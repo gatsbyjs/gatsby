@@ -260,6 +260,15 @@ export class WebsocketManager {
     }
     return false
   }
+
+  emitMappingStatus(didChange: boolean): void {
+    if (this.websocket) {
+      this.websocket.send({
+        type: `mappingWillChange`,
+        payload: didChange,
+      })
+    }
+  }
 }
 
 export const websocketManager: WebsocketManager = new WebsocketManager()

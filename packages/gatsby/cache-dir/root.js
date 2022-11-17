@@ -45,9 +45,11 @@ const RouteHandler = props => (
 //   // React to the current status...
 // })
 
-window.delayApply = new Promise(resolve => {
-  window.delayApplyResolve = resolve
-})
+// window.delayApply = new Promise(resolve => {
+//   window.delayApplyResolve = resolve
+// })
+
+window.delayApply = Promise.resolve()
 
 class LocationHandler extends React.Component {
   render() {

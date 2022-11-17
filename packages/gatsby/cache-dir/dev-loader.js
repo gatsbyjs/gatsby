@@ -9,19 +9,17 @@ import isEqual from "lodash/isEqual"
 
 function mergePageEntry(cachedPage, newPageData) {
   return {
-    ...(cachedPage ?? {}),
-    createdAt: new Date(),
+    ...cachedPage,
     payload: {
-      ...cachedPage?.payload,
-      ...newPageData.payload,
+      ...cachedPage.payload,
       json: {
         // For SSR, cachedPage may contain "data" and "serverData"
         // But newPageData may contain only "data" or only "serverData" depending on what was updated
-        ...cachedPage?.payload.json,
+        ...cachedPage.payload.json,
         ...newPageData.result,
       },
       page: {
-        ...cachedPage?.payload.page,
+        ...cachedPage.payload.page,
         getServerDataError: newPageData.getServerDataError,
         staticQueryResults: newPageData.staticQueryResults,
       },
@@ -65,11 +63,24 @@ class DevLoader extends BaseLoader {
           this.handleStalePageDataMessage(msg)
         } else if (msg.type === `staleServerData`) {
           this.handleStaleServerDataMessage(msg)
+        } else if (msg.type === `mappingWillChange`) {
+          if (msg.payload === true) {
+            this.lastMappingWillChange = new Date()
+          }
+          console.log(`mappingWillChange`, msg.payload)
         }
       })
     } else if (process.env.NODE_ENV !== `test`) {
       console.warn(`Could not get web socket`)
     }
+  }
+
+  shouldRestartLoadPage(startedAt) {
+    if (!this.lastMappingWillChange) {
+      return false
+    }
+
+    return this.lastMappingWillChange > startedAt
   }
 
   updateAsyncRequires(asyncRequires) {
@@ -171,14 +182,12 @@ class DevLoader extends BaseLoader {
       })
 
       const cachedPage = this.pageDb.get(pageDataDbCacheKey)
-      // if (cachedPage) {
-      console.log(`merging from cached`)
-      this.pageDb.set(
-        pageDataDbCacheKey,
-        mergePageEntry(cachedPage, newPageData)
-      )
-      // } else {
-      // }
+      if (cachedPage) {
+        this.pageDb.set(
+          pageDataDbCacheKey,
+          mergePageEntry(cachedPage, newPageData)
+        )
+      }
 
       // Additionally if those are query results for "/404.html"
       // we have to update all paths user wanted to visit, but didn't have

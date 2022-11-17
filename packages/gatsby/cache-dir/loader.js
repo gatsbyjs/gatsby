@@ -362,7 +362,16 @@ export class BaseLoader {
       return this.inFlightDb.get(pagePath)
     }
 
+    return this._loadPage(pagePath)
+  }
+
+  _loadPage(pagePath) {
     console.log(`actually running loadPage for ${pagePath}`)
+
+    const finalResult = {
+      createdAt: new Date(),
+    }
+
     const loadDataPromises = [
       this.loadAppData(),
       this.loadPageDataJson(pagePath),
@@ -391,10 +400,6 @@ export class BaseLoader {
         staticQueryHashes: pageStaticQueryHashes = [],
         slicesMap = {},
       } = pageData
-
-      const finalResult = {
-        createdAt: new Date(),
-      }
 
       const dedupedSliceNames = Array.from(new Set(Object.values(slicesMap)))
 
@@ -447,34 +452,7 @@ export class BaseLoader {
         ]
 
         if (!global.hasPartialHydration) {
-          let unregister
-          // let isRecompiling = false
-          let needAdditionalPageDataFetch = false
-
-          if (module.hot) {
-            const statusHandler = status => {
-              console.log(`webpack hot status`, status)
-              if (status === `check`) {
-                needAdditionalPageDataFetch = true
-              } else if (status === `idle`) {
-              }
-            }
-            module.hot.addStatusHandler(statusHandler)
-            unregister = () => {
-              module.hot.removeStatusHandler(statusHandler)
-            }
-          }
-
-          loadChunkPromises.push(
-            this.loadComponent(componentChunkName).then(toReturn => {
-              if (unregister) {
-                unregister()
-              }
-
-              console.log(`needToRefetch`, needAdditionalPageDataFetch)
-              return toReturn
-            })
-          )
+          loadChunkPromises.push(this.loadComponent(componentChunkName))
         }
 
         // In develop we have separate chunks for template and Head components
@@ -486,8 +464,6 @@ export class BaseLoader {
         const componentChunkPromises = Promise.all(loadChunkPromises).then(
           components => {
             const [sliceComponents, headComponent, pageComponent] = components
-
-            // finalResult.createdAt = new Date()
 
             for (const sliceComponent of sliceComponents) {
               if (!sliceComponent || sliceComponent instanceof Error) {
@@ -594,6 +570,10 @@ export class BaseLoader {
         return (
           Promise.all([componentChunkPromises, staticQueryBatchPromise])
             .then(([pageResources, staticQueryResults]) => {
+              if (this.shouldRestartLoadPage(finalResult.createdAt)) {
+                return this._loadPage(pagePath)
+              }
+
               let payload
               if (pageResources) {
                 payload = { ...pageResources, staticQueryResults }
@@ -604,36 +584,16 @@ export class BaseLoader {
                 })
               }
 
-              const existingEntry = this.pageDb.get(pagePath)
-              console.log(`setting pagedata from loadPage`, {
-                finalResult,
-                existingEntry,
-              })
-              if (
-                !existingEntry ||
-                existingEntry.createdAt < finalResult.createdAt
-              ) {
-                console.log(`1`)
-                this.pageDb.set(pagePath, finalResult)
+              this.pageDb.set(pagePath, finalResult)
 
-                if (finalResult.error) {
-                  return {
-                    error: finalResult.error,
-                    status: finalResult.status,
-                  }
+              if (finalResult.error) {
+                return {
+                  error: finalResult.error,
+                  status: finalResult.status,
                 }
-
-                return payload
-              } else {
-                console.log(`2`)
-                if (existingEntry) {
-                  existingEntry.payload.stale = true
-                }
-                this.inFlightDb.delete(pagePath)
-                return this.loadPage(rawPath)
               }
 
-              return existingEntry.payload
+              return payload
             })
             // when static-query fail to load we throw a better error
             .catch(err => {
@@ -658,6 +618,10 @@ export class BaseLoader {
     this.inFlightDb.set(pagePath, inFlightPromise)
 
     return inFlightPromise
+  }
+
+  shouldRestartLoadPage() {
+    return false
   }
 
   // returns undefined if the page does not exists in cache
