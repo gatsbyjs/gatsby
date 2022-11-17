@@ -3,6 +3,104 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.0.1/packages/gatsby) (2022-11-10)
+
+#### Bug Fixes
+
+- write out sq files when result doesn't change but query hash changes [#36997](https://github.com/gatsbyjs/gatsby/issues/36997) [#37004](https://github.com/gatsbyjs/gatsby/issues/37004) ([df29dc9](https://github.com/gatsbyjs/gatsby/commit/df29dc927f698582e3bf71dd59455c172a92c1aa))
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.0.0/packages/gatsby) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- Slices <> partial hydration interop [#36960](https://github.com/gatsbyjs/gatsby/issues/36960) ([e2a14bf](https://github.com/gatsbyjs/gatsby/commit/e2a14bf3d40795b1ecc182cdd0c055cbcf66e671))
+- handle graphql-import-node bundling [#36951](https://github.com/gatsbyjs/gatsby/issues/36951) ([d5c775a](https://github.com/gatsbyjs/gatsby/commit/d5c775afa6b5b5a61604a74f44ad25504f916c8f))
+- Traverse re-exports in static query mapper [#36943](https://github.com/gatsbyjs/gatsby/issues/36943) ([151f20c](https://github.com/gatsbyjs/gatsby/commit/151f20c4ec1cb38ef963aea58050b4788a37af16))
+- Update partial hydration directive [#36868](https://github.com/gatsbyjs/gatsby/issues/36868) ([7f1b57c](https://github.com/gatsbyjs/gatsby/commit/7f1b57c5a5849b3bc997957b3370c3119e79d279))
+- inject source location data to Slice usage and show errors in places where user renders them and not in gatsby internals [#36849](https://github.com/gatsbyjs/gatsby/issues/36849) ([4423795](https://github.com/gatsbyjs/gatsby/commit/4423795ed8069b8ce1f0646e213182009bfeb312))
+- GraphiQL v2 [#36541](https://github.com/gatsbyjs/gatsby/issues/36541) ([55a601d](https://github.com/gatsbyjs/gatsby/commit/55a601d759589286fb99e97db0ba095a1e6ed894))
+- Slice HTML rendering error handling [#36822](https://github.com/gatsbyjs/gatsby/issues/36822) ([f21b54f](https://github.com/gatsbyjs/gatsby/commit/f21b54faaee5fa1d9f5c1377721333013261c8c3))
+- Slice component validation [#36801](https://github.com/gatsbyjs/gatsby/issues/36801) ([1fd450f](https://github.com/gatsbyjs/gatsby/commit/1fd450fc7b3b3a6d3beb98f79ffe960e19bfe74e))
+- Support more syntax for Slices props [#36803](https://github.com/gatsbyjs/gatsby/issues/36803) ([56badff](https://github.com/gatsbyjs/gatsby/commit/56badff6d871972953a4b9a0f048350017b46b49))
+- Slices API [#36489](https://github.com/gatsbyjs/gatsby/issues/36489) ([6660144](https://github.com/gatsbyjs/gatsby/commit/666014471a545d183a91051d81864ecbad2a3971))
+- [v5 breaking change] change sort and aggregation fields API [#36708](https://github.com/gatsbyjs/gatsby/issues/36708) ([275b356](https://github.com/gatsbyjs/gatsby/commit/275b3562c235372ee8a43ae93a94cf91b9569d06))
+- Partial hydration router integration [#36616](https://github.com/gatsbyjs/gatsby/issues/36616) ([2aa8325](https://github.com/gatsbyjs/gatsby/commit/2aa83257b0ece5c08c40e46c98e2565d68fbaa29))
+- Normalize module keys between webpack plugin and loader [#36644](https://github.com/gatsbyjs/gatsby/issues/36644) ([81ca1dd](https://github.com/gatsbyjs/gatsby/commit/81ca1dda32db23ef9c1d6d9b314e7205d4181e55))
+
+#### Bug Fixes
+
+- drop `__renderedByLocation` prop when calculating slice props hashes and don't expose it to slice component [#36979](https://github.com/gatsbyjs/gatsby/issues/36979) ([2b5af32](https://github.com/gatsbyjs/gatsby/commit/2b5af328753280fb585b729a93a82e2d119d1bd2))
+- stitch slices if just page html was regenerating without any of used slices regenerating [#36950](https://github.com/gatsbyjs/gatsby/issues/36950) ([3044280](https://github.com/gatsbyjs/gatsby/commit/304428064c911813d4d1c481311dae508f8f8c84))
+- partial hydration chunking [#36923](https://github.com/gatsbyjs/gatsby/issues/36923) ([df6f4fb](https://github.com/gatsbyjs/gatsby/commit/df6f4fbc05268c9b53a26870a3f6515293bbe7f7))
+- Partial hydration loader commented out directive case [#36941](https://github.com/gatsbyjs/gatsby/issues/36941) ([8b26fa0](https://github.com/gatsbyjs/gatsby/commit/8b26fa0b7604e61ac8baf10571ea583a50a098df))
+- Also clear cache on gatsby version change [#36913](https://github.com/gatsbyjs/gatsby/issues/36913) ([6b51a8e](https://github.com/gatsbyjs/gatsby/commit/6b51a8ef276b2beffdf42b3f5494cf0f0bea558f))
+- Move murmurhash to gatsby-core-utils [#36882](https://github.com/gatsbyjs/gatsby/issues/36882) ([aaaa8c5](https://github.com/gatsbyjs/gatsby/commit/aaaa8c5da25014e386b2d4775d5691d9e5134699))
+- track multiple root nodes and not just one [#36867](https://github.com/gatsbyjs/gatsby/issues/36867) ([696a7ba](https://github.com/gatsbyjs/gatsby/commit/696a7ba230fcfc76e99232293cd548c832084c47))
+- Remove runQuery & getAllNodes from nodeModel [#36859](https://github.com/gatsbyjs/gatsby/issues/36859) ([412c65f](https://github.com/gatsbyjs/gatsby/commit/412c65fa4f654717434620a8c409c8495a58d562))
+- remove jsx from comment [#36855](https://github.com/gatsbyjs/gatsby/issues/36855) ([86fa2b1](https://github.com/gatsbyjs/gatsby/commit/86fa2b1296da38f08f11b0d26be7bf122f5a68ba))
+- Set trailingSlash default to "always" [#36798](https://github.com/gatsbyjs/gatsby/issues/36798) ([c10bf51](https://github.com/gatsbyjs/gatsby/commit/c10bf51125f6c601902d62f5336b32a1a4c05044))
+- handle 'fields' field edge case in sort/aggr codemod [#36844](https://github.com/gatsbyjs/gatsby/issues/36844) ([e574964](https://github.com/gatsbyjs/gatsby/commit/e574964a99b0541054489ed23ab591ee8c770703))
+- add more meaningful error message when nested slices are used [#36800](https://github.com/gatsbyjs/gatsby/issues/36800) ([59dc583](https://github.com/gatsbyjs/gatsby/commit/59dc583a84428052dc22643523021a1afb5b42e7))
+- support slices containing static queries during SSR/DSG [#36779](https://github.com/gatsbyjs/gatsby/issues/36779) ([cbe4db5](https://github.com/gatsbyjs/gatsby/commit/cbe4db57cc9099f7a144891bab816b9b61c71a79))
+- cache clear when upgrading from version without slices support cache [#36771](https://github.com/gatsbyjs/gatsby/issues/36771) ([2569e7d](https://github.com/gatsbyjs/gatsby/commit/2569e7db59a9efead3684875f37172847bd1cb1b))
+- define process.env.GATSBY_SLICE so produced engines use conditional slices paths [#36773](https://github.com/gatsbyjs/gatsby/issues/36773) ([b658436](https://github.com/gatsbyjs/gatsby/commit/b6584366fce751d26494564d9d3c2cb113ff1f40))
+- move client components to separate chunks [#36749](https://github.com/gatsbyjs/gatsby/issues/36749) ([719bd1c](https://github.com/gatsbyjs/gatsby/commit/719bd1cf17119712c26d1fdb6034a3ed4bff66c6))
+- create abstraction around use of createServerContext [#36677](https://github.com/gatsbyjs/gatsby/issues/36677) ([2f93f66](https://github.com/gatsbyjs/gatsby/commit/2f93f662a5aa8ad1c2307441ecd682378f04d5cf))
+- Don't fail build on missing gatsby-plugin-image for Partial Hydration [#36739](https://github.com/gatsbyjs/gatsby/issues/36739) ([fa98d33](https://github.com/gatsbyjs/gatsby/commit/fa98d33d39bc7eac54e37d77dce5f29fb8ba370d))
+- remove unused console.log [#36713](https://github.com/gatsbyjs/gatsby/issues/36713) ([9c5f2ef](https://github.com/gatsbyjs/gatsby/commit/9c5f2efa2c08b543d63f09654f67fbdbdc838e34))
+- Fix truncation of childNode during static HTML generation Fix [#36704](https://github.com/gatsbyjs/gatsby/issues/36704) ([ad1148e](https://github.com/gatsbyjs/gatsby/commit/ad1148e7d9304b7bec198841f64748242077a1cc))
+- Persist manifest on cached builds [#36693](https://github.com/gatsbyjs/gatsby/issues/36693) ([45a105b](https://github.com/gatsbyjs/gatsby/commit/45a105b6db6892150da27d71abaf693b8e43fb14))
+- Don't throw when a path with special character is visited [#36414](https://github.com/gatsbyjs/gatsby/issues/36414) ([c2a3dfa](https://github.com/gatsbyjs/gatsby/commit/c2a3dfafa120e011a0742ccf40d114e6d3680d85))
+- Use hex hash for CSS modules [#36701](https://github.com/gatsbyjs/gatsby/issues/36701) ([0683ae8](https://github.com/gatsbyjs/gatsby/commit/0683ae8b5285e9b1a031d95195b3e9c6f290128e))
+- Add back missing partial hydration error handling change [#36676](https://github.com/gatsbyjs/gatsby/issues/36676) ([a629551](https://github.com/gatsbyjs/gatsby/commit/a62955144f4d369e18402a9c4345f213c3a1d72e))
+
+#### Refactoring
+
+- track static queries and slice placeholder using module graph instead of chunk graph and do it in earlier webpack step [#36922](https://github.com/gatsbyjs/gatsby/issues/36922) ([be0e4aa](https://github.com/gatsbyjs/gatsby/commit/be0e4aa92911352b5328f3390aa02075d5f964d2))
+
+#### Chores
+
+- Update main README [#36954](https://github.com/gatsbyjs/gatsby/issues/36954) ([5e8e621](https://github.com/gatsbyjs/gatsby/commit/5e8e621bef0d4244f718d3b42d668d63504260e7))
+- preserve previous webpack stats derived values, even if we restart webpack itself [#36980](https://github.com/gatsbyjs/gatsby/issues/36980) ([bc7ac84](https://github.com/gatsbyjs/gatsby/commit/bc7ac84cfd75a4b9a88b7359959973ebe241bc18))
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- Remove slice flag [#36948](https://github.com/gatsbyjs/gatsby/issues/36948) ([a02a103](https://github.com/gatsbyjs/gatsby/commit/a02a1035826adef29657b8fda6ec20442125bf29))
+- Export Link as named export [#36888](https://github.com/gatsbyjs/gatsby/issues/36888) ([5a88dbb](https://github.com/gatsbyjs/gatsby/commit/5a88dbbd170a33b2d8dbae40debe8278537c962a))
+- Remove HAS_REACT_18 check [#36850](https://github.com/gatsbyjs/gatsby/issues/36850) ([20ef7c1](https://github.com/gatsbyjs/gatsby/commit/20ef7c12ffa9fd48c763c913e70ef20bef8a68fc))
+- make unstable_shouldOnCreateNode stable [#36516](https://github.com/gatsbyjs/gatsby/issues/36516) ([90f9ab4](https://github.com/gatsbyjs/gatsby/commit/90f9ab47593ba7458fc5bc677c4b0282b30808c8))
+- Update to GraphQL 16 [#36813](https://github.com/gatsbyjs/gatsby/issues/36813) ([9f840ad](https://github.com/gatsbyjs/gatsby/commit/9f840adc2e5fada5014f27814b49fbdf914d4ef9))
+- Remove GraphQL Playground [#36843](https://github.com/gatsbyjs/gatsby/issues/36843) ([c094766](https://github.com/gatsbyjs/gatsby/commit/c094766aeadd5c82eef22f979b98cdbae53b23a4))
+- Remove LOCKED_IN feature flags [#36810](https://github.com/gatsbyjs/gatsby/issues/36810) ([dc82d92](https://github.com/gatsbyjs/gatsby/commit/dc82d92e010b19a28df7d7b981b7bb2f9d841ea1))
+- upgrade latest-version [#36434](https://github.com/gatsbyjs/gatsby/issues/36434) ([eb9a330](https://github.com/gatsbyjs/gatsby/commit/eb9a3301f3c889f5d304889f461e3ec8567b3d11))
+- Remove obsolete `onCreateWebpackConfig` [#36814](https://github.com/gatsbyjs/gatsby/issues/36814) ([7abda34](https://github.com/gatsbyjs/gatsby/commit/7abda3470cad4538ec0932c5a28a4d55a7a90dd3))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+- provide slice rendering context to <HTML> [#36799](https://github.com/gatsbyjs/gatsby/issues/36799) ([93e0257](https://github.com/gatsbyjs/gatsby/commit/93e02574f013993b0f2286d42a5b8cc88da20c22))
+- Deprecate static query component [#36784](https://github.com/gatsbyjs/gatsby/issues/36784) ([eb8cf8d](https://github.com/gatsbyjs/gatsby/commit/eb8cf8d37976162ef4afc919c002f698a1305642))
+- setup circleci to run unit tests againt v5 [#36714](https://github.com/gatsbyjs/gatsby/issues/36714) ([ba146fd](https://github.com/gatsbyjs/gatsby/commit/ba146fd3b7ee1f18c1c695bc654890151d2cc0b3))
+
+#### Other Changes
+
+- Revert "chore(gatsby-plugin-typescript): Remove obsolete `onCreateWebpackConfig` (#36814)" [#36814](https://github.com/gatsbyjs/gatsby/issues/36814) [#36869](https://github.com/gatsbyjs/gatsby/issues/36869) ([24c185e](https://github.com/gatsbyjs/gatsby/commit/24c185ef1499e40842cee472be4e39d29082c7fc))
+
+### [4.24.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.7/packages/gatsby) (2022-11-03)
+
+#### Features
+
+- handle graphql-import-node bundling [#36951](https://github.com/gatsbyjs/gatsby/issues/36951) [#36953](https://github.com/gatsbyjs/gatsby/issues/36953) ([1926b4e](https://github.com/gatsbyjs/gatsby/commit/1926b4e5a4044ce0e60bdea04430627520f0a1b8))
+
+### [4.24.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.6/packages/gatsby) (2022-10-31)
+
+#### Bug Fixes
+
+- Also clear cache on gatsby version change [#36913](https://github.com/gatsbyjs/gatsby/issues/36913) [#36925](https://github.com/gatsbyjs/gatsby/issues/36925) ([be43418](https://github.com/gatsbyjs/gatsby/commit/be434189903d0150ce5fed31b9ea48b71f09cbe1))
+
+### [4.24.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.5/packages/gatsby) (2022-10-25)
+
+#### Bug Fixes
+
+- track multiple root nodes and not just one [#36867](https://github.com/gatsbyjs/gatsby/issues/36867) [#36879](https://github.com/gatsbyjs/gatsby/issues/36879) ([c9d97f9](https://github.com/gatsbyjs/gatsby/commit/c9d97f96fe8e40760185b46e699dd702d2141505))
+
 ### [4.24.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.4/packages/gatsby) (2022-10-10)
 
 **Note:** Version bump only for package gatsby

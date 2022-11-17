@@ -16,28 +16,24 @@ Run `node -v` in a terminal to see which version of Node.js you have.
 
 ```shell
 node -v
-v14.19.2
+v18.9.0
 ```
 
-This example shows Node.js version 14, specifically v14.19.2.
+This example shows Node.js version 18, specifically v18.9.0.
 
-## Upgrading from Node.js version 12
+## Upgrading Node.js
 
-Node.js version 12 _End-of-life_ date is April 30, 2022. Many of Gatsby's dependencies are updating to Node.js version 14 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
+Generally, it's recommended to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group).
 
-Generally, it's recommended to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 16 currently in summer 2022).
-
-> What about Node.js 15 and other odd release versions? Stable versions of Node.js are evenly numbered releases - Node.js 14, Node.js 16, Node.js 18 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
+> What about Node.js 15 and other odd release versions? Stable versions of Node.js are evenly numbered releases - Node 14, Node 16, Node 18 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
 
 There are multiple ways to update your version of Node.js depending on how you originally installed it. Read on to find the best approach for you.
 
 ### Using Homebrew
 
-This is the recommended way to install a newer version of Node.
-
 You will have Homebrew installed on your computer if you [followed part zero of the Gatsby tutorial](/docs/tutorial/part-0/#install-nodejs-for-your-appropriate-operating-system). Homebrew is a program that allows you to install specific versions of Node.js (and other software).
 
-To update from Node.js 12 to Node.js 14 using Homebrew, open a terminal and run the following commands:
+To update from Node.js 16 to Node.js 18 using Homebrew, open a terminal and run the following commands:
 
 ```shell
 brew search node
@@ -48,15 +44,15 @@ You should see output similar to this:
 ```shell
 brew search node
 ==> Formulae
-heroku/brew/heroku-node ✔        llnode                           node@14                          nodebrew
-leafnode                         node ✔                           node@12                          nodeenv
+heroku/brew/heroku-node ✔        llnode                           node@18                          nodebrew
+leafnode                         node ✔                           node@14                          nodeenv
 libbitcoin-node                  node-build                       node_exporter                    nodenv
 ```
 
-You're interested in the next stable version of Node.js after Node.js 12, which is Node.js 14. Homebrew makes this available in a package called `node@14`. Run:
+You're interested in the next stable version of Node.js after Node.js 16, which is Node.js 18. Homebrew makes this available in a package called `node@18`. Run:
 
 ```shell
-brew install node@14
+brew install node@18
 ```
 
 Once that's complete, run:
@@ -65,7 +61,7 @@ Once that's complete, run:
 node -v
 ```
 
-to confirm that you've upgraded from Node.js version 12 up to version 14.
+to confirm that you've upgraded from Node.js version 16 up to version 18.
 
 ### Using a Node.js version management package
 
@@ -84,11 +80,11 @@ nvm
 in a terminal to see if nvm is installed on your system. If it's installed, you can run:
 
 ```shell
-nvm install 14
-nvm alias default 14
+nvm install 18
+nvm alias default 18
 ```
 
-to install and use Node.js version 14.
+to install and use Node.js version 18.
 
 [Check nvm's documentation for further instructions](https://github.com/nvm-sh/nvm).
 
@@ -100,7 +96,7 @@ Run:
 n
 ```
 
-in a terminal to see if n is installed on your system. If it's installed, you can run `n 14` to install and use Node.js version 14.
+in a terminal to see if n is installed on your system. If it's installed, you can run `n 18` to install and use Node.js version 18.
 
 [Check n's documentation for further instructions](https://github.com/tj/n).
 
@@ -108,12 +104,8 @@ in a terminal to see if n is installed on your system. If it's installed, you ca
 
 If you aren't using any of the previously listed installation methods, you can [download a Node.js installer directly from nodejs.org](https://nodejs.org/en/).
 
-Gatsby's recommended way to install Node.js is by using Homebrew. Refer to the previous [Homebrew section of this document](#using-homebrew) for more info.
-
 ## Conclusion
 
 Gatsby takes backwards compatibility seriously and aims to support older versions of Node.js for as long as possible. We understand that juggling different software versions is not a productive way to spend your day.
 
 Gatsby also relies on a huge ecosystem of JavaScript dependencies. As the ecosystem moves away from older, unsupported Node.js versions we have to keep pace to ensure that bugs can be fixed and new features can be released.
-
-In this document, you learned how you upgrade from Node.js version 12 to Node.js version 14.

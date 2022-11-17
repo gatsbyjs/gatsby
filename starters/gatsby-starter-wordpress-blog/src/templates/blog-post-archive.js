@@ -4,7 +4,7 @@ import parse from "html-react-parser"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 const BlogIndex = ({
   data,
@@ -65,24 +65,18 @@ const BlogIndex = ({
   )
 }
 
-export const Head = () => <SEO title="All posts" />
+export const Head = () => <Seo title="All posts" />
 
 export default BlogIndex
 
-export const pageQuery = graphql`
-  query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
-    allWpPost(
-      sort: { fields: [date], order: DESC }
-      limit: $postsPerPage
-      skip: $offset
-    ) {
-      nodes {
-        excerpt
-        uri
-        date(formatString: "MMMM DD, YYYY")
-        title
-        excerpt
-      }
+export const pageQuery = graphql`query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
+  allWpPost(sort: {date: DESC}, limit: $postsPerPage, skip: $offset) {
+    nodes {
+      excerpt
+      uri
+      date(formatString: "MMMM DD, YYYY")
+      title
+      excerpt
     }
   }
-`
+}`

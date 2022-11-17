@@ -1,4 +1,4 @@
-"client export"
+"use client"
 
 const a = 1
 

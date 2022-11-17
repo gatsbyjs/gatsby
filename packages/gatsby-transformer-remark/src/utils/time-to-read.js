@@ -41,7 +41,7 @@ function isCjChar(char) {
 
 export const timeToRead = html => {
   let timeToRead = 0
-  const pureText = sanitizeHTML(html, { allowTags: [] })
+  const pureText = sanitizeHTML(html, { allowedTags: [] })
   const avgWPM = 265
 
   const latinChars = []

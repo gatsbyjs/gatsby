@@ -4,9 +4,10 @@ import got, { Method } from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
-import { graphqlHTTP, OptionsData } from "express-graphql"
+import { createHandler as createGraphqlEndpointHandler } from "graphql-http/lib/use/express"
+import type { OperationContext } from "graphql-http"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { FragmentDefinitionNode, GraphQLFormattedError, Kind } from "graphql"
+import { FragmentDefinitionNode, GraphQLError, Kind } from "graphql"
 import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -185,38 +186,38 @@ export async function startServer(
 
   app.use(
     graphqlEndpoint,
-    graphqlHTTP((): OptionsData => {
-      const { schema, schemaCustomization } = store.getState()
-
-      if (!schemaCustomization.composer) {
-        throw new Error(
-          `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
-        )
-      }
-      return {
-        schema,
-        graphiql: false,
-        extensions(): { [key: string]: unknown } {
-          return {
-            enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
-            refreshToken: process.env.GATSBY_REFRESH_TOKEN,
-          }
-        },
-        context: withResolverContext({
-          schema,
-          schemaComposer: schemaCustomization.composer,
+    createGraphqlEndpointHandler({
+      schema() {
+        return store.getState().schema
+      },
+      context() {
+        return withResolverContext({
+          schema: store.getState().schema,
+          schemaComposer: store.getState().schemaCustomization.composer,
           context: {},
-          customContext: schemaCustomization.context,
-        }),
-        customFormatErrorFn(err): GraphQLFormattedError {
-          return {
-            ...err.toJSON(),
-            extensions: {
-              stack: err.stack ? err.stack.split(`\n`) : [],
-            },
-          }
-        },
-      }
+          customContext: store.getState().schemaCustomization.context,
+        }) as unknown as OperationContext
+      },
+      onOperation(_req, _args, result) {
+        if (result.errors) {
+          result.errors = result.errors.map(
+            err =>
+              ({
+                ...err.toJSON(),
+                extensions: {
+                  stack: err.stack ? err.stack.split(`\n`) : [],
+                },
+              } as unknown as GraphQLError)
+          )
+        }
+
+        result.extensions = {
+          enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+          refreshToken: process.env.GATSBY_REFRESH_TOKEN,
+        }
+
+        return result
+      },
     })
   )
 
