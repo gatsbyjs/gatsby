@@ -269,7 +269,6 @@ export const createLocalFileNode = async ({
     cache,
     createNode,
     createNodeId,
-    reporter,
   }
 
   let remoteFileNode
@@ -322,6 +321,7 @@ export const createLocalFileNode = async ({
           url: mediaItemUrl,
           auth,
           ...createFileNodeRequirements,
+          reporter,
           pluginOptions,
         })
 

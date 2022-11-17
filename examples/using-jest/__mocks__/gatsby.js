@@ -10,6 +10,5 @@ module.exports = {
       href: to,
     })
   ),
-  StaticQuery: jest.fn(),
   useStaticQuery: jest.fn(),
 }

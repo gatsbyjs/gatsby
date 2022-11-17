@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
 import graphql from "gatsby/graphql"
-import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
-import { slash } from "gatsby-core-utils"
+import { slash } from "gatsby-core-utils/path"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 import { Binding } from "babel__traverse"
 import {
   CallExpression,
@@ -263,16 +263,17 @@ function getGraphQLTag(
   const normalizedText: string = graphql.stripIgnoredCharacters(text)
 
   const hash: number = murmurhash(normalizedText, 0)
+  const location = quasis[0].loc as SourceLocation | null
 
   try {
     const ast = graphql.parse(text)
 
     if (ast.definitions.length === 0) {
-      throw new EmptyGraphQLTagError(quasis[0].loc)
+      throw new EmptyGraphQLTagError(location)
     }
     return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
-    throw new GraphQLSyntaxError(text, err, quasis[0].loc)
+    throw new GraphQLSyntaxError(text, err, location)
   }
 }
 
@@ -638,5 +639,4 @@ export {
   GraphQLSyntaxError,
   ExportIsNotAsyncError,
   isWithinConfigExport,
-  murmurhash,
 }

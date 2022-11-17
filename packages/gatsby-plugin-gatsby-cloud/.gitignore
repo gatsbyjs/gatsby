@@ -3,4 +3,3 @@ yarn.lock
 **/*.d.ts
 /**/*.map
 !/src/**/*.js
-!/src/**/*.d.ts

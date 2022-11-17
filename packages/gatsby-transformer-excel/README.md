@@ -34,7 +34,7 @@ You can see an example project at [https://github.com/gatsbyjs/gatsby/tree/maste
 
 ## Parsing algorithm
 
-The parsing is powered by the [SheetJS / js-xlsx](https://git.io/xlsx) library.
+The parsing is powered by the [SheetJS / js-xlsx](https://github.com/SheetJS/js-xlsx) library.
 Each row of each worksheet is converted into a node whose keys are determined by
 the first row and whose type is determined by the name of the worksheet.
 

@@ -15,9 +15,9 @@ GraphQL is available in Gatsby without a special install: a schema is automatica
 
 Data needs to be [sourced](/docs/content-and-data/) — or added to the GraphQL schema — to be queried and pulled into pages using GraphQL. Gatsby uses [source plugins](/plugins/?=gatsby-source) to pull in data.
 
-**Note**: GraphQL isn't required: you can still [use Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/).
+**Please note**: GraphQL isn't required, you can still [use Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/).
 
-To source data with an existing plugin you have to install all needed packages. Furthermore you have to add the plugin to the plugins array in the `gatsby-config` with any optional configurations. If you want to source data from the filesystem for use with GraphQL, such as Markdown files, images, and more, refer to the [filesystem data sourcing docs](/docs/how-to/sourcing-data/sourcing-from-the-filesystem) and [recipes](/docs/recipes/sourcing-data).
+To source data with an existing plugin you have to install all needed packages. Furthermore you have to add the plugin to the plugins array in the `gatsby-config` with any optional configurations. If you want to source data from the filesystem for use with GraphQL, such as Markdown files, images, and more, refer to the [filesystem data sourcing docs](/docs/how-to/sourcing-data/sourcing-from-the-filesystem).
 
 For instructions on installing plugins from npm, take a look at the instructions in the docs on [using a plugin](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/).
 
@@ -28,7 +28,6 @@ You can also [create custom plugins](/docs/creating-plugins/) to fit your own us
 Data can be queried inside pages, components, or the `gatsby-node.js` file, using one of these options:
 
 - The `pageQuery` component
-- The `StaticQuery` component
 - The `useStaticQuery` hook
 
 **Note**: Because of how Gatsby processes GraphQL queries, you can't mix page queries and static queries in the same file. You also can't have multiple page queries or static queries in one file.
@@ -78,64 +77,11 @@ const HomePage = ({ data }) => {
 }
 ```
 
-### `StaticQuery`
-
-StaticQuery is a built-in component for retrieving data from Gatsby’s data layer in non-page components, such as a header, navigation, or any other child component.
-
-You can only have one `StaticQuery` per page: in order to include the data you need from multiple sources, you can use one query with multiple [root fields](/docs/conceptual/graphql-concepts/#query-fields). It cannot take variables as arguments.
-
-Also, refer to the [guide on querying data in components with static query](/docs/how-to/querying-data/static-query/).
-
-#### Params
-
-The `StaticQuery` component takes two values as props in JSX:
-
-- `query`: a `graphql` query string
-- `render`: a component with access to the data returned
-
-```jsx
-<StaticQuery
-  query={graphql` //highlight-line
-    query HeadingQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `}
-  render={(
-    data //highlight-line
-  ) => (
-    <header>
-      <h1>{data.site.siteMetadata.title}</h1>
-    </header>
-  )}
-/>
-```
-
-#### Returns
-
-The StaticQuery component returns `data` in a `render` prop:
-
-```jsx
-<StaticQuery
-  // ...
-  // highlight-start
-  render={data => (
-    <header>
-      <h1>{data.site.siteMetadata.title}</h1>
-    </header>
-  )}
-  // highlight-end
-/>
-```
-
 ### `useStaticQuery`
 
-The `useStaticQuery` hook can be used similar to `StaticQuery` in any component or page, but doesn't require the use of a component and render prop.
+The `useStaticQuery` hook can be used in any component or page.
 
-Because it is a React hook, the [rules of hooks](https://reactjs.org/docs/hooks-rules.html) apply and you'll need to use it with React and ReactDOM version 16.8.0 or later. Because of how queries currently work in Gatsby, only one instance of `useStaticQuery` is supported in each file.
+Because it is a React hook, the [rules of hooks](https://reactjs.org/docs/hooks-rules.html) apply. Because of how queries currently work in Gatsby, only one instance of `useStaticQuery` is supported in each file.
 
 Also, refer to the [guide on querying data in components with useStaticQuery](/docs/how-to/querying-data/use-static-query/).
 
@@ -216,7 +162,7 @@ Other built-in configurations can be used in queries
 - [`Alias`](/docs/graphql-reference#alias)
 - [`Group`](/docs/graphql-reference#group)
 
-For examples, refer to the [query recipes](/docs/recipes/querying-data) and [GraphQL query options reference guide](/docs/graphql-reference/).
+For examples, refer to the [GraphQL query options reference guide](/docs/graphql-reference/).
 
 ## Query fragments
 

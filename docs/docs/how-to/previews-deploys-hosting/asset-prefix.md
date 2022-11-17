@@ -6,11 +6,9 @@ Gatsby produces static content that can be hosted _anywhere_ at scale in a cost-
 
 In some circumstances you may want to deploy _assets_ (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. Typically this is when you're required to use a dedicated CDN for assets or need to follow company-specific hosting policies.
 
-This `assetPrefix` functionality is available starting in gatsby@2.4.0, so that you can seamlessly use Gatsby with assets hosted from a separate domain. To use this functionality, ensure that your version of `gatsby` specified in `package.json` is at least `2.4.0`.
-
 ## Usage
 
-### Adding to `gatsby-config.js`
+### Adding to `gatsby-config`
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -87,6 +85,6 @@ This feature works seamlessly with `assetPrefix`. Build out your application wit
 When using a custom asset prefix with `gatsby-plugin-offline`, your assets can still be cached offline. However, to ensure the plugin works correctly, there are a few things you need to do.
 
 1. Your asset server needs to have the `Access-Control-Allow-Origin` header set either to `*` or your site's origin.
-2. Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
+1. Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
 
    You can find most of these by looking for the `self.__precacheManifest` variable in your generated `sw.js`. Remember to also include `sw.js` itself, and any icons referenced in your `manifest.webmanifest` if you have one. To check your service worker is functioning as expected, look in Application → Service Workers in your browser dev tools, and check for any failed resources in the Console/Network tabs.

@@ -3,6 +3,223 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.0.0/packages/gatsby-core-utils) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- Move murmurhash to gatsby-core-utils [#36882](https://github.com/gatsbyjs/gatsby/issues/36882) ([aaaa8c5](https://github.com/gatsbyjs/gatsby/commit/aaaa8c5da25014e386b2d4775d5691d9e5134699))
+
+#### Chores
+
+- Update README with correct cpuCoreCount args [#36838](https://github.com/gatsbyjs/gatsby/issues/36838) ([ab51cd4](https://github.com/gatsbyjs/gatsby/commit/ab51cd446d7da41a6c1f5f9558bcf67d4e336a90))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [3.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.24.0/packages/gatsby-core-utils) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Bug Fixes
+
+- Use `grep -E` instead of `egrep` [#36648](https://github.com/gatsbyjs/gatsby/issues/36648) ([e8ed8a1](https://github.com/gatsbyjs/gatsby/commit/e8ed8a15c9d3fe973e1ccfb1d2881d3bff669250))
+
+## [3.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.23.0/packages/gatsby-core-utils) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [3.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.22.0/packages/gatsby-core-utils) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [3.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.21.0/packages/gatsby-core-utils) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update dependency del-cli to v5 for gatsby-core-utils [#36286](https://github.com/gatsbyjs/gatsby/issues/36286) ([a4f92b4](https://github.com/gatsbyjs/gatsby/commit/a4f92b4c2bcb75a84f01a857c4ed786fd40d27e7))
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
+## [3.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.20.0/packages/gatsby-core-utils) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [3.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.19.0/packages/gatsby-core-utils) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Bug Fixes
+
+- update dependency lmdb to v2.5.3 [#36099](https://github.com/gatsbyjs/gatsby/issues/36099) ([8488135](https://github.com/gatsbyjs/gatsby/commit/8488135dd7169264898f66310273b4bbb23fa9d7))
+- add tree-shake (esm) to core-utils [#36020](https://github.com/gatsbyjs/gatsby/issues/36020) ([6df573f](https://github.com/gatsbyjs/gatsby/commit/6df573f7582c195cf03d0da7cc5de32f090e9875))
+
+### [3.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.18.1/packages/gatsby-core-utils) (2022-07-12)
+
+#### Bug Fixes
+
+- update dependency lmdb to v2.5.3 [#36099](https://github.com/gatsbyjs/gatsby/issues/36099) [#36109](https://github.com/gatsbyjs/gatsby/issues/36109) [#36099](https://github.com/gatsbyjs/gatsby/issues/36099) ([1bb9a65](https://github.com/gatsbyjs/gatsby/commit/1bb9a65f0e4a657b975b181d3b77e2fd31c45085))
+
+## [3.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.18.0/packages/gatsby-core-utils) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- update dependency got to ^11.8.5 for gatsby-core-utils [#35804](https://github.com/gatsbyjs/gatsby/issues/35804) ([2cd167f](https://github.com/gatsbyjs/gatsby/commit/2cd167fd92b346f2a71572777548fa1cda899cc8))
+
+## [3.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.17.0/packages/gatsby-core-utils) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Chores
+
+- Upgrade lmdb to 2.5.2 [#35724](https://github.com/gatsbyjs/gatsby/issues/35724) ([9f3708f](https://github.com/gatsbyjs/gatsby/commit/9f3708f687af5d025459bd7d1e03a30aa996ffca))
+
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.16.0/packages/gatsby-core-utils) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+
+## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.15.0/packages/gatsby-core-utils) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Chores
+
+- bump lmdb to 2.3.10 [#35585](https://github.com/gatsbyjs/gatsby/issues/35585) ([c410214](https://github.com/gatsbyjs/gatsby/commit/c4102149ba61498bcc0e0594b3d78014e39cc3da))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.14.0/packages/gatsby-core-utils) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- fix Source and destination must not be the same fix [#35503](https://github.com/gatsbyjs/gatsby/issues/35503) ([f968c84](https://github.com/gatsbyjs/gatsby/commit/f968c84b3c27cd45bc5b2fea93c3b46390efe54d))
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.13.0/packages/gatsby-core-utils) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.12.1/packages/gatsby-core-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.12.0/packages/gatsby-core-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+- update dependency lmdb to ^2.2.6 for gatsby-core-utils [#35284](https://github.com/gatsbyjs/gatsby/issues/35284) ([2156937](https://github.com/gatsbyjs/gatsby/commit/215693750df99a6ef1f9866492ab4330acafd34c))
+- fix exports map fix [#35274](https://github.com/gatsbyjs/gatsby/issues/35274) ([6e4b3b5](https://github.com/gatsbyjs/gatsby/commit/6e4b3b5ca999219db1e61a332ef007aada4d2b3a))
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) ([392d6bc](https://github.com/gatsbyjs/gatsby/commit/392d6bc4300b9856e37a33291789e4dce5ac22d2))
+
+### [3.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.11.1/packages/gatsby-core-utils) (2022-03-31)
+
+#### Bug Fixes
+
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) [#35268](https://github.com/gatsbyjs/gatsby/issues/35268) ([a527891](https://github.com/gatsbyjs/gatsby/commit/a5278911d9c69a2b6478d97776d506722a0ad3a6))
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.11.0/packages/gatsby-core-utils) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- move package.json check to try catch [#35139](https://github.com/gatsbyjs/gatsby/issues/35139) ([bf5ff95](https://github.com/gatsbyjs/gatsby/commit/bf5ff95208b8eabd280a3ea0d9f1f6eeb3fc2da0))
+
+### [3.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.10.1/packages/gatsby-core-utils) (2022-03-23)
+
+#### Bug Fixes
+
+- move package.json check to try catch [#35139](https://github.com/gatsbyjs/gatsby/issues/35139) [#35207](https://github.com/gatsbyjs/gatsby/issues/35207) ([6e26dd1](https://github.com/gatsbyjs/gatsby/commit/6e26dd1c4bf08921aa8660f08d3be36ec17d65df))
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.10.0/packages/gatsby-core-utils) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- Allow write to gatsby-config.ts [#35074](https://github.com/gatsbyjs/gatsby/issues/35074) ([56fbf8d](https://github.com/gatsbyjs/gatsby/commit/56fbf8dd6a3f0a51f93786027b35e2720c6647cf))
+- add support for image-cdn [#34825](https://github.com/gatsbyjs/gatsby/issues/34825) ([29b236b](https://github.com/gatsbyjs/gatsby/commit/29b236b7f2212d062a65d34781a612d715d936ef))
+
+#### Bug Fixes
+
+- update dependency lmdb to ^2.2.4 for gatsby-core-utils [#34977](https://github.com/gatsbyjs/gatsby/issues/34977) ([495f71f](https://github.com/gatsbyjs/gatsby/commit/495f71fa0e30e6216dce7cdafaba36493c866b9c))
+- multiple requests with different outputdir [#35039](https://github.com/gatsbyjs/gatsby/issues/35039) ([2f361cc](https://github.com/gatsbyjs/gatsby/commit/2f361ccdbbd11c43495d54f8202919757831a023))
+
+### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.9.1/packages/gatsby-core-utils) (2022-03-09)
+
+#### Bug Fixes
+
+- multiple requests with different outputdir [#35039](https://github.com/gatsbyjs/gatsby/issues/35039) [#35043](https://github.com/gatsbyjs/gatsby/issues/35043) ([3c38128](https://github.com/gatsbyjs/gatsby/commit/3c3812844d7c4c263cf6afbfb67b725b9e3ff9c2))
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.9.0/packages/gatsby-core-utils) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Bug Fixes
+
+- fix caching when using remote-file fix [#34951](https://github.com/gatsbyjs/gatsby/issues/34951) ([98f2dfc](https://github.com/gatsbyjs/gatsby/commit/98f2dfc14f7c9484f590bc60fd6258b4929c6fe0))
+- fix urls without extension fix [#34930](https://github.com/gatsbyjs/gatsby/issues/34930) ([728af63](https://github.com/gatsbyjs/gatsby/commit/728af63f25378c516acb7ef9e8408f278074581c))
+- fix 304 when file does not exists fix [#34842](https://github.com/gatsbyjs/gatsby/issues/34842) ([1f3eee0](https://github.com/gatsbyjs/gatsby/commit/1f3eee04d1b09c23f885341382699ab91c15ea3e))
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [3.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.2/packages/gatsby-core-utils) (2022-03-01)
+
+#### Bug Fixes
+
+- fix caching when using remote-file fix [#34951](https://github.com/gatsbyjs/gatsby/issues/34951) fix [#34994](https://github.com/gatsbyjs/gatsby/issues/34994) ([4765950](https://github.com/gatsbyjs/gatsby/commit/47659500efa1cd05a1bc4dcfb042f071882bea34))
+
+### [3.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.1/packages/gatsby-core-utils) (2022-02-25)
+
+#### Bug Fixes
+
+- fix urls without extension fix [#34930](https://github.com/gatsbyjs/gatsby/issues/34930) fix [#34931](https://github.com/gatsbyjs/gatsby/issues/34931) ([b33fb35](https://github.com/gatsbyjs/gatsby/commit/b33fb3580e3dbde4f5179ab18540eb5f3ad7acb7))
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.0/packages/gatsby-core-utils) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Features
+
+- improve fetch-remote-file [#34758](https://github.com/gatsbyjs/gatsby/issues/34758) ([19b0304](https://github.com/gatsbyjs/gatsby/commit/19b0304e0a69df32d954659b674f0bb3fc525235))
+- create proper mutex [#34761](https://github.com/gatsbyjs/gatsby/issues/34761) ([f2d4830](https://github.com/gatsbyjs/gatsby/commit/f2d4830ef22666786e0020108d97379a853282b3))
+
+#### Bug Fixes
+
+- fix 304 when file does not exists fix [#34842](https://github.com/gatsbyjs/gatsby/issues/34842) fix [#34888](https://github.com/gatsbyjs/gatsby/issues/34888) ([9a579f1](https://github.com/gatsbyjs/gatsby/commit/9a579f1b248dc49ea053b962defcbc21f447ee18))
+
 ## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.7.0/packages/gatsby-core-utils) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

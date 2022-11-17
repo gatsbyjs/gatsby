@@ -40,7 +40,8 @@ async function outputFile() {
     return merged
   }, {})
 
-  output.features = [];
+  /** @type {Array<import("../index").AvailableFeatures>} */
+  output.features = ["image-cdn", "graphql-typegen", "content-file-path", "slices"];
 
   return fs.writeFile(
     path.resolve(OUTPUT_FILE_NAME),

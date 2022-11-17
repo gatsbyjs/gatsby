@@ -1,14 +1,14 @@
-## gatsby-codemods
+# gatsby-codemods
 
 A collection of codemod scripts for use with [JSCodeshift](https://github.com/facebook/jscodeshift) that help migrate to newer versions of Gatsby.
 
 > **Note:** Codemods are designed to rewrite your project's files. Ensure you have a backup before going any further.
 
-### Setup & Run
+## Setup & Run
 
 There are two ways to run codemods on this package.
 
-1. Run via npx
+### npx
 
 ```shell
 npx gatsby-codemods <codemod-name> <filepath>
@@ -18,21 +18,21 @@ npx gatsby-codemods <codemod-name> <filepath>
 
 Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extensions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
 
-2. Use JSCodeshift directly
+### JSCodeshift
 
-- Install JSCodeshift as a global module
+1. Install JSCodeshift as a global module
 
 ```shell
 npm install --global jscodeshift
 ```
 
-- Install this package
+2. Install this package
 
 ```shell
 npm install gatsby-codemods
 ```
 
-- Run a transform from this package on your project
+3. Run a transform from this package on your project
 
 ```shell
 jscodeshift -t node_modules/gatsby-codemods/transforms/global-graphql-calls.js my-project
@@ -49,16 +49,39 @@ Structure of a jscodeshift call:
   - use the `--extensions` option if your files have different extensions than `.js` (for example, `--extensions js,jsx`)
   - see all available [jscodeshift options](https://github.com/facebook/jscodeshift#usage-cli).
 
-### Included scripts
+## Included scripts
 
-#### `global-graphql-calls`
+### `sort-and-aggr-graphql`
+
+Apply changes to the `sort` argument and aggregation's `field` argument as explained in the [RFC: Change to sort and aggregation fields API](https://github.com/gatsbyjs/gatsby/discussions/36242).
+
+See the [Gatsby v4 to v5 migration guide for details on when to use this](https://gatsbyjs.com/docs/migrating-from-v4-to-v5/#graphql-schema-changes-to-sort-and-aggregation-fields).
+
+```shell
+npx gatsby-codemods sort-and-aggr-graphql <filepath>
+```
+
+Example result:
+
+```diff
+{
+- allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
++ allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    nodes {
+      ...fields
+    }
+  }
+}
+```
+
+### `global-graphql-calls`
 
 Add a `graphql` import to modules that use the `graphql` tag function without an import. This was supported in Gatsby v1 and deprecated for Gatsby v2.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
+See the [Gatsby v1 to v2 migration guide for details on when to use this](https://gatsbyjs.com/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
 
 ```shell
-jscodeshift -t node_modules/gatsby-codemods/dist/transforms/global-graphql-calls.js <path>
+npx gatsby-codemods global-graphql-calls <filepath>
 ```
 
 Example result:
@@ -82,14 +105,14 @@ export const query = graphql`
 `
 ```
 
-#### `import-link`
+### `import-link`
 
 Import `Link` from `gatsby` instead of `gatsby-link` and remove the `gatsby-link` import.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-link-from-gatsby).
+See the [Gatsby v1 to v2 migration guide for details on when to use this](https://gatsbyjs.com/docs/migrating-from-v1-to-v2/#import-link-from-gatsby).
 
 ```shell
-jscodeshift -t node_modules/gatsby-codemods/dist/transforms/import-link.js <path>
+npx gatsby-codemods import-link <filepath>
 ```
 
 Example result:
@@ -103,14 +126,14 @@ export default props => (
 )
 ```
 
-#### `navigate-calls`
+### `navigate-calls`
 
 Change the deprecated `navigateTo` method from `gatsby-link` to `navigate` from the `gatsby` module.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-navigateto-to-navigate).
+See the [Gatsby v1 to v2 migration guide for details on when to use this](https://gatsbyjs.com/docs/migrating-from-v1-to-v2/#change-navigateto-to-navigate).
 
 ```shell
-jscodeshift -t node_modules/gatsby-codemods/dist/transforms/navigate-calls.js <path>
+npx gatsby-codemods navigate-calls <filepath>
 ```
 
 Example result:
@@ -128,16 +151,16 @@ export default props => (
 )
 ```
 
-#### `rename-bound-action-creators`
+### `rename-bound-action-creators`
 
 Rename `boundActionCreators` to `actions`. `boundActionCreators` has been deprecated in Gatsby v2
 
 Note: Run this codemod only against files that use `boundActionCreators` instead of running it against a whole directory.
 
-See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
+See the [Gatsby v1 to v2 migration guide for details on when to use this](https://gatsbyjs.com/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
 
 ```shell
-jscodeshift -t node_modules/gatsby-codemods/dist/transforms/rename-bound-action-creators.js <path-to-file>
+npx gatsby-codemods rename-bound-action-creators <filepath>
 ```
 
 Example result:
@@ -157,9 +180,3 @@ Example result:
   }
 }
 ```
-
-### More scripts
-
-Check out [issue 5038 in the Gatsby repo for additional codemod ideas](https://github.com/gatsbyjs/gatsby/issues/5038#issuecomment-411516865).
-
-We'd love your help with writing these!

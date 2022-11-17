@@ -214,6 +214,7 @@ type Internal {
   mediaType: String
   owner: String!
   type: String!
+  contentFilePath: String
 }
 
 \\"\\"\\"
@@ -432,7 +433,7 @@ type SitePage implements Node {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type SitePlugin implements Node {
   resolve: String
@@ -476,19 +477,19 @@ type SiteBuildMetadata implements Node {
 
 type Query {
   file(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): File
-  allFile(filter: FileFilterInput, sort: FileSortInput, skip: Int, limit: Int): FileConnection!
+  allFile(filter: FileFilterInput, sort: [FileSortInput], skip: Int, limit: Int): FileConnection!
   directory(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Directory
-  allDirectory(filter: DirectoryFilterInput, sort: DirectorySortInput, skip: Int, limit: Int): DirectoryConnection!
+  allDirectory(filter: DirectoryFilterInput, sort: [DirectorySortInput], skip: Int, limit: Int): DirectoryConnection!
   site(buildTime: DateQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Site
-  allSite(filter: SiteFilterInput, sort: SiteSortInput, skip: Int, limit: Int): SiteConnection!
+  allSite(filter: SiteFilterInput, sort: [SiteSortInput], skip: Int, limit: Int): SiteConnection!
   siteFunction(functionRoute: StringQueryOperatorInput, pluginName: StringQueryOperatorInput, originalAbsoluteFilePath: StringQueryOperatorInput, originalRelativeFilePath: StringQueryOperatorInput, relativeCompiledFilePath: StringQueryOperatorInput, absoluteCompiledFilePath: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SiteFunction
-  allSiteFunction(filter: SiteFunctionFilterInput, sort: SiteFunctionSortInput, skip: Int, limit: Int): SiteFunctionConnection!
+  allSiteFunction(filter: SiteFunctionFilterInput, sort: [SiteFunctionSortInput], skip: Int, limit: Int): SiteFunctionConnection!
   sitePage(path: StringQueryOperatorInput, component: StringQueryOperatorInput, internalComponentName: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, pageContext: JSONQueryOperatorInput, pluginCreator: SitePluginFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePage
-  allSitePage(filter: SitePageFilterInput, sort: SitePageSortInput, skip: Int, limit: Int): SitePageConnection!
+  allSitePage(filter: SitePageFilterInput, sort: [SitePageSortInput], skip: Int, limit: Int): SitePageConnection!
   sitePlugin(resolve: StringQueryOperatorInput, name: StringQueryOperatorInput, version: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, browserAPIs: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: JSONQueryOperatorInput, packageJson: JSONQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePlugin
-  allSitePlugin(filter: SitePluginFilterInput, sort: SitePluginSortInput, skip: Int, limit: Int): SitePluginConnection!
+  allSitePlugin(filter: SitePluginFilterInput, sort: [SitePluginSortInput], skip: Int, limit: Int): SitePluginConnection!
   siteBuildMetadata(buildTime: DateQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SiteBuildMetadata
-  allSiteBuildMetadata(filter: SiteBuildMetadataFilterInput, sort: SiteBuildMetadataSortInput, skip: Int, limit: Int): SiteBuildMetadataConnection!
+  allSiteBuildMetadata(filter: SiteBuildMetadataFilterInput, sort: [SiteBuildMetadataSortInput], skip: Int, limit: Int): SiteBuildMetadataConnection!
 }
 
 input StringQueryOperatorInput {
@@ -553,6 +554,7 @@ input InternalFilterInput {
   mediaType: StringQueryOperatorInput
   owner: StringQueryOperatorInput
   type: StringQueryOperatorInput
+  contentFilePath: StringQueryOperatorInput
 }
 
 input BooleanQueryOperatorInput {
@@ -567,11 +569,11 @@ type FileConnection {
   edges: [FileEdge!]!
   nodes: [File!]!
   pageInfo: PageInfo!
-  distinct(field: FileFieldsEnum!): [String!]!
-  max(field: FileFieldsEnum!): Float
-  min(field: FileFieldsEnum!): Float
-  sum(field: FileFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: FileFieldsEnum!): [FileGroupConnection!]!
+  distinct(field: FileFieldSelector!): [String!]!
+  max(field: FileFieldSelector!): Float
+  min(field: FileFieldSelector!): Float
+  sum(field: FileFieldSelector!): Float
+  group(skip: Int, limit: Int, field: FileFieldSelector!): [FileGroupConnection!]!
 }
 
 type FileEdge {
@@ -590,124 +592,65 @@ type PageInfo {
   totalCount: Int!
 }
 
-enum FileFieldsEnum {
-  sourceInstanceName
-  absolutePath
-  relativePath
-  extension
-  size
-  prettySize
-  modifiedTime
-  accessTime
-  changeTime
-  birthTime
-  root
-  dir
-  base
-  ext
-  name
-  relativeDirectory
-  dev
-  mode
-  nlink
-  uid
-  gid
-  rdev
-  ino
-  atimeMs
-  mtimeMs
-  ctimeMs
-  atime
-  mtime
-  ctime
-  birthtime
-  birthtimeMs
-  id
-  parent___id
-  parent___parent___id
-  parent___parent___parent___id
-  parent___parent___parent___children
-  parent___parent___children
-  parent___parent___children___id
-  parent___parent___children___children
-  parent___parent___internal___content
-  parent___parent___internal___contentDigest
-  parent___parent___internal___description
-  parent___parent___internal___fieldOwners
-  parent___parent___internal___ignoreType
-  parent___parent___internal___mediaType
-  parent___parent___internal___owner
-  parent___parent___internal___type
-  parent___children
-  parent___children___id
-  parent___children___parent___id
-  parent___children___parent___children
-  parent___children___children
-  parent___children___children___id
-  parent___children___children___children
-  parent___children___internal___content
-  parent___children___internal___contentDigest
-  parent___children___internal___description
-  parent___children___internal___fieldOwners
-  parent___children___internal___ignoreType
-  parent___children___internal___mediaType
-  parent___children___internal___owner
-  parent___children___internal___type
-  parent___internal___content
-  parent___internal___contentDigest
-  parent___internal___description
-  parent___internal___fieldOwners
-  parent___internal___ignoreType
-  parent___internal___mediaType
-  parent___internal___owner
-  parent___internal___type
-  children
-  children___id
-  children___parent___id
-  children___parent___parent___id
-  children___parent___parent___children
-  children___parent___children
-  children___parent___children___id
-  children___parent___children___children
-  children___parent___internal___content
-  children___parent___internal___contentDigest
-  children___parent___internal___description
-  children___parent___internal___fieldOwners
-  children___parent___internal___ignoreType
-  children___parent___internal___mediaType
-  children___parent___internal___owner
-  children___parent___internal___type
-  children___children
-  children___children___id
-  children___children___parent___id
-  children___children___parent___children
-  children___children___children
-  children___children___children___id
-  children___children___children___children
-  children___children___internal___content
-  children___children___internal___contentDigest
-  children___children___internal___description
-  children___children___internal___fieldOwners
-  children___children___internal___ignoreType
-  children___children___internal___mediaType
-  children___children___internal___owner
-  children___children___internal___type
-  children___internal___content
-  children___internal___contentDigest
-  children___internal___description
-  children___internal___fieldOwners
-  children___internal___ignoreType
-  children___internal___mediaType
-  children___internal___owner
-  children___internal___type
-  internal___content
-  internal___contentDigest
-  internal___description
-  internal___fieldOwners
-  internal___ignoreType
-  internal___mediaType
-  internal___owner
-  internal___type
+input FileFieldSelector {
+  sourceInstanceName: FieldSelectorEnum
+  absolutePath: FieldSelectorEnum
+  relativePath: FieldSelectorEnum
+  extension: FieldSelectorEnum
+  size: FieldSelectorEnum
+  prettySize: FieldSelectorEnum
+  modifiedTime: FieldSelectorEnum
+  accessTime: FieldSelectorEnum
+  changeTime: FieldSelectorEnum
+  birthTime: FieldSelectorEnum
+  root: FieldSelectorEnum
+  dir: FieldSelectorEnum
+  base: FieldSelectorEnum
+  ext: FieldSelectorEnum
+  name: FieldSelectorEnum
+  relativeDirectory: FieldSelectorEnum
+  dev: FieldSelectorEnum
+  mode: FieldSelectorEnum
+  nlink: FieldSelectorEnum
+  uid: FieldSelectorEnum
+  gid: FieldSelectorEnum
+  rdev: FieldSelectorEnum
+  ino: FieldSelectorEnum
+  atimeMs: FieldSelectorEnum
+  mtimeMs: FieldSelectorEnum
+  ctimeMs: FieldSelectorEnum
+  atime: FieldSelectorEnum
+  mtime: FieldSelectorEnum
+  ctime: FieldSelectorEnum
+  birthtime: FieldSelectorEnum
+  birthtimeMs: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+enum FieldSelectorEnum {
+  SELECT
+}
+
+input NodeFieldSelector {
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+input InternalFieldSelector {
+  content: FieldSelectorEnum
+  contentDigest: FieldSelectorEnum
+  description: FieldSelectorEnum
+  fieldOwners: FieldSelectorEnum
+  ignoreType: FieldSelectorEnum
+  mediaType: FieldSelectorEnum
+  owner: FieldSelectorEnum
+  type: FieldSelectorEnum
+  contentFilePath: FieldSelectorEnum
 }
 
 type FileGroupConnection {
@@ -715,11 +658,11 @@ type FileGroupConnection {
   edges: [FileEdge!]!
   nodes: [File!]!
   pageInfo: PageInfo!
-  distinct(field: FileFieldsEnum!): [String!]!
-  max(field: FileFieldsEnum!): Float
-  min(field: FileFieldsEnum!): Float
-  sum(field: FileFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: FileFieldsEnum!): [FileGroupConnection!]!
+  distinct(field: FileFieldSelector!): [String!]!
+  max(field: FileFieldSelector!): Float
+  min(field: FileFieldSelector!): Float
+  sum(field: FileFieldSelector!): Float
+  group(skip: Int, limit: Int, field: FileFieldSelector!): [FileGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -763,8 +706,41 @@ input FileFilterInput {
 }
 
 input FileSortInput {
-  fields: [FileFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
+  sourceInstanceName: SortOrderEnum
+  absolutePath: SortOrderEnum
+  relativePath: SortOrderEnum
+  extension: SortOrderEnum
+  size: SortOrderEnum
+  prettySize: SortOrderEnum
+  modifiedTime: SortOrderEnum
+  accessTime: SortOrderEnum
+  changeTime: SortOrderEnum
+  birthTime: SortOrderEnum
+  root: SortOrderEnum
+  dir: SortOrderEnum
+  base: SortOrderEnum
+  ext: SortOrderEnum
+  name: SortOrderEnum
+  relativeDirectory: SortOrderEnum
+  dev: SortOrderEnum
+  mode: SortOrderEnum
+  nlink: SortOrderEnum
+  uid: SortOrderEnum
+  gid: SortOrderEnum
+  rdev: SortOrderEnum
+  ino: SortOrderEnum
+  atimeMs: SortOrderEnum
+  mtimeMs: SortOrderEnum
+  ctimeMs: SortOrderEnum
+  atime: SortOrderEnum
+  mtime: SortOrderEnum
+  ctime: SortOrderEnum
+  birthtime: SortOrderEnum
+  birthtimeMs: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
 }
 
 enum SortOrderEnum {
@@ -772,16 +748,35 @@ enum SortOrderEnum {
   DESC
 }
 
+input NodeSortInput {
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input InternalSortInput {
+  content: SortOrderEnum
+  contentDigest: SortOrderEnum
+  description: SortOrderEnum
+  fieldOwners: SortOrderEnum
+  ignoreType: SortOrderEnum
+  mediaType: SortOrderEnum
+  owner: SortOrderEnum
+  type: SortOrderEnum
+  contentFilePath: SortOrderEnum
+}
+
 type DirectoryConnection {
   totalCount: Int!
   edges: [DirectoryEdge!]!
   nodes: [Directory!]!
   pageInfo: PageInfo!
-  distinct(field: DirectoryFieldsEnum!): [String!]!
-  max(field: DirectoryFieldsEnum!): Float
-  min(field: DirectoryFieldsEnum!): Float
-  sum(field: DirectoryFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: DirectoryFieldsEnum!): [DirectoryGroupConnection!]!
+  distinct(field: DirectoryFieldSelector!): [String!]!
+  max(field: DirectoryFieldSelector!): Float
+  min(field: DirectoryFieldSelector!): Float
+  sum(field: DirectoryFieldSelector!): Float
+  group(skip: Int, limit: Int, field: DirectoryFieldSelector!): [DirectoryGroupConnection!]!
 }
 
 type DirectoryEdge {
@@ -790,124 +785,42 @@ type DirectoryEdge {
   previous: Directory
 }
 
-enum DirectoryFieldsEnum {
-  sourceInstanceName
-  absolutePath
-  relativePath
-  extension
-  size
-  prettySize
-  modifiedTime
-  accessTime
-  changeTime
-  birthTime
-  root
-  dir
-  base
-  ext
-  name
-  relativeDirectory
-  dev
-  mode
-  nlink
-  uid
-  gid
-  rdev
-  ino
-  atimeMs
-  mtimeMs
-  ctimeMs
-  atime
-  mtime
-  ctime
-  birthtime
-  birthtimeMs
-  id
-  parent___id
-  parent___parent___id
-  parent___parent___parent___id
-  parent___parent___parent___children
-  parent___parent___children
-  parent___parent___children___id
-  parent___parent___children___children
-  parent___parent___internal___content
-  parent___parent___internal___contentDigest
-  parent___parent___internal___description
-  parent___parent___internal___fieldOwners
-  parent___parent___internal___ignoreType
-  parent___parent___internal___mediaType
-  parent___parent___internal___owner
-  parent___parent___internal___type
-  parent___children
-  parent___children___id
-  parent___children___parent___id
-  parent___children___parent___children
-  parent___children___children
-  parent___children___children___id
-  parent___children___children___children
-  parent___children___internal___content
-  parent___children___internal___contentDigest
-  parent___children___internal___description
-  parent___children___internal___fieldOwners
-  parent___children___internal___ignoreType
-  parent___children___internal___mediaType
-  parent___children___internal___owner
-  parent___children___internal___type
-  parent___internal___content
-  parent___internal___contentDigest
-  parent___internal___description
-  parent___internal___fieldOwners
-  parent___internal___ignoreType
-  parent___internal___mediaType
-  parent___internal___owner
-  parent___internal___type
-  children
-  children___id
-  children___parent___id
-  children___parent___parent___id
-  children___parent___parent___children
-  children___parent___children
-  children___parent___children___id
-  children___parent___children___children
-  children___parent___internal___content
-  children___parent___internal___contentDigest
-  children___parent___internal___description
-  children___parent___internal___fieldOwners
-  children___parent___internal___ignoreType
-  children___parent___internal___mediaType
-  children___parent___internal___owner
-  children___parent___internal___type
-  children___children
-  children___children___id
-  children___children___parent___id
-  children___children___parent___children
-  children___children___children
-  children___children___children___id
-  children___children___children___children
-  children___children___internal___content
-  children___children___internal___contentDigest
-  children___children___internal___description
-  children___children___internal___fieldOwners
-  children___children___internal___ignoreType
-  children___children___internal___mediaType
-  children___children___internal___owner
-  children___children___internal___type
-  children___internal___content
-  children___internal___contentDigest
-  children___internal___description
-  children___internal___fieldOwners
-  children___internal___ignoreType
-  children___internal___mediaType
-  children___internal___owner
-  children___internal___type
-  internal___content
-  internal___contentDigest
-  internal___description
-  internal___fieldOwners
-  internal___ignoreType
-  internal___mediaType
-  internal___owner
-  internal___type
+input DirectoryFieldSelector {
+  sourceInstanceName: FieldSelectorEnum
+  absolutePath: FieldSelectorEnum
+  relativePath: FieldSelectorEnum
+  extension: FieldSelectorEnum
+  size: FieldSelectorEnum
+  prettySize: FieldSelectorEnum
+  modifiedTime: FieldSelectorEnum
+  accessTime: FieldSelectorEnum
+  changeTime: FieldSelectorEnum
+  birthTime: FieldSelectorEnum
+  root: FieldSelectorEnum
+  dir: FieldSelectorEnum
+  base: FieldSelectorEnum
+  ext: FieldSelectorEnum
+  name: FieldSelectorEnum
+  relativeDirectory: FieldSelectorEnum
+  dev: FieldSelectorEnum
+  mode: FieldSelectorEnum
+  nlink: FieldSelectorEnum
+  uid: FieldSelectorEnum
+  gid: FieldSelectorEnum
+  rdev: FieldSelectorEnum
+  ino: FieldSelectorEnum
+  atimeMs: FieldSelectorEnum
+  mtimeMs: FieldSelectorEnum
+  ctimeMs: FieldSelectorEnum
+  atime: FieldSelectorEnum
+  mtime: FieldSelectorEnum
+  ctime: FieldSelectorEnum
+  birthtime: FieldSelectorEnum
+  birthtimeMs: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
 }
 
 type DirectoryGroupConnection {
@@ -915,11 +828,11 @@ type DirectoryGroupConnection {
   edges: [DirectoryEdge!]!
   nodes: [Directory!]!
   pageInfo: PageInfo!
-  distinct(field: DirectoryFieldsEnum!): [String!]!
-  max(field: DirectoryFieldsEnum!): Float
-  min(field: DirectoryFieldsEnum!): Float
-  sum(field: DirectoryFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: DirectoryFieldsEnum!): [DirectoryGroupConnection!]!
+  distinct(field: DirectoryFieldSelector!): [String!]!
+  max(field: DirectoryFieldSelector!): Float
+  min(field: DirectoryFieldSelector!): Float
+  sum(field: DirectoryFieldSelector!): Float
+  group(skip: Int, limit: Int, field: DirectoryFieldSelector!): [DirectoryGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -963,8 +876,41 @@ input DirectoryFilterInput {
 }
 
 input DirectorySortInput {
-  fields: [DirectoryFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
+  sourceInstanceName: SortOrderEnum
+  absolutePath: SortOrderEnum
+  relativePath: SortOrderEnum
+  extension: SortOrderEnum
+  size: SortOrderEnum
+  prettySize: SortOrderEnum
+  modifiedTime: SortOrderEnum
+  accessTime: SortOrderEnum
+  changeTime: SortOrderEnum
+  birthTime: SortOrderEnum
+  root: SortOrderEnum
+  dir: SortOrderEnum
+  base: SortOrderEnum
+  ext: SortOrderEnum
+  name: SortOrderEnum
+  relativeDirectory: SortOrderEnum
+  dev: SortOrderEnum
+  mode: SortOrderEnum
+  nlink: SortOrderEnum
+  uid: SortOrderEnum
+  gid: SortOrderEnum
+  rdev: SortOrderEnum
+  ino: SortOrderEnum
+  atimeMs: SortOrderEnum
+  mtimeMs: SortOrderEnum
+  ctimeMs: SortOrderEnum
+  atime: SortOrderEnum
+  mtime: SortOrderEnum
+  ctime: SortOrderEnum
+  birthtime: SortOrderEnum
+  birthtimeMs: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
 }
 
 input SiteSiteMetadataFilterInput {
@@ -977,11 +923,11 @@ type SiteConnection {
   edges: [SiteEdge!]!
   nodes: [Site!]!
   pageInfo: PageInfo!
-  distinct(field: SiteFieldsEnum!): [String!]!
-  max(field: SiteFieldsEnum!): Float
-  min(field: SiteFieldsEnum!): Float
-  sum(field: SiteFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SiteFieldsEnum!): [SiteGroupConnection!]!
+  distinct(field: SiteFieldSelector!): [String!]!
+  max(field: SiteFieldSelector!): Float
+  min(field: SiteFieldSelector!): Float
+  sum(field: SiteFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFieldSelector!): [SiteGroupConnection!]!
 }
 
 type SiteEdge {
@@ -990,96 +936,18 @@ type SiteEdge {
   previous: Site
 }
 
-enum SiteFieldsEnum {
-  buildTime
-  siteMetadata___title
-  siteMetadata___description
-  id
-  parent___id
-  parent___parent___id
-  parent___parent___parent___id
-  parent___parent___parent___children
-  parent___parent___children
-  parent___parent___children___id
-  parent___parent___children___children
-  parent___parent___internal___content
-  parent___parent___internal___contentDigest
-  parent___parent___internal___description
-  parent___parent___internal___fieldOwners
-  parent___parent___internal___ignoreType
-  parent___parent___internal___mediaType
-  parent___parent___internal___owner
-  parent___parent___internal___type
-  parent___children
-  parent___children___id
-  parent___children___parent___id
-  parent___children___parent___children
-  parent___children___children
-  parent___children___children___id
-  parent___children___children___children
-  parent___children___internal___content
-  parent___children___internal___contentDigest
-  parent___children___internal___description
-  parent___children___internal___fieldOwners
-  parent___children___internal___ignoreType
-  parent___children___internal___mediaType
-  parent___children___internal___owner
-  parent___children___internal___type
-  parent___internal___content
-  parent___internal___contentDigest
-  parent___internal___description
-  parent___internal___fieldOwners
-  parent___internal___ignoreType
-  parent___internal___mediaType
-  parent___internal___owner
-  parent___internal___type
-  children
-  children___id
-  children___parent___id
-  children___parent___parent___id
-  children___parent___parent___children
-  children___parent___children
-  children___parent___children___id
-  children___parent___children___children
-  children___parent___internal___content
-  children___parent___internal___contentDigest
-  children___parent___internal___description
-  children___parent___internal___fieldOwners
-  children___parent___internal___ignoreType
-  children___parent___internal___mediaType
-  children___parent___internal___owner
-  children___parent___internal___type
-  children___children
-  children___children___id
-  children___children___parent___id
-  children___children___parent___children
-  children___children___children
-  children___children___children___id
-  children___children___children___children
-  children___children___internal___content
-  children___children___internal___contentDigest
-  children___children___internal___description
-  children___children___internal___fieldOwners
-  children___children___internal___ignoreType
-  children___children___internal___mediaType
-  children___children___internal___owner
-  children___children___internal___type
-  children___internal___content
-  children___internal___contentDigest
-  children___internal___description
-  children___internal___fieldOwners
-  children___internal___ignoreType
-  children___internal___mediaType
-  children___internal___owner
-  children___internal___type
-  internal___content
-  internal___contentDigest
-  internal___description
-  internal___fieldOwners
-  internal___ignoreType
-  internal___mediaType
-  internal___owner
-  internal___type
+input SiteFieldSelector {
+  buildTime: FieldSelectorEnum
+  siteMetadata: SiteSiteMetadataFieldSelector
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+input SiteSiteMetadataFieldSelector {
+  title: FieldSelectorEnum
+  description: FieldSelectorEnum
 }
 
 type SiteGroupConnection {
@@ -1087,11 +955,11 @@ type SiteGroupConnection {
   edges: [SiteEdge!]!
   nodes: [Site!]!
   pageInfo: PageInfo!
-  distinct(field: SiteFieldsEnum!): [String!]!
-  max(field: SiteFieldsEnum!): Float
-  min(field: SiteFieldsEnum!): Float
-  sum(field: SiteFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SiteFieldsEnum!): [SiteGroupConnection!]!
+  distinct(field: SiteFieldSelector!): [String!]!
+  max(field: SiteFieldSelector!): Float
+  min(field: SiteFieldSelector!): Float
+  sum(field: SiteFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFieldSelector!): [SiteGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1106,8 +974,17 @@ input SiteFilterInput {
 }
 
 input SiteSortInput {
-  fields: [SiteFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
+  buildTime: SortOrderEnum
+  siteMetadata: SiteSiteMetadataSortInput
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input SiteSiteMetadataSortInput {
+  title: SortOrderEnum
+  description: SortOrderEnum
 }
 
 type SiteFunctionConnection {
@@ -1115,11 +992,11 @@ type SiteFunctionConnection {
   edges: [SiteFunctionEdge!]!
   nodes: [SiteFunction!]!
   pageInfo: PageInfo!
-  distinct(field: SiteFunctionFieldsEnum!): [String!]!
-  max(field: SiteFunctionFieldsEnum!): Float
-  min(field: SiteFunctionFieldsEnum!): Float
-  sum(field: SiteFunctionFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SiteFunctionFieldsEnum!): [SiteFunctionGroupConnection!]!
+  distinct(field: SiteFunctionFieldSelector!): [String!]!
+  max(field: SiteFunctionFieldSelector!): Float
+  min(field: SiteFunctionFieldSelector!): Float
+  sum(field: SiteFunctionFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFunctionFieldSelector!): [SiteFunctionGroupConnection!]!
 }
 
 type SiteFunctionEdge {
@@ -1128,100 +1005,18 @@ type SiteFunctionEdge {
   previous: SiteFunction
 }
 
-enum SiteFunctionFieldsEnum {
-  functionRoute
-  pluginName
-  originalAbsoluteFilePath
-  originalRelativeFilePath
-  relativeCompiledFilePath
-  absoluteCompiledFilePath
-  matchPath
-  id
-  parent___id
-  parent___parent___id
-  parent___parent___parent___id
-  parent___parent___parent___children
-  parent___parent___children
-  parent___parent___children___id
-  parent___parent___children___children
-  parent___parent___internal___content
-  parent___parent___internal___contentDigest
-  parent___parent___internal___description
-  parent___parent___internal___fieldOwners
-  parent___parent___internal___ignoreType
-  parent___parent___internal___mediaType
-  parent___parent___internal___owner
-  parent___parent___internal___type
-  parent___children
-  parent___children___id
-  parent___children___parent___id
-  parent___children___parent___children
-  parent___children___children
-  parent___children___children___id
-  parent___children___children___children
-  parent___children___internal___content
-  parent___children___internal___contentDigest
-  parent___children___internal___description
-  parent___children___internal___fieldOwners
-  parent___children___internal___ignoreType
-  parent___children___internal___mediaType
-  parent___children___internal___owner
-  parent___children___internal___type
-  parent___internal___content
-  parent___internal___contentDigest
-  parent___internal___description
-  parent___internal___fieldOwners
-  parent___internal___ignoreType
-  parent___internal___mediaType
-  parent___internal___owner
-  parent___internal___type
-  children
-  children___id
-  children___parent___id
-  children___parent___parent___id
-  children___parent___parent___children
-  children___parent___children
-  children___parent___children___id
-  children___parent___children___children
-  children___parent___internal___content
-  children___parent___internal___contentDigest
-  children___parent___internal___description
-  children___parent___internal___fieldOwners
-  children___parent___internal___ignoreType
-  children___parent___internal___mediaType
-  children___parent___internal___owner
-  children___parent___internal___type
-  children___children
-  children___children___id
-  children___children___parent___id
-  children___children___parent___children
-  children___children___children
-  children___children___children___id
-  children___children___children___children
-  children___children___internal___content
-  children___children___internal___contentDigest
-  children___children___internal___description
-  children___children___internal___fieldOwners
-  children___children___internal___ignoreType
-  children___children___internal___mediaType
-  children___children___internal___owner
-  children___children___internal___type
-  children___internal___content
-  children___internal___contentDigest
-  children___internal___description
-  children___internal___fieldOwners
-  children___internal___ignoreType
-  children___internal___mediaType
-  children___internal___owner
-  children___internal___type
-  internal___content
-  internal___contentDigest
-  internal___description
-  internal___fieldOwners
-  internal___ignoreType
-  internal___mediaType
-  internal___owner
-  internal___type
+input SiteFunctionFieldSelector {
+  functionRoute: FieldSelectorEnum
+  pluginName: FieldSelectorEnum
+  originalAbsoluteFilePath: FieldSelectorEnum
+  originalRelativeFilePath: FieldSelectorEnum
+  relativeCompiledFilePath: FieldSelectorEnum
+  absoluteCompiledFilePath: FieldSelectorEnum
+  matchPath: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
 }
 
 type SiteFunctionGroupConnection {
@@ -1229,11 +1024,11 @@ type SiteFunctionGroupConnection {
   edges: [SiteFunctionEdge!]!
   nodes: [SiteFunction!]!
   pageInfo: PageInfo!
-  distinct(field: SiteFunctionFieldsEnum!): [String!]!
-  max(field: SiteFunctionFieldsEnum!): Float
-  min(field: SiteFunctionFieldsEnum!): Float
-  sum(field: SiteFunctionFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SiteFunctionFieldsEnum!): [SiteFunctionGroupConnection!]!
+  distinct(field: SiteFunctionFieldSelector!): [String!]!
+  max(field: SiteFunctionFieldSelector!): Float
+  min(field: SiteFunctionFieldSelector!): Float
+  sum(field: SiteFunctionFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFunctionFieldSelector!): [SiteFunctionGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1253,8 +1048,17 @@ input SiteFunctionFilterInput {
 }
 
 input SiteFunctionSortInput {
-  fields: [SiteFunctionFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
+  functionRoute: SortOrderEnum
+  pluginName: SortOrderEnum
+  originalAbsoluteFilePath: SortOrderEnum
+  originalRelativeFilePath: SortOrderEnum
+  relativeCompiledFilePath: SortOrderEnum
+  absoluteCompiledFilePath: SortOrderEnum
+  matchPath: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
 }
 
 input JSONQueryOperatorInput {
@@ -1287,11 +1091,11 @@ type SitePageConnection {
   edges: [SitePageEdge!]!
   nodes: [SitePage!]!
   pageInfo: PageInfo!
-  distinct(field: SitePageFieldsEnum!): [String!]!
-  max(field: SitePageFieldsEnum!): Float
-  min(field: SitePageFieldsEnum!): Float
-  sum(field: SitePageFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SitePageFieldsEnum!): [SitePageGroupConnection!]!
+  distinct(field: SitePageFieldSelector!): [String!]!
+  max(field: SitePageFieldSelector!): Float
+  min(field: SitePageFieldSelector!): Float
+  sum(field: SitePageFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePageFieldSelector!): [SitePageGroupConnection!]!
 }
 
 type SitePageEdge {
@@ -1300,146 +1104,34 @@ type SitePageEdge {
   previous: SitePage
 }
 
-enum SitePageFieldsEnum {
-  path
-  component
-  internalComponentName
-  componentChunkName
-  matchPath
-  pageContext
-  pluginCreator___resolve
-  pluginCreator___name
-  pluginCreator___version
-  pluginCreator___nodeAPIs
-  pluginCreator___browserAPIs
-  pluginCreator___ssrAPIs
-  pluginCreator___pluginFilepath
-  pluginCreator___pluginOptions
-  pluginCreator___packageJson
-  pluginCreator___id
-  pluginCreator___parent___id
-  pluginCreator___parent___parent___id
-  pluginCreator___parent___parent___children
-  pluginCreator___parent___children
-  pluginCreator___parent___children___id
-  pluginCreator___parent___children___children
-  pluginCreator___parent___internal___content
-  pluginCreator___parent___internal___contentDigest
-  pluginCreator___parent___internal___description
-  pluginCreator___parent___internal___fieldOwners
-  pluginCreator___parent___internal___ignoreType
-  pluginCreator___parent___internal___mediaType
-  pluginCreator___parent___internal___owner
-  pluginCreator___parent___internal___type
-  pluginCreator___children
-  pluginCreator___children___id
-  pluginCreator___children___parent___id
-  pluginCreator___children___parent___children
-  pluginCreator___children___children
-  pluginCreator___children___children___id
-  pluginCreator___children___children___children
-  pluginCreator___children___internal___content
-  pluginCreator___children___internal___contentDigest
-  pluginCreator___children___internal___description
-  pluginCreator___children___internal___fieldOwners
-  pluginCreator___children___internal___ignoreType
-  pluginCreator___children___internal___mediaType
-  pluginCreator___children___internal___owner
-  pluginCreator___children___internal___type
-  pluginCreator___internal___content
-  pluginCreator___internal___contentDigest
-  pluginCreator___internal___description
-  pluginCreator___internal___fieldOwners
-  pluginCreator___internal___ignoreType
-  pluginCreator___internal___mediaType
-  pluginCreator___internal___owner
-  pluginCreator___internal___type
-  id
-  parent___id
-  parent___parent___id
-  parent___parent___parent___id
-  parent___parent___parent___children
-  parent___parent___children
-  parent___parent___children___id
-  parent___parent___children___children
-  parent___parent___internal___content
-  parent___parent___internal___contentDigest
-  parent___parent___internal___description
-  parent___parent___internal___fieldOwners
-  parent___parent___internal___ignoreType
-  parent___parent___internal___mediaType
-  parent___parent___internal___owner
-  parent___parent___internal___type
-  parent___children
-  parent___children___id
-  parent___children___parent___id
-  parent___children___parent___children
-  parent___children___children
-  parent___children___children___id
-  parent___children___children___children
-  parent___children___internal___content
-  parent___children___internal___contentDigest
-  parent___children___internal___description
-  parent___children___internal___fieldOwners
-  parent___children___internal___ignoreType
-  parent___children___internal___mediaType
-  parent___children___internal___owner
-  parent___children___internal___type
-  parent___internal___content
-  parent___internal___contentDigest
-  parent___internal___description
-  parent___internal___fieldOwners
-  parent___internal___ignoreType
-  parent___internal___mediaType
-  parent___internal___owner
-  parent___internal___type
-  children
-  children___id
-  children___parent___id
-  children___parent___parent___id
-  children___parent___parent___children
-  children___parent___children
-  children___parent___children___id
-  children___parent___children___children
-  children___parent___internal___content
-  children___parent___internal___contentDigest
-  children___parent___internal___description
-  children___parent___internal___fieldOwners
-  children___parent___internal___ignoreType
-  children___parent___internal___mediaType
-  children___parent___internal___owner
-  children___parent___internal___type
-  children___children
-  children___children___id
-  children___children___parent___id
-  children___children___parent___children
-  children___children___children
-  children___children___children___id
-  children___children___children___children
-  children___children___internal___content
-  children___children___internal___contentDigest
-  children___children___internal___description
-  children___children___internal___fieldOwners
-  children___children___internal___ignoreType
-  children___children___internal___mediaType
-  children___children___internal___owner
-  children___children___internal___type
-  children___internal___content
-  children___internal___contentDigest
-  children___internal___description
-  children___internal___fieldOwners
-  children___internal___ignoreType
-  children___internal___mediaType
-  children___internal___owner
-  children___internal___type
-  internal___content
-  internal___contentDigest
-  internal___description
-  internal___fieldOwners
-  internal___ignoreType
-  internal___mediaType
-  internal___owner
-  internal___type
+input SitePageFieldSelector {
+  path: FieldSelectorEnum
+  component: FieldSelectorEnum
+  internalComponentName: FieldSelectorEnum
+  componentChunkName: FieldSelectorEnum
+  matchPath: FieldSelectorEnum
+  pageContext: FieldSelectorEnum
+  pluginCreator: SitePluginFieldSelector
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+input SitePluginFieldSelector {
+  resolve: FieldSelectorEnum
+  name: FieldSelectorEnum
+  version: FieldSelectorEnum
+  nodeAPIs: FieldSelectorEnum
+  browserAPIs: FieldSelectorEnum
+  ssrAPIs: FieldSelectorEnum
+  pluginFilepath: FieldSelectorEnum
+  pluginOptions: FieldSelectorEnum
+  packageJson: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
 }
 
 type SitePageGroupConnection {
@@ -1447,11 +1139,11 @@ type SitePageGroupConnection {
   edges: [SitePageEdge!]!
   nodes: [SitePage!]!
   pageInfo: PageInfo!
-  distinct(field: SitePageFieldsEnum!): [String!]!
-  max(field: SitePageFieldsEnum!): Float
-  min(field: SitePageFieldsEnum!): Float
-  sum(field: SitePageFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SitePageFieldsEnum!): [SitePageGroupConnection!]!
+  distinct(field: SitePageFieldSelector!): [String!]!
+  max(field: SitePageFieldSelector!): Float
+  min(field: SitePageFieldSelector!): Float
+  sum(field: SitePageFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePageFieldSelector!): [SitePageGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1471,8 +1163,33 @@ input SitePageFilterInput {
 }
 
 input SitePageSortInput {
-  fields: [SitePageFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
+  path: SortOrderEnum
+  component: SortOrderEnum
+  internalComponentName: SortOrderEnum
+  componentChunkName: SortOrderEnum
+  matchPath: SortOrderEnum
+  pageContext: SortOrderEnum
+  pluginCreator: SitePluginSortInput
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input SitePluginSortInput {
+  resolve: SortOrderEnum
+  name: SortOrderEnum
+  version: SortOrderEnum
+  nodeAPIs: SortOrderEnum
+  browserAPIs: SortOrderEnum
+  ssrAPIs: SortOrderEnum
+  pluginFilepath: SortOrderEnum
+  pluginOptions: SortOrderEnum
+  packageJson: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
 }
 
 type SitePluginConnection {
@@ -1480,11 +1197,11 @@ type SitePluginConnection {
   edges: [SitePluginEdge!]!
   nodes: [SitePlugin!]!
   pageInfo: PageInfo!
-  distinct(field: SitePluginFieldsEnum!): [String!]!
-  max(field: SitePluginFieldsEnum!): Float
-  min(field: SitePluginFieldsEnum!): Float
-  sum(field: SitePluginFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SitePluginFieldsEnum!): [SitePluginGroupConnection!]!
+  distinct(field: SitePluginFieldSelector!): [String!]!
+  max(field: SitePluginFieldSelector!): Float
+  min(field: SitePluginFieldSelector!): Float
+  sum(field: SitePluginFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePluginFieldSelector!): [SitePluginGroupConnection!]!
 }
 
 type SitePluginEdge {
@@ -1493,121 +1210,18 @@ type SitePluginEdge {
   previous: SitePlugin
 }
 
-enum SitePluginFieldsEnum {
-  resolve
-  name
-  version
-  nodeAPIs
-  browserAPIs
-  ssrAPIs
-  pluginFilepath
-  pluginOptions
-  packageJson
-  id
-  parent___id
-  parent___parent___id
-  parent___parent___parent___id
-  parent___parent___parent___children
-  parent___parent___children
-  parent___parent___children___id
-  parent___parent___children___children
-  parent___parent___internal___content
-  parent___parent___internal___contentDigest
-  parent___parent___internal___description
-  parent___parent___internal___fieldOwners
-  parent___parent___internal___ignoreType
-  parent___parent___internal___mediaType
-  parent___parent___internal___owner
-  parent___parent___internal___type
-  parent___children
-  parent___children___id
-  parent___children___parent___id
-  parent___children___parent___children
-  parent___children___children
-  parent___children___children___id
-  parent___children___children___children
-  parent___children___internal___content
-  parent___children___internal___contentDigest
-  parent___children___internal___description
-  parent___children___internal___fieldOwners
-  parent___children___internal___ignoreType
-  parent___children___internal___mediaType
-  parent___children___internal___owner
-  parent___children___internal___type
-  parent___internal___content
-  parent___internal___contentDigest
-  parent___internal___description
-  parent___internal___fieldOwners
-  parent___internal___ignoreType
-  parent___internal___mediaType
-  parent___internal___owner
-  parent___internal___type
-  children
-  children___id
-  children___parent___id
-  children___parent___parent___id
-  children___parent___parent___children
-  children___parent___children
-  children___parent___children___id
-  children___parent___children___children
-  children___parent___internal___content
-  children___parent___internal___contentDigest
-  children___parent___internal___description
-  children___parent___internal___fieldOwners
-  children___parent___internal___ignoreType
-  children___parent___internal___mediaType
-  children___parent___internal___owner
-  children___parent___internal___type
-  children___children
-  children___children___id
-  children___children___parent___id
-  children___children___parent___children
-  children___children___children
-  children___children___children___id
-  children___children___children___children
-  children___children___internal___content
-  children___children___internal___contentDigest
-  children___children___internal___description
-  children___children___internal___fieldOwners
-  children___children___internal___ignoreType
-  children___children___internal___mediaType
-  children___children___internal___owner
-  children___children___internal___type
-  children___internal___content
-  children___internal___contentDigest
-  children___internal___description
-  children___internal___fieldOwners
-  children___internal___ignoreType
-  children___internal___mediaType
-  children___internal___owner
-  children___internal___type
-  internal___content
-  internal___contentDigest
-  internal___description
-  internal___fieldOwners
-  internal___ignoreType
-  internal___mediaType
-  internal___owner
-  internal___type
-}
-
 type SitePluginGroupConnection {
   totalCount: Int!
   edges: [SitePluginEdge!]!
   nodes: [SitePlugin!]!
   pageInfo: PageInfo!
-  distinct(field: SitePluginFieldsEnum!): [String!]!
-  max(field: SitePluginFieldsEnum!): Float
-  min(field: SitePluginFieldsEnum!): Float
-  sum(field: SitePluginFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SitePluginFieldsEnum!): [SitePluginGroupConnection!]!
+  distinct(field: SitePluginFieldSelector!): [String!]!
+  max(field: SitePluginFieldSelector!): Float
+  min(field: SitePluginFieldSelector!): Float
+  sum(field: SitePluginFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePluginFieldSelector!): [SitePluginGroupConnection!]!
   field: String!
   fieldValue: String
-}
-
-input SitePluginSortInput {
-  fields: [SitePluginFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
 }
 
 type SiteBuildMetadataConnection {
@@ -1615,11 +1229,11 @@ type SiteBuildMetadataConnection {
   edges: [SiteBuildMetadataEdge!]!
   nodes: [SiteBuildMetadata!]!
   pageInfo: PageInfo!
-  distinct(field: SiteBuildMetadataFieldsEnum!): [String!]!
-  max(field: SiteBuildMetadataFieldsEnum!): Float
-  min(field: SiteBuildMetadataFieldsEnum!): Float
-  sum(field: SiteBuildMetadataFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldsEnum!): [SiteBuildMetadataGroupConnection!]!
+  distinct(field: SiteBuildMetadataFieldSelector!): [String!]!
+  max(field: SiteBuildMetadataFieldSelector!): Float
+  min(field: SiteBuildMetadataFieldSelector!): Float
+  sum(field: SiteBuildMetadataFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldSelector!): [SiteBuildMetadataGroupConnection!]!
 }
 
 type SiteBuildMetadataEdge {
@@ -1628,94 +1242,12 @@ type SiteBuildMetadataEdge {
   previous: SiteBuildMetadata
 }
 
-enum SiteBuildMetadataFieldsEnum {
-  buildTime
-  id
-  parent___id
-  parent___parent___id
-  parent___parent___parent___id
-  parent___parent___parent___children
-  parent___parent___children
-  parent___parent___children___id
-  parent___parent___children___children
-  parent___parent___internal___content
-  parent___parent___internal___contentDigest
-  parent___parent___internal___description
-  parent___parent___internal___fieldOwners
-  parent___parent___internal___ignoreType
-  parent___parent___internal___mediaType
-  parent___parent___internal___owner
-  parent___parent___internal___type
-  parent___children
-  parent___children___id
-  parent___children___parent___id
-  parent___children___parent___children
-  parent___children___children
-  parent___children___children___id
-  parent___children___children___children
-  parent___children___internal___content
-  parent___children___internal___contentDigest
-  parent___children___internal___description
-  parent___children___internal___fieldOwners
-  parent___children___internal___ignoreType
-  parent___children___internal___mediaType
-  parent___children___internal___owner
-  parent___children___internal___type
-  parent___internal___content
-  parent___internal___contentDigest
-  parent___internal___description
-  parent___internal___fieldOwners
-  parent___internal___ignoreType
-  parent___internal___mediaType
-  parent___internal___owner
-  parent___internal___type
-  children
-  children___id
-  children___parent___id
-  children___parent___parent___id
-  children___parent___parent___children
-  children___parent___children
-  children___parent___children___id
-  children___parent___children___children
-  children___parent___internal___content
-  children___parent___internal___contentDigest
-  children___parent___internal___description
-  children___parent___internal___fieldOwners
-  children___parent___internal___ignoreType
-  children___parent___internal___mediaType
-  children___parent___internal___owner
-  children___parent___internal___type
-  children___children
-  children___children___id
-  children___children___parent___id
-  children___children___parent___children
-  children___children___children
-  children___children___children___id
-  children___children___children___children
-  children___children___internal___content
-  children___children___internal___contentDigest
-  children___children___internal___description
-  children___children___internal___fieldOwners
-  children___children___internal___ignoreType
-  children___children___internal___mediaType
-  children___children___internal___owner
-  children___children___internal___type
-  children___internal___content
-  children___internal___contentDigest
-  children___internal___description
-  children___internal___fieldOwners
-  children___internal___ignoreType
-  children___internal___mediaType
-  children___internal___owner
-  children___internal___type
-  internal___content
-  internal___contentDigest
-  internal___description
-  internal___fieldOwners
-  internal___ignoreType
-  internal___mediaType
-  internal___owner
-  internal___type
+input SiteBuildMetadataFieldSelector {
+  buildTime: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
 }
 
 type SiteBuildMetadataGroupConnection {
@@ -1723,11 +1255,11 @@ type SiteBuildMetadataGroupConnection {
   edges: [SiteBuildMetadataEdge!]!
   nodes: [SiteBuildMetadata!]!
   pageInfo: PageInfo!
-  distinct(field: SiteBuildMetadataFieldsEnum!): [String!]!
-  max(field: SiteBuildMetadataFieldsEnum!): Float
-  min(field: SiteBuildMetadataFieldsEnum!): Float
-  sum(field: SiteBuildMetadataFieldsEnum!): Float
-  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldsEnum!): [SiteBuildMetadataGroupConnection!]!
+  distinct(field: SiteBuildMetadataFieldSelector!): [String!]!
+  max(field: SiteBuildMetadataFieldSelector!): Float
+  min(field: SiteBuildMetadataFieldSelector!): Float
+  sum(field: SiteBuildMetadataFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldSelector!): [SiteBuildMetadataGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1741,10 +1273,12 @@ input SiteBuildMetadataFilterInput {
 }
 
 input SiteBuildMetadataSortInput {
-  fields: [SiteBuildMetadataFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
-}
-"
+  buildTime: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}"
 `;
 
 exports[`build and update individual types applies automatic extensions to inferred fields 1`] = `
@@ -1829,7 +1363,7 @@ If you have explicitly defined a type for those fields, you can safely ignore th
 Otherwise, Gatsby will omit those fields from the GraphQL schema.
 
 If you know all field types in advance, the best strategy is to explicitly define them with the \`createTypes\` action, and skip inference with the \`@dontInfer\` directive.
-See https://www.gatsbyjs.org/docs/actions/#createTypes",
+See https://www.gatsbyjs.com/docs/actions/#createTypes",
     ],
   ],
   "results": Array [
@@ -1890,6 +1424,7 @@ exports[`build and update individual types creates derived types 8`] = `
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -1905,6 +1440,7 @@ exports[`build and update individual types creates derived types 8`] = `
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -1913,6 +1449,7 @@ exports[`build and update individual types creates derived types 8`] = `
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -1929,6 +1466,7 @@ exports[`build and update individual types creates derived types 8`] = `
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -1944,6 +1482,7 @@ exports[`build and update individual types creates derived types 8`] = `
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -1952,6 +1491,7 @@ exports[`build and update individual types creates derived types 8`] = `
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -1960,6 +1500,7 @@ exports[`build and update individual types creates derived types 8`] = `
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
   fields___field1
 }"
 `;

@@ -15,15 +15,15 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "babel-preset-gatsby": "^1.5.0",
+    "babel-preset-gatsby": "next",
     "gatsby": "next",
     "gatsby-plugin-gatsby-cloud": "next",
     "gatsby-plugin-sass": "next",
     "googleapis": "^73.0.0",
     "node-fetch": "^2.6.1",
     "query-string": "^7.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sass": "^1.32.13"
   },
   "devDependencies": {

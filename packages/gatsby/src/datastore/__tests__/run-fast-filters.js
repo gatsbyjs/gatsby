@@ -401,13 +401,15 @@ describe(`applyFastFilters`, () => {
     const result = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
+      [],
+      []
     )
     expect(Array.isArray(result)).toBe(true)
     expect(result.length).toEqual(2)
 
     result.map(node => {
-      expect(node.slog).toEqual(`def`)
+      expect(getNode(node.id).slog).toEqual(`def`)
     })
   })
 
@@ -419,13 +421,15 @@ describe(`applyFastFilters`, () => {
     const result = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
+      [],
+      []
     )
     expect(Array.isArray(result)).toBe(true)
     expect(result.length).toEqual(2)
 
     result.map(node => {
-      expect(node.deep.flat.search.chain).toEqual(300)
+      expect(getNode(node.id).deep.flat.search.chain).toEqual(300)
     })
   })
 
@@ -438,14 +442,16 @@ describe(`applyFastFilters`, () => {
     const results = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
+      [],
+      []
     )
 
     // Count is irrelevant as long as it is non-zero and they all match filter
     expect(Array.isArray(results)).toBe(true)
     expect(results.length).toEqual(1)
-    expect(results[0].slog).toEqual(`def`)
-    expect(results[0].deep.flat.search.chain).toEqual(300)
+    expect(getNode(results[0].id).slog).toEqual(`def`)
+    expect(getNode(results[0].id).deep.flat.search.chain).toEqual(300)
   })
 
   it(`supports elemMatch`, () => {
@@ -458,7 +464,9 @@ describe(`applyFastFilters`, () => {
     const result = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
+      [],
+      []
     )
 
     expect(result).not.toBe(undefined)
@@ -484,7 +492,9 @@ describe(`edge cases (yay)`, () => {
     const result = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
+      [],
+      []
     )
 
     // Sanity-check
@@ -511,10 +521,63 @@ describe(`edge cases (yay)`, () => {
     await getDataStore().ready()
 
     const run = () =>
-      applyFastFilters(createDbQueriesFromObject(filter), [typeName], new Map())
+      applyFastFilters(
+        createDbQueriesFromObject(filter),
+        [typeName],
+        new Map(),
+        [],
+        []
+      )
 
     expect(run).toThrow(
       `Invariant violation: inconsistent node counters detected`
     )
+
+    store.dispatch({
+      type: `DELETE_NODE`,
+      payload: badNode,
+    })
+  })
+
+  it(`works with subsequent, different filters (issue #34910)`, () => {
+    // shared filter cache
+    const filtersCache = new Map()
+
+    {
+      const filter1 = {
+        slog: { $eq: `def` }, // matches id_2 and id_4
+      }
+
+      const result1 = applyFastFilters(
+        createDbQueriesFromObject(filter1),
+        [typeName],
+        filtersCache,
+        [],
+        []
+      )
+
+      expect(result1.length).toEqual(2)
+      expect(result1[0].id).toEqual(`id_2`)
+      expect(result1[1].id).toEqual(`id_4`)
+    }
+
+    {
+      const filter2 = {
+        slog: { $eq: `def` }, // matches id_2 and id_4
+        // important - new filter element
+        deep: { flat: { search: { chain: { $eq: 500 } } } }, // matches id_2
+      }
+
+      const result2 = applyFastFilters(
+        createDbQueriesFromObject(filter2),
+        [typeName],
+        filtersCache,
+        [`string`], // important - new sort field
+        []
+      )
+
+      expect(result2.length).toEqual(1)
+      expect(result2[0].id).toEqual(`id_2`)
+    }
   })
 })

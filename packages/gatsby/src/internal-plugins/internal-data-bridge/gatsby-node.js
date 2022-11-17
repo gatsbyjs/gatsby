@@ -6,6 +6,9 @@ const _ = require(`lodash`)
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../datastore`)
+const {
+  findCompiledLocalPluginModule,
+} = require(`../../utils/parcel/compile-gatsby-files`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
@@ -52,6 +55,7 @@ exports.sourceNodes = ({
 
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
+
     createNode({
       ...plugin,
       packageJson: transformPackageJson(
@@ -76,7 +80,7 @@ exports.sourceNodes = ({
       siteMetadata: {
         ...configCopy.siteMetadata,
       },
-      port: program.proxyPort,
+      port: program.port,
       host: program.host,
       ...configCopy,
     }
@@ -112,10 +116,12 @@ exports.sourceNodes = ({
     },
   })
 
-  const pathToGatsbyConfig = systemPath.join(
-    program.directory,
-    `gatsby-config.js`
-  )
+  const pathToGatsbyConfig =
+    findCompiledLocalPluginModule(
+      program.directory,
+      `default-site-plugin`,
+      `gatsby-config`
+    ) ?? systemPath.join(program.directory, `gatsby-config.js`)
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
 
   // Create nodes for functions

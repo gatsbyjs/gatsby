@@ -289,14 +289,14 @@ describe(`actual compiling`, () => {
           "name": "page",
           "originalText": "query page { allPostsJson { nodes { id } } }",
           "path": "mockFile",
+          "templatePath": "mockFile",
           "text": "query page {
           allPostsJson {
             nodes {
               id
             }
           }
-        }
-        ",
+        }",
         }
       `)
     })
@@ -461,6 +461,7 @@ describe(`actual compiling`, () => {
                 }
               }",
         "path": "mockFile1",
+        "templatePath": "mockFile1",
         "text": "fragment Foo on Directory {
         id
       }
@@ -478,8 +479,7 @@ describe(`actual compiling`, () => {
             ...Bar
           }
         }
-      }
-      ",
+      }",
       }
     `)
     expect(result.get(`mockFile2`)).toMatchInlineSnapshot(`
@@ -497,6 +497,7 @@ describe(`actual compiling`, () => {
                 }
               }",
         "path": "mockFile2",
+        "templatePath": "mockFile2",
         "text": "fragment Bar on Directory {
         parent {
           ...Foo
@@ -513,8 +514,7 @@ describe(`actual compiling`, () => {
             ...Bar
           }
         }
-      }
-      ",
+      }",
       }
     `)
   })
@@ -1126,14 +1126,14 @@ describe(`actual compiling`, () => {
                 }
               }",
           "path": "mockFile",
+          "templatePath": "mockFile",
           "text": "query mockFileQuery {
         allPostsJson {
           nodes {
             id
           }
         }
-      }
-      ",
+      }",
         },
       }
     `)

@@ -5,25 +5,26 @@ tableOfContentsDepth: 2
 
 import { Announcement } from "gatsby-interface"
 
+Source plugins are reusable integrations with content and data backends. There are already [100s of ready-to-use source plugins for popular content APIs](/plugins/?=gatsby-source) like Contentful, Drupal, and WordPress. This tutorial teaches you how to build your own integration.
+
 In this tutorial, you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/graphql-data-layer/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
+Source plugins fetch data from remote or local services and write the data into the embedded Gatsby Database (powered by [LMDB](https://github.com/kriszyp/lmdb-js)).
 
 At a high-level, a source plugin:
 
-- Ensures local data is synced with its source and is 100% accurate.
-- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) with accurate media types, human-readable types, and accurate
-  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest).
-- Links nodes & creates relationships between them.
-- Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
+- Ensures the data in the Gatsby DB is synced with the latest updates from its source
+- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) (Gatsby's name for an object) with accurate media types, human-readable types, and accurate
+  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest)
+- Creates relationships between nodes
 
 A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/reference/config-files/gatsby-node/) file where you implement Gatsby's Node APIs. Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/how-to/plugins-and-themes/creating-a-generic-plugin).
 
 ## Why create a source plugin?
 
-Source plugins convert data from any source into a format that Gatsby can process. Your Gatsby site can use several source plugins to combine data in interesting ways.
+Source plugins make data from any source available to your Gatsby sites. Your Gatsby site can use several source plugins, like commerce data from Shopify, or content from one or more content management systems (like Contentful, WordPress, etc.), all in a unified graph.
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
@@ -169,7 +170,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -421,7 +421,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -435,7 +434,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: AUTHOR_NODE_TYPE,
-        content: JSON.stringify(author),
         contentDigest: createContentDigest(author),
       },
     })
@@ -505,12 +503,14 @@ Now in your plugin's `gatsby-node.js` file, you can implement a new API, called 
 Import the `createRemoteFileNode` helper from `gatsby-source-filesystem`, which will download a file from a remote location and create a `File` node for you.
 
 ```javascript:title=source-plugin/gatsby-node.js
-const { ApolloClient } = require("apollo-client")
-const { InMemoryCache } = require("apollo-cache-inmemory")
-const { split } = require("apollo-link")
-const { HttpLink } = require("apollo-link-http")
-const { WebSocketLink } = require("apollo-link-ws")
-const { getMainDefinition } = require("apollo-utilities")
+const {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+} = require("@apollo/client")
+const { WebSocketLink } = require("@apollo/client/link/ws")
+const { getMainDefinition } = require("@apollo/client/utilities")
 const fetch = require("node-fetch")
 const gql = require("graphql-tag")
 const WebSocket = require("ws")
@@ -995,6 +995,124 @@ Here are some things to keep in mind and some "gotchas" depending on how the CMS
 - While developing, you can set the Gatsby `VERBOSE` env variable to `"true"` to see additional logs that will help you debug what's happening in the source plugin.
 - When you click the "Open Preview" button in the CMS the `manifestId` in the URL should match the `manifestId` that the source plugin creates from that revision.
 - The node manifests get written out in the `public` dir of your gatsby site, so you can check to manifests on your local disk `/public/__node-manifests/<sourcePluginName>/<manifestId>.json` or you can navigate directly to that piece of content `https://<your-domain>/__node-manifests/<sourcePluginName>/<manifestId>`
+
+### Enabling Image CDN support
+
+Image CDN is a [feature on Gatsby Cloud](/products/cloud/image-cdn/) that provides edge network image processing by waiting to perform image processing until the very first user visit to a page. The processed image is then cached for super quick fetching on all subsequent user views. Enabling it will also speed up local development builds and production builds on other deployment platforms because images from your CMS or data source will only be downloaded if they are used in a created Gatsby page.
+
+You can learn more about it in the announcement blogpost [Image CDN: Lightning Fast Image Processing for Gatsby Cloud](/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud/)
+
+#### Integration with source plugins
+
+Starting with `gatsby@4.10`, Image CDN and its helper functions are available inside `gatsby` and `gatsby-plugin-utils`. In addition to the `RemoteFile` interface you can also use the `addRemoteFilePolyfillInterface` and `polyfillImageServiceDevRoutes` functions to enable Image CDN support down to Gatsby 2 inside your plugin.
+
+#### `createSchemaCustomization` node API additions
+
+To add support to a source plugin, you will need to create a new [GraphQL object type](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) that implements the `Node` and `RemoteFile` interfaces.
+
+```js
+schema.buildObjectType({
+  name: `YourImageAssetNodeType`,
+  fields: {
+    // .. your fields
+  },
+  interfaces: [`Node`, `RemoteFile`],
+})
+```
+
+It is also recommended that you add a polyfill to provide support back through Gatsby 2. To do so, wrap the `buildObjectType` call with the `addRemoteFilePolyfillInterface` polyfill like so:
+
+```js
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
+
+exports.createSchemaCustomization = ({ actions, schema, store }) => {
+  const imageAssetType = addRemoteFilePolyfillInterface(
+    schema.buildObjectType({
+      name: `YourImageAssetNodeType`,
+      fields: {
+        // your fields - see createSchemaCustomization docs - if you're using schema inference you can also leave this object empty
+      },
+      interfaces: [`Node`, `RemoteFile`],
+    }),
+    {
+      schema,
+      actions,
+      store,
+    }
+  )
+
+  actions.createTypes([imageAssetType])
+}
+```
+
+Implementing the `RemoteFile` interface adds the correct fields to your new GraphQL type and adds the necessary resolvers to handle the type. `RemoteFile` holds the following properties:
+
+- `mimeType: String!`
+- `filename: String!`
+- `filesize: Int`
+- `width: Int`
+- `height: Int`
+- `publicUrl: String!`
+- `resize(width: Int, height: Int, fit: enum): String`
+- `gatsbyImage(args): String`
+
+You might notice that `width`, `height`, `resize`, and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDF’s.
+
+The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
+
+#### Adding Image CDN request headers with the `setRequestHeaders` action
+
+Since Gatsby will be fetching files from your CMS instead of your source plugin fetching those files, you may need to set request headers for Gatsby to use in those requests.
+This is needed if for example your CMS is locked down behind some kind of authentication.
+For each domain Image CDN will make requests to, set the required headers following this example:
+
+```js
+exports.onPluginInit = ({ actions }, pluginOptions) => {
+  if (typeof actions.setRequestHeaders === `function`) {
+    actions.setRequestHeaders({
+      // set the domain the headers should apply to
+      domain: pluginOptions.apiUrl,
+      headers: {
+        // add any needed headers
+        Authorization: pluginOptions.authToken,
+      },
+    })
+  }
+}
+```
+
+#### `sourceNodes` node API additions
+
+When creating nodes, you must add some fields to the node itself to match what the `RemoteFile` interface expects. You will need `url`, `mimeType`, `filename` as mandatory fields. When you have an image type, `width` and `height` are required as well. The optional fields are `placeholderUrl` and `filesize`. `placeholderUrl` will be the url used to generate blurred or dominant color placeholder so it should contain `%width%` and `%height%` url params if possible.
+
+```js
+const assetNode = {
+  id: `an id`,
+  internal: {
+    type: `PrefixAsset`,
+  },
+  url: `${file.url}`,
+  placeholderUrl: `${file.url}?w=%width%&h=%height%`,
+  mimeType: file.contentType,
+  filename: file.fileName,
+  width: file.details?.image?.width,
+  height: file.details?.image?.height,
+}
+```
+
+#### `onCreateDevServer` node API
+
+Add the polyfill, `polyfillImageServiceDevRoutes`, to ensure that the development server started with `gatsby develop` has the routes it needs to work with Image CDN.
+
+```js
+import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
+
+export const onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
+}
+```
+
+Now you're all set up to use Image CDN! 🙌
 
 ## Publishing a plugin
 

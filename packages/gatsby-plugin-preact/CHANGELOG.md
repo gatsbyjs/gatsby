@@ -3,6 +3,137 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@7.0.0/packages/gatsby-plugin-preact) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [6.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.24.0/packages/gatsby-plugin-preact) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.23.0/packages/gatsby-plugin-preact) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.22.0/packages/gatsby-plugin-preact) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Chores
+
+- upgrade @pmmmwh/react-refresh-webpack-plugin [#36360](https://github.com/gatsbyjs/gatsby/issues/36360) ([28cfade](https://github.com/gatsbyjs/gatsby/commit/28cfadeb453ece090ab5919be92599f2b847f5d8))
+
+## [6.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.21.0/packages/gatsby-plugin-preact) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.20.0/packages/gatsby-plugin-preact) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.19.0/packages/gatsby-plugin-preact) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Bug Fixes
+
+- update dependency @prefresh/webpack to ^3.3.4 for gatsby-plugin-preact [#36031](https://github.com/gatsbyjs/gatsby/issues/36031) ([245c717](https://github.com/gatsbyjs/gatsby/commit/245c71749b3899136d9c96e0b593cd06f6d2e8c4))
+
+## [6.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.18.0/packages/gatsby-plugin-preact) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.17.0/packages/gatsby-plugin-preact) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.16.0/packages/gatsby-plugin-preact) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.15.0/packages/gatsby-plugin-preact) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.14.0/packages/gatsby-plugin-preact) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.13.0/packages/gatsby-plugin-preact) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.12.1/packages/gatsby-plugin-preact) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.12.0/packages/gatsby-plugin-preact) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-preact [#34980](https://github.com/gatsbyjs/gatsby/issues/34980) ([58c1ede](https://github.com/gatsbyjs/gatsby/commit/58c1ede960bc4b8cb3dd6bdf479ee50c48a04e61))
+
+## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.11.0/packages/gatsby-plugin-preact) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- fix preact alias fix [#35156](https://github.com/gatsbyjs/gatsby/issues/35156) ([b13ddff](https://github.com/gatsbyjs/gatsby/commit/b13ddff0b71f26e81adeefa339dbabe740f84a78))
+
+### [6.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.10.1/packages/gatsby-plugin-preact) (2022-03-18)
+
+#### Bug Fixes
+
+- fix preact alias fix [#35156](https://github.com/gatsbyjs/gatsby/issues/35156) fix [#35169](https://github.com/gatsbyjs/gatsby/issues/35169) ([0275fad](https://github.com/gatsbyjs/gatsby/commit/0275fad5dc2dcae0184eee0b0e1710a0b5b25b2e))
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.10.0/packages/gatsby-plugin-preact) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.9.0/packages/gatsby-plugin-preact) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.8.0/packages/gatsby-plugin-preact) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
 ## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.7.0/packages/gatsby-plugin-preact) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

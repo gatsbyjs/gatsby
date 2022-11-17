@@ -88,7 +88,7 @@ This example will be used throughout this document as an illustration tool.
 
 ## Setting up a development environment
 
-First [follow the instructions on setting up a local Gatsby dev environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/).
+First [follow the instructions on setting up a local Gatsby dev environment](https://www.gatsbyjs.com/contributing/setting-up-your-local-dev-environment/).
 
 ### Running the unit tests
 
@@ -108,7 +108,7 @@ yarn jest packages/gatsby-recipes --testPathPattern "providers" --watch
 
 ### Using gatsby-dev-cli
 
-You can create test recipes that you run in a test site. You’ll need to [use `gatsby-dev-cli` for this.](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes).
+You can create test recipes that you run in a test site. You’ll need to [use `gatsby-dev-cli` for this.](https://www.gatsbyjs.com/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes).
 
 One note, as you’ll be testing changes to the Gatsby CLI — instead of running the global gatsby-cli package (i.e. what you’d run by typing `gatsby`, you’ll want to run the version copied over by `gatsby-dev-cli` by running `./node_modules/.bin/gatsby`.
 

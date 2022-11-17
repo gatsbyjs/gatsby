@@ -1,3 +1,6 @@
+// content of this object is not important, just the fact that it's shared in multiple nodes
+const sharedReference = {}
+
 const nodes = [
   {
     id: `person1`,
@@ -6,6 +9,7 @@ const nodes = [
     internal: { type: `Author`, contentDigest: `0` },
     name: `Person1`,
     email: `person1@example.com`,
+    sharedReference,
   },
   {
     id: `person2`,
@@ -42,6 +46,7 @@ const nodes = [
       published: false,
       date: new Date(Date.UTC(2019, 0, 1)),
     },
+    sharedReference,
   },
   {
     id: `post2`,
@@ -83,7 +88,7 @@ const nodes = [
     id: `file2`,
     parent: null,
     children: [`post2`],
-    internal: { type: `RemoteFile`, contentDigest: `0` },
+    internal: { type: `ExternalFile`, contentDigest: `0` },
     url: `RemoteFile2`,
   },
   {

@@ -42,15 +42,15 @@ describe(`gatsby-worker`, () => {
     // as it's not a function
     expect(exposedMethodsSingle).toMatchInlineSnapshot(`
       Array [
-        "sync",
         "async",
-        "pid",
-        "neverEnding",
-        "syncThrow",
-        "asyncThrow",
         "async100ms",
-        "setupPingPongMessages",
+        "asyncThrow",
         "getWasPonged",
+        "neverEnding",
+        "pid",
+        "setupPingPongMessages",
+        "sync",
+        "syncThrow",
       ]
     `)
     // .all and .single should have same methods

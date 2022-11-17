@@ -10,14 +10,33 @@ const initialResponse = {
   sourceContent: null,
 }
 
-export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
-  const url =
+export function useStackFrame({
+  moduleId,
+  lineNumber,
+  columnNumber,
+  skipSourceMap,
+  endLineNumber,
+  endColumnNumber,
+}) {
+  let url =
     `/__original-stack-frame?moduleId=` +
     window.encodeURIComponent(moduleId) +
     `&lineNumber=` +
     window.encodeURIComponent(lineNumber) +
     `&columnNumber=` +
     window.encodeURIComponent(columnNumber)
+
+  if (skipSourceMap) {
+    url += `&skipSourceMap=true`
+  }
+
+  if (endLineNumber) {
+    url += `&endLineNumber=` + window.encodeURIComponent(endLineNumber)
+
+    if (endColumnNumber) {
+      url += `&endColumnNumber=` + window.encodeURIComponent(endColumnNumber)
+    }
+  }
 
   const [response, setResponse] = React.useState(initialResponse)
 

@@ -32,7 +32,7 @@ exports.queries = {
         totalCount
       }
       allWpMediaItem(
-        sort: { fields: [id] }
+        sort: { id: ASC }
         # this node "cG9zdDoxOTU=" only exists on warm builds. So our snapshot is wrong if we don't filter it out.
         filter: { id: { ne: "cG9zdDoxOTU=" } }
       ) {
@@ -266,7 +266,6 @@ exports.queries = {
               ... on WpCoreButtonBlockAttributes {
                 align
                 backgroundColor
-                borderRadius
                 className
                 gradient
                 linkTarget
@@ -277,20 +276,6 @@ exports.queries = {
                 title
                 url
               }
-            }
-          }
-          ... on WpCoreFileBlock {
-            attributes {
-              downloadButtonText
-              fileName
-              id
-              showDownloadButton
-              textLinkTarget
-            }
-          }
-          ... on WpCoreSpacerBlock {
-            attributes {
-              height
             }
           }
           ... on WpCoreSeparatorBlock {
@@ -405,13 +390,6 @@ exports.queries = {
                   url
                 }
               }
-            }
-          }
-
-          ... on WpCoreListBlock {
-            attributes {
-              ordered
-              values
             }
           }
         }
@@ -536,10 +514,6 @@ exports.queries = {
       opengraphType
       title
       twitterDescription
-      twitterImage {
-        id
-        title
-      }
       twitterTitle
     }
   `,
@@ -597,7 +571,7 @@ exports.queries = {
       testPage: wpPage(id: { eq: "cG9zdDoy" }) {
         title
       }
-      allWpPage(sort: { fields: date }) {
+      allWpPage(sort: { date: ASC }) {
         nodes {
           uri
           title
@@ -629,7 +603,7 @@ exports.queries = {
       testPost: wpPost(id: { eq: "cG9zdDox" }) {
         title
       }
-      allWpPost(sort: { fields: date }) {
+      allWpPost(sort: { date: ASC }) {
         nodes {
           title
           featuredImage {

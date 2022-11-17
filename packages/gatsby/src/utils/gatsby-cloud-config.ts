@@ -9,7 +9,7 @@ export function constructConfigObject(
   gatsbyConfig: IGatsbyConfig
 ): ConstructConfigObjectResponse {
   return {
-    trailingSlash: gatsbyConfig.trailingSlash ?? `legacy`,
+    trailingSlash: gatsbyConfig.trailingSlash ?? `always`,
     pathPrefix: gatsbyConfig.pathPrefix ?? ``,
     ...(gatsbyConfig.assetPrefix
       ? { assetPrefix: gatsbyConfig.assetPrefix }

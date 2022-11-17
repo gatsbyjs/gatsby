@@ -192,7 +192,7 @@ function groupByMedia(imageVariants) {
 
   if (without.length > 1 && process.env.NODE_ENV !== `production`) {
     console.warn(
-      `We've found ${without.length} sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
+      `We've found ${without.length} sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.com/plugins/gatsby-image/#art-directing-multiple-images`
     )
   }
 

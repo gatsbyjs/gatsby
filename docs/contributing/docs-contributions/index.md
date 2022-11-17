@@ -2,7 +2,7 @@
 title: Docs Contributions
 ---
 
-Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of June 2020, over 2,100 people have contributed. It's people like you that make this community great!
+Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! It's people like you that make this community great!
 
 > _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs structure](/contributing/docs-contributions/docs-structure/) page._
 
@@ -10,14 +10,14 @@ When writing (or reviewing) learning materials that show Gatsby users how to com
 
 ## Top priorities
 
-Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help. Once you start a Pull Request to address one of these issues, you can remove the "help wanted" label.
+Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help.
 
 ## Options for contributing to the Gatsby docs
 
 When working on the Gatsby documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and make changes to the Markdown files using your favorite text editor. Currently (as of March 2021), there is no way for community members to build the docs site locally. We are working internally to figure out a fix for this.
+- Clone the Gatsby repo and make changes to the Markdown files using your favorite text editor. Currently (as of February 2022), there is no way for community members to build the docs site locally. We are working internally to figure out a fix for this.
 
 ## Fixing image and link paths
 
@@ -39,9 +39,7 @@ For the purposes of an accessible document outline, content headings should go i
 
 > 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/reference/markdown-syntax/)!
 
-1. If you want to add/modify any Gatsby documentation, go to the
-   [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and
-   use the file editor to edit and then preview your changes.
+1. If you want to add/modify any Gatsby documentation, go to the [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and use the file editor to edit and then preview your changes.
 2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria:
    - Follow the standards outlined in the [Gatsby Style Guide](/contributing/gatsby-style-guide/).
    - If your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the [Docs Decision Tree](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
@@ -50,9 +48,7 @@ For the purposes of an accessible document outline, content headings should go i
 
 ## Docs site setup instructions
 
-The content of the docs site mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
-
-There is currently not a way for community members to build the docs site locally. We know this is not ideal and we're working internally on a fix.
+The content of the docs site mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs. You can directly edit the markdown files.
 
 ## Changing headers
 
@@ -122,35 +118,12 @@ tableOfContentsDepth: 2
 When you're new to Gatsby there can be a lot of words to learn...
 ```
 
-## Adding embedded GraphQL examples
-
-There are embedded examples in a few places in the docs (like the [GraphQL Reference guide](/docs/graphql-reference/)) that provide a working version of the code described. In the specific example of the GraphQL Query Options Reference page, these examples of the GraphiQL interface show how data can be queried from Gatsby's data layer.
-
-To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be opened at its server container link, for example: https://graphql-reference-1124782374.gtsb.io/. Because CodeSandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
-
-<!-- prettier-ignore -->
-```mdx
-Here's an example of a GraphQL query inline:
-
-<iframe src="https://graphql-reference-1124782374.gtsb.io/___graphql?query=query%20TitleQuery%20%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false&operationName=TitleQuery" /> // highlight-line
-
-More markdown content...
-```
-
-> Note that you should set the `explorerIsOpen` parameter in the URL to `false` if it isn't already.
-
 ## Docs renaming instructions
 
 Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
 
 - Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
-- For SEO purposes, add a redirect to `legacy-redirects.yaml`. (This file currently only exists in the private repo where the Gatsby docs site is built. Only internal Gatsby staff have access to it.) Here's an example:
-
-```yaml:title=legacy-redirects.yaml
-- fromPath: /docs/source-plugin-tutorial/
-  toPath: /tutorial/source-plugin-tutorial/
-```
 
 ## Claim your swag
 

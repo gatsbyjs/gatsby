@@ -13,7 +13,14 @@ for folder in $GLOB; do
 
   # validate
   cd "$folder" || exit
-  npm install &&
+
+  # WordPress has React 17 deps :/
+  if [ "$folder" = "starters/gatsby-starter-wordpress-blog" ]; then
+    npm install --legacy-peer-deps
+  else
+    npm install
+  fi
+
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&
   yarn &&

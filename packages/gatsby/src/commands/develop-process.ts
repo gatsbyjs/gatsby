@@ -71,11 +71,17 @@ onExit(() => {
   })
 })
 
-process.on(`message`, msg => {
-  if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
-    process.exit(msg.action.payload)
+process.on(
+  `message`,
+  (msg: {
+    type: string
+    action: { type: string; payload: number | undefined }
+  }) => {
+    if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
+      process.exit(msg.action.payload)
+    }
   }
-})
+)
 
 interface IDevelopArgs extends IProgram {
   debugInfo: IDebugInfo | null
@@ -132,9 +138,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
+  const hostname = program.host
   try {
-    program.port = await detectPortInUseAndPrompt(port)
+    program.port = await detectPortInUseAndPrompt(port, hostname)
   } catch (e) {
     if (e.message === `USER_REJECTED`) {
       process.exit(0)
@@ -146,11 +152,23 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   const app = express()
   const parentSpan = tracer.startSpan(`bootstrap`)
 
+  app.use((req, res, next) => {
+    try {
+      decodeURIComponent(req.path)
+    } catch (e) {
+      return res.status(500).send(`URI malformatted`)
+    }
+
+    return next()
+  })
+
   const machine = developMachine.withContext({
     program,
     parentSpan,
     app,
+    reporter,
     pendingQueryRuns: new Set([`/`]),
+    shouldRunInitialTypegen: true,
   })
 
   const service = interpret(machine)

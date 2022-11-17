@@ -27,7 +27,7 @@ const adjustPackageJson = ({
   versionPostFix,
   packagesToPublish,
   ignorePackageJSONChanges,
-  root,
+  packageNameToPath,
 }) => {
   // we need to check if package depend on any other package to will be published and
   // adjust version selector to point to dev version of package so local registry is used
@@ -49,7 +49,7 @@ const adjustPackageJson = ({
         fs.readFileSync(
           getMonorepoPackageJsonPath({
             packageName: packageThatWillBePublished,
-            root,
+            packageNameToPath,
           }),
           `utf-8`
         )
@@ -87,31 +87,36 @@ const adjustPackageJson = ({
  * This is `npm publish` (as in linked comment) and `yarn publish` requirement.
  * This is not verdaccio restriction.
  */
-const createTemporaryNPMRC = ({ pathToPackage }) => {
-  const NPMRCPath = path.join(pathToPackage, `.npmrc`)
-  fs.outputFileSync(NPMRCPath, NPMRCContent)
+const createTemporaryNPMRC = ({ pathToPackage, root }) => {
+  const NPMRCPathInPackage = path.join(pathToPackage, `.npmrc`)
+  fs.outputFileSync(NPMRCPathInPackage, NPMRCContent)
+
+  const NPMRCPathInRoot = path.join(root, `.npmrc`)
+  fs.outputFileSync(NPMRCPathInRoot, NPMRCContent)
 
   return registerCleanupTask(() => {
-    fs.removeSync(NPMRCPath)
+    fs.removeSync(NPMRCPathInPackage)
+    fs.removeSync(NPMRCPathInRoot)
   })
 }
 
 const publishPackage = async ({
   packageName,
   packagesToPublish,
-  root,
   versionPostFix,
   ignorePackageJSONChanges,
+  packageNameToPath,
+  root,
 }) => {
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
-    root,
+    packageNameToPath,
   })
 
   const { unadjustPackageJson, newPackageVersion } = adjustPackageJson({
     monoRepoPackageJsonPath,
     packageName,
-    root,
+    packageNameToPath,
     versionPostFix,
     packagesToPublish,
     ignorePackageJSONChanges,
@@ -119,7 +124,7 @@ const publishPackage = async ({
 
   const pathToPackage = path.dirname(monoRepoPackageJsonPath)
 
-  const uncreateTemporaryNPMRC = createTemporaryNPMRC({ pathToPackage })
+  const uncreateTemporaryNPMRC = createTemporaryNPMRC({ pathToPackage, root })
 
   // npm publish
   const publishCmd = [

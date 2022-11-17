@@ -1,24 +1,33 @@
 import fs from "fs-extra"
 import path from "path"
 import { Compiler } from "webpack"
+import { PARTIAL_HYDRATION_CHUNK_REASON } from "./webpack/plugins/partial-hydration"
+import { store } from "../redux"
+import { ensureFileContent } from "./ensure-file-content"
+
+let previousChunkMapJson: string | undefined
+let previousWebpackStatsJson: string | undefined
 
 export class GatsbyWebpackStatsExtractor {
   private plugin: { name: string }
-  constructor() {
+  private publicPath: string
+
+  constructor(publicPath: string) {
     this.plugin = { name: `GatsbyWebpackStatsExtractor` }
+    this.publicPath = publicPath
   }
   apply(compiler: Compiler): void {
-    let previousChunkMapJson: string | undefined
-    let previousWebpackStatsJson: string | undefined
     compiler.hooks.done.tapAsync(this.plugin.name, async (stats, done) => {
-      const assets = {}
+      const assets: { [key: string]: Array<string> } = {}
       const assetsMap = {}
       const childAssets = {}
       for (const chunkGroup of stats.compilation.chunkGroups) {
         if (chunkGroup.name) {
           const files: Array<string> = []
           for (const chunk of chunkGroup.chunks) {
-            files.push(...chunk.files)
+            if (chunk.chunkReason !== PARTIAL_HYDRATION_CHUNK_REASON) {
+              files.push(...chunk.files)
+            }
           }
           assets[chunkGroup.name] = files.filter(f => f.slice(-4) !== `.map`)
           assetsMap[chunkGroup.name] = files
@@ -63,6 +72,59 @@ export class GatsbyWebpackStatsExtractor {
           path.join(`public`, `chunk-map.json`),
           newChunkMapJson
         )
+
+        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+          // Add chunk mapping metadata to scripts slice
+          const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(
+            newChunkMapJson
+          )};`
+
+          const chunkSliceContents = `
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            ${scriptChunkMapping}
+          </script>
+        `
+
+          await fs.ensureDir(path.join(`public`, `_gatsby`, `slices`))
+
+          const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
+
+          const assetSliceContents: Array<string> = []
+
+          if (`polyfill` in assets && assets.polyfill) {
+            for (const asset of assets.polyfill) {
+              if (asset.endsWith(`.js`)) {
+                assetSliceContents.push(
+                  `<script src="${this.publicPath}/${asset}" nomodule></script>`
+                )
+              }
+            }
+          }
+
+          if (`app` in assets && assets.app) {
+            for (const asset of assets.app) {
+              if (asset.endsWith(`.js`)) {
+                assetSliceContents.push(
+                  `<script src="${this.publicPath}/${asset}" async></script>`
+                )
+              }
+            }
+          }
+
+          const scriptsSliceHtmlChanged = await ensureFileContent(
+            path.join(`public`, `_gatsby`, `slices`, `_gatsby-scripts-1.html`),
+            chunkSliceContents + hashSliceContents + assetSliceContents.join(``)
+          )
+
+          if (scriptsSliceHtmlChanged) {
+            store.dispatch({
+              type: `SLICES_SCRIPTS_REGENERATED`,
+            })
+          }
+        }
+
         previousChunkMapJson = newChunkMapJson
       }
 

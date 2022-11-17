@@ -8,6 +8,7 @@ import {
 import { reportOnce } from "./report-once"
 import { ROUTES_DIRECTORY } from "../constants"
 import { Runner } from "../bootstrap/create-graphql-runner"
+import { getDataStore } from "../datastore"
 
 type IPageConfigFn = (arg: { params: Record<string, unknown> }) => {
   defer: boolean
@@ -111,6 +112,7 @@ export async function materializePageMode(): Promise<void> {
       await new Promise(resolve => setImmediate(resolve))
     }
   }
+  await getDataStore().ready()
 }
 
 export async function preparePageTemplateConfigs(

@@ -13,6 +13,7 @@ export const KNOWN_CONFIG_KEYS = [
   `jsxRuntime`,
   `jsxImportSource`,
   `trailingSlash`,
+  `graphqlTypegen`,
 ]
 
 export function didYouMean(

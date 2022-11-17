@@ -71,7 +71,6 @@ exports[`rich text renders with custom options 1`] = `
       7oHxo6bs0us9wIkq27qdyK
       )
     </span>
-    
   </p>
   <p>
     Link in list:
@@ -79,13 +78,11 @@ exports[`rich text renders with custom options 1`] = `
   <ol>
     <li>
       <p>
-        
         <span>
           Resolved inline Entry (
           6KpLS2NZyB3KAvDzWf4Ukh
           )
         </span>
-        
       </p>
     </li>
   </ol>
@@ -99,9 +96,7 @@ exports[`rich text renders with custom options 1`] = `
     7oHxo6bs0us9wIkq27qdyK
     )
   </h2>
-  <p>
-    
-  </p>
+  <p />
   <h2>
     Embedded Asset:
   </h2>
@@ -112,9 +107,7 @@ exports[`rich text renders with custom options 1`] = `
     4ZQrqcrTunWiuNaavhGYNT
     )
   </h2>
-  <p>
-    
-  </p>
+  <p />
 </div>
 `;
 
@@ -190,7 +183,6 @@ exports[`rich text renders with default options 1`] = `
        id: 
       7oHxo6bs0us9wIkq27qdyK
     </span>
-    
   </p>
   <p>
     Link in list:
@@ -198,14 +190,12 @@ exports[`rich text renders with default options 1`] = `
   <ol>
     <li>
       <p>
-        
         <span>
           type: 
           embedded-entry-inline
            id: 
           6KpLS2NZyB3KAvDzWf4Ukh
         </span>
-        
       </p>
     </li>
   </ol>
@@ -213,14 +203,10 @@ exports[`rich text renders with default options 1`] = `
     Embedded Entity:
   </p>
   <div />
-  <p>
-    
-  </p>
+  <p />
   <h2>
     Embedded Asset:
   </h2>
-  <p>
-    
-  </p>
+  <p />
 </div>
 `;

@@ -5,10 +5,10 @@
     "puppeteer-core": "^3.3.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.1066.0"
+    "aws-sdk": "^2.1185.0"
   },
   "keywords": [],
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }

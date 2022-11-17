@@ -77,9 +77,9 @@ describe(`Babelrc actions/reducer`, () => {
 
   it(`sets default presets/plugins if there's no userland babelrc`, () => {
     const fakeResolver = (moduleName): string => `/path/to/module/${moduleName}`
-    const babel = { createConfigItem: jest.fn() }
+    const babel = { createConfigItem: jest.fn() } as any
 
-    prepareOptions(babel, { stage: `test` }, fakeResolver)
+    prepareOptions(babel, { stage: `test` as any }, fakeResolver as any)
 
     expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
   })
@@ -104,7 +104,7 @@ describe(`Babelrc actions/reducer`, () => {
       { name: `test` }
     )
     let state = babelrcReducer(undefined, action)
-    expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
+    expect(state.stages.develop.options!.sourceMaps).toBe(`inline`)
 
     const updateAction = actions.setBabelOptions(
       { options: { sourceMaps: true } },
@@ -112,7 +112,7 @@ describe(`Babelrc actions/reducer`, () => {
     )
     state = babelrcReducer(state, updateAction)
 
-    expect(state.stages.develop.options.sourceMaps).toBe(true)
+    expect(state.stages.develop.options!.sourceMaps).toBe(true)
   })
 
   it(`allows setting options on a particular stage`, () => {
@@ -121,16 +121,28 @@ describe(`Babelrc actions/reducer`, () => {
       { name: `test` }
     )
     const state = babelrcReducer(undefined, action)
-    expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
-    expect(state.stages[`develop-html`].options.sourceMaps).toBe(undefined)
+    expect(state.stages.develop.options!.sourceMaps).toBe(`inline`)
+    expect(state.stages[`develop-html`].options!.sourceMaps).toBe(undefined)
   })
 
   it(`allows merging config items`, () => {
-    const babel = { createConfigItem: jest.fn() }
+    const babel = { createConfigItem: jest.fn() } as any
     // This merges in new change.
     mergeConfigItemOptions({
-      items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
-      itemToMerge: { options: { wat: 2 }, file: { resolved: `hi` } },
+      items: [
+        {
+          value: (): null => null,
+          dirname: `hi`,
+          options: { wat: 1 },
+          file: { resolved: `hi`, request: `hello` },
+        },
+      ],
+      itemToMerge: {
+        value: (): null => null,
+        dirname: `hi`,
+        options: { wat: 2 },
+        file: { resolved: `hi`, request: `hello` },
+      },
       type: `plugin`,
       babel,
     })
@@ -138,8 +150,20 @@ describe(`Babelrc actions/reducer`, () => {
 
     expect(
       mergeConfigItemOptions({
-        items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
-        itemToMerge: { options: { wat: 2 }, file: { resolved: `hi2` } },
+        items: [
+          {
+            value: (): null => null,
+            dirname: `hi`,
+            options: { wat: 1 },
+            file: { resolved: `hi`, request: `hello` },
+          },
+        ],
+        itemToMerge: {
+          value: (): null => null,
+          dirname: `hi2`,
+          options: { wat: 2 },
+          file: { resolved: `hi2`, request: `hello2` },
+        },
         type: `plugin`,
         babel,
       })

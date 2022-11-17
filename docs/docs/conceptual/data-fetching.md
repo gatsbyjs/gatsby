@@ -60,7 +60,8 @@ module.exports = {
 Alternately, if you want to source data yourself you can use APIs Gatsby provides. Source plugins take advantage of the [`sourceNodes` API](/docs/reference/config-files/gatsby-node/#sourceNodes) and the [`createNode` action](/docs/reference/config-files/actions/#createNode) provided by Gatsby to make your data queryable during the build process. If you want to source data yourself you can add a section of code like this using the `createNode` API to add a node to your data layer manually:
 
 ```js:title=gatsby-node.js
-const fetch = require(`node-fetch`)
+const fetch = (...args) =>
+  import(`node-fetch`).then(({ default: fetch }) => fetch(...args))
 
 exports.sourceNodes = async ({
   actions: { createNode },

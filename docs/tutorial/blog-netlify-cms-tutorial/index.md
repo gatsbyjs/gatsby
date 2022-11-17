@@ -2,8 +2,6 @@
 title: Making a Gatsby Blog with Netlify CMS
 ---
 
-https://youtu.be/JeTqxCJC56Q
-
 This tutorial will use [gatsby-personal-starter-blog](https://github.com/thomaswang/gatsby-personal-starter-blog), a Gatsby starter based on the official [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences are that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory, `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/) for content editing. It also adds VS Code highlighting for code blocks.
 
 ## Prerequisites

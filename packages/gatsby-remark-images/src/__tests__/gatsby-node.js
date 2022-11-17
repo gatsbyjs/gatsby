@@ -1,6 +1,6 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
-import { Potrace } from "potrace"
+import { Potrace } from "@gatsbyjs/potrace"
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {

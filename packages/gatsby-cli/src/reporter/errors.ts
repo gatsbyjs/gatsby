@@ -3,6 +3,8 @@ import stackTrace from "stack-trace"
 import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
 import { isNodeInternalModulePath } from "gatsby-core-utils"
 import { IStructuredStackFrame } from "../structured-errors/types"
+import { readFileSync } from "fs-extra"
+import { codeFrameColumns } from "@babel/code-frame"
 
 const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
 
@@ -99,31 +101,91 @@ export function getErrorFormatter(): PrettyError {
   return prettyError
 }
 
+type ErrorWithPotentialForcedLocation = Error & {
+  forcedLocation?: {
+    fileName: string
+    lineNumber?: number
+    columnNumber?: number
+    endLineNumber?: number
+    endColumnNumber?: number
+    functionName?: string
+  }
+}
+
 /**
  * Convert a stringified webpack compilation error back into
  * an Error instance so it can be formatted properly
  */
-export async function createErrorFromString(
-  errorStr: string = ``,
+export function createErrorFromString(
+  errorOrErrorStack: string | ErrorWithPotentialForcedLocation = ``,
   sourceMapFile: string
-): Promise<ErrorWithCodeFrame> {
-  let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
-  // pull the message from the first line then remove the `Error:` prefix
-  // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
+): ErrorWithCodeFrame {
+  if (typeof errorOrErrorStack === `string`) {
+    const errorStr = errorOrErrorStack
+    let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
+    // pull the message from the first line then remove the `Error:` prefix
+    // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
 
-  message = message.replace(/^(Error:)/, ``)
+    message = message.replace(/^(Error:)/, ``)
 
-  const error = new Error(message)
+    const error = new Error(message)
 
-  error.stack = [message, rest.join(`\n`)].join(`\n`)
+    error.stack = [message, rest.join(`\n`)].join(`\n`)
 
-  error.name = `WebpackError`
-  try {
-    if (sourceMapFile) {
-      return await prepareStackTrace(error, sourceMapFile)
+    error.name = `WebpackError`
+    try {
+      if (sourceMapFile) {
+        return prepareStackTrace(error, sourceMapFile)
+      }
+    } catch (err) {
+      // don't shadow a real error because of a parsing issue
     }
-  } catch (err) {
-    // don't shadow a real error because of a parsing issue
+    return error
+  } else {
+    if (errorOrErrorStack.forcedLocation) {
+      const forcedLocation = errorOrErrorStack.forcedLocation
+      const error = new Error(errorOrErrorStack.message) as ErrorWithCodeFrame
+      error.stack = `${errorOrErrorStack.message}
+  at ${forcedLocation.functionName ?? `<anonymous>`} (${
+        forcedLocation.fileName
+      }${
+        forcedLocation.lineNumber
+          ? `:${forcedLocation.lineNumber}${
+              forcedLocation.columnNumber
+                ? `:${forcedLocation.columnNumber}`
+                : ``
+            }`
+          : ``
+      })`
+
+      try {
+        const source = readFileSync(forcedLocation.fileName, `utf8`)
+
+        error.codeFrame = codeFrameColumns(
+          source,
+          {
+            start: {
+              line: forcedLocation.lineNumber ?? 0,
+              column: forcedLocation.columnNumber ?? 0,
+            },
+            end: forcedLocation.endColumnNumber
+              ? {
+                  line: forcedLocation.endLineNumber ?? 0,
+                  column: forcedLocation.endColumnNumber ?? 0,
+                }
+              : undefined,
+          },
+          {
+            highlightCode: true,
+          }
+        )
+      } catch (e) {
+        // failed to generate codeframe, we still should show an error so we keep going
+      }
+
+      return error
+    } else {
+      return createErrorFromString(errorOrErrorStack.stack, sourceMapFile)
+    }
   }
-  return error
 }
