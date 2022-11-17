@@ -2,7 +2,7 @@
 title: Partial Hydration
 ---
 
-Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
+Partial Hydration enables you to selectively add interactivity to your otherwise completely static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
 
 ## Overview
 
@@ -18,7 +18,7 @@ You could see this as a super-powered way of doing code-splitting on your compon
 
 The result of shipping less and less JavaScript to the client will directly impact your performance scores, most notably the "Time to Interactive" measurement. It'll also make your users happy as they are not stuck in the "uncanny valley", explained in [patterns.dev Progressive Hydration](https://www.patterns.dev/posts/progressive-hydration/):
 
-> Although server rendering provides a faster First Contentful Paint, it doesn't always provide a faster Time To Interactive. The necessary JavaScript in order to be able to interact with our website hasn't been loaded yet. Buttons may look interactive, but they aren't interactive (yet). \[...\] The time that the user sees non-interactive UI on the screen is also refered to as the uncanny valley: although users may think that they can interact with the website, there are no handlers attached to the components yet. This can be a frustrating experience for the user, as the UI may look like it's frozen!
+> Although server rendering provides a faster First Contentful Paint, it doesn't always provide a faster Time To Interactive. The necessary JavaScript in order to be able to interact with our website hasn't been loaded yet. Buttons may look interactive, but they aren't interactive (yet). \[...\] The time that the user sees non-interactive UI on the screen is also referred to as the uncanny valley: although users may think that they can interact with the website, there are no handlers attached to the components yet. This can be a frustrating experience for the user, as the UI may look like it's frozen!
 
 By using Partial Hydration you can shorten that time or completely remove the uncanny valley.
 
@@ -42,7 +42,7 @@ If you don't know what React server components are or need a refresher, we recom
 
 So why is Gatsby using React server components to achieve Partial Hydration and didn't shift to the island architecture? In a nutshell: To allow you to (mostly) keep writing your apps as you're used to.
 
-In island architecture world you're authoring individual island layers that each have their own context and React tree. This means that you can't _just_ share context or bubble up/down of React events, you have to implement custom logic to connect those islands. You need to think differently when creating your app. Islands also don't work for SPAs as they can't render the complete page, leading to more sluggish navigations between pages. With React server components you can keep writing your app like you're used to, for the most part. There are of course constraints you have to follow with them but it's not a complete paradigm shift.
+In island architecture world you're authoring individual island layers that each have their own context and React tree. This means that you can't _just_ share context or bubble up/down of React events, you have to implement custom logic to connect those islands. You need to think differently when creating your app. Islands also don't work for SPAs as they can't render the complete page, leading to more sluggish navigation between pages. With React server components you can keep writing your app like you're used to, for the most part. There are of course constraints you have to follow with them but it's not a complete paradigm shift.
 
 ### Benefits
 

@@ -12,7 +12,7 @@ and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you e
 
 Key highlights of this release:
 
-- [Slices API](#slices-api) - Only re-build individual slices of your page
+- [Slice API](#slice-api) - Only re-build individual slices of your page
 - [Partial Hydration (Beta)](#partial-hydration-beta) - Improve frontend performance by shipping less JavaScript
 - [GraphiQL v2](#graphiql-v2) - An all new UI with features like dark mode, tabs, and persisted state
 
@@ -31,6 +31,20 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 If you're looking for an overview of all breaking changes and how to migrate, please see the [migrating from v4 to v5 guide](/docs/reference/release-notes/migrating-from-v4-to-v5/).
 
 If you're curious about our release schedules and which versions are officially supported, head to the [Gatsby Framework Version Support](/docs/reference/release-notes/gatsby-version-support/) document. As of Gatsby 5 we're no longer supporting Gatsby 2 and Gatsby 3.
+
+## Overview Video
+
+Prefer video over text? No problem! Learn more about all the new features in the video below:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube-nocookie.com/embed/6RwfzZi5gn0"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 ## Slice API
 

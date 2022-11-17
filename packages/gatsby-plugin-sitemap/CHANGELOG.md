@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.0.0/packages/gatsby-plugin-sitemap) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+- Document `excludes` glob matching [#36690](https://github.com/gatsbyjs/gatsby/issues/36690) ([6396664](https://github.com/gatsbyjs/gatsby/commit/6396664ab72c5a4305a7d39269d003772109233d))
+
+#### Other Changes
+
+- Change `output` default to `/` [#36812](https://github.com/gatsbyjs/gatsby/issues/36812) ([b645fdf](https://github.com/gatsbyjs/gatsby/commit/b645fdfbe654572fead90de098bb41406d07c57d))
+
 ## [5.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.24.0/packages/gatsby-plugin-sitemap) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
