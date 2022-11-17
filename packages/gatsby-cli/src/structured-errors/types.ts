@@ -1,4 +1,4 @@
-import { IErrorMapEntry, ErrorId, ErrorCategory } from "./error-map"
+import { IErrorMapEntry, ErrorId } from "./error-map"
 
 export interface IConstructError {
   details: {
@@ -60,4 +60,11 @@ export enum Type {
   WEBPACK = `WEBPACK`,
   PLUGIN = `PLUGIN`,
   COMPILATION = `COMPILATION`,
+}
+
+export enum ErrorCategory {
+  USER = `USER`,
+  SYSTEM = `SYSTEM`,
+  THIRD_PARTY = `THIRD_PARTY`,
+  UNKNOWN = `UNKNOWN`,
 }

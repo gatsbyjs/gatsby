@@ -1,5 +1,10 @@
 import { stripIndent, stripIndents } from "common-tags"
-import { IOptionalGraphQLInfoContext, Level, Type } from "./types"
+import {
+  IOptionalGraphQLInfoContext,
+  Level,
+  Type,
+  ErrorCategory,
+} from "./types"
 
 const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
   `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${
@@ -15,13 +20,7 @@ const getSharedNodeManifestWarning = (inputManifest: {
 }): string =>
   `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
 
-export enum ErrorCategory {
-  USER = `USER`,
-  SYSTEM = `SYSTEM`,
-  THIRD_PARTY = `THIRD_PARTY`,
-}
-
-const errors = {
+const errors: Record<string, IErrorMapEntry> = {
   "": {
     text: (context): string => {
       const sourceMessage =
@@ -31,6 +30,7 @@ const errors = {
       return sourceMessage
     },
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
   },
   "95312": {
     text: (context): string =>
