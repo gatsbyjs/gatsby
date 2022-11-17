@@ -31,6 +31,7 @@ const errors: Record<string, IErrorMapEntry> = {
     },
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
+    type: Type.UNKNOWN,
   },
   "95312": {
     text: (context): string =>
@@ -922,7 +923,7 @@ export interface IErrorMapEntry {
   text: (context) => string
   // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
   level: keyof typeof Level
-  type?: keyof typeof Type
-  category?: keyof typeof ErrorCategory
+  type: keyof typeof Type
+  category: keyof typeof ErrorCategory
   docsUrl?: string
 }

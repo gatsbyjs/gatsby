@@ -60,6 +60,7 @@ export enum Type {
   WEBPACK = `WEBPACK`,
   PLUGIN = `PLUGIN`,
   COMPILATION = `COMPILATION`,
+  UNKNOWN = `UNKNOWN`,
 }
 
 export enum ErrorCategory {
