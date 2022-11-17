@@ -14,9 +14,9 @@ const run = async content => {
   const markdownAST = remark.parse(content)
   await plugin({ markdownAST })
 
-  const htmlAst = toHAST(markdownAST, { allowDangerousHTML: true })
+  const htmlAst = toHAST(markdownAST, { allowDangerousHtml: true })
   const html = hastToHTML(htmlAst, {
-    allowDangerousHTML: true,
+    allowDangerousHtml: true,
   })
   return html
 }
@@ -56,21 +56,21 @@ describe(`gatsby-remark-graphviz`, () => {
       expect($(`pre`).length).toBe(0)
       expect($(`code`).length).toBe(0)
     })
+  })
 
-    it(`unknown graph lang`, async () => {
-      const test = await run(`
+  it(`handles unknown graph lang`, async () => {
+    const test = await run(`
 \`\`\`pieh-format
-  digraph graphname {
-    a :heart: b;
-  }
+digraph graphname {
+  a :heart: b;
+}
 \`\`\``)
 
-      const $ = cheerio.load(test)
+    const $ = cheerio.load(test)
 
-      expect($(`svg`).length).toBe(0)
-      expect($(`pre`).length).toBe(1)
-      expect($(`code`).length).toBe(1)
-    })
+    expect($(`svg`).length).toBe(0)
+    expect($(`pre`).length).toBe(1)
+    expect($(`code`).length).toBe(1)
   })
 
   it(`handles additional attributes`, async () => {
