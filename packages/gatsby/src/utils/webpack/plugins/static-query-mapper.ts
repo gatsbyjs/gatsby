@@ -243,8 +243,18 @@ export class StaticQueryMapper {
           const incomingConnections =
             compilation.moduleGraph.getIncomingConnections(module)
           for (const connection of incomingConnections) {
-            if (connection.originModule instanceof NormalModule) {
-              traverseModule(connection.originModule, config, visitedModules)
+            if (
+              connection.originModule instanceof NormalModule ||
+              // @ts-ignore __proto__ is a hack. LazyCompilationProxyModule class is not
+              // exported from webpack at all, so we can't use instanceof for it
+              connection.originModule?.__proto__?.constructor?.name ===
+                `LazyCompilationProxyModule`
+            ) {
+              traverseModule(
+                connection.originModule as NormalModule,
+                config,
+                visitedModules
+              )
             }
           }
         }
