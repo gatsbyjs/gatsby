@@ -1,5 +1,39 @@
 import React from "react"
 const { onRenderBody } = require(`../gatsby-ssr`)
+const { wrapPageElement } = require(`../gatsby-shared`)
+
+const renderedHtml = pluginOptions => {
+  const {
+    props: {
+      children: [
+        ,
+        ,
+        {
+          props: {
+            dangerouslySetInnerHTML: { __html: html },
+          },
+        },
+      ],
+    },
+  } = wrapPageElement({ element: `` }, pluginOptions)
+
+  return html
+}
+
+const scriptSrc = pluginOptions => {
+  const {
+    props: {
+      children: [
+        ,
+        {
+          props: { src },
+        },
+      ],
+    },
+  } = wrapPageElement({ element: `` }, pluginOptions)
+
+  return src
+}
 
 it(`does not crash when no pluginConfig is provided`, () => {
   const mocks = {
@@ -44,28 +78,17 @@ it(`adds a preconnect link for Google Tag Manager`, () => {
 
 describe(`respectDNT`, () => {
   it(`defaults respectDNT option to false`, () => {
-    const mocks = {
-      setHeadComponents: jest.fn(),
-      setPostBodyComponents: jest.fn(),
-    }
     const pluginOptions = {
       trackingIds: [`GA_TRACKING_ID`],
       pluginConfig: {},
     }
 
-    onRenderBody(mocks, pluginOptions)
-    const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
+    const html = renderedHtml(pluginOptions)
 
-    expect(config.props.dangerouslySetInnerHTML.__html).not.toContain(
-      DO_NOT_TRACK_STRING
-    )
+    expect(html).not.toContain(DO_NOT_TRACK_STRING)
   })
 
   it(`listens to respectDNT option`, () => {
-    const mocks = {
-      setHeadComponents: jest.fn(),
-      setPostBodyComponents: jest.fn(),
-    }
     const pluginOptions = {
       trackingIds: [`GA_TRACKING_ID`],
       pluginConfig: {
@@ -73,12 +96,9 @@ describe(`respectDNT`, () => {
       },
     }
 
-    onRenderBody(mocks, pluginOptions)
-    const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
+    const html = renderedHtml(pluginOptions)
 
-    expect(config.props.dangerouslySetInnerHTML.__html).toContain(
-      DO_NOT_TRACK_STRING
-    )
+    expect(html).toContain(DO_NOT_TRACK_STRING)
   })
 })
 
@@ -93,10 +113,11 @@ describe(`selfHostedOrigin`, () => {
     }
 
     onRenderBody(mocks, pluginOptions)
-    const [bodyConfig] = mocks.setPostBodyComponents.mock.calls[0][0]
     const headConfig = mocks.setHeadComponents.mock.calls[0][0]
 
-    expect(bodyConfig.props.src).toContain(`https://www.googletagmanager.com`)
+    expect(scriptSrc(pluginOptions)).toContain(
+      `https://www.googletagmanager.com`
+    )
     expect(headConfig[0].props.href).toContain(
       `https://www.googletagmanager.com`
     )
@@ -119,10 +140,9 @@ describe(`selfHostedOrigin`, () => {
     }
 
     onRenderBody(mocks, pluginOptions)
-    const [bodyConfig] = mocks.setPostBodyComponents.mock.calls[0][0]
     const headConfig = mocks.setHeadComponents.mock.calls[0][0]
 
-    expect(bodyConfig.props.src).toContain(origin)
+    expect(scriptSrc(pluginOptions)).toContain(origin)
     expect(headConfig[0].props.href).toContain(origin)
     expect(headConfig[1].props.href).toContain(origin)
   })
