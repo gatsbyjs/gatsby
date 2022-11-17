@@ -196,7 +196,7 @@ interface ISerializableObject {
 }
 
 /**
- * A props object for [slice placholder](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice placholder](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export interface SlicePlaceholderProps {
   alias: string
@@ -206,12 +206,12 @@ export interface SlicePlaceholderProps {
 }
 
 /**
- * Component used as a slice placholder, to mark a place in the page where a [slice](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
+ * Component used as a slice placholder, to mark a place in the page where a [slice](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
  */
 export declare function Slice(props: SlicePlaceholderProps): JSX.Element
 
 /**
- * A props object for [slice component](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice component](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export type SliceComponentProps<
   DataType = object,
