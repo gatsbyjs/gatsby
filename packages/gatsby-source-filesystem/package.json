@@ -16,7 +16,7 @@
     "mime": "^2.5.2",
     "pretty-bytes": "^5.4.1",
     "valid-url": "^1.0.9",
-    "xstate": "4.32.1"
+    "xstate": "^4.34.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
