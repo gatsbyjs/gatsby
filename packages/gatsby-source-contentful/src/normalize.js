@@ -150,7 +150,7 @@ export const buildForeignReferenceMap = ({
                   foreignReferenceMap[key] = []
                 }
                 foreignReferenceMap[key].push({
-                  name: `${contentTypeItemId}___NODE`,
+                  name: contentTypeItemId,
                   id: entryItem.sys.id,
                   spaceId: space.sys.id,
                   type: entryItem.sys.type,
@@ -171,7 +171,7 @@ export const buildForeignReferenceMap = ({
               foreignReferenceMap[key] = []
             }
             foreignReferenceMap[key].push({
-              name: `${contentTypeItemId}___NODE`,
+              name: contentTypeItemId,
               id: entryItem.sys.id,
               spaceId: space.sys.id,
               type: entryItem.sys.type,
@@ -411,22 +411,19 @@ export const createNodesForContentType = ({
                     )
                   })
                 if (resolvableEntryItemFieldValue.length !== 0) {
-                  entryItemFields[`${entryItemFieldKey}___NODE`] =
+                  entryItemFields[entryItemFieldKey] =
                     resolvableEntryItemFieldValue
                 }
-
-                delete entryItemFields[entryItemFieldKey]
               }
             } else if (entryItemFieldValue?.sys?.type === `Link`) {
               if (resolvable.has(createRefId(entryItemFieldValue))) {
-                entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
+                entryItemFields[entryItemFieldKey] = mId(
                   space.sys.id,
                   entryItemFieldValue.sys.id,
                   entryItemFieldValue.sys.linkType ||
                     entryItemFieldValue.sys.type
                 )
               }
-              delete entryItemFields[entryItemFieldKey]
             }
           }
         })
@@ -481,7 +478,7 @@ export const createNodesForContentType = ({
             locale: locale.code,
             spaceId: entryItem.sys.space.sys.id,
             environmentId: entryItem.sys.environment.sys.id,
-            contentType___NODE: createNodeId(contentTypeItemId),
+            contentType: createNodeId(contentTypeItemId),
             firstPublishedAt: entryItem.sys.createdAt,
             publishedAt: entryItem.sys.updatedAt,
             publishedVersion: entryItem.sys.revision,
@@ -499,19 +496,14 @@ export const createNodesForContentType = ({
         // Replace text fields with text nodes so we can process their markdown
         // into HTML.
         Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-          // Ignore fields with "___node" as they're already handled
-          // and won't be a text field.
-          if (entryItemFieldKey.includes(`___`)) {
-            return
-          }
-
-          const fieldType = contentTypeItem.fields.find(
+          // @todo: how expensive is this?
+          const field = contentTypeItem.fields.find(
             f =>
               (restrictedNodeFields.includes(f.id)
                 ? `${conflictFieldPrefix}${f.id}`
                 : f.id) === entryItemFieldKey
-          ).type
-          if (fieldType === `Text`) {
+          )
+          if (field?.type === `Text`) {
             const textNodeId = createNodeId(
               `${entryNodeId}${entryItemFieldKey}TextNode`
             )
@@ -531,8 +523,7 @@ export const createNodesForContentType = ({
               childrenNodes.push(textNode)
             }
 
-            entryItemFields[`${entryItemFieldKey}___NODE`] = textNodeId
-            delete entryItemFields[entryItemFieldKey]
+            entryItemFields[entryItemFieldKey] = textNodeId
           }
         })
 
@@ -540,7 +531,7 @@ export const createNodesForContentType = ({
           ...entryItemFields,
           ...entryNode,
           metadata: {
-            tags___NODE: entryItem.metadata.tags.map(tag =>
+            tags: entryItem.metadata.tags.map(tag =>
               createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
             ),
           },
@@ -617,7 +608,7 @@ export const createAssetNodes = ({
       height: file.details?.image?.height ?? null,
       size: file.details?.size ?? null,
       metadata: {
-        tags___NODE: assetItem.metadata.tags.map(tag =>
+        tags: assetItem.metadata.tags.map(tag =>
           createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
         ),
       },

@@ -37,7 +37,7 @@ Array [
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "contentType___NODE",
+              "from": "sys.contentType",
             },
           },
           "type": "ContentfulContentType",
@@ -83,7 +83,7 @@ Array [
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "tags___NODE",
+              "from": "tags",
             },
           },
           "type": "[ContentfulTag]!",
@@ -402,7 +402,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "longLocalized___NODE",
+              "from": "longLocalized",
             },
           },
           "type": "ContentfulText",
@@ -411,7 +411,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "longMarkdown___NODE",
+              "from": "longMarkdown",
             },
           },
           "type": "ContentfulText",
@@ -420,7 +420,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "longPlain___NODE",
+              "from": "longPlain",
             },
           },
           "type": "ContentfulText",
@@ -468,7 +468,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "many___NODE",
+              "from": "many",
             },
           },
           "type": "[ContentfulAsset]",
@@ -477,7 +477,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "manyLocalized___NODE",
+              "from": "manyLocalized",
             },
           },
           "type": "[ContentfulAsset]",
@@ -489,7 +489,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "one___NODE",
+              "from": "one",
             },
           },
           "type": "ContentfulAsset",
@@ -498,7 +498,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "oneLocalized___NODE",
+              "from": "oneLocalized",
             },
           },
           "type": "ContentfulAsset",
@@ -717,7 +717,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "many___NODE",
+              "from": "many",
             },
           },
           "type": "[UnionContentfulContentReferenceNumberText]",
@@ -726,7 +726,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "manyLocalized___NODE",
+              "from": "manyLocalized",
             },
           },
           "type": "[ContentfulEntry]",
@@ -738,7 +738,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "one___NODE",
+              "from": "one",
             },
           },
           "type": "ContentfulEntry",
@@ -747,7 +747,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "oneLocalized___NODE",
+              "from": "oneLocalized",
             },
           },
           "type": "ContentfulEntry",
@@ -783,7 +783,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "multipleItemsAllTypes___NODE",
+              "from": "multipleItemsAllTypes",
             },
           },
           "type": "[ContentfulEntry]",
@@ -792,7 +792,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "multipleItemsManyTypes___NODE",
+              "from": "multipleItemsManyTypes",
             },
           },
           "type": "[UnionContentfulNumberText]",
@@ -801,7 +801,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "multipleItemsSingleType___NODE",
+              "from": "multipleItemsSingleType",
             },
           },
           "type": "[ContentfulContentTypeText]",
@@ -810,7 +810,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "oneItemAllTypes___NODE",
+              "from": "oneItemAllTypes",
             },
           },
           "type": "ContentfulEntry",
@@ -819,7 +819,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "oneItemManyTypes___NODE",
+              "from": "oneItemManyTypes",
             },
           },
           "type": "UnionContentfulNumberText",
@@ -828,7 +828,7 @@ Ignored if layout = FLUID.",
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "oneItemSingleType___NODE",
+              "from": "oneItemSingleType",
             },
           },
           "type": "ContentfulContentTypeText",

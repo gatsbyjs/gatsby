@@ -27,7 +27,7 @@ const ContentfulDataTypes = new Map([
       return {
         type: `ContentfulText`,
         extensions: {
-          link: { by: `id`, from: `${field.id}___NODE` },
+          link: { by: `id`, from: field.id },
         },
       }
     },
@@ -112,7 +112,7 @@ const getLinkFieldType = (linkType, field, schema, createTypes) => {
         return {
           type: translatedTypeNames.shift(),
           extensions: {
-            link: { by: `id`, from: `${field.id}___NODE` },
+            link: { by: `id`, from: field.id },
           },
         }
       }
@@ -133,7 +133,7 @@ const getLinkFieldType = (linkType, field, schema, createTypes) => {
       return {
         type: unionName,
         extensions: {
-          link: { by: `id`, from: `${field.id}___NODE` },
+          link: { by: `id`, from: field.id },
         },
       }
     }
@@ -142,7 +142,7 @@ const getLinkFieldType = (linkType, field, schema, createTypes) => {
   return {
     type: `Contentful${linkType}`,
     extensions: {
-      link: { by: `id`, from: `${field.id}___NODE` },
+      link: { by: `id`, from: field.id },
     },
   }
 }
@@ -280,7 +280,7 @@ export async function createSchemaCustomization(
         contentType: {
           type: `ContentfulContentType`,
           extensions: {
-            link: { by: `id`, from: `contentType___NODE` },
+            link: { by: `id`, from: `sys.contentType` },
           },
         },
         firstPublishedAt: { type: ` Date!` },
@@ -300,7 +300,7 @@ export async function createSchemaCustomization(
         tags: {
           type: `[ContentfulTag]!`,
           extensions: {
-            link: { by: `id`, from: `tags___NODE` },
+            link: { by: `id`, from: `tags` },
           },
         },
       },
