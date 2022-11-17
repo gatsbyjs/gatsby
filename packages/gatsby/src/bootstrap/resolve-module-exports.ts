@@ -216,13 +216,17 @@ export async function resolveModuleExports(
 
   // TODO: Maybe move this to a better spot, let's test it here for now
   if (failedWithoutRequireError) {
-    // Let's see if it's a gatsby-node.mjs file
-    const url = pathToFileURL(`${modulePath}.mjs`)
-    const importedModule = await import(url.href)
-    const importedModuleExports = Object.keys(importedModule).filter(
-      exportName => exportName !== `__esModule`
-    )
-    return importedModuleExports
+    try {
+      // Let's see if it's a gatsby-node.mjs file
+      const url = pathToFileURL(`${modulePath}.mjs`)
+      const importedModule = await import(url.href)
+      const importedModuleExports = Object.keys(importedModule).filter(
+        exportName => exportName !== `__esModule`
+      )
+      return importedModuleExports
+    } catch (error) {
+      // TODO: Do something like testRequireError above to only panic on errors that are not import related
+    }
   }
 
   return []
