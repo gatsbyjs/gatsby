@@ -83,13 +83,7 @@ The Gatsby `<Script>` component also supports inline scripts, so for your smalle
 
 For more information, see the [Gatsby Script reference documentation](/docs/reference/built-in-components/gatsby-script/).
 
-#### Step 3: Consider using tools that mitigate third-party script impact
-
-Finally, you may want to try new tools that are emerging to mitigate the impact of scripts on web performance.
-
-One option is [Partytown](https://github.com/BuilderIO/partytown), a lazy-loaded library to help relocate resource intensive scripts into a web worker, and off of the main thread.
-
-Another option is to replace multiple analytics trackers that load in the user's browser with a single tracker from a "customer data platform" (CDP) like [Segment](https://www.gatsbyjs.com/plugins/gatsby-plugin-segment-js/?=gatsby-plugin-segment-js) or [Rudderstack](https://www.gatsbyjs.com/plugins/gatsby-plugin-rudderstack/?=gatsby-plugin-rudderstack). CDPs will send out data to your analytics tools from their servers. Here is [one example of a team that did this to optimize performance](https://www.gatsbyjs.com/blog/how-wavedirect-used-gatsby-rudderstack-and-sanity-to-4x-leads-and-dominate-search-results).
+Another option is to replace multiple analytics trackers that load in the user's browser with a single tracker from a "customer data platform" (CDP) like [Segment](/plugins/gatsby-plugin-segment-js/) or [Rudderstack](/plugins/gatsby-plugin-rudderstack/). CDPs will send out data to your analytics tools from their servers. Here is [one example of a team that did this to optimize performance](/blog/how-wavedirect-used-gatsby-rudderstack-and-sanity-to-4x-leads-and-dominate-search-results).
 
 ### Reduce your JavaScript bundle cost
 
