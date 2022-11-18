@@ -117,6 +117,7 @@ const options: Partial<MachineOptions<IDataLayerContext, any>> = {
 
 export const initializeDataMachine = createMachine(
   {
+    predictableActionArguments: true,
     id: `initializeDataMachine`,
     context: {},
     initial: `customizingSchema`,
@@ -135,6 +136,7 @@ export const initializeDataMachine = createMachine(
 
 export const reloadDataMachine = createMachine(
   {
+    predictableActionArguments: true,
     id: `reloadDataMachine`,
     context: {},
     initial: `customizingSchema`,
@@ -153,6 +155,7 @@ export const reloadDataMachine = createMachine(
  */
 export const recreatePagesMachine = createMachine(
   {
+    predictableActionArguments: true,
     id: `recreatePagesMachine`,
     context: {},
     initial: `buildingSchema`,

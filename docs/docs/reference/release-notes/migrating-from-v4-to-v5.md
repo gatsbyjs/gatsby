@@ -52,7 +52,7 @@ Or run
 npm install gatsby@latest
 ```
 
-Please note: If you use npm 7 you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
+Please note: If you use npm 7 or higher you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
 
 ```shell
 npm install gatsby@latest --legacy-peer-deps
@@ -388,3 +388,29 @@ If you defined the `engines` key you'll also need to update the minimum version:
 This section is a work in progress and will be expanded when necessary. It's a list of known issues you might run into while upgrading Gatsby to v5 and how to solve them.
 
 If you encounter any problem, please let us know in this [GitHub discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
+
+### Multiple versions of `graphql`
+
+Since we updated the internal `graphql` dependency to [v16](#update-to-graphql-16) you might run into a problem like this:
+
+```shell
+Cannot create as TypeComposer the following value:
+  GraphQLScalarType({ name: "Date", description: "A date string, such as 2007-12-03, compliant with the
+ ISO 8601 standard for representation of dates and times using the Gregorian calendar.",
+specifiedByURL: undefined, serialize: [function String], parseValue: [function String], parseLiteral:
+[function parseLiteral], extensions: {  }, astNode: undefined, extensionASTNodes: [] }).
+```
+
+This error (or any other similar errors) happens when you have multiple versions of `graphql` installed in your project. You can check this manually by running:
+
+```shell
+npm ls graphql
+```
+
+Or with `yarn`:
+
+```shell
+yarn why graphql
+```
+
+A brute-force way of solving this is to delete your lock file, delete `node_modules` and re-install with `npm install --legacy-peer-deps`/`yarn install`. This only works though if your project is just `gatsby`, if you have a more complicated setup you might need to use features like `resolutions`.

@@ -198,11 +198,12 @@ The following diagram shows an overview of the updates you'll have to make in or
 
 1. Create a new folder in your `src/pages` directory, and call it `blog`.
 
-2. Move the `src/pages/{mdx.frontmatter__slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` component to reflect the new folder structure:
+2. Move the `src/pages/{mdx.frontmatter__slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` and `Seo` component to reflect the new folder structure:
 
    ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
    import * as React from 'react'
    import Layout from '../../components/layout' // highlight-line
+   import Seo from '../../components/seo' // highlight-line
 
    // ...
    ```

@@ -50,7 +50,7 @@ export function Slice(props) {
       }
 
       throw new Error(
-        `Nested slices are not supported.${additionalContextMessage}\n\nSee https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice#nested-slices`
+        `Nested slices are not supported.${additionalContextMessage}\n\nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice#nested-slices`
       )
     } else {
       throw new Error(

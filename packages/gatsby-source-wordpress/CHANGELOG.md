@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.0.0/packages/gatsby-source-wordpress) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- check for camelCase single field name [#36817](https://github.com/gatsbyjs/gatsby/issues/36817) ([372345e](https://github.com/gatsbyjs/gatsby/commit/372345eedc1ed2625717fa7988a1174a93fb38ca))
+- exclude field name when set for \_\_all [#36840](https://github.com/gatsbyjs/gatsby/issues/36840) ([55d50a9](https://github.com/gatsbyjs/gatsby/commit/55d50a9120df0f32425efcda27d3cbb730f3bfe2))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- Remove HAS_REACT_18 check [#36850](https://github.com/gatsbyjs/gatsby/issues/36850) ([20ef7c1](https://github.com/gatsbyjs/gatsby/commit/20ef7c12ffa9fd48c763c913e70ef20bef8a68fc))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [6.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.24.0/packages/gatsby-source-wordpress) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
