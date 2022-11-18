@@ -340,6 +340,37 @@ export class BaseLoader {
     return findMatchPath(rawPath)
   }
 
+  loadStaticQueryResult(staticQueryHash) {
+    if (this.staticQueryDb[staticQueryHash]) {
+      const jsonPayload = this.staticQueryDb[staticQueryHash]
+      return { staticQueryHash, jsonPayload }
+    }
+
+    console.log(`[loader] loadStaticQueryResult memoizedGet start`, {
+      staticQueryHash,
+    })
+    return this.memoizedGet(
+      `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
+    )
+      .then(req => {
+        const jsonPayload = JSON.parse(req.responseText)
+
+        this.staticQueryDb[staticQueryHash] = jsonPayload
+
+        console.log(`[loader] loadStaticQueryResult memoizedGet finish`, {
+          staticQueryHash,
+          jsonPayload,
+        })
+
+        return { staticQueryHash, jsonPayload }
+      })
+      .catch(() => {
+        throw new Error(
+          `We couldn't load "${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json"`
+        )
+      })
+  }
+
   // TODO check all uses of this and whether they use undefined for page resources not exist
   loadPage(rawPath) {
     const pagePath = findPath(rawPath)
@@ -536,32 +567,12 @@ export class BaseLoader {
 
         // get list of static queries to get
         const staticQueryBatchPromise = Promise.all(
-          dedupedStaticQueryHashes.map(staticQueryHash => {
-            // Check for cache in case this static query result has already been loaded
-            if (this.staticQueryDb[staticQueryHash]) {
-              const jsonPayload = this.staticQueryDb[staticQueryHash]
-              return { staticQueryHash, jsonPayload }
-            }
-
-            return this.memoizedGet(
-              `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
-            )
-              .then(req => {
-                const jsonPayload = JSON.parse(req.responseText)
-                return { staticQueryHash, jsonPayload }
-              })
-              .catch(() => {
-                throw new Error(
-                  `We couldn't load "${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json"`
-                )
-              })
-          })
+          dedupedStaticQueryHashes.map(this.loadStaticQueryResult.bind(this))
         ).then(staticQueryResults => {
           const staticQueryResultsMap = {}
 
           staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
             staticQueryResultsMap[staticQueryHash] = jsonPayload
-            this.staticQueryDb[staticQueryHash] = jsonPayload
           })
 
           return staticQueryResultsMap

@@ -48,13 +48,14 @@ class DevLoader extends BaseLoader {
     const socket = getSocket()
 
     this.notFoundPagePathsInCaches = new Set()
+    this.pendingStaticQueryFetches = new Set()
 
     if (socket) {
       socket.on(`message`, msg => {
         if (msg.type === `staticQueryResult`) {
           this.handleStaticQueryResultHotUpdate(msg)
         } else if (msg.type === `pageQueryResult`) {
-          // console.log(`Received pageQueryResult from socket.io`, msg)
+          console.log(`Received pageQueryResult from socket.io`, msg)
           this.handlePageQueryResultHotUpdate(msg)
         } else if (msg.type === `sliceQueryResult`) {
           this.handleSliceQueryResultHotUpdate(msg)
@@ -66,19 +67,27 @@ class DevLoader extends BaseLoader {
         } else if (msg.type === `dataFilesWillRegenerate`) {
           if (msg.payload === true) {
             this.lastMappingWillChange = new Date()
-            console.log(
-              `[websocket-msg-handler] received dataFilesWillRegenerate(true), setting up promise that will be resolved when they do`
-            )
-            this.dataFilesRegenerationPromise = new Promise(resolve => {
-              this.dataFilesRegenerated = () => {
-                console.log(
-                  `[websocket-msg-handler] data files regenerated, resolving promise`
-                )
-                this.dataFilesRegenerationPromise = null
-                this.dataFilesRegenerated = null
-                resolve()
-              }
-            })
+
+            if (this.dataFilesRegenerationPromise) {
+              console.log(
+                `[websocket-msg-handler] received dataFilesWillRegenerate(true), but we already have a dataFilesRegenerationPromise. Not creating a new one.`
+              )
+            } else {
+              console.log(
+                `[websocket-msg-handler] received dataFilesWillRegenerate(true), setting up promise that will be resolved when they do`
+              )
+
+              this.dataFilesRegenerationPromise = new Promise(resolve => {
+                this.dataFilesRegenerated = () => {
+                  console.log(
+                    `[websocket-msg-handler] data files regenerated, resolving promise`
+                  )
+                  this.dataFilesRegenerationPromise = null
+                  this.dataFilesRegenerated = null
+                  resolve()
+                }
+              })
+            }
           } else {
             console.log(
               `[websocket-msg-handler] dataFilesWillRegenerate`,
@@ -102,6 +111,17 @@ class DevLoader extends BaseLoader {
     }
 
     return this.lastMappingWillChange > startedAt
+  }
+
+  beforeUpdateHotUpdate() {
+    if (this.dataFilesRegenerationPromise) {
+      return this.dataFilesRegenerationPromise.then(
+        () => Promise.all(Array.from(this.pendingStaticQueryFetches))
+        // console.log(`???`, { pendingFetches: this.pendingStaticQueryFetches })
+      )
+    }
+
+    return Promise.resolve()
   }
 
   _loadPage(pagePath) {
@@ -249,9 +269,44 @@ class DevLoader extends BaseLoader {
           }
         })
       }
-      return true
+
+      const promisesToAwait = []
+
+      if (
+        Array.isArray(newPageData?.staticQueryHashes) &&
+        JSON.stringify(newPageData?.staticQueryHashes ?? []) !==
+          JSON.stringify(cachedPageData?.staticQueryHashes ?? [])
+      ) {
+        console.log(`sq changed`, {
+          new: newPageData?.staticQueryHashes,
+          old: cachedPageData?.staticQueryHashes,
+        })
+
+        const fetchStaticQueriesPromise = Promise.all(
+          newPageData.staticQueryHashes.map(
+            this.loadStaticQueryResult.bind(this)
+          )
+        ).then(() => {
+          ___emitter.emit(`staticQueryResult`)
+        })
+
+        this.pendingStaticQueryFetches.add(fetchStaticQueriesPromise)
+
+        fetchStaticQueriesPromise.then(() => {
+          this.pendingStaticQueryFetches.delete(fetchStaticQueriesPromise)
+        })
+
+        promisesToAwait.push(fetchStaticQueriesPromise)
+      }
+
+      return Promise.all(promisesToAwait).then(() => {
+        console.log(`fetched everything new`)
+        return true
+      })
+
+      // Promise.resolve(true)
     }
-    return false
+    return Promise.resolve(false)
   }
 
   markAsStale = dirtyQueryId => {
@@ -288,10 +343,18 @@ class DevLoader extends BaseLoader {
   }
 
   handlePageQueryResultHotUpdate(msg) {
-    const updated = this.updatePageData(msg.payload.id, msg.payload.result)
-    if (updated) {
-      ___emitter.emit(`pageQueryResult`, msg.payload.result)
-    }
+    // const pagePath = normalizePagePath(msg.payload.id)
+    // this._loadPage(pagePath)
+
+    this.updatePageData(msg.payload.id, msg.payload.result).then(updated => {
+      if (updated) {
+        ___emitter.emit(`pageQueryResult`, msg.payload)
+      }
+    })
+    // const updated = this.updatePageData(msg.payload.id, msg.payload.result)
+    // if (updated) {
+    //   ___emitter.emit(`pageQueryResult`, msg.payload.result)
+    // }
   }
 
   handleStalePageDataMessage(msg) {
