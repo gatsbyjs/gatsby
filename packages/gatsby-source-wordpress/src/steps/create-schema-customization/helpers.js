@@ -116,7 +116,7 @@ export const typeIsASupportedScalar = type => {
   return supportedScalars.includes(findTypeName(type))
 }
 
-const typeSettingCache = {}
+const typeSettingCache = new Map()
 
 // retrieves plugin settings for the provided type
 export const getTypeSettingsByType = type => {
@@ -126,7 +126,11 @@ export const getTypeSettingsByType = type => {
 
   const typeName = findTypeName(type)
 
-  const cachedTypeSettings = typeSettingCache[typeName]
+  if (!typeName) {
+    return {}
+  }
+
+  const cachedTypeSettings = typeSettingCache.get(typeName)
 
   if (cachedTypeSettings) {
     return cachedTypeSettings
@@ -148,12 +152,12 @@ export const getTypeSettingsByType = type => {
   if (typeSettings) {
     const mergedSettings = merge(__allTypeSetting, typeSettings)
 
-    typeSettingCache[typeName] = mergedSettings
+    typeSettingCache.set(typeName, mergedSettings)
 
     return mergedSettings
   }
 
-  typeSettingCache[typeName] = __allTypeSetting
+  typeSettingCache.set(typeName, __allTypeSetting)
 
   return __allTypeSetting
 }
