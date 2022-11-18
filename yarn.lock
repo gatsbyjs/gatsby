@@ -1653,10 +1653,19 @@
     invariant "^2.2.4"
     prop-types "^15.8.1"
 
-"@gatsbyjs/webpack-hot-middleware@^2.25.2", "@gatsbyjs/webpack-hot-middleware@^2.25.3":
+"@gatsbyjs/webpack-hot-middleware@^2.25.3":
   version "2.25.3"
   resolved "https://registry.yarnpkg.com/@gatsbyjs/webpack-hot-middleware/-/webpack-hot-middleware-2.25.3.tgz#a00c5f526cbe178330b967f7ed6a487751ffd795"
   integrity sha512-ul17OZ8Dlw+ATRbnuU+kwxuAlq9lKbYz/2uBS1FLCdgoPTF1H2heP7HbUbgfMZbfRQNcCG2rMscMnr32ritCDw==
+  dependencies:
+    ansi-html-community "0.0.8"
+    html-entities "^2.3.3"
+    strip-ansi "^6.0.0"
+
+"@gatsbyjs/webpack-hot-middleware@^2.25.4-alpha-lazy-comp.0":
+  version "2.25.4-alpha-lazy-comp.0"
+  resolved "https://registry.yarnpkg.com/@gatsbyjs/webpack-hot-middleware/-/webpack-hot-middleware-2.25.4-alpha-lazy-comp.0.tgz#d84de33e65785781561dc5619a00a1764512da60"
+  integrity sha512-MqJ46O4ik+qP41so4PwfYQvs0k4D2/YFhbhcpFulAkIHMt9eVlJ5XRHd/YvzoWgdrQ3nklzKLoTds6+y3Cgxcg==
   dependencies:
     ansi-html-community "0.0.8"
     html-entities "^2.3.3"
