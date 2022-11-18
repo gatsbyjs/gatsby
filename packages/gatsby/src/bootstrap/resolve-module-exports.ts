@@ -6,6 +6,7 @@ import report from "gatsby-cli/lib/reporter"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testRequireError } from "../utils/test-require-error"
 import { resolveModule } from "../utils/module-resolver"
+import { pathToFileURL } from "url"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -186,12 +187,15 @@ https://gatsby.dev/no-mixed-modules
  * @param mode
  * @param resolver
  */
-export const resolveModuleExports = (
+export async function resolveModuleExports(
   modulePath: string,
   { mode = `analysis`, resolver = resolveModule } = {}
-): Array<string> => {
+): Promise<Array<string>> {
+  let failedWithoutRequireError = false
+
   if (mode === `require`) {
     let absPath: string | undefined
+
     try {
       absPath = require.resolve(modulePath)
       return Object.keys(require(modulePath)).filter(
@@ -202,10 +206,27 @@ export const resolveModuleExports = (
         // if module exists, but requiring it cause errors,
         // show the error to the user and terminate build
         report.panic(`Error in "${absPath}":`, e)
+      } else {
+        failedWithoutRequireError = true
       }
     }
   } else {
     return staticallyAnalyzeExports(modulePath, resolver)
+  }
+
+  // TODO: Maybe move this to a better spot, let's test it here for now
+  if (failedWithoutRequireError) {
+    try {
+      // Let's see if it's a gatsby-node.mjs file
+      const url = pathToFileURL(`${modulePath}.mjs`)
+      const importedModule = await import(url.href)
+      const importedModuleExports = Object.keys(importedModule).filter(
+        exportName => exportName !== `__esModule`
+      )
+      return importedModuleExports
+    } catch (error) {
+      // TODO: Do something like testRequireError above to only panic on errors that are not import related
+    }
   }
 
   return []

@@ -44,6 +44,6 @@
   "scripts": {
     "build": "",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\""
+    "watch": "babel -w lib --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\""
   }
 }
