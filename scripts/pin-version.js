@@ -2,6 +2,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 
 const packagesToPin = [
+  `@gatsbyjs/parcel-namer-force-mjs`,
   `@gatsbyjs/parcel-namer-relative-to-cwd`,
   `gatsby-parcel-config`,
 ]

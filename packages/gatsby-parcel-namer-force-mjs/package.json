@@ -1,0 +1,36 @@
+{
+  "name": "@gatsbyjs/parcel-namer-force-mjs",
+  "main": "lib/index.js",
+  "version": "0.0.1-next.0",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parcel-namer-force-mjs#readme",
+  "description": "Parcel namer that forces filenames to be .mjs",
+  "author": "LekoArts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-parcel-namer-force-mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "parcel": "2.x"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.18.0",
+    "@parcel/plugin": "2.6.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.0",
+    "babel-preset-gatsby-package": "^3.2.0-next.0",
+    "cross-env": "^7.0.3"
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\""
+  },
+  "files": [
+    "lib/index.js"
+  ]
+}

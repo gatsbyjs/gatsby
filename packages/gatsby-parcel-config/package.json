@@ -14,6 +14,7 @@
     "parcel": "2.x"
   },
   "dependencies": {
+    "@gatsbyjs/parcel-namer-force-mjs": "0.0.1-next.0",
     "@gatsbyjs/parcel-namer-relative-to-cwd": "2.2.0-next.0",
     "@parcel/bundler-default": "2.6.2",
     "@parcel/compressor-raw": "2.6.2",
