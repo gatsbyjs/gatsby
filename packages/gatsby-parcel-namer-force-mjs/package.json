@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.18.0",
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "2.2.0-next.0",
     "@parcel/plugin": "2.6.2"
   },
   "devDependencies": {

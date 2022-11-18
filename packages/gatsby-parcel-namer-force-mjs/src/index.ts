@@ -1,19 +1,21 @@
 import { Namer } from "@parcel/plugin"
-import { FilePath } from "@parcel/types"
-import path from "path"
+import type { FilePath, Namer as NamerOpts } from "@parcel/types"
+// @ts-ignore - No types available
+import gatsbyParcelNamerRelativeToCwd from "@gatsbyjs/gatsby-parcel-namer-relative-to-cwd"
+import * as path from "path"
 
-const GATSBY_FILE_NAMES = [`gatsby-node`, `gatsby-config`]
+const CONFIG = Symbol.for(`parcel-plugin-config`)
+const relativeNameOpts = gatsbyParcelNamerRelativeToCwd[
+  CONFIG
+] as NamerOpts<unknown>
 
 export default new Namer({
-  async name({ bundle }): Promise<FilePath | null | undefined> {
-    const filePath = bundle.getMainEntry()?.filePath
-    if (!filePath) {
-      return null
-    }
-    const fileName = path.parse(filePath).name
+  async name(opts): Promise<FilePath | null | undefined> {
+    const relativeName = await relativeNameOpts.name(opts)
 
-    if (GATSBY_FILE_NAMES.includes(fileName)) {
-      return `${fileName}.mjs`
+    if (relativeName) {
+      const { dir, name } = path.parse(relativeName)
+      return `${dir}/${name}.mjs`
     }
 
     return null
