@@ -3,13 +3,21 @@ import { LMDBCache, Cache } from "@parcel/cache"
 import path from "path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
-import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
+import {
+  ensureDir,
+  emptyDir,
+  existsSync,
+  remove,
+  readdir,
+  rename,
+} from "fs-extra"
 import telemetry from "gatsby-telemetry"
 import { isNearMatch } from "../is-near-match"
+import { resolveConfigFilePath } from "../../bootstrap/resolve-config-file-path"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
-export const gatsbyFileRegex = `gatsby-+(node|config).ts`
+export const gatsbyFileRegex = `gatsby-+(node|config)(.js|.ts)` // Just for fun see if we can use esm in gatsby-config.js now
 const RETRY_COUNT = 5
 
 function getCacheDir(siteRoot: string): string {
@@ -37,9 +45,14 @@ export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
     defaultConfig: require.resolve(`gatsby-parcel-config`),
     mode: `production`,
     cache,
+    defaultTargetOptions: {
+      // TODO: Investigate what else this does for possible side effects
+      shouldScopeHoist: true,
+    },
     targets: {
       root: {
-        outputFormat: `commonjs`,
+        outputFormat: `esmodule`,
+        isLibrary: true,
         includeNodeModules: false,
         sourceMap: process.env.NODE_ENV === `development`,
         engines: {
@@ -133,8 +146,34 @@ export async function compileGatsbyFiles(
     for (const bundle of bundles) {
       // validate that output exists and is valid
       try {
+        const { dir, name, ext } = path.parse(bundle.filePath)
+
+        // TODO: Figure out if we can configure Parcel to make the compiled file .mjs instead of .js, rename it manually for now
+        // Otherwise Node later compains about importing a .js esm module, it wants .mjs or "type": "module" in package.json
+        if (ext === `.js`) {
+          const newFilePath = bundle.filePath.replace(ext, `.mjs`)
+          await rename(bundle.filePath, newFilePath)
+
+          // The below didn't work, Parcel doesn't like an object it didn't create and throws:
+          // TypeError: Cannot read private member #bundle from an object whose class did not declare it
+          // Keep for posterity for now, remove later
+
+          // Annoyingly bundle properties are read only
+          // bundle = new Proxy(bundle, {
+          //   get(target, prop): any {
+          //     if (prop === `filePath`) {
+          //       return newFilePath
+          //     }
+          //     return target[prop]
+          //   },
+          // })
+        }
+
         delete require.cache[bundle.filePath]
-        require(bundle.filePath)
+
+        const filePath = resolveConfigFilePath(path.join(dir, name))
+
+        await import(filePath)
       } catch (e) {
         if (retry >= RETRY_COUNT) {
           reporter.panic({
@@ -142,6 +181,7 @@ export async function compileGatsbyFiles(
             context: {
               siteRoot,
               retries: RETRY_COUNT,
+              // TODO: All other accessors of bundle.filePath need to be adjusted to .mjs since bundle is read only, skip for now
               compiledFileLocation: bundle.filePath,
               sourceFileLocation: bundle.getMainEntry()?.filePath,
             },
