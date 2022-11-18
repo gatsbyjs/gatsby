@@ -49,7 +49,6 @@ const unionType = typeBuilderApi => {
 
 const interfaceType = typeBuilderApi => {
   const { type, schema } = typeBuilderApi
-  const debug = type.name === `WpNode` || type.name === `Node`
 
   const state = store.getState()
   const { ingestibles } = state.remoteSchema
@@ -61,7 +60,6 @@ const interfaceType = typeBuilderApi => {
     parentInterfacesImplementingTypes: implementingTypes,
     parentType: type,
     fields: type.fields,
-    debug,
   })
 
   if (!transformedFields) {
