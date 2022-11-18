@@ -1493,7 +1493,6 @@ Array [
   Object {
     "fields": Array [
       "avatar",
-      "databaseId",
       "id",
       "name",
       "url",
