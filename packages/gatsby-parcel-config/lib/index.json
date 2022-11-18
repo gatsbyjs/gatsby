@@ -6,7 +6,7 @@
     ],
     "*.{json,json5}": ["@parcel/transformer-json"]
   },
-  "namers": ["@gatsbyjs/parcel-namer-relative-to-cwd", "@parcel/namer-default"],
+  "namers": ["@gatsbyjs/parcel-namer-force-mjs","@gatsbyjs/parcel-namer-relative-to-cwd", "@parcel/namer-default"],
   "runtimes": ["@parcel/runtime-js"],
   "optimizers": {
     "*.{js,mjs,cjs}": ["@parcel/optimizer-terser"]
