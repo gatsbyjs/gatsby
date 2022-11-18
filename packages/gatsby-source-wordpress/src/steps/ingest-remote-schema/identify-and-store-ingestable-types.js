@@ -1,7 +1,11 @@
 import store from "~/store"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import { typeIsABuiltInScalar } from "../create-schema-customization/helpers"
-import { findTypeName } from "~/steps/create-schema-customization/helpers"
+import {
+  findTypeName,
+  getTypesThatImplementInterfaceType,
+} from "~/steps/create-schema-customization/helpers"
+import { transformFields } from "~/steps/create-schema-customization/transform-fields"
 import { getPersistentCache } from "~/utils/cache"
 
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
@@ -43,6 +47,23 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
 
   for (const interfaceType of interfaces) {
     if (typeIsExcluded({ pluginOptions, typeName: interfaceType.name })) {
+      continue
+    }
+
+    if (!interfaceType.fields) {
+      continue
+    }
+
+    const typesThatImplementInterface =
+      getTypesThatImplementInterfaceType(interfaceType)
+
+    const shouldSkipInterfaceType = !transformFields({
+      fields: interfaceType.fields,
+      parentType: interfaceType,
+      parentInterfacesImplementingTypes: typesThatImplementInterface,
+    })
+
+    if (shouldSkipInterfaceType && interfaceType.name !== `Node`) {
       continue
     }
 

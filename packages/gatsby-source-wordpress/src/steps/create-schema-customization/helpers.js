@@ -59,6 +59,38 @@ export const fieldOfTypeWasFetched = type => {
   return typeWasFetched
 }
 
+const implementingTypeCache = new Map()
+
+export const getTypesThatImplementInterfaceType = type => {
+  if (implementingTypeCache.has(type.name)) {
+    return implementingTypeCache.get(type.name)
+  }
+
+  const state = store.getState()
+  const { typeMap } = state.remoteSchema
+
+  const allTypes = typeMap.values()
+
+  const implementingTypes = Array.from(allTypes)
+    .filter(
+      ({ interfaces }) =>
+        interfaces &&
+        // find types that implement this interface type
+        interfaces.find(singleInterface => singleInterface.name === type.name)
+    )
+    .map(type => typeMap.get(type.name))
+    .filter(
+      type =>
+        type.kind !== `UNION` ||
+        // if this is a union type, make sure the union type has one or more member types, otherwise schema customization will throw an error
+        (!!type.possibleTypes && !!type.possibleTypes.length)
+    )
+
+  implementingTypeCache.set(type.name, implementingTypes)
+
+  return implementingTypes
+}
+
 const supportedScalars = [
   `Int`,
   `Float`,
