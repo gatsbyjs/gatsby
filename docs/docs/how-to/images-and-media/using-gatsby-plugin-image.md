@@ -115,7 +115,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    Any GraphQL File object that includes an image will have a `childImageSharp` field that you can use to query the image data. The exact data structure will vary according to your data source, but the syntax is like this:
 
    ```graphql:title=src/templates/blogpost.js
-   query {
+   query ($Id: String) {
      blogPost(id: { eq: $Id }) {
        title
        body
@@ -135,7 +135,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 
    ```graphql:title=src/templates/blogpost.js
-   query {
+   query ($Id: String) {
      blogPost(id: { eq: $Id }) {
        title
        body
@@ -178,7 +178,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    }
 
    export const pageQuery = graphql`
-     query {
+     query ($Id: String) {
        blogPost(id: { eq: $Id }) {
          title
          body
