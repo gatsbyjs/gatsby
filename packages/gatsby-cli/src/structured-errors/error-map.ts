@@ -585,8 +585,7 @@ const errors: Record<string, IErrorMapEntry> = {
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11334": {
     text: (context): string =>
@@ -599,8 +598,7 @@ const errors: Record<string, IErrorMapEntry> = {
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11335": {
     text: (context): string =>
@@ -617,8 +615,7 @@ const errors: Record<string, IErrorMapEntry> = {
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11336": {
     text: (context): string =>
@@ -633,24 +630,21 @@ const errors: Record<string, IErrorMapEntry> = {
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11337": {
     text: (context): string =>
       `An empty file "${context.componentPath}" was found during slice creation. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11338": {
     text: (context): string =>
       `${context.pluginName} created a slice component without a valid default export.\n\nThe path to the component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11339": {
     text: (context): string =>
@@ -663,8 +657,7 @@ const errors: Record<string, IErrorMapEntry> = {
         .join(`\n\n`),
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11340": {
     text: (context): string =>
@@ -676,8 +669,7 @@ const errors: Record<string, IErrorMapEntry> = {
         .join(`\n\n`),
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    // TODO: change domain to gatsbyjs.com when it's released
-    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   // node object didn't pass validation
   "11467": {
