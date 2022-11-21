@@ -28,9 +28,9 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> =
         })
       )
       .allow(null),
-    category: Joi.string().valid(Object.values(ErrorCategory)),
-    level: Joi.string().valid(Object.values(Level)),
-    type: Joi.string().valid(Object.values(Type)),
+    category: Joi.string().valid(...Object.values(ErrorCategory)),
+    level: Joi.string().valid(...Object.values(Level)),
+    type: Joi.string().valid(...Object.values(Type)),
     filePath: Joi.string(),
     location: Joi.object({
       start: Position.required(),
