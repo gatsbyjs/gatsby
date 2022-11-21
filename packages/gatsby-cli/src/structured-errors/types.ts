@@ -83,6 +83,18 @@ export const enum Type {
   FUNCTIONS_EXECUTION = `FUNCTIONS.EXECUTION`,
   CLI_VALIDATION = `CLI.VALIDATION`,
   UNKNOWN = `UNKNOWN`,
+  // Backwards compatibility for plugins
+  // TODO(v6): Remove these types
+  /** @deprecated */
+  GRAPHQL = `GRAPHQL`,
+  /** @deprecated */
+  CONFIG = `CONFIG`,
+  /** @deprecated */
+  WEBPACK = `WEBPACK`,
+  /** @deprecated */
+  PLUGIN = `PLUGIN`,
+  /** @deprecated */
+  COMPILATION = `COMPILATION`,
 }
 
 export const enum ErrorCategory {
