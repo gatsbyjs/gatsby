@@ -22,9 +22,9 @@ const constructError = (
       errorMapEntry = errorMap[id]
     } else if (suppliedErrorMap[id]) {
       errorMapEntry = {
-        ...suppliedErrorMap[id],
         type: `UNKNOWN`,
         level: `ERROR`,
+        ...suppliedErrorMap[id],
       }
     }
   }
