@@ -818,10 +818,10 @@ The source plugin needs to create node manifests using the [`unstable_createNode
 
 The first thing you'll want to do is identify which nodes you'll want to create a node manifest for. These will typically be nodes that you can preview, entry nodes, top level nodes, etc. An example of this could be a blog post or an article, any node that can be the "owner" of a page. A good place to call this action is whenever you call `createNode`.
 
-An easy way to keep track of your manifest logic is to parse it out into a different util function. Either inside the `createNodeManifest` util or before you call it you'll need to vet which nodes you'll want to create manifests for.
+An easy way to keep track of your manifest logic is to parse it out into a different util function. Before you call `unstable_createNodeManifest` you'll need to vet which nodes you'll want to create manifests for.
 
 ```javascript:title=source-plugin/gatsby-node.js
-import { createNodeManifest } from "./utils.js"
+import { customCreateNodeManifest } from "./utils.js"
 exports.sourceNodes = async (
   { actions }
 ) => {
@@ -834,7 +834,7 @@ exports.sourceNodes = async (
 
     const nodeIsEntryNode = `some condition`
     if (nodeIsEntryNode) {
-      createNodeManifest({
+      customCreateNodeManifest({
         entryItem: node,
         entryNode: gatsbyNode,
         project,
@@ -851,7 +851,7 @@ exports.sourceNodes = async (
 At the moment you'll only want to create node manifests for preview content and because this is a newer API, we'll need to check if the Gatsby version supports [`unstable_createNodeManifest`](/docs/reference/config-files/actions/#unstable_createNodeManifest).
 
 ```javascript:title=source-plugin/utils.js
-export function createNodeManifest({
+export function customCreateNodeManifest({
   entryItem, // the raw data source/cms content data
   project,   // the cms project data
   entryNode, // the Gatsby node
@@ -864,7 +864,7 @@ export function createNodeManifest({
   const createNodeManifestIsSupported =
     typeof unstable_createNodeManifest === `function`
 
-  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
+  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported && !!customNodeFilteringFn(entryNode)
   // highlight-end
 
   if (shouldCreateNodeManifest) {
