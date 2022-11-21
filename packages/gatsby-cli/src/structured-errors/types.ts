@@ -47,14 +47,14 @@ export interface IOptionalGraphQLInfoContext {
   plugin?: string
 }
 
-export const enum Level {
+export enum Level {
   ERROR = `ERROR`,
   WARNING = `WARNING`,
   INFO = `INFO`,
   DEBUG = `DEBUG`,
 }
 
-export const enum Type {
+export enum Type {
   HTML_COMPILATION = `HTML.COMPILATION`,
   HTML_GENERATION = `HTML.GENERATION`,
   HTML_GENERATION_DEV_SSR = `HTML.GENERATION.DEV_SSR`,
@@ -97,7 +97,7 @@ export const enum Type {
   COMPILATION = `COMPILATION`,
 }
 
-export const enum ErrorCategory {
+export enum ErrorCategory {
   USER = `USER`,
   SYSTEM = `SYSTEM`,
   THIRD_PARTY = `THIRD_PARTY`,
