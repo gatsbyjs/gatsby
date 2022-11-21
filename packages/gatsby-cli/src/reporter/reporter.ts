@@ -7,7 +7,10 @@ import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
-import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
+import {
+  IErrorMapEntryPublicApi,
+  ErrorId,
+} from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
 import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
@@ -53,7 +56,7 @@ class Reporter {
   stripIndent = stripIndent
   format = chalk
 
-  errorMap: Record<ErrorId, IErrorMapEntry> = {}
+  errorMap: Record<ErrorId, IErrorMapEntryPublicApi> = {}
 
   /**
    * Set a custom error map to the reporter. This allows
@@ -63,7 +66,7 @@ class Reporter {
    * https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/src/structured-errors/error-map.ts
    */
 
-  setErrorMap = (entry: Record<string, IErrorMapEntry>): void => {
+  setErrorMap = (entry: Record<string, IErrorMapEntryPublicApi>): void => {
     this.errorMap = {
       ...this.errorMap,
       ...entry,

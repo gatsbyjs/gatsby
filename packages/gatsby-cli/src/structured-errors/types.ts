@@ -1,4 +1,4 @@
-import { IErrorMapEntry, ErrorId } from "./error-map"
+import { ErrorId } from "./error-map"
 
 export interface IConstructError {
   details: {
@@ -31,11 +31,11 @@ export interface IStructuredError {
     start: ILocationPosition
     end?: ILocationPosition
   }
-  category?: keyof typeof ErrorCategory
+  category?: `${ErrorCategory}`
   error?: Error
   group?: string
-  level: IErrorMapEntry["level"]
-  type?: IErrorMapEntry["type"]
+  level: `${Level}`
+  type: `${Type}`
   docsUrl?: string
   pluginName?: string
 }
@@ -47,19 +47,18 @@ export interface IOptionalGraphQLInfoContext {
   plugin?: string
 }
 
-export enum Level {
+export const enum Level {
   ERROR = `ERROR`,
   WARNING = `WARNING`,
   INFO = `INFO`,
   DEBUG = `DEBUG`,
 }
 
-export enum Type {
+export const enum Type {
   HTML_COMPILATION = `HTML.COMPILATION`,
   HTML_GENERATION = `HTML.GENERATION`,
   HTML_GENERATION_DEV_SSR = `HTML.GENERATION.DEV_SSR`,
   HTML_GENERATION_SSG = `HTML.GENERATION.SSG`,
-  JS_COMPILATION = `JS.COMPILATION`,
   RSC_COMPILATION = `RSC.COMPILATION`,
   RSC_UNKNOWN = `RSC.UNKNOWN`,
   PAGE_DATA = `PAGE_DATA`,
@@ -71,6 +70,7 @@ export enum Type {
   ENGINE_COMPILATION = `ENGINE.COMPILATION`,
   ENGINE_HTML = `ENGINE.HTML`,
   ENGINE_VALIDATION = `ENGINE.VALIDATION`,
+  ENGINE_EXECUTION = `ENGINE.EXECUTION`,
   API_CONFIG_VALIDATION = `API.CONFIG.VALIDATION`,
   API_CONFIG_LOADING = `API.CONFIG.LOADING`,
   API_CONFIG_COMPILATION = `API.CONFIG.COMPILATION`,
@@ -85,7 +85,7 @@ export enum Type {
   UNKNOWN = `UNKNOWN`,
 }
 
-export enum ErrorCategory {
+export const enum ErrorCategory {
   USER = `USER`,
   SYSTEM = `SYSTEM`,
   THIRD_PARTY = `THIRD_PARTY`,
