@@ -31,12 +31,12 @@ export async function requireGatsbyPlugin(
       requirePluginModulePath = `${plugin.resolve}/${module}`
     }
 
+    // TODO: Use a single codepath with await import()
     try {
       pluginModule = require(requirePluginModulePath)
     } catch (failedToRequireError) {
       const url = pathToFileURL(`${requirePluginModulePath}.mjs`)
 
-      // TODO: Refactor probably
       try {
         pluginModule = await import(url?.href)
       } catch (failedToImportError) {

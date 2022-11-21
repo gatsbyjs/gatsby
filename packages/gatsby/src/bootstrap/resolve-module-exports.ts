@@ -214,7 +214,7 @@ export async function resolveModuleExports(
     return staticallyAnalyzeExports(modulePath, resolver)
   }
 
-  // TODO: Maybe move this to a better spot, let's test it here for now
+  // TODO: Use a single codepath with await import()
   if (failedWithoutRequireError) {
     try {
       // Let's see if it's a gatsby-node.mjs file
