@@ -39,6 +39,7 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,
+    type: Type.HTML_COMPILATION,
   },
   "95313": {
     text: (context): string =>
@@ -363,14 +364,14 @@ const errors: Record<string, IErrorMapEntry> = {
         context.nearMatch
       }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
     type: Type.CONFIG,
-    level: Level.ERROR,
+    level: Level.WARNING,
     category: ErrorCategory.USER,
   },
   "10125": {
     text: (context): string =>
       `Your ${context.configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`,
     type: Type.CONFIG,
-    level: Level.ERROR,
+    level: Level.WARNING,
     category: ErrorCategory.USER,
   },
   "10126": {
@@ -709,7 +710,7 @@ const errors: Record<string, IErrorMapEntry> = {
   // cli new command errors
   "11610": {
     text: (context): string =>
-      `It looks like you gave wrong argument orders . Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
+      `It looks like you gave wrong argument orders. Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
     category: ErrorCategory.USER,
@@ -922,8 +923,8 @@ export const defaultError = errorMap[``]
 export interface IErrorMapEntry {
   text: (context) => string
   // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
-  level: keyof typeof Level
-  type: keyof typeof Type
-  category: keyof typeof ErrorCategory
+  level: Level
+  type: Type
+  category: ErrorCategory
   docsUrl?: string
 }
