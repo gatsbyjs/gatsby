@@ -22,7 +22,7 @@ const constructError = (
       errorMapEntry = errorMap[id]
     } else if (suppliedErrorMap[id]) {
       errorMapEntry = {
-        type: `UNKNOWN`,
+        type: `PLUGIN`,
         level: `ERROR`,
         ...suppliedErrorMap[id],
       }
