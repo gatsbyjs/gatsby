@@ -1,6 +1,5 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
-import { IStructuredError } from "../../structured-errors/types"
-import { ErrorCategory } from "../../structured-errors/error-map"
+import { IStructuredError, ErrorCategory } from "../../structured-errors/types"
 import { IRenderPageArgs } from "../types"
 
 export interface IGatsbyCLIState {
