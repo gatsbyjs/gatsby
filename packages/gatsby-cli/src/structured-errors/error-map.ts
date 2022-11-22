@@ -88,8 +88,14 @@ const errors: Record<string, IErrorMapEntry> = {
       `${context.stageLabel} failed\n\n${
         context.sourceMessage ?? context.message
       }`,
-    // TODO: The type needs to be better
-    type: Type.UNKNOWN,
+    type: (context): `${Type}` =>
+      `WEBPACK.${
+        context.stage.toUpperCase() as
+          | `DEVELOP`
+          | `DEVELOP-HTML`
+          | `BUILD-JAVASCRIPT`
+          | `BUILD-HTML`
+      }`,
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
   },
@@ -103,8 +109,14 @@ const errors: Record<string, IErrorMapEntry> = {
 
       return message
     },
-    // TODO: The type needs to be better
-    type: Type.UNKNOWN,
+    type: (context): `${Type}` =>
+      `WEBPACK.${
+        context.stage.toUpperCase() as
+          | `DEVELOP`
+          | `DEVELOP-HTML`
+          | `BUILD-JAVASCRIPT`
+          | `BUILD-HTML`
+      }`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -950,7 +962,7 @@ export interface IErrorMapEntry {
   text: (context) => string
   // Public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union with string interpolation
   level: `${Level}`
-  type: `${Type}`
+  type: `${Type}` | ((context) => `${Type}`)
   category: `${ErrorCategory}`
   docsUrl?: string
 }
@@ -959,5 +971,5 @@ export interface IErrorMapEntry {
 export interface IErrorMapEntryPublicApi
   extends Omit<IErrorMapEntry, "level" | "type"> {
   level?: `${Level}`
-  type?: `${Type}`
+  type?: `${Type}` | ((context) => `${Type}`)
 }
