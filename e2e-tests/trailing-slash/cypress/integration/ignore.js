@@ -1,5 +1,11 @@
 import { assertPageVisits } from "../support/utils/trailing-slash"
 
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) {
+    return false
+  }
+})
+
 describe(`ignore`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
@@ -103,7 +109,6 @@ describe(`ignore (direct visits)`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
 
-  //Fix
   it(`page-creator`, () => {
     assertPageVisits([
       {
@@ -115,8 +120,7 @@ describe(`ignore (direct visits)`, () => {
 
     cy.visit(`/page-2`)
       .waitForRouteChange()
-      // TODO(v5): Should behave like "always"
-      .assertRoute(IS_BUILD ? `/page-2/` : `/page-2`)
+      .assertRoute(`/page-2`)
   })
 
   it(`create-page with`, () => {
@@ -200,7 +204,7 @@ describe(`ignore (direct visits)`, () => {
 
     cy.visit(`/page-2/?query_param=hello#anchor`)
       .waitForRouteChange()
-      .assertRoute(`/page-2/?query_param=hello#anchor`)
+      .assertRoute(IS_BUILD ? `/page-2?query_param=hello#anchor` : `/page-2/?query_param=hello#anchor`)
   })
   it(`query-param-hash without`, () => {
     assertPageVisits([
@@ -215,10 +219,6 @@ describe(`ignore (direct visits)`, () => {
 
     cy.visit(`/page-2?query_param=hello#anchor`)
       .waitForRouteChange()
-      .assertRoute(
-        IS_BUILD
-          ? `/page-2/?query_param=hello#anchor`
-          : `/page-2?query_param=hello#anchor`
-      )
+      .assertRoute(`/page-2?query_param=hello#anchor`)
   })
 })

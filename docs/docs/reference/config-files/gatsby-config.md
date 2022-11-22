@@ -177,7 +177,7 @@ Configures the creation of URLs for pages, and whether to remove, append, or ign
 - `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.
 - `ignore`: Don't automatically modify the URL
 
-The default setting for this option is `legacy` in order to preserve existing behavior for current users. In Gatsby v5 the default mode will be `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option. Alternate hosting providers (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
+The default setting for this option is `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option. Alternate hosting providers (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
 
 ## graphqlTypegen
 

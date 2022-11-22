@@ -53,6 +53,7 @@ The following CMSs have high popularity among Gatsby users and support key funct
 | [Builder.io](https://www.builder.io/)     | [guide](/docs/sourcing-from-builder-io/)                                    | [docs](/plugins/@builder.io/gatsby/)                |                                                             |
 | [Flotiq](https://flotiq.com/)             | [guide](/docs/sourcing-from-flotiq/)                                        | [docs](/plugins/gatsby-source-flotiq)               |
 | [Webiny](https://www.webiny.com/)         | [guide](https://www.webiny.com/docs/headless-cms/integrations/gatsby)       |                                                     | [starter](/starters/webiny/gatsby-starter-webiny/)          |
+| [Dialoguewise](https://dialoguewise.com/) | [guide](https://docs.dialoguewise.com/manage-content/sdk/gatsby)            | [docs](/plugins/gatsby-source-dialoguewise)         |                                                             |
 
 ## Integrating with other CMSs
 

@@ -522,7 +522,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   // highlight-start
   const result = await graphql(`
     query {
-      allEvent(sort: { fields: startDate, order: ASC }) {
+      allEvent(sort: { startDate: ASC }) {
         nodes {
           id
           slug
@@ -555,7 +555,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const result = await graphql(`
     query {
-      allEvent(sort: { fields: startDate, order: ASC }) {
+      allEvent(sort: { startDate: ASC }) {
         nodes {
           id
           slug
@@ -653,7 +653,7 @@ import { graphql, useStaticQuery } from "gatsby"
 const EventsTemplate = () => {
   const data = useStaticQuery(graphql`
     query {
-      allEvent(sort: { fields: startDate, order: ASC }) {
+      allEvent(sort: { startDate: ASC }) {
         nodes {
           id
           name
@@ -729,7 +729,7 @@ import EventList from "../components/event-list"
 const EventsTemplate = () => {
   const data = useStaticQuery(graphql`
     query {
-      allEvent(sort: { fields: startDate, order: ASC }) {
+      allEvent(sort: { startDate: ASC }) {
         nodes {
           id
           name

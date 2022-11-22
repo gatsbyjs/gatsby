@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.0.0/packages/gatsby-page-utils) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- Set trailingSlash default to "always" [#36798](https://github.com/gatsbyjs/gatsby/issues/36798) ([c10bf51](https://github.com/gatsbyjs/gatsby/commit/c10bf51125f6c601902d62f5336b32a1a4c05044))
+- path creation on windows filesystem [#36766](https://github.com/gatsbyjs/gatsby/issues/36766) ([f4ac70f](https://github.com/gatsbyjs/gatsby/commit/f4ac70f277fc35b870f55755e22180321906080a))
+
+#### Chores
+
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+### [2.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.24.1/packages/gatsby-page-utils) (2022-10-10)
+
+#### Bug Fixes
+
+- path creation on windows filesystem [#36766](https://github.com/gatsbyjs/gatsby/issues/36766) [#36783](https://github.com/gatsbyjs/gatsby/issues/36783) ([29fef67](https://github.com/gatsbyjs/gatsby/commit/29fef679567e0759e0854804e9082504362b3d71))
+
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.24.0/packages/gatsby-page-utils) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-page-utils
+
 ## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.23.0/packages/gatsby-page-utils) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

@@ -99,13 +99,13 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
-        <Link to="/redirect-two#anchor" data-testid="redirect-two-anchor">
+        <Link to="/redirect-two/#anchor" data-testid="redirect-two-anchor">
           Go to redirect with hash
         </Link>
       </li>
       <li>
         <Link
-          to="/redirect-two?query_param=hello"
+          to="/redirect-two/?query_param=hello"
           data-testid="redirect-two-search"
         >
           Go to redirect with query param
@@ -113,7 +113,7 @@ const IndexPage = ({ pageContext }) => (
       </li>
       <li>
         <Link
-          to="/redirect-two?query_param=hello#anchor"
+          to="/redirect-two/?query_param=hello#anchor"
           data-testid="redirect-two-search-anchor"
         >
           Go to redirect with query param and hash
