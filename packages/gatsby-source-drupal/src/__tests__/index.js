@@ -1,3 +1,5 @@
+import got from "got"
+
 const baseUrl = `http://fixture`
 const proxyUrl = `http://fixture-proxy`
 
@@ -457,8 +459,13 @@ describe(`gatsby-source-drupal`, () => {
   })
 
   it(`Can use the proxyUrl plugin option to use a different API url for sourcing`, async () => {
+    got.mockClear()
     nodes = {}
     await sourceNodes(args, { baseUrl, proxyUrl })
+    expect(got).toHaveBeenCalledWith(
+      expect.stringContaining(proxyUrl),
+      expect.anything()
+    )
     expect(Object.keys(nodes).length).not.toEqual(0)
     expect(nodes[createNodeId(`und.file-1`)]).toBeDefined()
     expect(nodes[createNodeId(`und.file-2`)]).toBeDefined()
