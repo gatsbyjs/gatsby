@@ -1493,7 +1493,6 @@ Array [
   Object {
     "fields": Array [
       "avatar",
-      "databaseId",
       "id",
       "name",
       "url",
@@ -1544,7 +1543,6 @@ Array [
       "modifiedGmt",
       "slug",
       "status",
-      "template",
       "uri",
       "nodeType",
       "parent",
@@ -5783,7 +5781,6 @@ Array [
       "sourceUrl",
       "srcSet",
       "status",
-      "template",
       "title",
       "uri",
       "nodeType",
@@ -6300,12 +6297,6 @@ Array [
       "node",
     ],
     "name": "WpNodeWithRevisionsToContentNodeConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "template",
-    ],
-    "name": "WpNodeWithTemplate",
   },
   Object {
     "fields": Array [
