@@ -463,8 +463,10 @@ describe(`gatsby-source-drupal`, () => {
     nodes = {}
     await sourceNodes(args, { baseUrl, proxyUrl })
 
+    let callSkipCount = 0
     for (const [index, call] of got.mock.calls.entries()) {
       if (call[0] === `http://fixture/jsonapi`) {
+        callSkipCount++
         continue
       }
 
@@ -474,6 +476,8 @@ describe(`gatsby-source-drupal`, () => {
         expect.anything()
       )
     }
+
+    expect(callSkipCount).toBe(1)
 
     expect(Object.keys(nodes).length).not.toEqual(0)
     expect(nodes[createNodeId(`und.file-1`)]).toBeDefined()
