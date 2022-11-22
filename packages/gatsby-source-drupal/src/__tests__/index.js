@@ -462,10 +462,19 @@ describe(`gatsby-source-drupal`, () => {
     got.mockClear()
     nodes = {}
     await sourceNodes(args, { baseUrl, proxyUrl })
-    expect(got).toHaveBeenCalledWith(
-      expect.stringContaining(proxyUrl),
-      expect.anything()
-    )
+
+    for (const [index] of got.mock.calls.entries()) {
+      if (index === 0) {
+        // we don't proxy 'http://fixture/jsonapi' which is the first call
+        continue
+      }
+      expect(got).toHaveBeenNthCalledWith(
+        index + 1,
+        expect.stringContaining(proxyUrl),
+        expect.anything()
+      )
+    }
+
     expect(Object.keys(nodes).length).not.toEqual(0)
     expect(nodes[createNodeId(`und.file-1`)]).toBeDefined()
     expect(nodes[createNodeId(`und.file-2`)]).toBeDefined()
