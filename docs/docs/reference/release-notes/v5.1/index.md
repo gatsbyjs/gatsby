@@ -12,8 +12,8 @@ If you haven't migrated yet, please refer to the [migration guide](/docs/referen
 
 Some brief notes about what Gatsby 5 brings to the table:
 
-- [Slices API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) unlocks up to 90% reduction in build duration for content changes in highly shared components
-- [Partial Hydration](https://www.gatsbyjs.com/docs/how-to/performance/partial-hydration/) allows you to ship only the necessary JavaScript to the browser
+- [Slices API](/docs/reference/built-in-components/gatsby-slice/) unlocks up to 90% reduction in build duration for content changes in highly shared components
+- [Partial Hydration](/docs/how-to/performance/partial-hydration/) allows you to ship only the necessary JavaScript to the browser
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -29,7 +29,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 - `gatsby`:
   - Fix writing of static query files when automatic sort and aggregation graphql codemod is run, via [PR #36997](https://github.com/gatsbyjs/gatsby/pull/36997)
-  - Fix graphql@16 peer dependency problems by migrating from express-graphql to graphql-http, via [PR #37001](https://github.com/gatsbyjs/gatsby/pull/37001)
+  - Fix graphql@16 peer dependency problems by migrating from `express-graphql` to `graphql-http`, via [PR #37001](https://github.com/gatsbyjs/gatsby/pull/37001)
   - Use XState `predictableActionArguments` and upgrade to latest, via [PR #36342](https://github.com/gatsbyjs/gatsby/pull/36342)
 - `gatsby-core-utils`:
   - Fix handling of non-ASCII characters in remote file download, via [PR #35637](https://github.com/gatsbyjs/gatsby/pull/35637)
