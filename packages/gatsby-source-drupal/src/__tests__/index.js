@@ -478,6 +478,7 @@ describe(`gatsby-source-drupal`, () => {
     }
 
     expect(callSkipCount).toBe(1)
+    expect(got).toBeCalledTimes(8)
 
     expect(Object.keys(nodes).length).not.toEqual(0)
     expect(nodes[createNodeId(`und.file-1`)]).toBeDefined()
