@@ -463,11 +463,11 @@ describe(`gatsby-source-drupal`, () => {
     nodes = {}
     await sourceNodes(args, { baseUrl, proxyUrl })
 
-    for (const [index] of got.mock.calls.entries()) {
-      if (index === 0) {
-        // we don't proxy 'http://fixture/jsonapi' which is the first call
+    for (const [index, call] of got.mock.calls.entries()) {
+      if (call[0] === `http://fixture/jsonapi`) {
         continue
       }
+
       expect(got).toHaveBeenNthCalledWith(
         index + 1,
         expect.stringContaining(proxyUrl),
