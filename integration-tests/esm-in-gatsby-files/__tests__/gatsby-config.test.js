@@ -60,7 +60,7 @@ describe(`gatsby-config.mjs`, () => {
     await fs.rm(localPluginTargetDir, { recursive: true })
   })
 
-  it(`works with required ESM modules`, async () => {
+  it(`works with imported ESM modules`, async () => {
     await fs.copyFile(fixturePath.esm, configPath.esm)
 
     await fs.ensureDir(localPluginTargetDir)
@@ -75,10 +75,10 @@ describe(`gatsby-config.mjs`, () => {
     expect(stdout).toContain(`hello-default-esm`)
     expect(stdout).toContain(`hello-named-esm`)
 
-    // Local plugin works
+    // Local plugin gatsby-config.mjs works
     expect(stdout).toContain(`a-local-plugin-gatsby-config-mjs`)
 
-    // Local plugin passed modules via options work
+    // Local plugin with an esm module passed via options works, this implicitly tests gatsby-node.mjs too
     expect(stdout).toContain(`a-local-plugin-using-passed-esm-module`)
   })
 })
