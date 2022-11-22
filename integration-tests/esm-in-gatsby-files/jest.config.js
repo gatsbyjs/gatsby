@@ -3,7 +3,7 @@ module.exports = {
     `/node_modules/`,
     `.cache`,
     `public`,
-    `__tests__/fixtures`,
+    `/__tests__/fixtures/`,
     `gatsby-config.js`,
     `gatsby-config.mjs`,
     `gatsby-config.ts`,

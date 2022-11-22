@@ -17,6 +17,9 @@ const configPath = {
   esm: path.join(siteRoot, `gatsby-config.mjs`),
 }
 
+const localPluginFixtureDir = path.join(fixtureRoot, `plugins`)
+const localPluginTargetDir = path.join(siteRoot, `plugins`)
+
 const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 async function build() {
@@ -30,6 +33,8 @@ async function build() {
   return stdout
 }
 
+// Tests include multiple assertions since running multiple builds is time consuming
+
 describe(`gatsby-config.js`, () => {
   afterEach(() => {
     fs.rmSync(configPath.cjs)
@@ -37,23 +42,43 @@ describe(`gatsby-config.js`, () => {
 
   it(`works with required CJS modules`, async () => {
     await fs.copyFile(fixturePath.cjs, configPath.cjs)
+
     const stdout = await build()
+
+    // Build succeeded
     expect(stdout).toContain(`Done building`)
+
+    // Requires work
     expect(stdout).toContain(`hello-default-cjs`)
     expect(stdout).toContain(`hello-named-cjs`)
   })
 })
 
 describe(`gatsby-config.mjs`, () => {
-  afterEach(() => {
-    fs.rmSync(configPath.esm)
+  afterEach(async () => {
+    await fs.rm(configPath.esm)
+    await fs.rm(localPluginTargetDir, { recursive: true })
   })
 
   it(`works with required ESM modules`, async () => {
     await fs.copyFile(fixturePath.esm, configPath.esm)
+
+    await fs.ensureDir(localPluginTargetDir)
+    await fs.copy(localPluginFixtureDir, localPluginTargetDir)
+
     const stdout = await build()
+
+    // Build succeeded
     expect(stdout).toContain(`Done building`)
+
+    // Imports work
     expect(stdout).toContain(`hello-default-esm`)
     expect(stdout).toContain(`hello-named-esm`)
+
+    // Local plugin works
+    expect(stdout).toContain(`a-local-plugin-gatsby-config-mjs`)
+
+    // Local plugin passed modules via options work
+    expect(stdout).toContain(`a-local-plugin-using-passed-esm-module`)
   })
 })
