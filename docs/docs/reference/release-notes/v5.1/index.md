@@ -46,6 +46,21 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [GhassenRjab](https://github.com/GhassenRjab): chore(gatsby-plugin-google-analytics): Update `minimatch` [PR #37029](https://github.com/gatsbyjs/gatsby/pull/37029)
+- [one-ness](https://github.com/one-ness): chore(docs): Add IE 11 note to v2 to v3 migration guide [PR #37022](https://github.com/gatsbyjs/gatsby/pull/37022)
+- [bicstone](https://github.com/bicstone): chore(docs): Fix broken link in v5 Release Notes [PR #37000](https://github.com/gatsbyjs/gatsby/pull/37000)
+- [cometkim](https://github.com/cometkim): fix(gatsby-core-utils): decode uri-encode filename for remote file [PR #35637](https://github.com/gatsbyjs/gatsby/pull/35637)
+- [shogohida](https://github.com/shogohida): chore(docs): Add `--` to quick start flags [PR #37041](https://github.com/gatsbyjs/gatsby/pull/37041)
+- [ascott97](https://github.com/ascott97): fix(gatsby-transformer-csv): Fix high memory consumption [PR #36610](https://github.com/gatsbyjs/gatsby/pull/36610)
+- [augustweinbren](https://github.com/augustweinbren): chore(docs): Clarify language in v4 to v5 migration guide [PR #37007](https://github.com/gatsbyjs/gatsby/pull/37007)
+- [benomatis](https://github.com/benomatis): chore(docs): Google Analytics: use gtag.js plugin [PR #36984](https://github.com/gatsbyjs/gatsby/pull/36984)
+- [btzs](https://github.com/btzs): chore(docs): Add import to Seo component in part 6 [PR #36990](https://github.com/gatsbyjs/gatsby/pull/36990)
+- [Nischal2015](https://github.com/Nischal2015)
+  - chore(docs): Fix typo in part 4 [PR #36983](https://github.com/gatsbyjs/gatsby/pull/36983)
+  - chore(docs): remove extra div [PR #36992](https://github.com/gatsbyjs/gatsby/pull/36992)
+  - chore(docs): fix typo in partial-hydration [PR #36987](https://github.com/gatsbyjs/gatsby/pull/36987)
+  - chore(docs): fix graphql-concepts typo [PR #36998](https://github.com/gatsbyjs/gatsby/pull/36998)
+- [Simon-Tang](https://github.com/Simon-Tang): feat(gatsby-plugin-google-gtag): Add `delayOnRouteUpdate` option [PR #37017](https://github.com/gatsbyjs/gatsby/pull/37017)
+- [axe312ger](https://github.com/axe312ger): build: include e2e tests in renovate config [PR #37005](https://github.com/gatsbyjs/gatsby/pull/37005)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.1.0-next.0...gatsby@5.1.0
