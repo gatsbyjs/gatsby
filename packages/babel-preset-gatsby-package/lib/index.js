@@ -66,7 +66,6 @@ function preset(context, options = {}) {
             shippedProposals: true,
             modules: esm ? false : `commonjs`,
             bugfixes: esm,
-            exclude: [`proposal-dynamic-import`],
           },
           browser ? browserConfig : nodeConfig
         ),
