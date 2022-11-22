@@ -1,5 +1,12 @@
+const baseUrl = `http://fixture`
+const proxyUrl = `http://fixture-proxy`
+
 jest.mock(`got`, () =>
   jest.fn(path => {
+    if (path.includes(proxyUrl)) {
+      path = path.replace(proxyUrl, baseUrl)
+    }
+
     let last = ``
     if (path.includes(`i18n-test`)) {
       last = `i18n-test-`
@@ -59,7 +66,6 @@ const { handleWebhookUpdate } = require(`../utils`)
 describe(`gatsby-source-drupal`, () => {
   let nodes = {}
   const createNodeId = id => `generated-id-${id}`
-  const baseUrl = `http://fixture`
   const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
   const { objectContaining } = expect
   const actions = {
@@ -445,6 +451,19 @@ describe(`gatsby-source-drupal`, () => {
     expect(nodes[createNodeId(`und.file-2`)]).toBeDefined()
     expect(nodes[createNodeId(`und.tag-1`)]).toBeUndefined()
     expect(nodes[createNodeId(`und.tag-2`)]).toBeUndefined()
+    expect(nodes[createNodeId(`und.article-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.article-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.article-3`)]).toBeDefined()
+  })
+
+  it(`Can use the proxyUrl plugin option to use a different API url for sourcing`, async () => {
+    nodes = {}
+    await sourceNodes(args, { baseUrl, proxyUrl })
+    expect(Object.keys(nodes).length).not.toEqual(0)
+    expect(nodes[createNodeId(`und.file-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.file-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.tag-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.tag-2`)]).toBeDefined()
     expect(nodes[createNodeId(`und.article-1`)]).toBeDefined()
     expect(nodes[createNodeId(`und.article-2`)]).toBeDefined()
     expect(nodes[createNodeId(`und.article-3`)]).toBeDefined()
