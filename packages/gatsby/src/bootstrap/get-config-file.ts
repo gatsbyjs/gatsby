@@ -1,5 +1,5 @@
 import fs from "fs-extra"
-// import { testRequireError } from "../utils/test-require-error"
+import { isImportError } from "../utils/is-import-error"
 import report from "gatsby-cli/lib/reporter"
 import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
@@ -35,21 +35,20 @@ export async function getConfigFile(
     // But the compiled file can also have an error like this:
     // "Cannot find module 'foobar'"
     // So this is trying to differentiate between an error we're fine ignoring and an error that we should throw
-    // const isModuleNotFoundError = outerError.code === `MODULE_NOT_FOUND`
-    // const isThisFileRequireError =
-    //   outerError?.requireStack?.[0]?.includes(`get-config-file`) ?? true
+    const isModuleNotFoundError = outerError.code === `ERR_MODULE_NOT_FOUND`
+    const isThisFileRequireError =
+      outerError?.requireStack?.[0]?.includes(`get-config-file`) ?? true
 
-    // TODO: Adjust test for import, not require
-    // if (!(isModuleNotFoundError && isThisFileRequireError)) {
-    //   report.panic({
-    //     id: `11902`,
-    //     error: outerError,
-    //     context: {
-    //       configName,
-    //       message: outerError.message,
-    //     },
-    //   })
-    // }
+    if (!(isModuleNotFoundError && isThisFileRequireError)) {
+      report.panic({
+        id: `11902`,
+        error: outerError,
+        context: {
+          configName,
+          message: outerError.message,
+        },
+      })
+    }
 
     // Attempt to find uncompiled gatsby-config in root dir
     configPath = path.join(siteDirectory, configName)
@@ -62,17 +61,18 @@ export async function getConfigFile(
         throw new Error(`No default export found in gatsby-config`)
       }
     } catch (innerError) {
-      // TODO: Adjust test for import, not require
-      // if (!testRequireError(configPath, innerError)) {
-      //   report.panic({
-      //     id: `10123`,
-      //     error: innerError,
-      //     context: {
-      //       configName,
-      //       message: innerError.message,
-      //     },
-      //   })
-      // }
+      // Panic if error happened because user's gatsby-config has some errors
+      // if not, we'll contine trying to find a config
+      if (!isImportError(innerError)) {
+        report.panic({
+          id: `10123`,
+          error: innerError,
+          context: {
+            configName,
+            message: innerError.message,
+          },
+        })
+      }
 
       const files = await fs.readdir(siteDirectory)
 
