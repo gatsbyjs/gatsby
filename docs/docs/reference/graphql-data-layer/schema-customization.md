@@ -459,7 +459,17 @@ In other words, you `link` **on** `from` **to** `by`. This makes `from` especial
 
 For the above example you can read `@link` this way: Use the value from the field `Frontmatter.reviewers` and match it by the field `AuthorJson.email`.
 
-Keep in mind that in the example above, the link of `posts` in `AuthorJson` works because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), it wouldn't work since the `by` argument doesn't support arrays. In that case, you'd have to provide a custom resolver with [Gatsby Type Builders](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api).
+Keep in mind that in the example above, the link of `posts` in `AuthorJson` works by defining a path to a node because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), you would need to define it like this with [`elemMatch`](/docs/graphql-reference/#filter):
+
+```graphql
+type AuthorJson implements Node {
+  # Using .elemMatch is important here
+  posts: [MarkdownRemark]
+    @link(by: "frontmatter.authors.elemMatch.email", from: "email")
+}
+```
+
+You can also provide a custom resolver with [Gatsby Type Builders](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api) to link arrays.
 
 ### Extensions and directives
 
