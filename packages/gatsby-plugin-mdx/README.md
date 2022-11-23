@@ -51,7 +51,7 @@ module.exports = {
 
 By default, this configuration will allow you to automatically create pages with `.mdx` files in `src/pages`.
 
-If you have MDX files in another location than `src/pages` you'll need to add another instance of `gatsby-source-filesystem` and configure the `path` to point at this folder. This is for example necessary when you have MDX files that you want to import into React components or for files you want to query via GraphQL.
+If you have MDX files in another location than `src/pages` you'll need to add another instance of `gatsby-source-filesystem` and configure the `path` to point at this folder. This is necessary for MDX files that you want to import into React components or for files you want to query via GraphQL.
 
 **Please Note:**
 
