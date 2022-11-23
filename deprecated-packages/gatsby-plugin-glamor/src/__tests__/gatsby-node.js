@@ -6,14 +6,10 @@ describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [`"optionA" is not allowed`]
 
-    const { isValid, errors } = await testPluginOptionsSchema(
-      pluginOptionsSchema,
-      {
-        optionA: `This options shouldn't exist`,
-      }
-    )
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      optionA: `This options shouldn't exist`,
+    })
 
-    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
@@ -22,12 +18,11 @@ describe(`pluginOptionsSchema`, () => {
     ${undefined}
     ${{}}
   `(`should validate the schema: $options`, async ({ options }) => {
-    const { isValid, errors } = await testPluginOptionsSchema(
+    const { isValid } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
 
     expect(isValid).toBe(true)
-    expect(errors).toEqual([])
   })
 })
