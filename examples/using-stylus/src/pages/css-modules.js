@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import s from "./css-modules.module.styl"
+import * as s from "./css-modules.module.styl"
 
 class CssModules extends React.Component {
   render() {

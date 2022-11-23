@@ -58,7 +58,7 @@ interface ErrorFormattingOptions {
    */
   stack?: boolean
   /**
-   * overrides the way values are wrapped (e.g. `[]` arround arrays, `""` around labels).
+   * overrides the way values are wrapped (e.g. `[]` around arrays, `""` around labels).
    * Each key can be set to a string with one (same character before and after the value) or two characters (first character
    * before and second character after), or `false` to disable wrapping.
    */
@@ -871,7 +871,7 @@ interface AnySchema extends SchemaInternals {
    *    - a function which returns the default value using the signature `function(parent, helpers)` where:
    *        - `parent` - a clone of the object containing the value being validated. Note that since specifying a
    *          `parent` ragument performs cloning, do not declare format arguments if you are not using them.
-   *        - `helpers` - same as thsoe described in [`any.custom()`](anycustomermethod_description)
+   *        - `helpers` - same as those described in [`any.custom()`](anycustomermethod_description)
    *
    * When called without any `value` on an object schema type, a default value will be automatically generated
    * based on the default values of the object keys.
@@ -1102,7 +1102,7 @@ interface AnySchema extends SchemaInternals {
   rule(options: RuleOptions): this
 
   /**
-   * Registers a schema to be used by decendents of the current schema in named link references.
+   * Registers a schema to be used by descendants of the current schema in named link references.
    */
   shared(ref: Schema): this
 
@@ -1160,7 +1160,7 @@ interface AnySchema extends SchemaInternals {
    * Warnings are reported separately from errors alongside the result value via the warning key (i.e. `{ value, warning }`).
    * Warning are always included when calling `any.validate()`.
    */
-  warning(code: string, context: Context): this
+  warning(code: string, context?: Context): this
 
   /**
    * Converts the type into an alternatives type where the conditions are merged into the type definition where:
@@ -1198,7 +1198,7 @@ interface Context {
 
 interface State {
   key?: string
-  path?: string
+  path: Array<string | number>
   parent?: any
   reference?: any
   ancestors?: any
@@ -2184,6 +2184,11 @@ export interface PluginOptionsSchemaJoi {
   // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
   // Below are undocumented APIs. use at your own risk
   // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+  /**
+   * Array of plugin definitions which get resolved automatically
+   */
+  subPlugins(...values: any[]): Schema
 
   /**
    * Whitelists a value

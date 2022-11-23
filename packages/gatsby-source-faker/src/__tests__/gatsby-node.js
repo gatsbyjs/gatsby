@@ -1,7 +1,7 @@
 const { sourceNodes } = require(`../gatsby-node`)
 
 describe(`gatsby-source-faker`, () => {
-  let actions = {}
+  const actions = {}
   let createNodeId
   let createContentDigest
 

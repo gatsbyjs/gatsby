@@ -1,6 +1,6 @@
 # `gatsby-core-utils`
 
-A list of utilities used in multiple gatsby packages.
+Utilities used in multiple Gatsby packages.
 
 ## Usage
 
@@ -30,11 +30,11 @@ Calculate the number of CPU cores on the current machine
 
 This function can be controlled by an env variable `GATSBY_CPU_COUNT` setting the first argument to true.
 
-| value         | description                                            |
-| ------------- | ------------------------------------------------------ |
-|               | Counts amount of real cores by running a shell command |
-| logical-cores | `require("os").cpus()` to count all virtual cores      |
-| any number    | Sets cpu count to that specific number                 |
+| value           | description                                            |
+| --------------- | ------------------------------------------------------ |
+|                 | Counts amount of real cores by running a shell command |
+| `logical_cores` | `require("os").cpus()` to count all virtual cores      |
+| any number      | Sets cpu count to that specific number                 |
 
 ```js
 const { cpuCoreCount } = require("gatsby-core-utils")
@@ -45,7 +45,7 @@ const coreCount = cpuCoreCount(false)
 
 ```js
 const { cpuCoreCount } = require("gatsby-core-utils")
-process.env.GATSBY_CPU_COUNT = "logical-cores"
+process.env.GATSBY_CPU_COUNT = "logical_cores"
 
 const coreCount = cpuCoreCount()
 // ...
@@ -103,4 +103,21 @@ const requireUtil = createRequireFromPath("../src/utils/")
 // Require `../src/utils/some-tool`
 requireUtil("./some-tool")
 // ...
+```
+
+### Mutex
+
+When working inside workers or async operations you want some kind of concurrency control that a specific work load can only concurrent one at a time. This is what a [Mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) does.
+
+By implementing the following code, the code is only executed one at a time and the other threads/async workloads are awaited until the current one is done. This is handy when writing to the same file to disk.
+
+```js
+const { createMutex } = require("gatsby-core-utils/mutex")
+
+const mutex = createMutex("my-custom-mutex-key")
+await mutex.acquire()
+
+await fs.writeFile("pathToFile", "my custom content")
+
+await mutex.release()
 ```

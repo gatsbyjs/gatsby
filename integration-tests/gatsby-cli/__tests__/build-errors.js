@@ -31,10 +31,12 @@ describe(`gatsby build (errors)`, () => {
 
     // Stack trace
     logs.should.contain(
-      `WebpackError: TypeError: Cannot read property 'bar' of null`
+      `WebpackError: TypeError: Cannot read properties of null (reading 'bar')`
     )
     logs.should.contain(`- index.js:5`)
-    logs.should.contain(`  src/pages/index.js:5:5`)
+    logs.should.contain(
+      `  gatsby-starter-default-build-errors/src/pages/index.js:5:5`
+    )
 
     expect(code).not.toBe(0)
   })

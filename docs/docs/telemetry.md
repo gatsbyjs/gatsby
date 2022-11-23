@@ -9,7 +9,7 @@ You will be notified when installing Gatsby and when running it for the first ti
 
 ## How to opt-out
 
-Users may always opt-out from the telemetry with `gatsby telemetry --disable` or setting the environment variable `GATSBY_TELEMETRY_DISABLED` to `1`
+Users may always opt out from the telemetry with `gatsby telemetry --disable` or setting the environment variable `GATSBY_TELEMETRY_DISABLED` to `1`
 
 ## Why?
 

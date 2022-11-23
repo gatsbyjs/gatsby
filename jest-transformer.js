@@ -1,11 +1,12 @@
-const babelPreset = require(`babel-preset-gatsby-package`)()
-module.exports = require(`babel-jest`).createTransformer({
-  ...babelPreset,
-  overrides: [
-    ...(babelPreset.overrides || []),
-    {
-      test: [`**/*.ts`, `**/*.tsx`],
-      plugins: [[`@babel/plugin-transform-typescript`, { isTSX: true }]],
-    },
+const babelJest = require(`babel-jest`)
+
+module.exports = babelJest.default.createTransformer({
+  presets: [`babel-preset-gatsby-package`],
+  babelrcRoots: [
+    // Keep the root as a root
+    `.`,
+
+    // Also consider monorepo packages "root" and load their .babelrc files.
+    `./packages/*`,
   ],
 })

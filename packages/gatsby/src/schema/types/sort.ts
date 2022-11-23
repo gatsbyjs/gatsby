@@ -15,7 +15,10 @@ import {
   InterfaceTypeComposer,
   UnionTypeComposer,
   ScalarTypeComposer,
+  toInputObjectType,
 } from "graphql-compose"
+
+import { convertToNestedInputType, IVisitContext } from "./utils"
 
 type AnyTypeComposer<TContext> =
   | ObjectTypeComposer<any, TContext>
@@ -27,8 +30,8 @@ type AnyTypeComposer<TContext> =
 
 export const SORTABLE_ENUM = {
   SORTABLE: `SORTABLE`,
-  NOT_SORTABLE: `NON_SORTABLE`,
-  DEPRECATED_SORTABLE: `DERPECATED_SORTABLE`,
+  NOT_SORTABLE: `NOT_SORTABLE`,
+  DEPRECATED_SORTABLE: `DEPRECATED_SORTABLE`,
 }
 
 export const getSortOrderEnum = <TContext = any>({
@@ -52,7 +55,7 @@ const convert = <TContext = any>({
   fields,
   prefix = null,
   depth = 0,
-  deprecationReason,
+  deprecationReason: parentFieldDeprecationReason,
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: AnyTypeComposer<TContext>
@@ -64,6 +67,7 @@ const convert = <TContext = any>({
   const sortFields = {}
 
   Object.keys(fields).forEach(fieldName => {
+    let deprecationReason = parentFieldDeprecationReason
     const fieldConfig = fields[fieldName]
     const sortable =
       typeComposer instanceof UnionTypeComposer ||
@@ -128,15 +132,14 @@ export const getFieldsEnum = <TSource = any, TContext = any>({
 }): EnumTypeComposer<TContext> => {
   const typeName = typeComposer.getTypeName()
   const fieldsEnumTypeName = `${typeName}FieldsEnum`
-  const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
-    fieldsEnumTypeName
-  )
+  const fieldsEnumTypeComposer =
+    schemaComposer.getOrCreateETC(fieldsEnumTypeName)
   addDerivedType({ typeComposer, derivedTypeName: fieldsEnumTypeName })
 
   const fields = convert({
     schemaComposer,
     typeComposer,
-    fields: inputTypeComposer.getFields() as GraphQLInputFieldMap,
+    fields: inputTypeComposer.getType().getFields(),
   })
   fieldsEnumTypeComposer.setFields(fields)
   return fieldsEnumTypeComposer
@@ -149,7 +152,15 @@ export const getSortInput = <TSource = any, TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer<TSource, TContext>
 }): InputTypeComposer<TContext> => {
-  const inputTypeComposer = typeComposer.getInputTypeComposer()
+  // toInputObjectType() will fail to convert fields of union types, e.g.
+  //   union FooBar = Foo | Bar
+  //   type Baz {
+  //     fooBar: FooBar
+  //   }
+  // Passing `fallbackType: null` allows us to skip this field in the input type
+  const inputTypeComposer = toInputObjectType(typeComposer, {
+    fallbackType: null,
+  })
   const sortOrderEnumTC = getSortOrderEnum({ schemaComposer })
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
@@ -168,4 +179,44 @@ export const getSortInput = <TSource = any, TContext = any>({
       order: { type: [sortOrderEnumTC], defaultValue: [`ASC`] },
     })
   })
+}
+
+type Context = any
+
+export const getSortInputNestedObjects = ({
+  schemaComposer,
+  typeComposer,
+}: {
+  schemaComposer: SchemaComposer<Context>
+  typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>
+}): InputTypeComposer => {
+  const itc = convertToNestedInputType({
+    schemaComposer,
+    typeComposer,
+    postfix: `SortInput`,
+    onEnter: ({ fieldName, typeComposer }): IVisitContext => {
+      const sortable =
+        typeComposer instanceof UnionTypeComposer ||
+        typeComposer instanceof ScalarTypeComposer
+          ? undefined
+          : typeComposer.getFieldExtension(fieldName, `sortable`)
+      if (sortable === SORTABLE_ENUM.NOT_SORTABLE) {
+        // stop traversing
+        return null
+      } else if (sortable === SORTABLE_ENUM.DEPRECATED_SORTABLE) {
+        // mark this and all nested fields as deprecated
+        return {
+          deprecationReason: `Sorting on fields that need arguments to resolve is deprecated.`,
+        }
+      }
+
+      // continue
+      return undefined
+    },
+    // @ts-ignore TODO: correct types
+    leafInputComposer: getSortOrderEnum({ schemaComposer }),
+  })
+
+  // @ts-ignore TODO: correct types
+  return itc.List
 }

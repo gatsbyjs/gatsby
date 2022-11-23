@@ -1,7 +1,8 @@
 import React from "react"
-import { Link, graphql, unstable_collectionGraphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
+import Seo from "../../components/seo"
 
 export default function BlogPost({ data: { product } }) {
   return (
@@ -13,19 +14,13 @@ export default function BlogPost({ data: { product } }) {
   )
 }
 
+export const Head = () => <Seo />
+
 export const blogPostQuery = graphql`
   query GetBlogPostBySlugCollection($id: String!) {
     product(id: { eq: $id }) {
       id
       name
-    }
-  }
-`
-
-export const collection = unstable_collectionGraphql`
-  {
-    allProduct { 
-      ...CollectionPagesQueryFragment
     }
   }
 `

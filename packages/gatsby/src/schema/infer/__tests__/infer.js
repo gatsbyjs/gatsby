@@ -18,6 +18,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -36,6 +37,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => {
   report.error.mockClear()
+  report.warn.mockClear()
 })
 
 const makeNodes = () => [
@@ -116,7 +118,7 @@ const addNodes = nodes => {
 
 const deleteNodes = nodes => {
   nodes.forEach(node => {
-    store.dispatch(actions.deleteNode({ node }, { name: `test` }))
+    store.dispatch(actions.deleteNode(node, { name: `test` }))
   })
 }
 
@@ -269,22 +271,26 @@ describe(`GraphQL type inference`, () => {
       typeDefs
     )
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
-    return graphql(
+    return graphql({
       schema,
-      `query {
-        allTest {
-          edges {
-            node {
-              ${fragment}
-            }
-          }
+      source: `query {
+    allTest {
+      edges {
+        node {
+          ${fragment}
         }
-        ${extraquery}
       }
-      `,
-      undefined,
-      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
-    )
+    }
+    ${extraquery}
+  }
+  `,
+      rootValue: undefined,
+      contextValue: withResolverContext({
+        schema,
+        schemaComposer,
+        context: { path: `/` },
+      }),
+    })
   }
 
   const getInferredFields = async (nodes, buildSchemaArgs) => {
@@ -524,7 +530,12 @@ describe(`GraphQL type inference`, () => {
           name: `Repro`,
           interfaces: [`Node`],
           fields: {
-            field_that_needs_to_be_sanitized_: `String`,
+            field_that_needs_to_be_sanitized_: {
+              type: `String`,
+              extensions: {
+                proxy: { from: `field_that_needs_to_be_sanitized?` },
+              },
+            },
             _another__field_that_needs_to_be_sanitized: {
               type: `String`,
               resolve: source =>
@@ -636,27 +647,31 @@ describe(`GraphQL type inference`, () => {
     ]
     const { schema, schemaComposer } = await buildTestSchema(nodes)
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
-        query {
-          allWordpressPage {
-            edges {
-              node {
-                __typename
-                id
-                acfFields {
-                  fooz
-                  __typename
-                }
-              }
+      source: `
+    query {
+      allWordpressPage {
+        edges {
+          node {
+            __typename
+            id
+            acfFields {
+              fooz
+              __typename
             }
           }
         }
-      `,
-      undefined,
-      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
-    )
+      }
+    }
+  `,
+      rootValue: undefined,
+      contextValue: withResolverContext({
+        schema,
+        schemaComposer,
+        context: { path: `/` },
+      }),
+    })
 
     expect(result).toMatchSnapshot()
   })

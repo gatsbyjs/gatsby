@@ -76,6 +76,7 @@ module.exports = {
     `features/regexp`,
     `features/symbol`,
     `features/promise`,
+    `features/dom-collections`,
   ],
   // Will be used by preset-env to exclude already polyfilled features from the automatic polyfilling option
   CORE_JS_POLYFILL_EXCLUDE_LIST: [
@@ -88,5 +89,9 @@ module.exports = {
     `es.promise`,
     `es.symbol.description`,
     `web.*`,
+
+    // core-js@3.7.0 added extra polyfill for reduce & reduce-right because of bug - we don't care about that bug, we're already on chrome 87
+    `es.array.reduce`,
+    `es.array.reduce-right`,
   ],
 }

@@ -8,6 +8,8 @@ const {
   GraphQLList,
   GraphQLObjectType,
   getNamedType,
+  parse,
+  print,
 } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
@@ -16,6 +18,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const withResolverContext = require(`../context`)
+const { tranformDocument } = require(`../../query/transform-document`)
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
@@ -47,18 +50,25 @@ describe(`Kitchen sink schema test`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = query =>
-    graphql(
+  const runQuery = query => {
+    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+      const inputAst = typeof query === `string` ? parse(query) : query
+      const { ast } = tranformDocument(inputAst)
+      query = print(ast)
+    }
+
+    return graphql({
       schema,
-      query,
-      undefined,
-      withResolverContext({
+      source: query,
+      rootValue: undefined,
+      contextValue: withResolverContext({
         schema,
         schemaComposer,
         context: {},
         customContext: {},
-      })
-    )
+      }),
+    })
+  }
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation((api, ...args) => {
@@ -88,7 +98,7 @@ describe(`Kitchen sink schema test`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        interface Post @nodeInterface {
+        interface Post implements Node {
           id: ID!
           code: String
         }
@@ -126,6 +136,9 @@ describe(`Kitchen sink schema test`, () => {
                   childImageSharp {
                     id
                   }
+                  childrenImageSharp {
+                    id
+                  }
                 }
               }
             }
@@ -144,6 +157,9 @@ describe(`Kitchen sink schema test`, () => {
                 comment
                 image {
                   childImageSharp {
+                    id
+                  }
+                  childrenImageSharp {
                     id
                   }
                 }
@@ -195,10 +211,13 @@ describe(`Kitchen sink schema test`, () => {
               text
             }
           }
+          builtIntPage: sitePage(id: { eq: "SitePage /1685001452849004065/" }) {
+            pageContext
+          }
         }
       `)
     ).toMatchSnapshot()
-  })
+  }, 30000)
 
   it(`correctly resolves nested Query types from third-party types`, () => {
     const queryFields = schema.getQueryType().getFields()
@@ -336,9 +355,11 @@ const mockCreateResolvers = ({ createResolvers }) => {
       likedEnough: {
         type: `[PostsJson]`,
         async resolve(parent, args, context) {
-          const result = await context.nodeModel.runQuery({
+          const { entries } = await context.nodeModel.findAll({
             type: `PostsJson`,
             query: {
+              limit: 2,
+              skip: 0,
               filter: {
                 likes: {
                   ne: null,
@@ -350,9 +371,8 @@ const mockCreateResolvers = ({ createResolvers }) => {
                 order: [`DESC`],
               },
             },
-            firstOnly: false,
           })
-          return result.slice(0, 2)
+          return entries
         },
       },
     },

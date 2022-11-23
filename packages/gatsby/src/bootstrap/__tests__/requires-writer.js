@@ -1,15 +1,17 @@
 const { joinPath } = require(`gatsby-core-utils`)
 const requiresWriter = require(`../requires-writer`)
-const { match } = require(`@reach/router/lib/utils`)
+const { match } = require(`@gatsbyjs/reach-router`)
 
 const now = Date.now()
 
 const generatePagesState = pages => {
-  let state = new Map()
+  const state = new Map()
   pages.forEach(page => {
     state.set(page.path, {
       component: ``,
       componentChunkName: ``,
+      componentPath: `/some-path`,
+      mode: `SSG`,
       ...page,
     })
   })
@@ -17,9 +19,16 @@ const generatePagesState = pages => {
   return state
 }
 
+jest.mock(`../../utils/page-mode`, () => {
+  return {
+    getPageMode: jest.fn(page => page.mode),
+  }
+})
+
 jest.mock(`fs-extra`, () => {
   return {
     writeFile: () => Promise.resolve(),
+    outputFileSync: () => {},
     move: () => {},
   }
 })
@@ -30,7 +39,7 @@ describe(`requires-writer`, () => {
   const program = {
     directory: `/dir`,
   }
-  let originalDateNow = global.Date.now
+  const originalDateNow = global.Date.now
 
   beforeEach(() => {
     global.Date.now = () => now
@@ -47,12 +56,14 @@ describe(`requires-writer`, () => {
         {
           component: `component1`,
           componentChunkName: `chunkName1`,
+          componentPath: `/component1`,
           matchPath: `matchPath1`,
           path: `/path1`,
         },
         {
           component: `component2`,
           componentChunkName: `chunkName2`,
+          componentPath: `/component2`,
           path: `/path2`,
         },
       ])
@@ -61,6 +72,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        slices: new Map(),
       })
 
       expect(spy).toBeCalledWith(
@@ -87,27 +99,33 @@ describe(`requires-writer`, () => {
       const pages = generatePagesState([
         {
           path: `/`,
+          componentPath: `/root--component`,
         },
         {
           path: `/app/`,
           matchPath: `/app/*`,
+          componentPath: `/app--component`,
         },
         {
           path: `/app/projects/`,
           matchPath: `/app/projects/*`,
+          componentPath: `/projects--component`,
         },
         {
           path: `/app/clients/`,
           matchPath: `/app/clients/*`,
+          componentPath: `/client--component`,
         },
         {
           path: `/app/login/`,
+          componentPath: `/login--component`,
         },
       ])
 
       await requiresWriter.writeAll({
         pages,
         program,
+        slices: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
@@ -121,26 +139,32 @@ describe(`requires-writer`, () => {
       const pages = generatePagesState([
         {
           path: `/`,
+          componentPath: `/root--component`,
         },
         {
           path: `/app/`,
           matchPath: `/app/*`,
+          componentPath: `/app--component`,
         },
         {
           path: `/app/clients/`,
           matchPath: `/app/clients/*`,
+          componentPath: `/clients--component`,
         },
         {
           path: `/app/clients/static`,
+          componentPath: `/static--component`,
         },
         {
           path: `/app/login/`,
+          componentPath: `/login--component`,
         },
       ])
 
       await requiresWriter.writeAll({
         pages,
         program,
+        slices: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
@@ -152,19 +176,23 @@ describe(`requires-writer`, () => {
         {
           path: `/another-custom-404`,
           matchPath: `/*`,
+          componentPath: `/404-2--component`,
         },
         {
           path: `/`,
+          componentPath: `/root--component`,
         },
         {
           path: `/custom-404`,
           matchPath: `/*`,
+          componentPath: `/404--component`,
         },
       ])
 
       await requiresWriter.writeAll({
         pages,
         program,
+        slices: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/`).path)
@@ -174,42 +202,53 @@ describe(`requires-writer`, () => {
     const pagesInput = [
       {
         path: `/`,
+        componentPath: `/root--component`,
       },
       {
         path: `/custom-404`,
         matchPath: `/*`,
+        componentPath: `/404--component`,
       },
       {
         path: `/mp4`,
         matchPath: `/mp1/mp2/mp3/mp4/*`,
+        componentPath: `/mp4--component`,
       },
       {
         path: `/some-page`,
+        componentPath: `/some--component`,
       },
       {
         path: `/mp1/mp2`,
+        componentPath: `/mp2--component`,
       },
       {
         path: `/mp1/with-params`,
         matchPath: `/mp1/:param`,
+        componentPath: `/params--component`,
       },
       {
         path: `/ap1/ap2`,
+        componentPath: `/ap2--component`,
       },
       {
         path: `/mp1/mp2/hello`,
+        componentPath: `/hello--component`,
       },
       {
         path: `/mp1`,
         matchPath: `/mp1/*`,
+        componentPath: `/mp1--component`,
       },
       {
         path: `/mp2`,
         matchPath: `/mp1/mp2/*`,
+        componentPath: `/mp2-star--component`,
       },
       {
         path: `/mp3`,
         matchPath: `/mp1/mp2/mp3/*`,
+        componentPath: `/mp3--component`,
       },
     ]
 
@@ -219,6 +258,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        slices: new Map(),
       })
 
       expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
@@ -245,6 +285,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        slices: new Map(),
       })
 
       const matchPathsForInvertedInput = matchPaths
@@ -252,6 +293,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
+        slices: new Map(),
       })
 
       expect(matchPathsForInvertedInput).toEqual(matchPaths)
@@ -263,6 +305,7 @@ describe(`requires-writer`, () => {
         await requiresWriter.writeAll({
           pages,
           program,
+          slices: new Map(),
         })
 
         const allMatchingPages = matchPaths
@@ -333,21 +376,24 @@ describe(`requires-writer`, () => {
         {
           component: `component1`,
           componentChunkName: `chunkName1`,
+          componentPath: `/component1`,
           matchPath: `matchPath1`,
           path: `/path1`,
         },
         {
           component: `component2`,
           componentChunkName: `chunkName2`,
+          componentPath: `/component2`,
           path: `/path2`,
         },
       ])
 
       const pages = [...pagesInput.values()]
       const pagesReversed = [...pagesInput.values()].reverse()
+      const slices = new Map()
 
-      expect(requiresWriter.getComponents(pages)).toEqual(
-        requiresWriter.getComponents(pagesReversed)
+      expect(requiresWriter.getComponents(pages, slices)).toEqual(
+        requiresWriter.getComponents(pagesReversed, slices)
       )
     })
   })

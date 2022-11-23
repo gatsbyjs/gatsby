@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
-import uuidv4 from "uuid"
+import { uuid } from "gatsby-core-utils"
 import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"
 import { Dispatch } from "redux"
@@ -23,6 +21,7 @@ import {
   IActivityErrored,
   IGatsbyCLIState,
   ISetLogs,
+  IRenderPageTree,
 } from "./types"
 import {
   delayedCall,
@@ -30,8 +29,8 @@ import {
   getElapsedTimeMS,
   getGlobalStatus,
 } from "./utils"
-import { IStructuredError } from "../../structured-errors/types"
-import { ErrorCategory } from "../../structured-errors/error-map"
+import { IStructuredError, ErrorCategory } from "../../structured-errors/types"
+import { IRenderPageArgs } from "../types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
@@ -53,38 +52,37 @@ let pendingStatus: ActivityStatuses | "" = ``
 // where technically we are "done" (all activities are done).
 // We don't want to emit multiple SET_STATUS events that would toggle between
 // IN_PROGRESS and SUCCESS/FAILED in short succession in those cases.
-export const setStatus = (
-  status: ActivityStatuses | "",
-  force: boolean = false
-) => (dispatch: Dispatch<ISetStatus>): void => {
-  const currentStatus = getStore().getState().logs.status
+export const setStatus =
+  (status: ActivityStatuses | "", force: boolean = false) =>
+  (dispatch: Dispatch<ISetStatus>): void => {
+    const currentStatus = getStore().getState().logs.status
 
-  if (cancelDelayedSetStatus) {
-    cancelDelayedSetStatus()
-    cancelDelayedSetStatus = null
-  }
+    if (cancelDelayedSetStatus) {
+      cancelDelayedSetStatus()
+      cancelDelayedSetStatus = null
+    }
 
-  if (
-    status !== currentStatus &&
-    (status === ActivityStatuses.InProgress || force || weShouldExit)
-  ) {
-    dispatch({
-      type: Actions.SetStatus,
-      payload: status,
-    })
-    pendingStatus = ``
-  } else {
-    // use pending status if truthy, fallback to current status if we don't have pending status
-    const pendingOrCurrentStatus = pendingStatus || currentStatus
+    if (
+      status !== currentStatus &&
+      (status === ActivityStatuses.InProgress || force || weShouldExit)
+    ) {
+      dispatch({
+        type: Actions.SetStatus,
+        payload: status,
+      })
+      pendingStatus = ``
+    } else {
+      // use pending status if truthy, fallback to current status if we don't have pending status
+      const pendingOrCurrentStatus = pendingStatus || currentStatus
 
-    if (status !== pendingOrCurrentStatus) {
-      pendingStatus = status
-      cancelDelayedSetStatus = delayedCall(() => {
-        setStatus(status, true)(dispatch)
-      }, 1000)
+      if (status !== pendingOrCurrentStatus) {
+        pendingStatus = status
+        cancelDelayedSetStatus = delayedCall(() => {
+          setStatus(status, true)(dispatch)
+        }, 1000)
+      }
     }
   }
-}
 
 export const createLog = ({
   level,
@@ -104,6 +102,7 @@ export const createLog = ({
   activity_type,
   activity_uuid,
   stack,
+  pluginName,
 }: {
   level: string
   text?: string
@@ -122,12 +121,13 @@ export const createLog = ({
   activity_type?: string
   activity_uuid?: string
   stack?: IStructuredError["stack"]
+  pluginName?: string
 }): ICreateLog => {
   return {
     type: Actions.Log,
     payload: {
       level,
-      text,
+      text: !text ? `\u2800` : text,
       statusText,
       duration,
       group,
@@ -144,6 +144,7 @@ export const createLog = ({
       activity_uuid,
       timestamp: new Date().toJSON(),
       stack,
+      pluginName,
     },
   }
 }
@@ -197,7 +198,7 @@ export const startActivity = ({
       type: Actions.StartActivity,
       payload: {
         id,
-        uuid: uuidv4(),
+        uuid: uuid.v4(),
         text,
         type,
         status,
@@ -377,5 +378,12 @@ export const setLogs = (logs: IGatsbyCLIState): ISetLogs => {
   return {
     type: Actions.SetLogs,
     payload: logs,
+  }
+}
+
+export const renderPageTree = (payload: IRenderPageArgs): IRenderPageTree => {
+  return {
+    type: Actions.RenderPageTree,
+    payload,
   }
 }

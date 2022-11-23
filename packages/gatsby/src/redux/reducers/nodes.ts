@@ -25,11 +25,6 @@ export const nodesReducer = (
       return state
     }
 
-    case `DELETE_NODES`: {
-      action.payload.forEach(id => state.delete(id))
-      return state
-    }
-
     default:
       return state
   }

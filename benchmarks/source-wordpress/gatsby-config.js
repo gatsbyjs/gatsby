@@ -18,7 +18,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-wordpress-experimental`,
+      resolve: `gatsby-source-wordpress`,
       options: {
         url: process.env.BENCHMARK_WPGRAPHQL_URL,
         type: {

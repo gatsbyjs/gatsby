@@ -134,7 +134,7 @@ Then, the app, webpack-runtime, component, shared libraries, and data JSON bundl
 
 ### onClientEntry (api-runner-browser)
 
-The first thing your app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before you hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/) will call rehydrate.
+The first thing your app does is run the [onClientEntry](/docs/reference/config-files/gatsby-browser/#onClientEntry) browser API. This allows plugins to perform any operations before you hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/plugins/gatsby-plugin-glamor/) will call rehydrate.
 
 It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in Node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
 

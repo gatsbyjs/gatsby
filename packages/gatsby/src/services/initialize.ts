@@ -1,33 +1,64 @@
 import _ from "lodash"
-import { slash } from "gatsby-core-utils"
-import fs from "fs-extra"
+import { slash, isCI } from "gatsby-core-utils"
+import * as fs from "fs-extra"
+import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import md5File from "md5-file"
 import crypto from "crypto"
-import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
+import glob from "globby"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
-import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
-import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
-import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
-import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
-import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
-import { internalActions } from "../redux/actions"
-import { IGatsbyState } from "../redux/types"
+import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
+import { loadConfig } from "../bootstrap/load-config"
+import { loadPlugins } from "../bootstrap/load-plugins"
+import type { InternalJob } from "../utils/jobs/types"
+import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
+import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
+import { resolveModule } from "../utils/module-resolver"
+import { writeGraphQLConfig } from "../utils/graphql-typegen/file-writes"
 
 interface IPluginResolution {
   resolve: string
   options: IPluginInfoOptions
+}
+
+interface IPluginResolutionSSR extends IPluginResolution {
+  name: string
+}
+
+// If the env variable GATSBY_EXPERIMENTAL_FAST_DEV is set, enable
+// all DEV experimental changes (but only during development & not on CI).
+if (
+  process.env.gatsby_executing_command === `develop` &&
+  process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
+  !isCI() &&
+  // skip FAST_DEV handling in workers, all env vars will be handle
+  // by main process already and passed to worker
+  !process.env.GATSBY_WORKER_POOL_WORKER
+) {
+  process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
+  process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
+
+  reporter.info(`
+Two fast dev experiments are enabled: SSR in develop and preserving file download cache.
+
+Please give feedback on their respective umbrella issues!
+
+- https://gatsby.dev/dev-ssr-feedback
+- https://gatsby.dev/cache-clearing-feedback
+  `)
+
+  telemetry.trackFeatureIsUsed(`FastDev`)
 }
 
 // Show stack trace on unhandled promises.
@@ -46,8 +77,14 @@ export async function initialize({
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
-  workerPool: JestWorker
+  workerPool: WorkerPool.GatsbyWorkerPool
 }> {
+  if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
+    reporter.info(
+      `GATSBY_DISABLE_CACHE_PERSISTENCE is enabled. Cache won't be persisted. Next builds will not be able to reuse any work done by current session.`
+    )
+    telemetry.trackFeatureIsUsed(`DisableCachePersistence`)
+  }
   if (!args) {
     reporter.panic(`Missing program args`)
   }
@@ -69,14 +106,34 @@ export async function initialize({
     args.setStore(store)
   }
 
-  // Start plugin runner which listens to the store
-  // and invokes Gatsby API based on actions.
-  startPluginRunner()
+  if (reporter._registerAdditionalDiagnosticOutputHandler) {
+    reporter._registerAdditionalDiagnosticOutputHandler(
+      function logPendingJobs(): string {
+        const outputs: Array<InternalJob> = []
+
+        for (const [, { job }] of store.getState().jobsV2.incomplete) {
+          outputs.push(job)
+          if (outputs.length >= 5) {
+            // 5 not finished jobs should be enough to track down issues
+            // this is just limiting output "spam"
+            break
+          }
+        }
+
+        return outputs.length
+          ? `Unfinished jobs (showing ${outputs.length} of ${
+              store.getState().jobsV2.incomplete.size
+            } jobs total):\n\n` + JSON.stringify(outputs, null, 2)
+          : ``
+      }
+    )
+  }
 
   const directory = slash(args.directory)
 
-  const program = {
+  const program: IStateProgram = {
     ...args,
+    extensions: [],
     browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
     directory,
@@ -105,51 +162,43 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
-  // Try opening the site's gatsby-config.js file.
-  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
+  const siteDirectory = program.directory
+
+  // Compile root gatsby files
+  let activity = reporter.activityTimer(`compile gatsby files`)
+  activity.start()
+  await compileGatsbyFiles(siteDirectory)
+  activity.end()
+
+  // Load gatsby config
+  activity = reporter.activityTimer(`load gatsby config`, {
     parentSpan,
   })
   activity.start()
-  const { configModule, configFilePath } = await getConfigFile(
-    program.directory,
-    `gatsby-config`
-  )
-  let config = preferDefault(configModule)
+  const config = await loadConfig({
+    siteDirectory,
+    processFlags: true,
+  })
+  activity.end()
 
-  // The root config cannot be exported as a function, only theme configs
-  if (typeof config === `function`) {
-    reporter.panic({
-      id: `10126`,
-      context: {
-        configName: `gatsby-config`,
-        path: program.directory,
-      },
-    })
+  // Load plugins
+  activity = reporter.activityTimer(`load plugins`, {
+    parentSpan,
+  })
+  activity.start()
+  const flattenedPlugins = await loadPlugins(config, siteDirectory)
+  activity.end()
+
+  // GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
+  // to disable query on demand loading indicator
+  if (!process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR) {
+    // if GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
+    // enable loading indicator
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
 
-  // theme gatsby configs can be functions or objects
-  if (config && config.__experimentalThemes) {
-    reporter.warn(
-      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
-    )
-    const themes = await loadThemes(config, {
-      useLegacyThemes: true,
-      configFilePath,
-      rootDir: program.directory,
-    })
-    config = themes.config
-
-    store.dispatch({
-      type: `SET_RESOLVED_THEMES`,
-      payload: themes.themes,
-    })
-  } else if (config) {
-    const plugins = await loadThemes(config, {
-      useLegacyThemes: false,
-      configFilePath,
-      rootDir: program.directory,
-    })
-    config = plugins.config
+  if (process.env.GATSBY_DETECT_NODE_MUTATIONS) {
+    enableNodeMutationsDetection()
   }
 
   if (config && config.polyfill) {
@@ -158,19 +207,23 @@ export async function initialize({
     )
   }
 
-  store.dispatch(internalActions.setSiteConfig(config))
-
-  activity.end()
+  // Throughout the codebase GATSBY_QUERY_ON_DEMAND is used to conditionally enable the QoD behavior, depending on if "gatsby develop" is running or not. In CI QoD is disabled by default, too.
+  // You can use GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI to force enable it in CI.
+  process.env.GATSBY_QUERY_ON_DEMAND = `true`
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // we don't want to ever have this flag enabled for anything than develop
+    // in case someone have this env var globally set
+    delete process.env.GATSBY_QUERY_ON_DEMAND
+  } else if (isCI() && !process.env.GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI) {
+    delete process.env.GATSBY_QUERY_ON_DEMAND
+    reporter.verbose(
+      `Query on Demand is disabled in CI by default. You can enable it by setting GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI env var.`
+    )
+  }
 
   // run stale jobs
-  store.dispatch(removeStaleJobs(store.getState()))
-
-  activity = reporter.activityTimer(`load plugins`, {
-    parentSpan,
-  })
-  activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory)
-  activity.end()
+  // @ts-ignore we'll need to fix redux typings https://redux.js.org/usage/usage-with-typescript
+  store.dispatch(removeStaleJobs(store.getState().jobsV2))
 
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
@@ -183,6 +236,10 @@ export async function initialize({
     plugins: pluginsStr,
   })
 
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  startPluginRunner()
+
   // onPreInit
   activity = reporter.activityTimer(`onPreInit`, {
     parentSpan,
@@ -191,11 +248,26 @@ export async function initialize({
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // During builds, delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
+  const lmdbCacheDirectoryName = `caches-lmdb`
+
+  const cacheDirectory = `${program.directory}/.cache`
+  const publicDirectory = `${program.directory}/public`
+  const workerCacheDirectory = `${program.directory}/.cache/worker`
+  const lmdbCacheDirectory = `${program.directory}/.cache/${lmdbCacheDirectoryName}`
+
+  const publicDirExists = fs.existsSync(publicDirectory)
+  const workerCacheDirExists = fs.existsSync(workerCacheDirectory)
+  const lmdbCacheDirExists = fs.existsSync(lmdbCacheDirectory)
+
+  // check the cache file that is used by the current configuration
+  const cacheDirExists = lmdbCacheDirExists
+
+  // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
+  // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
-    !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.env.NODE_ENV === `production`
+    process.env.NODE_ENV === `production` &&
+    publicDirExists &&
+    !cacheDirExists
   ) {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
@@ -204,12 +276,34 @@ export async function initialize({
       }
     )
     activity.start()
-    await del([
-      `public/**/*.{html,css}`,
-      `!public/page-data/**/*`,
-      `!public/static`,
-      `!public/static/**/*.{html,css}`,
-    ])
+    const files = await glob(
+      [
+        `public/**/*.{html,css}`,
+        `!public/page-data/**/*`,
+        `!public/static`,
+        `!public/static/**/*.{html,css}`,
+      ],
+      {
+        cwd: program.directory,
+      }
+    )
+    await Promise.all(files.map(file => fs.remove(file)))
+    activity.end()
+  }
+
+  // When the main process and workers communicate they save parts of their redux state to .cache/worker
+  // We should clean this directory to remove stale files that a worker might accidentally reuse then
+  if (workerCacheDirExists) {
+    activity = reporter.activityTimer(
+      `delete worker cache from previous builds`,
+      {
+        parentSpan,
+      }
+    )
+    activity.start()
+    await fs
+      .remove(workerCacheDirectory)
+      .catch(() => fs.emptyDir(workerCacheDirectory))
     activity.end()
   }
 
@@ -217,26 +311,38 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  // Check if any plugins have been updated since our last run. If so
-  // we delete the cache is there's likely been changes
-  // since the previous run.
+  // Check if any plugins have been updated since our last run. If so,
+  // we delete the cache as there's likely been changes since
+  // the previous run.
   //
   // We do this by creating a hash of all the version numbers of installed
   // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
-  const hashes: any = await Promise.all([
-    !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
-    md5File(`package.json`),
-    md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
-    md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
-  ])
+  // we should include gatsby version as well
+  pluginVersions.push(require(`../../package.json`).version)
+  const optionalFiles = [
+    `${program.directory}/gatsby-config.js`,
+    `${program.directory}/gatsby-node.js`,
+    `${program.directory}/gatsby-config.ts`,
+    `${program.directory}/gatsby-node.ts`,
+  ] as Array<string>
+
+  const state = store.getState()
+
+  const hashes = await Promise.all(
+    // Ignore optional files with .catch() as these are not required
+    [md5File(`package.json`), state.config.trailingSlash as string].concat(
+      optionalFiles.map(f => md5File(f).catch(() => ``))
+    )
+  )
+
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  const state = store.getState()
+
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -250,12 +356,97 @@ export async function initialize({
       a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
   }
-  const cacheDirectory = `${program.directory}/.cache`
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+
+  // .cache directory exists in develop at this point
+  // so checking for .cache/json or .cache/caches-lmdb as a heuristic (could be any expected file)
+  const cacheIsCorrupt = cacheDirExists && !publicDirExists
+  if (cacheIsCorrupt) {
+    reporter.info(reporter.stripIndent`
+      We've detected that the Gatsby cache is incomplete (the .cache directory exists
+      but the public directory does not). As a precaution, we're deleting your site's
+      cache to ensure there's no stale data.
+    `)
+  }
+
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash || cacheIsCorrupt) {
     try {
-      // Attempt to empty dir if remove fails,
-      // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      // Comment out inviet until we can test perf impact
+      //
+      // let sourceFileSystemVersion = flattenedPlugins.find(
+      // plugin => plugin.name === `gatsby-source-filesystem`
+      // )?.version
+
+      // // The site might be using a plugin which uses "createRemoteFileNode" but
+      // // doesn't have gatsby-source-filesystem in their gatsby-config.js. So lets
+      // // also try requiring it.
+      // if (!sourceFileSystemVersion) {
+      // try {
+      // sourceFileSystemVersion = require(`gatsby-source-filesystem/package.json`)
+      // ?.version
+      // } catch {
+      // // ignore require errors
+      // }
+      // }
+      // } else if (
+      // sourceFileSystemVersion &&
+      // semver.lt(sourceFileSystemVersion, `2.9.0`)
+      // ) {
+      // // If the site has more than 50 downloaded files in it, tell them
+      // // how to save time.
+      // try {
+      // // Divide by two as the directory as both cache files + the actual downloaded files so
+      // // two results / downloaded file.
+      // const filesCount =
+      // (await fs.readdir(`.cache/caches/gatsby-source-filesystem`))
+      // .length / 2
+      // if (filesCount > 50) {
+      // reporter.info(stripIndent`\n\n
+
+      // Your local development experience is about to get better, faster, and stronger!
+
+      // Your friendly Gatsby maintainers detected your site downloads quite a few files and that we're about to delete all ${Math.round(
+      // filesCount
+      // )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
+
+      // If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable the PRESERVE_FILE_DOWNLOAD_CACHE flag and run your develop server again.
+
+      // To do so, add to your gatsby-config.js:
+
+      // flags: {
+      // preserve_file_download_cache: true,
+      // }
+
+      // visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
+      // `)
+      // }
+      // } catch {
+      // // ignore errors (mostly will just be directory not found).
+      // }
+      // }
+
+      const deleteGlobs = [
+        // By default delete all files & subdirectories
+        `.cache/**`,
+        `.cache/data/**`,
+        `!.cache/data/gatsby-core-utils/**`,
+        `!.cache/compiled`,
+        // Add webpack
+        `!.cache/webpack`,
+      ]
+
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+        // Stop the caches directory from being deleted, add all sub directories,
+        // but remove gatsby-source-filesystem
+        deleteGlobs.push(`!.cache/caches`)
+        deleteGlobs.push(`.cache/caches/*`)
+        deleteGlobs.push(`!.cache/caches/gatsby-source-filesystem`)
+      }
+
+      const files = await glob(deleteGlobs, {
+        cwd: program.directory,
+      })
+
+      await Promise.all(files.map(file => fs.remove(file)))
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
@@ -263,7 +454,11 @@ export async function initialize({
     // been loaded from the file system cache).
     store.dispatch({
       type: `DELETE_CACHE`,
+      cacheIsCorrupt,
     })
+
+    // make sure all previous mutexes are released
+    await releaseAllMutexes()
 
     // in future this should show which plugin's caches are purged
     // possibly should also have which plugins had caches
@@ -286,7 +481,12 @@ export async function initialize({
   await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
-  await fs.ensureDir(`${program.directory}/public/static`)
+  await fs.ensureDir(`${publicDirectory}/static`)
+
+  // Init plugins once cache is initialized
+  await apiRunnerNode(`onPluginInit`, {
+    parentSpan: activity.span,
+  })
 
   activity.end()
 
@@ -298,9 +498,11 @@ export async function initialize({
   const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
-    await fs.copy(srcDir, siteDir)
+    await fs.copy(srcDir, siteDir, {
+      overwrite: true,
+    })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
-    await fs.ensureDirSync(`${cacheDirectory}/json`)
+    await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
@@ -323,30 +525,33 @@ export async function initialize({
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        return slash(
-          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
-        )
+        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+        return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
       // ignore
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      return slash(path.join(plugin.resolve, `gatsby-${env}`))
+      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+      return slash(resolveModule(modulePath) as string)
     }
     return undefined
   }
 
   const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
+  const isResolvedSSR = (plugin): plugin is IPluginResolutionSSR =>
+    !!plugin.resolve
 
-  const ssrPlugins: Array<IPluginResolution> = flattenedPlugins
+  const ssrPlugins: Array<IPluginResolutionSSR> = flattenedPlugins
     .map(plugin => {
       return {
+        name: plugin.name,
         resolve: hasAPIFile(`ssr`, plugin),
         options: plugin.pluginOptions,
       }
     })
-    .filter(isResolved)
+    .filter(isResolvedSSR)
 
   const browserPlugins: Array<IPluginResolution> = flattenedPlugins
     .map(plugin => {
@@ -382,6 +587,7 @@ export async function initialize({
     .map(
       plugin =>
         `{
+      name: '${plugin.name}',
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
@@ -411,6 +617,9 @@ export async function initialize({
   })
   activity.end()
 
+  // Track trailing slash option used in config
+  telemetry.trackFeatureIsUsed(`trailingSlash:${state.config.trailingSlash}`)
+
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
   // Change to this being an action and plugins implement `onPreBootstrap`
@@ -426,6 +635,14 @@ export async function initialize({
   })
 
   const workerPool = WorkerPool.create()
+
+  if (state.config.graphqlTypegen) {
+    telemetry.trackFeatureIsUsed(`GraphQLTypegen`)
+    // This is only run during `gatsby develop`
+    if (process.env.gatsby_executing_command === `develop`) {
+      writeGraphQLConfig(program)
+    }
+  }
 
   return {
     store,

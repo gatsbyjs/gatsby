@@ -1,3 +1,9 @@
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 describe(`the site data object`, () => {
   beforeEach(() => {
     cy.visit(`/site-data`)
@@ -9,7 +15,7 @@ describe(`the site data object`, () => {
       .should(`equal`, `Gatsby Default Starter`)
   })
 
-  it(`description is overriden by value in config`, () => {
+  it(`description is overridden by value in config`, () => {
     cy.getTestElement(`description`)
       .invoke(`text`)
       .should(`equal`, `This is site for production runtime e2e tests`)

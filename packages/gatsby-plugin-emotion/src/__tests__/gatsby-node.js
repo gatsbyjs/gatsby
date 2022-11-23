@@ -5,8 +5,13 @@ describe(`gatsby-plugin-emotion`, () => {
   describe(`onCreateBabelConfig`, () => {
     it(`sets the correct babel preset`, () => {
       const actions = { setBabelPreset: jest.fn() }
+      const store = {
+        getState: () => {
+          return { config: {} }
+        },
+      }
 
-      onCreateBabelConfig({ actions }, null)
+      onCreateBabelConfig({ actions, store }, null)
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
@@ -15,16 +20,41 @@ describe(`gatsby-plugin-emotion`, () => {
         ),
         options: {
           sourceMap: true,
-          autoLabel: true,
+          autoLabel: `dev-only`,
         },
       })
     })
 
-    it(`passes additional options on to the preset`, () => {
+    it(`sets the correct babel plugin when using automatic jsxRuntime`, () => {
+      const actions = { setBabelPlugin: jest.fn() }
+      const store = {
+        getState: () => {
+          return { config: { jsxRuntime: `automatic` } }
+        },
+      }
+
+      onCreateBabelConfig({ actions, store }, null)
+
+      expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(path.join(`@emotion`, `babel-plugin`)),
+        options: {
+          sourceMap: true,
+          autoLabel: `dev-only`,
+        },
+      })
+    })
+
+    it(`passes additional options to the preset`, () => {
       const actions = { setBabelPreset: jest.fn() }
       const pluginOptions = { useBuiltIns: true }
+      const store = {
+        getState: () => {
+          return { config: {} }
+        },
+      }
 
-      onCreateBabelConfig({ actions }, pluginOptions)
+      onCreateBabelConfig({ actions, store }, pluginOptions)
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
@@ -33,7 +63,29 @@ describe(`gatsby-plugin-emotion`, () => {
         ),
         options: {
           sourceMap: true,
-          autoLabel: true,
+          autoLabel: `dev-only`,
+          useBuiltIns: true,
+        },
+      })
+    })
+
+    it(`passes additional options to the plugin when using automatic jsxRuntime`, () => {
+      const actions = { setBabelPlugin: jest.fn() }
+      const pluginOptions = { useBuiltIns: true }
+      const store = {
+        getState: () => {
+          return { config: { jsxRuntime: `automatic` } }
+        },
+      }
+
+      onCreateBabelConfig({ actions, store }, pluginOptions)
+
+      expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(path.join(`@emotion`, `babel-plugin`)),
+        options: {
+          sourceMap: true,
+          autoLabel: `dev-only`,
           useBuiltIns: true,
         },
       })
@@ -53,8 +105,13 @@ describe(`gatsby-plugin-emotion`, () => {
 
       it(`sets the correct babel preset`, () => {
         const actions = { setBabelPreset: jest.fn() }
+        const store = {
+          getState: () => {
+            return { config: {} }
+          },
+        }
 
-        onCreateBabelConfig({ actions }, null)
+        onCreateBabelConfig({ actions, store }, null)
 
         expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
         expect(actions.setBabelPreset).toHaveBeenCalledWith({
@@ -63,7 +120,7 @@ describe(`gatsby-plugin-emotion`, () => {
           ),
           options: {
             sourceMap: false,
-            autoLabel: false,
+            autoLabel: `dev-only`,
           },
         })
       })

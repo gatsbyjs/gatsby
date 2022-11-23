@@ -1,6 +1,6 @@
 const path = require(`path`)
 const Url = require(`url`)
-const ProgressBar = require(`progress`)
+const { createFilePath } = require(`gatsby-core-utils`)
 
 /**
  * getParsedPath
@@ -38,45 +38,10 @@ export function getRemoteFileExtension(url) {
  * @return {String}          filename
  */
 export function getRemoteFileName(url) {
-  return getParsedPath(url).name
+  return decodeURIComponent(getParsedPath(url).name)
 }
 
-// TODO remove in V3
-export function createProgress(message, reporter) {
-  if (reporter && reporter.createProgress) {
-    return reporter.createProgress(message)
-  }
-
-  const bar = new ProgressBar(
-    ` [:bar] :current/:total :elapsed s :percent ${message}`,
-    {
-      total: 0,
-      width: 30,
-      clear: true,
-    }
-  )
-
-  return {
-    start() {},
-    tick() {
-      bar.tick()
-    },
-    done() {},
-    set total(value) {
-      bar.total = value
-    },
-  }
-}
-
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} ext
- * @return {String}
- */
-export function createFilePath(directory, filename, ext) {
-  return path.join(directory, `${filename}${ext}`)
-}
+// createFilePath should be imported from `gatsby-core-utils`
+// but some plugins already do import it from `gatsby-source-filesystem/utils`
+// so just keeping re-export here for backward compatibility
+export { createFilePath }

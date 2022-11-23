@@ -11,22 +11,21 @@ export async function runPageQueries({
   graphqlRunner,
 }: Partial<IQueryRunningContext>): Promise<void> {
   assertStore(store)
+  const state = store.getState()
 
   if (!queryIds) {
     return
   }
-  const { pageQueryIds } = queryIds
-  const state = store.getState()
-  const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
-    .length
 
-  if (!pageQueryIdsCount) {
+  const { pageQueryIds } = queryIds
+
+  if (pageQueryIds.length === 0) {
     return
   }
 
   const activity = reporter.createProgress(
     `run page queries`,
-    pageQueryIdsCount,
+    pageQueryIds.length,
     0,
     {
       id: `page-query-running`,
@@ -34,13 +33,10 @@ export async function runPageQueries({
     }
   )
 
-  activity.start()
   await processPageQueries(pageQueryIds, {
     state,
     activity,
     graphqlRunner,
     graphqlTracing: program?.graphqlTracing,
   })
-
-  activity.done()
 }

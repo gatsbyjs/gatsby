@@ -1,5 +1,5 @@
 ---
-title: Server Side Rendering
+title: Server-Side Rendering
 disableTableOfContents: true
 ---
 
@@ -40,10 +40,10 @@ Instead of purely server-side rendering, Gatsby uses the same APIs to create sta
 
 ### Learn more
 
-- [Gatsby Server Rendering APIs](/docs/ssr-apis/)
+- [Gatsby Server Rendering APIs](/docs/reference/config-files/gatsby-ssr/)
 
 - [Why server-side render?](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#why-server-side-render) from _Behind the Scenes: What makes Gatsby Great_
 
-- [Search Engine Optimization (SEO) and Social Sharing Cards with Gatsby](/tutorial/seo-and-social-sharing-cards-tutorial/#reach-skip-nav)
+- [Adding an SEO Component](/docs/how-to/adding-common-features/adding-seo-component/)
 
 - [What is a Static Site Generator?](/docs/glossary/static-site-generator/#what-is-a-static-site-generator) from the Gatsby docs

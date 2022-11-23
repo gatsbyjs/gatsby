@@ -1,4 +1,4 @@
-import { MachineConfig, assign, Machine } from "xstate"
+import { MachineConfig, assign, createMachine } from "xstate"
 import { IWaitingContext } from "./types"
 import { waitingActions } from "./actions"
 import { waitingServices } from "./services"
@@ -14,6 +14,7 @@ export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
  * mutations when we first start it
  */
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
+  predictableActionArguments: true,
   id: `waitingMachine`,
   initial: `idle`,
   context: {
@@ -22,12 +23,21 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   },
   states: {
     idle: {
-      always: {
-        // If we already have queued node mutations, move
-        // immediately to batching
-        cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
-        target: `batchingNodeMutations`,
-      },
+      always: [
+        {
+          // If we already have queued node mutations, move
+          // immediately to batching
+          cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
+          target: `batchingNodeMutations`,
+        },
+        {
+          // If source files are dirty upon entering this state,
+          // move immediately to aggregatingFileChanges to force re-compilation
+          // See https://github.com/gatsbyjs/gatsby/issues/27609
+          target: `aggregatingFileChanges`,
+          cond: ({ sourceFilesDirty }): boolean => Boolean(sourceFilesDirty),
+        },
+      ],
       on: {
         ADD_NODE_MUTATION: {
           actions: `addNodeMutation`,
@@ -127,7 +137,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   },
 }
 
-export const waitingMachine = Machine(waitingStates, {
+export const waitingMachine = createMachine(waitingStates, {
   actions: waitingActions,
   services: waitingServices,
 })

@@ -2,6 +2,13 @@ const _ = require(`lodash`)
 const babylon = require(`@babel/parser`)
 const traverse = require(`@babel/traverse`).default
 
+const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
+
+function shouldOnCreateNode({ node }) {
+  // This only processes JavaScript and TypeScript files.
+  return fileExtsToProcess.includes(node.extension)
+}
+
 async function onCreateNode({
   node,
   actions,
@@ -9,12 +16,6 @@ async function onCreateNode({
   createContentDigest,
 }) {
   const { createNode, createParentChildLink } = actions
-  const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
-
-  // This only processes JavaScript and TypeScript files.
-  if (!_.includes(fileExtsToProcess, node.extension)) {
-    return
-  }
 
   const code = await loadNodeContent(node)
   const options = {
@@ -40,7 +41,9 @@ async function onCreateNode({
     ],
   }
 
-  let exportsData, frontmatter, error
+  let exportsData
+  let frontmatter
+  let error
   try {
     const ast = babylon.parse(code, options)
 
@@ -135,4 +138,5 @@ async function onCreateNode({
   }
 }
 
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

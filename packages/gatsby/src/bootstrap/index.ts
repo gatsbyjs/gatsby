@@ -1,3 +1,5 @@
+import reporter from "gatsby-cli/lib/reporter"
+import { slash } from "gatsby-core-utils"
 import { startRedirectListener } from "./redirects-writer"
 import {
   IBuildContext,
@@ -6,25 +8,24 @@ import {
   sourceNodes,
   buildSchema,
   createPages,
-  createPagesStatefully,
   extractQueries,
   writeOutRedirects,
   postBootstrap,
-  rebuildSchemaWithSitePage,
 } from "../services"
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
-import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
-import JestWorker from "jest-worker"
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
+import { savePartialStateToDisk } from "../redux"
+import { IProgram } from "../commands/types"
 
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: Partial<IBuildContext>
+  initialContext: Partial<IBuildContext> & { program: IProgram }
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
-  workerPool: JestWorker
+  workerPool: GatsbyWorkerPool
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
@@ -32,15 +33,25 @@ export async function bootstrap(
 
   const parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
-  const bootstrapContext: IBuildContext = {
+  const bootstrapContext: IBuildContext & {
+    shouldRunCreatePagesStatefully: boolean
+  } = {
     ...initialContext,
     parentSpan,
+    shouldRunCreatePagesStatefully: true,
   }
 
   const context = {
     ...bootstrapContext,
     ...(await initialize(bootstrapContext)),
   }
+
+  const workerPool = context.workerPool
+
+  const program = context.store.getState().program
+  const directory = slash(program.directory)
+
+  workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
 
   await customizeSchema(context)
   await sourceNodes(context)
@@ -54,13 +65,15 @@ export async function bootstrap(
 
   await createPages(context)
 
-  await createPagesStatefully(context)
+  await handleStalePageData(parentSpan)
 
-  await handleStalePageData()
+  savePartialStateToDisk([`inferenceMetadata`])
 
-  await rebuildSchemaWithSitePage(context)
+  workerPool.all.buildSchema()
 
   await extractQueries(context)
+
+  savePartialStateToDisk([`components`, `staticQueryComponents`])
 
   await writeOutRedirects(context)
 
@@ -72,6 +85,6 @@ export async function bootstrap(
 
   return {
     gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,
-    workerPool: context.workerPool,
+    workerPool,
   }
 }

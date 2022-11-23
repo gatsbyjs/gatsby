@@ -46,7 +46,7 @@ describe(`navigation`, () => {
       cy.getTestElement(`subdir-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory/page-1`)
+        .should(`eq`, `/subdirectory/page-1/`)
     })
 
     it(`can navigate to a sibling page`, () => {
@@ -55,7 +55,7 @@ describe(`navigation`, () => {
         .getTestElement(`page-2-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory/page-2`)
+        .should(`eq`, `/subdirectory/page-2/`)
     })
 
     it(`can navigate to a parent page`, () => {
@@ -64,7 +64,7 @@ describe(`navigation`, () => {
         .getTestElement(`page-parent-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory`)
+        .should(`eq`, `/subdirectory/`)
     })
 
     it(`can navigate to a sibling page programatically`, () => {
@@ -73,7 +73,7 @@ describe(`navigation`, () => {
         .getTestElement(`page-2-button-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory/page-2`)
+        .should(`eq`, `/subdirectory/page-2/`)
     })
   })
 
@@ -110,7 +110,7 @@ describe(`navigation`, () => {
 
   describe(`Supports unicode characters in urls`, () => {
     it(`Can navigate directly`, () => {
-      cy.visit(`/안녕`).waitForRouteChange()
+      cy.visit(encodeURI(`/안녕`)).waitForRouteChange()
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)
         .should(`equal`, `Hi from the second page`)
@@ -126,7 +126,7 @@ describe(`navigation`, () => {
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
-      cy.visit(`/안녕404/`, {
+      cy.visit(encodeURI(`/안녕404/`), {
         failOnStatusCode: false,
       }).waitForRouteChange()
 
@@ -140,6 +140,72 @@ describe(`navigation`, () => {
         .waitForRouteChange()
 
       cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+    })
+  })
+
+  describe(`Supports encodable characters in urls`, () => {
+    it(`Can navigate directly`, () => {
+      cy.visit(`/foo/@something/bar`).waitForRouteChange()
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`Can navigate on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.getTestElement(`page-with-encodable-path`).click().waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
+      cy.visit(`/foo/@something/bar404/`, {
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+
+      cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.window()
+        .then(win => win.___navigate(`/foo/@something/bar404/`))
+        .waitForRouteChange()
+
+      cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+    })
+  })
+
+  // TODO: Check if this is the correct behavior
+  describe(`All location changes should trigger an effect (fast-refresh)`, () => {
+    beforeEach(() => {
+      cy.visit(`/navigation-effects`).waitForRouteChange()
+    })
+
+    it(`should trigger an effect after a search param has changed`, () => {
+      cy.findByTestId(`effect-message`).should(`have.text`, ``)
+      cy.findByTestId(`send-search-message`).click().waitForRouteChange()
+      cy.findByTestId(`effect-message`).should(
+        `have.text`,
+        `?message=searchParam`
+      )
+    })
+
+    it(`should trigger an effect after the hash has changed`, () => {
+      cy.findByTestId(`effect-message`).should(`have.text`, ``)
+      cy.findByTestId(`send-hash-message`).click().waitForRouteChange()
+      cy.findByTestId(`effect-message`).should(`have.text`, `#message-hash`)
+    })
+
+    it(`should trigger an effect after the state has changed`, () => {
+      cy.findByTestId(`effect-message`).should(`have.text`, ``)
+      cy.findByTestId(`send-state-message`).click().waitForRouteChange()
+      cy.findByTestId(`effect-message`).should(
+        `have.text`,
+        `this is a message using the state`
+      )
     })
   })
 

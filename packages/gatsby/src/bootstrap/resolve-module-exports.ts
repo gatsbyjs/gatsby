@@ -1,21 +1,21 @@
-import fs from "fs"
+import * as fs from "fs-extra"
 import * as t from "@babel/types"
 import traverse from "@babel/traverse"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
-import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import report from "gatsby-cli/lib/reporter"
-
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testRequireError } from "../utils/test-require-error"
+import { resolveModule } from "../utils/module-resolver"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
-  resolver = require.resolve
+  resolver = resolveModule
 ): Array<string> => {
   let absPath: string | undefined
   const exportNames: Array<string> = []
 
   try {
-    absPath = resolver(modulePath)
+    absPath = resolver(modulePath) as string
   } catch (err) {
     return exportNames // doesn't exist
   }
@@ -30,7 +30,7 @@ const staticallyAnalyzeExports = (
       const codeFrame = codeFrameColumns(
         code,
         {
-          start: ((err as unknown) as { loc: SourceLocation["start"] }).loc,
+          start: (err as unknown as { loc: SourceLocation["start"] }).loc,
         },
         {
           highlightCode: true,
@@ -81,10 +81,16 @@ const staticallyAnalyzeExports = (
     // get foo from `export { foo } from 'bar'`
     // get foo from `export { foo }`
     ExportSpecifier: function ExportSpecifier(astPath) {
-      const exportName = astPath?.node?.exported?.name
       isES6 = true
-      if (exportName) {
-        exportNames.push(exportName)
+      const exp = astPath?.node?.exported
+      if (!exp) {
+        return
+      }
+      if (exp.type === `Identifier`) {
+        const exportName = exp.name
+        if (exportName) {
+          exportNames.push(exportName)
+        }
       }
     },
 
@@ -182,12 +188,12 @@ https://gatsby.dev/no-mixed-modules
  */
 export const resolveModuleExports = (
   modulePath: string,
-  { mode = `analysis`, resolver = require.resolve } = {}
+  { mode = `analysis`, resolver = resolveModule } = {}
 ): Array<string> => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {
-      absPath = resolver(modulePath)
+      absPath = require.resolve(modulePath)
       return Object.keys(require(modulePath)).filter(
         exportName => exportName !== `__esModule`
       )

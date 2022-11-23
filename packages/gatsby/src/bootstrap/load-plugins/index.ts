@@ -1,54 +1,31 @@
-import _ from "lodash"
-
 import { store } from "../../redux"
+import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
-import { loadPlugins as loadPluginsInternal } from "./load"
+import { loadInternalPlugins } from "./load-internal-plugins"
 import {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
-  ExportType,
-  ICurrentAPIs,
-  validatePluginOptions,
+  validateConfigPluginsOptions,
 } from "./validate"
-import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
-
-const getAPI = (
-  api: { [exportType in ExportType]: { [api: string]: boolean } }
-): ICurrentAPIs =>
-  _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
-    merged[key] = _.keys(api[key])
-    return merged
-  }, {}) as ICurrentAPIs
-
-// Create a "flattened" array of plugins with all subplugins
-// brought to the top-level. This simplifies running gatsby-* files
-// for subplugins.
-const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
-  const flattened: Array<IPluginInfo> = []
-  const extractPlugins = (plugin: IPluginInfo): void => {
-    if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
-      plugin.pluginOptions.plugins.forEach(subPlugin => {
-        flattened.push(subPlugin)
-        extractPlugins(subPlugin)
-      })
-    }
-  }
-
-  plugins.forEach(plugin => {
-    flattened.push(plugin)
-    extractPlugins(plugin)
-  })
-
-  return flattened
-}
+import { IFlattenedPlugin } from "./types"
+import { normalizeConfig } from "./utils/normalize"
+import { getAPI } from "./utils/get-api"
+import { flattenPlugins } from "./utils/flatten-plugins"
+import { IGatsbyConfig } from "../../internal"
 
 export async function loadPlugins(
-  config: ISiteConfig = {},
-  rootDir: string | null = null
+  rawConfig: IGatsbyConfig,
+  rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
+  // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
+  const config = normalizeConfig(rawConfig)
+
+  // Show errors for invalid plugin configuration
+  await validateConfigPluginsOptions(config, rootDir)
+
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,
@@ -56,7 +33,7 @@ export async function loadPlugins(
   })
 
   // Collate internal plugins, site config plugins, site default plugins
-  const pluginInfos = loadPluginsInternal(config, rootDir)
+  const pluginInfos = loadInternalPlugins(config, rootDir)
 
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)
@@ -72,11 +49,6 @@ export async function loadPlugins(
   // Show errors for any non-Gatsby APIs exported from plugins
   await handleBadExports({ currentAPIs, badExports })
 
-  // Show errors for invalid plugin configuration
-  if (process.env.GATSBY_EXPERIMENTAL_PLUGIN_OPTION_VALIDATION) {
-    await validatePluginOptions({ flattenedPlugins })
-  }
-
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({
     flattenedPlugins,
@@ -85,7 +57,7 @@ export async function loadPlugins(
   // If we get this far, everything looks good. Update the store
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins,
+    payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
 
   return flattenedPlugins

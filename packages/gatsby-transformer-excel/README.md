@@ -6,7 +6,7 @@ Parses Excel files into JSON arrays.
 
 `npm install gatsby-transformer-excel`
 
-Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
+Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
 
 ## How to use
 
@@ -34,7 +34,7 @@ You can see an example project at [https://github.com/gatsbyjs/gatsby/tree/maste
 
 ## Parsing algorithm
 
-The parsing is powered by the [SheetJS / js-xlsx](https://git.io/xlsx) library.
+The parsing is powered by the [SheetJS / js-xlsx](https://github.com/SheetJS/js-xlsx) library.
 Each row of each worksheet is converted into a node whose keys are determined by
 the first row and whose type is determined by the name of the worksheet.
 

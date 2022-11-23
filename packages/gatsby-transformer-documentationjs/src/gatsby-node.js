@@ -42,7 +42,7 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
   return descriptionNode
 }
 
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node
@@ -185,6 +185,18 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
+function shouldOnCreateNode({ node }) {
+  return (
+    node.internal.type === `File` &&
+    (node.internal.mediaType === `application/javascript` ||
+      node.extension === `jsx` ||
+      node.extension === `tsx` ||
+      node.extension === `ts`)
+  )
+}
+
+exports.shouldOnCreateNode = shouldOnCreateNode
+
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
@@ -192,17 +204,6 @@ exports.createResolvers = ({ createResolvers }) => {
 exports.onCreateNode = async ({ node, actions, ...helpers }) => {
   const { createNodeId, createContentDigest } = helpers
   const { createNode, createParentChildLink } = actions
-
-  if (
-    node.internal.type !== `File` ||
-    !(
-      node.internal.mediaType === `application/javascript` ||
-      node.extension === `tsx` ||
-      node.extension === `ts`
-    )
-  ) {
-    return null
-  }
 
   let documentationJson
   try {
@@ -431,8 +432,12 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       if (docsJson.examples) {
         picked.examples = docsJson.examples.map(example => {
+          // Extract value from <caption/> element
+          const caption =
+            example?.caption?.children[0]?.children[0].value || null
           return {
             ...example,
+            caption,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,

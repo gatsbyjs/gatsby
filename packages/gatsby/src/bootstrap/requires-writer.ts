@@ -4,17 +4,19 @@ import fs from "fs-extra"
 import crypto from "crypto"
 import { slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
-import { match } from "@reach/router/lib/utils"
+import { match } from "@gatsbyjs/reach-router"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
-import { IGatsbyState, IGatsbyPage } from "../redux/types"
+import { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types"
 import {
   writeModule,
   getAbsolutePathForVirtualModule,
 } from "../utils/gatsby-webpack-virtual-modules"
+import { getPageMode } from "../utils/page-mode"
+import { devSSRWillInvalidate } from "../commands/build-html"
 
 interface IGatsbyPageComponent {
-  component: string
+  componentPath: string
   componentChunkName: string
 }
 
@@ -36,6 +38,8 @@ const ROOT_POINTS = 1
 const isRootSegment = (segment: string): boolean => segment === ``
 const isDynamic = (segment: string): boolean => paramRe.test(segment)
 const isSplat = (segment: string): boolean => segment === `*`
+const hasContentFilePath = (componentPath: string): boolean =>
+  componentPath.includes(`?__contentFilePath=`)
 
 const segmentize = (uri: string): Array<string> =>
   uri
@@ -60,17 +64,30 @@ export const resetLastHash = (): void => {
   lastHash = null
 }
 
-const pickComponentFields = (page: IGatsbyPage): IGatsbyPageComponent =>
-  _.pick(page, [`component`, `componentChunkName`])
+type IBareComponentData = Pick<
+  IGatsbyPageComponent,
+  `componentPath` | `componentChunkName`
+>
+const pickComponentFields = (
+  page: IGatsbyPage | IGatsbySlice
+): IBareComponentData => {
+  return {
+    componentPath: page.componentPath,
+    componentChunkName: page.componentChunkName,
+  }
+}
 
 export const getComponents = (
-  pages: Array<IGatsbyPage>
+  pages: Array<IGatsbyPage>,
+  slices: IGatsbyState["slices"]
 ): Array<IGatsbyPageComponent> =>
-  _(pages)
-    .map(pickComponentFields)
-    .uniqBy(c => c.componentChunkName)
-    .orderBy(c => c.componentChunkName)
-    .value()
+  _.orderBy(
+    _.uniqBy(
+      _.map([...pages, ...slices.values()], pickComponentFields),
+      c => c.componentChunkName
+    ),
+    c => c.componentChunkName
+  )
 
 /**
  * Get all dynamic routes and sort them by most specific at the top
@@ -108,7 +125,7 @@ const getMatchPaths = (
   const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (page.matchPath) {
+    if (page.matchPath && getPageMode(page) === `SSG`) {
       matchPathPages.push(createMatchPathEntry(page, index))
     }
   })
@@ -162,73 +179,143 @@ const getMatchPaths = (
 
 const createHash = (
   matchPaths: Array<IGatsbyPageMatchPath>,
-  components: Array<IGatsbyPageComponent>
+  components: Array<IGatsbyPageComponent>,
+  cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent>
 ): string =>
   crypto
     .createHash(`md5`)
-    .update(JSON.stringify({ matchPaths, components }))
+    .update(
+      JSON.stringify({
+        matchPaths,
+        components,
+        cleanedSSRVisitedPageComponents,
+      })
+    )
     .digest(`hex`)
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
-  // console.log(`on requiresWriter progress`)
-  const { program } = state
+  const { program, slices } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
-  const components = getComponents(pages)
+  const components = getComponents(pages, slices)
+  let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = []
 
-  const newHash = createHash(matchPaths, components)
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    const ssrVisitedPageComponents = [
+      ...(state.visitedPages.get(`server`)?.values() || []),
+    ]
+
+    // Remove any page components that no longer exist.
+    cleanedSSRVisitedPageComponents = components.filter(c =>
+      ssrVisitedPageComponents.some(s => s === c.componentChunkName)
+    )
+  }
+
+  const newHash = createHash(
+    matchPaths,
+    components,
+    cleanedSSRVisitedPageComponents
+  )
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    // console.log(`on requiresWriter END1`)
     return false
   }
 
   lastHash = newHash
 
-  // TODO: Remove all "hot" references in this `syncRequires` variable when fast-refresh is the default
-  const hotImport =
-    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-      ? `const { hot } = require("react-hot-loader/root")`
-      : ``
-  const hotMethod =
-    process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    // Create file with sync requires of visited page components files.
+
+    const lazySyncRequires = `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
+      .map(
+        (c: IGatsbyPageComponent): string =>
+          `  "${c.componentChunkName}": require("${joinPath(c.componentPath)}")`
+      )
+      .join(`,\n`)}
+  }\n\n`
+
+    writeModule(`$virtual/ssr-sync-requires`, lazySyncRequires)
+    // if this is executed, webpack should mark it as invalid, but sometimes there is some timing race
+    // so we also explicitly set flag here as well
+    devSSRWillInvalidate()
+  }
 
   // Create file with sync requires of components/json files.
-  let syncRequires = `${hotImport}
-
+  let syncRequires = `
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       (c: IGatsbyPageComponent): string =>
-        `  "${
-          c.componentChunkName
-        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+        `  "${c.componentChunkName}": preferDefault(require("${joinPath(
+          c.componentPath
+        )}"))`
     )
     .join(`,\n`)}
 }\n\n`
 
   // Create file with async requires of components/json files.
-  let asyncRequires = `// prefer default export if available
-const preferDefault = m => (m && m.default) || m
-\n`
-  asyncRequires += `exports.components = {\n${components
-    .map((c: IGatsbyPageComponent): string => {
-      // we need a relative import path to keep contenthash the same if directory changes
-      const relativeComponentPath = path.relative(
-        getAbsolutePathForVirtualModule(`$virtual`),
-        c.component
-      )
+  let asyncRequires = ``
 
-      return `  "${c.componentChunkName}": () => import("${slash(
-        `./${relativeComponentPath}`
-      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
-    })
-    .join(`,\n`)}
+  if (
+    process.env.gatsby_executing_command === `develop` ||
+    (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_PARTIAL_HYDRATION)
+  ) {
+    asyncRequires = `exports.components = {\n${components
+      .map((c: IGatsbyPageComponent): string => {
+        // we need a relative import path to keep contenthash the same if directory changes
+        const relativeComponentPath = path.relative(
+          getAbsolutePathForVirtualModule(`$virtual`),
+          c.componentPath
+        )
+
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
+        return `  "${c.componentChunkName}": () => import("${slash(
+          `./${relativeComponentPath}`
+        )}${rqPrefix}export=default" /* webpackChunkName: "${
+          c.componentChunkName
+        }" */)`
+      })
+      .join(`,\n`)}
+}\n\n
+
+exports.head = {\n${components
+      .map((c: IGatsbyPageComponent): string => {
+        // we need a relative import path to keep contenthash the same if directory changes
+        const relativeComponentPath = path.relative(
+          getAbsolutePathForVirtualModule(`$virtual`),
+          c.componentPath
+        )
+
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
+        return `  "${c.componentChunkName}": () => import("${slash(
+          `./${relativeComponentPath}`
+        )}${rqPrefix}export=head" /* webpackChunkName: "${
+          c.componentChunkName
+        }head" */)`
+      })
+      .join(`,\n`)}
 }\n\n`
+  } else {
+    asyncRequires = `exports.components = {\n${components
+      .map((c: IGatsbyPageComponent): string => {
+        // we need a relative import path to keep contenthash the same if directory changes
+        const relativeComponentPath = path.relative(
+          getAbsolutePathForVirtualModule(`$virtual`),
+          c.componentPath
+        )
+        return `  "${c.componentChunkName}": () => import("${slash(
+          `./${relativeComponentPath}`
+        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+      })
+      .join(`,\n`)}
+}\n\n`
+  }
 
   const writeAndMove = (
     virtualFilePath: string,
@@ -285,7 +372,27 @@ const debouncedWriteAll = _.debounce(
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
  * files as required
  */
+let listenerStarted = false
 export const startListener = (): void => {
+  // Only start the listener once.
+  if (listenerStarted) {
+    return
+  }
+  listenerStarted = true
+
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    /**
+     * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
+     * files as required
+     */
+    emitter.on(`CREATE_SERVER_VISITED_PAGE`, async (): Promise<void> => {
+      // this event only happen on new additions
+      devSSRWillInvalidate()
+      reporter.pendingActivity({ id: `requires-writer` })
+      debouncedWriteAll()
+    })
+  }
+
   emitter.on(`CREATE_PAGE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()

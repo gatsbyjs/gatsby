@@ -1,8 +1,10 @@
-// isomorphic-fetch sets global.fetch which seems to conflicts with source-map@<0.8.0 where it does a
-// simple browser check if (global.fetch) which is true when isomorphic-fetch is used. This creates an
-// exception in react-hot-loader. @see https://github.com/gatsbyjs/gatsby/pull/13713
-require(`isomorphic-fetch`)
+const {
+  data: headFunctionExportData,
+} = require(`./shared-data/head-function-export.js`)
 
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -10,9 +12,14 @@ module.exports = {
     social: {
       twitter: `kylemathews`,
     },
+    // Separate to avoid needing to change other tests that rely on site metadata
+    headFunctionExport: headFunctionExportData.queried,
+  },
+  graphqlTypegen: true,
+  flags: {
+    DEV_SSR: false,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -28,12 +35,17 @@ module.exports = {
       },
     },
     `gatsby-source-fake-data`,
+    `gatsby-source-pinc-data`,
+    `gatsby-source-query-on-demand-data`,
+    `gatsby-source-fs-route-mutations`,
+    `gatsby-browser-tsx`,
+    `gatsby-node-typegen`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-subcache`],
+        plugins: [`gatsby-remark-subcache`, `gatsby-remark-images`],
       },
     },
     `gatsby-plugin-sharp`,
@@ -50,8 +62,15 @@ module.exports = {
       },
     },
     `gatsby-plugin-image`,
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-less`,
+    `gatsby-plugin-stylus`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
+  ],
+  partytownProxiedURLs: [
+    `http://localhost:8888/three.js`,
+    `http://localhost:8000/used-by-off-main-thread-2.js`, // Meant to be same site
   ],
 }

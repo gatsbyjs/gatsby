@@ -13,10 +13,7 @@ import { typesWithoutInference } from "../../schema/types/type-defs"
 
 import { IGatsbyState, ActionsUnion } from "../types"
 
-const ignoredFields: Set<string> = new Set([
-  ...NodeInterfaceFields,
-  `__gatsby_resolved`,
-])
+const ignoredFields: Set<string> = new Set(NodeInterfaceFields)
 
 const initialTypeMetadata = (): { ignoredFields: Set<string> } => {
   return { ignoredFields }
@@ -99,16 +96,6 @@ const incrementalReducer = (
       return state
     }
 
-    // Deprecated, will be removed in Gatsby v3.
-    case `DELETE_NODES`: {
-      const { fullNodes } = action
-      fullNodes.forEach(node => {
-        const { type } = node.internal
-        state[type] = deleteNode(state[type] || initialTypeMetadata(), node)
-      })
-      return state
-    }
-
     case `SET_SCHEMA`: {
       Object.keys(state).forEach(type => {
         state[type].dirty = false
@@ -140,7 +127,6 @@ export const inferenceMetadataReducer = (
   switch (action.type) {
     case `CREATE_NODE`:
     case `DELETE_NODE`:
-    case `DELETE_NODES`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
     case `ADD_FIELD_TO_NODE`: {
       // Perf: disable incremental inference until the first schema build.

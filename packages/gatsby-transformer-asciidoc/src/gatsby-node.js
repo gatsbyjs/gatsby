@@ -1,6 +1,16 @@
 const asciidoc = require(`asciidoctor`)()
 const _ = require(`lodash`)
 
+function shouldOnCreateNode({ node }, pluginOptions = {}) {
+  const extensionsConfig = pluginOptions.fileExtensions
+
+  // make extensions configurable and use adoc and asciidoc as default
+  const supportedExtensions =
+    extensionsConfig instanceof Array ? extensionsConfig : [`adoc`, `asciidoc`]
+
+  return supportedExtensions.includes(node.extension)
+}
+
 async function onCreateNode(
   {
     node,
@@ -13,18 +23,6 @@ async function onCreateNode(
   },
   pluginOptions
 ) {
-  const extensionsConfig = pluginOptions.fileExtensions
-
-  // make extensions configurable and use adoc and asciidoc as default
-  const supportedExtensions =
-    typeof extensionsConfig !== `undefined` && extensionsConfig instanceof Array
-      ? extensionsConfig
-      : [`adoc`, `asciidoc`]
-
-  if (!supportedExtensions.includes(node.extension)) {
-    return
-  }
-
   // register custom converter if given
   if (pluginOptions.converterFactory) {
     asciidoc.ConverterFactory.register(
@@ -42,7 +40,7 @@ async function onCreateNode(
   // Load Asciidoc file for extracting
   // https://asciidoctor-docs.netlify.app/asciidoctor.js/processor/extract-api/
   // We use a `let` here as a warning: some operations, like .convert() mutate the document
-  let doc = await asciidoc.load(content, {
+  const doc = await asciidoc.load(content, {
     base_dir: node.dir,
     ...asciidocOptions,
   })
@@ -74,7 +72,7 @@ async function onCreateNode(
       }
     }
 
-    let pageAttributes = extractPageAttributes(doc.getAttributes())
+    const pageAttributes = extractPageAttributes(doc.getAttributes())
 
     const asciiNode = {
       id: createNodeId(`${node.id} >>> ASCIIDOC`),
@@ -86,9 +84,9 @@ async function onCreateNode(
       children: [],
       html,
       document: {
-        title: title.getCombined(),
-        subtitle: title.hasSubtitle() ? title.getSubtitle() : ``,
-        main: title.getMain(),
+        title: title?.getCombined() ?? ``,
+        subtitle: title?.hasSubtitle() ? title.getSubtitle() : ``,
+        main: title?.getMain() ?? ``,
       },
       revision,
       author,
@@ -138,4 +136,5 @@ const extractPageAttributes = allAttributes =>
     return pageAttributes
   }, {})
 
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

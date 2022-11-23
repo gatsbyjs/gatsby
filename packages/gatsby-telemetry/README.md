@@ -1,6 +1,6 @@
 # gatsby-telemetry
 
-Check out: [gatsby.dev/telemetry](https://gatsby.dev/telemetry)
+Check out [gatsby.dev/telemetry](https://gatsby.dev/telemetry) for more information.
 
 ## API
 

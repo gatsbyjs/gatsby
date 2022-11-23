@@ -7,10 +7,11 @@ import {
 } from "./telemetry"
 import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
+import time, { TimeUnit } from "@turist/time"
 
 const instance = new AnalyticsTracker()
 
-const flush = createFlush(instance.isTrackingEnabled())
+export const flush = createFlush(instance.isTrackingEnabled())
 
 process.on(`exit`, flush)
 
@@ -22,7 +23,7 @@ const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
 const interval =
   intervalDuration && Number.isFinite(+intervalDuration)
     ? Math.max(Number(intervalDuration), 1000)
-    : 10 * 60 * 1000 // 10 min
+    : time(10, TimeUnit.Minute)
 
 function tick(): void {
   flush()
@@ -33,6 +34,7 @@ function tick(): void {
 export function trackFeatureIsUsed(name: string): void {
   instance.trackFeatureIsUsed(name)
 }
+
 export function trackCli(
   input: string | Array<string>,
   tags?: ITelemetryTagsPayload,
@@ -87,7 +89,10 @@ export function aggregateStats(data: Array<number>): IAggregateStats {
   return instance.aggregateStats(data)
 }
 
-export function addSiteMeasurement(event: string, obj): void {
+export function addSiteMeasurement(
+  event: string,
+  obj: ITelemetryTagsPayload["siteMeasurements"]
+): void {
   instance.addSiteMeasurement(event, obj)
 }
 
@@ -122,18 +127,20 @@ export {
 }
 
 module.exports = {
-  trackFeatureIsUsed,
-  trackCli,
-  trackError,
-  trackBuildError,
-  setDefaultTags,
+  addSiteMeasurement,
+  aggregateStats,
+  captureEvent,
   decorateEvent,
+  expressMiddleware,
+  flush,
+  isTrackingEnabled,
+  setDefaultComponentId,
+  setDefaultTags,
+  setGatsbyCliVersion,
   setTelemetryEnabled,
   startBackgroundUpdate,
-  isTrackingEnabled,
-  aggregateStats,
-  addSiteMeasurement,
-  expressMiddleware,
-  setDefaultComponentId,
-  setGatsbyCliVersion,
+  trackBuildError,
+  trackCli,
+  trackError,
+  trackFeatureIsUsed,
 }

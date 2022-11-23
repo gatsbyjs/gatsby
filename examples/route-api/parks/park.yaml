@@ -1,0 +1,49 @@
+- name: Fantasyworld
+  description: Fantasyworld is Park Four at Delos Destinations. It appears to be based around a fantasy version of Medieval Europe, with at least one host that looks like a dragon.
+  meta:
+    id: 1
+    location:
+      type: Theme Park
+      place: Park Four
+- name: Medievalworld
+  description: This is Medievalworld, where we have reconstructed 13th-century Europe. A world of chivalry and combat, romance and excitement. Our teams of engineers have spared no expense in this re-creation, precise to the smallest detail.
+  meta:
+    id: 2
+    location:
+      type: Resort
+      place: Resort One
+- name: Park Five
+  description: Park Five seems to be the place where Dolores first encountered Caleb Nichols, when he and his unit were training there. Caleb stopped the other men in his unit from mistreating the female hosts during a break in training.
+  meta:
+    id: 3
+    location:
+      type: Theme Park
+      place: Park Five
+- name: The Raj
+  description: The Raj is park six at Delos Destinations and the first park revealed that doesn't use the "-world" suffix in its name. The park is named after and inspired by the "British Raj", the period between 1858 and 1947 in which the British Crown ruled over the Indian subcontinent.
+  meta:
+    id: 4
+    location:
+      type: Theme Park
+      place: Park Six
+- name: Romanworld
+  description: abc
+  meta:
+    id: 5
+    location:
+      type: Resort
+      place: Resort Two
+- name: Shōgunworld
+  description: Shōgunworld is a Delos destination modeled and influenced by the Edo period in Japan. The world features a strong military presence, reflecting the military rule and political uncertainty of the Japanese period.
+  meta:
+    id: 6
+    location:
+      type: Theme Park
+      place: Park Two
+- name: Westworld
+  description: Westworld is a park owned by Delos Incorporated and was the first park to be built. Guests pay to immerse themselves in a carefully crafted simulation of the American Wild West.
+  meta:
+    id: 7
+    location:
+      type: Theme Park
+      place: Park One

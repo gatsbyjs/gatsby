@@ -44,7 +44,7 @@ const getDetailedMessage = () => {
         return dependency.dependencies.sharp.version
       }
 
-      for (let depName of Object.keys(dependency.dependencies)) {
+      for (const depName of Object.keys(dependency.dependencies)) {
         const v = findSharpVersion(dependency.dependencies[depName])
         if (v) {
           return v
@@ -78,7 +78,7 @@ const getDetailedMessage = () => {
       }
     )
 
-    let packagesToUpdate = []
+    const packagesToUpdate = []
     // list top level dependencies
     msg = msg.concat([
       `List of installed packages that depend on sharp:`,
@@ -157,7 +157,17 @@ try {
     originalConsoleError(msg, ...args)
     handleMessage(msg)
   }
-  sharp = require(`sharp`)
+  try {
+    sharp = require(`gatsby/sharp`)
+  } catch (e) {
+    sharp = () => {
+      const sharp = require(`sharp`)
+      sharp.simd()
+      sharp.concurrency(1)
+
+      return Promise.resolve(sharp)
+    }
+  }
 } catch (e) {
   handleMessage(e.toString())
   throw e

@@ -1,4 +1,5 @@
 /index.js
 /gatsby-browser.js
 /gatsby-ssr.js
+/gatsby-node.js
 /__tests__

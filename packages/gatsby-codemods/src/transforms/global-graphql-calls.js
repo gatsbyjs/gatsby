@@ -8,20 +8,20 @@ function findGatsbyRequire(root, j) {
     },
   })
 
-  let string = requires.find(j.VariableDeclarator, {
+  const string = requires.find(j.VariableDeclarator, {
     init: { arguments: [{ value: MODULE_NAME }] },
   })
 
   if (string.length) return string
   // require(`gatsby`)
   return requires.filter(path => {
-    let template = path.get(`init`, `arguments`, 0, `quasis`, 0).node
+    const template = path.get(`init`, `arguments`, 0, `quasis`, 0).node
     return !!template && template.value.raw === MODULE_NAME
   })
 }
 
 function addEsmImport(j, root, tag) {
-  let existingImport = root.find(j.ImportDeclaration, {
+  const existingImport = root.find(j.ImportDeclaration, {
     source: { value: `gatsby` },
   })
 
@@ -46,7 +46,7 @@ function addEsmImport(j, root, tag) {
   const namespace = existingImport.find(j.ImportNamespaceSpecifier)
 
   if (namespace.length) {
-    let { name } = namespace.get(0).node.local
+    const { name } = namespace.get(0).node.local
     root
       .find(j.TaggedTemplateExpression, { tag: { name: `graphql` } })
       .replaceWith(({ node }) => {
@@ -58,14 +58,14 @@ function addEsmImport(j, root, tag) {
       })
     return
   }
-  let { specifiers } = existingImport.get(0).node
+  const { specifiers } = existingImport.get(0).node
   existingImport
     .get(`specifiers`, specifiers.length - 1)
     .insertAfter(j.importSpecifier(j.identifier(IMPORT_NAME)))
 }
 
 function addRequire(j, root, tag) {
-  let existingImport = findGatsbyRequire(root, j)
+  const existingImport = findGatsbyRequire(root, j)
 
   if (existingImport.find(j.Identifier, { value: IMPORT_NAME }).length) return // already exists
 
@@ -84,7 +84,7 @@ function addRequire(j, root, tag) {
   const pattern = existingImport.find(j.ObjectPattern)
 
   if (!pattern.length) {
-    let { name } = existingImport.get(`id`).node
+    const { name } = existingImport.get(`id`).node
     root
       .find(j.TaggedTemplateExpression, { tag: { name: `graphql` } })
       .replaceWith(({ node }) => {
@@ -96,8 +96,8 @@ function addRequire(j, root, tag) {
       })
     return
   }
-  let { properties } = pattern.get(0).node
-  let property = j.objectProperty(
+  const { properties } = pattern.get(0).node
+  const property = j.objectProperty(
     j.identifier(IMPORT_NAME),
     j.identifier(IMPORT_NAME)
   )
@@ -115,7 +115,7 @@ module.exports = (file, api, options) => {
 
   if (!tags.length) return false
 
-  let tag = tags.get(0)
+  const tag = tags.get(0)
 
   const useImportSyntax =
     root.find(j.ImportDeclaration, { importKind: `value` }).length > 0 ||

@@ -54,9 +54,9 @@ describe(`worker`, () => {
   })
 
   it(`should fail a promise when image processing fails`, async () => {
-    processFile.mockImplementation(() => [
-      Promise.reject(new Error(`transform failed`)),
-    ])
+    processFile.mockImplementation(() =>
+      Promise.reject(new Error(`transform failed`))
+    )
 
     const job = {
       inputPaths: [

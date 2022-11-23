@@ -10,7 +10,7 @@ async function fetch({ site, verbose, typePrefix }) {
 
   let entities = []
   try {
-    let res = await axios({
+    const res = await axios({
       method: `get`,
       url: `https://api.lever.co/v0/postings/${site}?mode=json`,
     })

@@ -35,13 +35,10 @@ Array [
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
+          "type": "File",
         },
       },
     },
   ],
 ]
 `;
-
-exports[`Process image nodes correctly doesn't create an ImageSharp node for a .gif file 1`] = `Array []`;
-
-exports[`Process image nodes correctly doesn't create an ImageSharp node for a .gif file 2`] = `Array []`;

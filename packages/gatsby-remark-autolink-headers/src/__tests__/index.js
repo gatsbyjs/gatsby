@@ -192,7 +192,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
 # With *Bold* {#custom-withbold}
 
-# Invalid {#this_is_italic}
+# Not italic {#not_italic_here}
 
 # No custom ID
 
@@ -222,8 +222,8 @@ describe(`gatsby-remark-autolink-headers`, () => {
         text: `With Bold`,
       },
       {
-        id: `invalid-thisisitalic`,
-        text: `Invalid {#thisisitalic}`,
+        id: `not_italic_here`,
+        text: `Not italic`,
       },
       {
         id: `no-custom-id`,
@@ -294,9 +294,9 @@ describe(`gatsby-remark-autolink-headers`, () => {
   it(`only adds ids to markdown headings whose heading type is included in the passed elements prop`, () => {
     const markdownAST = remark.parse(`
     # Heading One
-  
+
     ## Heading Two
-  
+
     ### Heading Three
         `)
 
@@ -314,9 +314,9 @@ describe(`gatsby-remark-autolink-headers`, () => {
   it(`does not add data to markdown headings when an empty array elements prop is passed`, () => {
     const markdownAST = remark.parse(`
     # Heading One
-  
+
     ## Heading Two
-  
+
     ### Heading Three
         `)
 
@@ -330,15 +330,15 @@ describe(`gatsby-remark-autolink-headers`, () => {
   it(`allows all six heading depths to be passed in the elements prop`, () => {
     const markdownAST = remark.parse(`
     # Heading One
-  
+
     ## Heading Two
-  
+
     ### Heading Three
 
     #### Heading Four
-  
+
     ##### Heading Five
-  
+
     ###### Heading Six
         `)
 

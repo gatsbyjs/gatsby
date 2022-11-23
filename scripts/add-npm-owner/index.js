@@ -19,7 +19,7 @@ getUnownedPackages({ user }).then(async ({ packages }) => {
     })
   }
 
-  for (let pkg of packages) {
+  for (const pkg of packages) {
     const cmd = `npm owner add ${user} ${pkg.name}`
     try {
       const { stderr } = await exec(cmd)

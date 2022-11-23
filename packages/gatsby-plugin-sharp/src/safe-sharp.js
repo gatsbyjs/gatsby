@@ -44,7 +44,7 @@ const getDetailedMessage = () => {
         return dependency.dependencies.sharp.version
       }
 
-      for (let depName of Object.keys(dependency.dependencies)) {
+      for (const depName of Object.keys(dependency.dependencies)) {
         const v = findSharpVersion(dependency.dependencies[depName])
         if (v) {
           return v
@@ -78,7 +78,7 @@ const getDetailedMessage = () => {
       }
     )
 
-    let packagesToUpdate = []
+    const packagesToUpdate = []
     // list top level dependencies
     msg = msg.concat([
       `List of installed packages that depend on sharp:`,

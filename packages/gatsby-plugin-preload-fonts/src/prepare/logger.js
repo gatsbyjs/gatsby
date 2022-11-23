@@ -41,7 +41,10 @@ module.exports = level => {
   const setAdapter = a => (adapter = a)
   const resetAdapter = () => (adapter = console.log)
 
-  const prepend = tag => (...args) => adapter(tag, ...args)
+  const prepend =
+    tag =>
+    (...args) =>
+      adapter(tag, ...args)
 
   return {
     setAdapter,

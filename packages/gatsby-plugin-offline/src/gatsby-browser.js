@@ -1,4 +1,4 @@
-exports.registerServiceWorker = () => true
+exports.registerServiceWorker = () => process.env.GATSBY_IS_PREVIEW !== `true`
 
 // only cache relevant resources for this page
 const whiteListLinkRels = /^(stylesheet|preload)$/
@@ -8,6 +8,10 @@ exports.onServiceWorkerActive = ({
   getResourceURLsForPathname,
   serviceWorker,
 }) => {
+  if (process.env.GATSBY_IS_PREVIEW === `true`) {
+    return
+  }
+
   // if the SW has just updated then clear the path dependencies and don't cache
   // stuff, since we're on the old revision until we navigate to another page
   if (window.___swUpdated) {

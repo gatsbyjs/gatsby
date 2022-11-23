@@ -9,8 +9,11 @@ import {
   Source,
   GraphQLError,
   ExecutionResult,
+  NoDeprecatedCustomRule,
+  print,
 } from "graphql"
 import { debounce } from "lodash"
+import reporter from "gatsby-cli/lib/reporter"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
@@ -18,9 +21,23 @@ import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
+import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
 import GraphQLSpanTracer from "./graphql-span-tracer"
+import { tranformDocument } from "./transform-document"
+
+// Preserve these caches across graphql instances.
+const _rootNodeMap = new WeakMap()
+const _trackedRootNodes = new WeakSet()
 
 type Query = string | Source
+
+export interface IQueryOptions {
+  parentSpan: Span | undefined
+  queryName: string
+  componentPath?: string | undefined
+  forceGraphqlTracing?: boolean
+  telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
+}
 
 export interface IGraphQLRunnerOptions {
   collectStats?: boolean
@@ -35,7 +52,7 @@ export class GraphQLRunner {
 
   schema: GraphQLSchema
 
-  validDocuments: WeakSet<DocumentNode>
+  validDocuments: WeakMap<DocumentNode, DocumentNode>
   scheduleClearCache: () => void
 
   stats: IGraphQLRunnerStats | null
@@ -51,10 +68,12 @@ export class GraphQLRunner {
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
+      _rootNodeMap,
+      _trackedRootNodes,
     })
     this.schema = schema
     this.parseCache = new Map()
-    this.validDocuments = new WeakSet()
+    this.validDocuments = new WeakMap()
     this.scheduleClearCache = debounce(this.clearCache.bind(this), 5000)
 
     this.graphqlTracing = graphqlTracing || false
@@ -80,7 +99,7 @@ export class GraphQLRunner {
 
   clearCache(): void {
     this.parseCache.clear()
-    this.validDocuments = new WeakSet()
+    this.validDocuments = new WeakMap()
   }
 
   parse(query: Query): DocumentNode {
@@ -92,16 +111,50 @@ export class GraphQLRunner {
 
   validate(
     schema: GraphQLSchema,
+    originalQueryText: string,
+    document: DocumentNode,
+    originalDocument: DocumentNode = document
+  ): {
+    errors: ReadonlyArray<GraphQLError>
+    warnings: ReadonlyArray<GraphQLError>
     document: DocumentNode
-  ): ReadonlyArray<GraphQLError> {
-    if (!this.validDocuments.has(document)) {
-      const errors = validate(schema, document)
-      if (!errors.length) {
-        this.validDocuments.add(document)
-      }
-      return errors as Array<GraphQLError>
+  } {
+    let errors: ReadonlyArray<GraphQLError> = []
+    let warnings: ReadonlyArray<GraphQLError> = []
+    const validatedDocument = this.validDocuments.get(document)
+    if (validatedDocument) {
+      return { errors: [], warnings: [], document: validatedDocument }
     }
-    return []
+
+    errors = validate(schema, document)
+    warnings = validate(schema, document, [NoDeprecatedCustomRule])
+
+    if (!errors.length) {
+      this.validDocuments.set(originalDocument, document)
+    } else {
+      const { ast: transformedDocument, hasChanged } =
+        tranformDocument(document)
+      if (hasChanged) {
+        const { errors, warnings, document } = this.validate(
+          schema,
+          originalQueryText,
+          transformedDocument,
+          originalDocument
+        )
+
+        if (!errors.length) {
+          reporter.warn(
+            `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nCurrent query:\n\n${reporter.stripIndent(
+              originalQueryText
+            )}\n\nConverted query:\n\n${print(transformedDocument)}`
+          )
+        }
+
+        return { errors, warnings, document }
+      }
+    }
+
+    return { errors, warnings, document }
   }
 
   getStats(): IGraphQLRunnerStatResults | null {
@@ -131,13 +184,16 @@ export class GraphQLRunner {
     }
   }
 
-  query(
+  async query(
     query: Query,
     context: Record<string, unknown>,
     {
       parentSpan,
       queryName,
-    }: { parentSpan: Span | undefined; queryName: string }
+      componentPath,
+      forceGraphqlTracing = false,
+      telemetryResolverTimings,
+    }: IQueryOptions
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -146,23 +202,44 @@ export class GraphQLRunner {
       this.clearCache()
     }
 
+    let queryText = query
+    if (typeof queryText !== `string`) {
+      queryText = queryText.body
+    }
+
     if (this.stats) {
       this.stats.totalQueries++
-      let statsQuery = query
-      if (typeof statsQuery !== `string`) {
-        statsQuery = statsQuery.body
-      }
 
       this.stats.uniqueQueries.add(
-        crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)
+        crypto.createHash(`sha1`).update(queryText).digest(`hex`)
       )
     }
 
-    const document = this.parse(query)
-    const errors = this.validate(schema, document)
+    const { errors, warnings, document } = this.validate(
+      schema,
+      queryText,
+      this.parse(query)
+    )
+
+    // Queries are usually executed in batch. But after the batch is finished
+    // cache just wastes memory without much benefits.
+    // TODO: consider a better strategy for cache purging/invalidation
+    this.scheduleClearCache()
+
+    if (warnings.length > 0) {
+      // TODO: move those warnings to the caller side, e.g. query-runner.ts
+      warnings.forEach(err => {
+        const message = componentPath ? `\nQueried in ${componentPath}` : ``
+        reporter.warn(err.message + message)
+      })
+    }
+
+    if (errors.length > 0) {
+      return { errors }
+    }
 
     let tracer
-    if (this.graphqlTracing && parentSpan) {
+    if ((this.graphqlTracing || forceGraphqlTracing) && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
         parentSpan,
         tags: {
@@ -174,31 +251,23 @@ export class GraphQLRunner {
     }
 
     try {
-      const result =
-        errors.length > 0
-          ? { errors }
-          : execute({
-              schema,
-              document,
-              rootValue: context,
-              contextValue: withResolverContext({
-                schema,
-                schemaComposer: schemaCustomization.composer,
-                context,
-                customContext: schemaCustomization.context,
-                nodeModel: this.nodeModel,
-                stats: this.stats,
-                tracer,
-              }),
-              variableValues: context,
-            })
-
-      // Queries are usually executed in batch. But after the batch is finished
-      // cache just wastes memory without much benefits.
-      // TODO: consider a better strategy for cache purging/invalidation
-      this.scheduleClearCache()
-
-      return Promise.resolve(result)
+      // `execute` will return a promise
+      return await execute({
+        schema,
+        document,
+        rootValue: context,
+        contextValue: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context,
+          customContext: schemaCustomization.context,
+          nodeModel: this.nodeModel,
+          stats: this.stats,
+          tracer,
+          telemetryResolverTimings,
+        }),
+        variableValues: context,
+      })
     } finally {
       if (tracer) {
         tracer.end()

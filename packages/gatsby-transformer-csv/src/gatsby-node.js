@@ -8,6 +8,13 @@ const convertToJson = (data, options) =>
     .fromString(data)
     .then(jsonData => jsonData, new Error(`CSV to JSON conversion failed!`))
 
+function shouldOnCreateNode({ node }, pluginOptions = {}) {
+  const { extension } = node
+  const { extensions } = pluginOptions
+
+  return extensions ? extensions.includes(extension) : extension === `csv`
+}
+
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
@@ -15,19 +22,13 @@ async function onCreateNode(
   const { createNode, createParentChildLink } = actions
 
   // Destructure out our custom options
-  const { typeName, nodePerFile, extensions, ...options } = pluginOptions || {}
-
-  // Filter out unwanted content
-  const filterExtensions = extensions ?? [`csv`]
-  if (!filterExtensions.includes(node.extension)) {
-    return
-  }
+  const { typeName, nodePerFile, ...options } = pluginOptions || {}
 
   // Load file contents
   const content = await loadNodeContent(node)
 
   // Parse
-  let parsedContent = await convertToJson(content, options)
+  const parsedContent = await convertToJson(content, options)
 
   // Generate the type
   function getType({ node, object }) {
@@ -41,7 +42,7 @@ async function onCreateNode(
   }
 
   // Generate the new node
-  function transformObject(obj, i) {
+  async function transformObject(obj, i) {
     const csvNode = {
       ...obj,
       id:
@@ -58,25 +59,27 @@ async function onCreateNode(
       },
     }
 
-    createNode(csvNode)
+    await createNode(csvNode)
     createParentChildLink({ parent: node, child: csvNode })
   }
 
   if (_.isArray(parsedContent)) {
     if (pluginOptions && nodePerFile) {
       if (pluginOptions && _.isString(nodePerFile)) {
-        transformObject({ [nodePerFile]: parsedContent }, 0)
+        await transformObject({ [nodePerFile]: parsedContent }, 0)
       } else {
-        transformObject({ items: parsedContent }, 0)
+        await transformObject({ items: parsedContent }, 0)
       }
     } else {
-      _.each(parsedContent, (obj, i) => {
-        transformObject(obj, i)
-      })
+      for (let i = 0, l = parsedContent.length; i < l; i++) {
+        const obj = parsedContent[i]
+        await transformObject(obj, i)
+      }
     }
   }
 
   return
 }
 
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

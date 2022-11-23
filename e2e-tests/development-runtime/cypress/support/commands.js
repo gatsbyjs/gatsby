@@ -1,4 +1,6 @@
 import "@testing-library/cypress/add-commands"
+import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command"
+import "gatsby-cypress"
 
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy
@@ -85,25 +87,52 @@ Cypress.Commands.add(`assertRoute`, route => {
   cy.url().should(`equal`, `${window.location.origin}${route}`)
 })
 
-// react-error-overlay is iframe, so this is just convenience helper
-// https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/#custom-command
-Cypress.Commands.add(`getOverlayIframe`, () => {
-  // get the iframe > document > body
-  // and retry until the body element is not empty
-  return (
-    cy
-      .get(`iframe`, { log: true, timeout: 150000 })
-      .its(`0.contentDocument.body`)
-      .should(`not.be.empty`)
-      // wraps "body" DOM element to allow
-      // chaining more Cypress commands, like ".find(...)"
-      // https://on.cypress.io/wrap
-      .then(cy.wrap, { log: true })
-  )
+// overwriting visit and creating a waitForHmr function to help us deal with HMR
+Cypress.Commands.overwrite("visit", (orig, url, options = {}) => {
+  const newOptions = {
+    ...options,
+    onBeforeLoad: win => {
+      if (options.onBeforeLoad) {
+        options.onBeforeLoad(win)
+      }
+
+      cy.spy(win.console, "log").as(`hmrConsoleLog`)
+    },
+  }
+
+  return orig(url, newOptions)
 })
 
-Cypress.Commands.add(`assertNoOverlayIframe`, () => {
-  // get the iframe > document > body
-  // and retry until the body element is not empty
-  return cy.get(`iframe`, { log: true, timeout: 15000 }).should(`not.exist`)
+Cypress.Commands.add(`waitForHmr`, (message = `App is up to date`) => {
+  cy.get(`@hmrConsoleLog`).should(`be.calledWithMatch`, message)
+  cy.wait(1000)
+})
+
+Cypress.Commands.add(`getFastRefreshOverlay`, () =>
+  cy.get(`gatsby-fast-refresh`).shadow()
+)
+
+Cypress.Commands.add(`assertNoFastRefreshOverlay`, () =>
+  cy.get(`gatsby-fast-refresh`).should(`not.exist`)
+)
+
+addMatchImageSnapshotCommand({
+  customDiffDir: `/__diff_output__`,
+  customDiffConfig: {
+    threshold: 0.1,
+  },
+  failureThreshold: 0.08,
+  failureThresholdType: `percent`,
+})
+
+/**
+ * Get a record from a table cell in one of the test components.
+ * @example cy.getRecord(Script.dayjs, ResourceRecord.fetchStart)
+ * @example cy.getRecord(`${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`, MarkRecord.executeStart)
+ */
+Cypress.Commands.add(`getRecord`, (key, metric, raw = false) => {
+  return cy
+    .get(`[id=${key}] [id=${metric}]`)
+    .invoke(`text`)
+    .then(value => (raw ? value : Number(value)))
 })

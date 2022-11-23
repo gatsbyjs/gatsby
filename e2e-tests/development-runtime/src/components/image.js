@@ -29,7 +29,7 @@ const Image = () => (
     `}
     render={data => (
       <div>
-        <StaticImage src="../images/gatsby-icon.png" />
+        <StaticImage alt="Gatsby Icon" src="../images/gatsby-icon.png" />
         <Img fluid={data.placeholderImage.childImageSharp.fluid} />
       </div>
     )}

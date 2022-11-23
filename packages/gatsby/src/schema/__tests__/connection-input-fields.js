@@ -17,6 +17,11 @@ function makeNodes() {
       float: 1.5,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
+      dateArray: [
+        `2006-07-22T22:39:53.000Z`,
+        `2006-07-04T22:39:53.000Z`,
+        `1999-07-04T22:39:53.000Z`,
+      ],
       anArray: [1, 2, 3, 4],
       key: {
         withEmptyArray: [],
@@ -88,13 +93,18 @@ function makeNodes() {
       float: 3.5,
       hair: 0,
       date: `2006-07-29T22:39:53.000Z`,
+      dateArray: [
+        new Date(`1997-07-04T22:39:53.000Z`),
+        new Date(`2006-07-04T22:39:53.000Z`),
+        new Date(`1999-07-04T22:39:53.000Z`),
+      ],
       anotherKey: {
         withANested: {
           nestedKey: `bar`,
         },
       },
       frontmatter: {
-        date: `2006-07-22T22:39:53.000Z`,
+        date: new Date(`2006-07-22T22:39:53.000Z`),
         title: `The world of shave and adventure`,
         blue: 10010,
         circle: `happy`,
@@ -145,39 +155,45 @@ async function queryResult(nodes, query) {
     inferenceMetadata: store.getState().inferenceMetadata,
   })
   store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+  store.dispatch({ type: `SET_SCHEMA_COMPOSER`, payload: schemaComposer })
 
-  let context = { path: `foo` }
-  return graphql(schema, query, undefined, {
-    ...context,
-    nodeModel: new LocalNodeModel({
-      schemaComposer,
-      schema,
-      createPageDependency: jest.fn(),
-    }),
+  const context = { path: `foo` }
+  return graphql({
+    schema,
+    source: query,
+    rootValue: undefined,
+    contextValue: {
+      ...context,
+      nodeModel: new LocalNodeModel({
+        schemaComposer,
+        schema,
+        createPageDependency: jest.fn(),
+      }),
+    },
   })
 }
 
 describe(`connection input fields`, () => {
   it(`returns list of distinct values in a field`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       `
         {
           allTest {
             totalCount
-            names: distinct(field: name)
-            array: distinct(field: anArray)
-            blue: distinct(field: frontmatter___blue)
+            names: distinct(field: { name: SELECT })
+            array: distinct(field: { anArray: SELECT })
+            blue: distinct(field: { frontmatter: { blue: SELECT }})
+            dates: distinct(field: { dateArray: SELECT })
             # Only one node has this field
-            circle: distinct(field: frontmatter___circle)
-            nestedField: distinct(field: anotherKey___withANested___nestedKey)
+            circle: distinct(field: { frontmatter: { circle: SELECT }})
+            nestedField: distinct(field: { anotherKey:{ withANested:{ nestedKey: SELECT }}})
           }
         }
       `
     )
 
     expect(result.errors).not.toBeDefined()
-
     expect(result.data.allTest.names.length).toEqual(2)
     expect(result.data.allTest.names[0]).toEqual(`The Mad Max`)
 
@@ -190,22 +206,25 @@ describe(`connection input fields`, () => {
     expect(result.data.allTest.circle.length).toEqual(1)
     expect(result.data.allTest.circle[0]).toEqual(`happy`)
 
+    expect(result.data.allTest.dates[2]).toEqual(`2006-07-04T22:39:53.000Z`)
+    expect(result.data.allTest.dates.length).toEqual(4)
+
     expect(result.data.allTest.nestedField.length).toEqual(2)
     expect(result.data.allTest.nestedField[0]).toEqual(`bar`)
     expect(result.data.allTest.nestedField[1]).toEqual(`foo`)
   })
 
   it(`handles the group connection field`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       ` {
         allTest {
-          blue: group(field: frontmatter___blue) {
+          blue: group(field: { frontmatter: { blue: SELECT }}) {
             field
             fieldValue
             totalCount
           }
-          anArray: group(field: anArray) {
+          anArray: group(field: { anArray: SELECT }) {
             field
             fieldValue
             totalCount
@@ -227,11 +246,11 @@ describe(`connection input fields`, () => {
   })
 
   it(`handles the nested group connection field`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       ` {
         allTest {
-          nestedKey: group(field: anotherKey___withANested___nestedKey) {
+          nestedKey: group(field: { anotherKey: { withANested: { nestedKey: SELECT }}}) {
             field
             fieldValue
             totalCount
@@ -255,7 +274,7 @@ describe(`connection input fields`, () => {
   })
 
   it(`can query object arrays`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       `
         {

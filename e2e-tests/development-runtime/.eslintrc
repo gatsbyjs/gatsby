@@ -1,0 +1,7 @@
+{
+  "parserOptions": {
+    "babelOptions": {
+      "configFile": "../../.babelrc.js"
+    }
+  }
+}

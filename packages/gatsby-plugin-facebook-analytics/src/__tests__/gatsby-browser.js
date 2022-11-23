@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { onRouteUpdate } from "../gatsby-browser"
 
 describe(`gatsby-plugin-facebook-analytics`, () => {

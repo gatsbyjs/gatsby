@@ -1,4 +1,4 @@
-require(`isomorphic-fetch`)
+const fetch = require(`node-fetch`)
 
 fetch(`http://localhost:8000/__refresh`, {
   method: `POST`,

@@ -8,38 +8,31 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "gatsby": "^2.24.79",
-    "gatsby-image": "^2.4.21",
-    "gatsby-plugin-feed": "^2.5.14",
-    "gatsby-plugin-google-analytics": "^2.3.18",
-    "gatsby-plugin-manifest": "^2.4.34",
-    "gatsby-plugin-offline": "^3.2.33",
-    "gatsby-plugin-react-helmet": "^3.3.14",
-    "gatsby-plugin-sharp": "^2.6.42",
-    "gatsby-remark-copy-linked-files": "^2.3.19",
-    "gatsby-remark-images": "^3.3.35",
-    "gatsby-remark-prismjs": "^3.5.16",
-    "gatsby-remark-responsive-iframe": "^2.4.17",
-    "gatsby-remark-smartypants": "^2.3.13",
-    "gatsby-source-filesystem": "^2.3.34",
-    "gatsby-transformer-remark": "^2.8.41",
-    "gatsby-transformer-sharp": "^2.5.17",
-    "prismjs": "^1.22.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1",
-    "typeface-merriweather": "0.0.72",
-    "typeface-montserrat": "0.0.75"
+    "@fontsource/merriweather": "^4.5.14",
+    "@fontsource/montserrat": "^4.5.13",
+    "gatsby": "^5.0.0",
+    "gatsby-plugin-feed": "^5.0.0",
+    "gatsby-plugin-image": "^3.0.0",
+    "gatsby-plugin-manifest": "^5.0.0",
+    "gatsby-plugin-sharp": "^5.0.0",
+    "gatsby-remark-images": "^7.0.0",
+    "gatsby-remark-prismjs": "^7.0.0",
+    "gatsby-remark-responsive-iframe": "^6.0.0",
+    "gatsby-source-filesystem": "^5.0.0",
+    "gatsby-transformer-remark": "^6.0.0",
+    "gatsby-transformer-sharp": "^5.0.0",
+    "prismjs": "^1.29.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   },
   "devDependencies": {
-    "prettier": "2.1.2"
+    "prettier": "^2.7.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [
     "gatsby"
   ],
   "license": "0BSD",
-  "main": "n/a",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
@@ -48,7 +41,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "npm run develop",
+    "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"

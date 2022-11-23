@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const { onCreateNode } = require(`../on-node-create`)
 const { graphql } = require(`gatsby/graphql`)
@@ -147,15 +146,15 @@ yadda yadda
       })
       const schema = sc.buildSchema()
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `query {
-                    listNode {
-                        ${fragment}
-                    }
-                }
-                `
-      )
+        source: `query {
+              listNode {
+                  ${fragment}
+              }
+          }
+          `,
+      })
       return result
     }
 

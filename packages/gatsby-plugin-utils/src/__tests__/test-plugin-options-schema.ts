@@ -1,50 +1,46 @@
 import { testPluginOptionsSchema } from "../test-plugin-options-schema"
-import { ObjectSchema } from "../utils/plugin-options-schema-joi-type"
+import { ObjectSchema } from "../joi"
 
 describe(`testPluginOptionsSchema`, () => {
-  it(`should partially validate one value of a schema`, () => {
+  it(`should partially validate one value of a schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         str: Joi.string(),
         nb: Joi.number(),
         toVerify: Joi.boolean(),
       })
+    const expectedErrors = [`"toVerify" must be a boolean`]
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"toVerify\\" must be a boolean",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should partially validate multiples value of a schema`, () => {
+  it(`should partially validate multiples value of a schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         str: Joi.string(),
         nb: Joi.number(),
         toVerify: Joi.boolean(),
       })
+    const expectedErrors = [
+      `"nb" must be a number`,
+      `"toVerify" must be a boolean`,
+    ]
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
       nb: `invalid value`,
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"toVerify\\" must be a boolean",
-        "\\"nb\\" must be a number",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate half of a real world plugin schema`, () => {
+  it(`should validate half of a real world plugin schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         trackingId: Joi.string()
@@ -84,8 +80,17 @@ describe(`testPluginOptionsSchema`, () => {
         siteSpeedSampleRate: Joi.number(),
         cookieDomain: Joi.string(),
       })
+    const expectedErrors = [
+      `"trackingId" is required`,
+      `"head" must be a boolean`,
+      `"anonymize" must be a boolean`,
+      `"respectDNT" must be a boolean`,
+      `"exclude[0]" must be a string`,
+      `"exclude[1]" must be a string`,
+      `"exclude[2]" must be a string`,
+    ]
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
       head: `invalid boolean value`,
       anonymize: `invalid boolean value`,
@@ -94,18 +99,10 @@ describe(`testPluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"trackingId\\" is required",
-        "\\"head\\" must be a boolean",
-        "\\"anonymize\\" must be a boolean",
-        "\\"respectDNT\\" must be a boolean",
-        "\\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate an entire real world plugin schema`, () => {
+  it(`should validate an entire real world plugin schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         trackingId: Joi.string()
@@ -145,8 +142,25 @@ describe(`testPluginOptionsSchema`, () => {
         siteSpeedSampleRate: Joi.number(),
         cookieDomain: Joi.string(),
       })
+    const expectedErrors = [
+      `"trackingId" is required`,
+      `"head" must be a boolean`,
+      `"anonymize" must be a boolean`,
+      `"respectDNT" must be a boolean`,
+      `"exclude[0]" must be a string`,
+      `"exclude[1]" must be a string`,
+      `"exclude[2]" must be a string`,
+      `"pageTransitionDelay" must be a number`,
+      `"optimizeId" must be a string`,
+      `"experimentId" must be a string`,
+      `"variationId" must be a string`,
+      `"defer" must be a boolean`,
+      `"sampleRate" must be a number`,
+      `"siteSpeedSampleRate" must be a number`,
+      `"cookieDomain" must be a string`,
+    ]
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
       head: `invalid boolean value`,
       anonymize: `invalid boolean value`,
@@ -163,32 +177,16 @@ describe(`testPluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"trackingId\\" is required",
-        "\\"head\\" must be a boolean",
-        "\\"anonymize\\" must be a boolean",
-        "\\"respectDNT\\" must be a boolean",
-        "\\"exclude\\" \\"[0]\\" must be a string. \\"[1]\\" must be a string. \\"[2]\\" must be a string",
-        "\\"pageTransitionDelay\\" must be a number",
-        "\\"optimizeId\\" must be a string",
-        "\\"experimentId\\" must be a string",
-        "\\"variationId\\" must be a string",
-        "\\"defer\\" must be a boolean",
-        "\\"sampleRate\\" must be a number",
-        "\\"siteSpeedSampleRate\\" must be a number",
-        "\\"cookieDomain\\" must be a string",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should check the validity of a schema`, () => {
+  it(`should check the validity of a schema`, async () => {
     const pluginSchema = ({ Joi }): ObjectSchema =>
       Joi.object({
         toVerify: Joi.boolean(),
       })
 
-    const { isValid, errors } = testPluginOptionsSchema(pluginSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: false,
     })
 

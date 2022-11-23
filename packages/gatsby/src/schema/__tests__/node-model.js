@@ -11,6 +11,20 @@ describe(`NodeModel`, () => {
   let schema
   const createPageDependency = jest.fn()
 
+  const allNodeTypes = [
+    `File`,
+    `Directory`,
+    `Site`,
+    `SitePage`,
+    `SiteFunction`,
+    `SitePlugin`,
+    `SiteBuildMetadata`,
+    `Author`,
+    `Contributor`,
+    `ExternalFile`,
+    `Post`,
+  ]
+
   describe(`normal node tests`, () => {
     beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
@@ -22,7 +36,7 @@ describe(`NodeModel`, () => {
       )
 
       const types = `
-      union AllFiles = File | RemoteFile
+      union AllFiles = File | ExternalFile
 
       interface TeamMember {
         name: String!
@@ -149,7 +163,7 @@ describe(`NodeModel`, () => {
         })
         expect(result.length).toBe(3)
         expect(
-          result.every(r => [`File`, `RemoteFile`].includes(r.internal.type))
+          result.every(r => [`File`, `ExternalFile`].includes(r.internal.type))
         ).toBeTruthy()
       })
 
@@ -218,55 +232,6 @@ describe(`NodeModel`, () => {
       })
     })
 
-    describe(`getAllNodes`, () => {
-      it(`returns all nodes`, () => {
-        const result = nodeModel.getAllNodes()
-        expect(result.length).toBe(9)
-      })
-
-      it(`returns all nodes of type`, () => {
-        const result = nodeModel.getAllNodes({ type: `Author` })
-        expect(result.length).toBe(2)
-      })
-
-      it(`returns all nodes of union type`, () => {
-        const result = nodeModel.getAllNodes({ type: `AllFiles` })
-        expect(result.length).toBe(3)
-      })
-
-      it(`returns all nodes of interface type`, () => {
-        const result = nodeModel.getAllNodes({ type: `TeamMember` })
-        expect(result.length).toBe(3)
-      })
-
-      it(`creates page dependencies`, () => {
-        nodeModel.getAllNodes({}, { path: `/` })
-        expect(createPageDependency).toHaveBeenCalledTimes(9)
-      })
-
-      it(`creates page dependencies when called with context and connection type`, () => {
-        nodeModel
-          .withContext({ path: `/` })
-          .getAllNodes({ type: `Post` }, { connectionType: `Post` })
-        expect(createPageDependency).toHaveBeenCalledTimes(1)
-      })
-
-      it(`does not create page dependencies when called with context without connection type`, () => {
-        nodeModel.withContext({ path: `/` }).getAllNodes()
-        expect(createPageDependency).toHaveBeenCalledTimes(0)
-      })
-
-      it(`returns empty array when no nodes of type found`, () => {
-        const result = nodeModel.getAllNodes({ type: `Astronauts` })
-        expect(result).toEqual([])
-      })
-
-      it(`does not create page dependencies when no matching nodes found`, () => {
-        nodeModel.getAllNodes({ type: `Astronauts` }, { path: `/` })
-        expect(createPageDependency).not.toHaveBeenCalled()
-      })
-    })
-
     describe(`getTypes`, () => {
       it(`returns all node types in the store`, () => {
         const result = nodeModel.getTypes()
@@ -277,23 +242,21 @@ describe(`NodeModel`, () => {
             `Contributor`,
             `Post`,
             `File`,
-            `RemoteFile`,
+            `ExternalFile`,
           ])
         )
       })
     })
 
-    describe(`runQuery`, () => {
+    describe(`findOne/findAll`, () => {
       it(`returns first result only`, async () => {
         const type = `Post`
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const result = await nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         expect(result.id).toBe(`post1`)
@@ -304,14 +267,14 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query,
-          firstOnly,
           type,
         })
-        expect(result.length).toBe(2)
+        const result = Array.from(entries)
+        const count = await totalCount()
+        expect(count).toBe(2)
         expect(result[0].id).toBe(`post1`)
         expect(result[1].id).toBe(`post3`)
       })
@@ -321,24 +284,18 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.runQuery(
+        await nodeModel.findAll(
           {
             query,
-            firstOnly,
             type,
           },
           { path: `/` }
         )
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
@@ -347,21 +304,15 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.withContext({ path: `/` }).runQuery({
+        await nodeModel.withContext({ path: `/` }).findAll({
           query,
-          firstOnly,
           type,
         })
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
@@ -370,12 +321,10 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.runQuery(
+        await nodeModel.findAll(
           {
             query,
-            firstOnly,
             type,
           },
           { path: `/`, connectionType: `Post` }
@@ -387,14 +336,68 @@ describe(`NodeModel`, () => {
         })
       })
 
+      it(`creates page dependencies with individual nodes when connectionType is null`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        nodeModel.replaceFiltersCache()
+        await nodeModel.findAll(
+          {
+            query,
+            type,
+          },
+          { path: `/`, connectionType: null }
+        )
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
+      it(`allows to opt-out of dependency tracking`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        nodeModel.replaceFiltersCache()
+        await nodeModel.findAll(
+          {
+            query,
+            type,
+          },
+          { path: `/`, track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
+      it(`allows to opt-out of dependency tracking with context`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        nodeModel.replaceFiltersCache()
+        await nodeModel.withContext({ path: `/` }).findAll(
+          {
+            query,
+            type,
+          },
+          { track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
       it(`doesn't allow querying union types`, () => {
         const type = `AllFiles`
         const query = {}
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = nodeModel.runQuery({
+        const result = nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         return expect(result).rejects.toThrowError(
@@ -405,11 +408,9 @@ describe(`NodeModel`, () => {
       it(`handles interface types`, async () => {
         const type = `TeamMember`
         const query = { name: { ne: null } }
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const result = await nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         expect(result.name).toBe(`Person1`)
@@ -422,14 +423,14 @@ describe(`NodeModel`, () => {
             children: { elemMatch: { internal: { type: { eq: `Post` } } } },
           },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query,
-          firstOnly,
           type,
         })
-        expect(result.length).toBe(2)
+        const result = Array.from(entries)
+        const count = await totalCount()
+        expect(count).toBe(2)
         expect(result[0].id).toBe(`file1`)
         expect(result[1].id).toBe(`file3`)
       })
@@ -441,11 +442,9 @@ describe(`NodeModel`, () => {
             nestedObject: { elemMatch: { nestedValue: { eq: `2` } } },
           },
         }
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const result = await nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         expect(result).toBeDefined()
@@ -466,15 +465,15 @@ describe(`NodeModel`, () => {
             },
           },
         }
-        const firstOnly = false
         nodeModel.replaceTypeKeyValueCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query,
-          firstOnly,
           type,
         })
+        const result = Array.from(entries)
+        const count = await totalCount()
         expect(result).toBeDefined()
-        expect(result.length).toEqual(2)
+        expect(count).toEqual(2)
         expect(result[0].id).toEqual(`post2`)
         expect(result[1].id).toEqual(`post3`)
       })
@@ -502,6 +501,55 @@ describe(`NodeModel`, () => {
         const predicate = () => false
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result).toBe(null)
+      })
+
+      describe(`multiple nodes share a reference`, () => {
+        // order of loading nodes here is important, so we check variants of loading post first and person second
+        // as well as other way around
+
+        it(`load person first, then post`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
+
+        it(`load post first, then person`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
       })
     })
 
@@ -553,6 +601,9 @@ describe(`NodeModel`, () => {
   describe(`materialization`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
+    let resolveSlugMock
+    let resolveCustomContextMock
+    let materializationSpy
     beforeEach(async () => {
       const nodes = (() => [
         {
@@ -610,6 +661,46 @@ describe(`NodeModel`, () => {
             contentDigest: `5`,
           },
         },
+        {
+          id: `id6`,
+          Meta: {
+            Date: `1`,
+            Category: `Gatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `6`,
+          },
+        },
+        {
+          id: `id7`,
+          Meta: {
+            Date: `2`,
+            Category: `NotGatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `7`,
+          },
+        },
+        {
+          id: `id8`,
+          toBeResolvedInAnotherField: 2,
+          enabled: true,
+          internal: {
+            type: `Test6`,
+            contentDigest: `8`,
+          },
+        },
+        {
+          id: `id9`,
+          toBeResolvedInAnotherField: 1,
+          enabled: true,
+          internal: {
+            type: `Test6`,
+            contentDigest: `9`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -617,6 +708,14 @@ describe(`NodeModel`, () => {
       )
       resolveBetterTitleMock = jest.fn()
       resolveOtherTitleMock = jest.fn()
+      resolveSlugMock = jest.fn()
+      resolveCustomContextMock = jest.fn()
+
+      store.dispatch(
+        actions.createResolverContext({
+          myCustomContext: `foo`,
+        })
+      )
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
@@ -680,7 +779,33 @@ describe(`NodeModel`, () => {
               },
               slug: {
                 type: `String`,
-                resolve: source => source.id,
+                resolve: source => {
+                  resolveSlugMock()
+                  return source.id
+                },
+              },
+
+              // for concurrent materialization test
+              intentionallySlowResolver1: {
+                type: `Boolean!`,
+                resolve: async () => {
+                  await new Promise(resolve => setTimeout(resolve, 1000))
+                  return true
+                },
+              },
+              intentionallySlowResolver2: {
+                type: `Boolean!`,
+                resolve: async () => {
+                  await new Promise(resolve => setTimeout(resolve, 1000))
+                  return true
+                },
+              },
+              usingCustomResolverContext: {
+                type: `String`,
+                resolve: (parent, _args, context) => {
+                  resolveCustomContextMock({ context, parent })
+                  return `${context.myCustomContext}/${parent.title}`
+                },
               },
             },
           }),
@@ -716,6 +841,33 @@ describe(`NodeModel`, () => {
               },
             },
           }),
+          typeBuilders.buildObjectType({
+            name: `Test5Meta`,
+            fields: {
+              Date: {
+                type: `String`,
+                resolve(source) {
+                  return source.Date
+                },
+              },
+              Category: {
+                type: `String`,
+                resolve(source) {
+                  return source.Category
+                },
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test6`,
+            interfaces: [`Node`],
+            fields: {
+              sort_order: {
+                type: `Int!`,
+                resolve: source => source.toBeResolvedInAnotherField,
+              },
+            },
+          }),
         ],
       })
 
@@ -730,14 +882,14 @@ describe(`NodeModel`, () => {
         schemaComposer,
         createPageDependency,
       })
+      materializationSpy = jest.spyOn(nodeModel, `_doResolvePrepareNodesQueue`)
     })
 
     it(`should not resolve prepared nodes more than once`, async () => {
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: { filter: { betterTitle: { eq: `foo` } } },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -745,10 +897,9 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: { filter: { betterTitle: { eq: `foo` } } },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -756,12 +907,11 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: {
             filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -769,12 +919,11 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: {
             filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -782,12 +931,11 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findOne(
         {
           query: {
             filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
-          firstOnly: true,
           type: `Test`,
         },
         { path: `/` }
@@ -796,19 +944,79 @@ describe(`NodeModel`, () => {
       expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
     })
 
-    it(`can filter by resolved fields`, async () => {
+    it(`should not resolve prepared nodes more than once (with mixed interfaces and node types)`, async () => {
       nodeModel.replaceFiltersCache()
-      const result = await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
-          query: {
-            filter: { hidden: { eq: false } },
-          },
-          firstOnly: false,
+          query: { filter: { slug: { eq: `id1` } } },
           type: `Test`,
         },
         { path: `/` }
       )
-      expect(result.length).toBe(2)
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(0)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.findAll(
+        {
+          query: { filter: { slug: { eq: `id1` } } },
+          type: `TestInterface`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(0)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.findAll(
+        {
+          query: {
+            filter: { slug: { eq: `id1` }, betterTitle: { eq: `foo` } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.findAll(
+        {
+          query: {
+            filter: { slug: { eq: `id1` } },
+          },
+          type: `TestInterface`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.findOne(
+        {
+          query: {
+            filter: { slug: { eq: `id1` }, betterTitle: { eq: `foo` } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+    })
+
+    it(`can filter by resolved fields`, async () => {
+      nodeModel.replaceFiltersCache()
+      const { entries, totalCount } = await nodeModel.findAll(
+        {
+          query: {
+            filter: { hidden: { eq: false } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      const result = Array.from(entries)
+      const count = await totalCount()
+      expect(count).toBe(2)
       expect(result[0].id).toBe(`id1`)
       expect(result[1].id).toBe(`id2`)
     })
@@ -816,40 +1024,44 @@ describe(`NodeModel`, () => {
     it(`merges query caches when filtering by nested field`, async () => {
       // See https://github.com/gatsbyjs/gatsby/issues/26056
       nodeModel.replaceFiltersCache()
-      const result1 = await nodeModel.runQuery(
-        {
-          query: {
-            filter: { nested: { foo: { eq: `foo1` } } },
+      const { entries: entries1, totalCount: totalCount1 } =
+        await nodeModel.findAll(
+          {
+            query: {
+              filter: { nested: { foo: { eq: `foo1` } } },
+            },
+            type: `Test`,
           },
-          firstOnly: false,
-          type: `Test`,
-        },
-        { path: `/` }
-      )
-      const result2 = await nodeModel.runQuery(
-        {
-          query: {
-            filter: { nested: { bar: { eq: `bar2` } } },
+          { path: `/` }
+        )
+      const { entries: entries2, totalCount: totalCount2 } =
+        await nodeModel.findAll(
+          {
+            query: {
+              filter: { nested: { bar: { eq: `bar2` } } },
+            },
+            type: `Test`,
           },
-          firstOnly: false,
-          type: `Test`,
-        },
-        { path: `/` }
-      )
+          { path: `/` }
+        )
+      const result1 = Array.from(entries1)
+      const result2 = Array.from(entries2)
+      const count1 = await totalCount1()
+      const count2 = await totalCount2()
 
       expect(result1).toBeTruthy()
-      expect(result1.length).toBe(1)
+      expect(count1).toBe(1)
       expect(result1[0].id).toBe(`id1`)
 
       expect(result2).toBeTruthy()
-      expect(result2.length).toBe(1)
+      expect(count2).toBe(1)
       expect(result2[0].id).toBe(`id2`)
     })
 
     it(`always uses a custom resolvers for query fields`, async () => {
       // See https://github.com/gatsbyjs/gatsby/issues/27368
       nodeModel.replaceFiltersCache()
-      const result1 = await nodeModel.runQuery(
+      const { entries: entries1 } = await nodeModel.findAll(
         {
           query: {
             sort: {
@@ -857,12 +1069,11 @@ describe(`NodeModel`, () => {
               order: [`desc`],
             },
           },
-          firstOnly: false,
           type: `Test4`,
         },
         { path: `/` }
       )
-      const result2 = await nodeModel.runQuery(
+      const { entries: entries2 } = await nodeModel.findAll(
         {
           query: {
             filter: { Meta: { Category: { eq: `Gatsby` } } },
@@ -871,50 +1082,239 @@ describe(`NodeModel`, () => {
               order: [`desc`],
             },
           },
-          firstOnly: false,
           type: `Test4`,
         },
         { path: `/` }
       )
 
-      expect(Array.isArray(result1)).toBeTruthy()
+      const result1 = Array.from(entries1)
+      const result2 = Array.from(entries2)
+
+      expect(result1).toBeTruthy()
       expect(result1.map(node => node.id)).toEqual([`id4`, `id5`])
 
-      expect(Array.isArray(result2)).toBeTruthy()
+      expect(result2).toBeTruthy()
       expect(result2.map(node => node.id)).toEqual([`id4`, `id5`])
+    })
+
+    it(`sorts correctly by fields with custom resolvers`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/28047
+      nodeModel.replaceFiltersCache()
+
+      // This is required to setup a state after which the error reveals itself
+      const result1 = await nodeModel.findOne(
+        {
+          query: {
+            filter: { id: { regex: `/non-existing/` } },
+          },
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+
+      // Filter by the same regex with sorting
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            filter: { id: { regex: `/id/` } },
+            sort: {
+              fields: [`Meta.Date`],
+              order: [`desc`],
+            },
+          },
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+      const result2 = Array.from(entries)
+
+      expect(result1).toEqual(null)
+
+      expect(Array.isArray(result2)).toBeTruthy()
+      expect(result2.map(node => node.id)).toEqual([`id7`, `id6`])
+    })
+
+    it(`sorts correctly by fields with custom resolvers if GC happen mid query`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      // populate filters cache
+      await nodeModel.findAll(
+        {
+          query: {},
+          type: `Test6`,
+        },
+        { path: `/` }
+      )
+
+      // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+      const v8 = require(`v8`)
+      const vm = require(`vm`)
+      v8.setFlagsFromString(`--expose_gc`)
+      const gc = vm.runInNewContext(`gc`)
+
+      const { clearKeptObjects } = require(`lmdb`)
+
+      const actualOrderBy = jest.requireActual(`lodash`).orderBy
+      const spy = jest.spyOn(require(`lodash`), `orderBy`)
+      spy.mockImplementationOnce((...args) => {
+        // very implementation specific case:
+        // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+        // GCed mid execution of query. For this test we force all weakly held nodes to be
+        // dropped
+        clearKeptObjects()
+        gc()
+        return actualOrderBy(...args)
+      })
+
+      // query will use same filters cache as previous query (important)
+      // but will use sorting that requires Materialization (sort_order has custom resolver)
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            sort: {
+              fields: [`sort_order`],
+              order: [`asc`],
+            },
+          },
+          type: `Test6`,
+        },
+        { path: `/` }
+      )
+      const result = Array.from(entries)
+      expect(result.length).toEqual(2)
+      expect(result[0].id).toEqual(`id9`)
+      expect(result[1].id).toEqual(`id8`)
     })
 
     it(`handles nulish values within array of interface type`, async () => {
       nodeModel.replaceFiltersCache()
-      const result = await nodeModel.runQuery(
+      const { entries, totalCount } = await nodeModel.findAll(
         {
           query: {
             filter: { arrayWithNulls: { elemMatch: { foo: { eq: `id1` } } } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
       )
+      const result = Array.from(entries)
+      const count = await totalCount()
       expect(result).toBeTruthy()
-      expect(result.length).toEqual(1)
+      expect(count).toEqual(1)
       expect(result[0].id).toEqual(`id1`)
     })
 
     it(`handles fields with custom resolvers on interfaces having multiple implementations`, async () => {
       nodeModel.replaceFiltersCache()
-      const result = await nodeModel.runQuery(
+      const result = await nodeModel.findOne(
         {
           query: {
             filter: { slug: { eq: `id3` } },
           },
-          firstOnly: true,
           type: `TestInterface`,
         },
         { path: `/` }
       )
       expect(result).toBeTruthy()
       expect(result.id).toEqual(`id3`)
+    })
+
+    it(`correctly merges resolved fields when multiple concurrent materializations happen for same node`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      const query1Promise = nodeModel.findAll(
+        {
+          query: {
+            filter: { intentionallySlowResolver1: { eq: true } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      // we batch and merge materialization runs scheduled in same event loop turn
+      // so just triggering adding small time delay so that we run 2 concurrent ones instead
+
+      await new Promise(resolve => process.nextTick(resolve))
+
+      const query2Promise = nodeModel.findAll(
+        {
+          query: {
+            filter: { intentionallySlowResolver2: { eq: true } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      await Promise.all([query1Promise, query2Promise])
+
+      // make sure materialization wasn't batched (test setup is correct)
+      expect(materializationSpy).toBeCalledTimes(2)
+
+      const resolvedFieldsForTestNodes = store
+        .getState()
+        .resolvedNodesCache.get(`Test`)
+
+      // resolvedFieldsForTestNodes should contain both intentionallySlowResolver1 and intentionallySlowResolver2
+      // so something like this:
+      // Map {
+      //   "id1" => Object {
+      //     "intentionallySlowResolver1": true,
+      //     "intentionallySlowResolver2": true,
+      //   },
+      //   "id2" => Object {
+      //     "intentionallySlowResolver1": true,
+      //     "intentionallySlowResolver2": true,
+      //   },
+      // }
+
+      // we should have resolved fields for all nodes
+      const { entries } = await nodeModel.findAll({ type: `Test` })
+      expect(Array.from(resolvedFieldsForTestNodes.keys())).toEqual(
+        Array.from(entries, node => node.id)
+      )
+
+      // we should have all fields merged on all nodes
+      expect(Array.from(resolvedFieldsForTestNodes.values())).toEqual(
+        expect.arrayContaining([
+          {
+            intentionallySlowResolver1: true,
+            intentionallySlowResolver2: true,
+          },
+        ])
+      )
+    })
+
+    it(`injects context passed by createResolverContext action when materializing fields`, async () => {
+      nodeModel.replaceFiltersCache()
+      const wat = await nodeModel.findAll(
+        {
+          query: {
+            sort: { fields: [`usingCustomResolverContext`], order: [`ASC`] },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(resolveCustomContextMock).toHaveBeenCalledTimes(2)
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id1`,
+        }),
+      })
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id2`,
+        }),
+      })
     })
   })
 
@@ -984,9 +1384,8 @@ describe(`NodeModel`, () => {
       it(`Doesn't track copied objects`, () => {
         const node = nodeModel.getNodeById({ id: `id1` })
         const copiedInlineObject = { ...node.inlineObject }
-        const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
-        )
+        const trackedRootNode =
+          nodeModel.findRootNodeAncestor(copiedInlineObject)
 
         expect(trackedRootNode).not.toEqual(node)
       })
@@ -1010,35 +1409,39 @@ describe(`NodeModel`, () => {
       it(`Doesn't track copied objects`, () => {
         const node = nodeModel.getNodesByIds({ ids: [`id1`] })[0]
         const copiedInlineObject = { ...node.inlineObject }
-        const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
-        )
+        const trackedRootNode =
+          nodeModel.findRootNodeAncestor(copiedInlineObject)
 
         expect(trackedRootNode).not.toEqual(node)
       })
     })
 
     describe(`Tracks nodes read from cache by list`, () => {
-      it(`Tracks inline objects`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Tracks inline objects`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const inlineObject = node.inlineObject
         const trackedRootNode = nodeModel.findRootNodeAncestor(inlineObject)
 
         expect(trackedRootNode).toEqual(node)
       })
-      it(`Tracks inline arrays`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Tracks inline arrays`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const inlineObject = node.inlineArray
         const trackedRootNode = nodeModel.findRootNodeAncestor(inlineObject)
 
         expect(trackedRootNode).toEqual(node)
       })
-      it(`Doesn't track copied objects`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Doesn't track copied objects`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const copiedInlineObject = { ...node.inlineObject }
-        const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
-        )
+        const trackedRootNode =
+          nodeModel.findRootNodeAncestor(copiedInlineObject)
 
         expect(trackedRootNode).not.toEqual(node)
       })
@@ -1047,13 +1450,14 @@ describe(`NodeModel`, () => {
     describe(`Tracks nodes returned by queries`, () => {
       it(`Tracks objects when running query without filter`, async () => {
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query: {},
           type: schema.getType(`Test`),
-          firstOnly: false,
         })
+        const result = Array.from(entries)
+        const count = await totalCount()
 
-        expect(result.length).toEqual(2)
+        expect(count).toEqual(2)
         expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
           result[0]
         )
@@ -1064,7 +1468,7 @@ describe(`NodeModel`, () => {
 
       it(`Tracks objects when running query with filter`, async () => {
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query: {
             filter: {
               inlineObject: {
@@ -1075,113 +1479,14 @@ describe(`NodeModel`, () => {
             },
           },
           type: schema.getType(`Test`),
-          firstOnly: false,
         })
+        const result = Array.from(entries)
+        const count = await totalCount()
 
-        expect(result.length).toEqual(1)
+        expect(count).toEqual(1)
         expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
           result[0]
         )
-      })
-    })
-  })
-
-  describe(`circular references`, () => {
-    describe(`directly on a node`, () => {
-      beforeEach(async () => {
-        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
-        const circular = { i_am: `recursion!` }
-        circular.circled = circular
-        const indirectCircular = {
-          down1: {
-            down2: {},
-          },
-        }
-        indirectCircular.down1.down2.deepCircular = indirectCircular
-
-        const node = {
-          id: `circleId`,
-          parent: null,
-          children: [],
-          inlineObject: {
-            field: `fieldOfFirstNode`,
-          },
-          inlineArray: [1, 2, 3],
-          circular,
-          indirect: {
-            indirectCircular,
-          },
-          internal: {
-            type: `Test`,
-            contentDigest: `digest1`,
-          },
-        }
-        actions.createNode(node, { name: `test` })(store.dispatch)
-
-        await build({})
-        const {
-          schemaCustomization: { composer: schemaComposer },
-        } = store.getState()
-        schema = store.getState().schema
-
-        nodeModel = new LocalNodeModel({
-          schema,
-          schemaComposer,
-          createPageDependency,
-        })
-      })
-
-      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
-        const copiedInlineObject = { ...node.inlineObject }
-        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
-
-        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
-      })
-    })
-    describe(`not directly on a node`, () => {
-      beforeEach(async () => {
-        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
-        const circular = { i_am: `recursion!` }
-        circular.circled = { bar: { circular } }
-
-        const node = {
-          id: `circleId`,
-          parent: null,
-          children: [],
-          inlineObject: {
-            field: `fieldOfFirstNode`,
-          },
-          inlineArray: [1, 2, 3],
-          foo: { circular },
-          internal: {
-            type: `Test`,
-            contentDigest: `digest1`,
-          },
-        }
-        actions.createNode(node, { name: `test` })(store.dispatch)
-
-        await build({})
-        const {
-          schemaCustomization: { composer: schemaComposer },
-        } = store.getState()
-        schema = store.getState().schema
-
-        nodeModel = new LocalNodeModel({
-          schema,
-          schemaComposer,
-          createPageDependency,
-        })
-      })
-
-      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
-        const copiedInlineObject = { ...node.inlineObject }
-        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
-
-        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
       })
     })
   })

@@ -28,8 +28,9 @@ export interface IGraphQLRunnerStatResults {
   uniqueSorts: number
 }
 
-export type PageContext = any
+export type PageContext = Record<string, any>
 
 export interface IExecutionResult extends ExecutionResult {
   pageContext?: PageContext
+  serverData?: unknown
 }

@@ -4,7 +4,7 @@ title: Building a Contact Form
 
 This guide covers how to create a contact form in a Gatsby site, along with an overview of some strategies for handling form data that has been submitted.
 
-Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to gatsby can be found in the [Adding Forms](/docs/adding-forms/) section.
+Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to your Gatsby site can be found in the [Adding Forms](/docs/how-to/adding-common-features/adding-forms/) section.
 
 ## Creating an Accessible Form
 

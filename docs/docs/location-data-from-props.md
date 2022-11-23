@@ -32,7 +32,7 @@ Running [client side](/docs/glossary#client-side) is the exception to this rule.
 
 Sometimes you need the absolute URL of the current page (including the host name) while using [server-side rendering](/docs/glossary#server-side-rendering/). For example, you may want to add a canonical URL to the page header.
 
-In this case, you would first need to add configuration that describes where your site is deployed. You can add this as a `siteURL` property on `siteMetadata` in [`gatsby-config.js`](/docs/gatsby-config/).
+In this case, you would first need to add configuration that describes where your site is deployed. You can add this as a `siteURL` property on `siteMetadata` in [`gatsby-config.js`](/docs/reference/config-files/gatsby-config/).
 
 Once you have added `siteURL`, you can form the absolute URL of the current page by retrieving `siteURL` and concatenating it with the current path from `location`. Note that the path starts with a slash; `siteURL` must therefore not end in one.
 
@@ -97,9 +97,9 @@ const SomePageComponent = ({ location }) => {
 
 ## Other resources
 
-- [Gatsby Link API](/docs/gatsby-link/)
+- [Gatsby Link API](/docs/reference/built-in-components/gatsby-link/)
 - [@reach/router docs](https://reach.tech/router/api/Location)
 - [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
 - [Hash Router](https://reacttraining.com/react-router/web/api/HashRouter)
-- [Gatsby Breadcrumb Plugin](/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
+- [Gatsby Breadcrumb Plugin](/plugins/gatsby-plugin-breadcrumb/#breadcrumb-props)
 - [Create Modal w/ Navigation State using React Router](https://codedaily.io/tutorials/47/Create-a-Modal-Route-with-Link-and-Nav-State-in-React-Router)

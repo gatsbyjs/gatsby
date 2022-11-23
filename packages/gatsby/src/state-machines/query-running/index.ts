@@ -1,4 +1,4 @@
-import { MachineConfig, Machine } from "xstate"
+import { MachineConfig, createMachine, assign } from "xstate"
 import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
@@ -10,14 +10,17 @@ import { queryActions } from "./actions"
 const PAGE_QUERY_ENQUEUING_TIMEOUT = 50
 
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
+  predictableActionArguments: true,
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
   on: {
     SOURCE_FILE_CHANGED: {
       actions: `markSourceFilesDirty`,
     },
+    QUERY_RUN_REQUESTED: {
+      actions: `trackRequestedQueryRun`,
+    },
   },
-  context: {},
   states: {
     extractingQueries: {
       id: `extracting-queries`,
@@ -59,12 +62,21 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     calculatingDirtyQueries: {
+      entry: assign<IQueryRunningContext>(({ pendingQueryRuns }) => {
+        return {
+          pendingQueryRuns: new Set(),
+          currentlyHandledPendingQueryRuns: pendingQueryRuns,
+        }
+      }),
       invoke: {
         id: `calculating-dirty-queries`,
         src: `calculateDirtyQueries`,
         onDone: {
           target: `runningStaticQueries`,
-          actions: `assignDirtyQueries`,
+          actions: [
+            `assignDirtyQueries`,
+            `clearCurrentlyHandledPendingQueryRuns`,
+          ],
         },
       },
     },
@@ -82,6 +94,15 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         src: `runPageQueries`,
         id: `running-page-queries`,
         onDone: {
+          target: `runningSliceQueries`,
+        },
+      },
+    },
+    runningSliceQueries: {
+      invoke: {
+        src: `runSliceQueries`,
+        id: `running-slice-queries`,
+        onDone: {
           target: `waitingForJobs`,
           actions: `flushPageData`,
         },
@@ -90,10 +111,17 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     // This waits for the jobs API to finish
     waitingForJobs: {
       // If files are dirty go and extract again
-      always: {
-        cond: (ctx): boolean => !!ctx.filesDirty,
-        target: `extractingQueries`,
-      },
+      always: [
+        {
+          cond: (ctx): boolean => !!ctx.filesDirty,
+          target: `extractingQueries`,
+        },
+        {
+          cond: ({ pendingQueryRuns }): boolean =>
+            !!pendingQueryRuns && pendingQueryRuns.size > 0,
+          target: `calculatingDirtyQueries`,
+        },
+      ],
       invoke: {
         src: `waitUntilAllJobsComplete`,
         id: `waiting-for-jobs`,
@@ -107,7 +135,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     },
   },
 }
-export const queryRunningMachine = Machine(queryStates, {
+export const queryRunningMachine = createMachine(queryStates, {
   actions: queryActions,
   services: queryRunningServices,
 })

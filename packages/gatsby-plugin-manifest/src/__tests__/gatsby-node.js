@@ -16,7 +16,7 @@ jest.mock(`fs`, () => {
  */
 
 jest.mock(`sharp`, () => {
-  let sharp = jest.fn(
+  const sharp = jest.fn(
     () =>
       new (class {
         resize() {
@@ -61,7 +61,8 @@ const reporter = {
     }
   }),
 }
-const { onPostBootstrap } = require(`../gatsby-node`)
+const { onPostBootstrap, pluginOptionsSchema } = require(`../gatsby-node`)
+const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
 
 const apiArgs = {
   reporter,
@@ -103,11 +104,6 @@ describe(`Test plugin manifest options`, () => {
     fs.existsSync.mockReset()
     fs.copyFileSync.mockReset()
     sharp.mockClear()
-  })
-
-  // the require of gatsby-node performs the invoking
-  it(`invokes sharp.simd for optimization`, () => {
-    expect(sharp.simd).toHaveBeenCalledTimes(1)
   })
 
   it(`correctly works with default parameters`, async () => {
@@ -165,8 +161,12 @@ describe(`Test plugin manifest options`, () => {
     // No sharp calls because this is manual mode: user provides all icon sizes
     // rather than the plugin generating them
     expect(sharp).toHaveBeenCalledTimes(0)
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath)
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath, {
+      recursive: true,
+    })
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath, {
+      recursive: true,
+    })
   })
 
   it(`invokes sharp if icon argument specified`, async () => {
@@ -522,5 +522,17 @@ describe(`Test plugin manifest options`, () => {
     await onPostBootstrap({ ...apiArgs }, specificOptions)
 
     expect(fs.copyFileSync).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe(`pluginOptionsSchema`, () => {
+  it(`validates options correctly`, async () => {
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      manifestOptions
+    )
+
+    expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

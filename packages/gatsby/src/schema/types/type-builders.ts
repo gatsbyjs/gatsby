@@ -1,10 +1,10 @@
 import {
-  ComposeObjectTypeConfig,
-  ComposeInputObjectTypeConfig,
-  ComposeInterfaceTypeConfig,
-  ComposeUnionTypeConfig,
-  ComposeEnumTypeConfig,
-  ComposeScalarTypeConfig,
+  ObjectTypeComposerAsObjectDefinition as ComposeObjectTypeConfig,
+  InputTypeComposerAsObjectDefinition as ComposeInputObjectTypeConfig,
+  InterfaceTypeComposerAsObjectDefinition as ComposeInterfaceTypeConfig,
+  UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
+  EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
+  ScalarTypeComposerAsObjectDefinition as ComposeScalarTypeConfig,
 } from "graphql-compose"
 
 enum GatsbyGraphQLTypeKind {
@@ -39,7 +39,7 @@ export type GatsbyGraphQLType<TSource, TContext> =
     }
   | {
       kind: GatsbyGraphQLTypeKind.SCALAR
-      config: ComposeScalarTypeConfig
+      config: ComposeScalarTypeConfig<any, any>
     }
 
 function buildObjectType<TSource, TContext>(
@@ -88,7 +88,7 @@ function buildEnumType<TSource, TContext>(
 }
 
 function buildScalarType<TSource, TContext>(
-  config: ComposeScalarTypeConfig
+  config: ComposeScalarTypeConfig<any, any>
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.SCALAR,

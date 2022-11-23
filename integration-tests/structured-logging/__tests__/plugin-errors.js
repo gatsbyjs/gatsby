@@ -3,13 +3,7 @@ const path = require(`path`)
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 describe(`Plugin Errors`, () => {
   let gatsbyProcess
@@ -59,7 +53,24 @@ describe(`Plugin Errors`, () => {
           action: expect.objectContaining({
             type: `LOG`,
             payload: expect.objectContaining({
-              level: "ERROR",
+              level: `ERROR`,
+              category: `SYSTEM`,
+              text: `Error text is MORE ERROR!`,
+              code: `structured-plugin-errors_12345`,
+            }),
+          }),
+        }),
+      ])
+    )
+
+    expect(events).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: `LOG_ACTION`,
+          action: expect.objectContaining({
+            type: `LOG`,
+            payload: expect.objectContaining({
+              level: `ERROR`,
               category: `SYSTEM`,
               text: `Error text is PANIC!`,
               code: `structured-plugin-errors_1337`,

@@ -3,8 +3,10 @@ import path from "path"
 import findCacheDir from "find-cache-dir"
 
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import { IProgram } from "./types"
 
@@ -31,7 +33,9 @@ module.exports = async function clean(program: IProgram): Promise<void> {
 
   report.info(`Successfully deleted directories`)
 
-  if (await userPassesFeedbackRequestHeuristic()) {
+  if (await userGetsSevenDayFeedback()) {
+    showSevenDayFeedbackRequest()
+  } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
 }

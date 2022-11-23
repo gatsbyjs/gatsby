@@ -7,12 +7,14 @@ import {
 } from "xstate"
 import reporter from "gatsby-cli/lib/reporter"
 
+type AnyInterpreterWithContext<T> = Interpreter<T, any, any, any, any>
+
 const isInterpreter = <T>(
   actor: Actor<T> | Interpreter<T>
 ): actor is Interpreter<T> => `machine` in actor
 
 export function logTransitions<T = DefaultContext>(
-  service: Interpreter<T>
+  service: AnyInterpreterWithContext<T>
 ): void {
   const listeners = new WeakSet()
   let last: State<T, AnyEventObject, any, any>
@@ -24,13 +26,16 @@ export function logTransitions<T = DefaultContext>(
       return
     }
     last = state
-    reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    if (process.env.gatsby_log_level === `verbose`) {
+      reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    }
     // eslint-disable-next-line no-unused-expressions
     service.children?.forEach(child => {
       // We want to ensure we don't attach a listener to the same
       // actor. We don't need to worry about detaching the listener
       // because xstate handles that for us when the actor is stopped.
 
+      // @ts-ignore - TODO: Fix it
       if (isInterpreter(child) && !listeners.has(child)) {
         let sublast = child.state
         child.onTransition(substate => {
@@ -40,11 +45,13 @@ export function logTransitions<T = DefaultContext>(
             return
           }
           sublast = substate
-          reporter.verbose(
-            `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
-              substate.value
-            )}`
-          )
+          if (process.env.gatsby_log_level === `verbose`) {
+            reporter.verbose(
+              `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
+                substate.value
+              )}`
+            )
+          }
         })
         listeners.add(child)
       }

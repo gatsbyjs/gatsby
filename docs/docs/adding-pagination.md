@@ -5,9 +5,9 @@ title: Adding Pagination
 A page displaying a list of content gets longer as the amount of content grows.
 Pagination is the technique of spreading that content across multiple pages.
 
-The goal of pagination is to create multiple pages (from a single [template](/docs/building-with-components/#page-template-components)) that show a limited number of items.
+The goal of pagination is to create multiple pages (from a single [template](/docs/conceptual/building-with-components/#page-template-components)) that show a limited number of items.
 
-Each page will [query GraphQL](/docs/graphql-concepts/) for those specific items.
+Each page will [query GraphQL](/docs/conceptual/graphql-concepts/) for those specific items.
 
 The information needed to query for those specific items (i.e. values for [`limit`](/docs/graphql-reference/#limit) and [`skip`](/docs/graphql-reference/#skip)) will come from the [`context`](/docs/graphql-reference/#query-variables) that is added when [creating pages](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in `gatsby-node`.
 
@@ -36,7 +36,7 @@ export const blogListQuery = graphql`
 // highlight-start
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC }}
       limit: $limit
       skip: $skip
     ) {
@@ -67,7 +67,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
       {
         allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
+          sort: { frontmatter: { date: DESC }}
           limit: 1000
         ) {
           edges {

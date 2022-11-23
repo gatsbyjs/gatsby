@@ -9,6 +9,5 @@ export interface IWaitingContext {
   nodeMutationBatch: Array<IMutationAction>
   store?: Store<IGatsbyState, AnyAction>
   runningBatch: Array<IMutationAction>
-  filesDirty?: boolean
-  webhookBody?: Record<string, unknown>
+  sourceFilesDirty?: boolean
 }

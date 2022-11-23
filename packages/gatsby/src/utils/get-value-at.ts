@@ -1,4 +1,7 @@
-export function getValueAt(obj: object, selector: string | Array<string>): any {
+export function getValueAt(
+  obj: Record<string, unknown>,
+  selector: string | Array<string>
+): any {
   const selectors =
     typeof selector === `string` ? selector.split(`.`) : selector
   return get(obj, selectors)

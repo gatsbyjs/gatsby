@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import path from "path"
-import { Color, Box } from "ink"
+import { Box, Text } from "ink"
 import { IStructuredError } from "../../../../structured-errors/types"
 
 interface IFileProps {
@@ -21,10 +21,10 @@ const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
   }
 
   return (
-    <Color blue>
+    <Text color="blue">
       {path.relative(process.cwd(), filePath)}
       {locString}
-    </Color>
+    </Text>
   )
 }
 
@@ -38,7 +38,7 @@ const DocsLink: FunctionComponent<IDocsLinkProps> = ({ docsUrl }) => {
   if (docsUrl === `https://gatsby.dev/issue-how-to`) return null
   return (
     <Box marginTop={1}>
-      See our docs page for more info on this error: {docsUrl}
+      <Text>See our docs page for more info on this error: {docsUrl}</Text>
     </Box>
   )
 }
@@ -56,17 +56,19 @@ export const Error: FunctionComponent<IErrorProps> = React.memo(
         <Box flexDirection="column">
           <Box>
             <Box marginRight={1}>
-              <Color black bgRed>
+              <Text color="black" backgroundColor="red">
                 {` ${details.level} `}
                 {details.code ? `#${details.code} ` : ``}
-              </Color>
-              <Color red>{details.type ? ` ` + details.type : ``}</Color>
+              </Text>
+              <Text color="red">{details.type ? ` ` + details.type : ``}</Text>
             </Box>
           </Box>
-          <Box marginTop={1}>{details.text}</Box>
+          <Box marginTop={1}>
+            <Text>{details.text}</Text>
+          </Box>
           {details.filePath && (
             <Box marginTop={1}>
-              File:{` `}
+              <Text>File:{` `}</Text>
               <File filePath={details.filePath} location={details.location} />
             </Box>
           )}

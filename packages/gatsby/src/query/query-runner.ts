@@ -3,77 +3,138 @@ import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
 import crypto from "crypto"
-import { ExecutionResult } from "graphql"
+import { ExecutionResult, GraphQLError } from "graphql"
 
 import path from "path"
 import { store } from "../redux"
-import { boundActionCreators } from "../redux/actions"
-import { getCodeFrame } from "./graphql-errors"
+import { actions } from "../redux/actions"
+import { getCodeFrame } from "./graphql-errors-codeframe"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
-import { pageDataExists } from "../utils/page-data"
+import { pageDataExists, savePageQueryResult } from "../utils/page-data"
+import GatsbyCacheLmdb from "../utils/cache-lmdb"
 
-const resultHashes = new Map()
+let resultHashCache: GatsbyCacheLmdb | undefined
+function getResultHashCache(): GatsbyCacheLmdb {
+  if (!resultHashCache) {
+    resultHashCache = new GatsbyCacheLmdb({
+      name: `query-result-hashes`,
+      encoding: `string`,
+    }).init()
+  }
+  return resultHashCache
+}
 
-interface IQueryJob {
+export interface IQueryJob {
   id: string
   hash?: string
   query: string
   componentPath: string
   context: PageContext
-  isPage: boolean
-  pluginCreatorId: string
+  queryType: "page" | "static" | "slice"
+  pluginCreatorId?: string
 }
 
-// Run query
-export const queryRunner = async (
+function reportLongRunningQueryJob(queryJob): void {
+  const messageParts = [
+    `This query took more than 15s to run — which is unusually long and might indicate you're querying too much or have some unoptimized code:`,
+    `File path: ${queryJob.componentPath}`,
+  ]
+
+  if (queryJob.isPage) {
+    const { path, context } = queryJob.context
+    messageParts.push(`URL path: ${path}`)
+
+    if (!_.isEmpty(context)) {
+      messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+    }
+  }
+
+  report.warn(messageParts.join(`\n`))
+}
+
+function panicQueryJobError(
+  queryJob: IQueryJob,
+  errors: ReadonlyArray<GraphQLError>
+): void {
+  let urlPath = undefined
+  let queryContext = {}
+  const plugin = queryJob.pluginCreatorId || `none`
+
+  if (queryJob.queryType === `page`) {
+    urlPath = queryJob.context.path
+    queryContext = queryJob.context.context
+  }
+
+  const structuredErrors = errors.map(e => {
+    const structuredError = errorParser({
+      message: e.message,
+      filePath: undefined,
+      location: undefined,
+      error: e,
+    })
+
+    structuredError.context = {
+      ...structuredError.context,
+      codeFrame: getCodeFrame(
+        queryJob.query,
+        e.locations && e.locations[0].line,
+        e.locations && e.locations[0].column
+      ),
+      filePath: queryJob.componentPath,
+      ...(urlPath ? { urlPath } : {}),
+      ...queryContext,
+      plugin,
+    }
+
+    return structuredError
+  })
+
+  report.panicOnBuild(structuredErrors)
+}
+
+async function startQueryJob(
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
   parentSpan: Span | undefined
-): Promise<IExecutionResult> => {
-  const { program } = store.getState()
+): Promise<ExecutionResult> {
+  let isPending = true
 
-  const graphql = (
-    query: string,
-    context: Record<string, unknown>,
-    queryName: string
-  ): Promise<ExecutionResult> => {
-    // Check if query takes too long, print out warning
-    const promise = graphqlRunner.query(query, context, {
+  // Print out warning when query takes too long
+  const timeoutId = setTimeout(() => {
+    if (isPending) {
+      reportLongRunningQueryJob(queryJob)
+    }
+  }, 15000)
+
+  return graphqlRunner
+    .query(queryJob.query, queryJob.context, {
       parentSpan,
-      queryName,
+      queryName: queryJob.id,
+      componentPath: queryJob.componentPath,
     })
-    let isPending = true
-
-    const timeoutId = setTimeout(() => {
-      if (isPending) {
-        const messageParts = [
-          `Query takes too long:`,
-          `File path: ${queryJob.componentPath}`,
-        ]
-
-        if (queryJob.isPage) {
-          const { path, context } = queryJob.context
-          messageParts.push(`URL path: ${path}`)
-
-          if (!_.isEmpty(context)) {
-            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
-          }
-        }
-
-        report.warn(messageParts.join(`\n`))
-      }
-    }, 15000)
-
-    promise.finally(() => {
+    .finally(() => {
       isPending = false
       clearTimeout(timeoutId)
     })
+}
 
-    return promise
-  }
+export async function queryRunner(
+  graphqlRunner: GraphQLRunner,
+  queryJob: IQueryJob,
+  parentSpan: Span | undefined
+): Promise<IExecutionResult> {
+  const { program } = store.getState()
+
+  store.dispatch(
+    actions.queryStart({
+      path: queryJob.id,
+      componentPath: queryJob.componentPath,
+      isPage: queryJob.queryType === `page`,
+    })
+  )
 
   // Run query
   let result: IExecutionResult
@@ -81,52 +142,21 @@ export const queryRunner = async (
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context, queryJob.id)
+    result = await startQueryJob(graphqlRunner, queryJob, parentSpan)
   }
 
-  // If there's a graphql error then log the error. If we're building, also
-  // quit.
-  if (result && result.errors) {
-    let urlPath = undefined
-    let queryContext = {}
-    const plugin = queryJob.pluginCreatorId || `none`
+  if (result.errors) {
+    // If there's a graphql error then log the error and exit
+    panicQueryJobError(queryJob, result.errors)
+  }
 
-    if (queryJob.isPage) {
-      urlPath = queryJob.context.path
-      queryContext = queryJob.context.context
+  // Add the page/slice context onto the results.
+  if (queryJob) {
+    if (queryJob.queryType === `page`) {
+      result[`pageContext`] = Object.assign({}, queryJob.context)
+    } else if (queryJob.queryType === `slice`) {
+      result[`sliceContext`] = Object.assign({}, queryJob.context)
     }
-
-    const structuredErrors = result.errors
-      .map(e => {
-        const structuredError = errorParser({
-          message: e.message,
-          filePath: undefined,
-          location: undefined,
-        })
-
-        structuredError.context = {
-          ...structuredError.context,
-          codeFrame: getCodeFrame(
-            queryJob.query,
-            e.locations && e.locations[0].line,
-            e.locations && e.locations[0].column
-          ),
-          filePath: queryJob.componentPath,
-          ...(urlPath ? { urlPath } : {}),
-          ...queryContext,
-          plugin,
-        }
-
-        return structuredError
-      })
-      .filter(Boolean)
-
-    report.panicOnBuild(structuredErrors)
-  }
-
-  // Add the page context onto the results.
-  if (queryJob && queryJob.isPage) {
-    result[`pageContext`] = Object.assign({}, queryJob.context)
   }
 
   // Delete internal data from pageContext
@@ -141,6 +171,9 @@ export const queryRunner = async (
     delete result.pageContext.componentPath
     delete result.pageContext.context
     delete result.pageContext.isCreatedByStatefulCreatePages
+    delete result.pageContext.matchPath
+    delete result.pageContext.mode
+    delete result.pageContext.slices
   }
 
   const resultJSON = JSON.stringify(result)
@@ -149,30 +182,44 @@ export const queryRunner = async (
     .update(resultJSON)
     .digest(`base64`)
 
+  const resultHashCache = getResultHashCache()
+
+  let resultHashCacheKey = queryJob.id
+  if (queryJob.queryType === `static`) {
+    // For static queries we use hash for a file path we output results to.
+    // With automatic sort and aggregation graphql codemod it is possible
+    // to have same result, but different query text hashes which would skip
+    // writing out file to disk if we don't check query hash as well
+    resultHashCacheKey += `-${queryJob.hash}`
+  }
+
   if (
-    resultHash !== resultHashes.get(queryJob.id) ||
-    (queryJob.isPage &&
+    resultHash !== (await resultHashCache.get(resultHashCacheKey)) ||
+    (queryJob.queryType === `page` &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
-    resultHashes.set(queryJob.id, resultHash)
+    await resultHashCache.set(resultHashCacheKey, resultHash)
 
-    if (queryJob.isPage) {
+    if (queryJob.queryType === `page` || queryJob.queryType === `slice`) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      const resultPath = path.join(
-        program.directory,
-        `.cache`,
-        `json`,
-        `${queryJob.id.replace(/\//g, `_`)}.json`
-      )
-      await fs.outputFile(resultPath, resultJSON)
-      store.dispatch({
-        type: `ADD_PENDING_PAGE_DATA_WRITE`,
-        payload: {
-          path: queryJob.id,
-        },
-      })
-    } else {
+      await savePageQueryResult(queryJob.id, resultJSON)
+      if (queryJob.queryType === `page`) {
+        store.dispatch({
+          type: `ADD_PENDING_PAGE_DATA_WRITE`,
+          payload: {
+            path: queryJob.id,
+          },
+        })
+      } else if (queryJob.queryType === `slice`) {
+        store.dispatch({
+          type: `ADD_PENDING_SLICE_DATA_WRITE`,
+          payload: {
+            name: queryJob.id.substring(7), // remove "slice--" prefix
+          },
+        })
+      }
+    } else if (queryJob.queryType === `static`) {
       const resultPath = path.join(
         program.directory,
         `public`,
@@ -185,21 +232,16 @@ export const queryRunner = async (
     }
   }
 
-  boundActionCreators.pageQueryRun({
-    path: queryJob.id,
-    componentPath: queryJob.componentPath,
-    isPage: queryJob.isPage,
-  })
-
-  // Sets pageData to the store, here for easier access to the resultHash
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    queryJob.isPage
-  ) {
-    boundActionCreators.setPageData({
-      id: queryJob.id,
+  // Broadcast that a page's query has run.
+  store.dispatch(
+    actions.pageQueryRun({
+      path: queryJob.id,
+      componentPath: queryJob.componentPath,
+      queryType: queryJob.queryType,
       resultHash,
+      queryHash: queryJob.hash,
     })
-  }
+  )
+
   return result
 }

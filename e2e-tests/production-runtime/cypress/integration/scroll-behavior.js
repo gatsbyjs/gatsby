@@ -1,3 +1,9 @@
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 describe(`Scroll behaviour`, () => {
   it(`should restore scroll position only when going back in history`, () => {
     cy.visit(`/`).waitForRouteChange()
@@ -44,11 +50,12 @@ describe(`Scroll behaviour`, () => {
       expect(win.scrollY).not.to.eq(0, 0)
 
       cy.scrollTo(`bottom`)
+      cy.wait(500) // allow ScrollContext to update scroll position store
       cy.go(`back`).waitForRouteChange()
       cy.go(`forward`).waitForRouteChange()
 
       cy.window().then(updatedWindow => {
-        expect(updatedWindow.scrollY).not.to.eq(idScrollY)
+        expect(updatedWindow.scrollY).to.eq(idScrollY)
       })
     })
   })

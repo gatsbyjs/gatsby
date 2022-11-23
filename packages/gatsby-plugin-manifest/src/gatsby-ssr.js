@@ -17,7 +17,7 @@ exports.onRenderBody = (
     icons: pluginIcons,
     include_favicon: insertFaviconLinkTag,
     theme_color_in_head: insertMetaTag,
-    theme_color,
+    theme_color: themeColor,
     crossOrigin = `anonymous`,
   }
 ) => {
@@ -31,18 +31,6 @@ exports.onRenderBody = (
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
     if (insertFaviconLinkTag) {
-      if (icon?.endsWith(`.svg`)) {
-        headComponents.push(
-          <link
-            key={`gatsby-plugin-manifest-icon-link-svg`}
-            rel="icon"
-            href={withPrefix(
-              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
-            )}
-            type="image/svg+xml"
-          />
-        )
-      }
       favicons.forEach(favicon => {
         headComponents.push(
           <link
@@ -55,6 +43,18 @@ exports.onRenderBody = (
           />
         )
       })
+      if (icon?.endsWith(`.svg`)) {
+        headComponents.push(
+          <link
+            key={`gatsby-plugin-manifest-icon-link-svg`}
+            rel="icon"
+            href={withPrefix(
+              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
+            )}
+            type="image/svg+xml"
+          />
+        )
+      }
     }
   }
 
@@ -69,12 +69,12 @@ exports.onRenderBody = (
   )
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
-  if (theme_color && insertMetaTag) {
+  if (themeColor && insertMetaTag) {
     headComponents.push(
       <meta
         key={`gatsby-plugin-manifest-meta`}
         name="theme-color"
-        content={theme_color}
+        content={themeColor}
       />
     )
   }

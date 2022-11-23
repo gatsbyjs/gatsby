@@ -77,14 +77,19 @@ describe(`build-node-connections`, () => {
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
-    let context = { path: `foo` }
-    let { data, errors } = await graphql(schema, query, undefined, {
-      ...context,
-      nodeModel: new LocalNodeModel({
-        schemaComposer,
-        schema,
-        createPageDependency,
-      }),
+    const context = { path: `foo` }
+    const { data, errors } = await graphql({
+      schema,
+      source: query,
+      rootValue: undefined,
+      contextValue: {
+        ...context,
+        nodeModel: new LocalNodeModel({
+          schemaComposer,
+          schema,
+          createPageDependency,
+        }),
+      },
     })
     expect(errors).not.toBeDefined()
     return data
@@ -95,7 +100,7 @@ describe(`build-node-connections`, () => {
   })
 
   it(`should result in a valid queryable schema`, async () => {
-    let { allParent, allChild, allRelative } = await runQuery(
+    const { allParent, allChild, allRelative } = await runQuery(
       `
       {
         allParent(filter: { id: { eq: "p1" } }) {
@@ -128,7 +133,7 @@ describe(`build-node-connections`, () => {
   })
 
   it(`should link children automatically`, async () => {
-    let { allParent } = await runQuery(
+    const { allParent } = await runQuery(
       `
       {
         allParent(filter: { id: { eq: "p1" } }) {
@@ -152,7 +157,7 @@ describe(`build-node-connections`, () => {
   })
 
   it(`should create typed children fields`, async () => {
-    let { allParent } = await runQuery(
+    const { allParent } = await runQuery(
       `
       {
         allParent(filter: { id: { eq: "p1" } }) {
@@ -175,13 +180,16 @@ describe(`build-node-connections`, () => {
   })
 
   it(`should create typed child field for singular children`, async () => {
-    let { allParent } = await runQuery(
+    const { allParent } = await runQuery(
       `
       {
         allParent(filter: { id: { eq: "p1" } }) {
           edges {
             node {
               childRelative { # lol
+                id
+              }
+              childrenRelative {
                 id
               }
             }
@@ -193,6 +201,9 @@ describe(`build-node-connections`, () => {
 
     expect(allParent.edges[0].node.childRelative).toBeDefined()
     expect(allParent.edges[0].node.childRelative.id).toEqual(`r1`)
+
+    expect(allParent.edges[0].node.childrenRelative).toBeDefined()
+    expect(allParent.edges[0].node.childrenRelative).toEqual([{ id: `r1` }])
   })
 
   it(`should create page dependency`, async () => {

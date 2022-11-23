@@ -8,6 +8,7 @@ import { findChangedPages } from "../utils/changed-pages"
 export async function sourceNodes({
   parentSpan,
   webhookBody,
+  webhookSourcePluginName,
   store,
   deferNodeMutation = false,
 }: Partial<IDataLayerContext>): Promise<{
@@ -25,11 +26,14 @@ export async function sourceNodes({
     parentSpan: activity.span,
     deferNodeMutation,
     webhookBody,
+    pluginName: webhookSourcePluginName,
   })
 
   reporter.verbose(`Checking for deleted pages`)
 
-  const tim = reporter.activityTimer(`Checking for changed pages`)
+  const tim = reporter.activityTimer(`Checking for changed pages`, {
+    parentSpan,
+  })
   tim.start()
 
   const { changedPages, deletedPages } = findChangedPages(

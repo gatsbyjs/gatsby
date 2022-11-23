@@ -12,7 +12,7 @@ React's profiling API was introduced in **React 16.5**. Therefore you must be ru
 
 Profiling will be enabled automatically in Development. If you have React DevTools it will [show a “Profiler” tab](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html#profiling-an-application). Caution should be given to the validity of profiling within Development as this does not reflect the performance of the Production build and therefore the experience of your users.
 
-To enable profiling for a Production build an additional CLI option `--profile` must be provided when running the build command. See [gatsby build command](/docs/gatsby-cli/#options-1) for further information.
+To enable profiling for a Production build an additional CLI option `--profile` must be provided when running the build command. See [gatsby build command](/docs/reference/gatsby-cli/#options-1) for further information.
 
 ## Performance impact
 
@@ -24,7 +24,7 @@ A warning will be issued in a Gatsby Production build if the `--profile` option 
 
 If you just want to see some high level results, your [React DevTools will have a profiling tab](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html#profiling-an-application) which provides some helpful performance information. However if you want to be able to capture more information programmatically, then React exports a `profiler` component which allows your site to tap into the performance metrics.
 
-The react profiler component can be used anywhere in a react tree to measure the performance of that part of the tree.
+The React profiler component can be used anywhere in a React tree to measure the performance of that part of the tree.
 
 ### Profiling a slow component
 
@@ -42,7 +42,7 @@ export const MyComponent = props => (
 
 ### Profiling Gatsby pages
 
-Capturing page performance can be achieved by using the [wrapPageElement API](/docs/browser-apis/#wrapPageElement) to profile each page.
+Capturing page performance can be achieved by using the [wrapPageElement API](/docs/reference/config-files/gatsby-browser/#wrapPageElement) to profile each page.
 
 ```jsx
 //gatsby-browser.js

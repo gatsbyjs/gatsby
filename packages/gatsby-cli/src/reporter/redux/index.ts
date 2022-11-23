@@ -1,20 +1,20 @@
-import { createStore, combineReducers } from "redux"
-import { reducer } from "./reducer"
-import { ActionsUnion, ISetLogs } from "./types"
+import { createStore, combineReducers, Store } from "redux"
+import { reducer as logsReducer } from "./reducers/logs"
+import { reducer as pageTreeReducer } from "./reducers/page-tree"
+import { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
 import { isInternalAction } from "./utils"
 import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
+import { IRenderPageArgs } from "../../reporter/types"
 
-let store = createStore(
-  combineReducers({
-    logs: reducer,
-  }),
-  {}
-)
-
-const diagnosticsMiddleware = createStructuredLoggingDiagnosticsMiddleware(
-  store
-)
+let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
+  createStore(
+    combineReducers({
+      logs: logsReducer,
+      pageTree: pageTreeReducer,
+    }),
+    {}
+  )
 
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
@@ -25,6 +25,9 @@ const storeSwapListeners: Array<StoreListener> = []
 const onLogActionListeners = new Set<ActionLogListener>()
 
 export const getStore = (): typeof store => store
+
+const diagnosticsMiddleware =
+  createStructuredLoggingDiagnosticsMiddleware(getStore)
 
 export const dispatch = (action: ActionsUnion | Thunk): void => {
   if (!action) {
@@ -41,7 +44,6 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
 
   action = {
     ...action,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore this is a typescript no-no..
     // And i'm pretty sure this timestamp isn't used anywhere.
     // but for now, the structured logs integration tests expect it

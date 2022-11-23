@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { Link, StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
-import { css } from "emotion"
+import { css } from "@emotion/css"
 import { Helmet } from "react-helmet"
 
 import { rhythm } from "../utils/typography"
@@ -19,6 +19,7 @@ const link = css`
   color: inherit;
 `
 
+// TODO(v6): Refactor this to a function component
 class PureLayout extends React.Component {
   render() {
     const HeadingTag = this.props.isIndex ? `h1` : `h3`
@@ -65,6 +66,7 @@ const query = graphql`
   }
 `
 
+// TODO(v6): Refactor to use `useStaticQuery` instead of `StaticQuery`, `StaticQuery` will be removed in v6
 const Layout = props => (
   <StaticQuery
     query={query}

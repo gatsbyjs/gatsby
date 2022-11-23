@@ -4,13 +4,11 @@
       "license": "MIT"
     },
     "publish": {
-      "allowBranch": "master",
+      "allowBranch": "release/*",
       "bump": "patch",
       "conventionalCommits": true,
+      "changelog": false,
       "message": "chore(release): Publish"
-    },
-    "bootstrap": {
-      "ignore": ["**/gatsby-admin"]
     }
   },
   "packages": ["packages/*"],

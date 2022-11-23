@@ -1,74 +1,57 @@
-import React, { FunctionComponent } from "react"
-import { splitProps, StaticImageProps } from "../utils"
-import { FluidObject, FixedObject } from "gatsby-image"
-import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
-import { GatsbyImageProps } from "./gatsby-image.browser"
+import React, { FunctionComponent, ReactElement } from "react"
+import {
+  altValidator,
+  GatsbyImage as GatsbyImageServer,
+} from "./gatsby-image.server"
+import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
+import PropTypes from "prop-types"
+import { ISharpGatsbyImageArgs } from "../image-utils"
+
+export interface IStaticImageProps
+  extends Omit<GatsbyImageProps, "image">,
+    Omit<ISharpGatsbyImageArgs, "backgroundColor"> {
+  src: string
+}
 
 // These values are added by Babel. Do not add them manually
 interface IPrivateProps {
-  __imageData?: FluidObject & FixedObject
+  __imageData?: IGatsbyImageData
   __error?: string
 }
 
 export function _getStaticImage(
   GatsbyImage: FunctionComponent<GatsbyImageProps>
-): React.FC<StaticImageProps & IPrivateProps> {
+): React.FC<IStaticImageProps & IPrivateProps> {
   return function StaticImage({
     src,
     __imageData: imageData,
     __error,
+    // We extract these because they're not meant to be passed-down to GatsbyImage
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    width,
+    height,
+    aspectRatio,
+    tracedSVGOptions,
+    placeholder,
+    formats,
+    quality,
+    transformOptions,
+    jpgOptions,
+    pngOptions,
+    webpOptions,
+    avifOptions,
+    blurredOptions,
+    breakpoints,
+    outputPixelDensities,
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     ...props
-  }): JSX.Element {
+  }): ReactElement {
     if (__error) {
       console.warn(__error)
     }
-    const { gatsbyImageProps, layout } = splitProps({ src, ...props })
+
     if (imageData) {
-      const isResponsive = layout !== `fixed`
-      const childProps: Pick<
-        GatsbyImageProps,
-        "layout" | "width" | "height" | "images" | "placeholder"
-      > = {
-        layout,
-        placeholder: null,
-        width: imageData.width,
-        height: imageData.height,
-        images: {
-          fallback: {
-            src: imageData.src,
-            srcSet: imageData.srcSet,
-            sizes: isResponsive ? imageData.sizes : undefined,
-          },
-          sources: [],
-        },
-      }
-
-      if (layout === `responsive`) {
-        childProps.width = 1
-        childProps.height = imageData.aspectRatio
-      }
-
-      if (layout === `intrinsic`) {
-        childProps.width = imageData.width
-        childProps.height = imageData.height
-      }
-
-      const placeholder = imageData.tracedSVG || imageData.base64
-
-      if (placeholder) {
-        childProps.placeholder = {
-          fallback: placeholder,
-        }
-      }
-
-      if (imageData.srcWebp) {
-        childProps.images.sources.push({
-          srcSet: imageData.srcSetWebp,
-          type: `image/webp`,
-          sizes: isResponsive ? imageData.sizes : undefined,
-        })
-      }
-      return <GatsbyImage {...gatsbyImageProps} {...childProps} />
+      return <GatsbyImage image={imageData} {...props} />
     }
     console.warn(`Image not loaded`, src)
     if (!__error && process.env.NODE_ENV === `development`) {
@@ -80,6 +63,49 @@ export function _getStaticImage(
   }
 }
 
-export const StaticImage: React.FC<
-  StaticImageProps & IPrivateProps
-> = _getStaticImage(GatsbyImageServer)
+const StaticImage: React.FC<IStaticImageProps & IPrivateProps> =
+  _getStaticImage(GatsbyImageServer)
+
+const checkDimensionProps: PropTypes.Validator<number> = (
+  props: IStaticImageProps & IPrivateProps,
+  propName: keyof IStaticImageProps & IPrivateProps,
+  ...rest
+) => {
+  if (
+    props.layout === `fullWidth` &&
+    (propName === `width` || propName === `height`) &&
+    props[propName]
+  ) {
+    return new Error(
+      `"${propName}" ${props[propName]} may not be passed when layout is fullWidth.`
+    )
+  }
+  return PropTypes.number(props, propName, ...rest)
+}
+
+const validLayouts = new Set([`fixed`, `fullWidth`, `constrained`])
+
+export const propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: altValidator,
+  width: checkDimensionProps,
+  height: checkDimensionProps,
+  sizes: PropTypes.string,
+  layout: (props: IStaticImageProps & IPrivateProps): Error | undefined => {
+    if (props.layout === undefined) {
+      return undefined
+    }
+    if (validLayouts.has(props.layout)) {
+      return undefined
+    }
+
+    return new Error(
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "constrained". Valid values are "fixed", "fullWidth" or "constrained".`
+    )
+  },
+}
+
+StaticImage.displayName = `StaticImage`
+StaticImage.propTypes = propTypes
+
+export { StaticImage }

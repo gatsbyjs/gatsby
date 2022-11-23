@@ -4,7 +4,7 @@ const { hasNodes } = require(`./inference-metadata`)
 const { getExampleObject } = require(`./build-example-data`)
 const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
-const { getNodesByType } = require(`../../redux/nodes`)
+const { getDataStore } = require(`../../datastore`)
 
 const addInferredTypes = ({
   schemaComposer,
@@ -28,11 +28,8 @@ const addInferredTypes = ({
     let typeComposer
     if (schemaComposer.has(typeName)) {
       typeComposer = schemaComposer.getOTC(typeName)
-      // Infer if we have enabled "@infer" or if it's "@dontInfer" but we
-      // have "addDefaultResolvers: true"
       const runInfer = typeComposer.hasExtension(`infer`)
-        ? typeComposer.getExtension(`infer`) ||
-          typeComposer.getExtension(`addDefaultResolvers`)
+        ? typeComposer.getExtension(`infer`)
         : true
       if (runInfer) {
         if (!typeComposer.hasInterface(`Node`)) {
@@ -91,8 +88,14 @@ const addInferredType = ({
     typeComposer.getExtension(`createdFrom`) === `inference` &&
     hasNodes(inferenceMetadata.typeMap[typeName])
   ) {
-    const nodes = getNodesByType(typeName)
-    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+    let firstNode
+    for (const node of getDataStore().iterateNodesByType(typeName)) {
+      firstNode = node
+      break
+    }
+    if (firstNode) {
+      typeComposer.setExtension(`plugin`, firstNode.internal.owner)
+    }
   }
 
   const exampleValue = getExampleObject({

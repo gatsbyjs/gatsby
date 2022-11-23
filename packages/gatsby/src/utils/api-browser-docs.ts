@@ -81,9 +81,9 @@ export const onRouteUpdate = true
  * @param {object} $0.routerProps The current state of the router.
  * @param {string} $0.pathname The new pathname (for backwards compatibility with v1).
  * @param {function} $0.getSavedScrollPosition Takes a location and returns the
- * coordinates of the last scroll position for that location, or `null`. Gatsby
- * saves scroll positions for each route in `SessionStorage`, so they are
- * available after page reload.
+ * coordinates of the last scroll position for that location, or `null` depending on
+ * whether a scroll happened or not. Gatsby saves scroll positions for each route
+ * in `SessionStorage`, so they are available after page reload.
  * @returns {(boolean|string|Array)} Should return either an [x, y] Array of
  * coordinates to scroll to, a string of the `id` or `name` of an element to
  * scroll to, `false` to not update the scroll position, or `true` for the
@@ -115,18 +115,7 @@ export const shouldUpdateScroll = true
 export const registerServiceWorker = true
 
 /**
- * Allow a plugin to replace the page component renderer.
- * @deprecated Use [wrapPageElement](#wrapPageElement) to decorate page element.
- * @param {object} $0
- * @param {object} $0.props The props of the page.
- * @param {object} $0.loader The gatsby loader.
- * @param {pluginOptions} pluginOptions
- * @returns {ReactNode} Replaced default page renderer
- */
-export const replaceComponentRenderer = true
-
-/**
- * Allow a plugin to wrap the page element.
+ * Can be used to wrap each page element.
  *
  * This is useful for setting wrapper components around pages that won't get
  * unmounted on page changes. For setting Provider components, use [wrapRootElement](#wrapRootElement).
@@ -153,7 +142,7 @@ export const replaceComponentRenderer = true
 export const wrapPageElement = true
 
 /**
- * Allow a plugin to wrap the root element.
+ * Can be used to the wrap the root element.
  *
  * This is useful to set up any Provider components that will wrap your application.
  * For setting persistent UI elements around pages use [wrapPageElement](#wrapPageElement).
@@ -214,19 +203,21 @@ export const onPostPrefetchPathname = true
 export const disableCorePrefetching = true
 
 /**
- * Allow a plugin to replace the `ReactDOM.render`/`ReactDOM.hydrate` function call by a custom renderer.
+ * Allow a plugin to replace the `ReactDOM.createRoot`/`render` function calls with a custom renderer.
  * @param {emptyArg} _
  * @param {pluginOptions} pluginOptions
- * @returns {Function} This method should return a function with same signature as `ReactDOM.render()`
+ * @returns {Function} This method should return a function with same signature as `ReactDOM.createRoot`/`render`
  *
- * _Note:_ it's very important to call the `callback` after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
+ * _Note:_
+ * Refer to React's documentation on [`ReactDOM.createRoot`/`render`](https://reactjs.org/docs/react-dom-client.html#createroot) for more information.
+ * Note that `ReactDOM.createRoot`/`render` is only available in React 18 or greater, prior versions should use [`ReactDOM.render`](https://reactjs.org/docs/react-dom.html#render).
  * @example
  * exports.replaceHydrateFunction = () => {
- *   return (element, container, callback) => {
- *     console.log("rendering!");
- *     ReactDOM.render(element, container, callback);
- *   };
- * };
+ *   return (element, container) => {
+ *     const root = ReactDOM.createRoot(container)
+ *     root.render(element)
+ *   }
+ * }
  */
 export const replaceHydrateFunction = true
 

@@ -1,0 +1,59 @@
+# Add e-commerce powered by Snipcart
+
+Snipcart is a shopping cart platform for developers.
+
+This recipe will guide you through enabling e-commerce on your Gatsby site.
+
+## Create a Snipcart account
+
+If you do not already have a Snipcart account, please register [here](https://app.snipcart.com/register).
+
+You can use this account for FREE to test things out as long as you like!
+
+---
+
+## Install Gatsby plugin for Snipcart
+
+<NPMPackage name="gatsby-plugin-snipcart-advanced" />
+
+<GatsbyPlugin
+  name="gatsby-plugin-snipcart-advanced"
+  options={{
+    publicApiKey:"[YOUR_PUBLIC_API_KEY]"
+  }}
+/>
+
+---
+
+## Pull Snipcart setup script
+
+<Directory path="bin" />
+
+<File
+  path="./bin/snipcart-setup.js"
+  content="https://gist.githubusercontent.com/thatfrankdev/4544e73bce47d90d0b1db1c8305198a6/raw/8ad06e2fbb1032df0faf214bf09029627c1e8321/snipcart-setup.js"
+/>
+
+<NPMScript
+  name="snipcart-setup"
+  command="node ./bin/snipcart-setup.js"
+/>
+
+<NPMPackage
+  name="abstract-syntax-tree"
+  dependencyType="development"
+/>
+
+---
+
+Snipcart has been installed to your gatsby site!
+
+The documentation of the plugin can be found [here](https://github.com/ipatate/gatsby-plugin-snipcart-advanced/blob/master/readme.md).
+
+Please set your account's public API key in the plugin config to get started.
+
+OPTIONAL: To automate the plugin configuration, you can run this command in your terminal: `npm run snipcart-setup`.
+
+Here's how to add your first Snipcart buy button: https://docs.snipcart.com/v3/setup/products.
+
+Happy selling!

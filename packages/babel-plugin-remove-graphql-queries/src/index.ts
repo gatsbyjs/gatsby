@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
 import graphql from "gatsby/graphql"
-import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
+import { slash } from "gatsby-core-utils/path"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 import { Binding } from "babel__traverse"
 import {
   CallExpression,
@@ -20,6 +22,11 @@ import {
   VariableDeclarator,
   SourceLocation,
   Expression,
+  ExportNamedDeclaration,
+  isFunctionDeclaration,
+  isVariableDeclaration,
+  isFunction,
+  isIdentifier,
 } from "@babel/types"
 
 interface ISourcePosition {
@@ -96,6 +103,20 @@ class GraphQLSyntaxError extends Error {
   }
 }
 
+class ExportIsNotAsyncError extends Error {
+  exportStart: ISourcePosition | undefined
+  exportName: string
+
+  constructor(exportName: string, exportStart: ISourcePosition | undefined) {
+    super(
+      `BabelPluginRemoveGraphQLQueries: the "${exportName}" export must be async when using it with graphql`
+    )
+    this.exportName = exportName
+    this.exportStart = JSON.parse(JSON.stringify(exportStart))
+    Error.captureStackTrace(this, ExportIsNotAsyncError)
+  }
+}
+
 const isGlobalIdentifier = (
   tag: NodePath,
   tagName: string = `graphql`
@@ -103,7 +124,7 @@ const isGlobalIdentifier = (
   tag.isIdentifier({ name: tagName }) && tag.scope.hasGlobal(tagName)
 
 export function followVariableDeclarations(binding: Binding): Binding {
-  const node = binding.path?.node
+  const node = binding?.path?.node
   if (
     node?.type === `VariableDeclarator` &&
     node?.id.type === `Identifier` &&
@@ -126,6 +147,7 @@ function getTagImport(tag: NodePath<Identifier>): NodePath | null {
   const parent = path.parentPath
 
   if (
+    parent &&
     binding.kind === `module` &&
     parent.isImportDeclaration() &&
     parent.node.source.value === `gatsby`
@@ -136,8 +158,10 @@ function getTagImport(tag: NodePath<Identifier>): NodePath | null {
     path.isVariableDeclarator() &&
     (path.get(`init`) as NodePath).isCallExpression() &&
     (path.get(`init.callee`) as NodePath).isIdentifier({ name: `require` }) &&
-    ((path.get(`init`) as NodePath<CallExpression>).node
-      .arguments[0] as StringLiteral).value === `gatsby`
+    (
+      (path.get(`init`) as NodePath<CallExpression>).node
+        .arguments[0] as StringLiteral
+    ).value === `gatsby`
   ) {
     const id = path.get(`id`) as NodePath
     if (id.isObjectPattern()) {
@@ -166,8 +190,12 @@ function isGraphqlTag(tag: NodePath, tagName: string = `graphql`): boolean {
     return (tag.get(`property`) as NodePath<Identifier>).node.name === tagName
   }
 
-  if (importPath.isImportSpecifier())
-    return importPath.node.imported.name === tagName
+  if (importPath.isImportSpecifier()) {
+    if (importPath.node.imported.type === `Identifier`) {
+      return importPath.node.imported.name === tagName
+    }
+    return false
+  }
 
   if (importPath.isObjectProperty())
     return (importPath.get(`key`) as NodePath<Identifier>).node.name === tagName
@@ -194,9 +222,14 @@ function removeImport(tag: NodePath<Expression>): void {
   const parent = importPath.parentPath
 
   if (importPath.isImportSpecifier()) {
-    if ((parent as NodePath<ImportDeclaration>).node.specifiers.length === 1) {
+    if (
+      parent &&
+      (parent as NodePath<ImportDeclaration>).node.specifiers.length === 1
+    ) {
       parent.remove()
-    } else importPath.remove()
+    } else {
+      importPath.remove()
+    }
   }
   if (importPath.isObjectProperty()) {
     if ((parent as NodePath<ObjectExpression>).node.properties.length === 1) {
@@ -230,16 +263,17 @@ function getGraphQLTag(
   const normalizedText: string = graphql.stripIgnoredCharacters(text)
 
   const hash: number = murmurhash(normalizedText, 0)
+  const location = quasis[0].loc as SourceLocation | null
 
   try {
     const ast = graphql.parse(text)
 
     if (ast.definitions.length === 0) {
-      throw new EmptyGraphQLTagError(quasis[0].loc)
+      throw new EmptyGraphQLTagError(location)
     }
     return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
-    throw new GraphQLSyntaxError(text, err, quasis[0].loc)
+    throw new GraphQLSyntaxError(text, err, location)
   }
 }
 
@@ -269,7 +303,7 @@ export default function ({ types: t }): PluginObj {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
               (process.env.NODE_ENV === `test` ||
-                state.opts.stage === `build-html`) &&
+                state.opts.stage === `develop-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`, ``) &&
               path2.parent.type !== `JSXClosingElement`
@@ -288,18 +322,19 @@ export default function ({ types: t }): PluginObj {
                 )
               )
               // Add import
-              const importDefaultSpecifier = t.importDefaultSpecifier(
-                identifier
-              )
+              const importDefaultSpecifier =
+                t.importDefaultSpecifier(identifier)
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)
@@ -311,7 +346,7 @@ export default function ({ types: t }): PluginObj {
           CallExpression(path2: NodePath<CallExpression>): void {
             if (
               (process.env.NODE_ENV === `test` ||
-                state.opts.stage === `build-html`) &&
+                state.opts.stage === `develop-html`) &&
               isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
@@ -329,17 +364,20 @@ export default function ({ types: t }): PluginObj {
               // cannot remove all 'gatsby' imports.
               if (path2.node.callee.type !== `MemberExpression`) {
                 // Remove imports to useStaticQuery
-                const importPath = (path2.scope.getBinding(
-                  `useStaticQuery`
-                ) as Binding).path
+                const importPath = (
+                  path2.scope.getBinding(`useStaticQuery`) as Binding
+                ).path
                 const parent = importPath.parentPath
                 if (importPath.isImportSpecifier())
                   if (
+                    parent &&
                     (parent as NodePath<ImportDeclaration>).node.specifiers
                       .length === 1
-                  )
+                  ) {
                     parent.remove()
-                  else importPath.remove()
+                  } else {
+                    importPath.remove()
+                  }
               }
 
               // Add query
@@ -348,18 +386,19 @@ export default function ({ types: t }): PluginObj {
               )
 
               // Add import
-              const importDefaultSpecifier = t.importDefaultSpecifier(
-                identifier
-              )
+              const importDefaultSpecifier =
+                t.importDefaultSpecifier(identifier)
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)
@@ -391,7 +430,7 @@ export default function ({ types: t }): PluginObj {
 
           // traverse upwards until we find top-level JSXOpeningElement or Program
           // this handles exported queries and variable queries
-          let parent = templatePath as NodePath
+          let parent: null | NodePath = templatePath as NodePath
           while (
             parent &&
             ![`Program`, `JSXOpeningElement`].includes(parent.node.type)
@@ -400,17 +439,19 @@ export default function ({ types: t }): PluginObj {
           }
 
           // modify StaticQuery elements and import data only if query is inside StaticQuery
-          parent.traverse(nestedJSXVistor, {
-            queryHash,
-            query,
-          })
+          if (parent) {
+            parent.traverse(nestedJSXVistor, {
+              queryHash,
+              query,
+            })
 
-          // modify useStaticQuery elements and import data only if query is inside useStaticQuery
-          parent.traverse(nestedHookVisitor, {
-            queryHash,
-            query,
-            templatePath,
-          })
+            // modify useStaticQuery elements and import data only if query is inside useStaticQuery
+            parent.traverse(nestedHookVisitor, {
+              queryHash,
+              query,
+              templatePath,
+            })
+          }
 
           return null
         }
@@ -487,7 +528,7 @@ export default function ({ types: t }): PluginObj {
               const binding = hookPath.scope.getBinding(varName)
 
               if (binding) {
-                followVariableDeclarations(binding).path.traverse({
+                followVariableDeclarations(binding)?.path?.traverse({
                   TaggedTemplateExpression,
                 })
               }
@@ -509,6 +550,19 @@ export default function ({ types: t }): PluginObj {
 
             const queryHash = hash.toString()
 
+            // In order to properly support FastRefresh, we need to remove the page query export
+            // from the built page. With FastRefresh, it looks up the parents of the imports from modules
+            // and since page queries are never used, FastRefresh doesn't know if it's safe to apply the
+            // update or not.
+            // By removing the page query export, FastRefresh works properly with page components
+            const potentialExportPath = path2.parentPath?.parentPath?.parentPath
+            if (
+              path2?.parentPath?.parentPath &&
+              potentialExportPath?.isExportNamedDeclaration()
+            ) {
+              potentialExportPath.replaceWith(path2.parentPath.parentPath)
+            }
+
             const tag = path2.get(`tag`)
             if (!isGlobal) {
               // Enqueue import removal. If we would remove it here, subsequent named exports
@@ -516,16 +570,66 @@ export default function ({ types: t }): PluginObj {
               tagsToRemoveImportsFrom.add(tag)
             }
 
-            // Replace the query with the hash of the query.
+            // When graphql tag is found inside config function, we replace it with global call, e.g.:
+            //   export async function config() {
+            //     const { data } = graphql`{ __typename }`
+            //   }
+            // is replaced with:
+            //   export async function config() {
+            //     const { data } = await global.__gatsbyGraphql(`{ __typename }`)
+            //   }
+            // Note: isWithinConfigExport will throw if "config" export is not async
+            if (isWithinConfigExport(path2)) {
+              const globalCall = t.awaitExpression(
+                t.callExpression(
+                  t.memberExpression(
+                    t.identifier(`global`),
+                    t.identifier(`__gatsbyGraphql`)
+                  ),
+                  [path2.node.quasi]
+                )
+              )
+              path2.replaceWith(globalCall)
+              return null
+            }
+
             path2.replaceWith(t.StringLiteral(queryHash))
             return null
           },
         })
-
         tagsToRemoveImportsFrom.forEach(removeImport)
       },
     },
   }
+}
+
+function isWithinConfigExport(
+  path: NodePath<TaggedTemplateExpression>
+): boolean {
+  const parentExport = path.findParent(parent =>
+    parent.isExportNamedDeclaration()
+  ) as NodePath<ExportNamedDeclaration> | null
+
+  const declaration = parentExport?.node?.declaration
+
+  if (isFunctionDeclaration(declaration) && declaration.id?.name === `config`) {
+    if (!declaration.async) {
+      throw new ExportIsNotAsyncError(`config`, declaration.loc?.start)
+    }
+    return true
+  }
+  if (
+    isVariableDeclaration(declaration) &&
+    isIdentifier(declaration.declarations[0]?.id) &&
+    declaration.declarations[0]?.id?.name === `config`
+  ) {
+    const init = declaration.declarations[0]?.init
+    if (!isFunction(init) || !init.async) {
+      throw new ExportIsNotAsyncError(`config`, init?.loc?.start)
+    }
+    return true
+  }
+  return false
 }
 
 export {
@@ -533,5 +637,6 @@ export {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
-  murmurhash,
+  ExportIsNotAsyncError,
+  isWithinConfigExport,
 }

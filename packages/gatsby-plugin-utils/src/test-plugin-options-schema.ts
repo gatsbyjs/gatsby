@@ -1,38 +1,67 @@
 import { Joi } from "./joi"
 import { GatsbyNode } from "gatsby"
+import { validateOptionsSchema } from "./validate"
+import { IPluginInfoOptions } from "./types"
 
 interface ITestPluginOptionsSchemaReturnType {
   errors: Array<string>
+  warnings: Array<string>
   isValid: boolean
+  hasWarnings: boolean
 }
 
-export function testPluginOptionsSchema<PluginOptions = object>(
+export async function testPluginOptionsSchema(
   pluginSchemaFunction: Exclude<GatsbyNode["pluginOptionsSchema"], undefined>,
-  pluginOptions: PluginOptions
-): ITestPluginOptionsSchemaReturnType {
-  const pluginOptionsNames = Object.keys(pluginOptions)
-  const pluginSchema = pluginSchemaFunction({ Joi })
-  const errors: Array<string> = []
+  pluginOptions: IPluginInfoOptions
+): Promise<ITestPluginOptionsSchemaReturnType> {
+  const pluginSchema = pluginSchemaFunction({
+    Joi: Joi.extend(joi => {
+      return {
+        type: `subPlugins`,
+        base: joi
+          .array()
+          .items(
+            joi.alternatives(
+              joi.string(),
+              joi.object({
+                resolve: Joi.string(),
+                options: Joi.object({}).unknown(true),
+              })
+            )
+          )
+          .custom(
+            arrayValue =>
+              arrayValue.map(value => {
+                if (typeof value === `string`) {
+                  value = { resolve: value }
+                }
 
-  pluginOptionsNames.forEach(pluginOptionName => {
-    const partialSchema = pluginSchema.extract(pluginOptionName)
-
-    const { error } = partialSchema.validate(pluginOptions[pluginOptionName], {
-      abortEarly: false,
-    })
-
-    if (error) {
-      const errorMessage = error.message
-
-      // In the case of an array, "value" does not exist in the error message
-      // and so we can't replace it with the plugin option name, we have to concat it
-      const message = errorMessage.includes(`"value"`)
-        ? errorMessage.replace(`"value"`, `"${pluginOptionName}"`)
-        : `"${pluginOptionName}" ${errorMessage}`
-
-      errors.push(message)
-    }
+                return value
+              }),
+            `Gatsby specific subplugin validation`
+          )
+          .default([]),
+      }
+    }),
   })
 
-  return { isValid: errors.length === 0, errors }
+  try {
+    const { warning } = await validateOptionsSchema(pluginSchema, pluginOptions)
+
+    const warnings = warning?.details?.map(detail => detail.message) ?? []
+
+    if (warnings?.length > 0) {
+      return {
+        isValid: true,
+        errors: [],
+        hasWarnings: true,
+        warnings,
+      }
+    }
+  } catch (e) {
+    const errors = e?.details?.map(detail => detail.message) ?? []
+    return { isValid: false, errors, hasWarnings: false, warnings: [] }
+  }
+
+  return { isValid: true, errors: [], hasWarnings: false, warnings: [] }
 }

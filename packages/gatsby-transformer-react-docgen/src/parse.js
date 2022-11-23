@@ -21,7 +21,11 @@ let fileCount = 0
  * Wrap handlers to pass in additional arguments such as the File node
  */
 function makeHandlers(node, handlers) {
-  handlers = (handlers || []).map(h => (...args) => h(...args, node))
+  handlers = (handlers || []).map(
+    h =>
+      (...args) =>
+        h(...args, node)
+  )
   return [
     createDisplayNameHandler(
       node.absolutePath || `/UnknownComponent${++fileCount}`
@@ -37,7 +41,7 @@ export default function parseMetadata(content, node, options) {
     components = parse(
       content,
       userResolver || resolver.findAllComponentDefinitions,
-      defaultHandlers.concat(makeHandlers(node, handlers)),
+      makeHandlers(node, handlers).concat(defaultHandlers),
       {
         ...parseOptions,
         filename: node.absolutePath,

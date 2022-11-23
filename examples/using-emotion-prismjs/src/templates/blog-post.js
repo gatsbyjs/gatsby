@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { css } from "emotion"
+import { css } from "@emotion/css"
 import { graphql } from "gatsby"
 import { rhythm, scale } from "../utils/typography"
 

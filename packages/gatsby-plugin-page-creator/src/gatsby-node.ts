@@ -9,21 +9,50 @@ import {
   PluginOptions,
   PluginCallback,
 } from "gatsby"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { parse, GraphQLString } from "gatsby/graphql"
+import {
+  createPath,
+  watchDirectory,
+  applyTrailingSlashOption,
+} from "gatsby-page-utils"
+import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createPage } from "./create-page-wrapper"
-import { createPath, watchDirectory } from "gatsby-page-utils"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
-import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { CODES, ERROR_MAP, prefixId } from "./error-utils"
+import { createPagesFromChangedNodes } from "./create-pages-from-changed-nodes"
+import type { IOptions } from "./types"
+import {
+  getPluginInstance,
+  ICreateAPageFromNodeArgs,
+} from "./tracked-nodes-state"
+import { getCollectionRouteParams } from "./get-collection-route-params"
+import { reverseLookupParams } from "./extract-query"
+import { getMatchPath } from "gatsby-core-utils/match-path"
 
-interface IOptions extends PluginOptions {
-  path: string
-  pathCheck: boolean
-  ignore: Array<string>
+let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
+
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
+    coreSupportsOnPluginInit = `stable`
+  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
+    coreSupportsOnPluginInit = `unstable`
+  }
+} catch (e) {
+  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
 }
 
 const knownCollections = new Map()
+
+export function createPages(_: CreatePagesArgs, pluginOptions: IOptions): void {
+  const instance = getPluginInstance(pluginOptions)
+  if (instance.syncPages) {
+    instance.syncPages()
+  }
+}
 
 // Path creator.
 // Auto-create pages.
@@ -36,31 +65,49 @@ export async function createPagesStatefully(
     actions,
     reporter,
     graphql,
+    emitter,
   }: CreatePagesArgs & {
     traceId: "initial-createPages"
   },
-  { path: pagesPath, pathCheck = true, ignore }: IOptions,
+  pluginOptions: IOptions,
   doneCb: PluginCallback
 ): Promise<void> {
+  const {
+    path: pagesPath,
+    pathCheck = true,
+    ignore,
+    slugify: slugifyOptions,
+  } = pluginOptions
   try {
     const { deletePage } = actions
-    const { program } = store.getState()
+    const { program, config } = store.getState()
+    const { trailingSlash = `always` } = config
 
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
     if (!pagesPath) {
-      reporter.panic(`"path" is a required option for gatsby-plugin-page-creator
+      reporter.panic({
+        id: prefixId(CODES.RequiredPath),
+        context: {
+          sourceMessage: `"path" is a required option for gatsby-plugin-page-creator
 
-See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`)
+See docs here - https://www.gatsbyjs.com/plugins/gatsby-plugin-page-creator/`,
+        },
+      })
     }
 
     // Validate that the path exists.
     if (pathCheck && !existsSync(pagesPath)) {
-      reporter.panic(`The path passed to gatsby-plugin-page-creator does not exist on your file system:
+      reporter.panic({
+        id: prefixId(CODES.NonExistingPath),
+        context: {
+          sourceMessage: `The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
 ${pagesPath}
 
-Please pick a path to an existing directory.`)
+Please pick a path to an existing directory.`,
+        },
+      })
     }
 
     const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
@@ -69,10 +116,150 @@ Please pick a path to an existing directory.`)
     // Get initial list of files.
     const files = await glob(pagesGlob, { cwd: pagesPath })
     files.forEach(file => {
-      createPage(file, pagesDirectory, actions, ignore, graphql, reporter)
+      createPage(
+        file,
+        pagesDirectory,
+        actions,
+        graphql,
+        reporter,
+        trailingSlash,
+        pagesPath,
+        ignore,
+        slugifyOptions
+      )
     })
 
     const knownFiles = new Set(files)
+    const pluginInstance = getPluginInstance({ path: pagesPath })
+
+    pluginInstance.syncPages = function syncPages(): void {
+      createPagesFromChangedNodes({ actions, pluginInstance }, pluginOptions)
+    }
+
+    pluginInstance.resolveFields = async function resolveFields(
+      nodeIds: Array<string>,
+      absolutePath: string
+    ): Promise<Array<Record<string, Record<string, unknown>>>> {
+      const queryString = collectionExtractQueryString(
+        absolutePath,
+        reporter,
+        nodeIds
+      )
+      if (!queryString) {
+        return []
+      }
+
+      const { data } = await graphql<{
+        nodes: Record<string, unknown>
+      }>(queryString)
+
+      if (!data) {
+        return []
+      }
+
+      const nodes = Object.values(Object.values(data)[0])[0] as any as Array<
+        Record<string, Record<string, unknown>>
+      >
+      return nodes
+    }
+
+    pluginInstance.getPathFromAResolvedNode =
+      function getPathFromAResolvedNode({
+        node,
+        absolutePath,
+      }: ICreateAPageFromNodeArgs): string {
+        const filePath = systemPath.relative(pluginOptions.path, absolutePath)
+
+        // URL path for the component and node
+        const { derivedPath } = derivePath(
+          filePath,
+          node,
+          reporter,
+          slugifyOptions
+        )
+
+        const hasTrailingSlash = derivedPath.endsWith(`/`)
+        const path = createPath(derivedPath, hasTrailingSlash, true)
+        const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+        return modifiedPath
+      }
+
+    pluginInstance.createAPageFromNode = function createAPageFromNode({
+      node,
+      absolutePath,
+    }: ICreateAPageFromNodeArgs): undefined | { errors: number; path: string } {
+      const filePath = systemPath.relative(pluginOptions.path, absolutePath)
+
+      const contentFilePath = node.internal?.contentFilePath
+      // URL path for the component and node
+      const { derivedPath, errors } = derivePath(
+        filePath,
+        node,
+        reporter,
+        slugifyOptions
+      )
+
+      const hasTrailingSlash = derivedPath.endsWith(`/`)
+      const path = createPath(derivedPath, hasTrailingSlash, true)
+      // We've already created a page with this path
+      if (this.knownPagePaths.has(path)) {
+        return undefined
+      }
+      this.knownPagePaths.add(path)
+      // Params is supplied to the FE component on props.params
+      const params = getCollectionRouteParams(createPath(filePath), path)
+      // nodeParams is fed to the graphql query for the component
+      const nodeParams = reverseLookupParams(node, absolutePath)
+      // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
+      const matchPath = getMatchPath(path)
+
+      const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+
+      const componentPath = contentFilePath
+        ? `${absolutePath}?__contentFilePath=${contentFilePath}`
+        : absolutePath
+
+      actions.createPage({
+        path: modifiedPath,
+        matchPath,
+        component: componentPath,
+        context: {
+          ...nodeParams,
+          __params: params,
+        },
+      })
+
+      const nodeId = node.id as unknown as string
+      if (nodeId) {
+        let templatesToPagePath = this.nodeIdToPagePath.get(nodeId)
+        if (!templatesToPagePath) {
+          templatesToPagePath = new Map<string, string>()
+          this.nodeIdToPagePath.set(nodeId, templatesToPagePath)
+        }
+
+        templatesToPagePath.set(componentPath, modifiedPath)
+      }
+
+      return { errors, path }
+    }
+
+    pluginInstance.deletePagesCreateFromNode =
+      function deletePagesCreateFromNode(id: string): void {
+        const templatesToPagePaths = this.nodeIdToPagePath.get(id)
+        if (templatesToPagePaths) {
+          for (const [
+            componentPath,
+            pagePath,
+          ] of templatesToPagePaths.entries()) {
+            actions.deletePage({
+              path: pagePath,
+              component: componentPath,
+            })
+            this.knownPagePaths.delete(pagePath)
+          }
+          this.nodeIdToPagePath.delete(id)
+        }
+      }
 
     watchDirectory(
       pagesPath,
@@ -84,18 +271,22 @@ Please pick a path to an existing directory.`)
               addedPath,
               pagesDirectory,
               actions,
-              ignore,
               graphql,
-              reporter
+              reporter,
+              trailingSlash,
+              pagesPath,
+              ignore,
+              slugifyOptions
             )
             knownFiles.add(addedPath)
           }
         } catch (e) {
-          reporter.panic(
-            e.message.startsWith(`PageCreator`)
-              ? e.message
-              : `PageCreator: ${e.message}`
-          )
+          reporter.panic({
+            id: prefixId(CODES.FileSystemAdd),
+            context: {
+              sourceMessage: e.message,
+            },
+          })
         }
       },
       removedPath => {
@@ -105,38 +296,73 @@ Please pick a path to an existing directory.`)
           store.getState().pages.forEach(page => {
             if (page.component === componentPath) {
               deletePage({
-                path: createPath(removedPath),
+                path: page.path,
                 component: componentPath,
               })
             }
           })
           knownFiles.delete(removedPath)
+
+          pluginInstance.templateFileRemoved(componentPath)
         } catch (e) {
-          reporter.panic(
-            e.message.startsWith(`PageCreator`)
-              ? e.message
-              : `PageCreator: ${e.message}`
-          )
+          reporter.panic({
+            id: prefixId(CODES.FileSystemRemove),
+            context: {
+              sourceMessage: e.message,
+            },
+          })
         }
       }
     ).then(() => doneCb(null, null))
+
+    emitter.on(`DELETE_NODE`, action => {
+      if (action.payload?.id) {
+        if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+          pluginInstance.changedNodesSinceLastPageCreation.deleted.set(
+            action.payload.id,
+            {
+              id: action.payload.id,
+              contentDigest: action.payload.internal.contentDigest,
+            }
+          )
+        }
+      }
+    })
+
+    emitter.on(`CREATE_NODE`, action => {
+      if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+        // If this node was deleted before being recreated, remove it from the deleted node list
+        pluginInstance.changedNodesSinceLastPageCreation.deleted.delete(
+          action.payload.id
+        )
+
+        pluginInstance.changedNodesSinceLastPageCreation.created.set(
+          action.payload.id,
+          {
+            id: action.payload.id,
+            contentDigest: action.payload.internal.contentDigest,
+            type: action.payload.internal.type,
+          }
+        )
+      }
+    })
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.Generic),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
   }
 }
 
-export function setFieldsOnGraphQLNodeType({
-  getNode,
-  type,
-  store,
-  reporter,
-}: SetFieldsOnGraphQLNodeTypeArgs): object {
+export function setFieldsOnGraphQLNodeType(
+  { getNode, type, store, reporter }: SetFieldsOnGraphQLNodeTypeArgs,
+  { slugify: slugifyOptions }: PluginOptions & { slugify: ISlugifyOptions }
+): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
+    const { trailingSlash = `always` } = store.getState().config
     const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
@@ -148,7 +374,7 @@ export function setFieldsOnGraphQLNodeType({
             },
           },
           resolve: (
-            source: object,
+            source: Record<string, unknown>,
             { filePath }: { filePath: string }
           ): string => {
             // This is a quick hack for attaching parents to the node.
@@ -164,8 +390,18 @@ export function setFieldsOnGraphQLNodeType({
             }
 
             validatePathQuery(filePath, extensions)
+            const { derivedPath } = derivePath(
+              filePath,
+              sourceCopy,
+              reporter,
+              slugifyOptions
+            )
 
-            return derivePath(filePath, sourceCopy, reporter)
+            const hasTrailingSlash = derivedPath.endsWith(`/`)
+            const path = createPath(derivedPath, hasTrailingSlash, true)
+            const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+
+            return modifiedPath
           },
         },
       }
@@ -173,31 +409,31 @@ export function setFieldsOnGraphQLNodeType({
 
     return {}
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.GraphQLResolver),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
     return {}
   }
 }
 
-export async function onPreInit(
+async function initializePlugin(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
+
   try {
-    const pagesGlob = `**/\\{*\\}**`
+    const pagesGlob = `**/**\\{*\\}**`
 
     const files = await glob(pagesGlob, { cwd: pagesPath })
 
     if (files.length > 0) {
       trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
-      if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-        reporter.panic(
-          `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
-        )
-      }
     }
 
     await Promise.all(
@@ -219,10 +455,20 @@ export async function onPreInit(
       })
     )
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.Generic),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
   }
+}
+
+if (coreSupportsOnPluginInit === `stable`) {
+  // need to conditionally export otherwise it throws an error for older versions
+  exports.onPluginInit = initializePlugin
+} else if (coreSupportsOnPluginInit === `unstable`) {
+  exports.unstable_onPluginInit = initializePlugin
+} else {
+  exports.onPreInit = initializePlugin
 }

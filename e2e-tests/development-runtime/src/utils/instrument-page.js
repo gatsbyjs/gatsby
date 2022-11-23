@@ -1,6 +1,6 @@
 import React from "react"
 
-export default Page =>
+const InstrumentPage = Page =>
   class extends React.Component {
     addLogEntry(action) {
       if (typeof window !== `undefined`) {
@@ -31,3 +31,5 @@ export default Page =>
       return <Page {...this.props} />
     }
   }
+
+export default InstrumentPage

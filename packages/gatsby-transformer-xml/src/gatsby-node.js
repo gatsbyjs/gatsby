@@ -1,6 +1,11 @@
 const parseXml = require(`xml-parser`)
 const _ = require(`lodash`)
 
+function shouldOnCreateNode({ node }) {
+  // We only care about XML content.
+  return [`application/xml`, `text/xml`].includes(node.internal.mediaType)
+}
+
 async function onCreateNode({
   node,
   actions,
@@ -10,10 +15,6 @@ async function onCreateNode({
 }) {
   const { createNode, createParentChildLink } = actions
 
-  // We only care about XML content.
-  if (![`application/xml`, `text/xml`].includes(node.internal.mediaType)) {
-    return
-  }
   const rawXml = await loadNodeContent(node)
   const parsedXml = parseXml(rawXml)
   const nodeArray = parsedXml.root.children.map((obj, i) => {
@@ -42,4 +43,5 @@ async function onCreateNode({
   return
 }
 
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

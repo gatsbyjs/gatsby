@@ -2,13 +2,34 @@ const ignore = require(`ignore`)
 const fs = require(`fs-extra`)
 const yargs = require(`yargs`)
 const chalk = require(`chalk`)
+const collectUpdates = require(`@lerna/collect-updates`)
+const PackageGraph = require(`@lerna/package-graph`)
+const Project = require(`@lerna/project`)
 const PromptUtilities = require(`@lerna/prompt`)
 const _ = require(`lodash`)
 const path = require(`path`)
 const packlist = require(`npm-packlist`)
 const { execSync } = require(`child_process`)
 
-let argv = yargs
+const argv = yargs
+  .command(
+    `* <bump>`,
+    `Clear previously built and potentially stale files in packages`,
+    commandBuilder => {
+      commandBuilder.positional(`bump`, {
+        choices: [
+          `major`,
+          `minor`,
+          `patch`,
+          `premajor`,
+          `preminor`,
+          `prepatch`,
+          `prerelease`,
+        ],
+      })
+    }
+  )
+
   .option(`dry-run`, {
     default: false,
     describe: `Don't delete files - just show what would be deleted`,
@@ -22,7 +43,7 @@ let argv = yargs
     describe: `Force deletion of file without prompting user to confirm`,
   }).argv
 
-const verbose = argv[`dry-run`] || argv[`verbose`] || !argv[`force`]
+const verbose = argv[`dry-run`] || argv[`verbose`]
 
 const buildIgnoreArray = str =>
   str
@@ -71,13 +92,12 @@ const getListOfFilesToClear = async ({ location, name }) => {
 
   const ig = ignore().add(gitignore)
 
-  if (verbose) {
-    console.log(`Files that will be packed for ${chalk.bold(name)}:`)
-  }
+  console.log(`Files that will be deleted for ${chalk.bold(name)}:`)
+
   const filesToDelete = result
     .filter(file => {
       const willBeDeleted = ig.ignores(file)
-      if (verbose) {
+      if (verbose || willBeDeleted) {
         console.log(
           `[ ${
             willBeDeleted ? chalk.red(`DEL`) : chalk.green(` - `)
@@ -94,12 +114,20 @@ const getListOfFilesToClear = async ({ location, name }) => {
 
 const run = async () => {
   try {
-    const changed = JSON.parse(
-      execSync(
-        `${path.resolve(
-          `node_modules/.bin/lerna`
-        )} changed --json --loglevel=silent`
-      ).toString()
+    const project = new Project(process.cwd())
+
+    const packages = await project.getPackages()
+    const packageGraph = new PackageGraph(packages)
+
+    const changed = collectUpdates(
+      packageGraph.rawPackageList,
+      packageGraph,
+      { cwd: process.cwd() },
+      {
+        ...project.config,
+        loglevel: `silent`,
+        bump: argv.bump,
+      }
     )
 
     const filesToDelete = _.flatten(

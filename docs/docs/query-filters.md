@@ -47,7 +47,7 @@ nodes = [
 
 The filter path is `post.author.name`, the comparator is `eq`, and the filter value is `'Alex'`.
 
-This ought to return two nodes, the ones with id 1 and 3, because those are the only ones where the result value `node[i].post.author.name` equals `'Alex'`.
+This ought to return two nodes, the ones with id 1 and 4, because those are the only ones where the result value `node[i].post.author.name` equals `'Alex'`.
 
 A filter path can combine multiple paths, for example:
 

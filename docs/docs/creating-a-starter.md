@@ -10,7 +10,7 @@ For a starter to work properly, it needs to include some files (see the [Hello W
 
 - `README.md`: instructions for how to install and configure your starter, a list of its features or structure, and any helpful tips.
 - `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [Hello World starter's package.json](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/package.json) file.
-- `gatsby-config.js`: a space to add configurable data and plugins. See [Gatsby Config](/docs/gatsby-config/) for more information.
+- `gatsby-config.js`: a space to add configurable data and plugins. See [Gatsby Config](/docs/reference/config-files/gatsby-config/) for more information.
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
 - `static`: a directory for static assets, such as a `favicon.ico` file.
 - `.gitignore`: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
@@ -77,9 +77,9 @@ Since starters are Gatsby projects, you can run `gatsby develop` or `gatsby buil
 
 ## Add your starter to the Gatsby Starter Library
 
-To make sure your starter is easily discoverable, you are welcome (but not required) to add it to the [Gatsby Starter Library](/contributing/submit-to-starter-library/). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
+To make sure your starter is easily discoverable, you are welcome (but not required) to add it to the [Gatsby Starter Library](/starters/submissions). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
 
 ## Further reading:
 
-- [How to create a Gatsby Starter](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
+- [How to create a Gatsby Starter](https://dev.to/emasuriano/how-to-create-a-gatsby-starter-42m8) by Emanuel Suriano
 - [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/) (including info on starters)

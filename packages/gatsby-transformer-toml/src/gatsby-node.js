@@ -1,6 +1,13 @@
 const toml = require(`toml`)
 const _ = require(`lodash`)
 
+function shouldOnCreateNode({ node }) {
+  // Filter out non-toml content
+  // Currently TOML files are considered null in 'mime-db'
+  // Hence the extension test instead of mediaType test
+  return node.extension === `toml`
+}
+
 async function onCreateNode({
   node,
   actions,
@@ -9,12 +16,7 @@ async function onCreateNode({
   createContentDigest,
 }) {
   const { createNode, createParentChildLink } = actions
-  // Filter out non-toml content
-  // Currently TOML files are considered null in 'mime-db'
-  // Hence the extension test instead of mediaType test
-  if (node.extension !== `toml`) {
-    return
-  }
+
   // Load TOML contents
   const content = await loadNodeContent(node)
   // Parse
@@ -45,4 +47,5 @@ async function onCreateNode({
   return
 }
 
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

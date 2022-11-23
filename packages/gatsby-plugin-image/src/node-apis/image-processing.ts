@@ -1,18 +1,18 @@
 import {
-  Node,
   GatsbyCache,
   Reporter,
   ParentSpanPluginArgs,
   Actions,
+  Store,
 } from "gatsby"
-import { fluid as fluidSharp, fixed as fixedSharp } from "gatsby-plugin-sharp"
-import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
-import { ImageProps, SharpProps } from "../utils"
-import { getCustomSharpFields } from "./get-custom-sharp-fields"
 import { watchImage } from "./watcher"
+import type { FileSystemNode } from "gatsby-source-filesystem"
+import { IStaticImageProps } from "../components/static-image.server"
+import { ISharpGatsbyImageArgs } from "../image-utils"
 
+const supportedTypes = new Set([`image/png`, `image/jpeg`, `image/webp`])
 export interface IImageMetadata {
   isFixed: boolean
   contentDigest?: string
@@ -24,15 +24,27 @@ export async function createImageNode({
   fullPath,
   createNodeId,
   createNode,
+  reporter,
 }: {
   fullPath: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
-}): Promise<Node | undefined> {
+  reporter: Reporter
+}): Promise<FileSystemNode | undefined> {
   if (!fs.existsSync(fullPath)) {
     return undefined
   }
-  const file: Node = await createFileNode(fullPath, createNodeId, {})
+
+  let file: FileSystemNode
+  try {
+    const {
+      createFileNode,
+    } = require(`gatsby-source-filesystem/create-file-node`)
+    file = await createFileNode(fullPath, createNodeId, {})
+  } catch (e) {
+    reporter.panic(`Please install gatsby-source-filesystem`)
+    return undefined
+  }
 
   if (!file) {
     return undefined
@@ -45,6 +57,9 @@ export async function createImageNode({
   return file
 }
 
+export const isRemoteURL = (url: string): boolean =>
+  url.startsWith(`http://`) || url.startsWith(`https://`)
+
 export async function writeImages({
   images,
   pathPrefix,
@@ -54,8 +69,9 @@ export async function writeImages({
   sourceDir,
   createNodeId,
   createNode,
+  filename,
 }: {
-  images: Map<string, ImageProps>
+  images: Map<string, IStaticImageProps>
   pathPrefix: string
   cacheDir: string
   reporter: Reporter
@@ -63,17 +79,67 @@ export async function writeImages({
   sourceDir: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
+  filename: string
 }): Promise<void> {
   const promises = [...images.entries()].map(
-    async ([hash, { src, layout, ...args }]) => {
-      const isFixed = layout !== `responsive`
-      const fullPath = path.resolve(sourceDir, src)
-
-      if (!fs.existsSync(fullPath)) {
-        reporter.warn(`Could not find image "${src}". Looked for ${fullPath}`)
+    async ([hash, { src, ...args }]) => {
+      let file: FileSystemNode | undefined
+      let fullPath
+      if (!src) {
+        reporter.warn(`Missing StaticImage "src" in ${filename}.`)
         return
       }
-      const file: Node = await createFileNode(fullPath, createNodeId, {})
+      if (isRemoteURL(src)) {
+        let createRemoteFileNode
+        try {
+          createRemoteFileNode =
+            require(`gatsby-source-filesystem`).createRemoteFileNode
+        } catch (e) {
+          reporter.panic(`Please install gatsby-source-filesystem`)
+        }
+
+        try {
+          file = await createRemoteFileNode({
+            url: src,
+            cache,
+            createNode,
+            createNodeId,
+          })
+        } catch (err) {
+          reporter.error(`Error loading image ${src}`, err)
+          return
+        }
+        if (
+          !file?.internal.mediaType ||
+          !supportedTypes.has(file.internal.mediaType)
+        ) {
+          reporter.error(
+            `The file loaded from ${src} is not a valid image type. Found "${
+              file?.internal.mediaType || `unknown`
+            }"`
+          )
+          return
+        }
+      } else {
+        fullPath = path.resolve(sourceDir, src)
+
+        if (!fs.existsSync(fullPath)) {
+          reporter.warn(
+            `Could not find image "${src}" in "${filename}". Looked for ${fullPath}.`
+          )
+          return
+        }
+
+        try {
+          const {
+            createFileNode,
+          } = require(`gatsby-source-filesystem/create-file-node`)
+
+          file = await createFileNode(fullPath, createNodeId, {})
+        } catch (e) {
+          reporter.panic(`Please install gatsby-source-filesystem`)
+        }
+      }
 
       if (!file) {
         reporter.warn(`Could not create node for image ${src}`)
@@ -82,7 +148,7 @@ export async function writeImages({
 
       // We need our own type, because `File` belongs to the filesystem plugin
       file.internal.type = `StaticImage`
-
+      delete (file.internal as any).owner
       createNode(file)
 
       const cacheKey = `ref-${file.id}`
@@ -94,30 +160,21 @@ export async function writeImages({
       // Different cache: this is the one with the image properties
       const cacheFilename = path.join(cacheDir, `${hash}.json`)
       imageRefs[hash] = {
-        isFixed,
         contentDigest: file.internal?.contentDigest,
         args,
         cacheFilename,
       }
       await cache.set(cacheKey, imageRefs)
 
-      await writeImage(
-        file,
-        pathPrefix,
-        args,
-        reporter,
-        cache,
-        isFixed,
-        cacheFilename
-      )
+      await writeImage(file, args, pathPrefix, reporter, cache, cacheFilename)
 
-      if (process.env.NODE_ENV === `development`) {
+      if (fullPath && process.env.NODE_ENV === `development`) {
         // Watch the source image for changes
         watchImage({
           createNode,
-          pathPrefix,
           createNodeId,
           fullPath,
+          pathPrefix,
           cache,
           reporter,
         })
@@ -129,42 +186,36 @@ export async function writeImages({
 }
 
 export async function writeImage(
-  file: Node,
+  file: FileSystemNode,
+  args: ISharpGatsbyImageArgs,
   pathPrefix: string,
-  args: SharpProps,
   reporter: Reporter,
   cache: GatsbyCache,
-  isFixed: boolean,
   filename: string
 ): Promise<void> {
+  let generateImageData
   try {
-    if (args.tracedSVG) {
-      // These are mutually-exclusive options
-      args.base64 = false
-    }
-    const options = { file, args, reporter, cache }
+    generateImageData = require(`gatsby-plugin-sharp`).generateImageData
+  } catch (e) {
+    reporter.panic(`Please install gatsby-plugin-sharp`)
+  }
+  try {
+    const options = { file, args, pathPrefix, reporter, cache }
 
+    if (!generateImageData) {
+      reporter.warn(`Please upgrade gatsby-plugin-sharp`)
+      return
+    }
     // get standard set of fields from sharp
-    const sharpData = await (isFixed
-      ? fixedSharp(options)
-      : fluidSharp(options))
+    const sharpData = await generateImageData(options)
+
     if (sharpData) {
-      // get the equivalent webP and tracedSVG fields gatsby-transformer-sharp handles normally
-      const customSharpFields = await getCustomSharpFields({
-        isFixed,
-        file,
-        pathPrefix,
-        args,
-        reporter,
-        cache,
-      })
-      const data = { ...sharpData, ...customSharpFields }
       // Write the image properties to the cache
-      await fs.writeJSON(filename, data)
+      await fs.writeJSON(filename, sharpData)
     } else {
-      reporter.warn(`Could not process image`)
+      reporter.warn(`Could not process image ${file.relativePath}`)
     }
   } catch (e) {
-    reporter.warn(`Error processing image`)
+    reporter.warn(`Error processing image ${file.relativePath}. \n${e.message}`)
   }
 }

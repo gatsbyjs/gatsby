@@ -1,9 +1,13 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const { onServiceWorkerActive } = require(`../gatsby-browser`)
 
 it(`does not add prefetch for preconnect/prefetch/prerender`, () => {
   const addHeadElement = (tagName, attributes) => {
     const el = document.createElement(tagName)
-    for (let key in attributes) {
+    for (const key in attributes) {
       el.setAttribute(key, attributes[key])
     }
     document.head.appendChild(el)
@@ -11,9 +15,9 @@ it(`does not add prefetch for preconnect/prefetch/prerender`, () => {
   }
 
   // Should not be prefetched
-  addHeadElement(`link`, { rel: `preconnect`, href: `https://gatsbyjs.org` })
-  addHeadElement(`link`, { rel: `prefetch`, href: `https://gatsbyjs.org` })
-  addHeadElement(`link`, { rel: `prerender`, href: `https://gatsbyjs.org` })
+  addHeadElement(`link`, { rel: `preconnect`, href: `https://gatsbyjs.com` })
+  addHeadElement(`link`, { rel: `prefetch`, href: `https://gatsbyjs.com` })
+  addHeadElement(`link`, { rel: `prerender`, href: `https://gatsbyjs.com` })
   addHeadElement(`script`, { src: `https://gats.by/script.js` })
   addHeadElement(`style`, { "data-href": `https://gats.by/lazy.css` })
   addHeadElement(`link`, {

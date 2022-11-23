@@ -1,3 +1,4 @@
+/* eslint-disable @babel/no-invalid-this */
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
 const fsExtra = require(`fs-extra`)
@@ -19,10 +20,12 @@ const validateDestinationDir = dir => {
     return true
   } else if (typeof dir === `string`) {
     // need to pass dummy data for validation to work
-    return destinationIsValid(`${dir}/h/n`)
+    return destinationIsValid(`${dir}/n/h/a`)
   } else if (_.isFunction(dir)) {
     // need to pass dummy data for validation to work
-    return destinationIsValid(`${dir({ name: `n`, hash: `h` })}`)
+    return destinationIsValid(
+      `${dir({ name: `n`, hash: `h`, absolutePath: `a` })}`
+    )
   } else {
     return false
   }
@@ -33,14 +36,11 @@ const defaultDestination = linkNode =>
 
 const getDestination = (linkNode, dir) => {
   if (_.isFunction(dir)) {
-    // need to pass dummy data for validation to work
-    const isValidFunction = `${dir({ name: `n`, hash: `h` })}` !== `${dir({})}`
-    return isValidFunction
-      ? `${dir({
-          name: linkNode.name,
-          hash: linkNode.internal.contentDigest,
-        })}.${linkNode.extension}`
-      : `${dir()}/${defaultDestination(linkNode)}`
+    return `${dir({
+      name: linkNode.name,
+      hash: linkNode.internal.contentDigest,
+      absolutePath: linkNode.absolutePath,
+    })}.${linkNode.extension}`
   } else if (_.isString(dir)) {
     return `${dir}/${defaultDestination(linkNode)}`
   } else {
@@ -58,13 +58,16 @@ const newPath = (linkNode, options) => {
 const newLinkURL = (linkNode, options, pathPrefix) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
-  return `${pathPrefix ? pathPrefix : ``}/${destination}`
+  const startsWithSlash = destination.startsWith(`/`)
+  return `${pathPrefix ? pathPrefix : ``}${
+    startsWithSlash ? `` : `/`
+  }${destination}`
 }
 
 function toArray(buf) {
-  var arr = new Array(buf.length)
+  const arr = new Array(buf.length)
 
-  for (var i = 0; i < buf.length; i++) {
+  for (let i = 0; i < buf.length; i++) {
     arr[i] = buf[i]
   }
 
@@ -88,10 +91,7 @@ module.exports = (
   // Copy linked files to the destination directory and modify the AST to point
   // to new location of the files.
   const visitor = link => {
-    if (
-      isRelativeUrl(link.url) &&
-      getNode(markdownNode.parent).internal.type === `File`
-    ) {
+    if (isRelativeUrl(link.url) && getNode(markdownNode.parent).dir) {
       const linkPath = path.posix.join(
         getNode(markdownNode.parent).dir,
         link.url
@@ -192,11 +192,8 @@ module.exports = (
       return
     }
 
-    // since dir will be undefined on non-files
-    if (
-      markdownNode.parent &&
-      getNode(markdownNode.parent).internal.type !== `File`
-    ) {
+    // Just make sure the parent node has dir
+    if (markdownNode.parent && !getNode(markdownNode.parent).dir) {
       return
     }
 
@@ -276,11 +273,9 @@ module.exports = (
     ).forEach(processUrl)
 
     // Handle video poster.
-    extractUrlAttributeAndElement(
-      $(`video[poster]`),
-      `poster`
-    ).forEach(extractedUrlAttributeAndElement =>
-      processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
+    extractUrlAttributeAndElement($(`video[poster]`), `poster`).forEach(
+      extractedUrlAttributeAndElement =>
+        processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
     )
 
     // Handle audio tags.

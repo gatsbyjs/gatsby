@@ -6,7 +6,7 @@ title: "Adding Images to a WordPress Site"
 
 The version of `gatsby-source-wordpress` that this tutorial uses will soon be deprecated and replaced with a complete rewrite in the next major version (v4). The reason for this is that we've adopted the use of WPGraphQL to support Preview and incremental builds as well as to make the schema generally more stable and consistent.
 
-Please follow the tutorial on [creating a new site with `gatsby-source-wordpress-experimental`](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
+Please follow the tutorial on [creating a new site with `gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
 
 ## What this tutorial covers:
 
@@ -16,7 +16,7 @@ In this tutorial, you will install the several image plugins and components in o
 
 Images are one of the most beautiful and striking ways to communicate to people, and are a key part of creating an effective and positive user experience; at the same time, high quality images can load slowly and cause text boxes to jump around, both of which make it difficult for people to be patient with visiting your website.
 
-The Gatsby Way™ of creating images describes a set of best practices that help you optimize performance and responsiveness of images so that you can get the benefits of awesome images that don't slow down your site. This [Gatsbygram site](https://gatsbygram.gatsbyjs.org/) (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here’s an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
+The Gatsby Way™ of creating images describes a set of best practices that help you optimize performance and responsiveness of images so that you can get the benefits of awesome images that don't slow down your site.
 
 ## Installing the `gatsby-source-wordpress` plugin
 
@@ -29,7 +29,7 @@ gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/plugins/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install gatsby-source-wordpress
@@ -201,8 +201,6 @@ Here’s an example query for generating different sizes of an image:
 }
 ```
 
-In either case, you can add traced SVG support by adding `_tracedSVG` to the end of each fragment. _Note this won’t work in the GraphQL explorer._
-
 ## Rendering the images to `index.js`
 
 Here is what your `index.js` should look like with the query added:
@@ -243,7 +241,7 @@ export const query = graphql`
                 childImageSharp {
                   # edit the maxWidth value to generate resized images
                   fixed(width: 500, height: 500) {
-                    ...GatsbyImageSharpFixed_withWebp_tracedSVG
+                    ...GatsbyImageSharpFixed_withWebp
                   }
                 }
               }
@@ -264,7 +262,7 @@ Your demo site should look something like this:
 
 It is useful and can be fun to purposefully slow down your browser to see image effects animate more slowly.
 
-Open your browser console and change the network speed to something slower. In Chrome, you can click on the “network” tab, then on the drop down arrow next to the word “Online.” Then click “Slow 3G.” Now, reload your page and watch the blur-up and SVG effects in action. The network tab also shows statistics on when each image loaded and how much time it took them to load.
+Open your browser console and change the network speed to something slower. In Chrome, you can click on the “network” tab, then on the drop down arrow next to the word “Online.” Then click “Slow 3G.” Now, reload your page and watch the blur-up effect in action. The network tab also shows statistics on when each image loaded and how much time it took them to load.
 
 ![Network](./images/network.png)
 

@@ -1,12 +1,25 @@
-import { RefObject } from "react"
-
 let intersectionObserver: IntersectionObserver
 
-type Unobserver = () => void
+export type Unobserver = () => void
+
+const ioEntryMap = new WeakMap<HTMLElement, () => void>()
+/* eslint-disable @typescript-eslint/no-explicit-any  */
+const connection =
+  (navigator as any).connection ||
+  (navigator as any).mozConnection ||
+  (navigator as any).webkitConnection
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+// These match the thresholds used in Chrome's native lazy loading
+// @see https://web.dev/browser-level-image-lazy-loading/#distance-from-viewport-thresholds
+const FAST_CONNECTION_THRESHOLD = `1250px`
+const SLOW_CONNECTION_THRESHOLD = `2500px`
 
 export function createIntersectionObserver(
   callback: () => void
-): (element: RefObject<HTMLElement | undefined>) => Unobserver {
+): (element: HTMLElement) => Unobserver {
+  const connectionType = connection?.effectiveType
+
   // if we don't support intersectionObserver we don't lazy load (Sorry IE 11).
   if (!(`IntersectionObserver` in window)) {
     return function observe(): Unobserver {
@@ -20,27 +33,31 @@ export function createIntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            callback()
+            // Get the matching entry's callback and call it
+            ioEntryMap.get(entry.target as HTMLElement)?.()
+            // We only need to call it once
+            ioEntryMap.delete(entry.target as HTMLElement)
           }
         })
       },
       {
-        // TODO look at lighthouse & amp-image on what values they are using
-        rootMargin: `150%`,
+        rootMargin:
+          connectionType === `4g` && !connection?.saveData
+            ? FAST_CONNECTION_THRESHOLD
+            : SLOW_CONNECTION_THRESHOLD,
       }
     )
   }
 
-  return function observe(
-    element: RefObject<HTMLElement | undefined>
-  ): Unobserver {
-    if (element.current) {
-      intersectionObserver.observe(element.current)
-    }
+  return function observe(element: HTMLElement): Unobserver {
+    // Store a reference to the callback mapped to the element being watched
+    ioEntryMap.set(element, callback)
+    intersectionObserver.observe(element)
 
     return function unobserve(): void {
-      if (intersectionObserver && element.current) {
-        intersectionObserver.unobserve(element.current)
+      if (intersectionObserver && element) {
+        ioEntryMap.delete(element)
+        intersectionObserver.unobserve(element)
       }
     }
   }

@@ -1,8 +1,10 @@
 const { supportedExtensions } = require(`./supported-extensions`)
 
-function unstable_shouldOnCreateNode({ node }) {
-  return !!supportedExtensions[node.extension]
+function shouldOnCreateNode({ node }) {
+  return node.internal.type === `File` && !!supportedExtensions[node.extension]
 }
+
+module.exports.shouldOnCreateNode = shouldOnCreateNode
 
 module.exports.onCreateNode = async function onCreateNode({
   node,
@@ -10,10 +12,6 @@ module.exports.onCreateNode = async function onCreateNode({
   createNodeId,
 }) {
   const { createNode, createParentChildLink } = actions
-
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return
-  }
 
   const imageNode = {
     id: createNodeId(`${node.id} >> ImageSharp`),
@@ -30,5 +28,3 @@ module.exports.onCreateNode = async function onCreateNode({
 
   return
 }
-
-module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode

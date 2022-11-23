@@ -10,6 +10,7 @@ describe(`gatsby-plugin-stylus`, () => {
     miniCssExtract: () => `miniCssExtract`,
     css: args => `css(${JSON.stringify(args)})`,
     postcss: args => `postcss(${JSON.stringify(args)})`,
+    null: () => `null`,
   }
 
   const { onCreateWebpackConfig } = require(`../gatsby-node`)
@@ -34,18 +35,26 @@ describe(`gatsby-plugin-stylus`, () => {
       "PostCss plugins": {
         postCssPlugins: [`test1`],
       },
+      "css-loader use commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
   }
 
   tests.stages.forEach(stage => {
-    for (let label in tests.options) {
+    for (const label in tests.options) {
       const options = tests.options[label]
       it(`Stage: ${stage} / ${label}`, () => {
         onCreateWebpackConfig(
           {
             actions,
             loaders,
-            stage: `develop`,
+            stage,
           },
           options
         )

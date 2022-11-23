@@ -1,11 +1,10 @@
+import { hasFeature } from "gatsby-plugin-utils"
 import _ from "lodash"
 import path from "path"
 import {
-  compose,
   convertUnionSyntaxToGraphql,
   extractField,
   extractFieldWithoutUnion,
-  removeFileExtension,
   switchToPeriodDelimiters,
 } from "./path-utils"
 
@@ -13,21 +12,27 @@ import {
 // End result should be something like { allProducts { nodes { id }}}
 export function generateQueryFromString(
   queryOrModel: string,
-  fileAbsolutePath: string
+  fileAbsolutePath: string,
+  nodeIds?: Array<string>
 ): string {
+  // TODO: 'fields' possibly contains duplicate fields, e.g. field{name},field{description} that should be merged to field{name,description}
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
-  if (queryOrModel.includes(`...CollectionPagesQueryFragment`)) {
-    return fragmentInterpolator(queryOrModel, fields)
-  }
 
-  return `{all${queryOrModel}{nodes{${fields}}}}`
+  // In case queryOrModel is not capitalized
+  const connectionQuery = _.camelCase(`all ${queryOrModel}`)
+
+  const connectionArgs = nodeIds
+    ? `(filter: { id: { in: ${JSON.stringify(nodeIds)} } })`
+    : ``
+
+  return `{${connectionQuery}${connectionArgs}{nodes{${fields}}}}`
 }
 
 // Takes a query result of something like `{ fields: { value: 'foo' }}` with a filepath of `/fields__value` and
 // translates the object into `{ fields__value: 'foo' }`. This is necassary to pass the value
 // into a query function for each individual page.
 export function reverseLookupParams(
-  queryResults: Record<string, object | string>,
+  queryResults: Record<string, Record<string, unknown> | string>,
   absolutePath: string
 ): Record<string, string> {
   const reversedParams = {
@@ -36,26 +41,25 @@ export function reverseLookupParams(
   }
 
   absolutePath.split(path.sep).forEach(part => {
-    const extracted = compose(
-      removeFileExtension,
-      extractFieldWithoutUnion
-    )(part)
+    const extracted = extractFieldWithoutUnion(part)
 
-    const results = _.get(
-      queryResults.nodes ? queryResults.nodes[0] : queryResults,
-      // replace __ with accessors '.'
-      switchToPeriodDelimiters(extracted)
-    )
-    reversedParams[extracted] = results
+    extracted.forEach(extract => {
+      if (extract === ``) return
+
+      const results = _.get(
+        queryResults.nodes ? queryResults.nodes[0] : queryResults,
+        // replace __ with accessors '.'
+        switchToPeriodDelimiters(extract)
+      )
+      reversedParams[extract] = results
+    })
   })
 
   return reversedParams
 }
 
-// Changes something like
-//   `/Users/site/src/pages/foo/{Model.id}/{Model.baz}`
-// to
-//   `id,baz`
+// Changes something like `/Users/site/src/pages/foo/{Model.id}/{Model.baz}` to `id,baz,internal{contentFilePath}`.
+// Also supports prefixes/postfixes, e.g. `/foo/prefix-{Model.id}` to `id`
 function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(path.sep)
 
@@ -64,18 +68,25 @@ function extractUrlParamsForQuery(createdPath: string): string {
     parts.push(`{Model.id}`)
   }
 
-  return parts
-    .reduce<Array<string>>((queryParts: Array<string>, part: string): Array<
-      string
-    > => {
-      if (part.startsWith(`{`)) {
-        return queryParts.concat(
-          deriveNesting(compose(removeFileExtension, extractField)(part))
-        )
-      }
+  // Always add internal { contentFilePath } if feature is available
+  if (hasFeature(`content-file-path`)) {
+    parts.push(`{Model.internal__contentFilePath}`)
+  }
 
-      return queryParts
-    }, [])
+  return parts
+    .reduce<Array<string>>(
+      (queryParts: Array<string>, part: string): Array<string> => {
+        if (part.includes(`{`) && part.includes(`}`)) {
+          const fields = extractField(part)
+          const derived = fields.map(f => deriveNesting(f))
+
+          return queryParts.concat(derived)
+        }
+
+        return queryParts
+      },
+      []
+    )
     .join(`,`)
 }
 
@@ -98,8 +109,4 @@ function deriveNesting(part: string): string {
       }, ``)
   }
   return part
-}
-
-function fragmentInterpolator(query: string, fields: string): string {
-  return query.replace(`...CollectionPagesQueryFragment`, `nodes{${fields}}`)
 }

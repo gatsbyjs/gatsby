@@ -5,7 +5,7 @@ const PackageGraph = require(`@lerna/package-graph`)
 const semver = require(`semver`)
 
 let warned = false
-let argv = yargs
+const argv = yargs
   .option(`fix`, {
     default: false,
     describe: `Fixes outdated dependencies`,
