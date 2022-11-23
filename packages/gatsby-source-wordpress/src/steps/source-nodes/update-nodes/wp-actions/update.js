@@ -11,6 +11,7 @@ import fetchReferencedMediaItemsAndCreateNodes, {
 
 import { dump } from "dumper.js"
 import { atob } from "atob"
+import { camelCase } from "lodash"
 
 import {
   buildTypeName,
@@ -75,7 +76,7 @@ export const fetchAndCreateSingleNode = async ({
     errorContext: `Error occurred while updating a single "${singleName}" node.`,
   })
 
-  let remoteNode = data[singleName]
+  let remoteNode = data[singleName] || data[camelCase(singleName)]
 
   if (!data || !remoteNode) {
     reporter.warn(

@@ -20,6 +20,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   bat: `batch`,
   h: `c`,
   tex: `latex`,
+  csproj: `xml`,
 }
 
 const getLanguage = file => {

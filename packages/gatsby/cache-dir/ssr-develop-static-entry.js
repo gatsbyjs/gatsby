@@ -9,7 +9,7 @@ import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { ServerLocation, Router, isRedirect } from "@reach/router"
+import { ServerLocation, Router, isRedirect } from "@gatsbyjs/reach-router"
 import { headHandlerForSSR } from "./head/head-export-handler-for-ssr"
 import { getStaticQueryResults } from "./loader"
 

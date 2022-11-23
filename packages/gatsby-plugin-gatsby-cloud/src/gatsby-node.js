@@ -12,7 +12,7 @@ import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE } from "./constants"
-import { emitRoutes, emitFileNodes } from "./ipc"
+import { emitRoutes, emitFileNodes, emitTotalRenderedPageCount } from "./ipc"
 
 const assetsManifest = {}
 
@@ -115,6 +115,7 @@ exports.onPostBuild = async ({ store }, userPluginOptions) => {
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
+    emitTotalRenderedPageCount(pages.size),
   ])
 }
 

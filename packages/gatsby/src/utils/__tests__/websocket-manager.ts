@@ -500,11 +500,9 @@ describe(`websocket-manager`, () => {
 
   describe(`Data`, () => {
     beforeEach(() => {
-      websocketManager.pageResults.clear()
       websocketManager.staticQueryResults.clear()
     })
     afterAll(() => {
-      websocketManager.pageResults.clear()
       websocketManager.staticQueryResults.clear()
     })
 

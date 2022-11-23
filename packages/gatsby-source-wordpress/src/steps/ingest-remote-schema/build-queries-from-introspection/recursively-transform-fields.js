@@ -4,7 +4,10 @@ import {
   findTypeName,
   findTypeKind,
 } from "~/steps/create-schema-customization/helpers"
-import { fieldIsExcludedOnParentType } from "~/steps/ingest-remote-schema/is-excluded"
+import {
+  fieldIsExcludedOnParentType,
+  fieldIsExcludedOnAll,
+} from "~/steps/ingest-remote-schema/is-excluded"
 import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
 
 export const transformInlineFragments = ({
@@ -539,11 +542,12 @@ const transformFields = ({
     ?.filter(
       field =>
         !fieldIsExcludedOnParentType({
-          pluginOptions,
           field,
           parentType,
-          mainType,
-          parentField,
+        }) &&
+        !fieldIsExcludedOnAll({
+          pluginOptions,
+          field,
         })
     )
     .map(field => {

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
+import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router" // These come from `@types/reach__router`
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { Span } from "opentracing"
 export { Reporter }
@@ -17,10 +17,13 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen" | "content-file-path"
+export type AvailableFeatures =
+  | "image-cdn"
+  | "graphql-typegen"
+  | "content-file-path"
 
 export {
-  default as Link,
+  Link,
   GatsbyLinkProps,
   navigate,
   withPrefix,
@@ -158,7 +161,7 @@ export type HeadProps<DataType = object, PageContextType = object> = {
     /**
      * Returns the Location object's URL's path.
      */
-    pathname: string;
+    pathname: string
   }
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
@@ -175,9 +178,50 @@ export type HeadProps<DataType = object, PageContextType = object> = {
 /**
  * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
- export type HeadFC<DataType = object, PageContextType = object> = (
+export type HeadFC<DataType = object, PageContextType = object> = (
   props: HeadProps<DataType, PageContextType>
 ) => JSX.Element
+
+type SerializableProps =
+  | ISerializableObject
+  | Array<SerializableProps>
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+
+interface ISerializableObject {
+  [key: string]: SerializableProps
+}
+
+/**
+ * A props object for [slice placholder](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ */
+export interface SlicePlaceholderProps {
+  alias: string
+  allowEmpty?: boolean
+  children?: React.ReactNode
+  [key: string]: SerializableProps
+}
+
+/**
+ * Component used as a slice placholder, to mark a place in the page where a [slice](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
+ */
+export declare function Slice(props: SlicePlaceholderProps): JSX.Element
+
+/**
+ * A props object for [slice component](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ */
+export type SliceComponentProps<
+  DataType = object,
+  SliceContextType = object,
+  AdditionalSerializableProps extends ISerializableObject = object
+> = {
+  data: DataType
+  sliceContext: SliceContextType
+  children?: React.ReactNode
+} & AdditionalSerializableProps
 
 /**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
@@ -280,8 +324,8 @@ export interface GatsbyConfig {
   flags?: Record<string, boolean>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
-  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `legacy` is used which is the behavior until v5. With Gatsby v5 "always" will be the default. */
-  trailingSlash?: "always" | "never" | "ignore" | "legacy"
+  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `always` is used. */
+  trailingSlash?: "always" | "never" | "ignore"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
   /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. If set to true, the default GraphQLTypegenOptions are used. See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/ for all options. */
@@ -408,12 +452,9 @@ export interface GatsbyNode<
    *
    * @gatsbyVersion 2.24.80
    * @example
-   * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+   * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
    */
-  unstable_shouldOnCreateNode?(
-    args: { node: TNode },
-    options: PluginOptions
-  ): boolean
+  shouldOnCreateNode?(args: { node: TNode }, options: PluginOptions): boolean
 
   /**
    * Called when a new page is created. This extension API is useful
@@ -990,6 +1031,7 @@ type ReactProps<T extends Element> = React.DetailedHTMLProps<
   T
 >
 export interface RenderBodyArgs {
+  loadPageDataSync: (pathname: string) => { result: Record<string, unknown> }
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
@@ -1219,6 +1261,14 @@ export interface Actions {
   createPage<TContext = Record<string, unknown>>(
     this: void,
     args: Page<TContext>,
+    plugin?: ActionPlugin,
+    option?: ActionOptions
+  ): void
+
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createSlice */
+  createSlice<TContext = Record<string, unknown>>(
+    this: void,
+    args: SliceInput<TContext>,
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
@@ -1658,6 +1708,13 @@ export interface Page<TContext = Record<string, unknown>> {
   context?: TContext
   ownerNodeId?: string
   defer?: boolean
+  slices?: Record<string, string>
+}
+
+export interface SliceInput<TContext = Record<string, unknown>> {
+  id: string
+  component: string
+  context?: TContext
 }
 
 export interface IPluginRefObject {

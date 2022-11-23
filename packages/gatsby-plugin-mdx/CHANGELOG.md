@@ -3,6 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.1.0/packages/gatsby-plugin-mdx) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.0.0/packages/gatsby-plugin-mdx) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- Better AST error [#36866](https://github.com/gatsbyjs/gatsby/issues/36866) ([58d5f2a](https://github.com/gatsbyjs/gatsby/commit/58d5f2aa51212e50ca90e4d7eeee039bbd9dfcd0))
+- Unwrap images [#36856](https://github.com/gatsbyjs/gatsby/issues/36856) ([94d18fa](https://github.com/gatsbyjs/gatsby/commit/94d18fa164efa2725dc9eadc71be55ebdba61ae9))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- make unstable_shouldOnCreateNode stable [#36516](https://github.com/gatsbyjs/gatsby/issues/36516) ([90f9ab4](https://github.com/gatsbyjs/gatsby/commit/90f9ab47593ba7458fc5bc677c4b0282b30808c8))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.3.0/packages/gatsby-plugin-mdx) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Features
+
+- add partial hydration [#36485](https://github.com/gatsbyjs/gatsby/issues/36485) ([c073bbe](https://github.com/gatsbyjs/gatsby/commit/c073bbea40379adc62bd891da9f65ff2756b120b))
+
+#### Bug Fixes
+
+- Multiple root query error [#36525](https://github.com/gatsbyjs/gatsby/issues/36525) ([a922943](https://github.com/gatsbyjs/gatsby/commit/a9229439ec2de823148096991d5fab9b2f2bae6e))
+- Add React import when not defined [#36595](https://github.com/gatsbyjs/gatsby/issues/36595) ([34df27a](https://github.com/gatsbyjs/gatsby/commit/34df27a3bd278f49a9b81cdb59146a79e8841669))
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+- Update "headings" instructions [#36593](https://github.com/gatsbyjs/gatsby/issues/36593) ([b1b83c1](https://github.com/gatsbyjs/gatsby/commit/b1b83c18a95a2ef79b6101b28d9295ef20b97d4b))
+
+### [4.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.2.1/packages/gatsby-plugin-mdx) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.2.0/packages/gatsby-plugin-mdx) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- ci pipeline [#36544](https://github.com/gatsbyjs/gatsby/issues/36544) ([1125e58](https://github.com/gatsbyjs/gatsby/commit/1125e58731249257123d692522bed1a1ddc32383))
+
+#### Chores
+
+- Fix `gatsby-source-filesystem` typo Fix [#36471](https://github.com/gatsbyjs/gatsby/issues/36471) ([e8d7446](https://github.com/gatsbyjs/gatsby/commit/e8d744617d07c39c053ac437b2b024a26e1c3394))
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.1.1/packages/gatsby-plugin-mdx) (2022-09-08)
+
+#### Bug Fixes
+
+- ci pipeline [#36544](https://github.com/gatsbyjs/gatsby/issues/36544) [#36568](https://github.com/gatsbyjs/gatsby/issues/36568) ([8e10e1c](https://github.com/gatsbyjs/gatsby/commit/8e10e1c6dbf24f506e1572d9eff9c4a39348e789))
+
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.1.0/packages/gatsby-plugin-mdx) (2022-08-30)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)

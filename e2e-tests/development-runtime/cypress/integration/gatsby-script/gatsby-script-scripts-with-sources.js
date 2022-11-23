@@ -119,8 +119,8 @@ describe(`scripts with sources`, () => {
     it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
       cy.visit(page.navigation).waitForRouteChange()
       cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
-      cy.go(`back`)
-      cy.go(`forward`)
+      cy.go(`back`).waitForRouteChange()
+      cy.go(`forward`).waitForRouteChange()
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
@@ -150,8 +150,8 @@ describe(`scripts with sources`, () => {
     it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
       cy.visit(page.navigation).waitForRouteChange()
       cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
-      cy.go(`back`)
-      cy.go(`forward`)
+      cy.go(`back`).waitForRouteChange()
+      cy.go(`forward`).waitForRouteChange()
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()

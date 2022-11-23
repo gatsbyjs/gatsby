@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@gatsbyjs/reach-router"
+import { Link as ReachRouterLink, Location } from "@gatsbyjs/reach-router"
 import { parsePath } from "./parse-path"
 import { isLocalLink } from "./is-local-link"
 import { rewriteLinkPath } from "./rewrite-link-path"
@@ -162,7 +162,7 @@ class GatsbyLink extends React.Component {
     }
 
     return (
-      <Link
+      <ReachRouterLink
         to={prefixedTo}
         state={state}
         getProps={getProps}
@@ -220,7 +220,7 @@ GatsbyLink.propTypes = {
   state: PropTypes.object,
 }
 
-export default React.forwardRef((props, ref) => (
+export const Link = React.forwardRef((props, ref) => (
   <GatsbyLinkLocationWrapper innerRef={ref} {...props} />
 ))
 

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.1.0/packages/gatsby-plugin-sharp) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.0.0/packages/gatsby-plugin-sharp) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.24.0/packages/gatsby-plugin-sharp) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [4.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.23.1/packages/gatsby-plugin-sharp) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.23.0/packages/gatsby-plugin-sharp) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Chores
+
+- Cleanup v4 compile flag conditions [#36486](https://github.com/gatsbyjs/gatsby/issues/36486) ([9dcc773](https://github.com/gatsbyjs/gatsby/commit/9dcc77340675a3b9a2f57c82e4b4e19c57072cfb))
+- upgrade svgo [#36445](https://github.com/gatsbyjs/gatsby/issues/36445) ([4707fb8](https://github.com/gatsbyjs/gatsby/commit/4707fb8a003d611aa16c6cc5dfefa5dfaafab2b7))
+
 ## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.22.0/packages/gatsby-plugin-sharp) (2022-08-30)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)

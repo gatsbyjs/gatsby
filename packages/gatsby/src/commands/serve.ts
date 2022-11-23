@@ -4,7 +4,7 @@ import fs from "fs-extra"
 import compression from "compression"
 import express from "express"
 import chalk from "chalk"
-import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
+import { match as reachMatch } from "@gatsbyjs/reach-router"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
 import telemetry from "gatsby-telemetry"
@@ -23,15 +23,12 @@ import {
 import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
 import { configureTrailingSlash } from "../utils/express-middlewares"
-import { getDataStore, detectLmdbStore } from "../datastore"
+import { getDataStore } from "../datastore"
 import { functionMiddlewares } from "../internal-plugins/functions/middleware"
 import {
   thirdPartyProxyPath,
   partytownProxy,
 } from "../internal-plugins/partytown/proxy"
-
-process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
-detectLmdbStore()
 
 interface IMatchPath {
   path: string
@@ -369,7 +366,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   try {
-    port = await detectPortInUseAndPrompt(port)
+    port = await detectPortInUseAndPrompt(port, program.host)
     startListening()
   } catch (e) {
     if (e.message === `USER_REJECTED`) {

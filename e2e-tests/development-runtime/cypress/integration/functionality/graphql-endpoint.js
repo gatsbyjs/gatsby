@@ -20,7 +20,7 @@ describe(`The GraphQL endpoint`, () => {
       // prefill query from query string
       cy.visit(endpoint + testQueryString)
       cy.get(`.graphiql-container`).should(`be.visible`)
-      cy.get(`.execute-button`).click()
+      cy.get(`.graphiql-execute-button`).click()
       cy.get(`.result-window .CodeMirror-code`).contains(
         `Gatsby Default Starter`
       )
@@ -30,9 +30,10 @@ describe(`The GraphQL endpoint`, () => {
       // hack to show (almost) empty editor instead of
       cy.visit(endpoint + `?query=%20`)
       cy.get(`.graphiql-container`).should(`be.visible`)
+      cy.get(`[aria-label="Show GraphiQL Explorer"]`).click()
       cy.get(`[data-field-name="site"]`).click()
       cy.get(`[data-field-name="port"]`).click()
-      cy.get(`.execute-button`).click()
+      cy.get(`.graphiql-execute-button`).click()
       cy.get(`.result-window .CodeMirror-code`).contains(`8000`)
     })
   })

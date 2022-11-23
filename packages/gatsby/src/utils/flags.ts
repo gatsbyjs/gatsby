@@ -83,12 +83,8 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastDev`,
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time.`,
-    includedFlags: [
-      `DEV_SSR`,
-      `PRESERVE_FILE_DOWNLOAD_CACHE`,
-      `DEV_WEBPACK_CACHE`,
-    ],
+    description: `Enable all experiments aimed at improving develop server start time & develop DX.`,
+    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -100,61 +96,6 @@ const activeFlags: Array<IFlag> = [
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => true,
-  },
-  {
-    name: `QUERY_ON_DEMAND`,
-    env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
-    umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
-    name: `LAZY_IMAGES`,
-    env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
-    umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => {
-      const semverConstraints = {
-        // Because of this, this flag will never show up
-        "gatsby-plugin-sharp": `>=2.10.0`,
-      }
-      if (satisfiesSemvers(semverConstraints)) {
-        return `LOCKED_IN`
-      } else {
-        // gatsby-plugin-sharp is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
-    },
-    requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
-  },
-  {
-    name: `PRESERVE_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
-    command: `all`,
-    telemetryId: `PreserveWebpackCache`,
-    experimental: false,
-    description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
-    name: `DEV_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
-    command: `develop`,
-    telemetryId: `DevWebackCache`,
-    experimental: false,
-    description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -177,29 +118,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `LMDB_STORE`,
-    env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
-    command: `all`,
-    telemetryId: `LmdbStore`,
-    experimental: true,
-    umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
-    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-    requires: `Requires Node v14.10 or above.`,
-  },
-  {
-    name: `PARALLEL_QUERY_RUNNING`,
-    env: `GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING`,
-    command: `build`,
-    telemetryId: `PQR`,
-    experimental: true,
-    umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
-    description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
-    includedFlags: [`LMDB_STORE`],
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-    requires: `Requires Node v14.10 or above.`,
-  },
-  {
     name: `DETECT_NODE_MUTATIONS`,
     env: `GATSBY_DETECT_NODE_MUTATIONS`,
     command: `all`,
@@ -207,18 +125,6 @@ const activeFlags: Array<IFlag> = [
     description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.`,
     experimental: false,
     testFitness: (): fitnessEnum => true,
-  },
-  {
-    name: `GRAPHQL_TYPEGEN`,
-    env: `GATSBY_GRAPHQL_TYPEGEN`,
-    command: `develop`,
-    telemetryId: `GraphQLTypegen`,
-    description: `More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/35420`,
-    experimental: false,
-    noCI: true,
-    testFitness: (): fitnessEnum => false,
-    requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
   },
   {
     name: `PARTIAL_HYDRATION`,

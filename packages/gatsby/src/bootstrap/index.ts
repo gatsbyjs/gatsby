@@ -48,12 +48,10 @@ export async function bootstrap(
 
   const workerPool = context.workerPool
 
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    const program = context.store.getState().program
-    const directory = slash(program.directory)
+  const program = context.store.getState().program
+  const directory = slash(program.directory)
 
-    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
-  }
+  workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
 
   await customizeSchema(context)
   await sourceNodes(context)
@@ -69,17 +67,13 @@ export async function bootstrap(
 
   await handleStalePageData(parentSpan)
 
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    savePartialStateToDisk([`inferenceMetadata`])
+  savePartialStateToDisk([`inferenceMetadata`])
 
-    workerPool.all.buildSchema()
-  }
+  workerPool.all.buildSchema()
 
   await extractQueries(context)
 
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    savePartialStateToDisk([`components`, `staticQueryComponents`])
-  }
+  savePartialStateToDisk([`components`, `staticQueryComponents`])
 
   await writeOutRedirects(context)
 

@@ -36,3 +36,5 @@ export const CACHING_HEADERS = {
   "/static/*": [IMMUTABLE_CACHING_HEADER],
   "/sw.js": [NEVER_CACHE_HEADER],
 }
+
+export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/

@@ -1,12 +1,14 @@
 import memoize from "memoizee"
 import { kebabCase as _kebabCase } from "lodash"
-import { murmurhash as _murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
+import { murmurhash as _murmurhash } from "gatsby-core-utils/murmurhash"
 import path from "path"
 import { store } from "../redux"
 
-const kebabCase = memoize(_kebabCase)
-const pathRelative = memoize(path.relative)
-const murmurhash = memoize(_murmurhash)
+const kebabCase: (string?: string) => string = memoize(_kebabCase)
+const pathRelative: (from: string, to: string) => string = memoize(
+  path.relative
+)
+const murmurhash: (str: string, seed: number) => number = memoize(_murmurhash)
 
 // unified routes adds support for files with [] and {},
 // the problem with our generateComponentChunkName is that when you
@@ -39,7 +41,10 @@ function replaceUnifiedRoutesKeys(
 }
 
 const chunkNameCache = new Map()
-export function generateComponentChunkName(componentPath: string): string {
+export function generateComponentChunkName(
+  componentPath: string,
+  kind: "component" | "slice" = `component`
+): string {
   if (chunkNameCache.has(componentPath)) {
     return chunkNameCache.get(componentPath)
   } else {
@@ -61,11 +66,11 @@ export function generateComponentChunkName(componentPath: string): string {
      * To prevent long file name errors, we truncate the name to a maximum of 60 characters.
      */
     if (shouldTruncate) {
-      const hash = murmurhash(name)
+      const hash = murmurhash(name, 0)
       name = `${hash}-${name.substring(name.length - 60)}`
     }
 
-    const chunkName = `component---${name}`
+    const chunkName = `${kind}---${name}`
 
     chunkNameCache.set(componentPath, chunkName)
 

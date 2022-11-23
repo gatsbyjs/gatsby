@@ -57,7 +57,7 @@ const result = await graphql(
     {
 -     allMarkdownRemark(
 +     allMdx(
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC }}
         limit: 1000
       ) {
         nodes {
