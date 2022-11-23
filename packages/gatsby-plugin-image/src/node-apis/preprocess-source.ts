@@ -46,7 +46,7 @@ export async function preprocessSource({
     },
   })
 
-  const images = extractStaticImageProps(ast, (prop, nodePath) => {
+  const images = extractStaticImageProps(ast, filename, (prop, nodePath) => {
     const sourceLocation = nodePath.node.loc as SourceLocation
     const { start, end } = sourceLocation
     reporter.error({
