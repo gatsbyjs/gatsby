@@ -90,5 +90,5 @@ In contrast, static queries do not take variables. This is because static querie
 
 Static queries thus have these limitations:
 
-- `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
-- Because of how queries currently work in Gatsby, Gatsby supports only a single instance of `useStaticQuery` in a file
+- `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages.
+- Because of how queries currently work in Gatsby, Gatsby supports only a single instance of `useStaticQuery` in a file.
