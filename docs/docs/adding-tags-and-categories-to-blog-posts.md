@@ -49,7 +49,7 @@ Try running the following query in Graph<em>i</em>QL (`http://localhost:8000/___
 ```graphql
 {
   allMarkdownRemark {
-    group(field: frontmatter___tags) {
+    group(field: { frontmatter: { tags: SELECT } }) {
       tag: fieldValue
       totalCount
     }
@@ -131,7 +131,7 @@ export const pageQuery = graphql`
   query($tag: String) {
     allMarkdownRemark(
       limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC }}
       filter: { frontmatter: { tags: { in: [$tag] } } }
     ) {
       totalCount
@@ -169,7 +169,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const result = await graphql(`
     {
       postsRemark: allMarkdownRemark(
-        sort: { order: DESC, fields: [frontmatter___date] }
+        sort: { frontmatter: { date: DESC }}
         limit: 2000
       ) {
         edges {
@@ -184,7 +184,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         }
       }
       tagsGroup: allMarkdownRemark(limit: 2000) {
-        group(field: frontmatter___tags) {
+        group(field: { frontmatter: { tags: SELECT }}) {
           fieldValue
         }
       }
@@ -297,7 +297,7 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(limit: 2000) {
-      group(field: frontmatter___tags) {
+      group(field: { frontmatter: { tags: SELECT }}) {
         fieldValue
         totalCount
       }

@@ -86,7 +86,25 @@ module.exports = {
 
 The best way to create your queries now is to first develop them in _GraphiQL_ at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
 
-![Prismic Index Query](../../images/prismic-index-query.jpg)
+```graphql
+query {
+  allPrismicPost {
+    edges {
+      node {
+        data {
+          date
+          title {
+            text
+          }
+          content {
+            html
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 Because you defined the custom type as `Post` the query is called `allPrismicPost` (and `prismicPost`). You can also see the API IDs (from the field names) you created earlier.
 
@@ -175,9 +193,7 @@ Prismic offers a [Content Relationship](https://user-guides.prismic.io/content-m
 
 https://youtu.be/67yir-jQrFk
 
-The video shows the usage of a group field and relationship field — if you only want to have one category, skip the group field. Similar as to the `Post` custom type the `Category` one can also be queried. Furthermore, the `allPrismicPost` query also has the `categories` node available:
-
-![Prismic Categories Query](../../images/prismic-categories-query.jpg)
+The video shows the usage of a group field and relationship field — if you only want to have one category, skip the group field. Similar as to the `Post` custom type the `Category` one can also be queried. Furthermore, the `allPrismicPost` query also has the `categories` node available.
 
 ### Single Type
 

@@ -1,6 +1,8 @@
 import * as React from "react"
 import { StaticQuery, graphql, Script } from "gatsby"
 import { scripts } from "../gatsby-script-scripts"
+import { ContextForSlicesProvider } from "./context-for-slices"
+import { WrapRootContext } from "./wrap-root-context"
 
 export default ({ element }) => {
   return (
@@ -19,15 +21,18 @@ export default ({ element }) => {
           siteMetadata: { title },
         },
       }) => (
-        <>
-          {element}
-          <Script src={scripts.jQuery} strategy="post-hydrate" />
-          <Script src={scripts.popper} strategy="idle" />
-          <div>
-            StaticQuery in wrapRootElement test (should show site title):
-            <span data-testid="wrap-root-element-result">{title}</span>
-          </div>
-        </>
+        <ContextForSlicesProvider>
+          {/* Instead of adding UI markup here, we just set provider
+          and actual UI is rendered in wrapPageElement. WrapRootElement
+          should never create UI elements as it will cause problems
+          for slices - it should only setup providers or components
+          resulting in side effects (for example Script components) */}
+          <WrapRootContext.Provider value={{ title }}>
+            {element}
+            <Script src={scripts.jQuery} strategy="post-hydrate" />
+            <Script src={scripts.popper} strategy="idle" />
+          </WrapRootContext.Provider>
+        </ContextForSlicesProvider>
       )}
     />
   )

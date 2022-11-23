@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
 import graphql from "gatsby/graphql"
-import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
-import { slash } from "gatsby-core-utils"
+import { slash } from "gatsby-core-utils/path"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 import { Binding } from "babel__traverse"
 import {
   CallExpression,
@@ -456,58 +456,55 @@ export default function ({ types: t }): PluginObj {
           return null
         }
 
-        if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
-          // Traverse for <StaticQuery/> instances
-          path.traverse({
-            JSXElement(jsxElementPath: NodePath<JSXElement>) {
-              const jsxIdentifier = jsxElementPath.node.openingElement
-                .name as JSXIdentifier
-              if (jsxIdentifier.name !== `StaticQuery`) {
-                return
-              }
+        // Traverse for <StaticQuery/> instances
+        path.traverse({
+          JSXElement(jsxElementPath: NodePath<JSXElement>) {
+            const jsxIdentifier = jsxElementPath.node.openingElement
+              .name as JSXIdentifier
+            if (jsxIdentifier.name !== `StaticQuery`) {
+              return
+            }
 
-              jsxElementPath.traverse({
-                JSXAttribute(jsxPath: NodePath<JSXAttribute>) {
-                  if (jsxPath.node.name.name !== `query`) {
-                    return
-                  }
-                  jsxPath.traverse({
-                    TaggedTemplateExpression(
-                      templatePath: NodePath<TaggedTemplateExpression>
-                    ) {
-                      setImportForStaticQuery(templatePath)
-                    },
-                    Identifier(identifierPath: NodePath<Identifier>) {
-                      if (identifierPath.node.name !== `graphql`) {
-                        const varName = identifierPath.node.name
-                        path.traverse({
-                          VariableDeclarator(
-                            varPath: NodePath<VariableDeclarator>
+            jsxElementPath.traverse({
+              JSXAttribute(jsxPath: NodePath<JSXAttribute>) {
+                if (jsxPath.node.name.name !== `query`) {
+                  return
+                }
+                jsxPath.traverse({
+                  TaggedTemplateExpression(
+                    templatePath: NodePath<TaggedTemplateExpression>
+                  ) {
+                    setImportForStaticQuery(templatePath)
+                  },
+                  Identifier(identifierPath: NodePath<Identifier>) {
+                    if (identifierPath.node.name !== `graphql`) {
+                      const varName = identifierPath.node.name
+                      path.traverse({
+                        VariableDeclarator(
+                          varPath: NodePath<VariableDeclarator>
+                        ) {
+                          if (
+                            (varPath.node.id as Identifier).name === varName &&
+                            varPath.node.init?.type ===
+                              `TaggedTemplateExpression`
                           ) {
-                            if (
-                              (varPath.node.id as Identifier).name ===
-                                varName &&
-                              varPath.node.init?.type ===
-                                `TaggedTemplateExpression`
-                            ) {
-                              varPath.traverse({
-                                TaggedTemplateExpression(
-                                  templatePath: NodePath<TaggedTemplateExpression>
-                                ) {
-                                  setImportForStaticQuery(templatePath)
-                                },
-                              })
-                            }
-                          },
-                        })
-                      }
-                    },
-                  })
-                },
-              })
-            },
-          })
-        }
+                            varPath.traverse({
+                              TaggedTemplateExpression(
+                                templatePath: NodePath<TaggedTemplateExpression>
+                              ) {
+                                setImportForStaticQuery(templatePath)
+                              },
+                            })
+                          }
+                        },
+                      })
+                    }
+                  },
+                })
+              },
+            })
+          },
+        })
 
         // Traverse once again for useStaticQuery instances
         path.traverse({
@@ -642,5 +639,4 @@ export {
   GraphQLSyntaxError,
   ExportIsNotAsyncError,
   isWithinConfigExport,
-  murmurhash,
 }

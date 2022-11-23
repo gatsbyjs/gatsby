@@ -1,4 +1,3 @@
-/* global HAS_REACT_18 */
 const React = require(`react`)
 const path = require(`path`)
 const {
@@ -283,12 +282,12 @@ export default async function staticPage({
       }
     ).pop()
 
+    const slicesContext = {
+      // if we're in build now, we know we're on the server
+      // otherwise we're in an engine
+      renderEnvironment: renderContext.isDuringBuild ? `server` : `engines`,
+    }
     if (process.env.GATSBY_SLICES) {
-      const slicesContext = {
-        // if we're in build now, we know we're on the server
-        // otherwise we're in an engine
-        renderEnvironment: renderContext.isDuringBuild ? `server` : `engines`,
-      }
       // if we're running in an engine, we need to manually wrap body with
       // the results context to pass the map of slice name to component/data/context
       if (slicesContext.renderEnvironment === `engines`) {
@@ -350,22 +349,17 @@ export default async function staticPage({
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        // react 18 enabled
-        if (HAS_REACT_18) {
-          const writableStream = new WritableAsPromise()
-          const { pipe } = renderToPipeableStream(bodyComponent, {
-            onAllReady() {
-              pipe(writableStream)
-            },
-            onError(error) {
-              writableStream.destroy(error)
-            },
-          })
+        const writableStream = new WritableAsPromise()
+        const { pipe } = renderToPipeableStream(bodyComponent, {
+          onAllReady() {
+            pipe(writableStream)
+          },
+          onError(error) {
+            writableStream.destroy(error)
+          },
+        })
 
-          bodyHtml = await writableStream
-        } else {
-          bodyHtml = renderToString(bodyComponent)
-        }
+        bodyHtml = await writableStream
       } catch (e) {
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e
@@ -509,7 +503,7 @@ export default async function staticPage({
       pathPrefix: __PATH_PREFIX__,
     })
 
-    const html = `<!DOCTYPE html>${renderToStaticMarkup(
+    let htmlElement = (
       <Html
         {...bodyProps}
         headComponents={headComponents}
@@ -520,7 +514,17 @@ export default async function staticPage({
         body={bodyHtml}
         path={pagePath}
       />
-    )}`
+    )
+
+    if (process.env.GATSBY_SLICES) {
+      htmlElement = (
+        <SlicesContext.Provider value={slicesContext}>
+          {htmlElement}
+        </SlicesContext.Provider>
+      )
+    }
+
+    const html = `<!DOCTYPE html>${renderToStaticMarkup(htmlElement)}`
 
     return {
       html,
@@ -543,11 +547,18 @@ export { StaticQueryContext, React }
 export async function renderSlice({ slice, staticQueryContext, props = {} }) {
   const { default: SliceComponent } = await getPageChunk(slice)
 
+  const slicesContext = {
+    // we are not yet supporting using <Slice /> placeholders within slice components
+    // setting this renderEnvironemnt to throw meaningful error on `<Slice />` usage
+    // `slices` renderEnvironment should be removed once we support nested `<Slice />` placeholders
+    renderEnvironment: `slices`,
+    sliceRoot: slice,
+  }
+
   const sliceElement = (
-    <StaticQueryContext.Provider value={staticQueryContext}>
-      <SliceComponent sliceContext={slice.context} {...props} />
-    </StaticQueryContext.Provider>
+    <SliceComponent sliceContext={slice.context} {...props} />
   )
+
   const sliceWrappedWithWrapRootElement = apiRunner(
     `wrapRootElement`,
     { element: sliceElement },
@@ -557,15 +568,26 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
     }
   ).pop()
 
+  const sliceWrappedWithWrapRootElementAndContexts = (
+    <SlicesContext.Provider value={slicesContext}>
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        {sliceWrappedWithWrapRootElement}
+      </StaticQueryContext.Provider>
+    </SlicesContext.Provider>
+  )
+
   const writableStream = new WritableAsPromise()
-  const { pipe } = renderToPipeableStream(sliceWrappedWithWrapRootElement, {
-    onAllReady() {
-      pipe(writableStream)
-    },
-    onError(error) {
-      writableStream.destroy(error)
-    },
-  })
+  const { pipe } = renderToPipeableStream(
+    sliceWrappedWithWrapRootElementAndContexts,
+    {
+      onAllReady() {
+        pipe(writableStream)
+      },
+      onError(error) {
+        writableStream.destroy(error)
+      },
+    }
+  )
 
   return await writableStream
 }

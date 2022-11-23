@@ -3,5 +3,7 @@
 // Ref: https://github.com/babel/babel/pull/7358
 module.exports = {
   sourceMaps: true,
-  presets: [["babel-preset-gatsby-package"]],
+  presets: [["babel-preset-gatsby-package", {
+    keepDynamicImports: [`./src/utils/feedback.ts`]
+  }]],
 }

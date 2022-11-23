@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@1.1.0/packages/gatsby-parcel-config) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-parcel-config
+
+## [1.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@1.0.0/packages/gatsby-parcel-config) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- Re-Add JSON transformer [#36748](https://github.com/gatsbyjs/gatsby/issues/36748) ([5e639b8](https://github.com/gatsbyjs/gatsby/commit/5e639b84f87c6de13fdf2e58a73b69b5ea1a182b))
+
 ### [0.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.15.1/packages/gatsby-parcel-config) (2022-10-06)
 
 #### Features

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.1.0/packages/gatsby-plugin-mdx) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.0.0/packages/gatsby-plugin-mdx) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- Better AST error [#36866](https://github.com/gatsbyjs/gatsby/issues/36866) ([58d5f2a](https://github.com/gatsbyjs/gatsby/commit/58d5f2aa51212e50ca90e4d7eeee039bbd9dfcd0))
+- Unwrap images [#36856](https://github.com/gatsbyjs/gatsby/issues/36856) ([94d18fa](https://github.com/gatsbyjs/gatsby/commit/94d18fa164efa2725dc9eadc71be55ebdba61ae9))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- make unstable_shouldOnCreateNode stable [#36516](https://github.com/gatsbyjs/gatsby/issues/36516) ([90f9ab4](https://github.com/gatsbyjs/gatsby/commit/90f9ab47593ba7458fc5bc677c4b0282b30808c8))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.3.0/packages/gatsby-plugin-mdx) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

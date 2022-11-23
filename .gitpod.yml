@@ -3,7 +3,7 @@ image:
 tasks:
   - init: >
       yarn run bootstrap &&
-      cd ./examples/gatsbygram &&
+      cd ./examples/using-typescript &&
       yarn install &&
       gatsby-dev --set-path-to-repo ../.. &&
       gatsby-dev --scan-once &&
@@ -11,16 +11,16 @@ tasks:
       cd ../.. &&
       touch /tmp/done.txt
     command: >
-      yarn run watch --scope={gatsby,gatsby-image,gatsby-link}
+      yarn run watch --scope={gatsby,gatsby-link}
   - openMode: split-right
     before: >
-      cd ./examples/gatsbygram
+      cd ./examples/using-typescript
     command: >
       gp await-port 8000 &&
       gatsby-dev --set-path-to-repo ../.. &&
       gatsby-dev
   - before: >
-      cd ./examples/gatsbygram
+      cd ./examples/using-typescript
     init: |
       until [ -f /tmp/done.txt ]
       do

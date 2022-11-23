@@ -10,6 +10,12 @@ Cypress.on(`window:load`, win => {
   win.requestIdleCallback = undefined
 })
 
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 /*
  * Some browsers don't support the requestIdleCallback API, so we need to
  * shim it. Here we test that the idle behaviour remains the same with shimmed requestIdleCallback

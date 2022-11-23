@@ -27,9 +27,7 @@ export function runTransform(transform, targetDir) {
   args = args.concat([`--transform`, transformerPath, targetDir])
 
   console.log(`Executing command: jscodeshift ${args.join(` `)}`)
-
-  const pathToNodeBin = process.argv[0]
-  const result = execa.sync(pathToNodeBin, args, {
+  const result = execa.node(jscodeshiftExecutable, args, {
     stdio: `inherit`,
     stripEof: false,
   })
@@ -52,7 +50,7 @@ export function run() {
   if (!codemods.includes(transform)) {
     console.log(
       `You have passed in invalid codemod name: ${transform}. Please pass in one of the following: ${codemods.join(
-        ", "
+        `, `
       )}.`
     )
     return

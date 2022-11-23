@@ -183,17 +183,27 @@ export async function queryRunner(
     .digest(`base64`)
 
   const resultHashCache = getResultHashCache()
+
+  let resultHashCacheKey = queryJob.id
+  if (queryJob.queryType === `static`) {
+    // For static queries we use hash for a file path we output results to.
+    // With automatic sort and aggregation graphql codemod it is possible
+    // to have same result, but different query text hashes which would skip
+    // writing out file to disk if we don't check query hash as well
+    resultHashCacheKey += `-${queryJob.hash}`
+  }
+
   if (
-    resultHash !== (await resultHashCache.get(queryJob.id)) ||
+    resultHash !== (await resultHashCache.get(resultHashCacheKey)) ||
     (queryJob.queryType === `page` &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
-    await resultHashCache.set(queryJob.id, resultHash)
+    await resultHashCache.set(resultHashCacheKey, resultHash)
 
     if (queryJob.queryType === `page` || queryJob.queryType === `slice`) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      await savePageQueryResult(program.directory, queryJob.id, resultJSON)
+      await savePageQueryResult(queryJob.id, resultJSON)
       if (queryJob.queryType === `page`) {
         store.dispatch({
           type: `ADD_PENDING_PAGE_DATA_WRITE`,

@@ -1,4 +1,4 @@
-const { onCreateNode } = require(`../gatsby-node`)
+const { onCreateNode, shouldOnCreateNode } = require(`../gatsby-node`)
 
 describe(`gatsby-transformer-javascript-frontmatter`, () => {
   describe(`onCreateNode`, () => {
@@ -43,39 +43,61 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
     `(
       `should loadNodeContent if file has extension $extension`,
       async ({ extension }) => {
-        await onCreateNode({
+        const shouldCreateNode = shouldOnCreateNode({
           node: {
             ...node,
             extension,
           },
-          actions,
-          loadNodeContent,
-          createContentDigest,
         })
+
+        if (shouldCreateNode) {
+          await onCreateNode({
+            node: {
+              ...node,
+              extension,
+            },
+            actions,
+            loadNodeContent,
+            createContentDigest,
+          })
+        }
         expect(loadNodeContent).toBeCalled()
       }
     )
 
     it(`should not loadNodeContent for not javascript file`, async () => {
-      await onCreateNode({
+      const shouldCreateNode = shouldOnCreateNode({
         node: {
           ...node,
           extension: `csv`,
         },
-        actions,
-        loadNodeContent,
-        createContentDigest,
       })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node: {
+            ...node,
+            extension: `csv`,
+          },
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
       expect(loadNodeContent).not.toBeCalled()
     })
 
     it(`should load frontmatter data with exported object`, async () => {
-      await onCreateNode({
-        node,
-        actions,
-        loadNodeContent,
-        createContentDigest,
-      })
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
       expect(actions.createNode).toBeCalled()
       expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
     })
@@ -91,12 +113,16 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
             description: "Things about the choropleth.",
           }
         `)
-      await onCreateNode({
-        node,
-        actions,
-        loadNodeContent,
-        createContentDigest,
-      })
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
       expect(actions.createNode).toBeCalled()
       expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
     })
@@ -104,12 +130,16 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
     it(`should pass fileAbsolutePath to node if file type is "File"`, async () => {
       node.internal.type = `File`
       node.absolutePath = `bar`
-      await onCreateNode({
-        node,
-        actions,
-        loadNodeContent,
-        createContentDigest,
-      })
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
       expect(actions.createNode.mock.calls[0][0].fileAbsolutePath).toEqual(
         node.absolutePath
       )

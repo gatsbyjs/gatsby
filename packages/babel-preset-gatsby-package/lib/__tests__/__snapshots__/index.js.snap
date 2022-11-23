@@ -89,7 +89,7 @@ Array [
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "14.15.0",
+        "node": "18.0.0",
       },
       "useBuiltIns": "entry",
     },
@@ -113,7 +113,7 @@ Array [
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "14.15.0",
+        "node": "18.0.0",
       },
       "useBuiltIns": "entry",
     },

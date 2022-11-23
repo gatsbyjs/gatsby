@@ -15,6 +15,12 @@ export const c = {
 
 exports[`covers cases shown in fixtures/cjs-module-exports.js 1`] = `""`;
 
+exports[`covers cases shown in fixtures/commented-out-directive.js 1`] = `
+"// \\"use client\\"
+
+export default function () {}"
+`;
+
 exports[`covers cases shown in fixtures/esm-aggregation.js 1`] = `""`;
 
 exports[`covers cases shown in fixtures/esm-declaration.js 1`] = `
@@ -153,6 +159,14 @@ export default {
   }"
 `;
 
-exports[`covers cases shown in fixtures/no-client-export.js 1`] = `""`;
+exports[`covers cases shown in fixtures/no-directive.js 1`] = `
+"export function noClientExport() {
+  return \`No \\"use client\\" found in this file\`
+}"
+`;
 
-exports[`covers cases shown in fixtures/no-client-export-no-export.js 1`] = `""`;
+exports[`covers cases shown in fixtures/no-directive-and-no-export.js 1`] = `
+"function noClientExport() {
+  return \`No \\"use client\\" found in this file, and the function itself is not exported\`
+}"
+`;

@@ -10,7 +10,10 @@ function genSource(query: string): string {
 
 function run(source: string): string {
   const query = genSource(source)
-  const { ast, hasChanged } = tranformDocument(graphql.parse(query))
+  const { ast, hasChanged, error } = tranformDocument(graphql.parse(query))
+  if (error) {
+    throw error
+  }
   return hasChanged ? graphql.print(ast) : query
 }
 
@@ -23,8 +26,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {excerpt: ASC})
-            }
-            "
+            }"
           `)
         })
 
@@ -36,8 +38,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {nested: {date: ASC}}})
-            }
-            "
+            }"
           `)
         })
 
@@ -52,8 +53,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: ASC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -68,8 +68,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -78,8 +77,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: ASC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -93,8 +91,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
               allMarkdownRemark(
                 sort: [{frontmatter: {priority: ASC}}, {frontmatter: {date: ASC}}]
               )
-            }
-            "
+            }"
           `)
         })
 
@@ -109,8 +106,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -126,8 +122,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -142,8 +137,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -160,8 +154,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
               allMarkdownRemark(
                 sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: ASC}}]
               )
-            }
-            "
+            }"
           `)
         })
 
@@ -178,8 +171,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
               allMarkdownRemark(
                 sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: DESC}}]
               )
-            }
-            "
+            }"
           `)
         })
       })
@@ -207,6 +199,11 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           const input = `allMarkdownRemark(sort: { frontmatter: { date: DESC }})`
           expect(run(input)).toEqual(genSource(input))
         })
+
+        it(`new API (transform is idempotent with "fields" edge case)`, () => {
+          const input = `allMarkdownRemark(sort: { fields: { slug: ASC }})`
+          expect(run(input)).toEqual(genSource(input))
+        })
       })
     })
 
@@ -217,8 +214,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               distinct(field: {frontmatter: {category: SELECT}})
-            }
-            "
+            }"
           `)
         })
 
@@ -227,8 +223,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               distinct(field: {frontmatter: {nested_category: SELECT}})
-            }
-            "
+            }"
           `)
         })
       })

@@ -1,7 +1,6 @@
 // needed for fast refresh
 import "@gatsbyjs/webpack-hot-middleware/client"
 
-/* global HAS_REACT_18 */
 import React from "react"
 import ReactDOM from "react-dom"
 
@@ -42,35 +41,18 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
-let reactFirstRenderOrHydrate
-if (HAS_REACT_18) {
-  const reactDomClient = require(`react-dom/client`)
-  reactFirstRenderOrHydrate = (Component, el) => {
-    // we will use hydrate if mount element has any content inside
-    const useHydrate = el && el.children.length
+const reactDomClient = require(`react-dom/client`)
+const reactFirstRenderOrHydrate = (Component, el) => {
+  // we will use hydrate if mount element has any content inside
+  const useHydrate = el && el.children.length
 
-    if (useHydrate) {
-      const root = reactDomClient.hydrateRoot(el, Component)
-      return () => root.unmount()
-    } else {
-      const root = reactDomClient.createRoot(el)
-      root.render(Component)
-      return () => root.unmount()
-    }
-  }
-} else {
-  const reactDomClient = require(`react-dom`)
-  reactFirstRenderOrHydrate = (Component, el) => {
-    // we will use hydrate if mount element has any content inside
-    const useHydrate = el && el.children.length
-
-    if (useHydrate) {
-      reactDomClient.hydrate(Component, el)
-      return () => ReactDOM.unmountComponentAtNode(el)
-    } else {
-      reactDomClient.render(Component, el)
-      return () => ReactDOM.unmountComponentAtNode(el)
-    }
+  if (useHydrate) {
+    const root = reactDomClient.hydrateRoot(el, Component)
+    return () => root.unmount()
+  } else {
+    const root = reactDomClient.createRoot(el)
+    root.render(Component)
+    return () => root.unmount()
   }
 }
 
@@ -123,7 +105,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   let dismissLoadingIndicator
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     let indicatorMountElement

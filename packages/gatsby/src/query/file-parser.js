@@ -304,59 +304,57 @@ async function findGraphQLTags(
     documents.push(docInFile)
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
-    // Look for queries in <StaticQuery /> elements.
-    traverse(ast, {
-      JSXElement(path) {
-        if (path.node.openingElement.name.name !== `StaticQuery`) {
-          return
-        }
-
-        // astexplorer.com link I (@kyleamathews) used when prototyping this algorithm
-        // https://astexplorer.net/#/gist/ab5d71c0f08f287fbb840bf1dd8b85ff/2f188345d8e5a4152fe7c96f0d52dbcc6e9da466
-        path.traverse({
-          JSXAttribute(jsxPath) {
-            if (jsxPath.node.name.name !== `query`) {
-              return
-            }
-            jsxPath.traverse({
-              // Assume the query is inline in the component and extract that.
-              TaggedTemplateExpression(templatePath) {
-                extractStaticQuery(templatePath)
-              },
-              // Also see if it's a variable that's passed in as a prop
-              // and if it is, go find it.
-              Identifier(identifierPath) {
-                if (identifierPath.node.name !== `graphql`) {
-                  const varName = identifierPath.node.name
-                  let found = false
-                  traverse(ast, {
-                    VariableDeclarator(varPath) {
-                      if (
-                        varPath.node.id.name === varName &&
-                        varPath.node.init.type === `TaggedTemplateExpression`
-                      ) {
-                        varPath.traverse({
-                          TaggedTemplateExpression(templatePath) {
-                            found = true
-                            extractStaticQuery(templatePath)
-                          },
-                        })
-                      }
-                    },
-                  })
-                  if (!found) {
-                    warnForUnknownQueryVariable(varName, file, `<StaticQuery>`)
-                  }
-                }
-              },
-            })
-          },
-        })
+  // Look for queries in <StaticQuery /> elements.
+  traverse(ast, {
+    JSXElement(path) {
+      if (path.node.openingElement.name.name !== `StaticQuery`) {
         return
-      },
-    })
-  }
+      }
+
+      // astexplorer.com link I (@kyleamathews) used when prototyping this algorithm
+      // https://astexplorer.net/#/gist/ab5d71c0f08f287fbb840bf1dd8b85ff/2f188345d8e5a4152fe7c96f0d52dbcc6e9da466
+      path.traverse({
+        JSXAttribute(jsxPath) {
+          if (jsxPath.node.name.name !== `query`) {
+            return
+          }
+          jsxPath.traverse({
+            // Assume the query is inline in the component and extract that.
+            TaggedTemplateExpression(templatePath) {
+              extractStaticQuery(templatePath)
+            },
+            // Also see if it's a variable that's passed in as a prop
+            // and if it is, go find it.
+            Identifier(identifierPath) {
+              if (identifierPath.node.name !== `graphql`) {
+                const varName = identifierPath.node.name
+                let found = false
+                traverse(ast, {
+                  VariableDeclarator(varPath) {
+                    if (
+                      varPath.node.id.name === varName &&
+                      varPath.node.init.type === `TaggedTemplateExpression`
+                    ) {
+                      varPath.traverse({
+                        TaggedTemplateExpression(templatePath) {
+                          found = true
+                          extractStaticQuery(templatePath)
+                        },
+                      })
+                    }
+                  },
+                })
+                if (!found) {
+                  warnForUnknownQueryVariable(varName, file, `<StaticQuery>`)
+                }
+              }
+            },
+          })
+        },
+      })
+      return
+    },
+  })
 
   // Look for queries in useStaticQuery hooks.
   traverse(ast, {
@@ -473,6 +471,11 @@ async function findGraphQLTags(
   return uniqueQueries
 }
 
+type CollectedSlice = {
+  name: string,
+  allowEmpty: boolean,
+}
+
 const cache = {}
 
 export default class FileParser {
@@ -483,7 +486,10 @@ export default class FileParser {
   async parseFile(
     file: string,
     addError
-  ): Promise<{ astDefinitions: ?Array<GraphQLDocumentInFile> }> {
+  ): Promise<{
+    astDefinitions: ?Array<GraphQLDocumentInFile>,
+    pageSlices: { [key: string]: CollectedSlice } | null,
+  }> {
     let text
     const cleanFilepath = getPathToLayoutComponent(file)
     try {
@@ -507,7 +513,7 @@ export default class FileParser {
     }
 
     // We do a quick check so we can exit early if this is a file we're not interested in.
-    // We only process files that either include graphql, or static images
+    // We only process files that include the APIs below
     if (
       !text.includes(`graphql`) &&
       !text.includes(`gatsby-plugin-image`) &&

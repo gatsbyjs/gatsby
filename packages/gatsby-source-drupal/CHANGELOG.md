@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.1.0/packages/gatsby-source-drupal) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.0.0/packages/gatsby-source-drupal) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- update dependency body-parser to ^1.20.1 for gatsby-source-drupal [#36940](https://github.com/gatsbyjs/gatsby/issues/36940) ([a5e4c47](https://github.com/gatsbyjs/gatsby/commit/a5e4c47940368cd058ee823ffce66038519aa052))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [5.25.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.25.0/packages/gatsby-source-drupal) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

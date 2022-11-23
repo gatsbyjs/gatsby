@@ -116,22 +116,4 @@ const runApiSteps =
   ): Promise<void> =>
     runSteps(steps, helpers, pluginOptions, apiName)
 
-const runApisInSteps = (nodeApis: {
-  [apiName: string]: Array<Step> | Step
-}): { [apiName: string]: Promise<void> | void } =>
-  Object.entries(nodeApis).reduce(
-    (gatsbyNodeExportObject, [apiName, apiSteps]) => {
-      const normalizedApiName = findApiName(apiName)
-
-      return {
-        ...gatsbyNodeExportObject,
-        [normalizedApiName]:
-          typeof apiSteps === `function`
-            ? apiSteps
-            : runApiSteps(apiSteps, normalizedApiName),
-      }
-    },
-    {}
-  )
-
-export { runSteps, runApisInSteps }
+export { runSteps, runApiSteps, findApiName }

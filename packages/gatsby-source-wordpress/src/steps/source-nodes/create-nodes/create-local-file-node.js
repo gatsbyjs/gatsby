@@ -265,6 +265,7 @@ export const createLocalFileNode = async ({
 
   const createFileNodeRequirements = {
     parentNodeId: mediaItemNode.id,
+    store: gatsbyStore,
     cache,
     createNode,
     createNodeId,

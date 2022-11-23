@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useContext } from "react"
 import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
@@ -11,6 +13,7 @@ export function Slice(props) {
       sliceName: props.alias,
     }
     delete internalProps.alias
+    delete internalProps.__renderedByLocation
 
     const slicesContext = useContext(SlicesContext)
 
@@ -20,7 +23,8 @@ export function Slice(props) {
       throw new SlicePropsError(
         slicesContext.renderEnvironment === `browser`,
         internalProps.sliceName,
-        propErrors
+        propErrors,
+        props.__renderedByLocation
       )
     }
 
@@ -32,22 +36,39 @@ export function Slice(props) {
     } else if (slicesContext.renderEnvironment === `engines`) {
       // if we're in SSR, we'll just render the component as is
       return <InlineSlice {...internalProps} />
+    } else if (slicesContext.renderEnvironment === `slices`) {
+      // we are not yet supporting nested slices
+
+      let additionalContextMessage = ``
+
+      // just in case generating additional contextual information fails, we still want the base message to show
+      // and not show another cryptic error message
+      try {
+        additionalContextMessage = `\n\nSlice component "${slicesContext.sliceRoot.name}" (${slicesContext.sliceRoot.componentPath}) tried to render <Slice alias="${props.alias}"/>`
+      } catch {
+        // don't need to handle it, we will just skip the additional context message if we fail to generate it
+      }
+
+      throw new Error(
+        `Nested slices are not supported.${additionalContextMessage}\n\nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice#nested-slices`
+      )
     } else {
       throw new Error(
         `Slice context "${slicesContext.renderEnvironment}" is not supported.`
       )
     }
   } else {
-    throw new Error(
-      `Slices are disabled, likely due to PARTIAL_HYDRATION flag being set.`
-    )
+    throw new Error(`Slices are disabled.`)
   }
 }
 
 class SlicePropsError extends Error {
-  constructor(inBrowser, sliceName, propErrors) {
+  constructor(inBrowser, sliceName, propErrors, renderedByLocation) {
     const errors = Object.entries(propErrors)
-      .map(([key, value]) => `${key}: "${value}"`)
+      .map(
+        ([key, value]) =>
+          `not serializable "${value}" type passed to "${key}" prop`
+      )
       .join(`, `)
 
     const name = `SlicePropsError`
@@ -65,22 +86,25 @@ class SlicePropsError extends Error {
       stackLines[0] = stackLines[0].trim()
       stack = `\n` + stackLines.join(`\n`)
 
-      // look for any hints for the component name in the stack trace
-      const componentRe = /^at\s+([a-zA-Z0-9]+)/
-      const componentMatch = stackLines[0].match(componentRe)
-      const componentHint = componentMatch ? `in ${componentMatch[1]} ` : ``
-
-      message = `Slice "${sliceName}" was passed props ${componentHint}that are not serializable (${errors}).`
+      message = `Slice "${sliceName}" was passed props that are not serializable (${errors}).`
     } else {
       // we can't really grab any extra info outside of the browser, so just print what we can
-      message = `${name}: Slice "${sliceName}" was passed props that are not serializable (${errors}). Use \`gatsby develop\` to see more information.`
+      message = `${name}: Slice "${sliceName}" was passed props that are not serializable (${errors}).`
       const stackLines = new Error().stack.trim().split(`\n`).slice(2)
       stack = `${message}\n${stackLines.join(`\n`)}`
     }
 
     super(message)
     this.name = name
-    this.stack = stack
+    if (stack) {
+      this.stack = stack
+    } else {
+      Error.captureStackTrace(this, SlicePropsError)
+    }
+
+    if (renderedByLocation) {
+      this.forcedLocation = { ...renderedByLocation, functionName: `Slice` }
+    }
   }
 }
 

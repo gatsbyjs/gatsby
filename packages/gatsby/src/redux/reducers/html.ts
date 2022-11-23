@@ -55,10 +55,12 @@ export function htmlReducer(
           htmlFile.dirty |= FLAG_DIRTY_CLEARED_CACHE
         })
         // slice html don't need to be deleted, they are just cleared
-        state.slicesProps?.bySliceId.clear()
-        state.slicesProps?.byPagePath.clear()
-        state.slicesProps?.bySliceName.clear()
-        state.pagesThatNeedToStitchSlices?.clear()
+        state.slicesProps = {
+          bySliceId: new Map(),
+          byPagePath: new Map(),
+          bySliceName: new Map(),
+        }
+        state.pagesThatNeedToStitchSlices = new Set()
         return state
       }
     }
@@ -256,6 +258,9 @@ export function htmlReducer(
         const htmlFile = state.trackedHtmlFiles.get(path)
         if (htmlFile) {
           htmlFile.dirty = 0
+          // if we regenerated html, slice placeholders will be empty and we will have to fill
+          // them in, so we are marking that page for stitching
+          state.pagesThatNeedToStitchSlices.add(path)
         }
       }
 

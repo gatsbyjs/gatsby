@@ -9,7 +9,6 @@ import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import type { IGatsbySlice, IGatsbyState } from "../redux/types"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
-import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
 import {
   constructPageDataString,
@@ -28,6 +27,12 @@ import { ensureFileContent } from "./ensure-file-content"
 
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
+}
+
+export interface ISliceData {
+  componentChunkName: string
+  result: IExecutionResult
+  staticQueryHashes: Array<string>
 }
 
 export async function readPageData(
@@ -75,46 +80,21 @@ export function waitUntilPageQueryResultsAreStored(): Promise<void> {
 }
 
 export async function savePageQueryResult(
-  programDir: string,
   pagePath: string,
   stringifiedResult: string
 ): Promise<void> {
-  if (isLmdbStore()) {
-    savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
-      pagePath,
-      stringifiedResult
-    ) as Promise<void>
-  } else {
-    const pageQueryResultsPath = path.join(
-      programDir,
-      `.cache`,
-      `json`,
-      `${pagePath.replace(/\//g, `_`)}.json`
-    )
-    await fs.outputFile(pageQueryResultsPath, stringifiedResult)
-  }
+  savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
+    pagePath,
+    stringifiedResult
+  ) as Promise<void>
 }
 
-export async function readPageQueryResult(
-  publicDir: string,
-  pagePath: string
-): Promise<string | Buffer> {
-  if (isLmdbStore()) {
-    const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
-    if (typeof stringifiedResult === `string`) {
-      return stringifiedResult
-    }
-    throw new Error(`Couldn't find temp query result for "${pagePath}".`)
-  } else {
-    const pageQueryResultsPath = path.join(
-      publicDir,
-      `..`,
-      `.cache`,
-      `json`,
-      `${pagePath.replace(/\//g, `_`)}.json`
-    )
-    return fs.readFile(pageQueryResultsPath)
+export async function readPageQueryResult(pagePath: string): Promise<string> {
+  const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
+  if (typeof stringifiedResult === `string`) {
+    return stringifiedResult
   }
+  throw new Error(`Couldn't find temp query result for "${pagePath}".`)
 }
 
 export async function writePageData(
@@ -123,7 +103,7 @@ export async function writePageData(
   slicesUsedByTemplates: Map<string, ICollectedSlices>,
   slices: IGatsbyState["slices"]
 ): Promise<string> {
-  const result = await readPageQueryResult(publicDir, pageData.path)
+  const result = await readPageQueryResult(pageData.path)
 
   const outputFilePath = generatePageDataPath(publicDir, pageData.path)
 
@@ -157,16 +137,18 @@ export async function writeSliceData(
   staticQueryHashes: Array<string>
 ): Promise<string> {
   const result = JSON.parse(
-    (await readPageQueryResult(publicDir, `slice--${name}`)).toString()
+    (await readPageQueryResult(`slice--${name}`)).toString()
   )
 
   const outputFilePath = path.join(publicDir, `slice-data`, `${name}.json`)
 
-  const body = JSON.stringify({
+  const sliceData: ISliceData = {
     componentChunkName,
     result,
     staticQueryHashes,
-  })
+  }
+
+  const body = JSON.stringify(sliceData)
 
   const sliceDataSize = Buffer.byteLength(body) / 1000
 
@@ -269,7 +251,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
           page.manifestId = nodeManifestPagePathMap.get(page.path)
         }
 
-        if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+        if (!isBuild && process.env.GATSBY_QUERY_ON_DEMAND) {
           // check if already did run query for this page
           // with query-on-demand we might have pending page-data write due to
           // changes in static queries assigned to page template, but we might not

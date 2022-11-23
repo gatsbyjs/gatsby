@@ -42,7 +42,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.unstable_shouldOnCreateNode = ({ node }) =>
+exports.shouldOnCreateNode = ({ node }) =>
   node.internal.type === `GendataCsv`
 
 // Not sure if there is a better way than to create a proxy node for markdown to pick up

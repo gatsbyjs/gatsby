@@ -219,8 +219,8 @@ class IndexPage extends React.Component {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query {
-    topRecipe: allRecipes(sort: { fields: [createdAt] }, limit: 1) {
+  {
+    topRecipe: allRecipes(sort: { createdAt: ASC }, limit: 1) {
       edges {
         node {
           title
@@ -244,7 +244,7 @@ export const pageQuery = graphql`
       }
     }
     nextTwoPromotedRecipes: allRecipes(
-      sort: { fields: [createdAt] }
+      sort: { createdAt: ASC }
       limit: 2
       skip: 1
     ) {
@@ -274,7 +274,7 @@ export const pageQuery = graphql`
       }
     }
     nextFourPromotedRecipes: allRecipes(
-      sort: { fields: [createdAt] }
+      sort: { createdAt: ASC }
       limit: 4
       skip: 3
     ) {
