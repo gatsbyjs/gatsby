@@ -32,8 +32,7 @@ npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
 
 ## Usage
 
-After installing `gatsby-plugin-mdx` you can add it to your plugins list in your
-`gatsby-config.js`. You'll also want to configure `gatsby-source-filesystem` to point at your `src/pages` directory (even if you don't want to create MDX pages from `src/pages`).
+After installing `gatsby-plugin-mdx` you can add it to your plugins list in your `gatsby-config.js`. You'll also want to configure `gatsby-source-filesystem` to point at your `src/pages` directory.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -50,11 +49,13 @@ module.exports = {
 }
 ```
 
-By default, this configuration will allow you to automatically create pages with `.mdx` files in `src/pages` and will process any Gatsby nodes with Markdown media types into MDX content.
+By default, this configuration will allow you to automatically create pages with `.mdx` files in `src/pages`.
+
+If you have MDX files in another location than `src/pages` you'll need to add another instance of `gatsby-source-filesystem` and configure the `path` to point at this folder. This is for example necessary when you have MDX files that you want to import into React components or for files you want to query via GraphQL.
 
 **Please Note:**
 
-- `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present and configured to process local markdown files in order to generate the resulting Gatsby nodes.
+- `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present and configured to process local MDX files in order to generate the resulting Gatsby nodes (`gatsby-source-filesystem` needs to discover all MDX files in order to create MDX nodes and allow the processing for each of them).
 - MDX syntax differs from Markdown as it only supports [CommonMark](https://commonmark.org/) by default. Nonstandard markdown features like [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) can be enabled with plugins (see [`mdxOptions` instructions](#mdxoptions)).
 - Certain features like HTML syntax doesn't work in MDX. Read the ["What is MDX?" guide](https://mdxjs.com/docs/what-is-mdx/#markdown) to learn more.
 
