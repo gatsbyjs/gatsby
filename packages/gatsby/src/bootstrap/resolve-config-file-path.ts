@@ -1,10 +1,14 @@
+import path from "path"
 import report from "gatsby-cli/lib/reporter"
 import { sync as existsSync } from "fs-exists-cached"
 
 /**
  * Figure out if the file path is .js or .mjs and return it if it exists.
  */
-export function resolveConfigFilePath(filePath: string): string {
+export function resolveConfigFilePath(
+  siteDirectory: string,
+  filePath: string
+): string {
   const filePathWithJSExtension = `${filePath}.js`
   const filePathWithMJSExtension = `${filePath}.mjs`
 
@@ -12,9 +16,11 @@ export function resolveConfigFilePath(filePath: string): string {
     existsSync(filePathWithJSExtension) &&
     existsSync(filePathWithMJSExtension)
   ) {
-    // TODO: Show project relative path in warning
     report.warn(
-      `The file ${filePath} has both .js and .mjs variants, please use one or the other. Using .js by default.`
+      `The file '${path.relative(
+        siteDirectory,
+        filePath
+      )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`
     )
     return filePathWithJSExtension
   }
