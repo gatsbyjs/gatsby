@@ -1,5 +1,5 @@
 import fs from "fs-extra"
-import { isImportError } from "../utils/is-import-error"
+import { testImportError } from "../utils/test-import-error"
 import report from "gatsby-cli/lib/reporter"
 import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
@@ -15,123 +15,176 @@ export async function getConfigFile(
   configModule: any
   configFilePath: string
 }> {
-  let configPath = ``
-  let configFilePath = ``
-  let configModule: any
+  const compiledResult = await attemptImportCompiled(siteDirectory, configName)
 
-  // Attempt to find compiled gatsby-config in .cache/compiled/gatsby-config
+  if (compiledResult?.configModule && compiledResult?.configFilePath) {
+    return compiledResult
+  }
+
+  const uncompiledResult = await attemptImportUncompiled(
+    siteDirectory,
+    configName,
+    distance
+  )
+
+  return uncompiledResult || {}
+}
+
+async function attemptImport(configPath: string): Promise<{
+  configModule: unknown
+  configFilePath: string
+}> {
+  const configFilePath = resolveConfigFilePath(configPath)
+
+  // The file does not exist, no sense trying to import it
+  if (!configFilePath) {
+    return { configFilePath: ``, configModule: undefined }
+  }
+
+  const importedModule = await import(configFilePath)
+  const configModule = importedModule.default
+
+  return { configFilePath, configModule }
+}
+
+async function attemptImportCompiled(
+  siteDirectory: string,
+  configName: string
+): Promise<{
+  configModule: unknown
+  configFilePath: string
+}> {
+  let compiledResult
+
   try {
-    configPath = path.join(`${siteDirectory}/${COMPILED_CACHE_DIR}`, configName)
-    configFilePath = resolveConfigFilePath(configPath)
-    configModule = await import(configFilePath)
-    if (!configModule.default) {
-      // TODO: Structured error
-      throw new Error(`No default export found in gatsby-config`)
-    }
-    configModule = configModule.default
-  } catch (outerError) {
-    // Not all plugins will have a compiled file, so the err.message can look like this:
-    // "Cannot find module '<root>/node_modules/gatsby-source-filesystem/.cache/compiled/gatsby-config'"
-    // But the compiled file can also have an error like this:
-    // "Cannot find module 'foobar'"
-    // So this is trying to differentiate between an error we're fine ignoring and an error that we should throw
-    const isModuleNotFoundError = outerError.code === `ERR_MODULE_NOT_FOUND`
-    const isThisFileRequireError =
-      outerError?.requireStack?.[0]?.includes(`get-config-file`) ?? true
+    const compiledConfigPath = path.join(
+      `${siteDirectory}/${COMPILED_CACHE_DIR}`,
+      configName
+    )
+    compiledResult = await attemptImport(compiledConfigPath)
+  } catch (error) {
+    report.panic({
+      id: `11902`,
+      error: error,
+      context: {
+        configName,
+        message: error.message,
+      },
+    })
+  }
 
-    if (!(isModuleNotFoundError && isThisFileRequireError)) {
+  return compiledResult
+}
+
+async function attemptImportUncompiled(
+  siteDirectory: string,
+  configName: string,
+  distance: number
+): Promise<{
+  configModule: unknown
+  configFilePath: string
+}> {
+  let uncompiledResult
+
+  const uncompiledConfigPath = path.join(siteDirectory, configName)
+
+  try {
+    uncompiledResult = await attemptImport(uncompiledConfigPath)
+  } catch (error) {
+    if (!testImportError(uncompiledConfigPath, error)) {
       report.panic({
-        id: `11902`,
-        error: outerError,
+        id: `10123`,
+        error,
         context: {
           configName,
-          message: outerError.message,
+          message: error.message,
         },
       })
     }
+  }
 
-    // Attempt to find uncompiled gatsby-config in root dir
-    configPath = path.join(siteDirectory, configName)
+  if (uncompiledResult?.configModule && uncompiledResult?.configFilePath) {
+    return uncompiledResult
+  }
 
-    try {
-      configFilePath = resolveConfigFilePath(configPath)
-      configModule = await import(configFilePath)
-      if (!configModule.default) {
-        // TODO: Structured error
-        throw new Error(`No default export found in gatsby-config`)
-      }
-    } catch (innerError) {
-      // Panic if error happened because user's gatsby-config has some errors
-      // if not, we'll contine trying to find a config
-      if (!isImportError(innerError)) {
-        report.panic({
-          id: `10123`,
-          error: innerError,
-          context: {
-            configName,
-            message: innerError.message,
-          },
-        })
-      }
+  const error = new Error(`Cannot find package '${uncompiledConfigPath}'`)
 
-      const files = await fs.readdir(siteDirectory)
+  const { tsConfig, nearMatch } = await checkTsAndNearMatch(
+    siteDirectory,
+    configName,
+    distance
+  )
 
-      let tsConfig = false
-      let nearMatch = ``
+  // gatsby-config.ts exists but compiled gatsby-config.js does not
+  if (tsConfig) {
+    report.panic({
+      id: `10127`,
+      error,
+      context: {
+        configName,
+      },
+    })
+  }
 
-      for (const file of files) {
-        if (tsConfig || nearMatch) {
-          break
-        }
+  // gatsby-config is misnamed
+  if (nearMatch) {
+    const isTSX = nearMatch.endsWith(`.tsx`)
+    report.panic({
+      id: `10124`,
+      error,
+      context: {
+        configName,
+        nearMatch,
+        isTSX,
+      },
+    })
+  }
 
-        const { name, ext } = path.parse(file)
+  // gatsby-config.js is incorrectly located in src/gatsby-config.js
+  if (existsSync(path.join(siteDirectory, `src`, configName + `.js`))) {
+    report.panic({
+      id: `10125`,
+      context: {
+        configName,
+      },
+    })
+  }
 
-        if (name === configName && ext === `.ts`) {
-          tsConfig = true
-          break
-        }
+  return uncompiledResult
+}
 
-        if (isNearMatch(name, configName, distance)) {
-          nearMatch = file
-        }
-      }
+async function checkTsAndNearMatch(
+  siteDirectory: string,
+  configName: string,
+  distance: number
+): Promise<{
+  tsConfig: boolean
+  nearMatch: string
+}> {
+  const files = await fs.readdir(siteDirectory)
 
-      // gatsby-config.ts exists but compiled gatsby-config.js does not
-      if (tsConfig) {
-        report.panic({
-          id: `10127`,
-          error: innerError,
-          context: {
-            configName,
-          },
-        })
-      }
+  let tsConfig = false
+  let nearMatch = ``
 
-      // gatsby-config is misnamed
-      if (nearMatch) {
-        const isTSX = nearMatch.endsWith(`.tsx`)
-        report.panic({
-          id: `10124`,
-          error: innerError,
-          context: {
-            configName,
-            nearMatch,
-            isTSX,
-          },
-        })
-      }
+  for (const file of files) {
+    if (tsConfig || nearMatch) {
+      break
+    }
 
-      // gatsby-config.js is incorrectly located in src/gatsby-config.js
-      if (existsSync(path.join(siteDirectory, `src`, configName + `.js`))) {
-        report.panic({
-          id: `10125`,
-          context: {
-            configName,
-          },
-        })
-      }
+    const { name, ext } = path.parse(file)
+
+    if (name === configName && ext === `.ts`) {
+      tsConfig = true
+      break
+    }
+
+    if (isNearMatch(name, configName, distance)) {
+      nearMatch = file
     }
   }
 
-  return { configModule, configFilePath }
+  return {
+    tsConfig,
+    nearMatch,
+  }
 }
