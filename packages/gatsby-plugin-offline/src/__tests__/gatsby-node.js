@@ -133,74 +133,82 @@ describe(`pluginOptionsSchema`, () => {
       `"workboxConfig.clientsClaim" must be a boolean`,
     ]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      precachePages: [1, 2, 3],
-      appendScript: 1223,
-      debug: `This should be a boolean`,
-      workboxConfig: {
-        importWorkboxFrom: 123,
-        globDirectory: 456,
-        globPatterns: [1, 2, 3],
-        modifyURLPrefix: {
-          "/": 123,
-        },
-        cacheId: 123,
-        dontCacheBustURLsMatching: `This should be a regexp`,
-        runtimeCaching: [
-          {
-            urlPattern: /(\.js$|\.css$|static\/)/,
-            handler: `Something Invalid`,
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        precachePages: [1, 2, 3],
+        appendScript: 1223,
+        debug: `This should be a boolean`,
+        workboxConfig: {
+          importWorkboxFrom: 123,
+          globDirectory: 456,
+          globPatterns: [1, 2, 3],
+          modifyURLPrefix: {
+            "/": 123,
           },
-          2,
-          3,
-        ],
-        skipWaiting: `This should be a boolean`,
-        clientsClaim: `This should be a boolean`,
-      },
-    })
+          cacheId: 123,
+          dontCacheBustURLsMatching: `This should be a regexp`,
+          runtimeCaching: [
+            {
+              urlPattern: /(\.js$|\.css$|static\/)/,
+              handler: `Something Invalid`,
+            },
+            2,
+            3,
+          ],
+          skipWaiting: `This should be a boolean`,
+          clientsClaim: `This should be a boolean`,
+        },
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate the schema`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      precachePages: [`/about-us/`, `/projects/*`],
-      appendScript: `src/custom-sw-code.js`,
-      debug: true,
-      workboxConfig: {
-        importWorkboxFrom: `local`,
-        globDirectory: `rootDir`,
-        globPatterns: [`a`, `b`, `c`],
-        modifyURLPrefix: {
-          "/": `pathPrefix/`,
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        precachePages: [`/about-us/`, `/projects/*`],
+        appendScript: `src/custom-sw-code.js`,
+        debug: true,
+        workboxConfig: {
+          importWorkboxFrom: `local`,
+          globDirectory: `rootDir`,
+          globPatterns: [`a`, `b`, `c`],
+          modifyURLPrefix: {
+            "/": `pathPrefix/`,
+          },
+          cacheId: `gatsby-plugin-offline`,
+          dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
+          maximumFileSizeToCacheInBytes: 4800,
+          runtimeCaching: [
+            {
+              urlPattern: /(\.js$|\.css$|static\/)/,
+              handler: `CacheFirst`,
+            },
+            {
+              urlPattern: /^https?:.*\/page-data\/.*\.json/,
+              handler: `StaleWhileRevalidate`,
+            },
+            {
+              urlPattern:
+                /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+              handler: `StaleWhileRevalidate`,
+            },
+            {
+              urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+              handler: `StaleWhileRevalidate`,
+            },
+          ],
+          skipWaiting: true,
+          clientsClaim: true,
         },
-        cacheId: `gatsby-plugin-offline`,
-        dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
-        maximumFileSizeToCacheInBytes: 4800,
-        runtimeCaching: [
-          {
-            urlPattern: /(\.js$|\.css$|static\/)/,
-            handler: `CacheFirst`,
-          },
-          {
-            urlPattern: /^https?:.*\/page-data\/.*\.json/,
-            handler: `StaleWhileRevalidate`,
-          },
-          {
-            urlPattern:
-              /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-            handler: `StaleWhileRevalidate`,
-          },
-          {
-            urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-            handler: `StaleWhileRevalidate`,
-          },
-        ],
-        skipWaiting: true,
-        clientsClaim: true,
-      },
-    })
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

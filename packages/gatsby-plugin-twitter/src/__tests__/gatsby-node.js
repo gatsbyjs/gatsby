@@ -22,10 +22,11 @@ it.each`
   ${undefined}
   ${{}}
 `(`should validate the schema: $options`, async ({ options }) => {
-  const { isValid } = await testPluginOptionsSchema(
+  const { isValid, errors } = await testPluginOptionsSchema(
     pluginOptionsSchema,
     options
   )
 
   expect(isValid).toBe(true)
+  expect(errors).toEqual([])
 })
