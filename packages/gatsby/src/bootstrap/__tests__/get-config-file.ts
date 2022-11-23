@@ -42,13 +42,19 @@ const reporterPanicMock = reporter.panic as jest.MockedFunction<
 >
 
 // Separate config directories so cases can be tested separately
-const dir = path.resolve(__dirname, `../__mocks__/get-config`)
-const compiledDir = `${dir}/compiled-dir`
-const userRequireDir = `${dir}/user-require-dir`
-const tsDir = `${dir}/ts-dir`
-const tsxDir = `${dir}/tsx-dir`
-const nearMatchDir = `${dir}/near-match-dir`
-const srcDir = `${dir}/src-dir`
+const baseDir = path.resolve(__dirname, `..`, `__mocks__`, `get-config`)
+const cjsDir = path.join(baseDir, `cjs`)
+
+const configDir = {
+  cjs: {
+    compiled: path.join(cjsDir, `compiled`),
+    userRequire: path.join(cjsDir, `user-require`),
+    ts: path.join(cjsDir, `ts`),
+    tsx: path.join(cjsDir, `tsx`),
+    nearMatch: path.join(cjsDir, `near-match`),
+    src: path.join(cjsDir, `src`),
+  },
+}
 
 describe(`getConfigFile`, () => {
   beforeEach(() => {
@@ -57,26 +63,26 @@ describe(`getConfigFile`, () => {
 
   it(`should get an uncompiled gatsby-config.js`, async () => {
     const { configModule, configFilePath } = await getConfigFile(
-      dir,
+      cjsDir,
       `gatsby-config`
     )
-    expect(configFilePath).toBe(path.join(dir, `gatsby-config.js`))
+    expect(configFilePath).toBe(path.join(cjsDir, `gatsby-config.js`))
     expect(configModule.siteMetadata.title).toBe(`uncompiled`)
   })
 
   it(`should get a compiled gatsby-config.js`, async () => {
     const { configModule, configFilePath } = await getConfigFile(
-      compiledDir,
+      configDir.cjs.compiled,
       `gatsby-config`
     )
     expect(configFilePath).toBe(
-      path.join(compiledDir, `compiled`, `gatsby-config.js`)
+      path.join(configDir.cjs.compiled, `compiled`, `gatsby-config.js`)
     )
     expect(configModule.siteMetadata.title).toBe(`compiled`)
   })
 
   it(`should handle user require errors found in compiled gatsby-config.js`, async () => {
-    await getConfigFile(userRequireDir, `gatsby-config`)
+    await getConfigFile(configDir.cjs.userRequire, `gatsby-config`)
 
     expect(reporterPanicMock).toBeCalledWith({
       id: `11902`,
@@ -91,7 +97,7 @@ describe(`getConfigFile`, () => {
   it(`should handle non-require errors`, async () => {
     testRequireErrorMock.mockImplementationOnce(() => false)
 
-    await getConfigFile(nearMatchDir, `gatsby-config`)
+    await getConfigFile(configDir.cjs.nearMatch, `gatsby-config`)
 
     expect(reporterPanicMock).toBeCalledWith({
       id: `10123`,
@@ -110,7 +116,7 @@ describe(`getConfigFile`, () => {
       .mockImplementationOnce(() => `force-inner-error`)
     testRequireErrorMock.mockImplementationOnce(() => true)
 
-    await getConfigFile(tsDir, `gatsby-config`)
+    await getConfigFile(configDir.cjs.ts, `gatsby-config`)
 
     expect(reporterPanicMock).toBeCalledWith({
       id: `10127`,
@@ -124,7 +130,7 @@ describe(`getConfigFile`, () => {
   it(`should handle near matches`, async () => {
     testRequireErrorMock.mockImplementationOnce(() => true)
 
-    await getConfigFile(nearMatchDir, `gatsby-config`)
+    await getConfigFile(configDir.cjs.nearMatch, `gatsby-config`)
 
     expect(reporterPanicMock).toBeCalledWith({
       id: `10124`,
@@ -140,7 +146,7 @@ describe(`getConfigFile`, () => {
   it(`should handle .tsx extension`, async () => {
     testRequireErrorMock.mockImplementationOnce(() => true)
 
-    await getConfigFile(tsxDir, `gatsby-config`)
+    await getConfigFile(configDir.cjs.tsx, `gatsby-config`)
 
     expect(reporterPanicMock).toBeCalledWith({
       id: `10124`,
@@ -156,7 +162,7 @@ describe(`getConfigFile`, () => {
   it(`should handle gatsby config incorrectly located in src dir`, async () => {
     testRequireErrorMock.mockImplementationOnce(() => true)
 
-    await getConfigFile(srcDir, `gatsby-config`)
+    await getConfigFile(configDir.cjs.src, `gatsby-config`)
 
     expect(reporterPanicMock).toBeCalledWith({
       id: `10125`,
