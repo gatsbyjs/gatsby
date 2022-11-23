@@ -10,9 +10,9 @@ jest.mock(`path`, () => {
   }
 })
 
-jest.mock(`../../utils/test-require-error`, () => {
+jest.mock(`../../utils/test-import-error`, () => {
   return {
-    testRequireError: jest.fn(),
+    testImportError: jest.fn(),
   }
 })
 
