@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.1.0/packages/gatsby) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Bug Fixes
+
+- Use xstate `predictableActionArguments` & update to 4.34 [#36342](https://github.com/gatsbyjs/gatsby/issues/36342) [#36355](https://github.com/gatsbyjs/gatsby/issues/36355) [#36451](https://github.com/gatsbyjs/gatsby/issues/36451) [#36393](https://github.com/gatsbyjs/gatsby/issues/36393) [#36393](https://github.com/gatsbyjs/gatsby/issues/36393) ([3032a1b](https://github.com/gatsbyjs/gatsby/commit/3032a1b07dbcfed292b7f32f12eef485ea2258a0))
+- write out sq files when result doesn't change but query hash changes [#36997](https://github.com/gatsbyjs/gatsby/issues/36997) ([3e87026](https://github.com/gatsbyjs/gatsby/commit/3e87026e73b9a2c539b343b8e4ddd32b8cd4b11f))
+
+#### Chores
+
+- Repository Cleanup [#37035](https://github.com/gatsbyjs/gatsby/issues/37035) ([0fb0390](https://github.com/gatsbyjs/gatsby/commit/0fb0390ef41f771d21c3829e91cc3f683044b696))
+- migrate from express-graphql to graphql-http [#37001](https://github.com/gatsbyjs/gatsby/issues/37001) ([3a4d333](https://github.com/gatsbyjs/gatsby/commit/3a4d3333d8409edd1fe679e9771b7ad9d71c2364))
+- v5 [#36763](https://github.com/gatsbyjs/gatsby/issues/36763) ([85e3d60](https://github.com/gatsbyjs/gatsby/commit/85e3d60c21597d7efbb7361fd28e95454f21fe2b))
+
+#### Other Changes
+
+- e2e tests for Slices API [#36746](https://github.com/gatsbyjs/gatsby/issues/36746) ([f158930](https://github.com/gatsbyjs/gatsby/commit/f1589305d9050d34a75d44d91960b98319960128))
+
 ### [5.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.0.1/packages/gatsby) (2022-11-10)
 
 #### Bug Fixes
