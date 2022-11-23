@@ -1,2 +1,5 @@
 yarn.lock
-/*.js
+**/*.js
+**/*.d.ts
+/**/*.map
+!/src/**/*.js

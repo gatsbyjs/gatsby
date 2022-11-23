@@ -10,7 +10,7 @@ How-To Guides work well for outlining procedures that readers need to follow. Yo
 
 A How-To Guide can include _some_ details to help users understand the steps they're following. For example, you should add a quick sentence before showing a code snippet, to explain what the code does (at a high level) and which pieces to pay special attention to. If you find yourself wanting to provide deeper explanations of how something works, consider creating a separate [Reference Guide](/contributing/docs-contributions/how-to-write-a-reference-guide) or [Conceptual Guide](/contributing/docs-contributions/how-to-write-a-conceptual-guide) and then linking to it in the How-To Guide.
 
-> For more information on How-To Guides, check out the [Divio documentation system](https://documentation.divio.com/how-to-guides/), which the Gatsby docs are based on.
+> For more information on How-To Guides, check out the [Diátaxis documentation system](https://diataxis.fr/how-to-guides/), which the Gatsby docs are based on.
 
 ## How-To Guides audience
 

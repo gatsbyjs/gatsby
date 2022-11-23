@@ -1,4 +1,5 @@
 import { fieldTransformers } from "./field-transformers"
+import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
 import store from "~/store"
 
 import {
@@ -88,24 +89,27 @@ const excludeField = ({
  * with proper node linking and type namespacing
  * also filters out unusable fields and types
  */
-
 export const transformFields = ({
   fields,
-  fieldAliases,
-  fieldBlacklist,
   parentType,
   parentInterfacesImplementingTypes,
-  gatsbyNodeTypes,
 }) => {
   if (!fields || !fields.length) {
     return null
   }
 
+  const gatsbyNodeTypes = getGatsbyNodeTypeNames()
+
+  const { fieldAliases, fieldBlacklist } = store.getState().remoteSchema
+
   const parentTypeSettings = getTypeSettingsByType(parentType)
 
-  const parentInterfacesImplementingTypeSettings = parentInterfacesImplementingTypes
-    ? parentInterfacesImplementingTypes.map(type => getTypeSettingsByType(type))
-    : null
+  const parentInterfacesImplementingTypeSettings =
+    parentInterfacesImplementingTypes
+      ? parentInterfacesImplementingTypes.map(type =>
+          getTypeSettingsByType(type)
+        )
+      : null
 
   const transformedFields = fields.reduce((fieldsObject, field) => {
     // if there's no field name this field is unusable
@@ -193,6 +197,10 @@ export const transformFields = ({
 
     return fieldsObject
   }, {})
+
+  if (!Object.keys(transformedFields).length) {
+    return null
+  }
 
   return transformedFields
 }

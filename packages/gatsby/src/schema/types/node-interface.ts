@@ -26,6 +26,7 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
       mediaType: `String`,
       owner: `String!`,
       type: `String!`,
+      contentFilePath: `String`,
     })
     // TODO: Can be removed with graphql-compose 5.11
     tc.getInputTypeComposer()
@@ -64,8 +65,7 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
       },
       internal: internalTC.getTypeNonNull(),
     })
-    // TODO: In Gatsby v2, the NodeInput.id field is of type String, not ID.
-    // Remove this workaround for v3.
+
     const nodeInputTC = tc.getInputTypeComposer()
     nodeInputTC.extendField(`id`, { type: `String` })
   })

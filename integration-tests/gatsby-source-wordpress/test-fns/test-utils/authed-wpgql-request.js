@@ -12,7 +12,9 @@ exports.authedWPGQLRequest = async (query, { variables } = {}) => {
     variables,
     url: process.env.WPGRAPHQL_URL,
     headers: {
-      Authorization: `Basic ${process.env.WORDPRESS_BASIC_AUTH}`,
+      Authorization: `Basic ${Buffer.from(
+        `${process.env.HTACCESS_USERNAME}:${process.env.HTACCESS_PASSWORD}`
+      ).toString("base64")}`,
     },
   })
 

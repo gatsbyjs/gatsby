@@ -1,20 +1,16 @@
 import { Span } from "opentracing"
+import reporter from "gatsby-cli/lib/reporter"
 import { IProgram } from "../../commands/types"
 import { Runner } from "../../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../../query/graphql-runner"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../../redux/types"
-import JestWorker from "jest-worker"
-export interface IGroupedQueryIds {
-  pageQueryIds: Array<string>
-  staticQueryIds: Array<string>
-}
+import type { GatsbyWorkerPool } from "../../utils/worker/pool"
 
-export interface IMutationAction {
-  type: string
-  payload: Array<unknown>
-}
+type Reporter = typeof reporter
+
 export interface IDataLayerContext {
+  reporter?: Reporter
   deferNodeMutation?: boolean
   nodesMutatedDuringQueryRun?: boolean
   program?: IProgram
@@ -25,7 +21,8 @@ export interface IDataLayerContext {
   webhookBody?: Record<string, unknown>
   webhookSourcePluginName?: string
   refresh?: boolean
-  workerPool?: JestWorker
+  workerPool?: GatsbyWorkerPool
   pagesToBuild?: Array<string>
   pagesToDelete?: Array<string>
+  shouldRunCreatePagesStatefully?: boolean
 }

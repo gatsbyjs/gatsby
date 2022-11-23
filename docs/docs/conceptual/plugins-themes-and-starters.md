@@ -1,17 +1,16 @@
 ---
-title: Plugins, Themes, & Starters
+title: Plugins, Themes & Starters
 ---
 
 In the Gatsby ecosystem, there's more than one way to build a site. To help you understand the differences between plugins, themes, and starters, this guide will talk through some of the details.
 
 ## What is a plugin?
 
-Gatsby plugins are Node.js packages that implement Gatsby APIs and are commonly installed through a registry like npm. There are many types of [plugins](/plugins/), including data sourcing, SEO, responsive images, offline support, support for Sass, TypeScript, sitemaps and RSS, Google Analytics, and more. You can also [make your own plugins](/docs/creating-plugins/) and either distribute them for fellow Gatsby developers to use or [install them locally](/docs/loading-plugins-from-your-local-plugins-folder/).
+Gatsby's plugin layer includes a wide variety of common website functionality that you can drop in to your website. These include integrations ("source plugins"), responsive images, dropping in analytics libraries, performance enhancements while using CSS libraries, and other website functionality.
 
-- [Plugin docs](/docs/plugins/)
 - [Using a plugin](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/)
+- [What is a plugin?](/docs/plugins/)
 - [Plugin library](/plugins/)
-- [Creating plugins](/docs/creating-plugins/)
 
 ## What is a theme?
 
@@ -102,7 +101,7 @@ Themes are intended to abstract several plugins into one, by making a `gatsby-co
 
 #### Custom components
 
-Custom components are most traditionally distributed as packages in the React ecosystem. Components don't need to hook into the Gatsby build system, so if shipped with a plugin they don't need to be included in a `gatsby-config`'s plugin array. This is the case with `gatsby-image` which is a React component. It doesn't need to be included in the plugins array because it is merely a component.
+Custom components are most traditionally distributed as packages in the React ecosystem. Components don't need to hook into the Gatsby build system, so if shipped with a plugin they don't need to be included in a `gatsby-config`'s plugin array.
 
 Some plugins ship with components you can use in a Gatsby site. An example is the [`<OutboundLink />` component from `gatsby-plugin-google-analytics`](/plugins/gatsby-plugin-google-analytics/?=#outboundlink-component). Other plugins, like [`gatsby-plugin-react-helmet`](/plugins/gatsby-plugin-react-helmet), require you to install components from other libraries.
 

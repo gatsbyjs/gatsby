@@ -130,7 +130,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 ## Blockquote
 
 - Use `>` to declare a blockquote
-- Adding multiple `>` with create nested blockquotes
+- Adding multiple `>` will create nested blockquotes
 - It is recommended to place `>` before each line
 - You can use other Markdown syntax inside blockquotes
 
@@ -205,5 +205,5 @@ The chart is rendered inside our MDX document.
 
 ## Helpful resources
 
-- https://daringfireball.net/projects/markdown/syntax
-- https://www.markdownguide.org/basic-syntax
+- [Markdown Syntax](https://daringfireball.net/projects/markdown/syntax)
+- [Basic Syntax](https://www.markdownguide.org/basic-syntax)

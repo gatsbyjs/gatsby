@@ -51,7 +51,14 @@ const getDerivedTypes = ({
   typeComposer,
 }: {
   typeComposer: AllTypeComposer
-}): Set<string> => typeComposer.getExtension(`derivedTypes`) || new Set()
+}): Set<string> => {
+  const derivedTypes = typeComposer.getExtension(`derivedTypes`)
+  if (derivedTypes) {
+    return derivedTypes as Set<string>
+  }
+
+  return new Set()
+}
 
 export const deleteFieldsOfDerivedTypes = ({ typeComposer }): void => {
   const derivedTypes = getDerivedTypes({ typeComposer })

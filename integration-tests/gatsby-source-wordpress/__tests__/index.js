@@ -1,12 +1,22 @@
+/**
+ * @jest-environment node
+ */
+
 require(`dotenv`).config({
   path: `.env.test`,
 })
 
-const on = require(`wait-on`)
+const urling = require(`../test-fns/test-utils/urling`)
+
 const {
   spawnGatsbyProcess,
   gatsbyCleanBeforeAll,
 } = require(`../test-fns/test-utils/get-gatsby-process`)
+
+const {
+  mutateSchema,
+  resetSchema,
+} = require(`../test-fns/test-utils/increment-remote-data`)
 
 jest.setTimeout(100000)
 
@@ -15,15 +25,22 @@ jest.setTimeout(100000)
 // we don't need to re-run some tests the second time,
 // so the following allows us to do that:
 const isWarmCache = process.env.WARM_CACHE
+
 const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
   beforeAll(done => {
-    if (isWarmCache) {
-      done()
-    } else {
-      gatsbyCleanBeforeAll(done)
-    }
+    ;(async () => {
+      console.log(`Waiting for WPGraphQL to be ready...`)
+      await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
+      console.log(`WPGraphQL is ready`)
+
+      if (isWarmCache) {
+        done()
+      } else {
+        gatsbyCleanBeforeAll(done)
+      }
+    })()
   })
 
   testOnColdCacheOnly(`Default options build succeeded`, async () => {
@@ -44,21 +61,55 @@ describe(`[gatsby-source-wordpress] Build default options`, () => {
 describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
   let gatsbyDevelopProcess
 
-  beforeAll(async done => {
+  beforeAll(async () => {
+    if (process.env.SKIP_BEFORE_ALL) {
+      return
+    }
+
     if (!isWarmCache) {
       await gatsbyCleanBeforeAll()
     }
 
-    gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
+    if (
+      isWarmCache &&
+      (!process.env.HTACCESS_USERNAME || !process.env.HTACCESS_PASSWORD)
+    ) {
+      console.log(
+        `Please add the env var HTACCESS_USERNAME and HTACCESS_PASSWORD. It should be a string in the following pattern: base64Encode(\`\${username}:\${password}\`)`
+      )
 
-    await on({ resources: [`http://localhost:8000`] })
-    done()
+      await new Promise(resolve => setTimeout(resolve, 100))
+      process.exit(1)
+    }
+
+    try {
+      if (isWarmCache) {
+        const response = await mutateSchema()
+        console.log(response)
+      } else {
+        const response = await resetSchema()
+        console.log(response)
+      }
+    } catch (e) {
+      console.info(`Threw errors while mutating or unmutating WordPress`)
+      console.error(e.stack)
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      process.exit(1)
+    }
+
+    return new Promise(resolve => {
+      gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
+      urling({ url: `http://localhost:8000/`, retry: 100 }).then(resolve)
+    })
   })
 
   require(`../test-fns/index`)
 
   afterAll(done => {
-    gatsbyDevelopProcess.kill()
+    if (gatsbyDevelopProcess) {
+      gatsbyDevelopProcess.kill()
+    }
+
     done()
   })
 })

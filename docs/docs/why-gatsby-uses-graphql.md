@@ -220,12 +220,12 @@ In order to load the product and image data into GraphQL, you need to add a few 
 - Optimize images ([`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/))
 - Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/plugins/gatsby-transformer-sharp/))
 
-In addition to the plugins, we’ll use [`gatsby-image`](/plugins/gatsby-image/) to display the optimized images with lazy loading.
+In addition to the plugins, we’ll use [`gatsby-plugin-image`](/plugins/gatsby-plugin-image/) to display the optimized images with lazy loading.
 
 Install these packages using the command line:
 
 ```shell
-npm install gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-image
+npm install gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-plugin-image
 ```
 
 Then add them to `gatsby-config.js`:
@@ -246,15 +246,11 @@ module.exports = {
 }
 ```
 
-To check that this worked, you can use the GraphQL Playground, which is available during development, by running:
+To check that this worked, you can use GraphiQL, which is available during development at `localhost:8000/___graphql`, by running:
 
 ```shell
-GATSBY_GRAPHQL_IDE=playground gatsby develop
+gatsby develop
 ```
-
-> **NOTE:** The `GATSBY_GRAPHQL_IDE=playground` part of this command is optional. Adding it enables the GraphQL Playground instead of GraphiQL, which is an older interface for exploring GraphQL.
-
-You can explore the available data schema using the “Docs” tab at the right.
 
 One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”. The `allProductsJson` option was created by the JSON transformer plugin ([`gatsby-transformer-json`](/plugins/gatsby-transformer-json/)).
 
@@ -274,11 +270,7 @@ You can write a query to select each product’s slug like this:
 }
 ```
 
-Test this query by entering it into the left-hand panel of the GraphQL Playground, then pressing the play button in the top center.
-
-The results will appear in the panel between the query and the docs, and they’ll look like this:
-
-![GraphQL Playground](./images/why-gql-playground.png)
+Test this query by entering it into the left-hand panel of GraphiQL, then pressing the play button in the top center.
 
 ### Generate pages with GraphQL
 
@@ -330,7 +322,7 @@ Here’s what that looks like in practice:
 ```jsx:title=src/templates/product-graphql.js
 import React from "react"
 import { graphql } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 export const query = graphql`
   query($slug: String!) {
@@ -340,9 +332,7 @@ export const query = graphql`
       price
       image {
         childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(layout: CONSTRAINED, width: 150)
         }
       }
     }
@@ -355,10 +345,10 @@ const Product = ({ data }) => {
   return (
     <div>
       <h1>{product.title}</h1>
-      <Image
-        fluid={product.image.childImageSharp.fluid}
+      <GatsbyImage
+        image={product.image.childImageSharp.gatsbyImageData}
         alt={product.title}
-        style={{ float: "left", marginRight: "1rem", width: 150 }}
+        style={{ float: "left", marginRight: "1rem" }}
       />
       <p>{product.price}</p>
       <div dangerouslySetInnerHTML={{ __html: product.description }} />
@@ -373,8 +363,7 @@ A few notes about this file:
 
 1. The result of the query is added to the template component as the `data` prop.
 2. The image path was automatically converted by the Sharp transformer into a “child node” that includes optimized versions of the image.
-3. The query uses a [GraphQL fragment](/plugins/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
-4. The `img` tag has been swapped out for a `gatsby-image` component named `Image`. Instead of a `src` attribute, it accepts an object with optimized image data.
+3. The `img` tag has been swapped out for a `gatsby-plugin-image` component named `GatsbyImage`. Instead of a `src` attribute, it accepts an object with optimized image data.
 
 Save this file, run `gatsby develop`, then open `http://localhost:8000/gql/purple-hat/`:
 

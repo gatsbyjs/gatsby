@@ -1,4 +1,3 @@
-import { printSchema, GraphQLSchema } from "graphql"
 import { ESLint } from "eslint"
 import path from "path"
 
@@ -22,13 +21,14 @@ export const eslintRequiredConfig: ESLint.Options = {
       // TODO proper check for custom babel & plugins config
       // Currently when a babelrc is added to the project, it will override our babelOptions
       babelOptions: {
-        presets: [`babel-preset-gatsby`],
+        presets: [require.resolve(`babel-preset-gatsby`)],
       },
       requireConfigFile: false,
     },
     globals: {
       graphql: true,
       __PATH_PREFIX__: true,
+      __TRAILING_SLASH__: true,
       __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
     },
     extends: [eslintRequirePreset],
@@ -36,8 +36,7 @@ export const eslintRequiredConfig: ESLint.Options = {
 }
 
 export const eslintConfig = (
-  schema: GraphQLSchema,
-  usingJsxRuntime: boolean
+  usingAutomaticJsxRuntime: boolean
 ): ESLint.Options => {
   return {
     useEslintrc: false,
@@ -47,6 +46,7 @@ export const eslintConfig = (
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
+        __TRAILING_SLASH__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
       extends: [
@@ -63,27 +63,20 @@ export const eslintConfig = (
         // TODO proper check for custom babel & plugins config
         // Currently when a babelrc is added to the project, it will override our babelOptions
         babelOptions: {
-          presets: [`babel-preset-gatsby`],
+          presets: [require.resolve(`babel-preset-gatsby`)],
         },
         requireConfigFile: false,
       },
-      plugins: [`graphql`],
+      plugins: [],
       rules: {
         // New versions of react use a special jsx runtime that remove the requirement
         // for having react in scope for jsx. Once the jsx runtime is backported to all
         // versions of react we can make this always be `off`.
         // I would also assume that eslint-config-react-app will switch their flag to `off`
         // when jsx runtime is stable in all common versions of React.
-        "react/react-in-jsx-scope": usingJsxRuntime ? `off` : `error`, // Conditionally apply for reactRuntime?
+        "react/jsx-uses-react": usingAutomaticJsxRuntime ? `off` : `error`,
+        "react/react-in-jsx-scope": usingAutomaticJsxRuntime ? `off` : `error`,
         "import/no-webpack-loader-syntax": [0],
-        "graphql/template-strings": [
-          `error`,
-          {
-            env: `relay`,
-            schemaString: printSchema(schema, { commentDescriptions: true }),
-            tagName: `graphql`,
-          },
-        ],
         "react/jsx-pascal-case": [
           `warn`,
           {
@@ -91,7 +84,7 @@ export const eslintConfig = (
           },
         ],
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/master/docs/rules
-        "jsx-a11y/accessible-emoji": `warn`,
+        // "jsx-a11y/accessible-emoji": `warn`, Deprecated
         "jsx-a11y/alt-text": `warn`,
         "jsx-a11y/anchor-has-content": `warn`,
         "jsx-a11y/anchor-is-valid": `warn`,
@@ -173,7 +166,7 @@ export const eslintConfig = (
         ],
         "jsx-a11y/no-noninteractive-element-to-interactive-role": `warn`,
         "jsx-a11y/no-noninteractive-tabindex": `warn`,
-        "jsx-a11y/no-onchange": `warn`,
+        // "jsx-a11y/no-onchange": `warn`, Deprecated
         "jsx-a11y/no-redundant-roles": `warn`,
         "jsx-a11y/no-static-element-interactions": `warn`,
         "jsx-a11y/role-has-required-aria-props": `warn`,

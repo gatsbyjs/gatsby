@@ -4,12 +4,45 @@ require(`dotenv`).config({
 
 console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
-const requestConcurrency = 1
-
 const mediaItemTypeSettings = {
+  excludeFieldNames: [`template`],
   localFile: {
-    requestConcurrency,
-    maxFileSizeBytes: 10485760,
+    excludeByMimeTypes: ["video/mp4"],
+    /**
+     * This is set to one byte smaller than the largest image in the Gatsby site so that we will have exactly one image that isn't fetched
+     * during the site build
+     */
+    maxFileSizeBytes: 740690,
+  },
+}
+
+const sharedTypeSettings = {
+  Settings: {
+    excludeFieldNames: [`generalSettingsEmail`],
+  },
+  GeneralSettings: {
+    excludeFieldNames: [`email`],
+  },
+  WPGatsby: {
+    exclude: true,
+  },
+  PostTypeSEO: {
+    excludeFieldNames: [`twitterImage`],
+  },
+  BlockAttributesObject: {
+    exclude: true,
+  },
+  BlockEditorPreview: {
+    exclude: true,
+  },
+  Post: { excludeFieldNames: [`pinged`] },
+}
+
+const debug = {
+  graphql: {
+    writeQueriesToDisk: true,
+    onlyReportCriticalErrors: false,
+    panicOnError: true,
   },
 }
 
@@ -17,13 +50,10 @@ const mediaItemTypeSettings = {
 // an int test with all default plugin options
 const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
   ? {
-      excludeFieldNames: [`commentCount`],
-      debug: {
-        graphql: {
-          writeQueriesToDisk: true,
-        },
-      },
+      excludeFieldNames: [`commentCount`, `generalSettingsEmail`],
+      debug,
       type: {
+        ...sharedTypeSettings,
         MediaItem: mediaItemTypeSettings,
         TypeLimitTest: {
           limit: 1,
@@ -36,8 +66,13 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
         Page: {
           excludeFieldNames: [`enclosure`],
+          beforeChangeNode: `./src/before-change-page.js`,
         },
         DatabaseIdentifier: {
+          exclude: true,
+        },
+        BlockEditorPreview: {
+          // we need to exclude this type because nodes of this type (which are added by wp-graphql-gutenberg) seem to be somewhat unpredictably created in WP and mess up our tests that are counting total nodes of the WpContentNode type (which is an interface that includes all content nodes including WpBlockEditorPreview).
           exclude: true,
         },
         User: {
@@ -59,12 +94,19 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
               : // and we don't actually need more than 1000 in production
                 1000,
         },
+        // excluding this because it causes Gatsby to throw errors
+        BlockEditorContentNode: { exclude: true },
       },
     }
   : {
+      excludeFieldNames: [`generalSettingsEmail`],
       type: {
+        ...sharedTypeSettings,
         MediaItem: mediaItemTypeSettings,
+        // excluding this because it causes Gatsby to throw errors
+        BlockEditorContentNode: { exclude: true },
       },
+      debug,
     }
 
 module.exports = {
@@ -83,13 +125,20 @@ module.exports = {
       options: {
         url: process.env.WPGRAPHQL_URL,
         schema: {
-          requestConcurrency: 10,
+          requestConcurrency: 7,
         },
+        debug,
         production: {
           hardCacheMediaFiles: true,
         },
         develop: {
           hardCacheMediaFiles: true,
+        },
+        auth: {
+          htaccess: {
+            username: process.env.HTACCESS_USERNAME,
+            password: process.env.HTACCESS_PASSWORD,
+          },
         },
         ...wpPluginOptions,
       },

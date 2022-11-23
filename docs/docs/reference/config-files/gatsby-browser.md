@@ -8,13 +8,15 @@ showTopLevelSignatures: true
 
 ## Introduction
 
-The file `gatsby-browser.js` lets you respond to Gatsby-specific events within the browser, and wrap your page components in additional global components. The Gatsby Browser API gives you many options for interacting with the [client-side](/docs/glossary#client-side) of Gatsby.
+The file `gatsby-browser.jsx`/`gatsby-browser.tsx` lets you respond to Gatsby-specific events within the browser, and wrap your page components in additional global components. The Gatsby Browser API gives you many options for interacting with the [client-side](/docs/glossary#client-side) of Gatsby.
+
+You can author the file in JavaScript or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-browsertsx--gatsby-ssrtsx).
 
 ## Usage
 
-To use Browser APIs, create a file in the root of your site at `gatsby-browser.js`. Export each API you want to use from this file.
+To use Browser APIs, create a file in the root of your site at `gatsby-browser.jsx`/`gatsby-browser.tsx`. Export each API you want to use from this file.
 
-```jsx:title=gatsby-browser.js
+```jsx:title=gatsby-browser.jsx
 const React = require("react")
 const Layout = require("./src/components/layout")
 

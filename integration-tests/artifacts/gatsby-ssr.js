@@ -10,3 +10,23 @@ export function onRenderBody({ setHeadComponents }) {
     />
   )
 }
+
+export function wrapPageElement({ element }) {
+  return (
+    <>
+      <h1>(to match gatsby-browser structure without using same imports)</h1>
+      {element}
+    </>
+  )
+}
+
+export function wrapRootElement({ element }) {
+  return (
+    <>
+      <div>
+        (to match src/components/github.js structure without using same imports)
+      </div>
+      {element}
+    </>
+  )
+}

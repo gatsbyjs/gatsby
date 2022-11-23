@@ -14,15 +14,16 @@ declare global {
   }
 }
 
-window._gatsbyEvents = window._gatsbyEvents || []
+// Use `self` here instead of `window` so it works in non-window environments (like Workers)
+self._gatsbyEvents = self._gatsbyEvents || []
 
 export function clearCompileError(): void {
-  window._gatsbyEvents.push([`FAST_REFRESH`, { action: `CLEAR_COMPILE_ERROR` }])
+  self._gatsbyEvents.push([`FAST_REFRESH`, { action: `CLEAR_COMPILE_ERROR` }])
 }
 
 export function clearRuntimeErrors(dismissOverlay: boolean): void {
   if (typeof dismissOverlay === `undefined` || dismissOverlay) {
-    window._gatsbyEvents.push([
+    self._gatsbyEvents.push([
       `FAST_REFRESH`,
       { action: `CLEAR_RUNTIME_ERRORS` },
     ])
@@ -34,7 +35,7 @@ export function showCompileError(message): void {
     return
   }
 
-  window._gatsbyEvents.push([
+  self._gatsbyEvents.push([
     `FAST_REFRESH`,
     {
       action: `SHOW_COMPILE_ERROR`,
@@ -48,7 +49,7 @@ export function showRuntimeErrors(errors): void {
     return
   }
 
-  window._gatsbyEvents.push([
+  self._gatsbyEvents.push([
     `FAST_REFRESH`,
     {
       action: `SHOW_RUNTIME_ERRORS`,
@@ -66,7 +67,7 @@ export function isWebpackCompileError(error): boolean {
 
 export function handleRuntimeError(error): void {
   if (error && !isWebpackCompileError(error)) {
-    window._gatsbyEvents.push([
+    self._gatsbyEvents.push([
       `FAST_REFRESH`,
       {
         action: `HANDLE_RUNTIME_ERROR`,

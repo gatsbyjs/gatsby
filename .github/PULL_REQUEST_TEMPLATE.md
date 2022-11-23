@@ -1,11 +1,8 @@
 <!--
   Have any questions? Check out the contributing docs at https://gatsby.dev/contribute, or
   ask in this Pull Request and a Gatsby maintainer will be happy to help :)
--->
 
-<!--
-  Is this a blog post? Check out the docs at https://www.gatsbyjs.com/contributing/blog-contributions/, and please mention if the blog post is pre-approved
-  by someone from Gatsby.
+  For any major changes, please first open a bug report (if it's a bug) or a feature request.
 -->
 
 ## Description
@@ -21,7 +18,6 @@
     - Update any references, if relevant. This includes Guides and Gatsby Internals docs.
   - If no docs exist:
     - Create a stub for documentation including bullet points for how to use the feature, code snippets (including from happy path tests), etc.
-  - Tag @gatsbyjs/documentation for review, pairing, polishing of the documentation
 -->
 
 ## Related Issues

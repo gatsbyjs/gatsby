@@ -8,7 +8,7 @@ When building Gatsby sites composed primarily of Markdown pages or posts, insert
 
 In sites like a blog, you may want to include a featured image that appears at the top of a page. One way to do this is to grab the image filename from a frontmatter field and then transform it with `gatsby-plugin-sharp` in a GraphQL query.
 
-This solution assumes you already have programmatically generated pages from Markdown with renderers like `gatsby-transformer-remark` or `gatsby-plugin-mdx`. If not, take a read through up to [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-seven/). This will build upon the tutorial and as such, `gatsby-transformer-remark` will be used for this example.
+This solution assumes you already have programmatically generated pages from Markdown with renderers like `gatsby-transformer-remark` or `gatsby-plugin-mdx`. If not, take a read through up to [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-7/). This will build upon the tutorial and as such, `gatsby-transformer-remark` will be used for this example.
 
 > Note: This can be done similarly using [MDX](/docs/how-to/routing/mdx/) as well. Instead of the `markdownRemark` nodes in GraphQL, `Mdx` can be swapped in and should work.
 
@@ -187,7 +187,7 @@ Configure the plugins in your `gatsby-config` file. As with the previous example
 
 The below example uses the `gatsby-plugin-mdx` plugin.
 
-`gatsby-remark-images` needs to be both a sub-plugin of `gatsby-plugin-mdx`, included in the `options` field, and a string entry in the plugins array. `gatsby-plugin-sharp` can be included on its own.
+`gatsby-remark-images` needs to be a sub-plugin of `gatsby-plugin-mdx`, included in the `options` field. `gatsby-plugin-sharp` can be included on its own.
 
 `gatsby-source-filesystem` needs to be pointed at wherever you have your images on disk.
 
@@ -197,7 +197,6 @@ The below example uses the `gatsby-plugin-mdx` plugin.
 module.exports = {
   plugins: [
     `gatsby-plugin-sharp`,
-    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {

@@ -1,5 +1,5 @@
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
-import { WebpackError, Module, NormalModule } from "webpack"
+import { WebpackError, StatsCompilation, Module, NormalModule } from "webpack"
 import { Stage as StageEnum } from "../commands/types"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 
@@ -52,7 +52,7 @@ const transformWebpackError = (
   stage: StageEnum,
   webpackError: WebpackError
 ): ITransformedWebpackError => {
-  const castedWebpackError = (webpackError as unknown) as IWebpackError
+  const castedWebpackError = webpackError as unknown as IWebpackError
 
   let location
   if (castedWebpackError.loc && castedWebpackError.loc.start) {
@@ -109,9 +109,8 @@ const transformWebpackError = (
     // it shows extra information for things that changed with webpack
     const BreakingChangeRegex = /BREAKING CHANGE[\D\n\d]+$/
     if (BreakingChangeRegex.test(castedWebpackError.message)) {
-      const breakingMatch = castedWebpackError.message.match(
-        BreakingChangeRegex
-      )
+      const breakingMatch =
+        castedWebpackError.message.match(BreakingChangeRegex)
 
       context.deprecationReason = breakingMatch?.[0]
     }
@@ -133,6 +132,18 @@ const transformWebpackError = (
   }
 }
 
+// With the introduction of Head API, the modulePath can have a resourceQuery so this function can be used to remove it
+const removeResourceQuery = (
+  moduleName: string | undefined
+): string | undefined => {
+  const moduleNameWithoutQuery = moduleName?.replace(
+    /(\?|&)export=(default|head)$/,
+    ``
+  )
+
+  return moduleNameWithoutQuery
+}
+
 export const structureWebpackErrors = (
   stage: StageEnum,
   webpackError: WebpackError | Array<WebpackError>
@@ -145,10 +156,23 @@ export const structureWebpackErrors = (
 }
 
 export const reportWebpackWarnings = (
-  warnings: Array<WebpackError>,
+  warnings: StatsCompilation["warnings"] = [],
   reporter: Reporter
 ): void => {
-  const warningMessages = warnings.map(warning => warning.message)
+  let warningMessages: Array<string> = []
+  if (typeof warnings[0] === `string`) {
+    warningMessages = warnings as unknown as Array<string>
+  } else if (
+    warnings[0]?.message &&
+    removeResourceQuery(warnings[0]?.moduleName)
+  ) {
+    warningMessages = warnings.map(
+      warning =>
+        `${removeResourceQuery(warning.moduleName)}\n\n${warning.message}`
+    )
+  } else if (warnings[0]?.message) {
+    warningMessages = warnings.map(warning => warning.message)
+  }
 
   formatWebpackMessages({
     errors: [],

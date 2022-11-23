@@ -1,5 +1,10 @@
-// disable output coloring for tests
-process.env.FORCE_COLOR = 0
+// @ts-check
+import { createClient } from "contentful"
+import { fetchContent, fetchContentTypes } from "../fetch"
+import {
+  formatPluginOptionsForCLI,
+  createPluginConfig,
+} from "../plugin-options"
 
 const mockClient = {
   getLocales: jest.fn(() =>
@@ -34,6 +39,12 @@ const mockClient = {
       total: 0,
     }
   }),
+  getTags: jest.fn(async () => {
+    return {
+      items: [],
+      total: 0,
+    }
+  }),
 }
 
 jest.mock(`contentful`, () => {
@@ -50,14 +61,8 @@ jest.mock(`../plugin-options`, () => {
 })
 
 // jest so test output is not filled with contentful plugin logs
+// @ts-ignore
 global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
-
-const contentful = require(`contentful`)
-const fetchData = require(`../fetch`)
-const {
-  formatPluginOptionsForCLI,
-  createPluginConfig,
-} = require(`../plugin-options`)
 
 const proxyOption = {
   host: `localhost`,
@@ -79,16 +84,19 @@ beforeAll(() => {
 
   global.process = {
     ...realProcess,
+    // @ts-ignore
     exit: jest.fn(),
   }
 })
 
 const start = jest.fn()
+const tick = jest.fn()
 const end = jest.fn()
 
 const mockActivity = {
   start,
   end,
+  tick,
   done: end,
 }
 
@@ -101,11 +109,14 @@ const reporter = {
 }
 
 beforeEach(() => {
+  // @ts-ignore
   global.process.exit.mockClear()
   reporter.panic.mockClear()
   mockClient.getLocales.mockClear()
+  // @ts-ignore
   formatPluginOptionsForCLI.mockClear()
-  contentful.createClient.mockClear()
+  // @ts-ignore
+  createClient.mockClear()
 })
 
 afterAll(() => {
@@ -113,9 +124,9 @@ afterAll(() => {
 })
 
 it(`calls contentful.createClient with expected params`, async () => {
-  await fetchData({ pluginConfig, reporter })
+  await fetchContent({ pluginConfig, reporter, syncToken: null })
   expect(reporter.panic).not.toBeCalled()
-  expect(contentful.createClient).toBeCalledWith(
+  expect(createClient).toBeCalledWith(
     expect.objectContaining({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       environment: `env`,
@@ -127,16 +138,17 @@ it(`calls contentful.createClient with expected params`, async () => {
 })
 
 it(`calls contentful.createClient with expected params and default fallbacks`, async () => {
-  await fetchData({
+  await fetchContent({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
     }),
     reporter,
+    syncToken: null,
   })
 
   expect(reporter.panic).not.toBeCalled()
-  expect(contentful.createClient).toBeCalledWith(
+  expect(createClient).toBeCalledWith(
     expect.objectContaining({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       environment: `master`,
@@ -147,7 +159,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
 })
 
 it(`calls contentful.getContentTypes with default page limit`, async () => {
-  await fetchData({
+  await fetchContentTypes({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
@@ -164,7 +176,7 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
 })
 
 it(`calls contentful.getContentTypes with custom plugin option page limit`, async () => {
-  await fetchData({
+  await fetchContentTypes({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
@@ -181,13 +193,49 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
   })
 })
 
+describe(`Tags feature`, () => {
+  it(`tags are disabled by default`, async () => {
+    await fetchContent({
+      pluginConfig: createPluginConfig({
+        accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
+        spaceId: `rocybtov1ozk`,
+        pageLimit: 50,
+      }),
+      reporter,
+      syncToken: null,
+    })
+
+    expect(reporter.panic).not.toBeCalled()
+    expect(mockClient.getTags).not.toBeCalled()
+  })
+  it(`calls contentful.getTags when enabled`, async () => {
+    await fetchContent({
+      pluginConfig: createPluginConfig({
+        accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
+        spaceId: `rocybtov1ozk`,
+        pageLimit: 50,
+        enableTags: true,
+      }),
+      reporter,
+      syncToken: null,
+    })
+
+    expect(reporter.panic).not.toBeCalled()
+    expect(mockClient.getTags).toHaveBeenCalledWith({
+      limit: 50,
+      order: `sys.createdAt`,
+      skip: 0,
+    })
+  })
+})
+
 describe(`Displays troubleshooting tips and detailed plugin options on contentful client error`, () => {
   it(`Generic fallback error`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       throw new Error(`error`)
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -220,11 +268,12 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`Connection error`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
+      // @ts-ignore
       err.code = `ENOTFOUND`
       throw err
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -255,23 +304,23 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API 404 response handling`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
+      // @ts-ignore
       err.responseData = { status: 404 }
       throw err
     })
     const masterOptions = { ...options, environment: `master` }
     const masterConfig = createPluginConfig(masterOptions)
 
-    await fetchData({
+    await fetchContent({
       pluginConfig: masterConfig,
       reporter,
+      syncToken: null,
     })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
         context: {
-          sourceMessage: expect.stringContaining(
-            `Check if host and spaceId settings are correct`
-          ),
+          sourceMessage: expect.stringContaining(`Endpoint not found`),
         },
       })
     )
@@ -300,17 +349,18 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API 404 response handling with environment set`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
+      // @ts-ignore
       err.responseData = { status: 404 }
       throw err
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
         context: {
           sourceMessage: expect.stringContaining(
-            `Unable to access your space. Check if environment is correct and your accessToken has access to the env and the master environments.`
+            `Unable to access your space.`
           ),
         },
       })
@@ -340,18 +390,17 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API authorization error handling`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
+      // @ts-ignore
       err.responseData = { status: 401 }
       throw err
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
         context: {
-          sourceMessage: expect.stringContaining(
-            `Check if accessToken and environment are correct`
-          ),
+          sourceMessage: expect.stringContaining(`Authorization error.`),
         },
       })
     )

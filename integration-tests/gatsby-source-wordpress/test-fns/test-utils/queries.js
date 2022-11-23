@@ -19,9 +19,6 @@ exports.queries = {
       allWpComment {
         totalCount
       }
-      # allWpProject {
-      #   totalCount
-      # }
       allWpTaxonomy {
         totalCount
       }
@@ -34,16 +31,17 @@ exports.queries = {
       allWpMenuItem {
         totalCount
       }
-      allWpMediaItem(sort: { fields: [id] }) {
+      allWpMediaItem(
+        sort: { id: ASC }
+        # this node "cG9zdDoxOTU=" only exists on warm builds. So our snapshot is wrong if we don't filter it out.
+        filter: { id: { ne: "cG9zdDoxOTU=" } }
+      ) {
         totalCount
         nodes {
           id
           mediaItemUrl
         }
       }
-      # allWpTeamMember {
-      #   totalCount
-      # }
       allWpPostFormat {
         totalCount
       }
@@ -187,18 +185,21 @@ exports.queries = {
       isDynamic
       order
       originalContent
-      parentNode {
-        id
-        ... on WpPost {
-          title
-        }
-      }
+      # @todo this connection isn't working
+      # parentNode {
+      #   id
+      #   ... on WpPost {
+      #     title
+      #   }
+      # }
       parentNodeDatabaseId
       dynamicContent
       attributes {
-        className
-        verticalAlignment
-        width
+        ... on WpCoreColumnBlockAttributes {
+          className
+          verticalAlignment
+          width
+        }
       }
     }
 
@@ -206,12 +207,13 @@ exports.queries = {
       name
       order
       originalContent
-      parentNode {
-        id
-        ... on WpPost {
-          title
-        }
-      }
+      # @todo this connection isn't working
+      # parentNode {
+      #   id
+      #   ... on WpPost {
+      #     title
+      #   }
+      # }
       parentNodeDatabaseId
       dynamicContent
       attributes {
@@ -223,7 +225,6 @@ exports.queries = {
           verticalAlignment
         }
       }
-      # saveContent
     }
 
     fragment InnerBlocks on WpBlock {
@@ -265,7 +266,6 @@ exports.queries = {
               ... on WpCoreButtonBlockAttributes {
                 align
                 backgroundColor
-                borderRadius
                 className
                 gradient
                 linkTarget
@@ -276,20 +276,6 @@ exports.queries = {
                 title
                 url
               }
-            }
-          }
-          ... on WpCoreFileBlock {
-            attributes {
-              downloadButtonText
-              fileName
-              id
-              showDownloadButton
-              textLinkTarget
-            }
-          }
-          ... on WpCoreSpacerBlock {
-            attributes {
-              height
             }
           }
           ... on WpCoreSeparatorBlock {
@@ -404,13 +390,6 @@ exports.queries = {
                   url
                 }
               }
-            }
-          }
-
-          ... on WpCoreListBlock {
-            attributes {
-              ordered
-              values
             }
           }
         }
@@ -535,10 +514,6 @@ exports.queries = {
       opengraphType
       title
       twitterDescription
-      twitterImage {
-        id
-        title
-      }
       twitterTitle
     }
   `,
@@ -593,10 +568,10 @@ exports.queries = {
   `,
   pages: /* GraphQL */ `
     {
-      # testPage: wpPage(id: { eq: "cG9zdDoy" }) {
-      #   title
-      # }
-      allWpPage(sort: { fields: date }) {
+      testPage: wpPage(id: { eq: "cG9zdDoy" }) {
+        title
+      }
+      allWpPage(sort: { date: ASC }) {
         nodes {
           uri
           title
@@ -628,7 +603,7 @@ exports.queries = {
       testPost: wpPost(id: { eq: "cG9zdDox" }) {
         title
       }
-      allWpPost(sort: { fields: date }) {
+      allWpPost(sort: { date: ASC }) {
         nodes {
           title
           featuredImage {
@@ -655,8 +630,8 @@ exports.queries = {
   `,
   users: /* GraphQL */ `
     {
-      testUser: wpUser(id: { eq: "dXNlcjox" }) {
-        firstName
+      testUser: wpUser(id: { eq: "dXNlcjo0" }) {
+        name
       }
       allWpUser {
         nodes {

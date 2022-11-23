@@ -1,0 +1,5 @@
+{
+  "name": "gatsby-monorepo",
+  "types": "./global.d.ts",
+  "private": true
+}

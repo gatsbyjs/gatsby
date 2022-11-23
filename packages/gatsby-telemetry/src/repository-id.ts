@@ -8,9 +8,10 @@ import gitUp from "git-up"
 import { getCIName } from "gatsby-core-utils"
 // there are no types for git-up, so we create our own
 // based on https://github.com/IonicaBizau/git-up/blob/60e6a4ff93d50360bbb80953bfab2f82d3418900/lib/index.js#L8-L28
-const typedGitUp = gitUp as (
-  input: string
-) => { resource: string; pathname: string }
+const typedGitUp = gitUp as (input: string) => {
+  resource: string
+  pathname: string
+}
 
 interface IRepositoryData {
   provider: string

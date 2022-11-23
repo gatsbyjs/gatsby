@@ -1,10 +1,13 @@
 import { readFile } from "fs-extra"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 
 jest.mock(`fs-extra`, () => {
   return {
     readFile: jest.fn(() => `contents`),
+    readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
   }
 })
+jest.mock(`gatsby-core-utils/murmurhash`)
 import glob from "glob"
 
 import { pagesReducer as reducer } from "../reducers/pages"
@@ -12,6 +15,9 @@ import { actions } from "../actions"
 
 afterEach(() => {
   ;(readFile as jest.MockedFunction<typeof readFile>).mockClear()
+})
+beforeEach(() => {
+  murmurhash.mockReturnValue(`1234567890`)
 })
 
 Date.now = jest.fn(
@@ -24,13 +30,15 @@ glob.sync = jest.fn()
 
 describe(`Add pages`, () => {
   it(`allows you to add pages`, () => {
-    const action = actions.createPage(
-      {
-        path: `/hi/`,
-        component: `/whatever/index.js`,
-      },
-      { id: `test`, name: `test` }
-    )
+    const action = actions
+      .createPage(
+        {
+          path: `/hi/`,
+          component: `/whatever/index.js`,
+        },
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
     expect(state).toMatchSnapshot()
@@ -83,62 +91,71 @@ describe(`Add pages`, () => {
   })
 
   it(`adds an initial forward slash if the user doesn't`, () => {
-    const action = actions.createPage(
+    const actionsArray = actions.createPage(
       {
         path: `hi/`,
         component: `/whatever/index.js`,
       },
       { id: `test`, name: `test` }
     )
+    const action = actionsArray.filter(a => a.type === `CREATE_PAGE`)[0]
     const state = reducer(undefined, action)
     expect(Array.from(state.values())[0].path).toEqual(`/hi/`)
   })
 
   it(`allows you to add pages with context`, () => {
-    const action = actions.createPage(
-      {
-        path: `/hi/`,
-        component: `/whatever/index.js`,
-        context: {
-          id: 123,
+    const action = actions
+      .createPage(
+        {
+          path: `/hi/`,
+          component: `/whatever/index.js`,
+          context: {
+            id: 123,
+          },
         },
-      },
-      { id: `test`, name: `test` }
-    )
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
     expect(state).toMatchSnapshot()
   })
 
   it(`allows you to add pages with matchPath`, () => {
-    const action = actions.createPage(
-      {
-        path: `/hi/`,
-        component: `/whatever/index.js`,
-        matchPath: `/hi-from-somewhere-else/`,
-      },
-      { id: `test`, name: `test` }
-    )
+    const action = actions
+      .createPage(
+        {
+          path: `/hi/`,
+          component: `/whatever/index.js`,
+          matchPath: `/hi-from-somewhere-else/`,
+        },
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
     expect(state).toMatchSnapshot()
   })
 
   it(`allows you to add multiple pages`, () => {
-    const action = actions.createPage(
-      {
-        path: `/hi/`,
-        component: `/whatever/index.js`,
-      },
-      { id: `test`, name: `test` }
-    )
-    const action2 = actions.createPage(
-      {
-        path: `/hi/pizza/`,
-        component: `/whatever/index.js`,
-      },
-      { id: `test`, name: `test` }
-    )
+    const action = actions
+      .createPage(
+        {
+          path: `/hi/`,
+          component: `/whatever/index.js`,
+        },
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
+    const action2 = actions
+      .createPage(
+        {
+          path: `/hi/pizza/`,
+          component: `/whatever/index.js`,
+        },
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
     let state = reducer(undefined, action)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
@@ -146,22 +163,26 @@ describe(`Add pages`, () => {
   })
 
   it(`allows you to update existing pages (based on path)`, () => {
-    const action = actions.createPage(
-      {
-        path: `/hi/`,
-        component: `/whatever/index.js`,
-      },
-      { id: `test`, name: `test` }
-    )
+    const action = actions
+      .createPage(
+        {
+          path: `/hi/`,
+          component: `/whatever/index.js`,
+        },
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
 
     // Change the component
-    const action2 = actions.createPage(
-      {
-        path: `/hi/`,
-        component: `/whatever2/index.js`,
-      },
-      { id: `test`, name: `test` }
-    )
+    const action2 = actions
+      .createPage(
+        {
+          path: `/hi/`,
+          component: `/whatever2/index.js`,
+        },
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
 
     let state = reducer(undefined, action)
     state = reducer(state, action2)
@@ -170,13 +191,15 @@ describe(`Add pages`, () => {
   })
 
   it(`allows you to delete paths`, () => {
-    const action = actions.createPage(
-      {
-        path: `/hi/`,
-        component: `/whatever/index.js`,
-      },
-      { id: `test`, name: `test` }
-    )
+    const action = actions
+      .createPage(
+        {
+          path: `/hi/`,
+          component: `/whatever/index.js`,
+        },
+        { id: `test`, name: `test` }
+      )
+      .filter(a => a.type === `CREATE_PAGE`)[0]
     const action2 = actions.deletePage({ path: `/hi/` })
 
     let state = reducer(undefined, action)

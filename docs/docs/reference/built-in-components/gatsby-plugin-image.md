@@ -1,5 +1,8 @@
 ---
 title: Gatsby Image plugin
+examples:
+  - label: Using Gatsby Image
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image"
 ---
 
 This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options. While most of these options are available regardless of where you source your images, be sure to refer to the documentation of your source plugin if you are using images from a CMS, as the exact options are likely to vary.
@@ -110,7 +113,7 @@ export function Dino() {
 }
 ```
 
-You should instead use the `css` prop provided by these libraries:
+If you use Emotion you can use the provided `css` prop instead:
 
 ```jsx
 // Emotion
@@ -127,22 +130,9 @@ export function Dino() {
 }
 ```
 
-```jsx
-// styled-components
+Unfortunately the [`css` prop from styled-components](https://styled-components.com/docs/api#css-prop) turns the code into a `styled` function under the hood and as explained above `StaticImage` doesn't support that syntax.
 
-export function Dino() {
-  return (
-    <StaticImage
-      src="trex.png"
-      css={`
-        border: 4px green dashed;
-      `}
-    />
-  )
-}
-```
-
-You can also use a regular `style` or `className` prop. Note that in all of these cases the styling is applied to the wrapper, not the image itself. If you need to style the `<img>` tag, you can use `imgStyle` or `imgClassName`.
+You can also use a regular `style` or `className` prop. Note that in all of these cases the styling is applied to the wrapper, not the image itself. If you need to style the `<img>` tag, you can use `imgStyle` or `imgClassName`. The `className` or `imgClassName` prop is helpful if your styling library is giving you a computed class name string instead of the computed styles (e.g. if you use libraries like [linaria](https://github.com/callstack/linaria)).
 
 ### `GatsbyImage`
 
@@ -263,14 +253,14 @@ These values are passed in as an object to `transformOptions`, either as a prop 
 | ----------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `grayscale` | `false`                   | Convert image to grayscale                                                                                                                                    |
 | `duotone`   | `false`                   | Add duotone effect. Pass `false`, or options object containing `{highlight: string, shadow: string, opacity: number}`                                         |
-| `rotate`    | `0`                       | Rotate the image. Value in degrees.                                                                                                                           |
-| `trim`      | `false`                   | Trim "boring" pixels. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                                         |
+| `rotate`    | `auto`                    | Rotate the image. Value in degrees.                                                                                                                           |
+| `trim`      | `10`                      | Trim "boring" pixels. Value is the threshold. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                 |
 | `cropFocus` | `"attention"`/`ATTENTION` | Controls crop behavior. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#resize) for strategy, position and gravity.                  |
 | `fit`       | `"cover"`/`COVER`         | Controls behavior when resizing an image and proving both width and height. See [the sharp documentation.](https://sharp.pixelplumbing.com/api-resize#resize) |
 
 ## All options
 
-The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
+The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.com) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
 
 | Option                                  | Default                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -290,6 +280,40 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image 
 | `pngOptions`                            | None                                                                 | Options to pass to sharp when generating PNG images.                                                                                                                                                                                                                                                                                                                                                          |
 | `webpOptions`                           | None                                                                 | Options to pass to sharp when generating WebP images.                                                                                                                                                                                                                                                                                                                                                         |
 | `avifOptions`                           | None                                                                 | Options to pass to sharp when generating AVIF images.                                                                                                                                                                                                                                                                                                                                                         |
+
+## Customizing the default options
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`,
+          quality: 50,
+          breakpoints: [750, 1080, 1366, 1920],
+          backgroundColor: `transparent`,
+          tracedSVGOptions: {},
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {},
+        },
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
 
 ## Helper functions
 

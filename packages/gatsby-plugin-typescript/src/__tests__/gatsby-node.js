@@ -50,15 +50,14 @@ describe(`gatsby-plugin-typescript`, () => {
   describe(`onCreateWebpackConfig`, () => {
     it(`sets the correct webpack config`, () => {
       const actions = { setWebpackConfig: jest.fn() }
-      const jsLoader = {}
-      const loaders = { js: jest.fn(() => jsLoader) }
+      const loaders = { js: jest.fn(() => {}) }
       onCreateWebpackConfig({ actions, loaders })
       expect(actions.setWebpackConfig).toHaveBeenCalledWith({
         module: {
           rules: [
             {
               test: /\.tsx?$/,
-              use: jsLoader,
+              use: expect.toBeFunction(),
             },
           ],
         },
@@ -67,7 +66,7 @@ describe(`gatsby-plugin-typescript`, () => {
 
     it(`does not set the webpack config if there isn't a js loader`, () => {
       const actions = { setWebpackConfig: jest.fn() }
-      const loaders = { js: jest.fn() }
+      const loaders = { js: undefined }
       onCreateWebpackConfig({ actions, loaders })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
     })

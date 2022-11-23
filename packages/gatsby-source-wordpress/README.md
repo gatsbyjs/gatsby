@@ -3,7 +3,7 @@
 </div>
 
 <p align="center">
-  <a href="https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/LICENSE">
+  <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby and gatsby-source-wordpress are released under the MIT license." />
   </a>
   <a href="https://www.npmjs.com/package/gatsby-source-wordpress">
@@ -42,6 +42,7 @@ This plugin works by merging the [WPGraphQL schema & data](https://docs.wpgraphq
 - 🏅 [Usage with popular WPGraphQL extensions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/usage-with-popular-wp-graphql-extensions.md)
 - 🛠 [Debugging and troubleshooting](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/debugging-and-troubleshooting.md)
 - 🏞 [Community and Support](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/community-and-support.md)
+- 🌻 [Contributing](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/contributing.md)
 - 🧓 [v3 Documentation](https://github.com/gatsbyjs/gatsby/blob/1da331a5352e3f7cb18f69050b7199481d85fbcb/packages/gatsby-source-wordpress/README.md)
 
 ## Relevant Links 🔗

@@ -4,19 +4,15 @@ import { pluginOptionsSchema } from "../gatsby-node"
 describe(`gatsby-node.js`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
-      `"commonmark" must be a boolean`,
       `"footnotes" must be a boolean`,
-      `"pedantic" must be a boolean`,
       `"gfm" must be a boolean`,
       `"plugins" must be an array`,
     ]
 
-    const { isValid, errors } = await testPluginOptionsSchema(
+    const { errors, isValid } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       {
-        commonmark: `this should be a boolean`,
         footnotes: `this should be a boolean`,
-        pedantic: `this should be a boolean`,
         gfm: `this should be a boolean`,
         plugins: `this should be an array`,
       }
@@ -30,9 +26,7 @@ describe(`gatsby-node.js`, () => {
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       {
-        commonmark: false,
         footnotes: false,
-        pedantic: false,
         gfm: false,
         plugins: [
           `gatsby-remark-copy-linked-files`,

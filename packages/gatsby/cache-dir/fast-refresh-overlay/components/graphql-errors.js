@@ -59,9 +59,10 @@ function WrappedAccordionItem({ error, open }) {
 }
 
 export function GraphqlErrors({ errors, dismiss }) {
-  const deduplicatedErrors = React.useMemo(() => Array.from(new Set(errors)), [
-    errors,
-  ])
+  const deduplicatedErrors = React.useMemo(
+    () => Array.from(new Set(errors)),
+    [errors]
+  )
   const hasMultipleErrors = deduplicatedErrors.length > 1
   return (
     <Overlay>

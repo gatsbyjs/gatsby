@@ -88,11 +88,11 @@ export const extractStaticImageProps = (
       ) {
         return
       }
-      const image = (evaluateImageAttributes(
+      const image = evaluateImageAttributes(
         // There's a conflict between the definition of NodePath in @babel/core and @babel/traverse
-        (nodePath as unknown) as NodePath<JSXOpeningElement>,
+        nodePath as unknown as NodePath<JSXOpeningElement>,
         onError
-      ) as unknown) as IStaticImageProps
+      ) as unknown as IStaticImageProps
       images.set(hashOptions(image), image)
     },
   })

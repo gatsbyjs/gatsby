@@ -1,9 +1,10 @@
 import moment, { MomentInput, unitOfTime, LocaleSpecifier } from "moment"
 import { GraphQLScalarType, Kind, GraphQLFieldConfig } from "graphql"
 import { oneLine } from "common-tags"
+import GatsbyCacheLmdb from "../../utils/cache-lmdb"
 
 interface IFormatDateArgs {
-  date?: Date
+  date: Date | string
   fromNow?: boolean
   formatString?: string
   difference?: unitOfTime.Diff
@@ -12,10 +13,10 @@ interface IFormatDateArgs {
 interface IDateResolverOption {
   locale?: string
   formatString?: string
-  fromNow?: string
+  fromNow?: boolean
   difference?: string
   from?: string
-  fromNode?: { type: string; defaultValue: boolean }
+  fromNode?: boolean
 }
 type DateResolverFieldConfig = GraphQLFieldConfig<any, any, any>
 type DateResolver = (
@@ -114,7 +115,8 @@ export const GraphQLDate = new GraphQLScalarType({
   },
 })
 
-const momentFormattingTokens = /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
+const momentFormattingTokens =
+  /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
 const momentFormattingRegexes = {
   YYYY: `\\d{4}`,
   MM: `\\d{2}`,
@@ -208,19 +210,40 @@ export function isDate(value: MomentInput): boolean {
   return typeof value !== `number` && momentDate.isValid()
 }
 
-const formatDate = ({
+let formatDateCache: GatsbyCacheLmdb | undefined
+function getFormatDateCache(): GatsbyCacheLmdb {
+  if (!formatDateCache) {
+    formatDateCache = new GatsbyCacheLmdb({
+      name: `format-date-cache`,
+      encoding: `string`,
+    }).init()
+  }
+  return formatDateCache
+}
+
+const formatDate = async ({
   date,
   fromNow,
   difference,
   formatString,
   locale = `en`,
-}: IFormatDateArgs): string | number => {
+}: IFormatDateArgs): Promise<string | number> => {
   const normalizedDate = JSON.parse(JSON.stringify(date))
   if (formatString) {
-    return moment
+    const cacheKey = `${normalizedDate}-${formatString}-${locale}`
+    const cachedFormat = await getFormatDateCache().get(cacheKey)
+    if (cachedFormat) {
+      return cachedFormat as string
+    }
+
+    const result = moment
       .utc(normalizedDate, ISO_8601_FORMAT, true)
       .locale(locale)
       .format(formatString)
+
+    await getFormatDateCache().set(cacheKey, result)
+
+    return result
   } else if (fromNow) {
     return moment
       .utc(normalizedDate, ISO_8601_FORMAT, true)
@@ -281,11 +304,18 @@ export const getDateResolver = (
         from: options.from || info.from,
         fromNode: options.from ? options.fromNode : info.fromNode,
       })
-      if (date == null) return null
 
-      return Array.isArray(date)
-        ? date.map(d => formatDate({ date: d, ...args }))
-        : formatDate({ date, ...args })
+      if (date == null) {
+        return null
+      }
+
+      if (Array.isArray(date)) {
+        return await Promise.all(
+          date.map(d => formatDate({ date: d, ...args }))
+        )
+      }
+
+      return await formatDate({ date, ...args })
     },
   }
 }

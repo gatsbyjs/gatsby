@@ -1,13 +1,14 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
+
 import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
 const ImageAPI = props => {
   const assets = props.data.allContentfulAsset.edges
   return (
-    <>
+    <Layout>
       <div
         style={{
           margin: `0 auto`,
@@ -161,12 +162,11 @@ const ImageAPI = props => {
         image={assets[1].node.fullWidth}
         style={{}}
       />
-      <Layout>
-        <h4>GraphQL query</h4>
-        <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
-          <code
-            dangerouslySetInnerHTML={{
-              __html: `{
+      <h4>GraphQL query</h4>
+      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: `{
   allContentfulAsset {
     edges {
       node {
@@ -176,36 +176,36 @@ const ImageAPI = props => {
     }
   }
 }`,
-            }}
-          />
-        </pre>
-        <h2 id="dominant">Dominant color previews</h2>
-        <p>
-          This calculates the dominant color of the source image and uses it as
-          a solid background color.
-        </p>
-        <div
-          style={{
-            display: `grid`,
-            gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
-            gap: rhythm(1),
           }}
-        >
-          {assets.map(({ node: { id, title, dominant } }) => (
-            <div key={id}>
-              <GatsbyImage
-                image={dominant}
-                alt={title}
-                style={{ border: `1px solid red` }}
-              />
-            </div>
-          ))}
-        </div>
-        <h4>GraphQL query</h4>
-        <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
-          <code
-            dangerouslySetInnerHTML={{
-              __html: `{
+        />
+      </pre>
+      <h2 id="dominant">Dominant color previews</h2>
+      <p>
+        This calculates the dominant color of the source image and uses it as a
+        solid background color.
+      </p>
+      <div
+        style={{
+          display: `grid`,
+          gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
+          gap: rhythm(1),
+        }}
+      >
+        {assets.map(({ node: { id, title, dominant } }) => (
+          <div key={id}>
+            <GatsbyImage
+              image={dominant}
+              alt={title}
+              style={{ border: `1px solid red` }}
+            />
+          </div>
+        ))}
+      </div>
+      <h4>GraphQL query</h4>
+      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: `{
   allContentfulAsset {
     edges {
       node {
@@ -219,36 +219,36 @@ const ImageAPI = props => {
     }
   }
 }`,
-            }}
-          />
-        </pre>
-        <h2 id="blurred">Blurred previews</h2>
-        <p>
-          This generates a very low-resolution version of the source image and
-          displays it as a blurred background.
-        </p>
-        <div
-          style={{
-            display: `grid`,
-            gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
-            gap: rhythm(1),
           }}
-        >
-          {assets.map(({ node: { id, title, blurred } }) => (
-            <div key={id}>
-              <GatsbyImage
-                image={blurred}
-                alt={title}
-                style={{ border: `1px solid red` }}
-              />
-            </div>
-          ))}
-        </div>
-        <h4>GraphQL query</h4>
-        <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
-          <code
-            dangerouslySetInnerHTML={{
-              __html: `{
+        />
+      </pre>
+      <h2 id="blurred">Blurred previews</h2>
+      <p>
+        This generates a very low-resolution version of the source image and
+        displays it as a blurred background.
+      </p>
+      <div
+        style={{
+          display: `grid`,
+          gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
+          gap: rhythm(1),
+        }}
+      >
+        {assets.map(({ node: { id, title, blurred } }) => (
+          <div key={id}>
+            <GatsbyImage
+              image={blurred}
+              alt={title}
+              style={{ border: `1px solid red` }}
+            />
+          </div>
+        ))}
+      </div>
+      <h4>GraphQL query</h4>
+      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: `{
   allContentfulAsset {
     edges {
       node {
@@ -262,37 +262,37 @@ const ImageAPI = props => {
     }
   }
 }`,
-            }}
-          />
-        </pre>
-        <h2 id="traced">Traced SVG previews</h2>
-        <p>
-          This generates a simplified, flat SVG version of the source image,
-          which it displays as a placeholder. This works well for images with
-          simple shapes or that include transparency.
-        </p>
-        <div
-          style={{
-            display: `grid`,
-            gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
-            gap: rhythm(1),
           }}
-        >
-          {assets.map(({ node: { id, title, traced } }) => (
-            <div key={id}>
-              <GatsbyImage
-                image={traced}
-                alt={title}
-                style={{ border: `1px solid red` }}
-              />
-            </div>
-          ))}
-        </div>
-        <h4>GraphQL query</h4>
-        <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
-          <code
-            dangerouslySetInnerHTML={{
-              __html: `{
+        />
+      </pre>
+      <h2 id="traced">Traced SVG previews</h2>
+      <p>
+        This generates a simplified, flat SVG version of the source image, which
+        it displays as a placeholder. This works well for images with simple
+        shapes or that include transparency.
+      </p>
+      <div
+        style={{
+          display: `grid`,
+          gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
+          gap: rhythm(1),
+        }}
+      >
+        {assets.map(({ node: { id, title, traced } }) => (
+          <div key={id}>
+            <GatsbyImage
+              image={traced}
+              alt={title}
+              style={{ border: `1px solid red` }}
+            />
+          </div>
+        ))}
+      </div>
+      <h4>GraphQL query</h4>
+      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: `{
   allContentfulAsset {
     edges {
       node {
@@ -306,11 +306,10 @@ const ImageAPI = props => {
     }
   }
 }`,
-            }}
-          />
-        </pre>
-      </Layout>
-    </>
+          }}
+        />
+      </pre>
+    </Layout>
   )
 }
 

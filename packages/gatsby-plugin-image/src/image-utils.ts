@@ -1,23 +1,10 @@
-/* eslint-disable no-unused-expressions */
-import { stripIndent } from "common-tags"
 import camelCase from "camelcase"
-import { IGatsbyImageData } from "."
+import type { IGatsbyImageData } from "./index"
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 export const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 export const EVERY_BREAKPOINT = [
-  320,
-  654,
-  768,
-  1024,
-  1366,
-  1600,
-  1920,
-  2048,
-  2560,
-  3440,
-  3840,
-  4096,
+  320, 654, 768, 1024, 1366, 1600, 1920, 2048, 2560, 3440, 3840, 4096,
 ]
 const DEFAULT_FLUID_WIDTH = 800
 const DEFAULT_FIXED_WIDTH = 800
@@ -48,6 +35,14 @@ export interface ISharpGatsbyImageArgs {
   transformOptions?: {
     fit?: Fit
     cropFocus?: number | string
+    duotone?: {
+      highlight: string
+      shadow: string
+      opacity?: number
+    }
+    grayscale?: boolean
+    rotate?: number
+    trim?: number
   }
   jpgOptions?: Record<string, unknown>
   pngOptions?: Record<string, unknown>
@@ -55,6 +50,7 @@ export interface ISharpGatsbyImageArgs {
   avifOptions?: Record<string, unknown>
   blurredOptions?: { width?: number; toFormat?: ImageFormat }
   breakpoints?: Array<number>
+  outputPixelDensities?: Array<number>
   backgroundColor?: string
 }
 
@@ -141,7 +137,7 @@ export const getSrcSet = (images: Array<IImage>): string =>
 export function formatFromFilename(filename: string): ImageFormat | undefined {
   const dot = filename.lastIndexOf(`.`)
   if (dot !== -1) {
-    const ext = filename.substr(dot + 1)
+    const ext = filename.slice(dot + 1)
     if (ext === `jpeg`) {
       return `jpg`
     }
@@ -454,8 +450,8 @@ export function fixedImageSizes({
   // print out this message with the necessary information before we overwrite it for sizing
   if (isTopSizeOverriden) {
     const fixedDimension = imgDimensions.width < width ? `width` : `height`
-    reporter.warn(stripIndent`
-    The requested ${fixedDimension} "${
+    reporter.warn(`
+The requested ${fixedDimension} "${
       fixedDimension === `width` ? width : height
     }px" for the image ${filename} was larger than the actual image ${fixedDimension} of ${
       imgDimensions[fixedDimension]

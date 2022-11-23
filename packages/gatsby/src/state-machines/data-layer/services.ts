@@ -1,24 +1,20 @@
-import { ServiceConfig } from "xstate"
+import { MachineOptions } from "xstate"
 import {
   customizeSchema,
   createPages,
-  createPagesStatefully,
   buildSchema,
   sourceNodes,
-  rebuildSchemaWithSitePage,
   writeOutRedirects as writeOutRedirectsAndWatch,
 } from "../../services"
 import { IDataLayerContext } from "./types"
 
-export const dataLayerServices: Record<
-  string,
-  ServiceConfig<IDataLayerContext>
-> = {
+export const dataLayerServices: MachineOptions<
+  IDataLayerContext,
+  any
+>["services"] = {
   customizeSchema,
   sourceNodes,
   createPages,
   buildSchema,
-  createPagesStatefully,
-  rebuildSchemaWithSitePage,
   writeOutRedirectsAndWatch,
 }

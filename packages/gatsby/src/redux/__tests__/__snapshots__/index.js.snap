@@ -4,17 +4,28 @@ exports[`redux db should write redux cache to disk 1`] = `
 Object {
   "components": Map {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
+      "componentChunkName": "component---users-username-dev-site-src-templates-my-sweet-new-page-js",
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "config": false,
       "isInBootstrap": true,
+      "isSlice": false,
       "pages": Set {
         "/my-sweet-new-page/",
       },
       "query": "",
+      "serverData": false,
     },
   },
   "html": Object {
     "browserCompilationHash": "",
+    "pagesThatNeedToStitchSlices": Set {},
+    "slicesProps": Object {
+      "byPagePath": Map {},
+      "bySliceId": Map {},
+      "bySliceName": Map {},
+    },
     "ssrCompilationHash": "",
+    "templateCompilationHashes": Object {},
     "trackedHtmlFiles": Map {
       "/my-sweet-new-page/" => Object {
         "dirty": 2,
@@ -28,6 +39,7 @@ Object {
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
+    "jobsByRequest": Map {},
   },
   "nodes": Map {
     "pageA" => Object {
@@ -62,8 +74,28 @@ Object {
     },
   },
   "pageDataStats": Map {},
+  "pages": Map {
+    "/my-sweet-new-page/" => Object {
+      "component": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "componentChunkName": "component---users-username-dev-site-src-templates-my-sweet-new-page-js",
+      "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "context": Object {
+        "id": "123456",
+      },
+      "internalComponentName": "Component/my-sweet-new-page/",
+      "isCreatedByStatefulCreatePages": false,
+      "matchPath": undefined,
+      "mode": "SSG",
+      "path": "/my-sweet-new-page/",
+      "pluginCreatorId": "",
+      "pluginCreator___NODE": "",
+      "slices": Object {},
+      "updatedAt": 1,
+    },
+  },
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},
+    "sliceNames": Set {},
   },
   "queries": Object {
     "byConnection": Map {},
@@ -88,6 +120,8 @@ Object {
       },
     },
   },
+  "slices": Map {},
+  "slicesByTemplate": Map {},
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {

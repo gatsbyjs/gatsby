@@ -6,7 +6,7 @@ Using MDX, you can replace every HTML element that Markdown renders with a
 custom implementation. This allows you to use a set of design system components
 when rendering.
 
-```jsx:title=src/components/layout.js
+```jsx:title=src/components/layout.jsx
 import { MDXProvider } from "@mdx-js/react"
 import * as DesignSystem from "your-design-system"
 
@@ -28,7 +28,7 @@ export default function Layout({ children }) {
 }
 ```
 
-**Note**: you can also provide your own custom components to the `MDXProvider` that make them globally available while writing MDX. You can find more details about this pattern in the [Importing and Using Components in MDX guide](/docs/mdx/importing-and-using-components#make-components-available-globally-as-shortcodes).
+**Note**: You can also provide your own custom components to the `MDXProvider` that make them globally available while writing MDX. You can find more details about this pattern in the [Importing and Using Components in MDX guide](/docs/how-to/routing/mdx#make-components-available-globally-as-shortcodes).
 
 The following components can be customized with the MDXProvider:
 
@@ -68,10 +68,10 @@ The following components can be customized with the MDXProvider:
 
 ## How does this work?
 
-Components passed to the MDXProvider are used to render the HTML elements
-that Markdown creates. It uses
-[React's Context API](https://reactjs.org/docs/context.html).
+Components passed to the MDXProvider are used to render the HTML elements that Markdown creates. It uses [React's Context API](https://reactjs.org/docs/context.html).
 
 ## Related
 
 - [MDX components](https://mdxjs.com/getting-started/)
+- [Adding Components to Markdown with MDX](/docs/how-to/routing/mdx/)
+- [gatsby-plugin-mdx README](/plugins/gatsby-plugin-mdx)

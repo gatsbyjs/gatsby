@@ -8,7 +8,7 @@ describe(`patchConsole`, () => {
     info: jest.fn(),
   }
 
-  patchConsole((reporter as unknown) as typeof gatsbyReporter)
+  patchConsole(reporter as unknown as typeof gatsbyReporter)
   ;[`info`, `log`, `warn`].forEach(method => {
     describe(method, () => {
       beforeEach(reporter[method].mockReset)

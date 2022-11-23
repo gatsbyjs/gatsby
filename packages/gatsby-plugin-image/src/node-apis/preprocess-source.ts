@@ -74,7 +74,6 @@ export async function preprocessSource({
     sourceDir,
     createNodeId,
     createNode,
-    store,
     filename,
   })
 

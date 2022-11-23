@@ -1,5 +1,10 @@
 ---
 title: Sourcing from WordPress
+examples:
+  - label: Using WordPress
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress"
+  - label: Using WordPress with ACF
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress-with-acf"
 ---
 
 This guide will walk you through the process of using Gatsby with WordPress and [WPGraphQL](https://www.wpgraphql.com/).
@@ -77,7 +82,7 @@ module.exports = {
 }
 ```
 
-**Note**: If your config varies from what it shown above, for instance, if you are securing your WordPress instance with Basic Auth, please refer to the [plugin docs](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md) for more information on how to setup other options required for your use case.
+**Note**: If your config varies from what is shown above, for instance, if you are securing your WordPress instance with Basic Auth, please refer to the [plugin docs](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md) for more information on how to set up other options required for your use case.
 
 ## Using WordPress data
 

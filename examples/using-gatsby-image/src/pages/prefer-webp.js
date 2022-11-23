@@ -1,39 +1,41 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
 
 const PreferWebp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.localFile.childImageSharp.fluid}
+    image={getImage(data.coverImage.localFile)}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Prefer WebP</PageTitle>
-    <FloatingImage
-      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
-      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.floatingImage.localFile)}
+      alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
       WebP is a modern image format that provides both lossless and lossy
       compression for images on the web. This format can reduce the filesize
-      considerably compared to JPG and PNG files, and using it is pretty easy
-      with <strong>gatsby-image</strong> and{` `}
+      considerably compared to JPG and PNG files. WebP images are generated
+      automatically when you use <strong>gatsby-plugin-image</strong> with
+      {` `}
       <strong>gatsby-plugin-sharp</strong>.
     </p>
     <p>
-      The <strong>WebP</strong> technique is similar to other gatsby-image
-      techniques in that it can be applied in image queries with GraphQL. To
-      specify that an image should be loaded in the WebP format in supporting
-      browsers, use a fragment with <code>withWebp</code> at the end.
+      The use of <strong>WebP</strong> is controlled by the{" "}
+      <strong>formats</strong> array and can be configured via your{" "}
+      <strong>gatsby-config.js</strong> file if you want to apply it to all
+      images in your site. Alternatively, it can be part of your GraphQL query
+      or passed via props when using StaticImage. <strong>AVIF</strong> is also
+      supported. By default, the original image format will be used as fallback
+      for browsers that don't have <strong>WebP</strong> support.
     </p>
-    <Img
-      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
-      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.fullWidthImage.localFile)}
+      alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
     <p />
   </Layout>
@@ -42,24 +44,20 @@ const PreferWebp = ({ data, location }) => (
 export default PreferWebp
 
 export const query = graphql`
-  query {
+  {
     coverImage: unsplashImagesYaml(title: { eq: "Pug with yellow raincoat" }) {
       credit
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 720) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(layout: CONSTRAINED, width: 720, aspectRatio: 0.5)
         }
       }
     }
     floatingImageMobile: unsplashImagesYaml(title: { eq: "Cacti" }) {
       localFile {
         childImageSharp {
-          fixed(width: 120) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
+          gatsbyImageData(width: 120, layout: FIXED)
         }
       }
     }
@@ -68,9 +66,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fixed(width: 200) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
+          gatsbyImageData(width: 200, layout: FIXED)
         }
       }
     }
@@ -79,9 +75,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
+          gatsbyImageData(width: 600, layout: CONSTRAINED)
         }
       }
     }

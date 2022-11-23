@@ -10,6 +10,11 @@ import { LAST_COMPLETED_SOURCE_TIME } from "../../../constants"
  * If there is, it calls the refresh webhook so that schema customization and source nodes run again.
  */
 const checkForNodeUpdates = async ({ cache, emitter }) => {
+  // pause polling until we know wether or not there are new actions
+  // if there aren't any we will unpause below, if there are some we will unpause
+  // at the end of sourceNodes (triggered by WEBHOOK_RECEIVED below)
+  store.dispatch.develop.pauseRefreshPolling()
+
   // get the last sourced time
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
   const since = lastCompletedSourceTime - 500
@@ -30,19 +35,17 @@ const checkForNodeUpdates = async ({ cache, emitter }) => {
   })
 
   if (newActions.length) {
-    // if there's atleast 1 new action, pause polling,
-    // refresh Gatsby schema+nodes and continue on
-    store.dispatch.develop.pauseRefreshPolling()
-
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: {
         since,
         refreshing: true,
       },
+      pluginName: `gatsby-source-wordpress`,
     })
   } else {
     // set new last completed source time and move on
     await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
+    store.dispatch.develop.resumeRefreshPolling()
   }
 }
 
@@ -108,28 +111,51 @@ const refetcher = async (
   )
 }
 
+let startedPolling = false
+let firstCompilationDone = false
+
 /**
  * Starts constantly refetching the latest WordPress changes
  * so we can update Gatsby nodes when data changes
  */
 const startPollingForContentUpdates = helpers => {
   if (
+    startedPolling ||
     process.env.WP_DISABLE_POLLING ||
     process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
   ) {
     return
   }
 
+  startedPolling = true
+
   const { verbose, develop } = store.getState().gatsbyApi.pluginOptions
 
   const msRefetchInterval = develop.nodeUpdateInterval
 
-  if (verbose) {
-    helpers.reporter.log(``)
-    helpers.reporter.info(formatLogMessage`Watching for WordPress changes`)
-  }
+  helpers.emitter.on(`COMPILATION_DONE`, () => {
+    /**
+     * we only want to start our refetcher helper 1 time after the first COMPILATION_DONE event.
+     * This event happens when the dev server is ready. It also happens after saving a code change. We only want to run our code 1 time.
+     * onCreateDevServer (the node API we're hooking into) is called before the dev server is ready.
+     * Running our logic at that point is problematic because we could end up triggering the WEBHOOK_RECEIVED event before the dev server is ready and this can cause Gatsby to throw errors. So we're hooking into COMPILATION_DONE to avoid that problem.
+     */
+    if (!firstCompilationDone) {
+      firstCompilationDone = true
 
-  refetcher(msRefetchInterval, helpers)
+      // wait a second so that terminal output is more smooth
+      setTimeout(() => {
+        if (verbose) {
+          helpers.reporter.log(``)
+          helpers.reporter.info(
+            formatLogMessage`Watching for WordPress changes`
+          )
+        }
+
+        refetcher(msRefetchInterval, helpers)
+      }, 1000)
+    }
+  })
 }
 
 export { startPollingForContentUpdates }

@@ -1,5 +1,6 @@
 const path = require(`path`)
 const Url = require(`url`)
+const { createFilePath } = require(`gatsby-core-utils`)
 
 /**
  * getParsedPath
@@ -37,18 +38,10 @@ export function getRemoteFileExtension(url) {
  * @return {String}          filename
  */
 export function getRemoteFileName(url) {
-  return getParsedPath(url).name
+  return decodeURIComponent(getParsedPath(url).name)
 }
 
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} ext
- * @return {String}
- */
-export function createFilePath(directory, filename, ext) {
-  return path.join(directory, `${filename}${ext}`)
-}
+// createFilePath should be imported from `gatsby-core-utils`
+// but some plugins already do import it from `gatsby-source-filesystem/utils`
+// so just keeping re-export here for backward compatibility
+export { createFilePath }

@@ -19,11 +19,11 @@ Object {
           "version": "1.0.0",
         },
       },
-      "plugin": Object {
-        "name": "test-plugin",
-        "resolve": "/node_modules/test-plugin",
-        "version": "1.0.0",
-      },
+    },
+  },
+  "jobsByRequest": Map {
+    "" => Set {
+      "aa9932d515707737e953173cd9c77306",
     },
   },
 }

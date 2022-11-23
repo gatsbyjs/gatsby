@@ -25,7 +25,7 @@ Reasons to fetch certain data at build time vs. client runtime will vary, but in
 
 In order to fetch data at build time, you can use a source plugin or source data yourself. To source data yourself you can create an integration with a third-party system by creating [nodes for the GraphQL layer](/docs/node-creation/) in your `gatsby-node` file from retrieved data that becomes queryable in pages. This is the same method that source plugins implement to [source data](/docs/content-and-data/) while the site builds. You can read about that process in the [Creating a Source Plugin guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
 
-> This process of fetching data at build time and creating pages from the data is [covered in more depth in the tutorial](/docs/tutorial/part-five/) as well as the docs for [creating pages from data programmatically](/docs/programmatically-create-pages-from-data/).
+> This process of fetching data at build time and creating pages from the data is [covered in more depth in the tutorial](/docs/tutorial/part-5/) as well as the docs for [creating pages from data programmatically](/docs/programmatically-create-pages-from-data/).
 
 #### Source data to be queried at build time
 
@@ -60,7 +60,8 @@ module.exports = {
 Alternately, if you want to source data yourself you can use APIs Gatsby provides. Source plugins take advantage of the [`sourceNodes` API](/docs/reference/config-files/gatsby-node/#sourceNodes) and the [`createNode` action](/docs/reference/config-files/actions/#createNode) provided by Gatsby to make your data queryable during the build process. If you want to source data yourself you can add a section of code like this using the `createNode` API to add a node to your data layer manually:
 
 ```js:title=gatsby-node.js
-const fetch = require(`node-fetch`)
+const fetch = (...args) =>
+  import(`node-fetch`).then(({ default: fetch }) => fetch(...args))
 
 exports.sourceNodes = async ({
   actions: { createNode },

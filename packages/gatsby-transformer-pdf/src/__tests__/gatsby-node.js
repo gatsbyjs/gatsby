@@ -1,5 +1,5 @@
 const path = require(`path`)
-const { onCreateNode } = require(`../gatsby-node`)
+const { onCreateNode, shouldOnCreateNode } = require(`../gatsby-node`)
 
 describe(`gatsby-transformer-pdf`, () => {
   let node
@@ -25,24 +25,34 @@ describe(`gatsby-transformer-pdf`, () => {
 
   it(`should do nothing if file extension is not pdf`, async () => {
     node.extension = `js`
-    await onCreateNode({
-      node,
-      actions,
-      loadNodeContent,
-      createNodeId,
-      createContentDigest,
-    })
+
+    const shouldCreateNode = shouldOnCreateNode({ node })
+
+    if (shouldCreateNode) {
+      await onCreateNode({
+        node,
+        actions,
+        loadNodeContent,
+        createNodeId,
+        createContentDigest,
+      })
+    }
+
     expect(createNodeId).not.toHaveBeenCalled()
   })
 
   it(`should create node base on pdf data`, async () => {
-    await onCreateNode({
-      node,
-      actions,
-      loadNodeContent,
-      createNodeId,
-      createContentDigest,
-    })
+    const shouldCreateNode = shouldOnCreateNode({ node })
+
+    if (shouldCreateNode) {
+      await onCreateNode({
+        node,
+        actions,
+        loadNodeContent,
+        createNodeId,
+        createContentDigest,
+      })
+    }
     expect(actions.createNode).toHaveBeenCalledWith({
       children: [],
       content: expect.any(String),

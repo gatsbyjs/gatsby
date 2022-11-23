@@ -183,10 +183,8 @@ export function updateImport(babel) {
         }
         const query = node.quasi?.quasis?.[0]?.value?.raw
         if (query) {
-          const {
-            ast: transformedGraphQLQuery,
-            hasChanged,
-          } = processGraphQLQuery(query, state)
+          const { ast: transformedGraphQLQuery, hasChanged } =
+            processGraphQLQuery(query, state)
 
           if (hasChanged) {
             node.quasi.quasis[0].value.raw = graphql.print(
@@ -203,10 +201,8 @@ export function updateImport(babel) {
         const query = node.arguments?.[0].quasis?.[0]?.value?.raw
 
         if (query) {
-          const {
-            ast: transformedGraphQLQuery,
-            hasChanged,
-          } = processGraphQLQuery(query, state)
+          const { ast: transformedGraphQLQuery, hasChanged } =
+            processGraphQLQuery(query, state)
 
           if (hasChanged) {
             node.arguments[0].quasis[0].value.raw = graphql.print(
@@ -390,10 +386,8 @@ function processGraphQLQuery(query, state) {
         if (!sharpField) {
           return
         }
-        const [
-          fixedOrFluidField,
-        ] = sharpField.selectionSet.selections.filter(({ name }) =>
-          propNames.includes(name?.value)
+        const [fixedOrFluidField] = sharpField.selectionSet.selections.filter(
+          ({ name }) => propNames.includes(name?.value)
         )
 
         if (!fixedOrFluidField) {

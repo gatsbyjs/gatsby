@@ -1,0 +1,8 @@
+---json
+{ "title": "I should not be parsed", "otherKey": "Some other key" }
+
+---
+
+<h1>A page with JSON frontmatter</h1>
+
+<span data-cy="frontmatter">{props.pageContext.frontmatter?.title || `disabled`}</span>

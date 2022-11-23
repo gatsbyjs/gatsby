@@ -7,6 +7,7 @@ import clipboardy from "clipboardy"
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import rateLimit, { RateLimitedAxiosInstance } from "axios-rate-limit"
 import { bold } from "chalk"
+import retry from "async-retry"
 import { formatLogMessage } from "./format-log-message"
 import store from "~/store"
 import { getPluginOptions } from "./get-gatsby-api"
@@ -26,6 +27,13 @@ export const moduleHelpers = {
     return http
   },
 }
+
+const errorIs500ish = (e: Error): boolean =>
+  e.message.includes(`Request failed with status code 50`) &&
+  (e.message.includes(`502`) ||
+    e.message.includes(`503`) ||
+    e.message.includes(`500`) ||
+    e.message.includes(`504`))
 
 interface IHandleErrorOptionsInput {
   variables: IJSON
@@ -255,11 +263,8 @@ const genericError = ({ url }: { url: string }): string =>
 const slackChannelSupportMessage = `If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.`
 
 const getLowerRequestConcurrencyOptionMessage = (): string => {
-  const {
-    requestConcurrency,
-    previewRequestConcurrency,
-    perPage,
-  } = store.getState().gatsbyApi.pluginOptions.schema
+  const { requestConcurrency, previewRequestConcurrency, perPage } =
+    store.getState().gatsbyApi.pluginOptions.schema
 
   return `Try reducing the ${bold(
     `requestConcurrency`
@@ -334,12 +339,7 @@ const handleFetchErrors = async ({
     return
   }
 
-  if (
-    e.message.includes(`Request failed with status code 50`) &&
-    (e.message.includes(`502`) ||
-      e.message.includes(`503`) ||
-      e.message.includes(`504`))
-  ) {
+  if (errorIs500ish(e) && !e.message.includes(`500`)) {
     if (`message` in e) {
       console.error(formatLogMessage(new Error(e.message).stack))
     }
@@ -470,9 +470,8 @@ ${slackChannelSupportMessage}`
     return
   }
 
-  const responseReturnedHtml = !!response?.headers[`content-type`].includes(
-    `text/html;`
-  )
+  const responseReturnedHtml =
+    !!response?.headers[`content-type`].includes(`text/html;`)
   const limit = pluginOptions?.schema?.requestConcurrency
 
   if (responseReturnedHtml && isFirstRequest) {
@@ -733,9 +732,24 @@ const fetchGraphql = async ({
       requestOptions.auth = htaccessCredentials
     }
 
-    response = await moduleHelpers
-      .getHttp(limit)
-      .post(url, { query, variables }, requestOptions)
+    response = await retry(
+      (bail: (e: Error) => void) =>
+        moduleHelpers
+          .getHttp(limit)
+          .post(url, { query, variables }, requestOptions)
+          .catch(e => {
+            if (!errorIs500ish(e)) {
+              // for any error that is not a 50x error, we bail, meaning we stop retrying. error will be thrown one level higher
+              bail(e)
+
+              return null
+            } else {
+              // otherwise throwing the error will cause the retry to happen again
+              throw e
+            }
+          }),
+      { retries: 5 }
+    )
 
     if (response.data === ``) {
       throw new Error(`GraphQL request returned an empty string.`)
@@ -745,7 +759,11 @@ const fetchGraphql = async ({
 
     const responsePath = response.request.path
 
-    if (path !== responsePath && responsePath !== undefined) {
+    if (
+      path !== responsePath &&
+      responsePath !== undefined &&
+      responsePath !== url
+    ) {
       throw new Error(`GraphQL request was redirected to ${responsePath}`)
     }
 

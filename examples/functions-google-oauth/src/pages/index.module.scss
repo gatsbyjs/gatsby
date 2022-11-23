@@ -1,0 +1,104 @@
+.title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 60px;
+  letter-spacing: -1px;
+  text-align: center;
+}
+
+.poweredBy {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: center;
+  margin: 0;
+  color: #232129;
+}
+
+.logoTitle {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 60px;
+  line-height: 75px;
+  /* identical to box height, or 125% */
+  text-align: center;
+  letter-spacing: -1.5px;
+  margin: 0;
+  /* Grey / 90 */
+  color: #232129;
+}
+
+.link {
+  font-weight: bold;
+  color: #7026b9;
+  text-decoration: none;
+}
+
+.gatsby-icon {
+  margin-top: 20px;
+
+  @media only screen and (max-width: 500px) {
+    margin-top: 5px;
+  }
+
+  svg {
+    width: auto;
+    height: auto;
+  }
+}
+
+.gatsby-icon svg {
+  margin-bottom: 40px;
+  @media only screen and (max-width: 500px) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.landing-page {
+  text-align: center;
+  position: absolute;
+  top: 10%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  font-family: Futura PT, Roboto;
+  max-width: 100vw;
+
+  @media only screen and (max-width: 500px) {
+    top: 5%;
+  }
+}
+
+.sign-in-button {
+  background-color: #7100b6;
+  color: white;
+  border-radius: 100px;
+  font-weight: 600;
+  padding: 8px 32px;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 21px;
+  border: 1px solid #7100b6;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 1.5rem;
+    font-weight: normal;
+    padding: 16px 32px;
+  }
+}
+
+.sign-in-button:hover {
+  background-color: white;
+  color: #7100b6;
+  transition: all 0.3s ease-in-out;
+}
