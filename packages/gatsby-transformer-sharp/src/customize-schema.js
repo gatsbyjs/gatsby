@@ -14,7 +14,6 @@ const {
   base64,
   fluid,
   fixed,
-  traceSVG,
   generateImageData,
 } = require(`gatsby-plugin-sharp`)
 const { hasFeature } = require(`gatsby-plugin-utils`)
@@ -67,14 +66,7 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
-  traceSVG({
-    file,
-    args: { ...fieldArgs.traceSVG },
-    fileArgs: fieldArgs,
-    cache,
-    reporter,
-  })
+let didShowFixed = false
 
 const fixedNodeType = ({
   pathPrefix,
@@ -90,12 +82,15 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent =>
-            getTracedSVG({
-              ...parent,
-              cache,
-              reporter,
-            }),
+          resolve: parent => {
+            if (!didShowFixed) {
+              console.trace(
+                `[gatsby-transformer-sharp fixed.tracedSVG] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+              )
+              didShowFixed = true
+            }
+            return parent.base64
+          },
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -234,6 +229,8 @@ const fixedNodeType = ({
   }
 }
 
+let didShowFluid = false
+
 const fluidNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -248,12 +245,15 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent =>
-            getTracedSVG({
-              ...parent,
-              cache,
-              reporter,
-            }),
+          resolve: parent => {
+            if (!didShowFluid) {
+              console.trace(
+                `[gatsby-transformer-sharp fluid.tracedSVG] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+              )
+              didShowFluid = true
+            }
+            return parent.base64
+          },
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
         src: { type: new GraphQLNonNull(GraphQLString) },
@@ -561,6 +561,8 @@ let didShow = false
  */
 const inProgressCopy = new Set()
 
+let didShowResized = false
+
 const createFields = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -645,12 +647,19 @@ const createFields = ({
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent =>
-              getTracedSVG({
-                ...parent,
+            resolve: async parent => {
+              if (!didShowResized) {
+                console.trace(
+                  `[gatsby-transformer-sharp resize resolver] traceSVG is no longer supported, falling back to blurred`
+                )
+                didShowResized = true
+              }
+              const { src } = await base64({
+                file: parent.file,
                 cache,
-                reporter,
-              }),
+              })
+              return src
+            },
           },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },

@@ -71,7 +71,7 @@ const queue = Queue<
   if (type === PlaceholderType.TRACED_SVG) {
     if (!didShow) {
       console.trace(
-        `[gatsby-plugin-utils placeholder-handler queue handler] traceSVG is no longer supported, falling back to dominantColor`
+        `[gatsby-plugin-utils placeholder-handler queue handler] traceSVG is no longer supported, falling back to dominantColor. See https://gatsby.dev/tracesvg-removal/`
       )
       didShow = true
     }
