@@ -4,15 +4,12 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby v4
+  Gatsby
 </h1>
 
 <p align="center">
-  ⚛️ 📄 🚀
-</p>
-<p align="center">
   <strong>
-    Static. That. Scales.
+    The future of web development is here.
   </strong>
 </p>
 <p align="center">
@@ -62,70 +59,56 @@
 
 Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites.
 
-- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
-  limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
-  dynamic web apps, from blogs to e-commerce sites to user dashboards.
+- **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins to load your data, then develop using Gatsby’s uniform GraphQL interface.
 
-- **Choose your Rendering Option.** You can choose alternative [rendering options](https://gatsbyjs.com/docs/conceptual/rendering-options/), namely Deferred Static Generation (DSG) and Server-Side Rendering (SSR), in addition to Static Site Generation (SSG) — on a per-page basis. This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
+- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the limitations. Gatsby sites are fully functional React apps, so you can create high-quality, dynamic web apps, from blogs to e-commerce sites to user dashboards.
 
-- **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
-  built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
-  whether the data is coming from the same backend.
+- **Choose your Rendering Options.** You can choose alternative [rendering options](https://gatsbyjs.com/docs/conceptual/rendering-options/), namely Deferred Static Generation (DSG) and Server-Side Rendering (SSR), in addition to Static Site Generation (SSG) — on a per-page basis. This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
 
-- **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
-  files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
-  to load your data, then develop using Gatsby’s uniform GraphQL interface.
+- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources, and more to ensure your site is fast — no manual tuning required.
 
-- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-  splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
-  and more to ensure your site is fast — no manual tuning required.
+- **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are built using React and GraphQL. Build a uniform workflow for you and your team, regardless of whether the data is coming from the same backend.
 
-- **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
-  site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
-  hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
+- **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
+
+- **Use Gatsby's Centralized Data Layer Everywhere.** With Gatsby's [Valhalla Content Hub](https://www.gatsbyjs.com/products/valhalla-content-hub/) you can bring Gatsby's data layer to any project. Making it accessible via a unified GraphQL API for building content sites, eCommerce platforms, and both native and web applications.
 
 [**Learn how to use Gatsby for your next project.**](https://www.gatsbyjs.com/docs/)
 
-## What’s In This Document
+## 🚀 Ship your first Gatsby site in 5 Minutes
 
-- [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
-- [Learning Gatsby](#-learning-gatsby)
-- [Release Notes](#-release-notes)
-- [Migration Guides](#-migration-guides)
-- [How to Contribute](#-how-to-contribute)
-- [License](#-license)
-- [Thanks to Our Contributors](#-thanks)
+Click the link below to quickly try the workflow of developing, building, and deploying websites with Gatsby and Gatsby Cloud.
 
-## 🚀 Get Up and Running in 5 Minutes
+[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog&utm_source=github&utm_medium=link&utm_campaign=onboarding&utm_content=oss)
+
+At the end of this process, you'll have
+
+1. a site working on Gatsby Cloud
+2. a new repository that is linked to that new site
+3. as you push changes to your new repository, Gatsby Cloud will automatically rebuild and redeploy your site!
+
+## 💻 Get started with Gatsby locally in 5 Minutes
 
 You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
 
-1. **Install the Gatsby CLI.**
+1. **Initialize a new project.**
 
    ```shell
-   npm install -g gatsby-cli
+   npm init gatsby
    ```
 
-2. **Create a Gatsby site from a Gatsby starter.**
+   Give it the name "My Gatsby Site".
 
-   Get your Gatsby blog set up in a single command:
-
-   ```shell
-   # Create a new Gatsby site using the interactive setup wizard
-   # Give it this name: My Gatsby site
-   gatsby new
-   ```
-
-3. **Start the site in `develop` mode.**
+2. **Start the site in `develop` mode.**
 
    Next, move into your new site’s directory and start it up:
 
    ```shell
    cd my-gatsby-site/
-   gatsby develop
+   npm run develop
    ```
 
-4. **Open the source code and start editing!**
+3. **Open the source code and start editing!**
 
    Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
@@ -147,10 +130,13 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 
 Wondering what we've shipped recently? Check out our [release notes](https://www.gatsbyjs.com/docs/reference/release-notes) for key highlights, performance improvements, new features, and notable bugfixes.
 
+Also, read our [documentation on version support](https://www.gatsbyjs.com/docs/reference/release-notes/gatsby-version-support/) to understand our plans for each version of Gatsby.
+
 ## 💼 Migration Guides
 
-Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v4 to your site without starting from scratch!
+Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v5 to your site without starting from scratch!
 
+- [Migrate from v4 to v5](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v4-to-v5/)
 - [Migrate from v3 to v4](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v3-to-v4/)
 - [Migrate from v2 to v3](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/)
 
@@ -167,10 +153,6 @@ Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how
 ### A note on how this repository is organized
 
 This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](https://github.com/gatsbyjs/gatsby/tree/master/packages) managed in this codebase, even though we publish them to NPM as separate packages.
-
-### Contributing to Gatsby v3
-
-We are only accepting critical security patches for Gatsby v3.
 
 ## 📝 License
 

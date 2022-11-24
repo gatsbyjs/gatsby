@@ -16,6 +16,8 @@ const _argv = yargs
         demandOption: true,
       }),
     async ({ pkg }) => {
+      // Needs to be called to fill the packageNameToDirname map
+      getAllPackageNames()
       await regenerateChangelog(pkg)
     }
   )
@@ -43,6 +45,8 @@ const _argv = yargs
         demandOption: true,
       }),
     async ({ pkg }) => {
+      // Needs to be called to fill the packageNameToDirname map
+      getAllPackageNames()
       await updateChangelog(pkg)
     }
   )

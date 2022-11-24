@@ -1,6 +1,7 @@
 import React from "react"
 
 import Layout from "../components/layout"
+import Seo from "../components/seo"
 import { useStaticQuery, graphql } from "gatsby"
 
 const SiteType = () => {
@@ -31,5 +32,7 @@ const SiteType = () => {
     </Layout>
   )
 }
+
+export const Head = () => <Seo />
 
 export default SiteType

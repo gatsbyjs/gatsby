@@ -288,6 +288,7 @@ describe(`Dev loader`, () => {
     const createAsyncRequires = components => {
       return {
         components,
+        head: components,
       }
     }
 
@@ -339,6 +340,7 @@ describe(`Dev loader`, () => {
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([
         `component`,
+        `head`,
         `json`,
         `page`,
         `staticQueryResults`,
@@ -438,7 +440,7 @@ describe(`Dev loader`, () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/`
+        `404 page could not be found. Checkout https://www.gatsbyjs.com/docs/how-to/adding-common-features/add-404-page/`
       )
 
       mock.error(defaultXHRMockErrorHandler)

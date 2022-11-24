@@ -1,3 +1,4 @@
+import "./global"
 export { GatsbyImage } from "./components/gatsby-image.server"
 export {
   GatsbyImageProps,

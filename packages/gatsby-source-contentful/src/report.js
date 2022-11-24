@@ -7,10 +7,16 @@ export const CODES = {
   SyncError: `111003`,
   FetchContentTypes: `111004`,
   GatsbyPluginMissing: `111005`,
+  ContentTypesMissing: `111006`,
 }
 
 export const ERROR_MAP = {
   [CODES.LocalesMissing]: {
+    text: context => context.sourceMessage,
+    level: `ERROR`,
+    category: `USER`,
+  },
+  [CODES.ContentTypesMissing]: {
     text: context => context.sourceMessage,
     level: `ERROR`,
     category: `USER`,

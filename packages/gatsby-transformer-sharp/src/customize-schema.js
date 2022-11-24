@@ -17,6 +17,7 @@ const {
   traceSVG,
   generateImageData,
 } = require(`gatsby-plugin-sharp`)
+const { hasFeature } = require(`gatsby-plugin-utils`)
 
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
@@ -373,7 +374,7 @@ const fluidNodeType = ({
         defaultValue: ``,
       },
       srcSetBreakpoints: {
-        type: GraphQLList(GraphQLInt),
+        type: new GraphQLList(GraphQLInt),
         defaultValue: [],
         description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
       },
@@ -407,7 +408,9 @@ const imageNodeType = ({
   cache,
 }) => {
   return {
-    type: new GraphQLNonNull(GraphQLJSON),
+    type: hasFeature(`graphql-typegen`)
+      ? `GatsbyImageData!`
+      : new GraphQLNonNull(GraphQLJSON),
     args: {
       layout: {
         type: ImageLayoutType,
@@ -458,7 +461,7 @@ const imageNodeType = ({
         description: `Options for traced placeholder SVGs. You also should set placeholder to "TRACED_SVG".`,
       },
       formats: {
-        type: GraphQLList(ImageFormatType),
+        type: new GraphQLList(ImageFormatType),
         description: stripIndent`
         The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG", "WEBP" and "AVIF".
         The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
@@ -467,14 +470,14 @@ const imageNodeType = ({
         `,
       },
       outputPixelDensities: {
-        type: GraphQLList(GraphQLFloat),
+        type: new GraphQLList(GraphQLFloat),
         description: stripIndent`
         A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image.
         Default is [ 1, 2 ] for FIXED images, meaning 1x and 2x and [0.25, 0.5, 1, 2] for CONSTRAINED. In this case, an image with a constrained layout
         and width = 400 would generate images at 100, 200, 400 and 800px wide. Ignored for FULL_WIDTH images, which use breakpoints instead`,
       },
       breakpoints: {
-        type: GraphQLList(GraphQLInt),
+        type: new GraphQLList(GraphQLInt),
         description: stripIndent`
         Specifies the image widths to generate. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
         based on the image size. For FULL_WIDTH images this can be used to override the default, which is [750, 1080, 1366, 1920].

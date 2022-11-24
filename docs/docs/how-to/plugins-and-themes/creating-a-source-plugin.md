@@ -5,25 +5,26 @@ tableOfContentsDepth: 2
 
 import { Announcement } from "gatsby-interface"
 
+Source plugins are reusable integrations with content and data backends. There are already [100s of ready-to-use source plugins for popular content APIs](/plugins/?=gatsby-source) like Contentful, Drupal, and WordPress. This tutorial teaches you how to build your own integration.
+
 In this tutorial, you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/graphql-data-layer/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
+Source plugins fetch data from remote or local services and write the data into the embedded Gatsby Database (powered by [LMDB](https://github.com/kriszyp/lmdb-js)).
 
 At a high-level, a source plugin:
 
-- Ensures local data is synced with its source and is 100% accurate.
-- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) with accurate media types, human-readable types, and accurate
-  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest).
-- Links nodes & creates relationships between them.
-- Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
+- Ensures the data in the Gatsby DB is synced with the latest updates from its source
+- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) (Gatsby's name for an object) with accurate media types, human-readable types, and accurate
+  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest)
+- Creates relationships between nodes
 
 A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/reference/config-files/gatsby-node/) file where you implement Gatsby's Node APIs. Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/how-to/plugins-and-themes/creating-a-generic-plugin).
 
 ## Why create a source plugin?
 
-Source plugins convert data from any source into a format that Gatsby can process. Your Gatsby site can use several source plugins to combine data in interesting ways.
+Source plugins make data from any source available to your Gatsby sites. Your Gatsby site can use several source plugins, like commerce data from Shopify, or content from one or more content management systems (like Contentful, WordPress, etc.), all in a unified graph.
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
@@ -169,7 +170,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -421,7 +421,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -435,7 +434,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: AUTHOR_NODE_TYPE,
-        content: JSON.stringify(author),
         contentDigest: createContentDigest(author),
       },
     })
@@ -820,10 +818,10 @@ The source plugin needs to create node manifests using the [`unstable_createNode
 
 The first thing you'll want to do is identify which nodes you'll want to create a node manifest for. These will typically be nodes that you can preview, entry nodes, top level nodes, etc. An example of this could be a blog post or an article, any node that can be the "owner" of a page. A good place to call this action is whenever you call `createNode`.
 
-An easy way to keep track of your manifest logic is to parse it out into a different util function. Either inside the `createNodeManifest` util or before you call it you'll need to vet which nodes you'll want to create manifests for.
+An easy way to keep track of your manifest logic is to parse it out into a different util function. Before you call `unstable_createNodeManifest` you'll need to vet which nodes you'll want to create manifests for.
 
 ```javascript:title=source-plugin/gatsby-node.js
-import { createNodeManifest } from "./utils.js"
+import { customCreateNodeManifest } from "./utils.js"
 exports.sourceNodes = async (
   { actions }
 ) => {
@@ -836,7 +834,7 @@ exports.sourceNodes = async (
 
     const nodeIsEntryNode = `some condition`
     if (nodeIsEntryNode) {
-      createNodeManifest({
+      customCreateNodeManifest({
         entryItem: node,
         entryNode: gatsbyNode,
         project,
@@ -850,10 +848,10 @@ exports.sourceNodes = async (
 
 ##### Check for support
 
-At the moment you'll only want to create node manifests for preview content and because this is a newer API, we'll need to check if the Gatsby version supports [`unstable_createNodeManifest`](/docs/reference/config-files/actions/#unstable_createNodeManifest).
+At the moment you'll only want to create node manifests for preview content. You may also want to filter out certain types of nodes, for example if your CMS has nodes that will never be previewed like redirect nodes or other types of non-content data.
 
 ```javascript:title=source-plugin/utils.js
-export function createNodeManifest({
+export function customCreateNodeManifest({
   entryItem, // the raw data source/cms content data
   project,   // the cms project data
   entryNode, // the Gatsby node
@@ -863,10 +861,7 @@ export function createNodeManifest({
   // This env variable is provided automatically on Gatsby Cloud hosting
   const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
-  const createNodeManifestIsSupported =
-    typeof unstable_createNodeManifest === `function`
-
-  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
+  const shouldCreateNodeManifest = isPreview && !!customNodeFilteringFn(entryNode)
   // highlight-end
 
   if (shouldCreateNodeManifest) {
@@ -880,7 +875,7 @@ export function createNodeManifest({
 Next we will build up the `manifestId` and call `unstable_createNodeManifest`. The `manifestId` needs to be created with information that comes from the CMS **NOT** Gatsby (the CMS will need to create the exact same manifest), which is why we use the `entryItem` id as opposed to the `entryNode` id. This `manifestId` must be uniquely tied to a specific revision of specific content. We use the CMS project space (you may not need this), the id of the content, and finally the timestamp that it was updated at.
 
 ```javascript:title=source-plugin/utils.js
-export function createNodeManifest({
+export function customCreateNodeManifest({
   // ...
 }) {
   // ...
@@ -909,7 +904,7 @@ Lastly we'll want to give our users a good experience and give a warning if they
 let warnOnceForNoSupport = false
 // highlight-end
 
-export function createNodeManifest({
+export function customCreateNodeManifest({
   // ...
 }) {
   // ...
@@ -1027,20 +1022,24 @@ It is also recommended that you add a polyfill to provide support back through G
 ```js
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
-addRemoteFilePolyfillInterface(
-  schema.buildObjectType({
-    name: `YourImageAssetNodeType`,
-    fields: {
-      // your fields
-    },
-    interfaces: [`Node`, `RemoteFile`],
-  }),
-  {
-    schema,
-    actions,
-    // schema and actions are arguments on the `createSchemaCustomization` API
-  }
-)
+exports.createSchemaCustomization = ({ actions, schema, store }) => {
+  const imageAssetType = addRemoteFilePolyfillInterface(
+    schema.buildObjectType({
+      name: `YourImageAssetNodeType`,
+      fields: {
+        // your fields - see createSchemaCustomization docs - if you're using schema inference you can also leave this object empty
+      },
+      interfaces: [`Node`, `RemoteFile`],
+    }),
+    {
+      schema,
+      actions,
+      store,
+    }
+  )
+
+  actions.createTypes([imageAssetType])
+}
 ```
 
 Implementing the `RemoteFile` interface adds the correct fields to your new GraphQL type and adds the necessary resolvers to handle the type. `RemoteFile` holds the following properties:
@@ -1057,6 +1056,27 @@ Implementing the `RemoteFile` interface adds the correct fields to your new Grap
 You might notice that `width`, `height`, `resize`, and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDF’s.
 
 The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
+
+#### Adding Image CDN request headers with the `setRequestHeaders` action
+
+Since Gatsby will be fetching files from your CMS instead of your source plugin fetching those files, you may need to set request headers for Gatsby to use in those requests.
+This is needed if for example your CMS is locked down behind some kind of authentication.
+For each domain Image CDN will make requests to, set the required headers following this example:
+
+```js
+exports.onPluginInit = ({ actions }, pluginOptions) => {
+  if (typeof actions.setRequestHeaders === `function`) {
+    actions.setRequestHeaders({
+      // set the domain the headers should apply to
+      domain: pluginOptions.apiUrl,
+      headers: {
+        // add any needed headers
+        Authorization: pluginOptions.authToken,
+      },
+    })
+  }
+}
+```
 
 #### `sourceNodes` node API additions
 
@@ -1084,8 +1104,8 @@ Add the polyfill, `polyfillImageServiceDevRoutes`, to ensure that the developmen
 ```js
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 
-export const onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+export const onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }
 ```
 

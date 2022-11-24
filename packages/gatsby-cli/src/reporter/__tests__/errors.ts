@@ -5,8 +5,8 @@ const errorStr = `./src/pages/index.module.scss\nModule build failed: /project/s
 // TODO: Add tests for sourcemap mapping in prepareStackTrace[]
 
 describe(`createErrorFromString`, () => {
-  it(`converts a string to an Error object`, async () => {
-    const err = await createErrorFromString(errorStr, ``)
+  it(`converts a string to an Error object`, () => {
+    const err = createErrorFromString(errorStr, ``)
     expect(typeof err).toEqual(`object`)
     expect(err.name).toEqual(`WebpackError`)
     expect(err.message).toEqual(`./src/pages/index.module.scss`)

@@ -5,6 +5,6 @@
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^3.3.0"
+    "gatsby": "^5.0.0"
   }
 }

@@ -1,11 +1,10 @@
-import { GatsbyNode } from "gatsby"
+import type { GatsbyNode } from "gatsby"
 import { getCacheDir } from "./node-apis/node-utils"
 import {
   ImageFormatType,
   ImageLayoutType,
   ImagePlaceholderType,
 } from "./resolver-utils"
-import { major } from "semver"
 
 export * from "./node-apis/preprocess-source"
 
@@ -52,9 +51,6 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
       plugins.define({
         // eslint-disable-next-line @typescript-eslint/naming-convention
         GATSBY___IMAGE: true,
-        HAS_REACT_18: JSON.stringify(
-          major(require(`react-dom/package.json`).version) >= 18
-        ),
       }),
     ],
   })

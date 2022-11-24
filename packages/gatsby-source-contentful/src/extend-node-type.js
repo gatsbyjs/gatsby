@@ -1,6 +1,7 @@
 // @ts-check
 import { stripIndent } from "common-tags"
-import { GraphQLBoolean, GraphQLInt, GraphQLJSON } from "gatsby/graphql"
+import { GraphQLBoolean, GraphQLInt } from "gatsby/graphql"
+import { hasFeature } from "gatsby-plugin-utils"
 
 import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
@@ -38,12 +39,13 @@ export async function setFieldsOnGraphQLNodeType({ type, cache }) {
         },
         quality: {
           type: GraphQLInt,
-          defaultValue: 50,
         },
       }
     )
 
-    fieldConfig.type = GraphQLJSON
+    fieldConfig.type = hasFeature(`graphql-typegen`)
+      ? `GatsbyImageData`
+      : `JSON`
 
     return fieldConfig
   }

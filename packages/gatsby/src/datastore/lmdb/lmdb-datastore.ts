@@ -47,28 +47,40 @@ let fullDbPath
 let rootDb
 let databases
 
-function getRootDb(): RootDatabase {
-  if (!rootDb) {
-    if (!fullDbPath) {
-      throw new Error(`LMDB path is not set!`)
-    }
-    rootDb = open({
-      name: `root`,
-      path: fullDbPath,
-      compression: true,
-    })
-  }
-  return rootDb
-}
-
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
   namespace NodeJS {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Global {
       __GATSBY_OPEN_LMDBS?: Map<string, ILmdbDatabases>
+      __GATSBY_OPEN_ROOT_LMDBS?: Map<string, RootDatabase>
     }
   }
+}
+
+function getRootDb(): RootDatabase {
+  if (!rootDb) {
+    if (!fullDbPath) {
+      throw new Error(`LMDB path is not set!`)
+    }
+
+    if (!globalThis.__GATSBY_OPEN_ROOT_LMDBS) {
+      globalThis.__GATSBY_OPEN_ROOT_LMDBS = new Map()
+    }
+    rootDb = globalThis.__GATSBY_OPEN_ROOT_LMDBS.get(fullDbPath)
+    if (rootDb) {
+      return rootDb
+    }
+
+    rootDb = open({
+      name: `root`,
+      path: fullDbPath,
+      compression: true,
+    })
+
+    globalThis.__GATSBY_OPEN_ROOT_LMDBS.set(fullDbPath, rootDb)
+  }
+  return rootDb
 }
 
 function getDatabases(): ILmdbDatabases {

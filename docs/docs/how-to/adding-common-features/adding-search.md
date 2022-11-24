@@ -38,7 +38,8 @@ There are many options available, including both self-hosted and commercially ho
 - [Algolia](https://www.algolia.com/) — SaaS, [has Gatsby plugin](/plugins/gatsby-plugin-algolia/)
 - [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS, commercial hosting available, [has Gatsby plugin](/plugins/@logilab/gatsby-plugin-elasticsearch/)
 - [Solr](https://solr.apache.org) — OSS and has commercial hosting available
-- [MeiliSearch](https://www.meilisearch.com/) - OSS, [has Gatsby plugin](/plugins/gatsby-plugin-meilisearch/)
+- [Meilisearch](https://www.meilisearch.com/) - OSS, [has Gatsby plugin](/plugins/gatsby-plugin-meilisearch/)
+- [Typesense](https://typesense.org/) - OSS, [has hosted version](https://cloud.typesense.org), [has Gatsby plugin](/plugins/gatsby-plugin-typesense/)
 
 Of these, the most common solution is Algolia. The Gatsby docs include a guide to adding Algolia to your site:
 

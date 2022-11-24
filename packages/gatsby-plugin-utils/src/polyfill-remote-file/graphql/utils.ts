@@ -29,10 +29,16 @@ export function calculateImageDimensions(
     fit,
     width: requestedWidth,
     height: requestedHeight,
-  }: { fit: ImageFit } & WidthOrHeight
+    aspectRatio: requestedAspectRatio,
+  }: { fit: ImageFit; aspectRatio: number } & WidthOrHeight
 ): { width: number; height: number; aspectRatio: number } {
   // Calculate the eventual width/height of the image.
-  const imageAspectRatio = originalDimensions.width / originalDimensions.height
+  let imageAspectRatio
+  if (requestedAspectRatio) {
+    imageAspectRatio = requestedAspectRatio
+  } else {
+    imageAspectRatio = originalDimensions.width / originalDimensions.height
+  }
 
   let width = requestedWidth
   let height = requestedHeight

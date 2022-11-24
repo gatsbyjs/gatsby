@@ -549,6 +549,20 @@ describe(`gatsby-plugin-sharp`, () => {
         }
       `)
     })
+
+    it(`handles really wide aspect ratios for blurred placeholder`, async () => {
+      const result = await base64({
+        file: getFileObject(
+          path.join(__dirname, `images/wide-aspect-ratio.png`),
+          `wide-aspect-ratio`,
+          `1000x10`
+        ),
+        args,
+      })
+
+      expect(result.width).toEqual(20)
+      expect(result.height).toEqual(1)
+    })
   })
 
   describe(`tracedSVG`, () => {

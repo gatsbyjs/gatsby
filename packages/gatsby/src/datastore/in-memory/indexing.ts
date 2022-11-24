@@ -1,4 +1,3 @@
-import { store } from "../../redux"
 import { IGatsbyNode } from "../../redux/types"
 import {
   IDbQueryElemMatch,
@@ -9,9 +8,11 @@ import {
 import { getDataStore, getNode } from "../"
 import _ from "lodash"
 import { getValueAt } from "../../utils/get-value-at"
+import { getResolvedFields } from "../../schema/utils"
 
 // Only list supported ops here. "CacheableFilterOp"
-export type FilterOp =  // TODO: merge with DbComparator ?
+// TODO: merge with DbComparator ?
+export type FilterOp =
   | "$eq"
   | "$ne"
   | "$lt"
@@ -21,7 +22,6 @@ export type FilterOp =  // TODO: merge with DbComparator ?
   | "$in"
   | "$nin"
   | "$regex" // Note: this includes $glob
-// Note: `undefined` is an encoding for a property that does not exist
 
 export type FilterCacheKey = string
 type GatsbyNodeID = string
@@ -29,6 +29,7 @@ type GatsbyNodeID = string
 export interface IGatsbyNodePartial {
   id: GatsbyNodeID
   internal: {
+    type: string
     counter: number
   }
   gatsbyNodePartialInternalData: {
@@ -88,18 +89,29 @@ export const getGatsbyNodePartial = (
   )
   let fullNodeObject: IGatsbyNode | undefined =
     node.gatsbyNodePartialInternalData ? undefined : (node as IGatsbyNode)
+  let resolvedNodeFields
 
   for (const dottedField of sortFieldIds) {
     if (dottedField in node) {
       dottedFields[dottedField] = node[dottedField]
     } else {
-      // if we haven't gotten the full node object, fetch it once
-      if (!fullNodeObject) {
-        fullNodeObject = getNode(node.id)!
-      }
+      if (dottedField.startsWith(`__gatsby_resolved.`)) {
+        if (!resolvedNodeFields) {
+          resolvedNodeFields = getResolvedFields(node)
+        }
 
-      // use the full node object to fetch the value
-      dottedFields[dottedField] = getValueAt(fullNodeObject, dottedField)
+        dottedFields[dottedField] = getValueAt(
+          resolvedNodeFields,
+          dottedField.slice(`__gatsby_resolved.`.length)
+        )
+      } else {
+        // if we haven't gotten the full node object, fetch it once
+        // use the full node object to fetch the value
+        if (!fullNodeObject) {
+          fullNodeObject = getNode(node.id)!
+        }
+        dottedFields[dottedField] = getValueAt(fullNodeObject, dottedField)
+      }
     }
   }
 
@@ -108,6 +120,7 @@ export const getGatsbyNodePartial = (
     id: node.id,
     internal: {
       counter: node.internal.counter,
+      type: node.internal.type,
     },
     gatsbyNodePartialInternalData: {
       indexFields: fieldsToStore,
@@ -281,9 +294,6 @@ export const ensureIndexByQuery = (
   indexFields: Array<string>,
   resolvedFields: Record<string, any>
 ): void => {
-  const state = store.getState()
-  const resolvedNodesCache = state.resolvedNodesCache
-
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
@@ -303,7 +313,6 @@ export const ensureIndexByQuery = (
           node,
           chain: filterPath,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -322,7 +331,6 @@ export const ensureIndexByQuery = (
           node,
           chain: filterPath,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -343,8 +351,6 @@ export function ensureEmptyFilterCache(
   // We want to cache the result since it's basically a list of nodes by type(s)
   // There are sites that have multiple queries which are empty
 
-  const state = store.getState()
-  const resolvedNodesCache = state.resolvedNodesCache
   const orderedByCounter: Array<IGatsbyNodePartial> = []
 
   filtersCache.set(filterCacheKey, {
@@ -359,14 +365,6 @@ export function ensureEmptyFilterCache(
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
       .forEach(node => {
-        if (!node.__gatsby_resolved) {
-          const typeName = node.internal.type
-          const resolvedNodes = resolvedNodesCache.get(typeName)
-          const resolved = resolvedNodes?.get(node.id)
-          if (resolved !== undefined) {
-            node.__gatsby_resolved = resolved
-          }
-        }
         orderedByCounter.push(
           getGatsbyNodePartial(node, indexFields, resolvedFields)
         )
@@ -378,14 +376,6 @@ export function ensureEmptyFilterCache(
       .iterateNodes()
       .forEach(node => {
         if (nodeTypeNames.includes(node.internal.type)) {
-          if (!node.__gatsby_resolved) {
-            const typeName = node.internal.type
-            const resolvedNodes = resolvedNodesCache.get(typeName)
-            const resolved = resolvedNodes?.get(node.id)
-            if (resolved !== undefined) {
-              node.__gatsby_resolved = resolved
-            }
-          }
           orderedByCounter.push(
             getGatsbyNodePartial(node, indexFields, resolvedFields)
           )
@@ -402,7 +392,6 @@ function addNodeToFilterCache({
   node,
   chain,
   filterCache,
-  resolvedNodesCache,
   indexFields,
   resolvedFields,
   valueOffset = node,
@@ -410,25 +399,21 @@ function addNodeToFilterCache({
   node: IGatsbyNode
   chain: Array<string>
   filterCache: IFilterCache
-  resolvedNodesCache: Map<string, any>
   indexFields: Array<string>
   resolvedFields: Record<string, any>
   valueOffset?: any
 }): void {
-  // There can be a filter that targets `__gatsby_resolved` so fix that first
-  if (!node.__gatsby_resolved) {
-    const typeName = node.internal.type
-    const resolvedNodes = resolvedNodesCache.get(typeName)
-    node.__gatsby_resolved = resolvedNodes?.get(node.id)
-  }
-
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
   let v = valueOffset as any
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
-    v = v[nextProp]
+    if (i === 1 && nextProp === `__gatsby_resolved`) {
+      v = getResolvedFields(v)
+    } else {
+      v = v[nextProp]
+    }
   }
 
   if (
@@ -491,9 +476,6 @@ export const ensureIndexByElemMatch = (
   // Given an elemMatch filter, generate the cache that contains all nodes that
   // matches a given value for that sub-query
 
-  const state = store.getState()
-  const { resolvedNodesCache } = state
-
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
@@ -510,7 +492,6 @@ export const ensureIndexByElemMatch = (
           valueAtCurrentStep: node,
           filter,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -529,7 +510,6 @@ export const ensureIndexByElemMatch = (
           valueAtCurrentStep: node,
           filter,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -544,7 +524,6 @@ function addNodeToBucketWithElemMatch({
   valueAtCurrentStep, // Arbitrary step on the path inside the node
   filter,
   filterCache,
-  resolvedNodesCache,
   indexFields,
   resolvedFields,
 }: {
@@ -552,24 +531,20 @@ function addNodeToBucketWithElemMatch({
   valueAtCurrentStep: any // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch
   filterCache: IFilterCache
-  resolvedNodesCache
   indexFields: Array<string>
   resolvedFields: Record<string, any>
 }): void {
-  // There can be a filter that targets `__gatsby_resolved` so fix that first
-  if (!node.__gatsby_resolved) {
-    const typeName = node.internal.type
-    const resolvedNodes = resolvedNodesCache.get(typeName)
-    node.__gatsby_resolved = resolvedNodes?.get(node.id)
-  }
-
   const { path, nestedQuery } = filter
 
   // Find the value to apply elemMatch to
   let i = 0
   while (i < path.length && valueAtCurrentStep) {
     const nextProp = path[i++]
-    valueAtCurrentStep = valueAtCurrentStep[nextProp]
+    if (i === 1 && nextProp === `__gatsby_resolved`) {
+      valueAtCurrentStep = getResolvedFields(valueAtCurrentStep)
+    } else {
+      valueAtCurrentStep = valueAtCurrentStep[nextProp]
+    }
   }
 
   if (path.length !== i) {
@@ -594,7 +569,6 @@ function addNodeToBucketWithElemMatch({
         valueAtCurrentStep: elem,
         filter: nestedQuery,
         filterCache,
-        resolvedNodesCache,
         indexFields,
         resolvedFields,
       })
@@ -604,7 +578,6 @@ function addNodeToBucketWithElemMatch({
         node,
         chain: nestedQuery.path,
         filterCache,
-        resolvedNodesCache,
         indexFields,
         resolvedFields,
         valueOffset: elem,

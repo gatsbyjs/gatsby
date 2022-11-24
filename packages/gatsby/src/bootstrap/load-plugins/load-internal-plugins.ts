@@ -13,8 +13,10 @@ import { createPluginId } from "./utils/create-id"
 import { createFileContentHash } from "./utils/create-hash"
 import {
   addGatsbyPluginCloudPluginWhenInstalled,
+  addGatsbyPluginPreviewWhenInstalled,
   incompatibleGatsbyCloudPlugin,
   GATSBY_CLOUD_PLUGIN_NAME,
+  GATSBY_PLUGIN_PREVIEW_NAME,
 } from "./utils/handle-gatsby-cloud"
 import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files"
 
@@ -74,7 +76,6 @@ export function loadInternalPlugins(
   })
 
   if (
-    _CFLAGS_.GATSBY_MAJOR === `4` &&
     configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
     incompatibleGatsbyCloudPlugin(plugins)
   ) {
@@ -88,6 +89,13 @@ export function loadInternalPlugins(
     (process.env.GATSBY_CLOUD === `true` || process.env.GATSBY_CLOUD === `1`)
   ) {
     addGatsbyPluginCloudPluginWhenInstalled(plugins, rootDir)
+  }
+
+  if (
+    !configuredPluginNames.has(GATSBY_PLUGIN_PREVIEW_NAME) &&
+    (process.env.GATSBY_CLOUD === `true` || process.env.GATSBY_CLOUD === `1`)
+  ) {
+    addGatsbyPluginPreviewWhenInstalled(plugins, rootDir)
   }
 
   // Support Typescript by default but allow users to override it
@@ -151,6 +159,16 @@ export function loadInternalPlugins(
   )
 
   plugins.push(processedPageCreatorPlugin)
+
+  // Partytown plugin collects usage of <Script strategy={"off-main-thread"} />
+  // in `wrapRootElement`, so we have to make sure it's the last one running to be able to
+  // collect scripts that users might inject in their `wrapRootElement`
+  plugins.push(
+    processPlugin(
+      path.join(__dirname, `../../internal-plugins/partytown`),
+      rootDir
+    )
+  )
 
   return plugins
 }

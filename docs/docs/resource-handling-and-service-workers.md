@@ -34,7 +34,7 @@ Upon initial install, we do the following:
 - Loop through all scripts and stylesheets in the head and fetch these again, so that Workbox can now cache them
 - Fetch all resources for pages whose paths are in the temporary prefetched paths array, so that Workbox can now cache them
 
-Note that in both of the above cases, all these files should have already been downloaded once by the browser, so with [proper HTTP caching setup](/docs/caching/) we don't have to download any of the files again. However, one exception to this is `<style>` elements with a `data-href` attribute (indicating that the embedded stylesheet is the same as the stylesheet at the location specified) - we currently fetch the specified file rather than caching the contents of the element.
+Note that in both of the above cases, all these files should have already been downloaded once by the browser, so with [proper HTTP caching setup](/docs/how-to/previews-deploys-hosting/caching/) we don't have to download any of the files again. However, one exception to this is `<style>` elements with a `data-href` attribute (indicating that the embedded stylesheet is the same as the stylesheet at the location specified) - we currently fetch the specified file rather than caching the contents of the element.
 
 Another current problem is that we may start fetching the resources for a page before the service worker has finished installing, but finish fetching them all after it has installed - this could cause a page's path to be allowed even if some of its resources haven't been cached (since Gatsby assumes the service worker was installed at the start of fetching resources, if it was installed at the end).
 

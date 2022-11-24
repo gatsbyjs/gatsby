@@ -1,5 +1,4 @@
-import path from "path"
-import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
+import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
 import {
@@ -9,7 +8,7 @@ import {
 import { isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
 import type {
   IRemoteFileNode,
   IGraphQLFieldConfigDefinition,
@@ -25,6 +24,7 @@ interface IResizeArgs {
   format: ImageFormat
   cropFocus: Array<ImageCropFocus>
   quality: number
+  aspectRatio: number
 }
 
 const DEFAULT_QUALITY = 75
@@ -40,7 +40,8 @@ const allowedFormats: Array<ImageFormat> = [
 export async function resizeResolver(
   source: IRemoteFileNode,
   args: Partial<IResizeArgs> & WidthOrHeight,
-  actions: Actions
+  actions: Actions,
+  store?: Store
 ): Promise<{
   width: number
   height: number
@@ -82,27 +83,27 @@ export async function resizeResolver(
     dispatchLocalImageServiceJob(
       {
         url: source.url,
-        extension: format,
-        basename: path.basename(source.filename, path.extname(source.filename)),
+        mimeType: source.mimeType,
+        filename: source.filename,
+        contentDigest: source.internal.contentDigest,
+      },
+      {
         ...(args as IResizeArgs),
         width,
         height,
         format,
-        contentDigest: source.internal.contentDigest,
       },
-      actions
+      actions,
+      store
     )
   }
 
-  const src = `${generatePublicUrl(source)}/${generateImageArgs({
+  const src = generateImageUrl(source, {
     ...(args as IResizeArgs),
     width,
     height,
     format,
-  })}/${path.basename(
-    source.filename,
-    path.extname(source.filename)
-  )}.${format}`
+  })
 
   return {
     src,
@@ -113,7 +114,8 @@ export async function resizeResolver(
 
 export function generateResizeFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  actions: Actions
+  actions: Actions,
+  store?: Store
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode,
   ReturnType<typeof resizeResolver>,
@@ -124,6 +126,7 @@ export function generateResizeFieldConfig(
     args: {
       width: `Int`,
       height: `Int`,
+      aspectRatio: `Float`,
       fit: {
         type: enums.fit.getTypeName(),
         defaultValue: enums.fit.getField(`COVER`).value,
@@ -146,7 +149,7 @@ export function generateResizeFieldConfig(
       },
     },
     resolve(source, args): ReturnType<typeof resizeResolver> {
-      return resizeResolver(source, args, actions)
+      return resizeResolver(source, args, actions, store)
     },
   }
 }

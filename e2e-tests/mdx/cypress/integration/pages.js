@@ -1,9 +1,28 @@
 /* global cy */
 
+Cypress.on('uncaught:exception', (err) => {
+    if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) {
+        return false
+    }
+})
+
 describe(`Pages`, () => {
     it(`can be created with MDX`, () => {
         cy.visit(`/`).waitForRouteChange()
         cy.get(`h2`).invoke(`text`).should(`eq`, `Do you work`)
+    })
+
+    it(`runs gatsby-remark-autolink-headers and attaches link`, () => {
+        cy.visit(`/`).waitForRouteChange()
+        cy.get(`h2`).invoke(`text`).should(`eq`, `Do you work`)
+        cy.get(`h2#do-you-work`).should('exist')
+        cy.get(`h2#do-you-work a svg`).should('exist')
+    })
+
+    it(`runs gatsby-remark-images and renders image`, () => {
+        cy.visit(`/`).waitForRouteChange()
+        cy.get(`span.gatsby-resp-image-wrapper`).should('exist')
+        cy.get(`span.gatsby-resp-image-wrapper img`).should('exist')
     })
 
     it(`can include shortcode component`, () => {

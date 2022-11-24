@@ -27,7 +27,7 @@ import {
 import { printBlockString } from "graphql/language/blockString"
 import { internalExtensionNames } from "./extensions"
 import _ from "lodash"
-import { builtInScalarTypeNames } from "./types/built-in-types"
+import { internalTypeNames } from "./types/built-in-types"
 
 export interface ISchemaPrintConfig {
   path?: string
@@ -108,8 +108,8 @@ const printDescription = (
   const lines = descriptionLines(description, 120 - indentation.length)
 
   const text = lines.join(`\n`)
-  const preferMultipleLines = text.length > 70
-  const blockString = printBlockString(text, ``, preferMultipleLines)
+  const isMultiline = text.length > 70
+  const blockString = printBlockString(text, { minimize: !isMultiline })
   const prefix = indentation && !firstInBlock ? `\n` + indentation : indentation
 
   return prefix + blockString.replace(/\n/g, `\n` + indentation) + `\n`
@@ -341,16 +341,6 @@ export const printTypeDefinitions = ({
     )
     return Promise.resolve()
   }
-
-  const internalTypes = [
-    ...builtInScalarTypeNames,
-    `Buffer`,
-    `Internal`,
-    `InternalInput`,
-    `Node`,
-    `NodeInput`,
-    `Query`,
-  ]
   const internalPlugins = [`internal-data-bridge`]
 
   const typesToExclude = exclude?.types || []
@@ -360,7 +350,7 @@ export const printTypeDefinitions = ({
 
   const isInternalType = (tc: NamedTypeComposer<unknown>): boolean => {
     const typeName = getName(tc)
-    if (internalTypes.includes(typeName)) {
+    if (internalTypeNames.includes(typeName)) {
       return true
     }
 

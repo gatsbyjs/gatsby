@@ -1,5 +1,7 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const headFunctionExportSharedData = require("./shared-data/head-function-export")
+const slicesData = require("./shared-data/slices")
 const {
   addRemoteFilePolyfillInterface,
   polyfillImageServiceDevRoutes,
@@ -17,9 +19,18 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
       {
         store,
         schema,
+        actions,
       }
     )
   )
+
+  actions.createTypes(`#graphql
+    type HeadFunctionExportFsRouteApi implements Node {
+      id: ID!
+      slug: String!
+      content: String!
+    }
+  `)
 }
 
 /** @type {import('gatsby').sourceNodes} */
@@ -68,6 +79,18 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
       },
     })
   })
+
+  actions.createNode({
+    id: createNodeId(`head-function-export-fs-route-api`),
+    slug: `/fs-route-api`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `HeadFunctionExportFsRouteApi`,
+      content: `Some words`,
+      contentDigest: createContentDigest(`Some words`),
+    },
+  })
 }
 
 /**
@@ -103,7 +126,7 @@ exports.onCreateNode = function onCreateNode({
  * @type {import('gatsby').createPages}
  */
 exports.createPages = async function createPages({
-  actions: { createPage, createRedirect },
+  actions: { createPage, createRedirect, createSlice },
   graphql,
 }) {
   const { data } = await graphql(`
@@ -153,6 +176,41 @@ exports.createPages = async function createPages({
     })
   })
 
+  //-------------------------Slice API----------------------------
+  createSlice({
+    id: `footer`,
+    component: path.resolve(`./src/components/footer.js`),
+    context: {
+      framework: slicesData.framework,
+    },
+  })
+
+  slicesData.allRecipeAuthors.forEach(({ id, name }) => {
+    createSlice({
+      id: `author-${id}`,
+      component: path.resolve(`./src/components/recipe-author.js`),
+      context: {
+        name,
+        id,
+      },
+    })
+  })
+
+  slicesData.allRecipes.forEach(({ authorId, id, name, description }) => {
+    createPage({
+      path: `/recipe/${id}`,
+      component: path.resolve(`./src/templates/recipe.js`),
+      context: {
+        description: description,
+        name,
+      },
+      slices: {
+        author: `author-${authorId}`,
+      },
+    })
+  })
+  //---------------------------------------------------------------
+
   createPage({
     path: `/안녕`,
     component: path.resolve(`src/pages/page-2.js`),
@@ -168,23 +226,31 @@ exports.createPages = async function createPages({
     component: path.resolve(`src/templates/static-page.js`),
   })
 
+  createPage({
+    path: `/head-function-export/correct-props`,
+    component: path.resolve(
+      `src/templates/head-function-export/correct-props.js`
+    ),
+    context: headFunctionExportSharedData.data.context,
+  })
+
   createRedirect({
-    fromPath: `/redirect-without-page`,
+    fromPath: `/redirect-without-page/`,
     toPath: `/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
 
   createRedirect({
-    fromPath: `/redirect`,
+    fromPath: `/redirect/`,
     toPath: `/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
 
   createRedirect({
-    fromPath: `/redirect-two`,
-    toPath: `/redirect-search-hash`,
+    fromPath: `/redirect-two/`,
+    toPath: `/redirect-search-hash/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
@@ -275,6 +341,6 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 
 /** @type{import('gatsby').onCreateDevServer} */
-exports.onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+exports.onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }

@@ -50,14 +50,18 @@ module.exports = {
     ], // Workaround for https://github.com/facebook/jest/issues/9771
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script|gatsby-link)/)`],
   globals: {
     __PATH_PREFIX__: ``,
   },
-  testURL: `http://localhost`,
+  testEnvironmentOptions: {
+    url: `http://localhost`,
+  },
   setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
+
+> **Note:** If you're using Jest 28 or above, you can skip adding the `moduleNameMapper` options for `gatsby-page-utils`, `gatsby-core-utils`, and `gatsby-plugin-utils`. The mentioned bug was fixed in Jest 28.
 
 Go over the content of this configuration file:
 
@@ -162,12 +166,11 @@ module.exports = {
         href: to,
       })
   ),
-  StaticQuery: jest.fn(),
   useStaticQuery: jest.fn(),
 }
 ```
 
-This mocks the `graphql()` function, `Link` component, and `StaticQuery` component.
+This mocks the `graphql()` function, `Link` component, and `useStaticQuery` hook.
 
 ## Writing tests
 
@@ -233,7 +236,7 @@ If you are using TypeScript, you need to install typings packages and make
 two changes to your config.
 
 ```shell
-npm install --save-dev @types/jest @types/react-test-renderer
+npm install --save-dev @types/jest @types/react-test-renderer @babel/preset-typescript
 ```
 
 Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory.
@@ -286,15 +289,12 @@ const paths = pathsToModuleNameMapper(compilerOptions.paths, {
 
 ## Other resources
 
-If you need to make changes to your Babel config, you can edit the config in
-`jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
-though remember you may need to install the Babel 7 versions. See
-[the Gatsby Babel config guide](/docs/how-to/custom-configuration/babel) for some examples.
+If you need to make changes to your Babel config, you can edit the config in `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby. See [the Gatsby Babel config guide](/docs/how-to/custom-configuration/babel) for some examples.
 
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).
 
-For an example encapsulating all of these techniques--and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
+For an example encapsulating all of these techniques and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
 
 [using-jest]: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest
 [react-testing-library]: https://github.com/testing-library/react-testing-library

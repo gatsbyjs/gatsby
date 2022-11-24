@@ -73,5 +73,18 @@ export const referencedMediaItems = [
     "internal": {
       "contentDigest": `5fa24d43c7fc603f9016933ad6bb3ee4`,
     }
+  },
+  {
+    "id": "cG9zdDoxMTgzNg==",
+    "mediaDetails": null,
+    "mediaItemUrl": "http://wpgatsby.local/wp-content/uploads/2022/04/gaussian2.svg",
+    "mediaType": "image",
+    "mimeType": "image/svg+xml",
+    "sourceUrl": "http://wpgatsby.local/wp-content/uploads/2022/04/gaussian2.svg",
+    "srcSet": null,
+    "fileSize": 801,
+    "internal": {
+      "contentDigest": `5fa24d43c7fc603f9016933ad6bb3ee42`,
+    }
   }
 ]

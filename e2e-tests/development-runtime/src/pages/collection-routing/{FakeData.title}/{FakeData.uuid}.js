@@ -15,7 +15,7 @@ export default function FakeDataNested({ data: { fake }, pageContext: { uuid } }
 }
 
 export const blogPostQuery = graphql`
-  query($id: String!) {
+  query FakeDataNested($id: String!) {
     fake: fakeData(id: { eq: $id }) {
       fields {
         slug

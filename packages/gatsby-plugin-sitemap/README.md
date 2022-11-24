@@ -2,27 +2,29 @@
 
 Create a sitemap for your Gatsby site.
 
-_NOTE: This plugin only generates output when run in `production` mode! To test your sitemap, run: `gatsby build && gatsby serve`_
+**Please note:** This plugin only generates output when run in `production` mode! To test your sitemap, run: `gatsby build && gatsby serve`.
 
 ## Install
 
-`npm install gatsby-plugin-sitemap`
+```shell
+npm install gatsby-plugin-sitemap
+```
 
 ## How to Use
 
-```javascript
-// In your gatsby-config.js
-siteMetadata: {
-  // If you didn't use the resolveSiteUrl option this needs to be set
-  siteUrl: `https://www.example.com`,
-},
-plugins: [`gatsby-plugin-sitemap`]
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    // If you didn't use the resolveSiteUrl option this needs to be set
+    siteUrl: `https://www.example.com`,
+  },
+  plugins: [`gatsby-plugin-sitemap`]
+}
 ```
 
-Above is the minimal configuration required to have it work. By default, the
-generated sitemap will include all of your site's pages, except the ones you exclude.
+Above is the minimal configuration required to have it work. By default, the generated sitemap will include all of your site's pages, except the ones you exclude. It will generate a `sitemap-index.xml` file at the root of your site and for every 45000 URLs a new `sitemap-X.xml` file. The `sitemap-index.xml` file will point at the generated `.xml` files.
 
-You then can point your service (e.g. Google Search Console) at `https://www.example.com/sitemap/sitemap-index.xml`.
+You then can point your service (e.g. Google Search Console) at `https://www.example.com/sitemap-index.xml`.
 
 ## Recommended usage
 
@@ -47,7 +49,7 @@ You probably do not want to use the defaults in this plugin. Here's an example o
 See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong. But wait, there's more, in their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
 
 > - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them.
-> - Google reads the `<lastmod>` value, but if you misrepresent this value, we will stop reading it.
+> - Google reads the `<lastmod>` value, but if you misrepresent this value, Google will stop reading it.
 
 You really want to customize this plugin config to include an accurate `lastmod` date. Checkout the [example](#example) for an example of how to do this.
 
@@ -57,15 +59,15 @@ The [`default config`](https://github.com/gatsbyjs/gatsby/blob/master/packages/g
 
 The options are as follows:
 
-- `output` (string = `/sitemap`) Folder path where sitemaps are stored.
+- `output` (string = `/`) Folder path where sitemaps are stored.
 - `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
 - `entryLimit` (number = 45000) Number of entries per sitemap file. A sitemap index (as `sitemap-index.xml`) will always be created and multiple sitemaps are created for every `entryLimit` increment (e.g under 45000 entries only `sitemap-0.xml` will be created).
-- `excludes` (string[] = []) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the [`filterPages`](#filterPages) function.
+- `excludes` (string[] = []) An array of paths to exclude from the sitemap. You can use glob matching using [minimatch](https://github.com/isaacs/minimatch). While `excludes` is usually an array of strings it is possible to enter other data types into this array for custom filtering, but doing so will require customization of the [`filterPages`](#filterPages) function.
 - `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom [`resolveSiteUrl`](#resolveSiteUrl) function. If you override the query, you may need to pass in a custom [`resolvePagePath`](#resolvePagePath), [`resolvePages`](#resolvePages) to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will definitely need to customize the [`resolvePages`](#resolvePages) function.
 - [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL. Sync or async functions allowed.
 - [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
 - [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned. Sync or async functions allowed.
-- [`filterPages`](#filterPages) (function) Takes the current page and a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
+- [`filterPages`](#filterPages) (function) Takes the current page and a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it. Note that when the `excludes` array is undefined or empty this function will not be called.
 - [`serialize`](#serialize) (function) Takes the output of `filterPages` and lets you return a sitemap entry. Sync or async functions allowed.
 
 The following pages are **always** excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
@@ -191,8 +193,8 @@ allPages.filter(
 
 | Param         | Type                | Description                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| page          | <code>object</code> |                                                                                     |
-| excludedRoute | <code>string</code> | Element from `exclude` Array in plugin config.                                      |
+| page          | <code>object</code> | contains the path key `{ path }`                                                    |
+| excludedRoute | <code>string</code> | Element from `excludes` Array in plugin config                                      |
 | tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
 
 <a id="serialize"></a>

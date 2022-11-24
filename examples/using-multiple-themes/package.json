@@ -18,8 +18,8 @@
     "gatsby": "next",
     "gatsby-theme-blog": "^1.6.61",
     "gatsby-theme-notes": "^1.3.87",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "prettier": "2.1.1"

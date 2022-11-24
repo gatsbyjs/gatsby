@@ -4,7 +4,7 @@ title: Layout Components
 
 In this guide, you'll learn Gatsby's approach to layouts, how to create and use layout components, and how to prevent layout components from unmounting.
 
-## Gatsby's approach to layouts
+## Introduction
 
 Gatsby does not, by default, automatically apply layouts to pages (there are, however, ways to do so which will be covered in a later section). Instead, Gatsby follows React's compositional model of importing and using components. This makes it possible to create multiple levels of layouts, e.g. a global header and footer, and then on some pages, a sidebar menu. It also makes it possible to pass data between layout and page components.
 
@@ -59,9 +59,7 @@ Alternatively, you can prevent your layout component from unmounting by using [g
 
 ## Other resources
 
-- [Creating nested layout components in Gatsby](/docs/tutorial/part-3/)
-- [Life after layouts in Gatsby V2](/blog/2018-06-08-life-after-layouts/)
-- [Migrating from v1 to v2](/docs/reference/release-notes/migrating-from-v1-to-v2/#remove-or-refactor-layout-components)
 - [gatsby-plugin-layout](/plugins/gatsby-plugin-layout/)
+- [Defining a layout with MDX](/docs/how-to/routing/mdx/#defining-a-layout)
 - [wrapPageElement Browser API](/docs/reference/config-files/gatsby-browser/#wrapPageElement)
 - [wrapPageElement SSR API](/docs/reference/config-files/gatsby-ssr/#wrapPageElement)
