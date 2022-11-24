@@ -1,7 +1,5 @@
 const path = require("path")
 
-const blogPost = path.resolve(`./src/templates/blog-post.js`)
-
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -14,6 +12,13 @@ exports.createPages = async ({ graphql, actions }) => {
           frontmatter {
             title # used in prev/next
           }
+          parent {
+            ... on File {
+              id
+              name
+              absolutePath
+            }
+          }
         }
       }
     }
@@ -25,13 +30,15 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const posts = result.data.allMdx.nodes
 
-  posts.forEach(({ id, slug }, index) => {
+  posts.forEach(({ id, slug, parent }, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1]
     const next = index === 0 ? null : posts[index - 1]
 
     createPage({
       path: slug,
-      component: blogPost,
+      component: `${path.resolve(
+        `./src/templates/blog-post.js`
+      )}?__contentFilePath=${parent.absolutePath}`,
       context: {
         id,
         slug,

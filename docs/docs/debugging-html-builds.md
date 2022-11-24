@@ -2,7 +2,7 @@
 title: Debugging HTML Builds
 ---
 
-Errors while building static HTML files (the build-time React SSR process) generally happen for one of the following reasons:
+Errors while building static HTML files (the build-time React SSR process) or while using `getServerData` (the [runtime SSR](/docs/reference/rendering-options/server-side-rendering/) process) generally happen for one of the following reasons:
 
 1. Some of your code references "browser globals" like `window` or `document`
    that aren't available in Node.js. If this is your problem you should see an
@@ -35,7 +35,7 @@ Errors while building static HTML files (the build-time React SSR process) gener
 
 5. Some other reason :-) #1 is the most common reason building static files
    fail. If it's another reason, you have to be a bit more creative in figuring
-   out the problem.
+   out the problem. The [`DEV_SSR` feature](#ssr-during-gatsby-develop) can help you with this.
 
 ## How to check if `window` is defined
 
@@ -50,7 +50,7 @@ const isBrowser = typeof window !== "undefined"
 export default function MyComponent() {
   let loggedIn = false
   if (isBrowser) {
-    window.localstorage.getItem("isLoggedIn") === "true"
+    window.localStorage.getItem("isLoggedIn") === "true"
   }
 
   return <div>Am I logged in? {loggedIn}</div>
@@ -106,3 +106,20 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
 ```
 
 Another solution is to use a package like [loadable-components](https://github.com/gregberge/loadable-components). The module that tries to use `window` will be dynamically loaded only on the client side (and not during SSR).
+
+## SSR during `gatsby develop`
+
+Server-Side render (SSR) pages on full reloads during `gatsby develop`. This helps you detect SSR bugs and fix them without needing to do full builds with `gatsby build`. Once enabled, go to your desired page and do a full reload (e.g. Ctrl + R or F5).
+
+Add the `DEV_SSR` flag to your `gatsby-config.js`:
+
+```js:title=gatsby-config.js
+module.exports = {
+  flags: {
+    DEV_SSR: true
+  },
+  plugins: [...]
+}
+```
+
+Please give feedback in the [DEV_SSR umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/28138).

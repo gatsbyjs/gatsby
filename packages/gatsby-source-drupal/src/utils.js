@@ -9,43 +9,27 @@ const {
 
 const { getOptions } = require(`./plugin-options`)
 
-let backRefsNamesLookup = new Map()
-let referencedNodesLookup = new Map()
+import { getGatsbyVersion } from "gatsby-core-utils"
+import { lt, prerelease } from "semver"
 
-const initRefsLookups = async ({ cache }) => {
-  const backRefsNamesLookupStr = await cache.get(`backRefsNamesLookup`)
-  const referencedNodesLookupStr = await cache.get(`referencedNodesLookup`)
-
-  if (backRefsNamesLookupStr) {
-    backRefsNamesLookup = new Map(JSON.parse(backRefsNamesLookupStr))
-  }
-
-  if (referencedNodesLookupStr) {
-    referencedNodesLookup = new Map(JSON.parse(referencedNodesLookupStr))
-  }
+function makeBackRefsKey(id) {
+  return `backrefs-${id}`
 }
 
-exports.initRefsLookups = initRefsLookups
-
-const storeRefsLookups = async ({ cache }) => {
-  await Promise.all([
-    cache.set(
-      `backRefsNamesLookup`,
-      JSON.stringify(Array.from(backRefsNamesLookup.entries()))
-    ),
-    cache.set(
-      `referencedNodesLookup`,
-      JSON.stringify(Array.from(referencedNodesLookup.entries()))
-    ),
-  ])
+function makeRefNodesKey(id) {
+  return `refnodes-${id}`
 }
 
-exports.storeRefsLookups = storeRefsLookups
-
-const handleReferences = (
+async function handleReferences(
   node,
-  { getNode, mutateNode = false, createNodeId, entityReferenceRevisions = [] }
-) => {
+  {
+    getNode,
+    mutateNode = false,
+    createNodeId,
+    entityReferenceRevisions = [],
+    cache,
+  }
+) {
   const relationships = node.relationships
   const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
 
@@ -54,6 +38,7 @@ const handleReferences = (
     const referencedNodes = []
     _.each(node.drupal_relationships, (v, k) => {
       if (!v.data) return
+
       const nodeFieldName = `${k}___NODE`
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
@@ -110,15 +95,15 @@ const handleReferences = (
     })
 
     delete node.drupal_relationships
-    referencedNodesLookup.set(node.id, referencedNodes)
+    await cache.set(makeRefNodesKey(node.id), referencedNodes)
     if (referencedNodes.length) {
       const nodeFieldName = `${node.internal.type}___NODE`
-      referencedNodes.forEach(nodeID => {
+      for (const nodeId of referencedNodes) {
         let referencedNode
         if (mutateNode) {
-          referencedNode = getNode(nodeID)
+          referencedNode = getNode(nodeId)
         } else {
-          referencedNode = _.cloneDeep(getNode(nodeID))
+          referencedNode = _.cloneDeep(getNode(nodeId))
         }
         if (!referencedNode.relationships[nodeFieldName]) {
           referencedNode.relationships[nodeFieldName] = []
@@ -128,17 +113,18 @@ const handleReferences = (
           referencedNode.relationships[nodeFieldName].push(node.id)
         }
 
-        let backRefsNames = backRefsNamesLookup.get(referencedNode.id)
+        let backRefsNames = await cache.get(makeBackRefsKey(referencedNode.id))
         if (!backRefsNames) {
           backRefsNames = []
-          backRefsNamesLookup.set(referencedNode.id, backRefsNames)
+          await cache.set(makeBackRefsKey(referencedNode.id), backRefsNames)
         }
 
         if (!backRefsNames.includes(nodeFieldName)) {
           backRefsNames.push(nodeFieldName)
+          await cache.set(makeBackRefsKey(referencedNode.id), backRefsNames)
         }
         backReferencedNodes.push(referencedNode)
-      })
+      }
     }
   }
 
@@ -155,6 +141,7 @@ const handleDeletedNode = async ({
   getNode,
   createNodeId,
   createContentDigest,
+  cache,
   entityReferenceRevisions,
 }) => {
   let deletedNode = getNode(
@@ -178,22 +165,22 @@ const handleDeletedNode = async ({
   // Clone node so we're not mutating the original node.
   deletedNode = _.cloneDeep(deletedNode)
 
-  // Remove the deleted node from backRefsNamesLookup and referencedNodesLookup
-  backRefsNamesLookup.delete(deletedNode.id)
-  referencedNodesLookup.delete(deletedNode.id)
+  await cache.del(makeBackRefsKey(deletedNode.id))
+  await cache.del(makeRefNodesKey(deletedNode.id))
 
   // Remove relationships from other nodes and re-create them.
-  Object.keys(deletedNode.relationships).forEach(key => {
+  Object.keys(deletedNode.relationships).forEach(async key => {
     let ids = deletedNode.relationships[key]
     ids = [].concat(ids)
-    ids.forEach(id => {
+    for (const id of ids) {
       let node = getNode(id)
 
       // The referenced node might have already been deleted.
       if (node) {
         // Clone node so we're not mutating the original node.
         node = _.cloneDeep(node)
-        let referencedNodes = referencedNodesLookup.get(node.id)
+        let referencedNodes = await cache.get(makeRefNodesKey(node.id))
+
         if (referencedNodes?.includes(deletedNode.id)) {
           // Loop over relationships and cleanup references.
           Object.entries(node.relationships).forEach(([key, value]) => {
@@ -219,7 +206,7 @@ const handleDeletedNode = async ({
           referencedNodes = referencedNodes.filter(
             nId => nId !== deletedNode.id
           )
-          referencedNodesLookup.set(node.id, referencedNodes)
+          await cache.set(makeRefNodesKey(node.id), referencedNodes)
         }
 
         // Recreate the referenced node with its now cleaned-up relationships.
@@ -232,12 +219,60 @@ const handleDeletedNode = async ({
         node.internal.contentDigest = createContentDigest(node)
         actions.createNode(node)
       }
-    })
+    }
   })
 
   actions.deleteNode(deletedNode)
 
   return deletedNode
+}
+
+async function createNodeIfItDoesNotExist({
+  nodeToUpdate,
+  actions,
+  createNodeId,
+  createContentDigest,
+  getNode,
+  reporter,
+  pluginOptions,
+}) {
+  if (!nodeToUpdate) {
+    reporter.warn(
+      `The updated node was empty. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
+
+${JSON.stringify(nodeToUpdate, null, 4)}
+      `
+    )
+
+    return
+  }
+
+  const { createNode } = actions
+  const newNodeId = createNodeId(
+    createNodeIdWithVersion(
+      nodeToUpdate.id,
+      nodeToUpdate.type,
+      getOptions().languageConfig ? nodeToUpdate.langcode : `und`,
+      nodeToUpdate.meta?.target_version,
+      getOptions().entityReferenceRevisions
+    )
+  )
+
+  const oldNode = getNode(newNodeId)
+  // Node doesn't yet exist so we'll create it now.
+  if (!oldNode) {
+    const newNode = await nodeFromData(
+      nodeToUpdate,
+      createNodeId,
+      getOptions().entityReferenceRevisions,
+      pluginOptions,
+      null,
+      reporter
+    )
+
+    newNode.internal.contentDigest = createContentDigest(newNode)
+    createNode(newNode)
+  }
 }
 
 const handleWebhookUpdate = async (
@@ -272,21 +307,31 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 `
   )
 
-  const { createNode } = actions
+  const { createNode, unstable_createNodeManifest } = actions
 
-  const newNode = nodeFromData(
+  const newNode = await nodeFromData(
     nodeToUpdate,
     createNodeId,
-    pluginOptions.entityReferenceRevisions
+    pluginOptions.entityReferenceRevisions,
+    pluginOptions,
+    null,
+    reporter
   )
+
+  drupalCreateNodeManifest({
+    attributes: nodeToUpdate.attributes,
+    gatsbyNode: newNode,
+    unstable_createNodeManifest,
+  })
 
   const nodesToUpdate = [newNode]
 
-  const oldNodeReferencedNodes = referencedNodesLookup.get(newNode.id)
-  const backReferencedNodes = handleReferences(newNode, {
+  const oldNodeReferencedNodes = await cache.get(makeRefNodesKey(newNode.id))
+  const backReferencedNodes = await handleReferences(newNode, {
     getNode,
     mutateNode: false,
     createNodeId,
+    cache,
     entityReferenceRevisions: pluginOptions.entityReferenceRevisions,
   })
 
@@ -297,17 +342,16 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     // Clone node so we're not mutating the original node.
     oldNode = _.cloneDeep(oldNode)
     // copy over back references from old node
-    const backRefsNames = backRefsNamesLookup.get(oldNode.id)
+    const backRefsNames = await cache.get(makeBackRefsKey(oldNode.id))
     if (backRefsNames) {
-      backRefsNamesLookup.set(newNode.id, backRefsNames)
+      await cache.set(makeBackRefsKey(newNode.id), backRefsNames)
       backRefsNames.forEach(backRefFieldName => {
         newNode.relationships[backRefFieldName] =
           oldNode.relationships[backRefFieldName]
       })
     }
 
-    const newNodeReferencedNodes = referencedNodesLookup.get(newNode.id)
-
+    const newNodeReferencedNodes = await cache.get(makeRefNodesKey(newNode.id))
     // see what nodes are no longer referenced and remove backRefs from them
     let removedReferencedNodes = _.difference(
       oldNodeReferencedNodes,
@@ -369,5 +413,135 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   }
 }
 
+const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
+const gatsbyVersion =
+  (typeof getGatsbyVersion === `function` && getGatsbyVersion()) || `0.0.0`
+const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
+const shouldUpgradeGatsbyVersion =
+  lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
+
+let warnOnceForNoSupport = false
+let warnOnceToUpgradeGatsby = false
+
+/**
+ * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
+ * Content Sync routes a user from Drupal to a page created from the entry data they're interested in previewing.
+ */
+export function drupalCreateNodeManifest({
+  attributes,
+  gatsbyNode,
+  unstable_createNodeManifest,
+}) {
+  const isPreview =
+    (process.env.NODE_ENV === `development` &&
+      process.env.ENABLE_GATSBY_REFRESH_ENDPOINT) ||
+    process.env.GATSBY_IS_PREVIEW === `true`
+
+  const updatedAt = attributes?.revision_timestamp
+  const id = attributes?.drupal_internal__nid
+  const langcode = attributes?.langcode
+
+  const supportsContentSync = typeof unstable_createNodeManifest === `function`
+  const shouldCreateNodeManifest =
+    id && updatedAt && supportsContentSync && isPreview
+
+  if (shouldCreateNodeManifest) {
+    if (shouldUpgradeGatsbyVersion && !warnOnceToUpgradeGatsby) {
+      console.warn(
+        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`
+      )
+      warnOnceToUpgradeGatsby = true
+    }
+    const manifestId = `${id}-${updatedAt}-${langcode}`
+
+    unstable_createNodeManifest({
+      manifestId,
+      node: gatsbyNode,
+      updatedAtUTC: updatedAt,
+    })
+  } else if (!supportsContentSync && !warnOnceForNoSupport) {
+    warnOnceForNoSupport = true
+    console.warn(
+      `Drupal: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+    )
+  }
+}
+
 exports.handleWebhookUpdate = handleWebhookUpdate
 exports.handleDeletedNode = handleDeletedNode
+exports.createNodeIfItDoesNotExist = createNodeIfItDoesNotExist
+
+/**
+ * This FN returns a Map with additional file node information that Drupal doesn't return on actual file nodes (namely the width/height of images)
+ */
+exports.getExtendedFileNodeData = allData => {
+  const fileNodesExtendedData = new Map()
+
+  for (const contentType of allData) {
+    if (!contentType) {
+      continue
+    }
+
+    contentType.data.forEach(node => {
+      if (!node) {
+        return
+      }
+
+      const { relationships } = node
+
+      if (relationships) {
+        for (const relationship of Object.values(relationships)) {
+          const relationshipNodes = Array.isArray(relationship.data)
+            ? relationship.data
+            : [relationship.data]
+
+          relationshipNodes.forEach(relationshipNode => {
+            if (!relationshipNode) {
+              return
+            }
+
+            if (
+              relationshipNode.type === `file--file` &&
+              relationshipNode.meta
+            ) {
+              const existingExtendedData = fileNodesExtendedData.get(
+                relationshipNode.id
+              )
+
+              // if we already have extended data for this file node, we need to merge the new data with it
+              if (existingExtendedData) {
+                const existingImageDerivativeLinks =
+                  existingExtendedData?.imageDerivatives?.links || {}
+
+                const imageDerivativeLinks = {
+                  ...existingImageDerivativeLinks,
+                  ...(relationshipNode.meta?.imageDerivatives?.links || {}),
+                }
+
+                const newMeta = {
+                  ...existingExtendedData,
+                  ...relationshipNode.meta,
+                }
+
+                newMeta.imageDerivatives = {
+                  ...newMeta.imageDerivatives,
+                  links: imageDerivativeLinks,
+                }
+
+                fileNodesExtendedData.set(relationshipNode.id, newMeta)
+              } else {
+                // otherwise we just add the extended data to the map
+                fileNodesExtendedData.set(
+                  relationshipNode.id,
+                  relationshipNode.meta
+                )
+              }
+            }
+          })
+        }
+      }
+    })
+  }
+
+  return fileNodesExtendedData
+}

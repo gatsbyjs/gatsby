@@ -7,7 +7,7 @@ import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
 
-const schemaCustomizationAPIs = new Set([
+export const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
   `createSchemaCustomization`,
   `createResolvers`,
@@ -176,6 +176,7 @@ function getSubpluginsByPluginPath(
       roots = roots.map(root => root[segment])
     }
   }
+  roots = roots.flat()
 
   return roots
 }

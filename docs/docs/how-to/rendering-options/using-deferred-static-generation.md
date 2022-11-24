@@ -100,7 +100,9 @@ export async function config() {
   const oldPosts = new Set(data.oldPosts.nodes.map(n => n.frontmatter.slug))
 
   return ({ params }) => {
-    defer: oldPosts.has(params.frontmatter__slug)
+    return {
+      defer: oldPosts.has(params.frontmatter__slug)
+    }
   }
 }
 ```
@@ -131,12 +133,12 @@ The `gatsby-node.js` file:
 ```js:title=gatsby-node.js
 const blogPostTemplate = require.resolve(`./src/templates/blog-post.js`)
 
-export.createPages = async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   const result = await graphql(`
     query {
-      allMdx(sort: { fields: frontmatter___date, order: DESC }) {
+      allMdx(sort: { frontmatter: { date: DESC }}) {
         nodes {
           slug
         }

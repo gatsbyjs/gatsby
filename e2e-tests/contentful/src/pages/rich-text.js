@@ -1,5 +1,5 @@
 import { graphql } from "gatsby"
-import GatsbyImage from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import * as React from "react"
 import slugify from "slugify"
 
@@ -27,8 +27,8 @@ const options = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
       const asset = node.data.target
-      if (asset.fluid) {
-        return <GatsbyImage {...asset} style={{ width: 200 }} />
+      if (asset.gatsbyImageData) {
+        return <GatsbyImage image={asset.gatsbyImageData} />
       }
       return (
         <>
@@ -130,9 +130,7 @@ export const pageQuery = graphql`
             __typename
             ... on ContentfulAsset {
               contentful_id
-              fluid(maxWidth: 200) {
-                ...GatsbyContentfulFluid
-              }
+              gatsbyImageData(width: 200)
             }
             ... on ContentfulText {
               contentful_id

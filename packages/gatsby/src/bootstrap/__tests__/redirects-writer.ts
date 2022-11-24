@@ -108,8 +108,8 @@ describe(`redirect-writer`, () => {
 
     const warningMessage = reporterWarnMock.mock.calls[0][0]
     expect(warningMessage).toMatchInlineSnapshot(`
-      "There are routes that match both page and redirect. Pages take precendence over redirects so the redirect will not work:
-       - page: \\"/server-overlap\\" and redirect: \\"/server-overlap/\\" -> \\"/server-overlap/redirect/\\"
+      "There are routes that match both page and redirect. Pages take precedence over redirects so the redirect will not work:
+       - page: \\"/server-overlap/\\" and redirect: \\"/server-overlap/\\" -> \\"/server-overlap/redirect/\\"
        - page: \\"/client-overlap/\\" and redirect: \\"/client-overlap\\" -> \\"/client-overlap/redirect/\\""
     `)
   })

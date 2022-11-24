@@ -5,20 +5,21 @@ examples:
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-path-prefix"
 ---
 
-Many applications are hosted at something other than the root (`/`) of their domain.
-
-For example, a Gatsby blog could live at `example.com/blog/`, or a site could be hosted on GitHub Pages at `example.github.io/my-gatsby-site/`.
-
-Each of these sites needs a prefix added to all paths on the site. So a link to
-`/my-sweet-blog-post/` should be rewritten as `/blog/my-sweet-blog-post`.
+Many applications are hosted at something other than the root (`/`) of their domain. For example, a Gatsby blog could live at `example.com/blog/`, or a site could be hosted on GitHub Pages at `example.github.io/my-gatsby-site/`. Each of these sites needs a prefix added to all paths on the site. So a link to `/my-sweet-blog-post/` should be rewritten as `/blog/my-sweet-blog-post`.
 
 In addition, links to various resources (JavaScript, CSS, images, and other static content) need the same prefix, so that the site continues to function correctly when served with the path prefix in place.
 
-Adding the path prefix is a two step process, as follows:
+Adding the path prefix is a two step process as you'll see below.
 
-## Add to `gatsby-config.js`
+## Prerequisites
 
-Firstly, add a `pathPrefix` value to your `gatsby-config.js`.
+- A Gatsby project set up. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
+
+## Instructions
+
+### Adding `pathPrefix` to `gatsby-config`
+
+Firstly, add a `pathPrefix` value to your `gatsby-config`.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -26,7 +27,7 @@ module.exports = {
 }
 ```
 
-## Build
+### `gatsby build`
 
 The final step is to build your application with either the `--prefix-paths` flag or `PREFIX_PATHS` environment variable, like so:
 
@@ -40,9 +41,9 @@ PREFIX_PATHS=true gatsby build
 
 If this flag is not passed, Gatsby will ignore your `pathPrefix` and build the site as if hosted from the root domain.
 
-## Serve
+### `gatsby serve`
 
-Serve your application with the `--prefix-paths` flag, like so:
+You can test your build output locally by using `gatsby serve`. Serve your application with the `--prefix-paths` flag, like so:
 
 ```shell
 gatsby serve --prefix-paths
@@ -50,7 +51,7 @@ gatsby serve --prefix-paths
 
 If this flag is not passed, Gatsby will ignore your `pathPrefix`.
 
-## In-app linking
+### In-app linking
 
 Gatsby provides APIs and libraries to make using this feature seamless. Specifically, the [`Link`](/docs/reference/built-in-components/gatsby-link/) component has built-in functionality to handle path prefixing.
 
@@ -93,7 +94,7 @@ export default function Index() {
 }
 ```
 
-## Add the path prefix to paths using `withPrefix`
+### Add the path prefix to paths using `withPrefix`
 
 For pathnames you construct manually, there’s a helper function, [`withPrefix`](/docs/reference/built-in-components/gatsby-link/#add-the-path-prefix-to-paths-using-withprefix) that prepends your path prefix in production (but doesn’t during development where paths don’t need to be prefixed).
 
@@ -101,4 +102,4 @@ For pathnames you construct manually, there’s a helper function, [`withPrefix`
 
 The [`assetPrefix`](/docs/how-to/previews-deploys-hosting/asset-prefix/) feature can be thought of as semi-related to this feature. That feature allows your assets (non-HTML files, e.g. images, JavaScript, etc.) to be hosted on a separate domain, for example a CDN.
 
-This feature works seamlessly with `assetPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix.
+This feature works seamlessly with `assetPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix. If you use `assetPrefix`, your `pathPrefix` will be changed to <code>&lt;assetPrefix&gt;/&lt;pathPrefix&gt;</code>. If you need to access the same `pathPrefix` as in your `gatsby-config`, consider using [`basePath`](/docs/reference/config-files/node-api-helpers/#basePath).

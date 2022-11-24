@@ -1,5 +1,9 @@
 const { build } = require(`..`)
-import { buildObjectType } from "../types/type-builders"
+import {
+  buildObjectType,
+  buildEnumType,
+  buildScalarType,
+} from "../types/type-builders"
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions/restricted`)
 const { actions: publicActions } = require(`../../redux/actions/public`)
@@ -18,6 +22,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    panic: jest.fn(console.error),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -98,6 +103,13 @@ describe(`Print type definitions`, () => {
         date: Date @dateformat(formatString: "YYYY")
       }
       union ThisOrThat = AnotherTest | OneMoreTest
+
+      enum SDLEnumSimple {
+        One
+        Two
+      }
+
+      scalar SDLScalar
     `)
     typeDefs.push(
       buildObjectType({
@@ -128,6 +140,21 @@ describe(`Print type definitions`, () => {
         name: `BarChild`,
         fields: {
           id: `ID!`,
+          fieldWithArgsAndDescription: {
+            type: `String`,
+            args: {
+              withDefault: {
+                type: `String`,
+                description: `This is description`,
+                defaultValue: `Test`,
+              },
+              withoutDefault: {
+                type: `String`,
+                description: `This is description too`,
+              },
+              usingDerivedType: `BarChildSortInput`,
+            },
+          },
         },
         interfaces: [`Node`],
         extensions: {
@@ -135,6 +162,20 @@ describe(`Print type definitions`, () => {
             types: [`Test`],
           },
         },
+      }),
+      buildEnumType({
+        name: `BuilderEnum`,
+        values: {
+          One: {
+            value: `One`,
+          },
+          Two: {
+            value: `Two`,
+          },
+        },
+      }),
+      buildScalarType({
+        name: `BuilderScalar`,
       })
     )
     store.dispatch({
@@ -151,6 +192,11 @@ describe(`Print type definitions`, () => {
       type: `CREATE_TYPES`,
       payload: typeDefs[2],
       plugin: { name: `gatsby-plugin-another-test` },
+    })
+    store.dispatch({
+      type: `CREATE_TYPES`,
+      payload: [typeDefs[3], typeDefs[4]],
+      plugin: { name: `gatsby-plugin-shared` },
     })
   })
 

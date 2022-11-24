@@ -1,6 +1,8 @@
+// needed for fast refresh
+import "@gatsbyjs/webpack-hot-middleware/client"
+
 import React from "react"
 import ReactDOM from "react-dom"
-import io from "socket.io-client"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -39,6 +41,21 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
+const reactDomClient = require(`react-dom/client`)
+const reactFirstRenderOrHydrate = (Component, el) => {
+  // we will use hydrate if mount element has any content inside
+  const useHydrate = el && el.children.length
+
+  if (useHydrate) {
+    const root = reactDomClient.hydrateRoot(el, Component)
+    return () => root.unmount()
+  } else {
+    const root = reactDomClient.createRoot(el)
+    root.render(Component)
+    return () => root.unmount()
+  }
+}
+
 // Do dummy dynamic import so the jsonp __webpack_require__.e is added to the commons.js
 // bundle. This ensures hot reloading doesn't break when someone first adds
 // a dynamic import.
@@ -60,53 +77,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  fetch(`/___services`)
-    .then(res => res.json())
-    .then(services => {
-      if (services.developstatusserver) {
-        let isRestarting = false
-        const parentSocket = io(
-          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver.port}`
-        )
-
-        parentSocket.on(`structured-log`, msg => {
-          if (
-            !isRestarting &&
-            msg.type === `LOG_ACTION` &&
-            msg.action.type === `DEVELOP` &&
-            msg.action.payload === `RESTART_REQUIRED` &&
-            window.confirm(
-              `The develop process needs to be restarted for the changes to ${msg.action.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
-            )
-          ) {
-            isRestarting = true
-            parentSocket.emit(`develop:restart`, () => {
-              window.location.reload()
-            })
-          }
-
-          if (
-            isRestarting &&
-            msg.type === `LOG_ACTION` &&
-            msg.action.type === `SET_STATUS` &&
-            msg.action.payload === `SUCCESS`
-          ) {
-            isRestarting = false
-            window.location.reload()
-          }
-        })
-
-        // Prevents certain browsers spamming XHR 'ERR_CONNECTION_REFUSED'
-        // errors within the console, such as when exiting the develop process.
-        parentSocket.on(`disconnect`, () => {
-          console.warn(
-            `[socket.io] Disconnected. Unable to perform health-check.`
-          )
-          parentSocket.close()
-        })
-      }
-    })
-
   /**
    * Service Workers are persistent by nature. They stick around,
    * serving a cached version of the site if they aren't removed.
@@ -127,45 +97,38 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const rootElement = document.getElementById(`___gatsby`)
-
-  const focusEl = document.getElementById(`gatsby-focus-wrapper`)
-
-  // Client only pages have any empty body so we just do a normal
-  // render to avoid React complaining about hydration mis-matches.
-  let defaultRenderer = ReactDOM.render
-  if (focusEl && focusEl.children.length) {
-    if (ReactDOM.hydrateRoot) {
-      defaultRenderer = ReactDOM.hydrateRoot
-    } else {
-      defaultRenderer = ReactDOM.hydrate
-    }
-  }
-
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    defaultRenderer
+    reactFirstRenderOrHydrate
   )[0]
 
   let dismissLoadingIndicator
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     let indicatorMountElement
+    let cleanupFn
 
     const showIndicatorTimeout = setTimeout(() => {
       indicatorMountElement = document.createElement(
         `first-render-loading-indicator`
       )
       document.body.append(indicatorMountElement)
-      ReactDOM.render(<Indicator />, indicatorMountElement)
+      cleanupFn = renderer(<Indicator />, indicatorMountElement)
     }, 1000)
 
     dismissLoadingIndicator = () => {
       clearTimeout(showIndicatorTimeout)
       if (indicatorMountElement) {
-        ReactDOM.unmountComponentAtNode(indicatorMountElement)
+        // If user defined replaceHydrateFunction themselves the cleanupFn return might not be there
+        // So fallback to unmountComponentAtNode for now
+        if (cleanupFn && typeof cleanupFn === `function`) {
+          cleanupFn()
+        } else {
+          ReactDOM.unmountComponentAtNode(indicatorMountElement)
+        }
         indicatorMountElement.remove()
       }
     }
@@ -193,16 +156,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         )
         document.body.append(indicatorMountElement)
 
-        if (renderer === ReactDOM.hydrateRoot) {
-          ReactDOM.createRoot(indicatorMountElement).render(
-            <LoadingIndicatorEventHandler />
-          )
-        } else {
-          ReactDOM.render(
-            <LoadingIndicatorEventHandler />,
-            indicatorMountElement
-          )
-        }
+        renderer(<LoadingIndicatorEventHandler />, indicatorMountElement)
       }
     }
 
@@ -225,11 +179,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         dismissLoadingIndicator()
       }
 
-      if (renderer === ReactDOM.hydrateRoot) {
-        renderer(rootElement, <App />)
-      } else {
-        renderer(<App />, rootElement)
-      }
+      renderer(<App />, rootElement)
     }
 
     // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450

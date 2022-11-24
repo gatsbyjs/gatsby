@@ -4,7 +4,7 @@ import { StaticQuery, graphql } from "gatsby"
 function Variable(props) {
   return (
     <StaticQuery
-      query={reactHelmetPluginQuery}
+      query={pluginQuery}
       render={data => (
         <div>
           <p {...props}>
@@ -16,9 +16,9 @@ function Variable(props) {
   )
 }
 
-const reactHelmetPluginQuery = graphql`
-  query ReactHelmetPluginQuery {
-    sitePlugin(name: { eq: "gatsby-plugin-react-helmet" }) {
+const pluginQuery = graphql`
+  query PluginQuery {
+    sitePlugin(name: { eq: "gatsby-plugin-global-style" }) {
       name
       version
     }

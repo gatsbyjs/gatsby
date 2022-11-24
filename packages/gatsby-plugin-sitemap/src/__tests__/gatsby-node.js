@@ -53,7 +53,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     )
     const { destinationDir, sourceData } =
       sitemap.simpleSitemapAndIndex.mock.calls[0][0]
-    expect(destinationDir).toEqual(path.join(`public`, `sitemap`))
+    expect(destinationDir).toEqual(path.join(`public`, `/`))
     expect(sourceData).toMatchSnapshot()
   })
 
@@ -141,14 +141,21 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     const options = {
       entryLimit: 1,
     }
+    const assetPrefix = `https://cdn.example.com`
     const prefix = `/test`
     await onPostBuild(
-      { graphql, pathPrefix: prefix, reporter },
+      {
+        graphql,
+        basePath: prefix,
+        pathPrefix: `${assetPrefix}${prefix}`,
+        reporter,
+      },
       await schema.validateAsync(options)
     )
     const { sourceData } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
     sourceData.forEach(page => {
       expect(page.url).toEqual(expect.stringContaining(prefix))
+      expect(page.url).not.toEqual(expect.stringContaining(assetPrefix))
     })
   })
 

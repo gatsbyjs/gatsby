@@ -15,7 +15,9 @@ describe(`extract query`, () => {
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}.js`)
         )
-      ).toBe(`{allThing{nodes{id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`handles lowercased model name`, () => {
@@ -24,7 +26,9 @@ describe(`extract query`, () => {
           `contentfulType`,
           compatiblePath(`/foo/{contentfulType.id}.js`)
         )
-      ).toBe(`{allContentfulType{nodes{id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allContentfulType{nodes{id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`handles model name with underscore`, () => {
@@ -33,7 +37,9 @@ describe(`extract query`, () => {
           `_customType`,
           compatiblePath(`/foo/{_customType.id}.js`)
         )
-      ).toBe(`{allCustomType{nodes{id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allCustomType{nodes{id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`handles model name with number`, () => {
@@ -42,7 +48,9 @@ describe(`extract query`, () => {
           `Type123`,
           compatiblePath(`/foo/{Type123.id}.js`)
         )
-      ).toBe(`{allType123{nodes{id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allType123{nodes{id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`handles fields with number or underscore`, () => {
@@ -51,13 +59,17 @@ describe(`extract query`, () => {
           `_type123`,
           compatiblePath(`/foo/{_type123.field123}.js`)
         )
-      ).toBe(`{allType123{nodes{field123,id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allType123{nodes{field123,id,internal{contentFilePath}}}}"`
+      )
       expect(
         generateQueryFromString(
           `_type123`,
           compatiblePath(`/foo/{_type123._field123}.js`)
         )
-      ).toBe(`{allType123{nodes{_field123,id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allType123{nodes{_field123,id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`works with different file extensions`, () => {
@@ -66,7 +78,9 @@ describe(`extract query`, () => {
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}.tsx`)
         )
-      ).toBe(`{allThing{nodes{id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,internal{contentFilePath}}}}"`
+      )
     })
   })
 
@@ -77,7 +91,9 @@ describe(`extract query`, () => {
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}.js`)
         )
-      ).toBe(`{allThing{nodes{id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`always queries id`, () => {
@@ -86,7 +102,9 @@ describe(`extract query`, () => {
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.baz}.js`)
         )
-      ).toBe(`{allThing{nodes{baz,id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{baz,id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`multiple nodes`, () => {
@@ -95,13 +113,17 @@ describe(`extract query`, () => {
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}/{Thing.name}.js`)
         )
-      ).toBe(`{allThing{nodes{id,name}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,name,internal{contentFilePath}}}}"`
+      )
       expect(
         generateQueryFromString(
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}-{Thing.name}.js`)
         )
-      ).toBe(`{allThing{nodes{id,name}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,name,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`nested nodes`, () => {
@@ -110,7 +132,9 @@ describe(`extract query`, () => {
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}/{Thing.fields__name}.js`)
         )
-      ).toBe(`{allThing{nodes{id,fields{name}}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,fields{name},internal{contentFilePath}}}}"`
+      )
     })
 
     it(`multiple nested nodes`, () => {
@@ -121,7 +145,9 @@ describe(`extract query`, () => {
             `/foo/bar/{thing.fields__name}/{thing.fields__description}.js`
           )
         )
-      ).toBe(`{allThing{nodes{fields{name},fields{description},id}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{fields{name},fields{description},id,internal{contentFilePath}}}}"`
+      )
     })
 
     it(`deeply nested nodes`, () => {
@@ -130,7 +156,9 @@ describe(`extract query`, () => {
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}/{Thing.fields__name__thing}.js`)
         )
-      ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,fields{name{thing}},internal{contentFilePath}}}}"`
+      )
       expect(
         generateQueryFromString(
           `customType`,
@@ -138,7 +166,9 @@ describe(`extract query`, () => {
             `/foo/bar/{customType.id}/{customType.fields__name__thing}.js`
           )
         )
-      ).toBe(`{allCustomType{nodes{id,fields{name{thing}}}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allCustomType{nodes{id,fields{name{thing}},internal{contentFilePath}}}}"`
+      )
     })
 
     it(`deeply nested nodes with prefixes`, () => {
@@ -149,7 +179,9 @@ describe(`extract query`, () => {
             `/foo/bar/prefix-{Thing.id}/another-prefix_{Thing.fields__name__thing}.js`
           )
         )
-      ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,fields{name{thing}},internal{contentFilePath}}}}"`
+      )
     })
 
     it(`deeply nested nodes with postfixes`, () => {
@@ -160,7 +192,9 @@ describe(`extract query`, () => {
             `/foo/bar/{Thing.id}-postfix/{Thing.fields__name__thing}_another-postfix.js`
           )
         )
-      ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allThing{nodes{id,fields{name{thing}},internal{contentFilePath}}}}"`
+      )
     })
 
     it(`supports graphql unions`, () => {
@@ -171,7 +205,9 @@ describe(`extract query`, () => {
             `/foo/bar/{UnionQuery.id}/{UnionQuery.parent__(File)__relativePath}.js`
           )
         )
-      ).toBe(`{allUnionQuery{nodes{id,parent{... on File{relativePath}}}}}`)
+      ).toMatchInlineSnapshot(
+        `"{allUnionQuery{nodes{id,parent{... on File{relativePath}},internal{contentFilePath}}}}"`
+      )
     })
 
     it(`supports nested graphql unions`, () => {
@@ -182,10 +218,22 @@ describe(`extract query`, () => {
             `/foo/bar/{UnionQuery.id}/{UnionQuery.parent__(File)__parent__(Bar)__relativePath}.js`
           )
         )
-      ).toBe(
-        `{allUnionQuery{nodes{id,parent{... on File{parent{... on Bar{relativePath}}}}}}}`
+      ).toMatchInlineSnapshot(
+        `"{allUnionQuery{nodes{id,parent{... on File{parent{... on Bar{relativePath}}}},internal{contentFilePath}}}}"`
       )
     })
+  })
+
+  it(`supports limiting collection query to specified node ids if provided`, () => {
+    expect(
+      generateQueryFromString(
+        `Thing`,
+        compatiblePath(`/foo/bar/{Thing.id}/{Thing.fields__name}.js`),
+        [`id-1`, `id-2`]
+      )
+    ).toMatchInlineSnapshot(
+      `"{allThing(filter: { id: { in: [\\"id-1\\",\\"id-2\\"] } }){nodes{id,fields{name},internal{contentFilePath}}}}"`
+    )
   })
 })
 

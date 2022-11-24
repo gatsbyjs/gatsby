@@ -67,19 +67,23 @@ For each script, it can be helpful to understand the business purpose, relative 
 
 There may also be relatively unimportant scripts that have a high performance costs; these are also good candidates for removal.
 
-#### Step 2: lazy load or inline scripts
+#### Step 2: Use the Gatsby Script component to load scripts performantly
 
-One of the lowest-hanging fruits is to set your scripts to load lazily rather than "eagerly" (the default). Any `<script>` tags being embedded manually can be set to `<script async>`.
+> Support for the Gatsby Script API was added in `gatsby@4.15.0`.
 
-For slightly more effort, you can get additional performance gains; rather than loading third-party scripts from external sources, you can inline scripts in your code to reduce the cost of a network call.
+Gatsby includes a built-in `<Script>` component that unlocks the ability to load your scripts with various strategies that are beneficial for performance:
 
-There are a number of places to put an inlined script, depending whether you need it to execute immediately upon loading or can defer execution.
+- After your page hydrates (`post-hydrate` strategy)
+- After the browser's main thread becomes idle (`idle` strategy)
+- In a web worker, avoiding doing any work on the main thread at all (`off-main-thread` strategy, experimental)
 
-- _No deferring_: This is a good default. Put the script in [onPreRenderHTML](/docs/ssr-apis/#onPreRenderHTML) to have it added to your document tree. You can place it lower in your DOM to have parsed and evaluated later.
-- _Some deferring_: You can place the script in [onClientEntry](/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
-- _More deferring_: You can place the script in [onInitialClientRender](/docs/browser-apis/#onInitialClientRender) to have it execute after the browser renders the page.
+Each strategy comes with its own set of considerations, but they are all more performant than the regular blocking `<script>`, `<script async>`, and `<script defer>`.
 
-Note that if you are using [html.js](/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`.
+The Gatsby `<Script>` component also supports inline scripts, so for your smaller scripts you can save the cost of a network request _and_ determine when the inline script is loaded.
+
+For more information, see the [Gatsby Script reference documentation](/docs/reference/built-in-components/gatsby-script/).
+
+Another option is to replace multiple analytics trackers that load in the user's browser with a single tracker from a "customer data platform" (CDP) like [Segment](/plugins/gatsby-plugin-segment-js/) or [Rudderstack](/plugins/gatsby-plugin-rudderstack/). CDPs will send out data to your analytics tools from their servers. Here is [one example of a team that did this to optimize performance](/blog/how-wavedirect-used-gatsby-rudderstack-and-sanity-to-4x-leads-and-dominate-search-results).
 
 ### Reduce your JavaScript bundle cost
 

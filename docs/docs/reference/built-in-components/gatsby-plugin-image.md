@@ -232,12 +232,11 @@ For `fullWidth` images you don't specify width or height, as it resizes to fit t
 
 Gatsby image components are lazy-loaded by default, which means that if they are offscreen they are not loaded by the browser until they come into view. To ensure that the layout does not jump around, a placeholder is displayed before the image loads. You can choose one of three types of placeholder (or not use a placeholder at all):
 
-| Placeholder    | Component prop value | Resolver prop value | Description                                                                                                                                                                        |
-| -------------- | -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dominant color | `"dominantColor"`    | `DOMINANT_COLOR`    | The default placeholder. This calculates the dominant color of the source image and uses it as a solid background color.                                                           |
-| Blurred        | `"blurred"`          | `BLURRED`           | This generates a very low-resolution version of the source image and displays it as a blurred background.                                                                          |
-| Traced SVG     | `"tracedSVG"`        | `TRACED_SVG`        | This generates a simplified, flat SVG version of the source image, which it displays as a placeholder. This works well for images with simple shapes or that include transparency. |
-| None           | `"none"`             | `NONE`              | No placeholder. You can use the background color option to set a static background if you wish.                                                                                    |
+| Placeholder    | Component prop value | Resolver prop value | Description                                                                                                              |
+| -------------- | -------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Dominant color | `"dominantColor"`    | `DOMINANT_COLOR`    | The default placeholder. This calculates the dominant color of the source image and uses it as a solid background color. |
+| Blurred        | `"blurred"`          | `BLURRED`           | This generates a very low-resolution version of the source image and displays it as a blurred background.                |
+| None           | `"none"`             | `NONE`              | No placeholder. You can use the background color option to set a static background if you wish.                          |
 
 ### `formats`
 
@@ -253,8 +252,8 @@ These values are passed in as an object to `transformOptions`, either as a prop 
 | ----------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `grayscale` | `false`                   | Convert image to grayscale                                                                                                                                    |
 | `duotone`   | `false`                   | Add duotone effect. Pass `false`, or options object containing `{highlight: string, shadow: string, opacity: number}`                                         |
-| `rotate`    | `0`                       | Rotate the image. Value in degrees.                                                                                                                           |
-| `trim`      | `false`                   | Trim "boring" pixels. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                                         |
+| `rotate`    | `auto`                    | Rotate the image. Value in degrees.                                                                                                                           |
+| `trim`      | `10`                      | Trim "boring" pixels. Value is the threshold. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                 |
 | `cropFocus` | `"attention"`/`ATTENTION` | Controls crop behavior. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#resize) for strategy, position and gravity.                  |
 | `fit`       | `"cover"`/`COVER`         | Controls behavior when resizing an image and proving both width and height. See [the sharp documentation.](https://sharp.pixelplumbing.com/api-resize#resize) |
 
@@ -275,7 +274,6 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.com) for image 
 | `outputPixelDensities`                  | For fixed images: `[1, 2]`<br />For constrained: `[0.25, 0.5, 1, 2]` | A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image. The value is multiplied by the image width, to give the generated sizes. For example, a `400` px wide constrained image would generate `100`, `200`, `400` and `800` px wide images by default. Ignored for full width layout images, which use `breakpoints` instead. |
 | `breakpoints`                           | `[750, 1080, 1366, 1920]`                                            | Output widths to generate for full width images. Default is to generate widths for common device resolutions. It will never generate an image larger than the source image. The browser will automatically choose the most appropriate.                                                                                                                                                                       |
 | `blurredOptions`                        | None                                                                 | Options for the low-resolution placeholder image. Ignored unless [`placeholder`](#placeholder) is blurred.                                                                                                                                                                                                                                                                                                    |
-| `tracedSVGOptions`                      | None                                                                 | Options for traced placeholder SVGs. See [potrace options](https://www.npmjs.com/package/potrace#parameters). Ignored unless [`placeholder`](#placeholder) is traced SVG.                                                                                                                                                                                                                                     |
 | `jpgOptions`                            | None                                                                 | Options to pass to sharp when generating JPG images.                                                                                                                                                                                                                                                                                                                                                          |
 | `pngOptions`                            | None                                                                 | Options to pass to sharp when generating PNG images.                                                                                                                                                                                                                                                                                                                                                          |
 | `webpOptions`                           | None                                                                 | Options to pass to sharp when generating WebP images.                                                                                                                                                                                                                                                                                                                                                         |
@@ -300,7 +298,6 @@ module.exports = {
           quality: 50,
           breakpoints: [750, 1080, 1366, 1920],
           backgroundColor: `transparent`,
-          tracedSVGOptions: {},
           blurredOptions: {},
           jpgOptions: {},
           pngOptions: {},

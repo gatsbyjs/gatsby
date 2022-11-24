@@ -5,7 +5,6 @@ import {
   IStaticQueryResultState,
 } from "../../redux/types"
 
-const platformSpy = jest.spyOn(require(`os`), `platform`)
 interface IMinimalStateSliceForTest {
   html: IGatsbyState["html"]
   pages: IGatsbyState["pages"]
@@ -245,16 +244,13 @@ describe(`calcDirtyHtmlFiles`, () => {
   })
 
   describe(`onCreatePage + deletePage + createPage that change path casing of a page`, () => {
-    afterAll(() => {
-      platformSpy.mockRestore()
-    })
-
     it(`linux (case sensitive file system)`, () => {
       let isolatedCalcDirtyHtmlFiles
       jest.isolateModules(() => {
-        platformSpy.mockImplementation(() => `linux`)
+        process.env.TEST_FORCE_CASE_FS = `SENSITIVE`
         isolatedCalcDirtyHtmlFiles =
           require(`../build-utils`).calcDirtyHtmlFiles
+        delete process.env.TEST_FORCE_CASE_FS
       })
 
       const state = generateStateToTestHelper({
@@ -280,9 +276,10 @@ describe(`calcDirtyHtmlFiles`, () => {
     it(`windows / mac (case insensitive file system)`, () => {
       let isolatedCalcDirtyHtmlFiles
       jest.isolateModules(() => {
-        platformSpy.mockImplementation(() => `win32`)
+        process.env.TEST_FORCE_CASE_FS = `INSENSITIVE`
         isolatedCalcDirtyHtmlFiles =
           require(`../build-utils`).calcDirtyHtmlFiles
+        delete process.env.TEST_FORCE_CASE_FS
       })
 
       const state = generateStateToTestHelper({

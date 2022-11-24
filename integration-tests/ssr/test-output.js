@@ -7,10 +7,11 @@ async function run() {
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)
-  const diff = require(`jest-diff`)
+  const { diff } = require(`jest-diff`)
   const prettier = require(`prettier`)
   const cheerio = require(`cheerio`)
   const stripAnsi = require(`strip-ansi`)
+  const pagesUsingEngines = require(`./pages-using-engines`)
 
   const devSiteBasePath = `http://localhost:8000`
 
@@ -32,29 +33,49 @@ async function run() {
       // Only in dev
       $(`meta[name="note"]`).remove()
 
+      // remove any comments
+      $.root()
+        .find("*")
+        .contents()
+        .filter(function () {
+          return this.type === "comment"
+        })
+        .remove()
+
       return $.html()
     }
 
+    const getProdHtmlPath = path => {
+      let maybeUsingEngine = pagesUsingEngines[path]
+      if (maybeUsingEngine) {
+        return maybeUsingEngine
+      }
+      return generateHtmlPath(join(process.cwd(), `public`), path)
+    }
+
     const builtHtml = format(
-      filterHtml(
-        fs.readFileSync(
-          generateHtmlPath(join(process.cwd(), `public`), path),
-          `utf-8`
-        )
-      )
+      filterHtml(fs.readFileSync(getProdHtmlPath(path), `utf-8`))
     )
 
     // Fetch once to trigger re-compilation.
-    await fetch(`${devSiteBasePath}/${path}`)
+    await fetch(`${devSiteBasePath}/${path}`, {
+      headers: {
+        "x-gatsby-wait-for-dev-ssr": `1`,
+      },
+    })
 
-    // Then wait for 6 seconds to ensure it's ready to go.
+    // Then wait for six seconds to ensure it's ready to go.
     // Otherwise, tests are flaky depending on the speed of the testing machine.
     await new Promise(resolve => {
       setTimeout(() => resolve(), 6000)
     })
 
     let devStatus = 200
-    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res => {
+    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`, {
+      headers: {
+        "x-gatsby-wait-for-dev-ssr": `1`,
+      },
+    }).then(res => {
       devStatus = res.status
       return res.text()
     })
@@ -103,7 +124,15 @@ async function run() {
     paths
   )
 
-  const results = await Promise.all(paths.map(p => comparePath(p)))
+  const results = []
+
+  // Run comparisons serially, otherwise recompilation fetches
+  // interfere with each other when run within Promise.all
+  for (const path of paths) {
+    const result = await comparePath(path)
+    results.push(result)
+  }
+
   // Test all true
   if (results.every(r => r)) {
     process.exit(0)

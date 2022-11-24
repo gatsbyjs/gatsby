@@ -20,6 +20,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   bat: `batch`,
   h: `c`,
   tex: `latex`,
+  csproj: `xml`,
 }
 
 const getLanguage = file => {
@@ -47,7 +48,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
     const { value } = node
 
     if (value.startsWith(`embed:`)) {
-      const file = value.substr(6)
+      const file = value.slice(6)
       let snippetPath = normalizePath(path.join(directory, file))
 
       // Embed specific lines numbers of a file

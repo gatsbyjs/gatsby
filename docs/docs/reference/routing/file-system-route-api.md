@@ -149,7 +149,7 @@ If you need to want to create pages for only some nodes in a collection (e.g. fi
 
 ### Routing and linking
 
-Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
+Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters. You can configure `slugify` by adjusting [`gatsby-plugin-page-creator`](/plugins/gatsby-plugin-page-creator/#options) for your `src/pages` path.
 
 When you want to link to a collection route page, it may not always be clear how to construct the URL from scratch.
 
@@ -214,12 +214,32 @@ You can use square brackets (`[ ]`) in the file path to mark any dynamic segment
 
 #### Splat routes
 
-Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
+Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. Use three periods in square brackets (`[...]`) in a file path to mark a page as a splat route. You can also name the parameter your page receives by adding a name after the three periods (`[...myNameKey]`).
 
-- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`
-- `src/pages/image/[...].js` will generate a route like `/image/*`
+As an example, suppose that you are rendering images from [S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
-Three periods `...` mark a page as a splat route. Optionally, you can name the splat as well, which has the benefit of naming the key of the property that your component receives.
+- `src/pages/image/[...].js` will generate a route like `/image/*`. `*` is accessible in your page's received properties with the key name `*`.
+- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`. `*awsKey` is accessible in your page's received properties with the key name `awsKey`.
+
+```js:title=src/pages/image/[...].js
+export default function ImagePage({ params }) {
+  const param = params[`*`]
+
+  // When visiting a route like `image/hello/world`,
+  // the value of `param` is `hello/world`.
+}
+```
+
+```js:title=src/pages/image/[...awsKey].js
+export default function ImagePage({ params }) {
+  const param = params[`awsKey`]
+
+  // When visiting a route like `image/hello/world`,
+  // the value of `param` is `hello/world`.
+}
+```
+
+Splat routes may not live in the same directory as regular client only routes.
 
 ### Examples
 

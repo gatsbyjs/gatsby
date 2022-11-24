@@ -5,7 +5,9 @@ import { IPluginInfoOptions } from "./types"
 
 interface ITestPluginOptionsSchemaReturnType {
   errors: Array<string>
+  warnings: Array<string>
   isValid: boolean
+  hasWarnings: boolean
 }
 
 export async function testPluginOptionsSchema(
@@ -15,39 +17,51 @@ export async function testPluginOptionsSchema(
   const pluginSchema = pluginSchemaFunction({
     Joi: Joi.extend(joi => {
       return {
-        base: joi.any(),
         type: `subPlugins`,
-        args: (): any =>
-          joi
-            .array()
-            .items(
-              joi
-                .alternatives(
-                  joi.string(),
-                  joi.object({
-                    resolve: Joi.string(),
-                    options: Joi.object({}).unknown(true),
-                  })
-                )
-                .custom(value => {
-                  if (typeof value === `string`) {
-                    value = { resolve: value }
-                  }
-
-                  return value
-                }, `Gatsby specific subplugin validation`)
+        base: joi
+          .array()
+          .items(
+            joi.alternatives(
+              joi.string(),
+              joi.object({
+                resolve: Joi.string(),
+                options: Joi.object({}).unknown(true),
+              })
             )
-            .default([]),
+          )
+          .custom(
+            arrayValue =>
+              arrayValue.map(value => {
+                if (typeof value === `string`) {
+                  value = { resolve: value }
+                }
+
+                return value
+              }),
+            `Gatsby specific subplugin validation`
+          )
+          .default([]),
       }
     }),
   })
 
   try {
-    await validateOptionsSchema(pluginSchema, pluginOptions)
+    const { warning } = await validateOptionsSchema(pluginSchema, pluginOptions)
+
+    const warnings = warning?.details?.map(detail => detail.message) ?? []
+
+    if (warnings?.length > 0) {
+      return {
+        isValid: true,
+        errors: [],
+        hasWarnings: true,
+        warnings,
+      }
+    }
   } catch (e) {
-    const errors = e.details.map(detail => detail.message)
-    return { isValid: false, errors }
+    const errors = e?.details?.map(detail => detail.message) ?? []
+    return { isValid: false, errors, hasWarnings: false, warnings: [] }
   }
 
-  return { isValid: true, errors: [] }
+  return { isValid: true, errors: [], hasWarnings: false, warnings: [] }
 }

@@ -292,6 +292,49 @@ if (coreSupportsOnPluginInit === "stable") {
 }
 ```
 
+## 5. Bundling External Files
+
+In order for DSG & SSR to work Gatsby creates bundles with all the contents of the site, plugins, and data. When a plugin (or your own `gatsby-node.js`) requires an external file via `fs` module (e.g. `fs.readFile`) the engine won't be able to include the file. As a result you might see an error (when trying to run DSG) like `ENOENT: no such file or directory` in the CLI.
+
+This limitation applies to these lifecycle APIs: `setFieldsOnGraphQLNodeType`, `createSchemaCustomization`, and `createResolvers`.
+
+Instead you should move the contents to a JS/TS file and import the file as this way the bundler will be able to include the contents.
+
+### The Old Way
+
+Previously you might have required a `.gql` file to use it in one of Gatsby's APIs with the `fs` module:
+
+```javascript:title=gatsby-node.js
+const fs = require("fs")
+const path = require("path")
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = fs.readFileSync(
+    // .gql file with the SDL
+    path.resolve(__dirname, "schema.gql"),
+    "utf8"
+  )
+
+  createTypes(typeDefs)
+}
+```
+
+### The New Way
+
+You can either move the definitions to a JS/TS file or inline it in `createTypes` directly.
+
+```javascript:title=gatsby-node.js
+// JS file containing the SDL strings now
+const typeDefs = require("./schema")
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(typeDefs)
+}
+```
+
 ## Recommendations for publishing your new source plugin version
 
 Publish a new version of your Gatsby-4-compatible package that references `"gatsby": "^4.0.0"` in its `peerDependencies` to signal that the given source plugin version is specifically updated to work with Gatsby 4.

@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { Express } from "express"
+import type { TrailingSlash } from "gatsby-page-utils"
 // TODO export it in index.d.ts
 type PluginEntry =
   | string
@@ -25,8 +26,9 @@ interface IGatsbyConfigInput {
     url: string
   }
   developMiddleware?(app: Express): void
-  jsxRuntime?: string
+  jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
+  trailingSlash?: TrailingSlash
 }
 
 type ConfigKey = keyof IGatsbyConfigInput

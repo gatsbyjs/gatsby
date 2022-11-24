@@ -198,36 +198,9 @@ Gatsby core and plugins can automatically create pages for you. Sometimes the
 default isn't quite what you want and you need to modify the created page
 objects.
 
-### Removing trailing slashes
+### Configuring trailing slash behavior
 
-A common reason for needing to modify automatically created pages is to remove
-trailing slashes.
-
-To do this, in your site's `gatsby-node.js` add code similar to the following:
-
-_Note: There's also a plugin that will remove all trailing slashes from pages automatically:
-[gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/)_.
-
-_Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
-
-```javascript:title=gatsby-node.js
-// Replacing '/' would result in empty string which is invalid
-const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
-// Implement the Gatsby API “onCreatePage”. This is
-// called after every page is created.
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions
-
-  const oldPage = Object.assign({}, page)
-  // Remove trailing slash unless page is /
-  page.path = replacePath(page.path)
-  if (page.path !== oldPage.path) {
-    // Replace old page with new page
-    deletePage(oldPage)
-    createPage(page)
-  }
-}
-```
+As of `gatsby@4.7.0`, you now have the option of [removing, appending, or ignoring trailing slashes](/docs/reference/config-files/gatsby-config/#trailingslash).
 
 ### Pass context to pages
 
@@ -262,6 +235,23 @@ export default Page
 ```
 
 Page context is serialized before being passed to pages. This means it can't be used to pass functions into components and `Date` objects will be serialized into strings.
+
+## Optimizing pages for Content Sync
+
+When using the [Content Sync](/docs/conceptual/content-sync) feature on Gatsby Cloud, an optional parameter, `ownerNodeId`, can be passed to the `createPage` action to allow greater control over where content is previewed. By passing a value to `ownerNodeId`, you can ensure that Content Sync will redirect content authors to the page they intend to preview their content on. The value of `ownerNodeId` should be set to the id of the node that's the preferred node to preview for each page. This is typically the id of the node that's used to create the page path for each page.
+
+```javascript:title=gatsby-node.js
+const posts = result.data.allPosts.nodes
+
+posts.forEach((post) => {
+  createPage({
+    path: `/blog/${post.slug}/`,
+    component: blogPost,
+    context: {},
+    ownerNodeId: post.id, // highlight-line
+  })
+})
+```
 
 ## Creating client-only routes
 

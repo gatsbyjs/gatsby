@@ -31,6 +31,7 @@ type ISSRData = Opaque<
   "ISSRData",
   {
     serverDataHeaders?: Record<string, string>
+    serverDataStatus?: number
   }
 >
 

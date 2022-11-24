@@ -1,9 +1,10 @@
-import { loadConfigAndPlugins as internalLoadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
+import { loadConfig } from "../../../bootstrap/load-config"
+import { loadPlugins } from "../../../bootstrap/load-plugins"
 import { store } from "../../../redux"
 import apiRunnerNode from "../../api-runner-node"
 
 export async function loadConfigAndPlugins(
-  ...args: Parameters<typeof internalLoadConfigAndPlugins>
+  ...args: Parameters<typeof loadConfig>
 ): Promise<void> {
   const [{ siteDirectory, program }] = args
 
@@ -14,12 +15,9 @@ export async function loadConfigAndPlugins(
       directory: siteDirectory,
     },
   })
-  await internalLoadConfigAndPlugins(...args)
+  const config = await loadConfig(...args)
+  await loadPlugins(config, siteDirectory)
 
   // Cache is already initialized
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    await apiRunnerNode(`onPluginInit`)
-  } else {
-    await apiRunnerNode(`unstable_onPluginInit`)
-  }
+  await apiRunnerNode(`onPluginInit`)
 }

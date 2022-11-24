@@ -4,17 +4,13 @@ import got, { Method } from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
-import { graphqlHTTP, OptionsData } from "express-graphql"
-import graphqlPlayground from "graphql-playground-middleware-express"
+import { createHandler as createGraphqlEndpointHandler } from "graphql-http/lib/use/express"
+import type { OperationContext } from "graphql-http"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import {
-  formatError,
-  FragmentDefinitionNode,
-  GraphQLFormattedError,
-  Kind,
-} from "graphql"
+import { FragmentDefinitionNode, GraphQLError, Kind } from "graphql"
 import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
+import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -38,7 +34,6 @@ import {
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
 import apiRunnerNode from "../utils/api-runner-node"
-import { Express } from "express"
 import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
@@ -52,12 +47,15 @@ import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
+import { configureTrailingSlash } from "./express-middlewares"
+import type { Express } from "express"
+import { addImageRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
 interface IServer {
   compiler: webpack.Compiler
-  listener: http.Server
+  listener: http.Server | https.Server
   webpackActivity: ActivityTracker
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
@@ -173,65 +171,53 @@ export async function startServer(
    */
   const graphqlEndpoint = `/_+graphi?ql`
 
-  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
-    app.get(
-      graphqlEndpoint,
-      graphqlPlayground({
-        endpoint: `/___graphql`,
-      }),
-      () => {}
-    )
-  } else {
-    graphiqlExplorer(app, {
-      graphqlEndpoint,
-      getFragments: function getFragments(): Array<FragmentDefinitionNode> {
-        const fragments: Array<FragmentDefinitionNode> = []
-        for (const def of store.getState().definitions.values()) {
-          if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
-            fragments.push(def.def)
-          }
+  graphiqlExplorer(app, {
+    graphqlEndpoint,
+    getFragments: function getFragments(): Array<FragmentDefinitionNode> {
+      const fragments: Array<FragmentDefinitionNode> = []
+      for (const def of store.getState().definitions.values()) {
+        if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
+          fragments.push(def.def)
         }
-        return fragments
-      },
-    })
-  }
+      }
+      return fragments
+    },
+  })
 
   app.use(
     graphqlEndpoint,
-    graphqlHTTP((): OptionsData => {
-      const { schema, schemaCustomization } = store.getState()
-
-      if (!schemaCustomization.composer) {
-        throw new Error(
-          `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
-        )
-      }
-      return {
-        schema,
-        graphiql: false,
-        extensions(): { [key: string]: unknown } {
-          return {
-            enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
-            refreshToken: process.env.GATSBY_REFRESH_TOKEN,
-          }
-        },
-        context: withResolverContext({
-          schema,
-          schemaComposer: schemaCustomization.composer,
+    createGraphqlEndpointHandler({
+      schema() {
+        return store.getState().schema
+      },
+      context() {
+        return withResolverContext({
+          schema: store.getState().schema,
+          schemaComposer: store.getState().schemaCustomization.composer,
           context: {},
-          customContext: schemaCustomization.context,
-        }),
-        customFormatErrorFn(
-          err
-        ): GraphQLFormattedError<{ stack: Array<string> }> {
-          return {
-            ...formatError(err),
-            extensions: {
-              stack: err.stack ? err.stack.split(`\n`) : [],
-            },
-          }
-        },
-      }
+          customContext: store.getState().schemaCustomization.context,
+        }) as unknown as OperationContext
+      },
+      onOperation(_req, _args, result) {
+        if (result.errors) {
+          result.errors = result.errors.map(
+            err =>
+              ({
+                ...err.toJSON(),
+                extensions: {
+                  stack: err.stack ? err.stack.split(`\n`) : [],
+                },
+              } as unknown as GraphQLError)
+          )
+        }
+
+        result.extensions = {
+          enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+          refreshToken: process.env.GATSBY_REFRESH_TOKEN,
+        }
+
+        return result
+      },
     })
   )
 
@@ -278,11 +264,15 @@ export async function startServer(
   })
 
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
-    const fileName = path.resolve(process.cwd(), req.query.fileName)
-    const lineNumber = parseInt(req.query.lineNumber, 10)
-    launchEditor(fileName, isNaN(lineNumber) ? 1 : lineNumber)
+    if (req.query.fileName) {
+      const fileName = path.resolve(process.cwd(), req.query.fileName as string)
+      const lineNumber = parseInt(req.query.lineNumber as string, 10)
+      launchEditor(fileName, isNaN(lineNumber) ? 1 : lineNumber)
+    }
     res.end()
   })
+
+  addImageRoutes(app, store)
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -324,7 +314,7 @@ export async function startServer(
 
           let pageData: IPageDataWithQueryResult
           // TODO move to query-engine
-          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+          if (process.env.GATSBY_QUERY_ON_DEMAND) {
             const start = Date.now()
 
             pageData = await getPageDataExperimental(page.path)
@@ -340,6 +330,7 @@ export async function startServer(
             )
           }
 
+          let statusCode = 200
           if (pageMode === `SSR`) {
             try {
               const result = await serverDataPromise
@@ -352,6 +343,10 @@ export async function startServer(
                 for (const [name, value] of Object.entries(result.headers)) {
                   res.setHeader(name, value)
                 }
+              }
+
+              if (result.status) {
+                statusCode = result.status
               }
 
               pageData.result.serverData = result.props
@@ -378,7 +373,7 @@ export async function startServer(
             pageData.result.serverData = null
           }
 
-          res.status(200).send(pageData)
+          res.status(statusCode).send(pageData)
           return
         } catch (e) {
           report.error(
@@ -394,76 +389,129 @@ export async function startServer(
     }
   )
 
-  app.get(`/__original-stack-frame`, async (req, res) => {
-    const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
+  app.get(`/__original-stack-frame`, (req, res) => {
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
       sourcePosition: null,
       sourceContent: null,
     }
 
-    if (!compilation) {
-      res.json(emptyResponse)
-      return
-    }
+    let sourceContent: string | null
+    let sourceLine: number | undefined
+    let sourceColumn: number | undefined
+    let sourceEndLine: number | undefined
+    let sourceEndColumn: number | undefined
+    let sourcePosition: { line?: number; column?: number } | null
 
-    const moduleId = req?.query?.moduleId
-    const lineNumber = parseInt(req.query.lineNumber, 10)
-    const columnNumber = parseInt(req.query.columnNumber, 10)
-
-    let fileModule
-    for (const module of compilation.modules) {
-      const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
-      if (moduleIdentifier === moduleId) {
-        fileModule = module
-        break
+    if (req.query?.skipSourceMap) {
+      if (!req.query?.moduleId) {
+        res.json(emptyResponse)
+        return
       }
-    }
 
-    if (!fileModule) {
-      res.json(emptyResponse)
-      return
-    }
+      const absolutePath = path.resolve(
+        store.getState().program.directory,
+        req.query.moduleId as string
+      )
+      try {
+        sourceContent = fs.readFileSync(absolutePath, `utf-8`)
+      } catch (e) {
+        res.json(emptyResponse)
+        return
+      }
 
-    // We need the internal webpack file that is used in the bundle, not the module source.
-    // It doesn't have the correct sourceMap.
-    const webpackSource = compilation?.codeGenerationResults
-      ?.get(fileModule)
-      ?.sources.get(`javascript`)
+      if (req.query?.lineNumber) {
+        try {
+          sourceLine = parseInt(req.query.lineNumber as string, 10)
 
-    const sourceMap = webpackSource?.map()
+          if (req.query?.endLineNumber) {
+            sourceEndLine = parseInt(req.query.endLineNumber as string, 10)
+          }
+          if (req.query?.columnNumber) {
+            sourceColumn = parseInt(req.query.columnNumber as string, 10)
+          }
+          if (req.query?.endColumnNumber) {
+            sourceEndColumn = parseInt(req.query.endColumnNumber as string, 10)
+          }
+        } catch {
+          // failed to get line/column, we should still try to show the code frame
+        }
+      }
+      sourcePosition = {
+        line: sourceLine,
+        column: sourceColumn,
+      }
+    } else {
+      const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
+      if (!compilation) {
+        res.json(emptyResponse)
+        return
+      }
 
-    if (!sourceMap) {
-      res.json(emptyResponse)
-      return
-    }
+      const moduleId = req.query?.moduleId
+      const lineNumber = parseInt((req.query?.lineNumber as string) ?? 1, 10)
+      const columnNumber = parseInt(
+        (req.query?.columnNumber as string) ?? 1,
+        10
+      )
 
-    const position = {
-      line: lineNumber,
-      column: columnNumber,
-    }
-    const result = await findOriginalSourcePositionAndContent(
-      sourceMap,
-      position
-    )
+      let fileModule
+      for (const module of compilation.modules) {
+        const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
+        if (moduleIdentifier === moduleId) {
+          fileModule = module
+          break
+        }
+      }
 
-    const sourcePosition = result?.sourcePosition
-    const sourceLine = sourcePosition?.line
-    const sourceColumn = sourcePosition?.column
-    const sourceContent = result?.sourceContent
+      if (!fileModule) {
+        res.json(emptyResponse)
+        return
+      }
 
-    if (!sourceContent || !sourceLine) {
-      res.json(emptyResponse)
-      return
+      // We need the internal webpack file that is used in the bundle, not the module source.
+      // It doesn't have the correct sourceMap.
+      const webpackSource = compilation?.codeGenerationResults
+        ?.get(fileModule)
+        ?.sources.get(`javascript`)
+
+      const sourceMap = webpackSource?.map()
+
+      if (!sourceMap) {
+        res.json(emptyResponse)
+        return
+      }
+
+      const position = {
+        line: lineNumber,
+        column: columnNumber,
+      }
+      const result = findOriginalSourcePositionAndContent(sourceMap, position)
+
+      sourcePosition = result?.sourcePosition
+      sourceLine = sourcePosition?.line
+      sourceColumn = sourcePosition?.column
+      sourceContent = result?.sourceContent
+
+      if (!sourceContent || !sourceLine) {
+        res.json(emptyResponse)
+        return
+      }
     }
 
     const codeFrame = codeFrameColumns(
       sourceContent,
       {
         start: {
-          line: sourceLine,
+          line: sourceLine ?? 0,
           column: sourceColumn ?? 0,
         },
+        end: sourceEndLine
+          ? {
+              line: sourceEndLine,
+              column: sourceEndColumn,
+            }
+          : undefined,
       },
       {
         highlightCode: true,
@@ -483,9 +531,9 @@ export async function startServer(
       sourceContent: null,
     }
 
-    const filePath = req?.query?.filePath
-    const lineNumber = parseInt(req.query.lineNumber, 10)
-    const columnNumber = parseInt(req.query.columnNumber, 10)
+    const filePath: string | undefined = req.query?.filePath as string
+    const lineNumber = parseInt(req.query?.lineNumber as string, 10)
+    const columnNumber = parseInt(req.query?.columnNumber as string, 10)
 
     if (!filePath) {
       res.json(emptyResponse)
@@ -518,6 +566,10 @@ export async function startServer(
     developMiddleware(app, program)
   }
 
+  const { proxy, trailingSlash } = store.getState().config
+
+  app.use(configureTrailingSlash(() => store.getState(), trailingSlash))
+
   // Disable directory indexing i.e. serving index.html from a directory.
   // This can lead to serving stale html files during development.
   //
@@ -525,7 +577,6 @@ export async function startServer(
   app.use(developStatic(`public`, { index: false }))
 
   // Set up API proxy.
-  const { proxy } = store.getState().config
   if (proxy) {
     proxy.forEach(({ prefix, url }) => {
       app.use(`${prefix}/*`, (req, res) => {
@@ -584,21 +635,35 @@ export async function startServer(
         return next()
       }
 
+      const allowTimedFallback = !req.headers[`x-gatsby-wait-for-dev-ssr`]
+
       await appendPreloadHeaders(pathObj.path, res)
 
       const htmlActivity = report.phantomActivity(`building HTML for path`, {})
       htmlActivity.start()
 
       try {
-        const renderResponse = await renderDevHTML({
+        const { html: renderResponse, serverData } = await renderDevHTML({
           path: pathObj.path,
           page: pathObj,
-          skipSsr: req.query[`skip-ssr`] || false,
+          skipSsr: Object.prototype.hasOwnProperty.call(req.query, `skip-ssr`),
           store,
+          allowTimedFallback,
           htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,
+          req,
         })
-        res.status(200).send(renderResponse)
+
+        if (serverData?.headers) {
+          for (const [name, value] of Object.entries(serverData.headers)) {
+            res.setHeader(name, value)
+          }
+        }
+        let statusCode = 200
+        if (serverData?.status) {
+          statusCode = serverData.status
+        }
+        res.status(statusCode).send(renderResponse)
       } catch (error) {
         // The page errored but couldn't read the page component.
         // This is a race condition when a page is deleted but its requested
@@ -658,7 +723,7 @@ export async function startServer(
 
         try {
           // Generate a shell for client-only content -- for the error overlay
-          const clientOnlyShell = await renderDevHTML({
+          const { html: clientOnlyShell } = await renderDevHTML({
             path: pathObj.path,
             page: pathObj,
             skipSsr: true,
@@ -666,6 +731,8 @@ export async function startServer(
             error: message,
             htmlComponentRendererPath: PAGE_RENDERER_PATH,
             directory: program.directory,
+            req,
+            allowTimedFallback,
           })
 
           res.send(clientOnlyShell)
@@ -697,7 +764,7 @@ export async function startServer(
   }
 
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     routeLoadingIndicatorRequests(app)
@@ -722,14 +789,16 @@ export async function startServer(
 
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         try {
-          const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)
-          const renderResponse = await renderDevHTML({
+          const allowTimedFallback = !req.headers[`x-gatsby-wait-for-dev-ssr`]
+          const { html: renderResponse } = await renderDevHTML({
             path: `/dev-404-page/`,
             // Let renderDevHTML figure it out.
             page: undefined,
             store,
             htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
+            req,
+            allowTimedFallback,
           })
           res.status(404).send(renderResponse)
         } catch (e) {
@@ -769,13 +838,11 @@ export async function startServer(
   /**
    * Set up the HTTP server and socket.io.
    **/
-  const server = new http.Server(app)
-
+  const server = program.ssl
+    ? new https.Server(program.ssl, app)
+    : new http.Server(app)
   const socket = websocketManager.init({ server })
-
-  // hardcoded `localhost`, because host should match `target` we set
-  // in http proxy in `develop-proxy`
-  const listener = server.listen(program.port, `localhost`)
+  const listener = server.listen(program.port, program.host)
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)

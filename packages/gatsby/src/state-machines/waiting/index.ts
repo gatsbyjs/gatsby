@@ -1,4 +1,4 @@
-import { MachineConfig, assign, Machine } from "xstate"
+import { MachineConfig, assign, createMachine } from "xstate"
 import { IWaitingContext } from "./types"
 import { waitingActions } from "./actions"
 import { waitingServices } from "./services"
@@ -14,6 +14,7 @@ export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
  * mutations when we first start it
  */
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
+  predictableActionArguments: true,
   id: `waitingMachine`,
   initial: `idle`,
   context: {
@@ -136,7 +137,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   },
 }
 
-export const waitingMachine = Machine(waitingStates, {
+export const waitingMachine = createMachine(waitingStates, {
   actions: waitingActions,
   services: waitingServices,
 })

@@ -7,7 +7,7 @@ Support for these are available out of the box in `gatsby-transformer-sharp`, so
 
 ## Adding a `gatsbyImageData` GraphQL resolver
 
-You can give your users the best experience by adding a `gatsbyImageData` resolver to your image nodes. This allows you to generate low-resolution or traced SVG images as inline data URIs to use as placeholders. You can also calculate the image's dominant color for an alternative placeholder. These are the same placeholders that are included with `gatsby-transformer-sharp`, and will give the best experience for your users. If you are able to deliver these directly from your CMS or other data source then this is ideal, but otherwise you can use helper functions included in `gatsby-plugin-sharp`.
+You can give your users the best experience by adding a `gatsbyImageData` resolver to your image nodes. This allows you to generate low-resolution images as inline data URIs to use as placeholders. You can also calculate the image's dominant color for an alternative placeholder. These are the same placeholders that are included with `gatsby-transformer-sharp`, and will give the best experience for your users. If you are able to deliver these directly from your CMS or other data source then this is ideal, but otherwise you can use helper functions included in `gatsby-plugin-sharp`.
 
 There are three steps to add a basic `gatsbyImageData` resolver:
 
@@ -56,7 +56,7 @@ const resolveGatsbyImageData = async (image, options) => {
     pluginName: `gatsby-source-example`,
     sourceMetadata,
     filename,
-    placeholderURL
+    placeholderURL,
     generateImageSource,
     options,
   }
@@ -72,7 +72,7 @@ const resolveGatsbyImageData = async (image, options) => {
   }
 
   // You could also calculate dominant color, and pass that as `backgroundColor`
-  // gatsby-plugin-sharp includes helpers that you can use to generate a tracedSVG or calculate
+  // gatsby-plugin-sharp includes helpers that you can use, such as calculating
   // the dominant color of a local file, if you don't want to handle it in your plugin
 
 

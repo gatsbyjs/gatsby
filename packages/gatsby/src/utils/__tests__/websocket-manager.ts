@@ -50,6 +50,43 @@ function waitUntil<T = any>(
   })
 }
 
+/**
+ * @see https://github.com/facebook/jest/issues/10529#issuecomment-904608475
+ */
+function itAsyncDone(
+  name: string,
+  cb: (done: jest.DoneCallback) => Promise<void>,
+  timeout?: number
+): void {
+  it(
+    name,
+    done => {
+      let doneCalled = false
+      const wrappedDone: jest.DoneCallback = (...args) => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+        done(...args)
+      }
+
+      wrappedDone.fail = (err): void => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+
+        done(err)
+      }
+
+      cb(wrappedDone).catch(wrappedDone)
+    },
+    timeout
+  )
+}
+
 describe(`websocket-manager`, () => {
   let websocketManager: WebsocketManager
   let httpServerAddr
@@ -463,11 +500,9 @@ describe(`websocket-manager`, () => {
 
   describe(`Data`, () => {
     beforeEach(() => {
-      websocketManager.pageResults.clear()
       websocketManager.staticQueryResults.clear()
     })
     afterAll(() => {
-      websocketManager.pageResults.clear()
       websocketManager.staticQueryResults.clear()
     })
 
@@ -561,7 +596,7 @@ describe(`websocket-manager`, () => {
   })
 
   describe(`Errors`, () => {
-    it(`Emits errors to display by clients`, async done => {
+    itAsyncDone(`Emits errors to display by clients`, async done => {
       expect.assertions(1)
 
       const clientSocket = await getClientSocketAndWaitForConnect()
@@ -573,8 +608,8 @@ describe(`websocket-manager`, () => {
           msg.payload?.message === `error-string`
         ) {
           clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
           clientSocket.disconnect()
+          expect(true).toBe(true)
           done()
         }
       }
@@ -583,7 +618,7 @@ describe(`websocket-manager`, () => {
       websocketManager.emitError(`test`, `error-string`)
     })
 
-    it(`Emits stored errors to new clients`, async done => {
+    itAsyncDone(`Emits stored errors to new clients`, async done => {
       expect.assertions(1)
 
       const clientSocket = getClientSocket()
@@ -595,8 +630,8 @@ describe(`websocket-manager`, () => {
           msg.payload?.message === `error-string`
         ) {
           clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
           clientSocket.disconnect()
+          expect(true).toBe(true)
           done()
         }
       }
@@ -605,25 +640,29 @@ describe(`websocket-manager`, () => {
       // we don't emit error here, instead rely on error we emitted in previous test
     })
 
-    it(`Can clear errors by emitting empty "overlayError" msg`, async done => {
-      expect.assertions(1)
+    itAsyncDone(
+      `Can clear errors by emitting empty "overlayError" msg`,
+      async done => {
+        expect.assertions(1)
 
-      const clientSocket = await getClientSocketAndWaitForConnect()
+        const clientSocket = await getClientSocketAndWaitForConnect()
 
-      function handler(msg): void {
-        if (
-          msg.type === `overlayError` &&
-          msg.payload.id === `test` &&
-          msg.payload.message === null
-        ) {
-          clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
-          done()
+        function handler(msg): void {
+          if (
+            msg.type === `overlayError` &&
+            msg.payload.id === `test` &&
+            msg.payload.message === null
+          ) {
+            clientSocket.off(`message`, handler)
+            clientSocket.disconnect()
+            expect(true).toBe(true)
+            done()
+          }
         }
-      }
 
-      clientSocket.on(`message`, handler)
-      websocketManager.emitError(`test`, null)
-    })
+        clientSocket.on(`message`, handler)
+        websocketManager.emitError(`test`, null)
+      }
+    )
   })
 })

@@ -126,8 +126,12 @@ export const createProgressReporter = ({
     },
 
     set total(value: number) {
-      unflushedTotal = value
+      total = unflushedTotal = value
       updateProgress()
+    },
+
+    get total(): number {
+      return total
     },
 
     span,

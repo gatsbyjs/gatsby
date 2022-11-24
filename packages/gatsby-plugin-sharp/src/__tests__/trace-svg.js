@@ -1,49 +1,14 @@
-jest.mock(`sharp`, () => {
-  const sharp = path => {
-    const pipeline = {
-      rotate: () => pipeline,
-      resize: () => pipeline,
-      png: () => pipeline,
-      jpeg: () => pipeline,
-      toFile: (_, cb) => cb(),
-      on: () => pipeline,
-      once: () => pipeline,
-      write: () => pipeline,
-      end: () => pipeline,
-      emit: () => pipeline,
-    }
-    return pipeline
-  }
+jest.mock(`os`, () => {
+  const path = require(`path`)
 
-  sharp.simd = jest.fn()
-  sharp.concurrency = jest.fn()
-
-  return sharp
-})
-
-jest.mock(`fs-extra`, () => {
   return {
-    ...jest.requireActual(`fs-extra`),
-    createReadStream: () => {
-      const stream = {
-        pipe: () => stream,
-      }
-      return stream
-    },
-  }
-})
-
-jest.mock(`potrace`, () => {
-  const circleSvgString = `<svg height="100" width="100"><circle cx="50" cy="50" r="40" /></svg>`
-  return {
-    trace: (_, _2, cb) => cb(null, circleSvgString),
-    Potrace: {
-      TURNPOLICY_MAJORITY: `wat`,
-    },
+    ...jest.requireActual(`os`),
+    tmpdir: () => path.join(__dirname, `.cache`),
   }
 })
 
 const path = require(`path`)
+const fs = require(`fs-extra`)
 
 const traceSVGHelpers = require(`../trace-svg`)
 
@@ -71,18 +36,25 @@ function getFileObject(absolutePath, name = path.parse(absolutePath).name) {
     absolutePath,
     extension: `png`,
     internal: {
-      contentDigest: `1234`,
+      contentDigest: `2022-01-13T13:27:56.654Z`,
     },
   }
 }
 
 describe(`traceSVG memoization`, () => {
   const file = getFileObject(path.join(__dirname, `images/test.png`))
-  const copyOfFile = getFileObject(path.join(__dirname, `images/test-copy.png`))
   const differentFile = getFileObject(
-    path.join(__dirname, `images/different.png`)
+    path.join(__dirname, `images/144-density.png`)
   )
   differentFile.internal.contentDigest = `4321`
+
+  beforeAll(async () => {
+    await fs.ensureDir(path.join(__dirname, `.cache`))
+  })
+
+  afterAll(async () => {
+    await fs.remove(path.join(__dirname, `.cache`))
+  })
 
   beforeEach(() => {
     traceSVGHelpers.clearMemoizeCaches()
@@ -103,7 +75,7 @@ describe(`traceSVG memoization`, () => {
     expect(notMemoizedPrepareTraceSVGInputFile).toBeCalledTimes(1)
   })
 
-  it(`Is memoizing results for same args`, async () => {
+  it(`should memoizing results for same args`, async () => {
     await traceSVG({
       file,
     })
@@ -118,119 +90,181 @@ describe(`traceSVG memoization`, () => {
     expect(notMemoizedPrepareTraceSVGInputFile).toBeCalledTimes(1)
   })
 
-  it(`Is calling functions with same input file when params change`, async () => {
-    await traceSVG({
-      file,
-      args: {
-        color: `red`,
-      },
-      fileArgs: {
-        width: 400,
-      },
-    })
-    await traceSVG({
-      file,
-      args: {
-        color: `blue`,
-      },
-      fileArgs: {
-        width: 400,
-      },
-    })
-    await traceSVG({
-      file,
-      args: {
-        color: `red`,
-      },
-      fileArgs: {
-        width: 200,
-      },
-    })
-    await traceSVG({
-      file,
-      args: {
-        color: `blue`,
-      },
-      fileArgs: {
-        width: 200,
-      },
-    })
-    await traceSVG({
-      file: differentFile,
-      args: {
-        color: `red`,
-      },
-      fileArgs: {
-        width: 400,
-      },
-    })
-
-    expect(memoizedTraceSVG).toBeCalledTimes(5)
-    expect(notMemoizedtraceSVG).toBeCalledTimes(5)
-    expect(memoizedPrepareTraceSVGInputFile).toBeCalledTimes(5)
-    // trace svg should be actually created just 3 times
-    // because it's affected just by `fileArgs`, and not `args`
-    // this makes sure we don't try to write to same input file multiple times
-    expect(notMemoizedPrepareTraceSVGInputFile).toBeCalledTimes(3)
-    expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({
+  it(
+    `should call functions with same input file when params change`,
+    async () => {
+      await traceSVG({
         file,
-        options: expect.objectContaining({
+        args: {
+          color: `red`,
+        },
+        fileArgs: {
           width: 400,
-        }),
+        },
       })
-    )
-    expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
+      await traceSVG({
         file,
-        options: expect.objectContaining({
+        args: {
+          color: `blue`,
+        },
+        fileArgs: {
+          width: 400,
+        },
+      })
+      await traceSVG({
+        file,
+        args: {
+          color: `red`,
+        },
+        fileArgs: {
           width: 200,
-        }),
+        },
       })
-    )
-    expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
-      3,
-      expect.objectContaining({
+      await traceSVG({
+        file,
+        args: {
+          color: `blue`,
+        },
+        fileArgs: {
+          width: 200,
+        },
+      })
+      await traceSVG({
         file: differentFile,
-        options: expect.objectContaining({
+        args: {
+          color: `red`,
+        },
+        fileArgs: {
           width: 400,
-        }),
+        },
       })
-    )
 
-    const usedTmpFilePaths = notMemoizedPrepareTraceSVGInputFile.mock.calls.map(
-      args => args[0].tmpFilePath
-    )
+      expect(memoizedTraceSVG).toBeCalledTimes(5)
+      expect(notMemoizedtraceSVG).toBeCalledTimes(5)
+      expect(memoizedPrepareTraceSVGInputFile).toBeCalledTimes(5)
+      // trace svg should be actually created just 3 times
+      // because it's affected just by `fileArgs`, and not `args`
+      // this makes sure we don't try to write to same input file multiple times
+      expect(notMemoizedPrepareTraceSVGInputFile).toBeCalledTimes(3)
+      expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          file,
+          options: expect.objectContaining({
+            width: 400,
+          }),
+        })
+      )
+      expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
+        2,
+        expect.objectContaining({
+          file,
+          options: expect.objectContaining({
+            width: 200,
+          }),
+        })
+      )
+      expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
+        3,
+        expect.objectContaining({
+          file: differentFile,
+          options: expect.objectContaining({
+            width: 400,
+          }),
+        })
+      )
 
-    // tmpFilePath was always unique
-    expect(usedTmpFilePaths.length).toBe(new Set(usedTmpFilePaths).size)
-  })
+      const usedTmpFilePaths =
+        notMemoizedPrepareTraceSVGInputFile.mock.calls.map(
+          args => args[0].tmpFilePath
+        )
+
+      // tmpFilePath was always unique
+      expect(usedTmpFilePaths.length).toBe(new Set(usedTmpFilePaths).size)
+    },
+    10 * 1000
+  )
 
   it(`Use memoized results for file copies`, async () => {
-    await traceSVG({
-      file,
-      args: {
-        color: `red`,
-      },
-      fileArgs: {
-        width: 400,
-      },
-    })
-    await traceSVG({
-      file: copyOfFile,
-      args: {
-        color: `red`,
-      },
-      fileArgs: {
-        width: 400,
-      },
-    })
+    const copyPath = path.join(__dirname, `images/test-copy.png`)
+    await fs.copy(path.join(__dirname, `images/test.png`), copyPath)
+
+    try {
+      const copyOfFile = getFileObject(copyPath)
+      await traceSVG({
+        file,
+        args: {
+          color: `red`,
+        },
+        fileArgs: {
+          width: 400,
+        },
+      })
+      await traceSVG({
+        file: copyOfFile,
+        args: {
+          color: `red`,
+        },
+        fileArgs: {
+          width: 400,
+        },
+      })
+    } finally {
+      await fs.remove(copyPath)
+    }
 
     expect(memoizedTraceSVG).toBeCalledTimes(2)
     expect(notMemoizedtraceSVG).toBeCalledTimes(1)
     expect(memoizedPrepareTraceSVGInputFile).toBeCalledTimes(1)
     expect(notMemoizedPrepareTraceSVGInputFile).toBeCalledTimes(1)
+  })
+
+  it(`should work with long filenames`, async () => {
+    const copyPath = path.join(
+      __dirname,
+      `images/${`a`.repeat(10)} (1) ${`a`.repeat(100)}.png`
+    )
+    await fs.copy(path.join(__dirname, `images/test.png`), copyPath)
+    expect.assertions(1)
+
+    try {
+      const copyOfFile = getFileObject(copyPath)
+      await traceSVG({
+        file: copyOfFile,
+        args: {
+          color: `red`,
+        },
+        fileArgs: {
+          width: 400,
+        },
+      })
+      expect(true).toBe(true)
+    } finally {
+      await fs.remove(copyPath)
+    }
+  })
+
+  it(`should work with long filenames that end with a dot`, async () => {
+    const copyPath = path.join(__dirname, `images/test${`.`.repeat(100)}.png`)
+    await fs.copy(path.join(__dirname, `images/test.png`), copyPath)
+    expect.assertions(1)
+
+    try {
+      const copyOfFile = getFileObject(copyPath)
+      await traceSVG({
+        file: copyOfFile,
+        args: {
+          color: `red`,
+        },
+        fileArgs: {
+          width: 400,
+        },
+      })
+      expect(true).toBe(true)
+    } catch (err) {
+      await fs.remove(copyPath)
+    } finally {
+      await fs.remove(copyPath)
+    }
   })
 })

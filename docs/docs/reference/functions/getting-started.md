@@ -48,11 +48,15 @@ Functions can be written in JavaScript or Typescript.
 ```ts:title=src/api/typescript.ts
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from "gatsby"
 
+interface ContactBody {
+  message: string
+}
+
 export default function handler(
-  req: GatsbyFunctionRequest,
+  req: GatsbyFunctionRequest<ContactBody>,
   res: GatsbyFunctionResponse
 ) {
-  res.send(`I am TYPESCRIPT`)
+  res.send({ title: `I am TYPESCRIPT`, message: req.body.message })
 }
 ```
 

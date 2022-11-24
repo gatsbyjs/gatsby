@@ -1,24 +1,24 @@
-const handler = require(`serve-handler`)
 const http = require(`http`)
-const path = require(`path`)
+const httpProxy = require("http-proxy")
+const waitOn = require("wait-on")
 
-const server = http.createServer((request, response) =>
-  handler(request, response, {
-    public: path.resolve(`assets`),
-    headers: [
-      {
-        source: `**/*`,
-        headers: [
-          {
-            key: `Access-Control-Allow-Origin`,
-            value: `*`,
-          },
-        ],
-      },
-    ],
-  })
+waitOn(
+  {
+    resources: [`http://localhost:9000/blog/`],
+  },
+  function (err) {
+    if (err) {
+      console.error(err)
+      process.exit(1)
+    }
+
+    const proxy = httpProxy.createProxyServer()
+    const server = http.createServer((request, response) =>
+      proxy.web(request, response, { target: "http://localhost:9000" })
+    )
+
+    server.listen(9001, () => {
+      console.log(`Assets server running at http://localhost:9001`)
+    })
+  }
 )
-
-server.listen(9001, () => {
-  console.log(`Running at http://localhost:9001`)
-})

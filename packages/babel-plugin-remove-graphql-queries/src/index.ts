@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
 import graphql from "gatsby/graphql"
-import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
-import { slash } from "gatsby-core-utils"
+import { slash } from "gatsby-core-utils/path"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 import { Binding } from "babel__traverse"
 import {
   CallExpression,
@@ -147,6 +147,7 @@ function getTagImport(tag: NodePath<Identifier>): NodePath | null {
   const parent = path.parentPath
 
   if (
+    parent &&
     binding.kind === `module` &&
     parent.isImportDeclaration() &&
     parent.node.source.value === `gatsby`
@@ -221,9 +222,14 @@ function removeImport(tag: NodePath<Expression>): void {
   const parent = importPath.parentPath
 
   if (importPath.isImportSpecifier()) {
-    if ((parent as NodePath<ImportDeclaration>).node.specifiers.length === 1) {
+    if (
+      parent &&
+      (parent as NodePath<ImportDeclaration>).node.specifiers.length === 1
+    ) {
       parent.remove()
-    } else importPath.remove()
+    } else {
+      importPath.remove()
+    }
   }
   if (importPath.isObjectProperty()) {
     if ((parent as NodePath<ObjectExpression>).node.properties.length === 1) {
@@ -257,16 +263,17 @@ function getGraphQLTag(
   const normalizedText: string = graphql.stripIgnoredCharacters(text)
 
   const hash: number = murmurhash(normalizedText, 0)
+  const location = quasis[0].loc as SourceLocation | null
 
   try {
     const ast = graphql.parse(text)
 
     if (ast.definitions.length === 0) {
-      throw new EmptyGraphQLTagError(quasis[0].loc)
+      throw new EmptyGraphQLTagError(location)
     }
     return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
-    throw new GraphQLSyntaxError(text, err, quasis[0].loc)
+    throw new GraphQLSyntaxError(text, err, location)
   }
 }
 
@@ -363,11 +370,14 @@ export default function ({ types: t }): PluginObj {
                 const parent = importPath.parentPath
                 if (importPath.isImportSpecifier())
                   if (
+                    parent &&
                     (parent as NodePath<ImportDeclaration>).node.specifiers
                       .length === 1
-                  )
+                  ) {
                     parent.remove()
-                  else importPath.remove()
+                  } else {
+                    importPath.remove()
+                  }
               }
 
               // Add query
@@ -420,7 +430,7 @@ export default function ({ types: t }): PluginObj {
 
           // traverse upwards until we find top-level JSXOpeningElement or Program
           // this handles exported queries and variable queries
-          let parent = templatePath as NodePath
+          let parent: null | NodePath = templatePath as NodePath
           while (
             parent &&
             ![`Program`, `JSXOpeningElement`].includes(parent.node.type)
@@ -429,17 +439,19 @@ export default function ({ types: t }): PluginObj {
           }
 
           // modify StaticQuery elements and import data only if query is inside StaticQuery
-          parent.traverse(nestedJSXVistor, {
-            queryHash,
-            query,
-          })
+          if (parent) {
+            parent.traverse(nestedJSXVistor, {
+              queryHash,
+              query,
+            })
 
-          // modify useStaticQuery elements and import data only if query is inside useStaticQuery
-          parent.traverse(nestedHookVisitor, {
-            queryHash,
-            query,
-            templatePath,
-          })
+            // modify useStaticQuery elements and import data only if query is inside useStaticQuery
+            parent.traverse(nestedHookVisitor, {
+              queryHash,
+              query,
+              templatePath,
+            })
+          }
 
           return null
         }
@@ -544,7 +556,10 @@ export default function ({ types: t }): PluginObj {
             // update or not.
             // By removing the page query export, FastRefresh works properly with page components
             const potentialExportPath = path2.parentPath?.parentPath?.parentPath
-            if (potentialExportPath?.isExportNamedDeclaration()) {
+            if (
+              path2?.parentPath?.parentPath &&
+              potentialExportPath?.isExportNamedDeclaration()
+            ) {
               potentialExportPath.replaceWith(path2.parentPath.parentPath)
             }
 
@@ -624,5 +639,4 @@ export {
   GraphQLSyntaxError,
   ExportIsNotAsyncError,
   isWithinConfigExport,
-  murmurhash,
 }

@@ -2,13 +2,15 @@
 
 Easily add Google Analytics to your Gatsby site.
 
-## Upgrade note
+## Deprecation Notice
 
-This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js`.
+This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js` and we recommend it.
 
 ## Install
 
-`npm install gatsby-plugin-google-analytics`
+```shell
+npm install gatsby-plugin-google-analytics
+```
 
 ## How to use
 
@@ -121,7 +123,7 @@ If you need to exclude any path from the tracking system, you can add it (one or
 
 ### `pageTransitionDelay`
 
-If your site uses any custom transitions on route update (e.g. [`gatsby-plugin-transition-link`](https://www.gatsbyjs.org/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)), then you can delay processing the page view event until the new page is mounted.
+If your site uses any custom transitions on route update (e.g. [`gatsby-plugin-transition-link`](https://www.gatsbyjs.com/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)), then you can delay processing the page view event until the new page is mounted.
 
 ### `optimizeId`
 

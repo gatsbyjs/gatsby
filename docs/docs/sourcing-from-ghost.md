@@ -64,7 +64,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Query Ghost data
   const result = await graphql(`
     {
-      allGhostPost(sort: { order: ASC, fields: published_at }) {
+      allGhostPost(sort: { published_at: ASC }) {
         edges {
           node {
             slug

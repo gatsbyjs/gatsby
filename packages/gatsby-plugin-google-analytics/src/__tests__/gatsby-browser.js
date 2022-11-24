@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { onInitialClientRender, onRouteUpdate } from "../gatsby-browser"
 import { Minimatch } from "minimatch"
 import { getLCP, getFID, getCLS } from "web-vitals/base"
@@ -46,7 +50,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         beforeEach(() => {
-          jest.useFakeTimers()
+          jest.useFakeTimers(`legacy`)
           jest.clearAllMocks()
           window.ga = jest.fn()
         })

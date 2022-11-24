@@ -3,6 +3,215 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@3.1.0/packages/gatsby-plugin-benchmark-reporting) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@3.0.0/packages/gatsby-plugin-benchmark-reporting) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.24.0/packages/gatsby-plugin-benchmark-reporting) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.23.0/packages/gatsby-plugin-benchmark-reporting) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.22.0/packages/gatsby-plugin-benchmark-reporting) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.21.0/packages/gatsby-plugin-benchmark-reporting) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.20.0/packages/gatsby-plugin-benchmark-reporting) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.19.0/packages/gatsby-plugin-benchmark-reporting) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.18.1/packages/gatsby-plugin-benchmark-reporting) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.18.0/packages/gatsby-plugin-benchmark-reporting) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.17.0/packages/gatsby-plugin-benchmark-reporting) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.16.0/packages/gatsby-plugin-benchmark-reporting) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.15.0/packages/gatsby-plugin-benchmark-reporting) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.14.0/packages/gatsby-plugin-benchmark-reporting) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.13.0/packages/gatsby-plugin-benchmark-reporting) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.12.1/packages/gatsby-plugin-benchmark-reporting) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.12.0/packages/gatsby-plugin-benchmark-reporting) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.11.1/packages/gatsby-plugin-benchmark-reporting) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.11.0/packages/gatsby-plugin-benchmark-reporting) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- fix dependencies fix [#35206](https://github.com/gatsbyjs/gatsby/issues/35206) ([6adc962](https://github.com/gatsbyjs/gatsby/commit/6adc9624736097ee4ca052b34cd38667e03d944e))
+
+### [2.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.10.1/packages/gatsby-plugin-benchmark-reporting) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.10.0/packages/gatsby-plugin-benchmark-reporting) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.9.1/packages/gatsby-plugin-benchmark-reporting) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.9.0/packages/gatsby-plugin-benchmark-reporting) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [2.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.8.2/packages/gatsby-plugin-benchmark-reporting) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.8.1/packages/gatsby-plugin-benchmark-reporting) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.8.0/packages/gatsby-plugin-benchmark-reporting) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.7.0/packages/gatsby-plugin-benchmark-reporting) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-benchmark-reporting [#34655](https://github.com/gatsbyjs/gatsby/issues/34655) ([9b5442b](https://github.com/gatsbyjs/gatsby/commit/9b5442ba52cb05afe64f19efdf76750592d3f278))
+
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.6.0/packages/gatsby-plugin-benchmark-reporting) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.5.2/packages/gatsby-plugin-benchmark-reporting) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.5.1/packages/gatsby-plugin-benchmark-reporting) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.5.0/packages/gatsby-plugin-benchmark-reporting) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.4.0/packages/gatsby-plugin-benchmark-reporting) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.3.0/packages/gatsby-plugin-benchmark-reporting) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.2.0/packages/gatsby-plugin-benchmark-reporting) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.6 for gatsby-plugin-benchmark-reporting [#33762](https://github.com/gatsbyjs/gatsby/issues/33762) ([96c7d85](https://github.com/gatsbyjs/gatsby/commit/96c7d85bb13df9e7847e453573f1dbbd010e745a))
+
+### [2.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.1.3/packages/gatsby-plugin-benchmark-reporting) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.1.2/packages/gatsby-plugin-benchmark-reporting) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+### [2.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.1.1/packages/gatsby-plugin-benchmark-reporting) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
 ## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.1.0/packages/gatsby-plugin-benchmark-reporting) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

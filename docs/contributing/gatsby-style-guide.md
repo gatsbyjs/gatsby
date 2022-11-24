@@ -2,15 +2,9 @@
 title: Gatsby Style Guide
 ---
 
-The Gatsby community is building out a more comprehensive Docs section. It
-will be full of relevant articles written to be easily understood by the many people who love building with Gatsby.
-
-The community plans, writes, and maintains these Docs on GitHub.
-
 ## Welcome!
 
-You don't have to be an expert in a
-topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
+You don't have to be an expert in a topic to write about it -- this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
 
 Before you begin writing, make sure to read the rest of this style guide.
 
@@ -38,12 +32,12 @@ Many times, the information that needs to go in your document already exists som
 
 Avoid copying and pasting huge chunks of other people's work. Instead, use their work to learn so you can write your own document. If you do quote someone's work verbatim, reference where you got the information.
 
-If the content is already somewhere else on the .org site, feel free to copy and paste without quoting or referencing.
+If the content is already somewhere else on the site, feel free to copy and paste without quoting or referencing.
 
 Possible sources of great research materials:
 
-- blogposts (on gatsbyjs.org and other sites)
-- docs (on gatsbyjs.org and other sites)
+- blogposts (on gatsbyjs.com and other sites)
+- docs (on gatsbyjs.com and other sites)
 - video tutorials
 - Discord or Twitter conversations
 - search engine results
@@ -61,30 +55,6 @@ rounds of proofreading and editing before you're happy with your writing.
 
 Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
 [Gatsby Discord](https://gatsby.dev/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
-
-### Use the linter
-
-Gatsby uses [`remark-lint`](https://github.com/remarkjs/remark-lint) and [`retext`](https://github.com/retextjs/retext) in order to check for common spelling, grammar, and formatting errors, including several of the suggestions in this guide. You can run the linter by typing the following on the command line:
-
-```shell
-yarn lint:docs
-```
-
-#### Updating the dictionary
-
-We use [`retext-spell`](https://github.com/retextjs/retext-spell) for spell checking the docs. Since the linter doesn't know about proper nouns, such as individual names or brand names, it may list these as errors:
-
-```text
-83:34-83:40  warning  `retext` is misspelt; did you mean `pretext`, `retest`?  retext                      retext-spell
-```
-
-You can add these words to the dictionary with the following command:
-
-```shell
-yarn update-dictionary
-```
-
-This will add all new words to the collective Gatsby dictionary, `dictionary.txt`. Commit this file along with the written docs, and be sure that actual misspellings aren't included.
 
 ## Word choice
 
@@ -129,7 +99,7 @@ Concise writing communicates the bare minimum without redundancy. Strive to make
 
 ### Use clear hyperlinks
 
-Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/).
+Hyperlinks should contain the clearest words to indicate where the link will lead you. The use of the title attribute on hyperlinks should be avoided for accessibility reasons.
 
 ```markdown
 <!-- Good -->
@@ -402,15 +372,16 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 - Gatsby
 - GraphQL
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
+- TypeScript
+- WordPress
 - Markdown
 - Node.js
-- webpack ([should always in lower-case letters, even at the beginning of a sentence](https://webpack.js.org/branding/#the-name))
+- webpack ([should always in lower-case letters, except at the beginning of a sentence](https://webpack.js.org/branding/#the-name))
 
 A full-stack developer (adjective form with a dash) works on the full stack
 (noun form with no dash). The same goes with many other compound terms.
 
-Use frontend for both adjective and noun forms as it's [more common and easier to maintain](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465). For example,
-a frontend developer works on the frontend. The same goes for backend.
+Use frontend for both adjective and noun forms as it's more common and easier to maintain. For example, a frontend developer works on the frontend. The same goes for backend.
 
 End users are spelled out with two words, rather than hyphenating with a dash.
 
@@ -427,8 +398,6 @@ straightforward way to communicate a subject. For example:
 Use the Oxford Comma except in titles. It is a comma used after the penultimate
 item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
 painter, sculptor, and architect. It makes things clearer.
-
-[Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
 
 ### Prefer US English
 
@@ -495,7 +464,7 @@ Attributes:
 
 - intermediate to advanced at React
 - frontend developer
-- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
+- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.com site
 
 Looking for:
 

@@ -108,13 +108,11 @@ describe(`fetch-retry`, () => {
       const msg = expect(e.context.sourceMessage)
       msg.toEqual(
         expect.stringContaining(
-          `Fetching contentful data failed: 500 MockedContentfulError`
+          `Fetching contentful data failed: ERR_BAD_RESPONSE 500 MockedContentfulError`
         )
       )
       msg.toEqual(expect.stringContaining(`Request ID: 123abc`))
-      msg.toEqual(
-        expect.stringContaining(`The request was sent with 3 attempts`)
-      )
+      msg.toEqual(expect.stringContaining(`Attempts: 3`))
     }
     expect(reporter.panic).toBeCalled()
     expect(scope.isDone()).toBeTruthy()
@@ -141,34 +139,6 @@ describe(`fetch-network-errors`, () => {
       expect(e.context.sourceMessage).toEqual(
         expect.stringContaining(
           `Accessing your Contentful space failed: ECONNRESET`
-        )
-      )
-    }
-
-    expect(reporter.panic).toBeCalled()
-    expect(scope.isDone()).toBeTruthy()
-  })
-
-  test(`catches error with response string`, async () => {
-    const scope = nock(baseURI)
-      // Space
-      .get(`/spaces/${options.spaceId}/`)
-      .reply(502, `Bad Gateway`)
-
-    try {
-      await fetchContent({
-        pluginConfig: createPluginConfig({
-          ...options,
-          contentfulClientConfig: { retryOnError: false },
-        }),
-        reporter,
-        syncToken: null,
-      })
-      throw new Error(`fetchContent should throw an error`)
-    } catch (e) {
-      expect(e.context.sourceMessage).toEqual(
-        expect.stringContaining(
-          `Accessing your Contentful space failed: Bad Gateway`
         )
       )
     }

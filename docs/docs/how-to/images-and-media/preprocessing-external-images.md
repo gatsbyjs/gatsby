@@ -57,9 +57,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.onCreateNode = async ({
   node,
   actions: { createNode, createNodeField },
-  store,
-  cache,
   createNodeId,
+  getCache,
 }) => {
   // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
   if (
@@ -71,8 +70,7 @@ exports.onCreateNode = async ({
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
       createNode, // helper function in gatsby-node to generate the node
       createNodeId, // helper function in gatsby-node to generate the node id
-      cache, // Gatsby's cache
-      store, // Gatsby's Redux store
+      getCache,
     })
 
     // if the file was created, extend the node with "localFile"
@@ -111,8 +109,6 @@ query {
   }
 }
 ```
-
-![GraphiQL with above query inserted](../../images/remote-file-node-graphiql-preview.png)
 
 You can then use `gatsby-transformer-sharp` & `gatsby-plugin-image` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the ["Using Gatsby Plugin Image" guide](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 

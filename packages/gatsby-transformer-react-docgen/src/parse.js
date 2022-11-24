@@ -41,7 +41,7 @@ export default function parseMetadata(content, node, options) {
     components = parse(
       content,
       userResolver || resolver.findAllComponentDefinitions,
-      defaultHandlers.concat(makeHandlers(node, handlers)),
+      makeHandlers(node, handlers).concat(defaultHandlers),
       {
         ...parseOptions,
         filename: node.absolutePath,

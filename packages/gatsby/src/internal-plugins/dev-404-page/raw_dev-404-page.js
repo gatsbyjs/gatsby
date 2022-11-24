@@ -243,6 +243,8 @@ export default function API (req, res) {
 
 export default Dev404Page
 
+// ESLint is complaining about the backslash in regex
+/* eslint-disable */
 export const pagesQuery = graphql`
   query PagesQuery {
     allSiteFunction {
@@ -250,10 +252,11 @@ export const pagesQuery = graphql`
         functionRoute
       }
     }
-    allSitePage(filter: { path: { ne: "/dev-404-page/" } }) {
+    allSitePage(filter: { path: { regex: "/^(?!\/dev-404-page).+$/" } }) {
       nodes {
         path
       }
     }
   }
 `
+/* eslint-enable */

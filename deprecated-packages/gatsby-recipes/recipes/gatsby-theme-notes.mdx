@@ -1,0 +1,34 @@
+# Gatsby Theme Notes Starter Recipe
+
+[Gatsby theme notes](https://www.gatsbyjs.com/plugins/gatsby-theme-notes) is a great theme for adding learning notes to your site.
+
+This recipe:
+
+---
+
+Installs necessary NPM package.
+
+<NPMPackage name="gatsby-theme-notes" />
+
+---
+
+Installs the `gatsby-theme-notes` plugin in `gatsby-config.js`.
+
+<GatsbyPlugin name="gatsby-theme-notes" options={{ basePath: `/notes` }} />
+
+---
+
+Adds a note.
+
+<File
+  path="content/notes/learning.md"
+  content="https://gist.githubusercontent.com/laurieontech/cf90cbee0bc69b106f2fa5109d055372/raw/58a012c02b6e9fffe3e93bc2a57bd5f01ef281b8/learning.md"
+/>
+
+---
+
+After installing this recipe, you can use your site for notetaking.
+
+When you've finished installing the recipe, run `gatsby develop` and check out `http://localhost:8000/notes` for the list of notes.
+
+---

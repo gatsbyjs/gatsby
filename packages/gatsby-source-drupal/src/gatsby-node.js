@@ -6,18 +6,31 @@ import HttpAgent from "agentkeepalive"
 const opentracing = require(`opentracing`)
 const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
 
+const {
+  polyfillImageServiceDevRoutes,
+  addRemoteFilePolyfillInterface,
+} = require(`gatsby-plugin-utils/polyfill-remote-file`)
+
 const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const {
-  initRefsLookups,
-  storeRefsLookups,
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  imageCDNState,
+} = require(`./normalize`)
+const {
   handleReferences,
   handleWebhookUpdate,
+  createNodeIfItDoesNotExist,
   handleDeletedNode,
+  drupalCreateNodeManifest,
+  getExtendedFileNodeData,
 } = require(`./utils`)
+
+const imageCdnDocs = `https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
 
 const agent = {
   http: new HttpAgent(),
@@ -61,13 +74,24 @@ async function worker([url, options]) {
     }
   }
 
+  if (typeof options.searchParams === `object`) {
+    url = new URL(url)
+    const searchParams = new URLSearchParams(options.searchParams)
+    const searchKeys = Array.from(searchParams.keys())
+    searchKeys.forEach(searchKey => {
+      // Only add search params to url if it has not already been
+      // added.
+      if (!url.searchParams.has(searchKey)) {
+        url.searchParams.set(searchKey, searchParams.get(searchKey))
+      }
+    })
+    url = url.toString()
+  }
+  delete options.searchParams
+
   const response = await got(url, {
     agent,
     cache: false,
-    timeout: {
-      // Occasionally requests to Drupal stall. Set a 15s timeout to retry in this case.
-      request: 15000,
-    },
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
@@ -131,6 +155,7 @@ exports.sourceNodes = async (
   globalReporter = reporter
   const {
     baseUrl,
+    proxyUrl = baseUrl,
     apiBase = `jsonapi`,
     basicAuth = {},
     filters,
@@ -138,6 +163,7 @@ exports.sourceNodes = async (
     params = {},
     concurrentFileRequests = 20,
     concurrentAPIRequests = 20,
+    requestTimeoutMS,
     disallowedLinkTypes = [
       `self`,
       `describedby`,
@@ -154,10 +180,18 @@ exports.sourceNodes = async (
       nonTranslatableEntities: [],
     },
   } = pluginOptions
-  const { createNode, setPluginStatus, touchNode } = actions
 
-  await initRefsLookups({ cache, getNode })
+  // older versions of Gatsby didn't use Joi's default value for plugin options
+  if (!(`imageCDN` in pluginOptions)) {
+    pluginOptions.imageCDN = true
+  }
 
+  const {
+    createNode,
+    setPluginStatus,
+    touchNode,
+    unstable_createNodeManifest,
+  } = actions
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -201,6 +235,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
           const deletedNode = await handleDeletedNode({
             actions,
             getNode,
+            cache,
             node: nodeToDelete,
             createNodeId,
             createContentDigest,
@@ -210,13 +245,23 @@ ${JSON.stringify(webhookBody, null, 4)}`
         }
 
         changesActivity.end()
-        await storeRefsLookups({ cache })
         return
       }
 
       let nodesToUpdate = data
       if (!Array.isArray(data)) {
         nodesToUpdate = [data]
+      }
+
+      for (const nodeToUpdate of nodesToUpdate) {
+        await createNodeIfItDoesNotExist({
+          nodeToUpdate,
+          actions,
+          createNodeId,
+          createContentDigest,
+          getNode,
+          reporter,
+        })
       }
 
       for (const nodeToUpdate of nodesToUpdate) {
@@ -241,7 +286,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
       return
     }
     changesActivity.end()
-    await storeRefsLookups({ cache })
     return
   }
 
@@ -288,6 +332,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
             searchParams: params,
             responseType: `json`,
             parentSpan: fastBuildsSpan,
+            timeout: {
+              // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+              request: requestTimeoutMS,
+            },
           },
         ])
 
@@ -330,11 +378,37 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
           // Process sync data from Drupal.
           const nodesToSync = res.body.entities
+
+          // First create all nodes that we haven't seen before. That
+          // way we can create relationships correctly next as the nodes
+          // will exist in Gatsby.
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              continue
+            }
+
+            let nodesToUpdate = nodeSyncData.data
+            if (!Array.isArray(nodeSyncData.data)) {
+              nodesToUpdate = [nodeSyncData.data]
+            }
+            for (const nodeToUpdate of nodesToUpdate) {
+              await createNodeIfItDoesNotExist({
+                nodeToUpdate,
+                actions,
+                createNodeId,
+                createContentDigest,
+                getNode,
+                reporter,
+              })
+            }
+          }
+
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
               handleDeletedNode({
                 actions,
                 getNode,
+                cache,
                 node: nodeSyncData,
                 createNodeId,
                 createContentDigest,
@@ -376,7 +450,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
         drupalFetchIncrementalActivity.end()
         fastBuildsSpan.finish()
-        await storeRefsLookups({ cache })
         return
       }
 
@@ -387,7 +460,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
       initialSourcing = false
 
       if (!requireFullRebuild) {
-        await storeRefsLookups({ cache })
         return
       }
     }
@@ -420,6 +492,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
         searchParams: params,
         responseType: `json`,
         parentSpan: fullFetchSpan,
+        timeout: {
+          // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+          request: requestTimeoutMS,
+        },
       },
     ])
     allData = await Promise.all(
@@ -459,6 +535,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
             }
           }
 
+          // If proxyUrl is defined, use it instead of baseUrl to get the content.
+          if (proxyUrl !== baseUrl) {
+            url = url.replace(baseUrl, proxyUrl)
+          }
+
           let d
           try {
             d = await requestQueue.push([
@@ -467,8 +548,13 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 username: basicAuth.username,
                 password: basicAuth.password,
                 headers,
+                searchParams: params,
                 responseType: `json`,
                 parentSpan: fullFetchSpan,
+                timeout: {
+                  // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+                  request: requestTimeoutMS,
+                },
               },
             ])
           } catch (error) {
@@ -481,7 +567,9 @@ ${JSON.stringify(webhookBody, null, 4)}`
               throw error
             }
           }
-          dataArray.push(...d.body.data)
+          if (d.body.data) {
+            dataArray.push(...d.body.data)
+          }
           // Add support for includes. Includes allow entity data to be expanded
           // based on relationships. The expanded data is exposed as `included`
           // in the JSON API response.
@@ -581,28 +669,61 @@ ${JSON.stringify(webhookBody, null, 4)}`
   createNodesSpan.setTag(`sourceNodes.fetch.type`, `full`)
 
   const nodes = new Map()
+  const fileNodesExtendedData = getExtendedFileNodeData(allData)
 
   // first pass - create basic nodes
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (!datum) return
-      const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+  for (const contentType of allData) {
+    if (!contentType) {
+      continue
+    }
+
+    await asyncPool(concurrentFileRequests, contentType.data, async datum => {
+      if (!datum) {
+        return
+      }
+
+      const node = await nodeFromData(
+        datum,
+        createNodeId,
+        entityReferenceRevisions,
+        pluginOptions,
+        fileNodesExtendedData,
+        reporter
+      )
+
+      drupalCreateNodeManifest({
+        attributes: datum?.attributes,
+        gatsbyNode: node,
+        unstable_createNodeManifest,
+      })
+
       nodes.set(node.id, node)
     })
-  })
+  }
+
+  if (
+    skipFileDownloads &&
+    !imageCDNState.foundPlaceholderStyle &&
+    !imageCDNState.hasLoggedNoPlaceholderStyle
+  ) {
+    imageCDNState.hasLoggedNoPlaceholderStyle = true
+    reporter.warn(
+      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\n${imageCdnDocs}\n`
+    )
+  }
 
   createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
-  nodes.forEach(node => {
-    handleReferences(node, {
+  for (const node of Array.from(nodes.values())) {
+    await handleReferences(node, {
       getNode: nodes.get.bind(nodes),
       mutateNode: true,
       createNodeId,
+      cache,
       entityReferenceRevisions,
     })
-  })
+  }
 
   if (skipFileDownloads) {
     reporter.info(`Skipping remote file download from Drupal`)
@@ -651,7 +772,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
   initialSourcing = false
 
   createNodesSpan.finish()
-  await storeRefsLookups({ cache, getNodes })
   return
 }
 
@@ -719,6 +839,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     baseUrl: Joi.string()
       .required()
       .description(`The URL to root of your Drupal instance`),
+    proxyUrl: Joi.string().description(
+      `The CDN URL equivalent to your baseUrl`
+    ),
     apiBase: Joi.string().description(
       `The path to the root of the JSONAPI — defaults to "jsonapi"`
     ),
@@ -735,8 +858,10 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     params: Joi.object().description(`Append optional GET params to requests`),
     concurrentFileRequests: Joi.number().integer().default(20).min(1),
     concurrentAPIRequests: Joi.number().integer().default(20).min(1),
+    requestTimeoutMS: Joi.number().integer().default(30000).min(1),
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
+    imageCDN: Joi.boolean().default(true),
     fastBuilds: Joi.boolean(),
     entityReferenceRevisions: Joi.array().items(Joi.string()),
     secret: Joi.string().description(
@@ -748,4 +873,40 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       translatableEntities: Joi.array().items(Joi.string()).required(),
       nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
+    placeholderStyleName: Joi.string().description(
+      `The machine name of the Gatsby Image CDN placeholder style in Drupal. The default is "placeholder".`
+    ),
   })
+
+exports.onCreateDevServer = async ({ app, store }) => {
+  // this makes the gatsby develop image CDN emulator work on earlier versions of Gatsby.
+  polyfillImageServiceDevRoutes(app, store)
+}
+
+exports.createSchemaCustomization = (
+  { actions, schema, store, reporter },
+  pluginOptions
+) => {
+  if (pluginOptions.skipFileDownloads && pluginOptions.imageCDN) {
+    actions.createTypes([
+      // polyfill so image CDN works on older versions of Gatsby
+      addRemoteFilePolyfillInterface(
+        // this type is merged in with the inferred file__file type, adding Image CDN support via the gatsbyImage GraphQL field. The `RemoteFile` interface as well as the polyfill above are what add the gatsbyImage field.
+        schema.buildObjectType({
+          name: `file__file`,
+          fields: {},
+          interfaces: [`Node`, `RemoteFile`],
+        }),
+        {
+          schema,
+          actions,
+          store,
+        }
+      ),
+    ])
+  } else {
+    reporter.info(
+      `[gatsby-source-drupal] Enable the skipFileDownloads option to use Gatsby's Image CDN. See the docs for more info:\n${imageCdnDocs}\n`
+    )
+  }
+}

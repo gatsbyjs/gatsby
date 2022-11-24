@@ -65,7 +65,9 @@ export const removePageFiles = async (
   })
 }
 
-const FSisCaseInsensitive = platform() === `win32` || platform() === `darwin`
+const FSisCaseInsensitive = process.env.TEST_FORCE_CASE_FS
+  ? process.env.TEST_FORCE_CASE_FS === `INSENSITIVE`
+  : platform() === `win32` || platform() === `darwin`
 function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`
@@ -160,15 +162,7 @@ export function calcDirtyHtmlFiles(state: IGatsbyState): {
       // and because of that `isDeleted` might not be set ...
       markActionForPage(path, `delete`)
     } else {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        if (getPageMode(page, state) === `SSG`) {
-          if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
-            markActionForPage(path, `regenerate`)
-          } else {
-            markActionForPage(path, `reuse`)
-          }
-        }
-      } else {
+      if (getPageMode(page, state) === `SSG`) {
         if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
           markActionForPage(path, `regenerate`)
         } else {
@@ -214,11 +208,16 @@ export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
 
   // mark html as dirty
   const dirtyPages = new Set<string>()
+  const dirtySlices = new Set<string>()
   for (const dirtyTemplate of dirtyTemplates) {
     const component = state.components.get(dirtyTemplate)
     if (component) {
       for (const page of component.pages) {
-        dirtyPages.add(page)
+        if (component.isSlice) {
+          dirtySlices.add(page)
+        } else {
+          dirtyPages.add(page)
+        }
       }
     }
   }
@@ -227,6 +226,7 @@ export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
     type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`,
     payload: {
       pages: dirtyPages,
+      slices: dirtySlices,
       staticQueryHashes: dirtyStaticQueryResults,
     },
   })

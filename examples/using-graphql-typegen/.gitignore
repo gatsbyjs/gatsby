@@ -1,0 +1,6 @@
+node_modules/
+.cache/
+public
+yarn.lock
+package-lock.json
+src/gatsby-types.d.ts

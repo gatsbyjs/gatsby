@@ -1,15 +1,10 @@
 import type { GatsbyImageProps } from "gatsby-plugin-image"
-import * as React from "react"
-import * as ReactDOM from "react-dom"
+import React from "react"
+import ReactDOM from "react-dom/client"
 
 let hydrateRef
-let isFirstHydration = true
-export function onRouteUpdate(): void {
-  if (isFirstHydration) {
-    isFirstHydration = false
-    return
-  }
 
+export function onRouteUpdate(): void {
   if (`requestIdleCallback` in window) {
     if (hydrateRef) {
       // @ts-ignore cancelIdleCallback is on window object
@@ -32,14 +27,38 @@ function hydrateImages(): void {
     doc.querySelectorAll(`[data-wp-inline-image]`)
   )
 
+  if (!inlineWPimages.length) {
+    return
+  }
+
   import(
     /* webpackChunkName: "gatsby-plugin-image" */ `gatsby-plugin-image`
   ).then(mod => {
     inlineWPimages.forEach(image => {
+      // usually this is the right element to hydrate on
+      const grandParentIsGatsbyImage =
+        // @ts-ignore-next-line classList is on HTMLElement
+        image?.parentNode?.parentNode?.classList?.contains(
+          `gatsby-image-wrapper`
+        )
+
+      // but sometimes this is the right element
+      const parentIsGatsbyImage =
+        // @ts-ignore-next-line classList is on HTMLElement
+        image?.parentNode?.classList?.contains(`gatsby-image-wrapper`)
+
+      if (!grandParentIsGatsbyImage && !parentIsGatsbyImage) {
+        return
+      }
+
+      const gatsbyImageHydrationElement = grandParentIsGatsbyImage
+        ? image.parentNode.parentNode
+        : image.parentNode
+
       if (
         image.dataset &&
         image.dataset.wpInlineImage &&
-        image.parentNode.parentNode
+        gatsbyImageHydrationElement
       ) {
         const hydrationData = doc.querySelector(
           `script[data-wp-inline-image-hydration="${image.dataset.wpInlineImage}"]`
@@ -50,21 +69,9 @@ function hydrateImages(): void {
             hydrationData.innerHTML
           )
 
-          // @ts-ignore - createRoot is on ReactDOM
-          if (ReactDOM.createRoot) {
-            // @ts-ignore - createRoot is on ReactDOM
-            const root = ReactDOM.createRoot(image.parentNode.parentNode)
-            // @ts-ignore - not same as below, not sure why it's complaining
-            root.render(React.createElement(mod.default, imageProps), {
-              hydrate: true,
-            })
-          } else {
-            ReactDOM.hydrate(
-              // @ts-ignore - no idea why it complains
-              React.createElement(mod.GatsbyImage, imageProps),
-              image.parentNode.parentNode
-            )
-          }
+          // @ts-ignore - TODO: Fix me
+          const root = ReactDOM.createRoot(gatsbyImageHydrationElement)
+          root.render(React.createElement(mod.GatsbyImage, imageProps))
         }
       }
     })

@@ -13,7 +13,7 @@ export const pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     plugins: Joi.array().strip(),
     output: Joi.string()
-      .default(`/sitemap`)
+      .default(`/`)
       .description(`Folder path where sitemaps are stored in \`public\`.`),
     createLinkInHead: Joi.boolean()
       .default(true)
@@ -41,7 +41,8 @@ export const pluginOptionsSchema = ({ Joi }) =>
           }
         }`
       )
-      .external(({ query }) => {
+      .external(pluginOptions => {
+        const query = pluginOptions?.query
         if (query) {
           try {
             parseGraphql(query)
@@ -74,9 +75,6 @@ export const pluginOptionsSchema = ({ Joi }) =>
         enter other data types into this array for custom filtering.
         Doing so will require customization of the \`filterPages\` function.`
       ),
-    exclude: Joi.forbidden().messages({
-      "any.unknown": `As of v4 the \`exclude\` option was renamed to \`excludes\``,
-    }),
     resolveSiteUrl: Joi.function()
       .default(() => resolveSiteUrl)
       .description(

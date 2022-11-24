@@ -200,7 +200,7 @@ describe(`remark prism plugin`, () => {
 
   describe(`warnings`, () => {
     it(`warns if the language is not specified for a code block`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
       const code = `\`\`\`\n// Fake\n\`\`\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST }, { noInlineHighlight: true })
@@ -211,7 +211,7 @@ describe(`remark prism plugin`, () => {
     })
 
     it(`gives a different warning if inline code can be highlighted`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
       const code = `\`foo bar\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST })
