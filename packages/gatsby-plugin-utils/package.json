@@ -54,9 +54,7 @@
     "graphql-compose": "^9.0.9",
     "import-from": "^4.0.0",
     "joi": "^17.4.2",
-    "mime": "^3.0.0",
-    "mini-svg-data-uri": "^1.4.4",
-    "svgo": "^2.8.0"
+    "mime": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
