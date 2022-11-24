@@ -143,8 +143,15 @@ async function attemptImportUncompiled(
     })
   }
 
-  // gatsby-config.js is incorrectly located in src/gatsby-config.js
-  if (existsSync(path.join(siteDirectory, `src`, configName + `.js`))) {
+  // gatsby-config.js/gatsby-config.mjs is incorrectly located in src/gatsby-config.js
+  const srcDirectoryHasJsConfig = existsSync(
+    path.join(siteDirectory, `src`, configName + `.js`)
+  )
+  const srcDirectoryHasMJsConfig = existsSync(
+    path.join(siteDirectory, `src`, configName + `.mjs`)
+  )
+
+  if (srcDirectoryHasJsConfig || srcDirectoryHasMJsConfig) {
     report.panic({
       id: `10125`,
       context: {
