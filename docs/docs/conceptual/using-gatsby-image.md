@@ -52,7 +52,7 @@ When a browser doesn't know how big an image is going to be, either because the 
 
 In addition, when an image appears, it goes from blank background to fully there from one frame to another. This can also be visually jarring. Like CSS has a `transition` prop to help position shifts feel gradual, images feel more aesthetically pleasing when they have placeholders.
 
-Gatsby Image's will hold the spot for your image automatically when you specify `width` prop, and depending on your preference, will provide a background -- blurred, a background color, or traced SVG, while the image loads.
+Gatsby Image's will hold the spot for your image automatically when you specify `width` prop, and depending on your preference, will provide a background -- blurred or a background color, while the image loads.
 
 ![Gatsby Image Gradual Transition](../images/gatsby-image-gif.gif)
 

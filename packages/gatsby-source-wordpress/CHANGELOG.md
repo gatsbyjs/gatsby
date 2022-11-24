@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.1.0/packages/gatsby-source-wordpress) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Chores
+
+- remove runApisInSteps and call runApiSteps for each gatsby-node api [#37039](https://github.com/gatsbyjs/gatsby/issues/37039) ([88b9dc5](https://github.com/gatsbyjs/gatsby/commit/88b9dc5243999e7d817292647216ca20e529db07))
+
+#### Other Changes
+
+- fix(gatsby-source-wordpress) pass store for auth [#37006](https://github.com/gatsbyjs/gatsby/issues/37006) ([5772595](https://github.com/gatsbyjs/gatsby/commit/57725954a2d35906daec2c521b2e0dd718639f22))
+
 ## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.0.0/packages/gatsby-source-wordpress) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
