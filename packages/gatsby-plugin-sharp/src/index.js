@@ -394,20 +394,6 @@ async function traceSVG(args) {
   return src
 }
 
-async function getTracedSVG({ file, options, cache, reporter }) {
-  if (options.generateTracedSVG && options.tracedSVG) {
-    const tracedSVG = await traceSVG({
-      args: options.tracedSVG,
-      fileArgs: options,
-      file,
-      cache,
-      reporter,
-    })
-    return tracedSVG
-  }
-  return undefined
-}
-
 async function stats({ file, reporter }) {
   let imgStats
   try {
@@ -428,6 +414,8 @@ async function stats({ file, reporter }) {
     isTransparent: !imgStats.isOpaque,
   }
 }
+
+let didShowFluid = false
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
@@ -546,8 +534,17 @@ async function fluid({ file, args = {}, reporter, cache }) {
     reporter,
   })
 
+  if (options.generateTracedSVG && options.tracedSVG) {
+    if (!didShowFluid) {
+      console.trace(
+        `[gatsby-plugin-sharp fluid()] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowFluid = true
+    }
+  }
+
   let base64Image
-  if (options.base64) {
+  if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
     const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
@@ -569,8 +566,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     // Get base64 version
     base64Image = await base64({ file, args: base64Args, reporter, cache })
   }
-
-  const tracedSVG = await getTracedSVG({ options, file, cache, reporter })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -618,7 +613,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
 
   return {
-    base64: base64Image && base64Image.src,
+    base64: (options.base64 && base64Image && base64Image.src) || undefined,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
@@ -629,9 +624,16 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
-    tracedSVG,
+    tracedSVG:
+      (options.generateTracedSVG &&
+        options.tracedSVG &&
+        base64Image &&
+        base64Image.src) ||
+      undefined,
   }
 }
+
+let didShowFixed = false
 
 async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
@@ -685,8 +687,17 @@ async function fixed({ file, args = {}, reporter, cache }) {
     reporter,
   })
 
+  if (options.generateTracedSVG && options.tracedSVG) {
+    if (!didShowFixed) {
+      console.trace(
+        `[gatsby-plugin-sharp fixed()] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowFixed = true
+    }
+  }
+
   let base64Image
-  if (options.base64) {
+  if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
     const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
@@ -714,8 +725,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
     })
   }
 
-  const tracedSVG = await getTracedSVG({ options, file, reporter, cache })
-
   const fallbackSrc = images[0].src
   const srcSet = images
     .map((image, i) => {
@@ -739,14 +748,19 @@ async function fixed({ file, args = {}, reporter, cache }) {
   const originalName = file.base
 
   return {
-    base64: base64Image && base64Image.src,
+    base64: (options.base64 && base64Image && base64Image.src) || undefined,
     aspectRatio: images[0].aspectRatio,
     width: images[0].width,
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
-    tracedSVG,
+    tracedSVG:
+      (options.generateTracedSVG &&
+        options.tracedSVG &&
+        base64Image &&
+        base64Image.src) ||
+      undefined,
   }
 }
 
