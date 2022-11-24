@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.1.0/packages/gatsby-cli) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Other Changes
+
+- update snapshots after adding js codehints to minimal starter [#36999](https://github.com/gatsbyjs/gatsby/issues/36999) ([adf5f9b](https://github.com/gatsbyjs/gatsby/commit/adf5f9b44e247422b7132578e8a778b424223c69))
+
 ## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.0.0/packages/gatsby-cli) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
