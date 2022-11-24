@@ -30,11 +30,14 @@ export async function getConfigFile(
   return uncompiledResult || {}
 }
 
-async function attemptImport(configPath: string): Promise<{
+async function attemptImport(
+  siteDirectory: string,
+  configPath: string
+): Promise<{
   configModule: unknown
   configFilePath: string
 }> {
-  const configFilePath = resolveConfigFilePath(configPath)
+  const configFilePath = resolveConfigFilePath(siteDirectory, configPath)
 
   // The file does not exist, no sense trying to import it
   if (!configFilePath) {
@@ -61,7 +64,7 @@ async function attemptImportCompiled(
       `${siteDirectory}/${COMPILED_CACHE_DIR}`,
       configName
     )
-    compiledResult = await attemptImport(compiledConfigPath)
+    compiledResult = await attemptImport(siteDirectory, compiledConfigPath)
   } catch (error) {
     report.panic({
       id: `11902`,
@@ -89,7 +92,7 @@ async function attemptImportUncompiled(
   const uncompiledConfigPath = path.join(siteDirectory, configName)
 
   try {
-    uncompiledResult = await attemptImport(uncompiledConfigPath)
+    uncompiledResult = await attemptImport(siteDirectory, uncompiledConfigPath)
   } catch (error) {
     if (!testImportError(uncompiledConfigPath, error)) {
       report.panic({
