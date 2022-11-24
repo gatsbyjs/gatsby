@@ -1,0 +1,16 @@
+[
+  {
+    "id": 75533206978766,
+    "subject_id": 278407151822,
+    "created_at": "2021-11-09T08:35:18-07:00",
+    "subject_type": "Collection",
+    "verb": "destroy"
+  },
+  {
+    "id": 75533206978767,
+    "subject_id": 6950279086286,
+    "created_at": "2021-11-09T08:35:18-07:00",
+    "subject_type": "Product",
+    "verb": "destroy"
+  }
+]

@@ -5,10 +5,10 @@ import "../engines-fs-provider"
 // just types - those should not be bundled
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
-import type { IGatsbyPage } from "../../redux/types"
+import type { IGatsbyPage, IGatsbySlice, IGatsbyState } from "../../redux/types"
 import { IGraphQLTelemetryRecord } from "../../schema/type-definitions"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
-import type { IPageDataWithQueryResult } from "../page-data"
+import type { IPageDataWithQueryResult, ISliceData } from "../page-data"
 import type { Request } from "express"
 import type { Span, SpanContext } from "opentracing"
 
@@ -25,6 +25,7 @@ import { getServerData, IServerData } from "../get-server-data"
 import reporter from "gatsby-cli/lib/reporter"
 import { initTracer } from "../tracer"
 import { getCodeFrame } from "../../query/graphql-errors-codeframe"
+import { ICollectedSlice } from "../babel/find-slices"
 
 export interface ITemplateDetails {
   query: string
@@ -41,15 +42,17 @@ export interface ISSRData {
   searchString: string
 }
 
+// just letting TypeScript know about injected data
+// with DefinePlugin
+declare global {
+  const INLINED_TEMPLATE_TO_DETAILS: Record<string, ITemplateDetails>
+  const WEBPACK_COMPILATION_HASH: string
+  const GATSBY_SLICES_SCRIPT: string
+}
+
 const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
 )
-
-const pageTemplateDetailsMap: Record<
-  string,
-  ITemplateDetails
-  // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
-> = INLINED_TEMPLATE_TO_DETAILS
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -106,7 +109,7 @@ export async function getData({
       page = maybePage
 
       // 2. Lookup query used for a page (template)
-      templateDetails = pageTemplateDetailsMap[page.componentChunkName]
+      templateDetails = INLINED_TEMPLATE_TO_DETAILS[page.componentChunkName]
       if (!templateDetails) {
         throw new Error(
           `Page template details for "${page.componentChunkName}" not found`
@@ -208,9 +211,14 @@ export async function getData({
     results.pageContext = page.context
 
     let searchString = ``
+
     if (req?.query) {
       const maybeQueryString = Object.entries(req.query)
-        .map(([k, v]) => `${k}=${v}`)
+        .map(
+          ([k, v]) =>
+            // Preserve QueryString encoding
+            `${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`
+        )
         .join(`&`)
       if (maybeQueryString) {
         searchString = `?${maybeQueryString}`
@@ -258,14 +266,45 @@ export async function renderPageData({
       })
       activity.start()
     }
+
+    const componentPath = data.page.componentPath
+    const sliceOverrides = data.page.slices
+
+    // @ts-ignore GATSBY_SLICES is being "inlined" by bundler
+    const slicesFromBundler = GATSBY_SLICES as {
+      [key: string]: IGatsbySlice
+    }
+    const slices: IGatsbyState["slices"] = new Map()
+    for (const [key, value] of Object.entries(slicesFromBundler)) {
+      slices.set(key, value)
+    }
+
+    const slicesUsedByTemplatesFromBundler =
+      // @ts-ignore GATSBY_SLICES_BY_TEMPLATE is being "inlined" by bundler
+      GATSBY_SLICES_BY_TEMPLATE as {
+        [key: string]: { [key: string]: ICollectedSlice }
+      }
+    const slicesUsedByTemplates: IGatsbyState["slicesByTemplate"] = new Map()
+    for (const [key, value] of Object.entries(
+      slicesUsedByTemplatesFromBundler
+    )) {
+      slicesUsedByTemplates.set(key, value)
+    }
+
+    // TODO: optimize this to only pass name for slices, as it's only used for validation
+
     const results = await constructPageDataString(
       {
         componentChunkName: data.page.componentChunkName,
         path: getPath(data),
         matchPath: data.page.matchPath,
         staticQueryHashes: data.templateDetails.staticQueryHashes,
+        componentPath,
+        slices: sliceOverrides,
       },
-      JSON.stringify(data.results)
+      JSON.stringify(data.results),
+      slicesUsedByTemplates,
+      slices
     )
 
     return JSON.parse(results)
@@ -288,6 +327,13 @@ const readStaticQueryContext = async (
   const rawSQContext = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawSQContext)
+}
+
+const readSliceData = async (sliceName: string): Promise<ISliceData> => {
+  const filePath = path.join(__dirname, `slice-data`, `${sliceName}.json`)
+
+  const rawSliceData = await fs.readFile(filePath, `utf-8`)
+  return JSON.parse(rawSliceData)
 }
 
 export async function renderHTML({
@@ -317,6 +363,29 @@ export async function renderHTML({
       })
     }
 
+    const sliceData: Record<string, ISliceData> = {}
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      let readSliceDataActivity: MaybePhantomActivity
+      try {
+        if (wrapperActivity) {
+          readSliceDataActivity = reporter.phantomActivity(
+            `Preparing slice-data`,
+            {
+              parentSpan: wrapperActivity.span,
+            }
+          )
+          readSliceDataActivity.start()
+        }
+        for (const sliceName of Object.values(pageData.slicesMap)) {
+          sliceData[sliceName] = await readSliceData(sliceName)
+        }
+      } finally {
+        if (readSliceDataActivity) {
+          readSliceDataActivity.end()
+        }
+      }
+    }
+
     let readStaticQueryContextActivity: MaybePhantomActivity
     let staticQueryContext: Record<string, { data: unknown }>
     try {
@@ -329,9 +398,24 @@ export async function renderHTML({
         )
         readStaticQueryContextActivity.start()
       }
-      staticQueryContext = await readStaticQueryContext(
-        data.page.componentChunkName
+
+      const uniqueUsedComponentChunkNames = [data.page.componentChunkName]
+      for (const singleSliceData of Object.values(sliceData)) {
+        if (
+          singleSliceData.componentChunkName &&
+          !uniqueUsedComponentChunkNames.includes(
+            singleSliceData.componentChunkName
+          )
+        ) {
+          uniqueUsedComponentChunkNames.push(singleSliceData.componentChunkName)
+        }
+      }
+
+      const contextsToMerge = await Promise.all(
+        uniqueUsedComponentChunkNames.map(readStaticQueryContext)
       )
+
+      staticQueryContext = Object.assign({}, ...contextsToMerge)
     } finally {
       if (readStaticQueryContextActivity) {
         readStaticQueryContextActivity.end()
@@ -350,15 +434,21 @@ export async function renderHTML({
         renderHTMLActivity.start()
       }
 
+      const pagePath = getPath(data)
       const results = await htmlComponentRenderer({
-        pagePath: getPath(data),
+        pagePath,
         pageData,
         staticQueryContext,
+        webpackCompilationHash: WEBPACK_COMPILATION_HASH,
         ...data.templateDetails.assets,
         inlinePageData: data.page.mode === `SSR` && data.results.serverData,
+        sliceData,
       })
 
-      return results.html
+      return results.html.replace(
+        `<slice-start id="_gatsby-scripts-1"></slice-start><slice-end id="_gatsby-scripts-1"></slice-end>`,
+        GATSBY_SLICES_SCRIPT
+      )
     } finally {
       if (renderHTMLActivity) {
         renderHTMLActivity.end()

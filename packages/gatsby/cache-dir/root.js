@@ -2,10 +2,15 @@ import React from "react"
 import { Router, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
+import { SlicesMapContext, SlicesContext } from "./slice/context"
 import { shouldUpdateScroll, RouteUpdates } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
-import { PageQueryStore, StaticQueryStore } from "./query-result-store"
+import {
+  PageQueryStore,
+  StaticQueryStore,
+  SliceDataStore,
+} from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 import FastRefreshOverlay from "./fast-refresh-overlay"
 
@@ -32,33 +37,44 @@ class LocationHandler extends React.Component {
   render() {
     const { location } = this.props
 
+    const slicesContext = {
+      renderEnvironment: `browser`,
+    }
+
     if (!loader.isPageNotFound(location.pathname + location.search)) {
       return (
         <EnsureResources location={location}>
           {locationAndPageResources => (
-            <RouteUpdates location={location}>
-              <ScrollContext
-                location={location}
-                shouldUpdateScroll={shouldUpdateScroll}
+            <SlicesContext.Provider value={slicesContext}>
+              <SlicesMapContext.Provider
+                value={locationAndPageResources.pageResources.page.slicesMap}
               >
-                <Router
-                  basepath={__BASE_PATH__}
-                  location={location}
-                  id="gatsby-focus-wrapper"
-                >
-                  <RouteHandler
-                    path={encodeURI(
-                      (
-                        locationAndPageResources.pageResources.page.matchPath ||
-                        locationAndPageResources.pageResources.page.path
-                      ).split(`?`)[0]
-                    )}
-                    {...this.props}
-                    {...locationAndPageResources}
-                  />
-                </Router>
-              </ScrollContext>
-            </RouteUpdates>
+                <RouteUpdates location={location}>
+                  <ScrollContext
+                    location={location}
+                    shouldUpdateScroll={shouldUpdateScroll}
+                  >
+                    <Router
+                      basepath={__BASE_PATH__}
+                      location={location}
+                      id="gatsby-focus-wrapper"
+                    >
+                      <RouteHandler
+                        path={encodeURI(
+                          (
+                            locationAndPageResources.pageResources.page
+                              .matchPath ||
+                            locationAndPageResources.pageResources.page.path
+                          ).split(`?`)[0]
+                        )}
+                        {...this.props}
+                        {...locationAndPageResources}
+                      />
+                    </Router>
+                  </ScrollContext>
+                </RouteUpdates>
+              </SlicesMapContext.Provider>
+            </SlicesContext.Provider>
           )}
         </EnsureResources>
       )
@@ -74,20 +90,30 @@ class LocationHandler extends React.Component {
     }
 
     return (
-      <RouteUpdates location={location}>
-        <Router
-          basepath={__BASE_PATH__}
-          location={location}
-          id="gatsby-focus-wrapper"
-        >
-          <RouteHandler
-            path={location.pathname}
-            location={location}
-            pageResources={dev404PageResources}
-            custom404={custom404}
-          />
-        </Router>
-      </RouteUpdates>
+      <EnsureResources location={location}>
+        {locationAndPageResources => (
+          <SlicesContext.Provider value={slicesContext}>
+            <SlicesMapContext.Provider
+              value={locationAndPageResources.pageResources.page.slicesMap}
+            >
+              <RouteUpdates location={location}>
+                <Router
+                  basepath={__BASE_PATH__}
+                  location={location}
+                  id="gatsby-focus-wrapper"
+                >
+                  <RouteHandler
+                    path={location.pathname}
+                    location={location}
+                    pageResources={dev404PageResources}
+                    custom404={custom404}
+                  />
+                </Router>
+              </RouteUpdates>
+            </SlicesMapContext.Provider>
+          </SlicesContext.Provider>
+        )}
+      </EnsureResources>
     )
   }
 }
@@ -111,7 +137,9 @@ const rootWrappedWithWrapRootElement = apiRunner(
 function RootWrappedWithOverlayAndProvider() {
   return (
     <FastRefreshOverlay>
-      <StaticQueryStore>{rootWrappedWithWrapRootElement}</StaticQueryStore>
+      <SliceDataStore>
+        <StaticQueryStore>{rootWrappedWithWrapRootElement}</StaticQueryStore>
+      </SliceDataStore>
     </FastRefreshOverlay>
   )
 }

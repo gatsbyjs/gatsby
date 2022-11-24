@@ -1,4 +1,5 @@
 jest.spyOn(process, `cwd`).mockImplementationOnce(() => `/project/root`)
+const mockExit = jest.spyOn(process, `exit`).mockImplementation(() => {})
 
 const { readFileSync, writeFileSync } = require(`fs-extra`)
 const { load, save } = require(`../prepare/cache`)
@@ -56,5 +57,15 @@ describe(`cache`, () => {
       `{"some":"cache"}`,
       `utf-8`
     )
+  })
+
+  it(`exits if writing to disk fails`, () => {
+    writeFileSync.mockImplementationOnce(() => {
+      throw new Error(`file not writable`)
+    })
+
+    save({ some: `cache` })
+
+    expect(mockExit).toHaveBeenCalledWith(1)
   })
 })

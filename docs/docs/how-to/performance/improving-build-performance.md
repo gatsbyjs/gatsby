@@ -32,7 +32,7 @@ many fields that aren't needed to create the pages. Most sites only need to quer
 
 Check how long `createPages` takes for your build. If it's longer than 10s, check if there's fields you can remove from the query.
 
-#### Query only need fields in page queries
+#### Query only needed fields in page queries
 
 The more fields you query the longer each query will take to run. Gatsby's GraphQL schema gives you a rich array of filtering/sorting capabilities so you grab just the data you need. If you install [gatsby-plugin-perf-budgets](https://github.com/pieh/gatsby-plugin-perf-budgets), it will show you the amount of data you query for each page so you can audit larger ones.
 
@@ -50,19 +50,23 @@ Gatsby Cloud offers image parallelization during image processing and other buil
 
 ### 2. Reducing build times from content sourcing and processing
 
-Avoid pulling unnecessary locales or content models into your site
+Avoid pulling unnecessary locales or content models into your site.
 
 Sometimes your headless CMS is storing content types that you're not using in your site, or content translations into other languages that you don't need. Most popular CMS integrations support adding options in `gatsby-config.js` to only pull specific locales; a few also support limiting specific content models.
 
 If you have a lot of content you're not using in your Gatsby site, check the options reference of the source plugin you use to see if you can exclude it from getting pulled in altogether!
 
-#### Check Your Headless CMS or other data source
+#### Check your headless CMS or other data source
 
 With similar amounts of pages and content, Gatsby builds work significantly faster with some headless CMSs than others (largely due to the way various source-plugins are implemented).
 
 Note that generally popular and official source plugins have built in a number of optimizations that custom or less-used source plugins may not have, so if you're sourcing large amounts of data from other plugins, you may want to monitor the build performance of those plugins.
 
 If build speeds are sufficiently painful, your CMS is the primary contributor, and there are significantly faster alternative(s), you may want to consider migrating some or all content.
+
+#### Conditionally applying plugin options using environment variables
+
+Your source plugin may have options that control which or how many entries, files, etc. are sourced. In order to speed up sourcing for e.g. `gatsby develop` or your staging environment, you can use environment variables to apply different plugin options depending on the current environment. To see an example of this pattern using `gatsby-source-filesystem` you can visit the [sourcing from the filesystem](/docs/how-to/sourcing-data/sourcing-from-the-filesystem/) documentation.
 
 #### If your site is multi-language, consider breaking it into several sites
 
@@ -81,6 +85,11 @@ Some options offered in `gatsby-plugin-image`, such as AVIF and traced-svg, incr
 #### Decrease bundle size
 
 The build time cost of generating Javascript bundles is proportional to the size of your bundles. [Optimizations to improve bundle size](https://www.gatsbyjs.com/docs/how-to/performance/improving-site-performance/#reduce-your-javascript-bundle-cost), especially of the templates that are most commonly used, should generate significant benefits. For example, if you have a 30k-page site with 25k product pages, to optimize build time start by optimizing your product page template.
+
+#### Remove support for browsers that don't support ES6 Modules
+
+During the bundling process, Gatsby will adhere to your projects `browserslist` to determine how bundles should be polyfilled for browser support. If not set, Gatsby sets `browserslist` as `>0.25%, not dead and supports es6-module`.
+A time-consuming part of the polyfill process is ES6 module support. One way to speed up your builds is to remove support for [these browsers](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZCwgbm90IHN1cHBvcnRzIGVzNi1tb2R1bGU%3D) by adding a `and supports es6-module` clause to your `browserslist` configuration. Gatsby does this by default.
 
 ### 4. Advanced options
 

@@ -4,6 +4,39 @@ const extendNodeType = require(`../extend-node-type`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
 
+/**
+ * @see https://github.com/facebook/jest/issues/10529#issuecomment-904608475
+ */
+function itAsyncDone(name, cb, timeout) {
+  it(
+    name,
+    done => {
+      let doneCalled = false
+      const wrappedDone = (...args) => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+        done(...args)
+      }
+
+      wrappedDone.fail = err => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+
+        done(err)
+      }
+
+      cb(wrappedDone).catch(wrappedDone)
+    },
+    timeout
+  )
+}
+
 jest.mock(`gatsby/reporter`, () => {
   return {
     log: jest.fn(),
@@ -75,15 +108,15 @@ async function queryResult(
   })
   const schema = sc.buildSchema()
 
-  const result = await graphql(
+  const result = await graphql({
     schema,
-    `query {
-        listNode {
-            ${fragment}
-        }
+    source: `query {
+      listNode {
+          ${fragment}
       }
-    `
-  )
+    }
+  `,
+  })
   return result
 }
 
@@ -105,7 +138,7 @@ const bootstrapTest = (
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(label, async done => {
+  itAsyncDone(label, async done => {
     node.content = content
     async function createNode(markdownNode) {
       const result = await queryResult([markdownNode], query, {
@@ -114,14 +147,14 @@ const bootstrapTest = (
       })
 
       if (result.errors) {
-        done.fail(result.errors)
+        done(result.errors)
       }
 
       try {
         test(result.data.listNode[0])
         done()
       } catch (err) {
-        done.fail(err)
+        done(err)
       }
     }
 

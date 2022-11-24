@@ -1,5 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 // This is by no means a full test file for loader.js so feel free to add more tests.
 import mock from "xhr-mock"
+import { setImmediate } from "timers"
 import { ProdLoader } from "../loader"
 import emitter from "../emitter"
 
@@ -341,6 +346,7 @@ describe(`Production loader`, () => {
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([
         `component`,
+        `head`,
         `json`,
         `page`,
         `staticQueryResults`,

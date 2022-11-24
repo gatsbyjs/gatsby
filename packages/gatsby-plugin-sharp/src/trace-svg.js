@@ -8,7 +8,9 @@ const filenamify = require(`filenamify`)
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { reportError } = require(`./report-error`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const {
+  createContentDigest,
+} = require(`gatsby-core-utils/create-content-digest`)
 
 exports.notMemoizedPrepareTraceSVGInputFile = async ({
   file,
@@ -70,16 +72,23 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 }
 
 const optimize = svg => {
-  const SVGO = require(`svgo`)
-  const svgo = new SVGO({
+  const { optimize } = require(`svgo`)
+  const { data } = optimize(svg, {
     multipass: true,
     floatPrecision: 0,
     plugins: [
       {
-        removeViewBox: false,
+        name: `preset-default`,
+        params: {
+          overrides: {
+            // disable removeViewBox plugin
+            removeViewBox: false,
+          },
+        },
       },
       {
-        addAttributesToSVGElement: {
+        name: `addAttributesToSVGElement`,
+        params: {
           attributes: [
             {
               preserveAspectRatio: `none`,
@@ -89,7 +98,7 @@ const optimize = svg => {
       },
     ],
   })
-  return svgo.optimize(svg).then(({ data }) => data)
+  return data
 }
 
 exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
@@ -114,9 +123,8 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 
   const tmpFilePath = path.join(
     tmpDir,
-    filenamify(
-      `${file.internal.contentDigest}-${file.name}-${optionsHash}.${file.extension}`
-    )
+    filenamify(`${file.internal.contentDigest}-${file.name}-${optionsHash}`) +
+      `.${file.extension}`
   )
 
   await exports.memoizedPrepareTraceSVGInputFile({
@@ -127,7 +135,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
   })
 
   const svgToMiniDataURI = require(`mini-svg-data-uri`)
-  const potrace = require(`potrace`)
+  const potrace = require(`@gatsbyjs/potrace`)
   const trace = promisify(potrace.trace)
 
   const defaultArgs = {

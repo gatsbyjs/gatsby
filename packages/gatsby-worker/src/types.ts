@@ -3,6 +3,7 @@ export const ERROR = 0b10
 export const RESULT = 0b11
 export const END = 0b00
 export const CUSTOM_MESSAGE = 0b100
+export const WORKER_READY = 0b1000
 
 type CustomMessage = [typeof CUSTOM_MESSAGE, unknown]
 
@@ -11,6 +12,7 @@ type FunctionArgs = Array<any>
 
 type ExecuteMessage = [typeof EXECUTE, FunctionName, FunctionArgs]
 type EndMessage = [typeof END]
+type WorkerReadyMessage = [typeof WORKER_READY]
 
 export type ParentMessageUnion = ExecuteMessage | EndMessage | CustomMessage
 
@@ -30,4 +32,8 @@ type ResultType = unknown
 
 type TaskResult = [typeof RESULT, ResultType]
 
-export type ChildMessageUnion = TaskError | TaskResult | CustomMessage
+export type ChildMessageUnion =
+  | TaskError
+  | TaskResult
+  | CustomMessage
+  | WorkerReadyMessage

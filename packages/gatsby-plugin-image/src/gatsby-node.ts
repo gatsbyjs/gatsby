@@ -1,4 +1,4 @@
-import { GatsbyNode } from "gatsby"
+import type { GatsbyNode } from "gatsby"
 import { getCacheDir } from "./node-apis/node-utils"
 import {
   ImageFormatType,

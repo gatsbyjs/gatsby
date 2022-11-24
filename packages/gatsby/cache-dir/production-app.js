@@ -1,9 +1,13 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
-import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { StaticQueryContext } from "gatsby"
+import { StaticQueryContext } from "./static-query"
+import {
+  SlicesMapContext,
+  SlicesContext,
+  SlicesResultsContext,
+} from "./slice/context"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -18,22 +22,28 @@ import {
   publicLoader,
   PageResourceStatus,
   getStaticQueryResults,
+  getSliceResults,
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
+import { reactDOMUtils } from "./react-dom-utils"
 
 const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
+
+const { render, hydrate } = reactDOMUtils()
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = publicLoader
 
 navigationInit()
+
+const reloadStorageKey = `gatsby-reload-compilation-hash-match`
 
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
@@ -63,6 +73,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const DataContext = React.createContext({})
 
+  const slicesContext = {
+    renderEnvironment: `browser`,
+  }
+
   class GatsbyRoot extends React.Component {
     render() {
       const { children } = this.props
@@ -72,11 +86,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
                 const staticQueryResults = getStaticQueryResults()
+                const sliceResults = getSliceResults()
+
                 return (
                   <StaticQueryContext.Provider value={staticQueryResults}>
-                    <DataContext.Provider value={{ pageResources, location }}>
-                      {children}
-                    </DataContext.Provider>
+                    <SlicesContext.Provider value={slicesContext}>
+                      <SlicesResultsContext.Provider value={sliceResults}>
+                        <SlicesMapContext.Provider
+                          value={pageResources.page.slicesMap}
+                        >
+                          <DataContext.Provider
+                            value={{ pageResources, location }}
+                          >
+                            {children}
+                          </DataContext.Provider>
+                        </SlicesMapContext.Provider>
+                      </SlicesResultsContext.Provider>
+                    </SlicesContext.Provider>
                   </StaticQueryContext.Provider>
                 )
               }}
@@ -160,7 +186,54 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )
   }
 
+  // It's possible that sessionStorage can throw an exception if access is not granted, see https://github.com/gatsbyjs/gatsby/issues/34512
+  const getSessionStorage = () => {
+    try {
+      return sessionStorage
+    } catch {
+      return null
+    }
+  }
+
   publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {
+    const sessionStorage = getSessionStorage()
+
+    if (
+      page?.page?.webpackCompilationHash &&
+      page.page.webpackCompilationHash !== window.___webpackCompilationHash
+    ) {
+      // Purge plugin-offline cache
+      if (
+        `serviceWorker` in navigator &&
+        navigator.serviceWorker.controller !== null &&
+        navigator.serviceWorker.controller.state === `activated`
+      ) {
+        navigator.serviceWorker.controller.postMessage({
+          gatsbyApi: `clearPathResources`,
+        })
+      }
+
+      // We have not matching html + js (inlined `window.___webpackCompilationHash`)
+      // with our data (coming from `app-data.json` file). This can cause issues such as
+      // errors trying to load static queries (as list of static queries is inside `page-data`
+      // which might not match to currently loaded `.js` scripts).
+      // We are making attempt to reload if hashes don't match, but we also have to handle case
+      // when reload doesn't fix it (possibly broken deploy) so we don't end up in infinite reload loop
+      if (sessionStorage) {
+        const isReloaded = sessionStorage.getItem(reloadStorageKey) === `1`
+
+        if (!isReloaded) {
+          sessionStorage.setItem(reloadStorageKey, `1`)
+          window.location.reload(true)
+          return
+        }
+      }
+    }
+
+    if (sessionStorage) {
+      sessionStorage.removeItem(reloadStorageKey)
+    }
+
     if (!page || page.status === PageResourceStatus.Error) {
       const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
 
@@ -173,8 +246,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       throw new Error(message)
     }
-
-    window.___webpackCompilationHash = page.page.webpackCompilationHash
 
     const SiteRoot = apiRunner(
       `wrapRootElement`,
@@ -202,10 +273,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return <GatsbyRoot>{SiteRoot}</GatsbyRoot>
     }
 
+    const focusEl = document.getElementById(`gatsby-focus-wrapper`)
+
+    // Client only pages have any empty body so we just do a normal
+    // render to avoid React complaining about hydration mis-matches.
+    let defaultRenderer = render
+    if (focusEl && focusEl.children.length) {
+      defaultRenderer = hydrate
+    }
+
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      ReactDOM.hydrateRoot ? ReactDOM.hydrateRoot : ReactDOM.hydrate
+      defaultRenderer
     )[0]
 
     function runRender() {
@@ -214,11 +294,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : null
 
-      if (renderer === ReactDOM.hydrateRoot) {
-        renderer(rootElement, <App />)
-      } else {
-        renderer(<App />, rootElement)
-      }
+      renderer(<App />, rootElement)
     }
 
     // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
@@ -242,5 +318,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       doc.addEventListener(`DOMContentLoaded`, handler, false)
       window.addEventListener(`load`, handler, false)
     }
+
+    return
   })
 })

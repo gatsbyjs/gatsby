@@ -13,6 +13,7 @@ import urlUtil from "url"
 import path from "path"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
+import { getPlaceholderUrlFromMediaItemNode } from "../create-nodes/process-node"
 
 const nodeFetchConcurrency = 2
 
@@ -106,6 +107,33 @@ const pushPromiseOntoRetryQueue = ({
   })
 }
 
+export const addImageCDNFieldsToNode = (node, pluginOptions) => {
+  if (!node?.__typename?.includes(`MediaItem`)) {
+    return node
+  }
+
+  const placeholderUrl = getPlaceholderUrlFromMediaItemNode(node, pluginOptions)
+
+  const url = node.sourceUrl || node.mediaItemUrl
+
+  const filename =
+    node?.mediaDetails?.file?.split(`/`)?.pop() ||
+    path.basename(urlUtil.parse(url).pathname)
+
+  return {
+    ...node,
+    url,
+    contentType: node.contentType,
+    mimeType: node.mimeType,
+    filename,
+    filesize: node?.mediaDetails?.fileSize,
+    width: node?.mediaDetails?.width,
+    height: node?.mediaDetails?.height,
+    placeholderUrl:
+      placeholderUrl ?? node?.mediaDetails?.sizes?.[0]?.sourceUrl ?? url,
+  }
+}
+
 export const createMediaItemNode = async ({
   node,
   helpers,
@@ -179,16 +207,22 @@ export const createMediaItemNode = async ({
         )
       }
 
-      node = {
-        ...node,
-        localFile: {
+      node = addImageCDNFieldsToNode(
+        {
+          ...node,
+          parent: null,
+          internal: {
+            contentDigest: createContentDigest(node),
+            type: buildTypeName(`MediaItem`),
+          },
+        },
+        pluginOptions
+      )
+
+      if (localFileNode?.id) {
+        node.localFile = {
           id: localFileNode?.id,
-        },
-        parent: null,
-        internal: {
-          contentDigest: createContentDigest(node),
-          type: buildTypeName(`MediaItem`),
-        },
+        }
       }
 
       const normalizedNode = normalizeNode({ node, nodeTypeName: `MediaItem` })
@@ -309,7 +343,16 @@ export const fetchMediaItemsBySourceUrl = async ({
 
   // take our previously cached id's and get nodes for them
   const previouslyCachedMediaItemNodes = await Promise.all(
-    cachedMediaItemNodeIds.map(async nodeId => helpers.getNode(nodeId))
+    cachedMediaItemNodeIds.map(async nodeId => {
+      const node = await helpers.getNode(nodeId)
+
+      const parentNode =
+        node?.internal?.type === `File` && node?.parent
+          ? helpers.getNode(node.parent)
+          : null
+
+      return parentNode || node
+    })
   )
 
   const {
@@ -327,7 +370,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   // so we need to resolve this promise
   // otherwise it will never resolve below.
   if (!mediaItemUrlsPages.length) {
-    return Promise.resolve([])
+    return Promise.resolve(previouslyCachedMediaItemNodes)
   }
 
   const allPromises = []
@@ -394,7 +437,7 @@ export const fetchMediaItemsBySourceUrl = async ({
           )
 
           nodes.forEach((node, index) => {
-            if (!node) {
+            if (!node || !node?.localFile?.id) {
               return
             }
 
@@ -417,7 +460,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   await mediaFileFetchQueue.onIdle()
 
   const allResults = await Promise.all(allPromises)
-  return allResults.flat()
+  return [...previouslyCachedMediaItemNodes, ...allResults.flat()]
 }
 
 export const fetchMediaItemsById = async ({
@@ -521,8 +564,13 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
 }) {
   const state = store.getState()
   const queryInfo = state.remoteSchema.nodeQueries.mediaItems
-
   const { helpers, pluginOptions } = state.gatsbyApi
+
+  // don't fetch media items if they are excluded via pluginOptions
+  if (pluginOptions.type?.MediaItem?.exclude) {
+    return []
+  }
+
   const { createContentDigest, actions } = helpers
   const { url } = pluginOptions
   const { typeInfo, settings, selectionSet, builtFragments } = queryInfo

@@ -3,25 +3,31 @@ import { testPluginOptionsSchema, Joi } from "gatsby-plugin-utils"
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
-    const expectedErrors = [`"wrong" is not allowed`]
+    const expectedErrors = [`"output" must be a string`]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      wrong: `test`,
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        output: 123,
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should provide error for deprecated "exclude" option`, async () => {
-    const expectedErrors = [
-      `As of v4 the \`exclude\` option was renamed to \`excludes\``,
-    ]
+  it(`should provide warning for deprecated "exclude" option`, async () => {
+    const expectedWarnings = [`"exclude" is not allowed`]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      exclude: [`test`],
-    })
+    const { warnings, hasWarnings } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        exclude: [`test`],
+      }
+    )
 
-    expect(errors).toEqual(expectedErrors)
+    expect(hasWarnings).toBe(true)
+    expect(warnings).toEqual(expectedWarnings)
   })
 
   it(`creates correct defaults`, async () => {
@@ -33,7 +39,7 @@ describe(`pluginOptionsSchema`, () => {
         "entryLimit": 45000,
         "excludes": Array [],
         "filterPages": [Function],
-        "output": "/sitemap",
+        "output": "/",
         "query": "{ site { siteMetadata { siteUrl } } allSitePage { nodes { path } } }",
         "resolvePagePath": [Function],
         "resolvePages": [Function],
@@ -48,7 +54,7 @@ describe(`pluginOptionsSchema`, () => {
     ${undefined}
     ${{}}
   `(`should validate the schema: $options`, async ({ options }) => {
-    const { isValid } = await testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )

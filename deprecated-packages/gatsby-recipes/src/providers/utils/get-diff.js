@@ -1,4 +1,4 @@
-import diff from "jest-diff"
+import { diff } from "jest-diff"
 import chalk from "chalk"
 import stripAnsi from "strip-ansi"
 

@@ -22,10 +22,10 @@ export const DEFAULT_OPTIONS = {
 
 export const SECURITY_HEADERS = {
   "/*": [
-    `X-Frame-Options: DENY`,
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
     `Referrer-Policy: same-origin`,
+    `X-Frame-Options: DENY`,
   ],
 }
 
@@ -38,9 +38,3 @@ export const CACHING_HEADERS = {
 }
 
 export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/
-
-export const COMMON_BUNDLES = [`commons`, `app`]
-
-export const PAGE_DATA_DIR = `page-data/`
-
-export const POLLING_INTERVAL = 5000

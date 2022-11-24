@@ -22,13 +22,17 @@ function hasBase64Placeholder(el) {
 }
 
 function hasNoPlaceholder(el) {
-  el.children(`div[data-placeholder-image]`).should(`be.empty`)
+  el.children(`div[data-placeholder-image]`).should($div => {
+    const style = window.getComputedStyle($div[0])
+    expect(style.backgroundColor).to.equal("rgba(0, 0, 0, 0)")
+  })
 }
 
 function hasColorPlaceholder(el) {
-  el.children(`div[data-placeholder-image]`)
-    .should("have.css", "background-color")
-    .should("not.be.empty")
+  el.children(`div[data-placeholder-image]`).should($div => {
+    const style = window.getComputedStyle($div[0])
+    expect(style.backgroundColor).not.to.equal("rgba(0, 0, 0, 0)")
+  })
 }
 
 function testGatsbyPluginImage(type, testPlaceholder) {
@@ -62,7 +66,7 @@ describe(`gatsby-plugin-image`, () => {
   })
 
   it(`constrained`, testConfig, () =>
-    testGatsbyPluginImage(`constrained`, hasColorPlaceholder)
+    testGatsbyPluginImage(`constrained`, hasNoPlaceholder)
   )
   it(`full-width`, testConfig, () =>
     testGatsbyPluginImage(`full-width`, hasNoPlaceholder)
@@ -94,14 +98,14 @@ describe(`gatsby-plugin-image`, () => {
   it(`sqip`, testConfig, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
 
   it(`english`, testConfig, () => {
-    testGatsbyPluginImage(`english`, hasColorPlaceholder)
+    testGatsbyPluginImage(`english`, hasNoPlaceholder)
     cy.get(`[data-cy="english"] p strong`).should(
       "have.text",
       "Locale - American English (png)"
     )
   })
   it(`german`, testConfig, () => {
-    testGatsbyPluginImage(`german`, hasColorPlaceholder)
+    testGatsbyPluginImage(`german`, hasNoPlaceholder)
     cy.get(`[data-cy="german"] p strong`).should(
       "have.text",
       "Locale - German (png)"

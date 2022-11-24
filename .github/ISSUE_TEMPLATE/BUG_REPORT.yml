@@ -1,6 +1,6 @@
 name: Bug Report
 description: Something isn't working as expected? Report your bugs here.
-labels: "type: bug"
+labels: ["type: bug"]
 body:
   - type: markdown
     attributes:
@@ -37,7 +37,14 @@ body:
     attributes:
       label: Reproduction Link
       placeholder: "https://github.com/username/repository-name/"
-      description: "Link to a reproduction (GitHub repository, Codesandbox, etc.). **Do not link to your actual project**, but provide a minimal reproduction in a fresh project -- how to make a minimal reproduction: https://gatsby.dev/reproduction"
+      description: |
+        Link to a minimal reproduction (GitHub repository, CodeSandbox, StackBlitz, etc.).
+
+        **Do not link to your actual project**, but provide a minimal reproduction in a fresh project — how to make a minimal reproduction: https://gatsby.dev/reproduction
+
+        You can use these links to quickly set up a new reproduction:
+        - CodeSandbox: https://githubbox.com/gatsbyjs/gatsby-starter-minimal
+        - StackBlitz: https://githubblitz.com/gatsbyjs/gatsby-starter-minimal
     validations:
       required: true
   - type: textarea
@@ -89,7 +96,7 @@ body:
   - type: textarea
     attributes:
       label: Config Flags
-      description: Do you use any "flags" inside "gatsby-config.js"? If yes, please paste them here.
+      description: Do you use any "flags" inside "gatsby-config"? If yes, please paste them here.
       placeholder: |
         For example:
 

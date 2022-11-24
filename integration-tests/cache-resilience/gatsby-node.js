@@ -3,7 +3,7 @@ const v8 = require(`v8`)
 const glob = require(`glob`)
 const path = require(`path`)
 const _ = require(`lodash`)
-const { open } = require(`lmdb-store`)
+const { createRequireFromPath } = require(`gatsby-core-utils`)
 
 const { saveState } = require(`gatsby/dist/redux/save-state`)
 
@@ -12,6 +12,10 @@ const {
   ON_POST_BUILD_FILE_PATH,
 } = require(`./utils/constants`)
 const { getAllPlugins } = require(`./utils/collect-scenarios`)
+
+// use lmdb version used by gatsby core
+const gatsbyRequire = createRequireFromPath(require.resolve(`gatsby`))
+const { open } = gatsbyRequire(`lmdb`)
 
 const getDiskCacheSnapshot = () => {
   const plugins = getAllPlugins()
@@ -35,10 +39,6 @@ const getDiskCacheSnapshot = () => {
     })
   } catch (e) {
     console.error(e)
-  } finally {
-    if (store) {
-      store.close()
-    }
   }
 
   return snapshot
@@ -84,6 +84,26 @@ exports.onPostBuild = async ({ getNodes, store }) => {
     )
 
     const result = require(pageDataPath).result.data
+
+    // some normalization so order of fields in type queries is consistent
+    if (result) {
+      if (result.typeinfoParent && result.typeinfoParent.fields) {
+        result.typeinfoParent.fields = result.typeinfoParent.fields.sort(
+          (a, b) => {
+            return a.name.localeCompare(b.name)
+          }
+        )
+      }
+
+      if (result.typeinfoChild && result.typeinfoChild.fields) {
+        result.typeinfoChild.fields = result.typeinfoChild.fields.sort(
+          (a, b) => {
+            return a.name.localeCompare(b.name)
+          }
+        )
+      }
+    }
+
     _.set(queryResults, [scenarioName, type], result)
   })
 

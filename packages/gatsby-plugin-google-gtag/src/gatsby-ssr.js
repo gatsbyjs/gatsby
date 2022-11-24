@@ -8,22 +8,16 @@ exports.onRenderBody = (
   if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
     return null
 
-  // Lighthouse recommends pre-connecting to google tag manager
-  setHeadComponents([
-    <link
-      rel="preconnect"
-      key="preconnect-google-gtag"
-      href="https://www.googletagmanager.com"
-    />,
-    <link
-      rel="dns-prefetch"
-      key="dns-prefetch-google-gtag"
-      href="https://www.googletagmanager.com"
-    />,
-  ])
-
   const gtagConfig = pluginOptions.gtagConfig || {}
   const pluginConfig = pluginOptions.pluginConfig || {}
+
+  const origin = pluginConfig.origin || `https://www.googletagmanager.com`
+
+  // Lighthouse recommends pre-connecting to google tag manager
+  setHeadComponents([
+    <link rel="preconnect" key="preconnect-google-gtag" href={origin} />,
+    <link rel="dns-prefetch" key="dns-prefetch-google-gtag" href={origin} />,
+  ])
 
   // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
   // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
@@ -65,7 +59,7 @@ exports.onRenderBody = (
           : `true`
       }) {
         window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer && window.dataLayer.push(arguments);}
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         ${pluginOptions.trackingIds
@@ -81,7 +75,7 @@ exports.onRenderBody = (
     <script
       key={`gatsby-plugin-google-gtag`}
       async
-      src={`https://www.googletagmanager.com/gtag/js?id=${firstTrackingId}`}
+      src={`${origin}/gtag/js?id=${firstTrackingId}`}
     />,
     <script
       key={`gatsby-plugin-google-gtag-config`}

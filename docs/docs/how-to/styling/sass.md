@@ -17,7 +17,9 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 
 1. Install the Gatsby plugin [**gatsby-plugin-sass**](/plugins/gatsby-plugin-sass/) and `sass`, a required peer dependency as of v3.0.0.
 
-`npm install sass gatsby-plugin-sass`
+```shell
+npm install sass gatsby-plugin-sass
+```
 
 2. Include the plugin in your `gatsby-config.js` file.
 
@@ -40,7 +42,7 @@ body {
 ```
 
 ```css:title=styles.sass
-$font-stack:    Helvetica, sans-serif
+$font-stack: Helvetica, sans-serif
 $primary-color: #333
 
 body
@@ -57,4 +59,3 @@ import "./styles.sass"
 
 - [Introduction to Sass](https://designmodo.com/introduction-sass/)
 - [Sass documentation](https://sass-lang.com/documentation)
-- [Gatsby starters that use Sass](/starters/?c=Styling%3ASCSS)

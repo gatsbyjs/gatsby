@@ -20,6 +20,9 @@ import {
 } from "../types/type-builders"
 const withResolverContext = require(`../context`)
 
+const itWhenV4 = _CFLAGS_.GATSBY_MAJOR !== `5` ? it : it.skip
+const itWhenV5 = _CFLAGS_.GATSBY_MAJOR === `5` ? it : it.skip
+
 /**
  * Helper identity function to trigger syntax highlighting in code editors.
  * (`gql` name serve as a hint)
@@ -36,6 +39,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    panic: jest.fn(console.error),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -60,7 +64,12 @@ describe(`Built-in types`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
 
-  it(`includes built-in types`, async () => {
+  itWhenV4(`includes built-in types (v4)`, async () => {
+    const schema = await buildSchema()
+    expect(printSchema(schema)).toMatchSnapshot()
+  })
+
+  itWhenV5(`includes built-in types (v5)`, async () => {
     const schema = await buildSchema()
     expect(printSchema(schema)).toMatchSnapshot()
   })
@@ -1395,6 +1404,139 @@ describe(`Build schema`, () => {
         }"
       `)
     })
+
+    itWhenV4(
+      `Can reference derived types when merging types (v4)`,
+      async () => {
+        createTypes(gql`
+          # create initial type composer
+          type TypeCreatedBySourcePlugin implements Node {
+            id: ID!
+            someField: String
+          }
+        `)
+        createTypes([
+          buildInterfaceType({
+            name: `SharedInterface`,
+            fields: {
+              id: `ID!`,
+              child_items: {
+                type: `[SharedInterface]`,
+                args: {
+                  // referencing derived type
+                  sort: `SharedInterfaceSortInput`,
+                },
+              },
+            },
+            interfaces: [`Node`],
+          }),
+          buildObjectType({
+            name: `TypeCreatedBySourcePlugin`,
+            fields: {
+              id: `ID!`,
+              child_items: {
+                type: `[SharedInterface]`,
+                args: {
+                  sort: `SharedInterfaceSortInput`,
+                },
+                resolve: (_, args) => [],
+              },
+            },
+            interfaces: [`Node`, `SharedInterface`],
+          }),
+        ])
+
+        // implicit assertion is that building schema doesn't throw in the process
+        const schema = await buildSchema()
+        expect(printType(schema.getType(`TypeCreatedBySourcePlugin`)))
+          .toMatchInlineSnapshot(`
+                  "type TypeCreatedBySourcePlugin implements Node & SharedInterface {
+                    id: ID!
+                    someField: String
+                    child_items(sort: SharedInterfaceSortInput): [SharedInterface]
+                    parent: Node
+                    children: [Node!]!
+                    internal: Internal!
+                  }"
+              `)
+
+        expect(printType(schema.getType(`SharedInterfaceSortInput`)))
+          .toMatchInlineSnapshot(`
+                  "input SharedInterfaceSortInput {
+                    fields: [SharedInterfaceFieldsEnum]
+                    order: [SortOrderEnum] = [ASC]
+                  }"
+              `)
+      }
+    )
+
+    itWhenV5(
+      `Can reference derived types when merging types (v5)`,
+      async () => {
+        createTypes(gql`
+          # create initial type composer
+          type TypeCreatedBySourcePlugin implements Node {
+            id: ID!
+            someField: String
+          }
+        `)
+        createTypes([
+          buildInterfaceType({
+            name: `SharedInterface`,
+            fields: {
+              id: `ID!`,
+              child_items: {
+                type: `[SharedInterface]`,
+                args: {
+                  // referencing derived type
+                  sort: `SharedInterfaceSortInput`,
+                },
+              },
+            },
+            interfaces: [`Node`],
+          }),
+          buildObjectType({
+            name: `TypeCreatedBySourcePlugin`,
+            fields: {
+              id: `ID!`,
+              child_items: {
+                type: `[SharedInterface]`,
+                args: {
+                  sort: `SharedInterfaceSortInput`,
+                },
+                resolve: (_, args) => [],
+              },
+            },
+            interfaces: [`Node`, `SharedInterface`],
+          }),
+        ])
+
+        // implicit assertion is that building schema doesn't throw in the process
+        const schema = await buildSchema()
+        expect(printType(schema.getType(`TypeCreatedBySourcePlugin`)))
+          .toMatchInlineSnapshot(`
+                  "type TypeCreatedBySourcePlugin implements Node & SharedInterface {
+                    id: ID!
+                    someField: String
+                    child_items(sort: SharedInterfaceSortInput): [SharedInterface]
+                    parent: Node
+                    children: [Node!]!
+                    internal: Internal!
+                  }"
+              `)
+
+        expect(printType(schema.getType(`SharedInterfaceSortInput`)))
+          .toMatchInlineSnapshot(`
+          "input SharedInterfaceSortInput {
+            id: SortOrderEnum
+            child_items: SharedInterfaceSortInput
+            parent: NodeSortInput
+            children: NodeSortInput
+            internal: InternalSortInput
+          }"
+        `)
+      }
+    )
   })
 
   it(`allows renaming and merging nested types`, async () => {

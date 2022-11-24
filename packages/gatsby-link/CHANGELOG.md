@@ -3,6 +3,256 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.1.0/packages/gatsby-link) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-link
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.0.0/packages/gatsby-link) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- Update partial hydration directive [#36868](https://github.com/gatsbyjs/gatsby/issues/36868) ([7f1b57c](https://github.com/gatsbyjs/gatsby/commit/7f1b57c5a5849b3bc997957b3370c3119e79d279))
+- Partial hydration router integration [#36616](https://github.com/gatsbyjs/gatsby/issues/36616) ([2aa8325](https://github.com/gatsbyjs/gatsby/commit/2aa83257b0ece5c08c40e46c98e2565d68fbaa29))
+
+#### Bug Fixes
+
+- Set trailingSlash default to "always" [#36798](https://github.com/gatsbyjs/gatsby/issues/36798) ([c10bf51](https://github.com/gatsbyjs/gatsby/commit/c10bf51125f6c601902d62f5336b32a1a4c05044))
+
+#### Chores
+
+- Correct type export [#36968](https://github.com/gatsbyjs/gatsby/issues/36968) ([6a53861](https://github.com/gatsbyjs/gatsby/commit/6a53861062610a94b01cf9cfb77e0a453ae9b3bd))
+- Export Link as named export [#36888](https://github.com/gatsbyjs/gatsby/issues/36888) ([5a88dbb](https://github.com/gatsbyjs/gatsby/commit/5a88dbbd170a33b2d8dbae40debe8278537c962a))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+### [4.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.24.1/packages/gatsby-link) (2022-10-10)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.24.0/packages/gatsby-link) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Bug Fixes
+
+- Correct handling of trailingSlash & pathPrefix fix [#36542](https://github.com/gatsbyjs/gatsby/issues/36542) ([85b1319](https://github.com/gatsbyjs/gatsby/commit/85b1319bf7494f679b7d27707ba9e8bb819a9058))
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.23.0/packages/gatsby-link) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Features
+
+- Client export directive [#36470](https://github.com/gatsbyjs/gatsby/issues/36470) ([320efb7](https://github.com/gatsbyjs/gatsby/commit/320efb77079f7adf4c89b885a7f34e4cc3951906))
+
+#### Chores
+
+- update dependency microbundle to ^0.15.1 for gatsby-link [#36512](https://github.com/gatsbyjs/gatsby/issues/36512) ([0e56ad6](https://github.com/gatsbyjs/gatsby/commit/0e56ad6a82125ba0458eb30b0fb58b65fc47e215))
+
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.22.0/packages/gatsby-link) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.21.0/packages/gatsby-link) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Correctly export default for CJS [#36312](https://github.com/gatsbyjs/gatsby/issues/36312) ([abb0baa](https://github.com/gatsbyjs/gatsby/commit/abb0baac94dee30043d669ac39a88a830784603b))
+
+#### Chores
+
+- update dependency del-cli to v5 for gatsby-link [#36287](https://github.com/gatsbyjs/gatsby/issues/36287) ([272b419](https://github.com/gatsbyjs/gatsby/commit/272b419cd85926c4d820f4d37a986d9b1c2326bf))
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.20.0/packages/gatsby-link) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- Update resolve import resolve [#36229](https://github.com/gatsbyjs/gatsby/issues/36229) ([b125296](https://github.com/gatsbyjs/gatsby/commit/b125296961f21f6cf94568125a9f894b5ff68334))
+- Publish types [#36199](https://github.com/gatsbyjs/gatsby/issues/36199) ([6d6f034](https://github.com/gatsbyjs/gatsby/commit/6d6f03482482f87b13193855d11bf3d85d58cdb4))
+
+### [4.19.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.19.1/packages/gatsby-link) (2022-07-21)
+
+#### Bug Fixes
+
+- Publish types [#36199](https://github.com/gatsbyjs/gatsby/issues/36199) [#36200](https://github.com/gatsbyjs/gatsby/issues/36200) ([c4adb3e](https://github.com/gatsbyjs/gatsby/commit/c4adb3e7da572dca2296268db80e40d94c466b88))
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.19.0/packages/gatsby-link) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Publish some packages as ESM & CJS [#36012](https://github.com/gatsbyjs/gatsby/issues/36012) ([5bd3063](https://github.com/gatsbyjs/gatsby/commit/5bd3063a1e72c6f98447bfac2bf767cca781330b))
+
+### [4.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.18.1/packages/gatsby-link) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.18.0/packages/gatsby-link) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- use proper babelrc configs for compiling packages [#35948](https://github.com/gatsbyjs/gatsby/issues/35948) ([384e801](https://github.com/gatsbyjs/gatsby/commit/384e8019152ad9bfa221e3e8b6da54675c93f293))
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.17.0/packages/gatsby-link) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.16.0/packages/gatsby-link) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.15.0/packages/gatsby-link) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-link
+
+### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.14.1/packages/gatsby-link) (2022-05-16)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.14.0/packages/gatsby-link) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency prop-types to ^15.8.1 for gatsby-link [#35291](https://github.com/gatsbyjs/gatsby/issues/35291) ([bf854ca](https://github.com/gatsbyjs/gatsby/commit/bf854ca65f6b1c82878796f61a51b99e73c5cad3))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.13.0/packages/gatsby-link) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- modify relative links based on trailing slash option [#35444](https://github.com/gatsbyjs/gatsby/issues/35444) ([e30be3e](https://github.com/gatsbyjs/gatsby/commit/e30be3ebc1dedd75222a9b228043109d8c68c186))
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.12.1/packages/gatsby-link) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.12.0/packages/gatsby-link) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-link
+
+### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.11.1/packages/gatsby-link) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.11.0/packages/gatsby-link) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- compatibility with react rc 2 [#35108](https://github.com/gatsbyjs/gatsby/issues/35108) ([0c61265](https://github.com/gatsbyjs/gatsby/commit/0c6126574d203c0e6fef173b76859cdcab2f13aa))
+
+#### Refactoring
+
+- replace deprecated String.prototype.substr() [#35205](https://github.com/gatsbyjs/gatsby/issues/35205) ([21f7c65](https://github.com/gatsbyjs/gatsby/commit/21f7c654da647a949c83efb2e17b473eab4db3ed))
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+### [4.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.10.1/packages/gatsby-link) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.10.0/packages/gatsby-link) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-link
+
+### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.9.1/packages/gatsby-link) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.9.0/packages/gatsby-link) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.8.2/packages/gatsby-link) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-link
+
+### [4.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.8.1/packages/gatsby-link) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.8.0/packages/gatsby-link) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Bug Fixes
+
+- trailing slash undefined check for prod env [#34765](https://github.com/gatsbyjs/gatsby/issues/34765) ([d3f2f5e](https://github.com/gatsbyjs/gatsby/commit/d3f2f5e0766613b5cdd10b19712702aa1712a9e1))
+
+### [4.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.7.1/packages/gatsby-link) (2022-02-08)
+
+#### Bug Fixes
+
+- trailing slash undefined check for prod env [#34765](https://github.com/gatsbyjs/gatsby/issues/34765) [#34766](https://github.com/gatsbyjs/gatsby/issues/34766) ([07dccad](https://github.com/gatsbyjs/gatsby/commit/07dccadbe4df09e70003d9d3113d6c9fcc3dcf48))
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.7.0/packages/gatsby-link) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
+
+#### Bug Fixes
+
+- update dependency @types/reach\_\_router to ^1.3.10 for gatsby-link [#34359](https://github.com/gatsbyjs/gatsby/issues/34359) ([923c881](https://github.com/gatsbyjs/gatsby/commit/923c88152a2c92f5bb32b47ff9fb4d7ceaafef64))
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.6.0/packages/gatsby-link) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.5.0/packages/gatsby-link) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.4.0/packages/gatsby-link) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-link
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.3.0/packages/gatsby-link) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

@@ -26,18 +26,14 @@ const nodeProxy = createProxyHandler({
   onGet(key, value) {
     if (key === `internal`) {
       return memoizedProxy(value, nodeInternalProxy)
-    } else if (
-      key === `__gatsby_resolved` ||
-      key === `fields` ||
-      key === `children`
-    ) {
+    } else if (key === `fields` || key === `children`) {
       // all allowed in here
       return value
     }
     return undefined
   },
   onSet(target, key, value) {
-    if (key === `__gatsby_resolved` || key === `fields` || key === `children`) {
+    if (key === `fields` || key === `children`) {
       target[key] = value
       return true
     }

@@ -4,6 +4,7 @@ import { Link } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import InstrumentPage from "../utils/instrument-page"
+import Seo from "../components/seo"
 
 const IndexPage = ({ pageContext }) => (
   <Layout>
@@ -62,6 +63,11 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
+        <Link to="/한글-URL" data-testid="dsg-page-with-unicode-path">
+          Go to DSG page with unicode path
+        </Link>
+      </li>
+      <li>
         <Link to="/foo/@something/bar" data-testid="page-with-encodable-path">
           Go to page with unicode path
         </Link>
@@ -93,13 +99,13 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
-        <Link to="/redirect-two#anchor" data-testid="redirect-two-anchor">
+        <Link to="/redirect-two/#anchor" data-testid="redirect-two-anchor">
           Go to redirect with hash
         </Link>
       </li>
       <li>
         <Link
-          to="/redirect-two?query_param=hello"
+          to="/redirect-two/?query_param=hello"
           data-testid="redirect-two-search"
         >
           Go to redirect with query param
@@ -107,14 +113,19 @@ const IndexPage = ({ pageContext }) => (
       </li>
       <li>
         <Link
-          to="/redirect-two?query_param=hello#anchor"
+          to="/redirect-two/?query_param=hello#anchor"
           data-testid="redirect-two-search-anchor"
         >
           Go to redirect with query param and hash
         </Link>
       </li>
     </ul>
+    <Link to="/gatsby-script-off-main-thread/" data-testid="off-main-thread">
+      Go to off-main-thread scripts page
+    </Link>
   </Layout>
 )
+
+export const Head = () => <Seo />
 
 export default InstrumentPage(IndexPage)

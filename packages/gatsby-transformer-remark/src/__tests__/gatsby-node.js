@@ -9,30 +9,38 @@ describe(`gatsby-node.js`, () => {
       `"plugins" must be an array`,
     ]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      footnotes: `this should be a boolean`,
-      gfm: `this should be a boolean`,
-      plugins: `this should be an array`,
-    })
+    const { errors, isValid } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        footnotes: `this should be a boolean`,
+        gfm: `this should be a boolean`,
+        plugins: `this should be an array`,
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate the schema`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      footnotes: false,
-      gfm: false,
-      plugins: [
-        `gatsby-remark-copy-linked-files`,
-        {
-          resolve: `gatsby-remark-images`,
-          options: {
-            maxWidth: 756,
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        footnotes: false,
+        gfm: false,
+        plugins: [
+          `gatsby-remark-copy-linked-files`,
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 756,
+            },
           },
-        },
-      ],
-    })
+        ],
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

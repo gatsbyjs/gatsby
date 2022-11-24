@@ -28,7 +28,7 @@ This will output a table indicating which packages have new versions available a
 
 ```shell
 Package                            Current   Wanted   Latest  Location
-gatsby                             2.15.13  2.15.13  2.15.20
+gatsby                             5.0.0     5.0.0    5.1.0
 ```
 
 ## Configure your dependencies for upgrades
@@ -39,7 +39,7 @@ If you only want to update **for patch releases**, you can add a tilde (`~`) bef
 
 ```json:title=package.json
 "dependencies"{
-  "gatsby": "~2.15.13",
+  "gatsby": "~5.0.0",
 }
 ```
 
@@ -47,7 +47,7 @@ If you only want to update **for patch releases**, you can add a tilde (`~`) bef
 
 ```json:title=package.json
 "dependencies"{
-  "gatsby": "^2.15.13",
+  "gatsby": "^5.0.0",
 }
 ```
 
@@ -107,14 +107,6 @@ npm run upgrade-interactive
 
 ## Troubleshooting
 
-Aside from some specific cases, such as [Gatsby's dropping of support for Node 6](/blog/2019-06-18-dropping-support-for-node-6/), upgrading for minor or patch releases should not require you to make changes to your code. It is recommended to run your suite of tests (in case you have one) after upgrading Gatsby or its dependencies.
+Upgrading for minor or patch releases should not require you to make changes to your code. It is recommended to run your suite of tests (in case you have one) after upgrading Gatsby or its dependencies.
 
 In case you get stuck in dependencies conflicts, you can use the [npm-force-resolutions package](https://www.npmjs.com/package/npm-force-resolutions?activeTab=readme) on npm.
-
-## Related content
-
-Check out these related guides for major upgrades of Gatsby:
-
-- [Migrating from v2 to v3](/docs/reference/release-notes/migrating-from-v2-to-v3/)
-- [Migrating from v1 to v2](/docs/reference/release-notes/migrating-from-v1-to-v2/)
-- [Migrating from v0 to v1](/docs/reference/release-notes/migrating-from-v0-to-v1/)

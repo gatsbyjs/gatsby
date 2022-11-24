@@ -1,5 +1,5 @@
 import { ActionsUnion, IGatsbyNode } from "../../../redux/types"
-import { Database } from "lmdb-store"
+import type { Database } from "lmdb"
 
 type NodeId = string
 

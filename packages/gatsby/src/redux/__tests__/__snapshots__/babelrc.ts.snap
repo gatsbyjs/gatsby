@@ -153,20 +153,26 @@ Array [
 exports[`Babelrc actions/reducer allows merging config items 2`] = `
 Array [
   Object {
+    "dirname": "hi",
     "file": Object {
+      "request": "hello",
       "resolved": "hi",
     },
     "options": Object {
       "wat": 1,
     },
+    "value": [Function],
   },
   Object {
+    "dirname": "hi2",
     "file": Object {
+      "request": "hello2",
       "resolved": "hi2",
     },
     "options": Object {
       "wat": 2,
     },
+    "value": [Function],
   },
 ]
 `;

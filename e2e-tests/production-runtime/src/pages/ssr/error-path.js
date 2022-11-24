@@ -8,6 +8,6 @@ export default function ErrorPath({ serverData }) {
   )
 }
 
-export function getServerData() {
+export async function getServerData() {
   throw new Error(`Some runtime error`)
 }

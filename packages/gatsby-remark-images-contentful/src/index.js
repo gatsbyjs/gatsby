@@ -1,5 +1,6 @@
 const { selectAll } = require(`unist-util-select`)
-const sharp = require(`./safe-sharp`)
+// TODO(v5): use gatsby/sharp
+const getSharpInstance = require(`./safe-sharp`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
@@ -62,6 +63,7 @@ module.exports = async (
     if (cachedRawHTML) {
       return cachedRawHTML
     }
+    const sharp = await getSharpInstance()
     const metaReader = sharp()
 
     // @todo to increase reliablility, this should use the asset downloading function from gatsby-source-contentful
@@ -86,6 +88,7 @@ module.exports = async (
     try {
       metadata = await metaReader.metadata()
     } catch (error) {
+      console.log(error)
       reporter.panic(
         `The image "${node.url}" (with alt text: "${node.alt}") doesn't appear to be a supported image format.`,
         error

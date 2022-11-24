@@ -32,6 +32,9 @@ export async function updateInternalSiteMetadata(
   )
 }
 
+// TODO(v5): Remove again - Necessary because of renaming in https://github.com/gatsbyjs/gatsby/pull/34094
+export { updateInternalSiteMetadata as updateSiteMetadata }
+
 /**
  * Does a string replace by searching for beginning of "siteMetadata"
  * Then it adds the name + value as the next key of that object
@@ -41,7 +44,7 @@ function addField(
   { name, value }: { name: string; value: string }
 ): string {
   const FIND = `  siteMetadata: {\n`
-  const REPLACE = `  siteMetadata: {\n      ${name}: \`${value}\`,\n`
+  const REPLACE = `  siteMetadata: {\n    ${name}: \`${value}\`,\n`
   const modifiedConfig = src.replace(FIND, REPLACE)
   return modifiedConfig
 }

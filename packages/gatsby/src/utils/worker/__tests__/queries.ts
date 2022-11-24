@@ -10,17 +10,15 @@ import {
   emitter,
   loadPartialStateFromDisk,
 } from "../../../redux"
-import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
-import {
-  createTestWorker,
-  describeWhenLMDB,
-  GatsbyTestWorkerPool,
-} from "./test-helpers"
+import { loadConfig } from "../../../bootstrap/load-config"
+import { loadPlugins } from "../../../bootstrap/load-plugins"
+import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
 import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
 import { runQueriesInWorkersQueue } from "../pool"
 import { readPageQueryResult } from "../../page-data"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -49,6 +47,7 @@ jest.mock(`gatsby-telemetry`, () => {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
   }
 })
 
@@ -108,14 +107,16 @@ const pageQueryIds = [dummyPageFoo, dummyPageBar, ...dummyPages]
 const queryIdsSmall: IGroupedQueryIds = {
   pageQueryIds: [dummyPageFoo, dummyPageBar],
   staticQueryIds: [dummyStaticQuery.id],
+  sliceQueryIds: [],
 }
 
 const queryIdsBig: IGroupedQueryIds = {
   pageQueryIds,
   staticQueryIds: [dummyStaticQuery.id],
+  sliceQueryIds: [],
 }
 
-describeWhenLMDB(`worker (queries)`, () => {
+describe(`worker (queries)`, () => {
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     const fileDir = path.join(process.cwd(), `.cache/worker`)
@@ -124,7 +125,11 @@ describeWhenLMDB(`worker (queries)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
-    await loadConfigAndPlugins({ siteDirectory })
+    await compileGatsbyFiles(siteDirectory)
+    const config = await loadConfig({
+      siteDirectory,
+    })
+    await loadPlugins(config, siteDirectory)
     await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
     await getDataStore().ready()
@@ -179,9 +184,9 @@ describeWhenLMDB(`worker (queries)`, () => {
     await Promise.all(worker.all.buildSchema())
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
     for (const watcher of mockWatchersToClose) {
@@ -196,7 +201,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueriesDependencies())
     // Pass "1" as workerId as the test only have one worker
-    const result = loadPartialStateFromDisk([`queries`], `1`)
+    const result = loadPartialStateFromDisk([`queries`, `telemetry`], `1`)
 
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -228,6 +233,9 @@ describeWhenLMDB(`worker (queries)`, () => {
             },
           },
         },
+        "telemetry": Object {
+          "gatsbyImageSourceUrls": Set {},
+        },
       }
     `)
   })
@@ -257,12 +265,8 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
-    const stateFromWorker = await worker.single.getState()
 
-    const pageQueryResult = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/foo`
-    )
+    const pageQueryResult = await readPageQueryResult(`/foo`)
 
     expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
@@ -277,12 +281,8 @@ describeWhenLMDB(`worker (queries)`, () => {
     await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueriesDependencies())
-    const stateFromWorker = await worker.single.getState()
 
-    const pageQueryResult = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/bar`
-    )
+    const pageQueryResult = await readPageQueryResult(`/bar`)
 
     expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
@@ -299,13 +299,9 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     // @ts-ignore - worker is defined
     await runQueriesInWorkersQueue(worker, queryIdsBig, { chunkSize: 10 })
-    const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a
-    const pageQueryResultA = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/a`
-    )
+    const pageQueryResultA = await readPageQueryResult(`/a`)
 
     expect(JSON.parse(pageQueryResultA).data).toStrictEqual({
       nodeTypeOne: {
@@ -313,10 +309,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       },
     })
 
-    const pageQueryResultZ = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/z`
-    )
+    const pageQueryResultZ = await readPageQueryResult(`/z`)
 
     expect(JSON.parse(pageQueryResultZ).data).toStrictEqual({
       nodeTypeOne: {
@@ -327,21 +320,25 @@ describeWhenLMDB(`worker (queries)`, () => {
     expect(spy).toHaveBeenNthCalledWith(1, {
       pageQueryIds: [],
       staticQueryIds: expect.toBeArrayOfSize(1),
+      sliceQueryIds: [],
     })
 
     expect(spy).toHaveBeenNthCalledWith(2, {
       pageQueryIds: expect.toBeArrayOfSize(10),
       staticQueryIds: [],
+      sliceQueryIds: [],
     })
 
     expect(spy).toHaveBeenNthCalledWith(3, {
       pageQueryIds: expect.toBeArrayOfSize(10),
       staticQueryIds: [],
+      sliceQueryIds: [],
     })
 
     expect(spy).toHaveBeenNthCalledWith(4, {
       pageQueryIds: expect.toBeArrayOfSize(8),
       staticQueryIds: [],
+      sliceQueryIds: [],
     })
 
     spy.mockRestore()
@@ -353,7 +350,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     const expectedActionShapes = {
       QUERY_START: [`componentPath`, `isPage`, `path`],
-      PAGE_QUERY_RUN: [`componentPath`, `isPage`, `path`, `resultHash`],
+      PAGE_QUERY_RUN: [`componentPath`, `queryType`, `path`, `resultHash`],
       ADD_PENDING_PAGE_DATA_WRITE: [`path`],
     }
     expect(result).toBeArrayOfSize(8)
@@ -384,7 +381,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       {
         payload: {
           componentPath: `/static-query-component.js`,
-          isPage: false,
+          queryType: `static`,
           path: `sq--q1`,
           queryHash: `q1-hash`,
           resultHash: `Dr5hgCDB+R0S9oRBWeZYj3lB7VI=`,
@@ -416,7 +413,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       {
         payload: {
           componentPath: `/foo.js`,
-          isPage: true,
+          queryType: `page`,
           path: `/foo`,
           resultHash: `8dW7PoqwZNk/0U8LO6kTj1qBCwU=`,
         },
@@ -431,7 +428,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       {
         payload: {
           componentPath: `/bar.js`,
-          isPage: true,
+          queryType: `page`,
           path: `/bar`,
           resultHash: `iKmhf9XgbsfK7qJw0tw95pmGwJM=`,
         },

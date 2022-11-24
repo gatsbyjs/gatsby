@@ -50,7 +50,7 @@ A storage of information locally that might be used again, so computations and l
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
 
-Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
+Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/code-contributions#setting-up-your-local-dev-environment), for those who contribute to the Gatsby project.
 
 ### Client-side
 
@@ -80,7 +80,7 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 ### Config
 
-The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
+The configuration file, `gatsby-config.js`/`gatsby-config.ts` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
 
 ### [Content Delivery Network](/docs/glossary/content-delivery-network/)
 
@@ -111,6 +111,10 @@ Decoupling describes the separation of different concerns. With [Gatsby](#gatsby
 ### [Decoupled Drupal](/docs/glossary/decoupled-drupal/)
 
 Decoupling refers to the practice of using Drupal as a [headless CMS](#headless-cms). A decoupled Drupal instance functions as a content API that returns JSON for your [frontend](#frontend) to consume.
+
+### Deferred Static Generation (DSG)
+
+[Deferred Static Generation (DSG)](/docs/how-to/rendering-options/using-deferred-static-generation/) is one of [Gatsby’s rendering options](/docs/conceptual/rendering-options/) and allows you to defer non-critical page generation to user request, speeding up build times. Instead of generating every page at build time, you can decide to build certain pages up front and others only when a user accesses the page at run time.
 
 ### Deploy
 
@@ -182,7 +186,7 @@ A hosting provider keeps a copy of your website or app and makes it accessible t
 
 A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window. Gatsby uses [Fast Refresh](/docs/reference/local-development/fast-refresh/).
 
-### [Hydration](/docs/glossary/hydration/)
+### [Hydration](/docs/conceptual/react-hydration/)
 
 Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
 
@@ -256,6 +260,10 @@ An [HTML](#html) page.
 
 This also often refers to [components](#component) that live in `/src/pages/` and are converted to pages by [Gatsby](#gatsby), as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
 
+### Partial Hydration
+
+Gatsby's Partial Hydration is powered by [React server components](#react-server-components) and gives you the ability to mark specific parts of your site as interactive while the rest of your site is static by default. Interactivity can come from things like click events, effects, and state changes. With Partial Hydration the JavaScript only for these portions is downloaded, making your websites ship less JavaScript to your users.
+
 ### Plugin
 
 Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugin) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
@@ -288,9 +296,17 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
+### React Server Components
+
+Generally speaking React server components allow developers to build apps that span the server and client. Server Components can dynamically choose which client components to render, allowing clients to download just the minimal amount of code necessary to render a page. Gatsby leverages this capability for its [Partial Hydration](#partial-hydration) feature. [Watch the talk "Data Fetching with Server Components"](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) or read the [Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to learn more.
+
 ### Remark
 
 A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) or [React](#react) code.
+
+### Run Script
+
+An executable command defined in the `scripts` property of your `package.json` file. See [npm](https://docs.npmjs.com/cli/v8/using-npm/scripts) and [yarn](https://classic.yarnpkg.com/lang/en/docs/cli/run/) run script documentation for more information.
 
 ### Runtime
 
@@ -380,6 +396,6 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ### [Yarn](/docs/glossary/yarn/)
 
-A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
+A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/code-contributions#setting-up-your-local-dev-environment).
 
 ## Z

@@ -19,7 +19,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   const nodes = getNodes()
 
   const query = async (query: string): Promise<void> => {
-    const result = await graphql(schema, query, {}, {}, {})
+    const result = await graphql({
+      schema,
+      source: query,
+      rootValue: {},
+      contextValue: {},
+    })
     console.log(`query result: ${JSON.stringify(result)}`)
   }
 

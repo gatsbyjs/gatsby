@@ -1,4 +1,4 @@
-import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 import { JSXOpeningElement } from "@babel/types"
 import { NodePath } from "@babel/core"
 import { getAttributeValues } from "babel-jsx-utils"
@@ -23,6 +23,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `sizes`,
   `backgroundColor`,
   `breakpoints`,
+  `outputPixelDensities`,
 ])
 
 export function normalizeProps(
@@ -59,5 +60,5 @@ export function evaluateImageAttributes(
 }
 
 export function hashOptions(options: unknown): string {
-  return `${murmurhash(JSON.stringify(options))}`
+  return `${murmurhash(JSON.stringify(options), 0)}`
 }

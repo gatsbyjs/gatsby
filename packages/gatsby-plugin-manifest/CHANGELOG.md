@@ -3,6 +3,222 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@5.1.0/packages/gatsby-plugin-manifest) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@5.0.0/packages/gatsby-plugin-manifest) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.24.0/packages/gatsby-plugin-manifest) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.23.1/packages/gatsby-plugin-manifest) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.23.0/packages/gatsby-plugin-manifest) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.22.0/packages/gatsby-plugin-manifest) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.21.0/packages/gatsby-plugin-manifest) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.20.0/packages/gatsby-plugin-manifest) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.19.0/packages/gatsby-plugin-manifest) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.18.1/packages/gatsby-plugin-manifest) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.18.0/packages/gatsby-plugin-manifest) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.17.0/packages/gatsby-plugin-manifest) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.16.0/packages/gatsby-plugin-manifest) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.15.1/packages/gatsby-plugin-manifest) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.15.0/packages/gatsby-plugin-manifest) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.14.0/packages/gatsby-plugin-manifest) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency semver to ^7.3.7 [#35543](https://github.com/gatsbyjs/gatsby/issues/35543) ([f593e00](https://github.com/gatsbyjs/gatsby/commit/f593e005e4561b423a297e967205d833451a2f55))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.13.0/packages/gatsby-plugin-manifest) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.12.1/packages/gatsby-plugin-manifest) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.12.0/packages/gatsby-plugin-manifest) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Chores
+
+- update sharp [#35303](https://github.com/gatsbyjs/gatsby/issues/35303) ([d267bb3](https://github.com/gatsbyjs/gatsby/commit/d267bb3d7547d08cfaabfbfc93199c785c50aec3))
+
+### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.11.1/packages/gatsby-plugin-manifest) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.11.0/packages/gatsby-plugin-manifest) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.10.2/packages/gatsby-plugin-manifest) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.10.1/packages/gatsby-plugin-manifest) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.10.0/packages/gatsby-plugin-manifest) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- add support for image-cdn [#34825](https://github.com/gatsbyjs/gatsby/issues/34825) ([29b236b](https://github.com/gatsbyjs/gatsby/commit/29b236b7f2212d062a65d34781a612d715d936ef))
+
+### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.9.1/packages/gatsby-plugin-manifest) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.9.0/packages/gatsby-plugin-manifest) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.8.2/packages/gatsby-plugin-manifest) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.8.1/packages/gatsby-plugin-manifest) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.8.0/packages/gatsby-plugin-manifest) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Bug Fixes
+
+- update dependency sharp to ^0.30.1 [#34755](https://github.com/gatsbyjs/gatsby/issues/34755) ([326a483](https://github.com/gatsbyjs/gatsby/commit/326a483bc01c5a3e433e3a82fd52c92a9f6467d5))
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.7.0/packages/gatsby-plugin-manifest) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.6.0/packages/gatsby-plugin-manifest) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Features
+
+- create more resilient wrapper around sharp [#34339](https://github.com/gatsbyjs/gatsby/issues/34339) ([a3fa646](https://github.com/gatsbyjs/gatsby/commit/a3fa646eb6b51004ef9e85a32f7be1cf2d0cc2db))
+
+#### Bug Fixes
+
+- don't throw on warnings in `pluginOptionsSchema` [#34182](https://github.com/gatsbyjs/gatsby/issues/34182) ([252f50d](https://github.com/gatsbyjs/gatsby/commit/252f50d0f282bee4c7e10065682bea52a603aa0c))
+- generate icons sequentially [#34331](https://github.com/gatsbyjs/gatsby/issues/34331) ([024d298](https://github.com/gatsbyjs/gatsby/commit/024d298e9d38386327dd44744ce877368a3261c6))
+
+### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.5.2/packages/gatsby-plugin-manifest) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.5.1/packages/gatsby-plugin-manifest) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.5.0/packages/gatsby-plugin-manifest) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.4.0/packages/gatsby-plugin-manifest) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- consider path prefix when getting localized manifest fix [#34174](https://github.com/gatsbyjs/gatsby/issues/34174) ([190b7b8](https://github.com/gatsbyjs/gatsby/commit/190b7b8f51db8e370f253b035add9dfaa526d81a))
+
+#### Chores
+
+- update sharp [#34120](https://github.com/gatsbyjs/gatsby/issues/34120) ([df36406](https://github.com/gatsbyjs/gatsby/commit/df3640679b5e161c4fd285b87ed32bb1224928b8))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.3.0/packages/gatsby-plugin-manifest) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

@@ -33,16 +33,15 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
     createNodeId,
     store,
     cache,
-    getNodesByType,
     reporter,
     assetDownloadWorkers,
     getNode,
+    assetNodes,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
 
-  const assetNodes = getNodesByType(`ContentfulAsset`)
   const bar = reporter.createProgress(
     `Downloading Contentful Assets`,
     assetNodes.length
@@ -79,11 +78,9 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
       if (!fileNodeID) {
         const fileNode = await createRemoteFileNode({
           url,
-          store,
           cache,
           createNode,
           createNodeId,
-          reporter,
         })
 
         if (fileNode) {

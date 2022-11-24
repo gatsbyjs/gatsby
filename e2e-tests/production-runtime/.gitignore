@@ -10,3 +10,8 @@ yarn-error.log
 # Cypress output
 cypress/videos/
 cypress/screenshots/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/

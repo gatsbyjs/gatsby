@@ -274,9 +274,9 @@ export const pageQuery = graphql`
     foo: file(relativePath: { regex: "/foo.jpg/" }) {
       childImageSharp {
 -        sizes(maxWidth: 700) {
--          ...GatsbyImageSharpSizes_tracedSVG
+-          ...GatsbyImageSharpSizes
 +        fluid(maxWidth: 700) {
-+          ...GatsbyImageSharpFluid_tracedSVG
++          ...GatsbyImageSharpFluid
         }
       }
     }
@@ -493,7 +493,7 @@ If you're using any other process properties, you want to polyfill process.
 1. Install `process` library - `npm install process`
 2. Configure webpack to use the process polyfill.
 
-```diff:title=gatby-node.js
+```diff:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
   if (stage === 'build-javascript' || stage === 'develop') {
     actions.setWebpackConfig({
@@ -755,8 +755,8 @@ exports.sourceNodes = ({ actions, getNodesByType }) => {
 In case you only have an ID at hand (e.g. getting it from cache or as `__NODE`), you can use the `getNode()` API:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
-  const { touchNode, getNode } = actions
+exports.sourceNodes = async ({ actions, getNode, getNodesByType, cache }) => {
+  const { touchNode } = actions
   const myNodeId = await cache.get("some-key")
 
   touchNode(getNode(myNodeId))
@@ -938,3 +938,74 @@ Gatsby will continue to work. Please track the [upstream issue](https://github.c
 Workspaces and their hoisting of dependencies can cause you troubles if you incrementally want to update a package. For example, if you use `gatsby-plugin-emotion` in multiple packages but only update its version in one, you might end up with multiple versions inside your project. Run `yarn why package-name` (in this example `yarn why gatsby-plugin-emotion`) to check if different versions are installed.
 
 We recommend updating all dependencies at once and re-checking it with `yarn why package-name`. You should only see one version found now.
+
+### Legacy Browser (IE 11 Polyfill)
+
+If you plan on targeting IE 11, you might run into an error like this:
+
+```shell
+SCRIPT438: Object doesn't support property or method 'setPrototypeOf'
+```
+
+To fix this, first create a polyfill for `Object.setPrototypeOf()` in a file called `setPrototypeOf.js` at the root of the site:
+
+```js:title=setPrototypeOf.js
+const setPrototypeOf = (function(Object, magic) {
+    'use strict';
+    var set;
+    function checkArgs(O, proto) {
+        // React calls Object.setPrototypeOf with function type, exit
+        if (typeof O === 'function') { return; }
+        if (typeof O !== 'object' || O === null) {
+            throw new TypeError('can not set prototype on a non-object');
+        }
+    }
+    function setPrototypeOf(O, proto) {
+        checkArgs(O, proto);
+        set.call(O, proto);
+        return O;
+    }
+    try {
+        // this works already in Firefox and Safari
+        set = Object.getOwnPropertyDescriptor(Object.prototype, magic).set;
+        set.call({}, null);
+    } catch (o_O) {
+        set = function(proto) {
+            this[magic] = proto;
+        };
+        setPrototypeOf.polyfill = setPrototypeOf(
+            setPrototypeOf({}, null),
+            Object.prototype
+        ) instanceof Object;
+    }
+    return setPrototypeOf;
+}(Object, '__proto__'))
+
+export { setPrototypeOf }
+```
+
+Then create a file called `polyfills.js`, where you can add multiple polyfills (custom or imported):
+
+```js:title=polyfills.js
+import { setPrototypeOf } from "./setPrototypeOf"
+
+// Polyfills
+Object.setPrototypeOf = setPrototypeOf
+```
+
+Then inject them into webpack using the `onCreateWebpackConfig` API in `gatsy-node.js` during stage `build-javascript`:
+
+```js:title=gatsby-node.js
+exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
+  if (stage === "build-javascript") {
+    const config = getConfig();
+    const app = typeof config.entry.app === 'string'
+      ? [config.entry.app]
+      : config.entry.app;
+    config.entry.app = ['./polyfills', ...app];
+    actions.replaceWebpackConfig(config);
+  }
+}
+```
+
+IE11 browser will now use this polyfill for `Object.setPrototypeOf()`.

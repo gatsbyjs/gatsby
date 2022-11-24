@@ -358,12 +358,6 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     dump(webhookBody)
   }
 
-  // in case there are preview callbacks from our last build
-  await invokeAndCleanupLeftoverPreviewCallbacks({
-    status: `GATSBY_PREVIEW_PROCESS_ERROR`,
-    context: `Starting sourcePreviews`,
-  })
-
   const wpGatsbyPreviewNodeManifestsAreSupported =
     await remoteSchemaSupportsFieldNameOnTypeName({
       typeName: `GatsbyPreviewData`,
@@ -445,4 +439,10 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
   }
 
   await Promise.all([queue.onEmpty(), queue.onIdle()])
+
+  // clean up leftover callbacks at the end to clean up anything we didn't catch elsewhere
+  await invokeAndCleanupLeftoverPreviewCallbacks({
+    status: `GATSBY_PREVIEW_PROCESS_ERROR`,
+    context: `Starting sourcePreviews`,
+  })
 }

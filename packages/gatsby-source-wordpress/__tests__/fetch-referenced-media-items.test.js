@@ -16,6 +16,7 @@ const fakeReporter = {
 
 const getNodeMock = jest.fn()
 
+const btoa = (input) => Buffer.from(input).toString(`base64`)
 
 describe(`fetch-referenced-media-items`, () => {
   beforeAll(() => {
@@ -113,19 +114,19 @@ const createApi = () => {
           data: {
             mediaItem__index_0: {
               id: 0,
-              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3`,
             },
             mediaItem__index_1: {
               id: 1,
-              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3`,
             },
           },
         })
 
       const result = await fetchMediaItemsBySourceUrl({
         mediaItemUrls: [
-          `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
-          `https://wordpress.host/wp-content/uploads/2018/05/file2.mp3`,
+          `https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3`,
+          `https://wordpress.host/wp-content/uploads/2018/05/single-page-file2.mp3`,
         ],
         selectionSet: `id\nmediaItemUrl`,
         createContentDigest,
