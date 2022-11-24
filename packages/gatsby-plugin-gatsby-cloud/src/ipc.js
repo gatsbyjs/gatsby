@@ -41,6 +41,18 @@ export function emitRoutes(routes) {
   })
 }
 
+export function emitTotalRenderedPageCount(totalRenderedPageCount) {
+  return sendOrPromise({
+    type: `LOG_ACTION`,
+    action: {
+      type: `CREATE_TOTAL_RENDERED_PAGE_COUNT`,
+      payload: {
+        totalRenderedPageCount,
+      },
+    },
+  })
+}
+
 export function emitRedirects(redirect) {
   return sendOrPromise({
     type: `LOG_ACTION`,

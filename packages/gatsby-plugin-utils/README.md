@@ -34,6 +34,7 @@ it(`should partially validate one value of a schema`, async () => {
       someOtherValue: Joi.string(),
       toVerify: Joi.boolean(),
     })
+  const expectedErrors = [`"toVerify" must be a boolean`]
 
   // Only the "toVerify" key of the schema will be verified in this test
   const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
@@ -41,7 +42,7 @@ it(`should partially validate one value of a schema`, async () => {
   })
 
   expect(isValid).toBe(false)
-  expect(errors).toEqual([`"toVerify" must be a boolean`])
+  expect(errors).toEqual(expectedErrors)
 })
 ```
 

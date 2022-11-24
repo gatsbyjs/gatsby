@@ -34,7 +34,7 @@ Add the plugin as a project dependency in your `package.json` file by running th
 npm install gatsby-plugin-sitemap
 ```
 
-Check the plugin's README file to see if there are any other dependencies that you also need to install. (For example, [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/) also requires `@mdx-js/mdx` and `@mdx-js/react` to be installed.)
+Check the plugin's README file to see if there are any other dependencies that you also need to install. (For example, [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/) also requires `@mdx-js/react` to be installed.)
 
 ### Step 2: Configure the plugin in your `gatsby-config.js` file
 
@@ -67,7 +67,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
-        output: `/my-cool-sitemap.xml`,
+        output: `/sitemap`,
       },
     },
     // highlight-end

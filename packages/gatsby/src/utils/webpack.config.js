@@ -10,7 +10,7 @@ const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
-const report = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
@@ -23,9 +23,10 @@ import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
-import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
-const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
+import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
+import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
+import { satisfiesSemvers } from "./flags"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -54,6 +55,10 @@ module.exports = async (
   const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 
   const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
+  const isPartialHydrationEnabled =
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -69,7 +74,7 @@ module.exports = async (
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
     } catch (err) {
       if (err.code !== `ENOENT`) {
-        report.error(
+        reporter.error(
           `There was a problem processing the .env file (${envFile})`,
           err
         )
@@ -96,8 +101,8 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
-    envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
-      !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    envObject.GATSBY_QUERY_ON_DEMAND = JSON.stringify(
+      !!process.env.GATSBY_QUERY_ON_DEMAND
     )
 
     if (stage === `develop`) {
@@ -117,23 +122,6 @@ module.exports = async (
         "process.env": `({})`,
       }
     )
-  }
-
-  function getHmrPath() {
-    // ref: https://github.com/gatsbyjs/gatsby/issues/8348
-    let hmrBasePath = `/`
-    const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
-
-    if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
-      const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.slice(-1) === `/`) {
-        hmrBasePath = pubPath
-      } else {
-        hmrBasePath = withTrailingSlash(pubPath)
-      }
-    }
-
-    return hmrBasePath + hmrSuffix
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
@@ -230,15 +218,13 @@ module.exports = async (
         __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
-        HAS_REACT_18: JSON.stringify(
-          major(require(`react-dom/package.json`).version) >= 18
-        ),
+        "global.hasPartialHydration": isPartialHydrationEnabled,
       }),
 
       plugins.virtualModules(),
       new BabelConfigItemsCacheInvalidatorPlugin(),
       process.env.GATSBY_WEBPACK_LOGGING?.split(`,`)?.includes(stage) &&
-        new WebpackLoggingPlugin(program.directory, report, program.verbose),
+        new WebpackLoggingPlugin(program.directory, reporter, program.verbose),
     ].filter(Boolean)
 
     switch (stage) {
@@ -249,7 +235,6 @@ module.exports = async (
             new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
-            plugins.eslintGraphqlSchemaReload(),
             new StaticQueryMapper(store),
           ])
           .filter(Boolean)
@@ -266,12 +251,10 @@ module.exports = async (
         }
 
         const isCustomEslint = hasLocalEslint(program.directory)
-        // get schema to pass to eslint config and program for directory
-        const { schema } = store.getState()
 
         // if no local eslint config, then add gatsby config
         if (!isCustomEslint) {
-          configPlugins.push(plugins.eslint(schema))
+          configPlugins.push(plugins.eslint())
         }
 
         // Enforce fast-refresh rules even with local eslint config
@@ -282,16 +265,29 @@ module.exports = async (
         break
       }
       case `build-javascript`: {
-        configPlugins = configPlugins.concat([
-          plugins.extractText({
-            filename: `[name].[contenthash].css`,
-            chunkFilename: `[name].[contenthash].css`,
-          }),
-          // Write out stats object mapping named dynamic imports (aka page
-          // components) to all their async chunks.
-          plugins.extractStats(),
-          new StaticQueryMapper(store),
-        ])
+        configPlugins = configPlugins
+          .concat([
+            plugins.extractText({
+              filename: `[name].[contenthash].css`,
+              chunkFilename: `[name].[contenthash].css`,
+            }),
+            // Write out stats object mapping named dynamic imports (aka page
+            // components) to all their async chunks.
+            plugins.extractStats(),
+            new StaticQueryMapper(store),
+            isPartialHydrationEnabled
+              ? new PartialHydrationPlugin(
+                  path.join(
+                    directory,
+                    `.cache`,
+                    `partial-hydration`,
+                    `manifest.json`
+                  ),
+                  reporter
+                )
+              : null,
+          ])
+          .filter(Boolean)
         break
       }
       case `develop-html`:
@@ -349,23 +345,23 @@ module.exports = async (
         resolve: {
           byDependency: {
             esm: {
-              fullySpecified: false
-            }
-          }
-        }
+              fullySpecified: false,
+            },
+          },
+        },
       },
       {
         test: /\.js$/i,
         descriptionData: {
-          type: `module`
+          type: `module`,
         },
         resolve: {
           byDependency: {
             esm: {
-              fullySpecified: false
-            }
-          }
-        }
+              fullySpecified: false,
+            },
+          },
+        },
       },
       rules.js({
         modulesThatUseGatsby,
@@ -375,19 +371,22 @@ module.exports = async (
       rules.images(),
       rules.media(),
       rules.miscAssets(),
+    ]
 
-      // This is a hack that exports one of @reach/router internals (BaseContext)
-      // to export list. We need it to reset basepath and baseuri context after
-      // Gatsby main router changes it, to keep v2 behaviour.
-      // We will need to most likely remove this for v3.
-      {
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      configRules.push({
         test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
-        use: [{
-          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
-        }],
-      }
-    ]
+        use: [
+          {
+            loader: require.resolve(
+              `./reach-router-add-basecontext-export-loader`
+            ),
+          },
+        ],
+      })
+    }
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
@@ -445,6 +444,15 @@ module.exports = async (
         break
     }
 
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    // Removes it from the client payload as it's not used there
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      configRules.push({
+        test: /react-server-dom-webpack/,
+        use: loaders.null(),
+      })
+    }
+
     return { rules: configRules }
   }
 
@@ -468,6 +476,7 @@ module.exports = async (
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
+        "react-server-dom-webpack": getPackageRoot(`react-server-dom-webpack`),
         "@pmmmwh/react-refresh-webpack-plugin": getPackageRoot(
           `@pmmmwh/react-refresh-webpack-plugin`
         ),
@@ -486,9 +495,16 @@ module.exports = async (
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      resolve.alias[`@reach/router`] = path.join(
-        getPackageRoot(`@gatsbyjs/reach-router`),
-        `es`
+      // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+      if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+        resolve.alias[`@reach/router`] = path.join(
+          getPackageRoot(`@gatsbyjs/reach-router`),
+          `es`
+        )
+      }
+
+      resolve.alias[`gatsby-core-utils/create-content-digest`] = directoryPath(
+        `.cache/create-content-digest-browser-shim`
       )
     }
 
@@ -549,7 +565,6 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
-    const [major, minor] = process.version.replace(`v`, ``).split(`.`)
     config.target = `node14.15`
   } else {
     config.target = [`web`, `es5`]
@@ -596,6 +611,8 @@ module.exports = async (
 
   if (stage === `build-html` || stage === `develop-html`) {
     config.optimization = {
+      // TODO fix our partial hydration manifest
+      mangleExports: !isPartialHydrationEnabled,
       splitChunks: {
         cacheGroups: {
           default: false,
@@ -660,7 +677,13 @@ module.exports = async (
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
-          test(module) {
+          test(module, { chunkGraph }) {
+            for (const chunk of chunkGraph.getModuleChunksIterable(module)) {
+              if (chunk.canBeInitial()) {
+                return false
+              }
+            }
+
             return !isCssModule(module)
           },
           name(module, chunks) {
@@ -701,6 +724,8 @@ module.exports = async (
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // TODO fix our partial hydration manifest
+      mangleExports: !isPartialHydrationEnabled,
       splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
@@ -723,13 +748,11 @@ module.exports = async (
   if (stage === `build-html` || stage === `develop-html`) {
     // externalize react, react-dom when develop-html or build-html(when not generating engines)
     const shouldMarkPackagesAsExternal =
-      stage === `develop-html` ||
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `develop-html` || !shouldGenerateEngines()
 
     // tracking = build-html (when not generating engines)
     const shouldTrackBuiltins =
-      stage === `build-html` &&
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `build-html` && !shouldGenerateEngines()
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets
@@ -840,8 +863,8 @@ module.exports = async (
   if (
     stage === `build-javascript` ||
     stage === `build-html` ||
-    (process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
-      (stage === `develop` || stage === `develop-html`))
+    stage === `develop` ||
+    stage === `develop-html`
   ) {
     const cacheLocation = path.join(
       program.directory,

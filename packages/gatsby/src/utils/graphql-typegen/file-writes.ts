@@ -31,7 +31,7 @@ export async function writeGraphQLConfig(
           endpoints: {
             default: {
               url: `${program.https ? `https://` : `http://`}${program.host}:${
-                program.proxyPort
+                program.port
               }/___graphql`,
             },
           },
@@ -70,9 +70,7 @@ export async function writeGraphQLSchema(
   schema: GraphQLSchema
 ): Promise<void> {
   try {
-    const schemaSDLString = printSchema(stabilizeSchema(schema), {
-      commentDescriptions: true,
-    })
+    const schemaSDLString = printSchema(stabilizeSchema(schema))
 
     await fs.outputFile(join(directory, OUTPUT_PATHS.schema), schemaSDLString)
     reporter.verbose(`Successfully created schema.graphql`)

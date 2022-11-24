@@ -108,8 +108,8 @@ const printDescription = (
   const lines = descriptionLines(description, 120 - indentation.length)
 
   const text = lines.join(`\n`)
-  const preferMultipleLines = text.length > 70
-  const blockString = printBlockString(text, ``, preferMultipleLines)
+  const isMultiline = text.length > 70
+  const blockString = printBlockString(text, { minimize: !isMultiline })
   const prefix = indentation && !firstInBlock ? `\n` + indentation : indentation
 
   return prefix + blockString.replace(/\n/g, `\n` + indentation) + `\n`

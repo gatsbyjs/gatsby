@@ -1,6 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql, Script } from "gatsby"
 import { scripts } from "../gatsby-script-scripts"
+import { ContextForSlicesProvider } from "./context-for-slices"
 
 const WrapRootElement = ({ element }) => (
   <StaticQuery
@@ -18,7 +19,7 @@ const WrapRootElement = ({ element }) => (
         siteMetadata: { title },
       },
     }) => (
-      <>
+      <ContextForSlicesProvider>
         {element}
         <Script src={scripts.jQuery} strategy="post-hydrate" />
         <Script src={scripts.popper} strategy="idle" />
@@ -29,7 +30,7 @@ const WrapRootElement = ({ element }) => (
             %TEST_HMR_IN_GATSBY_BROWSER%
           </div>
         </div>
-      </>
+      </ContextForSlicesProvider>
     )}
   />
 )

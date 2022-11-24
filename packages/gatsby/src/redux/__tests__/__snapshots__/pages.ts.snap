@@ -4,7 +4,7 @@ exports[`Add pages Fails if component path is missing 1`] = `"A component must b
 
 exports[`Add pages Fails if path is missing 1`] = `"The plugin \\"test\\" must set the page path when creating a page"`;
 
-exports[`Add pages Fails if the component path isn't absolute 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when create creating a page"`;
+exports[`Add pages Fails if the component path isn't absolute 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when creating a page"`;
 
 exports[`Add pages Fails if use a reserved field in the context object 1`] = `
 "The plugin \\"test\\" used reserved field names in the context object when creating a page:
@@ -60,6 +60,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "/hi/pizza/" => Object {
@@ -75,6 +76,7 @@ Map {
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -97,12 +99,14 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
     "name": "test",
   },
+  "slicesModified": false,
   "type": "CREATE_PAGE",
 }
 `;
@@ -122,6 +126,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -146,12 +151,14 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
     "name": "test",
   },
+  "slicesModified": false,
   "type": "CREATE_PAGE",
 }
 `;
@@ -173,6 +180,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -195,12 +203,14 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
     "name": "test",
   },
+  "slicesModified": false,
   "type": "CREATE_PAGE",
 }
 `;
@@ -220,6 +230,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -242,6 +253,7 @@ Map {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }

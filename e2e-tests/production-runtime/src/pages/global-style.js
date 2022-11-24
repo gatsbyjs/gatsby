@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import Layout from "../components/layout"
+import Seo from "../components/seo"
 
 const GlobalStyle = () => (
   <Layout>
@@ -26,4 +27,5 @@ const GlobalStyle = () => (
   </Layout>
 )
 
+export const Head = () => <Seo />
 export default GlobalStyle

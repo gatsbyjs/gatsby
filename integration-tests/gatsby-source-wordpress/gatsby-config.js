@@ -5,6 +5,7 @@ require(`dotenv`).config({
 console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
 const mediaItemTypeSettings = {
+  excludeFieldNames: [`template`],
   localFile: {
     excludeByMimeTypes: ["video/mp4"],
     /**

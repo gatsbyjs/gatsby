@@ -2,6 +2,7 @@ const fetch = require(`node-fetch`)
 const execa = require(`execa`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const { parse } = require(`node-html-parser`)
 
 function fetchUntil(url, filter, timeout = 1000) {
   return new Promise(resolve => {
@@ -30,7 +31,7 @@ describe(`SSR`, () => {
     }).then(res => res.text())
 
     expect(html).toMatchSnapshot()
-  })
+  }, 30000)
 
   test(`dev & build outputs match`, async () => {
     const childProcess = await execa(`yarn`, [`test-output`])
@@ -42,6 +43,28 @@ describe(`SSR`, () => {
       `testing these paths for differences between dev & prod outputs`
     )
   }, 180000)
+
+  test(`dev & build outputs have matching head elements from Head function export`, async () => {
+    const devSsrHtml = await fetch(
+      `http://localhost:8000/head-function-export`,
+      {
+        headers: {
+          "x-gatsby-wait-for-dev-ssr": `1`,
+        },
+      }
+    ).then(res => res.text())
+    const devSsrDom = parse(devSsrHtml)
+    const devSsrHead = devSsrDom.querySelector(`[data-testid=title]`)
+
+    const ssrHtml = await fs.readFile(
+      `${__dirname}/../public/head-function-export/index.html`,
+      `utf8`
+    )
+    const ssrDom = parse(ssrHtml)
+    const ssrHead = ssrDom.querySelector(`[data-testid=title]`)
+
+    expect(devSsrHead.textContent).toEqual(ssrHead.textContent)
+  })
 
   describe(`it generates an error page correctly`, () => {
     const badPages = [

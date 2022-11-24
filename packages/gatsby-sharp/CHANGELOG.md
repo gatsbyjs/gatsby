@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@1.1.0/packages/gatsby-sharp) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-sharp
+
+## [1.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@1.0.0/packages/gatsby-sharp) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [0.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.18.0/packages/gatsby-sharp) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Bug Fixes
+
+- fix bundling image cdn tools fix [#36534](https://github.com/gatsbyjs/gatsby/issues/36534) ([0ef331d](https://github.com/gatsbyjs/gatsby/commit/0ef331d30eab0731457b6607c9320e2818eb1677))
+
+## [0.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.17.0/packages/gatsby-sharp) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-sharp
+
+## [0.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.16.0/packages/gatsby-sharp) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-sharp
+
+## [0.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.15.0/packages/gatsby-sharp) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+
+## [0.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.14.0/packages/gatsby-sharp) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [0.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.13.0/packages/gatsby-sharp) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-sharp
+
+## [0.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.12.0/packages/gatsby-sharp) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- Support scoped packages in changelog generation [#35986](https://github.com/gatsbyjs/gatsby/issues/35986) ([9c1ecc1](https://github.com/gatsbyjs/gatsby/commit/9c1ecc148ee5a1c02030e21c0496db46d0adb487))
+
 ## [0.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.11.0/packages/gatsby-sharp) (2022-06-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)

@@ -27,7 +27,7 @@ npm install --save-dev jest-environment-jsdom
 Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
 ```js:title=setup-test-env.js
-import "@testing-library/jest-dom/extend-expect"
+import "@testing-library/jest-dom"
 ```
 
 This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.

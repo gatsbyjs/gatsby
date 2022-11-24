@@ -1,9 +1,13 @@
-/* global HAS_REACT_18 */
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { StaticQueryContext } from "gatsby"
+import { StaticQueryContext } from "./static-query"
+import {
+  SlicesMapContext,
+  SlicesContext,
+  SlicesResultsContext,
+} from "./slice/context"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -18,29 +22,20 @@ import {
   publicLoader,
   PageResourceStatus,
   getStaticQueryResults,
+  getSliceResults,
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
+import { reactDOMUtils } from "./react-dom-utils"
 
 const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
-let reactHydrate
-let reactRender
-if (HAS_REACT_18) {
-  const reactDomClient = require(`react-dom/client`)
-  reactRender = (Component, el) =>
-    reactDomClient.createRoot(el).render(Component)
-  reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
-} else {
-  const reactDomClient = require(`react-dom`)
-  reactRender = reactDomClient.render
-  reactHydrate = reactDomClient.hydrate
-}
+const { render, hydrate } = reactDOMUtils()
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -78,6 +73,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const DataContext = React.createContext({})
 
+  const slicesContext = {
+    renderEnvironment: `browser`,
+  }
+
   class GatsbyRoot extends React.Component {
     render() {
       const { children } = this.props
@@ -87,11 +86,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
                 const staticQueryResults = getStaticQueryResults()
+                const sliceResults = getSliceResults()
+
                 return (
                   <StaticQueryContext.Provider value={staticQueryResults}>
-                    <DataContext.Provider value={{ pageResources, location }}>
-                      {children}
-                    </DataContext.Provider>
+                    <SlicesContext.Provider value={slicesContext}>
+                      <SlicesResultsContext.Provider value={sliceResults}>
+                        <SlicesMapContext.Provider
+                          value={pageResources.page.slicesMap}
+                        >
+                          <DataContext.Provider
+                            value={{ pageResources, location }}
+                          >
+                            {children}
+                          </DataContext.Provider>
+                        </SlicesMapContext.Provider>
+                      </SlicesResultsContext.Provider>
+                    </SlicesContext.Provider>
                   </StaticQueryContext.Provider>
                 )
               }}
@@ -266,9 +277,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     // Client only pages have any empty body so we just do a normal
     // render to avoid React complaining about hydration mis-matches.
-    let defaultRenderer = reactRender
+    let defaultRenderer = render
     if (focusEl && focusEl.children.length) {
-      defaultRenderer = reactHydrate
+      defaultRenderer = hydrate
     }
 
     const renderer = apiRunner(
@@ -307,5 +318,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       doc.addEventListener(`DOMContentLoaded`, handler, false)
       window.addEventListener(`load`, handler, false)
     }
+
+    return
   })
 })

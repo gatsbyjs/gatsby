@@ -48,5 +48,19 @@ describe(`StaticImage`, () => {
         })
       })
     })
+    describe(`sharp props`, () => {
+      it(`respects outputPixelDensities on ${size.join("x")}`, () => {
+        cy.viewport(...size)
+        cy.visit("/static-images/sharp-props")
+        // Wait for main image to load
+        cy.get("[data-main-image]").should("exist")
+        // Check srcset for 1x, 2x, 3x
+        cy.get("[data-main-image]").then(img => {
+          expect(img[0].attributes.srcset.value).to.contain(`300w`)
+          expect(img[0].attributes.srcset.value).to.contain(`600w`)
+          expect(img[0].attributes.srcset.value).to.contain(`900w`)
+        })
+      })
+    })
   })
 })

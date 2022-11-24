@@ -91,11 +91,11 @@ The following errors are related to styles in your site, using CSS, preprocessor
 
 ### Inconsistent CSS styles between develop and build using styled-components or emotion
 
-_NOTE: We're in process of adding SSR support to the develop server. To use it now, enable the `DEV_SSR` flag in your gatsby-config.js — https://github.com/gatsbyjs/gatsby/discussions/28138_
-
 A common problem that trips up users that install and begin to use styled-components or emotion is not including the related plugin in the config. Because `gatsby develop` doesn't run server-side rendering, the build may look different if the plugin is not included to tell Gatsby to server-side render the styles for the CSS-in-JS solution being used.
 
 Adding `gatsby-plugin-styled-components` (in the case of styled-components) or `gatsby-plugin-emotion` (in the case of emotion) to `gatsby-config.js` will inform Gatsby to process the styles server-side so they display correctly in the final build.
+
+You can use the [`DEV_SSR` feature flag](/docs/debugging-html-builds#ssr-during-gatsby-develop) inside your `gatsby-config` to enable SSR support during `gatsby develop` which can help you debug such issues.
 
 ## Errors with GraphQL
 

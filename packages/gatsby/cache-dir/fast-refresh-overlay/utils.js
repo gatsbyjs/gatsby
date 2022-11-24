@@ -35,16 +35,20 @@ export function skipSSR() {
   }
 }
 
-export function getCodeFrameInformation(stackTrace) {
-  const callSite = stackTrace.find(CallSite => CallSite.getFileName())
-  if (!callSite) {
+export function getCodeFrameInformationFromStackTrace(stackTrace) {
+  const stackFrame = stackTrace.find(stackFrame => {
+    const fileName = stackFrame.getFileName()
+    return fileName && fileName !== `[native code]` // Quirk of Safari error stack frames
+  })
+
+  if (!stackFrame) {
     return null
   }
 
-  const moduleId = formatFilename(callSite.getFileName())
-  const lineNumber = callSite.getLineNumber()
-  const columnNumber = callSite.getColumnNumber()
-  const functionName = callSite.getFunctionName()
+  const moduleId = formatFilename(stackFrame.getFileName())
+  const lineNumber = stackFrame.getLineNumber()
+  const columnNumber = stackFrame.getColumnNumber()
+  const functionName = stackFrame.getFunctionName()
 
   return {
     moduleId,

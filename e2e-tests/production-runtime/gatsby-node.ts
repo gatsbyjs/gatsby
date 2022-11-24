@@ -3,6 +3,7 @@ import * as fs from "fs-extra"
 import { createContentDigest } from "gatsby-core-utils"
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 import type { GatsbyNode } from "gatsby"
+import slicesData from "./shared-data/slices"
 
 export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = () => {
   fs.copyFileSync(
@@ -36,6 +37,14 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       }
     )
   )
+
+  actions.createTypes(`#graphql
+    type HeadFunctionExportFsRouteApi implements Node {
+      id: ID!
+      slug: String!
+      content: String!
+    }
+  `)
 }
 
 const products = ["Burger", "Chicken"]
@@ -101,11 +110,60 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({
       },
     })
   })
+
+  actions.createNode({
+    id: createNodeId(`head-function-export-fs-route-api`),
+    slug: `/fs-route-api`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `HeadFunctionExportFsRouteApi`,
+      content: `Some words`,
+      contentDigest: createContentDigest(`Some words`),
+    },
+  })
 }
 
 export const createPages: GatsbyNode["createPages"] = ({
-  actions: { createPage, createRedirect },
+  actions: { createPage, createRedirect, createSlice },
 }) => {
+
+  //-------------------------Slices API----------------------------
+  createSlice({
+    id: `footer`,
+    component: path.resolve(`./src/components/footer.js`),
+    context: {
+      framework: slicesData.framework
+    },
+  })
+
+  slicesData.allRecipeAuthors.forEach(({ id, name }) => {
+    createSlice({
+      id: `author-${id}`,
+      component: path.resolve(`./src/components/recipe-author.js`),
+      context: {
+        name,
+        id,
+      },
+    })
+  })
+
+  slicesData.allRecipes.forEach(({ authorId, id, name, description }) => {
+    createPage({
+      path: `/recipe/${id}`,
+      component: path.resolve(`./src/templates/recipe.js`),
+      context: {
+        description: description,
+        name,
+      },
+      slices: {
+        author: `author-${authorId}`,
+      },
+    })
+  })
+
+  //---------------------------------------------------------------
+
   createPage({
     path: `/안녕`,
     component: path.resolve(`src/pages/page-2.js`),
@@ -222,24 +280,24 @@ export const createPages: GatsbyNode["createPages"] = ({
   }
 
   createRedirect({
-    fromPath: "/pagina-larga",
-    toPath: "/long-page",
+    fromPath: "/pagina-larga/",
+    toPath: "/long-page/",
     isPermanent: true,
     redirectInBrowser: true,
     ignoreCase: false,
   })
 
   createRedirect({
-    fromPath: "/Longue-Page",
-    toPath: "/long-page",
+    fromPath: "/Longue-Page/",
+    toPath: "/long-page/",
     isPermanent: true,
     redirectInBrowser: true,
     ignoreCase: true,
   })
 
   createRedirect({
-    fromPath: `/redirect-two`,
-    toPath: `/redirect-search-hash`,
+    fromPath: `/redirect-two/`,
+    toPath: `/redirect-search-hash/`,
     isPermanent: true,
     redirectInBrowser: true,
   })

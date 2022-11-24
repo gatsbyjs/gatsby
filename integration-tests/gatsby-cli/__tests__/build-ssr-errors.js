@@ -16,7 +16,7 @@ describe(`gatsby build (SSR errors)`, () => {
     logs.should.contain(`failed Building static HTML for pages`)
     logs.should.contain(`ERROR #95312`)
     logs.should.contain(
-      `"window" is not available during server side rendering.`
+      `"window" is not available during server-side rendering.`
     )
     logs.should.contain(
       `See our docs page for more info on this error: https://gatsby.dev/debug-html`

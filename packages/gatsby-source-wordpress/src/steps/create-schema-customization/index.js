@@ -62,8 +62,7 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
           break
         case `SCALAR`:
           /**
-           * custom scalar types aren't imlemented currently.
-           *  @todo make this hookable so sub-plugins or plugin options can add custom scalar support.
+           * custom scalar types aren't supported.
            */
           break
       }

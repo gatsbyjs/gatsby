@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`covers cases shown in fixtures/cjs-exports.js 1`] = `
+"export const a = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/cjs-exports.js',
+    name: 'a'
+  }
+export const c = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/cjs-exports.js',
+    name: 'c'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/cjs-module-exports.js 1`] = `""`;
+
+exports[`covers cases shown in fixtures/commented-out-directive.js 1`] = `
+"// \\"use client\\"
+
+export default function () {}"
+`;
+
+exports[`covers cases shown in fixtures/esm-aggregation.js 1`] = `""`;
+
+exports[`covers cases shown in fixtures/esm-declaration.js 1`] = `
+"export const a = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'a'
+  }
+export const b = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'b'
+  }
+export const c = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'c'
+  }
+export const d = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'd'
+  }
+export const e = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'e'
+  }
+export const f = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'f'
+  }
+export const functionName = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'functionName'
+  }
+export const ClassName = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'ClassName'
+  }
+export const g = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'g'
+  }
+export const foo = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'foo'
+  }
+export const i = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'i'
+  }
+export const j = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'j'
+  }
+export const withJSX = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-declaration.js',
+    name: 'withJSX'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/esm-default-class-anonymous.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-default-class-anonymous.js',
+    name: 'default'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/esm-default-class-named.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-default-class-named.js',
+    name: 'default'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/esm-default-expression.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-default-expression.js',
+    name: 'default'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/esm-default-function-anonymous.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-default-function-anonymous.js',
+    name: 'default'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/esm-default-function-named.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-default-function-named.js',
+    name: 'default'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/esm-list.js 1`] = `
+"export const a = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-list.js',
+    name: 'a'
+  }
+export const b = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-list.js',
+    name: 'b'
+  }
+export const d = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-list.js',
+    name: 'd'
+  }
+export const e = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-list.js',
+    name: 'e'
+  }
+export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file://fixtures/esm-list.js',
+    name: 'default'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/no-directive.js 1`] = `
+"export function noClientExport() {
+  return \`No \\"use client\\" found in this file\`
+}"
+`;
+
+exports[`covers cases shown in fixtures/no-directive-and-no-export.js 1`] = `
+"function noClientExport() {
+  return \`No \\"use client\\" found in this file, and the function itself is not exported\`
+}"
+`;

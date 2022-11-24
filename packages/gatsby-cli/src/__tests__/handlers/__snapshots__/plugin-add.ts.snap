@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`addPlugins gatsby-config.js should not write with no plugins 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`,
   },
@@ -11,7 +14,10 @@ exports[`addPlugins gatsby-config.js should not write with no plugins 1`] = `
 `;
 
 exports[`addPlugins gatsby-config.js should write a plugin with options 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
@@ -25,7 +31,10 @@ exports[`addPlugins gatsby-config.js should write a plugin with options 1`] = `
 `;
 
 exports[`addPlugins gatsby-config.js should write a single plugin 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
@@ -34,7 +43,10 @@ exports[`addPlugins gatsby-config.js should write a single plugin 1`] = `
 `;
 
 exports[`addPlugins gatsby-config.js should write multiple plugins 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
