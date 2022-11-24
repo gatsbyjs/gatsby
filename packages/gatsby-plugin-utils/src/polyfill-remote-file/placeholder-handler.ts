@@ -34,6 +34,8 @@ const PLACEHOLDER_TRACED_WIDTH = 200
 
 let tmpDir: string
 
+let didShow = false
+
 const queue = Queue<
   undefined,
   {
@@ -66,6 +68,16 @@ const queue = Queue<
     httpHeaders,
   })
 
+  if (type === PlaceholderType.TRACED_SVG) {
+    if (!didShow) {
+      console.trace(
+        `[gatsby-plugin-utils placeholder-handler queue handler] traceSVG is no longer supported, falling back to dominantColor`
+      )
+      didShow = true
+    }
+    type = PlaceholderType.DOMINANT_COLOR
+  }
+
   switch (type) {
     case PlaceholderType.BLURRED: {
       let buffer: Buffer
@@ -97,76 +109,6 @@ const queue = Queue<
         dominant
           ? `rgb(${dominant.r},${dominant.g},${dominant.b})`
           : `rgba(0,0,0,0)`
-      )
-    }
-    case PlaceholderType.TRACED_SVG: {
-      let buffer: Buffer
-
-      try {
-        const fileStream = createReadStream(filePath)
-        const pipeline = sharp()
-        fileStream.pipe(pipeline)
-        buffer = await pipeline
-          .resize(
-            PLACEHOLDER_BASE64_WIDTH,
-            Math.ceil(PLACEHOLDER_BASE64_WIDTH / (width / height))
-          )
-          .toBuffer()
-      } catch (err) {
-        buffer = await readFile(filePath)
-      }
-
-      const [{ trace, Potrace }, { optimize }, { default: svgToMiniDataURI }] =
-        await Promise.all([
-          import(`@gatsbyjs/potrace`),
-          import(`svgo`),
-          import(`mini-svg-data-uri`),
-        ])
-
-      trace(
-        buffer,
-        {
-          color: `lightgray`,
-          optTolerance: 0.4,
-          turdSize: 100,
-          turnPolicy: Potrace.TURNPOLICY_MAJORITY,
-        },
-        async (err, svg) => {
-          if (err) {
-            return cb(err)
-          }
-
-          try {
-            const { data } = await optimize(svg, {
-              multipass: true,
-              floatPrecision: 0,
-              plugins: [
-                {
-                  name: `preset-default`,
-                  params: {
-                    overrides: {
-                      // customize default plugin options
-                      removeViewBox: false,
-
-                      // or disable plugins
-                      addAttributesToSVGElement: {
-                        attributes: [
-                          {
-                            preserveAspectRatio: `none`,
-                          },
-                        ],
-                      },
-                    },
-                  },
-                },
-              ],
-            })
-
-            return cb(null, svgToMiniDataURI(data).replace(/ /gi, `%20`))
-          } catch (err) {
-            return cb(err)
-          }
-        }
       )
     }
   }

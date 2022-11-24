@@ -447,9 +447,9 @@ const imageNodeType = ({
         type: ImagePlaceholderType,
         description: stripIndent`
         Format of generated placeholder image, displayed while the main image loads.
-        BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
-        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
-        TRACED_SVG: a low-resolution traced SVG of the image.
+        BLURRED: a blurred, low resolution image, encoded as a base64 data URI
+        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image (default).
+        TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
         NONE: no placeholder. Set "background" to use a fixed background color.`,
       },
       blurredOptions: {
@@ -529,6 +529,17 @@ const imageNodeType = ({
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
         return null
       }
+
+      if (fieldArgs?.placeholder === `tracedSVG`) {
+        if (!didShow) {
+          console.trace(
+            `[gatsby-transformer-sharp gatsbyImageData resolver] traceSVG is no longer supported, falling back to dominantColor`
+          )
+          didShow = true
+        }
+        fieldArgs.placeholder = `dominantColor`
+      }
+
       const imageData = await generateImageData({
         file,
         args: fieldArgs,
@@ -541,6 +552,8 @@ const imageNodeType = ({
     },
   }
 }
+
+let didShow = false
 
 /**
  * Keeps track of asynchronous file copy to prevent sequence errors in the

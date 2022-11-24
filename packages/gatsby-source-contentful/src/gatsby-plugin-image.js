@@ -252,6 +252,8 @@ export function generateImageSource(
   return { width, height, format: toFormat, src }
 }
 
+let didShow = false
+
 export async function resolveGatsbyImageData(
   image,
   options,
@@ -285,6 +287,16 @@ export async function resolveGatsbyImageData(
   }
 
   options = doMergeDefaults(options, defaults)
+
+  if (options.placeholder === `tracedSVG`) {
+    if (!didShow) {
+      console.trace(
+        `[gatsby-source-contentful resolveGatsbytImageData] traceSVG is no longer supported, falling back to dominantColor`
+      )
+      didShow = true
+    }
+    options.placeholder = `dominantColor`
+  }
 
   const { baseUrl, contentType, width, height } = getBasicImageProps(
     image,
@@ -336,11 +348,7 @@ export async function resolveGatsbyImageData(
   }
 
   if (options.placeholder === `tracedSVG`) {
-    placeholderDataURI = await getTracedSVG({
-      image,
-      options,
-      cache,
-    })
+    console.error(`this shouldn't happen`)
   }
 
   if (placeholderDataURI) {

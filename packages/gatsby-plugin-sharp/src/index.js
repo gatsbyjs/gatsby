@@ -15,7 +15,6 @@ const {
   createTransformObject,
   removeDefaultValues,
 } = require(`./plugin-options`)
-const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { getDimensionsAndAspectRatio } = require(`./utils`)
@@ -382,12 +381,17 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
+let didShow = false
 async function traceSVG(args) {
-  if (args.cache) {
-    // Not all transformer plugins are going to provide cache
-    return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
+  if (!didShow) {
+    console.trace(
+      `[gatsby-plugin-sharp traceSVG()] traceSVG is no longer supported, falling back to base64`
+    )
+    didShow = true
   }
-  return await memoizedTraceSVG(args)
+
+  const { src } = await base64(args)
+  return src
 }
 
 async function getTracedSVG({ file, options, cache, reporter }) {
