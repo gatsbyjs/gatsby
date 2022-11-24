@@ -15,7 +15,7 @@ const {
 const { splitComponentPath } = require(`gatsby-core-utils/parse-component-path`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode, getDataStore } = require(`../../datastore`)
-import sanitizeNode from "../../utils/sanitize-node"
+import { sanitizeNode } from "../../utils/sanitize-node"
 const { store } = require(`../index`)
 const { validateComponent } = require(`../../utils/validate-component`)
 import { nodeSchema } from "../../joi-schemas/joi"

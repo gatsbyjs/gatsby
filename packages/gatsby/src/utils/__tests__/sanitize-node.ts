@@ -1,4 +1,4 @@
-import sanitizeNode from "../sanitize-node"
+import { sanitizeNode } from "../sanitize-node"
 
 describe(`node sanitization`, () => {
   let testNode
@@ -89,5 +89,25 @@ describe(`node sanitization`, () => {
     const result = sanitizeNode(testNodeWithoutUnserializableData)
     // should be same instance
     expect(result).toBe(testNodeWithoutUnserializableData)
+  })
+
+  it(`keeps length field but not OOM`, () => {
+    const testNodeWithLength = {
+      id: `id2`,
+      parent: ``,
+      children: [],
+      length: 81185414,
+      foo: `bar`,
+      internal: {
+        type: `Test`,
+        contentDigest: `digest1`,
+        owner: `test`,
+        counter: 0,
+      },
+      fields: [],
+    }
+    const result = sanitizeNode(testNodeWithLength)
+    // @ts-ignore - Just for tests
+    expect(result.length).toBeDefined()
   })
 })
