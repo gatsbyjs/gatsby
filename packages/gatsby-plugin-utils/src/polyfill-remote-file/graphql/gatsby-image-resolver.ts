@@ -76,6 +76,8 @@ const GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = [`true`, `1`].includes(
   process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``
 )
 
+let didShow = false
+
 export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
@@ -120,6 +122,14 @@ export async function gatsbyImageResolver(
   }
 
   if (!args.placeholder) {
+    args.placeholder = PlaceholderType.DOMINANT_COLOR
+  } else if (args.placeholder === PlaceholderType.TRACED_SVG) {
+    if (!didShow) {
+      console.trace(
+        `[gatsby-plugin-utils gatsbyImageResolver] traceSVG is no longer supported, falling back to DOMINANT_COLOR. See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShow = true
+    }
     args.placeholder = PlaceholderType.DOMINANT_COLOR
   }
 
