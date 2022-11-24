@@ -3,8 +3,6 @@ title: Using the Gatsby Image plugin
 examples:
   - label: Using Gatsby Image
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image"
-  - label: GatsbyGram
-    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram"
 ---
 
 _If you're looking for a guide on using the deprecated `gatsby-image` package, it can be found in the [How to use Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image) doc._
@@ -36,8 +34,6 @@ module.exports = {
 If you already have some of these plugins installed, please check that they're updated to the latest version.
 
 Note that `gatsby-source-filesystem` is not included in this config. If you are sourcing from your local filesystem to use `GatsbyImage` please configure accordingly. Otherwise, downloading the dependency without configuration is sufficient.
-
-<!-- TODO: add exact minimum version when we reach GA -->
 
 ## Using the Gatsby Image components
 
@@ -115,8 +111,8 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    Any GraphQL File object that includes an image will have a `childImageSharp` field that you can use to query the image data. The exact data structure will vary according to your data source, but the syntax is like this:
 
    ```graphql:title=src/templates/blogpost.js
-   query {
-     blogPost(id: { eq: $Id }) {
+   query ($id: String) {
+     blogPost(id: { eq: $id }) {
        title
        body
        # highlight-start
@@ -135,8 +131,8 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 
    ```graphql:title=src/templates/blogpost.js
-   query {
-     blogPost(id: { eq: $Id }) {
+   query ($id: String) {
+     blogPost(id: { eq: $id }) {
        title
        body
        author
@@ -178,8 +174,8 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    }
 
    export const pageQuery = graphql`
-     query {
-       blogPost(id: { eq: $Id }) {
+     query ($id: String) {
+       blogPost(id: { eq: $id }) {
          title
          body
          author
@@ -216,7 +212,6 @@ module.exports = {
           quality: 50,
           breakpoints: [750, 1080, 1366, 1920],
           backgroundColor: `transparent`,
-          tracedSVGOptions: {},
           blurredOptions: {},
           jpgOptions: {},
           pngOptions: {},

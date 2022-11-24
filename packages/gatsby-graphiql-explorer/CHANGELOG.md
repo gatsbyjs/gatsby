@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@3.1.0/packages/gatsby-graphiql-explorer) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Bug Fixes
+
+- Adjust env var truthiness logic [#37032](https://github.com/gatsbyjs/gatsby/issues/37032) ([19dd1c4](https://github.com/gatsbyjs/gatsby/commit/19dd1c4f4dbfb91d20a12e80d8677b77251a034a))
+
 ## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@3.0.0/packages/gatsby-graphiql-explorer) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)

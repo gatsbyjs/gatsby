@@ -250,6 +250,29 @@ module.exports = {
 }
 ```
 
+## CDN
+
+You can add an optional CDN or API gateway URL `proxyUrl` param. The URL can be a simple proxy of the Drupal
+`baseUrl`, or another URL (even containing a path) where the Drupal JSON API resources can be retrieved.
+
+This option is required as Drupal doesn't know about the CDN so it returns URLs pointing to the `baseUrl`. With `proxyUrl` set, the plugin will rewrite URLs returned from Drupal to keep pointing at the `proxyUrl`
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        proxyUrl: `https://xyz.cloudfront.net/`, // optional, defaults to the value of baseUrl
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
+  ],
+}
+```
+
 ## GET Search Params
 
 You can append optional GET request params to the request url using `params` option.

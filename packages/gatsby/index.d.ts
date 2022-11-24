@@ -196,7 +196,7 @@ interface ISerializableObject {
 }
 
 /**
- * A props object for [slice placholder](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice placholder](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export interface SlicePlaceholderProps {
   alias: string
@@ -206,12 +206,12 @@ export interface SlicePlaceholderProps {
 }
 
 /**
- * Component used as a slice placholder, to mark a place in the page where a [slice](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
+ * Component used as a slice placholder, to mark a place in the page where a [slice](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
  */
 export declare function Slice(props: SlicePlaceholderProps): JSX.Element
 
 /**
- * A props object for [slice component](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice component](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export type SliceComponentProps<
   DataType = object,
@@ -431,12 +431,34 @@ export interface GatsbyNode<
    * transform nodes created by other plugins should implement this API.
    *
    * See also the documentation for `createNode`
-   * and [`createNodeField`](https://www.gatsbyjs.com/docs/actions/#createNodeField)
+   * and [`createNodeField`](https://www.gatsbyjs.com/docs/reference/config-files/actions/#createNodeField)
+   * @param {object} $0
+   * @param {object} $0.node A node object.
+   * @param {object} $0.actions
+   * @param {function} $0.actions.createNode Create a new node.
+   * @param {function} $0.actions.createNodeField Extend another node. The new node field is placed under the fields key on the extended node object.
    * @example
-   * exports.onCreateNode = ({ node, actions }) => {
-   *   const { createNode, createNodeField } = actions
-   *   // Transform the new node here and create a new node or
-   *   // create a new node field.
+   * exports.onCreateNode = ({ node, getNode, actions }) => {
+   *   const { createNodeField } = actions
+   *
+   *   if (node.internal.type === `MarkdownRemark`) {
+   *     const nodePath = node.fileAbsolutePath
+   *
+   *     if (nodePath.match(/\/blog\//)) {
+   *       const postSlug = createFilePath({
+   *         node,
+   *         getNode,
+   *         basePath: `src/content`,
+   *         trailingSlash: true,
+   *       })
+   *
+   *       createNodeField({
+   *         node,
+   *         name: `slug`,
+   *         value: `/blog/${postSlug}/`,
+   *       })
+   *     }
+   *   }
    * }
    */
   onCreateNode?(

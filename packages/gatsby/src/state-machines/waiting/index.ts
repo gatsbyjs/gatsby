@@ -14,6 +14,7 @@ export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
  * mutations when we first start it
  */
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
+  predictableActionArguments: true,
   id: `waitingMachine`,
   initial: `idle`,
   context: {

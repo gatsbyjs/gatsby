@@ -153,9 +153,9 @@ import { Script } from "gatsby"
 />
 <Script id="gtag-config" strategy="off-main-thread" forward={[`gtag`]}>
   {`
-    window.dataLayer = window.dataLayer || []
-    window.gtag = function gtag() { window.dataLayer.push(arguments) }
-    gtag('js', new Date())
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
     gtag('config', ${process.env.GTAG}, { page_path: location ? location.pathname + location.search + location.hash : undefined })
   `}
 </Script>
