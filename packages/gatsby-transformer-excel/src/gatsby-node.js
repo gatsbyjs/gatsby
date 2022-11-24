@@ -1,13 +1,5 @@
 const XLSX = require(`xlsx`)
-const fs = require(`fs-extra`)
 const _ = require(`lodash`)
-
-// read files as `binary` from file system
-function _loadNodeContent(fileNode, fallback) {
-  return fileNode.absolutePath
-    ? fs.readFile(fileNode.absolutePath, `binary`)
-    : fallback(fileNode)
-}
 
 const extensions = [
   `xls`,
@@ -33,9 +25,10 @@ const extensions = [
   `qpw`,
   `htm`,
   `html`,
+  `numbers`,
 ]
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   return extensions.includes((node.extension || ``).toLowerCase())
 }
 
@@ -43,14 +36,7 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   options = {}
 ) {
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
-
-  // Load binary string
-  const content = await _loadNodeContent(node, loadNodeContent)
 
   // accept *all* options to pass to the sheet_to_json function
   const xlsxOptions = options
@@ -66,7 +52,10 @@ async function onCreateNode(
   delete xlsxOptions.plugins
 
   // Parse
-  const wb = XLSX.read(content, { type: `binary`, cellDates: true })
+  const readOptions = { cellDates: true }
+  const wb = node.absolutePath
+    ? XLSX.readFile(node.absolutePath, readOptions)
+    : XLSX.read(await loadNodeContent(node), { type: `binary`, ...readOptions })
   wb.SheetNames.forEach((n, idx) => {
     const ws = wb.Sheets[n]
     const parsedContent = XLSX.utils.sheet_to_json(ws, xlsxOptions)
@@ -115,5 +104,5 @@ async function onCreateNode(
   return
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

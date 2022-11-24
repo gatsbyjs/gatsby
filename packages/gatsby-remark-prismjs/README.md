@@ -94,7 +94,7 @@ plugins: [
 PrismJS ships with a number of [themes][5] (previewable on the [PrismJS
 website][6]) that you can easily include in your Gatsby site, or you can build
 your own by copying and modifying an example (which is what we've done for
-[gatsbyjs.org](https://gatsbyjs.org)).
+[gatsbyjs.com](https://gatsbyjs.com)).
 
 To load a theme, just require its CSS file in your `gatsby-browser.js` file, e.g.
 
@@ -400,7 +400,7 @@ You can specify language for `diff` code blocks by using `diff-[language]` to en
 
 ### Line hiding
 
-As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).
+As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.com/plugins/gatsby-remark-embed-snippet/).
 
 As with highlighting lines, you can control which lines to hide by adding directives as comments in your source code.
 

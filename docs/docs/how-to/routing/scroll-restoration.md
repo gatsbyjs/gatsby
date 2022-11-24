@@ -24,3 +24,7 @@ export default function PageComponent() {
   )
 }
 ```
+
+The string `page-component-ul-list` is an arbitrary key. It should be unique for the page you are using it in. It is stored in the browser's Storage > Session Storage with a key consisting of `@@scroll/your-page-name/your-key`. You can access it in your Chrome developer tools and you will see that it simply records the y offset of the scroll bar for that widget, **for that page**. Therefore, if you navigate to another page, the scroll bar for the targeted component will return to where it was the last time you visited that page during the current session.
+
+`useScrollRestoration` is part of the `gatsby-react-router-scroll` package.

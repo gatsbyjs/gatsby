@@ -112,17 +112,17 @@ const runQuery = (
   schemaComposer,
   query: string
 ): Promise<ExecutionResult> =>
-  graphql(
+  graphql({
     schema,
-    query,
-    undefined,
-    withResolverContext({
+    source: query,
+    rootValue: undefined,
+    contextValue: withResolverContext({
       schema,
       schemaComposer,
       context: {},
       customContext: {},
-    })
-  )
+    }),
+  })
 
 // test: schema
 export async function getRunQueryResult(

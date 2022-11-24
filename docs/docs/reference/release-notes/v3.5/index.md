@@ -72,7 +72,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
 - [fshowalter](https://github.com/fshowalter): fix(gatsby-transformer-remark): Activate footnotes by default & remove included options with remark v13 [PR #31019](https://github.com/gatsbyjs/gatsby/pull/31019)
 - [axe312ger](https://github.com/axe312ger)
 
-  - test(e2e-contentful): add schema.sql for comparision with later updates [PR #31074](https://github.com/gatsbyjs/gatsby/pull/31074)
+  - test(e2e-contentful): add schema.sql for comparison with later updates [PR #31074](https://github.com/gatsbyjs/gatsby/pull/31074)
   - fix(gatsby): upgrade css-minimizer-webpack-plugin to v2 [PR #31176](https://github.com/gatsbyjs/gatsby/pull/31176)
 
 - [joshua-isaac](https://github.com/joshua-isaac): chore(docs): Update sourcing from agility cms [PR #30966](https://github.com/gatsbyjs/gatsby/pull/30966)

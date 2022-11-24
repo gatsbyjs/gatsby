@@ -134,7 +134,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(`
     query GetBlogPosts {
-      allBlogpost(sort: { fields: flotiqInternal___createdAt, order: DESC }) {
+      allBlogpost(sort: { flotiqInternal: { createdAt: DESC }}) {
         edges {
           node {
             headerImage {

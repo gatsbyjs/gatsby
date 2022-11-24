@@ -121,7 +121,7 @@ const paginatedWpNodeFetch = async ({
           if (node?.databaseId && node?.uri && existingNode?.uri) {
             helpers.reporter.info(
               formatLogMessage(
-                `#${node.databaseId} (${node.uri}) is a duplicate of ${existingNode.databaseId} (${existingNode.uri})`
+                `Node with ID ${node.databaseId}/${node.id} of type ${node.__typename} was fetched multiple times. This is a WPGraphQL bug where pagination returns duplicate nodes.`
               )
             )
           }

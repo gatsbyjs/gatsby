@@ -1,7 +1,5 @@
 const fetch = require("node-fetch")
 
-jest.setTimeout(100000)
-
 describe(`auth in gatsby-browser`, () => {
   test(`should not be present`, async () => {
     const res = await fetch("http://localhost:8000/commons.js")

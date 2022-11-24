@@ -34,7 +34,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 
 ## Separating queries and presentational components
 
-As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/how-to/querying-data/page-query) or [StaticQuery](/docs/how-to/querying-data/static-query).
+As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [page query](/docs/how-to/querying-data/page-query) or [static query](/docs/how-to/querying-data/use-static-query/).
 
 ### Page queries
 
@@ -53,8 +53,8 @@ export default function MyPostsList(props) {
 export const query = graphql`
   query {
     allMdx(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      filter: { frontmatter: { draft: { ne: true } } }
+      sort: { frontmatter: { date: DESC }}
+      filter: { frontmatter: { draft: { ne: true }}}
     ) {
       edges {
         node {
@@ -123,9 +123,7 @@ export default Layout
 
 ## Site metadata
 
-For commonly customized things, such as site title and social media handles, you
-can have the user set site metadata in their `gatsby-config.js`. Then, throughout
-your theme you can create a StaticQuery to access it:
+For commonly customized things, such as site title and social media handles, you can have the user set site metadata in their `gatsby-config.js`. Then, throughout your theme you can create a static query to access it:
 
 ```js:title=src/hooks/use-site-metadata.js
 import { graphql, useStaticQuery } from "gatsby"

@@ -1,4 +1,4 @@
-import { Database } from "lmdb-store"
+import { Database } from "lmdb"
 import { IGatsbyNode } from "../redux/types"
 import { GatsbyGraphQLType } from "../../index"
 import { IInputQuery } from "./common/query"

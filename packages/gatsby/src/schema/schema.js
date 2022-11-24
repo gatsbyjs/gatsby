@@ -23,8 +23,15 @@ const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
-const { overridableBuiltInTypeNames } = require(`./types/built-in-types`)
+const {
+  overridableBuiltInTypeNames,
+  builtInScalarTypeNames,
+} = require(`./types/built-in-types`)
 const { addInferredTypes } = require(`./infer`)
+const {
+  addRemoteFileInterfaceFields,
+} = require(`./types/remote-file-interface`)
+
 const {
   findOne,
   findManyPaginated,
@@ -36,7 +43,11 @@ const {
   internalExtensionNames,
 } = require(`./extensions`)
 import { getPagination } from "./types/pagination"
-import { getSortInput, SORTABLE_ENUM } from "./types/sort"
+import {
+  SORTABLE_ENUM,
+  getSortInput,
+  getSortInputNestedObjects,
+} from "./types/sort"
 import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
 import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
 
@@ -202,8 +213,13 @@ const processTypeComposer = async ({
     })
 
     if (typeComposer.hasInterface(`Node`)) {
-      await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
+      await addNodeInterfaceFields({ schemaComposer, typeComposer })
     }
+
+    if (typeComposer.hasInterface(`RemoteFile`)) {
+      addRemoteFileInterfaceFields(schemaComposer, typeComposer)
+    }
+
     await determineSearchableFields({
       schemaComposer,
       typeComposer,
@@ -247,6 +263,7 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
     if (typeof typeOrTypeDef === `string`) {
       typeOrTypeDef = parseTypeDef(typeOrTypeDef)
     }
+
     if (isASTDocument(typeOrTypeDef)) {
       let parsedTypes
       const createdFrom = `sdl`
@@ -599,7 +616,7 @@ const checkIsAllowedTypeName = name => {
       `reserved for internal use. Please rename \`${name}\`.`
   )
   invariant(
-    ![`Boolean`, `Date`, `Float`, `ID`, `Int`, `JSON`, `String`].includes(name),
+    !builtInScalarTypeNames.includes(name),
     `The GraphQL type \`${name}\` is reserved for internal use by ` +
       `built-in scalar types.`
   )
@@ -1222,10 +1239,6 @@ const createChildField = typeName => {
 }
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
-  const sortInputTC = getSortInput({
-    schemaComposer,
-    typeComposer,
-  })
   const filterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
@@ -1252,7 +1265,14 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       type: paginationTC,
       args: {
         filter: filterInputTC,
-        sort: sortInputTC,
+        sort:
+          _CFLAGS_.GATSBY_MAJOR === `5`
+            ? getSortInputNestedObjects({ schemaComposer, typeComposer })
+            : getSortInput({
+                schemaComposer,
+                typeComposer,
+              }),
+
         skip: `Int`,
         limit: `Int`,
       },

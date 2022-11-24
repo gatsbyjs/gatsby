@@ -77,7 +77,7 @@ describe(`report.error`, () => {
     reporter.error({
       id: `95312`,
       context: {
-        ref: `navigator`,
+        undefinedGlobal: `navigator`,
       },
     })
     const generatedError = getErrorMessages(
@@ -111,7 +111,7 @@ describe(`report.error`, () => {
       "1337": {
         text: (context): string => `Error text is ${context.someProp}`,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     })
 
@@ -123,7 +123,7 @@ describe(`report.error`, () => {
       "1337": {
         text: (context): string => `Error text is ${context.someProp}`,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     })
 
@@ -146,7 +146,7 @@ describe(`report.error`, () => {
       "gatsby-plugin-foo-bar_1337": {
         text: (context): string => `Error text is ${context.someProp}`,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     })
 

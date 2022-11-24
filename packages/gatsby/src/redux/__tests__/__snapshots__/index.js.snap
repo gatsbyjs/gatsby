@@ -8,6 +8,7 @@ Object {
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
       "config": false,
       "isInBootstrap": true,
+      "isSlice": false,
       "pages": Set {
         "/my-sweet-new-page/",
       },
@@ -17,7 +18,14 @@ Object {
   },
   "html": Object {
     "browserCompilationHash": "",
+    "pagesThatNeedToStitchSlices": Set {},
+    "slicesProps": Object {
+      "byPagePath": Map {},
+      "bySliceId": Map {},
+      "bySliceName": Map {},
+    },
     "ssrCompilationHash": "",
+    "templateCompilationHashes": Object {},
     "trackedHtmlFiles": Map {
       "/my-sweet-new-page/" => Object {
         "dirty": 2,
@@ -81,11 +89,13 @@ Object {
       "path": "/my-sweet-new-page/",
       "pluginCreatorId": "",
       "pluginCreator___NODE": "",
+      "slices": Object {},
       "updatedAt": 1,
     },
   },
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},
+    "sliceNames": Set {},
   },
   "queries": Object {
     "byConnection": Map {},
@@ -110,6 +120,8 @@ Object {
       },
     },
   },
+  "slices": Map {},
+  "slicesByTemplate": Map {},
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {

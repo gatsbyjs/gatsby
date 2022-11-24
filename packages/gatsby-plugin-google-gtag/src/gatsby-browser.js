@@ -1,7 +1,9 @@
-exports.onRouteUpdate = ({ location }) => {
+exports.onRouteUpdate = ({ location }, pluginOptions = {}) => {
   if (process.env.NODE_ENV !== `production` || typeof gtag !== `function`) {
     return null
   }
+
+  const pluginConfig = pluginOptions.pluginConfig || {}
 
   const pathIsExcluded =
     location &&
@@ -18,13 +20,15 @@ exports.onRouteUpdate = ({ location }) => {
     window.gtag(`event`, `page_view`, { page_path: pagePath })
   }
 
+  const { delayOnRouteUpdate = 0 } = pluginConfig
+
   if (`requestAnimationFrame` in window) {
     requestAnimationFrame(() => {
-      requestAnimationFrame(sendPageView)
+      requestAnimationFrame(() => setTimeout(sendPageView, delayOnRouteUpdate))
     })
   } else {
-    // simulate 2 rAF calls
-    setTimeout(sendPageView, 32)
+    // Delay by 32ms to simulate 2 requestOnAnimationFrame calls
+    setTimeout(sendPageView, 32 + delayOnRouteUpdate)
   }
 
   return null

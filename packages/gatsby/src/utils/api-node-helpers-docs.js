@@ -294,7 +294,7 @@ module.exports.createNodeId = true;
 /**
  * Set of utilities that allow adding more detailed tracing for plugins.
  * Check
- * [Performance tracing](https://www.gatsbyjs.org/docs/performance-tracing)
+ * [Performance tracing](https://www.gatsbyjs.com/docs/performance-tracing)
  * page for more details.
  * @type {GatsbyTracing}
  */

@@ -46,7 +46,7 @@ describe(`navigation`, () => {
       cy.getTestElement(`subdir-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory/page-1`)
+        .should(`eq`, `/subdirectory/page-1/`)
     })
 
     it(`can navigate to a sibling page`, () => {
@@ -55,7 +55,7 @@ describe(`navigation`, () => {
         .getTestElement(`page-2-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory/page-2`)
+        .should(`eq`, `/subdirectory/page-2/`)
     })
 
     it(`can navigate to a parent page`, () => {
@@ -64,7 +64,7 @@ describe(`navigation`, () => {
         .getTestElement(`page-parent-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory`)
+        .should(`eq`, `/subdirectory/`)
     })
 
     it(`can navigate to a sibling page programatically`, () => {
@@ -73,7 +73,7 @@ describe(`navigation`, () => {
         .getTestElement(`page-2-button-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `/subdirectory/page-2`)
+        .should(`eq`, `/subdirectory/page-2/`)
     })
   })
 

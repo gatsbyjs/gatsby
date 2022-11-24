@@ -2,19 +2,13 @@
 title: Deploying to Firebase Hosting
 ---
 
-In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting.
-
 [Firebase Hosting](https://firebase.google.com/docs/hosting) is a free web content hosting platform for developers. With a single command, you can quickly deploy web apps and serve both static and dynamic content to a global CDN (content delivery network).
 
-## Pre-requisites
+## Prerequisites
 
-1. Make sure you have:
-
-   - installed [Node.js](https://nodejs.org/en/download/) on your local machine.
-   - a [Firebase Account](https://console.firebase.google.com).
-   - created a [Firebase Project](https://firebase.google.com/docs/web/setup#create-firebase-project).
-
-2. This guide assumes that you already have a Gatsby project on your local machine.
+- A [Firebase Account](https://console.firebase.google.com)
+- A [Firebase Project](https://firebase.google.com/docs/web/setup#create-firebase-project) created
+- A Gatsby project set up. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
 
 ## Deployment
 
@@ -41,7 +35,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
    This command will prompt you to:
 
    - select the Firebase products you wish to set up. Be sure to select **Firebase Hosting**.
-   - select the Firebase Project you wish to use or create a new one, if you haven't done it previously.
+   - select the Firebase project you wish to use or create a new one, if you haven't done it previously.
 
    When prompted to select your public directory, press <kbd>enter</kbd>. It will default to `public`, which is also Gatsby's default public directory.
 
@@ -119,7 +113,11 @@ Check the [Firebase Docs](https://firebase.google.com/docs/hosting/full-config) 
   For automatic setup of builds that are deployed straight to Firebase:
 </CloudCallout>
 
-## References:
+## Limitations
+
+Firebase doesn't support advanced features like [SSR](/docs/how-to/rendering-options/using-server-side-rendering/), [DSG](/docs/how-to/rendering-options/using-deferred-static-generation/), or [Image CDN](/docs/how-to/images-and-media/using-gatsby-plugin-image/#gatsby-cloud-image-cdn). You can get all features and faster builds by signing up to [Gatsby Cloud](/dashboard/signup).
+
+## Additional resources
 
 - [Firebase CLI Reference](https://firebase.google.com/docs/cli)
 - [Get Started with Firebase Hosting](https://firebase.google.com/docs/hosting/quickstart)

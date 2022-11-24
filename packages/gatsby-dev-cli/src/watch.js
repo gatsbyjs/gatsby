@@ -30,7 +30,15 @@ const MAX_COPY_RETRIES = 3
 async function watch(
   root,
   packages,
-  { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
+  {
+    scanOnce,
+    quiet,
+    forceInstall,
+    monoRepoPackages,
+    localPackages,
+    packageNameToPath,
+    externalRegistry,
+  }
 ) {
   setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
   // determine if in yarn workspace - if in workspace, force using verdaccio
@@ -123,6 +131,7 @@ async function watch(
     root,
     packages: _.uniq(localPackages),
     monoRepoPackages,
+    packageNameToPath,
   })
 
   const allPackagesToWatch = packages
@@ -143,10 +152,12 @@ async function watch(
       if (allPackagesToWatch.length > 0) {
         await publishPackagesLocallyAndInstall({
           packagesToPublish: allPackagesToWatch,
-          root,
+          packageNameToPath,
           localPackages,
           ignorePackageJSONChanges,
           yarnWorkspaceRoot,
+          externalRegistry,
+          root,
         })
       } else {
         // run `yarn`
@@ -186,7 +197,7 @@ async function watch(
   )
   const watchers = _.uniq(
     allPackagesToWatch
-      .map(p => path.join(root, `/packages/`, p))
+      .map(p => path.join(packageNameToPath.get(p)))
       .filter(p => fs.existsSync(p))
   )
 
@@ -199,7 +210,7 @@ async function watch(
   let anyPackageNotInstalled = false
 
   const watchEvents = [`change`, `add`]
-
+  const packagePathMatchingEntries = Array.from(packageNameToPath.entries())
   chokidar
     .watch(watchers, {
       ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
@@ -209,11 +220,22 @@ async function watch(
         return
       }
 
-      const [packageName] = filePath
-        .split(/packages[/\\]/)
-        .pop()
-        .split(/[/\\]/)
-      const prefix = path.join(root, `/packages/`, packageName)
+      // match against paths
+      let packageName
+
+      for (const [_packageName, packagePath] of packagePathMatchingEntries) {
+        const relativeToThisPackage = path.relative(packagePath, filePath)
+        if (!relativeToThisPackage.startsWith(`..`)) {
+          packageName = _packageName
+          break
+        }
+      }
+
+      if (!packageName) {
+        return
+      }
+
+      const prefix = packageNameToPath.get(packageName)
 
       // Copy it over local version.
       // Don't copy over the Gatsby bin file as that breaks the NPM symlink.
@@ -241,7 +263,7 @@ async function watch(
           newPath,
           packageName,
           monoRepoPackages,
-          root,
+          packageNameToPath,
           isInitialScan,
           ignoredPackageJSON,
         })
@@ -317,9 +339,11 @@ async function watch(
           isPublishing = true
           await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
-            root,
+            packageNameToPath,
             localPackages,
             ignorePackageJSONChanges,
+            externalRegistry,
+            root,
           })
           packagesToPublish.clear()
           isPublishing = false

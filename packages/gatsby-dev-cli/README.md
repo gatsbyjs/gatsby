@@ -48,7 +48,7 @@ git checkout package.json; npm install --force
 **[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
 
 More detailed instructions for setting up your Gatsby development environment can
-be found [here](https://www.gatsbyjs.org/contributing/how-to-contribute/).
+be found [here](https://www.gatsbyjs.com/contributing/how-to-contribute/).
 
 ### Other commands
 
@@ -63,9 +63,7 @@ packages you want to link by using the `--packages` option:
 
 With this flag, the tool will do an initial scan and copy and then quit. This is
 useful for setting up automated testing/builds of Gatsby sites from the latest
-code. Gatsby's main website (and example websites) are built from HEAD using
-this flag, see
-https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
+code. Gatsby's CI is using this for its tests.
 
 #### `--quiet`
 
@@ -79,3 +77,7 @@ Copy all modules/files in the gatsby source repo in packages/
 #### `--force-install`
 
 Disable copying files into node_modules and force usage of local npm repository.
+
+#### `--external-registry`
+
+Run `yarn add` commands without the `--registry` flag. This is helpful when using yarn 2/3 and you need to use `yarn config set npmRegistryServer http://localhost:4873` and `echo -e 'unsafeHttpWhitelist:\n - "localhost"' >> .yarnrc.yml` before running `gatsby-dev-cli`.

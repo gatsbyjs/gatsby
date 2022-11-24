@@ -1,4 +1,4 @@
-import { MachineConfig, Machine, assign } from "xstate"
+import { MachineConfig, createMachine, assign } from "xstate"
 import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
@@ -10,6 +10,7 @@ import { queryActions } from "./actions"
 const PAGE_QUERY_ENQUEUING_TIMEOUT = 50
 
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
+  predictableActionArguments: true,
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
   on: {
@@ -20,7 +21,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       actions: `trackRequestedQueryRun`,
     },
   },
-  context: {},
   states: {
     extractingQueries: {
       id: `extracting-queries`,
@@ -94,6 +94,15 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         src: `runPageQueries`,
         id: `running-page-queries`,
         onDone: {
+          target: `runningSliceQueries`,
+        },
+      },
+    },
+    runningSliceQueries: {
+      invoke: {
+        src: `runSliceQueries`,
+        id: `running-slice-queries`,
+        onDone: {
           target: `waitingForJobs`,
           actions: `flushPageData`,
         },
@@ -126,7 +135,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     },
   },
 }
-export const queryRunningMachine = Machine(queryStates, {
+export const queryRunningMachine = createMachine(queryStates, {
   actions: queryActions,
   services: queryRunningServices,
 })

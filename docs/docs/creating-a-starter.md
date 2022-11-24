@@ -77,9 +77,9 @@ Since starters are Gatsby projects, you can run `gatsby develop` or `gatsby buil
 
 ## Add your starter to the Gatsby Starter Library
 
-To make sure your starter is easily discoverable, you are welcome (but not required) to add it to the [Gatsby Starter Library](/contributing/submit-to-starter-library/). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
+To make sure your starter is easily discoverable, you are welcome (but not required) to add it to the [Gatsby Starter Library](/starters/submissions). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
 
 ## Further reading:
 
-- [How to create a Gatsby Starter](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
+- [How to create a Gatsby Starter](https://dev.to/emasuriano/how-to-create-a-gatsby-starter-42m8) by Emanuel Suriano
 - [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/) (including info on starters)

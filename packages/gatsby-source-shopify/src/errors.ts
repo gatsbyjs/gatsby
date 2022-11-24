@@ -9,9 +9,9 @@ export const pluginErrorCodes = {
 }
 
 export class OperationError extends Error {
-  public node: BulkOperationNode
+  public node: IBulkOperationNode
 
-  constructor(node: BulkOperationNode) {
+  constructor(node: IBulkOperationNode) {
     const { errorCode, id } = node
     super(`Operation ${id} failed with ${errorCode}`)
 

@@ -1,11 +1,22 @@
 # gatsby-source-graphql
 
+## ⚠️ Warning
+
+We do not recommend using this plugin if your content source has an existing source plugin (like [gatsby-source-wordpress](https://www.gatsbyjs.com/plugins/gatsby-source-wordpress/) for WordPress, [gatsby-source-contentful for Contentful](https://www.gatsbyjs.com/plugins/gatsby-source-contentful/), etc.) This plugin has [known limitations](#known-limitations), specifically in that it does not support Incremental Builds, CMS Preview, image optimizations, and lack of full support for the GraphQL data layer. Please only use it for simple proof-of-concepts and if there is not an [existing source plugin](https://www.gatsbyjs.com/plugins?=gatsby-source) for your data source.
+
+## Description
+
 Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas are stitched together by declaring an arbitrary type name that wraps the remote schema Query type (`typeName` below), and putting the remote schema under a field of the Gatsby GraphQL query (`fieldName` below).
 
 - [Example website](https://using-gatsby-source-graphql.netlify.app/)
 - [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
 
-This source plugin does **not** support [incremental builds, cloud builds](https://support.gatsbyjs.com/hc/en-us/articles/360053099253-Gatsby-Builds-Full-Incremental-and-Cloud), and preview (on Gatsby Cloud). Please be aware that build times will be signficantly slower than regular source plugins as the size of your site goes past a hundred or so pages.
+## Known Limitations
+
+- ⚠️ **Lack of support** for [Incremental Builds](https://support.gatsbyjs.com/hc/en-us/articles/360053099253-Gatsby-Builds-Full-Incremental-and-Cloud)
+  - This can cause significant build speed issues, particularly for larger, content-heavy sites
+- ⚠️ **Lack of support** for [CMS Preview](https://www.gatsbyjs.com/products/cloud/previews/) and real-time previews for content / API updates
+- ⚠️ **Lack of full support** for GraphQL data layer, including image optimization / image CDN, and directive support
 
 ## Install
 
@@ -154,7 +165,7 @@ module.exports = {
 
 ## Composing Apollo Links for production network setup
 
-Network requests can fail, return errors or take too long. Use [Apollo Link](https://www.apollographql.com/docs/link/) to
+Network requests can fail, return errors or take too long. Use [Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/) to
 add retries, error handling, logging and more to your GraphQL requests.
 
 Use the plugin's `createLink` option to add a custom Apollo Link to your GraphQL requests.
@@ -162,18 +173,18 @@ Use the plugin's `createLink` option to add a custom Apollo Link to your GraphQL
 You can compose different types of links, depending on the functionality you're trying to achieve.
 The most common links are:
 
-- `apollo-link-retry` for retrying queries that fail or time out
-- `apollo-link-error` for error handling
-- `apollo-link-http` for sending queries in http requests (used by default)
+- `@apollo/client/link/retry` for retrying queries that fail or time out
+- `@apollo/client/link/error` for error handling
+- `@apollo/client/link/http` for sending queries in http requests (used by default)
 
 For more explanation of how Apollo Links work together, check out this Medium article: [Productionizing Apollo Links](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb).
 
-Here's an example of using the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
+Here's an example of using the HTTP link with retries (using [@apollo/client/link/retry](https://www.apollographql.com/docs/react/api/link/apollo-link-retry/)):
 
 ```js
 // gatsby-config.js
-const { createHttpLink } = require(`apollo-link-http`)
-const { RetryLink } = require(`apollo-link-retry`)
+const { createHttpLink, from } = require(`@apollo/client`)
+const { RetryLink } = require(`@apollo/client/link/retry`)
 
 const retryLink = new RetryLink({
   delay: {
@@ -200,10 +211,7 @@ module.exports = {
         // `pluginOptions`: all plugin options
         //   (i.e. in this example object with keys `typeName`, `fieldName`, `url`, `createLink`)
         createLink: pluginOptions =>
-          ApolloLink.from([
-            retryLink,
-            createHttpLink({ uri: pluginOptions.url }),
-          ]),
+          from([retryLink, createHttpLink({ uri: pluginOptions.url })]),
       },
     },
   ],

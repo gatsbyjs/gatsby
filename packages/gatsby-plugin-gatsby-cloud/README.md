@@ -1,9 +1,11 @@
 # gatsby-plugin-gatsby-cloud
 
 Automatically generates a `_headers.json` file and a `_redirects.json` file at the root of the public folder to configure
-Headers and Redirects on Gatsby Cloud
+Headers and Redirects on Gatsby Cloud.
 
 By default, the plugin will add some basic security headers. You can easily add or replace headers through the plugin config.
+
+NOTE: This plugin is autoinstalled on Gatsby Cloud to ensure the latest compatible version, there is no need to install it locally unless you wish to add plugin config.
 
 ## Install
 
@@ -95,13 +97,13 @@ have to add to every path. To make this easier, the plugin provides the
 
 ### Redirects
 
-You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/actions/#createRedirect) action.
+You can create redirects using the [`createRedirect`](https://www.gatsbyjs.com/docs/actions/#createRedirect) action.
 
 In addition to the options provided by the Gatsby API, you can pass these options specific to this plugin:
 
 | Attribute    | Description                                                                                                                                                                                                                                              |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `statusCode` | Overrides the HTTP status code which is set to `302` by default or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. You can set one here. For example, `200` for rewrites, or `404` for a custom error page. |
+| `statusCode` | Overrides the HTTP status code which is set to `302` by default or `301` when [`isPermanent`](https://www.gatsbyjs.com/docs/actions/#createRedirect) is `true`. You can set one here. For example, `200` for rewrites, or `404` for a custom error page. |
 
 An example:
 
@@ -119,7 +121,7 @@ createRedirect({
 })
 ```
 
-Redirect rules are automatically added for [client only paths](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication). The plugin uses the [matchPath](https://www.gatsbyjs.org/docs/gatsby-internals-terminology/#matchpath) syntax to match all possible requests in the range of your client-side routes and serves the HTML file for the client-side route. Without it, only the exact route of the client-side route works.
+Redirect rules are automatically added for [client only paths](https://www.gatsbyjs.com/docs/client-only-routes-and-user-authentication). The plugin uses the [matchPath](https://www.gatsbyjs.com/docs/gatsby-internals-terminology/#matchpath) syntax to match all possible requests in the range of your client-side routes and serves the HTML file for the client-side route. Without it, only the exact route of the client-side route works.
 
 If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.
 

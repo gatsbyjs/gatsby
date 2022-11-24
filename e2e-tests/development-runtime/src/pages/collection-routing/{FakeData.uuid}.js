@@ -15,7 +15,7 @@ export default function FakeData({ data: { fake }, pageContext: { uuid } }) {
 }
 
 export const blogPostQuery = graphql`
-  query($id: String!) {
+  query FakeData($id: String!) {
     fake: fakeData(id: { eq: $id }) {
       fields {
         slug
