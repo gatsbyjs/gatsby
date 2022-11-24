@@ -137,7 +137,7 @@ describe(
       .first()
       .should($el => {
         expect($el.prop("tagName")).to.be.equal("IMG")
-        expect($el.prop("src")).to.contain("data:image/svg+xml,%3csvg")
+        expect($el.prop("src")).to.contain("data:image/jpeg;base64")
       })
     cy.get(".full [data-placeholder-image]")
       .first()

@@ -78,7 +78,7 @@ describe(`gatsby-plugin-image`, () => {
     testGatsbyPluginImage(`dominant-color`, hasColorPlaceholder)
   )
   it(`traced`, testConfig, () =>
-    testGatsbyPluginImage(`traced`, hasSVGPlaceholder)
+    testGatsbyPluginImage(`traced`, hasBase64Placeholder)
   )
   it(`blurred`, testConfig, () =>
     testGatsbyPluginImage(`blurred`, hasBase64Placeholder)
