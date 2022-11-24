@@ -126,8 +126,9 @@ describe(`remote-file`, () => {
     cy.get(".constrained_traced [data-placeholder-image]")
       .first()
       .should($el => {
-        expect($el.prop("tagName")).to.be.equal("IMG")
-        expect($el.prop("src")).to.contain("data:image/jpeg;base64")
+        // traced falls back to DOMINANT_COLOR
+        expect($el.prop("tagName")).to.be.equal("DIV")
+        expect($el).to.be.empty
       })
     cy.get(".full [data-placeholder-image]")
       .first()
