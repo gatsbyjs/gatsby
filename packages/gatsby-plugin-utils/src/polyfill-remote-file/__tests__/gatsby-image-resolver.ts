@@ -745,11 +745,11 @@ describe(`gatsbyImageData`, () => {
       cacheKey: `1`,
       directory: expect.stringContaining(cacheDir),
     })
-    expect(fixedResult?.placeholder).toMatchInlineSnapshot(`
-      Object {
-        "fallback": "rgb(56,40,40)",
-      }
-    `)
+    // placeholder doesn't exist, instead backgroundColor is used
+    expect(fixedResult?.placeholder).not.toBeDefined()
+    expect(fixedResult?.backgroundColor).toMatchInlineSnapshot(
+      `"rgb(56,40,40)"`
+    )
   })
 
   it(`should render avif, webp other format in this order`, async () => {
