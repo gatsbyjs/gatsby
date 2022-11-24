@@ -1,6 +1,13 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
-import { Potrace } from "@gatsbyjs/potrace"
+
+const warnSpy = jest.spyOn(console, `warn`).mockImplementation(() => {
+  // silence warnings
+})
+
+beforeEach(() => {
+  warnSpy.mockClear()
+})
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
@@ -63,6 +70,10 @@ describe(`pluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(true)
+
+    expect(warnSpy).toBeCalledWith(
+      `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+    )
   })
 
   it(`should validate the withWebp prop`, async () => {
@@ -126,6 +137,12 @@ describe(`pluginOptionsSchema`, () => {
         })
 
         expect(isValid).toBe(true)
+
+        if (booleanValue) {
+          expect(warnSpy).toBeCalledWith(
+            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+          )
+        }
       })
     })
 
@@ -133,7 +150,7 @@ describe(`pluginOptionsSchema`, () => {
       it(`should validate when all fields are set`, async () => {
         const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
           tracedSVG: {
-            turnPolicy: Potrace.TURNPOLICY_RIGHT,
+            turnPolicy: `TURNPOLICY_RIGHT`,
             turdSize: 50,
             alphaMax: 0.5,
             optCurve: false,
@@ -146,12 +163,16 @@ describe(`pluginOptionsSchema`, () => {
         })
 
         expect(isValid).toBe(true)
+
+        expect(warnSpy).toBeCalledWith(
+          `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+        )
       })
 
       it(`should validate when some fields are set`, async () => {
         const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
           tracedSVG: {
-            turnPolicy: Potrace.TURNPOLICY_RIGHT,
+            turnPolicy: `TURNPOLICY_RIGHT`,
             turdSize: 50,
             // alphaMax: 0.5,
             // optCurve: 0.2,
@@ -164,6 +185,10 @@ describe(`pluginOptionsSchema`, () => {
         })
 
         expect(isValid).toBe(true)
+
+        expect(warnSpy).toBeCalledWith(
+          `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+        )
       })
 
       it(`should fail validation when unknown fields are set`, async () => {
@@ -201,15 +226,19 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+          )
         })
 
         it.each([
-          Potrace.TURNPOLICY_BLACK,
-          Potrace.TURNPOLICY_WHITE,
-          Potrace.TURNPOLICY_LEFT,
-          Potrace.TURNPOLICY_RIGHT,
-          Potrace.TURNPOLICY_MINORITY,
-          Potrace.TURNPOLICY_MAJORITY,
+          `black`,
+          `white`,
+          `left`,
+          `TURNPOLICY_RIGHT`,
+          `minority`,
+          `majority`,
         ])(`supports setting by policy value (%s)`, async value => {
           const { isValid } = await testPluginOptionsSchema(
             pluginOptionsSchema,
@@ -219,6 +248,10 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+          )
         })
 
         it(`Doesn't support arbitrary string values`, async () => {
@@ -244,7 +277,7 @@ describe(`pluginOptionsSchema`, () => {
           [
             `THRESHOLD_AUTO`,
             {
-              value: Potrace.THRESHOLD_AUTO,
+              value: -1,
               expectedIsValid: true,
             },
           ],
@@ -280,6 +313,10 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+          )
         })
 
         // invalid settings
