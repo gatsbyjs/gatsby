@@ -119,6 +119,7 @@ function normalizeFormat(format: string): ImageFormat {
   return format as ImageFormat
 }
 
+let didShow = false
 export async function generateImageData({
   file,
   args,
@@ -128,7 +129,7 @@ export async function generateImageData({
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   args = mergeDefaults(args)
 
-  const {
+  let {
     layout = `constrained`,
     placeholder = `dominantColor`,
     tracedSVGOptions = {},
@@ -143,6 +144,16 @@ export async function generateImageData({
     args.breakpoints = args.breakpoints?.length
       ? args.breakpoints
       : DEFAULT_BREAKPOINTS
+  }
+
+  if (placeholder === `tracedSVG`) {
+    if (!didShow) {
+      console.trace(
+        `[gatsby-plugin-sharp image-data generateImageData] traceSVG is no longer supported, falling back to dominant_color. See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShow = true
+    }
+    placeholder = `dominantColor`
   }
 
   const {
