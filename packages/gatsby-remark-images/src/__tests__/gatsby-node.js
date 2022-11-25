@@ -79,7 +79,7 @@ describe(`pluginOptionsSchema`, () => {
     expect(isValid).toBe(true)
 
     expect(warnSpy).toBeCalledWith(
-      `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+      `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
     )
     expect(errors).toEqual([])
   })
@@ -175,7 +175,7 @@ describe(`pluginOptionsSchema`, () => {
 
         if (booleanValue) {
           expect(warnSpy).toBeCalledWith(
-            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
           )
         }
         expect(errors).toEqual([])
@@ -204,7 +204,7 @@ describe(`pluginOptionsSchema`, () => {
         expect(isValid).toBe(true)
 
         expect(warnSpy).toBeCalledWith(
-          `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+          `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
         )
         expect(errors).toEqual([])
       })
@@ -230,7 +230,7 @@ describe(`pluginOptionsSchema`, () => {
         expect(isValid).toBe(true)
 
         expect(warnSpy).toBeCalledWith(
-          `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+          `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
         )
         expect(errors).toEqual([])
       })
@@ -270,7 +270,7 @@ describe(`pluginOptionsSchema`, () => {
           expect(isValid).toBe(true)
 
           expect(warnSpy).toBeCalledWith(
-            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
           )
           expect(errors).toEqual([])
         })
@@ -293,7 +293,7 @@ describe(`pluginOptionsSchema`, () => {
           expect(isValid).toBe(true)
 
           expect(warnSpy).toBeCalledWith(
-            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
           )
           expect(errors).toEqual([])
         })
@@ -359,7 +359,7 @@ describe(`pluginOptionsSchema`, () => {
           expect(isValid).toBe(true)
 
           expect(warnSpy).toBeCalledWith(
-            `[gatsby-remark-images pluginOptions] traceSVG is no longer supported, falling back to blurred`
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
           )
           expect(errors).toEqual([])
         })
