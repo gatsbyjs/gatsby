@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@5.2.0/packages/gatsby-remark-graphviz) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Other Changes
+
+- fix(gatsby-remark-graphviz) Fix attribute application Fix [#36391](https://github.com/gatsbyjs/gatsby/issues/36391) ([7e92ab8](https://github.com/gatsbyjs/gatsby/commit/7e92ab8a029a53882ce14f079293c8591cccde19))
+
 ## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@5.1.0/packages/gatsby-remark-graphviz) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

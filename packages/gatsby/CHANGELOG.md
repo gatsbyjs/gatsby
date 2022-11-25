@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.2.0/packages/gatsby) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- Sanitize `length` on objects [#34253](https://github.com/gatsbyjs/gatsby/issues/34253) ([0889d31](https://github.com/gatsbyjs/gatsby/commit/0889d31ff3f5fdfbada06943640e0486de3b2262))
+- stale node manifests [#37091](https://github.com/gatsbyjs/gatsby/issues/37091) ([21cbfb3](https://github.com/gatsbyjs/gatsby/commit/21cbfb3ff608ce84834fae640c59fc534fc6bad0))
+- Fine-grained errors with type/category [#37070](https://github.com/gatsbyjs/gatsby/issues/37070) ([0c2b51c](https://github.com/gatsbyjs/gatsby/commit/0c2b51cac9b644df21d2b816dc5fa5c37bd349d4))
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+- Update internal links to website [#37052](https://github.com/gatsbyjs/gatsby/issues/37052) ([35703b6](https://github.com/gatsbyjs/gatsby/commit/35703b6e4db2d008a03f538097e05a70aae3c6b8))
+
+#### Other Changes
+
+- add onCreateNode params and example [#27503](https://github.com/gatsbyjs/gatsby/issues/27503) ([a259ff8](https://github.com/gatsbyjs/gatsby/commit/a259ff8e9c08b169cc767ea4f450ce3e509877bc))
+
 ## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.1.0/packages/gatsby) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

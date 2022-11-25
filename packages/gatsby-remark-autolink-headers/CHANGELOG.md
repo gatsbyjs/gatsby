@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@6.2.0/packages/gatsby-remark-autolink-headers) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
 ## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@6.1.0/packages/gatsby-remark-autolink-headers) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

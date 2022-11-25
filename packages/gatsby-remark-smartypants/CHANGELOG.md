@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-smartypants@6.2.0/packages/gatsby-remark-smartypants) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-remark-smartypants
+
 ## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-smartypants@6.1.0/packages/gatsby-remark-smartypants) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
