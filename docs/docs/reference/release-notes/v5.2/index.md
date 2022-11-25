@@ -44,6 +44,17 @@ If you’d like to know more or have any questions, head over to our [Github Dis
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-- TODO
+- [MichaelDeBoey](https://github.com/MichaelDeBoey): tests: Update pluginOptionsSchema tests [PR #27904](https://github.com/gatsbyjs/gatsby/pull/27904)
+- [sampittko](https://github.com/sampittko): docs: add onCreateNode params and example [PR #27503](https://github.com/gatsbyjs/gatsby/pull/27503)
+- [benomatis](https://github.com/benomatis): fix(gatsby-plugin-google-gtag): correct script to match google's current [PR #36993](https://github.com/gatsbyjs/gatsby/pull/36993)
+- [vse-volod](https://github.com/vse-volod): chore(docs): Update "Working with Images in Markdown" [PR #34621](https://github.com/gatsbyjs/gatsby/pull/34621)
+- [Nischal2015](https://github.com/Nischal2015): chore(docs): add missing argument [PR #37063](https://github.com/gatsbyjs/gatsby/pull/37063)
+- [aaronadamsCA](https://github.com/aaronadamsCA): chore(gatsby-plugin-image): Add `peerDependenciesMeta` [PR #35146](https://github.com/gatsbyjs/gatsby/pull/35146)
+- [hexpunk](https://github.com/hexpunk): fix(gatsby-remark-graphviz) Fix attribute application [PR #36391](https://github.com/gatsbyjs/gatsby/pull/36391)
+- [PeterDekkers](https://github.com/PeterDekkers): chore(gatsby-plugin-sitemap): Clarify filterPages' reliance on the excludes array [PR #37065](https://github.com/gatsbyjs/gatsby/pull/37065)
+- [aryans1319](https://github.com/aryans1319): chore(docs): Example `@link` directive with array (by elemMatch) [PR #36632](https://github.com/gatsbyjs/gatsby/pull/36632)
+- [Vacilando](https://github.com/Vacilando): feat(gatsby-source-drupal): Provide proxyUrl in addition to baseUrl to allow using CDN, API gateway, etc. [PR #36819](https://github.com/gatsbyjs/gatsby/pull/36819)
+- [iChenLei](https://github.com/iChenLei): fix(gatsby): Sanitize `length` on objects [PR #34253](https://github.com/gatsbyjs/gatsby/pull/34253)
+- [DarthFloopy](https://github.com/DarthFloopy): chore(gatsby-source-contentful): Add note about RichTextField to README [PR #36102](https://github.com/gatsbyjs/gatsby/pull/36102)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.2.0-next.0...gatsby@5.2.0
