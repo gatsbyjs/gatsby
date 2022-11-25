@@ -80,6 +80,7 @@ Object {
 
 exports[`production response formats returns json correctly 2`] = `
 Object {
+  "cache-control": "public, max-age=0, must-revalidate",
   "connection": "close",
   "content-length": "16",
   "content-type": "application/json; charset=utf-8",
@@ -92,6 +93,7 @@ exports[`production response formats returns text correctly 1`] = `"I am typescr
 
 exports[`production response formats returns text correctly 2`] = `
 Object {
+  "cache-control": "public, max-age=0, must-revalidate",
   "connection": "close",
   "content-length": "15",
   "content-type": "text/html; charset=utf-8",
