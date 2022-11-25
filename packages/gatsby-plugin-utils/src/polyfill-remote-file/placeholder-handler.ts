@@ -34,8 +34,7 @@ const PLACEHOLDER_TRACED_WIDTH = 200
 
 let tmpDir: string
 
-let didShow = false
-
+let didShowTraceSVGRemovalWarning = false
 const queue = Queue<
   undefined,
   {
@@ -69,11 +68,14 @@ const queue = Queue<
   })
 
   if (type === PlaceholderType.TRACED_SVG) {
-    if (!didShow) {
-      console.trace(
-        `[gatsby-plugin-utils placeholder-handler queue handler] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+    if (!didShowTraceSVGRemovalWarning) {
+      // we should not hit this code path, field resolver should fallback earlier, this is just in-case.
+      // also this falls back to BLURRED because the shape is compatible. DOMINANT_COLOR is not compatible
+      // and fallback to DOMINANT_COLOR need to happen very early on and not when already generating value
+      console.warn(
+        `"TRACED_SVG" placeholder is no longer supported, falling back to "BLURRED". See https://gatsby.dev/tracesvg-removal/`
       )
-      didShow = true
+      didShowTraceSVGRemovalWarning = true
     }
     type = PlaceholderType.BLURRED
   }

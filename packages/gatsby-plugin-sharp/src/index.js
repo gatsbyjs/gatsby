@@ -381,13 +381,13 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
-let didShow = false
+let didShowTraceSVGRemovalWarning = false
 async function traceSVG(args) {
-  if (!didShow) {
-    console.trace(
-      `[gatsby-plugin-sharp traceSVG()] traceSVG is no longer supported, falling back to base64`
+  if (!didShowTraceSVGRemovalWarning) {
+    console.warn(
+      `traceSVG placeholder generation is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
     )
-    didShow = true
+    didShowTraceSVGRemovalWarning = true
   }
 
   const { src } = await base64(args)
@@ -415,8 +415,7 @@ async function stats({ file, reporter }) {
   }
 }
 
-let didShowFluid = false
-
+let didShowTraceSVGRemovalWarningFluid = false
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
@@ -535,11 +534,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
   })
 
   if (options.generateTracedSVG && options.tracedSVG) {
-    if (!didShowFluid) {
-      console.trace(
-        `[gatsby-plugin-sharp fluid()] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+    if (!didShowTraceSVGRemovalWarningFluid) {
+      console.warn(
+        `tracedSVG placeholder generation for fluid images is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
       )
-      didShowFluid = true
+      didShowTraceSVGRemovalWarningFluid = true
     }
   }
 
@@ -633,8 +632,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 }
 
-let didShowFixed = false
-
+let didShowTraceSVGRemovalWarningFixed = false
 async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
@@ -688,11 +686,11 @@ async function fixed({ file, args = {}, reporter, cache }) {
   })
 
   if (options.generateTracedSVG && options.tracedSVG) {
-    if (!didShowFixed) {
-      console.trace(
-        `[gatsby-plugin-sharp fixed()] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+    if (!didShowTraceSVGRemovalWarningFixed) {
+      console.warn(
+        `tracedSVG placeholder generation for fixed images is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
       )
-      didShowFixed = true
+      didShowTraceSVGRemovalWarningFixed = true
     }
   }
 

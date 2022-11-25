@@ -66,8 +66,7 @@ function toArray(buf) {
   return arr
 }
 
-let didShowFixed = false
-
+let didShowTraceSVGRemovalWarningFixed = false
 const fixedNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -83,11 +82,11 @@ const fixedNodeType = ({
         tracedSVG: {
           type: GraphQLString,
           resolve: parent => {
-            if (!didShowFixed) {
-              console.trace(
-                `[gatsby-transformer-sharp fixed.tracedSVG] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+            if (!didShowTraceSVGRemovalWarningFixed) {
+              console.warn(
+                `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fixed processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
               )
-              didShowFixed = true
+              didShowTraceSVGRemovalWarningFixed = true
             }
             return parent.base64
           },
@@ -229,8 +228,7 @@ const fixedNodeType = ({
   }
 }
 
-let didShowFluid = false
-
+let didShowTraceSVGRemovalWarningFluid = false
 const fluidNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -246,11 +244,11 @@ const fluidNodeType = ({
         tracedSVG: {
           type: GraphQLString,
           resolve: parent => {
-            if (!didShowFluid) {
-              console.trace(
-                `[gatsby-transformer-sharp fluid.tracedSVG] traceSVG is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+            if (!didShowTraceSVGRemovalWarningFluid) {
+              console.warn(
+                `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fluid processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
               )
-              didShowFluid = true
+              didShowTraceSVGRemovalWarningFluid = true
             }
             return parent.base64
           },
@@ -401,6 +399,7 @@ const fluidNodeType = ({
   }
 }
 
+let didShowTraceSVGRemovalWarningGatsbyImageData = false
 const imageNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -531,11 +530,11 @@ const imageNodeType = ({
       }
 
       if (fieldArgs?.placeholder === `tracedSVG`) {
-        if (!didShow) {
-          console.trace(
-            `[gatsby-transformer-sharp gatsbyImageData resolver] traceSVG is no longer supported, falling back to dominantColor`
+        if (!didShowTraceSVGRemovalWarningGatsbyImageData) {
+          console.warn(
+            `"TRACED_SVG" placeholder argument value is no longer supported (used in ImageSharp.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
           )
-          didShow = true
+          didShowTraceSVGRemovalWarningGatsbyImageData = true
         }
         fieldArgs.placeholder = `dominantColor`
       }
@@ -553,15 +552,13 @@ const imageNodeType = ({
   }
 }
 
-let didShow = false
-
 /**
  * Keeps track of asynchronous file copy to prevent sequence errors in the
  * underlying fs-extra module during parallel copies of the same file
  */
 const inProgressCopy = new Set()
 
-let didShowResized = false
+let didShowTraceSVGRemovalWarningResize = false
 
 const createFields = ({
   pathPrefix,
@@ -648,11 +645,11 @@ const createFields = ({
           tracedSVG: {
             type: GraphQLString,
             resolve: async parent => {
-              if (!didShowResized) {
-                console.trace(
-                  `[gatsby-transformer-sharp resize resolver] traceSVG is no longer supported, falling back to blurred`
+              if (!didShowTraceSVGRemovalWarningResize) {
+                console.warn(
+                  `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.resize processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
                 )
-                didShowResized = true
+                didShowTraceSVGRemovalWarningResize = true
               }
               const { src } = await base64({
                 file: parent.file,

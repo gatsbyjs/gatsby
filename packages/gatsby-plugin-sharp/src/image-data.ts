@@ -119,7 +119,7 @@ function normalizeFormat(format: string): ImageFormat {
   return format as ImageFormat
 }
 
-let didShow = false
+let didShowTraceSVGRemovalWarning = false
 export async function generateImageData({
   file,
   args,
@@ -147,11 +147,11 @@ export async function generateImageData({
   }
 
   if (placeholder === `tracedSVG`) {
-    if (!didShow) {
-      console.trace(
-        `[gatsby-plugin-sharp image-data generateImageData] traceSVG is no longer supported, falling back to dominant_color. See https://gatsby.dev/tracesvg-removal/`
+    if (!didShowTraceSVGRemovalWarning) {
+      console.warn(
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
       )
-      didShow = true
+      didShowTraceSVGRemovalWarning = true
     }
     placeholder = `dominantColor`
   }

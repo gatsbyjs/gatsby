@@ -252,8 +252,7 @@ export function generateImageSource(
   return { width, height, format: toFormat, src }
 }
 
-let didShow = false
-
+let didShowTraceSVGRemovalWarning = false
 export async function resolveGatsbyImageData(
   image,
   options,
@@ -289,11 +288,11 @@ export async function resolveGatsbyImageData(
   options = doMergeDefaults(options, defaults)
 
   if (options.placeholder === `tracedSVG`) {
-    if (!didShow) {
-      console.trace(
-        `[gatsby-source-contentful resolveGatsbytImageData] traceSVG is no longer supported, falling back to dominantColor`
+    if (!didShowTraceSVGRemovalWarning) {
+      console.warn(
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in ContentfulAsset.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
       )
-      didShow = true
+      didShowTraceSVGRemovalWarning = true
     }
     options.placeholder = `dominantColor`
   }
