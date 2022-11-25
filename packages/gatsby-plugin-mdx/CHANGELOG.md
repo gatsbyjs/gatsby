@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.2.0/packages/gatsby-plugin-mdx) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Chores
+
+- Clarify MDX sourcing instructions [#37088](https://github.com/gatsbyjs/gatsby/issues/37088) ([ce0d8b2](https://github.com/gatsbyjs/gatsby/commit/ce0d8b2e6e976df3c2eab73fbc2ddf7422760377))
+
 ## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.1.0/packages/gatsby-plugin-mdx) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

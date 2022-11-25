@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.0/packages/gatsby-source-wordpress) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Features
+
+- MediaItem.excludeFieldNames / auto exclude interface types that have no fields [#37062](https://github.com/gatsbyjs/gatsby/issues/37062) ([0501ed3](https://github.com/gatsbyjs/gatsby/commit/0501ed3b02cec8e19953bbe5cb90766eed996823))
+
+#### Bug Fixes
+
+- Fine-grained errors with type/category [#37070](https://github.com/gatsbyjs/gatsby/issues/37070) ([0c2b51c](https://github.com/gatsbyjs/gatsby/commit/0c2b51cac9b644df21d2b816dc5fa5c37bd349d4))
+
+#### Chores
+
+- make duplicate node message clearer [#37077](https://github.com/gatsbyjs/gatsby/issues/37077) ([62e0e13](https://github.com/gatsbyjs/gatsby/commit/62e0e13bed091e5a66cc38582f557b1e4955ee07))
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
 ## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.1.0/packages/gatsby-source-wordpress) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
