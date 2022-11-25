@@ -5,12 +5,14 @@ describe(`fixed`, () => {
     cy.visit(`/static-image/traced`).waitForRouteChange()
   })
 
-  it(`renders a traced svg`, () => {
+  it(`traced svg (falls back to DOMINANT_COLOR)`, () => {
     cy.getTestElement(tracedTestId)
-      .find(`.gatsby-image-wrapper > img`)
-      .should(`have.attr`, `src`)
-      .and(src => {
-        ;[`data:image/svg+xml`].forEach(part => expect(src).to.include(part))
+      .find(`.gatsby-image-wrapper > [data-placeholder-image]`)
+      .first()
+      .should($el => {
+        // traced falls
+        expect($el.prop("tagName")).to.be.equal("DIV")
+        expect($el).to.be.empty
       })
   })
 
