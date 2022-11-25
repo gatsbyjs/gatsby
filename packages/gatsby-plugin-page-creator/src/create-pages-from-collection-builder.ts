@@ -1,35 +1,35 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
-import { createPath } from "gatsby-page-utils"
 import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { reverseLookupParams } from "./extract-query"
-import { getMatchPath } from "gatsby-core-utils"
-import { getCollectionRouteParams } from "./get-collection-route-params"
-import { derivePath } from "./derive-path"
+import type { TrailingSlash } from "gatsby-page-utils"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
 import { CODES, prefixId } from "./error-utils"
+import { getPluginInstance } from "./tracked-nodes-state"
+import { extractModel } from "./path-utils"
+
+interface ICreatePagesFromCollectionBuilderArgs {
+  filePath: string
+  absolutePath: string
+  pagesPath: string
+  actions: Actions
+  graphql: CreatePagesArgs["graphql"]
+  reporter: Reporter
+  trailingSlash: TrailingSlash
+  slugifyOptions?: ISlugifyOptions
+}
 
 export async function createPagesFromCollectionBuilder(
-  filePath: string,
-  absolutePath: string,
-  actions: Actions,
-  graphql: CreatePagesArgs["graphql"],
-  reporter: Reporter,
-  slugifyOptions?: ISlugifyOptions
+  args: ICreatePagesFromCollectionBuilderArgs
 ): Promise<void> {
+  const { filePath, absolutePath, pagesPath, actions, graphql, reporter } =
+    args || {}
+
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
-      createPagesFromCollectionBuilder(
-        filePath,
-        absolutePath,
-        actions,
-        graphql,
-        reporter,
-        slugifyOptions
-      )
+      createPagesFromCollectionBuilder(args)
     )
     return
   }
@@ -40,14 +40,7 @@ export async function createPagesFromCollectionBuilder(
   // 1.a  If the query string is not findable, we can't move on. So we stop and watch
   if (queryString === null) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
-      createPagesFromCollectionBuilder(
-        filePath,
-        absolutePath,
-        actions,
-        graphql,
-        reporter,
-        slugifyOptions
-      )
+      createPagesFromCollectionBuilder(args)
     )
     return
   }
@@ -75,15 +68,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       [],
       actions,
       reporter,
-      () =>
-        createPagesFromCollectionBuilder(
-          filePath,
-          absolutePath,
-          actions,
-          graphql,
-          reporter,
-          slugifyOptions
-        )
+      () => createPagesFromCollectionBuilder(args)
     )
 
     return
@@ -91,7 +76,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
   // 2. Get the nodes out of the data. We very much expect data to come back in a known shape:
   //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } }
-  const nodes = (Object.values(Object.values(data)[0])[0] as any) as Array<
+  const nodes = Object.values(Object.values(data)[0])[0] as any as Array<
     Record<string, Record<string, unknown>>
   >
 
@@ -105,46 +90,34 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
   let derivePathErrors = 0
 
-  const knownPagePaths = new Set<string>()
+  // Start listening for changes to this type
+  const pluginInstance = getPluginInstance({ path: pagesPath })
+  if (!pluginInstance.createAPageFromNode) {
+    throw new Error(`Expected pluginInstance.createAPageFromNode to be defined`)
+  }
+  const nodeType = extractModel(absolutePath)
+
+  let listOfTemplateFilePaths = pluginInstance.trackedTypes.get(nodeType)
+  if (!listOfTemplateFilePaths) {
+    listOfTemplateFilePaths = new Set()
+    pluginInstance.trackedTypes.set(nodeType, listOfTemplateFilePaths)
+  }
+  listOfTemplateFilePaths.add(absolutePath)
 
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
   //    the watcher will use this data to delete the pages if the query changes significantly.
   const paths: Array<string> = []
-  nodes.forEach((node: Record<string, Record<string, unknown>>) => {
-    // URL path for the component and node
-    const { derivedPath, errors } = derivePath(
-      filePath,
+  for (const node of nodes) {
+    const createPageResult = pluginInstance.createAPageFromNode({
+      absolutePath,
       node,
-      reporter,
-      slugifyOptions
-    )
-    const path = createPath(derivedPath)
-    // We've already created a page with this path
-    if (knownPagePaths.has(path)) {
-      return
-    }
-    knownPagePaths.add(path)
-    // Params is supplied to the FE component on props.params
-    const params = getCollectionRouteParams(createPath(filePath), path)
-    // nodeParams is fed to the graphql query for the component
-    const nodeParams = reverseLookupParams(node, absolutePath)
-    // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
-    const matchPath = getMatchPath(path)
-
-    actions.createPage({
-      path: path,
-      matchPath,
-      component: absolutePath,
-      context: {
-        ...nodeParams,
-        __params: params,
-      },
     })
 
-    derivePathErrors += errors
-
-    paths.push(path)
-  })
+    if (createPageResult) {
+      derivePathErrors += createPageResult.errors
+      paths.push(createPageResult.path)
+    }
+  }
 
   if (derivePathErrors > 0) {
     reporter.panicOnBuild({
@@ -161,14 +134,6 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     paths,
     actions,
     reporter,
-    () =>
-      createPagesFromCollectionBuilder(
-        filePath,
-        absolutePath,
-        actions,
-        graphql,
-        reporter,
-        slugifyOptions
-      )
+    () => createPagesFromCollectionBuilder(args)
   )
 }

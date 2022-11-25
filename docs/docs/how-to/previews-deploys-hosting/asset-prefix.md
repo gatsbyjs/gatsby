@@ -6,11 +6,9 @@ Gatsby produces static content that can be hosted _anywhere_ at scale in a cost-
 
 In some circumstances you may want to deploy _assets_ (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. Typically this is when you're required to use a dedicated CDN for assets or need to follow company-specific hosting policies.
 
-This `assetPrefix` functionality is available starting in gatsby@2.4.0, so that you can seamlessly use Gatsby with assets hosted from a separate domain. To use this functionality, ensure that your version of `gatsby` specified in `package.json` is at least `2.4.0`.
-
 ## Usage
 
-### Adding to `gatsby-config.js`
+### Adding to `gatsby-config`
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -20,12 +18,16 @@ module.exports = {
 
 One more step - when you build out this application, you need to add a flag so that Gatsby picks up this option.
 
-### The `--prefix-paths` flag
+### Enable prefixing for builds
 
-When building with an `assetPrefix`, you require a `--prefix-paths` flag. If this flag is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure you build out successfully, use the following command:
+You must explicitly enable prefixing for a build by either adding the `--prefix-paths` flag or setting the `PREFIX_PATHS` environment variable. If this flag or env variable is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure you build out successfully, do one of the following:
 
 ```shell
 gatsby build --prefix-paths
+```
+
+```shell
+PREFIX_PATHS=true gatsby build
 ```
 
 That's it! You have an application that is ready to have its assets deployed from a CDN and its core files (e.g. HTML files) can be hosted on a separate domain.
@@ -76,13 +78,13 @@ Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild
 
 The [`pathPrefix`](/docs/how-to/previews-deploys-hosting/path-prefix/) feature can be thought of as semi-related to this feature. That feature allows _all_ your website content to be prefixed with some constant prefix, for example you may want your blog to be hosted from `/blog` rather than the project root.
 
-This feature works seamlessly with `pathPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix.
+This feature works seamlessly with `assetPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix.
 
 ### Usage with `gatsby-plugin-offline`
 
 When using a custom asset prefix with `gatsby-plugin-offline`, your assets can still be cached offline. However, to ensure the plugin works correctly, there are a few things you need to do.
 
 1. Your asset server needs to have the `Access-Control-Allow-Origin` header set either to `*` or your site's origin.
-2. Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
+1. Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
 
    You can find most of these by looking for the `self.__precacheManifest` variable in your generated `sw.js`. Remember to also include `sw.js` itself, and any icons referenced in your `manifest.webmanifest` if you have one. To check your service worker is functioning as expected, look in Application → Service Workers in your browser dev tools, and check for any failed resources in the Console/Network tabs.

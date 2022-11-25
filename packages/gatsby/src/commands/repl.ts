@@ -13,19 +13,18 @@ module.exports = async (program: IProgram): Promise<void> => {
   await bootstrap({ program })
 
   // get all the goodies from the store
-  const {
-    schema,
-    config,
-    babelrc,
-    pages,
-    components,
-    staticQueryComponents,
-  } = store.getState()
+  const { schema, config, babelrc, pages, components, staticQueryComponents } =
+    store.getState()
 
   const nodes = getNodes()
 
   const query = async (query: string): Promise<void> => {
-    const result = await graphql(schema, query, {}, {}, {})
+    const result = await graphql({
+      schema,
+      source: query,
+      rootValue: {},
+      contextValue: {},
+    })
     console.log(`query result: ${JSON.stringify(result)}`)
   }
 

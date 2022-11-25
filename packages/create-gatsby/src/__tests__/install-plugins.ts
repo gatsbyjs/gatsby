@@ -1,9 +1,9 @@
 import { installPlugins } from "../install-plugins"
-import { reporter } from "../reporter"
-import { requireResolve } from "../require-utils"
+import { reporter } from "../utils/reporter"
+import { requireResolve } from "../utils/require-utils"
 
-jest.mock(`../require-utils`)
-jest.mock(`../reporter`)
+jest.mock(`../utils/require-utils`)
+jest.mock(`../utils/reporter`)
 
 jest.mock(
   `somewhere-virtually-existing`,

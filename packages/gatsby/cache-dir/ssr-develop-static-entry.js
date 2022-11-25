@@ -1,14 +1,20 @@
+/* global BROWSER_ESM_ONLY */
 import React from "react"
-import fs from "fs"
+import fs from "fs-extra"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
-import apiRunner from "./api-runner-ssr"
+import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { ServerLocation, Router, isRedirect } from "@reach/router"
+import { ServerLocation, Router, isRedirect } from "@gatsbyjs/reach-router"
+import { headHandlerForSSR } from "./head/head-export-handler-for-ssr"
+import { getStaticQueryResults } from "./loader"
+
+// prefer default export if available
+const preferDefault = m => (m && m.default) || m
 
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
@@ -47,7 +53,13 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
+export default async function staticPage({
+  pagePath,
+  isClientOnlyPage,
+  publicDir,
+  error,
+  serverData,
+}) {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -84,7 +96,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     ])
   }
 
-  const generateBodyHTML = () => {
+  const generateBodyHTML = async () => {
     const setHeadComponents = components => {
       headComponents = headComponents.concat(components)
     }
@@ -150,7 +162,17 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
 
     const pageData = getPageData(pagePath)
 
-    const { componentChunkName, staticQueryHashes = [] } = pageData
+    const { componentChunkName } = pageData
+
+    const pageComponent = await syncRequires.ssrComponents[componentChunkName]
+
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      staticQueryContext: getStaticQueryResults(),
+      pageData,
+      pagePath,
+    })
 
     let scriptsAndStyles = flatten(
       [`commons`].map(chunkKey => {
@@ -191,7 +213,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
       })
     )
       .filter(s => isObject(s))
-      .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
+      .sort((s1, _s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
 
     scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
 
@@ -213,34 +235,22 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
           />
         )
       })
-
-    const createElement = React.createElement
-
     class RouteHandler extends React.Component {
       render() {
         const props = {
           ...this.props,
           ...pageData.result,
+          serverData,
           params: {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
         }
 
-        let pageElement
-        if (
-          syncRequires.ssrComponents[componentChunkName] &&
-          !isClientOnlyPage
-        ) {
-          pageElement = createElement(
-            syncRequires.ssrComponents[componentChunkName],
-            props
-          )
-        } else {
-          // If this is a client-only page or the pageComponent didn't finish
-          // compiling yet, just render an empty component.
-          pageElement = () => null
-        }
+        const pageElement = React.createElement(
+          preferDefault(syncRequires.ssrComponents[componentChunkName]),
+          props
+        )
 
         const wrappedPage = apiRunner(
           `wrapPageElement`,
@@ -255,14 +265,15 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
       }
     }
 
-    const routerElement = (
-      <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-        <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
-          <RouteHandler path="/*" />
-        </Router>
-        <div {...RouteAnnouncerProps} />
-      </ServerLocation>
-    )
+    const routerElement =
+      syncRequires.ssrComponents[componentChunkName] && !isClientOnlyPage ? (
+        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+          <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
+            <RouteHandler path="/*" />
+          </Router>
+          <div {...RouteAnnouncerProps} />
+        </ServerLocation>
+      ) : null
 
     const bodyComponent = apiRunner(
       `wrapRootElement`,
@@ -274,7 +285,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     ).pop()
 
     // Let the site or plugin render the page component.
-    apiRunner(`replaceRenderer`, {
+    await apiRunnerAsync(`replaceRenderer`, {
       bodyComponent,
       replaceBodyHTMLString,
       setHeadComponents,
@@ -320,7 +331,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     return bodyHtml
   }
 
-  const bodyStr = generateBodyHTML()
+  const bodyStr = await generateBodyHTML()
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
@@ -331,14 +342,22 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     htmlAttributes,
     bodyAttributes,
     preBodyComponents,
-    postBodyComponents: postBodyComponents.concat([
-      <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
-      <script key={`framework`} src="/framework.js" />,
-      <script key={`commons`} src="/commons.js" />,
-    ]),
+    postBodyComponents: postBodyComponents.concat(
+      [
+        !BROWSER_ESM_ONLY && (
+          <script key={`polyfill`} src="/polyfill.js" noModule={true} />
+        ),
+        <script key={`framework`} src="/framework.js" />,
+        <script key={`commons`} src="/commons.js" />,
+      ].filter(Boolean)
+    ),
   })
   let htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
-  callback(null, htmlStr)
+  return htmlStr
+}
+
+export function getPageChunk({ componentChunkName }) {
+  return syncRequires.ssrComponents[componentChunkName]
 }

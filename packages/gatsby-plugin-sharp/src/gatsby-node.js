@@ -6,19 +6,22 @@ const {
   _lazyJobsEnabled,
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
-const { slash } = require(`gatsby-core-utils`)
+const { slash } = require(`gatsby-core-utils/path`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
-let coreSupportsOnPluginInit
-try {
-  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
-    `unstable_onPluginInit`
+function removeCachedValue(cache, key) {
+  if (cache?.del) {
+    // if cache expose ".del" method directly on public interface
+    return cache.del(key)
+  } else if (cache?.cache?.del) {
+    // legacy - using internal cache instance and calling ".del" on it directly
+    return cache.cache.del(key)
+  }
+  return Promise.reject(
+    new Error(`Cache instance doesn't expose ".del" function`)
   )
-} catch (e) {
-  coreSupportsOnPluginInit = false
 }
 
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
@@ -47,20 +50,18 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
     // and postpone all other operations
     // This speeds up the loading of lazy images in the browser and
     // also helps to free up the browser connection queue earlier.
-    const {
-      matchingJob,
-      jobWithRemainingOperations,
-    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
+    const { matchingJob, jobWithRemainingOperations } =
+      splitOperationsByRequestedFile(cacheResult, pathOnDisk)
 
     await _unstable_createJob(matchingJob, { reporter })
-    await cache.cache.del(decodedURI)
+    await removeCachedValue(cache, decodedURI)
 
     if (jobWithRemainingOperations.args.operations.length > 0) {
       // There are still some operations pending for this job - replace the cached job
-      await cache.cache.set(jobContentDigest, jobWithRemainingOperations)
+      await cache.set(jobContentDigest, jobWithRemainingOperations)
     } else {
       // No operations left to process - purge the cache
-      await cache.cache.del(jobContentDigest)
+      await removeCachedValue(cache, jobContentDigest)
     }
 
     return res.sendFile(pathOnDisk)
@@ -114,12 +115,10 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
   }
 }
 
-if (coreSupportsOnPluginInit) {
-  // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
-  exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
-    setActions(actions)
-    setPluginOptions(pluginOptions)
-  }
+// to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
+exports.onPluginInit = async ({ actions }, pluginOptions) => {
+  setActions(actions)
+  setPluginOptions(pluginOptions)
 }
 
 exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
@@ -209,7 +208,12 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
     stripMetadata: Joi.boolean().default(true),
     defaultQuality: Joi.number().default(50),
+    // TODO(v5): Remove deprecated failOnError option
     failOnError: Joi.boolean().default(true),
+    failOn: Joi.any()
+      .valid(`none`, `truncated`, `error`, `warning`)
+      .default(`warning`)
+      .description(`Level of sensitivity to invalid images`),
     defaults: Joi.object({
       formats: Joi.array().items(
         Joi.string().valid(`auto`, `png`, `jpg`, `webp`, `avif`)
@@ -233,4 +237,24 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     }).description(
       `Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/`
     ),
+  }).custom(value => {
+    const shouldNotFailOnError = !value.failOnError
+
+    if (shouldNotFailOnError) {
+      // show this warning only once in main process
+      if (!process.env.GATSBY_WORKER_ID) {
+        console.warn(
+          `[gatsby-plugin-sharp]: The "failOnError" option is deprecated. Please use "failOn" instead.`
+        )
+      }
+
+      return {
+        ...value,
+        failOn: `none`,
+      }
+    }
+
+    return {
+      ...value,
+    }
   })

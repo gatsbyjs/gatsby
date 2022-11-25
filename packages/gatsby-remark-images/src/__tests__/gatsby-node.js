@@ -1,6 +1,6 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
-import { Potrace } from "potrace"
+import { Potrace } from "@gatsbyjs/potrace"
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
@@ -9,11 +9,11 @@ describe(`pluginOptionsSchema`, () => {
       `"linkImagesToOriginal" must be a boolean`,
       `"showCaptions" must be one of [boolean, array]`,
       `"markdownCaptions" must be a boolean`,
-      `"sizeByPixelDensity" must be a boolean`,
       `"wrapperStyle" must be one of [object, string]`,
       `"backgroundColor" must be a string`,
       `"quality" must be a number`,
       `"withWebp" must be one of [object, boolean]`,
+      `"withAvif" must be one of [object, boolean]`,
       `"tracedSVG" must be one of [boolean, object]`,
       `"loading" must be one of [lazy, eager, auto]`,
       `"decoding" must be one of [async, sync, auto]`,
@@ -22,52 +22,72 @@ describe(`pluginOptionsSchema`, () => {
       `"srcSetBreakpoints" must be an array`,
     ]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      maxWidth: `This should be a number`,
-      linkImagesToOriginal: `This should be a boolean`,
-      showCaptions: `This should be a boolean`,
-      markdownCaptions: `This should be a boolean`,
-      sizeByPixelDensity: `This should be a boolean`,
-      wrapperStyle: true,
-      backgroundColor: 123,
-      quality: `This should be a number`,
-      withWebp: `This should be a boolean or an object`,
-      tracedSVG: `This should be a boolean`,
-      loading: `This should be lazy, eager or auto`,
-      decoding: `This should be async, sync or auto`,
-      disableBgImageOnAlpha: `This should be a boolean`,
-      disableBgImage: `This should be a boolean`,
-      srcSetBreakpoints: `This should be an array`,
-    })
+    const { errors, isValid } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        maxWidth: `This should be a number`,
+        linkImagesToOriginal: `This should be a boolean`,
+        showCaptions: `This should be a boolean`,
+        markdownCaptions: `This should be a boolean`,
+        wrapperStyle: true,
+        backgroundColor: 123,
+        quality: `This should be a number`,
+        withWebp: `This should be a boolean or an object`,
+        withAvif: `This should be a boolean or an object`,
+        tracedSVG: `This should be a boolean`,
+        loading: `This should be lazy, eager or auto`,
+        decoding: `This should be async, sync or auto`,
+        disableBgImageOnAlpha: `This should be a boolean`,
+        disableBgImage: `This should be a boolean`,
+        srcSetBreakpoints: `This should be an array`,
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate the schema`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      maxWidth: 700,
-      linkImagesToOriginal: false,
-      showCaptions: true,
-      markdownCaptions: true,
-      sizeByPixelDensity: true,
-      wrapperStyle: { marginTop: `1rem`, padding: `1.5rem`, color: `blue` },
-      backgroundColor: `red`,
-      quality: 77,
-      withWebp: true,
-      tracedSVG: true,
-      loading: `eager`,
-      decoding: `async`,
-      disableBgImageOnAlpha: true,
-      disableBgImage: true,
-      srcSetBreakpoints: [400, 600, 800],
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        maxWidth: 700,
+        linkImagesToOriginal: false,
+        showCaptions: true,
+        markdownCaptions: true,
+        wrapperStyle: { marginTop: `1rem`, padding: `1.5rem`, color: `blue` },
+        backgroundColor: `red`,
+        quality: 77,
+        withWebp: true,
+        withAvif: true,
+        tracedSVG: true,
+        loading: `eager`,
+        decoding: `async`,
+        disableBgImageOnAlpha: true,
+        disableBgImage: true,
+        srcSetBreakpoints: [400, 600, 800],
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 
   it(`should validate the withWebp prop`, async () => {
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        withWebp: { quality: 100 },
+      }
+    )
+
+    expect(isValid).toBe(true)
+    expect(errors).toEqual([])
+  })
+
+  it(`should validate the withAvif prop`, async () => {
     const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      withWebp: { quality: 100 },
+      withAvif: { quality: 100 },
     })
 
     expect(isValid).toBe(true)
@@ -75,35 +95,55 @@ describe(`pluginOptionsSchema`, () => {
 
   describe(`allow to use array of valid strings for "showCaptions"`, () => {
     it(`["title", "alt"]`, async () => {
-      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        showCaptions: [`title`, `alt`],
-      })
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          showCaptions: [`title`, `alt`],
+        }
+      )
 
       expect(isValid).toBe(true)
+      expect(errors).toEqual([])
     })
 
     it(`["title"]`, async () => {
-      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        showCaptions: [`title`],
-      })
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          showCaptions: [`title`],
+        }
+      )
 
       expect(isValid).toBe(true)
+      expect(errors).toEqual([])
     })
 
     it(`["alt"]`, async () => {
-      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        showCaptions: [`alt`],
-      })
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          showCaptions: [`alt`],
+        }
+      )
 
       expect(isValid).toBe(true)
+      expect(errors).toEqual([])
     })
 
     it(`["not valid"] (should fail validation)`, async () => {
-      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        showCaptions: [`not valid`],
-      })
+      const expectedErrors = [
+        `"showCaptions[0]" does not match any of the allowed types`,
+      ]
+
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          showCaptions: [`not valid`],
+        }
+      )
 
       expect(isValid).toBe(false)
+      expect(errors).toEqual(expectedErrors)
     })
   })
 
@@ -113,52 +153,66 @@ describe(`pluginOptionsSchema`, () => {
         [`true`, true],
         [`false`, false],
       ])(`%s`, async (_title, booleanValue) => {
-        const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-          tracedSVG: booleanValue,
-        })
+        const { isValid, errors } = await testPluginOptionsSchema(
+          pluginOptionsSchema,
+          {
+            tracedSVG: booleanValue,
+          }
+        )
 
         expect(isValid).toBe(true)
+        expect(errors).toEqual([])
       })
     })
 
     describe(`supports object notation`, () => {
       it(`should validate when all fields are set`, async () => {
-        const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-          tracedSVG: {
-            turnPolicy: Potrace.TURNPOLICY_RIGHT,
-            turdSize: 50,
-            alphaMax: 0.5,
-            optCurve: false,
-            optTolerance: 0.9,
-            threshold: 230,
-            blackOnWhite: false,
-            color: `red`,
-            background: `green`,
-          },
-        })
+        const { isValid, errors } = await testPluginOptionsSchema(
+          pluginOptionsSchema,
+          {
+            tracedSVG: {
+              turnPolicy: Potrace.TURNPOLICY_RIGHT,
+              turdSize: 50,
+              alphaMax: 0.5,
+              optCurve: false,
+              optTolerance: 0.9,
+              threshold: 230,
+              blackOnWhite: false,
+              color: `red`,
+              background: `green`,
+            },
+          }
+        )
 
         expect(isValid).toBe(true)
+        expect(errors).toEqual([])
       })
 
       it(`should validate when some fields are set`, async () => {
-        const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-          tracedSVG: {
-            turnPolicy: Potrace.TURNPOLICY_RIGHT,
-            turdSize: 50,
-            // alphaMax: 0.5,
-            // optCurve: 0.2,
-            // optTolerance: 0.9,
-            // threshold: 230,
-            // blackOnWhite: false,
-            color: `red`,
-            background: `green`,
-          },
-        })
+        const { isValid, errors } = await testPluginOptionsSchema(
+          pluginOptionsSchema,
+          {
+            tracedSVG: {
+              turnPolicy: Potrace.TURNPOLICY_RIGHT,
+              turdSize: 50,
+              // alphaMax: 0.5,
+              // optCurve: 0.2,
+              // optTolerance: 0.9,
+              // threshold: 230,
+              // blackOnWhite: false,
+              color: `red`,
+              background: `green`,
+            },
+          }
+        )
 
         expect(isValid).toBe(true)
+        expect(errors).toEqual([])
       })
 
       it(`should fail validation when unknown fields are set`, async () => {
+        const expectedErrors = [`"tracedSVG.foo" is not allowed`]
+
         const { isValid, errors } = await testPluginOptionsSchema(
           pluginOptionsSchema,
           {
@@ -169,11 +223,7 @@ describe(`pluginOptionsSchema`, () => {
         )
 
         expect(isValid).toBe(false)
-        expect(errors).toMatchInlineSnapshot(`
-          Array [
-            "\\"tracedSVG.foo\\" is not allowed",
-          ]
-        `)
+        expect(errors).toEqual(expectedErrors)
       })
 
       describe(`turnPolicy variants`, () => {
@@ -185,7 +235,7 @@ describe(`pluginOptionsSchema`, () => {
           `TURNPOLICY_MINORITY`,
           `TURNPOLICY_MAJORITY`,
         ])(`supports setting by policy name (%s)`, async name => {
-          const { isValid } = await testPluginOptionsSchema(
+          const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
               tracedSVG: { turnPolicy: name },
@@ -193,6 +243,7 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+          expect(errors).toEqual([])
         })
 
         it.each([
@@ -203,7 +254,7 @@ describe(`pluginOptionsSchema`, () => {
           Potrace.TURNPOLICY_MINORITY,
           Potrace.TURNPOLICY_MAJORITY,
         ])(`supports setting by policy value (%s)`, async value => {
-          const { isValid } = await testPluginOptionsSchema(
+          const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
               tracedSVG: { turnPolicy: value },
@@ -211,9 +262,14 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+          expect(errors).toEqual([])
         })
 
         it(`Doesn't support arbitrary string values`, async () => {
+          const expectedErrors = [
+            `"tracedSVG.turnPolicy" must be one of [TURNPOLICY_BLACK, TURNPOLICY_WHITE, TURNPOLICY_LEFT, TURNPOLICY_RIGHT, TURNPOLICY_MINORITY, TURNPOLICY_MAJORITY, black, white, left, right, minority, majority]`,
+          ]
+
           const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
@@ -222,11 +278,7 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(false)
-          expect(errors).toMatchInlineSnapshot(`
-            Array [
-              "\\"tracedSVG.turnPolicy\\" must be one of [TURNPOLICY_BLACK, TURNPOLICY_WHITE, TURNPOLICY_LEFT, TURNPOLICY_RIGHT, TURNPOLICY_MINORITY, TURNPOLICY_MAJORITY, black, white, left, right, minority, majority]",
-            ]
-          `)
+          expect(errors).toEqual(expectedErrors)
         })
       })
 
@@ -264,7 +316,7 @@ describe(`pluginOptionsSchema`, () => {
             value = titleAndMaybeValue
           }
 
-          const { isValid } = await testPluginOptionsSchema(
+          const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
               tracedSVG: { threshold: value },
@@ -272,6 +324,7 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+          expect(errors).toEqual([])
         })
 
         // invalid settings

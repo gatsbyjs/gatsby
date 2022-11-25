@@ -14,6 +14,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -47,12 +48,17 @@ const buildTestSchema = async nodes => {
 }
 const queryResult = async (nodes, query) => {
   const { schema, schemaComposer } = await buildTestSchema(nodes)
-  return graphql(schema, query, undefined, {
-    nodeModel: new LocalNodeModel({
-      schema,
-      createPageDependency,
-      schemaComposer,
-    }),
+  return graphql({
+    schema,
+    source: query,
+    rootValue: undefined,
+    contextValue: {
+      nodeModel: new LocalNodeModel({
+        schema,
+        createPageDependency,
+        schemaComposer,
+      }),
+    },
   })
 }
 

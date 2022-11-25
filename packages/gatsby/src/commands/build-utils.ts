@@ -2,22 +2,21 @@ import fs from "fs-extra"
 import path from "path"
 import { platform } from "os"
 import reporter from "gatsby-cli/lib/reporter"
-
 import {
   remove as removePageHtmlFile,
-  getPageHtmlFilePath,
-} from "../utils/page-html"
-import { removePageData, fixedPagePath } from "../utils/page-data"
+  generateHtmlPath,
+  fixedPagePath,
+} from "gatsby-core-utils"
+import { removePageData } from "../utils/page-data"
 import { store } from "../redux"
 import { IGatsbyState } from "../redux/types"
+import { getPageMode } from "../utils/page-mode"
 
 const checkFolderIsEmpty = (path: string): boolean =>
   fs.existsSync(path) && !fs.readdirSync(path).length
 
 const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
-  const pageHtmlDirectory = path.dirname(
-    getPageHtmlFilePath(publicDir, pagePath)
-  )
+  const pageHtmlDirectory = path.dirname(generateHtmlPath(publicDir, pagePath))
   const pageDataDirectory = path.join(
     publicDir,
     `page-data`,
@@ -66,7 +65,9 @@ export const removePageFiles = async (
   })
 }
 
-const FSisCaseInsensitive = platform() === `win32` || platform() === `darwin`
+const FSisCaseInsensitive = process.env.TEST_FORCE_CASE_FS
+  ? process.env.TEST_FORCE_CASE_FS === `INSENSITIVE`
+  : platform() === `win32` || platform() === `darwin`
 function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`
@@ -89,9 +90,7 @@ const pageGenerationActionPriority: Record<PageGenerationAction, number> = {
   delete: 0,
 }
 
-export function calcDirtyHtmlFiles(
-  state: IGatsbyState
-): {
+export function calcDirtyHtmlFiles(state: IGatsbyState): {
   toRegenerate: Array<string>
   toDelete: Array<string>
   toCleanupFromTrackedState: Set<string>
@@ -157,14 +156,19 @@ export function calcDirtyHtmlFiles(
   }
 
   state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
-    if (htmlFile.isDeleted || !state.pages.has(path)) {
+    const page = state.pages.get(path)
+    if (htmlFile.isDeleted || !page) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...
       markActionForPage(path, `delete`)
-    } else if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
-      markActionForPage(path, `regenerate`)
     } else {
-      markActionForPage(path, `reuse`)
+      if (getPageMode(page, state) === `SSG`) {
+        if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
+          markActionForPage(path, `regenerate`)
+        } else {
+          markActionForPage(path, `reuse`)
+        }
+      }
     }
   })
 
@@ -204,11 +208,16 @@ export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
 
   // mark html as dirty
   const dirtyPages = new Set<string>()
+  const dirtySlices = new Set<string>()
   for (const dirtyTemplate of dirtyTemplates) {
     const component = state.components.get(dirtyTemplate)
     if (component) {
       for (const page of component.pages) {
-        dirtyPages.add(page)
+        if (component.isSlice) {
+          dirtySlices.add(page)
+        } else {
+          dirtyPages.add(page)
+        }
       }
     }
   }
@@ -217,6 +226,7 @@ export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
     type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`,
     payload: {
       pages: dirtyPages,
+      slices: dirtySlices,
       staticQueryHashes: dirtyStaticQueryResults,
     },
   })

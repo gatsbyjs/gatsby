@@ -10,7 +10,7 @@ Moreover, their [Content Slices](https://prismic.io/feature/dynamic-layout-conte
 
 In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
-_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs/technologies/gatsby) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
+_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full-blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs/technologies/gatsby) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 
 ## Setup
 
@@ -86,7 +86,25 @@ module.exports = {
 
 The best way to create your queries now is to first develop them in _GraphiQL_ at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
 
-![Prismic Index Query](../../images/prismic-index-query.jpg)
+```graphql
+query {
+  allPrismicPost {
+    edges {
+      node {
+        data {
+          date
+          title {
+            text
+          }
+          content {
+            html
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 Because you defined the custom type as `Post` the query is called `allPrismicPost` (and `prismicPost`). You can also see the API IDs (from the field names) you created earlier.
 
@@ -165,7 +183,7 @@ Earlier you defined an `API_KEY` environment variable for the source plugin. Net
 
 Netlify is able to automatically start builds on pushes to a repository and accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately, Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. With those features set up, new content will automatically appear on your Netlify site.
 
-Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format https://api.netlify.com/build_hooks/-randomstring- after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Every time you publish a new document, Netlify will re-build your site.
+Set up your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format https://api.netlify.com/build_hooks/-randomstring- after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Every time you publish a new document, Netlify will re-build your site.
 
 ## Adding more features
 
@@ -175,9 +193,7 @@ Prismic offers a [Content Relationship](https://user-guides.prismic.io/content-m
 
 https://youtu.be/67yir-jQrFk
 
-The video shows the usage of a group field and relationship field — if you only want to have one category, skip the group field. Similar as to the `Post` custom type the `Category` one can also be queried. Furthermore, the `allPrismicPost` query also has the `categories` node available:
-
-![Prismic Categories Query](../../images/prismic-categories-query.jpg)
+The video shows the usage of a group field and relationship field — if you only want to have one category, skip the group field. Similar as to the `Post` custom type the `Category` one can also be queried. Furthermore, the `allPrismicPost` query also has the `categories` node available.
 
 ### Single Type
 

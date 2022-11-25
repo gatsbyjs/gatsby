@@ -2,9 +2,6 @@
 
 set -e
 
-install-wp-graphql-plugins
-
-# This seems goofy
 echo "xdebug.max_nesting_level=-1" >> /usr/local/etc/php/php.ini-development
 echo "xdebug.max_nesting_level=-1" >> /usr/local/etc/php/php.ini-production
 echo "xdebug.max_nesting_level=-1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini

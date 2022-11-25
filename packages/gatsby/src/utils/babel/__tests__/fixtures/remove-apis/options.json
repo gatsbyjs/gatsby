@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    [
+      "../../../babel-plugin-remove-api",
+      {
+        "apis": [
+          "getServerData",
+          "config",
+          "Head"
+        ]
+      }
+    ]
+  ]
+}

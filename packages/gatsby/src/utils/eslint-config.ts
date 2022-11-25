@@ -1,4 +1,3 @@
-import { printSchema, GraphQLSchema } from "graphql"
 import { ESLint } from "eslint"
 import path from "path"
 
@@ -29,6 +28,7 @@ export const eslintRequiredConfig: ESLint.Options = {
     globals: {
       graphql: true,
       __PATH_PREFIX__: true,
+      __TRAILING_SLASH__: true,
       __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
     },
     extends: [eslintRequirePreset],
@@ -36,8 +36,7 @@ export const eslintRequiredConfig: ESLint.Options = {
 }
 
 export const eslintConfig = (
-  schema: GraphQLSchema,
-  usingJsxRuntime: boolean
+  usingAutomaticJsxRuntime: boolean
 ): ESLint.Options => {
   return {
     useEslintrc: false,
@@ -47,6 +46,7 @@ export const eslintConfig = (
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
+        __TRAILING_SLASH__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
       extends: [
@@ -67,23 +67,16 @@ export const eslintConfig = (
         },
         requireConfigFile: false,
       },
-      plugins: [`graphql`],
+      plugins: [],
       rules: {
         // New versions of react use a special jsx runtime that remove the requirement
         // for having react in scope for jsx. Once the jsx runtime is backported to all
         // versions of react we can make this always be `off`.
         // I would also assume that eslint-config-react-app will switch their flag to `off`
         // when jsx runtime is stable in all common versions of React.
-        "react/react-in-jsx-scope": usingJsxRuntime ? `off` : `error`, // Conditionally apply for reactRuntime?
+        "react/jsx-uses-react": usingAutomaticJsxRuntime ? `off` : `error`,
+        "react/react-in-jsx-scope": usingAutomaticJsxRuntime ? `off` : `error`,
         "import/no-webpack-loader-syntax": [0],
-        "graphql/template-strings": [
-          `error`,
-          {
-            env: `relay`,
-            schemaString: printSchema(schema, { commentDescriptions: true }),
-            tagName: `graphql`,
-          },
-        ],
         "react/jsx-pascal-case": [
           `warn`,
           {

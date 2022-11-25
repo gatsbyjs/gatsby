@@ -15,11 +15,10 @@
     "gatsby": "next",
     "gatsby-plugin-gatsby-cloud": "next",
     "node-fetch": "^2.6.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "gatsby-plugin-create-client-paths": "next",
     "gatsby-plugin-postcss": "next",
     "prettier": "^2.2.1",
     "tailwindcss": "^1.5.2"

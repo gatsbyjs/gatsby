@@ -1,3 +1,5 @@
+import reporter from "gatsby-cli/lib/reporter"
+import { slash } from "gatsby-core-utils"
 import { startRedirectListener } from "./redirects-writer"
 import {
   IBuildContext,
@@ -9,19 +11,18 @@ import {
   extractQueries,
   writeOutRedirects,
   postBootstrap,
-  rebuildSchemaWithSitePage,
 } from "../services"
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
-import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
-import { saveStateForWorkers } from "../redux"
+import { savePartialStateToDisk } from "../redux"
+import { IProgram } from "../commands/types"
 
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: Partial<IBuildContext>
+  initialContext: Partial<IBuildContext> & { program: IProgram }
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
   workerPool: GatsbyWorkerPool
@@ -45,6 +46,13 @@ export async function bootstrap(
     ...(await initialize(bootstrapContext)),
   }
 
+  const workerPool = context.workerPool
+
+  const program = context.store.getState().program
+  const directory = slash(program.directory)
+
+  workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
+
   await customizeSchema(context)
   await sourceNodes(context)
 
@@ -57,19 +65,15 @@ export async function bootstrap(
 
   await createPages(context)
 
-  await handleStalePageData()
+  await handleStalePageData(parentSpan)
 
-  await rebuildSchemaWithSitePage(context)
+  savePartialStateToDisk([`inferenceMetadata`])
 
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    saveStateForWorkers([`inferenceMetadata`])
-  }
+  workerPool.all.buildSchema()
 
   await extractQueries(context)
 
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    saveStateForWorkers([`components`, `staticQueryComponents`])
-  }
+  savePartialStateToDisk([`components`, `staticQueryComponents`])
 
   await writeOutRedirects(context)
 
@@ -81,6 +85,6 @@ export async function bootstrap(
 
   return {
     gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,
-    workerPool: context.workerPool,
+    workerPool,
   }
 }

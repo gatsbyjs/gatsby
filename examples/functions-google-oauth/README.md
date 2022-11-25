@@ -8,7 +8,7 @@ This example illustrates logging in with Google 0Auth via Gatsby Functions and d
 
 1.  **Set up Google OAuth Client.**
 
-    This sample uses google oAuth client to authenticate into the Google inbox api. Obtain an oAuth credential from the Google Cloud [API & Services Credentails Page](https://console.cloud.google.com/apis/credentials?)
+    This sample uses google oAuth client to authenticate into the Google inbox api. Obtain an oAuth credential from the Google Cloud [API & Services Credentials Page](https://console.cloud.google.com/apis/credentials?)
 
     - Generate an Oauth Client ID. You can follow the steps highlighted in [Account Authentication - Service Account](https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication?id=oauth). Make sure to set up at least one **Authorized redirect URI** to be `http://localhost:8000`
 
@@ -16,8 +16,8 @@ This example illustrates logging in with Google 0Auth via Gatsby Functions and d
 
     There are **2** environment variable you'll need to add to your project:
 
-    - `GOOGLE_CLIENT_ID`: Fetch the ClientId from the newly created OAuth 2.0 Client ID. Yuo can find it in the [Google Credentials Console](https://console.cloud.google.com/apis/credentials)
-    - `GOOGLE_CLIENT_SECRET`: Fetch the Client Secret from the newly created OAuth 2.0 Client ID. Yuo can find it in the [Google Credentials Console](https://console.cloud.google.com/apis/credentials)
+    - `GOOGLE_CLIENT_ID`: Fetch the ClientId from the newly created OAuth 2.0 Client ID. You can find it in the [Google Credentials Console](https://console.cloud.google.com/apis/credentials)
+    - `GOOGLE_CLIENT_SECRET`: Fetch the Client Secret from the newly created OAuth 2.0 Client ID. You can find it in the [Google Credentials Console](https://console.cloud.google.com/apis/credentials)
 
     You'll also want to add these as environment variables when deploying to Gatsby Cloud.
 

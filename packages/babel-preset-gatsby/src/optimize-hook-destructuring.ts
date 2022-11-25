@@ -6,7 +6,8 @@ import { Program } from "@babel/types"
 const isHook = /^use[A-Z]/
 
 // matches only built-in hooks provided by React et al
-const isBuiltInHook = /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
+const isBuiltInHook =
+  /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
 
 interface IState {
   opts?: {
@@ -55,7 +56,12 @@ export default function ({
         path.parent.id.elements.reduce(
           (acc: Array<BabelTypes.ObjectProperty>, element, i) => {
             if (element) {
-              acc.push(t.objectProperty(t.numericLiteral(i), element))
+              acc.push(
+                t.objectProperty(
+                  t.numericLiteral(i),
+                  element as BabelTypes.Identifier
+                )
+              )
             }
             return acc
           },

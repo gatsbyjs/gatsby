@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`production dynamic routes param routes 1`] = `
+Object {
+  "super": "additional",
+  "userId": "23",
+}
+`;
+
+exports[`production dynamic routes unnamed wildcard routes 1`] = `
+Object {
+  "*": "super",
+  "0": "super",
+}
+`;
+
 exports[`production functions can parse different ways of sending data file in multipart/form 1`] = `
 Array [
   Object {
@@ -86,35 +100,22 @@ Object {
 }
 `;
 
-exports[`production routing dynamic routes 1`] = `
-Object {
-  "super": "additional",
-  "userId": "23",
-}
-`;
+exports[`production routes with special characters 1`] = `"I-Am-Capitalized.js"`;
 
-exports[`production routing dynamic routes 2`] = `
-Object {
-  "0": "super",
-}
-`;
+exports[`production routes with special characters 2`] = `"some whitespace.js"`;
 
-exports[`production routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
+exports[`production routes with special characters 3`] = `"with-äöü-umlaut.js"`;
 
-exports[`production routing routes with special characters 2`] = `"some whitespace.js"`;
+exports[`production routes with special characters 4`] = `"some-àè-french.js"`;
 
-exports[`production routing routes with special characters 3`] = `"with-äöü-umlaut.js"`;
+exports[`production routes with special characters 5`] = `"some-אודות.js"`;
 
-exports[`production routing routes with special characters 4`] = `"some-àè-french.js"`;
+exports[`production secondary-level API 1`] = `"I am at a secondary-level"`;
 
-exports[`production routing routes with special characters 5`] = `"some-אודות.js"`;
+exports[`production secondary-level API 2`] = `"I am another sub-directory function"`;
 
-exports[`production routing secondary-level API 1`] = `"I am at a secondary-level"`;
+exports[`production secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
 
-exports[`production routing secondary-level API 2`] = `"I am another sub-directory function"`;
-
-exports[`production routing secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
-
-exports[`production routing top-level API 1`] = `"I am at the top-level"`;
+exports[`production top-level API 1`] = `"I am at the top-level"`;
 
 exports[`production typescript typescript functions work 1`] = `"I am typescript"`;

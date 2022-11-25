@@ -75,7 +75,7 @@ You can find more information on how to switch to [`gatsby-plugin-image`](https:
 - gatsby: Fix hanging Gatsby process between webpack rebuilds in development, via [PR 30127](https://github.com/gatsbyjs/gatsby/pull/30127)
 - gatsby: fix SitePage schema, via [PR #30132](https://github.com/gatsbyjs/gatsby/pull/30132)
 - gatsby: fix double save during gatsby develop, via [PR #30193](https://github.com/gatsbyjs/gatsby/pull/30193)
-- gatsby-plugin-image: Handle placeholder in plugin toolkit correclty, via [PR #30141](https://github.com/gatsbyjs/gatsby/pull/30141)
+- gatsby-plugin-image: Handle placeholder in plugin toolkit correctly, via [PR #30141](https://github.com/gatsbyjs/gatsby/pull/30141)
 - gatsby-source-contentful: fix deprecation warnings, via [PR #29675](https://github.com/gatsbyjs/gatsby/pull/29675)
 
 ## Contributors
@@ -96,7 +96,7 @@ You can find more information on how to switch to [`gatsby-plugin-image`](https:
   - chore: make ./starters/upgrade-starters.sh executable [PR #30102](https://github.com/gatsbyjs/gatsby/pull/30102)
 
 - [imshubhamsingh](https://github.com/imshubhamsingh): chore(docs): updated doc for payment using square [PR #27272](https://github.com/gatsbyjs/gatsby/pull/27272)
-- [ahmetcanaydemir](https://github.com/ahmetcanaydemir): fix(gatsby-react-router-scroll): debounce function for scollListener [PR #26933](https://github.com/gatsbyjs/gatsby/pull/26933)
+- [ahmetcanaydemir](https://github.com/ahmetcanaydemir): fix(gatsby-react-router-scroll): debounce function for scrollListener [PR #26933](https://github.com/gatsbyjs/gatsby/pull/26933)
 - [talohana](https://github.com/talohana): chore(docs): add paths to unit-testing using typescript [PR #28029](https://github.com/gatsbyjs/gatsby/pull/28029)
 - [hashimwarren](https://github.com/hashimwarren): chore(docs): Update headless WordPress article [PR #29402](https://github.com/gatsbyjs/gatsby/pull/29402)
 - [lorensr](https://github.com/lorensr): chore(docs): Add twitter links to tutorial [PR #29696](https://github.com/gatsbyjs/gatsby/pull/29696)

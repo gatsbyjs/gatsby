@@ -18,8 +18,10 @@ const getFirstValueAt = (
   return value
 }
 
-const withBaseDir = (dir: string) => (p: string): string =>
-  path.posix.join(dir, slash(p))
+const withBaseDir =
+  (dir: string) =>
+  (p: string): string =>
+    path.posix.join(dir, slash(p))
 
 const findAncestorNode = (
   childNode: IGatsbyNode,

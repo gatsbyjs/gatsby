@@ -3,7 +3,7 @@ import { BulkQuery } from "./bulk-query"
 export class CollectionsQuery extends BulkQuery {
   query(date?: Date): string {
     const publishedStatus = this.pluginOptions.salesChannel
-      ? encodeURIComponent(`${this.pluginOptions.salesChannel}=visible`)
+      ? `'${encodeURIComponent(this.pluginOptions.salesChannel)}:visible'`
       : `published`
 
     const filters = [`published_status:${publishedStatus}`]
@@ -19,29 +19,6 @@ export class CollectionsQuery extends BulkQuery {
         collections(query: "${queryString}") {
           edges {
             node {
-              products {
-                edges {
-                  node {
-                    id
-                  }
-                }
-              }
-              metafields {
-                edges {
-                  node {
-                    createdAt
-                    description
-                    id
-                    key
-                    legacyResourceId
-                    namespace
-                    ownerType
-                    updatedAt
-                    value
-                    valueType
-                  }
-                }
-              }
               description
               descriptionHtml
               feedback {
@@ -63,14 +40,39 @@ export class CollectionsQuery extends BulkQuery {
               handle
               id
               image {
-                id
                 altText
                 height
-                width
+                id
                 originalSrc
+                src
                 transformedSrc
+                width
               }
               legacyResourceId
+              metafields {
+                edges {
+                  node {
+                    createdAt
+                    description
+                    id
+                    key
+                    legacyResourceId
+                    namespace
+                    ownerType
+                    updatedAt
+                    value
+                    type
+                    valueType: type
+                  }
+                }
+              }
+              products {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
               productsCount
               ruleSet {
                 appliedDisjunctively

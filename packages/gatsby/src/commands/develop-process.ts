@@ -48,18 +48,40 @@ if (process.send) {
 }
 
 onExit(() => {
+  let SSGCount = 0
+  let DSGCount = 0
+  let SSRCount = 0
+  for (const page of store.getState().pages.values()) {
+    if (page.mode === `SSR`) {
+      SSRCount++
+    } else if (page.mode === `DSG`) {
+      DSGCount++
+    } else {
+      SSGCount++
+    }
+  }
+
   telemetry.trackCli(`DEVELOP_STOP`, {
     siteMeasurements: {
       totalPagesCount: store.getState().pages.size,
+      SSRCount,
+      DSGCount,
+      SSGCount,
     },
   })
 })
 
-process.on(`message`, msg => {
-  if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
-    process.exit(msg.action.payload)
+process.on(
+  `message`,
+  (msg: {
+    type: string
+    action: { type: string; payload: number | undefined }
+  }) => {
+    if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
+      process.exit(msg.action.payload)
+    }
   }
-})
+)
 
 interface IDevelopArgs extends IProgram {
   debugInfo: IDebugInfo | null
@@ -80,6 +102,11 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  // provide global Gatsby object
+  global.__GATSBY = process.env.GATSBY_NODE_GLOBALS
+    ? JSON.parse(process.env.GATSBY_NODE_GLOBALS)
+    : {}
+
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }
@@ -92,19 +119,18 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
-  process.on(
-    `SIGINT`,
-    async (): Promise<void> => {
-      if (await userGetsSevenDayFeedback()) {
-        showSevenDayFeedbackRequest()
-      } else if (await userPassesFeedbackRequestHeuristic()) {
-        showFeedbackRequest()
-      }
-      process.exit(0)
+  process.on(`SIGINT`, async (): Promise<void> => {
+    if (await userGetsSevenDayFeedback()) {
+      showSevenDayFeedbackRequest()
+    } else if (await userPassesFeedbackRequestHeuristic()) {
+      showFeedbackRequest()
     }
-  )
+    process.exit(0)
+  })
 
-  initTracer(program.openTracingConfigFile)
+  await initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
@@ -112,9 +138,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
+  const hostname = program.host
   try {
-    program.port = await detectPortInUseAndPrompt(port)
+    program.port = await detectPortInUseAndPrompt(port, hostname)
   } catch (e) {
     if (e.message === `USER_REJECTED`) {
       process.exit(0)
@@ -126,11 +152,23 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   const app = express()
   const parentSpan = tracer.startSpan(`bootstrap`)
 
+  app.use((req, res, next) => {
+    try {
+      decodeURIComponent(req.path)
+    } catch (e) {
+      return res.status(500).send(`URI malformatted`)
+    }
+
+    return next()
+  })
+
   const machine = developMachine.withContext({
     program,
     parentSpan,
     app,
+    reporter,
     pendingQueryRuns: new Set([`/`]),
+    shouldRunInitialTypegen: true,
   })
 
   const service = interpret(machine)

@@ -3,25 +3,24 @@ import { pluginOptionsSchema } from "gatsby-source-wordpress/dist/steps/declare-
 
 describe(`pluginOptionsSchema`, () => {
   it(`should validate a minimal, valid config`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+    const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
       url: `http://localhost:8000/graphql`,
     })
 
     expect(isValid).toEqual(true)
+    expect(errors).toEqual([])
   })
 
   it(`should invalidate a config missing required vars`, async () => {
+    const expectedErrors = [`"url" is required`,]
+
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       {}
     )
 
     expect(isValid).toEqual(false)
-    expect(errors).toMatchInlineSnapshot(`
-    Array [
-      "\\"url\\" is required",
-    ]
-  `)
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate a fully custom config`, async () => {
@@ -96,6 +95,14 @@ describe(`pluginOptionsSchema`, () => {
           MenuItem: {
             beforeChangeNode: null,
           },
+          Page: {
+            beforeChangeNode: `./docs-generation.test.js`,
+          },
+          Post: {
+            beforeChangeNode: () => {
+              console.log(`Hi from an inline fn!`)
+            },
+          },
           EnqueuedScript: {
             exclude: true,
           },
@@ -106,7 +113,7 @@ describe(`pluginOptionsSchema`, () => {
       }
     )
 
-    expect(errors).toEqual([])
     expect(isValid).toEqual(true)
+    expect(errors).toEqual([])
   })
 })

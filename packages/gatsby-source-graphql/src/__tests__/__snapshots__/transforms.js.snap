@@ -11,13 +11,11 @@ type Mutation {
 
 type Wrapper {
   query: String
-}
-"
+}"
 `;
 
 exports[`StripNonQueryTransform works 1`] = `
 "type Query {
   query: String
-}
-"
+}"
 `;

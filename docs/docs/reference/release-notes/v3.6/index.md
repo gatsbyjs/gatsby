@@ -40,7 +40,7 @@ This indicator will show up on your previews hosted on Gatsby Cloud. There are 4
 
 This only works with our next gen preview which is currently in the middle of being rolled out to all sites.
 
-![Showing the different states that the Preview Indicator can take. It's a rectangular container with three vertically stacked icons. The first icon is the Gatsby logo, the second icon indicates a link, and the third icon is an information icon. The Gatsby logo can indicate that the preview information is getting fetched, that a new preview is available, and that the preview has an error. In this case you can view logs. The link icon let's you copy the current URL path to share. The information icon tells you when the preview was last updated.](https://user-images.githubusercontent.com/16143594/119472866-e741a280-bd4a-11eb-9845-2bd9007070ab.jpg)
+![Showing the different states that the Preview Indicator can take. It's a rectangular container with three vertically stacked icons. The first icon is the Gatsby logo, the second icon indicates a link, and the third icon is an information icon. The Gatsby logo can indicate that the preview information is getting fetched, that a new preview is available, and that the preview has an error. In this case you can view logs. The link icon lets you copy the current URL path to share. The information icon tells you when the preview was last updated.](https://user-images.githubusercontent.com/16143594/119472866-e741a280-bd4a-11eb-9845-2bd9007070ab.jpg)
 
 ## Notable bugfixes & improvements
 

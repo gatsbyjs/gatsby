@@ -4,7 +4,10 @@ import {
   findTypeName,
   findTypeKind,
 } from "~/steps/create-schema-customization/helpers"
-import { fieldIsExcludedOnParentType } from "~/steps/ingest-remote-schema/is-excluded"
+import {
+  fieldIsExcludedOnParentType,
+  fieldIsExcludedOnAll,
+} from "~/steps/ingest-remote-schema/is-excluded"
 import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
 
 export const transformInlineFragments = ({
@@ -539,11 +542,12 @@ const transformFields = ({
     ?.filter(
       field =>
         !fieldIsExcludedOnParentType({
-          pluginOptions,
           field,
           parentType,
-          mainType,
-          parentField,
+        }) &&
+        !fieldIsExcludedOnAll({
+          pluginOptions,
+          field,
         })
     )
     .map(field => {
@@ -599,14 +603,15 @@ const transformFields = ({
         })
 
         if (transformedField?.inlineFragments?.length) {
-          transformedField.inlineFragments = transformedField.inlineFragments.filter(
-            fieldInlineFragment =>
-              // yes this is a horrible use of .find(). @todo refactor this for better perf
-              !fragment.inlineFragments.find(
-                fragmentInlineFragment =>
-                  fragmentInlineFragment.name === fieldInlineFragment.name
-              )
-          )
+          transformedField.inlineFragments =
+            transformedField.inlineFragments.filter(
+              fieldInlineFragment =>
+                // yes this is a horrible use of .find(). @todo refactor this for better perf
+                !fragment.inlineFragments.find(
+                  fragmentInlineFragment =>
+                    fragmentInlineFragment.name === fieldInlineFragment.name
+                )
+            )
         }
       }
 

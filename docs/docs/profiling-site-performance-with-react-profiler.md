@@ -24,7 +24,7 @@ A warning will be issued in a Gatsby Production build if the `--profile` option 
 
 If you just want to see some high level results, your [React DevTools will have a profiling tab](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html#profiling-an-application) which provides some helpful performance information. However if you want to be able to capture more information programmatically, then React exports a `profiler` component which allows your site to tap into the performance metrics.
 
-The react profiler component can be used anywhere in a react tree to measure the performance of that part of the tree.
+The React profiler component can be used anywhere in a React tree to measure the performance of that part of the tree.
 
 ### Profiling a slow component
 

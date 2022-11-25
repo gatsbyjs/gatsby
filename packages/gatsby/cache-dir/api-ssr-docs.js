@@ -29,6 +29,7 @@
  * @param {function} $0.setBodyProps Takes an object of data which
  * is merged with other body props and passed to `html.js` as `bodyProps`.
  * @param {pluginOptions} pluginOptions
+ * @returns {void | Promise<void>}
  * @example
  * // From gatsby-plugin-glamor
  * const { renderToString } = require("react-dom/server")
@@ -184,6 +185,7 @@ exports.wrapPageElement = true
  * It is recommended to use both APIs together.
  * For example usage, check out [Using redux](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux).
  * @param {object} $0
+ * @param {string} $0.pathname The pathname of the page currently being rendered.
  * @param {ReactNode} $0.element The "Root" React Element built by Gatsby.
  * @param {pluginOptions} pluginOptions
  * @returns {ReactNode} Wrapped element

@@ -1,9 +1,9 @@
 import { actions } from "../redux/actions"
 import { store } from "../redux"
 const { deletePage } = actions
-
-import { isEqualWith, IsEqualCustomizer } from "lodash"
+import { isEqualWith } from "lodash"
 import { IGatsbyPage } from "../redux/types"
+import type { IsEqualCustomizer } from "lodash"
 
 export function deleteUntouchedPages(
   currentPages: Map<string, IGatsbyPage>,
@@ -17,8 +17,7 @@ export function deleteUntouchedPages(
     if (
       (shouldRunCreatePagesStatefully ||
         !page.isCreatedByStatefulCreatePages) &&
-      page.updatedAt < timeBeforeApisRan &&
-      page.path !== `/404.html`
+      page.updatedAt < timeBeforeApisRan
     ) {
       store.dispatch(deletePage(page))
       deletedPages.push(page.path, `/page-data${page.path}`)

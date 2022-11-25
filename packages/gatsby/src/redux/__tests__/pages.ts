@@ -1,10 +1,13 @@
 import { readFile } from "fs-extra"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 
 jest.mock(`fs-extra`, () => {
   return {
     readFile: jest.fn(() => `contents`),
+    readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
   }
 })
+jest.mock(`gatsby-core-utils/murmurhash`)
 import glob from "glob"
 
 import { pagesReducer as reducer } from "../reducers/pages"
@@ -12,6 +15,9 @@ import { actions } from "../actions"
 
 afterEach(() => {
   ;(readFile as jest.MockedFunction<typeof readFile>).mockClear()
+})
+beforeEach(() => {
+  murmurhash.mockReturnValue(`1234567890`)
 })
 
 Date.now = jest.fn(

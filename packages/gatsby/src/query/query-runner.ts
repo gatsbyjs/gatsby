@@ -8,14 +8,24 @@ import { ExecutionResult, GraphQLError } from "graphql"
 import path from "path"
 import { store } from "../redux"
 import { actions } from "../redux/actions"
-import { getCodeFrame } from "./graphql-errors"
+import { getCodeFrame } from "./graphql-errors-codeframe"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
-import { pageDataExists } from "../utils/page-data"
+import { pageDataExists, savePageQueryResult } from "../utils/page-data"
+import GatsbyCacheLmdb from "../utils/cache-lmdb"
 
-const resultHashes = new Map()
+let resultHashCache: GatsbyCacheLmdb | undefined
+function getResultHashCache(): GatsbyCacheLmdb {
+  if (!resultHashCache) {
+    resultHashCache = new GatsbyCacheLmdb({
+      name: `query-result-hashes`,
+      encoding: `string`,
+    }).init()
+  }
+  return resultHashCache
+}
 
 export interface IQueryJob {
   id: string
@@ -23,13 +33,13 @@ export interface IQueryJob {
   query: string
   componentPath: string
   context: PageContext
-  isPage: boolean
+  queryType: "page" | "static" | "slice"
   pluginCreatorId?: string
 }
 
 function reportLongRunningQueryJob(queryJob): void {
   const messageParts = [
-    `Query takes too long:`,
+    `This query took more than 15s to run — which is unusually long and might indicate you're querying too much or have some unoptimized code:`,
     `File path: ${queryJob.componentPath}`,
   ]
 
@@ -53,7 +63,7 @@ function panicQueryJobError(
   let queryContext = {}
   const plugin = queryJob.pluginCreatorId || `none`
 
-  if (queryJob.isPage) {
+  if (queryJob.queryType === `page`) {
     urlPath = queryJob.context.path
     queryContext = queryJob.context.context
   }
@@ -122,7 +132,7 @@ export async function queryRunner(
     actions.queryStart({
       path: queryJob.id,
       componentPath: queryJob.componentPath,
-      isPage: queryJob.isPage,
+      isPage: queryJob.queryType === `page`,
     })
   )
 
@@ -140,9 +150,13 @@ export async function queryRunner(
     panicQueryJobError(queryJob, result.errors)
   }
 
-  // Add the page context onto the results.
-  if (queryJob && queryJob.isPage) {
-    result[`pageContext`] = Object.assign({}, queryJob.context)
+  // Add the page/slice context onto the results.
+  if (queryJob) {
+    if (queryJob.queryType === `page`) {
+      result[`pageContext`] = Object.assign({}, queryJob.context)
+    } else if (queryJob.queryType === `slice`) {
+      result[`sliceContext`] = Object.assign({}, queryJob.context)
+    }
   }
 
   // Delete internal data from pageContext
@@ -157,6 +171,9 @@ export async function queryRunner(
     delete result.pageContext.componentPath
     delete result.pageContext.context
     delete result.pageContext.isCreatedByStatefulCreatePages
+    delete result.pageContext.matchPath
+    delete result.pageContext.mode
+    delete result.pageContext.slices
   }
 
   const resultJSON = JSON.stringify(result)
@@ -165,30 +182,44 @@ export async function queryRunner(
     .update(resultJSON)
     .digest(`base64`)
 
+  const resultHashCache = getResultHashCache()
+
+  let resultHashCacheKey = queryJob.id
+  if (queryJob.queryType === `static`) {
+    // For static queries we use hash for a file path we output results to.
+    // With automatic sort and aggregation graphql codemod it is possible
+    // to have same result, but different query text hashes which would skip
+    // writing out file to disk if we don't check query hash as well
+    resultHashCacheKey += `-${queryJob.hash}`
+  }
+
   if (
-    resultHash !== resultHashes.get(queryJob.id) ||
-    (queryJob.isPage &&
+    resultHash !== (await resultHashCache.get(resultHashCacheKey)) ||
+    (queryJob.queryType === `page` &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
-    resultHashes.set(queryJob.id, resultHash)
+    await resultHashCache.set(resultHashCacheKey, resultHash)
 
-    if (queryJob.isPage) {
+    if (queryJob.queryType === `page` || queryJob.queryType === `slice`) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      const resultPath = path.join(
-        program.directory,
-        `.cache`,
-        `json`,
-        `${queryJob.id.replace(/\//g, `_`)}.json`
-      )
-      await fs.outputFile(resultPath, resultJSON)
-      store.dispatch({
-        type: `ADD_PENDING_PAGE_DATA_WRITE`,
-        payload: {
-          path: queryJob.id,
-        },
-      })
-    } else {
+      await savePageQueryResult(queryJob.id, resultJSON)
+      if (queryJob.queryType === `page`) {
+        store.dispatch({
+          type: `ADD_PENDING_PAGE_DATA_WRITE`,
+          payload: {
+            path: queryJob.id,
+          },
+        })
+      } else if (queryJob.queryType === `slice`) {
+        store.dispatch({
+          type: `ADD_PENDING_SLICE_DATA_WRITE`,
+          payload: {
+            name: queryJob.id.substring(7), // remove "slice--" prefix
+          },
+        })
+      }
+    } else if (queryJob.queryType === `static`) {
       const resultPath = path.join(
         program.directory,
         `public`,
@@ -206,7 +237,7 @@ export async function queryRunner(
     actions.pageQueryRun({
       path: queryJob.id,
       componentPath: queryJob.componentPath,
-      isPage: queryJob.isPage,
+      queryType: queryJob.queryType,
       resultHash,
       queryHash: queryJob.hash,
     })

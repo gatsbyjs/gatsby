@@ -33,7 +33,7 @@ export const query = graphql`
   query Index($locale: String!, $dateFormat: String!) {
     allMdx(
       filter: { fields: { locale: { eq: $locale } } }
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC } }
     ) {
       edges {
         node {

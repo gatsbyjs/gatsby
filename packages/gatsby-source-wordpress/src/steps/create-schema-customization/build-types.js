@@ -6,6 +6,7 @@ import {
   fieldOfTypeWasFetched,
   getTypeSettingsByType,
   filterTypeDefinition,
+  getTypesThatImplementInterfaceType,
 } from "./helpers"
 
 const unionType = typeBuilderApi => {
@@ -47,42 +48,23 @@ const unionType = typeBuilderApi => {
 }
 
 const interfaceType = typeBuilderApi => {
-  const {
-    type,
-    schema,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
-  } = typeBuilderApi
+  const { type, schema } = typeBuilderApi
 
   const state = store.getState()
-  const { ingestibles, typeMap } = state.remoteSchema
+  const { ingestibles } = state.remoteSchema
   const { nodeInterfaceTypes } = ingestibles
 
-  const allTypes = typeMap.values()
-
-  const implementingTypes = Array.from(allTypes)
-    .filter(
-      ({ interfaces }) =>
-        interfaces &&
-        // find types that implement this interface type
-        interfaces.find(singleInterface => singleInterface.name === type.name)
-    )
-    .map(type => typeMap.get(type.name))
-    .filter(
-      type =>
-        type.kind !== `UNION` ||
-        // if this is a union type, make sure the union type has one or more member types, otherwise schema customization will throw an error
-        (!!type.possibleTypes && !!type.possibleTypes.length)
-    )
+  const implementingTypes = getTypesThatImplementInterfaceType(type)
 
   const transformedFields = transformFields({
     parentInterfacesImplementingTypes: implementingTypes,
+    parentType: type,
     fields: type.fields,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
   })
+
+  if (!transformedFields) {
+    return null
+  }
 
   let typeDef = {
     name: buildTypeName(type.name),
@@ -149,7 +131,11 @@ const objectType = typeBuilderApi => {
       .filter(interfaceType => {
         const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
 
-        return !interfaceTypeSettings.exclude && fieldOfTypeWasFetched(type)
+        return (
+          !interfaceTypeSettings.exclude &&
+          fieldOfTypeWasFetched(type) &&
+          fieldOfTypeWasFetched(interfaceType)
+        )
       })
       .map(({ name }) => buildTypeName(name))
   }

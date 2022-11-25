@@ -1,26 +1,35 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const v8 = require(`v8`)
+const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-
+const { murmurhash } = require(`gatsby-core-utils/murmurhash`)
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
 const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
-const { isLmdbStore } = require(`../../datastore`)
-const { saveState, store, readState } = require(`../index`)
+const {
+  saveState,
+  store,
+  readState,
+  savePartialStateToDisk,
+} = require(`../index`)
 
 const {
   actions: { createPage, createNode },
 } = require(`../actions`)
 
+const pageTemplatePath = `/Users/username/dev/site/src/templates/my-sweet-new-page.js`
 const mockWrittenContent = new Map()
 const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
   return {
     writeFileSync: jest.fn((file, content) =>
+      mockWrittenContent.set(file, content)
+    ),
+    outputFileSync: jest.fn((file, content) =>
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
@@ -78,6 +87,7 @@ jest.mock(`glob`, () => {
     }),
   }
 })
+jest.mock(`gatsby-core-utils/murmurhash`)
 
 function getFakeNodes() {
   // Set nodes to something or the cache will fail because it asserts this
@@ -123,7 +133,7 @@ describe(`redux db`, () => {
   const defaultPage = {
     path: `/my-sweet-new-page/`,
     // seems like jest serializer doesn't play nice with Maps on Windows
-    component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
+    component: pageTemplatePath,
     // The context is passed as props to the component as well
     // as into the component's GraphQL query.
     context: {
@@ -138,8 +148,30 @@ describe(`redux db`, () => {
     })
     writeToCache.mockClear()
     mockWrittenContent.clear()
+    mockWrittenContent.set(pageTemplatePath, `foo`)
     reporterWarn.mockClear()
     reporterInfo.mockClear()
+    murmurhash.mockReturnValue(`1234567890`)
+  })
+
+  it(`should have cache status telemetry event`, async () => {
+    jest.spyOn(telemetry, `trackCli`)
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `COLD`,
+    })
+
+    store.getState().nodes = getFakeNodes()
+
+    await saveState()
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `WARM`,
+    })
   })
 
   it(`should write redux cache to disk`, async () => {
@@ -193,31 +225,10 @@ describe(`redux db`, () => {
       v8Serialize.mockRestore()
       v8Deserialize.mockRestore()
     })
-    if (isLmdbStore()) {
-      // Nodes are stored in LMDB, those tests are irrelevant
-      return
-    }
 
     // we set limit to 1.5 * 1024 * 1024 * 1024 per shard
-    // simulating size for page and nodes will allow us to see if we create expected amount of shards
+    // simulating size for page will allow us to see if we create expected amount of shards
     // and that we stitch them back together correctly
-    const nodeShardsScenarios = [
-      {
-        numberOfNodes: 50000,
-        simulatedNodeObjectSize: 5 * 1024,
-        expectedNumberOfNodeShards: 1,
-      },
-      {
-        numberOfNodes: 50,
-        simulatedNodeObjectSize: 5 * 1024 * 1024,
-        expectedNumberOfNodeShards: 1,
-      },
-      {
-        numberOfNodes: 5,
-        simulatedNodeObjectSize: 0.6 * 1024 * 1024 * 1024,
-        expectedNumberOfNodeShards: 3,
-      },
-    ]
     const pageShardsScenarios = [
       {
         numberOfPages: 50 * 1000,
@@ -240,29 +251,21 @@ describe(`redux db`, () => {
     ]
 
     const scenarios = []
-    for (const nodeShardsParams of nodeShardsScenarios) {
-      for (const pageShardsParams of pageShardsScenarios) {
-        scenarios.push([
-          nodeShardsParams.numberOfNodes,
-          nodeShardsParams.simulatedNodeObjectSize,
-          nodeShardsParams.expectedNumberOfNodeShards,
-          pageShardsParams.numberOfPages,
-          pageShardsParams.simulatedPageObjectSize,
-          pageShardsParams.expectedNumberOfPageShards,
-          pageShardsParams.expectedPageContextSizeWarning
-            ? `with page context size warning`
-            : `without page context size warning`,
-          pageShardsParams.expectedPageContextSizeWarning,
-        ])
-      }
+    for (const pageShardsParams of pageShardsScenarios) {
+      scenarios.push([
+        pageShardsParams.numberOfPages,
+        pageShardsParams.simulatedPageObjectSize,
+        pageShardsParams.expectedNumberOfPageShards,
+        pageShardsParams.expectedPageContextSizeWarning
+          ? `with page context size warning`
+          : `without page context size warning`,
+        pageShardsParams.expectedPageContextSizeWarning,
+      ])
     }
 
     it.each(scenarios)(
-      `Scenario Nodes %i x %i bytes = %i shards / Pages %i x %i bytes = %i shards (%s)`,
+      `Scenario Pages %i x %i bytes = %i shards (%s)`,
       async (
-        numberOfNodes,
-        simulatedNodeObjectSize,
-        expectedNumberOfNodeShards,
         numberOfPages,
         simulatedPageObjectSize,
         expectedNumberOfPageShards,
@@ -273,32 +276,12 @@ describe(`redux db`, () => {
         // and make sure it's empty
         const initialStateInMemory = store.getState()
         expect(initialStateInMemory.pages).toEqual(new Map())
-        expect(initialStateInMemory.nodes).toEqual(new Map())
 
         // we expect to have no persisted state yet - this returns empty object
         // and let redux to use initial states for all redux slices
         const initialPersistedState = readState()
         expect(initialPersistedState.pages).toBeUndefined()
-        expect(initialPersistedState.nodes).toBeUndefined()
         expect(initialPersistedState).toEqual({})
-
-        for (let nodeIndex = 0; nodeIndex < numberOfNodes; nodeIndex++) {
-          store.dispatch(
-            createNode(
-              {
-                id: `node-${nodeIndex}`,
-                context: {
-                  objectType: `node`,
-                },
-                internal: {
-                  type: `Foo`,
-                  contentDigest: `contentDigest-${nodeIndex}`,
-                },
-              },
-              { name: `gatsby-source-test` }
-            )
-          )
-        }
 
         createPages(
           new Array(numberOfPages).fill(undefined).map((_, index) => {
@@ -314,32 +297,24 @@ describe(`redux db`, () => {
         )
 
         const currentStateInMemory = store.getState()
-        expect(currentStateInMemory.nodes.size).toEqual(numberOfNodes)
         expect(currentStateInMemory.pages.size).toEqual(numberOfPages)
 
         // this is just to make sure that any implementation changes in readState
         // won't affect this test - so we clone current state of things and will
         // use that for assertions
-        const clonedCurrentNodes = new Map(currentStateInMemory.nodes)
         const clonedCurrentPages = new Map(currentStateInMemory.pages)
 
         // we expect to have no persisted state yet and that current in-memory state doesn't affect it
         const persistedStateBeforeSaving = readState()
         expect(persistedStateBeforeSaving.pages).toBeUndefined()
-        expect(persistedStateBeforeSaving.nodes).toBeUndefined()
         expect(persistedStateBeforeSaving).toEqual({})
 
-        // simulate that nodes/pages have sizes set in scenario parameters
+        // simulate that pages have sizes set in scenario parameters
         // it changes implementation to JSON.stringify because calling v8.serialize
         // again cause max stack size errors :shrug: - this also requires adjusting
         // deserialize implementation
         v8Serialize.mockImplementation(obj => {
-          if (obj?.[1]?.context?.objectType === `node`) {
-            return {
-              toString: () => JSON.stringify(obj),
-              length: simulatedNodeObjectSize,
-            }
-          } else if (obj?.[1]?.context?.objectType === `page`) {
+          if (obj?.[1]?.context?.objectType === `page`) {
             return {
               toString: () => JSON.stringify(obj),
               length: simulatedPageObjectSize,
@@ -362,7 +337,6 @@ describe(`redux db`, () => {
 
         const shardsWritten = {
           rest: 0,
-          node: 0,
           page: 0,
         }
 
@@ -370,8 +344,6 @@ describe(`redux db`, () => {
           const basename = path.basename(fileWritten)
           if (basename.startsWith(`redux.rest`)) {
             shardsWritten.rest++
-          } else if (basename.startsWith(`redux.node`)) {
-            shardsWritten.node++
           } else if (basename.startsWith(`redux.page`)) {
             shardsWritten.page++
           }
@@ -380,14 +352,12 @@ describe(`redux db`, () => {
         expect(writeToCache).toBeCalled()
 
         expect(shardsWritten.rest).toEqual(1)
-        expect(shardsWritten.node).toEqual(expectedNumberOfNodeShards)
         expect(shardsWritten.page).toEqual(expectedNumberOfPageShards)
 
         // and finally - let's make sure that reading shards stitches it back together
         // correctly
         const persistedStateAfterSaving = readState()
 
-        expect(persistedStateAfterSaving.nodes).toEqual(clonedCurrentNodes)
         expect(persistedStateAfterSaving.pages).toEqual(clonedCurrentPages)
       }
     )
@@ -414,7 +384,7 @@ describe(`redux db`, () => {
     )
 
     // In strict mode nodes are stored in LMDB not redux state
-    expect(store.getState().nodes.size).toEqual(isLmdbStore() ? 0 : 1)
+    expect(store.getState().nodes.size).toEqual(0)
     expect(store.getState().pages.size).toEqual(0)
 
     let persistedState = readState()
@@ -435,14 +405,10 @@ describe(`redux db`, () => {
     persistedState = readState()
 
     // With lmdb store we always persist a single dummy node to bypass
-    //  "Cache exists but contains no nodes..." warning
-    if (isLmdbStore()) {
-      expect(persistedState.nodes?.size).toEqual(1)
-      const nodes = Array.from(persistedState.nodes.values())
-      expect(nodes[0]).toMatchObject({ id: `dummy-node-id` })
-    } else {
-      expect(persistedState.nodes?.size).toEqual(1)
-    }
+    // "Cache exists but contains no nodes..." warning
+    expect(persistedState.nodes?.size).toEqual(1)
+    const nodes = Array.from(persistedState.nodes.values())
+    expect(nodes[0]).toMatchObject({ id: `dummy-node-id` })
 
     expect(persistedState.pages?.size ?? 0).toEqual(0)
   })
@@ -473,24 +439,81 @@ describe(`redux db`, () => {
 
     persistedState = readState()
 
-    if (isLmdbStore()) {
-      // With lmdb store we always persist a single dummy node to bypass
-      //  "Cache exists but contains no nodes..." warning
-      expect(persistedState.nodes?.size ?? 0).toEqual(1)
-      expect(persistedState.pages?.size ?? 0).toEqual(1)
-      expect(reporterInfo).not.toBeCalled()
-      const nodes = Array.from(persistedState.nodes.values())
-      expect(nodes[0]).toMatchObject({ id: `dummy-node-id` })
-    } else {
-      // we expect state to be discarded because gatsby creates it least few nodes of it's own
-      // (particularly `Site` node). If there was nodes read this likely means something went wrong
-      // and state is not consistent
-      expect(persistedState.nodes?.size ?? 0).toEqual(0)
-      expect(persistedState.pages?.size ?? 0).toEqual(0)
+    // With lmdb store we always persist a single dummy node to bypass
+    // "Cache exists but contains no nodes..." warning
+    expect(persistedState.nodes?.size ?? 0).toEqual(1)
+    expect(persistedState.pages?.size ?? 0).toEqual(1)
+    expect(reporterInfo).not.toBeCalled()
+    const nodes = Array.from(persistedState.nodes.values())
+    expect(nodes[0]).toMatchObject({ id: `dummy-node-id` })
+  })
 
-      expect(reporterInfo).toBeCalledWith(
-        `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+  describe(`savePartialStateToDisk`, () => {
+    beforeEach(() => {
+      createPages(defaultPage)
+    })
+
+    it(`saves with correct filename (with defaults)`, () => {
+      savePartialStateToDisk([`pages`])
+
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
+
+      expect(basename.startsWith(`redux.worker.slices__`)).toBe(true)
+    })
+
+    it(`saves correct slice of state`, () => {
+      savePartialStateToDisk([`pages`])
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything() },
+        [`pages`],
+        undefined
       )
-    }
+    })
+
+    it(`respects optionalPrefix`, () => {
+      savePartialStateToDisk([`pages`], `custom-prefix`)
+
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
+
+      expect(basename.startsWith(`redux.worker.slices_custom-prefix_`)).toBe(
+        true
+      )
+    })
+
+    it(`respects transformState`, () => {
+      const customTransform = state => {
+        return {
+          ...state,
+          hello: `world`,
+        }
+      }
+
+      savePartialStateToDisk([`pages`], undefined, customTransform)
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything(), hello: `world` },
+        [`pages`],
+        undefined
+      )
+    })
   })
 })

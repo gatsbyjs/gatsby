@@ -5,15 +5,13 @@ import { DocumentNode } from "graphql"
 import { CombinedState } from "redux"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
-import { saveStateForWorkers, store } from "../../../redux"
-import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
-import {
-  createTestWorker,
-  describeWhenLMDB,
-  GatsbyTestWorkerPool,
-} from "./test-helpers"
+import { savePartialStateToDisk, store } from "../../../redux"
+import { loadConfig } from "../../../bootstrap/load-config"
+import { loadPlugins } from "../../../bootstrap/load-plugins"
+import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
 import { IGatsbyState } from "../../../redux/types"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -37,7 +35,16 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
-describeWhenLMDB(`worker (schema)`, () => {
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
+  }
+})
+
+describe(`worker (schema)`, () => {
   let stateFromWorker: CombinedState<IGatsbyState>
 
   beforeAll(async () => {
@@ -48,21 +55,25 @@ describeWhenLMDB(`worker (schema)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
-    await loadConfigAndPlugins({ siteDirectory })
-    await worker.loadConfigAndPlugins({ siteDirectory })
+    await compileGatsbyFiles(siteDirectory)
+    const config = await loadConfig({
+      siteDirectory,
+    })
+    await loadPlugins(config, siteDirectory)
+    await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
     await getDataStore().ready()
 
     await build({ parentSpan: {} })
-    saveStateForWorkers([`inferenceMetadata`])
-    await worker.buildSchema()
+    savePartialStateToDisk([`inferenceMetadata`])
+    await Promise.all(worker.all.buildSchema())
 
-    stateFromWorker = await worker.getState()
+    stateFromWorker = await worker.single.getState()
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
     for (const watcher of mockWatchersToClose) {
@@ -71,9 +82,11 @@ describeWhenLMDB(`worker (schema)`, () => {
   })
 
   it(`should have functioning createSchemaCustomization`, async () => {
-    const typeDefinitions = (stateFromWorker.schemaCustomization.types[0] as {
-      typeOrTypeDef: DocumentNode
-    }).typeOrTypeDef.definitions
+    const typeDefinitions = (
+      stateFromWorker.schemaCustomization.types[0] as {
+        typeOrTypeDef: DocumentNode
+      }
+    ).typeOrTypeDef.definitions
 
     expect(typeDefinitions).toEqual(
       expect.arrayContaining([
@@ -130,7 +143,7 @@ describeWhenLMDB(`worker (schema)`, () => {
 
   it(`should have resolverField from createResolvers`, async () => {
     // @ts-ignore - it exists
-    const { data } = await worker?.getRunQueryResult(`
+    const { data } = await worker?.single.getRunQueryResult(`
     {
       one: nodeTypeOne {
         number
@@ -151,7 +164,7 @@ describeWhenLMDB(`worker (schema)`, () => {
 
   it(`should have fieldsOnGraphQL from setFieldsOnGraphQLNodeType`, async () => {
     // @ts-ignore - it exists
-    const { data } = await worker?.getRunQueryResult(`
+    const { data } = await worker?.single.getRunQueryResult(`
     {
       four: nodeTypeOne {
         fieldsOnGraphQL

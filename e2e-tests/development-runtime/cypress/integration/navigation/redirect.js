@@ -1,6 +1,6 @@
 const runTests = () => {
   it(`should redirect page to index page when there is no such page`, () => {
-    cy.visit(`/redirect-without-page`, {
+    cy.visit(`/redirect-without-page/`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
@@ -8,7 +8,7 @@ const runTests = () => {
   })
 
   it(`should redirect page to index page even there is a such page`, () => {
-    cy.visit(`/redirect`, {
+    cy.visit(`/redirect/`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
@@ -21,6 +21,69 @@ const runTests = () => {
     }).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/pt/redirect-me/`)
+  })
+
+  it(`should support hash parameter with Link component`, () => {
+    cy.visit(`/`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.getTestElement(`redirect-two-anchor`).click().waitForRouteChange()
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`hash`).should(`equal`, `#anchor`)
+    cy.location(`search`).should(`equal`, ``)
+  })
+
+  it(`should support hash parameter on direct visit`, () => {
+    cy.visit(`/redirect-two/#anchor`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`hash`).should(`equal`, `#anchor`)
+    cy.location(`search`).should(`equal`, ``)
+  })
+
+  it(`should support search parameter with Link component`, () => {
+    cy.visit(`/`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.getTestElement(`redirect-two-search`).click().waitForRouteChange()
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`hash`).should(`equal`, ``)
+    cy.location(`search`).should(`equal`, `?query_param=hello`)
+  })
+
+  it(`should support search parameter on direct visit`, () => {
+    cy.visit(`/redirect-two/?query_param=hello`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`hash`).should(`equal`, ``)
+    cy.location(`search`).should(`equal`, `?query_param=hello`)
+  })
+  
+  it(`should support search & hash parameter with Link component`, () => {
+    cy.visit(`/`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.getTestElement(`redirect-two-search-anchor`).click().waitForRouteChange()
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`hash`).should(`equal`, `#anchor`)
+    cy.location(`search`).should(`equal`, `?query_param=hello`)
+  })
+
+  it(`should support search & hash parameter on direct visit`, () => {
+    cy.visit(`/redirect-two/?query_param=hello#anchor`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`hash`).should(`equal`, `#anchor`)
+    cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
 }
 

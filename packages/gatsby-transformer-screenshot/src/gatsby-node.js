@@ -1,19 +1,24 @@
 const axios = require(`axios`)
-const Queue = require(`better-queue`)
+const Queue = require(`fastq`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
 const LAMBDA_CONCURRENCY_LIMIT = 50
 const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 
-const screenshotQueue = new Queue(
-  (input, cb) => {
-    createScreenshotNode(input)
-      .then(r => cb(null, r))
-      .catch(e => cb(e))
-  },
-  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
-)
+const screenshotQueue = Queue.promise(worker, LAMBDA_CONCURRENCY_LIMIT)
+
+async function worker(input) {
+  // maxRetries: 3, retryDelay: 1000
+  for (let i = 0; i < 2; i++) {
+    try {
+      return await createScreenshotNode(input)
+    } catch (e) {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
+  }
+  return await createScreenshotNode(input)
+}
 
 exports.onPreBootstrap = (
   {
@@ -70,14 +75,14 @@ exports.onPreBootstrap = (
     return null
   }
 
-  return new Promise((resolve, reject) => {
-    screenshotQueue.on(`drain`, () => {
+  return new Promise(resolve => {
+    screenshotQueue.drain = () => {
       resolve()
-    })
+    }
   })
 }
 
-function unstable_shouldOnCreateNode({ node }, pluginOptions) {
+function shouldOnCreateNode({ node }, pluginOptions) {
   /*
    * Check if node is of a type we care about, and has a url field
    * (originally only checked sites.yml, hence including by default)
@@ -86,38 +91,30 @@ function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   return validNodeTypes.includes(node.internal.type) && node.url
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 
-exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
-) => {
-  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
-    return
-  }
-
+exports.onCreateNode = async ({
+  node,
+  actions,
+  store,
+  cache,
+  createNodeId,
+  createContentDigest,
+  getCache,
+}) => {
   const { createNode, createParentChildLink } = actions
 
   try {
-    const screenshotNode = await new Promise((resolve, reject) => {
-      screenshotQueue
-        .push({
-          url: node.url,
-          parent: node.id,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          getCache,
-          createContentDigest,
-          parentNodeId: node.id,
-        })
-        .on(`finish`, r => {
-          resolve(r)
-        })
-        .on(`failed`, e => {
-          reject(e)
-        })
+    const screenshotNode = await screenshotQueue.push({
+      url: node.url,
+      parent: node.id,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      getCache,
+      createContentDigest,
+      parentNodeId: node.id,
     })
 
     createParentChildLink({
@@ -156,13 +153,11 @@ const createScreenshotNode = async ({
 
       fileNode = await createRemoteFileNode({
         url: screenshotResponse.data.url,
-        store,
         cache,
         createNode,
         createNodeId,
         getCache,
         parentNodeId,
-        reporter,
       })
       expires = screenshotResponse.data.expires
 

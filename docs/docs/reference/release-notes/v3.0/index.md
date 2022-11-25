@@ -42,7 +42,7 @@ If you're looking for an overview of all breaking changes and how to migrate, pl
 
 ## Incremental Builds in OSS
 
-Gatsby v2 introduced experimental "Conditional Page Builds" (enabled by `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` environment variable). It had some gotchas and quirks, and it wasn't ready yet for GA. With Gatsby v3, we improved this feature and activated it by default for everyone! So incremental builds is available in OSS now. This improvement is (re)generating only subset of HTML files that needs to be generated. To be able to use it you will need to keep to `.cache` and `public` directories from previous builds.
+Gatsby v2 introduced experimental "Conditional Page Builds" (enabled by `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` environment variable). It had some gotchas and quirks, and it wasn't ready yet for GA. With Gatsby v3, we improved this feature and activated it by default for everyone! So incremental builds is available in OSS now. This improvement is (re)generating only subset of HTML files that needs to be generated. To be able to use it you will need to keep the `.cache` and `public` directories from previous builds.
 
 Take a project powered by Shopify as an example. You have your listing of all products and then individual product pages. When you change one single product, only that page should be rebuilt. In the screenshot below you can see exactly that (the sentence "Hello World" was added to the description):
 
@@ -128,7 +128,7 @@ Please refer to React's own [release notes](https://reactjs.org/blog/2020/10/20/
 
 The minimum version of Gatsby is now 16.9.0 to support Fast Refresh, React Hooks, and Suspense by default. We've also made sure we're 100% compatible with React 17. To use the new [React JSX transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) have a look at the [`babel-preset-gatsby`](#babel-preset-gatsby) section below.
 
-With this change, we'll be adding more experiments to support [Concurrent mode](https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html) and [React Server Components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) in future releases.
+With this change, we'll be adding more experiments to support [Concurrent mode](https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html) and [React server components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) in future releases.
 
 ## GraphQL 15
 
@@ -185,7 +185,7 @@ For more information, see:
 
 ## `gatsby-source-wordpress@5.0.0`
 
-Recently we’ve announced the brand new WordPress integration. Refer to this post on the Gatsby Blog for the full details: [Announcing Gatsby’s New WordPress Integration](/blog/wordpress-integration/)
+Recently we’ve announced the brand-new WordPress integration. Refer to this post on the Gatsby Blog for the full details: [Announcing Gatsby’s New WordPress Integration](/blog/wordpress-integration/)
 
 The originally published version of renewed `gatsby-source-wordpress` is `4.0.0`. It is
 fully compatible with Gatsby v2.

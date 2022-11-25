@@ -1,11 +1,22 @@
-import {
-  createTestWorker,
-  GatsbyTestWorkerPool,
-  itWhenLMDB,
-} from "./test-helpers"
+import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { getDataStore } from "../../../datastore"
+
+jest.setTimeout(15000)
+
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
+  }
+})
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {}
+})
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -13,20 +24,20 @@ beforeEach(() => {
   store.dispatch({ type: `DELETE_CACHE` })
 })
 
-afterEach(() => {
+afterEach(async () => {
   if (worker) {
-    worker.end()
+    await Promise.all(worker.end())
     worker = undefined
   }
 })
 
-itWhenLMDB(`worker can access node created in main process`, async () => {
+it(`worker can access node created in main process`, async () => {
   worker = createTestWorker()
 
   const testNodeId = `shared-node`
 
   expect(getDataStore().getNode(testNodeId)).toBeFalsy()
-  expect(await worker.getNodeFromWorker(testNodeId)).toBeFalsy()
+  expect(await worker.single.getNodeFromWorker(testNodeId)).toBeFalsy()
 
   const node = {
     id: testNodeId,
@@ -39,7 +50,9 @@ itWhenLMDB(`worker can access node created in main process`, async () => {
   await getDataStore().ready()
 
   const nodeStoredInMainProcess = getDataStore().getNode(testNodeId)
-  const nodeStoredInWorkerProcess = await worker.getNodeFromWorker(testNodeId)
+  const nodeStoredInWorkerProcess = await worker.single.getNodeFromWorker(
+    testNodeId
+  )
 
   expect(nodeStoredInWorkerProcess).toMatchInlineSnapshot(`
     Object {

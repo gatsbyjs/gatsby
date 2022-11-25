@@ -192,10 +192,9 @@ describe(`derive-path`, () => {
   })
 
   it(`keeps existing slashes around and handles possible double forward slashes`, () => {
-    // This tests three things
-    // 1) The trailing slash should be removed (as createPath will be used later anyways)
-    // 2) There shouldn't be a double forward slash in the final URL => blog//fire-and-powder/
-    // 3) If the slug is supposed to be a URL (e.g. foo/bar) it should keep that
+    // This tests two things
+    // 1) There shouldn't be a double forward slash in the final URL => blog//fire-and-powder/
+    // 2) If the slug is supposed to be a URL (e.g. foo/bar) it should keep that
     expect(
       derivePath(
         `blog/{MarkdownRemark.fields__slug}`,
@@ -206,7 +205,7 @@ describe(`derive-path`, () => {
         },
         reporter
       ).derivedPath
-    ).toEqual(`blog/fire-and-powder`)
+    ).toEqual(`blog/fire-and-powder/`)
     expect(
       derivePath(
         `blog/{MarkdownRemark.fields__slug}`,
@@ -229,7 +228,7 @@ describe(`derive-path`, () => {
         },
         reporter
       ).derivedPath
-    ).toEqual(`foo/dolores.js`)
+    ).toEqual(`foo/dolores`)
   })
 
   it(`supports file extension with existing slashes around`, () => {
@@ -241,7 +240,7 @@ describe(`derive-path`, () => {
         },
         reporter
       ).derivedPath
-    ).toEqual(`foo/dolores.js`)
+    ).toEqual(`foo/dolores/`)
     expect(
       derivePath(
         `foo/{Model.name}/template.js`,
@@ -250,7 +249,7 @@ describe(`derive-path`, () => {
         },
         reporter
       ).derivedPath
-    ).toEqual(`foo/dolores/template.js`)
+    ).toEqual(`foo/dolores/template`)
   })
 
   it(`supports mixed collection and client-only route`, () => {
@@ -263,6 +262,24 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/dolores/[...name]`)
+    expect(
+      derivePath(
+        `{Model.name}/[...name]`,
+        {
+          name: `dolores`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`dolores/[...name]`)
+    expect(
+      derivePath(
+        `{Model.name}/[name]`,
+        {
+          name: `dolores`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`dolores/[name]`)
   })
 
   it(`supports index paths`, () => {
@@ -283,7 +300,7 @@ describe(`derive-path`, () => {
         },
         reporter
       ).derivedPath
-    ).toEqual(`index.js`)
+    ).toEqual(`index`)
     expect(
       derivePath(
         `foo/{Page.path}`,
@@ -292,7 +309,7 @@ describe(`derive-path`, () => {
         },
         reporter
       ).derivedPath
-    ).toEqual(`foo`)
+    ).toEqual(`foo/`)
     expect(
       derivePath(
         `foo/{Page.path}/bar`,
@@ -302,6 +319,15 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.path}/bar/`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar/`)
     expect(
       derivePath(
         `foo/{Page.pathOne}/{Page.pathTwo}`,
@@ -322,6 +348,16 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.pathOne}/{Page.pathTwo}`,
+        {
+          pathOne: `/`,
+          pathTwo: `/bar/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar/`)
     expect(
       derivePath(
         `foo/{Page.path}/[...name]`,

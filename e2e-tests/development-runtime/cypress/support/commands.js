@@ -1,4 +1,6 @@
 import "@testing-library/cypress/add-commands"
+import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command"
+import "gatsby-cypress"
 
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy
@@ -106,10 +108,31 @@ Cypress.Commands.add(`waitForHmr`, (message = `App is up to date`) => {
   cy.wait(1000)
 })
 
-Cypress.Commands.add(`getFastRefreshOverlay`, () => (
-  cy.get('gatsby-fast-refresh').shadow()
-))
+Cypress.Commands.add(`getFastRefreshOverlay`, () =>
+  cy.get(`gatsby-fast-refresh`).shadow()
+)
 
-Cypress.Commands.add(`assertNoFastRefreshOverlay`, () => (
-  cy.get('gatsby-fast-refresh').should('not.exist')
-))
+Cypress.Commands.add(`assertNoFastRefreshOverlay`, () =>
+  cy.get(`gatsby-fast-refresh`).should(`not.exist`)
+)
+
+addMatchImageSnapshotCommand({
+  customDiffDir: `/__diff_output__`,
+  customDiffConfig: {
+    threshold: 0.1,
+  },
+  failureThreshold: 0.08,
+  failureThresholdType: `percent`,
+})
+
+/**
+ * Get a record from a table cell in one of the test components.
+ * @example cy.getRecord(Script.dayjs, ResourceRecord.fetchStart)
+ * @example cy.getRecord(`${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`, MarkRecord.executeStart)
+ */
+Cypress.Commands.add(`getRecord`, (key, metric, raw = false) => {
+  return cy
+    .get(`[id=${key}] [id=${metric}]`)
+    .invoke(`text`)
+    .then(value => (raw ? value : Number(value)))
+})

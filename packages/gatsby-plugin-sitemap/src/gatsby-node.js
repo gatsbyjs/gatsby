@@ -6,7 +6,7 @@ import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals"
 exports.pluginOptionsSchema = pluginOptionsSchema
 
 exports.onPostBuild = async (
-  { graphql, reporter, pathPrefix },
+  { graphql, reporter, basePath, pathPrefix },
   {
     output,
     entryLimit,
@@ -22,10 +22,8 @@ exports.onPostBuild = async (
   const { data: queryRecords, errors } = await graphql(query)
 
   // resolvePages and resolveSiteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
-  const siteUrl = await Promise.resolve(
-    resolveSiteUrl(queryRecords)
-  ).catch(err =>
-    reporter.panic(`${REPORTER_PREFIX} Error resolving Site URL`, err)
+  const siteUrl = await Promise.resolve(resolveSiteUrl(queryRecords)).catch(
+    err => reporter.panic(`${REPORTER_PREFIX} Error resolving Site URL`, err)
   )
 
   if (errors) {
@@ -35,10 +33,8 @@ exports.onPostBuild = async (
     )
   }
 
-  const allPages = await Promise.resolve(
-    resolvePages(queryRecords)
-  ).catch(err =>
-    reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err)
+  const allPages = await Promise.resolve(resolvePages(queryRecords)).catch(
+    err => reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err)
   )
 
   if (!Array.isArray(allPages)) {
@@ -74,7 +70,7 @@ exports.onPostBuild = async (
         serialize(page, { resolvePagePath })
       )
       serializedPages.push({
-        url: prefixPath({ url, siteUrl, pathPrefix }),
+        url: prefixPath({ url, siteUrl, pathPrefix: basePath }),
         ...rest,
       })
     } catch (err) {

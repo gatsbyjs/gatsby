@@ -12,7 +12,8 @@ import chokidar, { FSWatcher } from "chokidar"
 import { Span } from "opentracing"
 
 import path from "path"
-import { slash } from "gatsby-core-utils"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
+import { slash } from "gatsby-core-utils/path"
 
 import { store, emitter } from "../redux/"
 import { actions } from "../redux/actions"
@@ -45,16 +46,24 @@ interface IQuery {
 interface IQuerySnapshot {
   components: Map<string, IComponent>
   staticQueryComponents: Map<string, IGatsbyStaticQueryComponents>
+  componentsWithCleanFilePaths: Set<string>
 }
 
 const getQueriesSnapshot = (): IQuerySnapshot => {
   const state = store.getState()
+
+  const componentsWithCleanFilePaths: Set<string> = new Set()
+
+  state.components.forEach(c => {
+    componentsWithCleanFilePaths.add(getPathToLayoutComponent(c.componentPath))
+  })
 
   const snapshot: IQuerySnapshot = {
     components: new Map<string, IComponent>(state.components),
     staticQueryComponents: new Map<string, IGatsbyStaticQueryComponents>(
       state.staticQueryComponents
     ),
+    componentsWithCleanFilePaths,
   }
 
   return snapshot
@@ -137,7 +146,7 @@ const watch = async (rootDir: string): Promise<void> => {
   watcher = chokidar
     .watch(
       [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
-      { ignoreInitial: true }
+      { ignoreInitial: true, ignored: [`**/*.d.ts`] }
     )
     .on(`change`, path => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
@@ -172,12 +181,16 @@ const watchComponent = (componentPath: string): void => {
  * Removes components templates that aren't used by any page from redux store.
  */
 const clearInactiveComponents = (): void => {
-  const { components, pages } = store.getState()
+  const { components, pages, slices } = store.getState()
 
   const activeTemplates = new Set()
   pages.forEach(page => {
     // Set will guarantee uniqueness of entries
-    activeTemplates.add(slash(page.component))
+    activeTemplates.add(slash(page.componentPath))
+  })
+  slices.forEach(slice => {
+    // Set will guarantee uniqueness of entries
+    activeTemplates.add(slash(slice.componentPath))
   })
 
   components.forEach(component => {
@@ -231,8 +244,7 @@ export const updateStateAndRunQueries = async (
   handleComponentsWithRemovedQueries(snapshot, queries)
 
   // Run action for each component
-  const { components } = snapshot
-  components.forEach(c => {
+  snapshot.components.forEach(c => {
     const { isStaticQuery = false, text = `` } =
       queries.get(c.componentPath) || {}
 
@@ -253,7 +265,12 @@ export const updateStateAndRunQueries = async (
       // Check if this is a page component.
       // If it is and this is our first run during bootstrap,
       // show a warning about having a query in a non-page component.
-    } else if (isFirstRun && !snapshot.components.has(component)) {
+    } else if (
+      isFirstRun &&
+      !snapshot.componentsWithCleanFilePaths.has(
+        getPathToLayoutComponent(component)
+      )
+    ) {
       report.warn(
         `The GraphQL query in the non-page component "${component}" will not be run.`
       )
@@ -264,24 +281,18 @@ export const updateStateAndRunQueries = async (
   if (queriesWillNotRun) {
     report.log(report.stripIndent`
 
-        Exported queries are only executed for Page components. It's possible you're
-        trying to create pages in your gatsby-node.js and that's failing for some
-        reason.
+        Exported queries are only executed for page components. It's possible you're trying to create pages in your gatsby-node.js and that's failing for some reason.
 
-        If the failing component(s) is a regular component and not intended to be a page
-        component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query)
-        instead of exporting a page query.
+        If the failing component is a regular component and not intended to be a page component, you generally want to use "useStaticQuery" (https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/) instead of exporting a page query.
 
-        If you're more experienced with GraphQL, you can also export GraphQL
-        fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
+        If you're more experienced with GraphQL, you can also export GraphQL fragments from components and compose the fragments in the Page component query and pass data down into the child component (https://www.gatsbyjs.com/docs/reference/graphql-data-layer/using-graphql-fragments/)
 
       `)
   }
 
   if (process.env.NODE_ENV === `development`) {
     /**
-     * only process node manifests here in develop. we want this to run every time queries are updated. for gatsby build we process node manifests in src/services/run-page-queries.ts after all queries are run and pages are created. If we process node manifests in this location for gatsby build we wont have all the information needed to create the manifests. If we don't process manifests in this location during gatsby develop manifests will only be written once and never again when more manifests are created.
+     * only process node manifests here in develop. we want this to run every time queries are updated. for gatsby build we process node manifests in src/utils/page-data.ts after all queries are run and pages are created. If we process node manifests in this location for gatsby build we wont have all the information needed to create the manifests. If we don't process manifests in this location during gatsby develop manifests will only be written once and never again when more manifests are created.
      */
     await processNodeManifests()
   }

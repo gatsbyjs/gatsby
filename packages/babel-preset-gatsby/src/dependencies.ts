@@ -18,8 +18,7 @@ export default (_?: unknown, options: IPresetOptions = {}) => {
     require.resolve(`@babel/runtime/package.json`)
   )
 
-  // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
-  const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
+  const stage = options.stage || `test`
   const pluginBabelConfig = loadCachedConfig()
   const targets = pluginBabelConfig.browserslist
 

@@ -1,4 +1,3 @@
-import uuidv4 from "uuid/v4"
 import * as fs from "fs-extra"
 import os from "os"
 import {
@@ -6,6 +5,7 @@ import {
   getCIName,
   createContentDigest,
   getTermProgram,
+  uuid,
 } from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
@@ -17,11 +17,10 @@ import { showAnalyticsNotification } from "./show-analytics-notification"
 import { cleanPaths } from "./error-helpers"
 import { getDependencies } from "./get-dependencies"
 
-import { join, sep } from "path"
 import isDocker from "is-docker"
 import lodash from "lodash"
 
-const typedUUIDv4 = uuidv4 as () => string
+const typedUUIDv4 = uuid.v4 as () => string
 
 const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
@@ -109,6 +108,9 @@ export interface ITelemetryTagsPayload {
     bundleStats?: unknown
     pageDataStats?: unknown
     queryStats?: unknown
+    SSRCount?: number
+    DSGCount?: number
+    SSGCount?: number
   }
   errorV2?: IStructuredErrorV2
   valueString?: string
@@ -182,7 +184,7 @@ export class AnalyticsTracker {
       if (inherited) {
         p.gatsbyTelemetrySessionId = inherited
       } else {
-        p.gatsbyTelemetrySessionId = uuidv4()
+        p.gatsbyTelemetrySessionId = uuid.v4()
         process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
           p.gatsbyTelemetrySessionId
       }
@@ -227,15 +229,8 @@ export class AnalyticsTracker {
 
   getGatsbyCliVersion(): SemVer {
     try {
-      const jsonfile = join(
-        require
-          .resolve(`gatsby-cli`) // Resolve where current gatsby-cli would be loaded from.
-          .split(sep)
-          .slice(0, -2) // drop lib/index.js
-          .join(sep),
-        `package.json`
-      )
-      const { version } = require(jsonfile).version
+      const jsonfile = require.resolve(`gatsby-cli/package.json`)
+      const { version } = JSON.parse(fs.readFileSync(jsonfile, `utf-8`))
       return version
     } catch (e) {
       // ignore
@@ -407,8 +402,8 @@ export class AnalyticsTracker {
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (typeof machineId !== `string`) {
       machineId = typedUUIDv4()
+      this.store.updateConfig(`telemetry.machineId`, machineId)
     }
-    this.store.updateConfig(`telemetry.machineId`, machineId)
     this.machineId = machineId
     return machineId
   }

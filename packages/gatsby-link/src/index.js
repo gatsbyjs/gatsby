@@ -1,70 +1,15 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@gatsbyjs/reach-router"
-import { resolve } from "@gatsbyjs/reach-router/lib/utils"
-
+import { Link as ReachRouterLink, Location } from "@gatsbyjs/reach-router"
 import { parsePath } from "./parse-path"
+import { isLocalLink } from "./is-local-link"
+import { rewriteLinkPath } from "./rewrite-link-path"
+import { withPrefix, getGlobalPathPrefix } from "./prefix-helpers"
 
-export { parsePath }
-
-const isAbsolutePath = path => path?.startsWith(`/`)
-
-export function withPrefix(path, prefix = getGlobalBasePrefix()) {
-  if (!isLocalLink(path)) {
-    return path
-  }
-
-  if (path.startsWith(`./`) || path.startsWith(`../`)) {
-    return path
-  }
-  const base = prefix ?? getGlobalPathPrefix() ?? `/`
-
-  return `${base?.endsWith(`/`) ? base.slice(0, -1) : base}${
-    path.startsWith(`/`) ? path : `/${path}`
-  }`
-}
-
-// These global values are wrapped in typeof clauses to ensure the values exist.
-// This is especially problematic in unit testing of this component.
-const getGlobalPathPrefix = () =>
-  process.env.NODE_ENV !== `production`
-    ? typeof __PATH_PREFIX__ !== `undefined`
-      ? __PATH_PREFIX__
-      : undefined
-    : __PATH_PREFIX__
-const getGlobalBasePrefix = () =>
-  process.env.NODE_ENV !== `production`
-    ? typeof __BASE_PATH__ !== `undefined`
-      ? __BASE_PATH__
-      : undefined
-    : __BASE_PATH__
-
-const isLocalLink = path =>
-  path &&
-  !path.startsWith(`http://`) &&
-  !path.startsWith(`https://`) &&
-  !path.startsWith(`//`)
+export { parsePath, withPrefix }
 
 export function withAssetPrefix(path) {
   return withPrefix(path, getGlobalPathPrefix())
-}
-
-function absolutify(path, current) {
-  // If it's already absolute, return as-is
-  if (isAbsolutePath(path)) {
-    return path
-  }
-  return resolve(path, current)
-}
-
-const rewriteLinkPath = (path, relativeTo) => {
-  if (typeof path === `number`) {
-    return path
-  }
-  if (!isLocalLink(path)) {
-    return path
-  }
-  return isAbsolutePath(path) ? withPrefix(path) : absolutify(path, relativeTo)
 }
 
 const NavLinkPropTypes = {
@@ -80,16 +25,14 @@ const createIntersectionObserver = (el, cb) => {
       if (el === entry.target) {
         // Check if element is within viewport, remove listener, destroy observer, and run link callback.
         // MSEdge doesn't currently support isIntersecting, so also test for  an intersectionRatio > 0
-        if (entry.isIntersecting || entry.intersectionRatio > 0) {
-          io.unobserve(el)
-          io.disconnect()
-          cb()
-        }
+        cb(entry.isIntersecting || entry.intersectionRatio > 0)
       }
     })
   })
+
   // Add element to the observer
   io.observe(el)
+
   return { instance: io, el }
 }
 
@@ -113,39 +56,30 @@ class GatsbyLink extends React.Component {
     this.state = {
       IOSupported,
     }
+    this.abortPrefetch = null
     this.handleRef = this.handleRef.bind(this)
   }
 
   _prefetch() {
-    let currentPath = window.location.pathname
+    let currentPath = window.location.pathname + window.location.search
 
     // reach router should have the correct state
     if (this.props._location && this.props._location.pathname) {
-      currentPath = this.props._location.pathname
+      currentPath = this.props._location.pathname + this.props._location.search
     }
 
     const rewrittenPath = rewriteLinkPath(this.props.to, currentPath)
-    const newPathName = parsePath(rewrittenPath).pathname
+    const parsed = parsePath(rewrittenPath)
 
-    // Prefech is used to speed up next navigations. When you use it on the current navigation,
+    const newPathName = parsed.pathname + parsed.search
+
+    // Prefetch is used to speed up next navigations. When you use it on the current navigation,
     // there could be a race-condition where Chrome uses the stale data instead of waiting for the network to complete
     if (currentPath !== newPathName) {
-      ___loader.enqueue(newPathName)
+      return ___loader.enqueue(newPathName)
     }
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    // Preserve non IO functionality if no support
-    if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      this._prefetch()
-    }
-  }
-
-  componentDidMount() {
-    // Preserve non IO functionality if no support
-    if (!this.state.IOSupported) {
-      this._prefetch()
-    }
+    return undefined
   }
 
   componentWillUnmount() {
@@ -154,12 +88,19 @@ class GatsbyLink extends React.Component {
     }
     const { instance, el } = this.io
 
+    if (this.abortPrefetch) {
+      this.abortPrefetch.abort()
+    }
+
     instance.unobserve(el)
     instance.disconnect()
   }
 
   handleRef(ref) {
-    if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
+    if (
+      this.props.innerRef &&
+      Object.prototype.hasOwnProperty.call(this.props.innerRef, `current`)
+    ) {
       this.props.innerRef.current = ref
     } else if (this.props.innerRef) {
       this.props.innerRef(ref)
@@ -167,8 +108,14 @@ class GatsbyLink extends React.Component {
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
-      this.io = createIntersectionObserver(ref, () => {
-        this._prefetch()
+      this.io = createIntersectionObserver(ref, inViewPort => {
+        if (inViewPort) {
+          this.abortPrefetch = this._prefetch()
+        } else {
+          if (this.abortPrefetch) {
+            this.abortPrefetch.abort()
+          }
+        }
       })
     }
   }
@@ -215,7 +162,7 @@ class GatsbyLink extends React.Component {
     }
 
     return (
-      <Link
+      <ReachRouterLink
         to={prefixedTo}
         state={state}
         getProps={getProps}
@@ -224,7 +171,8 @@ class GatsbyLink extends React.Component {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
-          ___loader.hovering(parsePath(prefixedTo).pathname)
+          const parsed = parsePath(prefixedTo)
+          ___loader.hovering(parsed.pathname + parsed.search)
         }}
         onClick={e => {
           if (onClick) {
@@ -272,7 +220,7 @@ GatsbyLink.propTypes = {
   state: PropTypes.object,
 }
 
-export default React.forwardRef((props, ref) => (
+export const Link = React.forwardRef((props, ref) => (
   <GatsbyLinkLocationWrapper innerRef={ref} {...props} />
 ))
 

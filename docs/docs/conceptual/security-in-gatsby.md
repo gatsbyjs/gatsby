@@ -2,7 +2,13 @@
 title: Security in Gatsby
 ---
 
-By taking advantage of the benefits of static content, Gatsby inherits several security principles. However, even with this, your users can be exposed to malicious attacks. Read on for further information on potential attack vectors and how you could prevent them.
+Gatsby's architecture provides several security benefits relative to traditional website development:
+
+- Because Gatsby compiles your site to flat files, rather than having running app servers and databases, it reduces the attack surface of the site to outsiders.
+- Gatsby adds a layer of indirection which obscures your CMS — so even if your CMS is vulnerable, bad actors have no idea where to find it. This is in contrast to systems where bad actors can easily locate the admin dashboard at, e.g., `/wp-admin` and attempt to hack in.
+- With Gatsby, you serve your site from a global CDN e.g. Akamai, Cloudflare, Fastly, etc., which effectively eliminates the risk of DDoS attacks.
+
+However, there are still a couple of coding patterns you need to watch out for when building your Gatsby site:
 
 ## Cross-Site Scripting (XSS)
 
@@ -90,7 +96,7 @@ If you want to protect a page your server will provide an encrypted, hard to gue
 </form>
 ```
 
-When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. Make sure that malicious websites don't have access to the CSRF token by using [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
+When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. Make sure that malicious websites don't have access to the CSRF token by using [HTTP Access Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
 
 #### Same-Site Cookies Attribute
 
@@ -101,7 +107,7 @@ Set-Cookie: example=1; SameSite=Strict
 ```
 
 Using the `SameSite` attribute allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
-Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
+Check out [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 This cookie attribute is not a replacement for a CSRF Token (and vice-versa). They can work together as security layers in your website. Otherwise, a Cross-Site Scripting attack can be used to defeat these CSRF mitigation techniques. Check out [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute) for more information.
 
@@ -149,7 +155,7 @@ Sometimes in your Gatsby website, you will need display sensitive data or handle
 Content Security Policy is a security layer added in web applications to detect and prevent attacks, e.g. the XSS attack mentioned above.
 
 To add it to your Gatsby website, add [gatsby-plugin-csp](/plugins/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
-currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/plugins/gatsby-plugin-csp/) and other plugins that generate hashes in inline styles, including [gatsby-image](/plugins/gatsby-image).
+currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/plugins/gatsby-plugin-csp/) and other plugins that generate hashes in inline styles, including [gatsby-plugin-image](/plugins/gatsby-plugin-image).
 
 > Note that not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
 

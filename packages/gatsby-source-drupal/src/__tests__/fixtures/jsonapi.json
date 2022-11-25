@@ -5,6 +5,7 @@
     "file--file": "http://fixture/jsonapi/file/file",
     "node--article": "http://fixture/jsonapi/node/article",
     "paragraph--text": "http://fixture/jsonapi/paragraph/text",
+    "paragraph--image": "http://fixture/jsonapi/paragraph/image-gallary",
     "taxonomy_term--tags": {
       "href": "http://fixture/jsonapi/taxonomy_term/tags"
     },

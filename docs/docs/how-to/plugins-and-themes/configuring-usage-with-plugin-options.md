@@ -48,12 +48,12 @@ Any JavaScript data type can be passed in as an option.
 
 The following table lists possible options values and an example plugin that makes use of them.
 
-| Data Type | Sample Value                     | Example Plugin                                                   |
-| --------- | -------------------------------- | ---------------------------------------------------------------- |
-| Boolean   | `true`                           | [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/)           |
-| String    | `/src/data/`                     | [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) |
-| Array     | `["/about-us/", "/projects/*"]`  | [`gatsby-plugin-offline`](/plugins/gatsby-plugin-offline/)       |
-| Object    | `{ default: "./src/layout.js" }` | [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/)               |
+| Data Type | Sample Value                    | Example Plugin                                                   |
+| --------- | ------------------------------- | ---------------------------------------------------------------- |
+| Boolean   | `true`                          | [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/)           |
+| String    | `/src/data/`                    | [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) |
+| Array     | `["/about-us/", "/projects/*"]` | [`gatsby-plugin-offline`](/plugins/gatsby-plugin-offline/)       |
+| Object    | `{ mdxOptions: {} }`            | [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/)               |
 
 **Note**: Themes (which are a type of plugin) are able to receive options from a site's `gatsby-config.js` to be used in its `gatsby-config.js` in order to allow themes to be composed together. This is done by exporting the `gatsby-config.js` as a function instead of an object. You can see an example of this in the [`gatsby-theme-blog`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog) and [`gatsby-theme-blog-core`](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog-core) repositories. Plugins are not capable of this functionality.
 
@@ -74,7 +74,7 @@ module.exports = {
       resolve: `gatsby-plugin-console-log`,
       options: {
         optionA: true,
-        message: "Hello world"
+        message: "Hello world",
         optionB: false, // Optional.
       },
     },
@@ -249,17 +249,19 @@ describe(`pluginOptionsSchema`, () => {
       message: 123, // Should be a string
       optionB: `not a boolean`, // Should be a boolean
     }
+    const expectedErrors = [
+      `"optionA" is required`,
+      `"message" must be a string`,
+      `"optionB" must be a boolean`,
+    ]
+
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
 
     expect(isValid).toBe(false)
-    expect(errors).toEqual([
-      `"optionA" is required`,
-      `"message" must be a string`,
-      `"optionB" must be a boolean`,
-    ])
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate correct options`, async () => {

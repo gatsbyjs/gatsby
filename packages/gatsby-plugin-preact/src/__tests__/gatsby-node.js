@@ -1,3 +1,4 @@
+const path = require(`path`)
 const { onCreateWebpackConfig, onCreateBabelConfig } = require(`../gatsby-node`)
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
@@ -29,7 +30,9 @@ describe(`gatsby-plugin-preact`, () => {
       resolve: {
         alias: {
           react: `preact/compat`,
+          "react-dom/test-utils": `preact/test-utils`,
           "react-dom": `preact/compat`,
+          "react/jsx-runtime": `preact/jsx-runtime`,
         },
       },
     })
@@ -40,7 +43,7 @@ describe(`gatsby-plugin-preact`, () => {
       name: `@prefresh/babel-plugin`,
       stage: `develop`,
     })
-    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(1)
+    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(2)
     expect(actions.replaceWebpackConfig).toHaveBeenCalledWith({
       plugins: [],
       entry: {
@@ -94,14 +97,16 @@ describe(`gatsby-plugin-preact`, () => {
       resolve: {
         alias: {
           react: `preact/compat`,
+          "react-dom/test-utils": `preact/test-utils`,
           "react-dom": `preact/compat`,
+          "react/jsx-runtime": `preact/jsx-runtime`,
         },
       },
     })
 
-    expect(getConfig).toHaveBeenCalledTimes(1)
+    expect(getConfig).toHaveBeenCalledTimes(2)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(0)
-    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(1)
+    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(2)
     expect(actions.replaceWebpackConfig).toMatchInlineSnapshot(`
       [MockFunction] {
         "calls": Array [
@@ -125,8 +130,32 @@ describe(`gatsby-plugin-preact`, () => {
               },
             },
           ],
+          Array [
+            Object {
+              "optimization": Object {
+                "splitChunks": Object {
+                  "cacheGroups": Object {
+                    "default": false,
+                    "framework": Object {
+                      "chunks": "all",
+                      "enforce": true,
+                      "name": "framework",
+                      "priority": 40,
+                      "test": /\\(\\?<!node_modules\\.\\*\\)\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|prop-types\\)\\[\\\\\\\\/\\]/,
+                    },
+                    "vendors": false,
+                  },
+                  "chunks": "all",
+                },
+              },
+            },
+          ],
         ],
         "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
           Object {
             "type": "return",
             "value": undefined,

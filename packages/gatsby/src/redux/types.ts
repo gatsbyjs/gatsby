@@ -1,10 +1,19 @@
-import { IProgram } from "../commands/types"
+import type { TrailingSlash } from "gatsby-page-utils"
+import { IProgram, Stage } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
-import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
+import {
+  DocumentNode,
+  GraphQLSchema,
+  DefinitionNode,
+  SourceLocation,
+} from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
-import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
+import { ThunkAction } from "redux-thunk"
+import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
+import { Span } from "opentracing"
+import { ICollectedSlices } from "../utils/babel/find-slices"
 
 type SystemPath = string
 type Identifier = string
@@ -24,6 +33,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSG" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -38,6 +49,26 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  manifestId?: string
+  defer?: boolean
+  /**
+   * INTERNAL. Do not use `page.mode`, it can be removed at any time
+   * `page.mode` is currently reliable only in engines and `onPostBuild` hook
+   * (in develop it is dynamic and can change at any time)
+   * TODO: remove, see comments in utils/page-mode:materializePageMode
+   *
+   * @internal
+   */
+  mode: PageMode
+  slices: Record<string, string>
+}
+
+export interface IGatsbySlice {
+  componentPath: string
+  componentChunkName: string
+  context: Record<string, unknown>
+  name: string
+  updatedAt: number
 }
 
 export interface IGatsbyFunction {
@@ -57,9 +88,14 @@ export interface IGatsbyFunction {
   pluginName: string
 }
 
+export interface IGraphQLTypegenOptions {
+  typesOutputPath: string
+  generateOnBuild: boolean
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
-    // This is the name of the plugin like `gatsby-plugin-manifest
+    // This is the name of the plugin like `gatsby-plugin-manifest`
     resolve: string
     options: {
       [key: string]: unknown
@@ -77,8 +113,14 @@ export interface IGatsbyConfig {
   polyfill?: boolean
   developMiddleware?: any
   proxy?: any
+  partytownProxiedURLs?: Array<string>
   pathPrefix?: string
+  assetPrefix?: string
   mapping?: Record<string, string>
+  jsxRuntime?: "classic" | "automatic"
+  jsxImportSource?: string
+  trailingSlash?: TrailingSlash
+  graphqlTypegen?: IGraphQLTypegenOptions
 }
 
 export interface IGatsbyNode {
@@ -94,7 +136,6 @@ export interface IGatsbyNode {
     content?: string
     description?: string
   }
-  __gatsby_resolved: any // TODO
   [key: string]: unknown
   fields: Array<string>
 }
@@ -124,6 +165,9 @@ export interface IGatsbyPageComponent {
   query: string
   pages: Set<string>
   isInBootstrap: boolean
+  serverData: boolean
+  config: boolean
+  isSlice: boolean
 }
 
 export interface IDefinitionMeta {
@@ -131,19 +175,19 @@ export interface IDefinitionMeta {
   def: DefinitionNode
   filePath: string
   text: string
-  templateLoc: any
-  printedAst: string
+  templateLoc: SourceLocation
+  printedAst: string | null
   isHook: boolean
   isStaticQuery: boolean
   isFragment: boolean
-  hash: string
+  isConfigQuery: boolean
+  hash: number
 }
 
 type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
   job: InternalJob
-  plugin: IGatsbyPlugin
 }
 
 export interface IGatsbyIncompleteJob {
@@ -158,27 +202,22 @@ export interface IGatsbyCompleteJobV2 {
 
 export interface IPlugin {
   name: string
-  options: Record<string, any>
+  options: Record<string, unknown>
 }
 
 export interface IBabelStage {
   plugins: Array<IPlugin>
   presets: Array<IPlugin>
-  options: {
+  options?: {
     cacheDirectory: boolean
     sourceType: string
     sourceMaps?: string
   }
 }
 
-type BabelStageKeys =
-  | "develop"
-  | "develop-html"
-  | "build-html"
-  | "build-javascript"
-
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
+  browserslist: Array<string>
 }
 
 export interface IQueryState {
@@ -222,6 +261,8 @@ export interface IGatsbyState {
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
+  requestHeaders: Map<string, { [header: string]: string }>
+  telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -241,6 +282,8 @@ export interface IGatsbyState {
     >
     ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
     pluginFilepath: SystemPath
+    subPluginPaths?: Array<string>
+    modulePath?: string
   }>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>
@@ -269,6 +312,7 @@ export interface IGatsbyState {
   staticQueriesByTemplate: Map<SystemPath, Array<Identifier>>
   pendingPageDataWrites: {
     pagePaths: Set<string>
+    sliceNames: Set<string>
   }
   // @deprecated
   jobs: {
@@ -278,13 +322,14 @@ export interface IGatsbyState {
   jobsV2: {
     incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
     complete: Map<Identifier, IGatsbyCompleteJobV2>
+    jobsByRequest: Map<string, Set<Identifier>>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
   redirects: Array<IRedirect>
   babelrc: {
     stages: {
-      [key in BabelStageKeys]: IBabelStage
+      [key in Stage]: IBabelStage
     }
   }
   schemaCustomization: {
@@ -317,7 +362,33 @@ export interface IGatsbyState {
     ssrCompilationHash: string
     trackedStaticQueryResults: Map<string, IStaticQueryResultState>
     unsafeBuiltinWasUsedInSSR: boolean
+    templateCompilationHashes: Record<string, string>
+    slicesProps: {
+      bySliceId: Map<
+        string,
+        {
+          pages: Set<string>
+          props: Record<string, unknown>
+          sliceName: string
+          hasChildren: boolean
+          dirty: number
+        }
+      >
+      byPagePath: Map<string, Set<string>>
+      bySliceName: Map<
+        string,
+        {
+          sliceDataHash: string
+          dirty: number
+          props: Set<string>
+        }
+      >
+    }
+    pagesThatNeedToStitchSlices: Set<string>
   }
+  slices: Map<string, IGatsbySlice>
+  componentsUsingSlices: Map<string, ICollectedSlices>
+  slicesByTemplate: Map<SystemPath, ICollectedSlices>
 }
 
 export type GatsbyStateKeys = keyof IGatsbyState
@@ -335,6 +406,8 @@ export interface ICachedReduxState {
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
   html: IGatsbyState["html"]
+  slices: IGatsbyState["slices"]
+  slicesByTemplate: IGatsbyState["slicesByTemplate"]
 }
 
 export type ActionsUnion =
@@ -369,7 +442,7 @@ export type ActionsUnion =
   | ISetGraphQLDefinitionsAction
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
-  | ISetSSRWebpackCompilationHashAction
+  | ISetSSRGlobalSharedWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | ITouchNodeAction
   | IUpdatePluginsHashAction
@@ -377,6 +450,7 @@ export type ActionsUnion =
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
   | IAddPageDataStatsAction
+  | IAddSliceDataStatsAction
   | IRemoveTemplateComponentAction
   | ISetBabelPluginAction
   | ISetBabelPresetAction
@@ -387,7 +461,10 @@ export type ActionsUnion =
   | ISetStaticQueriesByTemplateAction
   | IAddPendingPageDataWriteAction
   | IAddPendingTemplateDataWriteAction
+  | IAddPendingSliceDataWriteAction
+  | IAddPendingSliceTemplateDataWriteAction
   | IClearPendingPageDataWriteAction
+  | IClearPendingSliceDataWriteAction
   | ICreateResolverContext
   | IClearSchemaCustomizationAction
   | ISetSchemaComposerAction
@@ -401,6 +478,35 @@ export type ActionsUnion =
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
+  | ISetSiteConfig
+  | IMergeWorkerQueryState
+  | ISetComponentFeatures
+  | IMaterializePageMode
+  | ISetJobV2Context
+  | IClearJobV2Context
+  | ISetDomainRequestHeaders
+  | ICreateSliceAction
+  | IDeleteSliceAction
+  | ISetSSRTemplateWebpackCompilationHashAction
+  | ISetComponentsUsingSlicesAction
+  | ISetSlicesByTemplateAction
+  | ISetSlicesProps
+  | ISlicesPropsRemoveStale
+  | ISlicesPropsRendered
+  | ISlicesStitched
+  | ISlicesScriptsRegenerated
+  | IProcessGatsbyImageSourceUrlAction
+  | IClearGatsbyImageSourceUrlAction
+
+export interface ISetComponentFeatures {
+  type: `SET_COMPONENT_FEATURES`
+  payload: {
+    componentPath: string
+    serverData: boolean
+    config: boolean
+    Head: boolean
+  }
+}
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -412,7 +518,7 @@ export interface IApiFinishedAction {
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -421,7 +527,7 @@ interface ISetBabelPluginAction {
 interface ISetBabelPresetAction {
   type: `SET_BABEL_PRESET`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -430,7 +536,7 @@ interface ISetBabelPresetAction {
 interface ISetBabelOptionsAction {
   type: `SET_BABEL_OPTIONS`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -440,8 +546,8 @@ export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
   payload: {
     job: IGatsbyIncompleteJobV2["job"]
-    plugin: IGatsbyIncompleteJobV2["plugin"]
   }
+  plugin: { name: string }
 }
 
 export interface IEndJobV2Action {
@@ -450,6 +556,7 @@ export interface IEndJobV2Action {
     jobContentDigest: string
     result: JobResultInterface
   }
+  plugin: { name: string }
 }
 
 export interface IRemoveStaleJobV2Action {
@@ -458,6 +565,13 @@ export interface IRemoveStaleJobV2Action {
     contentDigest: string
   }
 }
+
+export type ICreateJobV2FromInternalAction = ThunkAction<
+  Promise<Record<string, unknown>>,
+  IGatsbyState,
+  void,
+  ActionsUnion
+>
 
 interface ICreateJobAction {
   type: `CREATE_JOB`
@@ -486,14 +600,16 @@ interface IEndJobAction {
   plugin: IGatsbyIncompleteJob["plugin"]
 }
 
+export interface ICreatePageDependencyActionPayloadType {
+  path: string
+  nodeId?: string
+  connection?: string
+}
+
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
   plugin?: string
-  payload: {
-    path: string
-    nodeId?: string
-    connection?: string
-  }
+  payload: Array<ICreatePageDependencyActionPayloadType>
 }
 
 export interface IDeleteComponentDependenciesAction {
@@ -572,7 +688,7 @@ export interface IPageQueryRunAction {
   payload: {
     path: string
     componentPath: string
-    isPage: boolean
+    queryType: "page" | "static" | "slice"
     resultHash: string
     queryHash: string
   }
@@ -657,6 +773,70 @@ export interface ICreatePageAction {
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
   contextModified?: boolean
+  componentModified?: boolean
+  slicesModified?: boolean
+}
+
+export interface ICreateSliceAction {
+  type: `CREATE_SLICE`
+  payload: IGatsbySlice
+  plugin?: IGatsbyPlugin
+  traceId: string | undefined
+  componentModified?: boolean
+  contextModified?: boolean
+}
+
+export interface IDeleteSliceAction {
+  type: `DELETE_SLICE`
+  payload: {
+    name: string
+    componentPath: string
+  }
+}
+
+export interface ISetComponentsUsingSlicesAction {
+  type: `SET_COMPONENTS_USING_PAGE_SLICES`
+  payload: Map<string, ICollectedSlices>
+}
+
+export interface ISetSlicesByTemplateAction {
+  type: `SET_SLICES_BY_TEMPLATE`
+  payload: {
+    componentPath: string
+    slices: ICollectedSlices
+  }
+}
+
+export interface ISetSlicesProps {
+  type: `SET_SLICES_PROPS`
+  payload: Record<
+    string,
+    Record<
+      string,
+      {
+        props: Record<string, unknown>
+        sliceName: string
+        hasChildren: boolean
+      }
+    >
+  >
+}
+
+export interface ISlicesPropsRemoveStale {
+  type: `SLICES_PROPS_REMOVE_STALE`
+}
+
+export interface ISlicesPropsRendered {
+  type: `SLICES_PROPS_RENDERED`
+  payload: Array<{ sliceId: string }>
+}
+
+export interface ISlicesStitched {
+  type: `SLICES_STITCHED`
+}
+
+export interface ISlicesScriptsRegenerated {
+  type: `SLICES_SCRIPTS_REGENERATED`
 }
 
 export interface ICreateRedirectAction {
@@ -699,10 +879,32 @@ export interface IAddPendingTemplateDataWriteAction {
   }
 }
 
+export interface IAddPendingSliceDataWriteAction {
+  type: `ADD_PENDING_SLICE_DATA_WRITE`
+  payload: {
+    name: string
+  }
+}
+
+export interface IAddPendingSliceTemplateDataWriteAction {
+  type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`
+  payload: {
+    componentPath: SystemPath
+    sliceNames: Array<string>
+  }
+}
+
 export interface IClearPendingPageDataWriteAction {
   type: `CLEAR_PENDING_PAGE_DATA_WRITE`
   payload: {
     page: string
+  }
+}
+
+export interface IClearPendingSliceDataWriteAction {
+  type: `CLEAR_PENDING_SLICE_DATA_WRITE`
+  payload: {
+    name: string
   }
 }
 
@@ -721,9 +923,19 @@ export interface ISetWebpackCompilationHashAction {
   payload: IGatsbyState["webpackCompilationHash"]
 }
 
-export interface ISetSSRWebpackCompilationHashAction {
+export interface ISetSSRGlobalSharedWebpackCompilationHashAction {
   type: `SET_SSR_WEBPACK_COMPILATION_HASH`
   payload: string
+}
+
+export interface ISetSSRTemplateWebpackCompilationHashAction {
+  type: `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`
+  payload: {
+    templateHash: string
+    templatePath: string
+    isSlice: boolean
+    pages: Array<string>
+  }
 }
 
 export interface IUpdatePluginsHashAction {
@@ -774,6 +986,9 @@ export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
   oldNode?: IGatsbyNode
+  traceId: string
+  parentSpan: Span
+  followsSpan: Span
 }
 
 export interface IAddFieldToNodeAction {
@@ -813,6 +1028,16 @@ export interface IAddPageDataStatsAction {
     filePath: SystemPath
     size: number
     pageDataHash: string
+  }
+}
+
+export interface IAddSliceDataStatsAction {
+  type: `ADD_SLICE_DATA_STATS`
+  payload: {
+    sliceName: string
+    filePath: SystemPath
+    size: number
+    sliceDataHash: string
   }
 }
 
@@ -867,6 +1092,7 @@ interface IMarkHtmlDirty {
   type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`
   payload: {
     pages: Set<string>
+    slices: Set<string>
     staticQueryHashes: Set<string>
   }
 }
@@ -881,6 +1107,7 @@ export interface ICreateNodeManifest {
     manifestId: string
     node: IGatsbyNode
     pluginName: string
+    updatedAtUTC?: string | number
   }
 }
 
@@ -893,5 +1120,62 @@ export interface INodeManifest {
   pluginName: string
   node: {
     id: string
+  }
+}
+
+export interface ISetDomainRequestHeaders {
+  type: `SET_REQUEST_HEADERS`
+  payload: {
+    domain: string
+    headers: {
+      [header: string]: string
+    }
+  }
+}
+
+export interface IProcessGatsbyImageSourceUrlAction {
+  type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`
+  payload: {
+    sourceUrl: string
+  }
+}
+
+export interface IClearGatsbyImageSourceUrlAction {
+  type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`
+}
+
+export interface ITelemetry {
+  gatsbyImageSourceUrls: Set<string>
+}
+
+export interface IMergeWorkerQueryState {
+  type: `MERGE_WORKER_QUERY_STATE`
+  payload: {
+    workerId: number
+    queryStateChunk: IGatsbyState["queries"]
+    queryStateTelemetryChunk: IGatsbyState["telemetry"]
+  }
+}
+
+export interface IMaterializePageMode {
+  type: `MATERIALIZE_PAGE_MODE`
+  payload: {
+    path: string
+    pageMode: PageMode
+  }
+}
+
+export interface ISetJobV2Context {
+  type: `SET_JOB_V2_CONTEXT`
+  payload: {
+    job: IGatsbyIncompleteJobV2["job"]
+    requestId: string
+  }
+}
+
+export interface IClearJobV2Context {
+  type: `CLEAR_JOB_V2_CONTEXT`
+  payload: {
+    requestId: string
   }
 }

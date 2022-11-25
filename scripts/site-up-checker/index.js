@@ -46,7 +46,7 @@ const checkWebsite = async site => {
 
 const main = () => {
   const websites = [
-    `https://www.gatsbyjs.org`,
+    `https://www.gatsbyjs.com`,
     `https://gatsbygram.gatsbyjs.org`,
     `https://using-drupal.gatsbyjs.org`,
   ]

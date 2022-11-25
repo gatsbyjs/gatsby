@@ -5,16 +5,12 @@
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
     "gatsby": "next",
-    "gatsby-image": "next",
-    "gatsby-plugin-manifest": "next",
-    "gatsby-plugin-offline": "next",
-    "gatsby-plugin-react-helmet": "next",
+    "gatsby-plugin-image": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-sharp": "next",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-helmet": "^5.2.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "keywords": [
     "gatsby",
@@ -26,19 +22,16 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "start": "npm run develop",
+    "clean": "gatsby clean",
     "test": "jest"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "babel-jest": "^24.9.0",
-    "babel-preset-gatsby": "^0.5.10",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "babel-jest": "^29.1.2",
+    "babel-preset-gatsby": "^2.24.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.9.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby"
+    "jest": "^29.1.2",
+    "jest-environment-jsdom": "^29.1.2"
   }
 }

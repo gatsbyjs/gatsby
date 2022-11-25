@@ -1,4 +1,6 @@
-# Architecture of Gatsby's image plugins
+---
+title: Architecture of Gatsby's image plugins
+---
 
 This is a technical document for anyone who is interested in how images are implemented in Gatsby. This is not for learning [how to use images in Gatsby](/docs/how-to/images-and-media/using-gatsby-plugin-image/), or even [how to add image support to a plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/). This is for if you are working on Gatsby, or if you're curious about how it's implemented.
 
@@ -16,7 +18,7 @@ This is a React component, and is the actual component used to display all image
 
 #### The `StaticImage` component
 
-A a lightweight wrapper around `GatsbyImage`, this component is detected during the build process and the props are extracted to enable images to be downloaded, and processed by `gatsby-plugin-sharp` without needing GraphQL.
+A lightweight wrapper around `GatsbyImage`, this component is detected during the build process and the props are extracted to enable images to be downloaded, and processed by `gatsby-plugin-sharp` without needing GraphQL.
 
 #### Plugin toolkit
 
@@ -28,7 +30,7 @@ The plugin exports a number of other helper functions designed to help end-users
 
 ### `gatsby-plugin-sharp`
 
-This includes the actual image processing functions from both sharp but also imagemin and potrace. It includes the functions that generate the image data object, including calculating which srcset sizes to generate. It exports `generateImageData`, which is used by `gatsby-transformer-sharp` and `gatsby-plugin-image`. It takes a `File` node and the image processing arguments, calculates which images to generate, processes these images and returns an image data object suitable for passing to `GatsbyImage`. It also exports helper functions for third party plugins to use, such as `traceSVG`.
+This includes the actual image processing functions from sharp. It includes the functions that generate the image data object, including calculating which srcset sizes to generate. It exports `generateImageData`, which is used by `gatsby-transformer-sharp` and `gatsby-plugin-image`. It takes a `File` node and the image processing arguments, calculates which images to generate, processes these images and returns an image data object suitable for passing to `GatsbyImage`. It also exports helper functions for third party plugins to use, such as `generateImageData`.
 
 ### `gatsby-transformer-sharp`
 
@@ -52,15 +54,7 @@ Many source plugins now support `GatsbyImage`. They do this by generating image 
 
 ### Anatomy of the component
 
-The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is something that could be looked-at in future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
-
-#### Lazy hydration
-
-Throughout the component there are different versions delivered for browser and server. The reason for this is that the component performs lazy hydration: the image is loaded as soon as the SSR HTML is loaded in the browser, including blur-up and lazy-loaded images. Hydration is usually the slowest part of a React app's page load. `GatsbyImage` avoids this by skipping React for all initial image loads, leading to faster LCP. The plugin uses `onRenderBody` in `gatsby-ssr` to inject inline script and CSS tags to enable this. The JS attaches a `load` event listener to the body, which hides the placeholder and shows the main image when any `GatsbyImage` has loaded. It uses `<noscript>` tags to ensure that images still work with scripts disabled.
-
-Inside the `GatsbyImage` browser component, this means the load handling is skipped for any component that was rendered in SSR (which is indicated by adding a `data-gatsby-image-ssr` prop in the server component). However for any images that do not have this prop, this load handling happens in React. This will be the case for any image rendered after initial load, such as after page navigation or conditional rendering.
-
-The browser component is a class component, which uses `shouldComponentUpdate` to ensure that it is never hydrated as part of the normal rendering process in the browser. Instead, the image hydrates or renders itself manually, using the `lazyHydrate` function, which is itself loaded asynchronously using `import()`. This takes the `ref` of the wrapper's HTML element, and uses `hydrate` or `render` from `react-dom` to render or hydrate the inner components as their own React tree. This ensures that the hydration of the images never blocks page loading, contributing to faster TTI.
+The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is something that could be looked at in the future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
 
 #### Sizer
 
@@ -68,7 +62,7 @@ The `GatsbyImage` component supports three types of layout, which define the res
 
 #### Placeholder
 
-`GatbsyImage` supports displaying a placeholder while the main image loads. There are two kinds of placeholder that are currently supported: flat colors and images. The type of placeholder is set via the image data object, and will either be a data URI for the image, or a CSS color value. The image will either be a base64-encoded low resolution raster image (called `BLURRED` when using sharp) or a URI-encoded SVG (called `TRACED_SVG`). The raster image will by default be 20px wide, and the same aspect ratio as the main image. This will be resized to fill the full container, giving a blurred effect. The SVG image is expected to be a single-color, simplified SVG generated using [potrace](http://potrace.sourceforge.net/). While these are the defaults produced by sharp, and also used by many third-party source plugins, we do not enforce this, and it can be any URI. We strongly encourage the use of inline data URIs, as any placeholder that needs to make a network request will defeat much of the purpose of using a placeholder. The actual placeholder element is a regular `<img>` tag, even for SVGs.
+`GatsbyImage` supports displaying a placeholder while the main image loads. There are two kinds of placeholder that are currently supported: flat colors and images. The type of placeholder is set via the image data object, and will either be a data URI for the image, or a CSS color value. The image will be a base64-encoded low resolution raster image (called `BLURRED` when using sharp). The raster image will by default be 20px wide, and the same aspect ratio as the main image. This will be resized to fill the full container, giving a blurred effect. While these are the defaults produced by sharp, and also used by many third-party source plugins, we do not enforce this, and it can be any URI. We strongly encourage the use of inline data URIs, as any placeholder that needs to make a network request will defeat much of the purpose of using a placeholder. The actual placeholder element is a regular `<img>` tag, even for SVGs.
 
 The alternative placeholder is a flat color. This is expected to be calculated from the dominant color of the source image. sharp supports performing this calculation, and some CMSs provide it in the image metadata. This color is applied as a background color to a placeholder `<div>` element.
 
@@ -84,7 +78,7 @@ We pass through `media` props to the `<source>` elements, allowing art direction
 
 ## How `StaticImage` works
 
-The image plugin performs a number of tricks so that the `StaticImage` component appears to work like a regular React component, while being able to process images at build time. It can be helpful to think of `StaticImage` as a
+The image plugin performs a number of tricks so that the `StaticImage` component appears to work like a regular React component, while being able to process images at build time.
 
 ### The problem
 

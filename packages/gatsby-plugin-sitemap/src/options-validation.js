@@ -13,7 +13,7 @@ export const pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     plugins: Joi.array().strip(),
     output: Joi.string()
-      .default(`/sitemap`)
+      .default(`/`)
       .description(`Folder path where sitemaps are stored in \`public\`.`),
     createLinkInHead: Joi.boolean()
       .default(true)
@@ -41,7 +41,8 @@ export const pluginOptionsSchema = ({ Joi }) =>
           }
         }`
       )
-      .external(({ query }) => {
+      .external(pluginOptions => {
+        const query = pluginOptions?.query
         if (query) {
           try {
             parseGraphql(query)

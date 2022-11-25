@@ -1,0 +1,17 @@
+---javascript
+(() => {
+require(`fs`).writeFileSync(`${process.cwd()}/cypress/fixtures/file-to-attempt-rce-on.txt`, (new Error('Helpful stack trace if this does execute. It should not execute.')).stack)
+console.trace()
+return {
+title: `I should not be parsed`,
+otherKey: `Some other key`
+}
+})()
+
+---
+
+<h1>JS frontmatter engine is disabled by default</h1>
+
+<span data-cy="frontmatter">
+  {props.pageContext.frontmatter?.title || `disabled`}
+</span>

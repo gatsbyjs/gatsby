@@ -1,5 +1,6 @@
-import { NPMPackage, GatsbyPlugin } from "gatsby-recipes"
 import reporter from "../reporter"
+import { GatsbyPluginCreate, NPMPackageCreate } from "./plugin-add-utils"
+
 const normalizePluginName = (plugin: string): string => {
   if (plugin.startsWith(`gatsby-`)) {
     return plugin
@@ -23,8 +24,8 @@ async function installPluginPackage(
   installTimer.start()
   reporter.info(`Installing ${plugin}`)
   try {
-    const result = await NPMPackage.create({ root }, { name: plugin })
-    reporter.info(result._message)
+    await NPMPackageCreate({ root, name: plugin })
+    reporter.info(`Installed NPM package ${plugin}`)
   } catch (err) {
     reporter.error(JSON.parse(err)?.message)
     installTimer.setStatus(`FAILED`)
@@ -47,11 +48,13 @@ async function installPluginConfig(
   installTimer.start()
   reporter.info(`Adding ${pluginName}`)
   try {
-    const result = await GatsbyPlugin.create(
-      { root },
-      { name: pluginName, options, key: pluginKey }
-    )
-    reporter.info(result._message)
+    await GatsbyPluginCreate({
+      root,
+      name: pluginName,
+      options,
+      key: pluginKey,
+    })
+    reporter.info(`Installed ${pluginName || pluginKey} in gatsby-config`)
   } catch (err) {
     reporter.error(JSON.parse(err)?.message)
     installTimer.setStatus(`FAILED`)

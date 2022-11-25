@@ -57,8 +57,6 @@ query.
 Delete the `id` from the query and bring up the autocomplete again (<kbd>Ctrl +
 Space</kbd>).
 
-![The GraphiQL IDE showing autocomplete options](../../images/filesystem-autocomplete.png)
-
 Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
 each time to re-run the query. You'll see something like this:
 
@@ -93,6 +91,27 @@ You can then update your query using `sourceInstanceName` and the value of the `
       }
     }
   }
+}
+```
+
+## Conditionally sourcing files using environment variables
+
+You can conditionally set the `path` option using environment variables. For context, you might decide to do this if you're sourcing a lot of files and you're interested in only sourcing a smaller batch of files during `gatsby develop`. This is also helpful when you e.g. have a staging and production environment (signaled through environment variables).
+
+The example below shows how to use `NODE_ENV` (which is automatically set to `development` during `gatsby develop`) to only source a smaller portion of the content during development. For `gatsby build` the full dataset will be used.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `markdown-pages`,
+        path: process.env.NODE_ENV === `development` ? `${__dirname}/src/content/2022` : `${__dirname}/src/content`,
+      },
+    },
+    `gatsby-transformer-remark`,
+  ],
 }
 ```
 

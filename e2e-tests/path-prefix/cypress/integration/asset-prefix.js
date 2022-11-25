@@ -11,10 +11,6 @@ describe(`assetPrefix`, () => {
   })
 
   describe(`runtime`, () => {
-    it(`prefixes preloads`, () => {
-      assetPrefixMatcher(cy.get(`head link[rel="preload"]`))
-    })
-
     it(`prefixes styles`, () => {
       assetPrefixMatcher(cy.get(`head style[data-href]`), `data-href`)
     })

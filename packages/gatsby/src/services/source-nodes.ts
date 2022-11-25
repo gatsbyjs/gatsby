@@ -31,7 +31,9 @@ export async function sourceNodes({
 
   reporter.verbose(`Checking for deleted pages`)
 
-  const tim = reporter.activityTimer(`Checking for changed pages`)
+  const tim = reporter.activityTimer(`Checking for changed pages`, {
+    parentSpan,
+  })
   tim.start()
 
   const { changedPages, deletedPages } = findChangedPages(

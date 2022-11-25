@@ -20,6 +20,7 @@ import {
   ICreatePageDependencyAction,
   IGatsbyPage,
   IGatsbyState,
+  IMergeWorkerQueryState,
   IPageQueryRunAction,
   IQueryStartAction,
 } from "../../types"
@@ -186,17 +187,21 @@ describe(`delete page`, () => {
 
     const action1: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: Pages.foo.path,
-        nodeId: `123`,
-      },
+      payload: [
+        {
+          path: Pages.foo.path,
+          nodeId: `123`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: Pages.bar.path,
-        connection: `Bar`,
-      },
+      payload: [
+        {
+          path: Pages.bar.path,
+          connection: `Bar`,
+        },
+      ],
     }
     state = reducer(state, action1)
     state = reducer(state, action2)
@@ -353,7 +358,7 @@ describe(`createPages API end`, () => {
     for (const payload of dataDependencies) {
       state = reducer(state, {
         type: `CREATE_COMPONENT_DEPENDENCY`,
-        payload,
+        payload: [payload],
       })
     }
     state = deletePage(state, Pages.foo)
@@ -658,10 +663,12 @@ describe(`add page data dependency`, () => {
   it(`lets you add a node dependency`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        nodeId: `123`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          nodeId: `123`,
+        },
+      ],
     }
 
     expect(reducer(undefined, action)).toMatchObject({
@@ -672,24 +679,30 @@ describe(`add page data dependency`, () => {
   it(`lets you add a node dependency to multiple paths`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        nodeId: `1.2.3`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          nodeId: `1.2.3`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi2/`,
-        nodeId: `1.2.3`,
-      },
+      payload: [
+        {
+          path: `/hi2/`,
+          nodeId: `1.2.3`,
+        },
+      ],
     }
     const action3: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/blog/`,
-        nodeId: `1.2.3`,
-      },
+      payload: [
+        {
+          path: `/blog/`,
+          nodeId: `1.2.3`,
+        },
+      ],
     }
 
     let state = reducer(undefined, action)
@@ -704,17 +717,21 @@ describe(`add page data dependency`, () => {
   it(`lets you add a connection dependency`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        connection: `Markdown.Remark`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          connection: `Markdown.Remark`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi2/`,
-        connection: `Markdown.Remark`,
-      },
+      payload: [
+        {
+          path: `/hi2/`,
+          connection: `Markdown.Remark`,
+        },
+      ],
     }
 
     let state = reducer(undefined, action)
@@ -728,19 +745,23 @@ describe(`add page data dependency`, () => {
   it(`removes duplicate paths`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        nodeId: `1`,
-        connection: `MarkdownRemark`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          nodeId: `1`,
+          connection: `MarkdownRemark`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi2/`,
-        nodeId: `1`,
-        connection: `MarkdownRemark`,
-      },
+      payload: [
+        {
+          path: `/hi2/`,
+          nodeId: `1`,
+          connection: `MarkdownRemark`,
+        },
+      ],
     }
 
     let state = reducer(undefined, action)
@@ -755,11 +776,13 @@ describe(`add page data dependency`, () => {
   it(`lets you add both a node and connection in one action`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        connection: `MarkdownRemark`,
-        nodeId: `SuperCoolNode`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          connection: `MarkdownRemark`,
+          nodeId: `SuperCoolNode`,
+        },
+      ],
     }
 
     const state = reducer(undefined, action)
@@ -779,10 +802,11 @@ describe(`query start`, () => {
       { path: StaticQueries.q1.id, connection: `Test` },
       { path: StaticQueries.q1.id, nodeId: `123` },
     ]
+
     for (const payload of dataDependencies) {
       state = reducer(state, {
         type: `CREATE_COMPONENT_DEPENDENCY`,
-        payload,
+        payload: [payload],
       })
     }
   })
@@ -866,6 +890,157 @@ describe(`delete cache`, () => {
 
     state = reducer(state, { type: `DELETE_CACHE` })
     expect(state).toEqual(initialState)
+  })
+})
+
+describe(`merge worker query state`, () => {
+  beforeEach(() => {
+    state = createPage(state, Pages.foo)
+
+    const action: ICreatePageDependencyAction = {
+      type: `CREATE_COMPONENT_DEPENDENCY`,
+      payload: [
+        {
+          path: Pages.foo.path,
+          nodeId: `123`,
+          connection: `Foo`,
+        },
+      ],
+    }
+
+    state = reducer(state, action)
+  })
+
+  it(`has expected baseline`, () => {
+    const action: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map([[`worker-random-id`, new Set([`/worker-page`])]]),
+          byConnection: new Map([[`WorkerType`, new Set([`/worker-page`])]]),
+          queryNodes: new Map(),
+          trackedQueries: new Map([[`/worker-page`, { dirty: 0, running: 0 }]]),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    state = reducer(state, action)
+
+    expect(state.trackedQueries.get(`/worker-page`)).not.toEqual({
+      dirty: 0,
+      running: 0,
+    })
+    expect(state.byNode.get(`123`)).toEqual(new Set([`/foo`]))
+    expect(state.byNode.get(`worker-random-id`)).toEqual(
+      new Set([`/worker-page`])
+    )
+    expect(state.byConnection.get(`Foo`)).toEqual(new Set([`/foo`]))
+    expect(state.byConnection.get(`WorkerType`)).toEqual(
+      new Set([`/worker-page`])
+    )
+    expect(state.queryNodes.get(`/foo`)).toEqual(new Set([`123`]))
+    expect(state.queryNodes.get(`/worker-page`)).toEqual(
+      new Set([`worker-random-id`])
+    )
+  })
+
+  it(`checks for deletedQueries`, () => {
+    const action: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map(),
+          deletedQueries: new Set(`foo-bar`),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    expect(() => reducer(state, action)).toThrow(
+      `Assertion failed: workerState.deletedQueries.size === 0 (worker #1)`
+    )
+  })
+
+  it(`checks for trackedComponents`, () => {
+    const action: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map(),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map([
+            [
+              `test`,
+              {
+                componentPath: `/test`,
+                errors: 0,
+                query: `test`,
+                pages: new Set(`1`),
+              },
+            ],
+          ]),
+        },
+      },
+    }
+
+    expect(() => reducer(state, action)).toThrow(
+      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #1)`
+    )
+  })
+
+  it(`checks for trackedQueries`, () => {
+    const action1: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map([[`/worker-page`, { dirty: 1, running: 0 }]]),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    const action2: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 2,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map([[`/worker-page`, { dirty: 0, running: 1 }]]),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    expect(() => reducer(state, action1)).toThrow(
+      `Assertion failed: all worker queries are not dirty (worker #1)`
+    )
+    expect(() => reducer(state, action2)).toThrow(
+      `Assertion failed: all worker queries are not running (worker #2)`
+    )
   })
 })
 

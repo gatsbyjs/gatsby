@@ -5,8 +5,13 @@ import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
+import fetchReferencedMediaItemsAndCreateNodes, {
+  addImageCDNFieldsToNode,
+} from "../../fetch-nodes/fetch-referenced-media-items"
+
 import { dump } from "dumper.js"
 import { atob } from "atob"
+import { camelCase } from "lodash"
 
 import {
   buildTypeName,
@@ -22,6 +27,7 @@ export const fetchAndCreateSingleNode = async ({
   cachedNodeIds,
   token = null,
   isPreview = false,
+  isDraft = false,
   userDatabaseId = null,
 }) => {
   function getNodeQuery() {
@@ -32,7 +38,7 @@ export const fetchAndCreateSingleNode = async ({
     // if it's a preview but it's the initial blank node
     // then use the regular node query as the preview query wont
     // return anything
-    const query = isPreview ? previewQuery : nodeQuery
+    const query = isPreview && !isDraft ? previewQuery : nodeQuery
 
     return query
   }
@@ -70,7 +76,7 @@ export const fetchAndCreateSingleNode = async ({
     errorContext: `Error occurred while updating a single "${singleName}" node.`,
   })
 
-  let remoteNode = data[singleName]
+  let remoteNode = data[singleName] || data[camelCase(singleName)]
 
   if (!data || !remoteNode) {
     reporter.warn(
@@ -78,6 +84,16 @@ export const fetchAndCreateSingleNode = async ({
         `${id} ${singleName} was updated, but no data was returned for this node.`
       )
     )
+
+    reporter.info({
+      singleName,
+      id,
+      actionType,
+      cachedNodeIds,
+      token,
+      isPreview,
+      userDatabaseId,
+    })
 
     return { node: null }
   }
@@ -87,6 +103,11 @@ export const fetchAndCreateSingleNode = async ({
     singleName,
     id,
   })
+
+  if (isPreview && `slug` in remoteNode && !remoteNode.slug) {
+    // sometimes preview nodes do not have a slug - but some users will use slugs to build page urls. So we should make sure we have something for the slug.
+    remoteNode.slug = id
+  }
 
   if (isPreview) {
     const existingNode = getNode(id)
@@ -159,32 +180,42 @@ export const createSingleNode = async ({
     type: typeInfo.nodesTypeName,
   }
 
-  const processedNode = await processNode({
+  const { processedNode, nodeMediaItemIdReferences } = await processNode({
     node: updatedNodeContent,
     pluginOptions,
     wpUrl,
     helpers,
   })
 
+  await fetchReferencedMediaItemsAndCreateNodes({
+    referencedMediaItemNodeIds: nodeMediaItemIdReferences,
+  })
+
   const { actions } = helpers
 
   const { createContentDigest } = helpers
 
-  let remoteNode = {
-    ...processedNode,
-    id: id,
-    parent: null,
-    internal: {
-      contentDigest: createContentDigest(updatedNodeContent),
-      type: buildTypeName(typeInfo.nodesTypeName),
+  const builtTypename = buildTypeName(typeInfo.nodesTypeName)
+
+  let remoteNode = addImageCDNFieldsToNode(
+    {
+      ...processedNode,
+      __typename: builtTypename,
+      id: id,
+      parent: null,
+      internal: {
+        contentDigest: createContentDigest(updatedNodeContent),
+        type: builtTypename,
+      },
     },
-  }
+    pluginOptions
+  )
 
   const typeSettings = getTypeSettingsByType({
     name: typeInfo.nodesTypeName,
   })
 
-  let additionalNodeIds
+  let additionalNodeIds = nodeMediaItemIdReferences || []
   let cancelUpdate
 
   if (
@@ -195,20 +226,23 @@ export const createSingleNode = async ({
       additionalNodeIds: receivedAdditionalNodeIds,
       remoteNode: receivedRemoteNode,
       cancelUpdate: receivedCancelUpdate,
-    } =
-      (await typeSettings.beforeChangeNode({
-        actionType: actionType,
-        remoteNode,
-        actions,
-        helpers,
-        fetchGraphql,
-        typeSettings,
-        buildTypeName,
-        type: typeInfo.nodesTypeName,
-        wpStore: store,
-      })) || {}
+    } = (await typeSettings.beforeChangeNode({
+      actionType: actionType,
+      remoteNode,
+      actions,
+      helpers,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      type: typeInfo.nodesTypeName,
+      wpStore: store,
+    })) || {}
 
-    additionalNodeIds = receivedAdditionalNodeIds
+    additionalNodeIds = [
+      ...additionalNodeIds,
+      ...(receivedAdditionalNodeIds || []),
+    ]
+
     cancelUpdate = receivedCancelUpdate
 
     if (receivedRemoteNode) {

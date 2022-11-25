@@ -23,7 +23,6 @@ Things we’re looking for in Gatsby blog content:
 
 - Information to help others overcome challenges you’ve faced while working with Gatsby
 - Stories about how Gatsby helped you overcome different challenges on work and personal projects
-- Gatsby case studies
 - Showcasing a tool, fix, or other content you or someone else have contributed to Gatsby’s open source community
 - Showcasing a tool, fix, or other content someone else has contributed to Gatsby’s open source community
 - Clear and thoughtful explanations of technical details or complex concepts related to React, GraphQL, web and application development, open-source contribution, Gatsby core, and other Gatsby-adjacent subject matter
@@ -34,7 +33,7 @@ Things we’d like to avoid on the Gatsby blog:
 
 - **Docs content.** Some content is better found in the Gatsby docs guides and tutorials, as it can be found in a section for related content and not buried under pages of other paginated blog posts.
 - **Promotional content.** Please don’t submit content to the Gatsby blog solely for the purpose of promoting a product, yourself, or link-building.
-  - **Here’s what you can do instead:** If you have a product or project you want to share on the Gatsby blog, focus on practical information, and make sure there’s a clear relationship with Gatsby or Gatsby-adjacent topics. You could write a step by step guide to using your product with Gatsby. You could write a case study highlighting the direct impact Gatsby had on your awesome project and offer helpful tips for others to recreate your success.
+  - **Here’s what you can do instead:** If you have a product or project you want to share on the Gatsby blog, focus on practical information, and make sure there’s a clear relationship with Gatsby or Gatsby-adjacent topics. You could write a step-by-step guide to using your product with Gatsby. You could write a case study highlighting the direct impact Gatsby had on your awesome project and offer helpful tips for others to recreate your success.
 - **Content that doesn’t seem to have a clear benefit for Gatsby users and/or the Gatsby community.** For example, if you’re writing about a use-case or integration that’s extremely niche or unique to specific conditions that are really uncommon outside of your organization, the Gatsby blog might not be the best place for your content. Likewise, if your blog post doesn’t seem to have any direct relationship with Gatsby (or an interesting indirect relationship with Gatsby), then it may be more appropriate for a personal blog or another community blog.
 
 **Please note** that these are guidelines, not rules. If you think your blog post belongs on the Gatsby blog, we absolutely encourage you to submit it. While we reserve the right to decide what is and isn’t appropriate for the Gatsby blog, we also value and encourage your creativity and your contributions.

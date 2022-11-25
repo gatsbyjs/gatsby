@@ -84,8 +84,10 @@ const paginatedWpNodeFetch = async ({
   }
 
   let {
-    [contentTypePlural]: { nodes, pageInfo: { hasNextPage, endCursor } = {} },
+    [contentTypePlural]: { nodes, pageInfo },
   } = data
+
+  const { hasNextPage, endCursor } = pageInfo || {}
 
   // Sometimes private posts return as null.
   // That causes problems for us so let's strip them out
@@ -119,7 +121,7 @@ const paginatedWpNodeFetch = async ({
           if (node?.databaseId && node?.uri && existingNode?.uri) {
             helpers.reporter.info(
               formatLogMessage(
-                `#${node.databaseId} (${node.uri}) is a duplicate of ${existingNode.databaseId} (${existingNode.uri})`
+                `Node with ID ${node.databaseId}/${node.id} of type ${node.__typename} was fetched multiple times. This is a WPGraphQL bug where pagination returns duplicate nodes.`
               )
             )
           }

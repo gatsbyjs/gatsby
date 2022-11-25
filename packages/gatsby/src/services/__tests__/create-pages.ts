@@ -10,6 +10,12 @@ jest.mock(`../../utils/js-chunk-names`, () => {
   return { generateComponentChunkName: (): string => `--mocked--` }
 })
 
+jest.mock(`fs-extra`, () => {
+  return {
+    readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
+  }
+})
+
 let mockAPIs = {}
 
 const component = path.join(process.cwd(), `wat`)
@@ -136,15 +142,15 @@ describe(`createPages service cleans up not recreated pages`, () => {
 
       expect(store.getState().pages.size).toEqual(2)
       expect(Array.from(store.getState().pages.keys())).toEqual([
-        `/stateless/junk`,
-        `/stateful/junk`,
+        `/stateless/junk/`,
+        `/stateful/junk/`,
       ])
       expect(
-        store.getState().pages.get(`/stateless/junk`)
+        store.getState().pages.get(`/stateless/junk/`)
           .isCreatedByStatefulCreatePages
       ).toEqual(false)
       expect(
-        store.getState().pages.get(`/stateful/junk`)
+        store.getState().pages.get(`/stateful/junk/`)
           .isCreatedByStatefulCreatePages
       ).toEqual(true)
     } else {
@@ -161,10 +167,10 @@ describe(`createPages service cleans up not recreated pages`, () => {
     expect(store.getState().pages.size).toEqual(4)
     expect(Array.from(store.getState().pages.keys())).toEqual(
       expect.arrayContaining([
-        `/stateless/stable`,
-        `/stateless/dynamic/1`,
-        `/stateful/stable`,
-        `/stateful/dynamic/1`,
+        `/stateless/stable/`,
+        `/stateless/dynamic/1/`,
+        `/stateful/stable/`,
+        `/stateful/dynamic/1/`,
       ])
     )
 
@@ -175,7 +181,7 @@ describe(`createPages service cleans up not recreated pages`, () => {
           expect.objectContaining({
             type: `DELETE_PAGE`,
             payload: expect.objectContaining({
-              path: `/stateless/junk`,
+              path: `/stateless/junk/`,
             }),
           }),
         ])
@@ -185,7 +191,7 @@ describe(`createPages service cleans up not recreated pages`, () => {
           expect.objectContaining({
             type: `DELETE_PAGE`,
             payload: expect.objectContaining({
-              path: `/stateful/junk`,
+              path: `/stateful/junk/`,
             }),
           }),
         ])
@@ -201,10 +207,10 @@ describe(`createPages service cleans up not recreated pages`, () => {
 
     expect(Array.from(store.getState().pages.keys())).toEqual(
       expect.arrayContaining([
-        `/stateless/stable`,
-        `/stateless/dynamic/2`,
-        `/stateful/stable`,
-        `/stateful/dynamic/1`,
+        `/stateless/stable/`,
+        `/stateless/dynamic/2/`,
+        `/stateful/stable/`,
+        `/stateful/dynamic/1/`,
       ])
     )
 
@@ -214,7 +220,7 @@ describe(`createPages service cleans up not recreated pages`, () => {
         expect.objectContaining({
           type: `DELETE_PAGE`,
           payload: expect.objectContaining({
-            path: `/stateless/dynamic/1`,
+            path: `/stateless/dynamic/1/`,
           }),
         }),
       ])

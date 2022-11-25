@@ -103,7 +103,7 @@ Another major change is [lazy images in develop](#query-on-demand-and-lazy-image
 
 ### AVIF support
 
-This release adds beta support for generating and displaying [AVIF images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4). AVIF is a brand new image format, which offers considerably better filesizes and quality than JPG and even WebP. It is currently [only supported in Chrome](https://caniuse.com/avif), with Firefox support coming soon. However it is safe to use today, because unsupported browsers will fall back to using a supported format.
+This release adds beta support for generating and displaying [AVIF images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4). AVIF is a brand-new image format, which offers considerably better filesizes and quality than JPG and even WebP. It is currently [only supported in Chrome](https://caniuse.com/avif), with Firefox support coming soon. However it is safe to use today, because unsupported browsers will fall back to using a supported format.
 
 AVIF is not currently enabled by default, so to use it in your site you need to add it to the `formats` array. You should also include auto and WebP to support other browsers. Ensure that you have upgraded to the latest version of `gatsby-plugin-sharp`, `gatsby-transformer-sharp` and `gatsby-plugin-image`, and then use the following syntax:
 

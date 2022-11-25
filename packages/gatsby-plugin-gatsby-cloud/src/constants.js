@@ -8,6 +8,7 @@ export const BUILD_CSS_STAGE = `build-css`
 export const HEADERS_FILENAME = `_headers.json`
 export const REDIRECTS_FILENAME = `_redirects.json`
 export const PUBLIC_FUNCTIONS_FILENAME = `_functions.json`
+export const SITE_CONFIG_FILENAME = `_gatsby-config.json`
 export const CACHE_FUNCTIONS_FILENAME = `manifest.json`
 
 export const DEFAULT_OPTIONS = {
@@ -21,10 +22,10 @@ export const DEFAULT_OPTIONS = {
 
 export const SECURITY_HEADERS = {
   "/*": [
-    `X-Frame-Options: DENY`,
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
     `Referrer-Policy: same-origin`,
+    `X-Frame-Options: DENY`,
   ],
 }
 
@@ -37,9 +38,3 @@ export const CACHING_HEADERS = {
 }
 
 export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/
-
-export const COMMON_BUNDLES = [`commons`, `app`]
-
-export const PAGE_DATA_DIR = `page-data/`
-
-export const POLLING_INTERVAL = 5000

@@ -1,4 +1,5 @@
 // @flow
+const reporter = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -7,12 +8,16 @@ const { platform } = require(`os`)
 const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const { slash, createContentDigest } = require(`gatsby-core-utils`)
+const { slash } = require(`gatsby-core-utils/path`)
+const {
+  createContentDigest,
+} = require(`gatsby-core-utils/create-content-digest`)
+const { splitComponentPath } = require(`gatsby-core-utils/parse-component-path`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
-const { getNode } = require(`../../datastore`)
-const sanitizeNode = require(`../../utils/sanitize-node`)
-const { store } = require(`..`)
-const { validatePageComponent } = require(`../../utils/validate-page-component`)
+const { getNode, getDataStore } = require(`../../datastore`)
+import { sanitizeNode } from "../../utils/sanitize-node"
+const { store } = require(`../index`)
+const { validateComponent } = require(`../../utils/validate-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
@@ -20,28 +25,28 @@ const {
   truncatePath,
   tooLongSegmentsInPath,
 } = require(`../../utils/path`)
+const { applyTrailingSlashOption } = require(`gatsby-page-utils`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const { getPageMode } = require(`../../utils/page-mode`)
+const normalizePath = require(`../../utils/normalize-path`).default
+import { createJobV2FromInternalJob } from "./internal"
+import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
+import { reportOnce } from "../../utils/report-once"
+import { wrapNode } from "../../utils/detect-node-mutations"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
 
-/**
- * Memoize function used to pick shadowed page components to avoid expensive I/O.
- * Ideally, we should invalidate memoized values if there are any FS operations
- * on files that are in shadowing chain, but webpack currently doesn't handle
- * shadowing changes during develop session, so no invalidation is not a deal breaker.
- */
+// Memoize function used to pick shadowed page components to avoid expensive I/O.
+// Ideally, we should invalidate memoized values if there are any FS operations
+// on files that are in shadowing chain, but webpack currently doesn't handle
+// shadowing changes during develop session, so no invalidation is not a deal breaker.
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
-const {
-  enqueueJob,
-  createInternalJob,
-  removeInProgressJob,
-  getInProcessJobPromise,
-} = require(`../../utils/jobs-manager`)
+const { createInternalJob } = require(`../../utils/jobs/manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -73,15 +78,6 @@ const findChildren = initialChildren => {
   return children
 }
 
-const displayedWarnings = new Set()
-const warnOnce = (message, key) => {
-  const messageId = key ?? message
-  if (!displayedWarnings.has(messageId)) {
-    displayedWarnings.add(messageId)
-    report.warn(message)
-  }
-}
-
 import type { Plugin } from "./types"
 
 type Job = {
@@ -95,12 +91,16 @@ type JobV2 = {
   args: Object,
 }
 
-type PageInput = {
-  path: string,
-  component: string,
-  context?: Object,
-  ownerNodeId?: string,
+export interface IPageInput {
+  path: string;
+  component: string;
+  context?: Object;
+  ownerNodeId?: string;
+  defer?: boolean;
+  slices: Record<string, string>;
 }
+
+type PageMode = "SSG" | "DSG" | "SSR"
 
 type Page = {
   path: string,
@@ -111,6 +111,8 @@ type Page = {
   componentChunkName: string,
   updatedAt: number,
   ownerNodeId?: string,
+  mode: PageMode,
+  slices: Record<string, string>,
 }
 
 type ActionOptions = {
@@ -136,7 +138,7 @@ type PageDataRemove = {
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: PageInput) => {
+actions.deletePage = (page: IPageInput) => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -159,14 +161,16 @@ const reservedFields = [
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
  * @param {Object} page a page object
- * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.path Any valid URL. Must start with a forward slash. Unicode characters should be passed directly and not encoded (eg. `á` not `%C3%A1`).
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
- * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page. Note that the ownerNodeId must be for a node which is queried on this page via a GraphQL query.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
+ * @param {Object} page.slices A mapping of alias-of-id for Slices rendered on this page. See the technical docs for the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
+ * @param {boolean} page.defer When set to `true`, Gatsby will exclude the page from the build step and instead generate it during the first HTTP request. Default value is `false`. Also see docs on [Deferred Static Generation](/docs/reference/rendering-options/deferred-static-generation/).
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
@@ -180,7 +184,7 @@ const reservedFields = [
  * })
  */
 actions.createPage = (
-  page: PageInput,
+  page: IPageInput,
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
@@ -265,8 +269,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       report.panic({
         id: `11322`,
         context: {
+          input: page,
           pluginName: name,
-          pageObject: page,
         },
       })
     } else {
@@ -280,11 +284,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
-  const { error, message, panicOnBuild } = validatePageComponent(
-    page,
-    store.getState().program.directory,
-    name
-  )
+  const { config, program } = store.getState()
+  const { trailingSlash } = config
+  const { directory } = program
+
+  const { error, panicOnBuild } = validateComponent({
+    input: page,
+    pluginName: name,
+    errorIdMap: {
+      noPath: `11322`,
+      notAbsolute: `11326`,
+      doesNotExist: `11325`,
+      empty: `11327`,
+      noDefaultExport: `11328`,
+    },
+  })
 
   if (error) {
     if (isNotTestEnv) {
@@ -294,7 +308,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panic(error)
       }
     }
-    return message
+    return `${name} must set the absolute path to the page component when creating a page`
   }
 
   // check if we've processed this component path
@@ -307,9 +321,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
+      const splitPath = splitComponentPath(page.component)
 
       // normalize component path
-      page.component = slash(page.component)
+      page.component = slash(splitPath[0])
       // check if path uses correct casing - incorrect casing will
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
@@ -320,10 +335,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(
-          store.getState().program.directory,
-          page.component
-        )
+        const commonDir = getCommonDir(directory, page.component)
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
@@ -364,6 +376,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = trueComponentPath
       }
 
+      if (splitPath.length > 1) {
+        page.component = `${page.component}?__contentFilePath=${splitPath[1]}`
+      }
+
       pageComponentCache.set(originalPageComponent, page.component)
     }
   }
@@ -393,22 +409,33 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.path = truncatedPath
   }
 
+  page.path = applyTrailingSlashOption(page.path, trailingSlash)
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
-    component: page.component,
+    component: normalizePath(page.component),
+    componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+    slices: page?.slices || {},
 
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
     pluginCreatorId: plugin.id ?? ``,
   }
+
+  if (page.defer) {
+    internalPage.defer = true
+  }
+  // Note: mode is updated in the end of the build after we get access to all page components,
+  // see materializePageMode in utils/page-mode.ts
+  internalPage.mode = getPageMode(internalPage)
 
   if (page.ownerNodeId) {
     internalPage.ownerNodeId = page.ownerNodeId
@@ -422,6 +449,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const oldPage: Page = store.getState().pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+  const componentModified =
+    !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
+  const slicesModified =
+    !!oldPage && !_.isEqual(oldPage.slices, internalPage.slices)
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -484,13 +515,18 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
+  const sanitizedPayload = sanitizeNode(internalPage)
+
   const actions = [
     {
       ...actionOptions,
       type: `CREATE_PAGE`,
       contextModified,
+      componentModified,
+      slicesModified,
       plugin,
-      payload: internalPage,
+      payload: sanitizedPayload,
     },
   ]
 
@@ -512,26 +548,7 @@ const deleteNodeDeprecationWarningDisplayedMessages = new Set()
  * deleteNode(node)
  */
 actions.deleteNode = (node: any, plugin?: Plugin) => {
-  let id
-
-  // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
-  if (node && node.node) {
-    let msg =
-      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
-      `the node directly to the function: deleteNode(node)`
-
-    if (plugin && plugin.name) {
-      msg = msg + ` "deleteNode" was called by ${plugin.name}`
-    }
-    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
-      report.warn(msg)
-      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
-    }
-
-    id = node.node.id
-  } else {
-    id = node && node.id
-  }
+  const id = node && node.id
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
@@ -869,26 +886,40 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
-  const actions = createNode(...args)
+actions.createNode =
+  (...args) =>
+  dispatch => {
+    const actions = createNode(...args)
 
-  dispatch(actions)
-  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
-    action => action.type === `CREATE_NODE`
-  )
+    dispatch(actions)
+    const createNodeAction = (
+      Array.isArray(actions) ? actions : [actions]
+    ).find(action => action.type === `CREATE_NODE`)
 
-  if (!createNodeAction) {
-    return undefined
+    if (!createNodeAction) {
+      return Promise.resolve(undefined)
+    }
+
+    const { payload: node, traceId, parentSpan } = createNodeAction
+    const maybePromise = apiRunnerNode(`onCreateNode`, {
+      node: wrapNode(node),
+      traceId,
+      parentSpan,
+      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    })
+
+    if (maybePromise?.then) {
+      return maybePromise.then(res =>
+        getDataStore()
+          .ready()
+          .then(() => res)
+      )
+    } else {
+      return getDataStore()
+        .ready()
+        .then(() => maybePromise)
+    }
   }
-
-  const { payload: node, traceId, parentSpan } = createNodeAction
-  return apiRunnerNode(`onCreateNode`, {
-    node,
-    traceId,
-    parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
-  })
-}
 
 const touchNodeDeprecationWarningDisplayedMessages = new Set()
 
@@ -903,24 +934,6 @@ const touchNodeDeprecationWarningDisplayedMessages = new Set()
  * touchNode(node)
  */
 actions.touchNode = (node: any, plugin?: Plugin) => {
-  // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
-  if (node && node.nodeId) {
-    let msg =
-      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
-      `the node directly to the function: touchNode(node)`
-
-    if (plugin && plugin.name) {
-      msg = msg + ` "touchNode" was called by ${plugin.name}`
-    }
-
-    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
-      report.warn(msg)
-      touchNodeDeprecationWarningDisplayedMessages.add(msg)
-    }
-
-    node = getNode(node.nodeId)
-  }
-
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
   }
@@ -1229,7 +1242,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `CREATE_JOB`,
@@ -1255,54 +1268,21 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
-  const currentState = getState()
   const internalJob = createInternalJob(job, plugin)
-  const jobContentDigest = internalJob.contentDigest
 
-  // Check if we already ran this job before, if yes we return the result
-  // We have an inflight (in progress) queue inside the jobs manager to make sure
-  // we don't waste resources twice during the process
-  if (
-    currentState.jobsV2 &&
-    currentState.jobsV2.complete.has(jobContentDigest)
-  ) {
-    return Promise.resolve(
-      currentState.jobsV2.complete.get(jobContentDigest).result
-    )
+  const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
+  if (maybeWorkerPromise) {
+    return maybeWorkerPromise
   }
 
-  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
-  if (inProgressJobPromise) {
-    return inProgressJobPromise
+  return createJobV2FromInternalJob(internalJob)(dispatch, getState)
+}
+
+actions.addGatsbyImageSourceUrl = (sourceUrl: string) => {
+  return {
+    type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
+    payload: { sourceUrl },
   }
-
-  dispatch({
-    type: `CREATE_JOB_V2`,
-    plugin,
-    payload: {
-      job: internalJob,
-      plugin,
-    },
-  })
-
-  const enqueuedJobPromise = enqueueJob(internalJob)
-  return enqueuedJobPromise.then(result => {
-    // store the result in redux so we have it for the next run
-    dispatch({
-      type: `END_JOB_V2`,
-      plugin,
-      payload: {
-        jobContentDigest,
-        result,
-      },
-    })
-
-    // remove the job from our inProgressJobQueue as it's available in our done state.
-    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-    removeInProgressJob(jobContentDigest)
-
-    return result
-  })
 }
 
 /**
@@ -1323,7 +1303,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `SET_JOB`,
@@ -1350,7 +1330,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `END_JOB`,
@@ -1388,8 +1368,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
 }
 
 /**
- * Create a redirect from one page to another. Server redirects don't work out
- * of the box. You must have a plugin setup to integrate the redirect data with
+ * Create a redirect from one page to another. Redirects work out of the box with Gatsby Cloud. Read more about
+ * [working with redirects on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/1500003051241-Working-with-Redirects).
+ * If you are hosting somewhere other than Gatsby Cloud, you will need a plugin to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
  * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
@@ -1400,16 +1381,22 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
- * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration on the server. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well. You almost never need this so be sure your use case fits before enabling.
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects
+ * @param {Object} redirect.conditions Specify a country or language based redirect
+ * @param {(string|string[])} redirect.conditions.country A two-letter country code based on the regional indicator symbol
+ * @param {(string|string[])} redirect.conditions.language A two-letter identifier defined by ISO 639-1
  * @example
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
  *   const { createRedirect } = actions
  *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', conditions: { language: 'zn' }})
+ *   createRedirect({ fromPath: '/url', toPath: '/en/url', conditions: { language: ['ca', 'us'] }})
+ *   createRedirect({ fromPath: '/url', toPath: '/ca/url', conditions: { country: 'ca' }})
+ *   createRedirect({ fromPath: '/url', toPath: '/en/url', conditions: { country: ['ca', 'us'] }})
  *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
  *   // Create pages here
  * }
@@ -1463,11 +1450,13 @@ actions.createPageDependency = (
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: [
+      {
+        path,
+        nodeId,
+        connection,
+      },
+    ],
   }
 }
 
@@ -1494,27 +1483,21 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * Creates an individual node manifest.
  * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
  *
- * @param {Object} manifest a page object
- * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
- * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @param {Object} manifest Manifest data
+ * @param {string} manifest.manifestId An id which ties the unique revision state of this manifest to the unique revision state of a data source.
+ * @param {Object} manifest.node The Gatsby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
+ * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated. If this parameter is not included, a manifest is created for every node that gets called. By default, node manifests are created for content updated in the last 30 days. To change this, set a `NODE_MANIFEST_MAX_DAYS_OLD` environment variable.
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
+ *   updatedAtUTC: `2021-07-08T21:52:28.791+01:00`,
  *   node: {
  *      id: `post-id-1`
  *   },
  * })
  */
 actions.unstable_createNodeManifest = (
-  {
-    manifestId,
-    node,
-  }: {
-    manifestId: string,
-    node: {
-      id: string,
-    },
-  },
+  { manifestId, node, updatedAtUTC },
   plugin: Plugin
 ) => {
   return {
@@ -1523,7 +1506,61 @@ actions.unstable_createNodeManifest = (
       manifestId,
       node,
       pluginName: plugin.name,
+      updatedAtUTC,
     },
+  }
+}
+
+/**
+ * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
+ *
+ * @param {Object} $0
+ * @param {string} $0.domain The domain to store the headers for.
+ * @param {Object} $0.headers The headers to store.
+ */
+actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
+  const headersIsObject =
+    typeof headers === `object` && headers !== null && !Array.isArray(headers)
+
+  const noHeaders = !headersIsObject
+  const noDomain = typeof domain !== `string`
+
+  if (noHeaders) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`
+    )
+  }
+
+  if (noDomain) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`
+    )
+  }
+
+  if (noDomain || noHeaders) {
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`
+    )
+
+    return null
+  }
+
+  const baseDomain = url.parse(domain)?.hostname
+
+  if (baseDomain) {
+    return {
+      type: `SET_REQUEST_HEADERS`,
+      payload: {
+        domain: baseDomain,
+        headers,
+      },
+    }
+  } else {
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
+    )
+
+    return null
   }
 }
 

@@ -83,7 +83,9 @@ const ConnectedDevelop: React.FC = () => {
 
   return (
     <Develop
+      // @ts-ignore - program exists on state but we should refactor this
       pagesCount={state.pages?.size || 0}
+      // @ts-ignore - program exists on state but we should refactor this
       appName={state.program?.sitePackageJson.name || ``}
       status={state.logs?.status || ``}
     />

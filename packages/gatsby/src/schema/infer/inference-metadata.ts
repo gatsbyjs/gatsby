@@ -75,7 +75,7 @@ export interface ITypeInfoString extends ITypeInfo {
 }
 
 export interface ITypeInfoDate extends ITypeInfo {
-  example: string
+  example: string | Date
 }
 
 export interface ITypeInfoNumber extends ITypeInfo {
@@ -487,9 +487,9 @@ const addNodes = (
 }
 
 const possibleTypes = (descriptor: IValueDescriptor = {}): Array<ValueType> =>
-  Object.keys(descriptor).filter(type => descriptor[type].total > 0) as Array<
-    ValueType
-  >
+  Object.keys(descriptor).filter(
+    type => descriptor[type].total > 0
+  ) as Array<ValueType>
 
 const isEmpty = ({ fieldMap }): boolean =>
   Object.keys(fieldMap).every(

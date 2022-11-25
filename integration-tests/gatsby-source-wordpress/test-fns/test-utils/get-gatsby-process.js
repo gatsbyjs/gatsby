@@ -24,9 +24,13 @@ exports.gatsbyCleanBeforeAll = async done => {
 exports.spawnGatsbyProcess = (command = `develop`, env = {}) => {
   const proc = spawn(
     process.execPath,
-    [gatsbyBin, command, ...(command === `develop` ? ["-H", "localhost", "--port", "8000"] : [])],
+    [
+      gatsbyBin,
+      command,
+      ...(command === `develop` ? ["-H", "localhost", "--port", "8000"] : []),
+    ],
     {
-      stdio: [`inherit`, `inherit`, `inherit`],
+      stdio: `inherit`,
       env: {
         ...process.env,
         NODE_ENV: command === `develop` ? `development` : `production`,
@@ -35,7 +39,7 @@ exports.spawnGatsbyProcess = (command = `develop`, env = {}) => {
     }
   )
 
-  process.on('SIGINT', proc.kill)
+  process.on("SIGINT", proc.kill)
 
   return proc
 }

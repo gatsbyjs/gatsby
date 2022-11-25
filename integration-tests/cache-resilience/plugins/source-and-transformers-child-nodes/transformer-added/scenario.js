@@ -55,7 +55,7 @@ const nodesTest = ({
           \\"foo\\": \\"run-1\\",
           \\"id\\": \\"parent_childAdditionForTransformer\\",
           \\"internal\\": Object {
-            \\"contentDigest\\": \\"f85e860f002547e9da9e893e3e44e162\\",
+            \\"contentDigest\\": \\"f99c0539a6bb6061b072fe782a8e441f\\",
             \\"owner\\": \\"source-and-transformers-child-nodes/transformer-added/gatsby-source\\",
             \\"type\\": \\"Parent_ChildAdditionForTransformer\\",
           },
@@ -117,44 +117,44 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
     +   \\"typeinfoChild\\": Object {
     +     \\"fields\\": Array [
     +       Object {
-    +         \\"name\\": \\"id\\",
-    +       },
-    +       Object {
-    +         \\"name\\": \\"parent\\",
-    +       },
-    +       Object {
     +         \\"name\\": \\"children\\",
+    +       },
+    +       Object {
+    +         \\"name\\": \\"foo\\",
+    +       },
+    +       Object {
+    +         \\"name\\": \\"id\\",
     +       },
     +       Object {
     +         \\"name\\": \\"internal\\",
     +       },
     +       Object {
-    +         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"parent\\",
     +       },
     +     ],
     +   },
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
-            Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
+    +       Object {
+    +         \\"name\\": \\"childChildOfParentChildAdditionForTransformer\\",
+    +       },
             Object {
               \\"name\\": \\"children\\",
+    +       },
+    +       Object {
+    +         \\"name\\": \\"childrenChildOfParentChildAdditionForTransformer\\",
+            },
+            Object {
+              \\"name\\": \\"foo\\",
+            },
+            Object {
+              \\"name\\": \\"id\\",
             },
             Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-              \\"name\\": \\"foo\\",
-    +       },
-    +       Object {
-    +         \\"name\\": \\"childrenChildOfParentChildAdditionForTransformer\\",
-    +       },
-    +       Object {
-    +         \\"name\\": \\"childChildOfParentChildAdditionForTransformer\\",
+              \\"name\\": \\"parent\\",
             },
           ],
         },

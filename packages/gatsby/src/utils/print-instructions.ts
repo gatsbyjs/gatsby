@@ -20,11 +20,7 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
 
   console.log()
   console.log(
-    `View ${
-      process.env.GATSBY_GRAPHQL_IDE === `playground`
-        ? `the GraphQL Playground`
-        : `GraphiQL`
-    }, an in-browser IDE, to explore your site's data and schema`
+    `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
   )
   console.log()
 

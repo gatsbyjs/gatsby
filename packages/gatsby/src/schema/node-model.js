@@ -20,7 +20,10 @@ import {
   getNodesByType,
   getTypes,
 } from "../datastore"
-import { runFastFiltersAndSort } from "../datastore/in-memory/run-fast-filters"
+import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
+import { reportOnce } from "../utils/report-once"
+import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
+import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -51,14 +54,6 @@ export interface NodeModel {
     { ids: Array<string>, type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
   ): Array<any>;
-  getAllNodes(
-    { type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
-  ): Array<any>;
-  runQuery(
-    args: QueryArguments,
-    pageDependencies?: PageDependencies
-  ): Promise<any>;
   getTypes(): Array<string>;
   trackPageDependencies<nodeOrNodes: Node | Node[]>(
     result: nodeOrNodes,
@@ -69,13 +64,18 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, schemaComposer, createPageDependency }) {
+  constructor({
+    schema,
+    schemaComposer,
+    createPageDependency,
+    _rootNodeMap,
+    _trackedRootNodes,
+  }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.createPageDependencyActionCreator = createPageDependency
-
-    this._rootNodeMap = new WeakMap()
-    this._trackedRootNodes = new Set()
+    this._rootNodeMap = _rootNodeMap || new WeakMap()
+    this._trackedRootNodes = _trackedRootNodes || new WeakSet()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
@@ -148,7 +148,7 @@ class LocalNodeModel {
       this.trackInlineObjectsInRootNode(node)
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNode(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -179,58 +179,11 @@ class LocalNodeModel {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
   }
 
-  /**
-   * Get all nodes in the store, or all nodes of a specified type. Note that
-   * this adds connectionType tracking by default if type is passed.
-   *
-   * @param {Object} args
-   * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Node[]}
-   */
-  getAllNodes(args, pageDependencies = {}) {
-    // TODO: deprecate this method in favor of runQuery
-    const { type = `Node` } = args || {}
-
-    let result
-    if (type === `Node`) {
-      result = getNodes()
-    } else {
-      const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodesByType = nodeTypeNames.map(typeName =>
-        getNodesByType(typeName)
-      )
-      const nodes = [].concat(...nodesByType)
-      result = nodes.filter(Boolean)
-    }
-
-    if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
-    }
-
-    if (typeof pageDependencies.connectionType === `undefined`) {
-      pageDependencies.connectionType =
-        typeof type === `string` ? type : type.name
-    }
-
-    return this.trackPageDependencies(result, pageDependencies)
-  }
-
-  /**
-   * Get nodes of a type matching the specified query.
-   *
-   * @param {Object} args
-   * @param {Object} args.query Query arguments (`filter` and `sort`)
-   * @param {(string|GraphQLOutputType)} args.type Type
-   * @param {boolean} [args.firstOnly] If true, return only first match
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Promise<Node[]>}
-   */
-  async runQuery(args, pageDependencies = {}) {
-    const { query, firstOnly, type, stats, tracer } = args || {}
+  async _query(args) {
+    const { query = {}, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -241,6 +194,37 @@ class LocalNodeModel {
     )
 
     const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+
+    let runQueryActivity
+
+    // check if we can get node by id and skip
+    // more expensive query pipeline
+    if (
+      typeof query?.filter?.id?.eq !== `undefined` &&
+      Object.keys(query.filter).length === 1 &&
+      Object.keys(query.filter.id).length === 1
+    ) {
+      if (tracer) {
+        runQueryActivity = reporter.phantomActivity(`runQuerySimpleIdEq`, {
+          parentSpan: tracer.getParentActivity().span,
+        })
+        runQueryActivity.start()
+      }
+      const nodeFoundById = this.getNodeById({
+        id: query.filter.id.eq,
+        type: gqlType,
+      })
+
+      if (runQueryActivity) {
+        runQueryActivity.end()
+      }
+
+      return {
+        gqlType,
+        entries: new GatsbyIterable(nodeFoundById ? [nodeFoundById] : []),
+        totalCount: async () => (nodeFoundById ? 1 : 0),
+      }
+    }
 
     let materializationActivity
     if (tracer) {
@@ -258,21 +242,23 @@ class LocalNodeModel {
       min: query.min,
       sum: query.sum,
     })
+
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
       this.schema,
       gqlType,
-      fields,
-      nodeTypeNames
+      fields
     )
 
-    await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
+    for (const nodeTypeName of nodeTypeNames) {
+      const gqlNodeType = this.schema.getType(nodeTypeName)
+      await this.prepareNodes(gqlNodeType, fields, fieldsToResolve)
+    }
 
     if (materializationActivity) {
       materializationActivity.end()
     }
 
-    let runQueryActivity
     if (tracer) {
       runQueryActivity = reporter.phantomActivity(`runQuery`, {
         parentSpan: tracer.getParentActivity().span,
@@ -280,9 +266,8 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = runFastFiltersAndSort({
+    const { entries, totalCount } = await getDataStore().runQuery({
       queryArgs: query,
-      firstOnly,
       gqlSchema: this.schema,
       gqlComposer: this.schemaComposer,
       gqlType,
@@ -296,49 +281,79 @@ class LocalNodeModel {
       runQueryActivity.end()
     }
 
-    let trackInlineObjectsActivity
-    if (tracer) {
-      trackInlineObjectsActivity = reporter.phantomActivity(
-        `trackInlineObjects`,
-        {
-          parentSpan: tracer.getParentActivity().span,
-        }
-      )
-      trackInlineObjectsActivity.start()
+    return {
+      gqlType,
+      entries: entries.map(node => {
+        // With GatsbyIterable it happens lazily as we iterate
+        this.trackInlineObjectsInRootNode(node)
+        return node
+      }),
+      totalCount,
     }
-
-    let result = queryResult
-    if (firstOnly) {
-      if (result?.length > 0) {
-        result = result[0]
-        this.trackInlineObjectsInRootNode(result)
-      } else {
-        result = null
-
-        // Couldn't find matching node.
-        //  This leads to a state where data tracking for this query gets empty.
-        //  It means we will NEVER re-run this query on any data updates
-        //  (even if a new node matching this query is added at some point).
-        //  To workaround this, we have to add a connection tracking to re-run
-        //  the query whenever any node of this type changes.
-        pageDependencies.connectionType = gqlType.name
-      }
-    } else if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
-    }
-
-    if (trackInlineObjectsActivity) {
-      trackInlineObjectsActivity.end()
-    }
-
-    // Tracking connections by default:
-    if (!firstOnly && typeof pageDependencies.connectionType === `undefined`) {
-      pageDependencies.connectionType = gqlType.name
-    }
-    return this.trackPageDependencies(result, pageDependencies)
   }
 
-  prepareNodes(type, queryFields, fieldsToResolve, nodeTypeNames) {
+  /**
+   * Get all nodes in the store, or all nodes of a specified type (optionally with limit/skip).
+   * Returns slice of result as iterable and total count of nodes.
+   *
+   * @param {*} args
+   * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @return {Promise<Object>} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
+   */
+  async findAll(args, pageDependencies = {}) {
+    const { gqlType, ...result } = await this._query(args, pageDependencies)
+
+    // Tracking connections by default:
+    if (typeof pageDependencies.connectionType === `undefined`) {
+      pageDependencies.connectionType = gqlType.name
+    }
+    this.trackPageDependencies(result.entries, pageDependencies)
+    return {
+      entries: wrapNodes(result.entries),
+      totalCount: result.totalCount,
+    }
+  }
+
+  /**
+   * Get one node in the store. Only returns the first result.
+   *
+   * @param {*} args
+   * @param {Object} args.query Query arguments (e.g. `filter`). Doesn't support `sort`, `limit`, `skip`.
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Promise<Node>}
+   */
+  async findOne(args, pageDependencies = {}) {
+    const { query = {} } = args
+    if (query.sort?.fields?.length > 0) {
+      // If we support sorting and return the first node based on sorting
+      // we'll have to always track connection not an individual node
+      throw new Error(
+        `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead.`
+      )
+    }
+    const { gqlType, entries } = await this._query({
+      ...args,
+      query: { ...query, skip: 0, limit: 1, sort: undefined },
+    })
+    const result = Array.from(entries)
+    const first = result[0] ?? null
+
+    if (!first) {
+      // Couldn't find matching node.
+      //  This leads to a state where data tracking for this query gets empty.
+      //  It means we will NEVER re-run this query on any data updates
+      //  (even if a new node matching this query is added at some point).
+      //  To workaround this, we have to add a connection tracking to re-run
+      //  the query whenever any node of this type changes.
+      pageDependencies.connectionType = gqlType.name
+    }
+    return wrapNode(this.trackPageDependencies(first, pageDependencies))
+  }
+
+  prepareNodes(type, queryFields, fieldsToResolve) {
     const typeName = type.name
     if (!this._prepareNodesQueues[typeName]) {
       this._prepareNodesQueues[typeName] = []
@@ -352,7 +367,7 @@ class LocalNodeModel {
     if (!this._prepareNodesPromises[typeName]) {
       this._prepareNodesPromises[typeName] = new Promise(resolve => {
         process.nextTick(async () => {
-          await this._doResolvePrepareNodesQueue(type, nodeTypeNames)
+          await this._doResolvePrepareNodesQueue(type)
           resolve()
         })
       })
@@ -361,7 +376,7 @@ class LocalNodeModel {
     return this._prepareNodesPromises[typeName]
   }
 
-  async _doResolvePrepareNodesQueue(type, nodeTypeNames) {
+  async _doResolvePrepareNodesQueue(type) {
     const typeName = type.name
     const queue = this._prepareNodesQueues[typeName]
     this._prepareNodesQueues[typeName] = []
@@ -389,7 +404,11 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
-      await saveResolvedNodes(nodeTypeNames, async node => {
+      const {
+        schemaCustomization: { context: customContext },
+      } = store.getState()
+      const resolvedNodes = new Map()
+      for (const node of getDataStore().iterateNodesByType(typeName)) {
         this.trackInlineObjectsInRootNode(node)
         const resolvedFields = await resolveRecursive(
           this,
@@ -398,13 +417,15 @@ class LocalNodeModel {
           node,
           type,
           queryFields,
-          actualFieldsToResolve
+          actualFieldsToResolve,
+          customContext
         )
-        if (!node.__gatsby_resolved) {
-          node.__gatsby_resolved = {}
-        }
-        return _.merge(node.__gatsby_resolved, resolvedFields)
-      })
+
+        resolvedNodes.set(node.id, resolvedFields)
+      }
+      if (resolvedNodes.size) {
+        await saveResolvedNodes(typeName, resolvedNodes)
+      }
       this._preparedNodesCache.set(
         typeName,
         _.merge(
@@ -431,7 +452,7 @@ class LocalNodeModel {
    * @param {Node} node Root Node
    */
   trackInlineObjectsInRootNode(node) {
-    if (!this._trackedRootNodes.has(node.id)) {
+    if (!this._trackedRootNodes.has(node)) {
       addRootNodeToInlineObject(
         this._rootNodeMap,
         node,
@@ -439,7 +460,7 @@ class LocalNodeModel {
         true,
         new Set()
       )
-      this._trackedRootNodes.add(node.id)
+      this._trackedRootNodes.add(node)
     }
   }
 
@@ -452,28 +473,53 @@ class LocalNodeModel {
    */
   findRootNodeAncestor(obj, predicate = null) {
     let iterations = 0
-    let node = obj
+    let ids = this._rootNodeMap.get(obj)
+    if (!ids) {
+      ids = []
+    }
+    if (obj?.parent) {
+      ids.push(obj.parent)
+    }
+    let matchingRoot = null
 
-    while (iterations++ < 100) {
-      if (predicate && predicate(node)) return node
+    if (ids) {
+      for (const id of ids) {
+        let tracked = getNodeById(id)
 
-      const parent = getNodeById(node.parent)
-      const id = this._rootNodeMap.get(node)
-      const trackedParent = getNodeById(id)
+        if (tracked) {
+          const visited = new Set()
 
-      if (!parent && !trackedParent) {
-        const isMatchingRoot = !predicate || predicate(node)
-        return isMatchingRoot ? node : null
+          while (iterations++ < 100) {
+            if (predicate && predicate(tracked)) {
+              return tracked
+            }
+
+            if (visited.has(tracked)) {
+              reporter.error(
+                `It looks like you have a node that's set its parent as itself:\n\n` +
+                  tracked
+              )
+              break
+            }
+            visited.add(tracked)
+
+            const parent = getNodeById(tracked.parent)
+
+            if (!parent) {
+              break
+            }
+
+            tracked = parent
+          }
+
+          if (tracked && !predicate) {
+            matchingRoot = tracked
+          }
+        }
       }
-
-      node = parent || trackedParent
     }
 
-    reporter.error(
-      `It looks like you have a node that's set its parent as itself:\n\n` +
-        node
-    )
-    return null
+    return matchingRoot
   }
 
   /**
@@ -491,7 +537,7 @@ class LocalNodeModel {
       if (connectionType) {
         this.createPageDependency({ path, connection: connectionType })
       } else {
-        const nodes = Array.isArray(result) ? result : [result]
+        const nodes = isIterable(result) ? result : [result]
         for (const node of nodes) {
           if (node) {
             this.createPageDependency({ path, nodeId: node.id })
@@ -538,15 +584,15 @@ class ContextualNodeModel {
     )
   }
 
-  getAllNodes(args, pageDependencies) {
-    return this.nodeModel.getAllNodes(
+  findOne(args, pageDependencies) {
+    return this.nodeModel.findOne(
       args,
       this._getFullDependencies(pageDependencies)
     )
   }
 
-  runQuery(args, pageDependencies) {
-    return this.nodeModel.runQuery(
+  findAll(args, pageDependencies) {
+    return this.nodeModel.findAll(
       args,
       this._getFullDependencies(pageDependencies)
     )
@@ -581,21 +627,6 @@ class ContextualNodeModel {
 }
 
 const getNodeById = id => (id != null ? getNode(id) : null)
-
-const toNodeTypeNames = (schema, gqlTypeName) => {
-  const gqlType =
-    typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
-
-  if (!gqlType) return []
-
-  const possibleTypes = isAbstractType(gqlType)
-    ? schema.getPossibleTypes(gqlType)
-    : [gqlType]
-
-  return possibleTypes
-    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
-    .map(type => type.name)
-}
 
 const getQueryFields = ({ filter, sort, group, distinct, max, min, sum }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
@@ -681,7 +712,8 @@ async function resolveRecursive(
   node,
   type,
   queryFields,
-  fieldsToResolve
+  fieldsToResolve,
+  customContext
 ) {
   const gqlFields = getFields(schema, type, node)
   const resolvedFields = {}
@@ -697,7 +729,8 @@ async function resolveRecursive(
       schema,
       node,
       gqlField,
-      fieldName
+      fieldName,
+      customContext
     )
     if (gqlField && innerValue != null) {
       if (
@@ -711,11 +744,12 @@ async function resolveRecursive(
           innerValue,
           gqlFieldType,
           queryField,
-          _.isObject(fieldToResolve) ? fieldToResolve : queryField
+          _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+          customContext
         )
       } else if (
         isCompositeType(gqlFieldType) &&
-        _.isArray(innerValue) &&
+        (_.isArray(innerValue) || innerValue instanceof GatsbyIterable) &&
         gqlNonNullType instanceof GraphQLList
       ) {
         innerValue = await Promise.all(
@@ -729,7 +763,8 @@ async function resolveRecursive(
                   item,
                   gqlFieldType,
                   queryField,
-                  _.isObject(fieldToResolve) ? fieldToResolve : queryField
+                  _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+                  customContext
                 )
           )
         )
@@ -750,26 +785,34 @@ async function resolveRecursive(
         schema,
         node,
         gqlFields[fieldName],
-        fieldName
+        fieldName,
+        customContext
       )
     }
   }
 
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
-
+let withResolverContext
 function resolveField(
   nodeModel,
   schemaComposer,
   schema,
   node,
   gqlField,
-  fieldName
+  fieldName,
+  customContext
 ) {
   if (!gqlField?.resolve) {
     return node[fieldName]
   }
-  const withResolverContext = require(`./context`)
+
+  // We require this inline as there's a circular dependency from context back to this file.
+  // https://github.com/gatsbyjs/gatsby/blob/9d33b107d167e3e9e2aa282924a0c409f6afd5a0/packages/gatsby/src/schema/context.ts#L5
+  if (!withResolverContext) {
+    withResolverContext = require(`./context`)
+  }
+
   return gqlField.resolve(
     node,
     gqlField.args.reduce((acc, arg) => {
@@ -780,6 +823,7 @@ function resolveField(
       schema,
       schemaComposer,
       nodeModel,
+      customContext,
     }),
     {
       fieldName,
@@ -794,8 +838,7 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames,
-  isNestedType = false
+  isNestedAndParentNeedsResolve = false
 ) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
@@ -804,17 +847,14 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    const possibleTCs = [
+
+    const needsResolve = fieldNeedToResolve({
+      schema,
+      gqlType: type,
       typeComposer,
-      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
-    ]
-    let needsResolve = false
-    for (const tc of possibleTCs) {
-      needsResolve = tc.getFieldExtension(fieldName, `needsResolve`) || false
-      if (needsResolve) {
-        break
-      }
-    }
+      schemaComposer,
+      fieldName,
+    })
 
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
@@ -822,8 +862,7 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType),
-        true
+        isNestedAndParentNeedsResolve || needsResolve
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
@@ -833,7 +872,7 @@ const determineResolvableFields = (
     if (!fieldsToResolve[fieldName] && needsResolve) {
       fieldsToResolve[fieldName] = true
     }
-    if (!fieldsToResolve[fieldName] && isNestedType) {
+    if (!fieldsToResolve[fieldName] && isNestedAndParentNeedsResolve) {
       // If parent field needs to be resolved - all nested fields should be added as well
       // See https://github.com/gatsbyjs/gatsby/issues/26056
       fieldsToResolve[fieldName] = true
@@ -863,28 +902,25 @@ const addRootNodeToInlineObject = (
 
     // don't need to track node itself
     if (!isNode) {
-      rootNodeMap.set(data, nodeId)
+      let nodeIds = rootNodeMap.get(data)
+      if (!nodeIds) {
+        nodeIds = new Set([nodeId])
+      } else {
+        nodeIds.add(nodeId)
+      }
+      rootNodeMap.set(data, nodeIds)
     }
   }
 }
 
-const saveResolvedNodes = async (nodeTypeNames, resolver) => {
-  for (const typeName of nodeTypeNames) {
-    const resolvedNodes = new Map()
-    for (const node of getDataStore().iterateNodesByType(typeName)) {
-      const resolved = await resolver(node)
-      resolvedNodes.set(node.id, resolved)
-    }
-    if (!resolvedNodes.size) continue
-
-    store.dispatch({
-      type: `SET_RESOLVED_NODES`,
-      payload: {
-        key: typeName,
-        nodes: resolvedNodes,
-      },
-    })
-  }
+const saveResolvedNodes = (typeName, resolvedNodes) => {
+  store.dispatch({
+    type: `SET_RESOLVED_NODES`,
+    payload: {
+      key: typeName,
+      nodes: resolvedNodes,
+    },
+  })
 }
 
 const deepObjectDifference = (from, to) => {

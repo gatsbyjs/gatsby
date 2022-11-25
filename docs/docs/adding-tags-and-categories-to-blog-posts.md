@@ -4,7 +4,7 @@ title: Creating Tags Pages for Blog Posts
 
 Creating tag pages for your blog post is a way to let visitors browse related content.
 
-To add tags to your blog posts, you will first want to have your site set up to turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](/docs/tutorial/part-four/) and [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/).
+To add tags to your blog posts, you will first want to have your site set up to turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](/docs/tutorial/part-4/) and [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/).
 
 The process will essentially look like this:
 
@@ -49,7 +49,7 @@ Try running the following query in Graph<em>i</em>QL (`http://localhost:8000/___
 ```graphql
 {
   allMarkdownRemark {
-    group(field: frontmatter___tags) {
+    group(field: { frontmatter: { tags: SELECT } }) {
       tag: fieldValue
       totalCount
     }
@@ -131,7 +131,7 @@ export const pageQuery = graphql`
   query($tag: String) {
     allMarkdownRemark(
       limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC }}
       filter: { frontmatter: { tags: { in: [$tag] } } }
     ) {
       totalCount
@@ -169,7 +169,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const result = await graphql(`
     {
       postsRemark: allMarkdownRemark(
-        sort: { order: DESC, fields: [frontmatter___date] }
+        sort: { frontmatter: { date: DESC }}
         limit: 2000
       ) {
         edges {
@@ -184,7 +184,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         }
       }
       tagsGroup: allMarkdownRemark(limit: 2000) {
-        group(field: frontmatter___tags) {
+        group(field: { frontmatter: { tags: SELECT }}) {
           fieldValue
         }
       }
@@ -297,7 +297,7 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(limit: 2000) {
-      group(field: frontmatter___tags) {
+      group(field: { frontmatter: { tags: SELECT }}) {
         fieldValue
         totalCount
       }
