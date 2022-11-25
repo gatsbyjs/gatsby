@@ -98,36 +98,6 @@ const matchPathRouter =
     return next()
   }
 
-const setCacheHeaders = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-): void => {
-  function match(pattern: string, options: minimatch.IOptions = {}): boolean {
-    return minimatch(req.path, pattern, options)
-  }
-
-  if (req.method !== `GET`) {
-    next()
-    return
-  }
-
-  if ((match(`/static/**`) || match(`/**.+(js|css)`)) && !match(`/sw.js`)) {
-    res.header(
-      `Cache-control`,
-      `cache-control: public, max-age=31536000, immutable`
-    )
-
-    next()
-    return
-  }
-
-  res.header(`Cache-control`, `public, max-age=0, must-revalidate`)
-
-  next()
-  return
-}
-
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
