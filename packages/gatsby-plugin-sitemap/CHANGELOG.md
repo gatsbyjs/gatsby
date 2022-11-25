@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.2.0/packages/gatsby-plugin-sitemap) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Chores
+
+- Clarify filterPages' reliance on the excludes array [#37065](https://github.com/gatsbyjs/gatsby/issues/37065) ([fa5e90d](https://github.com/gatsbyjs/gatsby/commit/fa5e90dc67fb663afbb01574e009b346d48b4e1d))
+
+## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.1.0/packages/gatsby-plugin-sitemap) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
 ## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.0.0/packages/gatsby-plugin-sitemap) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)

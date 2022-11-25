@@ -8,6 +8,7 @@ import {
 } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
 import { IConstructError, IStructuredError } from "./types"
+
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
 const constructError = (
@@ -29,11 +30,17 @@ const constructError = (
     }
   }
 
+  const type =
+    typeof errorMapEntry.type === `function`
+      ? errorMapEntry.type(otherDetails.context)
+      : errorMapEntry.type
+
   // merge
   const structuredError: IStructuredError = {
     context: {},
     ...otherDetails,
     ...errorMapEntry,
+    type,
     text: errorMapEntry.text(otherDetails.context),
     stack: otherDetails.error
       ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))

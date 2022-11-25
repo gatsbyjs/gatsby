@@ -34,12 +34,7 @@ describe(`pluginOptionsSchema`, () => {
         avifOptions: 1,
       },
     }
-    const { isValid, errors } = await testPluginOptionsSchema(
-      pluginOptionsSchema,
-      options
-    )
-    expect(isValid).toBe(false)
-    expect(errors).toEqual([
+    const expectedErrors = [
       `"defaults.formats[0]" must be one of [auto, png, jpg, webp, avif]`,
       `"defaults.placeholder" must be one of [tracedSVG, dominantColor, blurred, none]`,
       `"defaults.quality" must be a number`,
@@ -51,16 +46,25 @@ describe(`pluginOptionsSchema`, () => {
       `"defaults.jpgOptions" must be of type object`,
       `"defaults.pngOptions" must be of type object`,
       `"defaults.avifOptions" must be of type object`,
-    ])
+    ]
+
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      options
+    )
+
+    expect(isValid).toBe(false)
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should accept correct options`, async () => {
     const options = { defaults }
-    const { isValid } = await testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })
 

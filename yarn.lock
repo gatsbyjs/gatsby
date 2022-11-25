@@ -1638,13 +1638,6 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@gatsbyjs/potrace@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@gatsbyjs/potrace/-/potrace-2.3.0.tgz#0ac22fb56a02ebc64ce55e4666c4b741cbf27377"
-  integrity sha512-72szhSY/4tPiPPOzq15CG6LW0s9FuWQ86gkLSUvBNoF0s+jsEdRaZmATYNjiY2Skg//EuyPLEqUQnXKXME0szg==
-  dependencies:
-    jimp-compact "^0.16.1-2"
-
 "@gatsbyjs/reach-router@^2.0.0-v2.0":
   version "2.0.0-v2.0.2"
   resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-2.0.0-v2.0.2.tgz#6b7e4846e4c68113b8e454fd8ea027ffad5a68c8"
@@ -7739,10 +7732,10 @@ contentful-sdk-core@^7.0.1:
     p-throttle "^4.1.1"
     qs "^6.9.4"
 
-contentful@^9.1.33:
-  version "9.1.33"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-9.1.33.tgz#1305254c647578ad981eae59fae1abdb07b50b6a"
-  integrity sha512-iiu2cC/9JvDrTK6cfSHhZ1iW6dOq+NmYMA2p5Thpv+9h2pEOyoHm1Un9Xir5XZSB11bu4POmo6JazGAn9N0tqg==
+contentful@^9.1.34:
+  version "9.1.34"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-9.1.34.tgz#9ead56a54fee67ccef5e6720d1ad4f2392c207d9"
+  integrity sha512-UlwDpCt9IS9ZK3OhE8enC2R4ZYp72GvH94cTpfIRWSst7dmctWQUY57z1UkMrzp8NT2/4b2CSxnGx5ev5bV3Sw==
   dependencies:
     axios "^0.27.0"
     contentful-resolve-response "^1.3.0"
@@ -14125,11 +14118,6 @@ jest@^27.4.4:
     "@jest/core" "^27.4.4"
     import-local "^3.0.2"
     jest-cli "^27.4.4"
-
-jimp-compact@^0.16.1-2:
-  version "0.16.1-2"
-  resolved "https://registry.yarnpkg.com/jimp-compact/-/jimp-compact-0.16.1-2.tgz#a82ff9a5a81f15a4b61b5e2e50fae6a43305e5a9"
-  integrity sha512-b2A3rRT1TITzqmaO70U2/uunCh43BQVq7BfRwGPkD5xj8/WZsR3sPTy9DENt+dNZGsel3zBEm1UtYegUxjZW7A==
 
 joi@^14.3.1:
   version "14.3.1"
@@ -22330,7 +22318,7 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-svgo@^2.3.0, svgo@^2.8.0:
+svgo@^2.3.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-2.8.0.tgz#4ff80cce6710dc2795f0c7c74101e6764cfccd24"
   integrity sha512-+N/Q9kV1+F+UeWYoSiULYo4xYSDQlTgb+ayMobAXPwMnLvop7oxKMo9OzIrX5x3eS4L4f2UHhc9axXwY8DpChg==

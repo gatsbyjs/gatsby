@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.2.0/packages/gatsby) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- Sanitize `length` on objects [#34253](https://github.com/gatsbyjs/gatsby/issues/34253) ([0889d31](https://github.com/gatsbyjs/gatsby/commit/0889d31ff3f5fdfbada06943640e0486de3b2262))
+- stale node manifests [#37091](https://github.com/gatsbyjs/gatsby/issues/37091) ([21cbfb3](https://github.com/gatsbyjs/gatsby/commit/21cbfb3ff608ce84834fae640c59fc534fc6bad0))
+- Fine-grained errors with type/category [#37070](https://github.com/gatsbyjs/gatsby/issues/37070) ([0c2b51c](https://github.com/gatsbyjs/gatsby/commit/0c2b51cac9b644df21d2b816dc5fa5c37bd349d4))
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+- Update internal links to website [#37052](https://github.com/gatsbyjs/gatsby/issues/37052) ([35703b6](https://github.com/gatsbyjs/gatsby/commit/35703b6e4db2d008a03f538097e05a70aae3c6b8))
+
+#### Other Changes
+
+- add onCreateNode params and example [#27503](https://github.com/gatsbyjs/gatsby/issues/27503) ([a259ff8](https://github.com/gatsbyjs/gatsby/commit/a259ff8e9c08b169cc767ea4f450ce3e509877bc))
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.1.0/packages/gatsby) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Bug Fixes
+
+- Use xstate `predictableActionArguments` & update to 4.34 [#36342](https://github.com/gatsbyjs/gatsby/issues/36342) [#36355](https://github.com/gatsbyjs/gatsby/issues/36355) [#36451](https://github.com/gatsbyjs/gatsby/issues/36451) [#36393](https://github.com/gatsbyjs/gatsby/issues/36393) [#36393](https://github.com/gatsbyjs/gatsby/issues/36393) ([3032a1b](https://github.com/gatsbyjs/gatsby/commit/3032a1b07dbcfed292b7f32f12eef485ea2258a0))
+- write out sq files when result doesn't change but query hash changes [#36997](https://github.com/gatsbyjs/gatsby/issues/36997) ([3e87026](https://github.com/gatsbyjs/gatsby/commit/3e87026e73b9a2c539b343b8e4ddd32b8cd4b11f))
+
+#### Chores
+
+- Repository Cleanup [#37035](https://github.com/gatsbyjs/gatsby/issues/37035) ([0fb0390](https://github.com/gatsbyjs/gatsby/commit/0fb0390ef41f771d21c3829e91cc3f683044b696))
+- migrate from express-graphql to graphql-http [#37001](https://github.com/gatsbyjs/gatsby/issues/37001) ([3a4d333](https://github.com/gatsbyjs/gatsby/commit/3a4d3333d8409edd1fe679e9771b7ad9d71c2364))
+- v5 [#36763](https://github.com/gatsbyjs/gatsby/issues/36763) ([85e3d60](https://github.com/gatsbyjs/gatsby/commit/85e3d60c21597d7efbb7361fd28e95454f21fe2b))
+
+#### Other Changes
+
+- e2e tests for Slices API [#36746](https://github.com/gatsbyjs/gatsby/issues/36746) ([f158930](https://github.com/gatsbyjs/gatsby/commit/f1589305d9050d34a75d44d91960b98319960128))
+
 ### [5.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.0.1/packages/gatsby) (2022-11-10)
 
 #### Bug Fixes

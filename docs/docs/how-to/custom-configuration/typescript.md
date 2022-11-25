@@ -437,7 +437,7 @@ Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/
 
 ### Other
 
-- Workspaces (e.g. Yarn) are not supported. We'll add documentation on how to use this feature inside a workspace soon.
+- Workspaces (e.g. Yarn) are not supported.
 - When changing `siteMetadata` in `gatsby-config` no hot-reloading will occur during `gatsby develop`. A restart is needed at the moment.
 
 ## Other Resources

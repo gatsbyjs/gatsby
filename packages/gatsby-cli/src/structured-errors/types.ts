@@ -3,7 +3,7 @@ import { ErrorId } from "./error-map"
 export interface IConstructError {
   details: {
     id?: ErrorId
-    context?: Record<string, string>
+    context?: Record<string, any>
     error?: Error
     pluginName?: string
     [key: string]: unknown
@@ -82,6 +82,11 @@ export enum Type {
   FUNCTIONS_COMPILATION = `FUNCTIONS.COMPILATION`,
   FUNCTIONS_EXECUTION = `FUNCTIONS.EXECUTION`,
   CLI_VALIDATION = `CLI.VALIDATION`,
+  // webpack errors for each stage enum: packages/gatsby/src/commands/types.ts
+  WEBPACK_DEVELOP = `WEBPACK.DEVELOP`,
+  WEBPACK_DEVELOP_HTML = `WEBPACK.DEVELOP-HTML`,
+  WEBPACK_BUILD_JAVASCRIPT = `WEBPACK.BUILD-JAVASCRIPT`,
+  WEBPACK_BUILD_HTML = `WEBPACK.BUILD-HTML`,
   UNKNOWN = `UNKNOWN`,
   // Backwards compatibility for plugins
   // TODO(v6): Remove these types
