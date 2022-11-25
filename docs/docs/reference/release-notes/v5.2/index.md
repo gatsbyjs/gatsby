@@ -6,9 +6,7 @@ title: "v5.2 Release Notes"
 
 Welcome to `gatsby@5.2.0` release (November 2022 #3)
 
-Key highlights of this release:
-
-- [`TRACED_SVG` support is removed](#traced_svg-support-is-removed)
+This is an out of band release due to the [removal of the Potrace](#removal-of-potrace) library in Gatsby. We'll continue with our biweekly schedule as normal.
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -20,17 +18,27 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## `TRACED_SVG` support is removed
+## Removal of Potrace
 
-Due to licensing requirements, we are removing the `Potrace` library usage from Gatsby. `Potrace` was powering `TRACED_SVG` image placeholders generation.
+Due to licensing requirements, we are removing the [Potrace library](https://potrace.sourceforge.net/) usage from Gatsby. Potrace is used in Gatsby's image transformations, specifically for creating a SVG placeholder. For example, in `gatsby-plugin-image` you were able to use it with `tracedSvg` and `TRACED_SVG` respectively.
 
-As this removal might have implications, there will be no API-breaking changes. All of the image transformations will continue to work, however using tracedSVG features will now fall back to whatever the default method is - this is generally `DOMINANT_COLOR` for `gatsby-plugin-image` (`gatsbyImageData` and `gatsbyImage`).
+These are the affected libraries/plugins:
 
-Check https://gatsby.dev/tracesvg-removal/ for more information.
+- gatsby-plugin-sharp
+- gatsby-transformer-sharp
+- gatsby-plugin-utils
+- gatsby-remark-images
+
+There will be **no API-breaking changes**, your builds will continue to work. However, whenever you use the `tracedSvg` feature Gatsby automatically falls back to the default placeholder style now. In most instances this is `DOMINANT_COLOR`. You'll see a detailed warning message in your CLI about this, too.
+
+If you’d like to know more or have any questions, head over to our [Github Discussion](https://gatsby.dev/tracesvg-removal).
 
 ## Notable bugfixes & improvements
 
-- TODO
+- `gatsby-source-wordpress`: `MediaItem.excludeFieldNames` / auto exclude interface types that have no fields, via [PR #37062](https://github.com/gatsbyjs/gatsby/pull/37062)
+- `gatsby-source-drupal`: Provide `proxyUrl` in addition to baseUrl to allow using CDN, API gateway, etc., via [PR #36819](https://github.com/gatsbyjs/gatsby/pull/36819)
+- `gatsby-cli`: We changed our error messages a little bit. You should see a more detailed `type` beside the error ID now
+- `gatsby`: Sanitize `length` on objects, via [PR #34253](https://github.com/gatsbyjs/gatsby/pull/34253)
 
 ## Contributors
 
