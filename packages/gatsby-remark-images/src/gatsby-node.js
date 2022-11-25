@@ -90,7 +90,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .custom(value => {
         if (!!value && !process.env.GATSBY_WORKER_ID) {
           console.warn(
-            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used.`
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
           )
         }
         return undefined
