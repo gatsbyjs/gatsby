@@ -143,4 +143,11 @@ describe(`collection-routing`, () => {
       assert404(`updated-node`)
     })
   })
+
+  it(`gatsbyPath should support materialized field values`, () => {
+    cy.visit(`/collection-routing/gatsby-path-materialized-linked-name/gatsby-path-materialized-parent-name`).waitForRouteChange()
+
+    cy.findByTestId(`gatsby-path-materialized`)
+    cy.should(`have.text`, `/collection-routing/gatsby-path-materialized-linked-name/gatsby-path-materialized-parent-name/`)
+  })
 })
