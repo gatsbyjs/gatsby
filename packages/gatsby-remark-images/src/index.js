@@ -25,6 +25,7 @@ const supportedExtensions = {
   webp: true,
   tif: true,
   tiff: true,
+  avif: true,
 }
 
 // If the image is relative (not hosted elsewhere)
