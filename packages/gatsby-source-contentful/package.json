@@ -2,7 +2,7 @@
   "name": "gatsby-source-contentful",
   "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
   "version": "8.0.0-next.3",
-  "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
+  "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com), Benedikt Rötsch <benedikt@hashbite.net> (hashbite.net)",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -32,7 +32,9 @@
     "@babel/core": "^7.15.5",
     "babel-preset-gatsby-package": "^3.0.0-next.1",
     "cross-env": "^7.0.3",
-    "nock": "^13.2.4"
+    "del-cli": "^5.0.0",
+    "nock": "^13.2.4",
+    "typescript": "^4.7.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
   "keywords": [
@@ -53,12 +55,16 @@
     "directory": "packages/gatsby-source-contentful"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__"
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts,.js\"",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build && npm run typegen",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.tsx\"",
+    "test": "jest",
+    "clean": "del-cli dist/*"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "types": "index.d.ts"
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts"
 }
