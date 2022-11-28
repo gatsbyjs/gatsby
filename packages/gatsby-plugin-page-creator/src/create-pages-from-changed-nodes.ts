@@ -72,7 +72,7 @@ export async function createPagesFromChangedNodes(
     )
 
     for (const node of resolvedNodes) {
-      const path = pluginInstance.getPathFromAResolvedNode({
+      const path = await pluginInstance.getPathFromAResolvedNode({
         node,
         absolutePath,
       })

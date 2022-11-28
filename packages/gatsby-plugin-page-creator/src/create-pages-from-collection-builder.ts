@@ -108,7 +108,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   //    the watcher will use this data to delete the pages if the query changes significantly.
   const paths: Array<string> = []
   for (const node of nodes) {
-    const createPageResult = pluginInstance.createAPageFromNode({
+    const createPageResult = await pluginInstance.createAPageFromNode({
       absolutePath,
       node,
     })
