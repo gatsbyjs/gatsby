@@ -23,7 +23,6 @@ export async function derivePath(
   slugifyOptions?: ISlugifyOptions,
   getFieldValue?: (node: Record<string, any>, fieldPath: string) => any
 ): Promise<{ errors: number; derivedPath: string }> {
-  console.log({ getFieldValueInDerivePath: getFieldValue })
   // 0. Since this function will be called for every path times count of nodes the errors will be counted and then the calling function will throw the error once
   let errors = 0
 

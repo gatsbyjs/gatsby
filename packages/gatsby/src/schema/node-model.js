@@ -55,6 +55,7 @@ export interface NodeModel {
   ): nodesOrNodes;
   findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null;
   trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node;
+  getFieldValue(node: Node, fieldPath: string): Promise<any>;
 }
 
 class LocalNodeModel {
@@ -554,7 +555,7 @@ class LocalNodeModel {
    * Utility to get a field value from a node, even when that value needs to be materialized first (e.g. nested field that was connected via @link directive)
    * @param {Node} node
    * @param {string} fieldPath
-   * @returns {Promise<Node>}
+   * @returns {any}
    * @example
    * // Example: Via schema customization the author ID is linked to the Author type
    * const blogPostNode = {
@@ -569,7 +570,7 @@ class LocalNodeModel {
     const typeName = node.internal.type
     const type = this.schema.getType(typeName)
 
-    await this.prepareNodes(type, {}, fieldToResolve)
+    await this.prepareNodes(type, fieldToResolve, fieldToResolve)
 
     return getMaybeResolvedValue(node, fieldPath, typeName)
   }
