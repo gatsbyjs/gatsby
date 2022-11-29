@@ -138,18 +138,18 @@ describe(`Resolve module exports`, () => {
     reporter.panic.mockClear()
   })
 
-  it(`Returns empty array for file paths that don't exist`, () => {
-    const result = resolveModuleExports(`/file/path/does/not/exist`)
+  it(`Returns empty array for file paths that don't exist`, async () => {
+    const result = await resolveModuleExports(`/file/path/does/not/exist`)
     expect(result).toEqual([])
   })
 
-  it(`Returns empty array for directory paths that don't exist`, () => {
-    const result = resolveModuleExports(`/directory/path/does/not/exist/`)
+  it(`Returns empty array for directory paths that don't exist`, async () => {
+    const result = await resolveModuleExports(`/directory/path/does/not/exist/`)
     expect(result).toEqual([])
   })
 
-  it(`Show meaningful error message for invalid JavaScript`, () => {
-    resolveModuleExports(`/bad/file`, { resolver })
+  it(`Show meaningful error message for invalid JavaScript`, async () => {
+    await resolveModuleExports(`/bad/file`, { resolver })
     expect(
       // @ts-ignore
       reporter.panic.mock.calls.map(c =>
@@ -160,119 +160,127 @@ describe(`Resolve module exports`, () => {
     ).toMatchSnapshot()
   })
 
-  it(`Resolves an export`, () => {
-    const result = resolveModuleExports(`/simple/export`, { resolver })
+  it(`Resolves an export`, async () => {
+    const result = await resolveModuleExports(`/simple/export`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
-  it(`Resolves multiple exports`, () => {
-    const result = resolveModuleExports(`/multiple/export`, { resolver })
+  it(`Resolves multiple exports`, async () => {
+    const result = await resolveModuleExports(`/multiple/export`, { resolver })
     expect(result).toEqual([`bar`, `baz`, `foo`])
   })
 
-  it(`Resolves an export from an ES6 file`, () => {
-    const result = resolveModuleExports(`/import/with/export`, { resolver })
+  it(`Resolves an export from an ES6 file`, async () => {
+    const result = await resolveModuleExports(`/import/with/export`, {
+      resolver,
+    })
     expect(result).toEqual([`baz`])
   })
 
-  it(`Resolves an exported const`, () => {
-    const result = resolveModuleExports(`/export/const`, { resolver })
+  it(`Resolves an exported const`, async () => {
+    const result = await resolveModuleExports(`/export/const`, { resolver })
     expect(result).toEqual([`fooConst`])
   })
 
-  it(`Resolves module.exports`, () => {
-    const result = resolveModuleExports(`/module/exports`, { resolver })
+  it(`Resolves module.exports`, async () => {
+    const result = await resolveModuleExports(`/module/exports`, { resolver })
     expect(result).toEqual([`barExports`])
   })
 
-  it(`Resolves exports from a larger file`, () => {
-    const result = resolveModuleExports(`/realistic/export`, { resolver })
+  it(`Resolves exports from a larger file`, async () => {
+    const result = await resolveModuleExports(`/realistic/export`, { resolver })
     expect(result).toEqual([`replaceHistory`, `replaceComponentRenderer`])
   })
 
-  it(`Ignores exports.__esModule`, () => {
-    const result = resolveModuleExports(`/esmodule/export`, { resolver })
+  it(`Ignores exports.__esModule`, async () => {
+    const result = await resolveModuleExports(`/esmodule/export`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
-  it(`Resolves a named export`, () => {
-    const result = resolveModuleExports(`/export/named`, { resolver })
+  it(`Resolves a named export`, async () => {
+    const result = await resolveModuleExports(`/export/named`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
-  it(`Resolves a named export from`, () => {
-    const result = resolveModuleExports(`/export/named/from`, { resolver })
+  it(`Resolves a named export from`, async () => {
+    const result = await resolveModuleExports(`/export/named/from`, {
+      resolver,
+    })
     expect(result).toEqual([`Component`])
   })
 
-  it(`Resolves a named export as`, () => {
-    const result = resolveModuleExports(`/export/named/as`, { resolver })
+  it(`Resolves a named export as`, async () => {
+    const result = await resolveModuleExports(`/export/named/as`, { resolver })
     expect(result).toEqual([`bar`])
   })
 
-  it(`Resolves multiple named exports`, () => {
-    const result = resolveModuleExports(`/export/named/multiple`, { resolver })
+  it(`Resolves multiple named exports`, async () => {
+    const result = await resolveModuleExports(`/export/named/multiple`, {
+      resolver,
+    })
     expect(result).toEqual([`foo`, `bar`, `baz`])
   })
 
-  it(`Resolves default export`, () => {
-    const result = resolveModuleExports(`/export/default`, { resolver })
+  it(`Resolves default export`, async () => {
+    const result = await resolveModuleExports(`/export/default`, { resolver })
     expect(result).toEqual([`export default`])
   })
 
-  it(`Resolves default export with name`, () => {
-    const result = resolveModuleExports(`/export/default/name`, { resolver })
-    expect(result).toEqual([`export default foo`])
-  })
-
-  it(`Resolves default function`, () => {
-    const result = resolveModuleExports(`/export/default/function`, {
-      resolver,
-    })
-    expect(result).toEqual([`export default`])
-  })
-
-  it(`Resolves default function with name`, () => {
-    const result = resolveModuleExports(`/export/default/function/name`, {
+  it(`Resolves default export with name`, async () => {
+    const result = await resolveModuleExports(`/export/default/name`, {
       resolver,
     })
     expect(result).toEqual([`export default foo`])
   })
 
-  it(`Resolves function declaration`, () => {
-    const result = resolveModuleExports(`/export/function`, { resolver })
+  it(`Resolves default function`, async () => {
+    const result = await resolveModuleExports(`/export/default/function`, {
+      resolver,
+    })
+    expect(result).toEqual([`export default`])
+  })
+
+  it(`Resolves default function with name`, async () => {
+    const result = await resolveModuleExports(`/export/default/function/name`, {
+      resolver,
+    })
+    expect(result).toEqual([`export default foo`])
+  })
+
+  it(`Resolves function declaration`, async () => {
+    const result = await resolveModuleExports(`/export/function`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
-  it(`Resolves exports when using require mode - simple case`, () => {
+  it(`Resolves exports when using require mode - simple case`, async () => {
     jest.mock(`require/exports`)
 
-    const result = resolveModuleExports(`require/exports`, {
+    const result = await resolveModuleExports(`require/exports`, {
       mode: `require`,
     })
     expect(result).toEqual([`foo`, `bar`])
   })
 
-  it(`Resolves exports when using require mode - unusual case`, () => {
+  it(`Resolves exports when using require mode - unusual case`, async () => {
     jest.mock(`require/unusual-exports`)
 
-    const result = resolveModuleExports(`require/unusual-exports`, {
+    const result = await resolveModuleExports(`require/unusual-exports`, {
       mode: `require`,
     })
     expect(result).toEqual([`foo`])
   })
 
-  it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, () => {
-    const result = resolveModuleExports(`require/not-existing-module`, {
+  it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, async () => {
+    const result = await resolveModuleExports(`require/not-existing-module`, {
       mode: `require`,
     })
     expect(result).toEqual([])
   })
 
-  it(`Resolves exports when using require mode - panic on errors`, () => {
+  it(`Resolves exports when using require mode - panic on errors`, async () => {
     jest.mock(`require/module-error`)
 
-    resolveModuleExports(`require/module-error`, {
+    await resolveModuleExports(`require/module-error`, {
       mode: `require`,
     })
 
