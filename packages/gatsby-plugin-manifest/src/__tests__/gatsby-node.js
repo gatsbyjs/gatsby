@@ -527,11 +527,12 @@ describe(`Test plugin manifest options`, () => {
 
 describe(`pluginOptionsSchema`, () => {
   it(`validates options correctly`, async () => {
-    const { isValid } = await testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       manifestOptions
     )
 
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

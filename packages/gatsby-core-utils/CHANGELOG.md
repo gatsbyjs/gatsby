@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.2.0/packages/gatsby-core-utils) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.1.0/packages/gatsby-core-utils) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Bug Fixes
+
+- decode uri-encode filename for remote file [#35637](https://github.com/gatsbyjs/gatsby/issues/35637) ([086c862](https://github.com/gatsbyjs/gatsby/commit/086c862e078a9808ebd5a3c8ba146e9931e3646d))
+
 ## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.0.0/packages/gatsby-core-utils) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)

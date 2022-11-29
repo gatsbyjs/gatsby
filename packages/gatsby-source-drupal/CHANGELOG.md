@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.2.0/packages/gatsby-source-drupal) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Features
+
+- Provide proxyUrl in addition to baseUrl to allow using CDN, API gateway, etc. [#36819](https://github.com/gatsbyjs/gatsby/issues/36819) ([e0cb9f6](https://github.com/gatsbyjs/gatsby/commit/e0cb9f6ed88ba918552a63ce14819cbad059d7a9))
+
+## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.1.0/packages/gatsby-source-drupal) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 ## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.0.0/packages/gatsby-source-drupal) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)

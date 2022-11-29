@@ -542,11 +542,8 @@ const transformFields = ({
     ?.filter(
       field =>
         !fieldIsExcludedOnParentType({
-          pluginOptions,
           field,
           parentType,
-          mainType,
-          parentField,
         }) &&
         !fieldIsExcludedOnAll({
           pluginOptions,

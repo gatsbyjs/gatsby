@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.2.0/packages/gatsby-plugin-google-analytics) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.1.0/packages/gatsby-plugin-google-analytics) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Chores
+
+- Update `minimatch` [#37029](https://github.com/gatsbyjs/gatsby/issues/37029) ([8569655](https://github.com/gatsbyjs/gatsby/commit/85696552292c34a1bc4b69e6708a850e342d6371))
+
 ## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.0.0/packages/gatsby-plugin-google-analytics) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
