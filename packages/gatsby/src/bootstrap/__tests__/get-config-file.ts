@@ -135,8 +135,6 @@ describe(`getConfigFile with cjs files`, () => {
   })
 })
 
-// TODO: We likely need to adjust the Jest config for this test suite, because integration tests pass yet
-// these fail with things like "Cannot use import statement outside a module""
 describe(`getConfigFile with esm files`, () => {
   beforeEach(() => {
     reporterPanicMock.mockClear()
