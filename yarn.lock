@@ -1638,10 +1638,10 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@gatsbyjs/reach-router@^2.0.0-v2.0":
-  version "2.0.0-v2.0.2"
-  resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-2.0.0-v2.0.2.tgz#6b7e4846e4c68113b8e454fd8ea027ffad5a68c8"
-  integrity sha512-sY/mOyxHFEJxjIS5vHH1cktkwDHHdadmgWNoqh3yYKcdGwQ9qZDzE4Po5FDhPsy+ZLWXBiR4F0x+JOGQKQ9Dgg==
+"@gatsbyjs/reach-router@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-2.0.0.tgz#de8520ef719c5bf849beb1f43f57b7dd3c7db5b1"
+  integrity sha512-n5nifEBtQCo4Wc/ErBvFEGyX5y8dKPSERre3pmuizkJl9J4l0M0bhu6aMc4uOXhG66UR4jgVDjN2Q2I2FSrVkw==
   dependencies:
     invariant "^2.2.4"
     prop-types "^15.8.1"
