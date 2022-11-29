@@ -255,7 +255,7 @@ describe(`gatsby config`, () => {
     expect(result.value).toEqual(
       expect.objectContaining({
         graphqlTypegen: {
-          typesOutputPath: `src/gatsby-types.d.ts`,,
+          typesOutputPath: `src/gatsby-types.d.ts`,
           documentSearchPaths: [
             `./gatsby-node.ts`,
             `./plugins/**/gatsby-node.ts`,
