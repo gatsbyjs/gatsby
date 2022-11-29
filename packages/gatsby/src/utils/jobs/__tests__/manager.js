@@ -8,6 +8,7 @@ const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
 const { uuid } = require(`gatsby-core-utils`)
 const timers = require(`timers`)
+const { MESSAGE_TYPES } = require(`../types`)
 
 let WorkerError
 let jobManager = null
@@ -395,6 +396,11 @@ describe(`Jobs manager`, () => {
 
     let originalProcessOn
     let originalSend
+    /**
+     * enqueueJob will run some async code before it sends IPC JOB_CREATED message
+     * This promise allow to await until that moment, to make assertions or execute more code
+     */
+    let waitForJobCreatedIPCSend
     beforeEach(() => {
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS = `true`
       listeners = []
@@ -404,7 +410,14 @@ describe(`Jobs manager`, () => {
         listeners.push(cb)
       }
 
-      process.send = jest.fn()
+      waitForJobCreatedIPCSend = new Promise(resolve => {
+        process.send = jest.fn(msg => {
+          if (msg?.type === MESSAGE_TYPES.JOB_CREATED) {
+            resolve(msg.payload)
+          }
+        })
+      })
+
       jest.useFakeTimers()
     })
 
@@ -425,6 +438,8 @@ describe(`Jobs manager`, () => {
 
       enqueueJob(jobArgs)
 
+      await waitForJobCreatedIPCSend
+
       jest.runAllTimers()
 
       expect(process.send).toHaveBeenCalled()
@@ -442,6 +457,9 @@ describe(`Jobs manager`, () => {
       const jobArgs = createInternalMockJob()
 
       const promise = enqueueJob(jobArgs)
+
+      await waitForJobCreatedIPCSend
+
       jest.runAllTimers()
 
       listeners[0]({
@@ -468,6 +486,8 @@ describe(`Jobs manager`, () => {
 
       const promise = enqueueJob(jobArgs)
 
+      await waitForJobCreatedIPCSend
+
       jest.runAllTimers()
 
       listeners[0]({
@@ -491,6 +511,8 @@ describe(`Jobs manager`, () => {
       const { enqueueJob } = jobManager
       const jobArgs = createInternalMockJob()
       const promise = enqueueJob(jobArgs)
+
+      await waitForJobCreatedIPCSend
 
       listeners[0]({
         type: `JOB_NOT_WHITELISTED`,
