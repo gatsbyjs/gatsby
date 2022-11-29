@@ -15,6 +15,7 @@
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "babel-preset-gatsby-package": "^2.4.0",
     "execa": "^4.0.1",
     "fs-extra": "^10.1.0",
     "jest": "^27.2.1",
