@@ -34,7 +34,7 @@
     "prepend-directive": "^1.0.3"
   },
   "peerDependencies": {
-    "@gatsbyjs/reach-router": "^2.0.0-v2.0",
+    "@gatsbyjs/reach-router": "^2.0.0",
     "react": "^18.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^0.0.0"
   },
