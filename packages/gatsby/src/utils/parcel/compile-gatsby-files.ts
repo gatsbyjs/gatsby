@@ -64,6 +64,15 @@ export async function compileGatsbyFiles(
     // Check for gatsby-node.jsx and gatsby-node.tsx (or other misnamed variations)
     const files = await readdir(siteRoot)
 
+    const gatsbyFilesIsInESM = files.some(file =>
+      file.match(/gatsby-(node|config)\.mjs/)
+    )
+
+    if (gatsbyFilesIsInESM) {
+      telemetry.trackFeatureIsUsed(`ESMInGatsbyFiles`)
+      console.log(`ESM BABAy`)
+    }
+
     let nearMatch = ``
     const configName = `gatsby-node`
 
