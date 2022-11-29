@@ -124,7 +124,7 @@ module.exports = {
   ],
   transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
   transform: {
-    "^.+\\.jsx|js|ts|mjs?$": `<rootDir>/jest-transformer.js`,
+    "^.+\\.jsx|js|ts|tsx|mjs?$": `<rootDir>/jest-transformer.js`,
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
