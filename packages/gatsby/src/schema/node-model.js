@@ -349,7 +349,7 @@ class LocalNodeModel {
   }
 
   /**
-   * Get one node in the store. Only returns the first result. When possible always use this method instead of fetching all nodes and then filtering them. findOne is more performant in that regard.
+   * Get one node in the store. Only returns the first result. When possible, always use this method instead of fetching all nodes and then filtering them. `findOne` is more performant in that regard.
    *
    * @param {*} args
    * @param {Object} args.query Query arguments (e.g. `filter`). Doesn't support `sort`, `limit`, `skip`.
