@@ -1,13 +1,24 @@
-// @ts-check
-import { getImageData } from "gatsby-plugin-image"
+import { getImageData, IGatsbyImageData } from "gatsby-plugin-image"
 import { useMemo } from "react"
 
 import { createUrl } from "./image-helpers"
+import {
+  IContentfulAsset,
+  IContentfulImageAPIUrlBuilderOptions,
+} from "./types/contentful"
 
-export function useContentfulImage({ image, ...props }) {
+interface IUseContentfulImageArgs {
+  image: IContentfulAsset
+  [key: string]: unknown
+}
+
+export function useContentfulImage({
+  image,
+  ...props
+}: IUseContentfulImageArgs): IGatsbyImageData {
   return useMemo(
     () =>
-      getImageData({
+      getImageData<IContentfulImageAPIUrlBuilderOptions>({
         baseUrl: image.url,
         sourceWidth: image.width,
         sourceHeight: image.height,

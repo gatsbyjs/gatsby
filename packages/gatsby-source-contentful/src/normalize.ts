@@ -1,12 +1,20 @@
-// @ts-check
 import _ from "lodash"
 import { getGatsbyVersion } from "gatsby-core-utils"
 import { lt, prerelease } from "semver"
 
 import { restrictedNodeFields, conflictFieldPrefix } from "./config"
+import { Asset, Entry, Link, LinkType, SyncCollection } from "contentful"
+import {
+  IContentfulAsset,
+  IContentfulEntity,
+  IContentfulEntry,
+  IContentfulLink,
+} from "./types/contentful"
 
-export const makeTypeName = (type, typePrefix = `ContentfulContentType`) =>
-  _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+export const makeTypeName = (
+  type: string,
+  typePrefix = `ContentfulContentType`
+): string => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
 const gatsbyVersion =
@@ -47,7 +55,19 @@ const makeGetLocalizedField =
   field =>
     getLocalizedField({ field, locale, localesFallback })
 
-export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+export const makeId = ({
+  spaceId,
+  id,
+  currentLocale,
+  defaultLocale,
+  type,
+}: {
+  spaceId: string
+  id: string
+  currentLocale: string
+  defaultLocale: string
+  type: string
+}): string => {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
     : type
@@ -58,16 +78,26 @@ export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
 
 const makeMakeId =
   ({ currentLocale, defaultLocale, createNodeId }) =>
-  (spaceId, id, type) =>
+  (spaceId, id, type): string =>
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 // Generates an unique id per space for reference resolving
-export const createRefId = nodeOrLink =>
-  `${nodeOrLink.sys.id}___${nodeOrLink.sys.linkType || nodeOrLink.sys.type}`
+// @todo space id is actually not factored in here!
+export const createRefId = (node: IContentfulEntity): string =>
+  `${node.sys.id}___${node.sys.type}`
 
-export const buildEntryList = ({ contentTypeItems, currentSyncData }) => {
+export const createLinkRefId = (link: IContentfulLink): string =>
+  `${link.sys.id}___${link.sys.linkType}`
+
+export const buildEntryList = ({
+  contentTypeItems,
+  currentSyncData,
+}: {
+  contentTypeItems: Array<Entry<unknown>>
+  currentSyncData: SyncCollection
+}): Array<Array<Entry<unknown>> | undefined> => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
-  const map = new Map(
+  const map: Map<string, Array<Entry<unknown>>> = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
   )
   // Now fill the buckets. Ignore entries for which there exists no bucket. (This happens when filterContentType is used)
@@ -85,8 +115,12 @@ export const buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
-}) => {
-  const resolvable = new Set()
+}: {
+  entryList: Array<Array<IContentfulEntry>>
+  existingNodes: Array<IContentfulEntry>
+  assets: Array<IContentfulAsset>
+}): Set<string> => {
+  const resolvable: Set<string> = new Set()
   existingNodes.forEach(node => {
     if (node.internal.owner === `gatsby-source-contentful` && node?.sys?.id) {
       // We need to add only root level resolvable (assets and entries)
@@ -490,6 +524,7 @@ export const createNodesForContentType = ({
           entryItem,
           entryNode,
           space,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           unstable_createNodeManifest,
         })
 
@@ -558,7 +593,14 @@ export const createAssetNodes = ({
   defaultLocale,
   locales,
   space,
-}) => {
+}: {
+  assetItem
+  createNode
+  createNodeId
+  defaultLocale
+  locales: Array<string>
+  space: string
+}): Array<Promise<any>> => {
   const createNodePromises = []
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)

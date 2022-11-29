@@ -1,4 +1,3 @@
-// @ts-check
 import { GraphQLEnumType } from "gatsby/graphql"
 
 export const ImageFormatType = new GraphQLEnumType({

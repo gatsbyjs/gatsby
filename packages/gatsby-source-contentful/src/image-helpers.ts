@@ -1,5 +1,8 @@
-// @ts-check
 import { URLSearchParams } from "url"
+import {
+  IContentfulAsset,
+  IContentfulImageAPIUrlBuilderOptions,
+} from "./types/contentful"
 
 // Maximum value for size parameters in Contentful Image API
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
@@ -19,12 +22,15 @@ export const mimeTypeExtensions = new Map([
 ])
 
 // Check if Contentful asset is actually an image
-export function isImage(image) {
+export function isImage(image: IContentfulAsset): boolean {
   return mimeTypeExtensions.has(image?.mimeType)
 }
 
 // Create a Contentful Image API url
-export function createUrl(imgUrl, options = {}) {
+export function createUrl(
+  imgUrl: string,
+  options: IContentfulImageAPIUrlBuilderOptions = {}
+): string {
   // If radius is -1, we need to pass `max` to the API
   const cornerRadius =
     options.cornerRadius === -1 ? `max` : options.cornerRadius

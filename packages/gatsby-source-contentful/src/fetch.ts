@@ -1,20 +1,32 @@
-// @ts-check
 import chalk from "chalk"
-import { createClient } from "contentful"
+import {
+  ContentfulClientApi,
+  createClient,
+  CreateClientParams,
+  EntryCollection,
+  Space,
+  Locale,
+  SyncCollection,
+  ContentType,
+  Entry,
+} from "contentful"
+import { Reporter } from "gatsby"
 import _ from "lodash"
 import { formatPluginOptionsForCLI } from "./plugin-options"
 import { CODES } from "./report"
+import { IContentfulContentType, IContentfulTag } from "./types/contentful"
+import { IProcessedPluginOptions } from "./types/plugin"
 
 /**
  * Generate a user friendly error message.
  *
  * Contentful's API has its own error message structure, which might change depending of internal server or authentification errors.
  */
-const createContentfulErrorMessage = e => {
+const createContentfulErrorMessage = (e): string => {
   // Handle axios error messages
   if (e.isAxiosError) {
     const axiosErrorMessage = [e.code, e.status]
-    const axiosErrorDetails = []
+    const axiosErrorDetails: Array<string> = []
 
     if (e.response) {
       axiosErrorMessage.push(e.response.status)
@@ -50,7 +62,7 @@ const createContentfulErrorMessage = e => {
 
   // If it is not an axios error, we assume that we got a Contentful SDK error and try to parse it
   const errorMessage = [e.name]
-  const errorDetails = []
+  const errorDetails: Array<string> = []
   try {
     /**
      * Parse stringified error data from message
@@ -98,11 +110,11 @@ const createContentfulErrorMessage = e => {
 function createContentfulClientOptions({
   pluginConfig,
   reporter,
-  syncProgress = { total: 0, tick: a => a },
-}) {
+  syncProgress = { total: 0, tick: (a): unknown => a },
+}): CreateClientParams {
   let syncItemCount = 0
 
-  const contentfulClientOptions = {
+  const contentfulClientOptions: CreateClientParams = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
     host: pluginConfig.get(`host`),
@@ -110,7 +122,7 @@ function createContentfulClientOptions({
     proxy: pluginConfig.get(`proxy`),
     integration: `gatsby-source-contentful`,
     responseLogger: response => {
-      function createMetadataLog(response) {
+      function createMetadataLog(response): string | null {
         if (!response.headers) {
           return null
         }
@@ -162,7 +174,7 @@ function handleContentfulError({
   reporter,
   contentfulClientOptions,
   pluginConfig,
-}) {
+}): void {
   let details
   let errors
   if (e.code === `ENOTFOUND`) {
@@ -227,13 +239,29 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   })
 }
 
+interface IFetchResult {
+  currentSyncData: unknown
+  tagItems: Array<IContentfulTag>
+  defaultLocale: string
+  locales: Array<Locale>
+  space: Space
+}
+
 /**
  * Fetches:
  * * Locales with default locale
  * * Entries and assets
  * * Tags
  */
-export async function fetchContent({ syncToken, pluginConfig, reporter }) {
+export async function fetchContent({
+  syncToken,
+  pluginConfig,
+  reporter,
+}: {
+  syncToken: string
+  pluginConfig: IProcessedPluginOptions
+  reporter: Reporter
+}): Promise<IFetchResult> {
   // Fetch locales and check connectivity
   const contentfulClientOptions = createContentfulClientOptions({
     pluginConfig,
@@ -264,7 +292,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   }
 
   // Fetch entries and assets via Contentful CDA sync API
-  const pageLimit = pluginConfig.get(`pageLimit`)
+  const pageLimit = pluginConfig.get(`pageLimit`) | 100
   reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
   const syncProgress = reporter.createProgress(
     `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
@@ -279,7 +307,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   })
   const syncClient = createClient(contentfulSyncClientOptions)
 
-  let currentSyncData
+  let currentSyncData: SyncCollection
   let currentPageLimit = pageLimit
   let lastCurrentPageLimit
   let syncSuccess = false
@@ -333,11 +361,12 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   } finally {
     // Fix output when there was no new data in Contentful
     if (
+      currentSyncData &&
       currentSyncData?.entries.length +
         currentSyncData?.assets.length +
         currentSyncData?.deletedEntries.length +
         currentSyncData?.deletedAssets.length ===
-      0
+        0
     ) {
       syncProgress.tick()
       syncProgress.total = 1
@@ -363,7 +392,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
     })
   }
 
-  const result = {
+  const result: IFetchResult = {
     currentSyncData,
     tagItems,
     defaultLocale,
@@ -378,24 +407,41 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
  * Fetches:
  * * Content types
  */
-export async function fetchContentTypes({ pluginConfig, reporter }) {
+export async function fetchContentTypes({
+  pluginConfig,
+  reporter,
+}: {
+  pluginConfig: IProcessedPluginOptions
+  reporter: Reporter
+}): Promise<Array<Entry<ContentType>> | null> {
   const contentfulClientOptions = createContentfulClientOptions({
     pluginConfig,
     reporter,
   })
   const client = createClient(contentfulClientOptions)
-  const pageLimit = pluginConfig.get(`pageLimit`)
+  const pageLimit = pluginConfig.get(`pageLimit`) | 100
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
     `environment`
   )}`
-  let contentTypes = null
+
+  let contentTypes: Array<Entry<ContentType>>
 
   try {
     reporter.verbose(`Fetching content types (${sourceId})`)
 
     // Fetch content types from CDA API
     try {
-      contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
+      const contentTypeCollection = await pagedGet<ContentType>(
+        client,
+        `getContentTypes`,
+        pageLimit
+      )
+      reporter.verbose(
+        `Content types fetched ${contentTypeCollection.items.length} (${sourceId})`
+      )
+      if (contentTypeCollection) {
+        contentTypes = contentTypeCollection.items
+      }
     } catch (e) {
       reporter.panic({
         id: CODES.FetchContentTypes,
@@ -406,13 +452,12 @@ export async function fetchContentTypes({ pluginConfig, reporter }) {
         },
       })
     }
-    reporter.verbose(
-      `Content types fetched ${contentTypes.items.length} (${sourceId})`
-    )
-
-    contentTypes = contentTypes.items
   } catch (e) {
     handleContentfulError(e)
+  }
+
+  if (!contentTypes) {
+    throw new Error(`cry`)
   }
 
   return contentTypes
@@ -423,14 +468,17 @@ export async function fetchContentTypes({ pluginConfig, reporter }) {
  * The first call will have no aggregated response. Subsequent calls will
  * concatenate the new responses to the original one.
  */
-function pagedGet(
-  client,
-  method,
-  pageLimit,
+function pagedGet<T>(
+  client: ContentfulClientApi,
+  method: keyof ContentfulClientApi,
+  pageLimit: number,
   query = {},
   skip = 0,
-  aggregatedResponse = null
-) {
+  aggregatedResponse?: EntryCollection<T>
+): Promise<EntryCollection<T> | undefined> {
+  if (!client[method]) {
+    throw new Error(`Contentful Client does not support the method ${method}`)
+  }
   return client[method]({
     ...query,
     skip: skip,
@@ -443,7 +491,7 @@ function pagedGet(
       aggregatedResponse.items = aggregatedResponse.items.concat(response.items)
     }
     if (skip + pageLimit <= response.total) {
-      return pagedGet(
+      return pagedGet<T>(
         client,
         method,
         pageLimit,

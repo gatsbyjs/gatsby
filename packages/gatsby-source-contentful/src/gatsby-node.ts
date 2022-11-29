@@ -1,18 +1,17 @@
-// @ts-check
-import _ from "lodash"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 import { CODES } from "./report"
 
 import { maskText } from "./plugin-options"
+import { GatsbyNode } from "gatsby"
 
 export { createSchemaCustomization } from "./create-schema-customization"
 export { sourceNodes } from "./source-nodes"
 
 const fetch = fetchRetry(origFetch)
 
-const validateContentfulAccess = async pluginOptions => {
+const validateContentfulAccess = async (pluginOptions): Promise<undefined> => {
   if (process.env.NODE_ENV === `test`) return undefined
 
   await fetch(
@@ -42,7 +41,10 @@ const validateContentfulAccess = async pluginOptions => {
   return undefined
 }
 
-export const onPreInit = async ({ store, reporter }) => {
+export const onPreInit: GatsbyNode["onPreInit"] = async ({
+  store,
+  reporter,
+}) => {
   // if gatsby-plugin-image is not installed
   try {
     await import(`gatsby-plugin-image/graphql-utils`)
@@ -70,7 +72,9 @@ export const onPreInit = async ({ store, reporter }) => {
   }
 }
 
-export const pluginOptionsSchema = ({ Joi }) =>
+export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
+  Joi,
+}) =>
   Joi.object()
     .keys({
       accessToken: Joi.string()
@@ -108,7 +112,7 @@ For example, to filter locales on only germany \`localeFilter: locale => locale.
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales`
         )
-        .default(() => () => true),
+        .default(() => (): boolean => true),
       pageLimit: Joi.number()
         .integer()
         .description(
@@ -162,7 +166,9 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     })
     .external(validateContentfulAccess)
 
-/** @type {import('gatsby').GatsbyNode["onCreateDevServer"]} */
-export const onCreateDevServer = ({ app, store }) => {
+export const onCreateDevServer: GatsbyNode["onCreateDevServer"] = ({
+  app,
+  store,
+}) => {
   polyfillImageServiceDevRoutes(app, store)
 }

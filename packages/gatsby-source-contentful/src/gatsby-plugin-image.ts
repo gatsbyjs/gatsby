@@ -1,6 +1,7 @@
-// @ts-check
 import fs from "fs-extra"
+import { GatsbyCache } from "gatsby"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
+import { IGatsbyImageData, ImageFormat } from "gatsby-plugin-image"
 import path from "path"
 import {
   createUrl,
@@ -9,6 +10,10 @@ import {
   validImageFormats,
   CONTENTFUL_IMAGE_MAX_SIZE,
 } from "./image-helpers"
+import {
+  IContentfulAsset,
+  IContentfulImageAPIUrlBuilderOptions,
+} from "./types/contentful"
 
 // Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
 const inFlightBase64Cache = new Map()
@@ -17,7 +22,15 @@ const inFlightBase64Cache = new Map()
 const resolvedBase64Cache = new Map()
 
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = (imageProps, cache) => {
+const getBase64Image = (
+  imageProps: {
+    image: IContentfulAsset
+    baseUrl: string
+    options: IContentfulImageAPIUrlBuilderOptions
+    aspectRatio: number
+  },
+  cache: GatsbyCache
+): string | null | Promise<string> => {
   if (!imageProps) {
     return null
   }
@@ -52,7 +65,7 @@ const getBase64Image = (imageProps, cache) => {
     return inFlight
   }
 
-  const loadImage = async () => {
+  const loadImage = async (): Promise<string> => {
     const { mimeType } = imageProps.image
 
     const extension = mimeTypeExtensions.get(mimeType)
@@ -78,7 +91,15 @@ const getBase64Image = (imageProps, cache) => {
   })
 }
 
-const getTracedSVG = async ({ image, options, cache }) => {
+const getTracedSVG = async ({
+  image,
+  options,
+  cache,
+}: {
+  image: IContentfulAsset
+  options: IContentfulImageAPIUrlBuilderOptions
+  cache: GatsbyCache
+}): Promise<string | null> => {
   const { traceSVG } = await import(`gatsby-plugin-sharp`)
   const { url: imgUrl, filename, mimeType } = image
 
@@ -110,7 +131,15 @@ const getTracedSVG = async ({ image, options, cache }) => {
   })
 }
 
-const getDominantColor = async ({ image, options, cache }) => {
+const getDominantColor = async ({
+  image,
+  options,
+  cache,
+}: {
+  image: IContentfulAsset
+  options: IContentfulImageAPIUrlBuilderOptions
+  cache: GatsbyCache
+}): Promise<string> => {
   let pluginSharp
 
   try {
@@ -127,7 +156,7 @@ const getDominantColor = async ({ image, options, cache }) => {
     const { mimeType, url: imgUrl, filename } = image
 
     if (mimeType.indexOf(`image/`) !== 0) {
-      return null
+      return `rgba(0,0,0,0.5)`
     }
 
     // 256px should be enough to properly detect the dominant color
@@ -165,7 +194,16 @@ const getDominantColor = async ({ image, options, cache }) => {
   }
 }
 
-function getBasicImageProps(image, args) {
+function getBasicImageProps(
+  image,
+  args
+): {
+  baseUrl: string
+  mimeType: string
+  aspectRatio: number
+  height: number
+  width: number
+} {
   let { width, height } = image
   if (args.width && args.height) {
     width = args.width
@@ -183,13 +221,13 @@ function getBasicImageProps(image, args) {
 
 // Generate image source data for gatsby-plugin-image
 export function generateImageSource(
-  filename,
-  width,
-  height,
-  toFormat,
-  _fit, // We use resizingBehavior instead
-  imageTransformOptions
-) {
+  filename: string,
+  width: number,
+  height: number,
+  toFormat: "gif" | ImageFormat,
+  _fit: string, // We use resizingBehavior instead
+  imageTransformOptions: any
+): { width: number; height: number; format: string; src: string } | undefined {
   const imageFormatDefaults = imageTransformOptions[`${toFormat}Options`]
 
   if (
@@ -222,7 +260,7 @@ export function generateImageSource(
     height = CONTENTFUL_IMAGE_MAX_SIZE
   }
 
-  if (!validImageFormats.has(toFormat)) {
+  if (toFormat && !validImageFormats.has(toFormat)) {
     console.warn(
       `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png, webp and avif"`
     )
@@ -245,11 +283,11 @@ export function generateImageSource(
 
 export async function resolveGatsbyImageData(
   image,
-  options,
+  options: IContentfulImageAPIUrlBuilderOptions,
   context,
   info,
-  { cache }
-) {
+  { cache }: { cache: GatsbyCache }
+): Promise<IGatsbyImageData | null> {
   if (!isImage(image)) return null
 
   const { generateImageData } = await import(`gatsby-plugin-image`)
@@ -277,7 +315,7 @@ export async function resolveGatsbyImageData(
 
   options = doMergeDefaults(options, defaults)
 
-  const { baseUrl, mimeType, width, height } = getBasicImageProps(
+  const { baseUrl, mimeType, width, height, aspectRatio } = getBasicImageProps(
     image,
     options
   )
@@ -305,7 +343,7 @@ export async function resolveGatsbyImageData(
     options,
   })
 
-  let placeholderDataURI = null
+  let placeholderDataURI: string | null = null
 
   if (options.placeholder === `dominantColor`) {
     imageProps.backgroundColor = await getDominantColor({
@@ -321,6 +359,7 @@ export async function resolveGatsbyImageData(
         baseUrl,
         image,
         options,
+        aspectRatio,
       },
       cache
     )

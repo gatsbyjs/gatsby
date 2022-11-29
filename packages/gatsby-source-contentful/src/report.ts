@@ -1,4 +1,4 @@
-// @ts-check
+import { IErrorMapEntry } from "gatsby-cli/lib/structured-errors/error-map"
 
 export const CODES = {
   /* Fetch errors */
@@ -8,9 +8,14 @@ export const CODES = {
   FetchContentTypes: `111004`,
   GatsbyPluginMissing: `111005`,
   ContentTypesMissing: `111006`,
+  FetchTags: `111007`,
 }
 
-export const ERROR_MAP = {
+interface IErrorMap {
+  [code: string]: IErrorMapEntry
+}
+
+export const ERROR_MAP: IErrorMap = {
   [CODES.LocalesMissing]: {
     text: context => context.sourceMessage,
     level: `ERROR`,
@@ -32,11 +37,6 @@ export const ERROR_MAP = {
     category: `THIRD_PARTY`,
   },
   [CODES.FetchContentTypes]: {
-    text: context => context.sourceMessage,
-    level: `ERROR`,
-    category: `THIRD_PARTY`,
-  },
-  [CODES.FetchTags]: {
     text: context => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,
