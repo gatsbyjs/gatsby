@@ -186,6 +186,10 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         graphqlTypegen: {
           typesOutputPath: `src/gatsby-types.d.ts`,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+          ],
           generateOnBuild: false,
         },
       })
@@ -202,6 +206,10 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         graphqlTypegen: {
           typesOutputPath: `src/gatsby-types.d.ts`,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+          ],
           generateOnBuild: false,
         },
       })
@@ -212,6 +220,11 @@ describe(`gatsby config`, () => {
     const config = {
       graphqlTypegen: {
         typesOutputPath: `gatsby-types.d.ts`,
+        documentSearchPaths: [
+          `./gatsby-node.ts`,
+          `./plugins/**/gatsby-node.ts`,
+          `./src/gatsby/generatePage.ts`,
+        ],
       },
     }
 
@@ -220,6 +233,11 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         graphqlTypegen: {
           typesOutputPath: `gatsby-types.d.ts`,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+            `./src/gatsby/generatePage.ts`,
+          ],
           generateOnBuild: false,
         },
       })
@@ -237,7 +255,11 @@ describe(`gatsby config`, () => {
     expect(result.value).toEqual(
       expect.objectContaining({
         graphqlTypegen: {
-          typesOutputPath: `src/gatsby-types.d.ts`,
+          typesOutputPath: `src/gatsby-types.d.ts`,,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+          ],
           generateOnBuild: true,
         },
       })

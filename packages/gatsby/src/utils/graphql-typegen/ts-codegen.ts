@@ -19,6 +19,10 @@ import {
 } from "./utils"
 
 export const DEFAULT_TYPES_OUTPUT_PATH = `src/gatsby-types.d.ts`
+export const DEFAULT_DOCUMENT_SEARCH_PATHS = [
+  `./gatsby-node.ts`,
+  `./plugins/**/gatsby-node.ts`,
+]
 const NAMESPACE = `Queries`
 
 // These override the defaults from
@@ -44,10 +48,10 @@ const DEFAULT_TYPESCRIPT_CONFIG: Readonly<TypeScriptPluginConfig> = {
 }
 
 const DEFAULT_TYPESCRIPT_OPERATIONS_CONFIG: Readonly<TypeScriptDocumentsPluginConfig> =
-  {
-    ...DEFAULT_TYPESCRIPT_CONFIG,
-    exportFragmentSpreadSubTypes: true,
-  }
+{
+  ...DEFAULT_TYPESCRIPT_CONFIG,
+  exportFragmentSpreadSubTypes: true,
+}
 
 export async function writeTypeScriptTypes(
   directory: IStateProgram["directory"],
@@ -103,7 +107,7 @@ export async function writeTypeScriptTypes(
   // TODO: This codepath can be made obsolete if Gatsby itself already places the queries inside gatsby-node into the `definitions`
   try {
     gatsbyNodeDocuments = await loadDocuments(
-      [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
+      graphqlTypegenOptions.documentSearchPaths,
       {
         loaders: [
           new CodeFileLoader({

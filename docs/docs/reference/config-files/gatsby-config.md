@@ -197,6 +197,7 @@ Optionally, you can configure its behavior by passing an object to `graphqlTypeg
 module.exports = {
   graphqlTypegen: {
     typesOutputPath: `gatsby-types.d.ts`,
+    documentSearchPaths: [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
     // Other options...
   },
 }
