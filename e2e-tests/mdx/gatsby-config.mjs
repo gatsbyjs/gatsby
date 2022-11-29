@@ -1,4 +1,11 @@
-module.exports = {
+import remarkGfm from "remark-gfm"
+import rehypeSlug from "rehype-slug"
+import { dirname } from "path"
+import { fileURLToPath } from "url"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const config = {
   siteMetadata: {
     title: `Gatsby MDX e2e`,
   },
@@ -28,7 +35,16 @@ module.exports = {
           `gatsby-remark-autolink-headers`,
         ],
         mdxOptions: {
-          remarkPlugins: [remarkRequireFilePathPlugin],
+          remarkPlugins: [
+            remarkRequireFilePathPlugin,
+            // This is an esm only packages, It should work out of the box
+            remarkGfm,
+          ],
+
+          rehypePlugins: [
+            // This is an esm only packages, It should work out of the box
+            rehypeSlug,
+          ],
         },
       },
     },
@@ -47,3 +63,5 @@ function remarkRequireFilePathPlugin() {
     }
   }
 }
+
+export default config
