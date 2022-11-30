@@ -5,7 +5,7 @@ import {
   findTypeName,
   getTypesThatImplementInterfaceType,
 } from "~/steps/create-schema-customization/helpers"
-import { transformFields } from "~/steps/create-schema-customization/transform-fields"
+import { transformFields } from "../create-schema-customization/transform-fields"
 import { getPersistentCache } from "~/utils/cache"
 import {
   findNamedType,
@@ -74,6 +74,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       fields: interfaceType.fields,
       parentType: interfaceType,
       parentInterfacesImplementingTypes: typesThatImplementInterface,
+      peek: true,
     })
 
     if (shouldSkipInterfaceType && interfaceType.name !== `Node`) {

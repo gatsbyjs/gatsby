@@ -88,6 +88,7 @@ export const transformFields = ({
   fields,
   parentType,
   parentInterfacesImplementingTypes,
+  peek = false,
 }) => {
   if (!fields || !fields.length) {
     return null
@@ -158,9 +159,11 @@ export const transformFields = ({
     field = handleCustomScalars(field)
 
     const { transform, description } =
-      fieldTransformers.find(({ test }) => test(field)) || {}
+      peek === false
+        ? fieldTransformers.find(({ test }) => test(field)) || {}
+        : {}
 
-    if (transform && typeof transform === `function`) {
+    if (transform && typeof transform === `function` && peek === false) {
       const transformerApi = {
         field,
         fieldsObject,
@@ -188,6 +191,8 @@ export const transformFields = ({
       }
 
       fieldsObject[fieldName] = transformedField
+    } else if (peek) {
+      fieldsObject[fieldName] = true
     }
 
     return fieldsObject
