@@ -200,6 +200,7 @@ async function fetchFile({
     // See if there's response headers for this url
     // from a previous request.
     const headers = { ...httpHeaders }
+
     if (cachedEntry?.headers?.etag && (await fs.pathExists(filename))) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       headers[`If-None-Match`] = cachedEntry.headers.etag

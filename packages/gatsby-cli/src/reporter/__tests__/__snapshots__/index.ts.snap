@@ -2,6 +2,7 @@
 
 exports[`report.error handles "Array of Errors" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Message 3 from new Error",
   },
@@ -10,11 +11,13 @@ Object {
   "level": "ERROR",
   "stack": Any<Array>,
   "text": "Message 3 from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "Error" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Message from new Error",
   },
@@ -23,11 +26,13 @@ Object {
   "level": "ERROR",
   "stack": Any<Array>,
   "text": "Message from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "String" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Error created in Jest",
   },
@@ -35,11 +40,13 @@ Object {
   "level": "ERROR",
   "stack": Array [],
   "text": "Error created in Jest",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "String, Error" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Error string passed to reporter Message from new Error",
   },
@@ -48,11 +55,13 @@ Object {
   "level": "ERROR",
   "stack": Any<Array>,
   "text": "Error string passed to reporter Message from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "String, Error, pluginName" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Error string passed to reporter Message from new Error",
   },
@@ -117,6 +126,7 @@ Object {
     },
   ],
   "text": "Error string passed to reporter Message from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
@@ -125,12 +135,13 @@ Object {
   "category": "USER",
   "code": "95312",
   "context": Object {
-    "ref": "navigator",
+    "undefinedGlobal": "navigator",
   },
   "docsUrl": "https://gatsby.dev/debug-html",
   "level": "ERROR",
   "stack": Array [],
-  "text": "\\"navigator\\" is not available during server side rendering.",
+  "text": "\\"navigator\\" is not available during server-side rendering. Enable \\"DEV_SSR\\" to debug this during \\"gatsby develop\\".",
+  "type": "HTML.COMPILATION",
 }
 `;
 
@@ -144,6 +155,7 @@ Object {
   "level": "ERROR",
   "stack": Array [],
   "text": "Error text is test123",
+  "type": "PLUGIN",
 }
 `;
 
@@ -158,5 +170,6 @@ Object {
   "pluginName": "gatsby-plugin-foo-bar",
   "stack": Array [],
   "text": "Error text is test123",
+  "type": "PLUGIN",
 }
 `;

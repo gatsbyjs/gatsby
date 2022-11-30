@@ -8,11 +8,7 @@ import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { savePartialStateToDisk, store } from "../../../redux"
 import { loadConfig } from "../../../bootstrap/load-config"
 import { loadPlugins } from "../../../bootstrap/load-plugins"
-import {
-  createTestWorker,
-  describeWhenLMDB,
-  GatsbyTestWorkerPool,
-} from "./test-helpers"
+import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
 import { IGatsbyState } from "../../../redux/types"
 import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
@@ -48,7 +44,7 @@ jest.mock(`gatsby-telemetry`, () => {
   }
 })
 
-describeWhenLMDB(`worker (schema)`, () => {
+describe(`worker (schema)`, () => {
   let stateFromWorker: CombinedState<IGatsbyState>
 
   beforeAll(async () => {

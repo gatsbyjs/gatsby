@@ -937,6 +937,15 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`bundling`, () => {
+      test(`should succeed when gatsby-core-utils is imported`, async () => {
+        const result = await fetch(`${host}/api/ignore-lmdb-require`).then(
+          res => res.text()
+        )
+        expect(result).toEqual(`hello world`)
+      })
+    })
+
     // TODO figure out why this gets into endless loops
     // describe.only(`hot reloading`, () => {
     // const fixturesDir = path.join(__dirname, `fixtures`)

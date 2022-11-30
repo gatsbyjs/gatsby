@@ -1,8 +1,6 @@
 import _ from "lodash"
 import semver from "semver"
 
-import sampleSiteForExperiment from "./sample-site-for-experiment"
-
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
@@ -85,12 +83,8 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastDev`,
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time.`,
-    includedFlags: [
-      // `DEV_SSR`, - not working with serverdata atm
-      `PRESERVE_FILE_DOWNLOAD_CACHE`,
-      `DEV_WEBPACK_CACHE`,
-    ],
+    description: `Enable all experiments aimed at improving develop server start time & develop DX.`,
+    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -99,75 +93,9 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `DevSsr`,
     experimental: false,
-    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
+    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (): fitnessEnum => {
-      // TODO Re-enable after gatsybcamp
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return false
-      }
-
-      if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
-  },
-  {
-    name: `QUERY_ON_DEMAND`,
-    env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
-    umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
-    name: `LAZY_IMAGES`,
-    env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
-    umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => {
-      const semverConstraints = {
-        // Because of this, this flag will never show up
-        "gatsby-plugin-sharp": `>=2.10.0`,
-      }
-      if (satisfiesSemvers(semverConstraints)) {
-        return `LOCKED_IN`
-      } else {
-        // gatsby-plugin-sharp is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
-    },
-    requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
-  },
-  {
-    name: `PRESERVE_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
-    command: `all`,
-    telemetryId: `PreserveWebpackCache`,
-    experimental: false,
-    description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
-    name: `DEV_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
-    command: `develop`,
-    telemetryId: `DevWebackCache`,
-    experimental: false,
-    description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -190,43 +118,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `LMDB_STORE`,
-    env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
-    command: `all`,
-    telemetryId: `LmdbStore`,
-    experimental: true,
-    umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
-    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
-    testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return `LOCKED_IN`
-      }
-
-      const [major, minor] = process.versions.node.split(`.`)
-      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
-    },
-    requires: `Requires Node v14.10 or above.`,
-  },
-  {
-    name: `PARALLEL_QUERY_RUNNING`,
-    env: `GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING`,
-    command: `build`,
-    telemetryId: `PQR`,
-    experimental: true,
-    umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
-    description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
-    includedFlags: [`LMDB_STORE`],
-    testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return `LOCKED_IN`
-      }
-
-      const [major, minor] = process.versions.node.split(`.`)
-      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
-    },
-    requires: `Requires Node v14.10 or above.`,
-  },
-  {
     name: `DETECT_NODE_MUTATIONS`,
     env: `GATSBY_DETECT_NODE_MUTATIONS`,
     command: `all`,
@@ -236,16 +127,30 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `GRAPHQL_TYPEGEN`,
-    env: `GATSBY_GRAPHQL_TYPEGEN`,
-    command: `develop`,
-    telemetryId: `GraphQLTypegen`,
-    description: `More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/35420`,
-    experimental: false,
-    noCI: true,
-    testFitness: (): fitnessEnum => false,
-    requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
+    name: `PARTIAL_HYDRATION`,
+    env: `GATSBY_PARTIAL_HYDRATION`,
+    command: `build`,
+    telemetryId: `PartialHydration`,
+    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
+    umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
+    experimental: true,
+    testFitness: (): fitnessEnum => {
+      const v18Constraint = {
+        react: `>=18.0.0`,
+      }
+      const v0Constraint = {
+        react: `^0.0.0`,
+      }
+
+      return (
+        _CFLAGS_.GATSBY_MAJOR === `5` &&
+        (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
+      )
+    },
+    requires:
+      Number(_CFLAGS_.GATSBY_MAJOR) < 5
+        ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
+        : `Partial hydration requires React 18+ to work.`,
   },
 ]
 

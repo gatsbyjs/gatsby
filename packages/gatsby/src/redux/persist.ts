@@ -135,7 +135,7 @@ function prepareCacheFolder(
   contents: DeepPartial<ICachedReduxState>
 ): void {
   // Temporarily save the nodes and pages and remove them from the main redux store
-  // This prevents an OOM when the page nodes collectively contain to much data
+  // This prevents an OOM when the page nodes collectively contain too much data
   const nodesMap = contents.nodes
   contents.nodes = undefined
 
@@ -149,12 +149,10 @@ function prepareCacheFolder(
   contents.pages = pagesMap
 
   if (nodesMap) {
-    if (nodesMap.size === 0 && process.env.GATSBY_EXPERIMENTAL_LMDB_STORE) {
+    if (nodesMap.size === 0) {
       // Nodes are actually stored in LMDB.
-      //  But we need at least one node in redux state to workaround the warning above:
-      //  "Cache exists but contains no nodes..." (when loading cache).
-      // Sadly, cannot rely on GATSBY_EXPERIMENTAL_LMDB_STORE env variable at cache load time
-      //  because it is not initialized at this point (when set via flags in config)
+      // But we need at least one node in redux state to workaround the warning above:
+      // "Cache exists but contains no nodes..." (when loading cache).
       const dummyNode: IGatsbyNode = {
         id: `dummy-node-id`,
         parent: ``,
@@ -165,7 +163,6 @@ function prepareCacheFolder(
           counter: 0,
           owner: ``,
         },
-        __gatsby_resolved: {},
         fields: [],
       }
       nodesMap.set(dummyNode.id, dummyNode)

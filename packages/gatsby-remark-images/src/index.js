@@ -25,6 +25,7 @@ const supportedExtensions = {
   webp: true,
   tif: true,
   tiff: true,
+  avif: true,
 }
 
 // If the image is relative (not hosted elsewhere)
@@ -347,32 +348,7 @@ module.exports = (
       `.trim()
     }
 
-    let placeholderImageData = fluidResult.base64
-
-    // if options.tracedSVG is enabled generate the traced SVG and use that as the placeholder image
-    if (options.tracedSVG) {
-      let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
-
-      // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
-      const { Potrace } = require(`@gatsbyjs/potrace`)
-      const argsKeys = Object.keys(args)
-      args = argsKeys.reduce((result, key) => {
-        const value = args[key]
-        result[key] = Potrace.hasOwnProperty(value) ? Potrace[value] : value
-        return result
-      }, {})
-
-      const tracedSVG = await traceSVG({
-        file: imageNode,
-        args,
-        fileArgs: args,
-        cache,
-        reporter,
-      })
-
-      // Escape single quotes so the SVG data can be used in inline style attribute with single quotes
-      placeholderImageData = tracedSVG.replace(/'/g, `\\'`)
-    }
+    const placeholderImageData = fluidResult.base64
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 

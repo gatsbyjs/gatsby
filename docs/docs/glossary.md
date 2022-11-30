@@ -186,7 +186,7 @@ A hosting provider keeps a copy of your website or app and makes it accessible t
 
 A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window. Gatsby uses [Fast Refresh](/docs/reference/local-development/fast-refresh/).
 
-### [Hydration](/docs/glossary/hydration/)
+### [Hydration](/docs/conceptual/react-hydration/)
 
 Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
 
@@ -260,6 +260,10 @@ An [HTML](#html) page.
 
 This also often refers to [components](#component) that live in `/src/pages/` and are converted to pages by [Gatsby](#gatsby), as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
 
+### Partial Hydration
+
+Gatsby's Partial Hydration is powered by [React server components](#react-server-components) and gives you the ability to mark specific parts of your site as interactive while the rest of your site is static by default. Interactivity can come from things like click events, effects, and state changes. With Partial Hydration the JavaScript only for these portions is downloaded, making your websites ship less JavaScript to your users.
+
 ### Plugin
 
 Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugin) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
@@ -292,9 +296,17 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
+### React Server Components
+
+Generally speaking React server components allow developers to build apps that span the server and client. Server Components can dynamically choose which client components to render, allowing clients to download just the minimal amount of code necessary to render a page. Gatsby leverages this capability for its [Partial Hydration](#partial-hydration) feature. [Watch the talk "Data Fetching with Server Components"](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) or read the [Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to learn more.
+
 ### Remark
 
 A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) or [React](#react) code.
+
+### Run Script
+
+An executable command defined in the `scripts` property of your `package.json` file. See [npm](https://docs.npmjs.com/cli/v8/using-npm/scripts) and [yarn](https://classic.yarnpkg.com/lang/en/docs/cli/run/) run script documentation for more information.
 
 ### Runtime
 

@@ -59,6 +59,38 @@ export const fieldOfTypeWasFetched = type => {
   return typeWasFetched
 }
 
+const implementingTypeCache = new Map()
+
+export const getTypesThatImplementInterfaceType = type => {
+  if (implementingTypeCache.has(type.name)) {
+    return implementingTypeCache.get(type.name)
+  }
+
+  const state = store.getState()
+  const { typeMap } = state.remoteSchema
+
+  const allTypes = typeMap.values()
+
+  const implementingTypes = Array.from(allTypes)
+    .filter(
+      ({ interfaces }) =>
+        interfaces &&
+        // find types that implement this interface type
+        interfaces.find(singleInterface => singleInterface.name === type.name)
+    )
+    .map(type => typeMap.get(type.name))
+    .filter(
+      type =>
+        type.kind !== `UNION` ||
+        // if this is a union type, make sure the union type has one or more member types, otherwise schema customization will throw an error
+        (!!type.possibleTypes && !!type.possibleTypes.length)
+    )
+
+  implementingTypeCache.set(type.name, implementingTypes)
+
+  return implementingTypes
+}
+
 const supportedScalars = [
   `Int`,
   `Float`,
@@ -84,7 +116,7 @@ export const typeIsASupportedScalar = type => {
   return supportedScalars.includes(findTypeName(type))
 }
 
-const typeSettingCache = {}
+const typeSettingCache = new Map()
 
 // retrieves plugin settings for the provided type
 export const getTypeSettingsByType = type => {
@@ -94,7 +126,11 @@ export const getTypeSettingsByType = type => {
 
   const typeName = findTypeName(type)
 
-  const cachedTypeSettings = typeSettingCache[typeName]
+  if (!typeName) {
+    return {}
+  }
+
+  const cachedTypeSettings = typeSettingCache.get(typeName)
 
   if (cachedTypeSettings) {
     return cachedTypeSettings
@@ -116,12 +152,12 @@ export const getTypeSettingsByType = type => {
   if (typeSettings) {
     const mergedSettings = merge(__allTypeSetting, typeSettings)
 
-    typeSettingCache[typeName] = mergedSettings
+    typeSettingCache.set(typeName, mergedSettings)
 
     return mergedSettings
   }
 
-  typeSettingCache[typeName] = __allTypeSetting
+  typeSettingCache.set(typeName, __allTypeSetting)
 
   return __allTypeSetting
 }

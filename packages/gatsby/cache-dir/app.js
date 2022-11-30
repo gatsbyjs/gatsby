@@ -1,7 +1,8 @@
-/* global HAS_REACT_18 */
+// needed for fast refresh
+import "@gatsbyjs/webpack-hot-middleware/client"
+
 import React from "react"
 import ReactDOM from "react-dom"
-import io from "socket.io-client"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -40,23 +41,19 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
-let reactRender
-let reactHydrate
-if (HAS_REACT_18) {
-  const reactDomClient = require(`react-dom/client`)
-  reactRender = (Component, el) => {
+const reactDomClient = require(`react-dom/client`)
+const reactFirstRenderOrHydrate = (Component, el) => {
+  // we will use hydrate if mount element has any content inside
+  const useHydrate = el && el.children.length
+
+  if (useHydrate) {
+    const root = reactDomClient.hydrateRoot(el, Component)
+    return () => root.unmount()
+  } else {
     const root = reactDomClient.createRoot(el)
     root.render(Component)
     return () => root.unmount()
   }
-  reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
-} else {
-  const reactDomClient = require(`react-dom`)
-  reactRender = (Component, el) => {
-    reactDomClient.render(Component, el)
-    return () => ReactDOM.unmountComponentAtNode(el)
-  }
-  reactHydrate = reactDomClient.hydrate
 }
 
 // Do dummy dynamic import so the jsonp __webpack_require__.e is added to the commons.js
@@ -80,53 +77,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  fetch(`/___services`)
-    .then(res => res.json())
-    .then(services => {
-      if (services.developstatusserver) {
-        let isRestarting = false
-        const parentSocket = io(
-          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver.port}`
-        )
-
-        parentSocket.on(`structured-log`, msg => {
-          if (
-            !isRestarting &&
-            msg.type === `LOG_ACTION` &&
-            msg.action.type === `DEVELOP` &&
-            msg.action.payload === `RESTART_REQUIRED` &&
-            window.confirm(
-              `The develop process needs to be restarted for the changes to ${msg.action.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
-            )
-          ) {
-            isRestarting = true
-            parentSocket.emit(`develop:restart`, () => {
-              window.location.reload()
-            })
-          }
-
-          if (
-            isRestarting &&
-            msg.type === `LOG_ACTION` &&
-            msg.action.type === `SET_STATUS` &&
-            msg.action.payload === `SUCCESS`
-          ) {
-            isRestarting = false
-            window.location.reload()
-          }
-        })
-
-        // Prevents certain browsers spamming XHR 'ERR_CONNECTION_REFUSED'
-        // errors within the console, such as when exiting the develop process.
-        parentSocket.on(`disconnect`, () => {
-          console.warn(
-            `[socket.io] Disconnected. Unable to perform health-check.`
-          )
-          parentSocket.close()
-        })
-      }
-    })
-
   /**
    * Service Workers are persistent by nature. They stick around,
    * serving a cached version of the site if they aren't removed.
@@ -147,25 +97,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const rootElement = document.getElementById(`___gatsby`)
-
-  const focusEl = document.getElementById(`gatsby-focus-wrapper`)
-
-  // Client only pages have any empty body so we just do a normal
-  // render to avoid React complaining about hydration mis-matches.
-  let defaultRenderer = reactRender
-  if (focusEl && focusEl.children.length) {
-    defaultRenderer = reactHydrate
-  }
-
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    defaultRenderer
+    reactFirstRenderOrHydrate
   )[0]
 
   let dismissLoadingIndicator
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     let indicatorMountElement
@@ -184,7 +124,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (indicatorMountElement) {
         // If user defined replaceHydrateFunction themselves the cleanupFn return might not be there
         // So fallback to unmountComponentAtNode for now
-        if (cleanupFn) {
+        if (cleanupFn && typeof cleanupFn === `function`) {
           cleanupFn()
         } else {
           ReactDOM.unmountComponentAtNode(indicatorMountElement)

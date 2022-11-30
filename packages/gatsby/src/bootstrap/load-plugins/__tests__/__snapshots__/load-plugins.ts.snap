@@ -91,8 +91,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -108,6 +108,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -129,6 +130,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -150,6 +152,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -171,6 +174,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -192,6 +196,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -213,6 +218,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -234,6 +240,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -291,6 +298,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -307,7 +315,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
     ],
     "id": "",
     "name": "partytown",
@@ -321,7 +329,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",
@@ -420,8 +427,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -449,6 +456,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -470,6 +478,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -491,6 +500,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -512,6 +522,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -533,6 +544,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -554,6 +566,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -575,6 +588,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -596,6 +610,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -653,6 +668,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -669,7 +685,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
     ],
     "id": "",
     "name": "partytown",
@@ -683,7 +699,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",
@@ -782,8 +797,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -799,6 +814,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -822,6 +838,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -843,6 +860,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -864,6 +882,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -885,6 +904,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -906,6 +926,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -927,6 +948,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -948,6 +970,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -969,6 +992,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -1026,6 +1050,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -1042,7 +1067,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
     ],
     "id": "",
     "name": "partytown",
@@ -1056,7 +1081,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",

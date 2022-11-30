@@ -3,6 +3,7 @@ import { Link, navigate, graphql } from "gatsby"
 import { StaticImage, GatsbyImage, getImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
+import Seo from "../components/seo"
 
 const IndexPage = ({ data }) => {
   const image = getImage(data.file)
@@ -40,9 +41,20 @@ const IndexPage = ({ data }) => {
       <Link data-testid="subdir-link" to="subdirectory/page-1">
         Go to subdirectory
       </Link>
+      <Link data-testid="page-ssr-link" to="/ssr/">
+        Go to SSR page
+      </Link>
+      <button
+        data-testid="page-ssr-button-link"
+        onClick={() => navigate(`/ssr/`)}
+      >
+        Go to SSR page with navigate()
+      </button>
     </Layout>
   )
 }
+
+export const Head = () => <Seo />
 
 export const query = graphql`
   query {

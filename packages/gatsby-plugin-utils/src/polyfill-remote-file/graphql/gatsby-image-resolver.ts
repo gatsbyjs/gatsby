@@ -10,7 +10,7 @@ import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
 import { ImageCropFocus, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
 import type {
   IRemoteFileNode,
   IRemoteImageNode,
@@ -72,10 +72,16 @@ const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 const DEFAULT_QUALITY = 75
 
+const GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = [`true`, `1`].includes(
+  process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``
+)
+
+let didShowTraceSVGRemovalWarning = false
 export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
-  actions: Actions
+  actions: Actions,
+  store?: Store
 ): Promise<{
   images: IGatsbyImageData
   layout: string
@@ -115,6 +121,14 @@ export async function gatsbyImageResolver(
   }
 
   if (!args.placeholder) {
+    args.placeholder = PlaceholderType.DOMINANT_COLOR
+  } else if (args.placeholder === PlaceholderType.TRACED_SVG) {
+    if (!didShowTraceSVGRemovalWarning) {
+      console.warn(
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in gatsbyImage processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarning = true
+    }
     args.placeholder = PlaceholderType.DOMINANT_COLOR
   }
 
@@ -186,7 +200,8 @@ export async function gatsbyImageResolver(
             cropFocus: args.cropFocus,
             quality: args.quality as number,
           },
-          actions
+          actions,
+          store
         )
       }
 
@@ -231,7 +246,8 @@ export async function gatsbyImageResolver(
   if (args.placeholder !== `none`) {
     const { fallback, backgroundColor: bgColor } = await generatePlaceholder(
       source,
-      args.placeholder as PlaceholderType
+      args.placeholder as PlaceholderType,
+      store
     )
 
     if (fallback) {
@@ -240,6 +256,11 @@ export async function gatsbyImageResolver(
     if (bgColor) {
       backgroundColor = bgColor
     }
+  }
+
+  // Check if addGatsbyImageSourceUrl for backwards compatibility with older Gatsby versions
+  if (GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS && actions.addGatsbyImageSourceUrl) {
+    actions.addGatsbyImageSourceUrl(source.url)
   }
 
   return {
@@ -254,14 +275,15 @@ export async function gatsbyImageResolver(
 
 export function generateGatsbyImageFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  actions: Actions
+  actions: Actions,
+  store?: Store
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode | IRemoteImageNode,
   ReturnType<typeof gatsbyImageResolver>,
   IGatsbyImageDataArgs
 > {
   return {
-    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData` : `JSON`,
     description: `Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.`,
     args: {
       layout: {
@@ -292,9 +314,9 @@ export function generateGatsbyImageFieldConfig(
         defaultValue: enums.placeholder.getField(`DOMINANT_COLOR`).value,
         description: stripIndent`
       Format of generated placeholder image, displayed while the main image loads.
-      BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
-      DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
-      TRACED_SVG: a low-resolution traced SVG of the image.
+      BLURRED: a blurred, low resolution image, encoded as a base64 data URI
+      DOMINANT_COLOR: a solid color, calculated from the dominant color of the image (default).
+      TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
       NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
       },
       aspectRatio: {
@@ -360,7 +382,7 @@ export function generateGatsbyImageFieldConfig(
       },
     },
     resolve(source, args): ReturnType<typeof gatsbyImageResolver> {
-      return gatsbyImageResolver(source, args, actions)
+      return gatsbyImageResolver(source, args, actions, store)
     },
   }
 }

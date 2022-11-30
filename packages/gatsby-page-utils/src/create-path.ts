@@ -1,9 +1,9 @@
 import { parse, posix } from "path"
+import { slash } from "gatsby-core-utils/path"
 
 export function createPath(
   filePath: string,
-  // TODO(v5): Set this default to false
-  withTrailingSlash: boolean = true,
+  withTrailingSlash: boolean = false,
   usePathBase: boolean = false
 ): string {
   const { dir, name, base } = parse(filePath)
@@ -14,5 +14,8 @@ export function createPath(
   const parsedName = name === `index` ? `` : name
   const postfix = withTrailingSlash ? `/` : ``
 
-  return posix.join(`/`, dir, usePathBase ? parsedBase : parsedName, postfix)
+  // Convert slashes since the Regex operates on forward slashes
+  return slash(
+    posix.join(`/`, dir, usePathBase ? parsedBase : parsedName, postfix)
+  )
 }

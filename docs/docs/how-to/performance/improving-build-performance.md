@@ -86,6 +86,11 @@ Some options offered in `gatsby-plugin-image`, such as AVIF and traced-svg, incr
 
 The build time cost of generating Javascript bundles is proportional to the size of your bundles. [Optimizations to improve bundle size](https://www.gatsbyjs.com/docs/how-to/performance/improving-site-performance/#reduce-your-javascript-bundle-cost), especially of the templates that are most commonly used, should generate significant benefits. For example, if you have a 30k-page site with 25k product pages, to optimize build time start by optimizing your product page template.
 
+#### Remove support for browsers that don't support ES6 Modules
+
+During the bundling process, Gatsby will adhere to your projects `browserslist` to determine how bundles should be polyfilled for browser support. If not set, Gatsby sets `browserslist` as `>0.25%, not dead and supports es6-module`.
+A time-consuming part of the polyfill process is ES6 module support. One way to speed up your builds is to remove support for [these browsers](https://browserslist.dev/?q=PjAuMjUlLCBub3QgZGVhZCwgbm90IHN1cHBvcnRzIGVzNi1tb2R1bGU%3D) by adding a `and supports es6-module` clause to your `browserslist` configuration. Gatsby does this by default.
+
 ### 4. Advanced options
 
 #### Look at current experimental flags

@@ -1,5 +1,14 @@
+import got from "got"
+
+const baseUrl = `http://fixture`
+const proxyUrl = `http://fixture-proxy`
+
 jest.mock(`got`, () =>
   jest.fn(path => {
+    if (path.includes(proxyUrl)) {
+      path = path.replace(proxyUrl, baseUrl)
+    }
+
     let last = ``
     if (path.includes(`i18n-test`)) {
       last = `i18n-test-`
@@ -13,6 +22,8 @@ jest.mock(`got`, () =>
     }
   })
 )
+
+const probeImageSize = require(`probe-image-size`)
 
 jest.mock(`probe-image-size`, () =>
   jest.fn(() => {
@@ -29,13 +40,20 @@ jest.mock(`gatsby-source-filesystem`, () => {
   }
 })
 
+let cacheStore
 function makeCache() {
-  const store = new Map()
+  cacheStore = new Map()
   return {
-    get: async id => store.get(id),
-    set: async (key, value) => store.set(key, value),
-    del: async key => store.delete(key),
-    store,
+    get: async id =>
+      new Promise(resolve =>
+        process.nextTick(() => resolve(cacheStore.get(id)))
+      ),
+    set: async (key, value) =>
+      new Promise(resolve =>
+        process.nextTick(() => resolve(cacheStore.set(key, value)))
+      ),
+    del: async key => cacheStore.delete(key),
+    cacheStore,
   }
 }
 
@@ -50,7 +68,6 @@ const { handleWebhookUpdate } = require(`../utils`)
 describe(`gatsby-source-drupal`, () => {
   let nodes = {}
   const createNodeId = id => `generated-id-${id}`
-  const baseUrl = `http://fixture`
   const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
   const { objectContaining } = expect
   const actions = {
@@ -336,17 +353,20 @@ describe(`gatsby-source-drupal`, () => {
             ...args,
           })
         })
+
         it(`Attributes`, () => {
           expect(nodes[createNodeId(`und.article-3`)].title).toBe(
             `Article #3 - Updated`
           )
         })
+
         it(`Relationships`, () => {
           // removed `field_main_image`, changed `field_tags`
           expect(nodes[createNodeId(`und.article-3`)].relationships).toEqual({
             field_tags___NODE: [createNodeId(`und.tag-2`)],
           })
         })
+
         it(`Back references`, () => {
           // removed `field_main_image`, `file-1` no longer has back reference to `article-3`
           expect(
@@ -438,6 +458,38 @@ describe(`gatsby-source-drupal`, () => {
     expect(nodes[createNodeId(`und.article-3`)]).toBeDefined()
   })
 
+  it(`Can use the proxyUrl plugin option to use a different API url for sourcing`, async () => {
+    got.mockClear()
+    nodes = {}
+    await sourceNodes(args, { baseUrl, proxyUrl })
+
+    let callSkipCount = 0
+    for (const [index, call] of got.mock.calls.entries()) {
+      if (call[0] === `http://fixture/jsonapi`) {
+        callSkipCount++
+        continue
+      }
+
+      expect(got).toHaveBeenNthCalledWith(
+        index + 1,
+        expect.stringContaining(proxyUrl),
+        expect.anything()
+      )
+    }
+
+    expect(callSkipCount).toBe(1)
+    expect(got).toBeCalledTimes(8)
+
+    expect(Object.keys(nodes).length).not.toEqual(0)
+    expect(nodes[createNodeId(`und.file-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.file-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.tag-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.tag-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.article-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.article-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`und.article-3`)]).toBeDefined()
+  })
+
   it(`Verify JSON:API includes relationships`, async () => {
     // Reset nodes and test includes relationships.
     Object.keys(nodes).forEach(key => delete nodes[key])
@@ -514,7 +566,51 @@ describe(`gatsby-source-drupal`, () => {
     })
   })
 
+  describe(`Paragraph fields`, () => {
+    it(`creates the initial paragraph entity correctly`, async () => {
+      // Reset nodes.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const nodesToUpdate = require(`./fixtures/paragraph-v1.json`)
+      for (const nodeToUpdate of nodesToUpdate) {
+        await handleWebhookUpdate(
+          {
+            nodeToUpdate: nodeToUpdate.data,
+            ...args,
+          },
+          { baseUrl: `https://example.com` }
+        )
+      }
+      expect(
+        nodes[`generated-id-en_US.e7861064-0009-4458-bf6e-0284d34bb00d`]
+          .field_image.alt
+      ).toEqual(`alt text`)
+    })
+    it(`updates the referenced entities correctly`, async () => {
+      // Reset nodes.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const nodesToUpdate = require(`./fixtures/paragraph-v2.json`)
+      for (const nodeToUpdate of nodesToUpdate) {
+        await handleWebhookUpdate(
+          {
+            nodeToUpdate: nodeToUpdate.data,
+            ...args,
+          },
+          { baseUrl: `https://example.com` }
+        )
+      }
+
+      expect(
+        nodes[`generated-id-en_US.e7861064-0009-4458-bf6e-0284d34bb00d`]
+          .field_image.alt
+      ).toEqual(`alt text v2`)
+    })
+  })
+
   describe(`Image CDN`, () => {
+    afterEach(() => {
+      probeImageSize.mockClear()
+    })
+
     it(`should generate required Image CDN node data`, async () => {
       // Reset nodes and test includes relationships.
       Object.keys(nodes).forEach(key => delete nodes[key])
@@ -536,6 +632,29 @@ describe(`gatsby-source-drupal`, () => {
       expect(fileNode.mimeType).toEqual(`image/png`)
       expect(fileNode.width).toEqual(100)
       expect(fileNode.height).toEqual(100)
+      expect(probeImageSize).toHaveBeenCalled()
+    })
+
+    it(`should not generate required Image CDN node data when imageCDN option is set to false`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+
+      const options = {
+        baseUrl,
+        skipFileDownloads: true,
+        imageCDN: false,
+      }
+
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+
+      const fileNode = nodes[createNodeId(`und.file-1`)]
+
+      // imageCDN: true fetches the width/height
+      expect(fileNode.width).not.toBeDefined()
+      expect(fileNode.height).not.toBeDefined()
+      expect(probeImageSize).not.toHaveBeenCalled()
     })
   })
 

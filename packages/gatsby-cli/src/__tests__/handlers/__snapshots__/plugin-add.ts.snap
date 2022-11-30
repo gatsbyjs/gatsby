@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`addPlugins gatsby-config.js should not write with no plugins 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`,
   },
@@ -11,7 +14,10 @@ exports[`addPlugins gatsby-config.js should not write with no plugins 1`] = `
 `;
 
 exports[`addPlugins gatsby-config.js should write a plugin with options 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
@@ -25,7 +31,10 @@ exports[`addPlugins gatsby-config.js should write a plugin with options 1`] = `
 `;
 
 exports[`addPlugins gatsby-config.js should write a single plugin 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
@@ -34,7 +43,10 @@ exports[`addPlugins gatsby-config.js should write a single plugin 1`] = `
 `;
 
 exports[`addPlugins gatsby-config.js should write multiple plugins 1`] = `
-"module.exports = {
+"/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
@@ -49,6 +61,10 @@ const config: GatsbyConfig = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`,
   },
+  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
+  // If you use VSCode you can also use the GraphQL plugin
+  // Learn more at: https://gatsby.dev/graphql-typegen
+  graphqlTypegen: true,
   plugins: [],
 }
 
@@ -63,6 +79,10 @@ const config: GatsbyConfig = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
+  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
+  // If you use VSCode you can also use the GraphQL plugin
+  // Learn more at: https://gatsby.dev/graphql-typegen
+  graphqlTypegen: true,
   plugins: [{
     resolve: 'gatsby-plugin-hello',
     options: {
@@ -82,6 +102,10 @@ const config: GatsbyConfig = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
+  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
+  // If you use VSCode you can also use the GraphQL plugin
+  // Learn more at: https://gatsby.dev/graphql-typegen
+  graphqlTypegen: true,
   plugins: [\\"gatsby-plugin-hello\\"]
 };
 
@@ -96,6 +120,10 @@ const config: GatsbyConfig = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
+  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
+  // If you use VSCode you can also use the GraphQL plugin
+  // Learn more at: https://gatsby.dev/graphql-typegen
+  graphqlTypegen: true,
   plugins: [\\"gatsby-plugin-hello\\", \\"gatsby-plugin-world\\"]
 };
 

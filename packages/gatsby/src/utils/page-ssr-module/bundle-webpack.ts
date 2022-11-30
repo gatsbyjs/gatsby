@@ -1,4 +1,5 @@
 import * as path from "path"
+import * as fs from "fs-extra"
 import webpack from "webpack"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
@@ -11,6 +12,7 @@ import {
 } from "../client-assets-for-template"
 import { writeStaticQueryContext } from "../static-query-utils"
 import { IGatsbyState } from "../../redux/types"
+import { store } from "../../redux"
 
 type Reporter = typeof reporter
 
@@ -56,6 +58,22 @@ export async function createPageSSRBundle({
   reporter: Reporter
   isVerbose?: boolean
 }): Promise<webpack.Compilation | undefined> {
+  const state = store.getState()
+  const slicesStateObject = {}
+  for (const [key, value] of state.slices) {
+    slicesStateObject[key] = value
+  }
+
+  const slicesByTemplateStateObject = {}
+  for (const [template, records] of state.slicesByTemplate) {
+    const recordsObject = {}
+    for (const path of Object.keys(records)) {
+      recordsObject[path] = records[path]
+    }
+
+    slicesByTemplateStateObject[template] = recordsObject
+  }
+
   const webpackStats = await readWebpackStats(path.join(rootDir, `public`))
 
   const toInline: Record<string, ITemplateDetails> = {}
@@ -153,8 +171,28 @@ export async function createPageSSRBundle({
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
         WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
+        GATSBY_SLICES: JSON.stringify(slicesStateObject),
+        GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
+        GATSBY_SLICES_SCRIPT: JSON.stringify(
+          _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
+            ? fs.readFileSync(
+                path.join(
+                  rootDir,
+                  `public`,
+                  `_gatsby`,
+                  `slices`,
+                  `_gatsby-scripts-1.html`
+                ),
+                `utf-8`
+              )
+            : ``
+        ),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "process.env.GATSBY_SLICES": JSON.stringify(
+          !!process.env.GATSBY_SLICES
+        ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
         ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)

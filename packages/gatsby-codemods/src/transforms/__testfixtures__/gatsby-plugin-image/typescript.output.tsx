@@ -8,8 +8,7 @@ export const Hero: React.SFC = ({ children }) => {
       gatsbyImageData(layout: FULL_WIDTH)
     }
   }
-}
-`);
+}`);
     return (
         <GatsbyImage
             image={data.file.childImageSharp.gatsbyImageData}

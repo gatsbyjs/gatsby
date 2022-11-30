@@ -1,5 +1,8 @@
 ---
 title: Gatsby Script API
+examples:
+  - label: Using Gatsby Script
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-script"
 ---
 
 > Support for the Gatsby Script API was added in `gatsby@4.15.0`.
@@ -115,7 +118,7 @@ import { Script, ScriptStrategy } from "gatsby"
 
 The `post-hydrate` strategy is the **default** loading strategy and will be used if you do not specificy a `strategy` attribute.
 
-The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](/docs/glossary/hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
+The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](/docs/conceptual/react-hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
 
 This can have negative implications for key web vital metrics like [Total Blocking Time](https://web.dev/tbt/). By leveraging the `<Script>` component with the `post-hydrate` strategy, you ensure that your script avoids interfering with your page reaching an interactive state, resulting in a better experience for your users.
 
@@ -133,26 +136,27 @@ The `idle` strategy is ideal for cases where you want to ensure a script loads i
 
 The `off-main-thread` strategy, unlike `post-hydrate` and `idle`, loads your script in a [web worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) via [Partytown](https://partytown.builder.io).
 
-This means that the burden of evaluation of your script is no longer the conern of the main thread, freeing it up to take care of other crucial tasks.
+This means that the burden of evaluation of your script is no longer the concern of the main thread, freeing it up to take care of other crucial tasks.
+
+> Note - Due to Partytown's status as **beta** software, the `off-main-thread` strategy is considered **experimental**. It is subject to certain [limitations](#limitations) and may require more configuration than other loading strategies depending on your use case.
 
 Here is an example configuring the `<Script>` component with the `off-main-thread` strategy to load [Google Analytics](https://analytics.google.com/analytics/web/):
 
 ```jsx
 import { Script } from "gatsby"
 
-// `process.env.GTM` is your Google Analytics 4 identifier defined in your `.env.production` and `.env.development` files
+// `process.env.GTAG` is your Google Analytics 4 identifier defined in your `.env.production` and `.env.development` files
 
 <Script
-  src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTM}`}
+  src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
   strategy="off-main-thread"
-  forward={[`gtag`]}
 />
-<Script id="gtag-config" strategy="off-main-thread">
+<Script id="gtag-config" strategy="off-main-thread" forward={[`gtag`]}>
   {`
-    window.dataLayer = window.dataLayer || []
-    window.gtag = function gtag() { window.dataLayer.push(arguments) }
-    gtag('js', new Date())
-    gtag('config', ${process.env.GTM}, { send_page_view: false })
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
+    gtag('config', ${process.env.GTAG}, { page_path: location ? location.pathname + location.search + location.hash : undefined })
   `}
 </Script>
 ```
@@ -163,10 +167,10 @@ Gatsby will collect all `off-main-thread` scripts on a page, and automatically m
 
 ```jsx
 <Script
-  src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTM}`}
+  src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
   strategy="off-main-thread"
   // highlight-next-line
-  forward={[`gtag`]}
+  forward={[`dataLayer.push`]}
 />
 ```
 
@@ -195,7 +199,7 @@ module.exports = {
   },
   // highlight-start
   partytownProxiedURLs: [
-    `https://www.googletagmanager.com/gtag/js?id=${process.env.GTM}`
+    `https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`
   ],
   // highlight-end
 }
@@ -205,9 +209,98 @@ This works out of the box when running your site via `gatsby develop`, `gatsby s
 
 Hosting on other providers requires support for Gatsby's [`createRedirect`](/docs/reference/config-files/actions/) action to rewrite requests from `/__third-party-proxy?url=${YOUR_URL}` to `YOUR_URL` with a 200 status code. You may need to check with your hosting provider to see if this is supported.
 
+#### Resolving URLs
+
+You can leverage Partytown's [vanilla config](https://partytown.builder.io/configuration#vanilla-config) to handle Partytown-specific behavior in your `off-main-thread` scripts. One such option is `resolveUrl`, which allows you to modify URLs handled by Partytown.
+
+One example of a use case for `resolveUrl` is when using tag manager scripts such as [Google Tag Manager](https://tagmanager.google.com). These scripts are challenging to use with Partytown since they contain _other_ scripts that make _other_ requests that may or may not need to be proxied depending on the CORS setting. In this scenario you can use `resolveUrl` to handle those child script URLs.
+
+Here's an example using [Google Tag Manager](https://tagmanager.google.com) to load [Google Analytics](http://analytics.google.com) (Universal Analytics in this case):
+
+Note - This assumes you have [set up Google Tag Manager to use Universal Analytics](https://support.google.com/tagmanager/answer/6107124?hl=en) in the Google Tag Manager web application.
+
+First you load your Google Tag Manager (GTM) script and send an initialization event:
+
+```jsx
+import { Script } from "gatsby"
+
+// `process.env.GTM` is your Google Tag Manager identifier defined in your `.env.production` and `.env.development` files
+
+<Script
+  // highlight-next-line
+  src={`https://www.googletagmanager.com/gtm.js?id=${process.env.GTM}`}
+  strategy="off-main-thread"
+  // highlight-next-line
+  forward={[`dataLayer.push`]}
+/>
+<Script id="gtm-init" strategy="off-main-thread">
+  {`
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), 'event': 'gtm.js' })
+  `}
+</Script>
+```
+
+Then you define `resolveUrl` in Partytown's vanilla config to handle the Google Analytics script loaded by Google Tag Manager:
+
+```jsx:title=gatsby-ssr.js
+import React from "react"
+
+export const onRenderBody = ({ setHeadComponents }) => {
+   setHeadComponents([
+     <script
+       key="partytown-vanilla-config"
+       dangerouslySetInnerHTML={{
+         __html: `partytown = {
+           resolveUrl(url, location) {
+              if (url.hostname.includes('google-analytics')) {
+                // Use a secure connection
+                if (url?.protocol === 'http:') {
+                  url = new URL(url.href.replace('http', 'https'))
+                }
+
+                // Point to our proxied URL
+                const proxyUrl = new URL(location.origin + '/__third-party-proxy')
+                proxyUrl.searchParams.append('url', url)
+
+                return proxyUrl
+              }
+
+              return url
+           }
+         }`,
+       }}
+     />,
+   ])
+}
+```
+
+Lastly, you need to add the Google Analytics URL to `partytownProxiedURLs` so that Gatsby knows the URL is safe to proxy:
+
+```js:title=gatsby-config.js
+import dotenv from "dotenv"
+
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+module.exports = {
+  siteMetadata: {
+    title: `Gatsby`,
+  },
+  partytownProxiedURLs: [
+    `https://www.googletagmanager.com/gtm.js?id=${process.env.GTM}`,
+    // highlight-next-line
+    `https://www.google-analytics.com/analytics.js`,
+  ]
+}
+```
+
+At this point both your Google Tag Manager and Google Analytics scripts should load successfully in your site.
+
 #### Debugging
 
-You can leverage Partytown's [vanilla config](https://partytown.builder.io/configuration#vanilla-config) to enable debug mode for your off-main-thread scripts:
+You can also leverage Partytown's [vanilla config](https://partytown.builder.io/configuration#vanilla-config) to enable debug mode for your off-main-thread scripts:
 
 ```jsx:title=gatsby-ssr.js
 import React from "react"
@@ -215,8 +308,9 @@ import React from "react"
 export const onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
     <script
-      key="test"
+      key="partytown-vanilla-config"
       dangerouslySetInnerHTML={{
+        // highlight-next-line
         __html: `partytown = { debug: true }`,
       }}
     />,
@@ -226,13 +320,14 @@ export const onRenderBody = ({ setHeadComponents }) => {
 
 You may need to adjust your dev tools to the verbose log level in order to see the extra logs in your console.
 
-It is recommended that you only make use of the `debug` property in Partytown's vanilla config to avoid unexpected behavior.
-
 #### Limitations
 
 By leveraging [Partytown](https://partytown.builder.io), scripts that use the `off-main-thread` strategy must also be aware of the [limitations mentioned in the Partytown documentation](https://partytown.builder.io/trade-offs). While the strategy can be powerful, it may not be the best solution for all scenarios.
 
-In addition, the `off-main-thread` strategy does not support the `onLoad` and `onError` callbacks.
+In addition, there are other limitations that require upstream changes from Partytown to enable:
+
+- The `onLoad` and `onError` callbacks are not supported. See [discussion #199 in the Partytown repo](https://github.com/BuilderIO/partytown/discussions/199).
+- Scripts load only on server-side rendering (SSR) navigation (e.g. regular `<a>` tag navigation), and not on client-side rendering (CSR) navigation (e.g. Gatsby `<Link>` navigation). See [issue #74 in the Partytown repo](https://github.com/BuilderIO/partytown/issues/74).
 
 ## Usage in Gatsby SSR and Browser APIs
 
@@ -281,8 +376,8 @@ Here is an example using the callbacks:
 ```jsx
 <Script
   src="https://my-example-script"
-  onLoad={() => console.log('success') )}
-  onError={() => console.log('sadness') )}
+  onLoad={() => console.log("success")}
+  onError={() => console.log("sadness")}
 />
 ```
 

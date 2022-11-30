@@ -5,6 +5,7 @@ const supportedExtensions = {
   webp: true,
   tif: true,
   tiff: true,
+  avif: true,
 }
 
 module.exports = {

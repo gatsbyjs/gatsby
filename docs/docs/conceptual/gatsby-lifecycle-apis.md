@@ -37,7 +37,7 @@ During the main bootstrap sequence, Gatsby (in this order):
   - within this, `createPage` can be called any number of times, which then triggers [onCreatePage](/docs/reference/config-files/gatsby-node/#onCreatePage)
 - runs [createPagesStatefully](/docs/reference/config-files/gatsby-node/#createPagesStatefully)
 - runs source nodes again and updates the GraphQL schema to include pages this time
-- runs [onPreExtractQueries](/docs/reference/config-files/gatsby-node/#onPreExtractQueries) e.g. implemented by [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/gatsby-node.js) and [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/gatsby-node.js), and extracts queries from pages and components (`StaticQuery`)
+- runs [onPreExtractQueries](/docs/reference/config-files/gatsby-node/#onPreExtractQueries) e.g. implemented by [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/gatsby-node.js) and [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/gatsby-node.js), and extracts queries from pages and components (`useStaticQuery`)
 - compiles GraphQL queries and creates the Abstract Syntax Tree (AST)
 - runs query validation based on schema
 - executes queries and stores their respective results

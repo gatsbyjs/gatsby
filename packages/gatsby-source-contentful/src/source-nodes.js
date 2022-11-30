@@ -40,6 +40,7 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
  * or the fallback field or the default field.
  */
 
+let isFirstSource = true
 export async function sourceNodes(
   {
     actions,
@@ -58,16 +59,22 @@ export async function sourceNodes(
     actions
   const online = await isOnline()
 
-  getNodes().forEach(node => {
-    if (node.internal.owner !== `gatsby-source-contentful`) {
-      return
-    }
-    touchNode(node)
-    if (node?.fields?.localFile) {
-      // Prevent GraphQL type inference from crashing on this property
-      touchNode(getNode(node.fields.localFile))
-    }
-  })
+  // Gatsby only checks if a node has been touched on the first sourcing.
+  // As iterating and touching nodes can grow quite expensive on larger sites with
+  // 1000s of nodes, we'll skip doing this on subsequent sources.
+  if (isFirstSource) {
+    getNodes().forEach(node => {
+      if (node.internal.owner !== `gatsby-source-contentful`) {
+        return
+      }
+      touchNode(node)
+      if (node?.fields?.localFile) {
+        // Prevent GraphQL type inference from crashing on this property
+        touchNode(getNode(node.fields.localFile))
+      }
+    })
+    isFirstSource = false
+  }
 
   if (
     !online &&

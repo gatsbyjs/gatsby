@@ -549,6 +549,20 @@ describe(`gatsby-plugin-sharp`, () => {
         }
       `)
     })
+
+    it(`handles really wide aspect ratios for blurred placeholder`, async () => {
+      const result = await base64({
+        file: getFileObject(
+          path.join(__dirname, `images/wide-aspect-ratio.png`),
+          `wide-aspect-ratio`,
+          `1000x10`
+        ),
+        args,
+      })
+
+      expect(result.width).toEqual(20)
+      expect(result.height).toEqual(1)
+    })
   })
 
   describe(`tracedSVG`, () => {
@@ -574,7 +588,7 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.tracedSVG).toBeUndefined()
     })
 
-    it(`runs on demand`, async () => {
+    it(`runs on demand (and falls back to blurred)`, async () => {
       const args = {
         maxWidth: 100,
         width: 100,
@@ -588,14 +602,20 @@ describe(`gatsby-plugin-sharp`, () => {
         args,
       })
 
-      expect(fixedSvg).toMatchSnapshot()
+      expect(fixedSvg).toMatchSnapshot(`fixed`)
+
+      expect(fixedSvg.tracedSVG).toMatch(`data:image/png;base64`)
+      expect(fixedSvg.tracedSVG).not.toMatch(`data:image/svg+xml`)
 
       const fluidSvg = await fluid({
         file,
         args,
       })
 
-      expect(fluidSvg).toMatchSnapshot()
+      expect(fluidSvg).toMatchSnapshot(`fluid`)
+
+      expect(fluidSvg.tracedSVG).toMatch(`data:image/png;base64`)
+      expect(fluidSvg.tracedSVG).not.toMatch(`data:image/svg+xml`)
     })
   })
 

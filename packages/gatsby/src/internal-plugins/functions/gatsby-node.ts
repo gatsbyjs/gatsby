@@ -313,6 +313,38 @@ const createWebpackConfig = async ({
     // watch: !isProductionEnv,
     module: {
       rules: [
+        // Webpack expects extensions when importing ESM modules as that's what the spec describes.
+        // Not all libraries have adapted so we don't enforce its behaviour
+        // @see https://github.com/webpack/webpack/issues/11467
+        {
+          test: /\.mjs$/i,
+          resolve: {
+            byDependency: {
+              esm: {
+                fullySpecified: false,
+              },
+            },
+          },
+        },
+        {
+          test: /\.js$/i,
+          descriptionData: {
+            type: `module`,
+          },
+          resolve: {
+            byDependency: {
+              esm: {
+                fullySpecified: false,
+              },
+            },
+          },
+          use: {
+            loader: `babel-loader`,
+            options: {
+              presets: [`@babel/typescript`],
+            },
+          },
+        },
         {
           test: [/.js$/, /.ts$/],
           exclude: /node_modules/,
@@ -325,7 +357,20 @@ const createWebpackConfig = async ({
         },
       ],
     },
-    plugins: [new webpack.DefinePlugin(processEnvVars)],
+    plugins: [
+      new webpack.DefinePlugin(processEnvVars),
+      new webpack.IgnorePlugin({
+        checkResource(resource): boolean {
+          if (resource === `lmdb`) {
+            reporter.warn(
+              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.\nIf you are importing utils from \`gatsby-core-utils\`, make sure to import from a specific module (for example \`gatsby-core-utils/create-content-digest\`).`
+            )
+            return true
+          }
+          return false
+        },
+      }),
+    ],
   }
 }
 
@@ -344,7 +389,6 @@ export async function onPreBootstrap({
     program: { directory: siteDirectoryPath },
   } = store.getState()
 
-  reporter.verbose(`Attaching functions to development server`)
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
     `.cache`,

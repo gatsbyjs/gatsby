@@ -1,24 +1,19 @@
-import * as path from "path"
-import fs from "fs-extra"
-import { describeWhenLMDB } from "../worker/__tests__/test-helpers"
-
 const complexObject = {
   key: `value`,
   another_key: 2,
   nested: { hello: `world`, foo: `bar`, nested: { super: `duper` } },
 }
 
-describeWhenLMDB(`cache-lmdb`, () => {
+describe(`cache-lmdb`, () => {
   let cache
 
   beforeAll(async () => {
-    const { default: GatsbyCacheLmdb } = await import(`../cache-lmdb`)
-    cache = new GatsbyCacheLmdb({ name: `__test__` }).init()
-    const fileDir = path.join(
-      process.cwd(),
-      `.cache/caches-lmdb-${process.env.JEST_WORKER_ID}`
+    const { default: GatsbyCacheLmdb, resetCache } = await import(
+      `../cache-lmdb`
     )
-    await fs.emptyDir(fileDir)
+
+    await resetCache()
+    cache = new GatsbyCacheLmdb({ name: `__test__` }).init()
   })
 
   it(`it can be instantiated`, () => {

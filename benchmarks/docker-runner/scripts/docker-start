@@ -1,0 +1,26 @@
+DOCKER_ID=$(./scripts/docker-get-id)
+if [ -n "$DOCKER_ID" ]; then
+  echo "\nA gatsby-generic-benchmark container is already running with id $DOCKER_ID."
+  echo "Please use that container, or run \`yarn docker:stop\` to stop it.\n"
+  return 1
+fi
+
+MEMORY_LIMIT="${DOCKER_MEMORY_LIMIT:-2g}"
+BENCHMARK_SITE="${DOCKER_BENCHMARK_SITE:-$(pwd)}"
+
+DOCKER_ID=$(\
+  docker run -td \
+  --mount type=bind,source="$(pwd)/../..",target=/usr/src/gatsby \
+  --mount type=bind,source="${BENCHMARK_SITE}",target=/usr/src/app \
+  --publish 9229:9229 \
+  --publish 9000:9000 \
+  --memory="${MEMORY_LIMIT}" \
+  --memory-swap="${MEMORY_LIMIT}" \
+  gatsby-generic-benchmark \
+  | head -c 12 \
+)
+
+sleep 1
+docker exec $DOCKER_ID bash -c "/usr/src/gatsby/benchmarks/docker-runner/scripts/docker-write-memory &"
+
+echo "\nStarted container id ${DOCKER_ID} with ${MEMORY_LIMIT} of memory! Run \`yarn docker:connect\` to connect to the container.\n"

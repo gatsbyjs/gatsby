@@ -1,23 +1,10 @@
-/* global HAS_REACT_18 */
 import type { GatsbyImageProps } from "gatsby-plugin-image"
 import React from "react"
+import ReactDOM from "react-dom/client"
 
 let hydrateRef
-let isFirstHydration = true
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 
 export function onRouteUpdate(): void {
-  if (
-    process.env.NODE_ENV === `production` &&
-    isFirstHydration &&
-    // Safari has a bug that causes images to stay blank when directly loading a page (images load when client-side navigating)
-    // running this code on first hydration makes images load.
-    !isSafari
-  ) {
-    isFirstHydration = false
-    return
-  }
-
   if (`requestIdleCallback` in window) {
     if (hydrateRef) {
       // @ts-ignore cancelIdleCallback is on window object
@@ -34,17 +21,6 @@ export function onRouteUpdate(): void {
   }
 }
 
-declare const HAS_REACT_18: boolean
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let ReactDOM: any
-
-if (HAS_REACT_18) {
-  ReactDOM = require(`react-dom/client`)
-} else {
-  ReactDOM = require(`react-dom`)
-}
-
 function hydrateImages(): void {
   const doc = document
   const inlineWPimages: Array<HTMLElement> = Array.from(
@@ -59,7 +35,31 @@ function hydrateImages(): void {
     /* webpackChunkName: "gatsby-plugin-image" */ `gatsby-plugin-image`
   ).then(mod => {
     inlineWPimages.forEach(image => {
-      if (image.dataset && image.dataset.wpInlineImage && image.parentNode) {
+      // usually this is the right element to hydrate on
+      const grandParentIsGatsbyImage =
+        // @ts-ignore-next-line classList is on HTMLElement
+        image?.parentNode?.parentNode?.classList?.contains(
+          `gatsby-image-wrapper`
+        )
+
+      // but sometimes this is the right element
+      const parentIsGatsbyImage =
+        // @ts-ignore-next-line classList is on HTMLElement
+        image?.parentNode?.classList?.contains(`gatsby-image-wrapper`)
+
+      if (!grandParentIsGatsbyImage && !parentIsGatsbyImage) {
+        return
+      }
+
+      const gatsbyImageHydrationElement = grandParentIsGatsbyImage
+        ? image.parentNode.parentNode
+        : image.parentNode
+
+      if (
+        image.dataset &&
+        image.dataset.wpInlineImage &&
+        gatsbyImageHydrationElement
+      ) {
         const hydrationData = doc.querySelector(
           `script[data-wp-inline-image-hydration="${image.dataset.wpInlineImage}"]`
         )
@@ -69,15 +69,9 @@ function hydrateImages(): void {
             hydrationData.innerHTML
           )
 
-          if (ReactDOM.createRoot) {
-            const root = ReactDOM.createRoot(image.parentNode)
-            root.render(React.createElement(mod.GatsbyImage, imageProps))
-          } else {
-            ReactDOM.hydrate(
-              React.createElement(mod.GatsbyImage, imageProps),
-              image.parentNode
-            )
-          }
+          // @ts-ignore - TODO: Fix me
+          const root = ReactDOM.createRoot(gatsbyImageHydrationElement)
+          root.render(React.createElement(mod.GatsbyImage, imageProps))
         }
       }
     })

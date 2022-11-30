@@ -20,8 +20,10 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import fetchReferencedMediaItemsAndCreateNodes, {
   stripImageSizesFromUrl,
 } from "../fetch-nodes/fetch-referenced-media-items"
-import btoa from "btoa"
+import { b64e } from "~/utils/string-encoding"
 import store from "~/store"
+
+import { store as gatsbyStore } from "gatsby/dist/redux"
 
 /**
  * Takes in a MediaItem node from WPGraphQL as well as Gatsby plugin options and returns the correct placeholder URL for GatsbyImage
@@ -104,7 +106,7 @@ const getCheerioImgDbId = cheerioImg => {
 }
 
 // media items are of the "post" type
-const dbIdToMediaItemRelayId = dbId => (dbId ? btoa(`post:${dbId}`) : null)
+const dbIdToMediaItemRelayId = dbId => (dbId ? b64e(`post:${dbId}`) : null)
 
 const getCheerioImgRelayId = cheerioImg =>
   dbIdToMediaItemRelayId(getCheerioImgDbId(cheerioImg))
@@ -610,7 +612,8 @@ export const replaceNodeHtmlImages = async ({
                 quality,
                 formats,
               },
-              helpers.actions
+              helpers.actions,
+              gatsbyStore
             )
           } else {
             publicUrl = publicUrlResolver(
@@ -622,7 +625,8 @@ export const replaceNodeHtmlImages = async ({
                   contentDigest: imageNode.modifiedGmt,
                 },
               },
-              helpers.actions
+              helpers.actions,
+              gatsbyStore
             )
           }
         } catch (e) {
@@ -735,17 +739,32 @@ const replaceFileLinks = async ({
     return nodeString
   }
 
-  const hrefMatches = execall(
-    /(\\"|\\'|\()([^'"()]*)(\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\))/gm,
-    nodeString
-  )
+  const hrefMatches = [
+    // match url pathnames in html fields, for ex /wp-content/uploads/2019/01/image.jpg
+    ...(execall(
+      /(\\"|\\'|\()([^'"()]*)(\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\))/gm,
+      nodeString
+    ) || []),
+    // match full urls in json fields, for ex https://example.com/wp-content/uploads/2019/01/image.jpg
+    ...(execall(
+      new RegExp(
+        `(\\"|\\'|\\()([^'"()]*)(${wpUrl}\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\\))`,
+        `gm`
+      ),
+      nodeString
+    ) || []),
+  ]
 
   if (hrefMatches.length) {
     // eslint-disable-next-line arrow-body-style
-    const mediaItemUrlsAndMatches = hrefMatches.map(matchGroup => ({
-      matchGroup,
-      url: `${wpUrl}${matchGroup.subMatches[2]}`,
-    }))
+    const mediaItemUrlsAndMatches = hrefMatches.map(matchGroup => {
+      const match = matchGroup.subMatches[2]
+      const url = match.startsWith(wpUrl) ? match : `${wpUrl}${match}`
+      return {
+        matchGroup,
+        url,
+      }
+    })
 
     const mediaItemUrls = mediaItemUrlsAndMatches
       .map(({ url }) => url)

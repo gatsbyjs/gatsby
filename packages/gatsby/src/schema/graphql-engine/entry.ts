@@ -1,6 +1,6 @@
-// "engines-fs-provider" must be first import, as it sets up global
-// fs and this need to happen before anything else tries to import fs
-import "../../utils/engines-fs-provider"
+// "bootstrap" must be first import, as it sets up multiple globals that need to be set early
+// see details in that module
+import "./bootstrap"
 
 import { ExecutionResult, Source } from "graphql"
 import { uuid } from "gatsby-core-utils"
@@ -74,13 +74,7 @@ export class GraphQLEngine {
         )
       }
 
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
-      } else {
-        await apiRunnerNode(`unstable_onPluginInit`, {
-          parentSpan: wrapActivity.span,
-        })
-      }
+      await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
       await apiRunnerNode(`createSchemaCustomization`, {
         parentSpan: wrapActivity.span,
       })

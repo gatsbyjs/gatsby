@@ -70,6 +70,18 @@ When you're using Gatsby Image CDN you no longer need Gatsby to fetch all of the
   },
 ```
 
+Note that this option will cause this plugin to fetch extra image metadata for Image CDN. If you need to use the `skipFileDownloads` option but don't want to use Image CDN and fetch extra metadata, you can disable it by explicitly turning Image CDN off:
+
+```js
+  {
+    resolve: `gatsby-source-drupal`,
+    options: {
+      imageCDN: false,
+      // other plugin options go here
+    },
+  },
+```
+
 #### Local dev improvements
 
 Using Image CDN also speeds up your local development startup times when running `gatsby develop`. Instead of fetching all files locally, `gatsby develop` has a local Image CDN emulator.
@@ -218,6 +230,49 @@ module.exports = {
 }
 ```
 
+One case where custom headers can be useful is if your webserver returns a `406 Not Acceptable` response.
+This happens when it requires narrow conformance with the JSON:API MIME type (e.g. Apache2 with security
+module enabled).
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        // ...
+        headers: {
+          accept: "application/vnd.api+json",
+        },
+      },
+    },
+  ],
+}
+```
+
+## CDN
+
+You can add an optional CDN or API gateway URL `proxyUrl` param. The URL can be a simple proxy of the Drupal
+`baseUrl`, or another URL (even containing a path) where the Drupal JSON API resources can be retrieved.
+
+This option is required as Drupal doesn't know about the CDN so it returns URLs pointing to the `baseUrl`. With `proxyUrl` set, the plugin will rewrite URLs returned from Drupal to keep pointing at the `proxyUrl`
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        proxyUrl: `https://xyz.cloudfront.net/`, // optional, defaults to the value of baseUrl
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
+  ],
+}
+```
+
 ## GET Search Params
 
 You can append optional GET request params to the request url using `params` option.
@@ -306,6 +361,12 @@ module.exports = {
 ## Concurrent API Requests
 
 You can use the `concurrentAPIRequests` option to change how many simultaneous API requests are made to the server/service. 20 is the default and seems to be the fastest for most sites.
+
+## API Request Timeout
+
+You can use the `requestTimeoutMS` option to set the request timeout for API requests. API requests sometimes stall and we want to retry these instead of endlessly waiting.
+
+The default is 30000ms. Very large sites might need to increase this.
 
 ## Disallowed Link Types
 

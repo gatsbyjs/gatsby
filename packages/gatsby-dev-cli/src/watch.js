@@ -157,6 +157,7 @@ async function watch(
           ignorePackageJSONChanges,
           yarnWorkspaceRoot,
           externalRegistry,
+          root,
         })
       } else {
         // run `yarn`
@@ -342,6 +343,7 @@ async function watch(
             localPackages,
             ignorePackageJSONChanges,
             externalRegistry,
+            root,
           })
           packagesToPublish.clear()
           isPublishing = false

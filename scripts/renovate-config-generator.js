@@ -155,6 +155,14 @@ const globalPackageRules = [
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
+  {
+    groupName: `lmdb`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackagePatterns: [`lmdb`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
 ]
 
 // there is no excludeMatchSourceUrlPrefixes option so we force babel to be disabled
@@ -211,6 +219,15 @@ const defaultPackageRules = [
     schedule: `before 7am on Monday`,
     matchUpdateTypes: [`major`],
     groupSlug: `starters-examples-major`,
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `E2E tests`,
+    commitMessageTopic: `e2e-tests`,
+    matchPaths: [`e2e-tests/**`],
+    schedule: `before 7am on Monday`,
+    matchUpdateTypes: [`major`],
+    groupSlug: `e2e-tests-major`,
     dependencyDashboardApproval: false,
   },
   {
@@ -345,7 +362,13 @@ const renovateConfig = {
     `:ignoreModulesAndTests`,
     `:enableVulnerabilityAlerts`,
   ],
-  includePaths: [`package.json`, `packages/**`, `starters/**`, `examples/**`],
+  includePaths: [
+    `package.json`,
+    `packages/**`,
+    `starters/**`,
+    `examples/**`,
+    `e2e-tests/**`,
+  ],
   major: {
     dependencyDashboardApproval: true,
   },
@@ -363,6 +386,12 @@ const renovateConfig = {
   packageRules: defaultPackageRules.concat(
     Array.from(packageRules.values()).flat()
   ),
+  force: {
+    constraints: {
+      node: `>=18.0.0`,
+      npm: `>=8.0.0`,
+    },
+  },
 }
 
 fs.writeJSONSync(path.join(ROOT_DIR, `renovate.json5`), renovateConfig, {

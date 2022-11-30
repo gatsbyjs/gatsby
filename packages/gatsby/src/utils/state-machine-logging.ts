@@ -7,12 +7,14 @@ import {
 } from "xstate"
 import reporter from "gatsby-cli/lib/reporter"
 
+type AnyInterpreterWithContext<T> = Interpreter<T, any, any, any, any>
+
 const isInterpreter = <T>(
   actor: Actor<T> | Interpreter<T>
 ): actor is Interpreter<T> => `machine` in actor
 
 export function logTransitions<T = DefaultContext>(
-  service: Interpreter<T>
+  service: AnyInterpreterWithContext<T>
 ): void {
   const listeners = new WeakSet()
   let last: State<T, AnyEventObject, any, any>

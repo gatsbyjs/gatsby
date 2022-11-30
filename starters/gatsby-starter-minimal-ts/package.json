@@ -17,14 +17,14 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^4.15.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "gatsby": "^5.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.35",
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.5",
-    "typescript": "^4.7.2"
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "typescript": "^4.8.4"
   }
 }

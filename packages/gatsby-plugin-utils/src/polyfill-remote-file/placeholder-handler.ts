@@ -6,7 +6,10 @@ import Queue from "fastq"
 import getSharpInstance from "gatsby-sharp"
 import { getCache } from "./utils/cache"
 import { getImageFormatFromMimeType } from "./utils/mime-type-helpers"
+import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
+
 import type { IRemoteImageNode } from "./types"
+import type { Store } from "gatsby"
 
 export enum PlaceholderType {
   BLURRED = `blurred`,
@@ -31,6 +34,7 @@ const PLACEHOLDER_TRACED_WIDTH = 200
 
 let tmpDir: string
 
+let didShowTraceSVGRemovalWarning = false
 const queue = Queue<
   undefined,
   {
@@ -39,11 +43,12 @@ const queue = Queue<
     width: number
     height: number
     type: PlaceholderType
+    store?: Store
   },
   string
   // eslint-disable-next-line consistent-return
 >(async function (
-  { url, contentDigest, width, height, type },
+  { url, contentDigest, width, height, type, store },
   cb
 ): Promise<void> {
   const sharp = await getSharpInstance()
@@ -53,11 +58,27 @@ const queue = Queue<
     tmpDir = await mkdtemp(path.join(cache.directory, `placeholder-`))
   }
 
+  const httpHeaders = getRequestHeadersForUrl(url, store)
+
   const filePath = await fetchRemoteFile({
     url,
     cacheKey: contentDigest,
     directory: tmpDir,
+    httpHeaders,
   })
+
+  if (type === PlaceholderType.TRACED_SVG) {
+    if (!didShowTraceSVGRemovalWarning) {
+      // we should not hit this code path, field resolver should fallback earlier, this is just in-case.
+      // also this falls back to BLURRED because the shape is compatible. DOMINANT_COLOR is not compatible
+      // and fallback to DOMINANT_COLOR need to happen very early on and not when already generating value
+      console.warn(
+        `"TRACED_SVG" placeholder is no longer supported, falling back to "BLURRED". See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarning = true
+    }
+    type = PlaceholderType.BLURRED
+  }
 
   switch (type) {
     case PlaceholderType.BLURRED: {
@@ -81,7 +102,7 @@ const queue = Queue<
     }
     case PlaceholderType.DOMINANT_COLOR: {
       const fileStream = createReadStream(filePath)
-      const pipeline = sharp({ failOnError: false })
+      const pipeline = sharp({ failOn: `none` })
       fileStream.pipe(pipeline)
       const { dominant } = await pipeline.stats()
 
@@ -92,76 +113,6 @@ const queue = Queue<
           : `rgba(0,0,0,0)`
       )
     }
-    case PlaceholderType.TRACED_SVG: {
-      let buffer: Buffer
-
-      try {
-        const fileStream = createReadStream(filePath)
-        const pipeline = sharp()
-        fileStream.pipe(pipeline)
-        buffer = await pipeline
-          .resize(
-            PLACEHOLDER_BASE64_WIDTH,
-            Math.ceil(PLACEHOLDER_BASE64_WIDTH / (width / height))
-          )
-          .toBuffer()
-      } catch (err) {
-        buffer = await readFile(filePath)
-      }
-
-      const [{ trace, Potrace }, { optimize }, { default: svgToMiniDataURI }] =
-        await Promise.all([
-          import(`@gatsbyjs/potrace`),
-          import(`svgo`),
-          import(`mini-svg-data-uri`),
-        ])
-
-      trace(
-        buffer,
-        {
-          color: `lightgray`,
-          optTolerance: 0.4,
-          turdSize: 100,
-          turnPolicy: Potrace.TURNPOLICY_MAJORITY,
-        },
-        async (err, svg) => {
-          if (err) {
-            return cb(err)
-          }
-
-          try {
-            const { data } = await optimize(svg, {
-              multipass: true,
-              floatPrecision: 0,
-              plugins: [
-                {
-                  name: `preset-default`,
-                  params: {
-                    overrides: {
-                      // customize default plugin options
-                      removeViewBox: false,
-
-                      // or disable plugins
-                      addAttributesToSVGElement: {
-                        attributes: [
-                          {
-                            preserveAspectRatio: `none`,
-                          },
-                        ],
-                      },
-                    },
-                  },
-                },
-              ],
-            })
-
-            return cb(null, svgToMiniDataURI(data).replace(/ /gi, `%20`))
-          } catch (err) {
-            return cb(err)
-          }
-        }
-      )
-    }
   }
 },
 QUEUE_CONCURRENCY)
@@ -169,7 +120,8 @@ QUEUE_CONCURRENCY)
 // eslint-disable-next-line consistent-return
 export async function generatePlaceholder(
   source: IRemoteImageNode,
-  placeholderType: PlaceholderType
+  placeholderType: PlaceholderType,
+  store?: Store
 ): Promise<{ fallback?: string; backgroundColor?: string }> {
   switch (placeholderType) {
     case PlaceholderType.BLURRED: {
@@ -187,6 +139,7 @@ export async function generatePlaceholder(
             width: PLACEHOLDER_BASE64_WIDTH,
             quality: PLACEHOLDER_QUALITY,
           },
+          store,
         }),
       }
     }
@@ -205,6 +158,7 @@ export async function generatePlaceholder(
             width: PLACEHOLDER_DOMINANT_WIDTH,
             quality: PLACEHOLDER_QUALITY,
           },
+          store,
         }),
       }
     }
@@ -223,6 +177,7 @@ export async function generatePlaceholder(
             width: PLACEHOLDER_TRACED_WIDTH,
             quality: PLACEHOLDER_QUALITY,
           },
+          store,
         }),
       }
     }
@@ -238,9 +193,11 @@ async function runPlaceholder({
   contentDigest,
   type,
   placeholderOptions,
+  store,
 }: IPlaceholderGenerationArgs & {
   type: PlaceholderType
   placeholderOptions: { width: number; quality: number }
+  store?: Store
 }): Promise<string> {
   const cache = getCache()
   const cacheKey = `image-cdn:${id}-${contentDigest}:${type}`
@@ -279,6 +236,7 @@ async function runPlaceholder({
           width,
           height,
           type,
+          store,
         },
         (err, result) => {
           if (err) {

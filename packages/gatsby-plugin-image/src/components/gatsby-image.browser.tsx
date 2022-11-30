@@ -122,12 +122,13 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
           ssrImage.removeAttribute(`data-gatsby-image-ssr`)
         }, 0)
       } else {
-        document.addEventListener(`load`, function onLoadListener() {
-          document.removeEventListener(`load`, onLoadListener)
+        onStartLoad?.({
+          wasCached: true,
+        })
 
-          onStartLoad?.({
-            wasCached: true,
-          })
+        ssrImage.addEventListener(`load`, function onLoadListener() {
+          ssrImage.removeEventListener(`load`, onLoadListener)
+
           onLoad?.({
             wasCached: true,
           })
@@ -151,6 +152,10 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
     let cleanupCallback
     renderImageToStringPromise.then(
       ({ renderImageToString, swapPlaceholderImage }) => {
+        if (!root.current) {
+          return
+        }
+
         root.current.innerHTML = renderImageToString({
           isLoading: true,
           isLoaded: imageCache.has(cacheKey),

@@ -20,10 +20,12 @@ const validateDestinationDir = dir => {
     return true
   } else if (typeof dir === `string`) {
     // need to pass dummy data for validation to work
-    return destinationIsValid(`${dir}/h/n`)
+    return destinationIsValid(`${dir}/n/h/a`)
   } else if (_.isFunction(dir)) {
     // need to pass dummy data for validation to work
-    return destinationIsValid(`${dir({ name: `n`, hash: `h` })}`)
+    return destinationIsValid(
+      `${dir({ name: `n`, hash: `h`, absolutePath: `a` })}`
+    )
   } else {
     return false
   }
@@ -34,14 +36,11 @@ const defaultDestination = linkNode =>
 
 const getDestination = (linkNode, dir) => {
   if (_.isFunction(dir)) {
-    // need to pass dummy data for validation to work
-    const isValidFunction = `${dir({ name: `n`, hash: `h` })}` !== `${dir({})}`
-    return isValidFunction
-      ? `${dir({
-          name: linkNode.name,
-          hash: linkNode.internal.contentDigest,
-        })}.${linkNode.extension}`
-      : `${dir()}/${defaultDestination(linkNode)}`
+    return `${dir({
+      name: linkNode.name,
+      hash: linkNode.internal.contentDigest,
+      absolutePath: linkNode.absolutePath,
+    })}.${linkNode.extension}`
   } else if (_.isString(dir)) {
     return `${dir}/${defaultDestination(linkNode)}`
   } else {
@@ -59,7 +58,10 @@ const newPath = (linkNode, options) => {
 const newLinkURL = (linkNode, options, pathPrefix) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
-  return `${pathPrefix ? pathPrefix : ``}/${destination}`
+  const startsWithSlash = destination.startsWith(`/`)
+  return `${pathPrefix ? pathPrefix : ``}${
+    startsWithSlash ? `` : `/`
+  }${destination}`
 }
 
 function toArray(buf) {

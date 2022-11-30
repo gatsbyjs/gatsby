@@ -1,42 +1,36 @@
 import React from "react"
+import { collectedScriptsByPage } from "gatsby-script"
+import { getForwards } from "./utils/get-forwards"
+import { partytownSnippet } from "@builder.io/partytown/integration"
 import type { GatsbySSR } from "gatsby"
-import { Partytown } from "@builder.io/partytown/react"
-import { PartytownContext, ScriptProps } from "gatsby-script"
-
-const collectedScripts: Map<string, Array<ScriptProps>> = new Map()
-
-export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({
-  element,
-  pathname,
-}) => (
-  <PartytownContext.Provider
-    value={{
-      collectScript: (newScript: ScriptProps): void => {
-        const currentCollectedScripts = collectedScripts.get(pathname) || []
-        currentCollectedScripts.push(newScript)
-        collectedScripts.set(pathname, currentCollectedScripts)
-      },
-    }}
-  >
-    {element}
-  </PartytownContext.Provider>
-)
 
 export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
   pathname,
   setHeadComponents,
 }) => {
-  const collectedScriptsOnPage = collectedScripts.get(pathname)
+  const collectedScripts = collectedScriptsByPage.get(pathname)
 
-  if (!collectedScriptsOnPage?.length) {
+  if (!collectedScripts?.length) {
     return
   }
 
-  const collectedForwards: Array<string> = collectedScriptsOnPage?.flatMap(
-    (script: ScriptProps) => script?.forward || []
-  )
+  const forwards = getForwards(collectedScripts)
 
-  setHeadComponents([<Partytown key="partytown" forward={collectedForwards} />])
+  // Adapted from https://github.com/BuilderIO/partytown/blob/main/src/react/snippet.tsx to only include SSR logic
+  setHeadComponents([
+    <script
+      key="partytown"
+      data-partytown=""
+      suppressHydrationWarning={true}
+      dangerouslySetInnerHTML={{
+        __html: `
+          ${partytownSnippet({ forward: forwards })}
+          document.currentScript.dataset.partytown=""
+        `,
+      }}
+    />,
+  ])
 
-  collectedScripts.delete(pathname)
+  // Clear scripts after we've used them to avoid leaky behavior
+  collectedScriptsByPage.delete(pathname)
 }

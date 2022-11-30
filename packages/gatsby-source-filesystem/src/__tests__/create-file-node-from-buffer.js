@@ -40,15 +40,6 @@ const bufferEq = (b1, b2) => Buffer.compare(b1, b2) === 0
 
 describe(`create-file-node-from-buffer`, () => {
   const defaultArgs = {
-    store: {
-      getState: jest.fn(() => {
-        return {
-          program: {
-            directory: `__whatever__`,
-          },
-        }
-      }),
-    },
     createNode: jest.fn(),
     createNodeId: jest.fn(),
   }

@@ -8,6 +8,7 @@ export const ERROR_MAP: IErrorMap = {
     text: getErrorText,
     level: `ERROR`,
     category: `USER`,
+    type: `PLUGIN`,
   },
   [errorCodes.apiConflict]: {
     text: (): string => shiftLeft`
@@ -21,6 +22,7 @@ export const ERROR_MAP: IErrorMap = {
   `,
     level: `ERROR`,
     category: `USER`,
+    type: `PLUGIN`,
   },
   /**
    * If we don't know what it is, we haven't done our due
@@ -31,10 +33,12 @@ export const ERROR_MAP: IErrorMap = {
     text: getErrorText,
     level: `ERROR`,
     category: `THIRD_PARTY`,
+    type: `PLUGIN`,
   },
   [errorCodes.unknownApiError]: {
     text: getErrorText,
     level: `ERROR`,
     category: `THIRD_PARTY`,
+    type: `PLUGIN`,
   },
 }
