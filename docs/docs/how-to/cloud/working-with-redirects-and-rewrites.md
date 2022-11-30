@@ -202,11 +202,14 @@ exports.createPages = async ({ graphql, actions }) => {
 Whenever you set a statusCode of 200 on createRedirect you create a rewrite or a reverse proxy. If your toPath is a page that already exists as part of your Gatsby site it will render that page. If the toPath is an external URL, then we will proxy that request. Maybe you have one site sitting in front of multiple other domains and you want to use rewrites to proxy the traffic. Imagine awesomesite.com was actually several different sites. Docs, dashboard, and marketing, for example. You could have all traffic start out routed to awesomesite.com and then rewrite to the other sites as needed. Such as:
 
 ```js:title=gatsby-node.js
-createRedirect({
-  fromPath: `/docs/*`,
-  toPath: `https://www.awesomesite.com/docs/*`,
-  statusCode: 200,
-})
+exports.createPages = async ({ actions }) => {
+  const { createRedirect } = actions
+  createRedirect({
+    fromPath: `/docs/*`,
+    toPath: `https://www.awesomesite.com/docs/*`,
+    statusCode: 200,
+  })
+});
 ```
 
 The important part here is that you have an external toPath with a complete URL and a statusCode of 200 to indicate the rewrite.
