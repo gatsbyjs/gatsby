@@ -77,12 +77,7 @@ const excludeField = ({
   // this field has required input args
   (field.args && field.args.find(arg => arg.type.kind === `NON_NULL`)) ||
   // this field has no typeName
-  !findTypeName(field.type) ||
-  // field is a non null object
-  // @todo this looks unnecessary. Need to look into why non null object types are excluded
-  (field.type.kind === `NON_NULL` && field.type.ofType.kind === `OBJECT`) ||
-  // field is a non null enum
-  (field.type.kind === `NON_NULL` && field.type.ofType.kind === `ENUM`)
+  !findTypeName(field.type)
 
 /**
  * Transforms fields from the WPGQL schema to work in the Gatsby schema
