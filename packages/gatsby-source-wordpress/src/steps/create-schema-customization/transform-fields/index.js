@@ -57,8 +57,8 @@ const excludeField = ({
 }) =>
   // this field wasn't previously fetched, so we shouldn't
   // add it to our schema
-  !fieldOfTypeWasFetched(field.type) ||
-  // this field was excluded on it's parent fields Type
+  (!fieldOfTypeWasFetched(field.type) && fieldName !== `id`) ||
+  // this field was excluded on its parent fields Type
   (parentTypeSettings.excludeFieldNames &&
     parentTypeSettings.excludeFieldNames.includes(fieldName)) ||
   // this field is on an interface type and one of the implementing types has this field excluded on it.
