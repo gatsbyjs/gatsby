@@ -123,7 +123,7 @@ export const config = {
 You can import `GatsbyFunctionConfig` from `gatsby` to type your `config` export:
 
 ```ts:title=src/api/some-function.ts
-import { GatsbyFunctionConfig } from "gatsby"
+import type { GatsbyFunctionConfig } from "gatsby"
 
 export const config: GatsbyFunctionConfig = {
   bodyParser: {
@@ -134,16 +134,18 @@ export const config: GatsbyFunctionConfig = {
 }
 ```
 
-### How function config is applied
+### How `config` is applied
 
-When working with `config` and adjusting `type` of one of body parser middlewares, it's important to realize that all body parser middlewares are still being applied with concrete order:
+When using the `config` and changing the `type` on one of the body parser middlewares, it's important to realize that all body parser middlewares are still being applied with this specific order:
 
 1. `raw`
-2. `text`
-3. `urlencoded`
-4. `json`
+1. `text`
+1. `urlencoded`
+1. `json`
 
-This means that if you want `json` to be used for all possible requests for given function, it won't be enough to just set `*/*` for `json` middleware, we also need to change config for middlewares that are higher in priority, so they don't accidentally match and handle request before `json` middleware can process it:
+Here's a concrete example:
+
+If you want `json` to be used for all possible requests for a given function, it won't be enough to just set `type: "*/*"` for the `json` middleware. You also need to change the `type` for middlewares that are higher in priority, so they don't accidentally match and handle request before the `json` middleware can process it:
 
 ```js
 export const config = {
@@ -151,7 +153,7 @@ export const config = {
     raw: {
       type: `-`,
     },
-    json: {
+    text: {
       type: `-`,
     },
     urlencoded: {
