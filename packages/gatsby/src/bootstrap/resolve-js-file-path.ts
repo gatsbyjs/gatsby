@@ -5,7 +5,7 @@ import { sync as existsSync } from "fs-exists-cached"
 /**
  * Figure out if the file path is .js or .mjs and return it if it exists.
  */
-export function resolveConfigFilePath(
+export function resolveJSFilepath(
   siteDirectory: string,
   filePath: string
 ): string {

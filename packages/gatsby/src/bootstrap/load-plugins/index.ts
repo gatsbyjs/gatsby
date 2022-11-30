@@ -43,6 +43,7 @@ export async function loadPlugins(
   let { flattenedPlugins, badExports } = await collatePluginAPIs({
     currentAPIs,
     flattenedPlugins: pluginArray,
+    rootDir,
   })
 
   // Show errors for any non-Gatsby APIs exported from plugins
