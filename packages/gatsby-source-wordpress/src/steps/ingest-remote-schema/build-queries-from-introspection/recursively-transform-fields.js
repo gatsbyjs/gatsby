@@ -252,7 +252,7 @@ export function transformField({
   ) {
     return {
       fieldName: fieldName,
-      fields: [`id`],
+      fields: [`__typename`, `id`],
       fieldType,
     }
   } else if (fieldType.kind === `LIST` && isListOfMediaItems && hasIdField) {
@@ -313,27 +313,10 @@ export function transformField({
         gatsbyNodesInfo.typeNames.includes(possibleType.name)
       )
 
-  const isAMediaItemNode = isAGatsbyNode && typeName === `MediaItem`
-
-  // pull the id and __typename for connections to media item gatsby nodes
-  if (isAMediaItemNode && hasIdField) {
+  if (isAGatsbyNode && hasIdField) {
     return {
       fieldName: fieldName,
       fields: [`__typename`, `id`],
-      fieldType,
-    }
-  } else if (isAGatsbyNode && hasIdField) {
-    const isAnInterfaceType =
-      // if this is an interface
-      typeKind === `INTERFACE` || fieldType.kind === `INTERFACE`
-
-    return {
-      fieldName: fieldName,
-      fields: isAnInterfaceType
-        ? // we need the typename for interfaces
-          [`id`, `__typename`]
-        : // or just the id for 1:1 connections to gatsby nodes
-          [`id`],
       fieldType,
     }
   }
