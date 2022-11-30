@@ -636,6 +636,16 @@ export async function initialize({
 
   const workerPool = WorkerPool.create()
 
+  const siteDirectoryFiles = await fs.readdir(siteDirectory)
+
+  const gatsbyFilesIsInESM = siteDirectoryFiles.some(file =>
+    file.match(/gatsby-(node|config)\.mjs/)
+  )
+
+  if (gatsbyFilesIsInESM) {
+    telemetry.trackFeatureIsUsed(`ESMInGatsbyFiles`)
+  }
+
   if (state.config.graphqlTypegen) {
     telemetry.trackFeatureIsUsed(`GraphQLTypegen`)
     // This is only run during `gatsby develop`
