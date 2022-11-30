@@ -85,7 +85,13 @@ export const getContentTypeQueryInfos = () => {
   return queryInfos
 }
 
+let nodeTypeNames = null
+
 export const getGatsbyNodeTypeNames = () => {
+  if (nodeTypeNames) {
+    return nodeTypeNames
+  }
+
   const { typeMap } = store.getState().remoteSchema
 
   const queryableTypenames = getContentTypeQueryInfos().map(
@@ -108,7 +114,11 @@ export const getGatsbyNodeTypeNames = () => {
     []
   )
 
-  return [...new Set([...queryableTypenames, ...implementingNodeTypes])]
+  nodeTypeNames = [
+    ...new Set([...queryableTypenames, ...implementingNodeTypes]),
+  ]
+
+  return nodeTypeNames
 }
 
 /**
