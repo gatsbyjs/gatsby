@@ -164,7 +164,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     const nodesField = fieldFields.find(nodeListFilter)
 
     // the type of this query
-    const nodesType = typeMap.get(findNamedType(nodesField.type)?.name)
+    const nodesType = typeMap.get(findNamedTypeName(nodesField.type))
 
     if (!nodesType) {
       reporter.panic(

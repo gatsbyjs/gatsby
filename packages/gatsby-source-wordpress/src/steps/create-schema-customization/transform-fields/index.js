@@ -7,7 +7,7 @@ import {
   typeIsASupportedScalar,
   getTypeSettingsByType,
   findTypeName,
-} from "~/steps/create-schema-customization/helpers"
+} from "../helpers"
 
 import { buildDefaultResolver } from "./default-resolver"
 
@@ -47,7 +47,7 @@ export const returnAliasedFieldName = ({ fieldAliases, field }) =>
     ? `${fieldAliases[field.name]}: ${field.name}`
     : field.name
 
-const excludeField = ({
+const fieldIsExcluded = ({
   field,
   fieldName,
   thisTypeSettings,
@@ -117,7 +117,7 @@ export const transformFields = ({
     const fieldName = getAliasedFieldName({ fieldAliases, field })
 
     if (
-      excludeField({
+      fieldIsExcluded({
         field,
         fieldName,
         thisTypeSettings,
@@ -136,7 +136,7 @@ export const transformFields = ({
     const includedChildFields = type?.fields?.filter(field => {
       const childFieldTypeSettings = getTypeSettingsByType(field.type)
       const fieldName = getAliasedFieldName({ fieldAliases, field })
-      return !excludeField({
+      return !fieldIsExcluded({
         field,
         fieldName,
         thisTypeSettings: childFieldTypeSettings,
