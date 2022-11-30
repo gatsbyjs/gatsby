@@ -1,4 +1,6 @@
 import { resolveConfigFilePath } from "./resolve-config-file-path"
+import { testImportError } from "../utils/test-import-error"
+import report from "gatsby-cli/lib/reporter"
 
 /**
  * Given a module path, return an array of the module's exports.
@@ -21,11 +23,20 @@ export async function resolveModuleExports(
     const importedModule = await import(moduleFilepath)
 
     const importedModuleExports = Object.keys(importedModule).filter(
-      exportName => exportName !== `__esModule` && exportName !== `default`
+      exportName => exportName !== `__esModule`
     )
 
     return importedModuleExports
   } catch (error) {
-    return []
+    if (!testImportError(modulePath, error)) {
+      // TODO: Structured error
+      report.panic(
+        `We encountered an error while trying to resolve exports from "${modulePath}". Please fix the error and try again.`
+      )
+    } else {
+      // Do nothing
+    }
   }
+
+  return []
 }

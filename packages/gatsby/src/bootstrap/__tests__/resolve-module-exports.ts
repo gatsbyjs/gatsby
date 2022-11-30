@@ -1,289 +1,192 @@
-jest.mock(`fs`, () => {
-  const fs = jest.requireActual(`fs`)
-  return {
-    ...fs,
-    readFileSync: jest.fn(),
-  }
-})
+import path from "path"
+import reporter from "gatsby-cli/lib/reporter"
+import { resolveModuleExports } from "../resolve-module-exports"
+
+const mockDir = path.resolve(
+  __dirname,
+  `..`,
+  `__mocks__`,
+  `resolve-module-exports`
+)
+const cjsMockDir = path.join(mockDir, `cjs`)
+const esmMockDir = path.join(mockDir, `esm`)
+
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panic: jest.fn(),
   }
 })
 
-import * as fs from "fs-extra"
-import reporter from "gatsby-cli/lib/reporter"
-import { resolveModuleExports } from "../resolve-module-exports"
-let resolver
+const reporterPanicMock = reporter.panic as jest.MockedFunction<
+  typeof reporter.panic
+>
+
+beforeEach(() => {
+  reporterPanicMock.mockClear()
+})
 
 describe(`Resolve module exports`, () => {
-  const MOCK_FILE_INFO = {
-    "/bad/file": `const exports.blah = () = }}}`,
-    "/simple/export": `exports.foo = '';`,
-    "/export/const": `export const fooConst = '';`,
-    "/module/exports": `module.exports.barExports = '';`,
-    "/multiple/export": `exports.bar = () => ''; exports.baz = {}; exports.foo = '';`,
-    "/import/with/export": `import * as React from 'react'; exports.baz = '';`,
-    "/realistic/export": `
-      /* eslint-disable react/prop-types */
-      /* globals window CustomEvent */
-      import React, { createElement } from "react"
-      import { Transition } from "react-transition-group"
-      import createHistory from "history/createBrowserHistory"
+  it(`returns empty array for file paths that don't exist`, async () => {
+    const moduleFilePath = path.join(`file`, `path`, `does`, `not`, `exist`)
+    const result = await resolveModuleExports(mockDir, moduleFilePath)
+    expect(result).toEqual([])
+  })
 
-      import getTransitionStyle from "./src/utils/getTransitionStyle"
+  it(`returns empty array for directory paths that don't exist`, async () => {
+    const moduleFilePath = path.join(
+      `directory`,
+      `path`,
+      `does`,
+      `not`,
+      `exist`
+    )
+    const result = await resolveModuleExports(mockDir, moduleFilePath)
+    expect(result).toEqual([])
+  })
 
-      const timeout = 250
-      const historyExitingEventType = 'history::exiting'
-
-      const getUserConfirmation = (pathname, callback) => {
-        const event = new CustomEvent(historyExitingEventType, { detail: { pathname } })
-        window.dispatchEvent(event)
-        setTimeout(() => {
-          callback(true)
-        }, timeout)
-      }
-      const history = createHistory({ getUserConfirmation })
-      // block must return a string to conform
-      history.block((location, action) => location.pathname)
-      exports.replaceHistory = () => history
-
-      class ReplaceComponentRenderer extends React.Component {
-        constructor(props) {
-          super(props)
-          this.state = { exiting: false, nextPageResources: {}}
-          this.listenerHandler = this.listenerHandler.bind(this)
-        }
-
-        listenerHandler(event) {
-          const nextPageResources = this.props.loader.getResourcesForPathname(
-            event.detail.pathname,
-            nextPageResources => this.setState({ nextPageResources })
-          ) || {}
-          this.setState({ exiting: true, nextPageResources })
-        }
-
-        componentDidMount() {
-          window.addEventListener(historyExitingEventType, this.listenerHandler)
-        }
-
-        componentWillUnmount() {
-          window.removeEventListener(historyExitingEventType, this.listenerHandler)
-        }
-
-        componentWillReceiveProps(nextProps) {
-          if (this.props.location.key !== nextProps.location.key) {
-            this.setState({ exiting: false, nextPageResources: {} })
-          }
-        }
-
-        render() {
-          const transitionProps = {
-            appear: true,
-            in: !this.state.exiting,
-            key: this.props.location.key,
-          }
-          transitionProps.timeout.enter = 0
-          transitionProps.timeout.exit = timeout
-          return (
-            <Transition {...transitionProps}>
-            {
-              (status) => createElement(this.props.pageResources.component, {
-                ...this.props,
-                ...this.props.pageResources.json,
-                transition: {
-                  status,
-                  timeout,
-                  style: getTransitionStyle({ status, timeout }),
-                  nextPageResources: this.state.nextPageResources,
-                },
-              })
-            }
-            </Transition>
-          )
-        }
-      }
-
-      // eslint-disable-next-line react/display-name
-      exports.replaceComponentRenderer = ({ props, loader }) => {
-        if (props.layout) {
-          return undefined
-        }
-        return createElement(ReplaceComponentRenderer, { ...props, loader })
-      }
-    `,
-    "/esmodule/export": `
-      exports.__esModule = true;
-      exports.foo = '';
-    `,
-    "/export/named": `const foo = ''; export { foo };`,
-    "/export/named/from": `export { Component } from 'react';`,
-    "/export/named/as": `const foo = ''; export { foo as bar };`,
-    "/export/named/multiple": `const foo = ''; const bar = ''; const baz = ''; export { foo, bar, baz };`,
-    "/export/default": `export default () => {}`,
-    "/export/default/name": `const foo = () => {}; export default foo`,
-    "/export/default/function": `export default function() {}`,
-    "/export/default/function/name": `export default function foo() {}`,
-    "/export/function": `export function foo() {}`,
-  }
-
-  beforeEach(() => {
-    resolver = jest.fn(arg => arg)
-    // @ts-ignore
-    fs.readFileSync.mockImplementation(file => {
-      const existing = MOCK_FILE_INFO[file]
-      return existing
+  describe(`cjs`, () => {
+    it(`shows a meaningful error message for files with errors in them`, async () => {
+      const moduleFilePath = path.join(cjsMockDir, `error-in-file`)
+      await resolveModuleExports(cjsMockDir, moduleFilePath)
+      expect(
+        // @ts-ignore Don't bother mocking jest mock object
+        reporter.panic.mock.calls.map(c =>
+          // Remove console colors + trim whitespace
+          // eslint-disable-next-line
+          c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim()
+        )
+      ).toMatchInlineSnapshot(`
+        Array [
+          "We encountered an error while trying to resolve exports from \\"<PROJECT_ROOT>/packages/gatsby/src/bootstrap/__mocks__/resolve-module-exports/cjs/error-in-file\\". Please fix the error and try again.",
+        ]
+      `)
     })
-    // @ts-ignore
-    reporter.panic.mockClear()
+
+    it(`resolves an export`, async () => {
+      const moduleFilePath = path.join(cjsMockDir, `simple-export`)
+      const result = await resolveModuleExports(cjsMockDir, moduleFilePath)
+      expect(result).toEqual([`foo`])
+    })
+
+    it(`resolves multiple exports`, async () => {
+      const moduleFilePath = path.join(cjsMockDir, `multiple-exports`)
+      const result = await resolveModuleExports(cjsMockDir, moduleFilePath)
+      expect(result).toEqual([`bar`, `baz`, `foo`])
+    })
+
+    it(`resolves module.exports`, async () => {
+      const moduleFilePath = path.join(cjsMockDir, `module-exports`)
+      const result = await resolveModuleExports(cjsMockDir, moduleFilePath)
+      expect(result).toEqual([`barExports`])
+    })
+
+    it(`ignores exports.__esModule`, async () => {
+      const moduleFilePath = path.join(cjsMockDir, `esmodule-export`)
+      const result = await resolveModuleExports(cjsMockDir, moduleFilePath)
+      expect(result).toEqual([`foo`])
+    })
   })
 
-  it(`Returns empty array for file paths that don't exist`, async () => {
-    const result = await resolveModuleExports(`/file/path/does/not/exist`)
-    expect(result).toEqual([])
-  })
+  describe(`esm`, () => {
+    it(`resolves an exported const`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `export-const`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`fooConst`])
+    })
 
-  it(`Returns empty array for directory paths that don't exist`, async () => {
-    const result = await resolveModuleExports(`/directory/path/does/not/exist/`)
-    expect(result).toEqual([])
-  })
+    it(`resolves a named export`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `named`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`foo`])
+    })
 
-  it(`Show meaningful error message for invalid JavaScript`, async () => {
-    await resolveModuleExports(`/bad/file`, { resolver })
-    expect(
-      // @ts-ignore
-      reporter.panic.mock.calls.map(c =>
-        // Remove console colors + trim whitespace
-        // eslint-disable-next-line
-        c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim()
+    it(`resolves a named export from`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `named-from`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`Component`])
+    })
+
+    it(`resolves a named export as`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `named-as`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`bar`])
+    })
+
+    it(`resolves multiple named exports`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `named-multiple`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toContain(`foo`)
+      expect(result).toContain(`bar`)
+      expect(result).toContain(`baz`)
+    })
+
+    it(`resolves default export`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `export-default`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`export default`])
+    })
+
+    it(`resolves default export with name`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `export-default-name`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`export default foo`])
+    })
+
+    it(`resolves default function`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `export-default-function`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`export default`])
+    })
+
+    it(`resolves default function with name`, async () => {
+      const moduleFilePath = path.join(
+        esmMockDir,
+        `export-default-function-name`
       )
-    ).toMatchSnapshot()
-  })
-
-  it(`Resolves an export`, async () => {
-    const result = await resolveModuleExports(`/simple/export`, { resolver })
-    expect(result).toEqual([`foo`])
-  })
-
-  it(`Resolves multiple exports`, async () => {
-    const result = await resolveModuleExports(`/multiple/export`, { resolver })
-    expect(result).toEqual([`bar`, `baz`, `foo`])
-  })
-
-  it(`Resolves an export from an ES6 file`, async () => {
-    const result = await resolveModuleExports(`/import/with/export`, {
-      resolver,
-    })
-    expect(result).toEqual([`baz`])
-  })
-
-  it(`Resolves an exported const`, async () => {
-    const result = await resolveModuleExports(`/export/const`, { resolver })
-    expect(result).toEqual([`fooConst`])
-  })
-
-  it(`Resolves module.exports`, async () => {
-    const result = await resolveModuleExports(`/module/exports`, { resolver })
-    expect(result).toEqual([`barExports`])
-  })
-
-  it(`Resolves exports from a larger file`, async () => {
-    const result = await resolveModuleExports(`/realistic/export`, { resolver })
-    expect(result).toEqual([`replaceHistory`, `replaceComponentRenderer`])
-  })
-
-  it(`Ignores exports.__esModule`, async () => {
-    const result = await resolveModuleExports(`/esmodule/export`, { resolver })
-    expect(result).toEqual([`foo`])
-  })
-
-  it(`Resolves a named export`, async () => {
-    const result = await resolveModuleExports(`/export/named`, { resolver })
-    expect(result).toEqual([`foo`])
-  })
-
-  it(`Resolves a named export from`, async () => {
-    const result = await resolveModuleExports(`/export/named/from`, {
-      resolver,
-    })
-    expect(result).toEqual([`Component`])
-  })
-
-  it(`Resolves a named export as`, async () => {
-    const result = await resolveModuleExports(`/export/named/as`, { resolver })
-    expect(result).toEqual([`bar`])
-  })
-
-  it(`Resolves multiple named exports`, async () => {
-    const result = await resolveModuleExports(`/export/named/multiple`, {
-      resolver,
-    })
-    expect(result).toEqual([`foo`, `bar`, `baz`])
-  })
-
-  it(`Resolves default export`, async () => {
-    const result = await resolveModuleExports(`/export/default`, { resolver })
-    expect(result).toEqual([`export default`])
-  })
-
-  it(`Resolves default export with name`, async () => {
-    const result = await resolveModuleExports(`/export/default/name`, {
-      resolver,
-    })
-    expect(result).toEqual([`export default foo`])
-  })
-
-  it(`Resolves default function`, async () => {
-    const result = await resolveModuleExports(`/export/default/function`, {
-      resolver,
-    })
-    expect(result).toEqual([`export default`])
-  })
-
-  it(`Resolves default function with name`, async () => {
-    const result = await resolveModuleExports(`/export/default/function/name`, {
-      resolver,
-    })
-    expect(result).toEqual([`export default foo`])
-  })
-
-  it(`Resolves function declaration`, async () => {
-    const result = await resolveModuleExports(`/export/function`, { resolver })
-    expect(result).toEqual([`foo`])
-  })
-
-  it(`Resolves exports when using require mode - simple case`, async () => {
-    jest.mock(`require/exports`)
-
-    const result = await resolveModuleExports(`require/exports`, {
-      mode: `require`,
-    })
-    expect(result).toEqual([`foo`, `bar`])
-  })
-
-  it(`Resolves exports when using require mode - unusual case`, async () => {
-    jest.mock(`require/unusual-exports`)
-
-    const result = await resolveModuleExports(`require/unusual-exports`, {
-      mode: `require`,
-    })
-    expect(result).toEqual([`foo`])
-  })
-
-  it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, async () => {
-    const result = await resolveModuleExports(`require/not-existing-module`, {
-      mode: `require`,
-    })
-    expect(result).toEqual([])
-  })
-
-  it(`Resolves exports when using require mode - panic on errors`, async () => {
-    jest.mock(`require/module-error`)
-
-    await resolveModuleExports(`require/module-error`, {
-      mode: `require`,
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`export default foo`])
     })
 
-    expect(reporter.panic).toBeCalled()
+    it(`resolves function declaration`, async () => {
+      const moduleFilePath = path.join(esmMockDir, `export-function-name`)
+      const result = await resolveModuleExports(esmMockDir, moduleFilePath)
+      expect(result).toEqual([`foo`])
+    })
+  })
+
+  // TODO: Categorize, adjust paths
+  describe.skip(`rest`, () => {
+    it(`Resolves exports when using require mode - simple case`, async () => {
+      jest.mock(`require/exports`)
+
+      const result = await resolveModuleExports(mockDir, `require/exports`)
+      expect(result).toEqual([`foo`, `bar`])
+    })
+
+    it(`Resolves exports when using require mode - unusual case`, async () => {
+      jest.mock(`require/unusual-exports`)
+
+      const result = await resolveModuleExports(
+        mockDir,
+        `require/unusual-exports`
+      )
+      expect(result).toEqual([`foo`])
+    })
+
+    it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, async () => {
+      const result = await resolveModuleExports(
+        mockDir,
+        `require/not-existing-module`
+      )
+      expect(result).toEqual([])
+    })
+
+    it(`Resolves exports when using require mode - panic on errors`, async () => {
+      jest.mock(`require/module-error`)
+
+      await resolveModuleExports(mockDir, `require/module-error`)
+
+      expect(reporter.panic).toBeCalled()
+    })
   })
 })
