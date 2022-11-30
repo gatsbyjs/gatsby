@@ -20,6 +20,17 @@ export const buildTypeName = name => {
     return name
   }
 
+  // Gatsby makes the same type, so we need to rename it to prevent conflicts
+  if (name.includes(`Connection`)) {
+    name = name.replace(`Connection`, `WpConnectionType`)
+  }
+
+  // Gatsby makes the same type, so we need to rename it to prevent conflicts
+  if (name.includes(`Edge`)) {
+    name = name.replace(`Edge`, `WpEdgeType`)
+  }
+
+  // Gatsby makes the same type, so we need to rename it to prevent conflicts
   if (name === `Filter`) {
     name = `FilterType`
   }
