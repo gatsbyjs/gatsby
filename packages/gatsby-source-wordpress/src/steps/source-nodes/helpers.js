@@ -1,5 +1,6 @@
 import store from "~/store"
 import { camelCase } from "lodash"
+import { findNamedTypeName } from "../ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
 
 export const getTypeInfoBySingleName = singleName => {
   const { typeMap } = store.getState().remoteSchema
@@ -8,7 +9,7 @@ export const getTypeInfoBySingleName = singleName => {
     .get(`RootQuery`)
     .fields.find(field => field.name === singleName)
 
-  const typeName = rootField.type.name || rootField.type.ofType.name
+  const typeName = rootField.type.name || findNamedTypeName(rootField.type)
 
   const type = typeMap.get(typeName)
 

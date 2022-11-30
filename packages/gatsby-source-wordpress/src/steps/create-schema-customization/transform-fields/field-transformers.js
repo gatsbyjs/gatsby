@@ -1,12 +1,15 @@
 import { buildTypeName, findTypeName, findTypeKind } from "../helpers"
 import { transformUnion, transformListOfUnions } from "./transform-union"
-import { transformGatsbyNodeObject } from "~/steps/create-schema-customization/transform-fields/transform-object"
-import { transformListOfGatsbyNodes } from "./transform-object"
+import {
+  transformListOfGatsbyNodes,
+  transformGatsbyNodeObject,
+} from "./transform-object"
 import { getGatsbyNodeTypeNames } from "~/steps/source-nodes/fetch-nodes/fetch-nodes"
 import { typeIsABuiltInScalar } from "~/steps/create-schema-customization/helpers"
 import store from "~/store"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
+import { findNamedTypeName } from "../../ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
 
 export const fieldTransformers = [
   {
@@ -16,7 +19,7 @@ export const fieldTransformers = [
 
     transform: ({ field }) => {
       if (typeIsABuiltInScalar(field.type)) {
-        return `${field.type.ofType.name}!`
+        return `${findNamedTypeName(field.type.ofType)}!`
       } else {
         return `JSON!`
       }
@@ -225,7 +228,8 @@ export const fieldTransformers = [
     test: field =>
       field.type.kind === `LIST` && field.type.ofType.kind === `INTERFACE`,
 
-    transform: ({ field }) => `[${buildTypeName(field.type.ofType.name)}]`,
+    transform: ({ field }) =>
+      `[${buildTypeName(findNamedTypeName(field.type))}]`,
   },
 
   {

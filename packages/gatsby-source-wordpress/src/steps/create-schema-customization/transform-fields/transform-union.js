@@ -1,4 +1,5 @@
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
+import { findNamedTypeName } from "../../ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
 
 export const transformUnion = ({ field, fieldName }) => {
   return {
@@ -25,7 +26,7 @@ export const transformUnion = ({ field, fieldName }) => {
 }
 
 export const transformListOfUnions = ({ field, fieldName }) => {
-  const typeName = buildTypeName(field.type.ofType.name)
+  const typeName = buildTypeName(findNamedTypeName(field.type))
 
   return {
     type: `[${typeName}]`,

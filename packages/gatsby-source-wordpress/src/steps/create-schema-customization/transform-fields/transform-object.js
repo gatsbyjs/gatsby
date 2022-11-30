@@ -5,9 +5,10 @@ import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { inPreviewMode } from "~/steps/preview/index"
 import { getPluginOptions } from "../../../utils/get-gatsby-api"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { findNamedTypeName } from "../../ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
 
 export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
-  const typeName = buildTypeName(field.type.ofType.name)
+  const typeName = buildTypeName(findNamedTypeName(field.type))
 
   return {
     type: `[${typeName}]`,

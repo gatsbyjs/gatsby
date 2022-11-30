@@ -105,6 +105,20 @@ const aliasConflictingFragmentFields = ({ fragments }) => {
   }
 }
 
+export const findNamedType = type => {
+  if (type.ofType) {
+    return findNamedType(type.ofType)
+  }
+
+  return type
+}
+
+export const findNamedTypeName = type => {
+  const namedType = findNamedType(type)
+
+  return namedType?.name
+}
+
 /**
  * generateNodeQueriesFromIngestibleFields
  *
@@ -150,7 +164,15 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     const nodesField = fieldFields.find(nodeListFilter)
 
     // the type of this query
-    const nodesType = typeMap.get(nodesField.type.ofType.name)
+    const nodesType = typeMap.get(findNamedType(nodesField.type)?.name)
+
+    if (!nodesType) {
+      reporter.panic(
+        formatLogMessage(
+          `Couldn't infer node type in the remote schema from the ${name} root field.`
+        )
+      )
+    }
 
     const { fields, possibleTypes } = nodesType
 
