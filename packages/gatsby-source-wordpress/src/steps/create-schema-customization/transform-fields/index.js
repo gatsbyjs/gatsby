@@ -6,7 +6,7 @@ import {
   fieldOfTypeWasFetched,
   typeIsASupportedScalar,
   getTypeSettingsByType,
-  findTypeName,
+  findNamedTypeName,
 } from "../helpers"
 
 import { buildDefaultResolver } from "./default-resolver"
@@ -77,7 +77,7 @@ const fieldIsExcluded = ({
   // this field has required input args
   (field.args && field.args.find(arg => arg.type.kind === `NON_NULL`)) ||
   // this field has no typeName
-  !findTypeName(field.type)
+  !findNamedTypeName(field.type)
 
 /**
  * Transforms fields from the WPGQL schema to work in the Gatsby schema
@@ -132,7 +132,7 @@ export const transformFields = ({
 
     const { typeMap } = store.getState().remoteSchema
 
-    const type = typeMap.get(findTypeName(field.type))
+    const type = typeMap.get(findNamedTypeName(field.type))
 
     const includedChildFields = type?.fields?.filter(field => {
       const childFieldTypeSettings = getTypeSettingsByType(field.type)

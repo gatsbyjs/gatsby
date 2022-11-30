@@ -1,6 +1,6 @@
 import store from "~/store"
 import { camelCase } from "lodash"
-import { findNamedTypeName } from "../ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
+import { findNamedTypeName } from "../create-schema-customization/helpers"
 
 export const getTypeInfoBySingleName = singleName => {
   const { typeMap } = store.getState().remoteSchema

@@ -2,15 +2,12 @@ import store from "~/store"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import { typeIsABuiltInScalar } from "../create-schema-customization/helpers"
 import {
-  findTypeName,
+  findNamedTypeName,
   getTypesThatImplementInterfaceType,
+  findNamedType,
 } from "~/steps/create-schema-customization/helpers"
 import { transformFields } from "../create-schema-customization/transform-fields"
 import { getPersistentCache } from "~/utils/cache"
-import {
-  findNamedType,
-  findNamedTypeName,
-} from "./build-queries-from-introspection/generate-queries-from-ingestable-types"
 
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
@@ -139,7 +136,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
               ?.nodeInterface
           ) {
             const nodeInterfaceType = typeMap.get(
-              findTypeName(nodeListField.type)
+              findNamedTypeName(nodeListField.type)
             )
 
             // we need to mark all the possible types as being fetched

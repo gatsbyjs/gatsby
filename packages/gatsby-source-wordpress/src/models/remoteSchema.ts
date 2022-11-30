@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { findTypeName } from "~/steps/create-schema-customization/helpers"
+import { findNamedTypeName } from "~/steps/create-schema-customization/helpers"
 
 interface IRemoteSchemaState {
   wpUrl: string
@@ -130,7 +130,7 @@ const remoteSchema: IRemoteSchemaStore = {
     },
 
     addFetchedType(state, type) {
-      const key = findTypeName(type)
+      const key = findNamedTypeName(type)
 
       if (!key) {
         return state

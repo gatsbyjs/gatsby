@@ -1,5 +1,5 @@
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
-import { findNamedTypeName } from "../../ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
+import { findNamedTypeName } from "../helpers"
 
 export const transformUnion = ({ field, fieldName }) => {
   return {

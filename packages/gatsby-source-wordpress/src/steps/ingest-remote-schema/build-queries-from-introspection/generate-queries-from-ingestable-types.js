@@ -15,6 +15,7 @@ import store from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
 import prettier from "prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
+import { findNamedTypeName } from "../../create-schema-customization/helpers"
 
 const recursivelyAliasFragments = field =>
   field.inlineFragments.map(fragment => {
@@ -103,20 +104,6 @@ const aliasConflictingFragmentFields = ({ fragments }) => {
 
     fragments[fragmentKey] = aliasedFragment
   }
-}
-
-export const findNamedType = type => {
-  if (type.ofType) {
-    return findNamedType(type.ofType)
-  }
-
-  return type
-}
-
-export const findNamedTypeName = type => {
-  const namedType = findNamedType(type)
-
-  return namedType?.name
 }
 
 /**

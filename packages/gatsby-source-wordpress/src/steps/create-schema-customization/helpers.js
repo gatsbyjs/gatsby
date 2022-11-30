@@ -54,16 +54,6 @@ export const buildTypeName = name => {
 }
 
 /**
- * Find the first type name of a Type definition pulled via introspection
- * @param {object} type
- */
-export const findTypeName = type =>
-  type?.name ||
-  type?.ofType?.name ||
-  type?.ofType?.ofType?.name ||
-  type?.ofType?.ofType?.ofType?.name
-
-/**
  * Find the first type kind of a Type definition pulled via introspection
  * @param {object} type
  */
@@ -79,9 +69,27 @@ export const findTypeKind = type => {
   return null
 }
 
+export const findNamedType = type => {
+  if (!type) {
+    return null
+  }
+
+  if (type.ofType) {
+    return findNamedType(type.ofType)
+  }
+
+  return type
+}
+
+export const findNamedTypeName = type => {
+  const namedType = findNamedType(type)
+
+  return namedType?.name
+}
+
 export const fieldOfTypeWasFetched = type => {
   const { fetchedTypes } = store.getState().remoteSchema
-  const typeName = findTypeName(type)
+  const typeName = findNamedTypeName(type)
   const typeWasFetched = !!fetchedTypes.get(typeName)
 
   return typeWasFetched
@@ -132,7 +140,7 @@ const supportedScalars = [
 export const typeIsABuiltInScalar = type =>
   // @todo the next function and this one are redundant.
   // see the next todo on how to fix the issue. If that todo is resolved, these functions will be identical. :(
-  supportedScalars.includes(findTypeName(type))
+  supportedScalars.includes(findNamedTypeName(type))
 
 export const typeIsASupportedScalar = type => {
   if (findTypeKind(type) !== `SCALAR`) {
@@ -141,7 +149,7 @@ export const typeIsASupportedScalar = type => {
     return true
   }
 
-  return supportedScalars.includes(findTypeName(type))
+  return supportedScalars.includes(findNamedTypeName(type))
 }
 
 const typeSettingCache = new Map()
@@ -152,7 +160,7 @@ export const getTypeSettingsByType = type => {
     return {}
   }
 
-  const typeName = findTypeName(type)
+  const typeName = findNamedTypeName(type)
 
   if (!typeName) {
     return {}
