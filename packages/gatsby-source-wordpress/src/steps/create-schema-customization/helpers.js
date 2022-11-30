@@ -67,11 +67,17 @@ export const findTypeName = type =>
  * Find the first type kind of a Type definition pulled via introspection
  * @param {object} type
  */
-export const findTypeKind = type =>
-  type?.kind ||
-  type?.ofType?.kind ||
-  type?.ofType?.ofType?.kind ||
-  type?.ofType?.ofType?.ofType?.kind
+export const findTypeKind = type => {
+  if (type?.kind) {
+    return type.kind
+  }
+
+  if (type?.ofType) {
+    return findTypeKind(type.ofType)
+  }
+
+  return null
+}
 
 export const fieldOfTypeWasFetched = type => {
   const { fetchedTypes } = store.getState().remoteSchema
