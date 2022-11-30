@@ -30,6 +30,20 @@ Note that there's currently a hard requirement for both kinds of url's to includ
 
 ## Preventing Image/File sourcing
 
+If you're using [Gatsby's Image CDN](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-) you can prevent this plugin from fetching files for media items with the following plugin options:
+
+```js
+{
+    resolve: `gatsby-source-wordpress`,
+    options: {
+        url: process.env.WPGRAPHQL_URL,
+        type: {
+            MediaItem: { createFileNodes: false },
+        },
+    },
+}
+```
+
 If you would prefer to let WordPress handle serving images for you, you can prevent Gatsby from fetching any images or files with the following plugin options:
 
 ```js
@@ -48,7 +62,50 @@ If you would prefer to let WordPress handle serving images for you, you can prev
 }
 ```
 
-:point_left: [Back to Features](./index.md)
+## Speeding up MediaItem fetching from WP
+
+Even when disabling MediaItem file nodes (above) while using Image CDN, fetching MediaItem information may still be slow for more complex sites. You can disable non-essential MediaItem fields from being fetched into Gatsby using the following plugin option:
+
+```js
+{
+    resolve: `gatsby-source-wordpress`,
+    options: {
+        url: process.env.WPGRAPHQL_URL,
+        type: {
+            MediaItem: {
+              excludeFieldNames: [
+                "contentNodes",
+                "seo",
+                "ancestors",
+                "contentType",
+                "author",
+                "template",
+                "mediaDetails",
+                "lastEditedBy",
+                "authorDatabaseId",
+                "authorId",
+                "contentTypeName",
+                "dateGmt",
+                "desiredSlug",
+                "enclosure",
+                "isContentNode",
+                "isTermNode",
+                "modified",
+                "modifiedGmt",
+                "parentDatabaseId",
+                "parentId",
+                "sizes",
+                "srcSet",
+                "parent",
+                "children"
+              ]
+            },
+        },
+    },
+}
+```
+
+These settings will become the default in this plugin in a future breaking change release.
 
 ## Referencing static file public URL's
 
@@ -89,3 +146,5 @@ query {
   }
 }
 ```
+
+:point_left: [Back to Features](./index.md)
