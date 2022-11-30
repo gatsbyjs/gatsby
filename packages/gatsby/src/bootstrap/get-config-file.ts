@@ -106,7 +106,7 @@ async function attemptImportUncompiled(
     }
   }
 
-  if (uncompiledResult?.configModule && uncompiledResult?.configFilePath) {
+  if (uncompiledResult?.configFilePath) {
     return uncompiledResult
   }
 
