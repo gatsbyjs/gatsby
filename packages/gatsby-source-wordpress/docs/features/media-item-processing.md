@@ -71,10 +71,6 @@ Even when disabling MediaItem file nodes (above) while using Image CDN, fetching
     resolve: `gatsby-source-wordpress`,
     options: {
         url: process.env.WPGRAPHQL_URL,
-        html: {
-            createStaticFiles: false,
-            useGatsbyImage: false,
-        },
         type: {
             MediaItem: {
               excludeFieldNames: [
