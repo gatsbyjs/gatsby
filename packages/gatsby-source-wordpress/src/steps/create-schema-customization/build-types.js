@@ -3,8 +3,6 @@ import { transformFields } from "./transform-fields"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import {
   buildTypeName,
-  fieldOfTypeWasFetched,
-  getTypeSettingsByType,
   filterTypeDefinition,
   getTypesThatImplementInterfaceType,
 } from "./helpers"
@@ -126,20 +124,6 @@ const objectType = typeBuilderApi => {
     },
   }
 
-  if (type.interfaces) {
-    objectType.interfaces = type.interfaces
-      .filter(interfaceType => {
-        const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
-
-        return (
-          !interfaceTypeSettings.exclude &&
-          fieldOfTypeWasFetched(type) &&
-          fieldOfTypeWasFetched(interfaceType)
-        )
-      })
-      .map(({ name }) => buildTypeName(name))
-  }
-
   if (
     gatsbyNodeTypes.includes(type.name) ||
     isAGatsbyNode ||
@@ -154,7 +138,8 @@ const objectType = typeBuilderApi => {
     // by different content types (post types)
     objectType.fields[`nodeType`] = `String`
 
-    objectType.interfaces = [`Node`, ...objectType.interfaces]
+    objectType.interfaces ||= []
+    objectType.interfaces.push(`Node`)
   }
 
   // @todo add this as a plugin option
