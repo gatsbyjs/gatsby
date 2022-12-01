@@ -52,7 +52,9 @@ describe(`gatsby-image`, () => {
   it(`fluid`, testConfig, () => testGatsbyImage(`fluid`, hasBase64Placeholder))
   it(`fixed`, testConfig, () => testGatsbyImage(`fixed`, hasBase64Placeholder))
   it(`webp`, testConfig, () => testGatsbyImage(`webp`, hasBase64Placeholder))
-  it(`traced`, testConfig, () => testGatsbyImage(`traced`, hasSVGPlaceholder))
+  it(`traced`, testConfig, () =>
+    testGatsbyImage(`traced`, hasBase64Placeholder)
+  )
   it(`sqip`, testConfig, () => testGatsbyImage(`sqip`, hasSVGPlaceholder))
 
   it(`english`, testConfig, () => {
