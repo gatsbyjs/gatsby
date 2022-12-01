@@ -28,13 +28,13 @@
     "gatsby-plugin-utils": "^4.3.0-next.0",
     "gatsby-source-filesystem": "^5.3.0-next.0",
     "node-fetch": "^2.6.7",
-    "sharp": "^0.30.7",
+    "sharp": "^0.31.2",
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
     "@types/node": "^14.18.3",
     "@types/node-fetch": "^2.5.12",
-    "@types/sharp": "^0.30.5",
+    "@types/sharp": "^0.31.0",
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "^3.3.0-next.0",
     "msw": "^0.38.2",

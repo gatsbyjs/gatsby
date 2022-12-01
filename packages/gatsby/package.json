@@ -190,7 +190,7 @@
     "@types/reach__router": "^1.3.5",
     "@types/react-dom": "^18.0.6",
     "@types/semver": "^7.3.12",
-    "@types/sharp": "^0.30.5",
+    "@types/sharp": "^0.31.0",
     "@types/signal-exit": "^3.0.0",
     "@types/string-similarity": "^4.0.0",
     "@types/tmp": "^0.2.0",
