@@ -266,9 +266,14 @@ export const introspectionFieldTypeToSDL = fieldType => {
 
   while (reference) {
     switch (reference.kind) {
-      case `SCALAR`:
-        openingTagsList.push(reference.name)
+      case `SCALAR`: {
+        const normalizedTypeName = supportedScalars.includes(reference.name)
+          ? reference.name
+          : `JSON`
+
+        openingTagsList.push(normalizedTypeName)
         break
+      }
       case `OBJECT`:
       case `INTERFACE`:
       case `UNION`:
