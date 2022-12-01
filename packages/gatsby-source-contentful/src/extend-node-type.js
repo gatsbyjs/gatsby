@@ -509,14 +509,14 @@ const fixedNodeType = ({ name, reporter }) => {
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => {
+          resolve: imageProps => {
             if (!didShowTraceSVGRemovalWarningFixed) {
               console.warn(
                 `"tracedSVG" placeholder field is no longer supported (used in ContentfulAsset.fixed processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
               )
               didShowTraceSVGRemovalWarningFixed = true
             }
-            return parent.base64
+            return getBase64Image(imageProps, reporter)
           },
         },
         aspectRatio: { type: GraphQLFloat },
@@ -619,14 +619,14 @@ const fluidNodeType = ({ name, reporter }) => {
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => {
+          resolve: imageProps => {
             if (!didShowTraceSVGRemovalWarningFluid) {
               console.warn(
                 `"tracedSVG" placeholder field is no longer supported (used in ContentfulAsset.fluid processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
               )
               didShowTraceSVGRemovalWarningFluid = true
             }
-            return parent.base64
+            return getBase64Image(imageProps, reporter)
           },
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -915,14 +915,14 @@ exports.extendNodeType = ({ type, store, reporter }) => {
           },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent => {
+            resolve: imageProps => {
               if (!didShowTraceSVGRemovalWarningResize) {
                 console.warn(
                   `"tracedSVG" placeholder field is no longer supported (used in ContentfulAsset.resize processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
                 )
                 didShowTraceSVGRemovalWarningResize = true
               }
-              return parent.base64
+              return getBase64Image(imageProps, reporter)
             },
           },
           src: { type: GraphQLString },
