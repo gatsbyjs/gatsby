@@ -29,6 +29,24 @@ export const buildInterfacesListForType = type => {
   return list
 }
 
+let ceIntCache = null
+const isWpgqlOneThirteenZeroPlus = () => {
+  if (ceIntCache !== null) {
+    return ceIntCache
+  }
+
+  const { typeMap } = store.getState().remoteSchema
+
+  const connectionInterface = !!typeMap.get(`Connection`)
+  const edgeInterface = !!typeMap.get(`Edge`)
+
+  const isWpgqlOneThirteenZeroPlus = connectionInterface || edgeInterface
+
+  ceIntCache = isWpgqlOneThirteenZeroPlus
+
+  return isWpgqlOneThirteenZeroPlus
+}
+
 /**
  * This function namespaces typenames with a prefix
  */
@@ -51,8 +69,12 @@ export const buildTypeName = name => {
     name = `FilterType`
   }
 
-  // Gatsby and WPGraphQL both generate types ending in these strings for every node type in the schema, so we need to rename it to prevent conflicts
-  if (name.endsWith(`Connection`) || name.endsWith(`Edge`)) {
+  if (
+    // Starting in WPGraphQL 1.13.0, Gatsby and WPGraphQL both generate types ending in these strings for every node type in the schema, so we need to rename types to prevent conflicts.
+    // for users on older versions of WPGraphQL we should try to keep the schema how it was before
+    isWpgqlOneThirteenZeroPlus() &&
+    (name.endsWith(`Connection`) || name.endsWith(`Edge`))
+  ) {
     name += `Type`
   }
 
