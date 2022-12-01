@@ -170,9 +170,15 @@ const destroy = async ({ root }, resource) => {
     return undefined
   }
 
-  await execa(`yarn`, [`remove`, resource.name, `-W`], {
-    cwd: root,
-  })
+  if (PACKAGE_MANGER === `yarn`) {
+    await execa(`yarn`, [`remove`, resource.name, `-W`], {
+      cwd: root,
+    })
+  } else {
+    await execa(`npm`, [`uninstall`, resource.name], {
+      cwd: root,
+    })
+  }
 
   return readResource
 }
