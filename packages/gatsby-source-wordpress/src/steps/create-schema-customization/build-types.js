@@ -70,20 +70,12 @@ const interfaceType = typeBuilderApi => {
     extensions: { infer: false },
   }
 
-  // if this is a node interface type
-  if (nodeInterfaceTypes.includes(type.name)) {
-    // we add nodeType (post type) to all nodes as they're fetched
-    // so we can add them to node interfaces as well in order to filter
-    // by a couple different content types
-    typeDef.fields[`nodeType`] = `String`
-    typeDef.interfaces = [`Node`]
-  } else {
-    // otherwise this is a regular interface type so we need to resolve the type name
+  // this is a regular interface type, not a node interface type so we need to resolve the type name
+  if (!nodeInterfaceTypes.includes(type.name)) {
     typeDef.resolveType = node =>
       node?.__typename ? buildTypeName(node.__typename) : null
   }
 
-  // @todo add this as a plugin option
   typeDef = filterTypeDefinition(typeDef, typeBuilderApi, `INTERFACE`)
 
   return schema.buildInterfaceType(typeDef)
@@ -134,10 +126,6 @@ const objectType = typeBuilderApi => {
     // from the entire schema
     type?.interfaces?.find(({ name }) => name === `Node`)
   ) {
-    // this is used to filter the node interfaces
-    // by different content types (post types)
-    objectType.fields[`nodeType`] = `String`
-
     objectType.interfaces ||= []
     objectType.interfaces.push(`Node`)
   }
