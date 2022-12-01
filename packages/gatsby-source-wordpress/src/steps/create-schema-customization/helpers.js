@@ -2,6 +2,7 @@ import store from "~/store"
 import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
+import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
 
 export const buildInterfacesListForType = type => {
   let shouldAddNodeType = false
@@ -46,18 +47,13 @@ export const buildTypeName = name => {
   }
 
   // Gatsby makes the same type, so we need to rename it to prevent conflicts
-  if (name.includes(`Connection`)) {
-    name = name.replace(`Connection`, `WpConnectionType`)
-  }
-
-  // Gatsby makes the same type, so we need to rename it to prevent conflicts
-  if (name.includes(`Edge`)) {
-    name = name.replace(`Edge`, `WpEdgeType`)
-  }
-
-  // Gatsby makes the same type, so we need to rename it to prevent conflicts
   if (name === `Filter`) {
     name = `FilterType`
+  }
+
+  // Gatsby and WPGraphQL both generate types ending in these strings for every node type in the schema, so we need to rename it to prevent conflicts
+  if (name.endsWith(`Connection`) || name.endsWith(`Edge`)) {
+    name += `Type`
   }
 
   if (name.startsWith(prefix)) {

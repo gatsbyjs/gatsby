@@ -1160,109 +1160,109 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToAncestorsCategoryWpConnectionType",
+    "name": "WpCategoryToAncestorsCategoryConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToAncestorsCategoryWpConnectionTypeFieldSelector",
+    "name": "WpCategoryToAncestorsCategoryConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToAncestorsCategoryWpConnectionTypeFilterInput",
+    "name": "WpCategoryToAncestorsCategoryConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToAncestorsCategoryWpConnectionTypeSortInput",
+    "name": "WpCategoryToAncestorsCategoryConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToCategoryWpConnectionType",
+    "name": "WpCategoryToCategoryConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToCategoryWpConnectionTypeFieldSelector",
+    "name": "WpCategoryToCategoryConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToCategoryWpConnectionTypeFilterInput",
+    "name": "WpCategoryToCategoryConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToCategoryWpConnectionTypeSortInput",
+    "name": "WpCategoryToCategoryConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToContentNodeWpConnectionType",
+    "name": "WpCategoryToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToContentNodeWpConnectionTypeFieldSelector",
+    "name": "WpCategoryToContentNodeConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToContentNodeWpConnectionTypeFilterInput",
+    "name": "WpCategoryToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToContentNodeWpConnectionTypeSortInput",
+    "name": "WpCategoryToContentNodeConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCategoryToParentCategoryWpConnectionTypeWpEdgeType",
+    "name": "WpCategoryToParentCategoryConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToParentCategoryWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpCategoryToParentCategoryConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToParentCategoryWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpCategoryToParentCategoryConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToParentCategoryWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpCategoryToParentCategoryConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToPostWpConnectionType",
+    "name": "WpCategoryToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToPostWpConnectionTypeFieldSelector",
+    "name": "WpCategoryToPostConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToPostWpConnectionTypeFilterInput",
+    "name": "WpCategoryToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToPostWpConnectionTypeSortInput",
+    "name": "WpCategoryToPostConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCategoryToTaxonomyWpConnectionTypeWpEdgeType",
+    "name": "WpCategoryToTaxonomyConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToTaxonomyWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpCategoryToTaxonomyConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToTaxonomyWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpCategoryToTaxonomyConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToTaxonomyWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpCategoryToTaxonomyConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -1409,73 +1409,73 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCommentToCommentWpConnectionType",
+    "name": "WpCommentToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommentWpConnectionTypeFieldSelector",
+    "name": "WpCommentToCommentConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommentWpConnectionTypeFilterInput",
+    "name": "WpCommentToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommentWpConnectionTypeSortInput",
+    "name": "WpCommentToCommentConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCommentToCommenterWpConnectionTypeWpEdgeType",
+    "name": "WpCommentToCommenterConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommenterWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpCommentToCommenterConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommenterWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpCommentToCommenterConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommenterWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpCommentToCommenterConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCommentToContentNodeWpConnectionTypeWpEdgeType",
+    "name": "WpCommentToContentNodeConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToContentNodeWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpCommentToContentNodeConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToContentNodeWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpCommentToContentNodeConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToContentNodeWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpCommentToContentNodeConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCommentToParentCommentWpConnectionTypeWpEdgeType",
+    "name": "WpCommentToParentCommentConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToParentCommentWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpCommentToParentCommentConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToParentCommentWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpCommentToParentCommentConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToParentCommentWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpCommentToParentCommentConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -1595,44 +1595,44 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpContentNodeToContentTypeWpConnectionTypeWpEdgeType",
+    "name": "WpContentNodeToContentTypeConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToContentTypeWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpContentNodeToContentTypeConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToContentTypeWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpContentNodeToContentTypeConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToContentTypeWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpContentNodeToContentTypeConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpContentNodeToEditLastWpConnectionTypeWpEdgeType",
+    "name": "WpContentNodeToEditLastConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToEditLastWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpContentNodeToEditLastConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToEditLastWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpContentNodeToEditLastConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToEditLastWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpContentNodeToEditLastConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
       "lockTimestamp",
       "node",
     ],
-    "name": "WpContentNodeToEditLockWpConnectionTypeWpEdgeType",
+    "name": "WpContentNodeToEditLockConnectionEdgeType",
   },
   Object {
     "fields": Array [
@@ -1750,37 +1750,37 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpContentTypeToContentNodeWpConnectionType",
+    "name": "WpContentTypeToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToContentNodeWpConnectionTypeFieldSelector",
+    "name": "WpContentTypeToContentNodeConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToContentNodeWpConnectionTypeFilterInput",
+    "name": "WpContentTypeToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToContentNodeWpConnectionTypeSortInput",
+    "name": "WpContentTypeToContentNodeConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpContentTypeToTaxonomyWpConnectionType",
+    "name": "WpContentTypeToTaxonomyConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToTaxonomyWpConnectionTypeFieldSelector",
+    "name": "WpContentTypeToTaxonomyConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToTaxonomyWpConnectionTypeFilterInput",
+    "name": "WpContentTypeToTaxonomyConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToTaxonomyWpConnectionTypeSortInput",
+    "name": "WpContentTypeToTaxonomyConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -5645,55 +5645,55 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpHierarchicalContentNodeToContentNodeAncestorsWpConnectionType",
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeAncestorsWpConnectionTypeFieldSelector",
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeAncestorsWpConnectionTypeFilterInput",
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeAncestorsWpConnectionTypeSortInput",
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpHierarchicalContentNodeToContentNodeChildrenWpConnectionType",
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeChildrenWpConnectionTypeFieldSelector",
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeChildrenWpConnectionTypeFilterInput",
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeChildrenWpConnectionTypeSortInput",
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpHierarchicalContentNodeToParentContentNodeWpConnectionTypeWpEdgeType",
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToParentContentNodeWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToParentContentNodeWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToParentContentNodeWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -5869,19 +5869,19 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpMediaItemToCommentWpConnectionType",
+    "name": "WpMediaItemToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpMediaItemToCommentWpConnectionTypeFieldSelector",
+    "name": "WpMediaItemToCommentConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpMediaItemToCommentWpConnectionTypeFilterInput",
+    "name": "WpMediaItemToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpMediaItemToCommentWpConnectionTypeSortInput",
+    "name": "WpMediaItemToCommentConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -6075,55 +6075,55 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpMenuItemToMenuItemLinkableWpConnectionTypeWpEdgeType",
+    "name": "WpMenuItemToMenuConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemLinkableWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpMenuItemToMenuConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemLinkableWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpMenuItemToMenuConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemLinkableWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpMenuItemToMenuConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpMenuItemToMenuItemWpConnectionType",
+    "name": "WpMenuItemToMenuItemConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemWpConnectionTypeFieldSelector",
+    "name": "WpMenuItemToMenuItemConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemWpConnectionTypeFilterInput",
+    "name": "WpMenuItemToMenuItemConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemWpConnectionTypeSortInput",
+    "name": "WpMenuItemToMenuItemConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpMenuItemToMenuWpConnectionTypeWpEdgeType",
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": null,
@@ -6141,19 +6141,19 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpMenuToMenuItemWpConnectionType",
+    "name": "WpMenuToMenuItemConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuToMenuItemWpConnectionTypeFieldSelector",
+    "name": "WpMenuToMenuItemConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpMenuToMenuItemWpConnectionTypeFilterInput",
+    "name": "WpMenuToMenuItemConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpMenuToMenuItemWpConnectionTypeSortInput",
+    "name": "WpMenuToMenuItemConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -6185,19 +6185,19 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpNodeWithAuthorToUserWpConnectionTypeWpEdgeType",
+    "name": "WpNodeWithAuthorToUserConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithAuthorToUserWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpNodeWithAuthorToUserConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithAuthorToUserWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpNodeWithAuthorToUserConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithAuthorToUserWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpNodeWithAuthorToUserConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -6301,19 +6301,19 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpNodeWithFeaturedImageToMediaItemWpConnectionTypeWpEdgeType",
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithFeaturedImageToMediaItemWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithFeaturedImageToMediaItemWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithFeaturedImageToMediaItemWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -6331,7 +6331,7 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpNodeWithRevisionsToContentNodeWpConnectionTypeWpEdgeType",
+    "name": "WpNodeWithRevisionsToContentNodeConnectionEdgeType",
   },
   Object {
     "fields": Array [
@@ -6459,19 +6459,19 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPageToCommentWpConnectionType",
+    "name": "WpPageToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPageToCommentWpConnectionTypeFieldSelector",
+    "name": "WpPageToCommentConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPageToCommentWpConnectionTypeFilterInput",
+    "name": "WpPageToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPageToCommentWpConnectionTypeSortInput",
+    "name": "WpPageToCommentConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -6774,55 +6774,55 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostFormatToContentNodeWpConnectionType",
+    "name": "WpPostFormatToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToContentNodeWpConnectionTypeFieldSelector",
+    "name": "WpPostFormatToContentNodeConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToContentNodeWpConnectionTypeFilterInput",
+    "name": "WpPostFormatToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToContentNodeWpConnectionTypeSortInput",
+    "name": "WpPostFormatToContentNodeConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostFormatToPostWpConnectionType",
+    "name": "WpPostFormatToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToPostWpConnectionTypeFieldSelector",
+    "name": "WpPostFormatToPostConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToPostWpConnectionTypeFilterInput",
+    "name": "WpPostFormatToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToPostWpConnectionTypeSortInput",
+    "name": "WpPostFormatToPostConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpPostFormatToTaxonomyWpConnectionTypeWpEdgeType",
+    "name": "WpPostFormatToTaxonomyConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToTaxonomyWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpPostFormatToTaxonomyConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToTaxonomyWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpPostFormatToTaxonomyConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToTaxonomyWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpPostFormatToTaxonomyConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -6852,91 +6852,91 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToCategoryWpConnectionType",
+    "name": "WpPostToCategoryConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCategoryWpConnectionTypeFieldSelector",
+    "name": "WpPostToCategoryConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCategoryWpConnectionTypeFilterInput",
+    "name": "WpPostToCategoryConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCategoryWpConnectionTypeSortInput",
+    "name": "WpPostToCategoryConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToCommentWpConnectionType",
+    "name": "WpPostToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCommentWpConnectionTypeFieldSelector",
+    "name": "WpPostToCommentConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCommentWpConnectionTypeFilterInput",
+    "name": "WpPostToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCommentWpConnectionTypeSortInput",
+    "name": "WpPostToCommentConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToPostFormatWpConnectionType",
+    "name": "WpPostToPostFormatConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToPostFormatWpConnectionTypeFieldSelector",
+    "name": "WpPostToPostFormatConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostToPostFormatWpConnectionTypeFilterInput",
+    "name": "WpPostToPostFormatConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostToPostFormatWpConnectionTypeSortInput",
+    "name": "WpPostToPostFormatConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToTagWpConnectionType",
+    "name": "WpPostToTagConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTagWpConnectionTypeFieldSelector",
+    "name": "WpPostToTagConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTagWpConnectionTypeFilterInput",
+    "name": "WpPostToTagConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTagWpConnectionTypeSortInput",
+    "name": "WpPostToTagConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToTermNodeWpConnectionType",
+    "name": "WpPostToTermNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTermNodeWpConnectionTypeFieldSelector",
+    "name": "WpPostToTermNodeConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTermNodeWpConnectionTypeFilterInput",
+    "name": "WpPostToTermNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTermNodeWpConnectionTypeSortInput",
+    "name": "WpPostToTermNodeConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -7817,55 +7817,55 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpTagToContentNodeWpConnectionType",
+    "name": "WpTagToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpTagToContentNodeWpConnectionTypeFieldSelector",
+    "name": "WpTagToContentNodeConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpTagToContentNodeWpConnectionTypeFilterInput",
+    "name": "WpTagToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpTagToContentNodeWpConnectionTypeSortInput",
+    "name": "WpTagToContentNodeConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpTagToPostWpConnectionType",
+    "name": "WpTagToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpTagToPostWpConnectionTypeFieldSelector",
+    "name": "WpTagToPostConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpTagToPostWpConnectionTypeFilterInput",
+    "name": "WpTagToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpTagToPostWpConnectionTypeSortInput",
+    "name": "WpTagToPostConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpTagToTaxonomyWpConnectionTypeWpEdgeType",
+    "name": "WpTagToTaxonomyConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpTagToTaxonomyWpConnectionTypeWpEdgeTypeFieldSelector",
+    "name": "WpTagToTaxonomyConnectionEdgeTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpTagToTaxonomyWpConnectionTypeWpEdgeTypeFilterInput",
+    "name": "WpTagToTaxonomyConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpTagToTaxonomyWpConnectionTypeWpEdgeTypeSortInput",
+    "name": "WpTagToTaxonomyConnectionEdgeTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -7994,19 +7994,19 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpTaxonomyToContentTypeWpConnectionType",
+    "name": "WpTaxonomyToContentTypeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpTaxonomyToContentTypeWpConnectionTypeFieldSelector",
+    "name": "WpTaxonomyToContentTypeConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpTaxonomyToContentTypeWpConnectionTypeFilterInput",
+    "name": "WpTaxonomyToContentTypeConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpTaxonomyToContentTypeWpConnectionTypeSortInput",
+    "name": "WpTaxonomyToContentTypeConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -8527,127 +8527,127 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToCommentWpConnectionType",
+    "name": "WpUserToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToCommentWpConnectionTypeFieldSelector",
+    "name": "WpUserToCommentConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpUserToCommentWpConnectionTypeFilterInput",
+    "name": "WpUserToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpUserToCommentWpConnectionTypeSortInput",
+    "name": "WpUserToCommentConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToPageWpConnectionType",
+    "name": "WpUserToPageConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPageWpConnectionTypeFieldSelector",
+    "name": "WpUserToPageConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPageWpConnectionTypeFilterInput",
+    "name": "WpUserToPageConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPageWpConnectionTypeSortInput",
+    "name": "WpUserToPageConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToPostWpConnectionType",
+    "name": "WpUserToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPostWpConnectionTypeFieldSelector",
+    "name": "WpUserToPostConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPostWpConnectionTypeFilterInput",
+    "name": "WpUserToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPostWpConnectionTypeSortInput",
+    "name": "WpUserToPostConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToTranslationFilterTestWpConnectionType",
+    "name": "WpUserToTranslationFilterTestConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTranslationFilterTestWpConnectionTypeFieldSelector",
+    "name": "WpUserToTranslationFilterTestConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTranslationFilterTestWpConnectionTypeFilterInput",
+    "name": "WpUserToTranslationFilterTestConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTranslationFilterTestWpConnectionTypeSortInput",
+    "name": "WpUserToTranslationFilterTestConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToTypeLimit0TestWpConnectionType",
+    "name": "WpUserToTypeLimit0TestConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimit0TestWpConnectionTypeFieldSelector",
+    "name": "WpUserToTypeLimit0TestConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimit0TestWpConnectionTypeFilterInput",
+    "name": "WpUserToTypeLimit0TestConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimit0TestWpConnectionTypeSortInput",
+    "name": "WpUserToTypeLimit0TestConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToTypeLimitTestWpConnectionType",
+    "name": "WpUserToTypeLimitTestConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimitTestWpConnectionTypeFieldSelector",
+    "name": "WpUserToTypeLimitTestConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimitTestWpConnectionTypeFilterInput",
+    "name": "WpUserToTypeLimitTestConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimitTestWpConnectionTypeSortInput",
+    "name": "WpUserToTypeLimitTestConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToUserRoleWpConnectionType",
+    "name": "WpUserToUserRoleConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToUserRoleWpConnectionTypeFieldSelector",
+    "name": "WpUserToUserRoleConnectionTypeFieldSelector",
   },
   Object {
     "fields": null,
-    "name": "WpUserToUserRoleWpConnectionTypeFilterInput",
+    "name": "WpUserToUserRoleConnectionTypeFilterInput",
   },
   Object {
     "fields": null,
-    "name": "WpUserToUserRoleWpConnectionTypeSortInput",
+    "name": "WpUserToUserRoleConnectionTypeSortInput",
   },
   Object {
     "fields": Array [
