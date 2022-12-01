@@ -51,44 +51,6 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
     })
   }
 
-  const interfaces = introspectionData.__schema.types.filter(
-    type => type.kind === `INTERFACE`
-  )
-
-  for (const interfaceType of interfaces) {
-    if (typeIsExcluded({ pluginOptions, typeName: interfaceType.name })) {
-      continue
-    }
-
-    if (!interfaceType.fields) {
-      continue
-    }
-
-    const typesThatImplementInterface =
-      getTypesThatImplementInterfaceType(interfaceType)
-
-    const shouldSkipInterfaceType = !transformFields({
-      fields: interfaceType.fields,
-      parentType: interfaceType,
-      parentInterfacesImplementingTypes: typesThatImplementInterface,
-      peek: true,
-    })
-
-    if (shouldSkipInterfaceType && interfaceType.name !== `Node`) {
-      continue
-    }
-
-    store.dispatch.remoteSchema.addFetchedType(interfaceType)
-
-    if (interfaceType.fields) {
-      for (const interfaceField of interfaceType.fields) {
-        if (interfaceField.type) {
-          store.dispatch.remoteSchema.addFetchedType(interfaceField.type)
-        }
-      }
-    }
-  }
-
   const rootFields = typeMap.get(`RootQuery`).fields
 
   for (const field of rootFields) {
@@ -190,6 +152,44 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
     }
 
     nonNodeRootFields.push(field)
+  }
+
+  const interfaces = introspectionData.__schema.types.filter(
+    type => type.kind === `INTERFACE`
+  )
+
+  for (const interfaceType of interfaces) {
+    if (typeIsExcluded({ pluginOptions, typeName: interfaceType.name })) {
+      continue
+    }
+
+    if (!interfaceType.fields) {
+      continue
+    }
+
+    const typesThatImplementInterface =
+      getTypesThatImplementInterfaceType(interfaceType)
+
+    const shouldSkipInterfaceType = !transformFields({
+      fields: interfaceType.fields,
+      parentType: interfaceType,
+      parentInterfacesImplementingTypes: typesThatImplementInterface,
+      peek: true,
+    })
+
+    if (shouldSkipInterfaceType && interfaceType.name !== `Node`) {
+      continue
+    }
+
+    store.dispatch.remoteSchema.addFetchedType(interfaceType)
+
+    if (interfaceType.fields) {
+      for (const interfaceField of interfaceType.fields) {
+        if (interfaceField.type) {
+          store.dispatch.remoteSchema.addFetchedType(interfaceField.type)
+        }
+      }
+    }
   }
 
   const nodeListFieldNames = nodeListRootFields.map(field => field.name)
