@@ -256,3 +256,37 @@ export const filterTypeDefinition = (
 
   return typeDefinition
 }
+
+// we should be using graphql-js for this kind of thing, but unfortunately this project didn't use it from the beginning so it would be a huge lift to refactor to use it now. In the future we will be rewriting this plugin using a new Gatsby source plugin toolkit, and at that time we'll use graphql-js.
+export const introspectionFieldTypeToSDL = fieldType => {
+  const openingTagsList = []
+  const closingTagsList = []
+
+  let reference = fieldType
+
+  while (reference) {
+    switch (reference.kind) {
+      case `SCALAR`:
+        openingTagsList.push(reference.name)
+        break
+      case `OBJECT`:
+      case `INTERFACE`:
+      case `UNION`:
+        openingTagsList.push(buildTypeName(reference.name))
+        break
+      case `NON_NULL`:
+        closingTagsList.push(`!`)
+        break
+      case `LIST`:
+        openingTagsList.push(`[`)
+        closingTagsList.push(`]`)
+        break
+      default:
+        break
+    }
+
+    reference = reference.ofType
+  }
+
+  return openingTagsList.join(``) + closingTagsList.reverse().join(``)
+}
