@@ -10,7 +10,7 @@ module.exports = {
       // These files use dynamic imports to load gatsby-config and gatsby-node so esm works
       `./src/bootstrap/get-config-file.ts`,
       `./src/bootstrap/resolve-module-exports.ts`,
-      `./src/utils/require-gatsby-plugin.ts`
+      `./src/utils/import-gatsby-plugin.ts`
     ]
   }]],
 }
