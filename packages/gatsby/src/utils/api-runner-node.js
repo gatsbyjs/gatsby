@@ -616,7 +616,6 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
           return null
         }
 
-        // TODO: Probably refactor
         return importGatsbyPlugin(plugin, `gatsby-node`).then(gatsbyNode => {
           const pluginName =
             plugin.name === `default-site-plugin`
