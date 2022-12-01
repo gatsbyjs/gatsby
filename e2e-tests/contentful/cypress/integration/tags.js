@@ -19,7 +19,7 @@ describe(`tags`, () => {
       "have.text",
       "numberInteger"
     )
-    cy.get('[data-cy-id^="tag-"]').should("have.length", 2)
+    cy.get('[data-cy-id^="tag-"]').should("have.length", 5)
   })
   it(`Filtered Entries`, () => {
     cy.get('[data-cy-integers] [data-cy-id="number-integer"]').should(
