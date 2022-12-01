@@ -11,7 +11,7 @@ For instance, while rebuilding your cooking blog, you might want to move all of 
 
 ## Prerequisites
 
-- If your Gatsby project doesn't already have a `gatsby-node.js` file, add one at that top level of your project (alongside your `gatsby-config.js`).
+- If your Gatsby project doesn't already have a `gatsby-node` file, add one at that top level of your project (alongside your `gatsby-config`).
 
 ## Directions
 
@@ -30,6 +30,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
 2. Once you've made these changes and deployed the changes through Gatsby Cloud, you should be able to test your changes once the CDN cache has been purged.
 
+**Please note:** Most of the examples below will omit the `createPages` wrapper for the sake of brevity. However, the `createRedirect` examples will still always need to be wrapped with it like shown above.
+
 ## Advanced use cases
 
 ### Wildcard Path Redirects
@@ -37,21 +39,17 @@ exports.createPages = async ({ graphql, actions }) => {
 In the example above, you've explicitly redirected one of your recipe urls, and after adding a few others, you realize that you won't have time to get all the old urls. So you decide that any other url that uses your old path `blog/recipes/*` should just be redirected to the new `/recipes` path. Here's how you'd handle that:
 
 ```js:title=gatsby-node.js
-exports.createPages = async ({ graphql, actions }) => {
-  const { createRedirect } = actions
+createRedirect({
+  fromPath: `/blog/recipes/mouthwatering-lasagna`,
+  toPath: `/recipes/mouthwatering-lasagna`,
+})
 
-  createRedirect({
-    fromPath: `/blog/recipes/mouthwatering-lasagna`,
-    toPath: `/recipes/mouthwatering-lasagna`,
-  })
+// All your other redirects
 
-	// All your other redirects
-
-  createRedirect({
-    fromPath: `/blog/recipes/*`,
-    toPath: `/recipes`,
-  })
-}
+createRedirect({
+  fromPath: `/blog/recipes/*`,
+  toPath: `/recipes`,
+})
 ```
 
 ### Splat redirects
@@ -59,14 +57,10 @@ exports.createPages = async ({ graphql, actions }) => {
 Extending the wildcard example above, you may have a high degree confidence that all of your old recipes that lived at `/blog/recipes` have been migrated to `/recipe`. In that case, you can use a `*` marker in the toPath to indicate that you want the redirect to include everything after the base url. In that case `/blog/recipes/any-awesome-url-path` would become `/recipes/any-awesome-url-path`. Here's how you'd handle that:
 
 ```js:title=gatsby-node.js
-exports.createPages = async ({ graphql, actions }) => {
-  const { createRedirect } = actions
-
-  createRedirect({
-    fromPath: `/blog/recipes/*`,
-    toPath: `/recipes/*`,
-  })
-}
+createRedirect({
+  fromPath: `/blog/recipes/*`,
+  toPath: `/recipes/*`,
+})
 ```
 
 ### Country based redirects
@@ -185,6 +179,7 @@ Here's how you could do it for our recipes site using a JSON file:
 
 ```js:title=gatsby-node.js
 const redirects = require("./redirects.json")
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createRedirect } = actions
 
@@ -204,12 +199,13 @@ Whenever you set a statusCode of 200 on createRedirect you create a rewrite or a
 ```js:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
   const { createRedirect } = actions
+
   createRedirect({
     fromPath: `/docs/*`,
     toPath: `https://www.awesomesite.com/docs/*`,
     statusCode: 200,
   })
-});
+}
 ```
 
 The important part here is that you have an external toPath with a complete URL and a statusCode of 200 to indicate the rewrite.
