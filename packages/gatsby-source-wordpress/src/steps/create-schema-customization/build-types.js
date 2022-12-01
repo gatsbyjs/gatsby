@@ -82,14 +82,8 @@ const interfaceType = typeBuilderApi => {
 }
 
 const objectType = typeBuilderApi => {
-  const {
-    type,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
-    schema,
-    isAGatsbyNode,
-  } = typeBuilderApi
+  const { type, gatsbyNodeTypes, fieldAliases, fieldBlacklist, schema } =
+    typeBuilderApi
 
   const transformedFields = transformFields({
     fields: type.fields,
@@ -116,18 +110,8 @@ const objectType = typeBuilderApi => {
     },
   }
 
-  if (
-    gatsbyNodeTypes.includes(type.name) ||
-    isAGatsbyNode ||
-    // this accounts for Node types that weren't fetched because
-    // they have no root field to fetch a single node of this type
-    // removing them from the schema breaks the build though
-    // @todo instead, if a node type isn't fetched, remove it
-    // from the entire schema
-    type?.interfaces?.find(({ name }) => name === `Node`)
-  ) {
-    objectType.interfaces ||= []
-    objectType.interfaces.push(`Node`)
+  if (type.interfaces?.includes(`Node`)) {
+    objectType.interfaces = [`Node`]
   }
 
   // @todo add this as a plugin option

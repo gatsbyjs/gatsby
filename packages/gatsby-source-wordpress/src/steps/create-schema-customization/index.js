@@ -91,8 +91,9 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
       fields: nonNodeRootFields,
       interfaces: [`Node`],
     },
-    isAGatsbyNode: true,
   })
+
+  typeDefs.push(wpType)
 
   typeDefs.push(
     addRemoteFilePolyfillInterface(
@@ -108,8 +109,6 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
       }
     )
   )
-
-  typeDefs.push(wpType)
 
   actions.createTypes(typeDefs)
 }
