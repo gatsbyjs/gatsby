@@ -211,7 +211,7 @@ export async function resolveModuleExports(
       }
       const importedModule = await import(moduleFilePath)
       return Object.keys(importedModule).filter(
-        exportName => exportName !== `__esModule`
+        exportName => exportName !== `__esModule` && exportName !== `default`
       )
     } catch (error) {
       if (!testImportError(modulePath, error)) {
