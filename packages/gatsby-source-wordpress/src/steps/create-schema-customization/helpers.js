@@ -3,8 +3,10 @@ import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
 
-export const buildInterfacesListForType = type =>
-  (type?.interfaces || [])
+export const buildInterfacesListForType = type => {
+  let shouldAddNodeType = false
+
+  const list = (type?.interfaces || [])
     .filter(interfaceType => {
       const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
 
@@ -12,7 +14,19 @@ export const buildInterfacesListForType = type =>
         !interfaceTypeSettings.exclude && fieldOfTypeWasFetched(interfaceType)
       )
     })
-    .map(({ name }) => buildTypeName(name))
+    .map(({ name }) => {
+      if (name === `Node`) {
+        shouldAddNodeType = true
+      }
+      return buildTypeName(name)
+    })
+
+  if (shouldAddNodeType) {
+    list.push(`Node`)
+  }
+
+  return list
+}
 
 /**
  * This function namespaces typenames with a prefix
