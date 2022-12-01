@@ -67,7 +67,7 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
           break
       }
 
-      if (type.interfaces) {
+      if (type.interfaces && builtType?.config) {
         builtType.config.interfaces ||= []
         builtType.config.interfaces.push(...buildInterfacesListForType(type))
       }
