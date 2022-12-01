@@ -49,6 +49,7 @@ const pluginsAreReady = async () => {
         pluginsAreReady = true
       }
     } catch (e) {
+      console.error(e)
       await new Promise(resolve => setTimeout(resolve, 1000))
     }
   }
