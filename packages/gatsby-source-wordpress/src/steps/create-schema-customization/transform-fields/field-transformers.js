@@ -43,6 +43,24 @@ export const fieldTransformers = [
   },
 
   {
+    description: `Lists of Gatsby node interfaces`,
+    test: field => {
+      const implementsNodeInterface = store
+        .getState()
+        .remoteSchema.typeMap.get(findNamedTypeName(field.type))
+        ?.interfaces?.some(i => i.name === `Node`)
+
+      const isAListOfGatsbyNodeInterfaces =
+        (field.type.kind === `LIST` || field.type.ofType?.kind === `LIST`) &&
+        implementsNodeInterface
+
+      return isAListOfGatsbyNodeInterfaces
+    },
+
+    transform: transformListOfGatsbyNodes,
+  },
+
+  {
     description: `NON_NULL lists of NON_NULL types`,
     test: field =>
       field.type.kind === `NON_NULL` &&
@@ -53,13 +71,13 @@ export const fieldTransformers = [
       const originalTypeName = findNamedTypeName(field.type)
       const typeKind = findTypeKind(field.type)
 
-      const normalizedType =
+      const normalizedTypeName =
         typeKind === `SCALAR` && typeIsABuiltInScalar(field.type)
           ? originalTypeName
           : buildTypeName(originalTypeName)
 
       return {
-        type: `[${normalizedType}!]!`,
+        type: `[${normalizedTypeName}!]!`,
         resolve: source => {
           const resolvedField = source[fieldName]
 
