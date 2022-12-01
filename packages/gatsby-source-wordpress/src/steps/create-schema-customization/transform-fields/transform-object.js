@@ -12,7 +12,7 @@ export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
 
   return {
     type: `[${typeName}]`,
-    resolve: (source, args, context) => {
+    resolve: (source, _args, context) => {
       let nodes = null
 
       const field = source[fieldName]
@@ -37,7 +37,7 @@ export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
 
 export const buildGatsbyNodeObjectResolver =
   ({ field, fieldName }) =>
-  async (source, _, context) => {
+  async (source, _args, context) => {
     const typeName = buildTypeName(field.type.name)
     const nodeField = source[fieldName]
 
