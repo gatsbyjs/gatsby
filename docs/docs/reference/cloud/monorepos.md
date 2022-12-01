@@ -31,6 +31,7 @@ The following table shows the level of support for each tool.
 | NPM Workspaces (v7 and onwards)  | ●                |                                                         |
 | NX                               | ●                | Full support for detecting and installing dependencies  |
 | Turborepo                        | ○                | We do not have plans to support Turborepo at this time. |
+| pnpm                             | ○                | TODO                                                    |
 
 ## Troubleshooting
 
