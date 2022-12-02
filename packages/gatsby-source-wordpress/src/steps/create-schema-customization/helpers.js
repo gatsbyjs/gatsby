@@ -2,7 +2,6 @@ import store from "~/store"
 import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
-import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
 
 export const buildInterfacesListForType = type => {
   let shouldAddNodeType = false
@@ -260,6 +259,8 @@ export const filterTypeDefinition = (
 }
 
 // we should be using graphql-js for this kind of thing, but unfortunately this project didn't use it from the beginning so it would be a huge lift to refactor to use it now. In the future we will be rewriting this plugin using a new Gatsby source plugin toolkit, and at that time we'll use graphql-js.
+// from introspection field types this will return a value like:
+// `String` or `[String]` or `[String!]!` or `[String]!` or `[[String]]` or `[[String]!]!` or `[[String]!]`, etc
 export const introspectionFieldTypeToSDL = fieldType => {
   const openingTagsList = []
   const closingTagsList = []
