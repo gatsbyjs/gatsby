@@ -3,8 +3,6 @@ import { transformFields } from "./transform-fields"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import {
   buildTypeName,
-  fieldOfTypeWasFetched,
-  getTypeSettingsByType,
   filterTypeDefinition,
   getTypesThatImplementInterfaceType,
 } from "./helpers"
@@ -72,34 +70,20 @@ const interfaceType = typeBuilderApi => {
     extensions: { infer: false },
   }
 
-  // if this is a node interface type
-  if (nodeInterfaceTypes.includes(type.name)) {
-    // we add nodeType (post type) to all nodes as they're fetched
-    // so we can add them to node interfaces as well in order to filter
-    // by a couple different content types
-    typeDef.fields[`nodeType`] = `String`
-    typeDef.interfaces = [`Node`]
-  } else {
-    // otherwise this is a regular interface type so we need to resolve the type name
+  // this is a regular interface type, not a node interface type so we need to resolve the type name
+  if (!nodeInterfaceTypes.includes(type.name)) {
     typeDef.resolveType = node =>
       node?.__typename ? buildTypeName(node.__typename) : null
   }
 
-  // @todo add this as a plugin option
   typeDef = filterTypeDefinition(typeDef, typeBuilderApi, `INTERFACE`)
 
   return schema.buildInterfaceType(typeDef)
 }
 
 const objectType = typeBuilderApi => {
-  const {
-    type,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
-    schema,
-    isAGatsbyNode,
-  } = typeBuilderApi
+  const { type, gatsbyNodeTypes, fieldAliases, fieldBlacklist, schema } =
+    typeBuilderApi
 
   const transformedFields = transformFields({
     fields: type.fields,
@@ -126,35 +110,8 @@ const objectType = typeBuilderApi => {
     },
   }
 
-  if (type.interfaces) {
-    objectType.interfaces = type.interfaces
-      .filter(interfaceType => {
-        const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
-
-        return (
-          !interfaceTypeSettings.exclude &&
-          fieldOfTypeWasFetched(type) &&
-          fieldOfTypeWasFetched(interfaceType)
-        )
-      })
-      .map(({ name }) => buildTypeName(name))
-  }
-
-  if (
-    gatsbyNodeTypes.includes(type.name) ||
-    isAGatsbyNode ||
-    // this accounts for Node types that weren't fetched because
-    // they have no root field to fetch a single node of this type
-    // removing them from the schema breaks the build though
-    // @todo instead, if a node type isn't fetched, remove it
-    // from the entire schema
-    type?.interfaces?.find(({ name }) => name === `Node`)
-  ) {
-    // this is used to filter the node interfaces
-    // by different content types (post types)
-    objectType.fields[`nodeType`] = `String`
-
-    objectType.interfaces = [`Node`, ...objectType.interfaces]
+  if (type.interfaces?.includes(`Node`)) {
+    objectType.interfaces = [`Node`]
   }
 
   // @todo add this as a plugin option
