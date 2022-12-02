@@ -2,7 +2,6 @@ import store from "~/store"
 import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
-import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
 
 export const buildInterfacesListForType = type => {
   let shouldAddNodeType = false
