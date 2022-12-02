@@ -137,9 +137,7 @@ global.___loader = {
 
 #### Mocking `gatsby`
 
-Finally, it's a good idea to mock the `gatsby` module itself. This may not be
-needed at first, but will make things a lot easier if you want to test
-components that use `Link` or GraphQL.
+Finally, it's a good idea to mock the `gatsby` module itself. This may not be needed at first, but will make things a lot easier if you want to test components that use `Link`, `Slice`, or GraphQL.
 
 ```js:title=__mocks__/gatsby.js
 const React = require("react")
@@ -166,11 +164,18 @@ module.exports = {
         href: to,
       })
   ),
+  Slice: jest.fn().mockImplementation(
+    ({ alias, ...rest }) =>
+      React.createElement("div", {
+        ...rest,
+        "data-test-slice-alias": alias
+      })
+  ),
   useStaticQuery: jest.fn(),
 }
 ```
 
-This mocks the `graphql()` function, `Link` component, and `useStaticQuery` hook.
+This mocks the `graphql()` function, [`Link` component](/docs/reference/built-in-components/gatsby-link/), [Slice placeholder](/docs/reference/built-in-components/gatsby-slice/), and [`useStaticQuery` hook](/docs/reference/graphql-data-layer/graphql-api/#usestaticquery).
 
 ## Writing tests
 

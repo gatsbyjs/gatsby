@@ -73,7 +73,9 @@ export const buildTypeName = name => {
     // Starting in WPGraphQL 1.13.0, Gatsby and WPGraphQL both generate types ending in these strings for every node type in the schema, so we need to rename types to prevent conflicts.
     // for users on older versions of WPGraphQL we should try to keep the schema how it was before
     isWpgqlOneThirteenZeroPlus() &&
-    (name.endsWith(`Connection`) || name.endsWith(`Edge`))
+    (name.endsWith(`Connection`) ||
+      name.endsWith(`Edge`) ||
+      name.endsWith(`PageInfo`))
   ) {
     name += `Type`
   }
