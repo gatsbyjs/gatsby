@@ -1,6 +1,6 @@
 import store from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
-import generateNodeQueriesFromIngestibleFields from "~/steps/ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
+import generateNodeQueriesFromIngestibleFields from "./generate-queries-from-ingestable-types"
 import { getPersistentCache, setPersistentCache } from "~/utils/cache"
 
 /**
