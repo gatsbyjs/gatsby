@@ -26,6 +26,7 @@ export interface ISharpPluginOptions {
   defaultQuality: number
   failOn?: SharpOptions["failOn"]
   defaults?: PluginOptionsDefaults
+  failOnError?: boolean
 }
 
 interface IDuotoneArgs {
@@ -95,7 +96,7 @@ const generalArgs: Partial<IGeneralArgs> = {
 
 let pluginOptions: ISharpPluginOptions = Object.assign({}, pluginDefaults)
 export const setPluginOptions = (
-  opts: Record<string, string>
+  opts: Record<string, string | boolean>
 ): ISharpPluginOptions => {
   pluginOptions = Object.assign({}, pluginOptions, opts)
   generalArgs.quality = pluginOptions.defaultQuality

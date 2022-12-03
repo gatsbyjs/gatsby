@@ -1,4 +1,4 @@
-const reportError = (message, err, reporter) => {
+const reportError = (message, err, reporter, pluginOptions) => {
   if (reporter) {
     reporter.error({
       id: `gatsby-plugin-sharp-20000`,
@@ -9,8 +9,10 @@ const reportError = (message, err, reporter) => {
     console.error(message, err)
   }
 
-  if (process.env.gatsby_executing_command === `build`) {
-    process.exit(1)
+  if (pluginOptions.failOnErrors === true) {
+    if (process.env.gatsby_executing_command === `build`) {
+      process.exit(1)
+    }
   }
 }
 exports.reportError = reportError

@@ -417,7 +417,8 @@ async function stats({ file, reporter }) {
 
 let didShowTraceSVGRemovalWarningFluid = false
 async function fluid({ file, args = {}, reporter, cache }) {
-  const options = healOptions(getPluginOptions(), args, file.extension)
+  const pluginOptions = getPluginOptions()
+  const options = healOptions(pluginOptions, args, file.extension)
 
   let metadata
   try {
@@ -429,7 +430,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
       err,
-      reporter
+      reporter,
+      pluginOptions
     )
     return null
   }
