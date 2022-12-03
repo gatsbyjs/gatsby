@@ -351,7 +351,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
     it(`reports metadata error without exiting`, async () => {
       process.env.gatsby_executing_command = `build`
-      setPluginOptions({ failOn: `none`, failOnError: false })
+      setPluginOptions({ failOn: `none` })
 
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/metadata-error.png`)),

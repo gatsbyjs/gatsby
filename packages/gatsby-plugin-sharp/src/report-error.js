@@ -9,7 +9,7 @@ const reportError = (message, err, reporter, pluginOptions) => {
     console.error(message, err)
   }
 
-  if (pluginOptions.failOnErrors === true) {
+  if (pluginOptions.failOn !== `none`) {
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }
