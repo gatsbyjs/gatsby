@@ -32,19 +32,6 @@ import { getCollectionRouteParams } from "./get-collection-route-params"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "gatsby-core-utils/match-path"
 
-let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
-
-try {
-  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
-    coreSupportsOnPluginInit = `stable`
-  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
-    coreSupportsOnPluginInit = `unstable`
-  }
-} catch (e) {
-  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
-}
-
 const knownCollections = new Map()
 
 export function createPages(_: CreatePagesArgs, pluginOptions: IOptions): void {
@@ -419,7 +406,7 @@ export function setFieldsOnGraphQLNodeType(
   }
 }
 
-async function initializePlugin(
+export async function onPluginInit(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
@@ -462,13 +449,4 @@ async function initializePlugin(
       },
     })
   }
-}
-
-if (coreSupportsOnPluginInit === `stable`) {
-  // need to conditionally export otherwise it throws an error for older versions
-  exports.onPluginInit = initializePlugin
-} else if (coreSupportsOnPluginInit === `unstable`) {
-  exports.unstable_onPluginInit = initializePlugin
-} else {
-  exports.onPreInit = initializePlugin
 }
