@@ -1,4 +1,5 @@
 import { resolveJSFilepath } from "../bootstrap/resolve-js-file-path"
+import { preferDefault } from "../bootstrap/prefer-default"
 
 const pluginModuleCache = new Map<string, any>()
 
@@ -37,7 +38,10 @@ export async function importGatsbyPlugin(
       importPluginModulePath
     )
 
-    pluginModule = await import(pluginFilePath)
+    const rawPluginModule = await import(pluginFilePath)
+
+    // If the module is cjs, the properties we care about are nested under a top-level `default` property
+    pluginModule = preferDefault(rawPluginModule)
 
     pluginModuleCache.set(key, pluginModule)
   }

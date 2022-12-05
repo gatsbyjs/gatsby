@@ -7,6 +7,7 @@ import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testImportError } from "../utils/test-import-error"
 import { resolveModule, ModuleResolver } from "../utils/module-resolver"
 import { resolveJSFilepath } from "./resolve-js-file-path"
+import { preferDefault } from "./prefer-default"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -206,10 +207,16 @@ export async function resolveModuleExports(
   if (mode === `import`) {
     try {
       const moduleFilePath = resolveJSFilepath(rootDir, modulePath)
+
       if (!moduleFilePath) {
         return []
       }
-      const importedModule = await import(moduleFilePath)
+
+      const rawImportedModule = await import(moduleFilePath)
+
+      // If the module is cjs, the properties we care about are nested under a top-level `default` property
+      const importedModule = preferDefault(rawImportedModule)
+
       return Object.keys(importedModule).filter(
         exportName => exportName !== `__esModule` && exportName !== `default`
       )

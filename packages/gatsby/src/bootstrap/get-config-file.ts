@@ -6,6 +6,7 @@ import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
 import { resolveJSFilepath } from "./resolve-js-file-path"
+import { preferDefault } from "./prefer-default"
 
 export async function getConfigFile(
   siteDirectory: string,
@@ -45,7 +46,7 @@ async function attemptImport(
   }
 
   const importedModule = await import(configFilePath)
-  const configModule = importedModule.default
+  const configModule = preferDefault(importedModule)
 
   return { configFilePath, configModule }
 }
