@@ -636,8 +636,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
 let didShowTraceSVGRemovalWarningFixed = false
 async function fixed({ file, args = {}, reporter, cache }) {
-  const pluginOptions = getPluginOptions()
-  const options = healOptions(pluginOptions, args, file.extension)
+  const options = healOptions(getPluginOptions(), args, file.extension)
 
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
