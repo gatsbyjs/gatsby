@@ -218,6 +218,10 @@ To better visualize how aliases are working in this case, check out this diagram
 
 ![Diagram of aliases in a Gatsby Slice](../../images/using-slices-alias-flow.png)
 
+## Testing Slices
+
+As explained in the [Unit Testing guide](/docs/how-to/testing/unit-testing/#mocking-gatsby) you'll want to mock the `gatsby` module, including the Slice placeholder. With this configuration the Slice placeholder will be replaced with a `<div>` that has the `alias` mapped to the custom data attribute called `data-test-slice-alias`.
+
 ## Additional Resources
 
 - [Gatsby Slice API Reference](/docs/reference/built-in-components/gatsby-slice/)

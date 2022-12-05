@@ -14,6 +14,7 @@ import {
   setHardCachedNodes,
   setPersistentCache,
 } from "~/utils/cache"
+import { buildTypeName } from "../../create-schema-customization/helpers"
 
 /**
  * fetchWPGQLContentNodes
@@ -85,7 +86,13 @@ export const getContentTypeQueryInfos = () => {
   return queryInfos
 }
 
+let cachedGatsbyNodeTypeNames = null
+
 export const getGatsbyNodeTypeNames = () => {
+  if (cachedGatsbyNodeTypeNames) {
+    return cachedGatsbyNodeTypeNames
+  }
+
   const { typeMap } = store.getState().remoteSchema
 
   const queryableTypenames = getContentTypeQueryInfos().map(
@@ -108,7 +115,21 @@ export const getGatsbyNodeTypeNames = () => {
     []
   )
 
-  return [...new Set([...queryableTypenames, ...implementingNodeTypes])]
+  const allTypeNames = [
+    ...new Set([...queryableTypenames, ...implementingNodeTypes]),
+  ]
+
+  const allBuiltTypeNames = allTypeNames.map(typename =>
+    buildTypeName(typename)
+  )
+
+  const typeNameList = [...allTypeNames, ...allBuiltTypeNames]
+
+  if (typeNameList.length) {
+    cachedGatsbyNodeTypeNames = typeNameList
+  }
+
+  return typeNameList
 }
 
 /**

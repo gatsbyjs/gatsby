@@ -128,6 +128,42 @@ You can import your own components.
 
 > **Note:** If you would like to include frontmatter metadata _and_ import components, the frontmatter needs to appear at the top of the file and then imports can follow.
 
+## Importing MDX files into JSX components
+
+You can also import MDX files into JSX components. For example, if you have a MDX file inside `src/content` that you want to include into a React component, you'll first need to make sure that `gatsby-plugin-mdx` can transpile that file. For this you have to point `gatsby-source-filesytem` to this folder:
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    // Your other plugins...
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/src/content`,
+      },
+    },
+  ],
+}
+```
+
+Afterwards you'll be able to use the MDX file (the `.mdx` file extension in the import is necessary) like so:
+
+```jsx:title=src/components/component.jsx
+import * as React from "react"
+// highlight-next-line
+import SomeText from "../content/some-text.mdx"
+
+const Component = () => (
+  <main>
+    {/* highlight-next-line */}
+    <SomeText />
+  </main>
+)
+
+export default Component
+```
+
 ## Defining a layout
 
 You can use regular [layout components](/docs/how-to/routing/layout-components/) to apply layout to your sub pages.
@@ -186,8 +222,6 @@ Sometimes you want to be able to programmatically create pages using MDX content
 For instance, let's say you have a Gatsby website, and you want to add support for MDX so you can start your blog. The posts will live in `content/posts`. You can do this with the help of `gatsby-source-filesystem` and [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) in `gatsby-node.js`.
 
 ### Source MDX pages from the filesystem
-
-To let Gatsby know that you'll be working with MDX content you need to add `gatsby-plugin-mdx` to the plugins array in your `gatsby-config.js` file.
 
 You'll need to use `gatsby-source-filesystem` and tell it to source "posts" from a folder called `content/posts` located in the project's root.
 

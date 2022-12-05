@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-pdf@4.2.0/packages/gatsby-transformer-pdf) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-transformer-pdf
+
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-pdf@4.1.0/packages/gatsby-transformer-pdf) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

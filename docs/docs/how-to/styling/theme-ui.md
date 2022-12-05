@@ -15,7 +15,7 @@ Theme UI includes the `gatsby-plugin-theme-ui` package to better integrate with 
 Install the following packages to add Theme UI.
 
 ```shell
-npm install theme-ui gatsby-plugin-theme-ui
+npm install theme-ui @theme-ui/mdx gatsby-plugin-theme-ui @emotion/react @mdx-js/react
 ```
 
 After installing the dependencies, add the following to your `gatsby-config.js`.

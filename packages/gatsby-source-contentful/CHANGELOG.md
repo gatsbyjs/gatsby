@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.2.0/packages/gatsby-source-contentful) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- update dependency contentful to ^9.1.34 for gatsby-source-contentful [#36514](https://github.com/gatsbyjs/gatsby/issues/36514) ([fb15745](https://github.com/gatsbyjs/gatsby/commit/fb15745827fb29c6e8ae5bd7c491cf903bfa4211))
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+- Add note about RichTextField to README [#36102](https://github.com/gatsbyjs/gatsby/issues/36102) ([f7b922f](https://github.com/gatsbyjs/gatsby/commit/f7b922f8711597c19d5c80fe48f66c0deb492fe0))
+
 ## [8.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.1.0/packages/gatsby-source-contentful) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

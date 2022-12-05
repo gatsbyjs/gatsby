@@ -21,7 +21,7 @@ export const removeExportQueryParam = (
   if (!path?.includes(`?`)) {
     return path
   }
-  const [filePath, queryParams] = path?.split(`?`)
+  const [filePath, queryParams] = path.split(`?`)
   const params = new URLSearchParams(queryParams)
   params.delete(`export`)
 

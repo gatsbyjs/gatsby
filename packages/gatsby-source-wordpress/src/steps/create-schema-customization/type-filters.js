@@ -1,6 +1,3 @@
-import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-local-file-node"
-
-// @todo move this to plugin options
 export const typeDefinitionFilters = [
   {
     typeName: `__all`,
@@ -64,17 +61,6 @@ export const typeDefinitionFilters = [
   {
     typeName: `MediaItem`,
     typeDef: objectType => {
-      // @todo: this field is deprecated as of 0.1.8, remove this when we get to beta
-      objectType.fields.remoteFile = {
-        type: `File`,
-        deprecationReason: `MediaItem.remoteFile was renamed to localFile`,
-        resolve: () => {
-          throw new Error(
-            `MediaItem.remoteFile is deprecated and has been renamed to MediaItem.localFile. Please update your code.`
-          )
-        },
-      }
-
       objectType.fields.localFile = {
         type: `File`,
         extensions: {
