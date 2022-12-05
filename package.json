@@ -104,6 +104,7 @@
     "lint:code": "eslint --ext .js,.jsx,.ts,.tsx --quiet .",
     "lint:other": "npm run prettier -- --check",
     "markdown": "md-magic --path \"starters/**/README.md\"",
+    "nvmrc": "echo $(node -p -e 'require(\"./package\").engines.node.split(\">=\").join(\"\")') > .nvmrc",
     "postmarkdown": "prettier --write \"starters/**/README.md\"",
     "prebootstrap": "yarn",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
