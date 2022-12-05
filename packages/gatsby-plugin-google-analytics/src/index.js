@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const createFunctionWithTimeout = (callback, opt_timeout = 1000) => {
+const createFunctionWithTimeout = (callback, optTimeout = 1000) => {
   let called = false
   const raceCallback = () => {
     if (!called) {
@@ -9,7 +9,7 @@ const createFunctionWithTimeout = (callback, opt_timeout = 1000) => {
       callback()
     }
   }
-  setTimeout(raceCallback, opt_timeout)
+  setTimeout(raceCallback, optTimeout)
   return raceCallback
 }
 
