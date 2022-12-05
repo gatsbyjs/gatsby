@@ -1,36 +1,49 @@
 import path from "path"
 import report from "gatsby-cli/lib/reporter"
-import { sync as existsSync } from "fs-exists-cached"
 
 /**
- * Figure out if the file path is .js or .mjs and return it if it exists.
+ * Figure out if the file path is .js or .mjs without relying on the fs module, and return the file path if it exists.
  */
-export function resolveJSFilepath(
+export async function resolveJSFilepath(
   siteDirectory: string,
   filePath: string
-): string {
+): Promise<string> {
   const filePathWithJSExtension = `${filePath}.js`
   const filePathWithMJSExtension = `${filePath}.mjs`
 
-  if (
-    existsSync(filePathWithJSExtension) &&
-    existsSync(filePathWithMJSExtension)
-  ) {
-    report.warn(
-      `The file '${path.relative(
-        siteDirectory,
-        filePath
-      )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`
-    )
-    return filePathWithJSExtension
+  // Check if both variants exist
+  try {
+    if (
+      require.resolve(filePathWithJSExtension) &&
+      require.resolve(filePathWithMJSExtension)
+    ) {
+      report.warn(
+        `The file '${path.relative(
+          siteDirectory,
+          filePath
+        )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`
+      )
+      return filePathWithJSExtension
+    }
+  } catch (_) {
+    // Do nothing
   }
 
-  if (existsSync(filePathWithJSExtension)) {
-    return filePathWithJSExtension
+  // Check if .js variant exists
+  try {
+    if (require.resolve(filePathWithJSExtension)) {
+      return filePathWithJSExtension
+    }
+  } catch (_) {
+    // Do nothing
   }
 
-  if (existsSync(filePathWithMJSExtension)) {
-    return filePathWithMJSExtension
+  try {
+    if (require.resolve(filePathWithMJSExtension)) {
+      return filePathWithMJSExtension
+    }
+  } catch (_) {
+    // Do nothing
   }
 
   return ``

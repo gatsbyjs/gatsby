@@ -38,7 +38,7 @@ async function attemptImport(
   configModule: unknown
   configFilePath: string
 }> {
-  const configFilePath = resolveJSFilepath(siteDirectory, configPath)
+  const configFilePath = await resolveJSFilepath(siteDirectory, configPath)
 
   // The file does not exist, no sense trying to import it
   if (!configFilePath) {

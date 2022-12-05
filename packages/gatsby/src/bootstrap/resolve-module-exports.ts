@@ -206,7 +206,7 @@ export async function resolveModuleExports(
 ): Promise<Array<string>> {
   if (mode === `import`) {
     try {
-      const moduleFilePath = resolveJSFilepath(rootDir, modulePath)
+      const moduleFilePath = await resolveJSFilepath(rootDir, modulePath)
 
       if (!moduleFilePath) {
         return []

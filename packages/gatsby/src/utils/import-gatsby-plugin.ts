@@ -33,7 +33,7 @@ export async function importGatsbyPlugin(
       importPluginModulePath = `${plugin.resolve}/${module}`
     }
 
-    const pluginFilePath = resolveJSFilepath(
+    const pluginFilePath = await resolveJSFilepath(
       process.cwd(),
       importPluginModulePath
     )
