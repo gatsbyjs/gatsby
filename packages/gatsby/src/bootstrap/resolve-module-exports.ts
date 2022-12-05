@@ -218,7 +218,7 @@ export async function resolveModuleExports(
       const importedModule = preferDefault(rawImportedModule)
 
       return Object.keys(importedModule).filter(
-        exportName => exportName !== `__esModule` && exportName !== `default`
+        exportName => exportName !== `__esModule`
       )
     } catch (error) {
       if (!testImportError(modulePath, error)) {
