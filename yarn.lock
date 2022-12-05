@@ -12054,10 +12054,10 @@ hast-util-parse-selector@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/hast-util-parse-selector/-/hast-util-parse-selector-2.2.0.tgz#2175f18cdd697308fc3431d5c29a9e48dfa4817a"
 
-hast-util-raw@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/hast-util-raw/-/hast-util-raw-6.0.2.tgz#0954c44e2e1c03dc5bb44c40ef5eee3185ebeabe"
-  integrity sha512-m7IlmqO8cytmG3EIMDMXUG8LjO2uyApWcxwL6apsGvikIClgykFg3UYps4rnt4kUpY3j8Mc7ANJ8zW6KPPLb+w==
+hast-util-raw@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/hast-util-raw/-/hast-util-raw-6.1.0.tgz#e16a3c2642f65cc7c480c165400a40d604ab75d0"
+  integrity sha512-5FoZLDHBpka20OlZZ4I/+RBw5piVQ8iI1doEvffQhx5CbCyTtP8UCq8Tw6NmTAMtXgsQxmhW7Ly8OdFre5/YMQ==
   dependencies:
     "@types/hast" "^2.0.0"
     hast-util-from-parse5 "^6.0.0"
@@ -12065,6 +12065,7 @@ hast-util-raw@^6.0.2:
     html-void-elements "^1.0.0"
     parse5 "^6.0.0"
     unist-util-position "^3.0.0"
+    unist-util-visit "^2.0.0"
     vfile "^4.0.0"
     web-namespaces "^1.0.0"
     xtend "^4.0.0"
@@ -20889,10 +20890,10 @@ safe-resolve@^1.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
 
-sanitize-html@^2.7.2:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-2.7.2.tgz#54c5189af75e3237d996e4b9a5e3eaad12c7f7fc"
-  integrity sha512-DggSTe7MviO+K4YTCwprG6W1vsG+IIX67yp/QY55yQqKCJYSWzCA1rZbaXzkjoKeL9+jqwm56wD6srYLtUNivg==
+sanitize-html@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-2.7.3.tgz#166c868444ee4f9fd7352ac8c63fa86c343fc2bd"
+  integrity sha512-jMaHG29ak4miiJ8wgqA1849iInqORgNv7SLfSw9LtfOhEUQ1C0YHKH73R+hgyufBW9ZFeJrb057k9hjlfBCVlw==
   dependencies:
     deepmerge "^4.2.2"
     escape-string-regexp "^4.0.0"
