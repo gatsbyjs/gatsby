@@ -395,9 +395,10 @@ async function traceSVG(args) {
 }
 
 async function stats({ file, reporter }) {
+  const pluginOptions = getPluginOptions()
   let imgStats
   try {
-    const pipeline = sharp()
+    const pipeline = sharp({ failOn: pluginOptions.failOn })
     fs.createReadStream(file.absolutePath).pipe(pipeline)
 
     imgStats = await pipeline.stats()
@@ -417,11 +418,12 @@ async function stats({ file, reporter }) {
 
 let didShowTraceSVGRemovalWarningFluid = false
 async function fluid({ file, args = {}, reporter, cache }) {
-  const options = healOptions(getPluginOptions(), args, file.extension)
+  const pluginOptions = getPluginOptions()
+  const options = healOptions(pluginOptions, args, file.extension)
 
   let metadata
   try {
-    const pipeline = sharp()
+    const pipeline = sharp({ failOn: pluginOptions.failOn })
     fs.createReadStream(file.absolutePath).pipe(pipeline)
 
     metadata = await pipeline.metadata()
@@ -634,7 +636,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
 let didShowTraceSVGRemovalWarningFixed = false
 async function fixed({ file, args = {}, reporter, cache }) {
-  const options = healOptions(getPluginOptions(), args, file.extension)
+  const pluginOptions = getPluginOptions()
+  const options = healOptions(pluginOptions, args, file.extension)
 
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`

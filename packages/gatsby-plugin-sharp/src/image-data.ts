@@ -396,6 +396,8 @@ export async function generateImageData({
     imageProps.placeholder = {
       fallback,
     }
+    // @ts-ignore - Type is incorrect because it's removed
+    // TODO(v6): Remove this codepath
   } else if (placeholder === `tracedSVG`) {
     const fallback: string = await traceSVG({
       file,
