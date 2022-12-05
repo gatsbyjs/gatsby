@@ -39,7 +39,7 @@
   "devDependencies": {
     "cpy-cli": "^2.0.0",
     "cross-env": "^5.2.0",
-    "del-cli": "^3.0.0",
+    "del-cli": "^3.0.1",
     "gatsby-cypress": "next",
     "is-ci": "^2.0.0",
     "make-dir-cli": "^2.0.0",
