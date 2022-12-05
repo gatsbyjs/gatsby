@@ -651,7 +651,7 @@ describe(`NodeModel`, () => {
       createPageDependency.mockClear()
     })
 
-    describe.only(`getFieldValue`, () => {
+    describe(`getFieldValue`, () => {
       it(`gets the materialized field value`, async () => {
         const fieldValue = await nodeModel.getFieldValue(
           articleNode,
