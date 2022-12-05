@@ -17,6 +17,7 @@ e2e-tests
 examples
 integration-tests
 **/*.d.ts
+deprecated-packages
 
 packages/*/*.js
 packages/gatsby-source-shopify/**/*.js

@@ -1,7 +1,7 @@
 import { runApiSteps, findApiName } from "./utils/run-steps"
 import * as steps from "./steps"
 
-const pluginInitApiName = findApiName(`onPluginInit|unstable_onPluginInit`)
+const pluginInitApiName = findApiName(`onPluginInit`)
 
 exports[pluginInitApiName] = runApiSteps(
   [

@@ -90,6 +90,7 @@ const remoteSchema: IRemoteSchemaStore = {
       `previewRevisionDatabaseId`,
       `previewRevisionId`,
       `editingLockedBy`,
+      `cursor`,
     ],
     // @todo make this a plugin option
     fieldAliases: {
