@@ -3,6 +3,7 @@ import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
 
+// canary commit
 export const buildInterfacesListForType = type => {
   let shouldAddNodeType = false
 
