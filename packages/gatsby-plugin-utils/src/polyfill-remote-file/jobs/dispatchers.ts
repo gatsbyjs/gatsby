@@ -23,10 +23,13 @@ export function dispatchLocalFileServiceJob(
   store?: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
-  const publicUrl = generateFileUrl({
-    url,
-    filename,
-  }).split(`/`)
+  const publicUrl = generateFileUrl(
+    {
+      url,
+      filename,
+    },
+    store
+  ).split(`/`)
 
   publicUrl.unshift(`public`)
   // get filename and remove querystring
@@ -83,7 +86,8 @@ export function dispatchLocalImageServiceJob(
       filename,
       internal: { contentDigest },
     },
-    imageArgs
+    imageArgs,
+    store
   ).split(`/`)
   publicUrl.unshift(`public`)
   // get filename and remove querystring
