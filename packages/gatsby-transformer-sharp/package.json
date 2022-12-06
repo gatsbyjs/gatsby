@@ -13,7 +13,7 @@
     "fs-extra": "^10.1.0",
     "gatsby-plugin-utils": "^4.3.0-next.2",
     "probe-image-size": "^7.2.3",
-    "semver": "^7.3.7",
+    "semver": "^7.3.8",
     "sharp": "^0.31.2"
   },
   "devDependencies": {
