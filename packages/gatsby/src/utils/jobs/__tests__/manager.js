@@ -42,15 +42,14 @@ jest.mock(`hasha`, () => jest.requireActual(`hasha`))
 
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
+const nodeModulesPluginPath = slash(
+  path.resolve(__dirname, `fixtures`, `node_modules`, `gatsby-plugin-test`)
+)
+
 const plugin = {
   name: `gatsby-plugin-test`,
   version: `1.0.0`,
-  resolve: path.resolve(
-    __dirname,
-    `fixtures`,
-    `node_modules`,
-    `gatsby-plugin-test`
-  ),
+  resolve: nodeModulesPluginPath,
 }
 
 const createMockJob = (overrides = {}) => {
@@ -130,12 +129,7 @@ describe(`Jobs manager`, () => {
           plugin: {
             name: `gatsby-plugin-test`,
             version: `1.0.0`,
-            resolve: path.resolve(
-              __dirname,
-              `fixtures`,
-              `node_modules`,
-              `gatsby-plugin-test`
-            ),
+            resolve: nodeModulesPluginPath,
             isLocal: false,
           },
         })
@@ -525,10 +519,8 @@ describe(`Jobs manager`, () => {
 
     it(`should run the worker locally when it's a local plugin`, async () => {
       jest.useRealTimers()
-      const localPluginPath = path.resolve(
-        __dirname,
-        `fixtures`,
-        `gatsby-plugin-local`
+      const localPluginPath = slash(
+        path.resolve(__dirname, `fixtures`, `gatsby-plugin-local`)
       )
       const localPluginWorkerPath = path.join(localPluginPath, `gatsby-worker`)
       const worker = require(localPluginWorkerPath)
