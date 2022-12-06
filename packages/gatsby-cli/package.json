@@ -44,7 +44,7 @@
     "prompts": "^2.4.2",
     "redux": "4.1.2",
     "resolve-cwd": "^3.0.0",
-    "semver": "^7.3.7",
+    "semver": "^7.3.8",
     "signal-exit": "^3.0.6",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^6.0.1",
