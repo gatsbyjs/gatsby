@@ -62,12 +62,12 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "ci-info": "2.0.0",
-    "configstore": "^5.0.1",
+    "ci-info": "3.7.0",
+    "configstore": "^6.0.0",
     "fastq": "^1.13.0",
-    "file-type": "^16.5.3",
+    "file-type": "^18.0.0",
     "fs-extra": "^10.1.0",
-    "got": "^11.8.5",
+    "got": "^12.5.3",
     "import-from": "^4.0.0",
     "lmdb": "2.5.3",
     "lock": "^1.1.0",
@@ -75,7 +75,7 @@
     "proper-lockfile": "^4.1.2",
     "resolve-from": "^5.0.0",
     "tmp": "^0.2.1",
-    "xdg-basedir": "^4.0.0"
+    "xdg-basedir": "^5.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
