@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@gatsbyjs/potrace": "^2.3.0",
     "async": "^3.2.4",
     "bluebird": "^3.7.2",
     "debug": "^4.3.4",
@@ -17,11 +16,9 @@
     "gatsby-core-utils": "^3.24.0",
     "gatsby-plugin-utils": "^3.18.0",
     "lodash": "^4.17.21",
-    "mini-svg-data-uri": "^1.4.4",
     "probe-image-size": "^7.2.3",
     "semver": "^7.3.7",
-    "sharp": "^0.30.7",
-    "svgo": "^2.8.0"
+    "sharp": "^0.30.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",

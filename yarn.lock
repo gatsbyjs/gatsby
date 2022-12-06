@@ -1638,13 +1638,6 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@gatsbyjs/potrace@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@gatsbyjs/potrace/-/potrace-2.3.0.tgz#0ac22fb56a02ebc64ce55e4666c4b741cbf27377"
-  integrity sha512-72szhSY/4tPiPPOzq15CG6LW0s9FuWQ86gkLSUvBNoF0s+jsEdRaZmATYNjiY2Skg//EuyPLEqUQnXKXME0szg==
-  dependencies:
-    jimp-compact "^0.16.1-2"
-
 "@gatsbyjs/reach-router@^1.3.9":
   version "1.3.9"
   resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-1.3.9.tgz#305c3c4c5041f27e53fc33e344a08ee2c4b985af"
@@ -14256,11 +14249,6 @@ jest@^27.4.4:
     import-local "^3.0.2"
     jest-cli "^27.4.4"
 
-jimp-compact@^0.16.1-2:
-  version "0.16.1-2"
-  resolved "https://registry.yarnpkg.com/jimp-compact/-/jimp-compact-0.16.1-2.tgz#a82ff9a5a81f15a4b61b5e2e50fae6a43305e5a9"
-  integrity sha512-b2A3rRT1TITzqmaO70U2/uunCh43BQVq7BfRwGPkD5xj8/WZsR3sPTy9DENt+dNZGsel3zBEm1UtYegUxjZW7A==
-
 joi@^14.3.1:
   version "14.3.1"
   resolved "https://registry.yarnpkg.com/joi/-/joi-14.3.1.tgz#164a262ec0b855466e0c35eea2a885ae8b6c703c"
@@ -23401,7 +23389,7 @@ svgo@^0.7.2:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
-svgo@^2.3.0, svgo@^2.8.0:
+svgo@^2.3.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-2.8.0.tgz#4ff80cce6710dc2795f0c7c74101e6764cfccd24"
   integrity sha512-+N/Q9kV1+F+UeWYoSiULYo4xYSDQlTgb+ayMobAXPwMnLvop7oxKMo9OzIrX5x3eS4L4f2UHhc9axXwY8DpChg==
