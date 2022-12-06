@@ -29,7 +29,11 @@ describe(`gatsby new`, () => {
   })
 
   it(`creates a gatsby site with the default starter`, () => {
-    const [code, logs] = GatsbyCLI.from(cwd).invoke([`new`, `gatsby-default`])
+    const [code, logs] = GatsbyCLI.from(cwd).invoke([
+      `new`,
+      `gatsby-default`,
+      `gatsbyjs/gatsby-starter-default#v4`,
+    ])
 
     logs.should.contain(
       `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-default.git`
@@ -48,7 +52,7 @@ describe(`gatsby new`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
-      `gatsbyjs/gatsby-starter-blog`,
+      `gatsbyjs/gatsby-starter-blog#v4`,
     ])
 
     logs.should.contain(

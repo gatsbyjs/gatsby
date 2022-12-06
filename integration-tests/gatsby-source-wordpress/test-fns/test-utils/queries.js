@@ -530,7 +530,6 @@ exports.queries = {
               id
               label
               databaseId
-              nodeType
               target
               title
               url
@@ -670,7 +669,6 @@ exports.queries = {
           writingSettingsDefaultPostFormat
           writingSettingsUseSmilies
         }
-        nodeType
         writingSettings {
           defaultCategory
           defaultPostFormat

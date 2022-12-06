@@ -1,4 +1,5 @@
 import store from "~/store"
+import { findNamedTypeName } from "../create-schema-customization/helpers"
 
 export const getTypeInfoBySingleName = singleName => {
   const { typeMap } = store.getState().remoteSchema
@@ -7,7 +8,7 @@ export const getTypeInfoBySingleName = singleName => {
     .get(`RootQuery`)
     .fields.find(field => field.name === singleName)
 
-  const typeName = rootField.type.name || rootField.type.ofType.name
+  const typeName = rootField.type.name || findNamedTypeName(rootField.type)
 
   const type = typeMap.get(typeName)
 
