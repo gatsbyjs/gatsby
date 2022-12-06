@@ -85,7 +85,9 @@ const GatsbyPluginImagePage = ({ data }) => {
         ))}
       </Grid>
 
-      <h2>gatsby-plugin-image: Traced SVG Placeholder</h2>
+      <h2>
+        gatsby-plugin-image: Traced SVG Placeholder (fallback to DOMINANT_COLOR)
+      </h2>
       <Grid data-cy="traced">
         {data.default.nodes.map(node => (
           <div>

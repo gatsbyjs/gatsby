@@ -498,7 +498,7 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
+const fixedNodeType = ({ name, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -509,7 +509,15 @@ const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: getTracedSVG,
+          resolve: imageProps => {
+            if (!didShowTraceSVGRemovalWarningFixed) {
+              console.warn(
+                `"tracedSVG" placeholder field is no longer supported (used in ContentfulAsset.fixed processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
+              )
+              didShowTraceSVGRemovalWarningFixed = true
+            }
+            return getBase64Image(imageProps, reporter)
+          },
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -600,7 +608,7 @@ const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
+const fluidNodeType = ({ name, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
@@ -611,7 +619,15 @@ const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: getTracedSVG,
+          resolve: imageProps => {
+            if (!didShowTraceSVGRemovalWarningFluid) {
+              console.warn(
+                `"tracedSVG" placeholder field is no longer supported (used in ContentfulAsset.fluid processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
+              )
+              didShowTraceSVGRemovalWarningFluid = true
+            }
+            return getBase64Image(imageProps, reporter)
+          },
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
         src: { type: new GraphQLNonNull(GraphQLString) },
@@ -704,36 +720,14 @@ const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
   }
 }
 
+let didShowTraceSVGRemovalWarningImageData = false
+let didShowTraceSVGRemovalWarningResize = false
+let didShowTraceSVGRemovalWarningFixed = false
+let didShowTraceSVGRemovalWarningFluid = false
+
 exports.extendNodeType = ({ type, store, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
-  }
-
-  const getTracedSVG = async args => {
-    const { traceSVG } = require(`gatsby-plugin-sharp`)
-
-    const { image, options } = args
-    const {
-      file: { contentType },
-    } = image
-
-    if (contentType.indexOf(`image/`) !== 0) {
-      return null
-    }
-
-    const absolutePath = await cacheImage(store, image, options, reporter)
-    const extension = path.extname(absolutePath)
-
-    return traceSVG({
-      file: {
-        internal: image.internal,
-        name: image.file.fileName,
-        extension,
-        absolutePath,
-      },
-      args: { toFormat: `` },
-      fileArgs: options,
-    })
   }
 
   const getDominantColor = async ({ image, options, reporter }) => {
@@ -774,6 +768,16 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
     const { generateImageData } = require(`gatsby-plugin-image`)
 
+    if (options?.placeholder === `tracedSVG`) {
+      if (!didShowTraceSVGRemovalWarningImageData) {
+        console.warn(
+          `"TRACED_SVG" placeholder argument value is no longer supported (used in ContentfulAsset.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+        )
+        didShowTraceSVGRemovalWarningImageData = true
+      }
+      options.placeholder = `dominantColor`
+    }
+
     const { baseUrl, contentType, width, height } = getBasicImageProps(
       image,
       options
@@ -813,13 +817,6 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       )
     }
 
-    if (options.placeholder === `tracedSVG`) {
-      placeholderDataURI = await getTracedSVG({
-        image,
-        options,
-      })
-    }
-
     if (placeholderDataURI) {
       imageProps.placeholder = { fallback: placeholderDataURI }
     }
@@ -829,13 +826,11 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
   const fixedNode = fixedNodeType({
     name: `ContentfulFixed`,
-    getTracedSVG,
     reporter,
   })
 
   const fluidNode = fluidNodeType({
     name: `ContentfulFluid`,
-    getTracedSVG,
     reporter,
   })
 
@@ -883,7 +878,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
             Format of generated placeholder image, displayed while the main image loads.
             BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
             DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
-            TRACED_SVG: a low-resolution traced SVG of the image.
+            TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
             NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
       },
       formats: {
@@ -920,7 +915,15 @@ exports.extendNodeType = ({ type, store, reporter }) => {
           },
           tracedSVG: {
             type: GraphQLString,
-            resolve: getTracedSVG,
+            resolve: imageProps => {
+              if (!didShowTraceSVGRemovalWarningResize) {
+                console.warn(
+                  `"tracedSVG" placeholder field is no longer supported (used in ContentfulAsset.resize processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
+                )
+                didShowTraceSVGRemovalWarningResize = true
+              }
+              return getBase64Image(imageProps, reporter)
+            },
           },
           src: { type: GraphQLString },
           width: { type: GraphQLInt },
