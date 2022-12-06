@@ -32,6 +32,15 @@ it(`resolves gatsby-config.js if it exists`, async () => {
   expect(resolvedConfigFilePath).toBe(`${configFilePath}.js`)
 })
 
+it(`resolves gatsby-config.js the same way if a file path with extension is provided`, async () => {
+  const configFilePath = path.join(mockDir, `cjs`, `gatsby-config.js`)
+  const resolvedConfigFilePath = await resolveJSFilepath(
+    mockDir,
+    configFilePath
+  )
+  expect(resolvedConfigFilePath).toBe(configFilePath)
+})
+
 it(`resolves gatsby-config.mjs if it exists`, async () => {
   const configFilePath = path.join(mockDir, `esm`, `gatsby-config`)
   const resolvedConfigFilePath = await resolveJSFilepath(
@@ -39,6 +48,15 @@ it(`resolves gatsby-config.mjs if it exists`, async () => {
     configFilePath
   )
   expect(resolvedConfigFilePath).toBe(`${configFilePath}.mjs`)
+})
+
+it(`resolves gatsby-config.mjs the same way if a file path with extension is provided`, async () => {
+  const configFilePath = path.join(mockDir, `esm`, `gatsby-config.mjs`)
+  const resolvedConfigFilePath = await resolveJSFilepath(
+    mockDir,
+    configFilePath
+  )
+  expect(resolvedConfigFilePath).toBe(configFilePath)
 })
 
 it(`warns if both variants exist and defaults to the gatsby-config.js variant`, async () => {

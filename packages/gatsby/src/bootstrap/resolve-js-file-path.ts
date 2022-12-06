@@ -8,8 +8,12 @@ export async function resolveJSFilepath(
   siteDirectory: string,
   filePath: string
 ): Promise<string> {
-  const filePathWithJSExtension = `${filePath}.js`
-  const filePathWithMJSExtension = `${filePath}.mjs`
+  const filePathWithJSExtension = filePath.endsWith(`.js`)
+    ? filePath
+    : `${filePath}.js`
+  const filePathWithMJSExtension = filePath.endsWith(`.mjs`)
+    ? filePath
+    : `${filePath}.mjs`
 
   // Check if both variants exist
   try {
