@@ -28,7 +28,7 @@ const { emitter, store } = require(`../redux`)
 const { getNodes, getNode, getNodesByType } = require(`../datastore`)
 const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
-const { requireGatsbyPlugin } = require(`./require-gatsby-plugin`)
+const { importGatsbyPlugin } = require(`./import-gatsby-plugin`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
@@ -293,7 +293,7 @@ const getUninitializedCache = plugin => {
 const availableActionsCache = new Map()
 let publicPath
 const runAPI = async (plugin, api, args, activity) => {
-  const gatsbyNode = await requireGatsbyPlugin(plugin, `gatsby-node`)
+  const gatsbyNode = await importGatsbyPlugin(plugin, `gatsby-node`)
 
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -616,8 +616,7 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
           return null
         }
 
-        // TODO: Probably refactor
-        return requireGatsbyPlugin(plugin, `gatsby-node`).then(gatsbyNode => {
+        return importGatsbyPlugin(plugin, `gatsby-node`).then(gatsbyNode => {
           const pluginName =
             plugin.name === `default-site-plugin`
               ? `gatsby-node.js`

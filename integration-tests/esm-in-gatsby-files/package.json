@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "clean": "gatsby clean",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
     "test": "jest --runInBand"
   },
   "dependencies": {

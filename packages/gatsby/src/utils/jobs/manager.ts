@@ -16,7 +16,7 @@ import {
   IJobNotWhitelisted,
   WorkerError,
 } from "./types"
-import { requireGatsbyPlugin } from "../require-gatsby-plugin"
+import { importGatsbyPlugin } from "../import-gatsby-plugin"
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
@@ -157,7 +157,7 @@ function runJob(
 ): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
-    return requireGatsbyPlugin(plugin, `gatsby-worker`).then(worker => {
+    return importGatsbyPlugin(plugin, `gatsby-worker`).then(worker => {
       if (!worker[job.name]) {
         throw new Error(`No worker function found for ${job.name}`)
       }

@@ -1,7 +1,7 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 const { slash } = require(`gatsby-core-utils`)
-const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker`)
+const worker = require(`./fixtures/node_modules/gatsby-plugin-test/gatsby-worker`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
@@ -26,26 +26,6 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-jest.mock(
-  `/node_modules/gatsby-plugin-test/gatsby-worker`,
-  () => {
-    return {
-      TEST_JOB: jest.fn(),
-    }
-  },
-  { virtual: true }
-)
-
-jest.mock(
-  `/gatsby-plugin-local/gatsby-worker`,
-  () => {
-    return {
-      TEST_JOB: jest.fn(),
-    }
-  },
-  { virtual: true }
-)
-
 jest.mock(`gatsby-core-utils`, () => {
   const realCoreUtils = jest.requireActual(`gatsby-core-utils`)
 
@@ -65,7 +45,12 @@ fs.ensureDir = jest.fn().mockResolvedValue(true)
 const plugin = {
   name: `gatsby-plugin-test`,
   version: `1.0.0`,
-  resolve: `/node_modules/gatsby-plugin-test`,
+  resolve: path.resolve(
+    __dirname,
+    `fixtures`,
+    `node_modules`,
+    `gatsby-plugin-test`
+  ),
 }
 
 const createMockJob = (overrides = {}) => {
@@ -95,6 +80,7 @@ describe(`Jobs manager`, () => {
 
   beforeEach(() => {
     worker.TEST_JOB.mockReset()
+    worker.NEXT_JOB.mockReset()
     endActivity.mockClear()
     pDefer.mockClear()
     uuid.v4.mockClear()
@@ -144,7 +130,12 @@ describe(`Jobs manager`, () => {
           plugin: {
             name: `gatsby-plugin-test`,
             version: `1.0.0`,
-            resolve: `/node_modules/gatsby-plugin-test`,
+            resolve: path.resolve(
+              __dirname,
+              `fixtures`,
+              `node_modules`,
+              `gatsby-plugin-test`
+            ),
             isLocal: false,
           },
         })
@@ -181,7 +172,7 @@ describe(`Jobs manager`, () => {
     it(`should schedule a job`, async () => {
       const { enqueueJob } = jobManager
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
-      worker.NEXT_JOB = jest.fn().mockReturnValue({ output: `another result` })
+      worker.NEXT_JOB.mockReturnValue({ output: `another result` })
       const mockedJob = createInternalMockJob()
       const job1 = enqueueJob(mockedJob)
       const job2 = enqueueJob(
@@ -534,12 +525,18 @@ describe(`Jobs manager`, () => {
 
     it(`should run the worker locally when it's a local plugin`, async () => {
       jest.useRealTimers()
-      const worker = require(`/gatsby-plugin-local/gatsby-worker`)
+      const localPluginPath = path.resolve(
+        __dirname,
+        `fixtures`,
+        `gatsby-plugin-local`
+      )
+      const localPluginWorkerPath = path.join(localPluginPath, `gatsby-worker`)
+      const worker = require(localPluginWorkerPath)
       const { enqueueJob, createInternalJob } = jobManager
       const jobArgs = createInternalJob(createMockJob(), {
         name: `gatsby-plugin-local`,
         version: `1.0.0`,
-        resolve: `/gatsby-plugin-local`,
+        resolve: localPluginPath,
       })
 
       await expect(enqueueJob(jobArgs)).resolves.toBeUndefined()

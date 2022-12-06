@@ -5,7 +5,8 @@ import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
-import { resolveConfigFilePath } from "./resolve-config-file-path"
+import { resolveJSFilepath } from "./resolve-js-file-path"
+import { preferDefault } from "./prefer-default"
 
 export async function getConfigFile(
   siteDirectory: string,
@@ -37,7 +38,7 @@ async function attemptImport(
   configModule: unknown
   configFilePath: string
 }> {
-  const configFilePath = resolveConfigFilePath(siteDirectory, configPath)
+  const configFilePath = await resolveJSFilepath(siteDirectory, configPath)
 
   // The file does not exist, no sense trying to import it
   if (!configFilePath) {
@@ -45,7 +46,7 @@ async function attemptImport(
   }
 
   const importedModule = await import(configFilePath)
-  const configModule = importedModule.default
+  const configModule = preferDefault(importedModule)
 
   return { configFilePath, configModule }
 }

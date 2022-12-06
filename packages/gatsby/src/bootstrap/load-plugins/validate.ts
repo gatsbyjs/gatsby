@@ -406,9 +406,11 @@ export async function validateConfigPluginsOptions(
 export async function collatePluginAPIs({
   currentAPIs,
   flattenedPlugins,
+  rootDir,
 }: {
   currentAPIs: ICurrentAPIs
   flattenedPlugins: Array<IPluginInfo & Partial<IFlattenedPlugin>>
+  rootDir: string
 }): Promise<{
   flattenedPlugins: Array<IFlattenedPlugin>
   badExports: IEntryMap
@@ -431,14 +433,19 @@ export async function collatePluginAPIs({
     const pluginNodeExports = await resolveModuleExports(
       plugin.resolvedCompiledGatsbyNode ?? `${plugin.resolve}/gatsby-node`,
       {
-        mode: `require`,
+        mode: `import`,
+        rootDir,
       }
     )
     const pluginBrowserExports = await resolveModuleExports(
-      `${plugin.resolve}/gatsby-browser`
+      `${plugin.resolve}/gatsby-browser`,
+      {
+        rootDir,
+      }
     )
     const pluginSSRExports = await resolveModuleExports(
-      `${plugin.resolve}/gatsby-ssr`
+      `${plugin.resolve}/gatsby-ssr`,
+      { rootDir }
     )
 
     if (pluginNodeExports.length > 0) {

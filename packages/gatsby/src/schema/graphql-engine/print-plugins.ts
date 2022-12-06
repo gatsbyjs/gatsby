@@ -5,7 +5,7 @@ import * as _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
-import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
+import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
 
 export const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
@@ -150,10 +150,7 @@ async function filterPluginsWithWorkers(
 
   for (const plugin of plugins) {
     try {
-      const pluginWithWorker = await requireGatsbyPlugin(
-        plugin,
-        `gatsby-worker`
-      )
+      const pluginWithWorker = await importGatsbyPlugin(plugin, `gatsby-worker`)
       if (pluginWithWorker) {
         filteredPlugins.push(plugin)
       }

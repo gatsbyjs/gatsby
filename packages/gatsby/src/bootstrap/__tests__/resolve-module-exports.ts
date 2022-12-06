@@ -12,8 +12,10 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 import * as fs from "fs-extra"
+import path from "path"
 import reporter from "gatsby-cli/lib/reporter"
 import { resolveModuleExports } from "../resolve-module-exports"
+
 let resolver
 
 describe(`Resolve module exports`, () => {
@@ -126,6 +128,8 @@ describe(`Resolve module exports`, () => {
     "/export/default/function/name": `export default function foo() {}`,
     "/export/function": `export function foo() {}`,
   }
+
+  const mockDir = path.resolve(__dirname, `..`, `__mocks__`)
 
   beforeEach(() => {
     resolver = jest.fn(arg => arg)
@@ -252,36 +256,45 @@ describe(`Resolve module exports`, () => {
     expect(result).toEqual([`foo`])
   })
 
-  it(`Resolves exports when using require mode - simple case`, async () => {
-    jest.mock(`require/exports`)
+  it(`Resolves exports when using import mode - simple case`, async () => {
+    jest.mock(`import/exports`)
 
-    const result = await resolveModuleExports(`require/exports`, {
-      mode: `require`,
-    })
+    const result = await resolveModuleExports(
+      path.join(mockDir, `import`, `exports`),
+      {
+        mode: `import`,
+      }
+    )
     expect(result).toEqual([`foo`, `bar`])
   })
 
-  it(`Resolves exports when using require mode - unusual case`, async () => {
-    jest.mock(`require/unusual-exports`)
+  it(`Resolves exports when using import mode - unusual case`, async () => {
+    jest.mock(`import/unusual-exports`)
 
-    const result = await resolveModuleExports(`require/unusual-exports`, {
-      mode: `require`,
-    })
+    const result = await resolveModuleExports(
+      path.join(mockDir, `import`, `unusual-exports`),
+      {
+        mode: `import`,
+      }
+    )
     expect(result).toEqual([`foo`])
   })
 
-  it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, async () => {
-    const result = await resolveModuleExports(`require/not-existing-module`, {
-      mode: `require`,
-    })
+  it(`Resolves exports when using import mode - returns empty array when module doesn't exist`, async () => {
+    const result = await resolveModuleExports(
+      path.join(mockDir, `import`, `not-existing-module`),
+      {
+        mode: `import`,
+      }
+    )
     expect(result).toEqual([])
   })
 
-  it(`Resolves exports when using require mode - panic on errors`, async () => {
-    jest.mock(`require/module-error`)
+  it(`Resolves exports when using import mode - panic on errors`, async () => {
+    jest.mock(`import/module-error`)
 
-    await resolveModuleExports(`require/module-error`, {
-      mode: `require`,
+    await resolveModuleExports(path.join(mockDir, `import`, `module-error`), {
+      mode: `import`,
     })
 
     expect(reporter.panic).toBeCalled()

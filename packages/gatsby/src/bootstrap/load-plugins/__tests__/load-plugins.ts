@@ -25,6 +25,17 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
+// Previously babel transpiled src ts plugin files (e.g. gatsby-node files) on the fly,
+// making them require-able/test-able without running compileGatsbyFiles prior (as would happen in a real scenario).
+// After switching to import to support esm, point file path resolution to the real compiled JS files in dist instead.
+jest.mock(`../../resolve-js-file-path`, () => {
+  return {
+    resolveJSFilepath: jest.fn(
+      (_, filePath) => `${filePath.replace(`src`, `dist`)}.js`
+    ),
+  }
+})
+
 jest.mock(`resolve-from`)
 const mockProcessExit = jest.spyOn(process, `exit`).mockImplementation(() => {})
 
