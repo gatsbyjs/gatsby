@@ -11,20 +11,6 @@ describe(`NodeModel`, () => {
   let schema
   const createPageDependency = jest.fn()
 
-  const allNodeTypes = [
-    `File`,
-    `Directory`,
-    `Site`,
-    `SitePage`,
-    `SiteFunction`,
-    `SitePlugin`,
-    `SiteBuildMetadata`,
-    `Author`,
-    `Contributor`,
-    `ExternalFile`,
-    `Post`,
-  ]
-
   describe(`normal node tests`, () => {
     beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
@@ -594,6 +580,84 @@ describe(`NodeModel`, () => {
           path: `/`,
           connection: `Contributor`,
         })
+      })
+    })
+  })
+
+  describe(`normal node tests (with materialization)`, () => {
+    const articleNode = {
+      id: `article-1`,
+      name: `Article 1`,
+      articleType: `article-type-1`,
+      parent: null,
+      children: [],
+      internal: {
+        type: `Article`,
+        contentDigest: `0`,
+      },
+    }
+    beforeEach(async () => {
+      store.dispatch({ type: `DELETE_CACHE` })
+      const nodes = (() => [
+        {
+          id: `article-type-1`,
+          name: `Article Type 1`,
+          parent: null,
+          children: [],
+          internal: {
+            type: `ArticleType`,
+            contentDigest: `0`,
+          },
+        },
+        articleNode,
+      ])()
+      nodes.forEach(node =>
+        actions.createNode(
+          { ...node, internal: { ...node.internal } },
+          { name: `test` }
+        )(store.dispatch)
+      )
+
+      const types = `
+        type ArticleType implements Node {
+          name: String!
+        }
+      
+        type Article implements Node {
+          name: String!
+          articleType: ArticleType @link
+        }
+      `
+      store.dispatch({
+        type: `CREATE_TYPES`,
+        payload: types,
+      })
+
+      await build({})
+      let schemaComposer
+      ;({
+        schemaCustomization: { composer: schemaComposer },
+        schema,
+      } = store.getState())
+
+      nodeModel = new LocalNodeModel({
+        schema,
+        schemaComposer,
+        createPageDependency,
+      })
+    })
+
+    beforeEach(() => {
+      createPageDependency.mockClear()
+    })
+
+    describe(`getFieldValue`, () => {
+      it(`gets the materialized field value`, async () => {
+        const fieldValue = await nodeModel.getFieldValue(
+          articleNode,
+          `articleType.name`
+        )
+        expect(fieldValue).toBe(`Article Type 1`)
       })
     })
   })

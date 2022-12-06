@@ -13,17 +13,11 @@ const {
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 import { store } from "../redux"
-import {
-  getDataStore,
-  getNode,
-  getNodes,
-  getNodesByType,
-  getTypes,
-} from "../datastore"
+import { getDataStore, getNode, getTypes } from "../datastore"
 import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
-import { reportOnce } from "../utils/report-once"
 import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
 import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
+import { getMaybeResolvedValue } from "./resolvers"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -61,6 +55,7 @@ export interface NodeModel {
   ): nodesOrNodes;
   findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null;
   trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node;
+  getFieldValue(node: Node, fieldPath: string): Promise<any>;
 }
 
 class LocalNodeModel {
@@ -127,6 +122,13 @@ class LocalNodeModel {
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the node
    * @param {PageDependencies} [pageDependencies]
    * @returns {(Node|null)}
+   * @example
+   * // Using only the id
+   * getNodeById({ id: `123` })
+   * // Using id and type
+   * getNodeById({ id: `123`, type: `MyType` })
+   * // Providing page dependencies
+   * getNodeById({ id: `123` }, { path: `/` })
    */
   getNodeById(args, pageDependencies) {
     const { id, type } = args || {}
@@ -586,6 +588,30 @@ class LocalNodeModel {
 
     return result
   }
+
+  /**
+   * Utility to get a field value from a node, even when that value needs to be materialized first (e.g. nested field that was connected via @link directive)
+   * @param {Node} node
+   * @param {string} fieldPath
+   * @returns {any}
+   * @example
+   * // Example: Via schema customization the author ID is linked to the Author type
+   * const blogPostNode = {
+   *   author: 'author-id-1',
+   *   // Rest of node fields...
+   * }
+   *
+   * getFieldValue(blogPostNode, 'author.name')
+   */
+  getFieldValue = async (node, fieldPath) => {
+    const fieldToResolve = pathToObject(fieldPath)
+    const typeName = node.internal.type
+    const type = this.schema.getType(typeName)
+
+    await this.prepareNodes(type, fieldToResolve, fieldToResolve)
+
+    return getMaybeResolvedValue(node, fieldPath, typeName)
+  }
 }
 
 class ContextualNodeModel {
@@ -662,6 +688,8 @@ class ContextualNodeModel {
       this._getFullDependencies(pageDependencies)
     )
   }
+
+  getFieldValue = (...args) => this.nodeModel.getFieldValue(...args)
 }
 
 const getNodeById = id => (id != null ? getNode(id) : null)

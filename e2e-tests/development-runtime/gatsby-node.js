@@ -30,6 +30,14 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
       slug: String!
       content: String!
     }
+
+    type GatsbyPathMaterializedParent implements Node {
+      childType: GatsbyPathMaterializedLinked @link(by: "name")
+    }
+
+    type GatsbyPathMaterializedLinked implements Node {
+      name: String!
+    }
   `)
 }
 
@@ -88,6 +96,29 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     internal: {
       type: `HeadFunctionExportFsRouteApi`,
       content: `Some words`,
+      contentDigest: createContentDigest(`Some words`),
+    },
+  })
+
+  actions.createNode({
+    id: createNodeId(`gatsby-path-materialized-parent`),
+    name: `gatsby-path-materialized Parent Name`,
+    childType: `gatsby-path-materialized Linked Name`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `GatsbyPathMaterializedParent`,
+      contentDigest: createContentDigest(`Some words`),
+    },
+  })
+
+  actions.createNode({
+    id: createNodeId(`gatsby-path-materialized-linked`),
+    name: `gatsby-path-materialized Linked Name`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `GatsbyPathMaterializedLinked`,
       contentDigest: createContentDigest(`Some words`),
     },
   })

@@ -151,14 +151,14 @@ Please pick a path to an existing directory.`,
     }
 
     pluginInstance.getPathFromAResolvedNode =
-      function getPathFromAResolvedNode({
+      async function getPathFromAResolvedNode({
         node,
         absolutePath,
-      }: ICreateAPageFromNodeArgs): string {
+      }: ICreateAPageFromNodeArgs): Promise<string> {
         const filePath = systemPath.relative(pluginOptions.path, absolutePath)
 
         // URL path for the component and node
-        const { derivedPath } = derivePath(
+        const { derivedPath } = await derivePath(
           filePath,
           node,
           reporter,
@@ -171,15 +171,17 @@ Please pick a path to an existing directory.`,
         return modifiedPath
       }
 
-    pluginInstance.createAPageFromNode = function createAPageFromNode({
+    pluginInstance.createAPageFromNode = async function createAPageFromNode({
       node,
       absolutePath,
-    }: ICreateAPageFromNodeArgs): undefined | { errors: number; path: string } {
+    }: ICreateAPageFromNodeArgs): Promise<
+      undefined | { errors: number; path: string }
+    > {
       const filePath = systemPath.relative(pluginOptions.path, absolutePath)
 
       const contentFilePath = node.internal?.contentFilePath
       // URL path for the component and node
-      const { derivedPath, errors } = derivePath(
+      const { derivedPath, errors } = await derivePath(
         filePath,
         node,
         reporter,
@@ -360,10 +362,11 @@ export function setFieldsOnGraphQLNodeType(
               type: GraphQLString,
             },
           },
-          resolve: (
+          resolve: async (
             source: Record<string, unknown>,
-            { filePath }: { filePath: string }
-          ): string => {
+            { filePath }: { filePath: string },
+            context
+          ): Promise<string> => {
             // This is a quick hack for attaching parents to the node.
             // This may be an incomprehensive fixed for the general use case
             // of connecting nodes together. However, I don't quite know how to
@@ -376,12 +379,15 @@ export function setFieldsOnGraphQLNodeType(
               sourceCopy.parent = getNode(source.parent)
             }
 
+            const getFieldValue = context.nodeModel.getFieldValue
+
             validatePathQuery(filePath, extensions)
-            const { derivedPath } = derivePath(
+            const { derivedPath } = await derivePath(
               filePath,
               sourceCopy,
               reporter,
-              slugifyOptions
+              slugifyOptions,
+              getFieldValue
             )
 
             const hasTrailingSlash = derivedPath.endsWith(`/`)

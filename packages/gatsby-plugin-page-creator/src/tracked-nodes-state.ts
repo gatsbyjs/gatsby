@@ -34,13 +34,13 @@ export interface IStatePerInstance {
   /**
    * construct a page path from template absolute path and resolved node fields
    */
-  getPathFromAResolvedNode?: (arg: ICreateAPageFromNodeArgs) => string
+  getPathFromAResolvedNode?: (arg: ICreateAPageFromNodeArgs) => Promise<string>
   /**
    * create a page from a node and template absolute path
    */
   createAPageFromNode?: (
     arg: ICreateAPageFromNodeArgs
-  ) => { errors: number; path: string } | undefined
+  ) => Promise<{ errors: number; path: string } | undefined>
   /**
    * delete all pages created from a node id
    */
