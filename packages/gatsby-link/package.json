@@ -31,7 +31,7 @@
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "microbundle": "^0.15.1",
-    "prepend-directive": "^1.0.3"
+    "prepend-directive": "^1.1.0"
   },
   "peerDependencies": {
     "@gatsbyjs/reach-router": "^2.0.0",
