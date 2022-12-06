@@ -1,10 +1,12 @@
 import Joi from "@hapi/joi"
 import { ILocationPosition, IStructuredError } from "./types"
 
-export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object().keys({
-  line: Joi.number(),
-  column: Joi.number(),
-})
+export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object()
+  .keys({
+    line: Joi.number(),
+    column: Joi.number(),
+  })
+  .unknown()
 
 export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys(
   {
@@ -27,7 +29,7 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     location: Joi.object({
       start: Position.required(),
       end: Position,
-    }),
+    }).unknown(),
     docsUrl: Joi.string().uri({
       allowRelative: false,
       relativeOnly: false,

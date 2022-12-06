@@ -14,7 +14,6 @@ const {
   base64,
   fluid,
   fixed,
-  traceSVG,
   generateImageData,
 } = require(`gatsby-plugin-sharp`)
 
@@ -54,15 +53,7 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
-  traceSVG({
-    file,
-    args: { ...fieldArgs.traceSVG },
-    fileArgs: fieldArgs,
-    cache,
-    reporter,
-  })
-
+let didShowTraceSVGRemovalWarningFixed = false
 const fixedNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -77,12 +68,15 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent =>
-            getTracedSVG({
-              ...parent,
-              cache,
-              reporter,
-            }),
+          resolve: parent => {
+            if (!didShowTraceSVGRemovalWarningFixed) {
+              console.warn(
+                `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fixed processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
+              )
+              didShowTraceSVGRemovalWarningFixed = true
+            }
+            return parent.base64
+          },
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -220,6 +214,7 @@ const fixedNodeType = ({
   }
 }
 
+let didShowTraceSVGRemovalWarningFluid = false
 const fluidNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -234,12 +229,15 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent =>
-            getTracedSVG({
-              ...parent,
-              cache,
-              reporter,
-            }),
+          resolve: parent => {
+            if (!didShowTraceSVGRemovalWarningFluid) {
+              console.warn(
+                `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fluid processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
+              )
+              didShowTraceSVGRemovalWarningFluid = true
+            }
+            return parent.base64
+          },
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
         src: { type: new GraphQLNonNull(GraphQLString) },
@@ -386,8 +384,8 @@ const fluidNodeType = ({
   }
 }
 
+let didShowTraceSVGRemovalWarningGatsbyImageData = false
 let warnedForBeta = false
-
 const imageNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -521,6 +519,17 @@ const imageNodeType = ({
         )
         warnedForBeta = true
       }
+
+      if (fieldArgs?.placeholder === `tracedSVG`) {
+        if (!didShowTraceSVGRemovalWarningGatsbyImageData) {
+          console.warn(
+            `"TRACED_SVG" placeholder argument value is no longer supported (used in ImageSharp.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+          )
+          didShowTraceSVGRemovalWarningGatsbyImageData = true
+        }
+        fieldArgs.placeholder = `dominantColor`
+      }
+
       const imageData = await generateImageData({
         file,
         args: fieldArgs,
@@ -539,6 +548,8 @@ const imageNodeType = ({
  * underlying fs-extra module during parallel copies of the same file
  */
 const inProgressCopy = new Set()
+
+let didShowTraceSVGRemovalWarningResize = false
 
 const createFields = ({
   pathPrefix,
@@ -631,12 +642,19 @@ const createFields = ({
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent =>
-              getTracedSVG({
-                ...parent,
+            resolve: async parent => {
+              if (!didShowTraceSVGRemovalWarningResize) {
+                console.warn(
+                  `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.resize processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
+                )
+                didShowTraceSVGRemovalWarningResize = true
+              }
+              const { src } = await base64({
+                file: parent.file,
                 cache,
-                reporter,
-              }),
+              })
+              return src
+            },
           },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },

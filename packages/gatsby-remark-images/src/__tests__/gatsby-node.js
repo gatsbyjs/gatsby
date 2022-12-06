@@ -1,6 +1,13 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
-import { Potrace } from "potrace"
+
+const warnSpy = jest.spyOn(console, `warn`).mockImplementation(() => {
+  // silence warnings
+})
+
+beforeEach(() => {
+  warnSpy.mockClear()
+})
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
@@ -42,24 +49,32 @@ describe(`pluginOptionsSchema`, () => {
   })
 
   it(`should validate the schema`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      maxWidth: 700,
-      linkImagesToOriginal: false,
-      showCaptions: true,
-      markdownCaptions: true,
-      sizeByPixelDensity: true,
-      wrapperStyle: { marginTop: `1rem`, padding: `1.5rem`, color: `blue` },
-      backgroundColor: `red`,
-      quality: 77,
-      withWebp: true,
-      tracedSVG: true,
-      loading: `eager`,
-      disableBgImageOnAlpha: true,
-      disableBgImage: true,
-      srcSetBreakpoints: [400, 600, 800],
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        maxWidth: 700,
+        linkImagesToOriginal: false,
+        showCaptions: true,
+        markdownCaptions: true,
+        sizeByPixelDensity: true,
+        wrapperStyle: { marginTop: `1rem`, padding: `1.5rem`, color: `blue` },
+        backgroundColor: `red`,
+        quality: 77,
+        withWebp: true,
+        tracedSVG: true,
+        loading: `eager`,
+        disableBgImageOnAlpha: true,
+        disableBgImage: true,
+        srcSetBreakpoints: [400, 600, 800],
+      }
+    )
 
     expect(isValid).toBe(true)
+
+    expect(warnSpy).toBeCalledWith(
+      `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+    )
+    expect(errors).toEqual([])
   })
 
   it(`should validate the withWebp prop`, async () => {
@@ -110,49 +125,75 @@ describe(`pluginOptionsSchema`, () => {
         [`true`, true],
         [`false`, false],
       ])(`%s`, async (_title, booleanValue) => {
-        const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-          tracedSVG: booleanValue,
-        })
+        const { isValid, errors } = await testPluginOptionsSchema(
+          pluginOptionsSchema,
+          {
+            tracedSVG: booleanValue,
+          }
+        )
 
         expect(isValid).toBe(true)
+
+        if (booleanValue) {
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
+        }
+        expect(errors).toEqual([])
       })
     })
 
     describe(`supports object notation`, () => {
       it(`should validate when all fields are set`, async () => {
-        const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-          tracedSVG: {
-            turnPolicy: Potrace.TURNPOLICY_RIGHT,
-            turdSize: 50,
-            alphaMax: 0.5,
-            optCurve: false,
-            optTolerance: 0.9,
-            threshold: 230,
-            blackOnWhite: false,
-            color: `red`,
-            background: `green`,
-          },
-        })
+        const { isValid, errors } = await testPluginOptionsSchema(
+          pluginOptionsSchema,
+          {
+            tracedSVG: {
+              turnPolicy: `TURNPOLICY_RIGHT`,
+              turdSize: 50,
+              alphaMax: 0.5,
+              optCurve: false,
+              optTolerance: 0.9,
+              threshold: 230,
+              blackOnWhite: false,
+              color: `red`,
+              background: `green`,
+            },
+          }
+        )
 
         expect(isValid).toBe(true)
+
+        expect(warnSpy).toBeCalledWith(
+          `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+        )
+        expect(errors).toEqual([])
       })
 
       it(`should validate when some fields are set`, async () => {
-        const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-          tracedSVG: {
-            turnPolicy: Potrace.TURNPOLICY_RIGHT,
-            turdSize: 50,
-            // alphaMax: 0.5,
-            // optCurve: 0.2,
-            // optTolerance: 0.9,
-            // threshold: 230,
-            // blackOnWhite: false,
-            color: `red`,
-            background: `green`,
-          },
-        })
+        const { isValid, errors } = await testPluginOptionsSchema(
+          pluginOptionsSchema,
+          {
+            tracedSVG: {
+              turnPolicy: `TURNPOLICY_RIGHT`,
+              turdSize: 50,
+              // alphaMax: 0.5,
+              // optCurve: 0.2,
+              // optTolerance: 0.9,
+              // threshold: 230,
+              // blackOnWhite: false,
+              color: `red`,
+              background: `green`,
+            },
+          }
+        )
 
         expect(isValid).toBe(true)
+
+        expect(warnSpy).toBeCalledWith(
+          `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+        )
+        expect(errors).toEqual([])
       })
 
       it(`should fail validation when unknown fields are set`, async () => {
@@ -182,7 +223,7 @@ describe(`pluginOptionsSchema`, () => {
           `TURNPOLICY_MINORITY`,
           `TURNPOLICY_MAJORITY`,
         ])(`supports setting by policy name (%s)`, async name => {
-          const { isValid } = await testPluginOptionsSchema(
+          const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
               tracedSVG: { turnPolicy: name },
@@ -190,17 +231,22 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
+          expect(errors).toEqual([])
         })
 
         it.each([
-          Potrace.TURNPOLICY_BLACK,
-          Potrace.TURNPOLICY_WHITE,
-          Potrace.TURNPOLICY_LEFT,
-          Potrace.TURNPOLICY_RIGHT,
-          Potrace.TURNPOLICY_MINORITY,
-          Potrace.TURNPOLICY_MAJORITY,
+          `black`,
+          `white`,
+          `left`,
+          `TURNPOLICY_RIGHT`,
+          `minority`,
+          `majority`,
         ])(`supports setting by policy value (%s)`, async value => {
-          const { isValid } = await testPluginOptionsSchema(
+          const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
               tracedSVG: { turnPolicy: value },
@@ -208,6 +254,11 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
+          expect(errors).toEqual([])
         })
 
         it(`Doesn't support arbitrary string values`, async () => {
@@ -233,7 +284,7 @@ describe(`pluginOptionsSchema`, () => {
           [
             `THRESHOLD_AUTO`,
             {
-              value: Potrace.THRESHOLD_AUTO,
+              value: -1,
               expectedIsValid: true,
             },
           ],
@@ -261,7 +312,7 @@ describe(`pluginOptionsSchema`, () => {
             value = titleAndMaybeValue
           }
 
-          const { isValid } = await testPluginOptionsSchema(
+          const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
             {
               tracedSVG: { threshold: value },
@@ -269,6 +320,11 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
+          expect(errors).toEqual([])
         })
 
         // invalid settings

@@ -32,6 +32,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
+    "clean": "gatsby clean",
     "start": "gatsby serve"
   }
 }
