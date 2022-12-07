@@ -431,7 +431,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
       err,
-      reporter
+      reporter,
+      pluginOptions
     )
     return null
   }

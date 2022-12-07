@@ -348,6 +348,17 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(actual.length).toEqual(expected.length)
       expect(actions.createJobV2).toMatchSnapshot()
     })
+
+    it(`reports metadata error without exiting`, async () => {
+      process.env.gatsby_executing_command = `build`
+      setPluginOptions({ failOn: `none` })
+
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/metadata-error.png`)),
+      })
+
+      expect(result).toBeNull()
+    })
   })
 
   describe(`fixed`, () => {
