@@ -9,6 +9,11 @@ export const typeDefinitionFilters = [
         typeDef.interfaces.push(...buildInterfacesListForType(type))
       }
 
+      if (typeDef?.interfaces?.includes(`Node`)) {
+        // used to filter by different node types within a node interface
+        typeDef.fields.nodeType = `String`
+      }
+
       if (typeDef?.fields?.date) {
         const dateField = {
           ...typeDef.fields.date,
