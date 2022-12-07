@@ -71,7 +71,7 @@ function pathObjectToPathString(input: INestedPathStructureNode): {
   }
 }
 
-function getMaybeResolvedValue(
+export function getMaybeResolvedValue(
   node: IGatsbyNode,
   field: string | INestedPathStructureNode,
   nodeInterfaceName: string

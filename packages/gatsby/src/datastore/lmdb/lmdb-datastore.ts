@@ -1,4 +1,4 @@
-import { RootDatabase, open, ArrayLikeIterable } from "lmdb"
+import { RootDatabase, open, RangeIterable } from "lmdb"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
@@ -166,7 +166,7 @@ function iterateNodes(): GatsbyIterable<IGatsbyNode> {
     nodesDb
       .getKeys({ snapshot: false })
       .map(nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined))
-      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
+      .filter(Boolean) as RangeIterable<IGatsbyNode>
   )
 }
 
@@ -176,7 +176,7 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
     nodesByType
       .getValues(type)
       .map(nodeId => getNode(nodeId))
-      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
+      .filter(Boolean) as RangeIterable<IGatsbyNode>
   )
 }
 
