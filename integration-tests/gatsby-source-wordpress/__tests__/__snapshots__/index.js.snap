@@ -1000,6 +1000,12 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpActionMonitorActionConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
       "default",
       "extraAttr",
       "forceDefault",
@@ -1031,6 +1037,18 @@ Array [
       "saveContent",
     ],
     "name": "WpBlock",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpBlockEditorContentNodeConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpBlockEditorPreviewConnectionEdgeType",
   },
   Object {
     "fields": null,
@@ -1086,6 +1104,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpCategoryConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpCategoryConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -1128,66 +1158,65 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToAncestorsCategoryConnection",
+    "name": "WpCategoryToAncestorsCategoryConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToAncestorsCategoryConnectionFilterInput",
+    "name": "WpCategoryToAncestorsCategoryConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToCategoryConnection",
+    "name": "WpCategoryToCategoryConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToCategoryConnectionFilterInput",
+    "name": "WpCategoryToCategoryConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToContentNodeConnection",
+    "name": "WpCategoryToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToContentNodeConnectionFilterInput",
+    "name": "WpCategoryToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCategoryToParentCategoryConnectionEdge",
+    "name": "WpCategoryToParentCategoryConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToParentCategoryConnectionEdgeFilterInput",
+    "name": "WpCategoryToParentCategoryConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCategoryToPostConnection",
+    "name": "WpCategoryToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToPostConnectionFilterInput",
+    "name": "WpCategoryToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCategoryToTaxonomyConnectionEdge",
+    "name": "WpCategoryToTaxonomyConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCategoryToTaxonomyConnectionEdgeFilterInput",
+    "name": "WpCategoryToTaxonomyConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "agent",
-      "approved",
       "author",
       "authorIp",
       "commentedOn",
@@ -1200,6 +1229,7 @@ Array [
       "parentDatabaseId",
       "parentId",
       "replies",
+      "status",
       "type",
       "parent",
       "children",
@@ -1287,6 +1317,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpCommentConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpCommentConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -1326,44 +1368,52 @@ Array [
     "name": "WpCommentSortInput",
   },
   Object {
+    "fields": null,
+    "name": "WpCommentStatusEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentStatusEnumQueryOperatorInput",
+  },
+  Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpCommentToCommentConnection",
+    "name": "WpCommentToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommentConnectionFilterInput",
+    "name": "WpCommentToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCommentToCommenterConnectionEdge",
+    "name": "WpCommentToCommenterConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToCommenterConnectionEdgeFilterInput",
+    "name": "WpCommentToCommenterConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCommentToContentNodeConnectionEdge",
+    "name": "WpCommentToContentNodeConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToContentNodeConnectionEdgeFilterInput",
+    "name": "WpCommentToContentNodeConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpCommentToParentCommentConnectionEdge",
+    "name": "WpCommentToParentCommentConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpCommentToParentCommentConnectionEdgeFilterInput",
+    "name": "WpCommentToParentCommentConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -1371,8 +1421,43 @@ Array [
       "id",
       "name",
       "url",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpCommenter",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpCommenterConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpCommenterConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpCommenterEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommenterFieldsEnum",
   },
   Object {
     "fields": null,
@@ -1389,8 +1474,34 @@ Array [
       "min",
       "sum",
       "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpCommenterGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommenterSortInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
     ],
     "name": "WpConnection",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpConnectionType",
   },
   Object {
     "fields": Array [
@@ -1430,6 +1541,18 @@ Array [
       "group",
     ],
     "name": "WpContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpContentNodeConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpContentNodeConnectionType",
   },
   Object {
     "fields": Array [
@@ -1475,28 +1598,28 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpContentNodeToContentTypeConnectionEdge",
+    "name": "WpContentNodeToContentTypeConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToContentTypeConnectionEdgeFilterInput",
+    "name": "WpContentNodeToContentTypeConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpContentNodeToEditLastConnectionEdge",
+    "name": "WpContentNodeToEditLastConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeToEditLastConnectionEdgeFilterInput",
+    "name": "WpContentNodeToEditLastConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "lockTimestamp",
       "node",
     ],
-    "name": "WpContentNodeToEditLockConnectionEdge",
+    "name": "WpContentNodeToEditLockConnectionEdgeType",
   },
   Object {
     "fields": Array [
@@ -1564,6 +1687,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpContentTypeConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpContentTypeConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -1606,21 +1741,21 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpContentTypeToContentNodeConnection",
+    "name": "WpContentTypeToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToContentNodeConnectionFilterInput",
+    "name": "WpContentTypeToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpContentTypeToTaxonomyConnection",
+    "name": "WpContentTypeToTaxonomyConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeToTaxonomyConnectionFilterInput",
+    "name": "WpContentTypeToTaxonomyConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -5409,6 +5544,24 @@ Array [
     "name": "WpEdge",
   },
   Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpEnqueuedScriptConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpEnqueuedStylesheetConnectionEdgeType",
+  },
+  Object {
     "fields": null,
     "name": "WpFieldsEnum",
   },
@@ -5459,48 +5612,246 @@ Array [
     "fields": Array [
       "ancestors",
       "wpChildren",
+      "contentType",
+      "contentTypeName",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "guid",
+      "id",
+      "isContentNode",
+      "isTermNode",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
       "wpParent",
       "parentDatabaseId",
       "parentId",
+      "slug",
+      "status",
+      "uri",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpHierarchicalContentNode",
   },
   Object {
     "fields": Array [
+      "totalCount",
+      "edges",
       "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
     ],
-    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnection",
+    "name": "WpHierarchicalContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpHierarchicalContentNodeEdge",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionFilterInput",
+    "name": "WpHierarchicalContentNodeFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpHierarchicalContentNodeGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeSortInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnection",
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionFilterInput",
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionTypeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionType",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdge",
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeFilterInput",
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
+      "databaseId",
+      "id",
       "parentDatabaseId",
       "parentId",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpHierarchicalNode",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpHierarchicalNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpHierarchicalNodeEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalNodeFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalNodeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpHierarchicalNodeGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalNodeSortInput",
+  },
+  Object {
+    "fields": Array [
+      "count",
+      "databaseId",
+      "description",
+      "id",
+      "isContentNode",
+      "isTermNode",
+      "link",
+      "name",
+      "parentDatabaseId",
+      "parentId",
+      "slug",
+      "taxonomyName",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpHierarchicalTermNode",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpHierarchicalTermNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpHierarchicalTermNodeEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalTermNodeFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalTermNodeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpHierarchicalTermNodeGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalTermNodeSortInput",
   },
   Object {
     "fields": Array [
@@ -5590,6 +5941,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpMediaItemConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpMediaItemConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -5653,11 +6016,11 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpMediaItemToCommentConnection",
+    "name": "WpMediaItemToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpMediaItemToCommentConnectionFilterInput",
+    "name": "WpMediaItemToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -5710,6 +6073,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpMenuConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpMenuConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -5758,6 +6133,7 @@ Array [
       "path",
       "target",
       "title",
+      "uri",
       "url",
       "parent",
       "children",
@@ -5778,6 +6154,18 @@ Array [
       "group",
     ],
     "name": "WpMenuItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpMenuItemConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpMenuItemConnectionType",
   },
   Object {
     "fields": Array [
@@ -5819,13 +6207,70 @@ Array [
     "fields": Array [
       "databaseId",
       "id",
+      "isContentNode",
+      "isTermNode",
       "uri",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpMenuItemLinkable",
   },
   Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpMenuItemLinkableConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpMenuItemLinkableConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpMenuItemLinkableEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemLinkableFieldsEnum",
+  },
+  Object {
     "fields": null,
     "name": "WpMenuItemLinkableFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpMenuItemLinkableGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemLinkableSortInput",
   },
   Object {
     "fields": null,
@@ -5835,31 +6280,31 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpMenuItemToMenuConnectionEdge",
+    "name": "WpMenuItemToMenuConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuConnectionEdgeFilterInput",
+    "name": "WpMenuItemToMenuConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpMenuItemToMenuItemConnection",
+    "name": "WpMenuItemToMenuItemConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemConnectionFilterInput",
+    "name": "WpMenuItemToMenuItemConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpMenuItemToMenuItemLinkableConnectionEdge",
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeFilterInput",
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": null,
@@ -5877,11 +6322,11 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpMenuToMenuItemConnection",
+    "name": "WpMenuToMenuItemConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpMenuToMenuItemConnectionFilterInput",
+    "name": "WpMenuToMenuItemConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -5898,61 +6343,260 @@ Array [
       "author",
       "authorDatabaseId",
       "authorId",
+      "id",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithAuthor",
   },
   Object {
     "fields": Array [
-      "node",
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
     ],
-    "name": "WpNodeWithAuthorToUserConnectionEdge",
+    "name": "WpNodeWithAuthorConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithAuthorEdge",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithAuthorToUserConnectionEdgeFilterInput",
+    "name": "WpNodeWithAuthorFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithAuthorFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithAuthorGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithAuthorSortInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpNodeWithAuthorToUserConnectionEdgeType",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithAuthorToUserConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
       "commentCount",
       "commentStatus",
+      "id",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithComments",
   },
   Object {
     "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpNodeWithCommentsConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithCommentsEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithCommentsFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithCommentsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithCommentsGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithCommentsSortInput",
+  },
+  Object {
+    "fields": Array [
       "content",
+      "id",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithContentEditor",
   },
   Object {
     "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpNodeWithContentEditorConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithContentEditorEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithContentEditorFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithContentEditorFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithContentEditorGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithContentEditorSortInput",
+  },
+  Object {
+    "fields": Array [
       "excerpt",
+      "id",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithExcerpt",
   },
   Object {
     "fields": Array [
-      "contentType",
-      "contentTypeName",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpNodeWithExcerptConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithExcerptEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithExcerptFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithExcerptFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithExcerptGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithExcerptSortInput",
+  },
+  Object {
+    "fields": Array [
       "featuredImage",
       "featuredImageDatabaseId",
       "featuredImageId",
-      "guid",
       "id",
-      "isContentNode",
-      "isTermNode",
-      "lastEditedBy",
-      "link",
-      "modified",
-      "modifiedGmt",
-      "slug",
-      "status",
-      "template",
-      "uri",
       "parent",
       "children",
       "internal",
@@ -6013,43 +6657,324 @@ Array [
     "fields": Array [
       "node",
     ],
-    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdge",
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeFilterInput",
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
+      "id",
       "menuOrder",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithPageAttributes",
   },
   Object {
     "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpNodeWithPageAttributesConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithPageAttributesEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithPageAttributesFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithPageAttributesFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithPageAttributesGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithPageAttributesSortInput",
+  },
+  Object {
+    "fields": Array [
+      "id",
       "isRevision",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithRevisions",
   },
   Object {
     "fields": Array [
-      "node",
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
     ],
-    "name": "WpNodeWithRevisionsToContentNodeConnectionEdge",
+    "name": "WpNodeWithRevisionsConnection",
   },
   Object {
     "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithRevisionsEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithRevisionsFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithRevisionsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithRevisionsGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithRevisionsSortInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpNodeWithRevisionsToContentNodeConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "id",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpNodeWithTemplate",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpNodeWithTemplateConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithTemplateEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTemplateFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTemplateFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithTemplateGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTemplateSortInput",
+  },
+  Object {
+    "fields": Array [
+      "id",
       "title",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithTitle",
   },
   Object {
     "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpNodeWithTitleConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithTitleEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTitleFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTitleFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithTitleGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTitleSortInput",
+  },
+  Object {
+    "fields": Array [
+      "id",
       "pingStatus",
       "pinged",
       "toPing",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpNodeWithTrackbacks",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpNodeWithTrackbacksConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpNodeWithTrackbacksEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTrackbacksFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTrackbacksFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpNodeWithTrackbacksGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithTrackbacksSortInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpOneToOneConnectionType",
   },
   Object {
     "fields": Array [
@@ -6121,6 +7046,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpPageConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPageConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -6163,11 +7100,11 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPageToCommentConnection",
+    "name": "WpPageToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPageToCommentConnectionFilterInput",
+    "name": "WpPageToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -6277,6 +7214,12 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpPluginConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
       "author",
       "authorDatabaseId",
       "authorId",
@@ -6345,6 +7288,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpPostConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -6404,6 +7359,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpPostFormatConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostFormatConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -6446,31 +7413,31 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostFormatToContentNodeConnection",
+    "name": "WpPostFormatToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToContentNodeConnectionFilterInput",
+    "name": "WpPostFormatToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostFormatToPostConnection",
+    "name": "WpPostFormatToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToPostConnectionFilterInput",
+    "name": "WpPostFormatToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpPostFormatToTaxonomyConnectionEdge",
+    "name": "WpPostFormatToTaxonomyConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatToTaxonomyConnectionEdgeFilterInput",
+    "name": "WpPostFormatToTaxonomyConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -6500,51 +7467,51 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToCategoryConnection",
+    "name": "WpPostToCategoryConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCategoryConnectionFilterInput",
+    "name": "WpPostToCategoryConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToCommentConnection",
+    "name": "WpPostToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToCommentConnectionFilterInput",
+    "name": "WpPostToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToPostFormatConnection",
+    "name": "WpPostToPostFormatConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToPostFormatConnectionFilterInput",
+    "name": "WpPostToPostFormatConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToTagConnection",
+    "name": "WpPostToTagConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTagConnectionFilterInput",
+    "name": "WpPostToTagConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpPostToTermNodeConnection",
+    "name": "WpPostToTermNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpPostToTermNodeConnectionFilterInput",
+    "name": "WpPostToTermNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -6671,6 +7638,18 @@ Array [
       "group",
     ],
     "name": "WpReusableBlockConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpReusableBlockConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpReusableBlockConnectionType",
   },
   Object {
     "fields": Array [
@@ -7143,6 +8122,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpTagConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTagConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -7185,31 +8176,31 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpTagToContentNodeConnection",
+    "name": "WpTagToContentNodeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpTagToContentNodeConnectionFilterInput",
+    "name": "WpTagToContentNodeConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpTagToPostConnection",
+    "name": "WpTagToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpTagToPostConnectionFilterInput",
+    "name": "WpTagToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "node",
     ],
-    "name": "WpTagToTaxonomyConnectionEdge",
+    "name": "WpTagToTaxonomyConnectionEdgeType",
   },
   Object {
     "fields": null,
-    "name": "WpTagToTaxonomyConnectionEdgeFilterInput",
+    "name": "WpTagToTaxonomyConnectionEdgeTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -7252,6 +8243,18 @@ Array [
       "group",
     ],
     "name": "WpTaxonomyConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpTaxonomyConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTaxonomyConnectionType",
   },
   Object {
     "fields": Array [
@@ -7330,11 +8333,11 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpTaxonomyToContentTypeConnection",
+    "name": "WpTaxonomyToContentTypeConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpTaxonomyToContentTypeConnectionFilterInput",
+    "name": "WpTaxonomyToContentTypeConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -7370,6 +8373,18 @@ Array [
       "group",
     ],
     "name": "WpTermNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpTermNodeConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTermNodeConnectionType",
   },
   Object {
     "fields": Array [
@@ -7410,6 +8425,12 @@ Array [
   Object {
     "fields": null,
     "name": "WpTermNodeSortInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpThemeConnectionEdgeType",
   },
   Object {
     "fields": Array [
@@ -7464,6 +8485,18 @@ Array [
       "group",
     ],
     "name": "WpTranslationFilterTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpTranslationFilterTestConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTranslationFilterTestConnectionType",
   },
   Object {
     "fields": Array [
@@ -7561,6 +8594,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpTypeLimit0TestConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTypeLimit0TestConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -7655,6 +8700,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpTypeLimitTestConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTypeLimitTestConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -7699,8 +8756,61 @@ Array [
       "isContentNode",
       "isTermNode",
       "uri",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpUniformResourceIdentifiable",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+    ],
+    "name": "WpUniformResourceIdentifiableConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpUniformResourceIdentifiableEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUniformResourceIdentifiableFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUniformResourceIdentifiableFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "max",
+      "min",
+      "sum",
+      "group",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpUniformResourceIdentifiableGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUniformResourceIdentifiableSortInput",
   },
   Object {
     "fields": Array [
@@ -7748,6 +8858,18 @@ Array [
       "group",
     ],
     "name": "WpUserConnection",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpUserConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserConnectionType",
   },
   Object {
     "fields": Array [
@@ -7809,6 +8931,18 @@ Array [
   },
   Object {
     "fields": Array [
+      "node",
+    ],
+    "name": "WpUserRoleConnectionEdgeType",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserRoleConnectionType",
+  },
+  Object {
+    "fields": Array [
       "next",
       "node",
       "previous",
@@ -7855,71 +8989,71 @@ Array [
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToCommentConnection",
+    "name": "WpUserToCommentConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToCommentConnectionFilterInput",
+    "name": "WpUserToCommentConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToPageConnection",
+    "name": "WpUserToPageConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPageConnectionFilterInput",
+    "name": "WpUserToPageConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToPostConnection",
+    "name": "WpUserToPostConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToPostConnectionFilterInput",
+    "name": "WpUserToPostConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToTranslationFilterTestConnection",
+    "name": "WpUserToTranslationFilterTestConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTranslationFilterTestConnectionFilterInput",
+    "name": "WpUserToTranslationFilterTestConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToTypeLimit0TestConnection",
+    "name": "WpUserToTypeLimit0TestConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimit0TestConnectionFilterInput",
+    "name": "WpUserToTypeLimit0TestConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToTypeLimitTestConnection",
+    "name": "WpUserToTypeLimitTestConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToTypeLimitTestConnectionFilterInput",
+    "name": "WpUserToTypeLimitTestConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
       "nodes",
     ],
-    "name": "WpUserToUserRoleConnection",
+    "name": "WpUserToUserRoleConnectionType",
   },
   Object {
     "fields": null,
-    "name": "WpUserToUserRoleConnectionFilterInput",
+    "name": "WpUserToUserRoleConnectionTypeFilterInput",
   },
   Object {
     "fields": Array [
@@ -8136,11 +9270,24 @@ Array [
       "slug",
       "status",
       "template",
-      "terms",
       "title",
       "uri",
     ],
     "name": "ActionMonitorAction",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "ActionMonitorActionConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ActionMonitorActionConnectionEdge",
   },
   Object {
     "fields": null,
@@ -8148,28 +9295,10 @@ Array [
   },
   Object {
     "fields": Array [
-      "node",
-    ],
-    "name": "ActionMonitorActionToPreviewConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "ActionMonitorActionToTermNodeConnection",
-  },
-  Object {
-    "fields": Array [
       "cursor",
       "node",
     ],
-    "name": "ActionMonitorActionToTermNodeConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "ActionMonitorActionToTermNodeConnectionWhereArgs",
+    "name": "ActionMonitorActionToPreviewConnectionEdge",
   },
   Object {
     "fields": null,
@@ -8239,7 +9368,6 @@ Array [
     "fields": Array [
       "edges",
       "nodes",
-      "pageInfo",
     ],
     "name": "BlockEditorContentNodeConnection",
   },
@@ -8283,7 +9411,6 @@ Array [
       "link",
       "modified",
       "modifiedGmt",
-      "preview",
       "previewRevisionDatabaseId",
       "previewRevisionId",
       "previewed",
@@ -8299,12 +9426,26 @@ Array [
     "name": "BlockEditorPreview",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "BlockEditorPreviewConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "BlockEditorPreviewConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "BlockEditorPreviewIdType",
   },
   Object {
     "fields": Array [
-      "node",
+      "cursor",
     ],
     "name": "BlockEditorPreviewToPreviewConnectionEdge",
   },
@@ -8341,6 +9482,20 @@ Array [
       "uri",
     ],
     "name": "Category",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "CategoryConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CategoryConnectionEdge",
   },
   Object {
     "fields": null,
@@ -8401,6 +9556,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "CategoryToParentCategoryConnectionEdge",
@@ -8426,6 +9582,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "CategoryToTaxonomyConnectionEdge",
@@ -8433,7 +9590,6 @@ Array [
   Object {
     "fields": Array [
       "agent",
-      "approved",
       "author",
       "authorIp",
       "commentedOn",
@@ -8448,6 +9604,7 @@ Array [
       "parentDatabaseId",
       "parentId",
       "replies",
+      "status",
       "type",
     ],
     "name": "Comment",
@@ -8463,6 +9620,28 @@ Array [
       "url",
     ],
     "name": "CommentAuthor",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "CommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "CommentNodeIdTypeEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "CommentStatusEnum",
   },
   Object {
     "fields": Array [
@@ -8485,18 +9664,21 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "CommentToCommenterConnectionEdge",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "CommentToContentNodeConnectionEdge",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "CommentToParentCommentConnectionEdge",
@@ -8518,8 +9700,22 @@ Array [
     "name": "Commenter",
   },
   Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CommenterConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "CommentsConnectionOrderbyEnum",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "Connection",
   },
   Object {
     "fields": Array [
@@ -8553,23 +9749,40 @@ Array [
     "name": "ContentNode",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "ContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ContentNodeConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "ContentNodeIdTypeEnum",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "ContentNodeToContentTypeConnectionEdge",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "ContentNodeToEditLastConnectionEdge",
   },
   Object {
     "fields": Array [
+      "cursor",
       "lockTimestamp",
       "node",
     ],
@@ -8604,10 +9817,6 @@ Array [
       "node",
     ],
     "name": "ContentNodeToEnqueuedStylesheetConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "ContentRevisionUnion",
   },
   Object {
     "fields": Array [
@@ -8652,6 +9861,20 @@ Array [
       "uri",
     ],
     "name": "ContentType",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "ContentTypeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ContentTypeConnectionEdge",
   },
   Object {
     "fields": null,
@@ -13108,6 +14331,13 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "Edge",
+  },
+  Object {
+    "fields": Array [
       "args",
       "dependencies",
       "extra",
@@ -13132,6 +14362,20 @@ Array [
   },
   Object {
     "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "EnqueuedScriptConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "EnqueuedScriptConnectionEdge",
+  },
+  Object {
+    "fields": Array [
       "args",
       "dependencies",
       "extra",
@@ -13141,6 +14385,20 @@ Array [
       "version",
     ],
     "name": "EnqueuedStylesheet",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "EnqueuedStylesheetConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "EnqueuedStylesheetConnectionEdge",
   },
   Object {
     "fields": null,
@@ -13184,9 +14442,35 @@ Array [
     "fields": Array [
       "ancestors",
       "children",
+      "contentType",
+      "contentTypeName",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "guid",
+      "id",
+      "isContentNode",
+      "isPreview",
+      "isRestricted",
+      "isTermNode",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
       "parent",
       "parentDatabaseId",
       "parentId",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "slug",
+      "status",
+      "template",
+      "uri",
     ],
     "name": "HierarchicalContentNode",
   },
@@ -13230,14 +14514,40 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "HierarchicalContentNodeToParentContentNodeConnectionEdge",
   },
   Object {
     "fields": Array [
+      "databaseId",
+      "id",
       "parentDatabaseId",
       "parentId",
+    ],
+    "name": "HierarchicalNode",
+  },
+  Object {
+    "fields": Array [
+      "count",
+      "databaseId",
+      "description",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "id",
+      "isContentNode",
+      "isRestricted",
+      "isTermNode",
+      "link",
+      "name",
+      "parentDatabaseId",
+      "parentId",
+      "slug",
+      "taxonomyName",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
     ],
     "name": "HierarchicalTermNode",
   },
@@ -13315,6 +14625,20 @@ Array [
     "name": "MediaItem",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "MediaItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "MediaItemConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "MediaItemIdType",
   },
@@ -13389,6 +14713,20 @@ Array [
   },
   Object {
     "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "MenuConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "MenuConnectionEdge",
+  },
+  Object {
+    "fields": Array [
       "childItems",
       "connectedNode",
       "cssClasses",
@@ -13406,17 +14744,41 @@ Array [
       "path",
       "target",
       "title",
+      "uri",
       "url",
     ],
     "name": "MenuItem",
   },
   Object {
     "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "MenuItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "MenuItemConnectionEdge",
+  },
+  Object {
+    "fields": Array [
       "databaseId",
       "id",
+      "isContentNode",
+      "isTermNode",
       "uri",
     ],
     "name": "MenuItemLinkable",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "MenuItemLinkableConnectionEdge",
   },
   Object {
     "fields": null,
@@ -13428,6 +14790,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "MenuItemToMenuConnectionEdge",
@@ -13453,6 +14816,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "MenuItemToMenuItemLinkableConnectionEdge",
@@ -13499,11 +14863,13 @@ Array [
       "author",
       "authorDatabaseId",
       "authorId",
+      "id",
     ],
     "name": "NodeWithAuthor",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "NodeWithAuthorToUserConnectionEdge",
@@ -13512,69 +14878,50 @@ Array [
     "fields": Array [
       "commentCount",
       "commentStatus",
+      "id",
     ],
     "name": "NodeWithComments",
   },
   Object {
     "fields": Array [
       "content",
+      "id",
     ],
     "name": "NodeWithContentEditor",
   },
   Object {
     "fields": Array [
       "excerpt",
+      "id",
     ],
     "name": "NodeWithExcerpt",
   },
   Object {
     "fields": Array [
-      "contentType",
-      "contentTypeName",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
-      "editingLockedBy",
-      "enclosure",
-      "enqueuedScripts",
-      "enqueuedStylesheets",
       "featuredImage",
       "featuredImageDatabaseId",
       "featuredImageId",
-      "guid",
       "id",
-      "isContentNode",
-      "isPreview",
-      "isRestricted",
-      "isTermNode",
-      "lastEditedBy",
-      "link",
-      "modified",
-      "modifiedGmt",
-      "previewRevisionDatabaseId",
-      "previewRevisionId",
-      "slug",
-      "status",
-      "template",
-      "uri",
     ],
     "name": "NodeWithFeaturedImage",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "NodeWithFeaturedImageToMediaItemConnectionEdge",
   },
   Object {
     "fields": Array [
+      "id",
       "menuOrder",
     ],
     "name": "NodeWithPageAttributes",
   },
   Object {
     "fields": Array [
+      "id",
       "isRevision",
       "revisionOf",
     ],
@@ -13582,29 +14929,40 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "NodeWithRevisionsToContentNodeConnectionEdge",
   },
   Object {
     "fields": Array [
+      "id",
       "template",
     ],
     "name": "NodeWithTemplate",
   },
   Object {
     "fields": Array [
+      "id",
       "title",
     ],
     "name": "NodeWithTitle",
   },
   Object {
     "fields": Array [
+      "id",
       "pingStatus",
       "pinged",
       "toPing",
     ],
     "name": "NodeWithTrackbacks",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "OneToOneConnection",
   },
   Object {
     "fields": null,
@@ -13672,6 +15030,20 @@ Array [
     "name": "Page",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "PageConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PageConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "PageIdType",
   },
@@ -13696,6 +15068,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "PageToPreviewConnectionEdge",
@@ -13824,6 +15197,20 @@ Array [
     "name": "Plugin",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "PluginConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PluginConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "PluginStatusEnum",
   },
@@ -13897,6 +15284,20 @@ Array [
   },
   Object {
     "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "PostConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostConnectionEdge",
+  },
+  Object {
+    "fields": Array [
       "contentNodes",
       "count",
       "databaseId",
@@ -13919,6 +15320,20 @@ Array [
       "uri",
     ],
     "name": "PostFormat",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "PostFormatConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostFormatConnectionEdge",
   },
   Object {
     "fields": null,
@@ -13964,6 +15379,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "PostFormatToTaxonomyConnectionEdge",
@@ -14073,6 +15489,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "PostToPreviewConnectionEdge",
@@ -14197,6 +15614,14 @@ Array [
   },
   Object {
     "fields": Array [
+      "isPreview",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+    ],
+    "name": "Previewable",
+  },
+  Object {
+    "fields": Array [
       "postsPerPage",
     ],
     "name": "ReadingSettings",
@@ -14276,7 +15701,6 @@ Array [
       "link",
       "modified",
       "modifiedGmt",
-      "preview",
       "previewBlocks",
       "previewBlocksFrom",
       "previewBlocksFromJSON",
@@ -14295,12 +15719,26 @@ Array [
     "name": "ReusableBlock",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "ReusableBlockConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ReusableBlockConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "ReusableBlockIdType",
   },
   Object {
     "fields": Array [
-      "node",
+      "cursor",
     ],
     "name": "ReusableBlockToPreviewConnectionEdge",
   },
@@ -14545,25 +15983,6 @@ Array [
       "nodes",
       "pageInfo",
     ],
-    "name": "RootQueryToContentRevisionUnionConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "RootQueryToContentRevisionUnionConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "RootQueryToContentRevisionUnionConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
     "name": "RootQueryToContentTypeConnection",
   },
   Object {
@@ -14754,6 +16173,25 @@ Array [
   Object {
     "fields": null,
     "name": "RootQueryToReusableBlockConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToRevisionsConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToRevisionsConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToRevisionsConnectionWhereArgs",
   },
   Object {
     "fields": Array [
@@ -15178,7 +16616,7 @@ Array [
   Object {
     "fields": Array [
       "clientMutationId",
-      "user",
+      "success",
     ],
     "name": "SendPasswordResetEmailPayload",
   },
@@ -15232,6 +16670,20 @@ Array [
     "name": "Tag",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "TagConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TagConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "TagIdType",
   },
@@ -15275,6 +16727,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "TagToTaxonomyConnectionEdge",
@@ -15304,6 +16757,20 @@ Array [
       "showUi",
     ],
     "name": "Taxonomy",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "TaxonomyConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TaxonomyConnectionEdge",
   },
   Object {
     "fields": null,
@@ -15379,6 +16846,20 @@ Array [
     "name": "TermNode",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "TermNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TermNodeConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "TermNodeIdTypeEnum",
   },
@@ -15434,6 +16915,20 @@ Array [
   },
   Object {
     "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "ThemeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ThemeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
       "author",
       "authorDatabaseId",
       "authorId",
@@ -15478,11 +16973,26 @@ Array [
     "name": "TranslationFilterTest",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "TranslationFilterTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TranslationFilterTestConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "TranslationFilterTestIdType",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "TranslationFilterTestToPreviewConnectionEdge",
@@ -15533,11 +17043,26 @@ Array [
     "name": "TypeLimit0Test",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "TypeLimit0TestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TypeLimit0TestConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "TypeLimit0TestIdType",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "TypeLimit0TestToPreviewConnectionEdge",
@@ -15588,11 +17113,26 @@ Array [
     "name": "TypeLimitTest",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "TypeLimitTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TypeLimitTestConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "TypeLimitTestIdType",
   },
   Object {
     "fields": Array [
+      "cursor",
       "node",
     ],
     "name": "TypeLimitTestToPreviewConnectionEdge",
@@ -15806,6 +17346,20 @@ Array [
     "name": "User",
   },
   Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "UserConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserConnectionEdge",
+  },
+  Object {
     "fields": null,
     "name": "UserNodeIdTypeEnum",
   },
@@ -15818,6 +17372,20 @@ Array [
       "name",
     ],
     "name": "UserRole",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+    ],
+    "name": "UserRoleConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserRoleConnectionEdge",
   },
   Object {
     "fields": null,
@@ -15860,25 +17428,6 @@ Array [
   Object {
     "fields": null,
     "name": "UserToCommentConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "UserToContentRevisionUnionConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "UserToContentRevisionUnionConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "UserToContentRevisionUnionConnectionWhereArgs",
   },
   Object {
     "fields": Array [
@@ -15966,6 +17515,25 @@ Array [
   Object {
     "fields": null,
     "name": "UserToPostConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToRevisionsConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToRevisionsConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToRevisionsConnectionWhereArgs",
   },
   Object {
     "fields": Array [
