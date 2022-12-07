@@ -32,7 +32,7 @@ describe(`gatsby new`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-default`,
-      `gatsbyjs/gatsby-starter-default#v3`,
+      `gatsbyjs/gatsby-starter-default#v2`,
     ])
 
     logs.should.contain(
@@ -52,7 +52,7 @@ describe(`gatsby new`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
-      `gatsbyjs/gatsby-starter-blog#v3`,
+      `gatsbyjs/gatsby-starter-blog#v2`,
     ])
 
     logs.should.contain(
