@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.1/packages/gatsby-source-wordpress) (2022-12-06)
+
+#### Bug Fixes
+
+- WPGraphQL 1.13.0 compatibility [#37134](https://github.com/gatsbyjs/gatsby/issues/37134) [#37182](https://github.com/gatsbyjs/gatsby/issues/37182) ([b9d76e3](https://github.com/gatsbyjs/gatsby/commit/b9d76e3b2d53e95f9f8170202637371530385e26))
+
 ## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.0/packages/gatsby-source-wordpress) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
