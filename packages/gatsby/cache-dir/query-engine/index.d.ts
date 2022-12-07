@@ -25,7 +25,13 @@ export interface IQueryResult {
 }
 
 export class GraphQLEngine {
-  constructor({ dbPath }: { dbPath: string })
+  constructor({
+    dbPath,
+    queryEnginePluginsPath,
+  }: {
+    dbPath: string
+    queryEnginePluginsPath: string
+  })
   runQuery(query: string, context: Record<string, any>): Promise<IQueryResult>
   findPageByPath(pathName: string): IGatsbyPage | undefined
 }

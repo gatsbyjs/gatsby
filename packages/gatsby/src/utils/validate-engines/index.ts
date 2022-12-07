@@ -11,7 +11,7 @@ export async function validateEngines(directory: string): Promise<void> {
         // that OpenTracing config might make
         GATSBY_OPEN_TRACING_CONFIG_FILE: ``,
       },
-      silent: true,
+      silent: false, // TODO: Revert, disabled for debugging
     }
   )
 

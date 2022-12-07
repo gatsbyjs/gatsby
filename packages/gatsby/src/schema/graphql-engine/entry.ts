@@ -17,12 +17,6 @@ import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
 import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
-import {
-  gatsbyNodes,
-  gatsbyWorkers,
-  flattenedPlugins,
-  // @ts-ignore
-} from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
 
 type MaybePhantomActivity =
@@ -36,11 +30,20 @@ const tracerReadyPromise = initTracer(
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runnerPromise?: Promise<GraphQLRunner>
+  private queryEnginePluginsPath: string
 
-  constructor({ dbPath }: { dbPath: string }) {
+  constructor({
+    dbPath,
+    queryEnginePluginsPath,
+  }: {
+    dbPath: string
+    queryEnginePluginsPath: string
+  }) {
     setupLmdbStore({ dbPath })
     // start initializing runner ASAP
     this.getRunner()
+
+    this.queryEnginePluginsPath = queryEnginePluginsPath
   }
 
   private async _doGetRunner(): Promise<GraphQLRunner> {
@@ -49,6 +52,9 @@ export class GraphQLEngine {
     const wrapActivity = reporter.phantomActivity(`Initializing GraphQL Engine`)
     wrapActivity.start()
     try {
+      const { gatsbyNodes, gatsbyWorkers, flattenedPlugins } = await import(
+        this.queryEnginePluginsPath
+      )
       // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
       store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 

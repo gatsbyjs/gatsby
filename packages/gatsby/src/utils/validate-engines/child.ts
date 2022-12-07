@@ -4,6 +4,8 @@ import * as path from "path"
 // @ts-ignore TS doesn't like accessing `_load`
 const originalModuleLoad = mod._load
 
+const preferDefault = (m: any): any => (m && m.default) || m
+
 class EngineValidationError extends Error {
   request: string
   relativeToRoot: string
@@ -48,6 +50,10 @@ export async function validate(directory: string): Promise<void> {
     const relativeToRoot = path.relative(directory, absPath)
     for (const allowedPrefix of allowedPrefixes) {
       if (relativeToRoot.startsWith(allowedPrefix)) {
+        // Probably can't do this since we're monkey patching module._load, which is a sync function
+        // if (request.endsWith(`.mjs`)) {
+        //   return await import(request)
+        // }
         return originalModuleLoad(request, parent, isMain)
       }
     }
@@ -67,14 +73,33 @@ export async function validate(directory: string): Promise<void> {
   process.env.GATSBY_WORKER_MODULE_PATH = ``
 
   // import engines, initiate them, if there is any error thrown it will be handled in parent process
-  const { GraphQLEngine } = require(path.join(
+  const queryEngineFilePath = path.join(
     directory,
     `.cache`,
-    `query-engine`
-  ))
-  require(path.join(directory, `.cache`, `page-ssr`))
+    `query-engine`,
+    `index.js`
+  )
+  const ssrEngineFilePath = path.join(
+    directory,
+    `.cache`,
+    `page-ssr`,
+    `index.js`
+  )
+
+  // Try loading query engine with await import
+  const rawImportedEngineModule = await import(queryEngineFilePath)
+  const { GraphQLEngine } = preferDefault(rawImportedEngineModule)
+
+  await import(ssrEngineFilePath)
+
   const graphqlEngine = new GraphQLEngine({
     dbPath: path.join(directory, `.cache`, `data`, `datastore`),
+    queryEnginePluginsPath: path.join(
+      directory,
+      `.cache`,
+      `query-engine-plugins.mjs`
+    ),
   })
+
   await graphqlEngine.ready()
 }

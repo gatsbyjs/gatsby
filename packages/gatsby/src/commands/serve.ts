@@ -196,6 +196,11 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     )) as typeof import("../utils/page-ssr-module/entry")
     const graphqlEngine = new GraphQLEngine({
       dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
+      queryEnginePluginsPath: path.join(
+        program.directory,
+        `.cache`,
+        `query-engine-plugins.mjs`
+      ),
     })
 
     router.get(

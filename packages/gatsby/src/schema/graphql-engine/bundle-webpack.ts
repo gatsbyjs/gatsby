@@ -78,6 +78,9 @@ export async function createGraphqlEngineBundle(
         config: [__filename],
       },
     },
+    experiments: {
+      topLevelAwait: true,
+    },
     // those are required in some runtime paths, but we don't need them
     externals: [
       `cbor-x`, // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it

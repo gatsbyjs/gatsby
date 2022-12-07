@@ -18,7 +18,7 @@ const includePlugins = new Set([`gatsby-plugin-sharp`])
 
 // Emit file that imports required node APIs
 const schemaCustomizationPluginsPath =
-  process.cwd() + `/.cache/query-engine-plugins.js`
+  process.cwd() + `/.cache/query-engine-plugins.mjs` // Probably don't want to do this, but otherwise it complains its not a module with "Cannot use import statement outside a module"
 
 export async function printQueryEnginePlugins(): Promise<void> {
   try {
