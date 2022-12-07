@@ -23,14 +23,15 @@ The following table shows the level of support for each tool.
 
 **Support:**
 
-| Tool.                            | Level of Support | Notes                                                   |
-| -------------------------------- | ---------------- | ------------------------------------------------------- |
-| Yarn Workspaces (v1)             | ●                |                                                         |
-| Yarn Workspaces (v2/v3 with PnP) | ◐                |                                                         |
-| Lerna                            | ●                |                                                         |
-| NPM Workspaces (v7 and onwards)  | ●                |                                                         |
-| NX                               | ●                | Full support for detecting and installing dependencies  |
-| Turborepo                        | ○                | We do not have plans to support Turborepo at this time. |
+| Tool.                            | Level of Support | Notes                                                                                                                    |
+| -------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Yarn Workspaces (v1)             | ●                |                                                                                                                          |
+| Yarn Workspaces (v2/v3 with PnP) | ◐                |                                                                                                                          |
+| Lerna                            | ●                |                                                                                                                          |
+| NPM Workspaces (v7 and onwards)  | ●                |                                                                                                                          |
+| NX                               | ●                | Full support for detecting and installing dependencies                                                                   |
+| Turborepo                        | ○                | We do not have plans to support Turborepo at this time.                                                                  |
+| pnpm                             | ○                | If you want to see this feature, [upvote the request](https://gatsby.canny.io/gatsby-cloud/p/support-pnpm-for-monorepos) |
 
 ## Troubleshooting
 

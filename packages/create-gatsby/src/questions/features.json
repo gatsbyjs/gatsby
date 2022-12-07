@@ -1,6 +1,6 @@
 {
-  "gatsby-plugin-google-analytics": {
-    "message": "Add the Google Analytics tracking script"
+  "gatsby-plugin-google-gtag": {
+    "message": "Add the Google gtag script for e.g. Google Analytics"
   },
   "gatsby-plugin-image": {
     "message": "Add responsive images",

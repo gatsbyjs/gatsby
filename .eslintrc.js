@@ -186,14 +186,11 @@ module.exports = {
           },
           {
             selector: `property`,
-            format: [`PascalCase`, `UPPER_CASE`, `camelCase`, `snake_case`],
-            leadingUnderscore: `allowSingleOrDouble`,
+            format: null,
           },
           {
             selector: `objectLiteralProperty`,
-            format: [`PascalCase`, `UPPER_CASE`, `camelCase`, `snake_case`],
-            leadingUnderscore: `allowSingleOrDouble`,
-            trailingUnderscore: `allowSingleOrDouble`,
+            format: null,
           },
           {
             selector: `enum`,

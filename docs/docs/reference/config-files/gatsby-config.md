@@ -197,6 +197,7 @@ Optionally, you can configure its behavior by passing an object to `graphqlTypeg
 module.exports = {
   graphqlTypegen: {
     typesOutputPath: `gatsby-types.d.ts`,
+    documentSearchPaths: [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
     // Other options...
   },
 }
@@ -205,6 +206,10 @@ module.exports = {
 ### typesOutputPath
 
 You can specify the path of the generated TypeScript types file relative to the site root. Default: `src/gatsby-types.d.ts`.
+
+### documentSearchPaths
+
+You can overwrite the search paths, which contain documents that should be scanned. Usually you want to include the default values and append your additional paths. Default: `` [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`] ``.
 
 ### generateOnBuild
 

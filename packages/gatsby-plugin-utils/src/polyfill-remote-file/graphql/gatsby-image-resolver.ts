@@ -205,13 +205,17 @@ export async function gatsbyImageResolver(
         )
       }
 
-      const src = generateImageUrl(source, {
-        width,
-        height: Math.round(width / imageSizes.aspectRatio),
-        format,
-        cropFocus: args.cropFocus,
-        quality: args.quality as number,
-      })
+      const src = generateImageUrl(
+        source,
+        {
+          width,
+          height: Math.round(width / imageSizes.aspectRatio),
+          format,
+          cropFocus: args.cropFocus,
+          quality: args.quality as number,
+        },
+        store
+      )
 
       if (!fallbackSrc) {
         fallbackSrc = src
