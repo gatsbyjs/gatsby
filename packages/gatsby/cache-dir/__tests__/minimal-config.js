@@ -36,6 +36,11 @@ it(`Builds cache-dir with minimal config`, done => {
         `Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating`,
         ``
       )
+      .replace(`Why you should do it regularly:`, ``)
+      .replace(
+        `https://github.com/browserslist/browserslist#browsers-data-updating`,
+        ``
+      )
       .trim()
 
     expect(stderr).toEqual(``)
