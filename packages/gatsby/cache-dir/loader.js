@@ -327,7 +327,7 @@ export class BaseLoader {
       return Promise.resolve({ sliceName, jsonPayload })
     }
 
-    const url = `/slice-data/${sliceName}.json`
+    const url = `${__PATH_PREFIX__}/slice-data/${sliceName}.json`
     return doFetch(url, `GET`).then(res => {
       const jsonPayload = JSON.parse(res.responseText)
 
