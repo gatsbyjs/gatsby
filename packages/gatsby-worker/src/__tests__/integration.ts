@@ -36,8 +36,8 @@ describe(`gatsby-worker`, () => {
       fail(`worker pool not created`)
     }
 
-    const exposedMethodsSingle = Object.keys(workerPool.single)
-    const exposedMethodsAll = Object.keys(workerPool.all)
+    const exposedMethodsSingle = Object.keys(workerPool.single).sort()
+    const exposedMethodsAll = Object.keys(workerPool.all).sort()
     // we expect that `notAFunction` even tho is exported in child module is not exposed
     // as it's not a function
     expect(exposedMethodsSingle).toMatchInlineSnapshot(`
@@ -46,12 +46,12 @@ describe(`gatsby-worker`, () => {
         "async100ms",
         "asyncThrow",
         "getWasPonged",
+        "lotOfMessagesAndExit",
         "neverEnding",
         "pid",
         "setupPingPongMessages",
         "sync",
         "syncThrow",
-        "lotOfMessagesAndExit",
       ]
     `)
     // .all and .single should have same methods
