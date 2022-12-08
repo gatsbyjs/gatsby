@@ -5,14 +5,10 @@ describe(`fixed`, () => {
     cy.visit(`/traced`).waitForRouteChange()
   })
 
-  it(`renders a traced svg`, () => {
+  it(`renders a traced svg (fallsback to base64)`, () => {
     cy.getTestElement(tracedTestId)
       .find(`.gatsby-image-wrapper > img`)
       .should(`have.attr`, `src`)
-      .and(src => {
-        ;[`data:image/svg+xml`, `fill='white'`].forEach(part =>
-          expect(src).to.include(part)
-        )
-      })
+      .and(`contains`, `base64`)
   })
 })
