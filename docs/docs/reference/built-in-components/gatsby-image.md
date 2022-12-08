@@ -294,27 +294,19 @@ GraphQL includes a concept called "query fragments", which are a part of a query
 
 - `GatsbyImageSharpFixed`
 - `GatsbyImageSharpFixed_noBase64`
-- `GatsbyImageSharpFixed_tracedSVG`
 - `GatsbyImageSharpFixed_withWebp`
 - `GatsbyImageSharpFixed_withWebp_noBase64`
-- `GatsbyImageSharpFixed_withWebp_tracedSVG`
 
 #### Fluid images
 
 - `GatsbyImageSharpFluid`
 - `GatsbyImageSharpFluid_noBase64`
-- `GatsbyImageSharpFluid_tracedSVG`
 - `GatsbyImageSharpFluid_withWebp`
 - `GatsbyImageSharpFluid_withWebp_noBase64`
-- `GatsbyImageSharpFluid_withWebp_tracedSVG`
 
 #### About `noBase64`
 
 If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyjs.org/blur-up/), choose the fragment with `noBase64` at the end.
-
-#### About `tracedSVG`
-
-If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.org/traced-svg/), choose the fragment with `tracedSVG` at the end.
 
 #### About `withWebp`
 
@@ -327,7 +319,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
   childImageSharp {
     fluid {
       // highlight-next-line
-      ...GatsbyImageSharpFluid_tracedSVG
+      ...GatsbyImageSharpFluid
     }
   }
 }

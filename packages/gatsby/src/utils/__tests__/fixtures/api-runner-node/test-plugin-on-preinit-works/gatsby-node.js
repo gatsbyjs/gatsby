@@ -1,0 +1,2 @@
+exports.onPreInit = () => {}
+exports.otherTestApi = () => {}

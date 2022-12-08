@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.2.0/packages/gatsby-cli) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- Make type optionally accept context [#37074](https://github.com/gatsbyjs/gatsby/issues/37074) ([759910a](https://github.com/gatsbyjs/gatsby/commit/759910a410ee601ebf2ee5f82f79b9bbf87c19e6))
+- Fine-grained errors with type/category [#37070](https://github.com/gatsbyjs/gatsby/issues/37070) ([0c2b51c](https://github.com/gatsbyjs/gatsby/commit/0c2b51cac9b644df21d2b816dc5fa5c37bd349d4))
+
+#### Chores
+
+- Update internal links to website [#37052](https://github.com/gatsbyjs/gatsby/issues/37052) ([35703b6](https://github.com/gatsbyjs/gatsby/commit/35703b6e4db2d008a03f538097e05a70aae3c6b8))
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.1.0/packages/gatsby-cli) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Other Changes
+
+- update snapshots after adding js codehints to minimal starter [#36999](https://github.com/gatsbyjs/gatsby/issues/36999) ([adf5f9b](https://github.com/gatsbyjs/gatsby/commit/adf5f9b44e247422b7132578e8a778b424223c69))
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.0.0/packages/gatsby-cli) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- Fancier Slices Tree [#36905](https://github.com/gatsbyjs/gatsby/issues/36905) ([c6bfa80](https://github.com/gatsbyjs/gatsby/commit/c6bfa80912e251147155f07c47361b47a473e6f7))
+- Update partial hydration directive [#36868](https://github.com/gatsbyjs/gatsby/issues/36868) ([7f1b57c](https://github.com/gatsbyjs/gatsby/commit/7f1b57c5a5849b3bc997957b3370c3119e79d279))
+- inject source location data to Slice usage and show errors in places where user renders them and not in gatsby internals [#36849](https://github.com/gatsbyjs/gatsby/issues/36849) ([4423795](https://github.com/gatsbyjs/gatsby/commit/4423795ed8069b8ce1f0646e213182009bfeb312))
+- GraphiQL v2 [#36541](https://github.com/gatsbyjs/gatsby/issues/36541) ([55a601d](https://github.com/gatsbyjs/gatsby/commit/55a601d759589286fb99e97db0ba095a1e6ed894))
+- Slice HTML rendering error handling [#36822](https://github.com/gatsbyjs/gatsby/issues/36822) ([f21b54f](https://github.com/gatsbyjs/gatsby/commit/f21b54faaee5fa1d9f5c1377721333013261c8c3))
+- Slice component validation [#36801](https://github.com/gatsbyjs/gatsby/issues/36801) ([1fd450f](https://github.com/gatsbyjs/gatsby/commit/1fd450fc7b3b3a6d3beb98f79ffe960e19bfe74e))
+- Slices API [#36489](https://github.com/gatsbyjs/gatsby/issues/36489) ([6660144](https://github.com/gatsbyjs/gatsby/commit/666014471a545d183a91051d81864ecbad2a3971))
+
+#### Bug Fixes
+
+- Remove `update-notifier` [#36367](https://github.com/gatsbyjs/gatsby/issues/36367) ([4c48a10](https://github.com/gatsbyjs/gatsby/commit/4c48a10cc4fc074332254e7ba93093e952d2ed95))
+- Persist manifest on cached builds [#36693](https://github.com/gatsbyjs/gatsby/issues/36693) ([45a105b](https://github.com/gatsbyjs/gatsby/commit/45a105b6db6892150da27d71abaf693b8e43fb14))
+- Add back missing partial hydration error handling change [#36676](https://github.com/gatsbyjs/gatsby/issues/36676) ([a629551](https://github.com/gatsbyjs/gatsby/commit/a62955144f4d369e18402a9c4345f213c3a1d72e))
+
+#### Chores
+
+- Remove HAS_REACT_18 check [#36850](https://github.com/gatsbyjs/gatsby/issues/36850) ([20ef7c1](https://github.com/gatsbyjs/gatsby/commit/20ef7c12ffa9fd48c763c913e70ef20bef8a68fc))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+- setup circleci to run unit tests againt v5 [#36714](https://github.com/gatsbyjs/gatsby/issues/36714) ([ba146fd](https://github.com/gatsbyjs/gatsby/commit/ba146fd3b7ee1f18c1c695bc654890151d2cc0b3))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.24.0/packages/gatsby-cli) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

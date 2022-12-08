@@ -657,7 +657,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         Stage.BuildHTML
       )
     } catch (err) {
-      let id = `95313` // TODO: verify error IDs exist
+      let id = `95313`
       const context = {
         errorPath: err.context && err.context.path,
         undefinedGlobal: ``,

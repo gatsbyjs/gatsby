@@ -1,4 +1,8 @@
-const { resolvableExtensions, onCreateBabelConfig } = require(`../gatsby-node`)
+const {
+  resolvableExtensions,
+  onCreateBabelConfig,
+  onCreateWebpackConfig,
+} = require(`../gatsby-node`)
 const path = require(`path`)
 
 const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
@@ -43,6 +47,31 @@ describe(`gatsby-plugin-typescript`, () => {
     })
   })
 
+  describe(`onCreateWebpackConfig`, () => {
+    it(`sets the correct webpack config`, () => {
+      const actions = { setWebpackConfig: jest.fn() }
+      const loaders = { js: jest.fn(() => {}) }
+      onCreateWebpackConfig({ actions, loaders })
+      expect(actions.setWebpackConfig).toHaveBeenCalledWith({
+        module: {
+          rules: [
+            {
+              test: /\.tsx?$/,
+              use: expect.toBeFunction(),
+            },
+          ],
+        },
+      })
+    })
+
+    it(`does not set the webpack config if there isn't a js loader`, () => {
+      const actions = { setWebpackConfig: jest.fn() }
+      const loaders = { js: undefined }
+      onCreateWebpackConfig({ actions, loaders })
+      expect(actions.setWebpackConfig).not.toHaveBeenCalled()
+    })
+  })
+
   describe(`plugin schema`, () => {
     it(`should provide meaningful errors when fields are invalid`, async () => {
       const expectedErrors = [
@@ -51,36 +80,50 @@ describe(`gatsby-plugin-typescript`, () => {
         `"allExtensions" must be a boolean`,
       ]
 
-      const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        isTSX: `this should be a boolean`,
-        jsxPragma: 123,
-        allExtensions: `this should be a boolean`,
-      })
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          isTSX: `this should be a boolean`,
+          jsxPragma: 123,
+          allExtensions: `this should be a boolean`,
+        }
+      )
 
+      expect(isValid).toBe(false)
       expect(errors).toEqual(expectedErrors)
     })
 
     it(`should validate the schema`, async () => {
-      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        isTSX: false,
-        jsxPragma: `ReactFunction`,
-        allExtensions: false,
-        allowNamespaces: false,
-        allowDeclareFields: false,
-        onlyRemoveTypeImports: false,
-      })
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          isTSX: false,
+          jsxPragma: `ReactFunction`,
+          allExtensions: false,
+          allowNamespaces: false,
+          allowDeclareFields: false,
+          onlyRemoveTypeImports: false,
+        }
+      )
 
       expect(isValid).toBe(true)
+      expect(errors).toEqual([])
     })
 
     it(`should break when isTSX doesn't match allExtensions`, async () => {
-      const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        isTSX: true,
-        jsxPragma: `ReactFunction`,
-        allExtensions: false,
-      })
+      const expectedErrors = [`"allExtensions" must be [true]`]
 
-      expect(errors).toEqual([`"allExtensions" must be [true]`])
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          isTSX: true,
+          jsxPragma: `ReactFunction`,
+          allExtensions: false,
+        }
+      )
+
+      expect(isValid).toBe(false)
+      expect(errors).toEqual(expectedErrors)
     })
   })
 })

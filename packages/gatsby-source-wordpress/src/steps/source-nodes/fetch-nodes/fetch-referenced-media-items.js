@@ -343,7 +343,16 @@ export const fetchMediaItemsBySourceUrl = async ({
 
   // take our previously cached id's and get nodes for them
   const previouslyCachedMediaItemNodes = await Promise.all(
-    cachedMediaItemNodeIds.map(async nodeId => helpers.getNode(nodeId))
+    cachedMediaItemNodeIds.map(async nodeId => {
+      const node = await helpers.getNode(nodeId)
+
+      const parentNode =
+        node?.internal?.type === `File` && node?.parent
+          ? helpers.getNode(node.parent)
+          : null
+
+      return parentNode || node
+    })
   )
 
   const {

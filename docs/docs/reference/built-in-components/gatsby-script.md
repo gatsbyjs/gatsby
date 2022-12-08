@@ -118,7 +118,7 @@ import { Script, ScriptStrategy } from "gatsby"
 
 The `post-hydrate` strategy is the **default** loading strategy and will be used if you do not specificy a `strategy` attribute.
 
-The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](/docs/glossary/hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
+The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](/docs/conceptual/react-hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
 
 This can have negative implications for key web vital metrics like [Total Blocking Time](https://web.dev/tbt/). By leveraging the `<Script>` component with the `post-hydrate` strategy, you ensure that your script avoids interfering with your page reaching an interactive state, resulting in a better experience for your users.
 
@@ -153,9 +153,9 @@ import { Script } from "gatsby"
 />
 <Script id="gtag-config" strategy="off-main-thread" forward={[`gtag`]}>
   {`
-    window.dataLayer = window.dataLayer || []
-    window.gtag = function gtag() { window.dataLayer.push(arguments) }
-    gtag('js', new Date())
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
     gtag('config', ${process.env.GTAG}, { page_path: location ? location.pathname + location.search + location.hash : undefined })
   `}
 </Script>

@@ -14,7 +14,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     log: jest.fn(),
     warn: jest.fn((...args) => {
       // filter out compatible warnings as we get a lot of
-      // Plugin X is not compatible with your gatsby version 4.X.Y-next.Z - It requires gatsby@^5.0.0-alpha-v5
+      // Plugin X is not compatible with your gatsby version X - It requires X
       // right now
       if (!args[0].includes(`is not compatible with your gatsby version`)) {
         mockNonIncompatibleWarn(...args)
@@ -22,6 +22,17 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     }),
     success: jest.fn(),
     info: jest.fn(),
+  }
+})
+
+// Previously babel transpiled src ts plugin files (e.g. gatsby-node files) on the fly,
+// making them require-able/test-able without running compileGatsbyFiles prior (as would happen in a real scenario).
+// After switching to import to support esm, point file path resolution to the real compiled JS files in dist instead.
+jest.mock(`../../resolve-js-file-path`, () => {
+  return {
+    resolveJSFilepath: jest.fn(
+      ({ filePath }) => `${filePath.replace(`src`, `dist`)}.js`
+    ),
   }
 })
 
@@ -174,6 +185,7 @@ describe(`Load plugins`, () => {
               `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
+              `onCreateWebpackConfig`,
             ],
             pluginOptions: {
               allExtensions: false,

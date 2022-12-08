@@ -1,14 +1,18 @@
-import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-local-file-node"
+import { buildInterfacesListForType } from "./helpers"
 
-// @todo move this to plugin options
 export const typeDefinitionFilters = [
   {
     typeName: `__all`,
-    typeDef: typeDef => {
-      /**
-       * @todo once WPGraphQL has a DateTime Scalar, use that to find date fields
-       * instead of the below fieldnames
-       */
+    typeDef: (typeDef, { type }) => {
+      if (type.interfaces && typeDef) {
+        typeDef.interfaces ||= []
+        typeDef.interfaces.push(...buildInterfacesListForType(type))
+      }
+
+      if (typeDef?.interfaces?.includes(`Node`)) {
+        // used to filter by different node types within a node interface
+        typeDef.fields.nodeType = `String`
+      }
 
       if (typeDef?.fields?.date) {
         const dateField = {
@@ -64,17 +68,6 @@ export const typeDefinitionFilters = [
   {
     typeName: `MediaItem`,
     typeDef: objectType => {
-      // @todo: this field is deprecated as of 0.1.8, remove this when we get to beta
-      objectType.fields.remoteFile = {
-        type: `File`,
-        deprecationReason: `MediaItem.remoteFile was renamed to localFile`,
-        resolve: () => {
-          throw new Error(
-            `MediaItem.remoteFile is deprecated and has been renamed to MediaItem.localFile. Please update your code.`
-          )
-        },
-      }
-
       objectType.fields.localFile = {
         type: `File`,
         extensions: {

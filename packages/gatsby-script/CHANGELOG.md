@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.2.0/packages/gatsby-script) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- correct script to match google's current [#36993](https://github.com/gatsbyjs/gatsby/issues/36993) ([5cb5014](https://github.com/gatsbyjs/gatsby/commit/5cb50143057e42ca2e00e90b597bb681cdba7300))
+
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.1.0/packages/gatsby-script) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-script
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.0.0/packages/gatsby-script) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- Update partial hydration directive [#36868](https://github.com/gatsbyjs/gatsby/issues/36868) ([7f1b57c](https://github.com/gatsbyjs/gatsby/commit/7f1b57c5a5849b3bc997957b3370c3119e79d279))
+
+#### Chores
+
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.9.0/packages/gatsby-script) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

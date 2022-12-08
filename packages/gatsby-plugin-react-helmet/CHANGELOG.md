@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@6.2.0/packages/gatsby-plugin-react-helmet) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
+## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@6.1.0/packages/gatsby-plugin-react-helmet) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@6.0.0/packages/gatsby-plugin-react-helmet) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [5.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.24.0/packages/gatsby-plugin-react-helmet) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

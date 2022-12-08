@@ -1,7 +1,7 @@
 {
   "name": "gatsby-script",
   "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
-  "version": "2.0.0-next.0",
+  "version": "2.3.0-next.2",
   "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -16,22 +16,22 @@
   "sideEffects": false,
   "scripts": {
     "build": "microbundle -f cjs,modern --jsx React.createElement && tsc --emitDeclarationOnly --declaration --declarationDir dist",
-    "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"client export\"",
+    "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"use client\"",
     "watch": "microbundle watch -f cjs,modern --jsx React.createElement --no-compress",
     "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
   },
   "devDependencies": {
-    "@gatsbyjs/reach-router": "^2.0.0-v2.0",
+    "@gatsbyjs/reach-router": "^2.0.0",
     "@testing-library/react": "^11.2.7",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "microbundle": "^0.15.1",
-    "prepend-directive": "^1.0.3",
-    "typescript": "^4.7.4"
+    "prepend-directive": "^1.1.0",
+    "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "@gatsbyjs/reach-router": "^2.0.0-v2.0",
+    "@gatsbyjs/reach-router": "^2.0.0",
     "react": "^18.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^0.0.0"
   },

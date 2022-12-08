@@ -149,6 +149,227 @@ const truncateObjStrings = (obj): IPageDataWithQueryResult => {
   return obj
 }
 
+interface IPreviewErrorProps {
+  pagePath: string
+  publicDir: string
+  error: IRenderHTMLError
+}
+
+const generatePreviewErrorPage = async ({
+  pagePath,
+  publicDir,
+  error,
+}: IPreviewErrorProps): Promise<string> => {
+  const pageData = await readPageData(publicDir, pagePath)
+  const truncatedPageData = truncateObjStrings(pageData)
+
+  const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Failed to render HTML for "${pagePath}"</title>
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      * {
+        margin: 0;
+      }
+      html, body {
+        height: 100%;
+      }
+      body {
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      img, picture, video, canvas, svg {
+        display: block;
+        max-width: 100%;
+      }
+      input, button, textarea, select {
+        font: inherit;
+      }
+      p, h1, h2, h3, h4, h5, h6 {
+        overflow-wrap: break-word;
+      }
+
+      :root {
+        --color-ansi-selection: rgba(95, 126, 151, 0.48);
+        --color-ansi-bg: #fafafa;
+        --color-ansi-fg: #545454;
+        --color-ansi-white: #969896;
+        --color-ansi-black: #141414;
+        --color-ansi-blue: #183691;
+        --color-ansi-cyan: #007faa;
+        --color-ansi-green: #008000;
+        --color-ansi-magenta: #795da3;
+        --color-ansi-red: #d91e18;
+        --color-ansi-yellow: #aa5d00;
+        --color-ansi-bright-white: #ffffff;
+        --color-ansi-bright-black: #545454;
+        --color-ansi-bright-blue: #183691;
+        --color-ansi-bright-cyan: #007faa;
+        --color-ansi-bright-green: #008000;
+        --color-ansi-bright-magenta: #795da3;
+        --color-ansi-bright-red: #d91e18;
+        --color-ansi-bright-yellow: #aa5d00;
+        --importantLight: #ffffff;
+        --importantDark: #000000;
+        --backdrop: rgba(72, 67, 79, 0.5);
+        --color: #454a53;
+        --background: var(--color-ansi-bright-white);
+        --primary: #663399;
+        --primaryLight: #9158ca;
+        --link: var(--primary);
+        --line: #e0e0e0;
+        --colorHeader: rgb(244, 244, 244);
+        --codeFrame-bg: #eeeeee;
+        --codeFrame-color: #414141;
+        --codeFrame-button-bg: white;
+        --radii: 5px;
+        --z-index-backdrop: 9000;
+        --z-index-overlay: 10000;
+        --space-xxs: 0.25em;
+        --space-xs: 0.5em;
+        --space-sm: 1em;
+        --space: 1.5em;
+        --space-lg: 2.5em;
+        --rootBoxShadowOpacity: 0.08;
+        --ring-opacity: 0.65;
+        --ring-color: rgba(138, 75, 175, var(--ring-opacity));
+      }
+
+      html {
+        font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        background: var(--background);
+        color: var(--color);
+      }
+
+      a {
+        color: var(--link);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      button:focus, a:focus {
+        outline: 4px solid transparent;
+        box-shadow: 0 0 0 4px var(--ring-color);
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      header {
+        color: var(--colorHeader);
+        background: var(--primary);
+        padding: var(--space);
+      }
+
+      header p {
+        margin-bottom: 0;
+      }
+
+      h1 {
+        color: var(--importantLight);
+        font-weight: 500;
+        margin: 0;
+      }
+
+      main {
+        padding: var(--space);
+      }
+
+      h2 {
+        font-weight: 500;
+        font-size: 1.25em;
+        color: var(--importantDark);
+        margin-bottom: var(--space-xs);
+      }
+
+      p {
+        margin-bottom: var(--space-sm);
+      }
+
+      pre {
+        color: var(--color-ansi-fg);
+        background: var(--color-ansi-bg);
+        padding: var(--space-sm);
+        border-radius: var(--radii);
+        overflow: auto;
+        margin-bottom: var(--space-sm);
+      }
+
+      p code {
+        color: var(--color-ansi-fg);
+        background: var(--color-ansi-bg);
+        border-radius: var(--radii);
+        padding: var(--space-xxs)
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-ansi-bg: #2b2b2b;
+          --color-ansi-fg: #d1d5db;
+          --color-ansi-white: #ffffff;
+          --color-ansi-black: #d4d0ab;
+          --color-ansi-blue: #4791ff;
+          --color-ansi-cyan: #00e0e0;
+          --color-ansi-green: #abe338;
+          --color-ansi-magenta: #dcc6e0;
+          --color-ansi-red: #ffa07a;
+          --color-ansi-yellow: #ffd700;
+          --color-ansi-bright-white: #ffffff;
+          --color-ansi-bright-black: #d4d0ab;
+          --color-ansi-bright-blue: #4791ff;
+          --color-ansi-bright-cyan: #00e0e0;
+          --color-ansi-bright-green: #abe338;
+          --color-ansi-bright-magenta: #dcc6e0;
+          --color-ansi-bright-red: #ffa07a;
+          --color-ansi-bright-yellow: #ffd700;
+          --importantDark: white;
+          --backdrop: rgba(48, 48, 50, 0.75);
+          --color: #d1d5db;
+          --link: #d9bae8;
+          --background: #232129;
+          --primary: #452475;
+          --primaryLight: #663399;
+          --line: #464647;
+          --codeFrame-bg: #18171d;
+          --codeFrame-color: #d1d5db;
+          --codeFrame-button-bg: #232129;
+          --rootBoxShadowOpacity: 0.15;
+          --ring-color: rgba(217, 186, 232, var(--ring-opacity));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Failed to render HTML</h1>
+      <p>The error occurred on the page: <strong>${pagePath}</strong></p>
+    </header>
+    <main>
+      <p>While trying to render the HTML for "${pagePath}" an error occurred. In order to make the build succeed you'll need to fix the error in your site. See the stacktrace below to find the culprit. Also be sure to read <a href="https://www.gatsbyjs.com/docs/debugging-html-builds/">Debugging HTML Builds</a> if you need more help.</p>
+      <h2>Error</h2>
+      <pre><code>${
+        error.stack ? error.stack : `No codeFrame could be generated.`
+      }</code></pre>
+      <h2>Extra Details</h2>
+      <p>Below you'll find additional data that might help you debug the error.</p>
+      <details>
+        <summary>Page Data</summary>
+        <p>The page data contains some metadata about the affected page but also the GraphQL data if you have queries in your page. If e.g. data from the GraphQL query is undefined, check if it's available here.</p>
+        <pre><code>${JSON.stringify(truncatedPageData, null, 2)}</code></pre>
+      </details>
+    </main>
+  </body>
+</html>
+`
+
+  return html
+}
+
 export const renderHTMLProd = async ({
   htmlComponentRendererPath,
   paths,
@@ -229,17 +450,11 @@ export const renderHTMLProd = async ({
 
         // If we're in Preview-mode, write out a simple error html file.
         if (isPreview) {
-          const pageData = await readPageData(publicDir, pagePath)
-          const truncatedPageData = truncateObjStrings(pageData)
-
-          const html = `<h1>Preview build error</h1>
-        <p>There was an error when building the preview page for this page ("${pagePath}").</p>
-        <h3>Error</h3>
-        <pre><code>${htmlRenderError?.stack}</code></pre>
-        <h3>Page component id</h3>
-        <p><code>${pageData.componentChunkName}</code></p>
-        <h3>Page data</h3>
-        <pre><code>${JSON.stringify(truncatedPageData, null, 4)}</code></pre>`
+          const html = await generatePreviewErrorPage({
+            pagePath,
+            publicDir,
+            error: htmlRenderError,
+          })
 
           await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
           previewErrors[pagePath] = {
@@ -351,8 +566,25 @@ export async function renderPartialHydrationProd({
 
   for (const pagePath of paths) {
     const pageData = await readPageData(publicDir, pagePath)
+
+    // we collect static query hashes from page template and also all used slices on the page
+    const staticQueryHashes = new Set(pageData.staticQueryHashes)
+    if (pageData.slicesMap) {
+      for (const sliceName of Object.values(pageData.slicesMap)) {
+        const sliceDataPath = path.join(
+          publicDir,
+          `slice-data`,
+          `${sliceName}.json`
+        )
+        const sliceData = await fs.readJSON(sliceDataPath)
+        for (const staticQueryHash of sliceData.staticQueryHashes) {
+          staticQueryHashes.add(staticQueryHash)
+        }
+      }
+    }
+
     const { staticQueryContext } = await getStaticQueryContext(
-      pageData.staticQueryHashes
+      Array.from(staticQueryHashes)
     )
 
     const pageRenderer = path.join(

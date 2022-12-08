@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useContext } from "react"
 import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
@@ -11,6 +13,7 @@ export function Slice(props) {
       sliceName: props.alias,
     }
     delete internalProps.alias
+    delete internalProps.__renderedByLocation
 
     const slicesContext = useContext(SlicesContext)
 
@@ -47,7 +50,7 @@ export function Slice(props) {
       }
 
       throw new Error(
-        `Nested slices are not supported.${additionalContextMessage}\n\nSee https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice#nested-slices`
+        `Nested slices are not supported.${additionalContextMessage}\n\nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice#nested-slices`
       )
     } else {
       throw new Error(
@@ -55,9 +58,7 @@ export function Slice(props) {
       )
     }
   } else {
-    throw new Error(
-      `Slices are disabled, likely due to PARTIAL_HYDRATION flag being set.`
-    )
+    throw new Error(`Slices are disabled.`)
   }
 }
 

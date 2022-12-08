@@ -1,7 +1,7 @@
 ---
 title: Making Your Site Accessible
 examples:
-  - label: Using react-skip-nav
+  - label: Using reach-skip-nav
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-reach-skip-nav"
 ---
 

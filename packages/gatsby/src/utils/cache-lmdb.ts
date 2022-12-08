@@ -74,6 +74,9 @@ export default class GatsbyCacheLmdb {
       this.db = GatsbyCacheLmdb.getStore().openDB({
         name: this.name,
         encoding: this.encoding,
+        cache: {
+          expirer: false,
+        },
       })
     }
     return this.db

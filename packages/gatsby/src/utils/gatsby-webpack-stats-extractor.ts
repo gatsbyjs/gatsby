@@ -5,6 +5,9 @@ import { PARTIAL_HYDRATION_CHUNK_REASON } from "./webpack/plugins/partial-hydrat
 import { store } from "../redux"
 import { ensureFileContent } from "./ensure-file-content"
 
+let previousChunkMapJson: string | undefined
+let previousWebpackStatsJson: string | undefined
+
 export class GatsbyWebpackStatsExtractor {
   private plugin: { name: string }
   private publicPath: string
@@ -14,8 +17,6 @@ export class GatsbyWebpackStatsExtractor {
     this.publicPath = publicPath
   }
   apply(compiler: Compiler): void {
-    let previousChunkMapJson: string | undefined
-    let previousWebpackStatsJson: string | undefined
     compiler.hooks.done.tapAsync(this.plugin.name, async (stats, done) => {
       const assets: { [key: string]: Array<string> } = {}
       const assetsMap = {}

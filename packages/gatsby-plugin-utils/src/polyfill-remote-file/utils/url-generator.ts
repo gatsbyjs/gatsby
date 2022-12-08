@@ -4,6 +4,7 @@ import { URL } from "url"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
 import type { ImageCropFocus, WidthOrHeight } from "../types"
+import type { Store } from "gatsby"
 
 // this is an arbitrary origin that we use #branding so we can construct a full url for the URL constructor
 const ORIGIN = `https://gatsbyjs.com`
@@ -53,20 +54,26 @@ function appendUrlParamToSearchParams(
   searchParams.append(paramName, finalUrl)
 }
 
-export function generateFileUrl({
-  url,
-  filename,
-}: {
-  url: string
-  filename: string
-}): string {
+export function generateFileUrl(
+  {
+    url,
+    filename,
+  }: {
+    url: string
+    filename: string
+  },
+  store?: Store
+): string {
   const fileExt = extname(filename)
   const filenameWithoutExt = basename(filename, fileExt)
 
   const parsedURL = new URL(
-    `${ORIGIN}${generatePublicUrl({
-      url,
-    })}/${filenameWithoutExt}${fileExt}`
+    `${ORIGIN}${generatePublicUrl(
+      {
+        url,
+      },
+      store
+    )}/${filenameWithoutExt}${fileExt}`
   )
 
   appendUrlParamToSearchParams(parsedURL.searchParams, url)
@@ -81,13 +88,14 @@ export function generateImageUrl(
     filename: string
     internal: { contentDigest: string }
   },
-  imageArgs: Parameters<typeof generateImageArgs>[0]
+  imageArgs: Parameters<typeof generateImageArgs>[0],
+  store?: Store
 ): string {
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
   const queryStr = generateImageArgs(imageArgs)
 
   const parsedURL = new URL(
-    `${ORIGIN}${generatePublicUrl(source)}/${createContentDigest(
+    `${ORIGIN}${generatePublicUrl(source, store)}/${createContentDigest(
       queryStr
     )}/${filenameWithoutExt}.${imageArgs.format}`
   )
@@ -102,17 +110,28 @@ export function generateImageUrl(
   return `${parsedURL.pathname}${parsedURL.search}`
 }
 
-function generatePublicUrl({
-  url,
-  mimeType,
-}: {
-  url: string
-  mimeType?: string
-}): string {
+function generatePublicUrl(
+  {
+    url,
+    mimeType,
+  }: {
+    url: string
+    mimeType?: string
+  },
+  store?: Store
+): string {
+  const state = store?.getState()
+
+  const pathPrefix = state?.program?.prefixPaths
+    ? state?.config?.pathPrefix
+    : ``
+
   const remoteUrl = createContentDigest(url)
 
   let publicUrl =
-    mimeType && isImage({ mimeType }) ? `/_gatsby/image/` : `/_gatsby/file/`
+    pathPrefix +
+    (mimeType && isImage({ mimeType }) ? `/_gatsby/image/` : `/_gatsby/file/`)
+
   publicUrl += `${remoteUrl}`
 
   return publicUrl

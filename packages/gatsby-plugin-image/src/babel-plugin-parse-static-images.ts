@@ -24,7 +24,7 @@ export default function attrs({
 }): PluginObj {
   return {
     visitor: {
-      JSXOpeningElement(nodePath): void {
+      JSXOpeningElement(nodePath, state): void {
         if (
           !nodePath
             .get(`name`)
@@ -49,6 +49,8 @@ export default function attrs({
           console.warn(`[gatsby-plugin-image] ${error}`)
         }
 
+        // Adding the filename to the hashing, like in "extractStaticImageProps" function
+        props.filename = state.filename
         const hash = hashOptions(props)
 
         const cacheDir = (this.opts as Record<string, string>)?.cacheDir

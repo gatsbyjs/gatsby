@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@6.2.0/packages/gatsby-plugin-sass) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
+## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@6.1.0/packages/gatsby-plugin-sass) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@6.0.0/packages/gatsby-plugin-sass) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- update dependency autoprefixer to ^10.4.13 for gatsby-plugin-sass [#36934](https://github.com/gatsbyjs/gatsby/issues/36934) ([b9eb8d2](https://github.com/gatsbyjs/gatsby/commit/b9eb8d2b558b493a8a7bd05f62a8049f9eb884fb))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [5.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.24.0/packages/gatsby-plugin-sass) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

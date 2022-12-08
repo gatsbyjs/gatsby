@@ -16,6 +16,8 @@
     "gatsby-source-filesystem": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rehype-slug": "^5.1.0",
+    "remark-gfm": "^3.0.1",
     "theme-ui": "^0.3.1"
   },
   "keywords": [
@@ -45,6 +47,6 @@
     "gatsby-cypress": "next",
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
-    "start-server-and-test": "^1.7.1"
+    "start-server-and-test": "^1.14.0"
   }
 }

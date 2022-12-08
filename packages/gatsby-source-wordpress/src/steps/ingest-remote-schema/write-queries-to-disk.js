@@ -24,7 +24,15 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
   const wordPressGraphQLDirectory = `${process.cwd()}/WordPress/GraphQL`
 
   // remove before writing in case there are old types
-  await fs.remove(wordPressGraphQLDirectory)
+  try {
+    fs.rmSync(wordPressGraphQLDirectory, {
+      recursive: true,
+    })
+  } catch (e) {
+    if (!e.message.includes(`no such file or directory, stat`)) {
+      throw e
+    }
+  }
 
   for (const {
     nodeListQueries,

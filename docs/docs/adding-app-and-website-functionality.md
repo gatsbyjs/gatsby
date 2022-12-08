@@ -20,7 +20,7 @@ Gatsby allows you to orchestrate data fetching, transforming, and usage in pages
 Even though Gatsby generates static files, Gatsby apps [rehydrate](/docs/glossary#hydration) from static HTML rendered by ReactDOM APIs into an app running client-side JavaScript. The general approach as outlined in the [React Hydration guide](/docs/conceptual/react-hydration) is as follows:
 
 1. Build and render static HTML, creating content and pages with data injected at build time
-2. Invoke `ReactDOM.hydrate()` method to pick up where the static HTML was left
+2. Invoke `ReactDOMClient.hydrateRoot()` method to pick up where the static HTML was left
 3. Transfer rendering to the React reconciler
 
 It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for [dynamic data](/docs/client-data-fetching/), [authenticate users](/docs/how-to/adding-common-features/building-a-site-with-authentication/), and perform all the app-like functionality you desire because the page is running a React application.

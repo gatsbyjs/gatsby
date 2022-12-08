@@ -1,9 +1,9 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "3.0.0-next.2",
+  "version": "3.3.0-next.3",
   "scripts": {
     "build": "npm-run-all --npm-path npm -s clean -p build:*",
-    "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"client export\"",
+    "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"use client\"",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",
     "build:gatsby-ssr": "microbundle -i src/gatsby-ssr.tsx -f cjs -o ./[name].js --no-pkg-main --jsx React.createElement --jsxFragment React.Fragment --no-compress --external=common-tags,react --no-sourcemap",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --jsxFragment React.Fragment --define SERVER=true",
@@ -61,17 +61,25 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.2.9",
     "prepend-directive": "^1.0.3",
-    "semver": "^7.3.7",
+    "semver": "^7.3.8",
     "terser": "^5.3.8",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.12.3",
-    "gatsby": "^5.0.0-alpha-v5",
-    "gatsby-plugin-sharp": "^4.0.0-next",
-    "gatsby-source-filesystem": "^4.0.0-next",
+    "gatsby": "^5.0.0-next",
+    "gatsby-plugin-sharp": "^5.0.0-next",
+    "gatsby-source-filesystem": "^5.0.0-next",
     "react": "^18.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^0.0.0"
+  },
+  "peerDependenciesMeta": {
+    "gatsby-plugin-sharp": {
+      "optional": true
+    },
+    "gatsby-source-filesystem": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
@@ -79,13 +87,13 @@
     "@babel/runtime": "^7.15.4",
     "@babel/traverse": "^7.15.4",
     "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "^5.0.0-next.1",
+    "babel-plugin-remove-graphql-queries": "^5.3.0-next.1",
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.3",
     "common-tags": "^1.8.2",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^4.0.0-next.1",
-    "gatsby-plugin-utils": "^4.0.0-next.2",
+    "gatsby-core-utils": "^4.3.0-next.1",
+    "gatsby-plugin-utils": "^4.3.0-next.3",
     "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.8.1"
   },

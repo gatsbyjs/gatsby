@@ -202,9 +202,9 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
         type: ImagePlaceholderType.name,
         description: stripIndent`
             Format of generated placeholder image, displayed while the main image loads.
-            BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
-            DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
-            TRACED_SVG: a low-resolution traced SVG of the image.
+            BLURRED: a blurred, low resolution image, encoded as a base64 data URI.
+            DOMINANT_COLOR: a solid color, calculated from the dominant color of the image (default).
+            TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
             NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
       },
       formats: {

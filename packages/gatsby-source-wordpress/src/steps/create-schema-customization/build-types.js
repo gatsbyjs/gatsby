@@ -3,9 +3,8 @@ import { transformFields } from "./transform-fields"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import {
   buildTypeName,
-  fieldOfTypeWasFetched,
-  getTypeSettingsByType,
   filterTypeDefinition,
+  getTypesThatImplementInterfaceType,
 } from "./helpers"
 
 const unionType = typeBuilderApi => {
@@ -47,37 +46,23 @@ const unionType = typeBuilderApi => {
 }
 
 const interfaceType = typeBuilderApi => {
-  const { type, schema, gatsbyNodeTypes, fieldAliases, fieldBlacklist } =
-    typeBuilderApi
+  const { type, schema } = typeBuilderApi
 
   const state = store.getState()
-  const { ingestibles, typeMap } = state.remoteSchema
+  const { ingestibles } = state.remoteSchema
   const { nodeInterfaceTypes } = ingestibles
 
-  const allTypes = typeMap.values()
-
-  const implementingTypes = Array.from(allTypes)
-    .filter(
-      ({ interfaces }) =>
-        interfaces &&
-        // find types that implement this interface type
-        interfaces.find(singleInterface => singleInterface.name === type.name)
-    )
-    .map(type => typeMap.get(type.name))
-    .filter(
-      type =>
-        type.kind !== `UNION` ||
-        // if this is a union type, make sure the union type has one or more member types, otherwise schema customization will throw an error
-        (!!type.possibleTypes && !!type.possibleTypes.length)
-    )
+  const implementingTypes = getTypesThatImplementInterfaceType(type)
 
   const transformedFields = transformFields({
     parentInterfacesImplementingTypes: implementingTypes,
+    parentType: type,
     fields: type.fields,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
   })
+
+  if (!transformedFields) {
+    return null
+  }
 
   let typeDef = {
     name: buildTypeName(type.name),
@@ -85,34 +70,20 @@ const interfaceType = typeBuilderApi => {
     extensions: { infer: false },
   }
 
-  // if this is a node interface type
-  if (nodeInterfaceTypes.includes(type.name)) {
-    // we add nodeType (post type) to all nodes as they're fetched
-    // so we can add them to node interfaces as well in order to filter
-    // by a couple different content types
-    typeDef.fields[`nodeType`] = `String`
-    typeDef.interfaces = [`Node`]
-  } else {
-    // otherwise this is a regular interface type so we need to resolve the type name
+  // this is a regular interface type, not a node interface type so we need to resolve the type name
+  if (!nodeInterfaceTypes.includes(type.name)) {
     typeDef.resolveType = node =>
       node?.__typename ? buildTypeName(node.__typename) : null
   }
 
-  // @todo add this as a plugin option
   typeDef = filterTypeDefinition(typeDef, typeBuilderApi, `INTERFACE`)
 
   return schema.buildInterfaceType(typeDef)
 }
 
 const objectType = typeBuilderApi => {
-  const {
-    type,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
-    schema,
-    isAGatsbyNode,
-  } = typeBuilderApi
+  const { type, gatsbyNodeTypes, fieldAliases, fieldBlacklist, schema } =
+    typeBuilderApi
 
   const transformedFields = transformFields({
     fields: type.fields,
@@ -139,31 +110,8 @@ const objectType = typeBuilderApi => {
     },
   }
 
-  if (type.interfaces) {
-    objectType.interfaces = type.interfaces
-      .filter(interfaceType => {
-        const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
-
-        return !interfaceTypeSettings.exclude && fieldOfTypeWasFetched(type)
-      })
-      .map(({ name }) => buildTypeName(name))
-  }
-
-  if (
-    gatsbyNodeTypes.includes(type.name) ||
-    isAGatsbyNode ||
-    // this accounts for Node types that weren't fetched because
-    // they have no root field to fetch a single node of this type
-    // removing them from the schema breaks the build though
-    // @todo instead, if a node type isn't fetched, remove it
-    // from the entire schema
-    type?.interfaces?.find(({ name }) => name === `Node`)
-  ) {
-    // this is used to filter the node interfaces
-    // by different content types (post types)
-    objectType.fields[`nodeType`] = `String`
-
-    objectType.interfaces = [`Node`, ...objectType.interfaces]
+  if (type.interfaces?.includes(`Node`)) {
+    objectType.interfaces = [`Node`]
   }
 
   // @todo add this as a plugin option

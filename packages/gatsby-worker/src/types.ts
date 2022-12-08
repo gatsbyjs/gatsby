@@ -5,14 +5,16 @@ export const END = 0b00
 export const CUSTOM_MESSAGE = 0b100
 export const WORKER_READY = 0b1000
 
-type CustomMessage = [typeof CUSTOM_MESSAGE, unknown]
+type Counter = number
+
+type CustomMessage = [typeof CUSTOM_MESSAGE, Counter, unknown]
 
 type FunctionName = string | number | symbol
 type FunctionArgs = Array<any>
 
-type ExecuteMessage = [typeof EXECUTE, FunctionName, FunctionArgs]
-type EndMessage = [typeof END]
-type WorkerReadyMessage = [typeof WORKER_READY]
+type ExecuteMessage = [typeof EXECUTE, Counter, FunctionName, FunctionArgs]
+type EndMessage = [typeof END, Counter]
+type WorkerReadyMessage = [typeof WORKER_READY, Counter]
 
 export type ParentMessageUnion = ExecuteMessage | EndMessage | CustomMessage
 
@@ -22,6 +24,7 @@ type ErrorStack = string
 
 type TaskError = [
   typeof ERROR,
+  Counter,
   ErrorType,
   ErrorMessage,
   ErrorStack | undefined,
@@ -30,7 +33,7 @@ type TaskError = [
 
 type ResultType = unknown
 
-type TaskResult = [typeof RESULT, ResultType]
+type TaskResult = [typeof RESULT, Counter, ResultType]
 
 export type ChildMessageUnion =
   | TaskError
