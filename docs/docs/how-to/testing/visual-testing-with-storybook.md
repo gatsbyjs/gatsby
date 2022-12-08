@@ -82,6 +82,8 @@ module.exports = {
 }
 ```
 
+> **Note:** If using React 17, add the following line to `webpackFinal` as well: `config.externals = ["react-dom/client"];`
+
 The final `.storybook/main.js` should look something like this:
 
 ```js:title=.storybook/main.js
