@@ -64,6 +64,7 @@ const pageDataMock = {
   componentChunkName: `page-component---src-pages-test-js`,
   path: `/about/`,
   staticQueryHashes: [],
+  slicesMap: new Map(),
 }
 
 const webpackCompilationHash = `1234567890abcdef1234`
@@ -194,7 +195,6 @@ describe(`develop-static-entry`, () => {
     global.__BASE_PATH__ = ``
     global.__ASSET_PREFIX__ = ``
     global.BROWSER_ESM_ONLY = false
-    global.HAS_REACT_18 = false
   })
 
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, async () => {
@@ -371,6 +371,7 @@ describe(`static-entry sanity checks`, () => {
     styles: [],
     reversedStyles: [],
     reversedScripts: [],
+    sliceData: {},
   }
 
   beforeEach(() => {

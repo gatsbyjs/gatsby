@@ -33,6 +33,15 @@ async function run() {
       // Only in dev
       $(`meta[name="note"]`).remove()
 
+      // remove any comments
+      $.root()
+        .find("*")
+        .contents()
+        .filter(function () {
+          return this.type === "comment"
+        })
+        .remove()
+
       return $.html()
     }
 

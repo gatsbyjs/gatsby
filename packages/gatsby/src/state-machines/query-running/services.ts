@@ -5,6 +5,7 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  runSliceQueries,
   waitUntilAllJobsComplete,
   writeOutRedirects,
 } from "../../services"
@@ -19,6 +20,7 @@ export const queryRunningServices: MachineOptions<
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  runSliceQueries,
   waitUntilAllJobsComplete,
   writeOutRedirects,
 }

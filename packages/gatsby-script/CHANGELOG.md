@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.9.0/packages/gatsby-script) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Bug Fixes
+
+- fix bundling image cdn tools fix [#36534](https://github.com/gatsbyjs/gatsby/issues/36534) ([0ef331d](https://github.com/gatsbyjs/gatsby/commit/0ef331d30eab0731457b6607c9320e2818eb1677))
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+
 ## [1.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.8.0/packages/gatsby-script) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

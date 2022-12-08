@@ -4,8 +4,5 @@ module.exports = {
     description: `The filters and sort benchmark`,
     author: `@gatsbyjs`,
   },
-  flags: {
-    PARALLEL_QUERY_RUNNING: true,
-  }
   // plugins: [`gatsby-plugin-benchmark-reporting`],
 }

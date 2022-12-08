@@ -1,6 +1,6 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { isLmdbStore, getDataStore } = require(`../../datastore`)
+const { getDataStore } = require(`../../datastore`)
 
 const makeNodesUneven = () => [
   // Note: This is assumed to be an uneven node count

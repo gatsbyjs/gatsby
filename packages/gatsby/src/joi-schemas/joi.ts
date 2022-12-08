@@ -54,8 +54,8 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
     jsxRuntime: Joi.string().valid(`automatic`, `classic`).default(`classic`),
     jsxImportSource: Joi.string(),
     trailingSlash: Joi.string()
-      .valid(`always`, `never`, `ignore`, `legacy`) // TODO(v5): Remove legacy
-      .default(`legacy`),
+      .valid(`always`, `never`, `ignore`)
+      .default(`always`),
     graphqlTypegen: Joi.alternatives(
       Joi.boolean(),
       Joi.object()
