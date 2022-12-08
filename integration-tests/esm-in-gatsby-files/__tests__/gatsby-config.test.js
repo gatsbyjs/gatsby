@@ -10,11 +10,15 @@ const siteRoot = path.resolve(__dirname, `..`)
 const fixturePath = {
   cjs: path.join(fixtureRoot, `gatsby-config.js`),
   esm: path.join(fixtureRoot, `gatsby-config.mjs`),
+  ts: path.join(fixtureRoot, `gatsby-config.ts`),
+  tsWithEsm: path.join(fixtureRoot, `/ts-with-esm/gatsby-config.ts`),
 }
 
 const configPath = {
   cjs: path.join(siteRoot, `gatsby-config.js`),
   esm: path.join(siteRoot, `gatsby-config.mjs`),
+  ts: path.join(siteRoot, `gatsby-config.ts`),
+  tsWithEsm: path.join(siteRoot, `gatsby-config.ts`),
 }
 
 const localPluginFixtureDir = path.join(fixtureRoot, `plugins`)
@@ -51,6 +55,39 @@ describe(`gatsby-config.js`, () => {
     // Requires work
     expect(stdout).toContain(`hello-default-cjs`)
     expect(stdout).toContain(`hello-named-cjs`)
+  })
+})
+
+describe(`gatsby-config.ts`, () => {
+  afterEach(() => {
+    fs.rmSync(configPath.ts)
+  })
+
+  it(`works with imported CJS modules`, async () => {
+    await fs.copyFile(fixturePath.ts, configPath.ts)
+
+    const stdout = await build()
+
+    // Build succeeded
+    expect(stdout).toContain(`Done building`)
+
+    // Requires work
+    expect(stdout).toContain(`hello-default-cjs`)
+    expect(stdout).toContain(`hello-named-cjs`)
+  })
+
+
+  it(`works with ESM only packages`, async () => {
+    await fs.copyFile(fixturePath.tsWithEsm, configPath.tsWithEsm)
+
+    const stdout = await build()
+
+    // Build succeeded
+    expect(stdout).toContain(`Done building`)
+
+    // esm import works
+    expect(stdout).toContain(`hello-default-esm`)
+    expect(stdout).toContain(`hello-named-esm`)
   })
 })
 
