@@ -396,17 +396,6 @@ export async function generateImageData({
     imageProps.placeholder = {
       fallback,
     }
-  } else if (placeholder === `tracedSVG`) {
-    const fallback: string = await traceSVG({
-      file,
-      args: tracedSVGOptions,
-      fileArgs: args,
-      cache,
-      reporter,
-    })
-    imageProps.placeholder = {
-      fallback,
-    }
   } else if (metadata?.dominantColor) {
     imageProps.backgroundColor = metadata.dominantColor
   }
