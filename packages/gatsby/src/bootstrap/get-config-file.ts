@@ -2,7 +2,6 @@ import fs from "fs-extra"
 import { testImportError } from "../utils/test-import-error"
 import report from "gatsby-cli/lib/reporter"
 import path from "path"
-import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
 import { resolveJSFilepath } from "./resolve-js-file-path"
@@ -38,7 +37,10 @@ async function attemptImport(
   configModule: unknown
   configFilePath: string
 }> {
-  const configFilePath = await resolveJSFilepath(siteDirectory, configPath)
+  const configFilePath = await resolveJSFilepath({
+    rootDir: siteDirectory,
+    filePath: configPath,
+  })
 
   // The file does not exist, no sense trying to import it
   if (!configFilePath) {
@@ -144,15 +146,14 @@ async function attemptImportUncompiled(
     })
   }
 
-  // gatsby-config.js/gatsby-config.mjs is incorrectly located in src/gatsby-config.js
-  const srcDirectoryHasJsConfig = existsSync(
-    path.join(siteDirectory, `src`, configName + `.js`)
-  )
-  const srcDirectoryHasMJsConfig = existsSync(
-    path.join(siteDirectory, `src`, configName + `.mjs`)
-  )
+  // gatsby-config is incorrectly located in src directory
+  const isInSrcDir = await resolveJSFilepath({
+    rootDir: siteDirectory,
+    filePath: path.join(siteDirectory, `src`, configName),
+    warn: false,
+  })
 
-  if (srcDirectoryHasJsConfig || srcDirectoryHasMJsConfig) {
+  if (isInSrcDir) {
     report.panic({
       id: `10125`,
       context: {

@@ -31,7 +31,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 jest.mock(`../../resolve-js-file-path`, () => {
   return {
     resolveJSFilepath: jest.fn(
-      (_, filePath) => `${filePath.replace(`src`, `dist`)}.js`
+      ({ filePath }) => `${filePath.replace(`src`, `dist`)}.js`
     ),
   }
 })

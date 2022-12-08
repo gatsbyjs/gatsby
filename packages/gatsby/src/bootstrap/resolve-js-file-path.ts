@@ -4,10 +4,15 @@ import report from "gatsby-cli/lib/reporter"
 /**
  * Figure out if the file path is .js or .mjs without relying on the fs module, and return the file path if it exists.
  */
-export async function resolveJSFilepath(
-  siteDirectory: string,
+export async function resolveJSFilepath({
+  rootDir,
+  filePath,
+  warn = true,
+}: {
+  rootDir: string
   filePath: string
-): Promise<string> {
+  warn?: boolean
+}): Promise<string> {
   const filePathWithJSExtension = filePath.endsWith(`.js`)
     ? filePath
     : `${filePath}.js`
@@ -21,12 +26,14 @@ export async function resolveJSFilepath(
       require.resolve(filePathWithJSExtension) &&
       require.resolve(filePathWithMJSExtension)
     ) {
-      report.warn(
-        `The file '${path.relative(
-          siteDirectory,
-          filePath
-        )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`
-      )
+      if (warn) {
+        report.warn(
+          `The file '${path.relative(
+            rootDir,
+            filePath
+          )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`
+        )
+      }
       return filePathWithJSExtension
     }
   } catch (_) {
