@@ -15,17 +15,17 @@
   },
   "dependencies": {
     "@gatsbyjs/parcel-namer-relative-to-cwd": "2.3.0-next.2",
-    "@parcel/bundler-default": "2.8.0",
-    "@parcel/compressor-raw": "2.8.0",
-    "@parcel/namer-default": "2.8.0",
-    "@parcel/optimizer-terser": "2.8.0",
-    "@parcel/packager-js": "2.8.0",
-    "@parcel/packager-raw": "2.8.0",
-    "@parcel/reporter-dev-server": "2.8.0",
-    "@parcel/resolver-default": "2.8.0",
-    "@parcel/runtime-js": "2.8.0",
-    "@parcel/transformer-js": "2.8.0",
-    "@parcel/transformer-json": "2.8.0"
+    "@parcel/bundler-default": "2.8.1",
+    "@parcel/compressor-raw": "2.8.1",
+    "@parcel/namer-default": "2.8.1",
+    "@parcel/optimizer-terser": "2.8.1",
+    "@parcel/packager-js": "2.8.1",
+    "@parcel/packager-raw": "2.8.1",
+    "@parcel/reporter-dev-server": "2.8.1",
+    "@parcel/resolver-default": "2.8.1",
+    "@parcel/runtime-js": "2.8.1",
+    "@parcel/transformer-js": "2.8.1",
+    "@parcel/transformer-json": "2.8.1"
   },
   "peerDependencies": {
     "@parcel/core": "^2.0.0"
