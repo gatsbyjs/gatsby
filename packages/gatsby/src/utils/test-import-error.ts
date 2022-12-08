@@ -8,7 +8,8 @@ export const testImportError = (moduleName: string, err: any): boolean => {
     return true
   }
   const regex = new RegExp(
-    `ModuleNotFoundError:\\s(\\S+\\s)?[Cc]annot find module\\s.${moduleName.replace(
+    // stderr will show ModuleNotFoundError, but Error is correct since we toString below
+    `Error:\\s(\\S+\\s)?[Cc]annot find module\\s.${moduleName.replace(
       /[-/\\^$*+?.()|[\]{}]/g,
       `\\$&`
     )}`
