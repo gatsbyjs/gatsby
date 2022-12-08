@@ -1,7 +1,7 @@
 import * as fs from "fs"
 import enhancedResolve, { CachedInputFileSystem } from "enhanced-resolve"
 
-type ModuleResolver = (modulePath: string) => string | false
+export type ModuleResolver = (modulePath: string) => string | false
 type ResolveType = (context?: any, path?: any, request?: any) => string | false
 
 export const resolveModule: ModuleResolver = modulePath => {

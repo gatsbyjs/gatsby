@@ -4,8 +4,10 @@ import traverse from "@babel/traverse"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
 import report from "gatsby-cli/lib/reporter"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
-import { testRequireError } from "../utils/test-require-error"
-import { resolveModule } from "../utils/module-resolver"
+import { testImportError } from "../utils/test-import-error"
+import { resolveModule, ModuleResolver } from "../utils/module-resolver"
+import { resolveJSFilepath } from "./resolve-js-file-path"
+import { preferDefault } from "./prefer-default"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -176,32 +178,56 @@ https://gatsby.dev/no-mixed-modules
   return exportNames
 }
 
+interface IResolveModuleExportsOptions {
+  mode?: `analysis` | `import`
+  resolver?: ModuleResolver
+  rootDir?: string
+}
+
 /**
- * Given a `require.resolve()` compatible path pointing to a JS module,
- * return an array listing the names of the module's exports.
+ * Given a path to a module, return an array of the module's exports.
+ *
+ * It can run in two modes:
+ * 1. `analysis` mode gets exports via static analysis by traversing the file's AST with babel
+ * 2. `import` mode gets exports by directly importing the module and accessing its properties
+ *
+ * At the time of writing, analysis mode is used for files that can be jsx (e.g. gatsby-browser, gatsby-ssr)
+ * and import mode is used for files that can be js or mjs.
  *
  * Returns [] for invalid paths and modules without exports.
- *
- * @param modulePath
- * @param mode
- * @param resolver
  */
-export const resolveModuleExports = (
+export async function resolveModuleExports(
   modulePath: string,
-  { mode = `analysis`, resolver = resolveModule } = {}
-): Array<string> => {
-  if (mode === `require`) {
-    let absPath: string | undefined
+  {
+    mode = `analysis`,
+    resolver = resolveModule,
+    rootDir = process.cwd(),
+  }: IResolveModuleExportsOptions = {}
+): Promise<Array<string>> {
+  if (mode === `import`) {
     try {
-      absPath = require.resolve(modulePath)
-      return Object.keys(require(modulePath)).filter(
+      const moduleFilePath = await resolveJSFilepath({
+        rootDir,
+        filePath: modulePath,
+      })
+
+      if (!moduleFilePath) {
+        return []
+      }
+
+      const rawImportedModule = await import(moduleFilePath)
+
+      // If the module is cjs, the properties we care about are nested under a top-level `default` property
+      const importedModule = preferDefault(rawImportedModule)
+
+      return Object.keys(importedModule).filter(
         exportName => exportName !== `__esModule`
       )
-    } catch (e) {
-      if (!testRequireError(modulePath, e)) {
+    } catch (error) {
+      if (!testImportError(modulePath, error)) {
         // if module exists, but requiring it cause errors,
         // show the error to the user and terminate build
-        report.panic(`Error in "${absPath}":`, e)
+        report.panic(`Error in "${modulePath}":`, error)
       }
     }
   } else {

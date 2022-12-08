@@ -40,11 +40,11 @@ export async function loadPlugins(
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
-  const x = collatePluginAPIs({ currentAPIs, flattenedPlugins: pluginArray })
-
-  // From this point on, these are fully-resolved plugins.
-  let flattenedPlugins = x.flattenedPlugins
-  const badExports = x.badExports
+  let { flattenedPlugins, badExports } = await collatePluginAPIs({
+    currentAPIs,
+    flattenedPlugins: pluginArray,
+    rootDir,
+  })
 
   // Show errors for any non-Gatsby APIs exported from plugins
   await handleBadExports({ currentAPIs, badExports })
