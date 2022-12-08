@@ -16,10 +16,6 @@ import { getStaticQueryResults } from "./loader"
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
 
-// import testRequireError from "./test-require-error"
-// For some extremely mysterious reason, webpack adds the above module *after*
-// this module so that when this code runs, testRequireError is undefined.
-// So in the meantime, we'll just inline it.
 const testRequireError = (moduleName, err) => {
   const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
   const firstLine = err.toString().split(`\n`)[0]
