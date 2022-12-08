@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.2.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.2/packages/gatsby-source-wordpress) (2022-12-07)
+
+#### Chores
+
+- use wpgql 1.13 in itests [#37146](https://github.com/gatsbyjs/gatsby/issues/37146) [#37207](https://github.com/gatsbyjs/gatsby/issues/37207) ([4b31ecb](https://github.com/gatsbyjs/gatsby/commit/4b31ecb1160531c8de4ba26182a5753dffd56bb9))
+
 ### [7.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.1/packages/gatsby-source-wordpress) (2022-12-06)
 
 #### Bug Fixes
