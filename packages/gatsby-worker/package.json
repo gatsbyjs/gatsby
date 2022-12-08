@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.15.5",
-    "@babel/runtime": "^7.15.4"
+    "@babel/runtime": "^7.15.4",
+    "fs-extra": "^10.0.0",
+    "signal-exit": "^3.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",

@@ -243,6 +243,7 @@ describe(`worker (jobs)`, () => {
           payload: {
             id: expect.any(String),
             error: expect.any(String),
+            stack: expect.any(String),
           },
         }),
         expect.toBeOneOf([1, 2, 3])
