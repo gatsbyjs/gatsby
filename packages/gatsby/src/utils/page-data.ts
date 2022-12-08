@@ -452,3 +452,45 @@ export async function handleStalePageData(parentSpan: Span): Promise<void> {
 
   activity.end()
 }
+
+interface IModifyPageDataForErrorMessage {
+  errors: {
+    graphql?: IPageDataWithQueryResult["result"]["errors"]
+    getServerData?: IPageDataWithQueryResult["getServerDataError"]
+  }
+  graphqlExtensions?: IPageDataWithQueryResult["result"]["extensions"]
+  pageContext?: IPageDataWithQueryResult["result"]["pageContext"]
+  path: IPageDataWithQueryResult["path"]
+  matchPath: IPageDataWithQueryResult["matchPath"]
+  slicesMap: IPageDataWithQueryResult["slicesMap"]
+}
+
+export function modifyPageDataForErrorMessage(
+  input: IPageDataWithQueryResult
+): IModifyPageDataForErrorMessage {
+  const optionalData = {
+    ...(input.result?.pageContext
+      ? { pageContext: input.result.pageContext }
+      : {}),
+    ...(input.result?.pageContext
+      ? { pageContext: input.result.pageContext }
+      : {}),
+  }
+
+  const optionalErrors = {
+    ...(input.result?.errors ? { graphql: input.result.errors } : {}),
+    ...(input.getServerDataError
+      ? { getServerData: input.getServerDataError }
+      : {}),
+  }
+
+  return {
+    errors: {
+      ...optionalErrors,
+    },
+    path: input.path,
+    matchPath: input.matchPath,
+    slicesMap: input.slicesMap,
+    ...optionalData,
+  }
+}
