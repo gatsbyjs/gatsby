@@ -1,11 +1,18 @@
+import { buildInterfacesListForType } from "./helpers"
+
 export const typeDefinitionFilters = [
   {
     typeName: `__all`,
-    typeDef: typeDef => {
-      /**
-       * @todo once WPGraphQL has a DateTime Scalar, use that to find date fields
-       * instead of the below fieldnames
-       */
+    typeDef: (typeDef, { type }) => {
+      if (type.interfaces && typeDef) {
+        typeDef.interfaces ||= []
+        typeDef.interfaces.push(...buildInterfacesListForType(type))
+      }
+
+      if (typeDef?.interfaces?.includes(`Node`)) {
+        // used to filter by different node types within a node interface
+        typeDef.fields.nodeType = `String`
+      }
 
       if (typeDef?.fields?.date) {
         const dateField = {
