@@ -5,7 +5,6 @@ import Bluebird from "bluebird"
 import * as path from "path"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
-import { truncate } from "lodash"
 
 import {
   readWebpackStats,
@@ -14,6 +13,7 @@ import {
 } from "../../client-assets-for-template"
 import {
   IPageDataWithQueryResult,
+  modifyPageDataForErrorMessage,
   readPageData,
   readSliceData,
 } from "../../page-data"
@@ -135,20 +135,6 @@ async function getResourcesForTemplate(
   return resources
 }
 
-const truncateObjStrings = (obj): IPageDataWithQueryResult => {
-  // Recursively truncate strings nested in object
-  // These objs can be quite large, but we want to preserve each field
-  for (const key in obj) {
-    if (typeof obj[key] === `object` && obj[key] !== null) {
-      truncateObjStrings(obj[key])
-    } else if (typeof obj[key] === `string`) {
-      obj[key] = truncate(obj[key], { length: 250 })
-    }
-  }
-
-  return obj
-}
-
 interface IPreviewErrorProps {
   pagePath: string
   publicDir: string
@@ -161,7 +147,7 @@ const generatePreviewErrorPage = async ({
   error,
 }: IPreviewErrorProps): Promise<string> => {
   const pageData = await readPageData(publicDir, pagePath)
-  const truncatedPageData = truncateObjStrings(pageData)
+  const pageDataForErrorMessage = modifyPageDataForErrorMessage(pageData)
 
   const html = `<!doctype html>
 <html lang="en">
@@ -359,8 +345,12 @@ const generatePreviewErrorPage = async ({
       <p>Below you'll find additional data that might help you debug the error.</p>
       <details>
         <summary>Page Data</summary>
-        <p>The page data contains some metadata about the affected page but also the GraphQL data if you have queries in your page. If e.g. data from the GraphQL query is undefined, check if it's available here.</p>
-        <pre><code>${JSON.stringify(truncatedPageData, null, 2)}</code></pre>
+        <p>The page data contains some metadata about the affected page. If data from the GraphQL is undefined, try running the query in the GraphiQL IDE.</p>
+        <pre><code>${JSON.stringify(
+          pageDataForErrorMessage,
+          null,
+          2
+        )}</code></pre>
       </details>
     </main>
   </body>
