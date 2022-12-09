@@ -167,7 +167,13 @@ export async function initialize({
   // Compile root gatsby files
   let activity = reporter.activityTimer(`compile gatsby files`)
   activity.start()
-  await compileGatsbyFiles(siteDirectory)
+  /**
+   * Run compilation twice until the target.someTarget.source option is fixed in parcel
+   * @see {@link https://github.com/parcel-bundler/parcel/issues/8684}
+   * @see {@link https://parceljs.org/features/targets/#source}
+   */
+  await compileGatsbyFiles({ siteRoot: siteDirectory, mode: `cjs` })
+  await compileGatsbyFiles({ siteRoot: siteDirectory, mode: `esm` })
   activity.end()
 
   // Load gatsby config

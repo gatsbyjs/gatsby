@@ -1,9 +1,7 @@
 {
   "bundler": "@parcel/bundler-default",
   "transformers": {
-    "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
-      "@parcel/transformer-js"
-    ],
+    "*.{js,mjs,jsm,jsx,es6,cjs,ts,mts,tsx}": ["@parcel/transformer-js"],
     "*.{json,json5}": ["@parcel/transformer-json"]
   },
   "namers": ["@gatsbyjs/parcel-namer-relative-to-cwd", "@parcel/namer-default"],

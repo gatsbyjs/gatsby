@@ -3,13 +3,22 @@ import { LMDBCache, Cache } from "@parcel/cache"
 import path from "path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
-import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
+import {
+  ensureDir,
+  emptyDir,
+  existsSync,
+  remove,
+  readdir,
+  rename,
+} from "fs-extra"
 import telemetry from "gatsby-telemetry"
 import { isNearMatch } from "../is-near-match"
+import { resolveJSFilepath } from "../../bootstrap/resolve-js-file-path"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
-export const gatsbyFileRegex = `gatsby-+(node|config).ts`
+export const gatsbyFileRegex = `gatsby-+(node|config)`
+
 const RETRY_COUNT = 5
 
 function getCacheDir(siteRoot: string): string {
@@ -28,18 +37,31 @@ function exponentialBackoff(retry: number): Promise<void> {
  * Construct Parcel with config.
  * @see {@link https://parceljs.org/features/targets/}
  */
-export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
+export function constructParcel({
+  siteRoot,
+  cache,
+  mode,
+}: {
+  siteRoot: string
+  cache?: Cache
+  mode: `esm` | `cjs`
+}): Parcel {
+  const fileExtension = mode === `esm` ? `mts` : `ts`
+  const rootEntry = `${siteRoot}/${gatsbyFileRegex}.${fileExtension}`
+  const pluginEntries = `${siteRoot}/plugins/**/${gatsbyFileRegex}.${fileExtension}`
+
   return new Parcel({
-    entries: [
-      `${siteRoot}/${gatsbyFileRegex}`,
-      `${siteRoot}/plugins/**/${gatsbyFileRegex}`,
-    ],
+    entries: [rootEntry, pluginEntries],
     defaultConfig: require.resolve(`gatsby-parcel-config`),
     mode: `production`,
     cache,
+    defaultTargetOptions: {
+      shouldScopeHoist: mode === `esm`,
+    },
     targets: {
       root: {
-        outputFormat: `commonjs`,
+        outputFormat: mode === `esm` ? `esmodule` : `commonjs`,
+        isLibrary: mode === `esm`,
         includeNodeModules: false,
         sourceMap: process.env.NODE_ENV === `development`,
         engines: {
@@ -56,10 +78,15 @@ export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
  * Compile known gatsby-* files (e.g. `gatsby-config`, `gatsby-node`)
  * and output in `<SITE_ROOT>/.cache/compiled`.
  */
-export async function compileGatsbyFiles(
-  siteRoot: string,
-  retry: number = 0
-): Promise<void> {
+export async function compileGatsbyFiles({
+  siteRoot,
+  mode,
+  retry = 0,
+}: {
+  siteRoot: string
+  mode: `esm` | `cjs`
+  retry?: number
+}): Promise<void> {
   try {
     // Check for gatsby-node.jsx and gatsby-node.tsx (or other misnamed variations)
     const files = await readdir(siteRoot)
@@ -109,7 +136,7 @@ export async function compileGatsbyFiles(
     // for whatever reason TS thinks LMDBCache is some browser Cache and not actually Parcel's Cache
     // so we force type it to Parcel's Cache
     const cache = new LMDBCache(getCacheDir(siteRoot)) as unknown as Cache
-    const parcel = constructParcel(siteRoot, cache)
+    const parcel = constructParcel({ siteRoot, cache, mode })
     const { bundleGraph } = await parcel.run()
     let cacheClosePromise = Promise.resolve()
     try {
@@ -133,8 +160,22 @@ export async function compileGatsbyFiles(
     for (const bundle of bundles) {
       // validate that output exists and is valid
       try {
-        delete require.cache[bundle.filePath]
-        require(bundle.filePath)
+        // TODO: This is a hack, replace with parcel namer plugin
+        let targetFilePath = bundle.filePath
+
+        const entry = bundle.getMainEntry()
+
+        if (entry?.filePath.endsWith(`.mts`)) {
+          targetFilePath = targetFilePath.replace(`.js`, `.mjs`)
+          await rename(bundle.filePath, targetFilePath)
+        }
+
+        const filePath = await resolveJSFilepath({
+          rootDir: siteRoot,
+          filePath: targetFilePath,
+        })
+
+        await import(filePath)
       } catch (e) {
         if (retry >= RETRY_COUNT) {
           reporter.panic({
@@ -168,9 +209,11 @@ export async function compileGatsbyFiles(
           // to prevent EBUSY errors from potentially hiding real import errors
         }
 
-        await compileGatsbyFiles(siteRoot, retry + 1)
+        await compileGatsbyFiles({ siteRoot, mode, retry: retry + 1 })
         return
       }
+
+      // TODO: Track telemetry of esm in mts files
 
       const mainEntry = bundle.getMainEntry()?.filePath
       // mainEntry won't exist for shared chunks
