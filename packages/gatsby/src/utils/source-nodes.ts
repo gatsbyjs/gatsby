@@ -115,8 +115,7 @@ export default async ({
     pluginName,
   })
 
-  // Flush createParentChildLinkBatcher to ensure parent nodes are written
-  // with their children dependencies.
+  // Flush createParentChildLinkBatcher to ensure parent nodes are written with their children dependencies.
   createParentChildLinkBatcher.flush()
 
   await getDataStore().ready()

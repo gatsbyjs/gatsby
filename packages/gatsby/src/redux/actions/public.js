@@ -1037,8 +1037,11 @@ actions.createNodeField = (
  * @example
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
-actions.createParentChildLink = ({ parent, child }) => {
-  createParentChildLinkBatcher.add({ parent: parent.id, child })
+actions.createParentChildLink = (
+  { parent, child }: { parent: any, child: any },
+  plugin?: Plugin
+) => {
+  createParentChildLinkBatcher.add({ parent, child })
 
   return []
 }
