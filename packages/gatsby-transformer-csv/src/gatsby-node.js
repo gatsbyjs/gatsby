@@ -44,13 +44,7 @@ async function onCreateNode(
         return type
       }
     } else {
-      if (typeCache.has(node.internal.type)) {
-        return typeCache.get(node.internal.type)
-      } else {
-        const type = typeNameFromFile({ node })
-        typeCache.set(node.internal.type, type)
-        return type
-      }
+      return typeNameFromFile({ node })
     }
   }
 
