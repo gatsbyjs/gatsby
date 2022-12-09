@@ -1,46 +1,64 @@
-import { runApisInSteps } from "./utils/run-steps"
+import { runApiSteps, findApiName } from "./utils/run-steps"
 import * as steps from "./steps"
 
-module.exports = runApisInSteps({
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  "onPluginInit|unstable_onPluginInit": [
+const pluginInitApiName = findApiName(`onPluginInit`)
+
+exports[pluginInitApiName] = runApiSteps(
+  [
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.tempPreventMultipleInstances,
     steps.setRequestHeaders,
   ],
+  pluginInitApiName
+)
 
-  pluginOptionsSchema: steps.pluginOptionsSchema,
+exports.pluginOptionsSchema = steps.pluginOptionsSchema
 
-  createSchemaCustomization: [
+exports.createSchemaCustomization = runApiSteps(
+  [
     steps.setGatsbyApiToState,
     steps.ensurePluginRequirementsAreMet,
     steps.ingestRemoteSchema,
     steps.createSchemaCustomization,
   ],
+  `createSchemaCustomization`
+)
 
-  sourceNodes: [
+exports.sourceNodes = runApiSteps(
+  [
     steps.setGatsbyApiToState,
     steps.persistPreviouslyCachedImages,
     steps.sourceNodes,
     steps.setImageNodeIdCache,
   ],
+  `sourceNodes`
+)
 
-  onPreExtractQueries: [
-    steps.onPreExtractQueriesInvokeLeftoverPreviewCallbacks,
-  ],
+exports.onPreExtractQueries = runApiSteps(
+  [steps.onPreExtractQueriesInvokeLeftoverPreviewCallbacks],
+  `onPreExtractQueries`
+)
 
-  onPostBuild: [steps.setImageNodeIdCache, steps.logPostBuildWarnings],
+exports.onPostBuild = runApiSteps(
+  [steps.setImageNodeIdCache, steps.logPostBuildWarnings],
+  `onPostBuild`
+)
 
-  onCreatePage: [
+exports.onCreatePage = runApiSteps(
+  [
     steps.onCreatepageSavePreviewNodeIdToPageDependency,
     steps.onCreatePageRespondToPreviewStatusQuery,
   ],
+  `onCreatePage`
+)
 
-  onCreateDevServer: [
+exports.onCreateDevServer = runApiSteps(
+  [
     steps.imageRoutes,
     steps.setImageNodeIdCache,
     steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,
   ],
-})
+  `onCreateDevServer`
+)

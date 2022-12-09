@@ -82,7 +82,12 @@ interface IPingMessage {
   type: `PING`
 }
 
-export type MessagesFromChild = IPingMessage
+interface ILotOfMessagesTestMessage {
+  type: `LOT_OF_MESSAGES_TEST`
+  payload: number
+}
+
+export type MessagesFromChild = IPingMessage | ILotOfMessagesTestMessage
 
 interface IPongMessage {
   type: `PONG`
@@ -94,6 +99,10 @@ let setupPingPongMessages = function (): Promise<void> {
   throw new Error(`gatsby-worker messenger not available`)
 }
 let getWasPonged = function (): boolean {
+  throw new Error(`gatsby-worker messenger not available`)
+}
+
+let lotOfMessagesAndExit = function (count: number): void {
   throw new Error(`gatsby-worker messenger not available`)
 }
 
@@ -126,6 +135,13 @@ if (messenger) {
   getWasPonged = function getWasPonged(): boolean {
     return wasPonged
   }
+
+  lotOfMessagesAndExit = function lotOfMessagesAndExit(count: number): boolean {
+    for (let i = 0; i < count; i++) {
+      messenger.sendMessage({ type: `LOT_OF_MESSAGES_TEST`, payload: i })
+    }
+    process.exit(1)
+  }
 }
 
-export { setupPingPongMessages, getWasPonged }
+export { setupPingPongMessages, getWasPonged, lotOfMessagesAndExit }

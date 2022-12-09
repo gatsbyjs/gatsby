@@ -1,7 +1,7 @@
 const asciidoc = require(`asciidoctor`)()
 const _ = require(`lodash`)
 
-function unstable_shouldOnCreateNode({ node }, pluginOptions = {}) {
+function shouldOnCreateNode({ node }, pluginOptions = {}) {
   const extensionsConfig = pluginOptions.fileExtensions
 
   // make extensions configurable and use adoc and asciidoc as default
@@ -23,10 +23,6 @@ async function onCreateNode(
   },
   pluginOptions
 ) {
-  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
-    return
-  }
-
   // register custom converter if given
   if (pluginOptions.converterFactory) {
     asciidoc.ConverterFactory.register(
@@ -140,5 +136,5 @@ const extractPageAttributes = allAttributes =>
     return pageAttributes
   }, {})
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

@@ -77,7 +77,7 @@ describe(`report.error`, () => {
     reporter.error({
       id: `95312`,
       context: {
-        ref: `navigator`,
+        undefinedGlobal: `navigator`,
       },
     })
     const generatedError = getErrorMessages(

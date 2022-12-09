@@ -9,9 +9,7 @@ These examples will work on the _real_ schema used on [graphql-reference example
 You can run this example locally to experiment and poke around the innards of the site! To get to the GraphiQL editor, go to `localhost:8000/___graphql` (that's three underscores).
 You can also open the [CodeSandbox version](https://codesandbox.io/s/github/gatsbyjs/gatsby/tree/master/examples/graphql-reference) of the example site.
 
-For more background information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/) and [how to use GraphiQL][] in any Gatsby site.
-
-[how to use graphiql]: /docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries
+For more background information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/) and [how to use GraphiQL](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries) in any Gatsby site.
 
 ## Basic queries
 
@@ -344,7 +342,7 @@ The ordering of your results can be specified with `sort`. Here the results are 
 
 ```graphql
 {
-  allMarkdownRemark(sort: { fields: [frontmatter___date], order: ASC }) {
+  allMarkdownRemark(sort: { frontmatter: { date: ASC } }) {
     totalCount
     edges {
       node {
@@ -360,12 +358,12 @@ The ordering of your results can be specified with `sort`. Here the results are 
 
 #### Sorting on multiple fields
 
-You can also sort on multiple fields but the `sort` keyword can only be used once. The second sort field gets evaluated when the first field (here: `date`) is identical. The results of the following query are sorted in ascending order of `date` and `title` field.
+You can also sort on multiple fields. The results of the following query are sorted in ascending order of `date` and `title` field.
 
 ```graphql
 {
   allMarkdownRemark(
-    sort: { fields: [frontmatter___date, frontmatter___title], order: ASC }
+    sort: [{ frontmatter: { date: ASC } }, { frontmatter: { title: ASC } }]
   ) {
     totalCount
     edges {
@@ -384,15 +382,12 @@ You can also sort on multiple fields but the `sort` keyword can only be used onc
 
 #### Sort order
 
-By default, sort `fields` will be sorted in ascending order. Optionally, you can specify a sort `order` per field by providing an array of `ASC` (for ascending) or `DESC` (for descending) values. For example, to sort by `frontmatter.date` in ascending order, and additionally by `frontmatter.title` in descending order, you would use `sort: { fields: [frontmatter___date, frontmatter___title], order: [ASC, DESC] }`. Note that if you only provide a single sort `order` value, this will affect the first sort field only, the rest will be sorted in default ascending order.
+You can specify a sort `order` by providing `ASC` (for ascending) or `DESC` (for descending) value. For example, to sort by `frontmatter.date` in ascending order, and additionally by `frontmatter.title` in descending order, you would use `sort: [{ frontmatter: { date: ASC }}, { frontmatter: { title: DESC }}]`.
 
 ```graphql
 {
   allMarkdownRemark(
-    sort: {
-      fields: [frontmatter___date, frontmatter___title]
-      order: [ASC, DESC]
-    }
+    sort: [{ frontmatter: { date: ASC } }, { frontmatter: { title: DESC } }]
   ) {
     totalCount
     edges {
@@ -510,7 +505,7 @@ This query combines sorting, filtering, limiting and formatting together.
   allMarkdownRemark(
     limit: 3
     filter: { frontmatter: { date: { ne: null } } }
-    sort: { fields: [frontmatter___date], order: DESC }
+    sort: { frontmatter: { date: DESC } }
   ) {
     edges {
       node {
@@ -578,7 +573,7 @@ The query below gets you all categories (`fieldValue`) applied to a book and the
 ```graphql
 {
   allMarkdownRemark(filter: { frontmatter: { title: { ne: "" } } }) {
-    group(field: frontmatter___categories) {
+    group(field: { frontmatter: { tags: SELECT } }) {
       fieldValue
       totalCount
       edges {

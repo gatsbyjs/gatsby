@@ -533,7 +533,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre style=\\"counter-reset: linenumber NaN\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
-color<span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
+<span class=\\"token literal-property property\\">color</span><span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
  <span class=\\"token punctuation\\">}</span>\`</code><span aria-hidden=\\"true\\" class=\\"line-numbers-rows\\" style=\\"white-space: normal; width: auto; left: 0;\\"><span></span><span></span><span></span></span></pre></div>",
     },
   ],
@@ -573,7 +573,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre style=\\"counter-reset: linenumber 4\\" class=\\"language-js line-numbers\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
-color<span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
+<span class=\\"token literal-property property\\">color</span><span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
  <span class=\\"token punctuation\\">}</span>\`</code><span aria-hidden=\\"true\\" class=\\"line-numbers-rows\\" style=\\"white-space: normal; width: auto; left: 0;\\"><span></span><span></span><span></span></span></pre></div>",
     },
   ],
@@ -613,7 +613,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\" data-language=\\"js\\"><pre class=\\"language-js\\"><code class=\\"language-js\\"><span class=\\"token comment\\">//.foo { </span>
-color<span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
+<span class=\\"token literal-property property\\">color</span><span class=\\"token operator\\">:</span> red<span class=\\"token punctuation\\">;</span>
  <span class=\\"token punctuation\\">}</span>\`</code></pre></div>",
     },
   ],

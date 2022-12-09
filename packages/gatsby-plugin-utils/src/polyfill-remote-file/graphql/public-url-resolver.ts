@@ -23,7 +23,7 @@ export function publicUrlResolver(
     )
   }
 
-  return generateFileUrl({ url: source.url, filename: source.filename })
+  return generateFileUrl({ url: source.url, filename: source.filename }, store)
 }
 
 export function generatePublicUrlFieldConfig(

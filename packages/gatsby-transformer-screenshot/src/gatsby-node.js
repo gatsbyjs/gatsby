@@ -82,7 +82,7 @@ exports.onPreBootstrap = (
   })
 }
 
-function unstable_shouldOnCreateNode({ node }, pluginOptions) {
+function shouldOnCreateNode({ node }, pluginOptions) {
   /*
    * Check if node is of a type we care about, and has a url field
    * (originally only checked sites.yml, hence including by default)
@@ -91,16 +91,17 @@ function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   return validNodeTypes.includes(node.internal.type) && node.url
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 
-exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
-) => {
-  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
-    return
-  }
-
+exports.onCreateNode = async ({
+  node,
+  actions,
+  store,
+  cache,
+  createNodeId,
+  createContentDigest,
+  getCache,
+}) => {
   const { createNode, createParentChildLink } = actions
 
   try {

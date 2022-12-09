@@ -27,6 +27,7 @@ import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import { store } from "../index"
 import normalizePath from "normalize-path"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { validateComponent } from "../../utils/validate-component"
 
 type RestrictionActionNames =
   | "createFieldExtension"
@@ -39,6 +40,12 @@ type RestrictionActionNames =
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
   | ActionCreator<ThunkAction<any, IGatsbyState, any, ActionsUnion>>
+
+export interface ICreateSliceInput {
+  id: string
+  component: string
+  context: Record<string, unknown>
+}
 
 export const actions = {
   /**
@@ -429,12 +436,28 @@ export const actions = {
       }
     },
 
+  /**
+   * Create a new Slice. See the technical docs for the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
+   *
+   * @availableIn [createPages]
+   *
+   * @param {object} $0
+   * @param {Object} slice a slice object
+   * @param {string} slice.id The unique ID for this slice
+   * @param {string} slice.component The absolute path to the component for this slice
+   * @param {Object} slice.context Context data for this slice. Passed as props
+   * to the component `this.props.sliceContext` as well as to the graphql query
+   * as graphql arguments.
+   * @example
+   * exports.createPages = ({ actions }) => {
+   *   actions.createSlice({
+   *     id: `navigation-bar`,
+   *     component: path.resolve(`./src/components/navigation-bar.js`),
+   *   })
+   * }
+   */
   createSlice: (
-    payload: {
-      id: string
-      component: string
-      context: Record<string, unknown>
-    },
+    payload: ICreateSliceInput,
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateSliceAction => {
@@ -455,20 +478,34 @@ export const actions = {
           },
         })
       }
-      if (!payload.component) {
-        report.panic({
-          id: `11333`,
-          context: {
-            pluginName: name,
-            sliceObject: payload,
-          },
-        })
+
+      const { slices } = store.getState()
+
+      const { error, panicOnBuild } = validateComponent({
+        input: payload,
+        pluginName: name,
+        errorIdMap: {
+          noPath: `11333`,
+          notAbsolute: `11335`,
+          doesNotExist: `11336`,
+          empty: `11337`,
+          noDefaultExport: `11338`,
+        },
+      })
+
+      if (error && process.env.NODE_ENV !== `test`) {
+        if (panicOnBuild) {
+          report.panicOnBuild(error)
+        } else {
+          report.panic(error)
+        }
       }
 
       trackFeatureIsUsed(`SliceAPI`)
+
       const componentPath = normalizePath(payload.component)
 
-      const oldSlice = store.getState().slices.get(payload.id)
+      const oldSlice = slices.get(payload.id)
       const contextModified =
         !!oldSlice && !isEqual(oldSlice.context, payload.context)
       const componentModified =

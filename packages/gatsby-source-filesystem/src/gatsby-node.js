@@ -1,7 +1,7 @@
 const chokidar = require(`chokidar`)
 const fs = require(`fs`)
 const path = require(`path`)
-const { Machine, interpret } = require(`xstate`)
+const { createMachine, interpret, assign } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { ERROR_MAP } = require(`./error-utils`)
@@ -61,13 +61,17 @@ const createFSMachine = (
   }
 
   const log = expr => (ctx, action, meta) => {
-    if (meta.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+    if (ctx.bootstrapped) {
       reporter.info(expr(ctx, action, meta))
     }
   }
 
-  const fsMachine = Machine(
+  const fsMachine = createMachine(
     {
+      predictableActionArguments: true,
+      context: {
+        bootstrapped: false,
+      },
       id: `fs`,
       type: `parallel`,
       states: {
@@ -81,6 +85,7 @@ const createFSMachine = (
             },
             BOOTSTRAPPED: {
               type: `final`,
+              entry: assign({ bootstrapped: true }),
             },
           },
         },

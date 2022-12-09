@@ -625,7 +625,8 @@ export const replaceNodeHtmlImages = async ({
                   contentDigest: imageNode.modifiedGmt,
                 },
               },
-              helpers.actions
+              helpers.actions,
+              gatsbyStore
             )
           }
         } catch (e) {
@@ -812,7 +813,7 @@ const replaceFileLinks = async ({
           return null
         }
 
-        const [, hostname, path] = mediaItemMatchGroup?.subMatches
+        const [, hostname, path] = mediaItemMatchGroup.subMatches
 
         cacheCreatedFileNodeBySrc({
           node: mediaItemNode,

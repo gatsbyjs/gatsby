@@ -1,7 +1,6 @@
 import report from "gatsby-cli/lib/reporter"
 import { getConfigStore, getGatsbyVersion, isCI } from "gatsby-core-utils"
 import { trackCli } from "gatsby-telemetry"
-import latestVersion from "latest-version"
 import getDayOfYear from "date-fns/getDayOfYear"
 
 const feedbackKey = `feedback.disabled`
@@ -115,6 +114,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   const versionPoints = getGatsbyVersion().split(`.`)
   let latestVersionPoints: Array<string> = []
   try {
+    const { default: latestVersion } = await import(`latest-version`)
     latestVersionPoints = (await latestVersion(`gatsby`)).split(`.`)
   } catch (e) {
     // do nothing.

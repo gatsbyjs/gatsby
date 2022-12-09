@@ -12,7 +12,7 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 
 ### Install Node and Yarn
 
-- Ensure you have the latest **LTS** version of Node installed (`>= 14.15.0`) by executing `node --version`
+- Ensure you have the latest **LTS** version of Node installed (`>= 18`) by executing `node --version`
 - [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
 - Ensure you have the version 1 of Yarn installed (`^1`) by executing `yarn --version`. The Gatsby monorepo does not yet support later versions of Yarn.
 

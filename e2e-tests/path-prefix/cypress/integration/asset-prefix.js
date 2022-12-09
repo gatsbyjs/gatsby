@@ -5,9 +5,38 @@ const assetPrefixExpression = new RegExp(`^${assetPrefix}`)
 const assetPrefixMatcher = (chain, attr = `href`) =>
   chain.should(`have.attr`, attr).and(`matches`, assetPrefixExpression)
 
+beforeEach(() => {
+  cy.intercept(/page-data/).as("page-data")
+  cy.intercept(/slice-data/).as("slice-data")
+})
+
 describe(`assetPrefix`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
+  })
+
+  it(`page-data is prefixed with asset prefix`, () => {
+    cy.wait("@page-data")
+
+    cy.get("@page-data").then((...intercepts) => {
+      expect(intercepts).to.have.length(1)
+
+      for (const intercept of intercepts) {
+        expect(intercept.request.url).to.match(assetPrefixExpression)
+      }
+    })
+  })
+
+  it(`slice-data is prefixed with asset prefix`, () => {
+    cy.wait("@slice-data")
+
+    cy.get("@slice-data").then((...intercepts) => {
+      expect(intercepts).to.have.length(1)
+
+      for (const intercept of intercepts) {
+        expect(intercept.request.url).to.match(assetPrefixExpression)
+      }
+    })
   })
 
   describe(`runtime`, () => {

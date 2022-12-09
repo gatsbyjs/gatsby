@@ -63,6 +63,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.excludeFieldNames](#typemediaitemexcludefieldnames)
     - [type.MediaItem.placeholderSizeName](#typemediaitemplaceholdersizename)
     - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
@@ -1229,6 +1230,26 @@ A special type which is applied to any non-node root fields that are ingested an
 ### type.MediaItem
 
 **Field type**: `Object`
+
+#### type.MediaItem.excludeFieldNames
+
+Excludes fields on the MediaItem type by field name.
+
+**Field type**: `Array`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    type: {
+      MediaItem: {
+        excludeFieldNames: [`dateGmt`, `parent`],
+      },
+    },
+  },
+}
+
+```
 
 #### type.MediaItem.placeholderSizeName
 

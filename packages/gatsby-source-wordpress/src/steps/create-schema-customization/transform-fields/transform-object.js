@@ -5,13 +5,15 @@ import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { inPreviewMode } from "~/steps/preview/index"
 import { getPluginOptions } from "../../../utils/get-gatsby-api"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { findNamedTypeName, introspectionFieldTypeToSDL } from "../helpers"
 
 export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
-  const typeName = buildTypeName(field.type.ofType.name)
+  const typeSDLString = introspectionFieldTypeToSDL(field.type)
+  const typeName = buildTypeName(findNamedTypeName(field.type))
 
   return {
-    type: `[${typeName}]`,
-    resolve: (source, args, context) => {
+    type: typeSDLString,
+    resolve: (source, _args, context) => {
       let nodes = null
 
       const field = source[fieldName]
@@ -36,7 +38,7 @@ export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
 
 export const buildGatsbyNodeObjectResolver =
   ({ field, fieldName }) =>
-  async (source, _, context) => {
+  async (source, _args, context) => {
     const typeName = buildTypeName(field.type.name)
     const nodeField = source[fieldName]
 

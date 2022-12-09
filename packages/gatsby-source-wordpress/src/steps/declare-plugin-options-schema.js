@@ -765,6 +765,20 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       MediaItem: Joi.object({
+        excludeFieldNames: Joi.array()
+          .items(Joi.string())
+          .allow(null)
+          .allow(false)
+          .description(`Excludes fields on the MediaItem type by field name.`)
+          .meta({
+            example: wrapOptions(`
+            type: {
+              MediaItem: {
+                excludeFieldNames: [\`dateGmt\`, \`parent\`],
+              },
+            },
+          `),
+          }),
         placeholderSizeName: Joi.string()
           .default(`gatsby-image-placeholder`)
           .description(

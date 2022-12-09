@@ -25,7 +25,6 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 })
 
 const Remark = require(`remark`)
-const { Potrace } = require(`@gatsbyjs/potrace`)
 const queryString = require(`query-string`)
 const cheerio = require(`cheerio`)
 const toHAST = require(`mdast-util-to-hast`)
@@ -453,7 +452,7 @@ test(`it transforms images in markdown with query strings`, async () => {
   expect(node.value).not.toMatch(`<html>`)
 })
 
-test(`it uses tracedSVG placeholder when enabled`, async () => {
+test(`it doesn't use tracedSVG placeholder (deprecated and fallback to base64)`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `
 ![image](./${imagePath})
@@ -469,16 +468,7 @@ test(`it uses tracedSVG placeholder when enabled`, async () => {
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
-  expect(mockTraceSVG).toBeCalledTimes(1)
-
-  expect(mockTraceSVG).toBeCalledWith(
-    expect.objectContaining({
-      // fileArgs cannot be left undefined or traceSVG errors
-      fileArgs: expect.any(Object),
-      // args containing Potrace constants should be translated to their values
-      args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
-    })
-  )
+  expect(mockTraceSVG).toBeCalledTimes(0)
 })
 
 describe(`showCaptions`, () => {

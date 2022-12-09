@@ -166,6 +166,12 @@ export async function createGraphqlEngineBundle(
           test: /\.txt/,
           type: `asset/resource`,
         },
+        {
+          test: /\.(graphqls?|gqls?)$/,
+          use: {
+            loader: require.resolve(`graphql-tag/loader`),
+          },
+        },
       ],
     },
     resolve: {
@@ -180,13 +186,15 @@ export async function createGraphqlEngineBundle(
         lmdb: require.resolve(`lmdb`),
         "ts-node": require.resolve(`./shims/ts-node`),
         "gatsby-sharp$": require.resolve(`./shims/gatsby-sharp`),
+        "graphql-import-node$": require.resolve(`./shims/no-op-module`),
+        "graphql-import-node/register$":
+          require.resolve(`./shims/no-op-module`),
       },
     },
     plugins: [
       new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
       new webpack.DefinePlugin({
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
-        "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),

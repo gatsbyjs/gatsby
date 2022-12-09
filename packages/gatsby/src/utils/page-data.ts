@@ -9,7 +9,6 @@ import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import type { IGatsbySlice, IGatsbyState } from "../redux/types"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
-import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
 import {
   constructPageDataString,
@@ -81,46 +80,21 @@ export function waitUntilPageQueryResultsAreStored(): Promise<void> {
 }
 
 export async function savePageQueryResult(
-  programDir: string,
   pagePath: string,
   stringifiedResult: string
 ): Promise<void> {
-  if (isLmdbStore()) {
-    savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
-      pagePath,
-      stringifiedResult
-    ) as Promise<void>
-  } else {
-    const pageQueryResultsPath = path.join(
-      programDir,
-      `.cache`,
-      `json`,
-      `${pagePath.replace(/\//g, `_`)}.json`
-    )
-    await fs.outputFile(pageQueryResultsPath, stringifiedResult)
-  }
+  savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
+    pagePath,
+    stringifiedResult
+  ) as Promise<void>
 }
 
-export async function readPageQueryResult(
-  publicDir: string,
-  pagePath: string
-): Promise<string | Buffer> {
-  if (isLmdbStore()) {
-    const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
-    if (typeof stringifiedResult === `string`) {
-      return stringifiedResult
-    }
-    throw new Error(`Couldn't find temp query result for "${pagePath}".`)
-  } else {
-    const pageQueryResultsPath = path.join(
-      publicDir,
-      `..`,
-      `.cache`,
-      `json`,
-      `${pagePath.replace(/\//g, `_`)}.json`
-    )
-    return fs.readFile(pageQueryResultsPath)
+export async function readPageQueryResult(pagePath: string): Promise<string> {
+  const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
+  if (typeof stringifiedResult === `string`) {
+    return stringifiedResult
   }
+  throw new Error(`Couldn't find temp query result for "${pagePath}".`)
 }
 
 export async function writePageData(
@@ -129,7 +103,7 @@ export async function writePageData(
   slicesUsedByTemplates: Map<string, ICollectedSlices>,
   slices: IGatsbyState["slices"]
 ): Promise<string> {
-  const result = await readPageQueryResult(publicDir, pageData.path)
+  const result = await readPageQueryResult(pageData.path)
 
   const outputFilePath = generatePageDataPath(publicDir, pageData.path)
 
@@ -163,7 +137,7 @@ export async function writeSliceData(
   staticQueryHashes: Array<string>
 ): Promise<string> {
   const result = JSON.parse(
-    (await readPageQueryResult(publicDir, `slice--${name}`)).toString()
+    (await readPageQueryResult(`slice--${name}`)).toString()
   )
 
   const outputFilePath = path.join(publicDir, `slice-data`, `${name}.json`)
@@ -208,6 +182,9 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
+let staleNodeManifests = false
+const maxManifestIdsToLog = 50
+
 type IDataTask =
   | {
       type: "page"
@@ -234,6 +211,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     queries,
     slices,
     slicesByTemplate,
+    nodeManifests,
   } = store.getState()
   const isBuild = program?._?.[0] !== `develop`
 
@@ -247,6 +225,25 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
     // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
     nodeManifestPagePathMap = await processNodeManifests()
+  } else if (nodeManifests.length > 0 && staleNodeManifests) {
+    staleNodeManifests = false
+
+    reporter.warn(
+      `[gatsby] node manifests were created but no page-data.json files were written, so manifest ID's were not added to page-data.json files. This may be a bug or it may be due to a source plugin creating a node manifest for a node that did not change. Node manifest IDs: ${nodeManifests
+        .map(n => n.manifestId)
+        .slice(0, maxManifestIdsToLog)
+        .join(`,`)}${
+        nodeManifests.length > maxManifestIdsToLog
+          ? ` There were ${
+              nodeManifests.length - maxManifestIdsToLog
+            } additional ID's that were not logged due to output length.`
+          : ``
+      }`
+    )
+
+    nodeManifestPagePathMap = await processNodeManifests()
+  } else if (nodeManifests.length > 0) {
+    staleNodeManifests = true
   }
 
   if (pagePaths.size > 0 || sliceNames.size > 0) {
@@ -277,7 +274,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
           page.manifestId = nodeManifestPagePathMap.get(page.path)
         }
 
-        if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+        if (!isBuild && process.env.GATSBY_QUERY_ON_DEMAND) {
           // check if already did run query for this page
           // with query-on-demand we might have pending page-data write due to
           // changes in static queries assigned to page template, but we might not
@@ -454,4 +451,46 @@ export async function handleStalePageData(parentSpan: Span): Promise<void> {
   await Promise.all(deletionPromises)
 
   activity.end()
+}
+
+interface IModifyPageDataForErrorMessage {
+  errors: {
+    graphql?: IPageDataWithQueryResult["result"]["errors"]
+    getServerData?: IPageDataWithQueryResult["getServerDataError"]
+  }
+  graphqlExtensions?: IPageDataWithQueryResult["result"]["extensions"]
+  pageContext?: IPageDataWithQueryResult["result"]["pageContext"]
+  path: IPageDataWithQueryResult["path"]
+  matchPath: IPageDataWithQueryResult["matchPath"]
+  slicesMap: IPageDataWithQueryResult["slicesMap"]
+}
+
+export function modifyPageDataForErrorMessage(
+  input: IPageDataWithQueryResult
+): IModifyPageDataForErrorMessage {
+  const optionalData = {
+    ...(input.result?.pageContext
+      ? { pageContext: input.result.pageContext }
+      : {}),
+    ...(input.result?.pageContext
+      ? { pageContext: input.result.pageContext }
+      : {}),
+  }
+
+  const optionalErrors = {
+    ...(input.result?.errors ? { graphql: input.result.errors } : {}),
+    ...(input.getServerDataError
+      ? { getServerData: input.getServerDataError }
+      : {}),
+  }
+
+  return {
+    errors: {
+      ...optionalErrors,
+    },
+    path: input.path,
+    matchPath: input.matchPath,
+    slicesMap: input.slicesMap,
+    ...optionalData,
+  }
 }

@@ -724,7 +724,7 @@ describe(`gatsbyImageData`, () => {
     `)
   })
 
-  it(`should generate tracedSVG placeholder`, async () => {
+  it(`should generate tracedSVG placeholder (fallback to dominant_color)`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
       path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
@@ -745,11 +745,11 @@ describe(`gatsbyImageData`, () => {
       cacheKey: `1`,
       directory: expect.stringContaining(cacheDir),
     })
-    expect(fixedResult?.placeholder).toMatchInlineSnapshot(`
-      Object {
-        "fallback": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='20'%20height='33'%20viewBox='0%200%2020%2033'%3e%3cpath%20d='M6%201C4%205%204%205%203%203L2%201C0%201%200%205%200%2014s0%209%203%208c4%200%204%200%204-2v-8H6c0-1%202-3%204-3s2%200%202-2l-1-4c0-3%200-3-3-3L6%201'%20fill='%23d3d3d3'%20fill-rule='evenodd'/%3e%3c/svg%3e",
-      }
-    `)
+    // placeholder doesn't exist, instead backgroundColor is used
+    expect(fixedResult?.placeholder).not.toBeDefined()
+    expect(fixedResult?.backgroundColor).toMatchInlineSnapshot(
+      `"rgb(56,40,40)"`
+    )
   })
 
   it(`should render avif, webp other format in this order`, async () => {

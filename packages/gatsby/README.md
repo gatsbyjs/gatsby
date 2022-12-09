@@ -4,15 +4,12 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby v4
+  Gatsby
 </h1>
 
 <p align="center">
-  ⚛️ 📄 🚀
-</p>
-<p align="center">
   <strong>
-    Static. That. Scales.
+    The future of web development is here.
   </strong>
 </p>
 <p align="center">
@@ -74,6 +71,8 @@ Gatsby helps professional developers efficiently create maintainable, highly-per
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
 
+- **Use Gatsby's Centralized Data Layer Everywhere.** With Gatsby's [Valhalla Content Hub](https://www.gatsbyjs.com/products/valhalla-content-hub/) you can bring Gatsby's data layer to any project. Making it accessible via a unified GraphQL API for building content sites, eCommerce platforms, and both native and web applications.
+
 [**Learn how to use Gatsby for your next project.**](https://www.gatsbyjs.com/docs/)
 
 ## 🚀 Ship your first Gatsby site in 5 Minutes
@@ -88,36 +87,28 @@ At the end of this process, you'll have
 2. a new repository that is linked to that new site
 3. as you push changes to your new repository, Gatsby Cloud will automatically rebuild and redeploy your site!
 
-## 💻 Get started with Gatsby _locally_ in 5 Minutes
+## 💻 Get started with Gatsby locally in 5 Minutes
 
 You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
 
-1. **Install the Gatsby CLI.**
+1. **Initialize a new project.**
 
    ```shell
-   npm install -g gatsby-cli
+   npm init gatsby
    ```
 
-2. **Create a Gatsby site from a Gatsby starter.**
+   Give it the name "My Gatsby Site".
 
-   Get your Gatsby blog set up in a single command:
-
-   ```shell
-   # Create a new Gatsby site using the interactive setup wizard
-   # Give it this name: My Gatsby site
-   gatsby new
-   ```
-
-3. **Start the site in `develop` mode.**
+2. **Start the site in `develop` mode.**
 
    Next, move into your new site’s directory and start it up:
 
    ```shell
    cd my-gatsby-site/
-   gatsby develop
+   npm run develop
    ```
 
-4. **Open the source code and start editing!**
+3. **Open the source code and start editing!**
 
    Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
@@ -139,10 +130,13 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 
 Wondering what we've shipped recently? Check out our [release notes](https://www.gatsbyjs.com/docs/reference/release-notes) for key highlights, performance improvements, new features, and notable bugfixes.
 
+Also, read our [documentation on version support](https://www.gatsbyjs.com/docs/reference/release-notes/gatsby-version-support/) to understand our plans for each version of Gatsby.
+
 ## 💼 Migration Guides
 
-Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v4 to your site without starting from scratch!
+Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v5 to your site without starting from scratch!
 
+- [Migrate from v4 to v5](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v4-to-v5/)
 - [Migrate from v3 to v4](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v3-to-v4/)
 - [Migrate from v2 to v3](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/)
 
@@ -159,10 +153,6 @@ Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how
 ### A note on how this repository is organized
 
 This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](https://github.com/gatsbyjs/gatsby/tree/master/packages) managed in this codebase, even though we publish them to NPM as separate packages.
-
-### Contributing to Gatsby v3
-
-We are only accepting critical security patches for Gatsby v3.
 
 ## 📝 License
 

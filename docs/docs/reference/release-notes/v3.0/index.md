@@ -128,7 +128,7 @@ Please refer to React's own [release notes](https://reactjs.org/blog/2020/10/20/
 
 The minimum version of Gatsby is now 16.9.0 to support Fast Refresh, React Hooks, and Suspense by default. We've also made sure we're 100% compatible with React 17. To use the new [React JSX transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) have a look at the [`babel-preset-gatsby`](#babel-preset-gatsby) section below.
 
-With this change, we'll be adding more experiments to support [Concurrent mode](https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html) and [React Server Components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) in future releases.
+With this change, we'll be adding more experiments to support [Concurrent mode](https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html) and [React server components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) in future releases.
 
 ## GraphQL 15
 

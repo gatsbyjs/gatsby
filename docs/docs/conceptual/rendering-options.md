@@ -2,8 +2,6 @@
 title: Rendering Options
 ---
 
-import { Announcement } from "gatsby-interface"
-
 Gatsby is historically known as a static site generator enhanced with [React Hydration][1].
 But starting with Gatsby 4, you can choose alternative rendering options in addition to static site generation (SSG) — on a per-page basis.
 This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
@@ -14,7 +12,7 @@ A rendering option defines the stage at which your page's user-facing HTML is ge
 (SSG or pre-rendering), during HTTP request (server-side rendering) or locally in the browser
 with Javascript (client-side rendering).
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 For an in-depth explanation of each of those approaches and their trade-offs we
 highly recommend the ["Rendering on the Web"][3] article from the Chrome team.
@@ -35,7 +33,7 @@ How does SSG work?
 
 This mode provides the most pleasant user experience, the highest level of security, and run-time scalability for your site.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** SSG doesn't mean your site is not dynamic. You can still use JavaScript to communicate with any APIs,
 add private sections of your site for authorized users via [client-side rendering][4] and

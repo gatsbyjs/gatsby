@@ -23,7 +23,7 @@ export type AvailableFeatures =
   | "content-file-path"
 
 export {
-  default as Link,
+  Link,
   GatsbyLinkProps,
   navigate,
   withPrefix,
@@ -196,7 +196,7 @@ interface ISerializableObject {
 }
 
 /**
- * A props object for [slice placholder](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice placholder](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export interface SlicePlaceholderProps {
   alias: string
@@ -206,12 +206,12 @@ export interface SlicePlaceholderProps {
 }
 
 /**
- * Component used as a slice placholder, to mark a place in the page where a [slice](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
+ * Component used as a slice placholder, to mark a place in the page where a [slice](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
  */
 export declare function Slice(props: SlicePlaceholderProps): JSX.Element
 
 /**
- * A props object for [slice component](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice component](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export type SliceComponentProps<
   DataType = object,
@@ -302,6 +302,7 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 export interface GraphQLTypegenOptions {
   typesOutputPath?: string
+  documentSearchPaths?: string[]
   generateOnBuild?: boolean
 }
 
@@ -324,8 +325,8 @@ export interface GatsbyConfig {
   flags?: Record<string, boolean>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
-  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `legacy` is used which is the behavior until v5. With Gatsby v5 "always" will be the default. */
-  trailingSlash?: "always" | "never" | "ignore" | "legacy"
+  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `always` is used. */
+  trailingSlash?: "always" | "never" | "ignore"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
   /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. If set to true, the default GraphQLTypegenOptions are used. See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/ for all options. */
@@ -431,12 +432,34 @@ export interface GatsbyNode<
    * transform nodes created by other plugins should implement this API.
    *
    * See also the documentation for `createNode`
-   * and [`createNodeField`](https://www.gatsbyjs.com/docs/actions/#createNodeField)
+   * and [`createNodeField`](https://www.gatsbyjs.com/docs/reference/config-files/actions/#createNodeField)
+   * @param {object} $0
+   * @param {object} $0.node A node object.
+   * @param {object} $0.actions
+   * @param {function} $0.actions.createNode Create a new node.
+   * @param {function} $0.actions.createNodeField Extend another node. The new node field is placed under the fields key on the extended node object.
    * @example
-   * exports.onCreateNode = ({ node, actions }) => {
-   *   const { createNode, createNodeField } = actions
-   *   // Transform the new node here and create a new node or
-   *   // create a new node field.
+   * exports.onCreateNode = ({ node, getNode, actions }) => {
+   *   const { createNodeField } = actions
+   *
+   *   if (node.internal.type === `MarkdownRemark`) {
+   *     const nodePath = node.fileAbsolutePath
+   *
+   *     if (nodePath.match(/\/blog\//)) {
+   *       const postSlug = createFilePath({
+   *         node,
+   *         getNode,
+   *         basePath: `src/content`,
+   *         trailingSlash: true,
+   *       })
+   *
+   *       createNodeField({
+   *         node,
+   *         name: `slug`,
+   *         value: `/blog/${postSlug}/`,
+   *       })
+   *     }
+   *   }
    * }
    */
   onCreateNode?(
@@ -452,12 +475,9 @@ export interface GatsbyNode<
    *
    * @gatsbyVersion 2.24.80
    * @example
-   * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+   * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
    */
-  unstable_shouldOnCreateNode?(
-    args: { node: TNode },
-    options: PluginOptions
-  ): boolean
+  shouldOnCreateNode?(args: { node: TNode }, options: PluginOptions): boolean
 
   /**
    * Called when a new page is created. This extension API is useful

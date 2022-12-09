@@ -1,12 +1,13 @@
 import { fieldTransformers } from "./field-transformers"
+import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
 import store from "~/store"
 
 import {
   fieldOfTypeWasFetched,
   typeIsASupportedScalar,
   getTypeSettingsByType,
-  findTypeName,
-} from "~/steps/create-schema-customization/helpers"
+  findNamedTypeName,
+} from "../helpers"
 
 import { buildDefaultResolver } from "./default-resolver"
 
@@ -46,7 +47,7 @@ export const returnAliasedFieldName = ({ fieldAliases, field }) =>
     ? `${fieldAliases[field.name]}: ${field.name}`
     : field.name
 
-const excludeField = ({
+const fieldIsExcluded = ({
   field,
   fieldName,
   thisTypeSettings,
@@ -56,8 +57,8 @@ const excludeField = ({
 }) =>
   // this field wasn't previously fetched, so we shouldn't
   // add it to our schema
-  !fieldOfTypeWasFetched(field.type) ||
-  // this field was excluded on it's parent fields Type
+  (!fieldOfTypeWasFetched(field.type) && fieldName !== `id`) ||
+  // this field was excluded on its parent fields Type
   (parentTypeSettings.excludeFieldNames &&
     parentTypeSettings.excludeFieldNames.includes(fieldName)) ||
   // this field is on an interface type and one of the implementing types has this field excluded on it.
@@ -76,30 +77,26 @@ const excludeField = ({
   // this field has required input args
   (field.args && field.args.find(arg => arg.type.kind === `NON_NULL`)) ||
   // this field has no typeName
-  !findTypeName(field.type) ||
-  // field is a non null object
-  // @todo this looks unnecessary. Need to look into why non null object types are excluded
-  (field.type.kind === `NON_NULL` && field.type.ofType.kind === `OBJECT`) ||
-  // field is a non null enum
-  (field.type.kind === `NON_NULL` && field.type.ofType.kind === `ENUM`)
+  !findNamedTypeName(field.type)
 
 /**
  * Transforms fields from the WPGQL schema to work in the Gatsby schema
  * with proper node linking and type namespacing
  * also filters out unusable fields and types
  */
-
 export const transformFields = ({
   fields,
-  fieldAliases,
-  fieldBlacklist,
   parentType,
   parentInterfacesImplementingTypes,
-  gatsbyNodeTypes,
+  peek = false,
 }) => {
   if (!fields || !fields.length) {
     return null
   }
+
+  const gatsbyNodeTypes = getGatsbyNodeTypeNames()
+
+  const { fieldAliases, fieldBlacklist } = store.getState().remoteSchema
 
   const parentTypeSettings = getTypeSettingsByType(parentType)
 
@@ -121,7 +118,7 @@ export const transformFields = ({
     const fieldName = getAliasedFieldName({ fieldAliases, field })
 
     if (
-      excludeField({
+      fieldIsExcluded({
         field,
         fieldName,
         thisTypeSettings,
@@ -135,12 +132,12 @@ export const transformFields = ({
 
     const { typeMap } = store.getState().remoteSchema
 
-    const type = typeMap.get(findTypeName(field.type))
+    const type = typeMap.get(findNamedTypeName(field.type))
 
     const includedChildFields = type?.fields?.filter(field => {
       const childFieldTypeSettings = getTypeSettingsByType(field.type)
       const fieldName = getAliasedFieldName({ fieldAliases, field })
-      return !excludeField({
+      return !fieldIsExcluded({
         field,
         fieldName,
         thisTypeSettings: childFieldTypeSettings,
@@ -162,9 +159,11 @@ export const transformFields = ({
     field = handleCustomScalars(field)
 
     const { transform, description } =
-      fieldTransformers.find(({ test }) => test(field)) || {}
+      peek === false
+        ? fieldTransformers.find(({ test }) => test(field)) || {}
+        : {}
 
-    if (transform && typeof transform === `function`) {
+    if (transform && typeof transform === `function` && peek === false) {
       const transformerApi = {
         field,
         fieldsObject,
@@ -192,10 +191,16 @@ export const transformFields = ({
       }
 
       fieldsObject[fieldName] = transformedField
+    } else if (peek) {
+      fieldsObject[fieldName] = true
     }
 
     return fieldsObject
   }, {})
+
+  if (!Object.keys(transformedFields).length) {
+    return null
+  }
 
   return transformedFields
 }

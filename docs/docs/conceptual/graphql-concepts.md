@@ -14,10 +14,7 @@ familiar with SQL, it works in a very similar way. Using a special syntax, you d
 the data you want in your component and then that data is given
 to you.
 
-Gatsby uses GraphQL to enable [page and StaticQuery
-components](/docs/conceptual/building-with-components/) to declare what data they and their
-sub-components need. Then, Gatsby makes that data available in
-the browser when needed by your components.
+Gatsby uses GraphQL to enable page and static query queries to declare what data they and their sub-components need. Then, Gatsby makes that data available in the browser when needed by your components.
 
 Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
 
@@ -234,7 +231,7 @@ See also the following blog posts:
 
 ### Fragments
 
-Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpFixed`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](https://graphql.org/learn/queries/#fragments).
+Fragments let you construct sets of fields, and then include them in queries where you need to. You can learn more about them in the [GraphQL documentation](https://graphql.org/learn/queries/#fragments).
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
@@ -341,9 +338,7 @@ export default function Home({ data }) {
       <h1>Index page</h1>
       <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
       {data.allMarkdownRemark.edges.map(({ node }) => (
-        <div key={node.id}>
-          <IndexPost frontmatter={node.frontmatter} />
-        </div>
+        <IndexPost key={node.id} frontmatter={node.frontmatter} />
       ))}
     </div>
   )
