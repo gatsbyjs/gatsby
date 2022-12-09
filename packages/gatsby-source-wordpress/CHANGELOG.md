@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.2.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.3/packages/gatsby-source-wordpress) (2022-12-08)
+
+#### Bug Fixes
+
+- Add back nodeType field that was removed in last version [#37212](https://github.com/gatsbyjs/gatsby/issues/37212) [#37219](https://github.com/gatsbyjs/gatsby/issues/37219) ([815791a](https://github.com/gatsbyjs/gatsby/commit/815791a4fd4cf336acc898cd26b2e8768e5f24bc))
+
 ### [7.2.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.2/packages/gatsby-source-wordpress) (2022-12-07)
 
 #### Chores
