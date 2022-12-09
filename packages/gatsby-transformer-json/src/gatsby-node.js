@@ -100,7 +100,7 @@ async function onCreateNode(
   if (_.isArray(parsedContent)) {
     const chunks = _.chunk(parsedContent, 100)
     let count = 0
-    for await (const chunk of chunks) {
+    for (const chunk of chunks) {
       await transformArrayChunk({ chunk, startCount: count })
       count += chunk.length
     }
