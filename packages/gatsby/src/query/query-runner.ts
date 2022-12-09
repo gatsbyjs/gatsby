@@ -37,19 +37,14 @@ export interface IQueryJob {
   pluginCreatorId?: string
 }
 
-function reportLongRunningQueryJob(queryJob): void {
+function reportLongRunningQueryJob(queryJob: IQueryJob): void {
   const messageParts = [
-    `This query took more than 15s to run — which is unusually long and might indicate you're querying too much or have some unoptimized code:`,
+    `This query took more than 15s to run — which might indicate you're querying too much or have some unoptimized code:`,
     `File path: ${queryJob.componentPath}`,
   ]
 
-  if (queryJob.isPage) {
-    const { path, context } = queryJob.context
-    messageParts.push(`URL path: ${path}`)
-
-    if (!_.isEmpty(context)) {
-      messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
-    }
+  if (queryJob.queryType === `page`) {
+    messageParts.push(`URL path: ${queryJob.context.path}`)
   }
 
   report.warn(messageParts.join(`\n`))
