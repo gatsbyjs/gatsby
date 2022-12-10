@@ -1,10 +1,10 @@
 {
-  "name": "gatsby-source-wordpress",
-  "description": "Source data from WordPress in an efficient and scalable way.",
-  "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
-  "version": "6.17.0",
+  "name": "@throttleup/gatsby-source-wordpress",
+  "description": "Custom version of the original package. Source data from WordPress in an efficient and scalable way.",
+  "author": "ThrottleUp Technologies",
+  "version": "1.0.0",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "email": "adam@throttleup.io"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
@@ -63,7 +63,7 @@
     "tree-kill": "^1.2.2",
     "wait-on": "^4.0.2"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
+  "homepage": "https://github.com/ThrottleUpTech/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -80,7 +80,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "url": "https://github.com/ThrottleUpTech/gatsby.git",
     "directory": "packages/gatsby-source-wordpress"
   },
   "scripts": {
