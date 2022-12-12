@@ -1,9 +1,9 @@
 {
-  "presets": [["babel-preset-gatsby-package", { "browser": true }]],
+  "presets": [["babel-preset-gatsby-package"]],
   "overrides": [
     {
-      "test": ["**/*.ts"],
-      "plugins": [["@babel/plugin-transform-typescript"]]
+      "test": "src/apply-trailing-slash-options.ts",
+      "presets": [["babel-preset-gatsby-package", { "browser": true }]]
     }
   ]
 }

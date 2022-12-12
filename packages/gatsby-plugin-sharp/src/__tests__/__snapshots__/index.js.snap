@@ -5,7 +5,7 @@ Object {
   "aspectRatio": 1,
   "height": 20,
   "originalName": "test.png",
-  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
+  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRUlEQVR42r2UvU7DMBCAv7ShQUClCiTIAAHaOC4zAxKvgMTMwDvwBgw8BQsbG8/BgPiRkNgYGFg6gRhgoE2C/BPSILdQhLBOTuzcd3c+34U84dfC38NZQl9YGYhJ4ExL3i3F7nwLpxrrS64jTkPOQu7XNN/Vn8bAhryK2AoAPDXhw94cvY4NwQ0b8jKiVbNkrZiBzQZPHXJZ4ctzGn57Wqk2jFOslUAvD1rK+nD+7GOg3Z4vl9EOD7Oz4vNcdV7AQsHHi0qpzshxu6rUUid8sjQOrsGdEzbZuolUhJ4LA8QUr3GZoEq21ZZkZ0bpBZ4FTCAmf0cLIxJmnUse1on90tvny+4s70nFrbtIHtvsN2kWdFjncJ438fWSHeWZCTKpTPTaXESqSF9i8g1S6Shvd2OYI9jGkGqZTdTPadGV2b/+DH4IfwAG62UOzwvNmgAAAABJRU5ErkJggg==",
   "width": 20,
 }
 `;
@@ -23,7 +23,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXtgW5nZmbWfGyNbWi1dWvL1a0bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAV0lEQVR42q2QQQ6AMAgEdxf+/2ZTsFC1XoxzaDZTIARgQEx0RqXvD3gKxuvYQs4OZ2e91m9w1Sak9VguMUus7cj4D8Vou7hQN+0stFywWEc+u9NLHzY8AIWvAJmSdlsXAAAAAElFTkSuQmCC",
   "height": 100,
   "originalName": "test.png",
   "src": "/static/1234/31820/test.png",
@@ -36,7 +36,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fluid 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXtgW5nZmbWfGyNbWi1dWvL1a0bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAV0lEQVR42q2QQQ6AMAgEdxf+/2ZTsFC1XoxzaDZTIARgQEx0RqXvD3gKxuvYQs4OZ2e91m9w1Sak9VguMUus7cj4D8Vou7hQN+0stFywWEc+u9NLHzY8AIWvAJmSdlsXAAAAAElFTkSuQmCC",
   "density": 72,
   "originalImg": "/static/1234/31820/test.png",
   "originalName": "test.png",
@@ -85,7 +85,7 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -142,7 +142,7 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -185,7 +185,7 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -256,7 +256,7 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -299,7 +299,7 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -382,7 +382,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -464,7 +464,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -546,7 +546,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -628,7 +628,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -688,7 +688,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -752,7 +752,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -816,7 +816,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -880,7 +880,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -916,7 +916,7 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -987,7 +987,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1014,7 +1014,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRUlEQVR42r2UvU7DMBCAv7ShQUClCiTIAAHaOC4zAxKvgMTMwDvwBgw8BQsbG8/BgPiRkNgYGFg6gRhgoE2C/BPSILdQhLBOTuzcd3c+34U84dfC38NZQl9YGYhJ4ExL3i3F7nwLpxrrS64jTkPOQu7XNN/Vn8bAhryK2AoAPDXhw94cvY4NwQ0b8jKiVbNkrZiBzQZPHXJZ4ctzGn57Wqk2jFOslUAvD1rK+nD+7GOg3Z4vl9EOD7Oz4vNcdV7AQsHHi0qpzshxu6rUUid8sjQOrsGdEzbZuolUhJ4LA8QUr3GZoEq21ZZkZ0bpBZ4FTCAmf0cLIxJmnUse1on90tvny+4s70nFrbtIHtvsN2kWdFjncJ438fWSHeWZCTKpTPTaXESqSF9i8g1S6Shvd2OYI9jGkGqZTdTPadGV2b/+DH4IfwAG62UOzwvNmgAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
@@ -1082,7 +1082,7 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1125,7 +1125,7 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1189,7 +1189,7 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1260,7 +1260,7 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1318,7 +1318,7 @@ exports[`gatsby-plugin-sharp queueImageResizing file name works with spaces & sp
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1361,7 +1361,7 @@ exports[`gatsby-plugin-sharp queueImageResizing should round height when auto-ca
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1397,7 +1397,7 @@ Object {
 }
 `;
 
-exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
+exports[`gatsby-plugin-sharp tracedSVG runs on demand (and falls back to blurred): fixed 1`] = `
 Object {
   "aspectRatio": 1,
   "base64": undefined,
@@ -1405,12 +1405,12 @@ Object {
   "originalName": "test.png",
   "src": "/static/1234/7e516/test.png",
   "srcSet": "/static/1234/7e516/test.png 1x",
-  "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
+  "tracedSVG": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRUlEQVR42r2UvU7DMBCAv7ShQUClCiTIAAHaOC4zAxKvgMTMwDvwBgw8BQsbG8/BgPiRkNgYGFg6gRhgoE2C/BPSILdQhLBOTuzcd3c+34U84dfC38NZQl9YGYhJ4ExL3i3F7nwLpxrrS64jTkPOQu7XNN/Vn8bAhryK2AoAPDXhw94cvY4NwQ0b8jKiVbNkrZiBzQZPHXJZ4ctzGn57Wqk2jFOslUAvD1rK+nD+7GOg3Z4vl9EOD7Oz4vNcdV7AQsHHi0qpzshxu6rUUid8sjQOrsGdEzbZuolUhJ4LA8QUr3GZoEq21ZZkZ0bpBZ4FTCAmf0cLIxJmnUse1on90tvny+4s70nFrbtIHtvsN2kWdFjncJ438fWSHeWZCTKpTPTaXESqSF9i8g1S6Shvd2OYI9jGkGqZTdTPadGV2b/+DH4IfwAG62UOzwvNmgAAAABJRU5ErkJggg==",
   "width": 100,
 }
 `;
 
-exports[`gatsby-plugin-sharp tracedSVG runs on demand 2`] = `
+exports[`gatsby-plugin-sharp tracedSVG runs on demand (and falls back to blurred): fluid 1`] = `
 Object {
   "aspectRatio": 1,
   "base64": undefined,
@@ -1425,6 +1425,6 @@ Object {
 /static/1234/a1812/test.png 50w,
 /static/1234/7e516/test.png 100w",
   "srcSetType": "image/png",
-  "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
+  "tracedSVG": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRUlEQVR42r2UvU7DMBCAv7ShQUClCiTIAAHaOC4zAxKvgMTMwDvwBgw8BQsbG8/BgPiRkNgYGFg6gRhgoE2C/BPSILdQhLBOTuzcd3c+34U84dfC38NZQl9YGYhJ4ExL3i3F7nwLpxrrS64jTkPOQu7XNN/Vn8bAhryK2AoAPDXhw94cvY4NwQ0b8jKiVbNkrZiBzQZPHXJZ4ctzGn57Wqk2jFOslUAvD1rK+nD+7GOg3Z4vl9EOD7Oz4vNcdV7AQsHHi0qpzshxu6rUUid8sjQOrsGdEzbZuolUhJ4LA8QUr3GZoEq21ZZkZ0bpBZ4FTCAmf0cLIxJmnUse1on90tvny+4s70nFrbtIHtvsN2kWdFjncJ438fWSHeWZCTKpTPTaXESqSF9i8g1S6Shvd2OYI9jGkGqZTdTPadGV2b/+DH4IfwAG62UOzwvNmgAAAABJRU5ErkJggg==",
 }
 `;

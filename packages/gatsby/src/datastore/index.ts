@@ -1,7 +1,7 @@
 import { IGatsbyNode } from "../redux/types"
 import { getDataStore } from "./datastore"
 
-export { getDataStore, isLmdbStore, detectLmdbStore } from "./datastore"
+export { getDataStore } from "./datastore"
 
 // Convenience accessor methods
 

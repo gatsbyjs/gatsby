@@ -50,11 +50,13 @@ module.exports = {
     ], // Workaround for https://github.com/facebook/jest/issues/9771
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script|gatsby-link)/)`],
   globals: {
     __PATH_PREFIX__: ``,
   },
-  testURL: `http://localhost`,
+  testEnvironmentOptions: {
+    url: `http://localhost`,
+  },
   setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
@@ -135,9 +137,7 @@ global.___loader = {
 
 #### Mocking `gatsby`
 
-Finally, it's a good idea to mock the `gatsby` module itself. This may not be
-needed at first, but will make things a lot easier if you want to test
-components that use `Link` or GraphQL.
+Finally, it's a good idea to mock the `gatsby` module itself. This may not be needed at first, but will make things a lot easier if you want to test components that use `Link`, `Slice`, or GraphQL.
 
 ```js:title=__mocks__/gatsby.js
 const React = require("react")
@@ -164,12 +164,18 @@ module.exports = {
         href: to,
       })
   ),
-  StaticQuery: jest.fn(),
+  Slice: jest.fn().mockImplementation(
+    ({ alias, ...rest }) =>
+      React.createElement("div", {
+        ...rest,
+        "data-test-slice-alias": alias
+      })
+  ),
   useStaticQuery: jest.fn(),
 }
 ```
 
-This mocks the `graphql()` function, `Link` component, and `StaticQuery` component.
+This mocks the `graphql()` function, [`Link` component](/docs/reference/built-in-components/gatsby-link/), [Slice placeholder](/docs/reference/built-in-components/gatsby-slice/), and [`useStaticQuery` hook](/docs/reference/graphql-data-layer/graphql-api/#usestaticquery).
 
 ## Writing tests
 
@@ -235,7 +241,7 @@ If you are using TypeScript, you need to install typings packages and make
 two changes to your config.
 
 ```shell
-npm install --save-dev @types/jest @types/react-test-renderer
+npm install --save-dev @types/jest @types/react-test-renderer @babel/preset-typescript
 ```
 
 Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory.
@@ -288,15 +294,12 @@ const paths = pathsToModuleNameMapper(compilerOptions.paths, {
 
 ## Other resources
 
-If you need to make changes to your Babel config, you can edit the config in
-`jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
-though remember you may need to install the Babel 7 versions. See
-[the Gatsby Babel config guide](/docs/how-to/custom-configuration/babel) for some examples.
+If you need to make changes to your Babel config, you can edit the config in `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby. See [the Gatsby Babel config guide](/docs/how-to/custom-configuration/babel) for some examples.
 
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).
 
-For an example encapsulating all of these techniques--and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
+For an example encapsulating all of these techniques and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
 
 [using-jest]: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest
 [react-testing-library]: https://github.com/testing-library/react-testing-library

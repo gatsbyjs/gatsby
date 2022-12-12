@@ -1,33 +1,47 @@
 import path from "path"
 import { Store } from "redux"
-import { Compiler, Module, NormalModule, Compilation } from "webpack"
-import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
-import { isEqual } from "lodash"
-import { generateComponentChunkName } from "../../js-chunk-names"
+import { Compiler, NormalModule } from "webpack"
+import { isEqual, cloneDeep } from "lodash"
 import { enqueueFlush } from "../../page-data"
-import type {
-  IGatsbyState,
-  IGatsbyPageComponent,
-  IGatsbyStaticQueryComponents,
-} from "../../../redux/types"
+import type { IGatsbyState, IGatsbyPageComponent } from "../../../redux/types"
+import {
+  ICollectedSlices,
+  mergePreviouslyCollectedSlices,
+} from "../../babel/find-slices"
+import { slash } from "gatsby-core-utils/path"
 
-type ChunkGroup = Compilation["chunkGroups"][0]
-type EntryPoint = Compilation["asyncEntrypoints"][0]
+/**
+ * Remove the export query param from a path that can
+ * a) contain only the ?export= query param
+ * b) but also contain ?__contentFilePath&export=
+ */
+export const removeExportQueryParam = (
+  path: string | undefined
+): string | undefined => {
+  if (!path?.includes(`?`)) {
+    return path
+  }
+  const [filePath, queryParams] = path.split(`?`)
+  const params = new URLSearchParams(queryParams)
+  params.delete(`export`)
+
+  const paramsString = params.toString()
+
+  return `${filePath}${
+    paramsString ? `?${decodeURIComponent(paramsString)}` : ``
+  }`
+}
 
 /**
  * Checks if a module matches a resourcePath
  */
 function doesModuleMatchResourcePath(
   resourcePath: string,
-  webpackModule: Module | NormalModule | ConcatenatedModule
+  webpackModule: NormalModule
 ): boolean {
-  if (!(webpackModule instanceof ConcatenatedModule)) {
-    return (webpackModule as NormalModule).resource === resourcePath
-  }
-
-  // ConcatenatedModule is a collection of modules so we have to go deeper to actually get it
-  return webpackModule.modules.some(
-    innerModule => (innerModule as NormalModule).resource === resourcePath
+  return (
+    removeExportQueryParam((webpackModule as NormalModule).resource) ===
+    resourcePath
   )
 }
 
@@ -45,80 +59,6 @@ function getRealPath(
   return cache.get(componentPath) as string
 }
 
-/**
- * Grab the actual webpackModule from the resourcePath
- * We return staticQueries and componentPaths cause that's what we care about
- */
-function getWebpackModulesByResourcePaths(
-  modules: Set<Module>,
-  staticQueries: IGatsbyState["staticQueryComponents"],
-  components: IGatsbyState["components"]
-): {
-  webpackModulesByStaticQueryId: Map<string, Module>
-  webpackModulesByComponentId: Map<string, Module>
-} {
-  const realPathCache = new Map<string, string>()
-  const webpackModulesByStaticQueryId = new Map<string, Module>()
-  const webpackModulesByComponentId = new Map<string, Module>()
-
-  modules.forEach(webpackModule => {
-    for (const [id, staticQuery] of staticQueries) {
-      const staticQueryComponentPath = getRealPath(
-        realPathCache,
-        staticQuery.componentPath
-      )
-
-      if (
-        !doesModuleMatchResourcePath(staticQueryComponentPath, webpackModule)
-      ) {
-        continue
-      }
-
-      webpackModulesByStaticQueryId.set(id, webpackModule)
-    }
-
-    for (const [id, component] of components) {
-      const componentComponentPath = getRealPath(
-        realPathCache,
-        component.componentPath
-      )
-      if (!doesModuleMatchResourcePath(componentComponentPath, webpackModule)) {
-        continue
-      }
-
-      webpackModulesByComponentId.set(id, webpackModule)
-    }
-  })
-
-  return { webpackModulesByStaticQueryId, webpackModulesByComponentId }
-}
-
-/**
- * Chunks can be async so the group might not represent a pageComponent group
- * We'll need to search for it.
- */
-function getChunkGroupsDerivedFromEntrypoint(
-  chunkGroup: ChunkGroup,
-  entrypoint: EntryPoint
-): Array<ChunkGroup> {
-  // when it's imported by any globals or async-requires we know we have the correct chunkgroups.
-  // Async modules won't have hasParent listed
-  if (chunkGroup.hasParent(entrypoint)) {
-    return [chunkGroup]
-  }
-
-  let chunkGroups: Array<ChunkGroup> = []
-  for (const parentChunkGroup of chunkGroup.getParents()) {
-    const newChunkGroup = getChunkGroupsDerivedFromEntrypoint(
-      parentChunkGroup,
-      entrypoint
-    )
-    chunkGroups = chunkGroups.concat(newChunkGroup)
-  }
-
-  return chunkGroups
-}
-
 export class StaticQueryMapper {
   private store: Store<IGatsbyState>
   private name: string
@@ -129,149 +69,307 @@ export class StaticQueryMapper {
   }
 
   apply(compiler: Compiler): void {
-    const { components, staticQueryComponents } = this.store.getState()
+    const {
+      components,
+      staticQueryComponents,
+      componentsUsingSlices,
+      program,
+    } = this.store.getState()
 
     compiler.hooks.done.tap(this.name, stats => {
-      const compilation = stats.compilation
-      // We only care about the main compilation
-      // Chunkgraph should always be available when it's done but you know typescript.
-      if (compilation.compiler.parentCompilation || !compilation.chunkGraph) {
-        return
-      }
-
-      const staticQueriesByChunkGroup = new Map<ChunkGroup, Array<string>>()
-      const chunkGroupsWithPageComponents = new Set<ChunkGroup>()
-      const chunkGroupsByComponentPath = new Map<
-        IGatsbyPageComponent["componentPath"],
-        ChunkGroup
-      >()
-
-      const { webpackModulesByStaticQueryId, webpackModulesByComponentId } =
-        getWebpackModulesByResourcePaths(
-          compilation.modules,
-          staticQueryComponents,
-          components
-        )
-
-      const appEntryPoint = (
-        compilation.entrypoints.has(`app`)
-          ? compilation.entrypoints.get(`app`)
-          : compilation.entrypoints.get(`commons`)
-      ) as EntryPoint
-
-      // group hashes by chunkGroup for ease of use
-      for (const [
-        staticQueryId,
-        webpackModule,
-      ] of webpackModulesByStaticQueryId) {
-        let chunkGroupsDerivedFromEntrypoints: Array<ChunkGroup> = []
-        for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
-          webpackModule
-        )) {
-          for (const chunkGroup of chunk.groupsIterable) {
-            if (chunkGroup === appEntryPoint) {
-              chunkGroupsDerivedFromEntrypoints.push(chunkGroup)
-            } else {
-              chunkGroupsDerivedFromEntrypoints =
-                chunkGroupsDerivedFromEntrypoints.concat(
-                  getChunkGroupsDerivedFromEntrypoint(chunkGroup, appEntryPoint)
-                )
-            }
-          }
-        }
-
-        // loop over all component chunkGroups or global ones
-        chunkGroupsDerivedFromEntrypoints.forEach(chunkGroup => {
-          const staticQueryHashes =
-            staticQueriesByChunkGroup.get(chunkGroup) ?? []
-
-          staticQueryHashes.push(
-            (
-              staticQueryComponents.get(
-                staticQueryId
-              ) as IGatsbyStaticQueryComponents
-            ).hash
-          )
-
-          staticQueriesByChunkGroup.set(chunkGroup, staticQueryHashes)
-        })
-      }
-
-      // group chunkGroups by componentPaths for ease of use
-      for (const [
-        componentPath,
-        webpackModule,
-      ] of webpackModulesByComponentId) {
-        for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
-          webpackModule
-        )) {
-          for (const chunkGroup of chunk.groupsIterable) {
-            // When it's a direct import from app entrypoint (async-requires) we know we have the correct chunkGroup
-            if (chunkGroup.name === generateComponentChunkName(componentPath)) {
-              chunkGroupsWithPageComponents.add(chunkGroup)
-              chunkGroupsByComponentPath.set(componentPath, chunkGroup)
-            }
-          }
-        }
-      }
-
-      let globalStaticQueries: Array<string> = []
-      for (const [chunkGroup, staticQueryHashes] of staticQueriesByChunkGroup) {
-        // When a chunkgroup is not part of a pageComponent we know it's part of a global group.
-        if (!chunkGroupsWithPageComponents.has(chunkGroup)) {
-          globalStaticQueries = globalStaticQueries.concat(staticQueryHashes)
-        }
-      }
-
-      components.forEach(component => {
-        const allStaticQueries = new Set(globalStaticQueries)
-        if (chunkGroupsByComponentPath.has(component.componentPath)) {
-          const chunkGroup = chunkGroupsByComponentPath.get(
-            component.componentPath
-          )
-          if (chunkGroup && staticQueriesByChunkGroup.has(chunkGroup)) {
-            ;(
-              staticQueriesByChunkGroup.get(chunkGroup) as Array<string>
-            ).forEach(staticQuery => {
-              allStaticQueries.add(staticQuery)
-            })
-          }
-        }
-
-        // modules, chunks, chunkgroups can all have not-deterministic orders so
-        // just sort array of static queries we produced to ensure final result is deterministic
-        const staticQueryHashes = Array.from(allStaticQueries).sort()
-
-        if (
-          !isEqual(
-            this.store
-              .getState()
-              .staticQueriesByTemplate.get(component.componentPath),
-            staticQueryHashes
-          )
-        ) {
-          this.store.dispatch({
-            type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
-            payload: {
-              componentPath: component.componentPath,
-              pages: component.pages,
-            },
-          })
-
-          this.store.dispatch({
-            type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
-            payload: {
-              componentPath: component.componentPath,
-              staticQueryHashes,
-            },
-          })
-        }
-      })
-
       // In dev mode we want to write page-data when compilation succeeds
       if (!stats.hasErrors() && compiler.watchMode) {
         enqueueFlush()
       }
     })
+
+    compiler.hooks.finishMake.tapPromise(
+      {
+        name: this.name,
+        before: `PartialHydrationPlugin`,
+      },
+      async compilation => {
+        if (compilation.compiler.parentCompilation) {
+          return
+        }
+
+        const entryModules = new Set()
+        const gatsbyBrowserPlugins = slash(
+          path.join(
+            program.directory,
+            `.cache`,
+            `api-runner-browser-plugins.js`
+          )
+        )
+        const asyncRequiresPath = slash(
+          path.join(
+            program.directory,
+            `.cache`,
+            `_this_is_virtual_fs_path_`,
+            `$virtual`,
+            `async-requires.js`
+          )
+        )
+        for (const entry of compilation.entries.values()) {
+          for (const dependency of entry.dependencies) {
+            const mod = compilation.moduleGraph.getModule(dependency)
+            entryModules.add(mod)
+          }
+        }
+
+        const realPathCache = new Map<string, string>()
+
+        const webpackModulesByStaticQueryId = new Map<
+          string,
+          Set<NormalModule>
+        >()
+        const webpackModulesByUsedSlicePlaceholderAlias = new Map<
+          NormalModule,
+          ICollectedSlices
+        >()
+        const componentModules = new Map<NormalModule, IGatsbyPageComponent>()
+        let asyncRequiresModule: NormalModule | undefined
+
+        for (const webpackModule of compilation.modules) {
+          if (!(webpackModule instanceof NormalModule)) {
+            // the only other type can be CssModule at this stage, which we don't care about
+            // this also acts as a type guard, providing fuller typeing for webpackModule
+            continue
+          }
+
+          if (doesModuleMatchResourcePath(asyncRequiresPath, webpackModule)) {
+            asyncRequiresModule = webpackModule
+            continue
+          }
+
+          if (
+            doesModuleMatchResourcePath(gatsbyBrowserPlugins, webpackModule)
+          ) {
+            entryModules.add(webpackModule)
+            continue
+          }
+
+          for (const staticQuery of staticQueryComponents.values()) {
+            const staticQueryComponentPath = getRealPath(
+              realPathCache,
+              staticQuery.componentPath
+            )
+
+            if (
+              !doesModuleMatchResourcePath(
+                staticQueryComponentPath,
+                webpackModule
+              )
+            ) {
+              continue
+            }
+
+            let set = webpackModulesByStaticQueryId.get(staticQuery.hash)
+
+            if (!set) {
+              set = new Set()
+              webpackModulesByStaticQueryId.set(staticQuery.hash, set)
+            }
+
+            set.add(webpackModule)
+          }
+
+          for (const [filePath, slices] of componentsUsingSlices) {
+            const componentComponentPath = getRealPath(realPathCache, filePath)
+
+            if (
+              !doesModuleMatchResourcePath(
+                componentComponentPath,
+                webpackModule
+              )
+            ) {
+              continue
+            }
+
+            webpackModulesByUsedSlicePlaceholderAlias.set(webpackModule, slices)
+          }
+
+          for (const component of components.values()) {
+            const componentComponentPath = getRealPath(
+              realPathCache,
+              component.componentPath
+            )
+
+            if (
+              !doesModuleMatchResourcePath(
+                componentComponentPath,
+                webpackModule
+              )
+            ) {
+              continue
+            }
+
+            componentModules.set(webpackModule, component)
+          }
+        }
+
+        function traverseModule(
+          module: NormalModule,
+          config: {
+            onComponent(component: IGatsbyPageComponent): void
+            onRoot(): void
+          },
+          visitedModules = new Set<NormalModule>()
+        ): void {
+          if (visitedModules.has(module)) {
+            return
+          }
+          visitedModules.add(module)
+
+          if (module === asyncRequiresModule) {
+            return
+          }
+
+          const component = componentModules.get(module)
+          if (component) {
+            config.onComponent(component)
+            // don't return here yet, as component might be imported by another one, and we want to traverse up until we reach async-requires
+          }
+
+          if (entryModules.has(module)) {
+            config.onRoot()
+            return
+          }
+
+          const incomingConnections =
+            compilation.moduleGraph.getIncomingConnections(module)
+          for (const connection of incomingConnections) {
+            if (connection.originModule instanceof NormalModule) {
+              traverseModule(connection.originModule, config, visitedModules)
+            }
+          }
+        }
+
+        const globalStaticQueries = new Set<string>()
+        const staticQueriesByComponents = new Map<string, Set<string>>()
+        for (const [
+          staticQueryId,
+          modules,
+        ] of webpackModulesByStaticQueryId.entries()) {
+          for (const module of modules) {
+            traverseModule(module, {
+              onComponent(component: IGatsbyPageComponent) {
+                let staticQueriesForComponent = staticQueriesByComponents.get(
+                  component.componentPath
+                )
+                if (!staticQueriesForComponent) {
+                  staticQueriesForComponent = new Set()
+                  staticQueriesByComponents.set(
+                    component.componentPath,
+                    staticQueriesForComponent
+                  )
+                }
+
+                staticQueriesForComponent.add(staticQueryId)
+              },
+              onRoot() {
+                globalStaticQueries.add(staticQueryId)
+              },
+            })
+          }
+        }
+
+        let globalSliceUsage: ICollectedSlices = {}
+        const slicesByComponents = new Map<string, ICollectedSlices>()
+        for (const [
+          module,
+          slices,
+        ] of webpackModulesByUsedSlicePlaceholderAlias.entries()) {
+          traverseModule(module, {
+            onComponent(component: IGatsbyPageComponent) {
+              slicesByComponents.set(
+                component.componentPath,
+                mergePreviouslyCollectedSlices(
+                  slices,
+                  slicesByComponents.get(component.componentPath)
+                )
+              )
+            },
+            onRoot() {
+              globalSliceUsage = mergePreviouslyCollectedSlices(
+                slices,
+                globalSliceUsage
+              )
+            },
+          })
+        }
+
+        for (const component of components.values()) {
+          const allStaticQueries = new Set([
+            ...globalStaticQueries,
+            ...(staticQueriesByComponents.get(component.componentPath) ?? []),
+          ])
+          const staticQueryHashes = Array.from(allStaticQueries).sort()
+
+          const allSlices = mergePreviouslyCollectedSlices(
+            slicesByComponents.get(component.componentPath) ?? {},
+            component.isSlice ? {} : cloneDeep(globalSliceUsage)
+          )
+
+          const slices = Object.keys(allSlices)
+            .sort()
+            .reduce((obj, key) => {
+              obj[key] = allSlices[key]
+              return obj
+            }, {})
+
+          const didSlicesChange = !isEqual(
+            this.store.getState().slicesByTemplate.get(component.componentPath),
+            slices
+          )
+          const didStaticQueriesChange = !isEqual(
+            this.store
+              .getState()
+              .staticQueriesByTemplate.get(component.componentPath),
+            staticQueryHashes
+          )
+
+          if (didStaticQueriesChange || didSlicesChange) {
+            if (component.isSlice) {
+              this.store.dispatch({
+                type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`,
+                payload: {
+                  componentPath: component.componentPath,
+                  sliceNames: component.pages,
+                },
+              })
+            } else {
+              this.store.dispatch({
+                type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+                payload: {
+                  componentPath: component.componentPath,
+                  pages: component.pages,
+                },
+              })
+            }
+          }
+
+          if (didSlicesChange) {
+            this.store.dispatch({
+              type: `SET_SLICES_BY_TEMPLATE`,
+              payload: {
+                componentPath: component.componentPath,
+                slices,
+              },
+            })
+          }
+
+          if (didStaticQueriesChange) {
+            this.store.dispatch({
+              type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
+              payload: {
+                componentPath: component.componentPath,
+                staticQueryHashes,
+              },
+            })
+          }
+        }
+      }
+    )
   }
 }

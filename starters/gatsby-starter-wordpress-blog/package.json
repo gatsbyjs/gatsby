@@ -1,43 +1,39 @@
 {
   "name": "gatsby-starter-wordpress-blog",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "A starter for a blog powered by Gatsby and WordPress",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com> and Tyler Barnes <tylerdbarnes@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@wordpress/block-library": "^2.29.3",
-    "gatsby": "^4.16.0",
-    "gatsby-image": "^3.11.0",
-    "gatsby-plugin-image": "^2.16.1",
-    "gatsby-plugin-manifest": "^4.16.0",
-    "gatsby-plugin-offline": "^5.16.0",
-    "gatsby-plugin-react-helmet": "^5.16.0",
-    "gatsby-plugin-sharp": "^4.16.1",
-    "gatsby-source-wordpress": "^6.16.1",
-    "gatsby-transformer-sharp": "^4.16.0",
-    "html-react-parser": "^0.14.3",
+    "@fontsource/merriweather": "^4.5.14",
+    "@fontsource/montserrat": "^4.5.13",
+    "@wordpress/block-library": "^7.19.0",
+    "gatsby": "^5.2.0",
+    "gatsby-plugin-image": "^3.2.0",
+    "gatsby-plugin-manifest": "^5.2.0",
+    "gatsby-plugin-sharp": "^5.2.0",
+    "gatsby-source-wordpress": "^7.2.3",
+    "gatsby-transformer-sharp": "^5.2.0",
+    "html-react-parser": "^3.0.4",
     "lodash": "^4.17.21",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1",
-    "typeface-merriweather": "0.0.72",
-    "typeface-montserrat": "0.0.75"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "dumper.js": "^1.3.1",
-    "prettier": "2.6.2"
+    "prettier": "2.8.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby-starter-wordpress-blog#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "wordpress"
   ],
   "license": "0BSD",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git+https://github.com/gatsbyjs/gatsby-starter-wordpress-blog.git"
   },
   "scripts": {
     "build": "gatsby build",

@@ -19,7 +19,6 @@ import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
-import { detectLmdbStore } from "../datastore"
 import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
@@ -49,10 +48,9 @@ if (
 ) {
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
   process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
-  process.env.PRESERVE_WEBPACK_CACHE = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled: Development SSR, preserving file download cache and preserving webpack cache.
+Two fast dev experiments are enabled: SSR in develop and preserving file download cache.
 
 Please give feedback on their respective umbrella issues!
 
@@ -191,18 +189,13 @@ export async function initialize({
   const flattenedPlugins = await loadPlugins(config, siteDirectory)
   activity.end()
 
-  // TODO: figure out proper way of disabling loading indicator
-  // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
-  // will work, but we don't want to force users into using env vars
-  if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-    !process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR
-  ) {
-    // if query on demand is enabled and GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
+  // GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
+  // to disable query on demand loading indicator
+  if (!process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR) {
+    // if GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
-  const lmdbStoreIsUsed = detectLmdbStore()
 
   if (process.env.GATSBY_DETECT_NODE_MUTATIONS) {
     enableNodeMutationsDetection()
@@ -214,17 +207,18 @@ export async function initialize({
     )
   }
 
-  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-    if (process.env.gatsby_executing_command !== `develop`) {
-      // we don't want to ever have this flag enabled for anything than develop
-      // in case someone have this env var globally set
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-    } else if (isCI() && !process.env.CYPRESS_SUPPORT) {
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      reporter.verbose(
-        `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
-      )
-    }
+  // Throughout the codebase GATSBY_QUERY_ON_DEMAND is used to conditionally enable the QoD behavior, depending on if "gatsby develop" is running or not. In CI QoD is disabled by default, too.
+  // You can use GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI to force enable it in CI.
+  process.env.GATSBY_QUERY_ON_DEMAND = `true`
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // we don't want to ever have this flag enabled for anything than develop
+    // in case someone have this env var globally set
+    delete process.env.GATSBY_QUERY_ON_DEMAND
+  } else if (isCI() && !process.env.GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI) {
+    delete process.env.GATSBY_QUERY_ON_DEMAND
+    reporter.verbose(
+      `Query on Demand is disabled in CI by default. You can enable it by setting GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI env var.`
+    )
   }
 
   // run stale jobs
@@ -261,15 +255,12 @@ export async function initialize({
   const workerCacheDirectory = `${program.directory}/.cache/worker`
   const lmdbCacheDirectory = `${program.directory}/.cache/${lmdbCacheDirectoryName}`
 
-  const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
   const publicDirExists = fs.existsSync(publicDirectory)
   const workerCacheDirExists = fs.existsSync(workerCacheDirectory)
   const lmdbCacheDirExists = fs.existsSync(lmdbCacheDirectory)
 
   // check the cache file that is used by the current configuration
-  const cacheDirExists = lmdbStoreIsUsed
-    ? lmdbCacheDirExists
-    : cacheJsonDirExists
+  const cacheDirExists = lmdbCacheDirExists
 
   // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
   // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
@@ -302,10 +293,7 @@ export async function initialize({
 
   // When the main process and workers communicate they save parts of their redux state to .cache/worker
   // We should clean this directory to remove stale files that a worker might accidentally reuse then
-  if (
-    workerCacheDirExists &&
-    process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
-  ) {
+  if (workerCacheDirExists) {
     activity = reporter.activityTimer(
       `delete worker cache from previous builds`,
       {
@@ -323,15 +311,17 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  // Check if any plugins have been updated since our last run. If so
-  // we delete the cache is there's likely been changes
-  // since the previous run.
+  // Check if any plugins have been updated since our last run. If so,
+  // we delete the cache as there's likely been changes since
+  // the previous run.
   //
   // We do this by creating a hash of all the version numbers of installed
   // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
+  // we should include gatsby version as well
+  pluginVersions.push(require(`../../package.json`).version)
   const optionalFiles = [
     `${program.directory}/gatsby-config.js`,
     `${program.directory}/gatsby-node.js`,
@@ -440,6 +430,8 @@ export async function initialize({
         `.cache/data/**`,
         `!.cache/data/gatsby-core-utils/**`,
         `!.cache/compiled`,
+        // Add webpack
+        `!.cache/webpack`,
       ]
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
@@ -448,11 +440,6 @@ export async function initialize({
         deleteGlobs.push(`!.cache/caches`)
         deleteGlobs.push(`.cache/caches/*`)
         deleteGlobs.push(`!.cache/caches/gatsby-source-filesystem`)
-      }
-
-      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-        // Add webpack
-        deleteGlobs.push(`!.cache/webpack`)
       }
 
       const files = await glob(deleteGlobs, {
@@ -497,35 +484,26 @@ export async function initialize({
   await fs.ensureDir(`${publicDirectory}/static`)
 
   // Init plugins once cache is initialized
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    await apiRunnerNode(`onPluginInit`, {
-      parentSpan: activity.span,
-    })
-  } else {
-    await apiRunnerNode(`unstable_onPluginInit`, {
-      parentSpan: activity.span,
-    })
-  }
+  await apiRunnerNode(`onPluginInit`, {
+    parentSpan: activity.span,
+  })
 
   activity.end()
 
   activity = reporter.activityTimer(`copy gatsby files`, {
     parentSpan,
   })
+
   activity.start()
+
   const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = cacheDirectory
-  const tryRequire = `${__dirname}/../utils/test-require-error.js`
+
   try {
     await fs.copy(srcDir, siteDir, {
       overwrite: true,
     })
-    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
-    if (lmdbStoreIsUsed) {
-      await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
-    } else {
-      await fs.ensureDir(`${cacheDirectory}/json`)
-    }
+    await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
@@ -659,10 +637,22 @@ export async function initialize({
 
   const workerPool = WorkerPool.create()
 
-  // This is only run during `gatsby develop`
+  const siteDirectoryFiles = await fs.readdir(siteDirectory)
+
+  const gatsbyFilesIsInESM = siteDirectoryFiles.some(file =>
+    file.match(/gatsby-(node|config)\.mjs/)
+  )
+
+  if (gatsbyFilesIsInESM) {
+    telemetry.trackFeatureIsUsed(`ESMInGatsbyFiles`)
+  }
+
   if (state.config.graphqlTypegen) {
     telemetry.trackFeatureIsUsed(`GraphQLTypegen`)
-    writeGraphQLConfig(program)
+    // This is only run during `gatsby develop`
+    if (process.env.gatsby_executing_command === `develop`) {
+      writeGraphQLConfig(program)
+    }
   }
 
   return {

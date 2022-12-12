@@ -2,7 +2,7 @@
 title: "Part 1: Create and Deploy Your First Gatsby Site"
 ---
 
-import { Announcement, LinkButton } from "gatsby-interface"
+import { LinkButton } from "gatsby-interface"
 import Collapsible from "@components/collapsible"
 import { MdArrowForward } from "react-icons/md"
 
@@ -30,13 +30,15 @@ First, you write the code for your Gatsby site from your computer. When you're r
 
 </Collapsible>
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Prefer a video?**
 
 If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 1.
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+**Note**: Parts of this recording may be slightly outdated, but the concepts are generally applicable. For the most up-to-date information, follow along with the written tutorial.
+
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe
   width="560"
@@ -56,7 +58,7 @@ To create your first Gatsby site, you're going to use a command from the Gatsby 
 
 ![The welcome message for the interactive "gatsby new" command.](./gatsby-new-cli.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** For this Tutorial, your Gatsby CLI should be v4.8 or newer. To check what version you have installed, run the following command:
 
@@ -86,7 +88,7 @@ cd Desktop
 gatsby new
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Having trouble with `gatsby new`?** If you had trouble globally installing `gatsby-cli` in Part 0, you can also create a new site by running `npm init gatsby` from the command line instead of `gatsby new`.
 
@@ -114,7 +116,7 @@ Will you be using JavaScript or TypeScript?
   TypeScript
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 This tutorial doesn't require any prior TypeScript knowledge as it uses JavaScript. If you're familiar with TypeScript you can read the [Gatsby and TypeScript guide](/docs/how-to/custom-configuration/typescript/) to learn about typings, files, and conventions. If you want to use TypeScript we recommend going through the tutorial first and then only afterwards convert the project to TypeScript.
 
@@ -127,7 +129,7 @@ This tutorial doesn't require any prior TypeScript knowledge as it uses JavaScri
 · No (or I'll add it later)
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 In the future, you can use these options to tell `gatsby new` what features you want to add to your site, and `gatsby new` will automatically configure them for you. It's a much quicker way to set up new projects.
 
@@ -194,7 +196,7 @@ To start up your development server, do the following:
 cd my-first-gatsby-site
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Tip:** Whenever you want to run any commands for your site, you need to be in the context for that site. That is, your command line needs to be pointed at the directory where your site's code lives.
 
@@ -206,7 +208,7 @@ cd my-first-gatsby-site
 gatsby develop
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 If you weren't able to install the Gatsby command line interface globally, you can start your development server using the following command instead:
 
@@ -235,9 +237,9 @@ schema
 
 And there it is: your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at `http://localhost:8000/` for as long as your development server is running. (That’s the process you started by running the `gatsby develop` command.) To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (`ctrl-c`). To start it again, run `gatsby develop` again!
+You'll be able to visit the site locally at `http://localhost:8000/` for as long as your development server is running. (That's the process you started by running the `gatsby develop` command.) To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (`ctrl-c`). To start it again, run `gatsby develop` again!
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** If you are using VM setup like vagrant and/or would like to listen on your local IP address, run `gatsby develop --host=0.0.0.0`. Now, the development server listens on both `http://localhost` and your local IP.
 
@@ -263,7 +265,7 @@ GitHub is a website that many developers use to back up and share their code onl
    git push -u origin main
    ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Using GitHub for the first time?**
 
@@ -291,7 +293,7 @@ To connect your code on GitHub to your Gatsby Cloud account, do the following:
 
 1. If this is your first time connecting GitHub to Gatsby Cloud, you'll need to give Gatsby Cloud permission to access your GitHub account.
 
-  <Announcement style={{marginBottom: "1.5rem"}}>
+  <Announcement>
 
     **Note:** If you are part of more than one GitHub organization, you will need to first select the organization with which the repository resides at this step before selecting the repository itself.
 
@@ -301,7 +303,7 @@ To connect your code on GitHub to your Gatsby Cloud account, do the following:
 
    ![The GitHub permissions page, asking whether you want to give Gatsby Cloud access to your repos. The "All repositories" option is selected.](./03-github-gatsby-cloud-permissions.png)
 
-1. Now, when you go back to the Gatsby Cloud window, the repository list should contain your GitHub repository. Select it.
+1. Now, when you go back to the Gatsby Cloud window, the repository list should contain your GitHub repository. Select it by clicking on **"Import"**.
 
    ![The "Select a Repository" dropdown in Gatsby Cloud lists the "my-first-gatsby-site" GitHub repository.](04-select-repository.png)
 
@@ -309,7 +311,7 @@ To connect your code on GitHub to your Gatsby Cloud account, do the following:
 
    ![The new fields. "Base Branch" is set to "main", "Base Directory" is set to "/", and "Site Name" is set to "my-first-gatsby-site-main".](./05-add-site-details.png)
 
-1. Gatsby Cloud will ask you if you want to add any integrations to your site. For future projects, this might be useful if you want to use a CMS. Gatsby Cloud will also ask if you want to add any environment variables. Again, this may useful for future projects, but for now, scroll past and click the **"Build Site"** button.
+1. Gatsby Cloud will ask you if you want to add any integrations to your site. For future projects, this might be useful if you want to use a CMS. Gatsby Cloud will also ask if you want to add any environment variables. Again, this may be useful for future projects, but for now, scroll past and click the **"Build Site"** button.
 
    ![The "Integrations" tab of the "Add a site" screen.](./06-integrations-and-environment-variables.png)
 
@@ -321,7 +323,7 @@ You did it! Your Gatsby site is now online! 👏
 
 Every time you push a new change to the main branch of your GitHub repo, Gatsby Cloud will see the changes and automatically start a build for the new version of your site.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Tip:** There will be a unique URL for each build (like `https://build-49535320-b3ae-4761-bbeb-f8f7fa07e0fc.gtsb.io/`), and a URL that always has the latest build (like `my-first-gatsby-site-main.gatsbyjs.io`). You'll mostly want to share the human-readable URL, so that people can always see the most up-to-date version of your site. But in some cases (like when you're trying to debug a specific build of your site) it can be helpful to use the unique build URL.
 
@@ -352,7 +354,7 @@ First, you write the code for your Gatsby site from your computer. When you're r
 - Gatsby Cloud is an infrastructure platform specifically optimized for building, deploying, and hosting Gatsby sites.
   - When you push a new commit to the `main` branch of the GitHub repository for your site, Gatsby Cloud will detect the changes, rebuild a new version of your site, and then redeploy it.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

@@ -1,22 +1,27 @@
 {
   "name": "gatsby-graphiql-explorer",
-  "version": "2.17.0",
+  "version": "3.4.0-next.0",
   "description": "GraphiQL IDE with custom features for Gatsby users",
   "main": "index.js",
   "scripts": {
-    "build:app": "webpack --config ./src/app/webpack.config.js",
-    "build:babel": "babel src/index.js --out-dir . --ignore \"**/__tests__\"",
-    "build": "npm-run-all --npm-path npm --parallel build:app build:babel",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:app": "npm run build:app -- --watch",
-    "watch:babel": "npm run build:babel -- --watch",
-    "watch": "npm-run-all --npm-path npm --parallel watch:app watch:babel"
+    "build": "webpack --config ./src/webpack.config.js",
+    "watch": "npm run build -- --watch",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "clean": "del-cli dist/*"
   },
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "graphiql",
+    "gatsby-graphiql"
   ],
-  "author": "",
+  "files": [
+    "dist/*",
+    "index.js"
+  ],
+  "author": "Michal Piechowiak <misiek.piechowiak@gmail.com>",
+  "contributors": [
+    "LekoArts"
+  ],
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -27,35 +32,33 @@
     "directory": "packages/gatsby-graphiql-explorer"
   },
   "license": "MIT",
-  "dependencies": {
-    "@babel/runtime": "^7.15.4"
-  },
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-class-properties": "^7.14.0",
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.4",
     "@babel/preset-react": "^7.14.0",
+    "@graphiql/plugin-code-exporter": "^0.1.0",
+    "@graphiql/plugin-explorer": "^0.1.10",
+    "@graphiql/react": "^0.13.7",
+    "@graphiql/toolkit": "^0.8.0",
     "babel-loader": "^8.2.2",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "core-js": "^3.22.3",
     "cross-env": "^7.0.3",
     "css-loader": "^6.2.0",
-    "graphiql": "^1.4.0",
-    "graphiql-code-exporter": "^3.0.3",
-    "graphiql-explorer": "^0.6.3",
+    "del-cli": "^5.0.0",
+    "graphiql": "^2.0.13",
     "html-webpack-plugin": "^5.3.2",
     "npm-run-all": "4.1.5",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "regenerator-runtime": "^0.13.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "regenerator-runtime": "^0.13.10",
     "style-loader": "^3.2.1",
     "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0",
-    "whatwg-fetch": "^3.6.2"
+    "webpack-cli": "^4.8.0"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }

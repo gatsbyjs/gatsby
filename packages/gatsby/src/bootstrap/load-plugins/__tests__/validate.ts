@@ -79,7 +79,10 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
+    const result = await collatePluginAPIs({
+      currentAPIs: apis,
+      flattenedPlugins,
+    })
     expect(result).toMatchSnapshot()
   })
 
@@ -106,7 +109,10 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
+    const result = await collatePluginAPIs({
+      currentAPIs: apis,
+      flattenedPlugins,
+    })
     expect(result).toMatchSnapshot()
   })
 })

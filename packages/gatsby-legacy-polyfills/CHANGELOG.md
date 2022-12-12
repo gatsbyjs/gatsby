@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@3.2.0/packages/gatsby-legacy-polyfills) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@3.1.0/packages/gatsby-legacy-polyfills) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@3.0.0/packages/gatsby-legacy-polyfills) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- update dependency @jridgewell/trace-mapping to ^0.3.17 for gatsby-legacy-polyfills [#36933](https://github.com/gatsbyjs/gatsby/issues/36933) ([58c37ea](https://github.com/gatsbyjs/gatsby/commit/58c37ea9e274a1b08d5ad8bd8a5c29f692a65e0a))
+
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.24.0/packages/gatsby-legacy-polyfills) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.23.0/packages/gatsby-legacy-polyfills) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-legacy-polyfills [#35547](https://github.com/gatsbyjs/gatsby/issues/35547) ([856b695](https://github.com/gatsbyjs/gatsby/commit/856b69553b7775752a8c6befa952693c74478869))
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.22.0/packages/gatsby-legacy-polyfills) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.21.0/packages/gatsby-legacy-polyfills) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.20.0/packages/gatsby-legacy-polyfills) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.19.0/packages/gatsby-legacy-polyfills) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Publish some packages as ESM & CJS [#36012](https://github.com/gatsbyjs/gatsby/issues/36012) ([5bd3063](https://github.com/gatsbyjs/gatsby/commit/5bd3063a1e72c6f98447bfac2bf767cca781330b))
+
+## [2.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.18.0/packages/gatsby-legacy-polyfills) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.17.0/packages/gatsby-legacy-polyfills) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
 ## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.16.0/packages/gatsby-legacy-polyfills) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

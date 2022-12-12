@@ -1,3 +1,9 @@
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 describe(`Client only paths`, () => {
   const routes = [
     {
@@ -75,6 +81,11 @@ describe(`Client only paths`, () => {
   describe(`work on first load`, () => {
     routes.forEach(({ path, marker, label, skipTestingExactLocation }) => {
       it(label, () => {
+        cy.on('uncaught:exception', (err, runnable) => {
+          if (err.message.includes('Minified React error')) {
+            return false
+          }
+        })
         cy.visit(path).waitForRouteChange()
         cy.getTestElement(`dom-marker`).contains(marker)
 

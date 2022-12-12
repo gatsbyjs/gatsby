@@ -6,7 +6,6 @@
   "dependencies": {
     "@contentful/rich-text-types": "^14.1.2",
     "gatsby": "next",
-    "gatsby-image": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-source-contentful": "next",
@@ -15,25 +14,26 @@
     "gatsby-transformer-sqip": "next",
     "modern-normalize": "^1.0.0",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "slugify": "^1.5.0"
   },
   "devDependencies": {
     "@cypress/snapshot": "^2.1.7",
     "cross-env": "^7.0.3",
-    "cypress": "^9.5.4",
+    "cypress": "^9.7.0",
     "cypress-image-snapshot": "^4.0.1",
-    "gatsby-cypress": "latest",
+    "gatsby-cypress": "next",
     "prettier": "^2.6.2",
     "srcset": "^5.0.0",
-    "start-server-and-test": "^1.7.1"
+    "start-server-and-test": "^1.14.0"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "scripts": {
+    "clean": "gatsby clean",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",

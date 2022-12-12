@@ -1,6 +1,6 @@
 {
   "name": "gatsby-sharp",
-  "version": "0.11.0",
+  "version": "1.4.0-next.0",
   "sideEffects": false,
   "keywords": [
     "gatsby",
@@ -14,8 +14,8 @@
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-sharp#readme",
   "dependencies": {
-    "@types/sharp": "^0.30.0",
-    "sharp": "^0.30.3"
+    "@types/sharp": "^0.31.0",
+    "sharp": "^0.31.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.5",
@@ -23,10 +23,10 @@
     "babel-plugin-replace-ts-export-assignment": "^0.0.2",
     "cross-env": "^7.0.3",
     "npm-run-all": "4.1.5",
-    "typescript": "^4.7.2"
+    "typescript": "^4.9.3"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
@@ -35,9 +35,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-file dist/index.js --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "build": "babel src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
     "prepare": "cross-env NODE_ENV=production npm-run-all --npm-path npm -s build typegen",
-    "watch": "babel -w src --out-file dist/index.js --ignore \"**/__tests__\" --extensions \".ts,.js\""
+    "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\""
   }
 }

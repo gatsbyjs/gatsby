@@ -1,22 +1,24 @@
 {
   "name": "gatsby-worker",
   "description": "Utility to create worker pools",
-  "version": "1.17.0",
+  "version": "2.4.0-next.0",
   "author": "Michal Piechowiak<misiek.piechowiak@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/core": "^7.15.5",
-    "@babel/runtime": "^7.15.4"
+    "@babel/runtime": "^7.15.4",
+    "fs-extra": "^10.0.0",
+    "signal-exit": "^3.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/register": "^7.15.3",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.2"
+    "typescript": "^4.9.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-worker#readme",
   "keywords": [
@@ -37,6 +39,6 @@
     "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }

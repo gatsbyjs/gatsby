@@ -3,6 +3,112 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.2.0/packages/gatsby-source-shopify) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- Fine-grained errors with type/category [#37070](https://github.com/gatsbyjs/gatsby/issues/37070) ([0c2b51c](https://github.com/gatsbyjs/gatsby/commit/0c2b51cac9b644df21d2b816dc5fa5c37bd349d4))
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+
+## [8.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.1.0/packages/gatsby-source-shopify) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [8.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.0.0/packages/gatsby-source-shopify) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+
+## [7.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.13.0/packages/gatsby-source-shopify) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [7.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.12.1/packages/gatsby-source-shopify) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.12.0/packages/gatsby-source-shopify) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-source-shopify [#34363](https://github.com/gatsbyjs/gatsby/issues/34363) ([afba8ca](https://github.com/gatsbyjs/gatsby/commit/afba8ca46742b0e8255aa935417a701386f5972f))
+
+## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.11.0/packages/gatsby-source-shopify) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [7.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.10.1/packages/gatsby-source-shopify) (2022-08-18)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.10.0/packages/gatsby-source-shopify) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Features
+
+- Add query runtime warning for CI environments [#36142](https://github.com/gatsbyjs/gatsby/issues/36142) ([e90448f](https://github.com/gatsbyjs/gatsby/commit/e90448fbd204c3e3725938ab6af9fc3260617a07))
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+
+## [7.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.9.0/packages/gatsby-source-shopify) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Features
+
+- Add query runtime warning for CI environments [#36142](https://github.com/gatsbyjs/gatsby/issues/36142) [#36296](https://github.com/gatsbyjs/gatsby/issues/36296) ([a6ff9e9](https://github.com/gatsbyjs/gatsby/commit/a6ff9e91978a17c2d4f39ca0d4173b5e37153bab))
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [7.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.8.0/packages/gatsby-source-shopify) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [7.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.7.1/packages/gatsby-source-shopify) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [7.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.7.0/packages/gatsby-source-shopify) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- update dependency prettier to ^2.7.1 [#35542](https://github.com/gatsbyjs/gatsby/issues/35542) ([fac7cea](https://github.com/gatsbyjs/gatsby/commit/fac7ceaad3a7ac8d4b8b56cf186b81d76a4b0cf5))
+
+## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.6.0/packages/gatsby-source-shopify) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [7.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.5.1/packages/gatsby-source-shopify) (2022-06-08)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.5.0/packages/gatsby-source-shopify) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

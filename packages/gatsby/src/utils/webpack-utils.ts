@@ -13,7 +13,7 @@ import { getBrowsersList } from "./browserslist"
 import ESLintPlugin from "eslint-webpack-plugin"
 import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
-import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import { getPublicPath } from "./get-public-path"
 import {
   GatsbyWebpackVirtualModules,
   VIRTUAL_MODULES_BASE_PATH,
@@ -38,7 +38,7 @@ type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
   external?: RuleFactory<T>
 }
 
-type PluginFactory = (...args: any) => WebpackPluginInstance
+type PluginFactory = (...args: any) => WebpackPluginInstance | null
 
 type BuiltinPlugins = typeof builtinPlugins
 
@@ -183,6 +183,9 @@ export const createWebpackUtils = (
 
   const isSSR = stage.includes(`html`)
   const { config } = store.getState()
+  const { assetPrefix, pathPrefix } = config
+
+  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
   const makeExternalOnly =
     (original: RuleFactory) =>
@@ -268,7 +271,7 @@ export const createWebpackUtils = (
         modulesOptions = {
           auto: undefined,
           namedExport: true,
-          localIdentName: `[name]--[local]--[hash:base64:5]`,
+          localIdentName: `[name]--[local]--[hash:hex:5]`,
           exportLocalsConvention: `dashesOnly`,
           exportOnlyLocals: isSSR,
         }
@@ -430,7 +433,7 @@ export const createWebpackUtils = (
           )
         },
         type: `javascript/auto`,
-        use: ({ issuer }): Array<RuleSetUseItem> => [
+        use: ({ resourceQuery, issuer }): Array<RuleSetUseItem> => [
           // If a JS import comes from async-requires, assume it is for a page component.
           // Using `issuer` allows us to avoid mutating async-requires for this case.
           //
@@ -445,6 +448,7 @@ export const createWebpackUtils = (
             configFile: true,
             compact: PRODUCTION,
             isPageTemplate: /async-requires/.test(issuer),
+            resourceQuery,
           }),
         ],
       }
@@ -782,16 +786,15 @@ export const createWebpackUtils = (
     plugins.ignore({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ })
 
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
-    new GatsbyWebpackStatsExtractor()
+    new GatsbyWebpackStatsExtractor(publicPath)
 
-  plugins.eslintGraphqlSchemaReload =
-    (): GatsbyWebpackEslintGraphqlSchemaReload =>
-      new GatsbyWebpackEslintGraphqlSchemaReload()
+  // TODO: remove this in v5
+  plugins.eslintGraphqlSchemaReload = (): null => null
 
   plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
     new GatsbyWebpackVirtualModules()
 
-  plugins.eslint = (schema: GraphQLSchema): WebpackPluginInstance => {
+  plugins.eslint = (): WebpackPluginInstance => {
     const options = {
       extensions: [`js`, `jsx`],
       exclude: [
@@ -799,7 +802,7 @@ export const createWebpackUtils = (
         `/bower_components/`,
         VIRTUAL_MODULES_BASE_PATH,
       ],
-      ...eslintConfig(schema, config.jsxRuntime === `automatic`),
+      ...eslintConfig(config.jsxRuntime === `automatic`),
     }
     // @ts-ignore
     return new ESLintPlugin(options)

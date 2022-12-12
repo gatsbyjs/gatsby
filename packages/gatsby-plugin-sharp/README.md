@@ -20,39 +20,34 @@ of PNGs then it can significantly reduce build times.
 
 ## Install
 
-`npm install gatsby-plugin-sharp`
+```shell
+npm install gatsby-plugin-sharp
+```
 
 ## How to use
 
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-sharp`,
-    options: {
-      // Defaults used for gatsbyImageData and StaticImage
-      defaults: {},
-      // Set to false to allow builds to continue on image errors
-      failOnError: true,
-      // deprecated options and their defaults:
-      base64Width: 20,
-      forceBase64Format: ``, // valid formats: png,jpg,webp
-      useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
-      stripMetadata: true,
-      defaultQuality: 50,
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        // Defaults used for gatsbyImageData and StaticImage
+        defaults: {},
+        // Relates to "options.failOn" in https://sharp.pixelplumbing.com/api-constructor#parameters
+        failOn: `warning`,
+      },
     },
-  },
-]
+  ]
+}
 ```
 
 ## Options
 
-- `defaults`: default values used for `gatsbyImageData` and `StaticImage` from [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image).
+- `defaults`: Default values used for `gatsbyImageData` and `StaticImage` from [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image).
   Available options are: `formats`,`placeholder`,`quality`,`breakpoints`,`backgroundColor`,`tracedSVGOptions`,`blurredOptions`,`jpgOptions`,`pngOptions`,`webpOptions`,`avifOptions`.
   For details of these, see [the reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
-- `failOnError`: default = `true`. By default builds will fail if there is a corrupted image. Set to false to continue the build on error. The image will return `undefined`.
-
-Other options are deprecated, and should only be used for the legacy `fixed` and `fluid` functions.
+- `failOn`: default = `warning`. By default, builds will fail if sharp finds an image with corrupted pixel values. When setting `failOn` to `none` the image will return `undefined` instead. You can customize this option, see [`options.failOn`](https://sharp.pixelplumbing.com/api-constructor#parameters). Images with corrupt image headers/metadata will always fail, regardless of this setting.
 
 ## Methods
 
@@ -213,8 +208,8 @@ Rotate the image (after cropping). See Sharp's [rotate][7].
 
 #### grayscale
 
-Uses Sharp's [greyscale][8] to convert the source image to 8-bit greyscale, 256
-shades of grey, e.g.
+Uses Sharp's [grayscale][8] to convert the source image to 8-bit grayscale, 256
+shades of gray, e.g.
 
 ```graphql
 allImageSharp {
@@ -285,67 +280,9 @@ quoting the Sharp documentation:
 > <a href="https://en.wikipedia.org/wiki/Alpha_compositing">premultiplication</a>
 > will occur.
 
-#### tracedSVG
+### Setting sharp's level of sensitivity to invalid images
 
-Generates a traced SVG of the image (see [the original GitHub issue][9]) and
-returns the SVG as "[optimized URL-encoded][10]" `data:` URI. It used in
-[gatsby-image](/plugins/gatsby-image/) to provide an
-alternative to the default inline base64 placeholder image.
-
-Uses [node-potrace][11] and [SVGO][12] under the hood. Default settings for
-node-potrace:
-
-```javascript
-  {
-    color: `lightgray`,
-    optTolerance: 0.4,
-    turdSize: 100,
-    turnPolicy: TURNPOLICY_MAJORITY,
-  }
-```
-
-All [node-potrace `Potrace` parameters][13] are exposed and can be set via the
-`traceSVG` argument:
-
-```javascript
-fixed(
-  traceSVG: {
-    color: "#f00e2e"
-    turnPolicy: TURNPOLICY_MINORITY
-    blackOnWhite: false
-  }
-) {
-  src
-  srcSet
-  tracedSVG
-}
-```
-
-### Setting a default quality
-
-You can pass a default image quality to `sharp` by setting the `defaultQuality` option.
-
-### Using MozJPEG
-
-You can opt-in to use [MozJPEG][16] for jpeg-encoding. MozJPEG provides even
-better image compression than the default encoder used in `gatsby-plugin-sharp`.
-However, when using MozJPEG the build time of your Gatsby project will increase
-significantly.
-
-To enable MozJPEG, you can set the `useMozJpeg` plugin option to `true` in
-`gatsby-config.js`.
-
-For backwards compatible reasons, if `useMozJpeg` is not defined in the plugin
-options, the [environment variable](/docs/environment-variables/#environment-variables)
-`GATSBY_JPEG_ENCODER` acts as a fallback if set to `MOZJPEG`:
-
-```shell
-GATSBY_JPEG_ENCODER=MOZJPEG
-```
-
-### Allow build to continue on image processing error
-
-By default, the build will fail when it encounters an error while processing an image. You can change this so that it continues the build process by setting the plugin option `failOnError` to `false`. Sharp will still throw an error and display it in the console as a GraphQL error, but it will not exit the process. It is important to note that any images that would have otherwise failed will not be accessible via `childImageSharp` until the underlying issue with the image is addressed.
+By default, the build will fail when sharp encounters an error while processing an image. You can change parts of this behavior by changing the `failOn` setting to `none`. In that case sharp will then ignore any errors relating to the pixel values/file structure of your file. However, if your image has corrupt image headers/metadata the build will still fail. It is important to note that any images that would have otherwise failed will not be accessible via `childImageSharp` until the underlying issue with the image is addressed.
 
 ### EXIF and ICC metadata
 

@@ -591,6 +591,17 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
           ],
         `),
       }),
+    catchLinks: Joi.boolean()
+      .default(true)
+      .allow(null)
+      .description(
+        `Turns on/off an automatically included copy of gatsby-plugin-catch-links which is used to catch anchor tags in html fields to perform client-side routing instead of full page refreshes.`
+      )
+      .meta({
+        example: wrapOptions(`
+          catchLinks: false,
+        `),
+      }),
     html: Joi.object({
       useGatsbyImage: Joi.boolean()
         .default(true)
@@ -767,6 +778,20 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       MediaItem: Joi.object({
+        excludeFieldNames: Joi.array()
+          .items(Joi.string())
+          .allow(null)
+          .allow(false)
+          .description(`Excludes fields on the MediaItem type by field name.`)
+          .meta({
+            example: wrapOptions(`
+            type: {
+              MediaItem: {
+                excludeFieldNames: [\`dateGmt\`, \`parent\`],
+              },
+            },
+          `),
+          }),
         placeholderSizeName: Joi.string()
           .default(`gatsby-image-placeholder`)
           .description(

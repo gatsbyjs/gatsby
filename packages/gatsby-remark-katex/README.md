@@ -5,7 +5,9 @@
 
 ## Install
 
-`npm install gatsby-transformer-remark gatsby-remark-katex katex`
+```shell
+npm install gatsby-transformer-remark gatsby-remark-katex katex
+```
 
 ## How to use
 

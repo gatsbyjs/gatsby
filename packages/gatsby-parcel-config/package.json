@@ -1,7 +1,7 @@
 {
   "name": "gatsby-parcel-config",
   "main": "lib/index.json",
-  "version": "0.8.0",
+  "version": "1.4.0-next.0",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parcel-config#readme",
   "description": "A minimal Parcel config for use in Gatsby",
   "repository": {
@@ -14,43 +14,21 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.2.0",
-    "@parcel/bundler-default": "2.6.0",
-    "@parcel/compressor-raw": "2.6.0",
-    "@parcel/namer-default": "2.6.0",
-    "@parcel/optimizer-terser": "2.6.0",
-    "@parcel/packager-js": "2.6.0",
-    "@parcel/packager-raw": "2.6.0",
-    "@parcel/reporter-dev-server": "2.6.0",
-    "@parcel/resolver-default": "2.6.0",
-    "@parcel/runtime-browser-hmr": "2.6.0",
-    "@parcel/runtime-js": "2.6.0",
-    "@parcel/runtime-react-refresh": "2.6.0",
-    "@parcel/runtime-service-worker": "2.6.0",
-    "@parcel/transformer-js": "2.6.0",
-    "@parcel/transformer-json": "2.6.0",
-    "@parcel/transformer-raw": "2.6.0",
-    "@parcel/transformer-react-refresh-wrap": "2.6.0"
-  },
-  "parcelDependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.0.0-next.0",
-    "@parcel/optimizer-data-url": "2.6.0",
-    "@parcel/packager-raw-url": "2.6.0",
-    "@parcel/packager-ts": "2.6.0",
-    "@parcel/packager-xml": "2.6.0",
-    "@parcel/transformer-graphql": "2.6.0",
-    "@parcel/transformer-inline-string": "2.6.0",
-    "@parcel/transformer-jsonld": "2.6.0",
-    "@parcel/transformer-mdx": "2.6.0",
-    "@parcel/transformer-toml": "2.6.0",
-    "@parcel/transformer-typescript-types": "2.6.0",
-    "@parcel/transformer-webmanifest": "2.6.0",
-    "@parcel/transformer-worklet": "2.6.0",
-    "@parcel/transformer-xml": "2.6.0",
-    "@parcel/transformer-yaml": "2.6.0"
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "2.4.0-next.0",
+    "@parcel/bundler-default": "2.8.1",
+    "@parcel/compressor-raw": "2.8.1",
+    "@parcel/namer-default": "2.8.1",
+    "@parcel/optimizer-terser": "2.8.1",
+    "@parcel/packager-js": "2.8.1",
+    "@parcel/packager-raw": "2.8.1",
+    "@parcel/reporter-dev-server": "2.8.1",
+    "@parcel/resolver-default": "2.8.1",
+    "@parcel/runtime-js": "2.8.1",
+    "@parcel/transformer-js": "2.8.1",
+    "@parcel/transformer-json": "2.8.1"
   },
   "peerDependencies": {
-    "@parcel/core": "2.6.0"
+    "@parcel/core": "^2.0.0"
   },
   "scripts": {
     "version": "node ../../scripts/pin-version.js"

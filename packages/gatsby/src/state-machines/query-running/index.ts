@@ -10,6 +10,7 @@ import { queryActions } from "./actions"
 const PAGE_QUERY_ENQUEUING_TIMEOUT = 50
 
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
+  predictableActionArguments: true,
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
   on: {
@@ -92,6 +93,15 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       invoke: {
         src: `runPageQueries`,
         id: `running-page-queries`,
+        onDone: {
+          target: `runningSliceQueries`,
+        },
+      },
+    },
+    runningSliceQueries: {
+      invoke: {
+        src: `runSliceQueries`,
+        id: `running-slice-queries`,
         onDone: {
           target: `waitingForJobs`,
           actions: `flushPageData`,

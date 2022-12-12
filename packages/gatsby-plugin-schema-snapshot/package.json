@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-schema-snapshot",
-  "version": "3.17.0",
+  "version": "4.4.0-next.0",
   "main": "index.js",
   "license": "MIT",
   "keywords": [
@@ -20,6 +20,6 @@
     "@babel/runtime": "^7.15.4"
   },
   "peerDependencies": {
-    "gatsby": "^4.0.0-next"
+    "gatsby": "^5.0.0-next"
   }
 }

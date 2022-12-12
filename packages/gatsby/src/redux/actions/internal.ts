@@ -120,8 +120,8 @@ export const apiFinished = (
 }
 
 /**
- * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
- * components, it calls this to store the query with its component.
+ * When the query watcher extracts a "static" GraphQL query from useStaticQuery
+ * it calls this to store the query with its component.
  * @private
  */
 export const replaceStaticQuery = (
@@ -311,7 +311,7 @@ export const removeStaleJob = (
  */
 export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
   const result = gatsbyConfigSchema.validate(config || {})
-  const normalizedPayload: IGatsbyConfig = result.value
+  const normalizedPayload = result.value as IGatsbyConfig
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(

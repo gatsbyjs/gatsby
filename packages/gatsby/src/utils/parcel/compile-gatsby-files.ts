@@ -1,8 +1,11 @@
 import { Parcel } from "@parcel/core"
+import { LMDBCache, Cache } from "@parcel/cache"
+import path from "path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
-import { ensureDir, emptyDir, existsSync, remove } from "fs-extra"
+import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
 import telemetry from "gatsby-telemetry"
+import { isNearMatch } from "../is-near-match"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
@@ -25,7 +28,7 @@ function exponentialBackoff(retry: number): Promise<void> {
  * Construct Parcel with config.
  * @see {@link https://parceljs.org/features/targets/}
  */
-export function constructParcel(siteRoot: string): Parcel {
+export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
   return new Parcel({
     entries: [
       `${siteRoot}/${gatsbyFileRegex}`,
@@ -33,13 +36,14 @@ export function constructParcel(siteRoot: string): Parcel {
     ],
     defaultConfig: require.resolve(`gatsby-parcel-config`),
     mode: `production`,
+    cache,
     targets: {
       root: {
         outputFormat: `commonjs`,
         includeNodeModules: false,
-        sourceMap: false,
+        sourceMap: process.env.NODE_ENV === `development`,
         engines: {
-          node: `>= 14.15.0`,
+          node: _CFLAGS_.GATSBY_MAJOR === `5` ? `>= 18.0.0` : `>= 14.15.0`,
         },
         distDir: `${siteRoot}/${COMPILED_CACHE_DIR}`,
       },
@@ -57,14 +61,67 @@ export async function compileGatsbyFiles(
   retry: number = 0
 ): Promise<void> {
   try {
+    // Check for gatsby-node.jsx and gatsby-node.tsx (or other misnamed variations)
+    const files = await readdir(siteRoot)
+
+    let nearMatch = ``
+    const configName = `gatsby-node`
+
+    for (const file of files) {
+      if (nearMatch) {
+        break
+      }
+
+      const { name } = path.parse(file)
+      // Of course, allow valid gatsby-node files
+      if (
+        file === `gatsby-node.js` ||
+        file === `gatsby-node.mjs` ||
+        file === `gatsby-node.ts`
+      ) {
+        break
+      }
+
+      if (isNearMatch(name, configName, 3)) {
+        nearMatch = file
+      }
+    }
+
+    // gatsby-node is misnamed
+    if (nearMatch) {
+      const isTSX = nearMatch.endsWith(`.tsx`)
+      reporter.panic({
+        id: `10128`,
+        context: {
+          configName,
+          nearMatch,
+          isTSX,
+        },
+      })
+    }
+
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
     await ensureDir(distDir)
     await emptyDir(distDir)
 
     await exponentialBackoff(retry)
 
-    const parcel = constructParcel(siteRoot)
+    // for whatever reason TS thinks LMDBCache is some browser Cache and not actually Parcel's Cache
+    // so we force type it to Parcel's Cache
+    const cache = new LMDBCache(getCacheDir(siteRoot)) as unknown as Cache
+    const parcel = constructParcel(siteRoot, cache)
     const { bundleGraph } = await parcel.run()
+    let cacheClosePromise = Promise.resolve()
+    try {
+      // @ts-ignore store is public field on LMDBCache class, but public interface for Cache
+      // doesn't have it. There doesn't seem to be proper public API for this, so we have to
+      // resort to reaching into internals. Just in case this is wrapped in try/catch if
+      // parcel changes internals in future (closing cache is only needed when retrying
+      // so the if the change happens we shouldn't fail on happy builds)
+      cacheClosePromise = cache.store.close()
+    } catch (e) {
+      reporter.verbose(`Failed to close parcel cache\n${e.toString()}`)
+    }
 
     await exponentialBackoff(retry)
 
@@ -101,8 +158,15 @@ export async function compileGatsbyFiles(
           )
         }
 
-        // sometimes parcel cache gets in weird state
-        await remove(getCacheDir(siteRoot))
+        // sometimes parcel cache gets in weird state and we need to clear the cache
+        await cacheClosePromise
+
+        try {
+          await remove(getCacheDir(siteRoot))
+        } catch {
+          // in windows we might get "EBUSY" errors if LMDB failed to close, so this try/catch is
+          // to prevent EBUSY errors from potentially hiding real import errors
+        }
 
         await compileGatsbyFiles(siteRoot, retry + 1)
         return

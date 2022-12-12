@@ -662,7 +662,8 @@ export const replaceNodeHtmlImages = async ({
                   contentDigest: imageNode.modifiedGmt,
                 },
               },
-              helpers.actions
+              helpers.actions,
+              gatsbyStore
             )
           }
         } catch (e) {
@@ -775,17 +776,32 @@ const replaceFileLinks = async ({
     return nodeString
   }
 
-  const hrefMatches = execall(
-    /(\\"|\\'|\()([^'"()]*)(\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\))/gm,
-    nodeString
-  )
+  const hrefMatches = [
+    // match url pathnames in html fields, for ex /wp-content/uploads/2019/01/image.jpg
+    ...(execall(
+      /(\\"|\\'|\()([^'"()]*)(\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\))/gm,
+      nodeString
+    ) || []),
+    // match full urls in json fields, for ex https://example.com/wp-content/uploads/2019/01/image.jpg
+    ...(execall(
+      new RegExp(
+        `(\\"|\\'|\\()([^'"()]*)(${wpUrl}\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\\))`,
+        `gm`
+      ),
+      nodeString
+    ) || []),
+  ]
 
   if (hrefMatches.length) {
     // eslint-disable-next-line arrow-body-style
-    const mediaItemUrlsAndMatches = hrefMatches.map(matchGroup => ({
-      matchGroup,
-      url: `${wpUrl}${matchGroup.subMatches[2]}`,
-    }))
+    const mediaItemUrlsAndMatches = hrefMatches.map(matchGroup => {
+      const match = matchGroup.subMatches[2]
+      const url = match.startsWith(wpUrl) ? match : `${wpUrl}${match}`
+      return {
+        matchGroup,
+        url,
+      }
+    })
 
     const mediaItemUrls = mediaItemUrlsAndMatches
       .map(({ url }) => url)
@@ -834,7 +850,7 @@ const replaceFileLinks = async ({
           return null
         }
 
-        const [, hostname, path] = mediaItemMatchGroup?.subMatches
+        const [, hostname, path] = mediaItemMatchGroup.subMatches
 
         cacheCreatedFileNodeBySrc({
           node: mediaItemNode,

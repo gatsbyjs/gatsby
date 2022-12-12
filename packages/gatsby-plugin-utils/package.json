@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "3.11.0",
+  "version": "4.4.0-next.0",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "exports": {
@@ -47,33 +47,32 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@gatsbyjs/potrace": "^2.2.0",
+    "fastq": "^1.13.0",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.17.0",
-    "gatsby-sharp": "^0.11.0",
-    "graphql-compose": "^9.0.7",
+    "gatsby-core-utils": "^4.4.0-next.0",
+    "gatsby-sharp": "^1.4.0-next.0",
+    "graphql-compose": "^9.0.10",
     "import-from": "^4.0.0",
-    "joi": "^17.4.2",
-    "mime": "^3.0.0",
-    "mini-svg-data-uri": "^1.4.4",
-    "svgo": "^2.8.0"
+    "joi": "^17.7.0",
+    "mime": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3",
-    "msw": "^0.38.2",
+    "msw": "^0.49.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.2"
+    "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "gatsby": "^4.0.0-next"
+    "gatsby": "^5.0.0-next",
+    "graphql": "^16.0.0"
   },
   "files": [
     "dist/"
   ],
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }

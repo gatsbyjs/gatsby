@@ -2,7 +2,7 @@ describe(`client-side navigation to the new page`, () => {
   before(() => {
     cy.visit(`/`).waitForRouteChange()
     cy.exec(`npm run update -- --file src/pages/new-page.js`)
-    cy.wait(1000)
+    cy.wait(5000)
   })
 
   it(`can navigate to newly created page using link`, () => {

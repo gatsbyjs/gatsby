@@ -107,6 +107,18 @@ exports.mutateSchema = async () => {
       ) {
         clientMutationId
       }
+
+      addPageWithFullStaticFileUrl: createPage(
+        input: {
+          clientMutationId: "add-page-with-full-static-file-url"
+          authorId: 4
+          title: "inc page with full static file url"
+          content: "http://localhost:8001/wp-content/uploads/2020/08/file-sample_1MB.doc"
+          status: PUBLISH
+        }
+      ) {
+        clientMutationId
+      }
     }
   `)
 }

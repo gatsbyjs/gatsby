@@ -1,11 +1,11 @@
 {
   "name": "gatsby-codemods",
-  "version": "3.17.0",
+  "version": "4.4.0-next.0",
   "description": "A collection of codemod scripts for use with JSCodeshift that help migrate to newer versions of Gatsby.",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.tsx,.js\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.tsx,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
@@ -30,17 +30,18 @@
     "@babel/plugin-syntax-typescript": "^7.14.0",
     "@babel/runtime": "^7.15.4",
     "execa": "^5.1.1",
-    "graphql": "^15.8.0",
+    "graphql": "^16.6.0",
     "jscodeshift": "^0.12.0",
     "recast": "^0.20.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "@types/jscodeshift": "^0.11.5",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   },
   "bin": "./bin/gatsby-codemods.js"
 }

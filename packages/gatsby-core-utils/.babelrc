@@ -1,3 +1,10 @@
 {
-  "presets": [["babel-preset-gatsby-package"]]
+  "presets": [["babel-preset-gatsby-package"]],
+  "env": {
+    "modern": {
+      "presets": [["babel-preset-gatsby-package", {
+        "esm": true
+      }]]
+    }
+  }
 }

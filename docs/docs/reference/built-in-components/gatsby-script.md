@@ -118,7 +118,7 @@ import { Script, ScriptStrategy } from "gatsby"
 
 The `post-hydrate` strategy is the **default** loading strategy and will be used if you do not specificy a `strategy` attribute.
 
-The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](/docs/glossary/hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
+The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](/docs/conceptual/react-hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
 
 This can have negative implications for key web vital metrics like [Total Blocking Time](https://web.dev/tbt/). By leveraging the `<Script>` component with the `post-hydrate` strategy, you ensure that your script avoids interfering with your page reaching an interactive state, resulting in a better experience for your users.
 
@@ -150,14 +150,13 @@ import { Script } from "gatsby"
 <Script
   src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
   strategy="off-main-thread"
-  forward={[`gtag`]}
 />
-<Script id="gtag-config" strategy="off-main-thread">
+<Script id="gtag-config" strategy="off-main-thread" forward={[`gtag`]}>
   {`
-    window.dataLayer = window.dataLayer || []
-    window.gtag = function gtag() { window.dataLayer.push(arguments) }
-    gtag('js', new Date())
-    gtag('config', ${process.env.GTAG}, { send_page_view: false })
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
+    gtag('config', ${process.env.GTAG}, { page_path: location ? location.pathname + location.search + location.hash : undefined })
   `}
 </Script>
 ```
@@ -171,7 +170,7 @@ Gatsby will collect all `off-main-thread` scripts on a page, and automatically m
   src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
   strategy="off-main-thread"
   // highlight-next-line
-  forward={[`gtag`]}
+  forward={[`dataLayer.push`]}
 />
 ```
 
@@ -325,7 +324,10 @@ You may need to adjust your dev tools to the verbose log level in order to see t
 
 By leveraging [Partytown](https://partytown.builder.io), scripts that use the `off-main-thread` strategy must also be aware of the [limitations mentioned in the Partytown documentation](https://partytown.builder.io/trade-offs). While the strategy can be powerful, it may not be the best solution for all scenarios.
 
-In addition, the `off-main-thread` strategy does not support the `onLoad` and `onError` callbacks.
+In addition, there are other limitations that require upstream changes from Partytown to enable:
+
+- The `onLoad` and `onError` callbacks are not supported. See [discussion #199 in the Partytown repo](https://github.com/BuilderIO/partytown/discussions/199).
+- Scripts load only on server-side rendering (SSR) navigation (e.g. regular `<a>` tag navigation), and not on client-side rendering (CSR) navigation (e.g. Gatsby `<Link>` navigation). See [issue #74 in the Partytown repo](https://github.com/BuilderIO/partytown/issues/74).
 
 ## Usage in Gatsby SSR and Browser APIs
 

@@ -1,6 +1,6 @@
 {
-  "gatsby-plugin-google-analytics": {
-    "message": "Add the Google Analytics tracking script"
+  "gatsby-plugin-google-gtag": {
+    "message": "Add the Google gtag script for e.g. Google Analytics"
   },
   "gatsby-plugin-image": {
     "message": "Add responsive images",
@@ -16,10 +16,6 @@
       }
     }
   },
-  "gatsby-plugin-react-helmet": {
-    "message": "Add page meta tags with React Helmet",
-    "dependencies": ["react-helmet"]
-  },
   "gatsby-plugin-sitemap": { "message": "Add an automatic sitemap" },
   "gatsby-plugin-manifest": {
     "message": "Generate a manifest file",
@@ -30,7 +26,7 @@
   "gatsby-plugin-mdx": {
     "message": "Add Markdown and MDX support",
     "plugins": ["gatsby-source-filesystem:pages"],
-    "dependencies": ["@mdx-js/react@v1", "@mdx-js/mdx@v1"],
+    "dependencies": ["@mdx-js/react"],
     "options": {
       "gatsby-source-filesystem:pages": {
         "name": "pages",

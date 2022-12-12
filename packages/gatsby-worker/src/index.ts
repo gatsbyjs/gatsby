@@ -1,4 +1,7 @@
-import { fork, ChildProcess } from "child_process"
+import { fork } from "child_process"
+import fs from "fs-extra"
+import os from "os"
+import path from "path"
 
 import { TaskQueue } from "./task-queue"
 import {
@@ -82,7 +85,9 @@ class TaskInfo<T> {
 
 interface IWorkerInfo<T> {
   workerId: number
-  worker: ChildProcess
+  send: (msg: ParentMessageUnion) => void
+  kill: (signal?: NodeJS.Signals | number) => boolean
+  lastMessage: number
   exitedPromise: Promise<{
     code: number | null
     signal: NodeJS.Signals | null
@@ -131,6 +136,7 @@ export class WorkerPool<
   private idleWorkers: Set<IWorkerInfo<keyof WorkerModuleExports>> = new Set()
   private listeners: Array<(msg: MessagesFromChild, workerId: number) => void> =
     []
+  private counter = 0
 
   constructor(private workerPath: string, private options?: IWorkerOptions) {
     const single: Partial<WorkerPool<WorkerModuleExports>["single"]> = {}
@@ -138,7 +144,7 @@ export class WorkerPool<
 
     {
       // we don't need to retain these
-      const module: WorkerModuleExports = require(workerPath)
+      const module = require(workerPath)
       const exportNames = Object.keys(module) as Array<
         keyof WorkerModuleExports
       >
@@ -170,8 +176,14 @@ export class WorkerPool<
   }
 
   private startAll(): void {
+    this.counter = 0
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), `gatsby-worker`))
     const options = this.options
     for (let workerId = 1; workerId <= (options?.numWorkers ?? 1); workerId++) {
+      const workerInFlightsDumpLocation = path.join(
+        tmpDir,
+        `worker-${workerId}.json`
+      )
       const worker = fork(childWrapperPath, {
         cwd: process.cwd(),
         env: {
@@ -179,6 +191,7 @@ export class WorkerPool<
           ...(options?.env ?? {}),
           GATSBY_WORKER_ID: workerId.toString(),
           GATSBY_WORKER_MODULE_PATH: this.workerPath,
+          GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION: workerInFlightsDumpLocation,
         },
         // Suppress --debug / --inspect flags while preserving others (like --harmony).
         execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
@@ -186,28 +199,66 @@ export class WorkerPool<
       })
 
       let workerReadyResolve: () => void
+      let workerExitResolve: (arg: {
+        code: number | null
+        signal: NodeJS.Signals | null
+      }) => void
+
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
         workerId,
-        worker,
+        send: (msg: ParentMessageUnion): void => {
+          if (!worker.connected) {
+            return
+          }
+
+          worker.send(msg, undefined, undefined, error => {
+            if (error && worker.connected) {
+              throw error
+            }
+          })
+        },
+        kill: worker.kill.bind(worker),
         ready: new Promise<void>(resolve => {
           workerReadyResolve = resolve
         }),
+        lastMessage: 0,
         exitedPromise: new Promise(resolve => {
-          worker.on(`exit`, (code, signal) => {
-            if (workerInfo.currentTask) {
-              // worker exited without finishing a task
-              workerInfo.currentTask.reject(
-                new Error(`Worker exited before finishing task`)
-              )
-            }
-            // remove worker from list of workers
-            this.workers.splice(this.workers.indexOf(workerInfo), 1)
-            resolve({ code, signal })
-          })
+          workerExitResolve = resolve
         }),
       }
 
-      worker.on(`message`, (msg: ChildMessageUnion) => {
+      const workerProcessMessageHandler = (msg: ChildMessageUnion): void => {
+        if (!Array.isArray(msg)) {
+          // all gatsby-worker messages should be an array
+          // if it's not an array we skip it
+          return
+        } else if (msg[1] <= workerInfo.lastMessage) {
+          // this message was already handled, so skipping it
+          // this is specifically for special casing worker exits
+          // where we serialize "in-flight" IPC messages to fs
+          // and "replay" them here to ensure no messages are lost
+          // Trickiness is that while we write out in flight IPC messages
+          // to fs, those messages might actually still go through as regular
+          // ipc messages so we have to ensure we don't handle same message twice
+          return
+        } else if (msg[1] !== workerInfo.lastMessage + 1) {
+          // TODO: figure out IPC message order guarantees (or lack of them) - for now
+          // condition above relies on IPC messages being received in same order
+          // as they were sent via `process.send` in child process
+          // generally we expect messages we receive to be next one (lastMessage + 1)
+          // IF order is not guaranteed, then different strategy for de-duping messages
+          // is needed.
+          throw new Error(
+            `[gatsby-worker] Out of order message. Expected ${
+              workerInfo.lastMessage + 1
+            }, got ${msg[1]}.\n\nFull message:\n${JSON.stringify(
+              msg,
+              null,
+              2
+            )}.`
+          )
+        }
+        workerInfo.lastMessage = msg[1]
         if (msg[0] === RESULT) {
           if (!workerInfo.currentTask) {
             throw new Error(
@@ -217,7 +268,7 @@ export class WorkerPool<
           const task = workerInfo.currentTask
           workerInfo.currentTask = undefined
           this.checkForWork(workerInfo)
-          task.resolve(msg[1])
+          task.resolve(msg[2])
         } else if (msg[0] === ERROR) {
           if (!workerInfo.currentTask) {
             throw new Error(
@@ -225,18 +276,18 @@ export class WorkerPool<
             )
           }
 
-          let error = msg[4]
+          let error = msg[5]
 
           if (error !== null && typeof error === `object`) {
             const extra = error
 
-            const NativeCtor = global[msg[1]]
+            const NativeCtor = global[msg[2]]
             const Ctor = typeof NativeCtor === `function` ? NativeCtor : Error
 
-            error = new Ctor(msg[2])
+            error = new Ctor(msg[3])
             // @ts-ignore type doesn't exist on Error, but that's what jest-worker does for errors :shrug:
-            error.type = msg[1]
-            error.stack = msg[3]
+            error.type = msg[2]
+            error.stack = msg[4]
 
             for (const key in extra) {
               if (Object.prototype.hasOwnProperty.call(extra, key)) {
@@ -251,11 +302,39 @@ export class WorkerPool<
           task.reject(error)
         } else if (msg[0] === CUSTOM_MESSAGE) {
           for (const listener of this.listeners) {
-            listener(msg[1] as MessagesFromChild, workerId)
+            listener(msg[2] as MessagesFromChild, workerId)
           }
         } else if (msg[0] === WORKER_READY) {
           workerReadyResolve()
         }
+      }
+
+      worker.on(`message`, workerProcessMessageHandler)
+      worker.on(`exit`, async (code, signal) => {
+        if (await fs.pathExists(workerInFlightsDumpLocation)) {
+          const pendingMessages = await fs.readJSON(workerInFlightsDumpLocation)
+          if (Array.isArray(pendingMessages)) {
+            for (const msg of pendingMessages) {
+              workerProcessMessageHandler(msg)
+            }
+          }
+          try {
+            await fs.remove(workerInFlightsDumpLocation)
+          } catch {
+            // this is just cleanup, failing to delete this file
+            // won't cause
+          }
+        }
+
+        if (workerInfo.currentTask) {
+          // worker exited without finishing a task
+          workerInfo.currentTask.reject(
+            new Error(`Worker exited before finishing task`)
+          )
+        }
+        // remove worker from list of workers
+        this.workers.splice(this.workers.indexOf(workerInfo), 1)
+        workerExitResolve({ code, signal })
       })
 
       this.workers.push(workerInfo)
@@ -270,13 +349,13 @@ export class WorkerPool<
   end(): Array<Promise<number | null>> {
     const results = this.workers.map(async workerInfo => {
       // tell worker to end gracefully
-      const endMessage: ParentMessageUnion = [END]
+      const endMessage: ParentMessageUnion = [END, ++this.counter]
 
-      workerInfo.worker.send(endMessage)
+      workerInfo.send(endMessage)
 
       // force exit if worker doesn't exit gracefully quickly
       const forceExitTimeout = setTimeout(() => {
-        workerInfo.worker.kill(`SIGKILL`)
+        workerInfo.kill(`SIGKILL`)
       }, 1000)
 
       const exitResult = await workerInfo.exitedPromise
@@ -342,10 +421,11 @@ export class WorkerPool<
 
     const msg: ParentMessageUnion = [
       EXECUTE,
+      ++this.counter,
       taskInfo.functionName,
       taskInfo.args,
     ]
-    workerInfo.worker.send(msg)
+    workerInfo.send(msg)
   }
 
   private scheduleWork<T extends keyof WorkerModuleExports>(
@@ -402,8 +482,8 @@ export class WorkerPool<
       throw new Error(`There is no worker with "${workerId}" id.`)
     }
 
-    const poolMsg = [CUSTOM_MESSAGE, msg]
-    worker.worker.send(poolMsg)
+    const poolMsg: ParentMessageUnion = [CUSTOM_MESSAGE, ++this.counter, msg]
+    worker.send(poolMsg)
   }
 }
 

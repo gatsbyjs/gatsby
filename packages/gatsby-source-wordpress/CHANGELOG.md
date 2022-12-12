@@ -3,6 +3,165 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.2.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.3/packages/gatsby-source-wordpress) (2022-12-08)
+
+#### Bug Fixes
+
+- Add back nodeType field that was removed in last version [#37212](https://github.com/gatsbyjs/gatsby/issues/37212) [#37219](https://github.com/gatsbyjs/gatsby/issues/37219) ([815791a](https://github.com/gatsbyjs/gatsby/commit/815791a4fd4cf336acc898cd26b2e8768e5f24bc))
+
+### [7.2.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.2/packages/gatsby-source-wordpress) (2022-12-07)
+
+#### Chores
+
+- use wpgql 1.13 in itests [#37146](https://github.com/gatsbyjs/gatsby/issues/37146) [#37207](https://github.com/gatsbyjs/gatsby/issues/37207) ([4b31ecb](https://github.com/gatsbyjs/gatsby/commit/4b31ecb1160531c8de4ba26182a5753dffd56bb9))
+
+### [7.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.1/packages/gatsby-source-wordpress) (2022-12-06)
+
+#### Bug Fixes
+
+- WPGraphQL 1.13.0 compatibility [#37134](https://github.com/gatsbyjs/gatsby/issues/37134) [#37182](https://github.com/gatsbyjs/gatsby/issues/37182) ([b9d76e3](https://github.com/gatsbyjs/gatsby/commit/b9d76e3b2d53e95f9f8170202637371530385e26))
+
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.0/packages/gatsby-source-wordpress) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Features
+
+- MediaItem.excludeFieldNames / auto exclude interface types that have no fields [#37062](https://github.com/gatsbyjs/gatsby/issues/37062) ([0501ed3](https://github.com/gatsbyjs/gatsby/commit/0501ed3b02cec8e19953bbe5cb90766eed996823))
+
+#### Bug Fixes
+
+- Fine-grained errors with type/category [#37070](https://github.com/gatsbyjs/gatsby/issues/37070) ([0c2b51c](https://github.com/gatsbyjs/gatsby/commit/0c2b51cac9b644df21d2b816dc5fa5c37bd349d4))
+
+#### Chores
+
+- make duplicate node message clearer [#37077](https://github.com/gatsbyjs/gatsby/issues/37077) ([62e0e13](https://github.com/gatsbyjs/gatsby/commit/62e0e13bed091e5a66cc38582f557b1e4955ee07))
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.1.0/packages/gatsby-source-wordpress) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Chores
+
+- remove runApisInSteps and call runApiSteps for each gatsby-node api [#37039](https://github.com/gatsbyjs/gatsby/issues/37039) ([88b9dc5](https://github.com/gatsbyjs/gatsby/commit/88b9dc5243999e7d817292647216ca20e529db07))
+
+#### Other Changes
+
+- fix(gatsby-source-wordpress) pass store for auth [#37006](https://github.com/gatsbyjs/gatsby/issues/37006) ([5772595](https://github.com/gatsbyjs/gatsby/commit/57725954a2d35906daec2c521b2e0dd718639f22))
+
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.0.0/packages/gatsby-source-wordpress) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- check for camelCase single field name [#36817](https://github.com/gatsbyjs/gatsby/issues/36817) ([372345e](https://github.com/gatsbyjs/gatsby/commit/372345eedc1ed2625717fa7988a1174a93fb38ca))
+- exclude field name when set for \_\_all [#36840](https://github.com/gatsbyjs/gatsby/issues/36840) ([55d50a9](https://github.com/gatsbyjs/gatsby/commit/55d50a9120df0f32425efcda27d3cbb730f3bfe2))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- Remove HAS_REACT_18 check [#36850](https://github.com/gatsbyjs/gatsby/issues/36850) ([20ef7c1](https://github.com/gatsbyjs/gatsby/commit/20ef7c12ffa9fd48c763c913e70ef20bef8a68fc))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [6.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.24.0/packages/gatsby-source-wordpress) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Chores
+
+- Fix license link Fix [#36621](https://github.com/gatsbyjs/gatsby/issues/36621) ([67fa4b4](https://github.com/gatsbyjs/gatsby/commit/67fa4b48b2b986b3a0e82dd211bc79e679d4f3c2))
+
+### [6.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.23.1/packages/gatsby-source-wordpress) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.23.0/packages/gatsby-source-wordpress) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- match more urls wp on delta [#36474](https://github.com/gatsbyjs/gatsby/issues/36474) ([5302b7a](https://github.com/gatsbyjs/gatsby/commit/5302b7a29e12d2b1132d5852ed4ddc0d638443c4))
+- match full urls when replacing media item links to static [#36447](https://github.com/gatsbyjs/gatsby/issues/36447) ([dbbda9e](https://github.com/gatsbyjs/gatsby/commit/dbbda9e9224cff65a8d1fe8ca00a15d6a9eabe09))
+
+#### Chores
+
+- update dependency @types/semver to ^7.3.12 [#36510](https://github.com/gatsbyjs/gatsby/issues/36510) ([0b6e823](https://github.com/gatsbyjs/gatsby/commit/0b6e8237ddf50258c896a44a952ecd388963879c))
+
+### [6.22.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.22.1/packages/gatsby-source-wordpress) (2022-09-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.22.0/packages/gatsby-source-wordpress) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [6.21.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.21.1/packages/gatsby-source-wordpress) (2022-08-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.21.0/packages/gatsby-source-wordpress) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+- update dependency @types/semver to ^7.3.10 [#36027](https://github.com/gatsbyjs/gatsby/issues/36027) ([a529451](https://github.com/gatsbyjs/gatsby/commit/a5294515f966b336db6c910168bdc06897d2a42b))
+
+## [6.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.20.0/packages/gatsby-source-wordpress) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Features
+
+- use env var to disable catch links [#36141](https://github.com/gatsbyjs/gatsby/issues/36141) ([ff0a664](https://github.com/gatsbyjs/gatsby/commit/ff0a66475fedc9740cf8bf00c6ce6971679f94b4))
+
+## [6.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.19.0/packages/gatsby-source-wordpress) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Add retries to graphql requests [#35949](https://github.com/gatsbyjs/gatsby/issues/35949) ([48a64f6](https://github.com/gatsbyjs/gatsby/commit/48a64f6d9c8f920f86b58695c9eaff43d35f5f9c))
+
+### [6.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.18.1/packages/gatsby-source-wordpress) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.18.0/packages/gatsby-source-wordpress) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- always hydrate images and use the right parent element [#36002](https://github.com/gatsbyjs/gatsby/issues/36002) ([96c28bf](https://github.com/gatsbyjs/gatsby/commit/96c28bfb995382fc2e0adbfab98d773811fe6983))
+- update minor and patch dependencies for gatsby-source-wordpress [#35806](https://github.com/gatsbyjs/gatsby/issues/35806) ([40743d1](https://github.com/gatsbyjs/gatsby/commit/40743d1b3acd2b380594c0fe1990578dd9922f50))
+- update dependency prettier to ^2.7.1 [#35542](https://github.com/gatsbyjs/gatsby/issues/35542) ([fac7cea](https://github.com/gatsbyjs/gatsby/commit/fac7ceaad3a7ac8d4b8b56cf186b81d76a4b0cf5))
+
+## [6.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.17.0/packages/gatsby-source-wordpress) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) ([7a5b5c1](https://github.com/gatsbyjs/gatsby/commit/7a5b5c124cea2c448f110c487e81194344dedb7d))
+
+#### Refactoring
+
+- move option check within relevant function to ensure enforcement [#35827](https://github.com/gatsbyjs/gatsby/issues/35827) ([b653c7b](https://github.com/gatsbyjs/gatsby/commit/b653c7b32e8b0e82f581f1a4586a819999117734))
+
+### [6.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.16.1/packages/gatsby-source-wordpress) (2022-06-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.16.0/packages/gatsby-source-wordpress) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.2.0/packages/gatsby-dev-cli) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.1.0/packages/gatsby-dev-cli) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Chores
+
+- Repository Cleanup [#37035](https://github.com/gatsbyjs/gatsby/issues/37035) ([0fb0390](https://github.com/gatsbyjs/gatsby/commit/0fb0390ef41f771d21c3829e91cc3f683044b696))
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.0.0/packages/gatsby-dev-cli) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+- Upgrade to verdaccio v5 [#36649](https://github.com/gatsbyjs/gatsby/issues/36649) ([17a776d](https://github.com/gatsbyjs/gatsby/commit/17a776d269c8c459c00305ff7f9f05228b1f13e2))
+
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.24.0/packages/gatsby-dev-cli) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.23.0/packages/gatsby-dev-cli) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- adjust setup to 'just work' with npm 8.5 [#36498](https://github.com/gatsbyjs/gatsby/issues/36498) ([3f5e57c](https://github.com/gatsbyjs/gatsby/commit/3f5e57c6aa76fd766b45a831dda35a19d84770b2))
+
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.22.0/packages/gatsby-dev-cli) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.21.0/packages/gatsby-dev-cli) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.20.0/packages/gatsby-dev-cli) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.19.0/packages/gatsby-dev-cli) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.18.0/packages/gatsby-dev-cli) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- update dependency chokidar to ^3.5.3 [#34643](https://github.com/gatsbyjs/gatsby/issues/34643) ([9b308cb](https://github.com/gatsbyjs/gatsby/commit/9b308cb744047beeea3a5b2f500fbf5a8b8ef2d5))
+- update dependency got to ^11.8.5 for gatsby-dev-cli [#35799](https://github.com/gatsbyjs/gatsby/issues/35799) ([dcb1b7e](https://github.com/gatsbyjs/gatsby/commit/dcb1b7e45bfa84eeb3ed692bcb1e36354ad46c0c))
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.17.0/packages/gatsby-dev-cli) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.16.0/packages/gatsby-dev-cli) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

@@ -1,15 +1,27 @@
 {
   "name": "gatsby-core-utils",
-  "version": "3.17.0",
+  "version": "4.4.0-next.0",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
     "gatsby-core-utils"
   ],
   "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/*.js",
-    "./dist/*": "./dist/*.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.mjs",
+      "require": "./dist/*.js"
+    },
+    "./dist/*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.mjs",
+      "require": "./dist/*.js"
+    }
   },
   "typesVersions": {
     "*": {
@@ -23,6 +35,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -30,10 +43,16 @@
     "directory": "packages/gatsby-core-utils"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
+    "prebuild": "npm-run-all --npm-path npm clean",
+    "build": "npm-run-all --npm-path npm -s build:*",
+    "build:cjs": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
+    "build:mjs": "cross-env BABEL_ENV=modern babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\" --out-file-extension .mjs",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
-    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\""
+    "watch": "npm-run-all --npm-path npm -p watch:*",
+    "watch:cjs": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
+    "watch:mjs": "cross-env BABEL_ENV=modern babel -w src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\" --out-file-extension .mjs",
+    "clean": "del-cli dist/*"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -48,9 +67,9 @@
     "fastq": "^1.13.0",
     "file-type": "^16.5.3",
     "fs-extra": "^10.1.0",
-    "got": "^11.8.3",
+    "got": "^11.8.5",
     "import-from": "^4.0.0",
-    "lmdb": "2.5.2",
+    "lmdb": "2.7.1",
     "lock": "^1.1.0",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",
@@ -62,13 +81,15 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@types/ci-info": "2.0.0",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3",
+    "del-cli": "^5.0.0",
     "is-uuid": "^1.0.2",
-    "msw": "^0.38.2",
-    "typescript": "^4.7.2"
+    "msw": "^0.49.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.9.3"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }

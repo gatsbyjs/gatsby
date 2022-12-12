@@ -15,7 +15,9 @@ In the processing, it makes images responsive by:
 
 ## Install
 
-`npm install gatsby-remark-images gatsby-plugin-sharp`
+```shell
+npm install gatsby-remark-images gatsby-plugin-sharp
+```
 
 ## How to use
 
@@ -95,6 +97,9 @@ This plugin will support the following formats:
 
 - JPEG
 - PNG
+- WEBP
+- TIFF
+- AVIF
 
 Since [Sharp][5] is used for image processing, this plugin will not support GIFs or SVGs. If you would like to render these file types with the image markdown syntax, use the [`gatsby-remark-copy-linked-files`](https://www.gatsbyjs.com/plugins/gatsby-remark-copy-linked-files/) plugin. Do note with this it will load in the images, but won't use the features of [Sharp][5] such as the elastic container or the blur-up enhancements.
 

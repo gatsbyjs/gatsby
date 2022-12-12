@@ -1,7 +1,7 @@
 {
   "name": "@gatsbyjs/parcel-namer-relative-to-cwd",
   "main": "lib/index.js",
-  "version": "1.2.0",
+  "version": "2.4.0-next.0",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parcel-namer-relative-to-cwd#readme",
   "description": "Parcel namer that preserve directory structure to stabilize output and keep the hierarchy.",
   "author": "Michal Piechowiak <misiek.piechowiak@gmail.com>",
@@ -11,23 +11,21 @@
     "directory": "packages/gatsby-parcel-namer-relative-to-cwd"
   },
   "engines": {
-    "node": ">=14.15.0",
+    "node": ">=18.0.0",
     "parcel": "2.x"
   },
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.18.0",
-    "@parcel/plugin": "2.6.0",
-    "gatsby-core-utils": "^3.17.0"
+    "@parcel/namer-default": "2.8.1",
+    "@parcel/plugin": "2.8.1",
+    "gatsby-core-utils": "^4.4.0-next.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.18.0",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3"
-  },
-  "peerDependencies": {
-    "@parcel/namer-default": "2.5.0"
   },
   "scripts": {
     "build": "babel src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\"",

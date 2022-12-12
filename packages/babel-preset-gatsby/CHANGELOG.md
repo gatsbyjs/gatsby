@@ -3,6 +3,88 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@3.2.0/packages/babel-preset-gatsby) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@3.1.0/packages/babel-preset-gatsby) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@3.0.0/packages/babel-preset-gatsby) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.24.0/packages/babel-preset-gatsby) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.23.0/packages/babel-preset-gatsby) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- ci pipeline [#36544](https://github.com/gatsbyjs/gatsby/issues/36544) ([1125e58](https://github.com/gatsbyjs/gatsby/commit/1125e58731249257123d692522bed1a1ddc32383))
+
+### [2.22.1](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.22.1/packages/babel-preset-gatsby) (2022-09-08)
+
+#### Bug Fixes
+
+- ci pipeline [#36544](https://github.com/gatsbyjs/gatsby/issues/36544) [#36568](https://github.com/gatsbyjs/gatsby/issues/36568) ([8e10e1c](https://github.com/gatsbyjs/gatsby/commit/8e10e1c6dbf24f506e1572d9eff9c4a39348e789))
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.22.0/packages/babel-preset-gatsby) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.21.0/packages/babel-preset-gatsby) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.20.0/packages/babel-preset-gatsby) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.19.0/packages/babel-preset-gatsby) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Gatsby Head API [#35980](https://github.com/gatsbyjs/gatsby/issues/35980) ([40810c4](https://github.com/gatsbyjs/gatsby/commit/40810c46d18753ea10c8f60ebdabc164482e7983))
+
+### [2.18.1](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.18.1/packages/babel-preset-gatsby) (2022-07-12)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [2.18.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.18.0/packages/babel-preset-gatsby) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.17.0/packages/babel-preset-gatsby) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 ## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.16.0/packages/babel-preset-gatsby) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "2.17.0",
+  "version": "3.4.0-next.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "@babel/preset-react": "^7.14.0",
     "@babel/runtime": "^7.15.4",
     "babel-plugin-dynamic-import-node": "^2.3.3",
+    "babel-plugin-lodash": "^3.3.4",
     "core-js": "^3.22.3"
   },
   "devDependencies": {
@@ -35,7 +36,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   },
   "files": [
     "lib/*.js"

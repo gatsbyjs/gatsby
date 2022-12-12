@@ -1,6 +1,6 @@
 const { spawn } = require(`child_process`)
 const path = require(`path`)
-const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
+const { murmurhash } = require(`gatsby-core-utils/murmurhash`)
 const { readPageData } = require(`gatsby/dist/utils/page-data`)
 const { stripIgnoredCharacters } = require(`gatsby/graphql`)
 const fs = require(`fs-extra`)
@@ -329,6 +329,70 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
   })
+
+  describe(`/slices/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html stitched correctly and slice is up to date`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `Gatsby Slice Test (before edit)`
+          : `Gatsby Slice Test (after edit)`
+      )
+    })
+
+    it(`has correct html when prop is passed to slice component`, () => {
+      expect(htmlContent).toContain(`a-large-header`)
+    })
+  })
+
+  describe(`/slices/blog-1/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `blog-1`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html stitched correctly and slice is up to date`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `Gatsby Slice Test (before edit)`
+          : `Gatsby Slice Test (after edit)`
+      )
+    })
+
+    it("node change results in correct HTML for slice", () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `who lives and works in San Francisco building useful things(before edit)`
+          : `who lives and works in San Francisco building useful things(after edit)`
+      )
+    })
+  })
+
+  describe(`/slices/blog-2/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `blog-2`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`uses correct slice when a slice is changed in createPage mappping`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2 ? `Josh Johnson` : `Kyle Mathews`
+      )
+    })
+  })
 }
 
 function assertNodeCorrectness(runNumber) {
@@ -403,6 +467,15 @@ describe(`First run (baseline)`, () => {
     test(`are written correctly when imported`, async () => {
       const queries = [titleQuery, ...globalQueries]
       const pagePath = `/import/`
+
+      const { staticQueryHashes } = await readPageData(publicDir, pagePath)
+
+      expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+    })
+
+    test(`are written correctly when a re-exported query is imported`, async () => {
+      const queries = [titleQuery, ...globalQueries]
+      const pagePath = `/import-re-export/`
 
       const { staticQueryHashes } = await readPageData(publicDir, pagePath)
 
@@ -504,7 +577,7 @@ describe(`First run (baseline)`, () => {
     `stale-pages/stable`,
     `stale-pages/only-in-first`,
     `page-that-will-have-trailing-slash-removed`,
-    `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont`,
+    `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
   ]
   const unexpectedPages = [`stale-pages/only-not-in-first`]
 
@@ -605,13 +678,15 @@ describe(`Second run (different pages created, data changed)`, () => {
   const runNumber = 2
 
   const expectedPagesToBeGenerated = [
-    `/stale-pages/only-not-in-first`,
+    `/stale-pages/only-not-in-first/`,
     `/page-query-changing-data-but-not-id/`,
     `/page-query-dynamic-2/`,
     `/static-query-result-tracking/should-invalidate/`,
     `/page-query-template-change/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
     `/changing-context/`,
+    "/slices/blog-2/",
+    "/slices/",
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [
@@ -694,14 +769,32 @@ describe(`Second run (different pages created, data changed)`, () => {
   assertNodeCorrectness(runNumber)
 })
 
-describe(`Third run (js change, all pages are recreated)`, () => {
+describe(`Third run (js template change, just pages of that template are recreated, all pages are stitched)`, () => {
   const runNumber = 3
 
-  const expectedPages = [
-    `/stale-pages/only-not-in-first`,
-    `/page-query-dynamic-3/`,
+  const expectedPagesToRemainFromPreviousBuild = [
+    `/stale-pages/stable/`,
+    `/page-query-stable/`,
+    `/page-query-changing-but-not-invalidating-html/`,
+    `/static-query-result-tracking/stable/`,
+    `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
     `/page-that-will-have-trailing-slash-removed`,
-    `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont`,
+  ]
+
+  const expectedPagesToBeGenerated = [
+    // this is page that gets template change
+    `/gatsby-browser/`,
+    // those change happen on every build
+    `/page-query-dynamic-3/`,
+    `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
+    `/changing-context/`,
+  ]
+
+  const expectedPages = [
+    // this page should remain from first build
+    ...expectedPagesToRemainFromPreviousBuild,
+    // those pages should have been (re)created
+    ...expectedPagesToBeGenerated,
   ]
 
   const unexpectedPages = [
@@ -755,8 +848,14 @@ describe(`Third run (js change, all pages are recreated)`, () => {
       })
     })
 
-    it(`should recreate all html files`, () => {
+    it(`should recreate only some html files`, () => {
       expect(manifest[runNumber].generated.sort()).toEqual(
+        expectedPagesToBeGenerated.sort()
+      )
+    })
+
+    it(`should stitch fragments back in all html files (browser bundle changed)`, () => {
+      expect(manifest[runNumber].stitched.sort()).toEqual(
         manifest[runNumber].allPages.sort()
       )
     })
@@ -782,8 +881,10 @@ describe(`Third run (js change, all pages are recreated)`, () => {
     })
   })
 
-  // third run - we modify module used by both ssr and browser bundle - both bundles should change
-  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
+  // third run - we modify template used by both ssr and browser bundle - global, shared SSR won't change
+  // as the change is localized in just one of templates, which in Gatsby 5 doesn't invalidate all html
+  // files anymore
+  assertWebpackBundleChanges({ browser: true, ssr: false, runNumber })
 
   assertHTMLCorrectness(runNumber)
 

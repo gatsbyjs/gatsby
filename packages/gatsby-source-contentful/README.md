@@ -1,11 +1,5 @@
 # gatsby-source-contentful
 
-> Source plugin for pulling content types, entries, and assets into Gatsby from
-> Contentful spaces. It creates links between entry types and asset so they can be
-> queried in Gatsby using GraphQL.
->
-> An example site for using this plugin is at https://using-contentful.gatsbyjs.org/
-
 <details>
 <summary><strong>Table of contents</strong></summary>
 
@@ -552,7 +546,7 @@ function BlogPostTemplate({ data }) {
 }
 ```
 
-**Note:** The `contentful_id` field must be queried on rich-text references in order for the `renderNode` to receive the correct data.
+**Note:** The `contentful_id` and `__typename` fields must be queried on rich-text references in order for the `renderNode` to receive the correct data.
 
 ### Embedding an image in a Rich Text field
 
@@ -588,7 +582,7 @@ const options = {
         // asset is not an image
         return null
       }
-      return <GatsbyImage image={image} />
+      return <GatsbyImage image={gatsbyImageData} />
     },
   },
 }

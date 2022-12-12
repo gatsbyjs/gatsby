@@ -42,6 +42,7 @@
 - [searchAndReplace](#searchandreplace)
   - [searchAndReplace[].search](#searchandreplacesearch)
   - [searchAndReplace[].replace](#searchandreplacereplace)
+- [catchLinks](#catchlinks)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
   - [html.gatsbyImageOptions](#htmlgatsbyimageoptions)
@@ -63,6 +64,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.excludeFieldNames](#typemediaitemexcludefieldnames)
     - [type.MediaItem.placeholderSizeName](#typemediaitemplaceholdersizename)
     - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
@@ -871,6 +873,24 @@ The replacement string for each regex match.
 
 ```
 
+## catchLinks
+
+Turns on/off an automatically included copy of gatsby-plugin-catch-links which is used to catch anchor tags in html fields to perform client-side routing instead of full page refreshes.
+
+**Field type**: `Boolean`
+
+**Default value**: `true`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    catchLinks: false,
+  },
+}
+
+```
+
 ## html
 
 Options related to html field processing.
@@ -1231,6 +1251,26 @@ A special type which is applied to any non-node root fields that are ingested an
 ### type.MediaItem
 
 **Field type**: `Object`
+
+#### type.MediaItem.excludeFieldNames
+
+Excludes fields on the MediaItem type by field name.
+
+**Field type**: `Array`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    type: {
+      MediaItem: {
+        excludeFieldNames: [`dateGmt`, `parent`],
+      },
+    },
+  },
+}
+
+```
 
 #### type.MediaItem.placeholderSizeName
 

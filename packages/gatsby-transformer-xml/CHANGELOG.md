@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@5.2.0/packages/gatsby-transformer-xml) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@5.1.0/packages/gatsby-transformer-xml) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@5.0.0/packages/gatsby-transformer-xml) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- make unstable_shouldOnCreateNode stable [#36516](https://github.com/gatsbyjs/gatsby/issues/36516) ([90f9ab4](https://github.com/gatsbyjs/gatsby/commit/90f9ab47593ba7458fc5bc677c4b0282b30808c8))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.24.0/packages/gatsby-transformer-xml) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.23.0/packages/gatsby-transformer-xml) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.22.0/packages/gatsby-transformer-xml) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.21.0/packages/gatsby-transformer-xml) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.20.0/packages/gatsby-transformer-xml) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.19.0/packages/gatsby-transformer-xml) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.18.0/packages/gatsby-transformer-xml) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.17.0/packages/gatsby-transformer-xml) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-xml@4.16.0/packages/gatsby-transformer-xml) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

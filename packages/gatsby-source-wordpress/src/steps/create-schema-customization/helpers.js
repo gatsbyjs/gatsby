@@ -3,6 +3,49 @@ import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
 
+export const buildInterfacesListForType = type => {
+  let shouldAddNodeType = false
+
+  const list = (type?.interfaces || [])
+    .filter(interfaceType => {
+      const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
+
+      return (
+        !interfaceTypeSettings.exclude && fieldOfTypeWasFetched(interfaceType)
+      )
+    })
+    .map(({ name }) => {
+      if (name === `Node`) {
+        shouldAddNodeType = true
+      }
+      return buildTypeName(name)
+    })
+
+  if (shouldAddNodeType) {
+    list.push(`Node`)
+  }
+
+  return list
+}
+
+let ceIntCache = null
+const isWpgqlOneThirteenZeroPlus = () => {
+  if (ceIntCache !== null) {
+    return ceIntCache
+  }
+
+  const { typeMap } = store.getState().remoteSchema
+
+  const connectionInterface = !!typeMap.get(`Connection`)
+  const edgeInterface = !!typeMap.get(`Edge`)
+
+  const isWpgqlOneThirteenZeroPlus = connectionInterface || edgeInterface
+
+  ceIntCache = isWpgqlOneThirteenZeroPlus
+
+  return isWpgqlOneThirteenZeroPlus
+}
+
 /**
  * This function namespaces typenames with a prefix
  */
@@ -20,8 +63,20 @@ export const buildTypeName = name => {
     return name
   }
 
+  // Gatsby makes the same type, so we need to rename it to prevent conflicts
   if (name === `Filter`) {
     name = `FilterType`
+  }
+
+  if (
+    // Starting in WPGraphQL 1.13.0, Gatsby and WPGraphQL both generate types ending in these strings for every node type in the schema, so we need to rename types to prevent conflicts.
+    // for users on older versions of WPGraphQL we should try to keep the schema how it was before
+    isWpgqlOneThirteenZeroPlus() &&
+    (name.endsWith(`Connection`) ||
+      name.endsWith(`Edge`) ||
+      name.endsWith(`PageInfo`))
+  ) {
+    name += `Type`
   }
 
   if (name.startsWith(prefix)) {
@@ -32,31 +87,77 @@ export const buildTypeName = name => {
 }
 
 /**
- * Find the first type name of a Type definition pulled via introspection
- * @param {object} type
- */
-export const findTypeName = type =>
-  type?.name ||
-  type?.ofType?.name ||
-  type?.ofType?.ofType?.name ||
-  type?.ofType?.ofType?.ofType?.name
-
-/**
  * Find the first type kind of a Type definition pulled via introspection
  * @param {object} type
  */
-export const findTypeKind = type =>
-  type?.kind ||
-  type?.ofType?.kind ||
-  type?.ofType?.ofType?.kind ||
-  type?.ofType?.ofType?.ofType?.kind
+export const findTypeKind = type => {
+  if (type?.kind) {
+    return type.kind
+  }
+
+  if (type?.ofType) {
+    return findTypeKind(type.ofType)
+  }
+
+  return null
+}
+
+export const findNamedType = type => {
+  if (!type) {
+    return null
+  }
+
+  if (type.ofType) {
+    return findNamedType(type.ofType)
+  }
+
+  return type
+}
+
+export const findNamedTypeName = type => {
+  const namedType = findNamedType(type)
+
+  return namedType?.name
+}
 
 export const fieldOfTypeWasFetched = type => {
   const { fetchedTypes } = store.getState().remoteSchema
-  const typeName = findTypeName(type)
+  const typeName = findNamedTypeName(type)
   const typeWasFetched = !!fetchedTypes.get(typeName)
 
   return typeWasFetched
+}
+
+const implementingTypeCache = new Map()
+
+export const getTypesThatImplementInterfaceType = type => {
+  if (implementingTypeCache.has(type.name)) {
+    return implementingTypeCache.get(type.name)
+  }
+
+  const state = store.getState()
+  const { typeMap } = state.remoteSchema
+
+  const allTypes = typeMap.values()
+
+  const implementingTypes = Array.from(allTypes)
+    .filter(
+      ({ interfaces }) =>
+        interfaces &&
+        // find types that implement this interface type
+        interfaces.find(singleInterface => singleInterface.name === type.name)
+    )
+    .map(type => typeMap.get(type.name))
+    .filter(
+      type =>
+        type.kind !== `UNION` ||
+        // if this is a union type, make sure the union type has one or more member types, otherwise schema customization will throw an error
+        (!!type.possibleTypes && !!type.possibleTypes.length)
+    )
+
+  implementingTypeCache.set(type.name, implementingTypes)
+
+  return implementingTypes
 }
 
 const supportedScalars = [
@@ -72,7 +173,7 @@ const supportedScalars = [
 export const typeIsABuiltInScalar = type =>
   // @todo the next function and this one are redundant.
   // see the next todo on how to fix the issue. If that todo is resolved, these functions will be identical. :(
-  supportedScalars.includes(findTypeName(type))
+  supportedScalars.includes(findNamedTypeName(type))
 
 export const typeIsASupportedScalar = type => {
   if (findTypeKind(type) !== `SCALAR`) {
@@ -81,10 +182,10 @@ export const typeIsASupportedScalar = type => {
     return true
   }
 
-  return supportedScalars.includes(findTypeName(type))
+  return supportedScalars.includes(findNamedTypeName(type))
 }
 
-const typeSettingCache = {}
+const typeSettingCache = new Map()
 
 // retrieves plugin settings for the provided type
 export const getTypeSettingsByType = type => {
@@ -92,9 +193,13 @@ export const getTypeSettingsByType = type => {
     return {}
   }
 
-  const typeName = findTypeName(type)
+  const typeName = findNamedTypeName(type)
 
-  const cachedTypeSettings = typeSettingCache[typeName]
+  if (!typeName) {
+    return {}
+  }
+
+  const cachedTypeSettings = typeSettingCache.get(typeName)
 
   if (cachedTypeSettings) {
     return cachedTypeSettings
@@ -116,12 +221,12 @@ export const getTypeSettingsByType = type => {
   if (typeSettings) {
     const mergedSettings = merge(__allTypeSetting, typeSettings)
 
-    typeSettingCache[typeName] = mergedSettings
+    typeSettingCache.set(typeName, mergedSettings)
 
     return mergedSettings
   }
 
-  typeSettingCache[typeName] = __allTypeSetting
+  typeSettingCache.set(typeName, __allTypeSetting)
 
   return __allTypeSetting
 }
@@ -151,4 +256,45 @@ export const filterTypeDefinition = (
   }
 
   return typeDefinition
+}
+
+// we should be using graphql-js for this kind of thing, but unfortunately this project didn't use it from the beginning so it would be a huge lift to refactor to use it now. In the future we will be rewriting this plugin using a new Gatsby source plugin toolkit, and at that time we'll use graphql-js.
+// from introspection field types this will return a value like:
+// `String` or `[String]` or `[String!]!` or `[String]!` or `[[String]]` or `[[String]!]!` or `[[String]!]`, etc
+export const introspectionFieldTypeToSDL = fieldType => {
+  const openingTagsList = []
+  const closingTagsList = []
+
+  let reference = fieldType
+
+  while (reference) {
+    switch (reference.kind) {
+      case `SCALAR`: {
+        const normalizedTypeName = supportedScalars.includes(reference.name)
+          ? reference.name
+          : `JSON`
+
+        openingTagsList.push(normalizedTypeName)
+        break
+      }
+      case `OBJECT`:
+      case `INTERFACE`:
+      case `UNION`:
+        openingTagsList.push(buildTypeName(reference.name))
+        break
+      case `NON_NULL`:
+        closingTagsList.push(`!`)
+        break
+      case `LIST`:
+        openingTagsList.push(`[`)
+        closingTagsList.push(`]`)
+        break
+      default:
+        break
+    }
+
+    reference = reference.ofType
+  }
+
+  return openingTagsList.join(``) + closingTagsList.reverse().join(``)
 }

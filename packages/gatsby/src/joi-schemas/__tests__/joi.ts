@@ -108,13 +108,13 @@ describe(`gatsby config`, () => {
     )
   })
 
-  it(`returns "legacy" for trailingSlash when not set`, () => {
+  it(`returns "always" for trailingSlash when not set`, () => {
     const config = {}
 
     const result = gatsbyConfigSchema.validate(config)
     expect(result.value).toEqual(
       expect.objectContaining({
-        trailingSlash: `legacy`,
+        trailingSlash: `always`,
       })
     )
   })
@@ -126,7 +126,7 @@ describe(`gatsby config`, () => {
 
     const result = gatsbyConfigSchema.validate(config)
     expect(result.error).toMatchInlineSnapshot(
-      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore]]`
     )
   })
 
@@ -137,7 +137,132 @@ describe(`gatsby config`, () => {
 
     const result = gatsbyConfigSchema.validate(config)
     expect(result.error).toMatchInlineSnapshot(
-      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore]]`
+    )
+  })
+
+  it(`return false for graphqlTypegen when not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: false,
+      })
+    )
+  })
+
+  it(`throws when graphqlTypegen is not valid option`, () => {
+    const config = {
+      graphqlTypegen: `foo-bar`,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "graphqlTypegen" must be one of [boolean, object]]`
+    )
+  })
+
+  it(`throws when graphqlTypegen has invalid keys`, () => {
+    const config = {
+      graphqlTypegen: {
+        invalid: true,
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "graphqlTypegen.invalid" is not allowed]`
+    )
+  })
+
+  it(`return defaults for graphqlTypegen when empty object is set`, () => {
+    const config = {
+      graphqlTypegen: {},
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+          ],
+          generateOnBuild: false,
+        },
+      })
+    )
+  })
+
+  it(`return defaults for graphqlTypegen when true is set`, () => {
+    const config = {
+      graphqlTypegen: true,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+          ],
+          generateOnBuild: false,
+        },
+      })
+    )
+  })
+
+  it(`graphqlTypegen config object can be overwritten`, () => {
+    const config = {
+      graphqlTypegen: {
+        typesOutputPath: `gatsby-types.d.ts`,
+        documentSearchPaths: [
+          `./gatsby-node.ts`,
+          `./plugins/**/gatsby-node.ts`,
+          `./src/gatsby/generatePage.ts`,
+        ],
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `gatsby-types.d.ts`,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+            `./src/gatsby/generatePage.ts`,
+          ],
+          generateOnBuild: false,
+        },
+      })
+    )
+  })
+
+  it(`returns partial defaults for graphqlTypegen when partial options object is set`, () => {
+    const config = {
+      graphqlTypegen: {
+        generateOnBuild: true,
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+          documentSearchPaths: [
+            `./gatsby-node.ts`,
+            `./plugins/**/gatsby-node.ts`,
+          ],
+          generateOnBuild: true,
+        },
+      })
     )
   })
 })

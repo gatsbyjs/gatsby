@@ -3,6 +3,7 @@ import React from "react"
 
 import { GatsbyImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
+import Seo from "../components/seo"
 
 const RemoteFile = ({ data }) => {
   return (
@@ -76,5 +77,6 @@ export const pageQuery = graphql`
     }
   }
 `
+export const Head = () => <Seo />
 
 export default RemoteFile

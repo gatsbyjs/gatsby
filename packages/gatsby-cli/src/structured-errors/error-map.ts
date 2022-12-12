@@ -1,5 +1,10 @@
 import { stripIndent, stripIndents } from "common-tags"
-import { IOptionalGraphQLInfoContext, Level, Type } from "./types"
+import {
+  IOptionalGraphQLInfoContext,
+  Level,
+  Type,
+  ErrorCategory,
+} from "./types"
 
 const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
   `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${
@@ -15,13 +20,7 @@ const getSharedNodeManifestWarning = (inputManifest: {
 }): string =>
   `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
 
-export enum ErrorCategory {
-  USER = `USER`,
-  SYSTEM = `SYSTEM`,
-  THIRD_PARTY = `THIRD_PARTY`,
-}
-
-const errors = {
+const errors: Record<string, IErrorMapEntry> = {
   "": {
     text: (context): string => {
       const sourceMessage =
@@ -31,13 +30,16 @@ const errors = {
       return sourceMessage
     },
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
+    type: Type.UNKNOWN,
   },
   "95312": {
     text: (context): string =>
-      `"${context.ref}" is not available during server side rendering.`,
+      `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,
+    type: Type.HTML_COMPILATION,
   },
   "95313": {
     text: (context): string =>
@@ -46,23 +48,29 @@ const errors = {
       }`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
+    category: ErrorCategory.UNKNOWN,
+    type: Type.HTML_COMPILATION,
   },
   "95314": {
     text: (context): string => context.errorMessage,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
+    type: Type.HTML_COMPILATION,
+    category: ErrorCategory.UNKNOWN,
   },
   "95315": {
     text: (context): string =>
       `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    type: Type.ENGINE_EXECUTION,
   },
   "98001": {
     text: (): string =>
-      `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
-    type: Type.WEBPACK,
+      `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://gatsby.dev/new-issue for more help.`,
+    type: Type.ENGINE_VALIDATION,
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
   },
   "98011": {
     text: (context): string =>
@@ -71,7 +79,7 @@ const errors = {
       }" package${
         context.importedBy ? ` (imported by "${context.importedBy}")` : ``
       }${context.advisory ? `\n\n${context.advisory}` : ``}`,
-    type: Type.WEBPACK,
+    type: Type.ENGINE_COMPILATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -80,8 +88,16 @@ const errors = {
       `${context.stageLabel} failed\n\n${
         context.sourceMessage ?? context.message
       }`,
-    type: Type.WEBPACK,
+    type: (context): `${Type}` =>
+      `WEBPACK.${
+        context.stage.toUpperCase() as
+          | `DEVELOP`
+          | `DEVELOP-HTML`
+          | `BUILD-JAVASCRIPT`
+          | `BUILD-HTML`
+      }`,
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
   },
   "98124": {
     text: (context): string => {
@@ -93,7 +109,14 @@ const errors = {
 
       return message
     },
-    type: Type.WEBPACK,
+    type: (context): `${Type}` =>
+      `WEBPACK.${
+        context.stage.toUpperCase() as
+          | `DEVELOP`
+          | `DEVELOP-HTML`
+          | `BUILD-JAVASCRIPT`
+          | `BUILD-HTML`
+      }`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -103,15 +126,9 @@ const errors = {
         There was an error in your GraphQL query:\n\n${
           context.sourceMessage
         }${optionalGraphQLInfo(context)}`),
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_UNKNOWN,
     level: Level.ERROR,
-  },
-  // Deprecated
-  "85907": {
-    text: (context): string =>
-      `There was an error in your GraphQL query:\n\n${context.message}`,
-    type: Type.GRAPHQL,
-    level: Level.ERROR,
+    category: ErrorCategory.USER,
   },
   "85908": {
     text: (context): string => {
@@ -121,15 +138,9 @@ const errors = {
 
       return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.\n\n${context.codeFrame}${closestFragment}`
     },
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-  },
-  // Deprecated
-  "85909": {
-    text: (context): string => context.sourceMessage,
-    type: Type.GRAPHQL,
-    level: Level.ERROR,
   },
   "85910": {
     text: (context): string =>
@@ -148,9 +159,9 @@ const errors = {
         This can happen when you use two page/static queries in one file. Please combine those into one query.
         If you're defining multiple components (each with a static query) in one file, you'll need to move each component to its own file.
       `),
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.com/docs/graphql/`,
+    docsUrl: `https://www.gatsbyjs.com/docs/how-to/querying-data/`,
     category: ErrorCategory.USER,
   },
   "85911": {
@@ -162,39 +173,36 @@ const errors = {
         This may indicate a syntax error in the code, or it may be a file type
         that Gatsby does not know how to parse.
       `),
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_EXTRACTION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "85912": {
     text: (context): string =>
       `Failed to parse preprocessed file ${context.filePath}`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_EXTRACTION,
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
   },
   "85913": {
     text: (context): string =>
       `There was a problem reading the file: ${context.filePath}`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_EXTRACTION,
     level: Level.ERROR,
-  },
-  "85914": {
-    text: (context): string =>
-      `There was a problem reading the file: ${context.filePath}`,
-    type: Type.GRAPHQL,
-    level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
   },
   // default parsing error
   "85915": {
     text: (context): string =>
       `There was a problem parsing the GraphQL query in file: ${context.filePath}`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_EXTRACTION,
     level: Level.ERROR,
+    category: ErrorCategory.USER,
   },
   "85916": {
     text: (context): string =>
       `String interpolation is not allowed in graphql tag:\n\n${context.codeFrame}`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -203,8 +211,9 @@ const errors = {
       `Unexpected empty graphql tag${
         context.codeFrame ? `\n\n${context.codeFrame}` : ``
       }`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
+    category: ErrorCategory.USER,
   },
   "85918": {
     text: (context): string =>
@@ -212,7 +221,7 @@ const errors = {
         GraphQL syntax error in query:\n\n${context.sourceMessage}${
         context.codeFrame ? `\n\n${context.codeFrame}` : ``
       }`),
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -228,7 +237,7 @@ const errors = {
       File: ${context.rightFragment.filePath}
       ${context.rightFragment.codeFrame}
     `),
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -237,16 +246,11 @@ const errors = {
     text: (context): string => {
       const staticQueryMessage = stripIndents(`Suggestion 1:
 
-      If you're not using a page query but a useStaticQuery / StaticQuery you see this error because they currently don't support variables. To learn more about the limitations of useStaticQuery / StaticQuery, please visit these docs:
-
-      https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
-      https://www.gatsbyjs.com/docs/how-to/querying-data/static-query/`)
+      If you're not using a page query but useStaticQuery you see this error because it doesn't support variables. To learn more about the limitations: https://gatsby.dev/use-static-query`)
 
       const generalMessage = stripIndents(`Suggestion 2:
 
-      You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
-
-      https://www.gatsbyjs.com/docs/how-to/querying-data/page-query#how-to-add-query-variables-to-a-page-query`)
+      You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Learn how to add data to context: https://gatsby.dev/graphql-variables-how-to`)
 
       return stripIndent(`
         There was an error in your GraphQL query:\n\n${
@@ -255,14 +259,14 @@ const errors = {
         context
       )}\n\n${staticQueryMessage}\n\n${generalMessage}`)
     },
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "85921": {
     text: (context): string =>
       `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you're e.g. filtering for specific nodes make sure that you choose the correct field (that has the same type "${context.inputType}") or adjust the context variable to the type "${context.expectedType}".`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -273,10 +277,10 @@ const errors = {
       ${context.sourceMessage}
 
       This can happen if you e.g. accidentally added { } to the field "${context.fieldName}". If you didn't expect "${context.fieldName}" to be of type "${context.fieldType}" make sure that your input source and/or plugin is correct.
-      However, if you expect "value" to exist, the field might be accessible in another subfield. Please try your query in GraphiQL.
+      However, if you expect "${context.fieldName}" to exist, the field might be accessible in another subfield. Please try your query in GraphiQL.
 
       It is recommended to explicitly type your GraphQL schema if you want to use optional fields.`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
     docsUrl: `https://gatsby.dev/creating-type-definitions`,
@@ -284,7 +288,7 @@ const errors = {
   "85923": {
     text: (context): string =>
       `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo. However, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node/gatsby-config, please try a restart of your development server.\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere.\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields.`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
     docsUrl: `https://gatsby.dev/creating-type-definitions`,
@@ -298,7 +302,7 @@ const errors = {
       }" doesn't match the (scalar) type of "${
         context.type
       }".${optionalGraphQLInfo(context)}`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -308,24 +312,25 @@ const errors = {
         context.sourceMessage
       }\n\nThe field "${
         context.field
-      }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.js. If you're using a plugin/theme, you can learn more here on how to fix field types:\nhttps://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization#fixing-field-types${optionalGraphQLInfo(
+      }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.${optionalGraphQLInfo(
         context
       )}`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/creating-type-definitions`,
   },
   "85926": {
     text: (context): string =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nThis can happen when you used graphql\`{ ...yourQuery }\` instead of graphql(\`{ ...yourQuery }\`) inside gatsby-node.js\n\nYou can't use the template literal function you're used to (from page queries) and rather have to call graphql() as a normal function.`,
-    type: Type.GRAPHQL,
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nThis can happen when you use graphql\`{ ...yourQuery }\` instead of graphql(\`{ ...yourQuery }\`) inside gatsby-node\n\nYou can't use the template literal function you're used to (from page queries) and rather have to call graphql() as a normal function.`,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "85927": {
     text: (context): string =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nSee if ${context.variable} has a typo or ${context.operation} doesn't actually require this variable.`,
-    type: Type.GRAPHQL,
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nSee if "${context.variable}" has a typo or ${context.operation} doesn't actually require this variable.`,
+    type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -333,58 +338,73 @@ const errors = {
     text: (): string =>
       `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
+    type: Type.GRAPHQL_QUERY_RUNNING,
   },
   "85929": {
     text: (context): string =>
       `The "${context.exportName}" export must be async when using it with graphql:\n\n${context.codeFrame}`,
-    type: Type.GRAPHQL,
+    type: Type.GRAPHQL_EXTRACTION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   // Config errors
   "10122": {
     text: (context): string =>
-      `The site's gatsby-config.js failed validation:\n\n${context.sourceMessage}`,
-    type: Type.CONFIG,
+      `The site's gatsby-config failed validation:\n\n${context.sourceMessage}`,
+    type: Type.API_CONFIG_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "10123": {
     text: (context): string =>
       `We encountered an error while trying to load your site's ${context.configName}. Please fix the error and try again.`,
-    type: Type.CONFIG,
+    type: Type.API_CONFIG_LOADING,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "10124": {
     text: (context): string =>
-      `It looks like you were trying to add the config file? Please rename "${context.nearMatch}" to "${context.configName}.js"`,
-    type: Type.CONFIG,
+      `It looks like you were trying to add the config file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
+    type: Type.API_CONFIG_LOADING,
+    // TODO: Make this a warning? Needs to be also changed where this error is called + tests
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "10125": {
     text: (context): string =>
       `Your ${context.configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`,
-    type: Type.CONFIG,
+    type: Type.API_CONFIG_LOADING,
+    // TODO: Make this a warning? Needs to be also changed where this error is called + tests
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "10126": {
     text: (context): string =>
       `${context.path}/${context.configName} cannot export a function.` +
-      `\n\nA ${context.configName} exported as a Function can only be used as a theme and not run directly.` +
+      `\n\nA ${context.configName} exported as a function can only be used as a theme and not run directly.` +
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
-      `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
+      `\nIf you are in the root gatsby-config for your site, change the export to be an object and not a function as functions` +
       `\nare not supported in the root gatsby-config.`,
-    type: Type.CONFIG,
+    type: Type.API_CONFIG_LOADING,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "10127": {
     text: (context): string =>
-      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js". Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
-    type: Type.CONFIG,
+      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js". Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://gatsby.dev/new-issue for more help."`,
+    type: Type.API_TYPESCRIPT_COMPILATION,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "10128": {
+    text: (context): string =>
+      `It looks like you were trying to add the gatsby-node file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
+    type: Type.API_CONFIG_LOADING,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -400,8 +420,9 @@ const errors = {
       ]
         .filter(Boolean)
         .join(`\n\n`),
-    type: Type.CONFIG,
+    type: Type.API_CONFIG_LOADING,
     level: Level.ERROR,
+    category: ErrorCategory.USER,
   },
   // Plugin errors
   "11321": {
@@ -411,20 +432,23 @@ const errors = {
       } lifecycle:\n\n${
         context.sourceMessage ?? context.message
       }${optionalGraphQLInfo(context)}`,
-    type: Type.PLUGIN,
+    type: Type.API_NODE_EXECUTION,
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
   },
   "11322": {
     text: (context): string =>
       `${
         context.pluginName
       } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
+    type: Type.API_NODE_VALIDATION,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11323": {
     text: (context): string =>
@@ -434,63 +458,76 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11324": {
     text: (context): string =>
-      `${context.message}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      `Error while creating your page:\n\n${context.message}`,
     level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11325": {
     text: (context): string =>
       `${
         context.pluginName
       } created a page with a component that doesn't exist.\n\nThe path to the missing component is "${
-        context.component
+        context.componentPath
       }"\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11326": {
     text: (context): string =>
       `${
         context.pluginName
-      } must set the absolute path to the page component when create creating a page.\n\nThe (relative) path you used for the component is "${
-        context.component
+      } must set the absolute path to the page component when creating a page.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
-        context.component
+        context.componentPath
       }")\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11327": {
     text: (context): string =>
-      `You have an empty file in the "src/pages" directory at "${context.relativePath}". Please remove it or make it a valid component`,
+      `An empty file "${context.componentPath}" was found during page creation. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11328": {
     text: (context): string =>
-      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${context.fileName}`,
+      `${context.pluginName} created a page without a valid default export.\n\nThe path to the page is "${context.componentPath}". If your page is a named export, please use "export default" instead.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   // invalid or deprecated APIs
   "11329": {
     text: (context): string =>
       [
         stripIndent(`
-          Your plugins must export known APIs from their gatsby-${context.exportType}.js.
+          Your plugins must export known APIs from their gatsby-${context.exportType}.
 
           See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-${context.exportType}/ for the list of Gatsby ${context.exportType} APIs.
         `),
@@ -508,6 +545,8 @@ const errors = {
         )
         .join(`\n`),
     level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
   },
   // "X" is not defined in Gatsby's node APIs
   "11330": {
@@ -523,7 +562,7 @@ const errors = {
       } here: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#${
         context.api
       }`,
-    type: Type.PLUGIN,
+    type: Type.API_NODE_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -542,17 +581,123 @@ const errors = {
           context.validationErrors.map(error => `- ${error.message}`).join(`\n`)
         )
         .join(`\n`),
-    type: Type.PLUGIN,
+    type: Type.API_NODE_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "11332": {
     text: (): string =>
       `Failed to compile Gatsby Functions. See the error below for more details.\nNote: The src/api folder is a reserved folder for Gatsby Functions and can't be used for any other files.`,
-    type: Type.COMPILATION,
+    type: Type.FUNCTIONS_COMPILATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
+  },
+  // slices
+  "11333": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11334": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the slice id when creating a slice.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.sliceObject,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11335": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the absolute path to the slice component when creating a slice.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
+      }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
+        context.componentPath
+      }")\n\nThe object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11336": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice with a component that doesn't exist.\n\nThe path to the missing component is "${
+        context.componentPath
+      }"\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11337": {
+    text: (context): string =>
+      `An empty file "${context.componentPath}" was found during slice creation. Please remove it or make it a valid component.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11338": {
+    text: (context): string =>
+      `${context.pluginName} created a slice component without a valid default export.\n\nThe path to the component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11339": {
+    text: (context): string =>
+      [
+        `Building static HTML failed for slice "${context.sliceName}".`,
+        `Slice metadata: ${JSON.stringify(context?.sliceData || {}, null, 2)}`,
+        `Slice props: ${JSON.stringify(context?.sliceProps || {}, null, 2)}`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.HTML_COMPILATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11340": {
+    text: (context): string =>
+      [
+        `Building static HTML failed for slice "${context.sliceName}".`,
+        `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    type: Type.HTML_COMPILATION,
+    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   // node object didn't pass validation
   "11467": {
@@ -567,6 +712,8 @@ const errors = {
         .filter(Boolean)
         .join(`\n\n`),
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
+    type: Type.API_NODE_VALIDATION,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode`,
   },
   // local SSL certificate errors
@@ -576,19 +723,23 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.com/docs/local-https#custom-key-and-certificate-files`,
     category: ErrorCategory.USER,
+    type: Type.CLI_VALIDATION,
   },
   "11522": {
     text: (): string => `Failed to generate dev SSL certificate`,
     level: Level.ERROR,
+    category: ErrorCategory.THIRD_PARTY,
     docsUrl: `https://www.gatsbyjs.com/docs/local-https#setup`,
+    type: Type.CLI_VALIDATION,
   },
   // cli new command errors
   "11610": {
     text: (context): string =>
-      `It looks like you gave wrong argument orders . Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
+      `It looks like you gave wrong argument orders. Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
     category: ErrorCategory.USER,
+    type: Type.CLI_VALIDATION,
   },
   "11611": {
     text: (context): string =>
@@ -596,6 +747,7 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
     category: ErrorCategory.USER,
+    type: Type.CLI_VALIDATION,
   },
   "11612": {
     text: (context): string =>
@@ -603,12 +755,15 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
     category: ErrorCategory.USER,
+    type: Type.CLI_VALIDATION,
   },
   "11613": {
     text: (context): string =>
       `Directory ${context.rootPath} is already an npm project`,
     level: Level.ERROR,
+    category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
+    type: Type.CLI_VALIDATION,
   },
   "11614": {
     text: (context): string =>
@@ -618,6 +773,8 @@ const errors = {
         context.line ? `:${context.line}:${context.column}` : ``
       } to resolve the error.`),
     level: Level.WARNING,
+    category: ErrorCategory.USER,
+    type: Type.HTML_GENERATION_DEV_SSR,
   },
   "11615": {
     text: (context): string =>
@@ -626,6 +783,7 @@ const errors = {
         ${context.sourceMessage}`),
     level: Level.ERROR,
     category: ErrorCategory.SYSTEM,
+    type: Type.HTML_GENERATION_DEV_SSR,
   },
   "11616": {
     text: (context): string =>
@@ -634,6 +792,7 @@ const errors = {
         ${context.sourceMessage}`),
     level: Level.ERROR,
     category: ErrorCategory.SYSTEM,
+    type: Type.HTML_GENERATION_DEV_SSR,
   },
   // Watchdog
   "11701": {
@@ -648,10 +807,11 @@ const errors = {
         context.stuckStatusDiagnosticMessage
       }${context.additionalOutput}`,
     level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
+    type: Type.UNKNOWN,
     docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
   },
-
-  /** Node Manifest warnings */
+  // Node Manifest warnings
   "11801": {
     text: ({ inputManifest }): string => `${getSharedNodeManifestWarning(
       inputManifest
@@ -659,8 +819,8 @@ const errors = {
       If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a ownerNodeId is added to createPage() if you're not using the Filesystem Route API). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.\n`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
   },
-
   "11802": {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
@@ -668,8 +828,8 @@ const errors = {
       )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.id in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
   },
-
   "11805": {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
@@ -677,8 +837,8 @@ const errors = {
       )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.slug in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
   },
-
   "11803": {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
@@ -686,14 +846,15 @@ const errors = {
       )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page where this node is queried.\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
   },
   "11804": {
     text: ({ pluginName, nodeId }): string =>
       `Plugin ${pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
+    type: Type.API_NODE_VALIDATION,
   },
-  /** End Node Manifest warnings */
   // Parcel Compilation Errors
   "11901": {
     text: (context): string =>
@@ -714,21 +875,21 @@ const errors = {
     }
     ${context.filePath ? `File path: ${context.filePath}` : ``}`),
     level: Level.ERROR,
-    type: Type.COMPILATION,
+    type: Type.API_TYPESCRIPT_COMPILATION,
     category: ErrorCategory.USER,
   },
   "11902": {
     text: (context): string =>
       `We encountered an error while trying to compile your site's ${context.configName}. Check the current limitations (https://gatsby.dev/ts-limitations), fix the error, and try again.`,
     level: Level.ERROR,
-    type: Type.COMPILATION,
+    type: Type.API_TYPESCRIPT_COMPILATION,
     category: ErrorCategory.USER,
   },
   "11903": {
     text: (context): string =>
       `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.\n${context.sourceMessage}`,
     level: Level.ERROR,
-    type: Type.COMPILATION,
+    type: Type.API_TYPESCRIPT_COMPILATION,
     category: ErrorCategory.USER,
   },
   "11904": {
@@ -741,9 +902,9 @@ const errors = {
         context.sourceFileLocation
           ? `\nCompiled from: ${context.sourceFileLocation}`
           : ``
-      }\n\nPlease run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.`,
+      }\n\nPlease run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/new-issue for more help.`,
     level: Level.ERROR,
-    type: Type.COMPILATION,
+    type: Type.API_TYPESCRIPT_COMPILATION,
     category: ErrorCategory.SYSTEM,
   },
   "12100": {
@@ -753,9 +914,41 @@ const errors = {
     
     ${context.sourceMessage}`,
     level: Level.ERROR,
-    type: Type.GRAPHQL,
+    type: Type.API_TYPESCRIPT_TYPEGEN,
     category: ErrorCategory.USER,
     docsUrl: `https://gatsby.dev/graphql-typegen`,
+  },
+  // Partial hydration
+  "80000": {
+    text: (context): string =>
+      stripIndents(`Building partial HTML failed${
+        context?.path ? ` for path "${context.path}"` : ``
+      }
+
+      This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers are used in a component without declaring the "use client" directive at the top of the file.
+      
+      Consider adding "use client" to the top of your file if your component is interactive, otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
+    `),
+    level: Level.ERROR,
+    type: Type.RSC_COMPILATION,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    category: ErrorCategory.USER,
+  },
+  "80001": {
+    text: (): string =>
+      stripIndents(
+        `
+        Failed to restore previous client module manifest.
+        
+        This can happen if the manifest is corrupted or is not compatible with the current version of Gatsby.
+
+        Please run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/new-issue for more help.
+        `
+      ),
+    level: Level.ERROR,
+    type: Type.RSC_COMPILATION,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    category: ErrorCategory.THIRD_PARTY,
   },
 }
 
@@ -767,9 +960,16 @@ export const defaultError = errorMap[``]
 
 export interface IErrorMapEntry {
   text: (context) => string
-  // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
-  level: keyof typeof Level
-  type?: keyof typeof Type
-  category?: keyof typeof ErrorCategory
+  // Public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union with string interpolation
+  level: `${Level}`
+  type: `${Type}` | ((context) => `${Type}`)
+  category: `${ErrorCategory}`
   docsUrl?: string
+}
+
+// Make level and type optional for plugins
+export interface IErrorMapEntryPublicApi
+  extends Omit<IErrorMapEntry, "level" | "type"> {
+  level?: `${Level}`
+  type?: `${Type}` | ((context) => `${Type}`)
 }

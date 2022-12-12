@@ -1,12 +1,18 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "3.17.0",
+  "version": "5.4.0-next.0",
   "description": "MDX integration for Gatsby",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#readme",
   "scripts": {
-    "test": "jest"
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build && npm run typegen",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.tsx\"",
+    "test": "jest",
+    "clean": "del-cli dist/*"
   },
   "repository": {
     "type": "git",
@@ -14,58 +20,45 @@
     "directory": "packages/gatsby-plugin-mdx"
   },
   "peerDependencies": {
-    "@mdx-js/mdx": "^1.0.0",
-    "@mdx-js/react": "^1.0.0",
-    "gatsby": "^4.0.0-next",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "@mdx-js/react": "^2.0.0",
+    "gatsby": "^5.0.0-next",
+    "gatsby-source-filesystem": "^5.0.0-next",
+    "react": "^18.0.0 || ^0.0.0",
+    "react-dom": "^18.0.0 || ^0.0.0"
   },
   "dependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/generator": "^7.15.4",
-    "@babel/helper-plugin-utils": "^7.14.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.14.7",
-    "@babel/preset-env": "^7.15.4",
-    "@babel/preset-react": "^7.14.0",
-    "@babel/runtime": "^7.15.4",
-    "@babel/types": "^7.15.4",
-    "camelcase-css": "^2.0.1",
-    "change-case": "^3.1.0",
-    "core-js": "^3.22.3",
-    "dataloader": "^1.4.0",
-    "debug": "^4.3.1",
-    "escape-string-regexp": "^1.0.5",
-    "eval": "^0.1.4",
+    "@mdx-js/mdx": "^2.1.5",
+    "acorn": "^8.8.1",
+    "acorn-jsx": "^5.3.2",
+    "astring": "^1.8.3",
+    "deepmerge": "^4.2.2",
+    "estree-util-build-jsx": "^2.2.0",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.17.0",
-    "gray-matter": "^4.0.2",
-    "json5": "^2.1.3",
-    "loader-utils": "^1.4.0",
-    "lodash": "^4.17.21",
-    "mdast-util-to-string": "^1.1.0",
-    "mdast-util-toc": "^3.1.0",
-    "mime": "^2.4.6",
-    "mkdirp": "^1.0.4",
-    "p-queue": "^6.6.2",
-    "pretty-bytes": "^5.3.0",
-    "remark": "^10.0.1",
-    "remark-retext": "^3.1.3",
-    "retext-english": "^3.0.4",
-    "slugify": "^1.4.4",
-    "static-site-generator-webpack-plugin": "^3.4.2",
-    "style-to-object": "^0.3.0",
-    "underscore.string": "^3.3.5",
-    "unified": "^8.4.2",
-    "unist-util-map": "^1.0.5",
-    "unist-util-remove": "^1.0.3",
-    "unist-util-visit": "^1.4.1"
+    "gatsby-core-utils": "^4.4.0-next.0",
+    "gatsby-plugin-utils": "^4.4.0-next.0",
+    "gray-matter": "^4.0.3",
+    "mdast-util-mdx": "^2.0.0",
+    "mdast-util-to-hast": "^10.2.0",
+    "mdast-util-to-markdown": "^1.3.0",
+    "mdast-util-toc": "^6.1.0",
+    "rehype-infer-description-meta": "^1.1.0",
+    "remark-unwrap-images": "^3.0.1",
+    "unified": "^10.1.2",
+    "unist-util-visit": "^4.1.1",
+    "vfile": "^5.3.6"
   },
   "devDependencies": {
-    "@mdx-js/mdx": "^1.6.16",
-    "@mdx-js/react": "^1.6.16",
-    "gatsby-plugin-utils": "^3.11.0",
-    "js-combinatorics": "^1.4.5",
-    "react-test-renderer": "^16.13.1"
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.2",
+    "@types/estree": "^0.0.50",
+    "@types/mdast": "^3.0.10",
+    "@types/unist": "^2.0.6",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
+    "cross-env": "^7.0.3",
+    "del-cli": "^5.0.0",
+    "opentracing": "^0.14.7",
+    "typescript": "^4.9.3",
+    "webpack": "^5.72.1"
   },
   "jest": {
     "testEnvironment": "node"
@@ -73,11 +66,13 @@
   "keywords": [
     "gatsby",
     "gatsby-plugin",
-    "gatsby-transformer-plugin",
     "mdx",
     "markdown",
     "remark",
     "rehype"
   ],
-  "types": "index.d.ts"
+  "files": [
+    "dist/*",
+    "gatsby-node.js"
+  ]
 }

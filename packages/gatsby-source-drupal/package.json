@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-drupal",
   "description": "Gatsby source plugin for building websites using the Drupal CMS as a data source",
-  "version": "5.18.0",
+  "version": "6.4.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -11,11 +11,11 @@
     "@opentelemetry/semantic-conventions": "0.26.0",
     "agentkeepalive": "^4.2.1",
     "bluebird": "^3.7.2",
-    "body-parser": "^1.20.0",
+    "body-parser": "^1.20.1",
     "fastq": "^1.13.0",
-    "gatsby-plugin-utils": "^3.11.0",
-    "gatsby-source-filesystem": "^4.17.0",
-    "got": "^11.8.3",
+    "gatsby-plugin-utils": "^4.4.0-next.0",
+    "gatsby-source-filesystem": "^5.4.0-next.0",
+    "got": "^11.8.5",
     "http2-wrapper": "^2.1.11",
     "lodash": "^4.17.21",
     "opentracing": "^0.14.7",
@@ -26,11 +26,11 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
   "keywords": [
@@ -40,7 +40,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^4.0.0-next"
+    "gatsby": "^5.0.0-next"
   },
   "repository": {
     "type": "git",

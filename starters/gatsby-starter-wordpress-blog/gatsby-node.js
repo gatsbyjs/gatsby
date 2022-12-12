@@ -1,15 +1,15 @@
 const path = require(`path`)
 const chunk = require(`lodash/chunk`)
 
-// This is a simple debugging tool
-// dd() will prettily dump to the terminal and kill the process
-// const { dd } = require(`dumper.js`)
-
 /**
  * exports.createPages is a built-in Gatsby Node API.
  * It's purpose is to allow you to create pages for your site! 💡
  *
- * See https://www.gatsbyjs.com/docs/node-apis/#createPages for more info.
+ * See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createPages
+ */
+
+/**
+ * @type {import('gatsby').GatsbyNode['createPages']}
  */
 exports.createPages = async gatsbyUtilities => {
   // Query our posts from the GraphQL server
@@ -34,7 +34,7 @@ const createSinglePages = async ({ posts, gatsbyUtilities }) =>
   Promise.all(
     posts.map(({ previous, post, next }) =>
       // createPage is an action passed to createPages
-      // See https://www.gatsbyjs.com/docs/actions#createPage for more info
+      // See https://www.gatsbyjs.com/docs/reference/config-files/actions/#createPage
       gatsbyUtilities.actions.createPage({
         // Use the WordPress uri as the Gatsby page path
         // This is a good idea so that internal links and menus work 👍
@@ -42,7 +42,7 @@ const createSinglePages = async ({ posts, gatsbyUtilities }) =>
 
         // use the blog post template as the page component
         component: path.resolve(
-          `./src/templates/${post.__typename.replace(`Wp`, ``)}.js`
+          `./src/templates/${post.__typename.replace(`Wp`, ``).toLowerCase()}.js`
         ),
 
         // `context` is available in the template as a prop and
@@ -129,53 +129,41 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
  * Otherwise it will return the posts 🙌
  *
  * We're passing in the utilities we got from createPages.
- * So see https://www.gatsbyjs.com/docs/node-apis/#createPages for more info!
+ * See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createPages
  */
 async function getNodes({ graphql, reporter }) {
-  const graphqlResult = await graphql(/* GraphQL */ `
-    query WpPosts {
-      # Query all WordPress blog posts sorted by date
-      allWpPost(sort: { fields: [date], order: DESC }) {
-        edges {
-          previous {
-            id
-          }
-
-          # note: this is a GraphQL alias. It renames "node" to "post" for this query
-          # We're doing this because this "node" is a post! It makes our code more readable further down the line.
-          post: node {
-            __typename
-            id
-            uri
-          }
-
-          next {
-            id
-          }
-        }
+  const graphqlResult = await graphql(`query WpPosts {
+  allWpPost(sort: {date: DESC}) {
+    edges {
+      previous {
+        id
       }
-
-      allWpPage(sort: { fields: [date], order: DESC }) {
-        edges {
-          previous {
-            id
-          }
-
-          # note: this is a GraphQL alias. It renames "node" to "post" for this query
-          # We're doing this because this "node" is a post! It makes our code more readable further down the line.
-          post: node {
-            __typename
-            id
-            uri
-          }
-
-          next {
-            id
-          }
-        }
+      post: node {
+        __typename
+        id
+        uri
+      }
+      next {
+        id
       }
     }
-  `)
+  }
+  allWpPage(sort: {date: DESC}) {
+    edges {
+      previous {
+        id
+      }
+      post: node {
+        __typename
+        id
+        uri
+      }
+      next {
+        id
+      }
+    }
+  }
+}`)
 
   if (graphqlResult.errors) {
     reporter.panicOnBuild(

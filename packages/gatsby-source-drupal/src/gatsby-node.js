@@ -155,6 +155,7 @@ exports.sourceNodes = async (
   globalReporter = reporter
   const {
     baseUrl,
+    proxyUrl = baseUrl,
     apiBase = `jsonapi`,
     basicAuth = {},
     filters,
@@ -421,25 +422,23 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 nodesToUpdate = [nodeSyncData.data]
               }
 
-              await Promise.all(
-                nodesToUpdate.map(nodeToUpdate =>
-                  handleWebhookUpdate(
-                    {
-                      nodeToUpdate,
-                      actions,
-                      cache,
-                      createNodeId,
-                      createContentDigest,
-                      getCache,
-                      getNode,
-                      reporter,
-                      store,
-                      languageConfig,
-                    },
-                    pluginOptions
-                  )
+              for (const nodeToUpdate of nodesToUpdate) {
+                await handleWebhookUpdate(
+                  {
+                    nodeToUpdate,
+                    actions,
+                    cache,
+                    createNodeId,
+                    createContentDigest,
+                    getCache,
+                    getNode,
+                    reporter,
+                    store,
+                    languageConfig,
+                  },
+                  pluginOptions
                 )
-              )
+              }
             }
           }
 
@@ -534,6 +533,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 url = url.toString()
               }
             }
+          }
+
+          // If proxyUrl is defined, use it instead of baseUrl to get the content.
+          if (proxyUrl !== baseUrl) {
+            url = url.replace(baseUrl, proxyUrl)
           }
 
           let d
@@ -711,17 +715,15 @@ ${JSON.stringify(webhookBody, null, 4)}`
   createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
-  await Promise.all(
-    Array.from(nodes.values()).map(node =>
-      handleReferences(node, {
-        getNode: nodes.get.bind(nodes),
-        mutateNode: true,
-        createNodeId,
-        cache,
-        entityReferenceRevisions,
-      })
-    )
-  )
+  for (const node of Array.from(nodes.values())) {
+    await handleReferences(node, {
+      getNode: nodes.get.bind(nodes),
+      mutateNode: true,
+      createNodeId,
+      cache,
+      entityReferenceRevisions,
+    })
+  }
 
   if (skipFileDownloads) {
     reporter.info(`Skipping remote file download from Drupal`)
@@ -837,6 +839,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     baseUrl: Joi.string()
       .required()
       .description(`The URL to root of your Drupal instance`),
+    proxyUrl: Joi.string().description(
+      `The CDN URL equivalent to your baseUrl`
+    ),
     apiBase: Joi.string().description(
       `The path to the root of the JSONAPI — defaults to "jsonapi"`
     ),

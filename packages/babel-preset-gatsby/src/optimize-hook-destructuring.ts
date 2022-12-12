@@ -56,7 +56,12 @@ export default function ({
         path.parent.id.elements.reduce(
           (acc: Array<BabelTypes.ObjectProperty>, element, i) => {
             if (element) {
-              acc.push(t.objectProperty(t.numericLiteral(i), element))
+              acc.push(
+                t.objectProperty(
+                  t.numericLiteral(i),
+                  element as BabelTypes.Identifier
+                )
+              )
             }
             return acc
           },

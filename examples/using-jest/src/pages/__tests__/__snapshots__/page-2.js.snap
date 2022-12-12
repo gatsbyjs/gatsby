@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageTwo renders correctly 1`] = `
+<main>
+  <h1>
+    Page 2
+  </h1>
+  <p>
+    Your name
+  </p>
+</main>
+`;

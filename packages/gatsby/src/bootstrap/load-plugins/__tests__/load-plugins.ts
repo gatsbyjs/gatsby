@@ -4,15 +4,35 @@ import reporter from "gatsby-cli/lib/reporter"
 import { IFlattenedPlugin } from "../types"
 import { silent as resolveFrom } from "resolve-from"
 
+const mockNonIncompatibleWarn = jest.fn()
+
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     error: jest.fn(),
     panic: jest.fn(),
     panicOnBuild: jest.fn(),
     log: jest.fn(),
-    warn: jest.fn(),
+    warn: jest.fn((...args) => {
+      // filter out compatible warnings as we get a lot of
+      // Plugin X is not compatible with your gatsby version X - It requires X
+      // right now
+      if (!args[0].includes(`is not compatible with your gatsby version`)) {
+        mockNonIncompatibleWarn(...args)
+      }
+    }),
     success: jest.fn(),
     info: jest.fn(),
+  }
+})
+
+// Previously babel transpiled src ts plugin files (e.g. gatsby-node files) on the fly,
+// making them require-able/test-able without running compileGatsbyFiles prior (as would happen in a real scenario).
+// After switching to import to support esm, point file path resolution to the real compiled JS files in dist instead.
+jest.mock(`../../resolve-js-file-path`, () => {
+  return {
+    resolveJSFilepath: jest.fn(
+      ({ filePath }) => `${filePath.replace(`src`, `dist`)}.js`
+    ),
   }
 })
 
@@ -459,8 +479,9 @@ describe(`Load plugins`, () => {
       )
 
       expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(0)
-      expect(reporter.warn as jest.Mock).toHaveBeenCalledTimes(1)
-      expect((reporter.warn as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
+      expect(mockNonIncompatibleWarn as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((mockNonIncompatibleWarn as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
         Array [
           "Warning: there are unknown plugin options for \\"gatsby-plugin-google-analytics\\": doesThisExistInTheSchema
         Please open an issue at https://ghub.io/gatsby-plugin-google-analytics if you believe this option is valid.",

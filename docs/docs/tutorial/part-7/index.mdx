@@ -2,9 +2,9 @@
 title: "Part 7: Add Dynamic Images from Data"
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
-import Collapsible from '@components/collapsible'
-import { MdArrowForward } from 'react-icons/md'
+import { LinkButton } from "gatsby-interface"
+import Collapsible from "@components/collapsible"
+import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
@@ -16,18 +16,27 @@ By the end of this part of the Tutorial, you will be able to:
 
 - Use the `GatsbyImage` component to create images dynamically from data.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Prefer a video?**
 
 If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 7.
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+**Note**: Parts of this recording may be slightly outdated, but the concepts are generally applicable. For the most up-to-date information, follow along with the written tutorial.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/NQj3H2Z9vn0?start=229" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/NQj3H2Z9vn0?start=229"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 </Announcement>
-
 
 ## What's the difference between `GatsbyImage` and `StaticImage`?
 
@@ -35,13 +44,13 @@ Back in [Part 3](/docs/tutorial/part-3/) of the Tutorial, you learned about how 
 
 How do you know whether to use the `StaticImage` component or the `GatsbyImage` component? The decision ultimately comes down to whether or not your image source is going to be the same every time the component renders.
 
-* The `StaticImage` component is for *static* image sources, like a hard-coded file path or remote URL. In other words, the source for your image is always going to be the same every time the component renders.
-* The `GatsbyImage` component is for *dynamic* image sources, like if the image source gets passed in as a prop.
+- The `StaticImage` component is for _static_ image sources, like a hard-coded file path or remote URL. In other words, the source for your image is always going to be the same every time the component renders.
+- The `GatsbyImage` component is for _dynamic_ image sources, like if the image source gets passed in as a prop.
 
 Here's a quick analogy to help illustrate the difference:
 
-* Using the `StaticImage` component is like asking for directions using a physical address, like "400 Main Street". You'll always end up in the same place, no matter how many people you ask.
-* Using the `GatsbyImage` component is like asking for directions more generically. If you ask someone to point you to the best coffee shop in town, where you end up will depend on whom you ask and what their personal preferences are.
+- Using the `StaticImage` component is like asking for directions using a physical address, like "400 Main Street". You'll always end up in the same place, no matter how many people you ask.
+- Using the `GatsbyImage` component is like asking for directions more generically. If you ask someone to point you to the best coffee shop in town, where you end up will depend on whom you ask and what their personal preferences are.
 
 ![A side-by-side of two identical cartoon maps of a little town. The first, labeled "StaticImage", labels one of the houses "400 Main Street". The second, labeled "GatsbyImage", labels three of the houses with "coffee shop".](./staticimage-vs-gatsbyimage-towns.png)
 
@@ -54,9 +63,9 @@ Many blog sites include a hero image at the top of each post. These images are u
 The steps below will help you find and download some photos for your hero images and add them to the frontmatter for each of your blog posts.
 
 1. Start by organizing the `blog` directory with all your MDX posts. First, create a new subdirectory in your `blog` folder for each post. Then, rename each of your `.mdx` files to `index.mdx` (to prevent the routes from ending up with a duplicated path parameter, like `blog/my-post/my-post/`).
-    * For example, a post at `blog/my-first-post.mdx` would move to `blog/my-first-post/index.mdx`. Similarly, a post at `blog/another-post.mdx` would move to `blog/another-post/index.mdx`.
+   - For example, a post at `blog/my-first-post.mdx` would move to `blog/my-first-post/index.mdx`. Similarly, a post at `blog/another-post.mdx` would move to `blog/another-post/index.mdx`.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** After you move or rename your `.mdx` files, you'll need to stop and restart your local development server for your changes to be picked up.
 
@@ -65,14 +74,14 @@ The steps below will help you find and download some photos for your hero images
 ![Diagram of moving each MDX file into its own subdirectory in the blog folder](./reorganize-blog-directory.png)
 
 2. Use a website like [Unsplash](https://unsplash.com) to find some pretty, freely usable images. For best results, choose photos with a landscape (horizontal) orientation, since those will fit on your screen more easily.
-    ![A screenshot of the Unsplash home page](./unsplash.png)
+   ![A screenshot of the Unsplash home page](./unsplash.png)
 
-2. When you've found a photo that you like, download it and add it to subdirectory for one of your blog posts. Continue downloading photos until you have a different hero image for each post.
-    ![Diagram of the "blog" folder structure, with the hero image for each post in the subdirectory for that post.](./folder-structure-with-images.png)
+3. When you've found a photo that you like, download it and add it to subdirectory for one of your blog posts. Continue downloading photos until you have a different hero image for each post.
+   ![Diagram of the "blog" folder structure, with the hero image for each post in the subdirectory for that post.](./folder-structure-with-images.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
-**Pro Tip:** Sometimes, the images you download from the internet can be a little *too* high quality. If you know your site will only ever render an image at 1000 pixels wide, there's no point in having a source image that's 5000 pixels wide. All those extra pixels mean extra work to process and optimize your images, which can slow down build times.
+**Pro Tip:** Sometimes, the images you download from the internet can be a little _too_ high quality. If you know your site will only ever render an image at 1000 pixels wide, there's no point in having a source image that's 5000 pixels wide. All those extra pixels mean extra work to process and optimize your images, which can slow down build times.
 
 As a general guideline, it's a good idea to **preoptimize** your image files by resizing them to be no more than twice the maximum size they'll be rendered at. For example, if your layout is 600 pixels wide, then the highest resolution image you will need is 1200 pixels (to account for 2x pixel density).
 
@@ -81,15 +90,16 @@ For more detailed information, refer to the doc on [Preoptimizing Your Images](/
 </Announcement>
 
 3. Next, add some additional frontmatter fields to each of your blog posts:
-    * `hero_image`: the relative path to the hero image file for that post
-    * `hero_image_alt`: a short description of the image, to be used as alternative text for screen readers or in case the image doesn't load correctly
-    * `hero_image_credit_text`: the text to display to give the photographer credit for the hero image
-    * `hero_image_credit_link`: a link to the page where your hero image was downloaded from
+   - `hero_image`: the relative path to the hero image file for that post
+   - `hero_image_alt`: a short description of the image, to be used as alternative text for screen readers or in case the image doesn't load correctly
+   - `hero_image_credit_text`: the text to display to give the photographer credit for the hero image
+   - `hero_image_credit_link`: a link to the page where your hero image was downloaded from
 
 ```mdx:title=blog/my-first-post/index.mdx
 ---
 title: "My First Post"
 date: "2021-07-23"
+slug: "my-first-post"
 // highlight-start
 hero_image: "./christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg"
 hero_image_alt: "A gray pitbull relaxing on the sidewalk with its tongue hanging out"
@@ -105,6 +115,7 @@ hero_image_credit_link: "https://unsplash.com/photos/ocZ-_Y7-Ptg"
 ---
 title: "Another Post"
 date: "2021-07-24"
+slug: "another-post"
 // highlight-start
 hero_image: "./anthony-duran-eLUBGqKGdE4-unsplash.jpg"
 hero_image_alt: "A grey and white pitbull wading happily in a pool"
@@ -120,6 +131,7 @@ hero_image_credit_link: "https://unsplash.com/photos/eLUBGqKGdE4"
 ---
 title: "Yet Another Post"
 date: "2021-07-25"
+slug: "yet-another-post"
 // highlight-start
 hero_image: "./jane-almon-7rriIaBH6JY-unsplash.jpg"
 hero_image_alt: "A white pitbull wearing big googly-eye glasses"
@@ -142,25 +154,25 @@ When Gatsby adds nodes to the data layer at build time, the `gatsby-transformer-
 ![A diagram showing how ImageSharp nodes get created from File nodes in the data layer](./data-layer-with-imagesharp-nodes.png)
 
 1. In the terminal, run the following command to install `gatsby-transformer-sharp`:
-    ```shell
-    npm install gatsby-transformer-sharp
-    ```
+
+   ```shell
+   npm install gatsby-transformer-sharp
+   ```
 
 2. Add `gatsby-transformer-sharp` to the `plugins` array in your `gatsby-config.js` file.
-    ```js:title=gatsby-config.js
-    module.exports = {
-      siteMetadata: {
-        title: "My First Gatsby Site",
-      },
-      plugins: [
-        // ...existing plugins
-        "gatsby-transformer-sharp", // highlight-line
-      ],
-    }
-    ```
+   ```js:title=gatsby-config.js
+   module.exports = {
+     siteMetadata: {
+       title: "My First Gatsby Site",
+     },
+     plugins: [
+       // ...existing plugins
+       "gatsby-transformer-sharp", // highlight-line
+     ],
+   }
+   ```
 
 Since you've added `gatsby-transformer-sharp` to your site, you'll need to restart your local development server to see the changes in GraphiQL. You'll take a closer look at GraphiQL in the next step.
-
 
 ## Render hero image in the blog post page template
 
@@ -172,7 +184,7 @@ First, you'll use GraphiQL to add the hero image frontmatter fields to the Graph
 
 1. Open GraphiQL by going to `localhost:8000/___graphql` in a web browser. Start by copying your existing blog post page query into the GraphiQL Query Editor pane. Run it once to make sure everything is working correctly.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** You'll need to set up an object in the Query Variables pane with an `id` that matches one of your posts. Refer to [Part 6 section on query variables](/docs/tutorial/part-6/#render-post-contents-in-the-blog-post-page-template) if you need a refresher on how to set that up.
 
@@ -180,12 +192,11 @@ First, you'll use GraphiQL to add the hero image frontmatter fields to the Graph
 
 ```graphql
 query ($id: String) {
-  mdx(id: {eq: $id}) {
+  mdx(id: { eq: $id }) {
     frontmatter {
       title
       date(formatString: "MMMM D, YYYY")
     }
-    body
   }
 }
 ```
@@ -196,9 +207,8 @@ query ($id: String) {
     "mdx": {
       "frontmatter": {
         "title": "My First Post",
-        "date": "July 23, 2021",
-      },
-      "body": "..."
+        "date": "July 23, 2021"
+      }
     }
   },
   "extensions": {}
@@ -207,7 +217,7 @@ query ($id: String) {
 
 2. In the Explorer pane, check the boxes for the `hero_image_alt`, `hero_image_credit_link`, and `hero_image_credit_text` fields. When you run your query, you should get back a response something like the JSON object below.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** Remember to scroll down to the blue `frontmatter` field, which is lower than the purple `frontmatter:` argument.
 
@@ -225,7 +235,6 @@ query ($id: String) {
       hero_image_credit_text
       // highlight-end
     }
-    body
   }
 }
 ```
@@ -240,8 +249,7 @@ query ($id: String) {
         "hero_image_alt": "A gray pitbull relaxing on the sidewalk with its tongue hanging out",
         "hero_image_credit_link": "https://unsplash.com/photos/ocZ-_Y7-Ptg",
         "hero_image_credit_text": "Christopher Ayme"
-      },
-      "body": "..."
+      }
     }
   },
   "extensions": {}
@@ -267,12 +275,11 @@ query ($id: String) {
       }
       // highlight-end
     }
-    body
   }
 }
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Pro Tip:** How does GraphiQL know to add extra fields to the `hero_image` frontmatter field?
 
@@ -318,8 +325,7 @@ Gatsby can tell that the `hero_image` field from your MDX frontmatter matches a 
           ]
         }
         // highlight-end
-      },
-      "body": "..."
+      }
     }
   },
   "extensions": {}
@@ -328,7 +334,7 @@ Gatsby can tell that the `hero_image` field from your MDX frontmatter matches a 
 
 If you take a closer look at the `gatsbyImageData` object on the `hero_image.childImageSharp` field, you'll see that it contains a bunch of information about the hero image for that post: dimensions, file paths for the images at different sizes, fallback images to use as a placeholder while the image loads. All this data gets calculated by `gatsby-plugin-sharp` at build time. The `gatsbyImageData` object in your response has the same structure that the `GatsbyImage` component needs to render an image.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** You might have noticed that the `gatsbyImageData` field in GraphiQL accepts several arguments, like `aspectRatio`, `formats`, or `width`. You can use these arguments to pass in extra data about how you want the Sharp image processing library to create your optimized images.
 
@@ -343,58 +349,60 @@ For more information, see the [`gatsby-plugin-image` Reference Guide](/docs/refe
 Once you have your GraphQL query set up, you can add it to your blog post page template.
 
 1. Replace your existing page query with the query you built in GraphiQL that includes the hero image frontmatter fields.
-    ```js:title=src/pages/blog/{mdx.slug}.js
-    // imports
 
-    const BlogPost = ({ data }) => {
-      return (
-        // ...
-      )
-    }
+   ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
+   // imports
 
-    // highlight-start
-    export const query = graphql`
-      query($id: String) {
-        mdx(id: {eq: $id}) {
-          body
-          frontmatter {
-            title
-            date(formatString: "MMMM DD, YYYY")
-            hero_image_alt
-            hero_image_credit_link
-            hero_image_credit_text
-            hero_image {
-              childImageSharp {
-                gatsbyImageData
-              }
-            }
-          }
-        }
-      }
-    `
-    // highlight-end
+   const BlogPost = ({ data, children }) => {
+     return (
+       // ...
+     )
+   }
 
-    export default BlogPost
-    ```
+   // highlight-start
+   export const query = graphql`
+     query($id: String) {
+       mdx(id: {eq: $id}) {
+         frontmatter {
+           title
+           date(formatString: "MMMM DD, YYYY")
+           hero_image_alt
+           hero_image_credit_link
+           hero_image_credit_text
+           hero_image {
+             childImageSharp {
+               gatsbyImageData
+             }
+           }
+         }
+       }
+     }
+   `
+   // highlight-end
+
+   export const Head = ({ data }) => <Seo title={data.mdx.frontmatter.title} />
+
+   export default BlogPost
+   ```
 
 2. Import the `GatsbyImage` component and the `getImage` helper function from the `gatsby-plugin-image` package.
 
-```js:title=src/pages/blog/{mdx.slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter_slug}.js
 import * as React from 'react'
 import { graphql } from 'gatsby'
-import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image' // highlight-line
 import Layout from '../../components/layout'
+import Seo from '../../components/seo'
 
 // ...
 ```
 
 2. Use the `getImage` helper function to get back the `gatsbyImageData` object from the `hero_image` field.
 
-```js:title=src/pages/blog/{mdx.slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
 // imports
 
-const BlogPost = ({ data }) => {
+const BlogPost = ({ data, children }) => {
   const image = getImage(data.mdx.frontmatter.hero_image) // highlight-line
 
   return (
@@ -405,7 +413,7 @@ const BlogPost = ({ data }) => {
 // ...
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** `getImage` is a helper function that takes in a `File` node or an `ImageSharp` node and returns the `gatsbyImageData` object for that node. You can use it to keep your code a little cleaner and easier to read.
 
@@ -414,37 +422,37 @@ Without the `getImage` helper function, you'd have to type out `data.mdx.frontma
 </Announcement>
 
 3. Use the `GatsbyImage` component from `gatsby-plugin-image` to render the hero image data. You should pass `GatsbyImage` two props:
-    * `image`: the `gatsbyImageData` object for your `hero_image` field
-    * `alt`: the alternative text for your image, from the `hero_image_alt` field
-    ```js:title=src/pages/blog/{mdx.slug}.js
-    return (
-      <Layout pageTitle={data.mdx.frontmatter.title}>
-        <p>Posted: {data.mdx.frontmatter.date}</p>
-        {/* highlight-start */}
-        <GatsbyImage
-          image={image}
-          alt={data.mdx.frontmatter.hero_image_alt}
-        />
-        {/* highlight-end */}
-        <MDXRenderer>
-          {data.mdx.body}
-        </MDXRenderer>
-      </Layout>
-    )
-    ```
+
+   - `image`: the `gatsbyImageData` object for your `hero_image` field
+   - `alt`: the alternative text for your image, from the `hero_image_alt` field
+
+   ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
+   return (
+     <Layout pageTitle={data.mdx.frontmatter.title}>
+       <p>Posted: {data.mdx.frontmatter.date}</p>
+       {/* highlight-start */}
+       <GatsbyImage
+         image={image}
+         alt={data.mdx.frontmatter.hero_image_alt}
+       />
+       {/* highlight-end */}
+       {children}
+     </Layout>
+   )
+   ```
 
 4. Now, when you visit each of your blog post pages, you should see the corresponding hero image rendered before the body of your post!
-    ![A screenshot of the My First Post blog page, with a hero image of a gray pitbull relaxing on the sidewalk.](./blog-post-with-hero-image.png)
+   ![A screenshot of the My First Post blog page, with a hero image of a gray pitbull relaxing on the sidewalk.](./blog-post-with-hero-image.png)
 
-    ![A screenshot of the Another Post blog page, with a hero image of a gray and white pitbull in a swimming pool.](./another-post.png)
+   ![A screenshot of the Another Post blog page, with a hero image of a gray and white pitbull in a swimming pool.](./another-post.png)
 
-    ![A screenshot of the Yet Another Post blog page, with a hero image of a dog wearing googly-eye glasses.](./yet-another-post.png)
+   ![A screenshot of the Yet Another Post blog page, with a hero image of a dog wearing googly-eye glasses.](./yet-another-post.png)
 
 ### Task: Add image credit after hero image
 
 It's important to give credit to people whose work you use in your own site. The last piece of including hero images to your site is to add a paragraph to give credit to the photographer.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Pro Tip:** Since the credit link goes to an external page (in other words, one that's not part of your site), you can use the `<a>` HTML tag instead of the Gatsby `Link` component.
 
@@ -452,12 +460,10 @@ Remember, Gatsby's `Link` component only gives performance benefits for internal
 
 </Announcement>
 
-
-
-```js:title=src/pages/blog/{mdx.slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
 // imports
 
-const BlogPost = ({ data }) => {
+const BlogPost = ({ data, children }) => {
   const image = getImage(data.mdx.frontmatter.hero_image)
 
   return (
@@ -475,9 +481,7 @@ const BlogPost = ({ data }) => {
         </a>
       </p>
       {/* highlight-end */}
-      <MDXRenderer>
-        {data.mdx.body}
-      </MDXRenderer>
+      {children}
     </Layout>
   )
   }
@@ -486,10 +490,12 @@ export const query = graphql`
   ...
 `
 
+export const Head = ({ data }) => <Seo title={data.mdx.frontmatter.title} />
+
 export default BlogPost
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Syntax Hint:** You might have noticed that there's a `{" "}` after the "Photo Credit:" text `<p>` tag. That's to make sure that a space gets rendered between the colon (`:`) and the link text.
 
@@ -499,20 +505,19 @@ Try removing the `{" "}` and see what happens. The paragraph text should end up 
 
 ![A screenshot of the My First Post blog page, which now includes a photo credit underneath the hero image. It says, "Photo Credit: Christopher Ayme".](./blog-post-with-hero-image-credit.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
-
 
 ## Summary
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* When should you use the `GatsbyImage` component instead of the `StaticImage` component?
+- When should you use the `GatsbyImage` component instead of the `StaticImage` component?
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Ship It!** 🚀
 
@@ -532,10 +537,10 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 ### Key takeaways
 
-* Use the `StaticImage` component if your component always renders the same image (from a relative path or a remote URL).
-* Use the `GatsbyImage` component if the image source changes for different instances of your component (like if it gets passed in as a prop).
+- Use the `StaticImage` component if your component always renders the same image (from a relative path or a remote URL).
+- Use the `GatsbyImage` component if the image source changes for different instances of your component (like if it gets passed in as a prop).
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

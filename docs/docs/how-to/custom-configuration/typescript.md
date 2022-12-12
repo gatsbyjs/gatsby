@@ -1,7 +1,7 @@
 ---
 title: TypeScript and Gatsby
 examples:
-  - label: Using Typescript
+  - label: Using TypeScript
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-typescript"
   - label: Using vanilla-extract
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract"
@@ -48,7 +48,7 @@ export default IndexRoute
 
 The example above uses the power of TypeScript, in combination with exported types from Gatsby (`PageProps`) to tell this code what props is. This can greatly improve your developer experience by letting your IDE show you what properties are injected by Gatsby.
 
-`PageProps` can receive a couple of [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), most notably the `DataType` one. This way you can type the resulting `data` prop.
+`PageProps` can receive a couple of [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), most notably the `DataType` one. This way you can type the resulting `data` prop. Others are: `PageContextType`, `LocationState`, and `ServerDataType`.
 
 ```tsx:title=src/pages/index.tsx
 import * as React from "react"
@@ -152,7 +152,7 @@ export async function getServerData(
 If you’re using an anonymous function, you can also use the shorthand `GetServerData` type like this:
 
 ```tsx
-const getServerData: GetServerData<ServerDataProps> = async props => {
+export const getServerData: GetServerData<ServerDataProps> = async props => {
   // your function body
 }
 ```
@@ -222,6 +222,126 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 
 Read the [Gatsby Node APIs documentation](/docs/reference/config-files/gatsby-node/) to learn more about its different APIs.
 
+### Gatsby Head API
+
+You can use `HeadProps` to type your [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import type { HeadProps } from "gatsby"
+
+const Page = () => <div>Hello World</div>
+export default Page
+
+export function Head(props: HeadProps) {
+  return (
+    <title>Hello World</title>
+  )
+}
+```
+
+Similar to [`PageProps`](#pageprops) the `HeadProps` can receive two [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType` and `PageContextType`). This way you can type the `data` prop that gets passed to the `Head` function.
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import { graphql, HeadProps, PageProps } from "gatsby"
+
+type DataProps = {
+  site: {
+    siteMetadata: {
+      title: string
+    }
+  }
+}
+
+const IndexRoute = ({ data: { site } }: PageProps<DataProps>) => {
+  return (
+    <main>
+      <h1>{site.siteMetadata.title}</h1>
+    </main>
+  )
+}
+
+export default IndexRoute
+
+export function Head(props: HeadProps<DataProps>) {
+  return (
+    <title>{props.data.site.siteMetadata.title}</title>
+  )
+}
+
+export const query = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
+
+If you’re using an anonymous function, you can also use the shorthand `HeadFC` type like this:
+
+```tsx
+export const Head: HeadFC<DataProps> = props => {
+  // your return value
+}
+```
+
+### Gatsby Slice API
+
+> Support added in `gatsby@5.0.0`
+
+You can use `SliceComponentProps` to type your Slice component from the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/). `SliceComponentProps` can receive three [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType`, `SliceContextType`, and `AdditionalSerializableProps`). This way you can type the `data` and `pageContext` prop that gets passed to your Slice component.
+
+```tsx
+import * as React from "react"
+import { SliceComponentProps, graphql } from "gatsby"
+
+type DataType = {
+  site: {
+    siteMetadata: {
+      title: string
+    }
+  }
+}
+
+type SliceContextType = {
+  locale: string
+}
+
+type AdditionalSerializableProps = {
+  theme: "light" | "dark"
+}
+
+const Navigation = ({
+  data,
+  sliceContext,
+  theme,
+}: SliceComponentProps<
+  DataType,
+  SliceContextType,
+  AdditionalSerializableProps
+>) => (
+  <nav className={`theme---${theme}`}>
+    Menu for {sliceContext.locale} at {data.site.siteMetadata.title}
+  </nav>
+)
+
+export default Navigation
+
+export const query = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
+
 ### Local Plugins
 
 > Support added in `gatsby@4.9.0`
@@ -262,7 +382,17 @@ exports.createPages = () => {}
 
 ## Styling
 
+### vanilla-extract
+
 [vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use vanilla-extract, select it as your preferred styling solution when initializing your project with `npm init gatsby`. You can also manually setup your project through [gatsby-plugin-vanilla-extract](/plugins/gatsby-plugin-vanilla-extract/) or use the [vanilla-extract example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract).
+
+### CSS Modules
+
+To import CSS Modules add this typing definition to your source folder:
+
+```typescript:title=src/module.css.d.ts
+declare module "*.module.css";
+```
 
 ## Migrating to TypeScript
 
@@ -270,7 +400,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
 
 - Run `gatsby clean` to remove any old artifacts
 - Convert your `.js`/`.jsx` files to `.ts/.tsx`
-- Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as `devDependencies`
+- Install `@types/node`, `@types/react`, `@types/react-dom`, and `typescript` as `devDependencies`
 - Add a `tsconfig.json` file using `npx tsc --init` or use the one from [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json)
 - Rename `gatsby-*` files:
   - `gatsby-node.js` to `gatsby-node.ts`
@@ -307,7 +437,7 @@ Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/
 
 ### Other
 
-- Workspaces (e.g. Yarn) are not supported. We'll add documentation on how to use this feature inside a workspace soon.
+- Workspaces (e.g. Yarn) are not supported.
 - When changing `siteMetadata` in `gatsby-config` no hot-reloading will occur during `gatsby develop`. A restart is needed at the moment.
 
 ## Other Resources

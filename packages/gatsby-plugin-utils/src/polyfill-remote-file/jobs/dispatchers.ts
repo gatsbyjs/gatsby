@@ -23,14 +23,17 @@ export function dispatchLocalFileServiceJob(
   store?: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
-  const publicUrl = generateFileUrl({
-    url,
-    filename,
-  }).split(`/`)
+  const publicUrl = generateFileUrl(
+    {
+      url,
+      filename,
+    },
+    store
+  ).split(`/`)
 
   publicUrl.unshift(`public`)
   // get filename and remove querystring
-  const outputFilename = publicUrl.pop()?.split(`?`)[0]
+  const outputFilename = decodeURI(publicUrl.pop()?.split(`?`)?.[0] as string)
 
   const httpHeaders = getRequestHeadersForUrl(url, store)
 
@@ -83,11 +86,12 @@ export function dispatchLocalImageServiceJob(
       filename,
       internal: { contentDigest },
     },
-    imageArgs
+    imageArgs,
+    store
   ).split(`/`)
   publicUrl.unshift(`public`)
   // get filename and remove querystring
-  const outputFilename = publicUrl.pop()?.split(`?`)[0]
+  const outputFilename = decodeURI(publicUrl.pop()?.split(`?`)?.[0] as string)
 
   const httpHeaders = getRequestHeadersForUrl(url, store) as
     | Record<string, string>

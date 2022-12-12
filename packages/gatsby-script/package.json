@@ -1,46 +1,42 @@
 {
   "name": "gatsby-script",
   "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
-  "version": "1.2.0",
+  "version": "2.4.0-next.0",
   "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "source": "src/index.ts",
   "main": "dist/index.js",
+  "module": "dist/index.modern.mjs",
   "types": "dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/*.d.ts",
-        "dist/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist/*"
   ],
+  "sideEffects": false,
   "scripts": {
-    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "build": "babel src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
-    "watch": "babel -w src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
+    "build": "microbundle -f cjs,modern --jsx React.createElement && tsc --emitDeclarationOnly --declaration --declarationDir dist",
+    "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"use client\"",
+    "watch": "microbundle watch -f cjs,modern --jsx React.createElement --no-compress",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "clean": "del-cli dist/*"
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "@babel/preset-typescript": "^7.16.7",
+    "@gatsbyjs/reach-router": "^2.0.0",
     "@testing-library/react": "^11.2.7",
-    "babel-preset-gatsby-package": "^2.17.0",
     "cross-env": "^7.0.3",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.7.2"
+    "del-cli": "^5.0.0",
+    "microbundle": "^0.15.1",
+    "prepend-directive": "^1.1.0",
+    "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "@gatsbyjs/reach-router": "^2.0.0",
+    "react": "^18.0.0 || ^0.0.0",
+    "react-dom": "^18.0.0 || ^0.0.0"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-script#readme",
   "keywords": [

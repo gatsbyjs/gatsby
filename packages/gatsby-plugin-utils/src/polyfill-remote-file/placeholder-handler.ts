@@ -34,6 +34,7 @@ const PLACEHOLDER_TRACED_WIDTH = 200
 
 let tmpDir: string
 
+let didShowTraceSVGRemovalWarning = false
 const queue = Queue<
   undefined,
   {
@@ -66,6 +67,19 @@ const queue = Queue<
     httpHeaders,
   })
 
+  if (type === PlaceholderType.TRACED_SVG) {
+    if (!didShowTraceSVGRemovalWarning) {
+      // we should not hit this code path, field resolver should fallback earlier, this is just in-case.
+      // also this falls back to BLURRED because the shape is compatible. DOMINANT_COLOR is not compatible
+      // and fallback to DOMINANT_COLOR need to happen very early on and not when already generating value
+      console.warn(
+        `"TRACED_SVG" placeholder is no longer supported, falling back to "BLURRED". See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarning = true
+    }
+    type = PlaceholderType.BLURRED
+  }
+
   switch (type) {
     case PlaceholderType.BLURRED: {
       let buffer: Buffer
@@ -88,7 +102,7 @@ const queue = Queue<
     }
     case PlaceholderType.DOMINANT_COLOR: {
       const fileStream = createReadStream(filePath)
-      const pipeline = sharp({ failOnError: false })
+      const pipeline = sharp({ failOn: `none` })
       fileStream.pipe(pipeline)
       const { dominant } = await pipeline.stats()
 
@@ -97,76 +111,6 @@ const queue = Queue<
         dominant
           ? `rgb(${dominant.r},${dominant.g},${dominant.b})`
           : `rgba(0,0,0,0)`
-      )
-    }
-    case PlaceholderType.TRACED_SVG: {
-      let buffer: Buffer
-
-      try {
-        const fileStream = createReadStream(filePath)
-        const pipeline = sharp()
-        fileStream.pipe(pipeline)
-        buffer = await pipeline
-          .resize(
-            PLACEHOLDER_BASE64_WIDTH,
-            Math.ceil(PLACEHOLDER_BASE64_WIDTH / (width / height))
-          )
-          .toBuffer()
-      } catch (err) {
-        buffer = await readFile(filePath)
-      }
-
-      const [{ trace, Potrace }, { optimize }, { default: svgToMiniDataURI }] =
-        await Promise.all([
-          import(`@gatsbyjs/potrace`),
-          import(`svgo`),
-          import(`mini-svg-data-uri`),
-        ])
-
-      trace(
-        buffer,
-        {
-          color: `lightgray`,
-          optTolerance: 0.4,
-          turdSize: 100,
-          turnPolicy: Potrace.TURNPOLICY_MAJORITY,
-        },
-        async (err, svg) => {
-          if (err) {
-            return cb(err)
-          }
-
-          try {
-            const { data } = await optimize(svg, {
-              multipass: true,
-              floatPrecision: 0,
-              plugins: [
-                {
-                  name: `preset-default`,
-                  params: {
-                    overrides: {
-                      // customize default plugin options
-                      removeViewBox: false,
-
-                      // or disable plugins
-                      addAttributesToSVGElement: {
-                        attributes: [
-                          {
-                            preserveAspectRatio: `none`,
-                          },
-                        ],
-                      },
-                    },
-                  },
-                },
-              ],
-            })
-
-            return cb(null, svgToMiniDataURI(data).replace(/ /gi, `%20`))
-          } catch (err) {
-            return cb(err)
-          }
-        }
       )
     }
   }

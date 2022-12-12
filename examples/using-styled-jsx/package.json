@@ -6,8 +6,8 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-plugin-styled-jsx": "next",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "styled-jsx": "^3.3.0"
   },
   "license": "MIT",

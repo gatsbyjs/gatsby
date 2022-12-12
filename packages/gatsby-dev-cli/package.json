@@ -1,7 +1,7 @@
 {
   "name": "gatsby-dev-cli",
   "description": "CLI helpers for contributors working on Gatsby",
-  "version": "4.17.0",
+  "version": "5.4.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby-dev": "./dist/index.js"
@@ -11,23 +11,23 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "chokidar": "^3.5.2",
+    "chokidar": "^3.5.3",
     "configstore": "^5.0.1",
-    "del": "^6.0.0",
+    "del": "^6.1.1",
     "execa": "^5.1.1",
     "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^10.1.0",
-    "got": "^11.8.3",
+    "got": "^11.8.5",
     "is-absolute": "^1.0.0",
     "lodash": "^4.17.21",
     "signal-exit": "^3.0.7",
-    "verdaccio": "^4.12.2",
+    "verdaccio": "^5.18.0",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^2.17.0",
+    "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",
@@ -48,6 +48,6 @@
     "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }

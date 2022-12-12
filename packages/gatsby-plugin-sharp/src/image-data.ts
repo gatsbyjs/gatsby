@@ -62,7 +62,7 @@ export async function getImageMetadata(
   }
 
   try {
-    const pipeline = sharp({ failOnError: !!getPluginOptions().failOnError })
+    const pipeline = sharp({ failOn: getPluginOptions().failOn })
 
     fs.createReadStream(file.absolutePath).pipe(pipeline)
 
@@ -119,6 +119,7 @@ function normalizeFormat(format: string): ImageFormat {
   return format as ImageFormat
 }
 
+let didShowTraceSVGRemovalWarning = false
 export async function generateImageData({
   file,
   args,
@@ -128,7 +129,7 @@ export async function generateImageData({
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   args = mergeDefaults(args)
 
-  const {
+  let {
     layout = `constrained`,
     placeholder = `dominantColor`,
     tracedSVGOptions = {},
@@ -143,6 +144,16 @@ export async function generateImageData({
     args.breakpoints = args.breakpoints?.length
       ? args.breakpoints
       : DEFAULT_BREAKPOINTS
+  }
+
+  if (placeholder === `tracedSVG`) {
+    if (!didShowTraceSVGRemovalWarning) {
+      console.warn(
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarning = true
+    }
+    placeholder = `dominantColor`
   }
 
   const {
@@ -375,19 +386,11 @@ export async function generateImageData({
         ...options,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
-        height: Math.round(placeholderWidth / imageSizes.aspectRatio),
+        height: Math.max(
+          1,
+          Math.round(placeholderWidth / imageSizes.aspectRatio)
+        ),
       },
-      reporter,
-    })
-    imageProps.placeholder = {
-      fallback,
-    }
-  } else if (placeholder === `tracedSVG`) {
-    const fallback: string = await traceSVG({
-      file,
-      args: tracedSVGOptions,
-      fileArgs: args,
-      cache,
       reporter,
     })
     imageProps.placeholder = {

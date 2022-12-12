@@ -4,20 +4,19 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "cypress": "^3.1.0",
-    "gatsby": "^2.3.34",
-    "gatsby-plugin-feed": "^2.1.2",
-    "gatsby-plugin-image": "^0.4.0",
-    "gatsby-plugin-manifest": "^2.0.17",
-    "gatsby-plugin-offline": "^2.0.23",
-    "gatsby-plugin-react-helmet": "^3.0.6",
-    "gatsby-plugin-sharp": "^2.0.37",
-    "gatsby-plugin-sitemap": "^2.0.12",
-    "gatsby-source-filesystem": "^2.8.1",
-    "gatsby-transformer-sharp": "^2.9.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-helmet": "^5.2.0"
+    "cypress": "^9.7.0",
+    "gatsby": "next",
+    "gatsby-plugin-feed": "next",
+    "gatsby-plugin-image": "next",
+    "gatsby-plugin-manifest": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-plugin-sitemap": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-sharp": "next",
+    "http-proxy": "^1.18.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "keywords": [
     "gatsby"
@@ -25,11 +24,11 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "del-cli -f assets && make-dir assets/blog",
-    "build": "gatsby build --prefix-paths",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build --prefix-paths",
     "postbuild": "cpy --cwd=./public --parents '**/*' '../assets/blog'",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
+    "test": "npm run build && npm run start-server-and-test",
     "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
     "serve": "npm-run-all --parallel serve:*",
     "serve:site": "gatsby serve --prefix-paths",
@@ -40,14 +39,14 @@
   "devDependencies": {
     "cpy-cli": "^2.0.0",
     "cross-env": "^5.2.0",
-    "del-cli": "^3.0.0",
-    "gatsby-cypress": "^0.1.7",
+    "del-cli": "^3.0.1",
+    "gatsby-cypress": "next",
     "is-ci": "^2.0.0",
     "make-dir-cli": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "2.0.4",
-    "serve-handler": "^6.0.0",
-    "start-server-and-test": "^1.7.1"
+    "start-server-and-test": "^1.14.0",
+    "wait-on": "^6.0.0"
   },
   "repository": {
     "type": "git",

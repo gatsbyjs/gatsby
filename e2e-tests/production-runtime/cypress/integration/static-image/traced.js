@@ -1,16 +1,29 @@
 const tracedTestId = `image-traced`
 
+Cypress.on("uncaught:exception", err => {
+  if (
+    (err.message.includes("Minified React error #418") ||
+      err.message.includes("Minified React error #423") ||
+      err.message.includes("Minified React error #425")) &&
+    Cypress.env(`TEST_PLUGIN_OFFLINE`)
+  ) {
+    return false
+  }
+})
+
 describe(`fixed`, () => {
   beforeEach(() => {
     cy.visit(`/static-image/traced`).waitForRouteChange()
   })
 
-  it(`renders a traced svg`, () => {
+  it(`traced svg (falls back to DOMINANT_COLOR)`, () => {
     cy.getTestElement(tracedTestId)
-      .find(`.gatsby-image-wrapper > img`)
-      .should(`have.attr`, `src`)
-      .and(src => {
-        ;[`data:image/svg+xml`].forEach(part => expect(src).to.include(part))
+      .find(`.gatsby-image-wrapper > [data-placeholder-image]`)
+      .first()
+      .should($el => {
+        // traced falls
+        expect($el.prop("tagName")).to.be.equal("DIV")
+        expect($el).to.be.empty
       })
   })
 

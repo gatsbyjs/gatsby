@@ -1,6 +1,6 @@
 /* global BROWSER_ESM_ONLY */
 import React from "react"
-import fs from "fs"
+import fs from "fs-extra"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
@@ -9,12 +9,13 @@ import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { ServerLocation, Router, isRedirect } from "@reach/router"
+import { ServerLocation, Router, isRedirect } from "@gatsbyjs/reach-router"
+import { headHandlerForSSR } from "./head/head-export-handler-for-ssr"
+import { getStaticQueryResults } from "./loader"
 
-// import testRequireError from "./test-require-error"
-// For some extremely mysterious reason, webpack adds the above module *after*
-// this module so that when this code runs, testRequireError is undefined.
-// So in the meantime, we'll just inline it.
+// prefer default export if available
+const preferDefault = m => (m && m.default) || m
+
 const testRequireError = (moduleName, err) => {
   const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
   const firstLine = err.toString().split(`\n`)[0]
@@ -48,13 +49,13 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default async function staticPage(
+export default async function staticPage({
   pagePath,
   isClientOnlyPage,
   publicDir,
   error,
-  callback
-) {
+  serverData,
+}) {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -159,6 +160,16 @@ export default async function staticPage(
 
     const { componentChunkName } = pageData
 
+    const pageComponent = await syncRequires.ssrComponents[componentChunkName]
+
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      staticQueryContext: getStaticQueryResults(),
+      pageData,
+      pagePath,
+    })
+
     let scriptsAndStyles = flatten(
       [`commons`].map(chunkKey => {
         const fetchKey = `assetsByChunkName[${chunkKey}]`
@@ -225,26 +236,17 @@ export default async function staticPage(
         const props = {
           ...this.props,
           ...pageData.result,
+          serverData,
           params: {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
         }
 
-        let pageElement
-        if (
-          syncRequires.ssrComponents[componentChunkName] &&
-          !isClientOnlyPage
-        ) {
-          pageElement = React.createElement(
-            syncRequires.ssrComponents[componentChunkName],
-            props
-          )
-        } else {
-          // If this is a client-only page or the pageComponent didn't finish
-          // compiling yet, just render an empty component.
-          pageElement = () => null
-        }
+        const pageElement = React.createElement(
+          preferDefault(syncRequires.ssrComponents[componentChunkName]),
+          props
+        )
 
         const wrappedPage = apiRunner(
           `wrapPageElement`,
@@ -259,14 +261,15 @@ export default async function staticPage(
       }
     }
 
-    const routerElement = (
-      <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-        <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
-          <RouteHandler path="/*" />
-        </Router>
-        <div {...RouteAnnouncerProps} />
-      </ServerLocation>
-    )
+    const routerElement =
+      syncRequires.ssrComponents[componentChunkName] && !isClientOnlyPage ? (
+        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+          <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
+            <RouteHandler path="/*" />
+          </Router>
+          <div {...RouteAnnouncerProps} />
+        </ServerLocation>
+      ) : null
 
     const bodyComponent = apiRunner(
       `wrapRootElement`,
@@ -348,5 +351,9 @@ export default async function staticPage(
   let htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
-  callback(null, htmlStr)
+  return htmlStr
+}
+
+export function getPageChunk({ componentChunkName }) {
+  return syncRequires.ssrComponents[componentChunkName]
 }

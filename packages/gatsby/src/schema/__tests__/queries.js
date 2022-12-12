@@ -1,11 +1,16 @@
-const { graphql } = require(`graphql`)
+const { graphql, parse, print } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
+const { tranformDocument } = require(`../../query/transform-document`)
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
+
+const mockActualOrderBy = jest.requireActual(`lodash`).orderBy
+jest.mock(`lodash/orderBy`, () => jest.fn(mockActualOrderBy))
+const orderBySpy = require(`lodash/orderBy`)
 
 const getTestNodes = require(`./fixtures/queries`)
 
@@ -34,21 +39,32 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
+beforeEach(() => {
+  orderBySpy.mockClear()
+})
+
 describe(`Query schema`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = (query, variables) =>
-    graphql(
+  const runQuery = (query, variables) => {
+    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+      const inputAst = typeof query === `string` ? parse(query) : query
+      const { ast } = tranformDocument(inputAst)
+      query = print(ast)
+    }
+
+    return graphql({
       schema,
-      query,
-      undefined,
-      withResolverContext({
+      source: query,
+      rootValue: undefined,
+      contextValue: withResolverContext({
         schema,
         schemaComposer,
       }),
-      variables
-    )
+      variableValues: variables,
+    })
+  }
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation(async (api, ...args) => {
@@ -92,7 +108,7 @@ describe(`Query schema`, () => {
           args[0].createResolvers({
             Frontmatter: {
               authors: {
-                resolve(source, args, context, info) {
+                async resolve(source, args, context, info) {
                   // NOTE: When using the first field resolver argument (here called
                   // `source`, also called `parent` or `root`), it is important to
                   // take care of the fact that the resolver can be called more than once
@@ -107,9 +123,13 @@ describe(`Query schema`, () => {
                   ) {
                     return source.authors
                   }
-                  return context.nodeModel
-                    .getAllNodes({ type: `Author` })
-                    .filter(author => source.authors.includes(author.email))
+                  const { entries } = await context.nodeModel.findAll({
+                    type: `Author`,
+                  })
+                  const authors = entries.filter(author =>
+                    source.authors.includes(author.email)
+                  )
+                  return Array.from(authors)
                 },
               },
             },
@@ -138,10 +158,12 @@ describe(`Query schema`, () => {
             Query: {
               allAuthorNames: {
                 type: `[String!]!`,
-                resolve(source, args, context, info) {
-                  return context.nodeModel
-                    .getAllNodes({ type: `Author` })
-                    .map(author => author.name)
+                async resolve(source, args, context, info) {
+                  const { entries } = await context.nodeModel.findAll({
+                    type: `Author`,
+                  })
+
+                  return Array.from(entries, author => author.name)
                 },
               },
             },
@@ -1216,9 +1238,7 @@ describe(`Query schema`, () => {
 
         const { clearKeptObjects } = require(`lmdb`)
 
-        const actualOrderBy = jest.requireActual(`lodash`).orderBy
-        const spy = jest.spyOn(require(`lodash`), `orderBy`)
-        spy.mockImplementationOnce((...args) => {
+        orderBySpy.mockImplementationOnce((...args) => {
           // eslint thinks that WeakRef is not defined for some reason :shrug:
           // eslint-disable-next-line no-undef
           const weakNode = new WeakRef(getNode(`md1`))
@@ -1239,8 +1259,10 @@ describe(`Query schema`, () => {
             )
           }
 
-          return actualOrderBy(...args)
+          return mockActualOrderBy(...args)
         })
+
+        expect(orderBySpy).not.toBeCalled()
 
         // sort added only to hit code path using `orderBy`,
         // which we use to force GC to simulate node "randomly"
@@ -1266,7 +1288,7 @@ describe(`Query schema`, () => {
         const results = await runQuery(query)
 
         // make sure we released all nodes from memory in middle of the run
-        expect(spy).toBeCalled()
+        expect(orderBySpy).toBeCalled()
 
         const expected = {
           allMarkdown: {
@@ -1403,9 +1425,7 @@ describe(`Query schema`, () => {
 
         const { clearKeptObjects } = require(`lmdb`)
 
-        const actualOrderBy = jest.requireActual(`lodash`).orderBy
-        const spy = jest.spyOn(require(`lodash`), `orderBy`)
-        spy.mockImplementationOnce((...args) => {
+        orderBySpy.mockImplementationOnce((...args) => {
           // eslint thinks that WeakRef is not defined for some reason :shrug:
           // eslint-disable-next-line no-undef
           const weakNode = new WeakRef(getNode(`md1`))
@@ -1426,8 +1446,10 @@ describe(`Query schema`, () => {
             )
           }
 
-          return actualOrderBy(...args)
+          return mockActualOrderBy(...args)
         })
+
+        expect(orderBySpy).not.toBeCalled()
 
         // sort added only to hit code path using `orderBy`,
         // which we use to force GC to simulate node "randomly"
@@ -1443,7 +1465,7 @@ describe(`Query schema`, () => {
         const results = await runQuery(query)
 
         // make sure we released all nodes from memory in middle of the run
-        expect(spy).toBeCalled()
+        expect(orderBySpy).toBeCalled()
 
         const expected = {
           allMarkdown: {
@@ -1505,9 +1527,7 @@ describe(`Query schema`, () => {
 
           const { clearKeptObjects } = require(`lmdb`)
 
-          const actualOrderBy = jest.requireActual(`lodash`).orderBy
-          const spy = jest.spyOn(require(`lodash`), `orderBy`)
-          spy.mockImplementationOnce((...args) => {
+          orderBySpy.mockImplementationOnce((...args) => {
             // eslint thinks that WeakRef is not defined for some reason :shrug:
             // eslint-disable-next-line no-undef
             const weakNode = new WeakRef(getNode(`md1`))
@@ -1528,8 +1548,10 @@ describe(`Query schema`, () => {
               )
             }
 
-            return actualOrderBy(...args)
+            return mockActualOrderBy(...args)
           })
+
+          expect(orderBySpy).not.toBeCalled()
 
           // sort added only to hit code path using `orderBy`,
           // which we use to force GC to simulate node "randomly"
@@ -1545,7 +1567,7 @@ describe(`Query schema`, () => {
           const results = await runQuery(query)
 
           // make sure we released all nodes from memory in middle of the run
-          expect(spy).toBeCalled()
+          expect(orderBySpy).toBeCalled()
 
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.max).toEqual(399)
@@ -1601,9 +1623,7 @@ describe(`Query schema`, () => {
 
           const { clearKeptObjects } = require(`lmdb`)
 
-          const actualOrderBy = jest.requireActual(`lodash`).orderBy
-          const spy = jest.spyOn(require(`lodash`), `orderBy`)
-          spy.mockImplementationOnce((...args) => {
+          orderBySpy.mockImplementationOnce((...args) => {
             // eslint thinks that WeakRef is not defined for some reason :shrug:
             // eslint-disable-next-line no-undef
             const weakNode = new WeakRef(getNode(`md1`))
@@ -1624,8 +1644,10 @@ describe(`Query schema`, () => {
               )
             }
 
-            return actualOrderBy(...args)
+            return mockActualOrderBy(...args)
           })
+
+          expect(orderBySpy).not.toBeCalled()
 
           // sort added only to hit code path using `orderBy`,
           // which we use to force GC to simulate node "randomly"
@@ -1641,7 +1663,7 @@ describe(`Query schema`, () => {
           const results = await runQuery(query)
 
           // make sure we released all nodes from memory in middle of the run
-          expect(spy).toBeCalled()
+          expect(orderBySpy).toBeCalled()
 
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.min).toEqual(199)
@@ -1696,9 +1718,7 @@ describe(`Query schema`, () => {
 
           const { clearKeptObjects } = require(`lmdb`)
 
-          const actualOrderBy = jest.requireActual(`lodash`).orderBy
-          const spy = jest.spyOn(require(`lodash`), `orderBy`)
-          spy.mockImplementationOnce((...args) => {
+          orderBySpy.mockImplementationOnce((...args) => {
             // eslint thinks that WeakRef is not defined for some reason :shrug:
             // eslint-disable-next-line no-undef
             const weakNode = new WeakRef(getNode(`md1`))
@@ -1719,8 +1739,10 @@ describe(`Query schema`, () => {
               )
             }
 
-            return actualOrderBy(...args)
+            return mockActualOrderBy(...args)
           })
+
+          expect(orderBySpy).not.toBeCalled()
 
           // sort added only to hit code path using `orderBy`,
           // which we use to force GC to simulate node "randomly"
@@ -1736,7 +1758,7 @@ describe(`Query schema`, () => {
           const results = await runQuery(query)
 
           // make sure we released all nodes from memory in middle of the run
-          expect(spy).toBeCalled()
+          expect(orderBySpy).toBeCalled()
 
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.sum).toEqual(199 + 399)

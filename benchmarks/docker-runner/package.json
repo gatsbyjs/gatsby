@@ -1,0 +1,36 @@
+{
+  "name": "gatsby-generic-benchmark",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Test site stress testing memory usage",
+  "license": "MIT",
+  "scripts": {
+    "gatsby:build": "yarn gatsby build",
+    "gatsby:serve": "yarn gatsby serve -H 0.0.0.0 -p 9000",
+    "gatsby:develop": "NODE_ENV=development yarn gatsby develop -H 0.0.0.0 -p 9000",
+    "gatsby:build:debug": "node --nolazy --inspect-brk=0.0.0.0:9229 node_modules/.bin/gatsby build",
+    "gatsby:develop:debug": "NODE_ENV=development node --nolazy --inspect-brk=0.0.0.0:9229 node_modules/.bin/gatsby develop -H 0.0.0.0 -p 9000",
+    "docker:build": "docker build -t gatsby-generic-benchmark . --build-arg jemalloc=$JEMALLOC",
+    "docker:remove": "docker image rm -f gatsby-generic-benchmark",
+    "docker:rebuild": "yarn docker:stop; yarn docker:remove && yarn docker:build",
+    "docker:start": "./scripts/docker-start",
+    "docker:connect": "./scripts/docker-connect",
+    "docker:start-and-connect": "./scripts/docker-start && sleep 1 && ./scripts/docker-connect",
+    "docker:stop": "./scripts/docker-stop",
+    "docker:stats": "./scripts/docker-stats",
+    "test": "node scripts/test.js",
+    "test-suite": "node scripts/test-suite.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/generic"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "gatsby": "^4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

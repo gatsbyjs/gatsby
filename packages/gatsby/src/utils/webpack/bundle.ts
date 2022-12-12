@@ -35,7 +35,7 @@ export function build(webpackConfig: webpack.Configuration): Promise<{
 export function watch(
   webpackConfig: webpack.Configuration,
   onWatch: (
-    err: Error | webpack.WebpackError | undefined,
+    err: Error | webpack.WebpackError | undefined | null,
     stats: webpack.Stats | undefined
   ) => void,
   watchOptions: webpack.Watching["watchOptions"] = {}

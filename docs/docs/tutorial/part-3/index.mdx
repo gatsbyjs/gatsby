@@ -3,9 +3,9 @@ title: "Part 3: Add Features with Plugins"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
-import Collapsible from '@components/collapsible'
-import { MdArrowForward } from 'react-icons/md'
+import { LinkButton } from "gatsby-interface"
+import Collapsible from "@components/collapsible"
+import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
@@ -15,19 +15,29 @@ In this part of the Tutorial, you'll learn what Gatsby plugins are and how to us
 
 By the end of this part of the Tutorial, you will be able to:
 
-* Use the [Gatsby Plugin Library](/plugins) to browse all the available plugins.
-* Add a plugin to your Gatsby site.
-* Configure your plugins in your `gatsby-config.js` file.
+- Use the [Gatsby Plugin Library](/plugins) to browse all the available plugins.
+- Add a plugin to your Gatsby site.
+- Configure your plugins in your `gatsby-config.js` file.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Prefer a video?**
 
 If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 3.
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+**Note**: Parts of this recording may be slightly outdated, but the concepts are generally applicable. For the most up-to-date information, follow along with the written tutorial.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/C8YxdGGjvOg?start=228" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/C8YxdGGjvOg?start=228"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 </Announcement>
 
@@ -35,13 +45,13 @@ You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on th
 
 In Gatsby terms, a **plugin** is a separate npm package that you install to add extra features to your site.
 
-There are a variety of plugins that each have different use cases. Some plugins provide pre-built components, others add analytics, others let you pull data into your site. Some plugins are built by Gatsby employees, while other plugins are built and maintained by community members. So far, there are more than 2,600 plugins to choose from. You can look through all the available plugins using the [Gatsby Plugin Library](/plugins).
+There are a variety of plugins that each have different use cases. Some plugins provide pre-built components, others add analytics, others let you pull data into your site. Some plugins are built by Gatsby employees, while other plugins are built and maintained by community members. So far, there are more than 3,000 plugins to choose from. You can look through all the available plugins using the [Gatsby Plugin Library](/plugins).
 
 You can think of a plugin as an accessory for your site. You don't _need_ to use plugins - you could build out the same functionality from scratch yourself - but they save you time. They're like those fancy single-purpose cooking gadgets that peel apples or crush garlic. You could accomplish the same task using a regular knife, but it's often faster to use a tool that's built to do that one specific job really well.
 
 ![Kitchen accessories like an apple peeler, an egg slicer, or a garlic press are specialized tools that do one thing really well. They aren't required, but they make your life easier.)](./cooking-accessories.png)
 
-You will likely use plugins in almost every Gatsby site you build. While working through the rest of the Tutorial, you’ll have many opportunities to practice installing and using plugins.
+You will likely use plugins in almost every Gatsby site you build. While working through the rest of the Tutorial, you'll have many opportunities to practice installing and using plugins.
 
 ## Add a plugin to your site
 
@@ -64,6 +74,7 @@ In your terminal, run the following command (swapping out `plugin-name` for the 
 ```shell
 npm install plugin-name
 ```
+
 Depending on what plugin you're using, there might be more dependencies that you also need to install. Check the specific plugin's README in the plugin library for more details.
 
 #### 2) Configure the plugin in your `gatsby-config.js` file.
@@ -100,7 +111,7 @@ module.exports = {
 }
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** After you make updates to your `gatsby-config.js` file, you'll need to restart your `gatsby develop` process for your changes to be picked up.
 
@@ -130,12 +141,12 @@ Follow the steps below to use the `StaticImage` component to add an image from a
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 The `StaticImage` component requires a few additional plugins to work. These extra plugins are called **peer dependencies**, and you'll need to install them along with the `gatsby-plugin-image` package:
 
-* `gatsby-plugin-sharp`: Handles the actual image processing that is used by `gatsby-plugin-image`.
-* `gatsby-source-filesystem`: Lets you pull in data from your computer's filesystem. (You'll learn more about this plugin later. Just install it for now.)
+- `gatsby-plugin-sharp`: Handles the actual image processing that is used by `gatsby-plugin-image`.
+- `gatsby-source-filesystem`: Lets you pull in data from your computer's filesystem. (You'll learn more about this plugin later. Just install it for now.)
 
 **Tip:** When adding a new plugin to your site, check the plugin README in the [Gatsby Plugin Library](/plugins) to see if there are any special setup instructions.
 
@@ -157,23 +168,24 @@ module.exports = {
 };
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Key Gatsby Concept** 💡
 
 The `gatsby-config.js` file is a special file that Gatsby recognizes automatically. It's where you add plugins and other site configuration.
 
 After you update your `gatsby-config.js` file, your local development server has to restart in order to pick up the new changes. Sometimes it will restart itself automatically, but if you're seeing unexpected behavior, try stopping and restarting it yourself.
+
 </Announcement>
 
 3. Now that your plugins have been installed and configured, you can use the `StaticImage` component in your Gatsby site! You can use the `StaticImage` component similarly to the way you'd use an HTML `<img>` tag.
 
-    The `StaticImage` component expects the following props:
+   The `StaticImage` component expects the following props:
 
-    * `src` (string): The URL to the image you want to load. (This is the same as what you put in the `src` attribute of an `<img>` HTML element.)
-    * `alt` (string): The alt text to describe the image. This gets used by screen readers or if there's a problem loading the image.
+   - `src` (string): The URL to the image you want to load. (This is the same as what you put in the `src` attribute of an `<img>` HTML element.)
+   - `alt` (string): The alt text to describe the image. This gets used by screen readers or if there's a problem loading the image.
 
-    Find an image URL online, and then use the `StaticImage` component to add that image to your home page:
+   Find an image URL online, and then use the `StaticImage` component to add that image to your home page:
 
 ```js:title=src/pages/index.js
 import * as React from 'react'
@@ -194,6 +206,8 @@ const IndexPage = () => {
   )
 }
 
+export const Head = () => <title>Home Page</title>
+
 export default IndexPage
 ```
 
@@ -201,7 +215,7 @@ export default IndexPage
 
 ![The home page of your site, which now includes a picture of a dog.](./index-page-with-static-image-from-url.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 Nothing at `localhost:8000`? Make sure your local development server is still running!
 
@@ -219,6 +233,7 @@ You can also use the `StaticImage` component to render images from your local fi
 
 1. Download a photo to your computer, and move it into your project folder. To keep things organized, put it in the `src/images` directory.
 2. Update the `src` prop in your home page to be a relative path to your file instead of a URL. (Make sure it matches the name of your image!) Don't forget to update the `alt` prop to describe your image!
+
 ```js:title=src/pages/index.js
 import * as React from 'react'
 import Layout from '../components/layout'
@@ -238,15 +253,18 @@ const IndexPage = () => {
   )
 }
 
+export const Head = () => <title>Home Page</title>
+
 export default IndexPage
 ```
+
 3. In your web browser, go to `localhost:8000`. Your image should still appear on the home page.
 
 ![The home page of your site, which includes a different picture of a dog.](./index-page-with-static-image-from-filesystem.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 
@@ -254,10 +272,10 @@ export default IndexPage
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* What is the benefit to using a plugin in your Gatsby site?
-* How would you add a new plugin to your Gatsby site?
+- What is the benefit to using a plugin in your Gatsby site?
+- How would you add a new plugin to your Gatsby site?
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Ship It!** 🚀
 
@@ -282,7 +300,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 - The general process for using a plugin is to install it, configure it in your `gatsby-config.js` file, and then use it in your site as needed.
 - You can use the [Gatsby Plugin Library](https://www.gatsbyjs.com/plugins) to browse all the available plugins and learn more about how each one works.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

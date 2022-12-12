@@ -57,8 +57,6 @@ query.
 Delete the `id` from the query and bring up the autocomplete again (<kbd>Ctrl +
 Space</kbd>).
 
-![The GraphiQL IDE showing autocomplete options](../../images/filesystem-autocomplete.png)
-
 Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
 each time to re-run the query. You'll see something like this:
 

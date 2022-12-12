@@ -3,9 +3,9 @@ title: "Part 0: Set Up Your Development Environment"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
-import Collapsible from '@components/collapsible'
-import { MdArrowForward } from 'react-icons/md'
+import { LinkButton } from "gatsby-interface"
+import Collapsible from "@components/collapsible"
+import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
@@ -15,52 +15,53 @@ Before you start building your first Gatsby site, you’ll need to familiarize y
 
 By the end of this part of the Tutorial, you will:
 
-* Have a basic understanding of the key technologies needed to create a Gatsby site.
-* Install all the required software tools.
-* Create all the necessary accounts for deploying your site online.
+- Have a basic understanding of the key technologies needed to create a Gatsby site.
+- Install all the required software tools.
+- Create all the necessary accounts for deploying your site online.
 
 ## Background Knowledge
 
 The Tutorial is intended to be as approachable as possible for people who are new to Gatsby and React. With that said, if you are brand new to web development (welcome!), you might find it helpful to learn some fundamentals first.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
-Don't worry, you don't need to be an expert with these! A high-level understanding of the basics should be enough. You'll pick up a lot through the course of the Tutorial.
+<Announcement>
+  Don't worry, you don't need to be an expert with these! A high-level
+  understanding of the basics should be enough. You'll pick up a lot through the
+  course of the Tutorial.
 </Announcement>
 
-* **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. You use HTML to add structure to your web content, defining things like headings, paragraphs, and more.
-    * Learn more about HTML with the [Basic HTML and HTML5 course on freeCodeCamp](https://www.freecodecamp.org/learn/responsive-web-design/#basic-html-and-html5).
-* **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
-    * Learn more about CSS with the [Basic CSS course on freeCodeCamp](https://www.freecodecamp.org/learn/responsive-web-design/#basic-css).
-* **JavaScript**: A programming language that lets you make your web content dynamic and interactive.
-    * In this Tutorial you will use the following concepts: creating and using variables, destructuring objects and arrays, arrow functions, array methods like `.map()`.
-    * Learn more about JavaScript with the [Basic JavaScript course on freeCodeCamp](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/#basic-javascript).
-* The **command line**: The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the **terminal**. In this tutorial, we’ll use both interchangeably.
-    * If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, something like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute.
-    * The instructions for how to use the command line differ slightly based on what operating system your computer uses:
-        * [Command line instructions for Mac](https://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/)
-        * [Command line instructions for Windows](https://www.lifewire.com/how-to-open-command-prompt-2618089)
-        * [Command line instructions for Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
+- **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. You use HTML to add structure to your web content, defining things like headings, paragraphs, and more.
+  - Learn more about HTML with the [Basic HTML and HTML5 course on freeCodeCamp](https://www.freecodecamp.org/learn/responsive-web-design/#basic-html-and-html5).
+- **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
+  - Learn more about CSS with the [Basic CSS course on freeCodeCamp](https://www.freecodecamp.org/learn/responsive-web-design/#basic-css).
+- **JavaScript**: A programming language that lets you make your web content dynamic and interactive.
+  - In this Tutorial you will use the following concepts: creating and using variables, destructuring objects and arrays, arrow functions, array methods like `.map()`.
+  - Learn more about JavaScript with the [Basic JavaScript course on freeCodeCamp](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/#basic-javascript).
+- The **command line**: The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the **terminal**. In this tutorial, we’ll use both interchangeably.
+  - If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, something like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute.
+  - The instructions for how to use the command line differ slightly based on what operating system your computer uses:
+    - [Command line instructions for Mac](https://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/)
+    - [Command line instructions for Windows](https://www.lifewire.com/how-to-open-command-prompt-2618089)
+    - [Command line instructions for Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
 In addition to the ones listed above, Gatsby uses a few more technologies under the hood. The Tutorial will teach you everything you need to know about the following tools. But if you're interested in getting a head start, here's a bit more information:
 
-* **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
-    * Learn more about React with the [React course on freeCodeCamp](https://www.freecodecamp.org/learn/front-end-libraries/#react).
-* **GraphQL**: A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
-    * Learn more about GraphQL with the [How to GraphQL tutorial](https://www.howtographql.com/).
-
+- **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
+  - Learn more about React with the [React course on freeCodeCamp](https://www.freecodecamp.org/learn/front-end-libraries/#react).
+- **GraphQL**: A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
+  - Learn more about GraphQL with the [How to GraphQL tutorial](https://www.howtographql.com/).
 
 ## Installation Guide
 
 The rest of this part of the Tutorial walks you through how to install the following tools:
 
-* [Node.js](#nodejs) (v14.15 or newer)
-* [Git](#git)
-* [Gatsby command line interface (CLI)](#gatsby-cli) (v3 or newer)
-* [Visual Studio Code](#visual-studio-code)
+- [Node.js](#nodejs) (v18 or newer)
+- [Git](#git)
+- [Gatsby command line interface (CLI)](#gatsby-cli) (v5 or newer)
+- [Visual Studio Code](#visual-studio-code)
 
 ### Node.js
 
-[Node.js](https://nodejs.dev/learn) is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have Node.js version 14.15 (or newer) installed on your computer.
+[Node.js](https://nodejs.dev/en/learn/) is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have Node.js version 18 (or newer) installed on your computer.
 
 [npm](https://docs.npmjs.com/getting-started/what-is-npm) is a package manager that comes bundled with Node.js. You'll use the npm command line interface to add packages to your site (like Gatsby plugins) and to run command line tasks (like starting up your site).
 
@@ -93,7 +94,7 @@ brew -v
 xcode-select --install
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account.
 
@@ -110,7 +111,7 @@ If that fails, download it [directly from Apple's site](https://developer.apple.
 brew install node
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
@@ -132,7 +133,7 @@ Download and install the latest Node.js version from [the official Node.js websi
 
 Install nvm (Node Version Manager) and needed dependencies. nvm is used to manage Node.js and all its associated versions.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 When installing a package, if it asks for confirmation, type `y` and press enter.
 
@@ -144,7 +145,7 @@ Select your distro:
 - [Arch, Manjaro and other pacman based distros](#arch-manjaro-and-other-pacman-based-distros)
 - [Fedora, RedHat, and other dnf based distros](#fedora-redhat-and-other-dnf-based-distros)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 If the Linux distribution you are using is not listed here, please find instructions on the web.
 
@@ -228,8 +229,8 @@ nvm --version
 When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the version 16 release, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 16
-nvm use 16
+nvm install 18
+nvm use 18
 ```
 
 Confirm that this worked. The output should be a version number.
@@ -255,7 +256,6 @@ The steps to download and install Git depend on your operating system. Follow th
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
 - [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
-
 ### Gatsby CLI
 
 The Gatsby command line interface (CLI) is a tool that lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites.
@@ -268,7 +268,7 @@ Install the Gatsby CLI globally by running the command below. (Have an older ver
 npm install -g gatsby-cli
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** When you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands. You can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry).
 
@@ -288,9 +288,9 @@ gatsby --help
 
 ![Check Gatsby commands in terminal](05-gatsby-help.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
-**Troubleshooting**
+#### Troubleshooting
 
 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
@@ -308,14 +308,14 @@ The final step in this part of the Tutorial is to create accounts for the online
 
 In this Tutorial, you will deploy your site using Gatsby Cloud. To use Gatsby Cloud, you will need to set up a GitHub account and a Gatsby Cloud account. (Both accounts are free!)
 
-* [Create a GitHub account.](https://github.com/join) GitHub is a website for storing your Git codebases (also called Git repositories).
-* [Create a Gatsby Cloud account.](/dashboard/signup/) Gatsby Cloud is a platform designed to be the best way to build and deploy your Gatsby sites.
+- [Create a GitHub account.](https://github.com/join) GitHub is a website for storing your Git codebases (also called Git repositories).
+- [Create a Gatsby Cloud account.](/dashboard/signup/) Gatsby Cloud is a platform designed to be the best way to build and deploy your Gatsby sites.
 
 ## Summary
 
 Now that you have all the knowledge and tools you'll need, you're ready for the Tutorial!
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

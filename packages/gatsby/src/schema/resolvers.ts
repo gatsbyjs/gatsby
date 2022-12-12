@@ -11,10 +11,12 @@ import {
   isObjectType,
   isInterfaceType,
   isEnumType,
+  isInputObjectType,
   SelectionSetNode,
   SelectionNode,
   FieldNode,
 } from "graphql"
+import isPlainObject from "lodash/isPlainObject"
 import { Path } from "graphql/jsutils/Path"
 import reporter from "gatsby-cli/lib/reporter"
 import { pathToArray } from "../query/utils"
@@ -34,11 +36,50 @@ type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 type nestedListOfStrings = Array<string | nestedListOfStrings>
 type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
 
-function getMaybeResolvedValue(
+type NestedPathStructure = INestedPathStructureNode | true | "ASC" | "DESC"
+
+interface INestedPathStructureNode {
+  [key: string]: NestedPathStructure
+}
+
+function pathObjectToPathString(input: INestedPathStructureNode): {
+  path: string
+  leaf: any
+} {
+  const path: Array<string> = []
+  let currentValue: NestedPathStructure | undefined = input
+  let leaf: any = undefined
+  while (currentValue) {
+    if (isPlainObject(currentValue)) {
+      const entries = Object.entries(currentValue)
+      if (entries.length !== 1) {
+        throw new Error(`Invalid field arg`)
+      }
+      for (const [key, value] of entries) {
+        path.push(key)
+        currentValue = value
+      }
+    } else {
+      leaf = currentValue
+      currentValue = undefined
+    }
+  }
+
+  return {
+    path: path.join(`.`),
+    leaf,
+  }
+}
+
+export function getMaybeResolvedValue(
   node: IGatsbyNode,
-  field: string,
+  field: string | INestedPathStructureNode,
   nodeInterfaceName: string
 ): any {
+  if (typeof field !== `string`) {
+    field = pathObjectToPathString(field).path
+  }
+
   if (
     fieldPathNeedToResolve({
       selector: field,
@@ -70,7 +111,40 @@ export function findOne<TSource, TArgs>(
   }
 }
 
-type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number }
+type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number; sort: any }
+
+function maybeConvertSortInputObjectToSortPath<TArgs>(
+  args: PaginatedArgs<TArgs>
+): any {
+  if (!args.sort) {
+    return args
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+    let sorts = args.sort
+    if (!Array.isArray(sorts)) {
+      sorts = [sorts]
+    }
+
+    const modifiedSort: any = {
+      fields: [],
+      order: [],
+    }
+
+    for (const sort of sorts) {
+      const { path, leaf } = pathObjectToPathString(sort)
+      modifiedSort.fields.push(path)
+      modifiedSort.order.push(leaf)
+    }
+
+    return {
+      ...args,
+      sort: modifiedSort,
+    }
+  }
+
+  return args
+}
 
 export function findManyPaginated<TSource, TArgs>(
   typeName: string
@@ -95,7 +169,7 @@ export function findManyPaginated<TSource, TArgs>(
     const limit = typeof args.limit === `number` ? args.limit + 2 : undefined
 
     const extendedArgs = {
-      ...args,
+      ...maybeConvertSortInputObjectToSortPath(args),
       group: group || [],
       distinct: distinct || [],
       max: max || [],
@@ -127,7 +201,7 @@ export function findManyPaginated<TSource, TArgs>(
 }
 
 interface IFieldConnectionArgs {
-  field: string
+  field: string | INestedPathStructureNode
 }
 
 export function createDistinctResolver(
@@ -281,7 +355,10 @@ export function createGroupResolver(
               },
               args
             ),
-            field,
+            field:
+              typeof field === `string`
+                ? field
+                : pathObjectToPathString(field).path,
             fieldValue,
           })
           return acc
@@ -560,25 +637,52 @@ function getProjectedField(
       info
     )
 
+    if (fieldNodes.length === 0) {
+      return []
+    }
+
     const returnType = getNullableType(info.returnType)
 
     if (isObjectType(returnType) || isInterfaceType(returnType)) {
       const field = returnType.getFields()[fieldName]
       const fieldArg = field?.args?.find(arg => arg.name === `field`)
       if (fieldArg) {
-        const fieldEnum = getNullableType(fieldArg.type)
+        const fieldTC = getNullableType(fieldArg.type)
 
-        if (isEnumType(fieldEnum)) {
+        if (isEnumType(fieldTC) || isInputObjectType(fieldTC)) {
           return fieldNodes.reduce(
             (acc: Array<string>, fieldNode: FieldNode) => {
               const fieldArg = fieldNode.arguments?.find(
                 arg => arg.name.value === `field`
               )
-              if (fieldArg?.value.kind === Kind.ENUM) {
-                const enumKey = fieldArg.value.value
-                const enumValue = fieldEnum.getValue(enumKey)
-                if (enumValue) {
-                  return [...acc, enumValue.value]
+              if (isEnumType(fieldTC)) {
+                if (fieldArg?.value.kind === Kind.ENUM) {
+                  const enumKey = fieldArg.value.value
+                  const enumValue = fieldTC.getValue(enumKey)
+                  if (enumValue) {
+                    acc.push(enumValue.value)
+                  }
+                }
+              } else if (isInputObjectType(fieldTC)) {
+                const path: Array<string> = []
+                let currentValue = fieldArg?.value
+                while (currentValue) {
+                  if (currentValue.kind === Kind.OBJECT) {
+                    if (currentValue.fields.length !== 1) {
+                      throw new Error(`Invalid field arg`)
+                    }
+
+                    const fieldArg = currentValue.fields[0]
+                    path.push(fieldArg.name.value)
+                    currentValue = fieldArg.value
+                  } else {
+                    currentValue = undefined
+                  }
+                }
+
+                if (path.length > 0) {
+                  const sortPath = path.join(`.`)
+                  acc.push(sortPath)
                 }
               }
               return acc

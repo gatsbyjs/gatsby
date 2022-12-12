@@ -2,8 +2,6 @@
 title: Rendering Options
 ---
 
-import { Announcement } from "gatsby-interface"
-
 Gatsby is historically known as a static site generator enhanced with [React Hydration][1].
 But starting with Gatsby 4, you can choose alternative rendering options in addition to static site generation (SSG) — on a per-page basis.
 This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
@@ -14,7 +12,7 @@ A rendering option defines the stage at which your page's user-facing HTML is ge
 (SSG or pre-rendering), during HTTP request (server-side rendering) or locally in the browser
 with Javascript (client-side rendering).
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 For an in-depth explanation of each of those approaches and their trade-offs we
 highly recommend the ["Rendering on the Web"][3] article from the Chrome team.
@@ -35,7 +33,7 @@ How does SSG work?
 
 This mode provides the most pleasant user experience, the highest level of security, and run-time scalability for your site.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** SSG doesn't mean your site is not dynamic. You can still use JavaScript to communicate with any APIs,
 add private sections of your site for authorized users via [client-side rendering][4] and
@@ -72,7 +70,7 @@ It implies a different deployment model and requires backend infrastructure. But
 
 SSG, DSG, and client-side rendering can handle a vast majority of use cases in web development. But there is a small niche when you may still need to generate HTML on-the-fly. That's when you'll need Server-Side Rendering.
 
-Server-Side Rendering is a method of content rendering in which each web page is served to a site visitor at runtime, meaning that a portion of the build process happens on each page request. Because the content is rendering during runtime, visitors will always get the latest version of content directly from the server—though they may have to wait a few seconds for it display.
+Server-Side Rendering is a method of content rendering in which each web page is served to a site visitor at runtime, meaning that a portion of the build process happens on each page request. Because the content is rendering during runtime, visitors will always get the latest version of content directly from the server—though they may have to wait a few seconds for it to display.
 
 For example, imagine you are building a site with user reviews. You want those reviews to be immediately indexed by search engines as soon as they are posted, so client-side rendering is not an option.
 
