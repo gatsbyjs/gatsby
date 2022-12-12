@@ -88,7 +88,7 @@ export async function compileGatsbyFiles(
         break
       }
 
-      // Check for likely misnamed files, but allow a 'gatsby-node' directory.
+      // Check for likely misnamed files
       if (isNearMatch(name, gatsbyNodeName, 3)) {
         nearMatch = file
       }
