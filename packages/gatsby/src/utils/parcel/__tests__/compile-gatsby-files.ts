@@ -189,14 +189,17 @@ describe(`gatsby-node directory is allowed`, () => {
     expect(reporterPanicMock).not.toHaveBeenCalled()
   })
 
-  it(`should not compile gatsby-node dir`, async () => {
+  it(`should compile gatsby-node file and its dir files`, async () => {
     process.chdir(dir.gatsbyNodeAsDirectory)
     await remove(`${dir.gatsbyNodeAsDirectory}/.cache`)
     await compileGatsbyFiles(dir.gatsbyNodeAsDirectory)
-    const isCompiled = await pathExists(
-      `${dir.gatsbyNodeAsDirectory}/.cache/compiled/gatsby-node`
+
+    const compiledGatsbyNode = await readFile(
+      `${dir.gatsbyNodeAsDirectory}/.cache/compiled/gatsby-node.js`,
+      `utf-8`
     )
-    expect(isCompiled).toEqual(false)
+
+    expect(compiledGatsbyNode).toContain(`I am working!`)
     expect(reporterPanicMock).not.toHaveBeenCalled()
   })
 })

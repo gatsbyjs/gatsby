@@ -64,7 +64,12 @@ export async function compileGatsbyFiles(
     const gatsbyNodeName = `gatsby-node`
 
     // Check for gatsby-node.jsx and gatsby-node.tsx (or other misnamed variations)
-    const files = await readdir(siteRoot)
+    // With "withFileTypes" the array will contain <fs.Dirent> objects
+    // So directory names need to be filtered out
+    const filesAndDirectories = await readdir(siteRoot, { withFileTypes: true })
+    const files = filesAndDirectories
+      .filter(i => !i.isDirectory())
+      .map(i => i.name)
 
     let nearMatch = ``
 

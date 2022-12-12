@@ -1,2 +1,2 @@
-import { createPages } from "./gatsby-node/create-pages"
-export { createPages }
+import { onPreInit } from "./gatsby-node/on-pre-init"
+export { onPreInit }
