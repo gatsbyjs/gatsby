@@ -16,7 +16,7 @@ import {
   IJobNotWhitelisted,
   WorkerError,
 } from "./types"
-import { requireGatsbyPlugin } from "../require-gatsby-plugin"
+import { importGatsbyPlugin } from "../import-gatsby-plugin"
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
@@ -157,30 +157,31 @@ function runJob(
 ): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
-    const worker = requireGatsbyPlugin(plugin, `gatsby-worker`)
-    if (!worker[job.name]) {
-      throw new Error(`No worker function found for ${job.name}`)
-    }
+    return importGatsbyPlugin(plugin, `gatsby-worker`).then(worker => {
+      if (!worker[job.name]) {
+        throw new Error(`No worker function found for ${job.name}`)
+      }
 
-    if (!forceLocal && !job.plugin.isLocal && hasExternalJobsEnabled()) {
-      if (process.send) {
-        if (!isListeningForMessages) {
-          isListeningForMessages = true
-          listenForJobMessages()
-        }
+      if (!forceLocal && !job.plugin.isLocal && hasExternalJobsEnabled()) {
+        if (process.send) {
+          if (!isListeningForMessages) {
+            isListeningForMessages = true
+            listenForJobMessages()
+          }
 
-        return runExternalWorker(job)
-      } else {
-        // only show the offloading warning once
-        if (!hasShownIPCDisabledWarning) {
-          hasShownIPCDisabledWarning = true
-          reporter.warn(
-            `Offloading of a job failed as IPC could not be detected. Running job locally.`
-          )
+          return runExternalWorker(job)
+        } else {
+          // only show the offloading warning once
+          if (!hasShownIPCDisabledWarning) {
+            hasShownIPCDisabledWarning = true
+            reporter.warn(
+              `Offloading of a job failed as IPC could not be detected. Running job locally.`
+            )
+          }
         }
       }
-    }
-    return runLocalWorker(worker[job.name], job)
+      return runLocalWorker(worker[job.name], job)
+    })
   } catch (err) {
     throw new Error(
       `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`

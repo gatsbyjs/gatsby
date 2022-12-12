@@ -146,15 +146,15 @@ yadda yadda
       })
       const schema = sc.buildSchema()
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `query {
-                    listNode {
-                        ${fragment}
-                    }
-                }
-                `
-      )
+        source: `query {
+              listNode {
+                  ${fragment}
+              }
+          }
+          `,
+      })
       return result
     }
 

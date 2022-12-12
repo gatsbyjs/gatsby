@@ -115,6 +115,21 @@ export const prepareOptions = (
     )
   }
 
+  if (
+    stage === `develop` ||
+    stage === `build-html` ||
+    stage === `develop-html`
+  ) {
+    requiredPlugins.push(
+      babel.createConfigItem(
+        [resolve(`./babel/babel-plugin-add-slice-placeholder-location`)],
+        {
+          type: `plugin`,
+        }
+      )
+    )
+  }
+
   const requiredPresets: Array<PluginItem> = []
 
   if (stage === `develop`) {

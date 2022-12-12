@@ -71,6 +71,30 @@ When you directly visit a page you'll get served the HTML. If you request a page
 
 This all happens automatically and you only need to configure the `defer` key.
 
+## Current limitations
+
+There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code, through contributions to upstream dependencies, and updates to our documentation.
+
+### Functions inside `gatsby-config` are not allowed
+
+The `gatsby-config` file is bundled into the DSG engine and for this the file has to be serializable. Functions or callbacks can't be used as they are not serializable.
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-acme`,
+      options: {
+        // ⚠️ Doesn't work
+        optionA: () => `foobar`,
+        // OK
+        optionB: `foobar`
+      }
+    }
+  ]
+}
+```
+
 ## Additional Resources
 
 - [How-To Guide: Using Deferred Static Generation](/docs/how-to/rendering-options/using-deferred-static-generation/)

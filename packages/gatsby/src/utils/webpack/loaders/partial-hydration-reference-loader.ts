@@ -36,7 +36,7 @@ function createDefaultReference(
 const partialHydrationReferenceLoader: LoaderDefinitionFunction<
   Record<string, unknown>
 > = async function partialHydrationReferenceLoader(content) {
-  if (!content.includes(`client export`)) {
+  if (!content.includes(`use client`)) {
     return content
   }
 
@@ -52,7 +52,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
     ExpressionStatement(plainAcornNode: Node) {
       const node = plainAcornNode as unknown as Directive
 
-      if (node.directive === `client export`) {
+      if (node.directive === `use client`) {
         hasClientExportDirective = true
       }
     },
@@ -177,7 +177,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
     },
   })
 
-  return references.join(`\n`)
+  return hasClientExportDirective ? references.join(`\n`) : content
 }
 
 module.exports = partialHydrationReferenceLoader

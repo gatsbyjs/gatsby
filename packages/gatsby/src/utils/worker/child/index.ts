@@ -12,11 +12,11 @@ if (isWorker) {
     : {}
 }
 
-// Note: this doesn't check for conflicts between module exports
 export {
   renderHTMLProd,
   renderHTMLDev,
   renderPartialHydrationProd,
+  renderSlices,
 } from "./render-html"
 export { setInferenceMetadata, buildSchema } from "./schema"
 export { setComponents, runQueries, saveQueriesDependencies } from "./queries"

@@ -5,7 +5,7 @@ import * as _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
-import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
+import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
 
 export const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
@@ -26,13 +26,11 @@ export async function printQueryEnginePlugins(): Promise<void> {
   } catch (e) {
     // no-op
   }
-  return await fs.writeFile(
-    schemaCustomizationPluginsPath,
-    renderQueryEnginePlugins()
-  )
+  const queryEnginePlugins = await renderQueryEnginePlugins()
+  return await fs.writeFile(schemaCustomizationPluginsPath, queryEnginePlugins)
 }
 
-function renderQueryEnginePlugins(): string {
+async function renderQueryEnginePlugins(): Promise<string> {
   const { flattenedPlugins } = store.getState()
   const usedPlugins = flattenedPlugins.filter(
     p =>
@@ -41,7 +39,8 @@ function renderQueryEnginePlugins(): string {
         p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api)))
   )
   const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
-  return render(usedPlugins, usedSubPlugins)
+  const result = await render(usedPlugins, usedSubPlugins)
+  return result
 }
 
 function relativePluginPath(resolve: string): string {
@@ -50,10 +49,10 @@ function relativePluginPath(resolve: string): string {
   )
 }
 
-function render(
+async function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
   usedSubPlugins: IGatsbyState["flattenedPlugins"]
-): string {
+): Promise<string> {
   const uniqGatsbyNode = uniq(usedPlugins)
   const uniqSubPlugins = uniq(usedSubPlugins)
 
@@ -67,7 +66,7 @@ function render(
     }
   })
 
-  const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
+  const pluginsWithWorkers = await filterPluginsWithWorkers(uniqGatsbyNode)
 
   const subPluginModuleToImportNameMapping = new Map<string, string>()
   const imports: Array<string> = [
@@ -144,16 +143,23 @@ export const flattenedPlugins =
   return output
 }
 
-function filterPluginsWithWorkers(
+async function filterPluginsWithWorkers(
   plugins: IGatsbyState["flattenedPlugins"]
-): IGatsbyState["flattenedPlugins"] {
-  return plugins.filter(plugin => {
+): Promise<IGatsbyState["flattenedPlugins"]> {
+  const filteredPlugins: Array<any> = []
+
+  for (const plugin of plugins) {
     try {
-      return Boolean(requireGatsbyPlugin(plugin, `gatsby-worker`))
-    } catch (err) {
-      return false
+      const pluginWithWorker = await importGatsbyPlugin(plugin, `gatsby-worker`)
+      if (pluginWithWorker) {
+        filteredPlugins.push(plugin)
+      }
+    } catch (_) {
+      // Do nothing
     }
-  })
+  }
+
+  return filteredPlugins
 }
 
 type ArrayElement<ArrayType extends Array<unknown>> = ArrayType extends Array<

@@ -26,6 +26,7 @@ The `static` folder (see the [Using the Static Folder](/docs/how-to/images-and-m
 For the best performance possible it's recommended to [preload](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) your font files. Add a `gatsby-ssr.js` if not existent yet and add the following:
 
 ```js:title=gatsby-ssr.js
+import * as React from "react"
 
 export const onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([

@@ -1,6 +1,7 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const headFunctionExportSharedData = require("./shared-data/head-function-export")
+const slicesData = require("./shared-data/slices")
 const {
   addRemoteFilePolyfillInterface,
   polyfillImageServiceDevRoutes,
@@ -29,6 +30,14 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
       slug: String!
       content: String!
     }
+
+    type GatsbyPathMaterializedParent implements Node {
+      childType: GatsbyPathMaterializedLinked @link(by: "name")
+    }
+
+    type GatsbyPathMaterializedLinked implements Node {
+      name: String!
+    }
   `)
 }
 
@@ -37,7 +46,8 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const items = [
     {
       name: "photoA.jpg",
-      url: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
+      url:
+        "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
       placeholderUrl:
         "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=%width%&h=%height%",
       mimeType: "image/jpg",
@@ -47,7 +57,8 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     },
     {
       name: "photoB.jpg",
-      url: "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=2000&q=10",
+      url:
+        "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=2000&q=10",
       mimeType: "image/jpg",
       filename: "photo-1552053831.jpg",
       width: 1247,
@@ -55,7 +66,8 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     },
     {
       name: "photoC.jpg",
-      url: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
+      url:
+        "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
       placeholderUrl:
         "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=%width%&h=%height%",
       mimeType: "image/jpg",
@@ -84,6 +96,29 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     internal: {
       type: `HeadFunctionExportFsRouteApi`,
       content: `Some words`,
+      contentDigest: createContentDigest(`Some words`),
+    },
+  })
+
+  actions.createNode({
+    id: createNodeId(`gatsby-path-materialized-parent`),
+    name: `gatsby-path-materialized Parent Name`,
+    childType: `gatsby-path-materialized Linked Name`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `GatsbyPathMaterializedParent`,
+      contentDigest: createContentDigest(`Some words`),
+    },
+  })
+
+  actions.createNode({
+    id: createNodeId(`gatsby-path-materialized-linked`),
+    name: `gatsby-path-materialized Linked Name`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `GatsbyPathMaterializedLinked`,
       contentDigest: createContentDigest(`Some words`),
     },
   })
@@ -122,7 +157,7 @@ exports.onCreateNode = function onCreateNode({
  * @type {import('gatsby').createPages}
  */
 exports.createPages = async function createPages({
-  actions: { createPage, createRedirect },
+  actions: { createPage, createRedirect, createSlice },
   graphql,
 }) {
   const { data } = await graphql(`
@@ -172,6 +207,41 @@ exports.createPages = async function createPages({
     })
   })
 
+  //-------------------------Slice API----------------------------
+  createSlice({
+    id: `footer`,
+    component: path.resolve(`./src/components/footer.js`),
+    context: {
+      framework: slicesData.framework,
+    },
+  })
+
+  slicesData.allRecipeAuthors.forEach(({ id, name }) => {
+    createSlice({
+      id: `author-${id}`,
+      component: path.resolve(`./src/components/recipe-author.js`),
+      context: {
+        name,
+        id,
+      },
+    })
+  })
+
+  slicesData.allRecipes.forEach(({ authorId, id, name, description }) => {
+    createPage({
+      path: `/recipe/${id}`,
+      component: path.resolve(`./src/templates/recipe.js`),
+      context: {
+        description: description,
+        name,
+      },
+      slices: {
+        author: `author-${authorId}`,
+      },
+    })
+  })
+  //---------------------------------------------------------------
+
   createPage({
     path: `/안녕`,
     component: path.resolve(`src/pages/page-2.js`),
@@ -196,22 +266,22 @@ exports.createPages = async function createPages({
   })
 
   createRedirect({
-    fromPath: `/redirect-without-page`,
+    fromPath: `/redirect-without-page/`,
     toPath: `/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
 
   createRedirect({
-    fromPath: `/redirect`,
+    fromPath: `/redirect/`,
     toPath: `/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
 
   createRedirect({
-    fromPath: `/redirect-two`,
-    toPath: `/redirect-search-hash`,
+    fromPath: `/redirect-two/`,
+    toPath: `/redirect-search-hash/`,
     isPermanent: true,
     redirectInBrowser: true,
   })

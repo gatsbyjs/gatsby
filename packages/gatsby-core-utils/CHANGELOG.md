@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.2.0/packages/gatsby-core-utils) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.1.0/packages/gatsby-core-utils) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Bug Fixes
+
+- decode uri-encode filename for remote file [#35637](https://github.com/gatsbyjs/gatsby/issues/35637) ([086c862](https://github.com/gatsbyjs/gatsby/commit/086c862e078a9808ebd5a3c8ba146e9931e3646d))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.0.0/packages/gatsby-core-utils) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- Move murmurhash to gatsby-core-utils [#36882](https://github.com/gatsbyjs/gatsby/issues/36882) ([aaaa8c5](https://github.com/gatsbyjs/gatsby/commit/aaaa8c5da25014e386b2d4775d5691d9e5134699))
+
+#### Chores
+
+- Update README with correct cpuCoreCount args [#36838](https://github.com/gatsbyjs/gatsby/issues/36838) ([ab51cd4](https://github.com/gatsbyjs/gatsby/commit/ab51cd446d7da41a6c1f5f9558bcf67d4e336a90))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [3.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.24.0/packages/gatsby-core-utils) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

@@ -2,7 +2,12 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { StaticQueryContext } from "gatsby"
+import { StaticQueryContext } from "./static-query"
+import {
+  SlicesMapContext,
+  SlicesContext,
+  SlicesResultsContext,
+} from "./slice/context"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -17,6 +22,7 @@ import {
   publicLoader,
   PageResourceStatus,
   getStaticQueryResults,
+  getSliceResults,
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
@@ -67,6 +73,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const DataContext = React.createContext({})
 
+  const slicesContext = {
+    renderEnvironment: `browser`,
+  }
+
   class GatsbyRoot extends React.Component {
     render() {
       const { children } = this.props
@@ -75,22 +85,26 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           {({ location }) => (
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
-                if (pageResources.partialHydration) {
-                  return (
-                    <DataContext.Provider value={{ pageResources, location }}>
-                      {children}
-                    </DataContext.Provider>
-                  )
-                } else {
-                  const staticQueryResults = getStaticQueryResults()
-                  return (
-                    <StaticQueryContext.Provider value={staticQueryResults}>
-                      <DataContext.Provider value={{ pageResources, location }}>
-                        {children}
-                      </DataContext.Provider>
-                    </StaticQueryContext.Provider>
-                  )
-                }
+                const staticQueryResults = getStaticQueryResults()
+                const sliceResults = getSliceResults()
+
+                return (
+                  <StaticQueryContext.Provider value={staticQueryResults}>
+                    <SlicesContext.Provider value={slicesContext}>
+                      <SlicesResultsContext.Provider value={sliceResults}>
+                        <SlicesMapContext.Provider
+                          value={pageResources.page.slicesMap}
+                        >
+                          <DataContext.Provider
+                            value={{ pageResources, location }}
+                          >
+                            {children}
+                          </DataContext.Provider>
+                        </SlicesMapContext.Provider>
+                      </SlicesResultsContext.Provider>
+                    </SlicesContext.Provider>
+                  </StaticQueryContext.Provider>
+                )
               }}
             </EnsureResources>
           )}

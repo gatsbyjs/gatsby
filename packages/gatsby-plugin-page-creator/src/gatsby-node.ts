@@ -32,19 +32,6 @@ import { getCollectionRouteParams } from "./get-collection-route-params"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "gatsby-core-utils/match-path"
 
-let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
-
-try {
-  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
-    coreSupportsOnPluginInit = `stable`
-  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
-    coreSupportsOnPluginInit = `unstable`
-  }
-} catch (e) {
-  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
-}
-
 const knownCollections = new Map()
 
 export function createPages(_: CreatePagesArgs, pluginOptions: IOptions): void {
@@ -81,7 +68,7 @@ export async function createPagesStatefully(
   try {
     const { deletePage } = actions
     const { program, config } = store.getState()
-    const { trailingSlash = `legacy` } = config
+    const { trailingSlash = `always` } = config
 
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
@@ -164,45 +151,45 @@ Please pick a path to an existing directory.`,
     }
 
     pluginInstance.getPathFromAResolvedNode =
-      function getPathFromAResolvedNode({
+      async function getPathFromAResolvedNode({
         node,
         absolutePath,
-      }: ICreateAPageFromNodeArgs): string {
+      }: ICreateAPageFromNodeArgs): Promise<string> {
         const filePath = systemPath.relative(pluginOptions.path, absolutePath)
 
         // URL path for the component and node
-        const { derivedPath } = derivePath(
+        const { derivedPath } = await derivePath(
           filePath,
           node,
           reporter,
           slugifyOptions
         )
-        // TODO(v5): Remove legacy handling
-        const isLegacy = trailingSlash === `legacy`
+
         const hasTrailingSlash = derivedPath.endsWith(`/`)
-        const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
+        const path = createPath(derivedPath, hasTrailingSlash, true)
         const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
         return modifiedPath
       }
 
-    pluginInstance.createAPageFromNode = function createAPageFromNode({
+    pluginInstance.createAPageFromNode = async function createAPageFromNode({
       node,
       absolutePath,
-    }: ICreateAPageFromNodeArgs): undefined | { errors: number; path: string } {
+    }: ICreateAPageFromNodeArgs): Promise<
+      undefined | { errors: number; path: string }
+    > {
       const filePath = systemPath.relative(pluginOptions.path, absolutePath)
 
       const contentFilePath = node.internal?.contentFilePath
       // URL path for the component and node
-      const { derivedPath, errors } = derivePath(
+      const { derivedPath, errors } = await derivePath(
         filePath,
         node,
         reporter,
         slugifyOptions
       )
-      // TODO(v5): Remove legacy handling
-      const isLegacy = trailingSlash === `legacy`
+
       const hasTrailingSlash = derivedPath.endsWith(`/`)
-      const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
+      const path = createPath(derivedPath, hasTrailingSlash, true)
       // We've already created a page with this path
       if (this.knownPagePaths.has(path)) {
         return undefined
@@ -364,7 +351,7 @@ export function setFieldsOnGraphQLNodeType(
 ): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
-    const { trailingSlash = `legacy` } = store.getState().config
+    const { trailingSlash = `always` } = store.getState().config
     const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
@@ -375,10 +362,11 @@ export function setFieldsOnGraphQLNodeType(
               type: GraphQLString,
             },
           },
-          resolve: (
+          resolve: async (
             source: Record<string, unknown>,
-            { filePath }: { filePath: string }
-          ): string => {
+            { filePath }: { filePath: string },
+            context
+          ): Promise<string> => {
             // This is a quick hack for attaching parents to the node.
             // This may be an incomprehensive fixed for the general use case
             // of connecting nodes together. However, I don't quite know how to
@@ -391,21 +379,19 @@ export function setFieldsOnGraphQLNodeType(
               sourceCopy.parent = getNode(source.parent)
             }
 
+            const getFieldValue = context.nodeModel.getFieldValue
+
             validatePathQuery(filePath, extensions)
-            const { derivedPath } = derivePath(
+            const { derivedPath } = await derivePath(
               filePath,
               sourceCopy,
               reporter,
-              slugifyOptions
+              slugifyOptions,
+              getFieldValue
             )
-            // TODO(v5): Remove legacy handling
-            const isLegacy = trailingSlash === `legacy`
+
             const hasTrailingSlash = derivedPath.endsWith(`/`)
-            const path = createPath(
-              derivedPath,
-              isLegacy || hasTrailingSlash,
-              true
-            )
+            const path = createPath(derivedPath, hasTrailingSlash, true)
             const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
             return modifiedPath
@@ -426,7 +412,7 @@ export function setFieldsOnGraphQLNodeType(
   }
 }
 
-async function initializePlugin(
+export async function onPluginInit(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
@@ -469,13 +455,4 @@ async function initializePlugin(
       },
     })
   }
-}
-
-if (coreSupportsOnPluginInit === `stable`) {
-  // need to conditionally export otherwise it throws an error for older versions
-  exports.onPluginInit = initializePlugin
-} else if (coreSupportsOnPluginInit === `unstable`) {
-  exports.unstable_onPluginInit = initializePlugin
-} else {
-  exports.onPreInit = initializePlugin
 }

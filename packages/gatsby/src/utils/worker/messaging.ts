@@ -3,10 +3,20 @@ import { ReporterMessagesFromChild } from "gatsby-cli/lib/reporter/types"
 import {
   IJobCreatedMessage,
   IJobCompletedMessage,
-  IJobFailed,
+  MESSAGE_TYPES,
+  InternalJob,
 } from "../jobs/types"
 
-export type MessagesFromParent = IJobCompletedMessage | IJobFailed
+interface IJobFailedSerialized {
+  type: MESSAGE_TYPES.JOB_FAILED
+  payload: {
+    id: InternalJob["id"]
+    error: string
+    stack?: string
+  }
+}
+
+export type MessagesFromParent = IJobCompletedMessage | IJobFailedSerialized
 export type MessagesFromChild = IJobCreatedMessage | ReporterMessagesFromChild
 
 export type GatsbyWorkerMessenger = IGatsbyWorkerMessenger<

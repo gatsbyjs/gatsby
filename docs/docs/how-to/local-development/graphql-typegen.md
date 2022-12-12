@@ -79,7 +79,8 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
 
 Instead of setting a boolean value for the `graphqlTypegen` option in `gatsby-config` you can also set an object to configure it. See all details in the [gatsby-config documentation](/docs/reference/config-files/gatsby-config/#graphqltypegen).
 
-If for example you use `typesOutputPath` to specify a different path, make sure to also update the `"include"` setting in your `tsconfig.json` to include the new path.
+- With `typesOutputPath` the output path can be specified. Make sure to also update the `"include"` setting in your `tsconfig.json` to include the new path.
+- With `documentSearchPaths` it's possible to overwrite the search path for the documents, which are scanned for GraphQL queries.
 
 ### Non-Nullable types
 

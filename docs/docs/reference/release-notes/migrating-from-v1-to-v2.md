@@ -875,9 +875,9 @@ export const pageQuery = graphql`
     foo: file(relativePath: { regex: "/foo.jpg/" }) {
       childImageSharp {
 -        sizes(maxWidth: 700) {
--          ...GatsbyImageSharpSizes_tracedSVG
+-          ...GatsbyImageSharpSizes
 +        fluid(maxWidth: 700) {
-+          ...GatsbyImageSharpFluid_tracedSVG
++          ...GatsbyImageSharpFluid
         }
       }
     }

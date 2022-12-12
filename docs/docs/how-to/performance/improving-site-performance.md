@@ -83,6 +83,8 @@ The Gatsby `<Script>` component also supports inline scripts, so for your smalle
 
 For more information, see the [Gatsby Script reference documentation](/docs/reference/built-in-components/gatsby-script/).
 
+Another option is to replace multiple analytics trackers that load in the user's browser with a single tracker from a "customer data platform" (CDP) like [Segment](/plugins/gatsby-plugin-segment-js/) or [Rudderstack](/plugins/gatsby-plugin-rudderstack/). CDPs will send out data to your analytics tools from their servers. Here is [one example of a team that did this to optimize performance](/blog/how-wavedirect-used-gatsby-rudderstack-and-sanity-to-4x-leads-and-dominate-search-results).
+
 ### Reduce your JavaScript bundle cost
 
 Among all assets, JavaScript can be uniquely costly to your performance. This is due to three main reasons:

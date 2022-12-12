@@ -36,7 +36,7 @@ export const blogListQuery = graphql`
 // highlight-start
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC }}
       limit: $limit
       skip: $skip
     ) {
@@ -67,7 +67,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
       {
         allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
+          sort: { frontmatter: { date: DESC }}
           limit: 1000
         ) {
           edges {

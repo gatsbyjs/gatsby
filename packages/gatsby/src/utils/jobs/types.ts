@@ -77,6 +77,11 @@ export class WorkerError extends Error {
 
     this.name = `WorkerError`
 
-    Error.captureStackTrace(this, WorkerError)
+    if (typeof error === `string`) {
+      Error.captureStackTrace(this, WorkerError)
+    } else {
+      // inherit stack from original error so actual stack trace persist
+      this.stack = error.stack
+    }
   }
 }

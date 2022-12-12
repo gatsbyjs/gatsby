@@ -311,7 +311,7 @@ export const removeStaleJob = (
  */
 export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
   const result = gatsbyConfigSchema.validate(config || {})
-  const normalizedPayload: IGatsbyConfig = result.value
+  const normalizedPayload = result.value as IGatsbyConfig
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(

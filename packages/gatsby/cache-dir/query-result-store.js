@@ -6,7 +6,8 @@ import {
 } from "./socketIo"
 import PageRenderer from "./page-renderer"
 import normalizePagePath from "./normalize-page-path"
-import loader, { getStaticQueryResults } from "./loader"
+import loader, { getStaticQueryResults, getSliceResults } from "./loader"
+import { SlicesResultsContext } from "./slice/context"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
@@ -151,6 +152,46 @@ export class StaticQueryStore extends React.Component {
       <StaticQueryContext.Provider value={this.state.staticQueryData}>
         {this.props.children}
       </StaticQueryContext.Provider>
+    )
+  }
+}
+
+export class SliceDataStore extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      slicesData: new Map(getSliceResults()),
+    }
+  }
+
+  handleMittEvent = () => {
+    this.setState({
+      slicesData: new Map(getSliceResults()),
+    })
+  }
+
+  componentDidMount() {
+    ___emitter.on(`sliceQueryResult`, this.handleMittEvent)
+    ___emitter.on(`onPostLoadPageResources`, this.handleMittEvent)
+  }
+
+  componentWillUnmount() {
+    ___emitter.off(`sliceQueryResult`, this.handleMittEvent)
+    ___emitter.off(`onPostLoadPageResources`, this.handleMittEvent)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // We want to update this component when:
+    // - slice results changed
+
+    return this.state.slicesData !== nextState.slicesData
+  }
+
+  render() {
+    return (
+      <SlicesResultsContext.Provider value={this.state.slicesData}>
+        {this.props.children}
+      </SlicesResultsContext.Provider>
     )
   }
 }

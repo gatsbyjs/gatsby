@@ -27,11 +27,11 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `16`, but more recent version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `18`, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 16
-nvm use 16
+nvm install 18
+nvm use 18
 ```
 
 To confirm this has worked, use the following command.
@@ -58,11 +58,11 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `16`, but more recent version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `18`, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 16
-nvm use 16
+nvm install 18
+nvm use 18
 ```
 
 To confirm this has worked, use the following command.
@@ -101,11 +101,11 @@ Before using `nvm`, you need to install additional dependencies.
 sudo pacman -S grep awk tar git
 ```
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `16`, but more recent version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `18`, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 16
-nvm use 16
+nvm install 18
+nvm use 18
 ```
 
 To confirm this has worked, use the following command.

@@ -11,20 +11,18 @@ packages/*/scripts/**
 **/__tests__/fixtures/**
 peril
 docs
-plop-templates
 starters
 benchmarks
 e2e-tests
 examples
 integration-tests
 **/*.d.ts
+deprecated-packages
 
 packages/*/*.js
 packages/gatsby-source-shopify/**/*.js
 packages/gatsby-plugin-preload-fonts/prepare/*.js
 packages/gatsby/cache-dir/commonjs/**/*
-packages/gatsby-admin/public
-packages/gatsby/gatsby-admin-public
 packages/gatsby-codemods/transforms
 packages/gatsby-source-graphql/batching
 packages/gatsby-plugin-gatsby-cloud/components

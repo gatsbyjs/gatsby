@@ -1,10 +1,14 @@
 import * as path from "path"
 import fs from "fs-extra"
-import Template from "webpack/lib/Template"
-import ModuleDependency from "webpack/lib/dependencies/ModuleDependency"
-import NullDependency from "webpack/lib/dependencies/NullDependency"
 import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
-import webpack, { Module, NormalModule, Dependency, javascript } from "webpack"
+import webpack, {
+  Module,
+  NormalModule,
+  javascript,
+  Compilation,
+  Compiler,
+  AsyncDependenciesBlock,
+} from "webpack"
 import type Reporter from "gatsby-cli/lib/reporter"
 
 interface IModuleExport {
@@ -17,18 +21,7 @@ interface IDirective {
   directive?: string
 }
 
-/**
- * @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L27-L35
- */
-class ClientReferenceDependency extends ModuleDependency {
-  constructor(request) {
-    super(request)
-  }
-
-  get type(): string {
-    return `client-reference`
-  }
-}
+export const PARTIAL_HYDRATION_CHUNK_REASON = `PartialHydration client module`
 
 /**
  * inspiration and code mostly comes from https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js
@@ -39,8 +32,7 @@ export class PartialHydrationPlugin {
   _manifestPath: string // Absolute path to where the manifest file should be written
   _reporter: typeof Reporter
 
-  _references: Array<ClientReferenceDependency> = []
-  _clientModules = new Set<webpack.NormalModule>()
+  _collectedCssModules = new Set<webpack.Module>()
   _previousManifest = {}
 
   constructor(manifestPath: string, reporter: typeof Reporter) {
@@ -48,37 +40,15 @@ export class PartialHydrationPlugin {
     this._reporter = reporter
   }
 
-  _generateClientReferenceChunk(
-    reference: NormalModule,
-    module: NormalModule,
-    rootContext: string
-  ): void {
-    const chunkName = Template.toPath(
-      // @ts-ignore - types are incorrect
-      path.relative(rootContext, reference.userRequest)
-    )
-
-    const dep = new ClientReferenceDependency(reference.rawRequest)
-    const block = new webpack.AsyncDependenciesBlock(
-      {
-        name: chunkName,
-      },
-      undefined,
-      // @ts-ignore - types are incorrect
-      reference.request
-    )
-
-    block.addDependency(dep as Dependency)
-    module.addBlock(block)
-  }
-
   _generateManifest(
-    _chunkGroups: webpack.Compilation["chunkGroups"],
-    moduleGraph: webpack.Compilation["moduleGraph"],
-    chunkGraph: webpack.Compilation["chunkGraph"],
+    compilation: Compilation,
     rootContext: string
   ): Record<string, Record<string, IModuleExport>> {
+    const moduleGraph = compilation.moduleGraph
+    const chunkGraph = compilation.chunkGraph
+
     const json: Record<string, Record<string, IModuleExport>> = {}
+    const mapOriginalModuleToPotentiallyConcatanetedModule = new Map()
     // @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L220-L252
     const recordModule = (
       id: string,
@@ -86,13 +56,6 @@ export class PartialHydrationPlugin {
       exports: Array<{ originalExport: string; resolvedExport: string }>,
       chunkIds: Array<string>
     ): void => {
-      if (
-        // @ts-ignore - types are incorrect
-        !module.resource
-      ) {
-        return
-      }
-
       const normalModule: NormalModule = module as NormalModule
 
       const moduleExports: Record<string, IModuleExport> = {}
@@ -104,17 +67,36 @@ export class PartialHydrationPlugin {
         }
       })
 
-      const normalizedModuleKey = createNormalizedModuleKey(
-        normalModule.resource,
-        rootContext
-      )
+      // @ts-ignore
+      if (normalModule.modules) {
+        // @ts-ignore
+        normalModule.modules.forEach(mod => {
+          if (mod.buildInfo.rsc) {
+            const normalizedModuleKey = createNormalizedModuleKey(
+              mod.resource,
+              rootContext
+            )
 
-      if (normalizedModuleKey !== undefined) {
-        json[normalizedModuleKey] = moduleExports
+            if (normalizedModuleKey !== undefined) {
+              json[normalizedModuleKey] = moduleExports
+            }
+          }
+        })
+      } else {
+        if (normalModule.buildInfo.rsc) {
+          const normalizedModuleKey = createNormalizedModuleKey(
+            normalModule.resource,
+            rootContext
+          )
+
+          if (normalizedModuleKey !== undefined) {
+            json[normalizedModuleKey] = moduleExports
+          }
+        }
       }
     }
 
-    const toRecord: Map<
+    const ClientModulesToRecord: Map<
       webpack.Module,
       Map<
         webpack.Module,
@@ -125,60 +107,91 @@ export class PartialHydrationPlugin {
       >
     > = new Map()
 
-    for (const clientModule of this._clientModules) {
-      for (const connection of moduleGraph.getIncomingConnections(
-        clientModule
-      )) {
-        if (connection.dependency) {
-          if (toRecord.has(connection.module)) {
-            continue
-          }
+    function recordModuleExports(module): any {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const childMap = new Map()
+      ClientModulesToRecord.set(module, childMap)
 
+      for (const exportInfo of moduleGraph.getExportsInfo(module).exports) {
+        if (exportInfo.isReexport()) {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const childMap = new Map()
-          toRecord.set(connection.module, childMap)
-
-          for (const exportInfo of moduleGraph.getExportsInfo(connection.module)
-            .exports) {
-            if (exportInfo.isReexport()) {
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              const targetInfo = exportInfo.getTarget(moduleGraph)!
-              if (!childMap.has(targetInfo.module)) {
-                childMap.set(targetInfo.module, [])
-              }
-
-              childMap.get(targetInfo.module)?.push({
-                originalExport: exportInfo.name,
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                resolvedExport: targetInfo.export![0],
-              })
-            } else {
-              if (!childMap.has(connection.module)) {
-                childMap.set(connection.module, [])
-              }
-
-              childMap.get(connection.module)?.push({
-                originalExport: exportInfo.name,
-                resolvedExport: exportInfo.name,
-              })
-            }
+          const targetInfo = exportInfo.getTarget(moduleGraph)!
+          if (!childMap.has(targetInfo.module)) {
+            childMap.set(targetInfo.module, [])
           }
+
+          childMap.get(targetInfo.module)?.push({
+            originalExport: exportInfo.name,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            resolvedExport: targetInfo.export![0],
+          })
+        } else {
+          if (!childMap.has(module)) {
+            childMap.set(module, [])
+          }
+
+          childMap.get(module)?.push({
+            originalExport: exportInfo.name,
+            resolvedExport: exportInfo.name,
+          })
         }
       }
     }
 
-    for (const [originalModule, resolvedMap] of toRecord) {
-      for (const [resolvedModule, exports] of resolvedMap) {
-        const chunkIds: Set<string> = new Set()
-        for (const chunk of chunkGraph.getModuleChunksIterable(
-          resolvedModule
-        )) {
-          for (const group of chunk.groupsIterable) {
-            for (const chunkInGroup of group.chunks) {
-              if (chunkInGroup.id) {
-                chunkIds.add(chunkInGroup.id as string)
+    const newClientModules = new Set<webpack.Module>()
+    compilation.chunkGroups.forEach(chunkGroup => {
+      chunkGroup.chunks.forEach((chunk: webpack.Chunk) => {
+        const chunkModules =
+          compilation.chunkGraph.getChunkModulesIterable(chunk)
+        for (const mod of chunkModules) {
+          if (mod.buildInfo.rsc) {
+            mapOriginalModuleToPotentiallyConcatanetedModule.set(mod, mod)
+            newClientModules.add(mod)
+          }
+
+          // @ts-ignore
+          if (mod.modules) {
+            // @ts-ignore
+            for (const subMod of mod.modules) {
+              if (subMod.buildInfo.rsc) {
+                mapOriginalModuleToPotentiallyConcatanetedModule.set(
+                  subMod,
+                  mod
+                )
+                newClientModules.add(mod)
               }
             }
+          }
+        }
+      })
+    })
+
+    for (const clientModule of newClientModules) {
+      recordModuleExports(clientModule)
+
+      const incomingConnections =
+        moduleGraph.getIncomingConnections(clientModule)
+
+      for (const connection of incomingConnections) {
+        if (connection.dependency) {
+          if (ClientModulesToRecord.has(connection.module)) {
+            continue
+          }
+
+          recordModuleExports(connection.module)
+        }
+      }
+    }
+
+    for (const [originalModule, resolvedMap] of ClientModulesToRecord) {
+      for (const [resolvedModule, exports] of resolvedMap) {
+        const chunkIds: Set<string> = new Set()
+
+        const chunks = chunkGraph.getModuleChunksIterable(resolvedModule)
+
+        for (const chunk of chunks) {
+          if (chunk.id) {
+            chunkIds.add(chunk.id as string)
           }
         }
 
@@ -187,9 +200,157 @@ export class PartialHydrationPlugin {
       }
     }
 
-    toRecord.clear()
+    ClientModulesToRecord.clear()
 
     return json
+  }
+
+  async addClientModuleEntries(
+    // @ts-ignore
+    compiler: Compiler,
+    compilation: Compilation
+  ): Promise<void> {
+    const clientModules: Array<webpack.NormalModule> = []
+    const cssModules = (this._collectedCssModules = new Set())
+
+    const visited = new Set<webpack.Module>()
+    function collectCssModules(module: webpack.Module): void {
+      if (visited.has(module)) {
+        return
+      }
+      visited.add(module)
+      if (module.buildInfo.rsc) {
+        return
+      }
+
+      if (module.type === `css/mini-extract`) {
+        cssModules.add(module)
+      }
+
+      const outgoingConnections =
+        compilation.moduleGraph.getOutgoingConnections(module)
+
+      for (const connection of outgoingConnections) {
+        if (connection.dependency) {
+          collectCssModules(connection.module)
+        }
+      }
+    }
+
+    let asyncRequires: NormalModule | null = null
+    for (const module of compilation.modules) {
+      if (module instanceof NormalModule) {
+        if (module.buildInfo.rsc) {
+          clientModules.push(module)
+        } else if (module.request.endsWith(`export=default`)) {
+          const incomingConnections =
+            compilation.moduleGraph.getIncomingConnections(module)
+
+          for (const connection of incomingConnections) {
+            if (connection.dependency) {
+              const dependencyBlock = compilation.moduleGraph.getParentBlock(
+                connection.dependency
+              )
+
+              if (
+                dependencyBlock instanceof AsyncDependenciesBlock &&
+                dependencyBlock?.chunkName?.startsWith(`slice---`)
+              ) {
+                continue
+              }
+
+              if (connection.originModule instanceof NormalModule) {
+                if (
+                  connection.originModule.resource.includes(`async-requires`)
+                ) {
+                  asyncRequires = connection.originModule
+
+                  // Remove page template "import" from async-requires.
+                  // Note that if other imports to a template will remain it will remain in the bundle:
+                  // that can happen if template is marked with "use client" or if other client component
+                  // will import it. We don't want to force remove template - we just want to remove the
+                  // import from async-requires and let webpack remove it rom the bundle (or rather just not add it)
+                  // if it's not used anywhere else
+                  compilation.moduleGraph.removeConnection(
+                    connection.dependency
+                  )
+                }
+              }
+            }
+          }
+
+          // find css modules that are imported by this module
+          collectCssModules(module)
+        }
+      }
+    }
+
+    if (!asyncRequires) {
+      throw new Error(`couldn't find async-requires module`)
+    }
+
+    const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/client-components-requires-writer-loader?modules=${clientModules
+      .map(
+        module =>
+          `./` +
+          path.relative(
+            compilation.options.context as string,
+            module.userRequest
+          )
+      )
+      .join(`,`)}!`
+
+    const clientComponentEntryDep = webpack.EntryPlugin.createDependency(
+      clientSSRLoader,
+      {
+        name: `app`,
+      }
+    )
+    await this.addEntry(compilation, ``, clientComponentEntryDep, {
+      name: `app`,
+    })
+  }
+
+  addEntry(
+    compilation: Compilation,
+    context: string,
+    entry: any /* Dependency */,
+    options: {
+      name: string
+    } /* EntryOptions */
+  ): Promise<any> /* Promise<module> */ {
+    return new Promise((resolve, reject) => {
+      // @ts-ignore
+      try {
+        const oldEntry = compilation.entries.get(options.name)
+        if (!oldEntry) {
+          resolve(null)
+          return
+        }
+
+        oldEntry.includeDependencies.push(entry)
+        compilation.hooks.addEntry.call(entry, options)
+        compilation.addModuleTree(
+          {
+            context,
+            dependency: entry,
+          },
+          // @ts-ignore
+          (err: Error | undefined, module: any) => {
+            if (err) {
+              compilation.hooks.failedEntry.call(entry, options, err)
+              return reject(err)
+            }
+
+            compilation.hooks.succeedEntry.call(entry, options, module)
+            return resolve(module)
+          }
+        )
+      } catch (e) {
+        console.log({ e })
+        reject(e)
+      }
+    })
   }
 
   apply(compiler: webpack.Compiler): void {
@@ -214,103 +375,96 @@ export class PartialHydrationPlugin {
       }
     })
 
+    compiler.hooks.finishMake.tapPromise(this.name, async compilation => {
+      if (compilation.compiler.parentCompilation) {
+        // child compilation happen for css modules for example, we only care about the main compilation
+        return
+      }
+      await this.addClientModuleEntries(compiler, compilation)
+    })
+
     compiler.hooks.thisCompilation.tap(
       this.name,
       (compilation, { normalModuleFactory }) => {
-        // tell webpack that this is a regular javascript module
-        compilation.dependencyFactories.set(
-          ClientReferenceDependency as ModuleDependency,
-          normalModuleFactory
-        )
-        // don't add extra code to the source file
-        compilation.dependencyTemplates.set(
-          ClientReferenceDependency as ModuleDependency,
-          new NullDependency.Template()
-        )
-
-        // const entryModule: webpack.NormalModule | null = null
-        const handler = (parser: javascript.JavascriptParser): void => {
+        const parserCallback = (parser: javascript.JavascriptParser): void => {
           parser.hooks.program.tap(this.name, ast => {
             const hasClientExportDirective = ast.body.find(
               statement =>
                 statement.type === `ExpressionStatement` &&
-                (statement as IDirective).directive === `client export`
+                (statement as IDirective).directive === `use client`
             )
 
             const module = parser.state.module
 
             if (hasClientExportDirective) {
-              this._clientModules.add(module)
-
-              // if (entryModule) {
-              //   console.log(`parse`, module.resource)
-              //   this._generateClientReferenceChunk(
-              //     module,
-              //     entryModule,
-              //     compilation.options.context as string
-              //   )
-              //   entryModule.invalidateBuild()
-              // }
+              // this metadata will be preserved on warm builds, so we don't need to force parse modules
+              // each time, as webpack will manage going through parsing of module is invalidated
+              module.buildInfo.rsc = true
             }
-
-            // if (module.resource.includes(`production-app`) && !entryModule) {
-            //   entryModule = module
-
-            //   for (const clientModule of this._clientModules) {
-            //     this._generateClientReferenceChunk(
-            //       clientModule,
-            //       entryModule,
-            //       compilation.options.context as string
-            //     )
-            //   }
-            // }
           })
         }
 
-        compilation.hooks.optimizeChunkModules.tap(
-          this.name,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          () => {
-            // 1. move clientModules into their own chunk
-            // 2. disconnect module from original chunk
+        normalModuleFactory.hooks.parser
+          .for(`javascript/auto`)
+          .tap(this.name, parserCallback)
+        normalModuleFactory.hooks.parser
+          .for(`javascript/esm`)
+          .tap(this.name, parserCallback)
+        normalModuleFactory.hooks.parser
+          .for(`javascript/dynamic`)
+          .tap(this.name, parserCallback)
 
-            for (const clientModule of this._clientModules) {
-              const chunkName = Template.toPath(
-                // @ts-ignore - types are incorrect
-                path.relative(
-                  compilation.options.context as string,
-                  clientModule.userRequest
+        // add dangling css modules to the app entry
+        compilation.hooks.optimizeChunks.tap(this.name, () => {
+          let appChunk: webpack.Chunk | null = null
+          for (const chunk of compilation.chunks) {
+            if (chunk.name === `app`) {
+              appChunk = chunk
+              break
+            }
+          }
+
+          if (!appChunk) {
+            throw new Error(`"app" chunk not found`)
+          }
+
+          const modulesToInsertIntoApp: Array<webpack.Module> = []
+
+          for (const cssModule of this._collectedCssModules) {
+            const usedInChunks =
+              compilation.chunkGraph.getModuleChunksIterable(cssModule)
+
+            let isInAnyChunk = false
+
+            for (const _ of usedInChunks) {
+              isInAnyChunk = true
+              break
+            }
+            if (!isInAnyChunk) {
+              modulesToInsertIntoApp.push(cssModule)
+            }
+          }
+
+          for (const cssModule of modulesToInsertIntoApp.sort(
+            (a, b) =>
+              compilation.moduleGraph.getPostOrderIndex(a) -
+              compilation.moduleGraph.getPostOrderIndex(b)
+          )) {
+            compilation.chunkGraph.connectChunkAndModule(appChunk, cssModule)
+
+            for (const group of appChunk.groupsIterable) {
+              if (!group.getModulePostOrderIndex(cssModule)) {
+                group.setModulePostOrderIndex(
+                  cssModule,
+                  // @ts-ignore
+                  group._modulePostOrderIndices.size + 1
                 )
-              )
-
-              const selectedChunks = Array.from(
-                compilation.chunkGraph.getModuleChunksIterable(clientModule)
-              )
-              const chunk = compilation.addChunk(chunkName)
-              chunk.chunkReason = `PartialHydration client module`
-              compilation.chunkGraph.connectChunkAndModule(chunk, clientModule)
-
-              for (const connectedChunk of selectedChunks) {
-                compilation.chunkGraph.disconnectChunkAndModule(
-                  connectedChunk,
-                  clientModule
-                )
-                connectedChunk.split(chunk)
               }
             }
           }
-        )
+        })
 
-        normalModuleFactory.hooks.parser
-          .for(`javascript/auto`)
-          .tap(this.name, handler)
-        normalModuleFactory.hooks.parser
-          .for(`javascript/esm`)
-          .tap(this.name, handler)
-        normalModuleFactory.hooks.parser
-          .for(`javascript/dynamic`)
-          .tap(this.name, handler)
-
+        // generate client components manifest
         compilation.hooks.processAssets.tap(
           {
             name: this.name,
@@ -318,9 +472,7 @@ export class PartialHydrationPlugin {
           },
           () => {
             const manifest = this._generateManifest(
-              compilation.chunkGroups,
-              compilation.moduleGraph,
-              compilation.chunkGraph,
+              compilation,
               compilation.options.context as string
             )
 

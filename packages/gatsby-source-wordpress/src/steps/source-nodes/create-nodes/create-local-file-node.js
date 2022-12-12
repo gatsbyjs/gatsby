@@ -233,6 +233,7 @@ export const createLocalFileNode = async ({
   mediaItemUrl = ensureSrcHasHostname({ wpUrl, src: mediaItemUrl })
 
   const { excludeByMimeTypes, maxFileSizeBytes } =
+    // eslint-disable-next-line no-unsafe-optional-chaining
     pluginOptions.type?.MediaItem?.localFile
 
   // if this file is larger than maxFileSizeBytes, don't fetch the remote file
@@ -265,6 +266,7 @@ export const createLocalFileNode = async ({
 
   const createFileNodeRequirements = {
     parentNodeId: mediaItemNode.id,
+    store: gatsbyStore,
     cache,
     createNode,
     createNodeId,

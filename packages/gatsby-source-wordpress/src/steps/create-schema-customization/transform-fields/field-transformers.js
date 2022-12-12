@@ -1,8 +1,10 @@
-import { buildTypeName, findTypeName, findTypeKind } from "../helpers"
+import { buildTypeName, findNamedTypeName, findTypeKind } from "../helpers"
 import { transformUnion, transformListOfUnions } from "./transform-union"
-import { transformGatsbyNodeObject } from "~/steps/create-schema-customization/transform-fields/transform-object"
-import { transformListOfGatsbyNodes } from "./transform-object"
-import { getGatsbyNodeTypeNames } from "~/steps/source-nodes/fetch-nodes/fetch-nodes"
+import {
+  transformListOfGatsbyNodes,
+  transformGatsbyNodeObject,
+} from "./transform-object"
+import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
 import { typeIsABuiltInScalar } from "~/steps/create-schema-customization/helpers"
 import store from "~/store"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
@@ -16,7 +18,7 @@ export const fieldTransformers = [
 
     transform: ({ field }) => {
       if (typeIsABuiltInScalar(field.type)) {
-        return `${field.type.ofType.name}!`
+        return `${findNamedTypeName(field.type.ofType)}!`
       } else {
         return `JSON!`
       }
@@ -31,13 +33,31 @@ export const fieldTransformers = [
       (field.type.ofType.name || field.type.ofType?.ofType?.name),
 
     transform: ({ field }) => {
-      const typeName = findTypeName(field.type)
+      const typeName = findNamedTypeName(field.type)
       const normalizedTypeName = typeIsABuiltInScalar(field.type)
         ? typeName
         : buildTypeName(typeName)
 
       return `[${normalizedTypeName}]!`
     },
+  },
+
+  {
+    description: `Lists of Gatsby node interfaces`,
+    test: field => {
+      const implementsNodeInterface = store
+        .getState()
+        .remoteSchema.typeMap.get(findNamedTypeName(field.type))
+        ?.interfaces?.some(i => i.name === `Node`)
+
+      const isAListOfGatsbyNodeInterfaces =
+        (field.type.kind === `LIST` || field.type.ofType?.kind === `LIST`) &&
+        implementsNodeInterface
+
+      return isAListOfGatsbyNodeInterfaces
+    },
+
+    transform: transformListOfGatsbyNodes,
   },
 
   {
@@ -48,16 +68,16 @@ export const fieldTransformers = [
       field.type.ofType?.ofType?.kind === `NON_NULL`,
 
     transform: ({ field, fieldName }) => {
-      const originalTypeName = findTypeName(field.type)
+      const originalTypeName = findNamedTypeName(field.type)
       const typeKind = findTypeKind(field.type)
 
-      const normalizedType =
+      const normalizedTypeName =
         typeKind === `SCALAR` && typeIsABuiltInScalar(field.type)
           ? originalTypeName
           : buildTypeName(originalTypeName)
 
       return {
-        type: `[${normalizedType}!]!`,
+        type: `[${normalizedTypeName}!]!`,
         resolve: source => {
           const resolvedField = source[fieldName]
 
@@ -83,7 +103,7 @@ export const fieldTransformers = [
       (field.type.ofType.name ?? field.type.ofType?.ofType?.name) &&
       typeIsABuiltInScalar(field.type),
 
-    transform: ({ field }) => `[${findTypeName(field.type)}!]`,
+    transform: ({ field }) => `[${findNamedTypeName(field.type)}!]`,
   },
 
   {
@@ -93,7 +113,8 @@ export const fieldTransformers = [
       field.type.ofType.kind === `NON_NULL` &&
       (field.type.ofType.name ?? field.type.ofType?.ofType?.name),
 
-    transform: ({ field }) => `[${buildTypeName(findTypeName(field.type))}!]`,
+    transform: ({ field }) =>
+      `[${buildTypeName(findNamedTypeName(field.type))}!]`,
   },
 
   {
@@ -131,7 +152,7 @@ export const fieldTransformers = [
         store
           .getState()
           // get the full type for this interface
-          .remoteSchema.typeMap.get(findTypeName(field.type))
+          .remoteSchema.typeMap.get(findNamedTypeName(field.type))
           // filter out any excluded types
           .possibleTypes?.filter(
             possibleType =>
@@ -225,7 +246,8 @@ export const fieldTransformers = [
     test: field =>
       field.type.kind === `LIST` && field.type.ofType.kind === `INTERFACE`,
 
-    transform: ({ field }) => `[${buildTypeName(field.type.ofType.name)}]`,
+    transform: ({ field }) =>
+      `[${buildTypeName(findNamedTypeName(field.type))}]`,
   },
 
   {
@@ -244,7 +266,8 @@ export const fieldTransformers = [
     description: `Lists of NON_NULL types`,
     test: field =>
       findTypeKind(field.type) !== `LIST` && field.type.kind === `NON_NULL`,
-    transform: ({ field }) => `${buildTypeName(findTypeName(field.type))}!`,
+    transform: ({ field }) =>
+      `${buildTypeName(findNamedTypeName(field.type))}!`,
   },
 
   // for finding unhandled types

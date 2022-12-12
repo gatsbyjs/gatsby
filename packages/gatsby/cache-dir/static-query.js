@@ -17,9 +17,18 @@ function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   )
 }
 
-// TODO(v5): Remove completely
+let warnedAboutStaticQuery = false
+
+// TODO(v6): Remove completely
 const StaticQuery = props => {
   const { data, query, render, children } = props
+
+  if (process.env.NODE_ENV === `development` && !warnedAboutStaticQuery) {
+    console.warn(
+      `The <StaticQuery /> component is deprecated and will be removed in Gatsby v6. Use useStaticQuery instead. Refer to the migration guide for more information: https://gatsby.dev/migrating-4-to-5/#staticquery--is-deprecated`
+    )
+    warnedAboutStaticQuery = true
+  }
 
   return (
     <StaticQueryContext.Consumer>

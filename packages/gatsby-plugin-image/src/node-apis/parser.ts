@@ -74,6 +74,7 @@ export function babelParseToAst(
  */
 export const extractStaticImageProps = (
   ast: babel.types.File,
+  filename: string,
   onError?: (prop: string, nodePath: NodePath) => void
 ): Map<string, IStaticImageProps> => {
   const images: Map<string, IStaticImageProps> = new Map()
@@ -93,6 +94,10 @@ export const extractStaticImageProps = (
         nodePath as unknown as NodePath<JSXOpeningElement>,
         onError
       ) as unknown as IStaticImageProps
+      // When the image props are the same for multiple StaticImage but they are in different locations
+      // the hash will be the same then. We need to make sure that the hash is unique.
+      image.filename = filename
+
       images.set(hashOptions(image), image)
     },
   })
