@@ -532,7 +532,6 @@ jobs:
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GATSBY_EXPERIMENTAL_LMDB_STORE: 1
             GENERATE_JEST_REPORT: "true"
             COMPILER_OPTIONS: GATSBY_MAJOR=5
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
