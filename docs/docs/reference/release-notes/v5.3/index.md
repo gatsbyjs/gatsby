@@ -23,7 +23,11 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ## ES Modules (ESM) in Gatsby files
 
-TODO
+The ECMAScript module format is the [official TC39 standard](https://tc39.es/ecma262/#sec-modules) for packaging JavaScript. For many years, [CommonJS (CJS)](https://nodejs.org/api/modules.html#modules-commonjs-modules) was the de facto standard in Node.js. Before now, [`gatsby-config`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/) and [`gatsby-node`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/) had to be written in CommonJS (CJS), earlier this year, we also included support for TypeScript, allowing you to write your `gatsby-*` in `.ts`
+
+Support for ESM in `gatsby-config` and `gatsby-node` files has been a highly requested feature in the community, and ecosystems that Gatsby interacts with like mdx and unified have switched to ESM, dropping CJS in their latest major releases. In this release, we've included support for ESM in `gatsby-node.mjs` and `gatsby-config.mjs`. This means that you can now write your `gatsby-*` files in ESM and also use Pure ESM Packages without any hack. Please note that we do not support ESM in `gatsby-config.ts` and `gatsby-node.ts` yet and support for that would be added in another minor release.
+
+For more details, head over to our [ESM in Gatsby files](https://github.com/gatsbyjs/gatsby/discussions/37069) umbrella discussion.
 
 ## Improved error messages
 
