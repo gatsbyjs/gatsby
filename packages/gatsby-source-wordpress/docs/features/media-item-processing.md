@@ -44,7 +44,7 @@ If you're using [Gatsby's Image CDN](https://support.gatsbyjs.com/hc/en-us/artic
 }
 ```
 
-If you would prefer to let WordPress handle serving images for you, you can prevent Gatsby from fetching any images or files with the following plugin options:
+If you would prefer to let WordPress handle serving images for you, you can prevent Gatsby from fetching any images or files with the following plugin options. This may also be needed for very large sites to build quickly if you have a lot of files/images in html fields.
 
 ```js
 {
@@ -77,10 +77,8 @@ Even when disabling MediaItem file nodes (above) while using Image CDN, fetching
                 "contentNodes",
                 "seo",
                 "ancestors",
-                "contentType",
                 "author",
                 "template",
-                "mediaDetails",
                 "lastEditedBy",
                 "authorDatabaseId",
                 "authorId",
@@ -94,7 +92,6 @@ Even when disabling MediaItem file nodes (above) while using Image CDN, fetching
                 "modifiedGmt",
                 "parentDatabaseId",
                 "parentId",
-                "sizes",
                 "srcSet",
                 "parent",
                 "children"
