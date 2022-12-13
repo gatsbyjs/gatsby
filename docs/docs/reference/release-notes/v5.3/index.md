@@ -61,7 +61,7 @@ An error occurred during parallel query running.
 Error: Worker exited before finishing task
 ```
 
-Gatsby uses [worker threads](https://nodejs.org/docs/latest-v18.x/api/worker_threads.html) to execute its GraphQL queries in parallel (with its own package [`gatsby-worker`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-worker)). When Parallel Query Running was introduced these workers were already instructed to propagate their errors to the main process so that you can see what actually happened. Unfortunately, at a certain workload the workers didn't have enough time to relay those messages and you were left alone with the above mentioned worker error.
+Gatsby uses [child processes](https://nodejs.org/docs/latest-v18.x/api/child_process.html) to execute its GraphQL queries in parallel (with its own package [`gatsby-worker`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-worker)). When Parallel Query Running was introduced these child processes were already instructed to propagate their errors to the main process so that you can see what actually happened. Unfortunately, at a certain workload the child processes didn't have enough time to relay those messages and you were left alone with the above mentioned worker error.
 
 In the PR [feat(gatsby-worker): Show original stack trace](https://github.com/gatsbyjs/gatsby/pull/37206) we have now given `gatsby-worker` the ability to save its errors to a local, temporary file and then the main process can playback any messages that otherwise might have been lost. We have further plans to improve this functionality but the main pain point was fixed with the above PR. You should now successfully see the original error, with any amount of workload.
 
