@@ -90,6 +90,8 @@ When you use [Gatsby Preview](/products/cloud/previews/) and your site errors ou
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [mudge](https://github.com/mudge): fix(gatsby): Use path prefix when loading slice data [PR #37202](https://github.com/gatsbyjs/gatsby/pull/37202)
+- [heimoshuiyu](https://github.com/heimoshuiyu): feat(gatsby-transformer-sharp): Add `avif` to supportedExtensions [PR #37112](https://github.com/gatsbyjs/gatsby/pull/37112)
+- [openscript](https://github.com/openscript): feat(gatsby): Add `documentSearchPaths` option to `graphqlTypegen` [PR #37120](https://github.com/gatsbyjs/gatsby/pull/37120)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.3.0-next.0...gatsby@5.3.0
