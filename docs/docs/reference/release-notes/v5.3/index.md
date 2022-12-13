@@ -23,29 +23,30 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ## ES Modules (ESM) in Gatsby files
 
-The ECMAScript module format is the [official TC39 standard](https://tc39.es/ecma262/#sec-modules) for packaging JavaScript. For many years, [CommonJS (CJS)](https://nodejs.org/api/modules.html#modules-commonjs-modules) was the de facto standard in Node.js. Before now, [`gatsby-config`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/) and [`gatsby-node`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/) had to be written in CommonJS (CJS), earlier this year, we also included support for TypeScript, allowing you to write your `gatsby-*` in `.ts`
+The ECMAScript module (ESM) format is the [official TC39 standard](https://tc39.es/ecma262/#sec-modules) for packaging JavaScript. For many years, [CommonJS (CJS)](https://nodejs.org/api/modules.html#modules-commonjs-modules) was the de facto standard in Node.js. Before now, [`gatsby-config`](/docs/reference/config-files/gatsby-config/) and [`gatsby-node`](/docs/reference/config-files/gatsby-node/) had to be written in CJS. Earlier this year, we also included support for TypeScript, allowing you to author your `gatsby-*` in TypeScript.
 
-Support for ESM in `gatsby-config` and `gatsby-node` files has been a highly requested feature in the community, and ecosystems that Gatsby interacts with like mdx and unified have switched to ESM, dropping CJS in their latest major releases. In this release, we've included support for ESM in `gatsby-node.mjs` and `gatsby-config.mjs`. This means that you can now write your `gatsby-*` files in ESM and also use Pure ESM Packages without any hack.
+Support for ESM in `gatsby-config` and `gatsby-node` files has been a highly requested feature in the community, and ecosystems that Gatsby interacts with like MDX and unified have switched to ESM, dropping CJS in their latest major releases. In this release, we've included support for ESM in `gatsby-node.mjs` and `gatsby-config.mjs`. This means that you can now use ESM-only packages without any workarounds. Here's an example `gatsby-config.mjs` file:
 
-```javascript:title=gatbsy-config.mjs
-//Import Pure ESM or CommonJS packages
-import slugify from '@sindresorhus/slugify';
+```js:title=gatsby-config.mjs
+// The latest version of "slugify" is ESM-only
+import slugify from "@sindresorhus/slugify"
+
+const title = `Gatsby Default Starter`
 
 const config = {
   siteMetadata: {
-    title: slugify(`Gatsby Default Starter`),
-    siteUrl: `https://www.yourdomain.tld`,
+    title,
+    slugifiedTitle: slugify(title),
   },
   plugins: [],
-};
+}
 
-// Use the export statement
-export default config;
+export default config
 ```
 
-Please note that we do not support ESM in `gatsby-config.ts` and `gatsby-node.ts` yet and support for that would be added in another minor release.
+**Please note:** The TypeScript variants of `gatsby-config` and `gatsby-node` do **not** support ESM yet. We plan on adding support in a future minor release by using the `.mts` extension. If you have questions or suggestions about this, please go to our [ESM in Gatsby files](https://github.com/gatsbyjs/gatsby/discussions/37069) umbrella discussion.
 
-For more details, head over to our [ESM in Gatsby files](https://github.com/gatsbyjs/gatsby/discussions/37069) umbrella discussion.
+The [ESM in Gatsby files](https://github.com/gatsbyjs/gatsby/discussions/37069) umbrella discussion is also the right place for any questions about the `.mjs` usage.
 
 ## Improved error messages
 
