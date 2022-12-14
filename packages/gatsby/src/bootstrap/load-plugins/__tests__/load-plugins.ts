@@ -33,6 +33,7 @@ jest.mock(`../../resolve-js-file-path`, () => {
     resolveJSFilepath: jest.fn(
       ({ filePath }) => `${filePath.replace(`src`, `dist`)}.js`
     ),
+    maybeAddFileProtocol: jest.fn(val => val),
   }
 })
 

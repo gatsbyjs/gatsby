@@ -6,7 +6,7 @@ import report from "gatsby-cli/lib/reporter"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testImportError } from "../utils/test-import-error"
 import { resolveModule, ModuleResolver } from "../utils/module-resolver"
-import { resolveJSFilepath } from "./resolve-js-file-path"
+import { maybeAddFileProtocol, resolveJSFilepath } from "./resolve-js-file-path"
 import { preferDefault } from "./prefer-default"
 
 const staticallyAnalyzeExports = (
@@ -215,7 +215,9 @@ export async function resolveModuleExports(
         return []
       }
 
-      const rawImportedModule = await import(moduleFilePath)
+      const rawImportedModule = await import(
+        maybeAddFileProtocol(moduleFilePath)
+      )
 
       // If the module is cjs, the properties we care about are nested under a top-level `default` property
       const importedModule = preferDefault(rawImportedModule)
