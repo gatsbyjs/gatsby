@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-shopify",
-  "version": "8.3.1",
+  "version": "8.3.2",
   "description": "Gatsby source plugin for building websites using Shopify as a data source.",
   "scripts": {
     "watch": "tsc-watch --outDir .",
@@ -36,7 +36,7 @@
     "@types/node-fetch": "^2.5.12",
     "@types/sharp": "^0.31.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^3.3.1",
+    "gatsby-plugin-image": "^3.3.2",
     "msw": "^0.38.2",
     "prettier": "^2.7.1",
     "prettier-check": "^2.0.0",
