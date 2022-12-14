@@ -34,7 +34,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       // show this warning only once in main process
       if (!process.env.GATSBY_WORKER_ID) {
         console.warn(
-          `JS frontmatter engine is enabled in gatsby-transformer-remark (via jsFrontmatterEngine: true). This can cause a security risk, see TODO. If you are not relying on this feature we strongly suggest disabling it via the "jsFrontmatterEngine: false" plugin option. If you rely on this feature make sure to properly secure or sanitize your content source.`
+          `JS frontmatter engine is enabled in gatsby-transformer-remark (via jsFrontmatterEngine: true). This can cause a security risk, see https://github.com/gatsbyjs/gatsby/security/advisories/GHSA-7ch4-rr99-cqcw. If you are not relying on this feature we strongly suggest disabling it via the "jsFrontmatterEngine: false" plugin option. If you rely on this feature make sure to properly secure or sanitize your content source.`
         )
       }
       return value
@@ -43,7 +43,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     const js = () => {
       if (!warnedAboutJSFrontmatterEngine) {
         console.warn(
-          `You have frontmatter declared with "---js" or "---javascript" that is not parsed by default to mitigate a security risk (see TODO). If you require this feature it can be enabled by setting "jsFrontmatterEngine: true" in the plugin options of gatsby-transformer-remark.`
+          `You have frontmatter declared with "---js" or "---javascript" that is not parsed by default to mitigate a security risk (see https://github.com/gatsbyjs/gatsby/security/advisories/GHSA-7ch4-rr99-cqcw). If you require this feature it can be enabled by setting "jsFrontmatterEngine: true" in the plugin options of gatsby-transformer-remark.`
         )
         warnedAboutJSFrontmatterEngine = true
       }
