@@ -2,6 +2,7 @@ import fs from "fs-extra"
 import { testImportError } from "../utils/test-import-error"
 import report from "gatsby-cli/lib/reporter"
 import path from "path"
+import { pathToFileURL } from "url"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
 import { resolveJSFilepath } from "./resolve-js-file-path"
@@ -47,7 +48,7 @@ async function attemptImport(
     return { configFilePath: ``, configModule: undefined }
   }
 
-  const importedModule = await import(configFilePath)
+  const importedModule = await import(pathToFileURL(configFilePath).href)
   const configModule = preferDefault(importedModule)
 
   return { configFilePath, configModule }
