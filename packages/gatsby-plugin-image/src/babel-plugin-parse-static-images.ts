@@ -50,7 +50,9 @@ export default function attrs({
         }
 
         // Adding the filename to the hashing, like in "extractStaticImageProps" function
-        props.filename = state.filename
+        if (state.filename) {
+          props.filename = slash(state.filename)
+        }
         const hash = hashOptions(props)
 
         const cacheDir = (this.opts as Record<string, string>)?.cacheDir
