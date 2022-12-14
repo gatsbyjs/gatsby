@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@7.3.0/packages/gatsby-transformer-documentationjs) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
 ## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@7.2.0/packages/gatsby-transformer-documentationjs) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
