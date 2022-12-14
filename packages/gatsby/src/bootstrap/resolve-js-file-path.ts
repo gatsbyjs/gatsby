@@ -7,7 +7,7 @@ import report from "gatsby-cli/lib/reporter"
  * On other platforms, the file protocol is not required, but supported, so we want to just always use it.
  * Except jest doesn't work with that and in that environment we never add the file protocol.
  */
-const maybeAddFileProtocol = process.env.JEST_WORKER_ID
+export const maybeAddFileProtocol = process.env.JEST_WORKER_ID
   ? (module: string): string => module
   : (module: string): string => pathToFileURL(module).href
 
@@ -44,7 +44,7 @@ export async function resolveJSFilepath({
           )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`
         )
       }
-      return maybeAddFileProtocol(filePathWithJSExtension)
+      return filePathWithJSExtension
     }
   } catch (_) {
     // Do nothing
@@ -53,7 +53,7 @@ export async function resolveJSFilepath({
   // Check if .js variant exists
   try {
     if (require.resolve(filePathWithJSExtension)) {
-      return maybeAddFileProtocol(filePathWithJSExtension)
+      return filePathWithJSExtension
     }
   } catch (_) {
     // Do nothing
@@ -61,7 +61,7 @@ export async function resolveJSFilepath({
 
   try {
     if (require.resolve(filePathWithMJSExtension)) {
-      return maybeAddFileProtocol(filePathWithMJSExtension)
+      return filePathWithMJSExtension
     }
   } catch (_) {
     // Do nothing
