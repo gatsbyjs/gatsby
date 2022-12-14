@@ -3,7 +3,7 @@ title: "Unified Hosting"
 description: "Learn about Unified Hosting and the benefits of it in Gatsby Cloud"
 ---
 
-Unified Hosting (as signalled by a `gatsbyjs.io` domain) is enabled by default on production builds for all builds.
+Unified Hosting (as signalled by a `gatsbyjs.io` domain) is enabled by default for all builds.
 
 ## Benefits
 
