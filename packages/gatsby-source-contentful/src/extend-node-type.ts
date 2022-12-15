@@ -1,11 +1,24 @@
 import { stripIndent } from "common-tags"
 import { GraphQLBoolean, GraphQLInt } from "gatsby/graphql"
 import { hasFeature } from "gatsby-plugin-utils"
-import { IGatsbyImageData } from "gatsby-plugin-image"
 import { GatsbyNode } from "gatsby"
 
 import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
+
+// type IContentfulImageFieldConfig =
+// ObjectTypeAs<
+//   //ObjectTypeComposerFieldConfigAsObjectDefinition<
+//     unknown,
+//     unknown,
+//     IGatsbyImageFieldArgs & {
+//       jpegProgressive: unknown
+//       resizingBehavior: unknown
+//       cropFocus: unknown
+//       cornerRadius: unknown
+//       quality: unknown
+//     }
+//   >
 
 export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] =
   async function setFieldsOnGraphQLNodeType({ type, cache }) {

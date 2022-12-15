@@ -1,4 +1,4 @@
-import { SourceNodesArgs } from "gatsby"
+import { Actions, SourceNodesArgs } from "gatsby"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 import { IContentfulAsset } from "./types/contentful"
 
@@ -33,16 +33,12 @@ interface IRemoteData {
 
 export async function downloadContentfulAssets(
   gatsbyFunctions: SourceNodesArgs,
+  actions: Actions,
   assetNodes: Array<IContentfulAsset>,
   assetDownloadWorkers: number
 ): Promise<void> {
-  const {
-    actions: { createNode, touchNode, createNodeField },
-    createNodeId,
-    cache,
-    reporter,
-    getNode,
-  } = gatsbyFunctions
+  const { createNodeId, cache, reporter, getNode } = gatsbyFunctions
+  const { createNode, touchNode, createNodeField } = actions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.

@@ -3,18 +3,20 @@ import {
   ContentfulClientApi,
   createClient,
   CreateClientParams,
-  EntryCollection,
-  Space,
-  Locale,
-  SyncCollection,
-  ContentType,
-  Entry,
 } from "contentful"
 import { Reporter } from "gatsby"
 import _ from "lodash"
 import { formatPluginOptionsForCLI } from "./plugin-options"
 import { CODES } from "./report"
-import { IContentfulContentType, IContentfulTag } from "./types/contentful"
+import {
+  ContentType,
+  Entry,
+  EntryCollection,
+  Locale,
+  Space,
+  SyncCollection,
+  Tag,
+} from "./types/contentful-js-sdk"
 import { IProcessedPluginOptions } from "./types/plugin"
 
 /**
@@ -240,8 +242,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 }
 
 interface IFetchResult {
-  currentSyncData: unknown
-  tagItems: Array<IContentfulTag>
+  currentSyncData: SyncCollection
+  tagItems: Array<Tag>
   defaultLocale: string
   locales: Array<Locale>
   space: Space
@@ -307,9 +309,9 @@ export async function fetchContent({
   })
   const syncClient = createClient(contentfulSyncClientOptions)
 
-  let currentSyncData: SyncCollection
+  let currentSyncData: SyncCollection | undefined
   let currentPageLimit = pageLimit
-  let lastCurrentPageLimit
+  let lastCurrentPageLimit = 0
   let syncSuccess = false
   try {
     while (!syncSuccess) {
@@ -321,7 +323,7 @@ export async function fetchContent({
         const query = syncToken
           ? { nextSyncToken: syncToken, ...basicSyncConfig }
           : { initial: true, ...basicSyncConfig }
-        currentSyncData = await syncClient.sync(query)
+        currentSyncData = (await syncClient.sync(query)) as SyncCollection
         syncSuccess = true
       } catch (e) {
         // Back off page limit if responses content length exceeds Contentfuls limits.
@@ -379,6 +381,9 @@ export async function fetchContent({
   let tagItems
   try {
     const tagsResult = await pagedGet(client, `getTags`, pageLimit)
+    if (!tagsResult) {
+      throw new Error()
+    }
     tagItems = tagsResult.items
     reporter.verbose(`Tags fetched ${tagItems.length}`)
   } catch (e) {
@@ -390,6 +395,10 @@ export async function fetchContent({
         )}`,
       },
     })
+  }
+
+  if (!currentSyncData) {
+    throw new Error(`Unable to sync data from Contentful API`)
   }
 
   const result: IFetchResult = {
@@ -424,7 +433,7 @@ export async function fetchContentTypes({
     `environment`
   )}`
 
-  let contentTypes: Array<Entry<ContentType>>
+  let contentTypes: Array<Entry<ContentType>> = []
 
   try {
     reporter.verbose(`Fetching content types (${sourceId})`)
@@ -436,10 +445,10 @@ export async function fetchContentTypes({
         `getContentTypes`,
         pageLimit
       )
-      reporter.verbose(
-        `Content types fetched ${contentTypeCollection.items.length} (${sourceId})`
-      )
       if (contentTypeCollection) {
+        reporter.verbose(
+          `Content types fetched ${contentTypeCollection.items.length} (${sourceId})`
+        )
         contentTypes = contentTypeCollection.items
       }
     } catch (e) {
@@ -454,10 +463,6 @@ export async function fetchContentTypes({
     }
   } catch (e) {
     handleContentfulError(e)
-  }
-
-  if (!contentTypes) {
-    throw new Error(`cry`)
   }
 
   return contentTypes

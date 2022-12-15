@@ -16,6 +16,7 @@ import {
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
 import { IPluginOptions } from "./types/plugin"
+import { IContentfulAsset, IContentfulEntity } from "./types/contentful"
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 
@@ -32,20 +33,17 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 
 let isFirstSource = true
 export const sourceNodes: GatsbyNode["sourceNodes"] =
-  async function sourceNodes(
-    {
+  async function sourceNodes(args, pluginOptions) {
+    const {
       actions,
       getNode,
       getNodes,
       createNodeId,
       store,
       cache,
-      getCache,
       reporter,
       parentSpan,
-    },
-    pluginOptions
-  ) {
+    } = args
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
       actions
@@ -60,9 +58,13 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           return
         }
         touchNode(node)
-        if (node?.fields?.localFile) {
-          // Prevent GraphQL type inference from crashing on this property
-          touchNode(getNode(node.fields.localFile))
+        const assetNode = node as IContentfulAsset
+        if (!assetNode.fields.localFile) {
+          return
+        }
+        const localFileNode = getNode(assetNode.fields.localFile)
+        if (localFileNode) {
+          touchNode(localFileNode)
         }
       })
       isFirstSource = false
@@ -184,7 +186,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         (n.internal.owner === `gatsby-source-contentful` &&
           n.internal.type.indexOf(`ContentfulContentType`) === 0) ||
         n.internal.type === `ContentfulAsset`
-    )
+    ) as Array<IContentfulEntity>
 
     // Report existing, new and updated nodes
     const nodeCounts = {
@@ -262,7 +264,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     const { deletedEntries, deletedAssets } = currentSyncData
     const deletedEntryGatsbyReferenceIds = new Set()
 
-    function deleteContentfulNode(node) {
+    function deleteContentfulNode(node): void {
       const normalizedType = node.sys.type.startsWith(`Deleted`)
         ? node.sys.type.substring(`Deleted`.length)
         : node.sys.type
@@ -488,6 +490,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         createNodesForContentType({
           contentTypeItem,
           entries: entryList[i],
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          unstable_createNodeManifest,
           createNode,
           createNodeId,
           getNode,
@@ -498,7 +502,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           space,
           useNameForId,
           pluginConfig,
-          unstable_createNodeManifest,
         })
       )
     }
@@ -507,7 +510,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       reporter.info(`Creating ${assets.length} Contentful asset nodes`)
     }
 
-    const assetNodes = []
+    const assetNodes: Array<IContentfulAsset> = []
     for (let i = 0; i < assets.length; i++) {
       // We wait for each asset to be process until handling the next one.
       assetNodes.push(
@@ -548,15 +551,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     if (pluginConfig.get(`downloadLocal`)) {
       const assetDownloadWorkers = pluginConfig.get(`assetDownloadWorkers`)
       await downloadContentfulAssets(
-        {
-          actions,
-          createNodeId,
-          store,
-          cache,
-          getCache,
-          getNode,
-          reporter,
-        },
+        args,
+        actions,
         assetNodes,
         assetDownloadWorkers
       )

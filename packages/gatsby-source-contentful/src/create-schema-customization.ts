@@ -17,11 +17,13 @@ import {
   GraphQLString,
   GraphQLType,
 } from "gatsby/graphql"
-import { IContentfulContentType, IContentfulEntry } from "./types/contentful"
-import { ContentTypeField } from "./types/contentful-api"
-import { ContentType } from "contentful"
-
-type ContentfulField = ContentType["fields"][0]
+import {
+  ContentType,
+  ContentTypeField,
+  FieldItem,
+} from "./types/contentful-js-sdk/content-type"
+import { Entry } from "./types/contentful-js-sdk/entry"
+import { IContentfulEntry } from "./types/contentful"
 
 interface IContentfulGraphQLField
   extends Omit<Partial<GraphQLFieldConfig<unknown, unknown>>, "type"> {
@@ -104,7 +106,7 @@ const unionsNameSet = new Set()
 
 const getLinkFieldType = (
   linkType: string | undefined,
-  field: ContentfulField,
+  field: ContentTypeField | FieldItem,
   schema,
   createTypes
 ): IContentfulGraphQLField => {
@@ -133,8 +135,12 @@ const getLinkFieldType = (
 
       // Single content type
       if (translatedTypeNames.length === 1) {
+        const typeName = translatedTypeNames.shift()
+        if (!typeName) {
+          throw new Error(`Translated type name can not be empty`)
+        }
         return {
-          type: translatedTypeNames.shift(),
+          type: typeName,
           extensions: {
             link: { by: `id`, from: field.id },
           },
@@ -173,7 +179,7 @@ const getLinkFieldType = (
 
 // Translate Contentful field types to GraphQL field types
 const translateFieldType = (
-  field: ContentfulField,
+  field: ContentTypeField | FieldItem,
   schema,
   createTypes
 ): GraphQLFieldConfig<unknown, unknown> => {
@@ -192,11 +198,7 @@ const translateFieldType = (
     const fieldData =
       field.items?.type === `Link`
         ? getLinkFieldType(field.items.linkType, field, schema, createTypes)
-        : translateFieldType(
-            field.items as ContentTypeField,
-            schema,
-            createTypes
-          )
+        : translateFieldType(field.items, schema, createTypes)
 
     fieldType = { ...fieldData, type: `[${fieldData.type}]` }
   } else if (field.type === `Link`) {
@@ -223,7 +225,7 @@ async function getContentTypesFromContentful({
   cache,
   reporter,
   pluginConfig,
-}): Promise<Array<IContentfulContentType>> {
+}): Promise<Array<Entry<ContentType>>> {
   // Get content type items from Contentful
   const allContentTypeItems = await fetchContentTypes({
     pluginConfig,

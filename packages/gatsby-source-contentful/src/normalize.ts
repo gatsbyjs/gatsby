@@ -3,13 +3,25 @@ import { getGatsbyVersion } from "gatsby-core-utils"
 import { lt, prerelease } from "semver"
 
 import { restrictedNodeFields, conflictFieldPrefix } from "./config"
-import { Asset, Entry, Link, LinkType, SyncCollection } from "contentful"
 import {
   IContentfulAsset,
-  IContentfulEntity,
   IContentfulEntry,
   IContentfulLink,
+  IContentfulSys,
 } from "./types/contentful"
+import { Actions, Node, SourceNodesArgs } from "gatsby"
+import {
+  SyncCollection,
+  Entry,
+  Asset,
+  ContentType,
+  Space,
+  Locale,
+  FieldItem,
+  LocaleCode,
+  AssetFile,
+} from "./types/contentful-js-sdk"
+import { IProcessedPluginOptions } from "./types/plugin"
 
 export const makeTypeName = (
   type: string,
@@ -23,7 +35,19 @@ const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
 const shouldUpgradeGatsbyVersion =
   lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
-export const getLocalizedField = ({ field, locale, localesFallback }) => {
+interface IContententfulLocaleFallback {
+  [key: string]: LocaleCode
+}
+
+export const getLocalizedField = ({
+  field,
+  locale,
+  localesFallback,
+}: {
+  field: FieldItem
+  locale: Locale
+  localesFallback: IContententfulLocaleFallback
+}): null | FieldItem => {
   if (!field) {
     return null
   }
@@ -35,14 +59,16 @@ export const getLocalizedField = ({ field, locale, localesFallback }) => {
   ) {
     return getLocalizedField({
       field,
-      locale: { code: localesFallback[locale.code] },
+      locale: { ...locale, code: localesFallback[locale.code] },
       localesFallback,
     })
   } else {
     return null
   }
 }
-export const buildFallbackChain = locales => {
+export const buildFallbackChain = (
+  locales: Array<Locale>
+): IContententfulLocaleFallback => {
   const localesFallback = {}
   _.each(
     locales,
@@ -52,7 +78,7 @@ export const buildFallbackChain = locales => {
 }
 const makeGetLocalizedField =
   ({ locale, localesFallback }) =>
-  field =>
+  (field: FieldItem): null | FieldItem =>
     getLocalizedField({ field, locale, localesFallback })
 
 export const makeId = ({
@@ -83,8 +109,9 @@ const makeMakeId =
 
 // Generates an unique id per space for reference resolving
 // @todo space id is actually not factored in here!
-export const createRefId = (node: IContentfulEntity): string =>
-  `${node.sys.id}___${node.sys.type}`
+export const createRefId = (
+  node: Entry<unknown> | IContentfulEntry | Asset
+): string => `${node.sys.id}___${node.sys.type}`
 
 export const createLinkRefId = (link: IContentfulLink): string =>
   `${link.sys.id}___${link.sys.linkType}`
@@ -95,7 +122,7 @@ export const buildEntryList = ({
 }: {
   contentTypeItems: Array<Entry<unknown>>
   currentSyncData: SyncCollection
-}): Array<Array<Entry<unknown>> | undefined> => {
+}): Array<Array<Entry<unknown>>> => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map: Map<string, Array<Entry<unknown>>> = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
@@ -108,7 +135,7 @@ export const buildEntryList = ({
     }
   })
   // Order is relevant, must map 1:1 to contentTypeItems array
-  return contentTypeItems.map(contentType => map.get(contentType.sys.id))
+  return contentTypeItems.map(contentType => map.get(contentType.sys.id) || [])
 }
 
 export const buildResolvableSet = ({
@@ -116,9 +143,9 @@ export const buildResolvableSet = ({
   existingNodes = [],
   assets = [],
 }: {
-  entryList: Array<Array<IContentfulEntry>>
+  entryList: Array<Array<Entry<unknown>>>
   existingNodes: Array<IContentfulEntry>
-  assets: Array<IContentfulAsset>
+  assets: Array<Asset>
 }): Set<string> => {
   const resolvable: Set<string> = new Set()
   existingNodes.forEach(node => {
@@ -138,6 +165,17 @@ export const buildResolvableSet = ({
   return resolvable
 }
 
+interface IForeignReference {
+  name: string
+  id: string
+  spaceId: string
+  type: string // Could be based on constances?
+}
+
+interface IForeignReferenceMap {
+  [key: string]: Array<IForeignReference>
+}
+
 export const buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
@@ -145,8 +183,8 @@ export const buildForeignReferenceMap = ({
   defaultLocale,
   space,
   useNameForId,
-}) => {
-  const foreignReferenceMap = {}
+}): IForeignReferenceMap => {
+  const foreignReferenceMap: IForeignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
     // Establish identifier for content type
     //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -219,9 +257,13 @@ export const buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(id, node, key, text) {
+interface IContentfulTextNode extends Node {
+  sys: Partial<IContentfulSys>
+}
+
+function prepareTextNode(id, node, key, text): IContentfulTextNode {
   const str = _.isString(text) ? text : ``
-  const textNode = {
+  const textNode: IContentfulTextNode = {
     id,
     parent: node.id,
     raw: str,
@@ -231,7 +273,9 @@ function prepareTextNode(id, node, key, text) {
       content: str,
       // entryItem.sys.publishedAt is source of truth from contentful
       contentDigest: node.sys.publishedAt,
+      owner: `gatsby-source-contentful`,
     },
+    children: [],
     sys: {
       type: `TextNode`,
     },
@@ -256,8 +300,9 @@ function contentfulCreateNodeManifest({
   entryItem,
   entryNode,
   space,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   unstable_createNodeManifest,
-}) {
+}): void {
   const isPreview = pluginConfig.get(`host`) === `preview.contentful.com`
 
   const createNodeManifestIsSupported =
@@ -311,9 +356,22 @@ function contentfulCreateNodeManifest({
   }
 }
 
+interface ICreateNodesForContentTypeArgs extends Actions, SourceNodesArgs {
+  contentTypeItem: ContentType
+  entries: Array<Entry<unknown>>
+  resolvable: Set<string>
+  foreignReferenceMap: IForeignReferenceMap
+  defaultLocale: string
+  locales: Array<Locale>
+  space: Space
+  useNameForId: boolean
+  pluginConfig: IProcessedPluginOptions
+}
+
 export const createNodesForContentType = ({
   contentTypeItem,
   entries,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   unstable_createNodeManifest,
   createNode,
   createNodeId,
@@ -325,7 +383,7 @@ export const createNodesForContentType = ({
   space,
   useNameForId,
   pluginConfig,
-}) => {
+}: ICreateNodesForContentTypeArgs): unknown => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
   //  but sometimes a base62 uuid generated by Contentful, hence the option)
@@ -336,7 +394,7 @@ export const createNodesForContentType = ({
     contentTypeItemId = contentTypeItem.sys.id
   }
 
-  const createNodePromises = []
+  const createNodePromises: Array<void | Promise<void>> = []
 
   // Create a node for the content type
   const contentTypeNode = {
@@ -376,7 +434,7 @@ export const createNodesForContentType = ({
     })
 
     // Warn about any field conflicts
-    const conflictFields = []
+    const conflictFields: Array<string> = []
     contentTypeItem.fields.forEach(contentTypeItemField => {
       const fieldName = contentTypeItemField.id
       if (restrictedNodeFields.includes(fieldName)) {
@@ -387,10 +445,10 @@ export const createNodesForContentType = ({
       }
     })
 
-    const childrenNodes = []
+    const childrenNodes: Array<Node> = []
 
     // First create nodes for each of the entries of that content type
-    const entryNodes = entries
+    const entryNodes: Array<IContentfulEntry> = entries
       .map(entryItem => {
         const entryNodeId = mId(
           space.sys.id,
@@ -410,6 +468,10 @@ export const createNodesForContentType = ({
           const fieldProps = contentTypeItem.fields.find(
             field => field.id === k
           )
+
+          if (!fieldProps) {
+            throw new Error(`Unable to translate field ${k}`)
+          }
 
           const localizedField = fieldProps.localized
             ? getField(v)
@@ -495,7 +557,7 @@ export const createNodesForContentType = ({
         }
 
         // Create actual entry node
-        let entryNode = {
+        let entryNode: IContentfulEntry = {
           id: entryNodeId,
           parent: contentTypeItemId,
           children: [],
@@ -503,6 +565,7 @@ export const createNodesForContentType = ({
             type: `${makeTypeName(contentTypeItemId)}`,
             // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
             contentDigest: entryItem.sys.updatedAt,
+            owner: `gatsby-source-contentful`,
           },
           // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
           // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
@@ -516,6 +579,11 @@ export const createNodesForContentType = ({
             firstPublishedAt: entryItem.sys.createdAt,
             publishedAt: entryItem.sys.updatedAt,
             publishedVersion: entryItem.sys.revision,
+          },
+          metadata: {
+            tags: entryItem.metadata.tags.map(tag =>
+              createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+            ),
           },
         }
 
@@ -565,11 +633,6 @@ export const createNodesForContentType = ({
         entryNode = {
           ...entryItemFields,
           ...entryNode,
-          metadata: {
-            tags: entryItem.metadata.tags.map(tag =>
-              createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
-            ),
-          },
         }
         return entryNode
       })
@@ -598,10 +661,10 @@ export const createAssetNodes = ({
   createNode
   createNodeId
   defaultLocale
-  locales: Array<string>
-  space: string
-}): Array<Promise<any>> => {
-  const createNodePromises = []
+  locales: Array<Locale>
+  space: Space
+}): Array<Promise<IContentfulAsset>> => {
+  const createNodePromises: Array<Promise<IContentfulAsset>> = []
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -614,7 +677,13 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
-    const file = getField(assetItem.fields?.file) ?? null
+    const fileRes = getField(assetItem.fields?.file)
+
+    if (!fileRes) {
+      return
+    }
+
+    const file = fileRes as unknown as AssetFile
 
     // Skip empty and unprocessed assets in Preview API
     if (!file || !file.url || !file.contentType || !file.fileName) {

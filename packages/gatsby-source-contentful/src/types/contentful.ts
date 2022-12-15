@@ -8,26 +8,26 @@ export interface IContentfulContentType {
   displayField: string
   description: string
 }
-interface IContentfulSys {
+export interface IContentfulSys {
   id: string
   type: string
   spaceId: string
   environmentId: string
-  contentType: IContentfulContentType
-  firstPublishedAt: Date
-  publishedAt: Date
+  contentType: string
+  firstPublishedAt: string
+  publishedAt: string
   publishedVersion: number
   locale: string
 }
 
-export interface IContentfulTag {
-  name: string
-  contentful_id: string
-  id: string
-}
+// export interface IContentfulTag {
+//   name: string
+//   contentful_id: string
+//   id: string
+// }
 
 interface IContentfulMetadata {
-  tags: [IContentfulTag]
+  tags: Array<string>
 }
 
 interface IContentfulLinkSys {
@@ -60,6 +60,7 @@ export interface IContentfulAsset extends IContentfulEntity {
   size: number
   width: number
   height: number
+  fields: { localFile?: string }
 }
 
 // Image API

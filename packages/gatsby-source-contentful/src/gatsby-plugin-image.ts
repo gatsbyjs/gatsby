@@ -284,8 +284,8 @@ export function generateImageSource(
 export async function resolveGatsbyImageData(
   image,
   options: IContentfulImageAPIUrlBuilderOptions,
-  context,
-  info,
+  _context,
+  _info,
   { cache }: { cache: GatsbyCache }
 ): Promise<IGatsbyImageData | null> {
   if (!isImage(image)) return null
