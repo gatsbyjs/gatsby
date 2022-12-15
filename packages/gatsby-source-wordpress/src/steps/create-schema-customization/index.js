@@ -1,6 +1,6 @@
 import store from "~/store"
 
-import { fieldOfTypeWasFetched } from "./helpers"
+import { buildInterfacesListForType, fieldOfTypeWasFetched } from "./helpers"
 
 import buildType from "./build-types"
 import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
@@ -86,8 +86,9 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
       fields: nonNodeRootFields,
       interfaces: [`Node`],
     },
-    isAGatsbyNode: true,
   })
+
+  typeDefs.push(wpType)
 
   typeDefs.push(
     addRemoteFilePolyfillInterface(
@@ -103,8 +104,6 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
       }
     )
   )
-
-  typeDefs.push(wpType)
 
   actions.createTypes(typeDefs)
 }

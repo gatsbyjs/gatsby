@@ -36,8 +36,8 @@ describe(`gatsby-worker`, () => {
       fail(`worker pool not created`)
     }
 
-    const exposedMethodsSingle = Object.keys(workerPool.single)
-    const exposedMethodsAll = Object.keys(workerPool.all)
+    const exposedMethodsSingle = Object.keys(workerPool.single).sort()
+    const exposedMethodsAll = Object.keys(workerPool.all).sort()
     // we expect that `notAFunction` even tho is exported in child module is not exposed
     // as it's not a function
     expect(exposedMethodsSingle).toMatchInlineSnapshot(`
@@ -46,6 +46,7 @@ describe(`gatsby-worker`, () => {
         "async100ms",
         "asyncThrow",
         "getWasPonged",
+        "lotOfMessagesAndExit",
         "neverEnding",
         "pid",
         "setupPingPongMessages",
@@ -425,6 +426,28 @@ describe(`gatsby-worker`, () => {
 
         workerPool.sendMessage({ type: `PONG` }, 9001)
       }).toThrowError(`There is no worker with "9001" id.`)
+    })
+
+    it(`messages are not lost if worker exits soon after sending a message`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+      const COUNT = 10000
+
+      let counter = 0
+      workerPool.onMessage(msg => {
+        if (msg.type === `LOT_OF_MESSAGES_TEST`) {
+          counter++
+        }
+      })
+
+      try {
+        await workerPool.single.lotOfMessagesAndExit(COUNT)
+      } catch (e) {
+        console.log(e)
+      }
+
+      expect(counter).toEqual(COUNT)
     })
   })
 })

@@ -4,25 +4,46 @@ Parses Markdown files using [remark](http://remark.js.org/).
 
 ## Install
 
-`npm install gatsby-transformer-remark`
+Install the plugin to your site:
 
-## How to use
+```shell
+npm install gatsby-transformer-remark
+```
 
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-transformer-remark`,
-    options: {
-      // Footnotes mode (default: true)
-      footnotes: true,
-      // GitHub Flavored Markdown mode (default: true)
-      gfm: true,
-      // Plugins configs
-      plugins: [],
+Add it to your `gatsby-config`:
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {},
     },
-  },
-],
+  ],
+}
+```
+
+## Options
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        // Footnotes mode (default: true)
+        footnotes: true,
+        // GitHub Flavored Markdown mode (default: true)
+        gfm: true,
+        // Add your gatsby-remark-* plugins here
+        plugins: [],
+        // Enable JS for https://github.com/jonschlinkert/gray-matter#optionsengines (default: false)
+        // It's not advised to set this to "true" and this option will likely be removed in the future
+        jsFrontmatterEngine: false,
+      },
+    },
+  ],
+}
 ```
 
 The following parts of `options` enable the `remark-footnotes` and `remark-gfm`
@@ -31,10 +52,30 @@ plugins:
 - `options.footnotes`
 - `options.gfm`
 
-A full explanation of how to use markdown in Gatsby can be found here:
-[Adding Markdown Pages](https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/)
+A full explanation of how to use markdown in Gatsby can be found here: [Adding Markdown Pages](https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/)
 
-There are many Gatsby Remark plugins which you can install to customize how Markdown is processed. Many of them are demoed at https://using-remark.gatsbyjs.org/. See also the [source code for using-remark](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark).
+There are many `gatsby-remark-*` plugins which you can install to customize how Markdown is processed. Check out the [source code for using-remark](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark) as an example.
+
+### `gray-matter` options
+
+`gatsby-transformer-remark` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse Markdown frontmatter, so you can specify any of the options mentioned [in its README](https://github.com/jonschlinkert/gray-matter#options) in the `options` key of the plugin.
+
+**Example: Excerpts**
+
+If you don't want to use `pruneLength` for excerpts but a custom separator, you can specify an `excerpt_separator`:
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        excerpt_separator: `<!-- end -->`
+      }
+    },
+  ],
+}
+```
 
 ## Parsing algorithm
 
@@ -120,19 +161,20 @@ By default, `absolute` is set to `false`, generating a relative path. If you'd l
 
 To pass default options to the plugin generating the `tableOfContents`, configure it in `gatsby-config.js` as shown below. The options shown below are the defaults used by the plugin.
 
-```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-transformer-remark`,
-    options: {
-      tableOfContents: {
-        heading: null,
-        maxDepth: 6,
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        tableOfContents: {
+          heading: null,
+          maxDepth: 6,
+        },
       },
     },
-  },
-]
+  ],
+}
 ```
 
 ### Excerpts
@@ -198,23 +240,6 @@ You can also get excerpts in Markdown format.
 }
 ```
 
-## `gray-matter` options
-
-`gatsby-transformer-remark` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse Markdown frontmatter, so you can specify any of the options mentioned [here](https://github.com/jonschlinkert/gray-matter#options) in the `gatsby-config.js` file.
-
-### Example: Excerpts
-
-If you don't want to use `pruneLength` for excerpts but a custom separator, you can specify an `excerpt_separator` in the `gatsby-config.js` file:
-
-```javascript
-{
-  "resolve": `gatsby-transformer-remark`,
-  "options": {
-    "excerpt_separator": `<!-- end -->`
-  }
-}
-```
-
 Any file that does not have the given `excerpt_separator` will fall back to the default pruning method.
 
 ## Troubleshooting
@@ -237,14 +262,18 @@ If that is the case, you can set `truncate` option on `excerpt` field, like:
 
 If your Markdown file contains HTML, `excerpt` will not return a value.
 
-In that case, you can set an `excerpt_separator` in the `gatsby-config.js` file:
+In that case, you can set an `excerpt_separator` in the `gatsby-config`:
 
-```javascript
-{
-  "resolve": `gatsby-transformer-remark`,
-  "options": {
-    "excerpt_separator": `<!-- endexcerpt -->`
-  }
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        excerpt_separator: `<!-- endexcerpt -->`
+      },
+    },
+  ],
 }
 ```
 

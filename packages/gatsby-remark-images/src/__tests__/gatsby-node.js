@@ -1,6 +1,13 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
-import { Potrace } from "@gatsbyjs/potrace"
+
+const warnSpy = jest.spyOn(console, `warn`).mockImplementation(() => {
+  // silence warnings
+})
+
+beforeEach(() => {
+  warnSpy.mockClear()
+})
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
@@ -70,6 +77,10 @@ describe(`pluginOptionsSchema`, () => {
     )
 
     expect(isValid).toBe(true)
+
+    expect(warnSpy).toBeCalledWith(
+      `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+    )
     expect(errors).toEqual([])
   })
 
@@ -161,6 +172,12 @@ describe(`pluginOptionsSchema`, () => {
         )
 
         expect(isValid).toBe(true)
+
+        if (booleanValue) {
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
+        }
         expect(errors).toEqual([])
       })
     })
@@ -171,7 +188,7 @@ describe(`pluginOptionsSchema`, () => {
           pluginOptionsSchema,
           {
             tracedSVG: {
-              turnPolicy: Potrace.TURNPOLICY_RIGHT,
+              turnPolicy: `TURNPOLICY_RIGHT`,
               turdSize: 50,
               alphaMax: 0.5,
               optCurve: false,
@@ -185,6 +202,10 @@ describe(`pluginOptionsSchema`, () => {
         )
 
         expect(isValid).toBe(true)
+
+        expect(warnSpy).toBeCalledWith(
+          `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+        )
         expect(errors).toEqual([])
       })
 
@@ -193,7 +214,7 @@ describe(`pluginOptionsSchema`, () => {
           pluginOptionsSchema,
           {
             tracedSVG: {
-              turnPolicy: Potrace.TURNPOLICY_RIGHT,
+              turnPolicy: `TURNPOLICY_RIGHT`,
               turdSize: 50,
               // alphaMax: 0.5,
               // optCurve: 0.2,
@@ -207,6 +228,10 @@ describe(`pluginOptionsSchema`, () => {
         )
 
         expect(isValid).toBe(true)
+
+        expect(warnSpy).toBeCalledWith(
+          `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+        )
         expect(errors).toEqual([])
       })
 
@@ -243,16 +268,20 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
           expect(errors).toEqual([])
         })
 
         it.each([
-          Potrace.TURNPOLICY_BLACK,
-          Potrace.TURNPOLICY_WHITE,
-          Potrace.TURNPOLICY_LEFT,
-          Potrace.TURNPOLICY_RIGHT,
-          Potrace.TURNPOLICY_MINORITY,
-          Potrace.TURNPOLICY_MAJORITY,
+          `black`,
+          `white`,
+          `left`,
+          `TURNPOLICY_RIGHT`,
+          `minority`,
+          `majority`,
         ])(`supports setting by policy value (%s)`, async value => {
           const { isValid, errors } = await testPluginOptionsSchema(
             pluginOptionsSchema,
@@ -262,6 +291,10 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
           expect(errors).toEqual([])
         })
 
@@ -288,7 +321,7 @@ describe(`pluginOptionsSchema`, () => {
           [
             `THRESHOLD_AUTO`,
             {
-              value: Potrace.THRESHOLD_AUTO,
+              value: -1,
               expectedIsValid: true,
             },
           ],
@@ -324,6 +357,10 @@ describe(`pluginOptionsSchema`, () => {
           )
 
           expect(isValid).toBe(true)
+
+          expect(warnSpy).toBeCalledWith(
+            `"tracedSVG" plugin option for "gatsby-remark-images" is no longer supported. Blurred placeholder will be used. See https://gatsby.dev/tracesvg-removal/`
+          )
           expect(errors).toEqual([])
         })
 

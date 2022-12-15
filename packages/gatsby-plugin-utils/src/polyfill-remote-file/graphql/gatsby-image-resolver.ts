@@ -76,6 +76,7 @@ const GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = [`true`, `1`].includes(
   process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``
 )
 
+let didShowTraceSVGRemovalWarning = false
 export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
@@ -120,6 +121,14 @@ export async function gatsbyImageResolver(
   }
 
   if (!args.placeholder) {
+    args.placeholder = PlaceholderType.DOMINANT_COLOR
+  } else if (args.placeholder === PlaceholderType.TRACED_SVG) {
+    if (!didShowTraceSVGRemovalWarning) {
+      console.warn(
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in gatsbyImage processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarning = true
+    }
     args.placeholder = PlaceholderType.DOMINANT_COLOR
   }
 
@@ -196,13 +205,17 @@ export async function gatsbyImageResolver(
         )
       }
 
-      const src = generateImageUrl(source, {
-        width,
-        height: Math.round(width / imageSizes.aspectRatio),
-        format,
-        cropFocus: args.cropFocus,
-        quality: args.quality as number,
-      })
+      const src = generateImageUrl(
+        source,
+        {
+          width,
+          height: Math.round(width / imageSizes.aspectRatio),
+          format,
+          cropFocus: args.cropFocus,
+          quality: args.quality as number,
+        },
+        store
+      )
 
       if (!fallbackSrc) {
         fallbackSrc = src
@@ -305,9 +318,9 @@ export function generateGatsbyImageFieldConfig(
         defaultValue: enums.placeholder.getField(`DOMINANT_COLOR`).value,
         description: stripIndent`
       Format of generated placeholder image, displayed while the main image loads.
-      BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
-      DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
-      TRACED_SVG: a low-resolution traced SVG of the image.
+      BLURRED: a blurred, low resolution image, encoded as a base64 data URI
+      DOMINANT_COLOR: a solid color, calculated from the dominant color of the image (default).
+      TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
       NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
       },
       aspectRatio: {

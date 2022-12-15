@@ -2,7 +2,7 @@
 title: "Part 5: Transform Data to Use MDX"
 ---
 
-import { Announcement, LinkButton } from "gatsby-interface"
+import { LinkButton } from "gatsby-interface"
 import Collapsible from "@components/collapsible"
 import { MdArrowForward } from "react-icons/md"
 
@@ -14,7 +14,7 @@ Sometimes, the format of the data you get from source plugins isn't exactly what
 
 In this part of the Tutorial, you'll learn about one particular transformer plugin, `gatsby-plugin-mdx`, which lets you use [MDX](https://mdxjs.com/), a file format that allows Markdown and JSX alongside your text content. (Fun fact: this Tutorial is actually written in MDX!) You'll use MDX to add some content to your blog post files, and then you'll use `gatsby-plugin-mdx` to render the contents of your posts on your Blog page.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** Usually, transformer plugin names start with `gatsby-transformer-`. (`gatsby-plugin-mdx` is one exception to this convention.)
 
@@ -28,7 +28,7 @@ By the end of this part of the Tutorial, you will be able to:
 - Use the `gatsby-plugin-mdx` plugin to render the contents of your MDX files on your Blog page.
 - Use the `sort` field to control the order of results in your GraphQL queries.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Prefer a video?**
 
@@ -60,7 +60,7 @@ A **transformer plugin** converts nodes from one type to another. For example, t
 
 ![The gatsby-source-filesystem plugin pulls data from your local filesystem into Gatsby's GraphQL data layer as File nodes. Then the gatsby-plugin-mdx transformer plugin uses those File nodes to create new MDX nodes. Finally, you can use GraphQL queries to pull data from the MDX nodes into your components.](./data-layer-with-nodes.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** Even though it's called a transformer plugin, it's not actually _changing_ the original nodes created by the source plugins. Each transformer plugin creates new nodes based on the data from the sourced nodes, but it doesn't actually change the source nodes themselves. So even though `gatsby-plugin-mdx` creates new MDX nodes in the data layer, you can still access the original File nodes created by `gatsby-source-filesystem`.
 
@@ -80,7 +80,7 @@ MDX files let you format text using Markdown, a markup language that uses a spec
 
 Once you get used to what all the different symbols mean, Markdown can be easier to read than HTML, which makes it a popular format for written content like blog posts.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks.
 
@@ -152,7 +152,7 @@ Wow look at all this content. How do they do it?
 
 Now that you have some MDX content inside your blog posts, it's time set up the `gatsby-plugin-mdx` transformer plugin.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Quick Refresher:** Remember the process for adding a plugin to your site (from [Part 3](/docs/tutorial/part-3/))? See if you can remember the three steps from memory before checking your answer. (Science has shown that the act of trying to [actively recall information](https://www.cultofpedagogy.com/retrieval-practice/) helps you retain it better!)
 
@@ -197,7 +197,7 @@ The `gatsby-plugin-mdx` package requires a one additional dependencies to run: `
    };
    ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Tip:** There are a variety of [remark](https://remark.js.org/) plugins that you can use to add extra features to your Markdown. You can configure them using the [`gatsbyRemarkPlugins`](/plugins/gatsby-plugin-mdx/#gatsby-remark--plugins) option when you configure `gatsby-plugin-mdx` in your `gatsby-config.js` file.
 
@@ -218,7 +218,7 @@ The `gatsby-plugin-mdx` plugin makes two new fields available for you to use in 
 
 You can use the `allMdx` field to request data for multiple MDX nodes at once (similar to the way `allFile` worked with File nodes). Open GraphiQL and explore what fields are available on MDX nodes. Try running a few queries to see what kind of information you get back.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Quick Refresher:** Remember how to access GraphiQL? See if you can remember the steps before checking for the answer in Part 4. (Check the section called ["Use GraphiQL to explore the data layer and write GraphQL queries"](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries)).
 
@@ -240,7 +240,7 @@ Use GraphiQL to create a new query that gets data about your blog posts using th
    }
    ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Syntax Hint:** When it comes to using dates in your frontmatter, the `formatString` argument is a helpful tool for changing the way the date is displayed.
 
@@ -401,7 +401,7 @@ query MyQuery {
 
 Now that you have your GraphQL query all set up, it's time to tackle the last piece of the puzzle: rendering your posts in the Blog page.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Pro Tip:** When transformer plugins create a new node, they add a `parent` field that references back to the original source node it was created from. For example, when `gatsby-plugin-mdx` creates new MDX nodes, it adds a `parent` field which you can use to access data from the original File node.
 
@@ -569,7 +569,7 @@ export default BlogPage
 
 Nice work! Your site now has a blog page with actual content.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
@@ -582,7 +582,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 - What is a transformer plugin? How do transformer plugins affect the data in the data layer?
 - What is MDX? Why is it useful?
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Ship It!** 🚀
 
@@ -607,7 +607,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 - Transformer plugins create new types of nodes, using data from existing source nodes as a starting point. Transformer plugins don't actually change the original source nodes.
 - `gatsby-plugin-mdx` is a transformer plugin that lets you use MDX in your site. With MDX, you can create text content with Markdown formatting and embedded React components.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.3.2/packages/gatsby-plugin-sharp) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.3.1/packages/gatsby-plugin-sharp) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.3.0/packages/gatsby-plugin-sharp) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- Pass `failOn` to all pipelines [#37177](https://github.com/gatsbyjs/gatsby/issues/37177) ([639ae08](https://github.com/gatsbyjs/gatsby/commit/639ae08fcf215131d5253dc7367d273273a8a961))
+
+#### Chores
+
+- update semver [#37186](https://github.com/gatsbyjs/gatsby/issues/37186) ([34adbf1](https://github.com/gatsbyjs/gatsby/commit/34adbf1f6147f9c440dfc0900b8523010ca61d51))
+- update sharp [#37131](https://github.com/gatsbyjs/gatsby/issues/37131) ([5a5e419](https://github.com/gatsbyjs/gatsby/commit/5a5e419709cd4cf39ae344a887249b0630756baf))
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.2.0/packages/gatsby-plugin-sharp) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
 ## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.1.0/packages/gatsby-plugin-sharp) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

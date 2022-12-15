@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.3.1/packages/gatsby-cli) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.3.0/packages/gatsby-cli) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update semver [#37186](https://github.com/gatsbyjs/gatsby/issues/37186) ([34adbf1](https://github.com/gatsbyjs/gatsby/commit/34adbf1f6147f9c440dfc0900b8523010ca61d51))
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.2.0/packages/gatsby-cli) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- Make type optionally accept context [#37074](https://github.com/gatsbyjs/gatsby/issues/37074) ([759910a](https://github.com/gatsbyjs/gatsby/commit/759910a410ee601ebf2ee5f82f79b9bbf87c19e6))
+- Fine-grained errors with type/category [#37070](https://github.com/gatsbyjs/gatsby/issues/37070) ([0c2b51c](https://github.com/gatsbyjs/gatsby/commit/0c2b51cac9b644df21d2b816dc5fa5c37bd349d4))
+
+#### Chores
+
+- Update internal links to website [#37052](https://github.com/gatsbyjs/gatsby/issues/37052) ([35703b6](https://github.com/gatsbyjs/gatsby/commit/35703b6e4db2d008a03f538097e05a70aae3c6b8))
+
 ## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.1.0/packages/gatsby-cli) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

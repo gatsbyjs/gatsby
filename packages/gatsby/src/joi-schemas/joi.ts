@@ -1,6 +1,9 @@
 import Joi from "joi"
 import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
-import { DEFAULT_TYPES_OUTPUT_PATH } from "../utils/graphql-typegen/ts-codegen"
+import {
+  DEFAULT_DOCUMENT_SEARCH_PATHS,
+  DEFAULT_TYPES_OUTPUT_PATH,
+} from "../utils/graphql-typegen/ts-codegen"
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.replace(/(\w)\/+$/, `$1`)
@@ -61,6 +64,9 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       Joi.object()
         .keys({
           typesOutputPath: Joi.string().default(DEFAULT_TYPES_OUTPUT_PATH),
+          documentSearchPaths: Joi.array()
+            .items(Joi.string())
+            .default(DEFAULT_DOCUMENT_SEARCH_PATHS),
           generateOnBuild: Joi.boolean().default(false),
         })
         .unknown(false)
@@ -70,6 +76,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         if (value === true) {
           return {
             typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
+            documentSearchPaths: DEFAULT_DOCUMENT_SEARCH_PATHS,
             generateOnBuild: false,
           }
         }

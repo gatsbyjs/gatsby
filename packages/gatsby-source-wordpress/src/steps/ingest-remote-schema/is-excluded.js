@@ -1,6 +1,6 @@
 import store from "~/store"
 import {
-  findTypeName,
+  findNamedTypeName,
   getTypeSettingsByType,
 } from "~/steps/create-schema-customization/helpers"
 
@@ -22,7 +22,7 @@ const fieldIsExcludedOnParentType = ({ field, parentType }) => {
   const state = store.getState()
   const { typeMap } = state.remoteSchema
 
-  const fullType = typeMap.get(findTypeName(parentType))
+  const fullType = typeMap.get(findNamedTypeName(parentType))
 
   const parentTypeNodesField = fullType?.fields?.find(
     field => field.name === `nodes`

@@ -208,7 +208,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
     stripMetadata: Joi.boolean().default(true),
     defaultQuality: Joi.number().default(50),
-    // TODO(v5): Remove deprecated failOnError option
+    // TODO(v6): Remove deprecated failOnError option
     failOnError: Joi.boolean().default(true),
     failOn: Joi.any()
       .valid(`none`, `truncated`, `error`, `warning`)

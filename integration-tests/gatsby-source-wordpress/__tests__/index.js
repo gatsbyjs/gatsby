@@ -18,7 +18,44 @@ const {
   resetSchema,
 } = require(`../test-fns/test-utils/increment-remote-data`)
 
+const {
+  default: fetchGraphql,
+} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+
 jest.setTimeout(100000)
+
+const pluginsAreReady = async () => {
+  let pluginsAreReady = false
+  let tryCount = 0
+
+  while (!pluginsAreReady && tryCount < 20) {
+    try {
+      tryCount++
+
+      const response = await fetchGraphql({
+        url: `http://localhost:8001/graphql`,
+        query: /* GraphQL */ `
+          {
+            __type(name: "AttachFeaturedImageToNodeByIdPayload") {
+              name
+            }
+          }
+        `,
+      })
+
+      if (
+        response?.data?.__type?.name === `AttachFeaturedImageToNodeByIdPayload`
+      ) {
+        pluginsAreReady = true
+      }
+    } catch (e) {
+      console.error(e)
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
+  }
+
+  return pluginsAreReady
+}
 
 // we run these tests twice in a row
 // to make sure everything passes on a warm cache build
@@ -34,6 +71,9 @@ describe(`[gatsby-source-wordpress] Build default options`, () => {
       console.log(`Waiting for WPGraphQL to be ready...`)
       await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
       console.log(`WPGraphQL is ready`)
+      console.log(`Waiting for plugins to be ready...`)
+      await pluginsAreReady()
+      console.log(`Plugins are ready`)
 
       if (isWarmCache) {
         done()

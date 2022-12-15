@@ -493,15 +493,16 @@ export async function initialize({
   activity = reporter.activityTimer(`copy gatsby files`, {
     parentSpan,
   })
+
   activity.start()
+
   const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = cacheDirectory
-  const tryRequire = `${__dirname}/../utils/test-require-error.js`
+
   try {
     await fs.copy(srcDir, siteDir, {
       overwrite: true,
     })
-    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
     await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
@@ -635,6 +636,16 @@ export async function initialize({
   })
 
   const workerPool = WorkerPool.create()
+
+  const siteDirectoryFiles = await fs.readdir(siteDirectory)
+
+  const gatsbyFilesIsInESM = siteDirectoryFiles.some(file =>
+    file.match(/gatsby-(node|config)\.mjs/)
+  )
+
+  if (gatsbyFilesIsInESM) {
+    telemetry.trackFeatureIsUsed(`ESMInGatsbyFiles`)
+  }
 
   if (state.config.graphqlTypegen) {
     telemetry.trackFeatureIsUsed(`GraphQLTypegen`)

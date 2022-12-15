@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.3.1/packages/gatsby-transformer-remark) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.3.0/packages/gatsby-transformer-remark) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-transformer-remark [#37164](https://github.com/gatsbyjs/gatsby/issues/37164) ([b7d1db7](https://github.com/gatsbyjs/gatsby/commit/b7d1db7d5b41a722aef0f1e59478934bada9c9d7))
+
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.2.0/packages/gatsby-transformer-remark) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
 ## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.1.0/packages/gatsby-transformer-remark) (2022-11-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)

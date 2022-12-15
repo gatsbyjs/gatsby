@@ -90,6 +90,7 @@ export interface IGatsbyFunction {
 
 export interface IGraphQLTypegenOptions {
   typesOutputPath: string
+  documentSearchPaths: Array<string>
   generateOnBuild: boolean
 }
 
