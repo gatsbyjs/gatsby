@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.3.1/packages/gatsby-core-utils) (2022-12-14)
+
+#### Other Changes
+
+- Revert "fix(deps): update dependency lmdb to v2.7.1 (#37160)" [#37160](https://github.com/gatsbyjs/gatsby/issues/37160) [#37255](https://github.com/gatsbyjs/gatsby/issues/37255) [#37258](https://github.com/gatsbyjs/gatsby/issues/37258) ([e9aafe4](https://github.com/gatsbyjs/gatsby/commit/e9aafe4cde8738e8ae938e87320de3a4f729ccd5))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.3.0/packages/gatsby-core-utils) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)

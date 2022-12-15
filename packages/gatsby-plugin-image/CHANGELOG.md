@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.3.2/packages/gatsby-plugin-image) (2022-12-14)
+
+#### Bug Fixes
+
+- Normalize filename for correct hashing [#37262](https://github.com/gatsbyjs/gatsby/issues/37262) [#37263](https://github.com/gatsbyjs/gatsby/issues/37263) ([b7477f4](https://github.com/gatsbyjs/gatsby/commit/b7477f4cb680d60ee0d88e22a71937194764a9af))
+
+### [3.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.3.1/packages/gatsby-plugin-image) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
 ## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.3.0/packages/gatsby-plugin-image) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)

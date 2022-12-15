@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.3.2/packages/gatsby) (2022-12-14)
+
+#### Bug Fixes
+
+- use file:// protocol when importing gatsby-config/node [#37257](https://github.com/gatsbyjs/gatsby/issues/37257) [#37260](https://github.com/gatsbyjs/gatsby/issues/37260) ([a283319](https://github.com/gatsbyjs/gatsby/commit/a2833194fe7edf99e95127b26ac5c96c2ba661cd))
+
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.3.1/packages/gatsby) (2022-12-14)
+
+#### Other Changes
+
+- Revert "fix(deps): update dependency lmdb to v2.7.1 (#37160)" [#37160](https://github.com/gatsbyjs/gatsby/issues/37160) [#37255](https://github.com/gatsbyjs/gatsby/issues/37255) [#37258](https://github.com/gatsbyjs/gatsby/issues/37258) ([e9aafe4](https://github.com/gatsbyjs/gatsby/commit/e9aafe4cde8738e8ae938e87320de3a4f729ccd5))
+
 ## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.3.0/packages/gatsby) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
