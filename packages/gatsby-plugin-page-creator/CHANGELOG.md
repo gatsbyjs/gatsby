@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.3.1/packages/gatsby-plugin-page-creator) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.3.0/packages/gatsby-plugin-page-creator) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- Materialize nodes in gatsbyPath [#37111](https://github.com/gatsbyjs/gatsby/issues/37111) ([3095506](https://github.com/gatsbyjs/gatsby/commit/30955067549f72f923caa5465ae135b89e2052eb))
+- Remove obsolete `unstable_onPluginInit` codepaths [#37176](https://github.com/gatsbyjs/gatsby/issues/37176) ([bb42840](https://github.com/gatsbyjs/gatsby/commit/bb4284044e2025df483dd7c52df19dc20ecc7f8c))
+
 ## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.2.0/packages/gatsby-plugin-page-creator) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

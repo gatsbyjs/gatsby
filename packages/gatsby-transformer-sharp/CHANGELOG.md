@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@5.3.1/packages/gatsby-transformer-sharp) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@5.3.0/packages/gatsby-transformer-sharp) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Features
+
+- Add `avif` to supportedExtensions [#37112](https://github.com/gatsbyjs/gatsby/issues/37112) ([fbb3a3c](https://github.com/gatsbyjs/gatsby/commit/fbb3a3c0d86c7d55bd2ae34e48fa7d0da18ea825))
+
+#### Chores
+
+- update semver [#37186](https://github.com/gatsbyjs/gatsby/issues/37186) ([34adbf1](https://github.com/gatsbyjs/gatsby/commit/34adbf1f6147f9c440dfc0900b8523010ca61d51))
+- update sharp [#37131](https://github.com/gatsbyjs/gatsby/issues/37131) ([5a5e419](https://github.com/gatsbyjs/gatsby/commit/5a5e419709cd4cf39ae344a887249b0630756baf))
+
 ## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@5.2.0/packages/gatsby-transformer-sharp) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

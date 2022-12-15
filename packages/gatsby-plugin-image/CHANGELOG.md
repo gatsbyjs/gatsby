@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.3.2/packages/gatsby-plugin-image) (2022-12-14)
+
+#### Bug Fixes
+
+- Normalize filename for correct hashing [#37262](https://github.com/gatsbyjs/gatsby/issues/37262) [#37263](https://github.com/gatsbyjs/gatsby/issues/37263) ([b7477f4](https://github.com/gatsbyjs/gatsby/commit/b7477f4cb680d60ee0d88e22a71937194764a9af))
+
+### [3.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.3.1/packages/gatsby-plugin-image) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.3.0/packages/gatsby-plugin-image) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- Ensure cache hash is unique [#37087](https://github.com/gatsbyjs/gatsby/issues/37087) ([c98d947](https://github.com/gatsbyjs/gatsby/commit/c98d9479c913df33b58618a512bf5119cb2c5d40))
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update semver [#37186](https://github.com/gatsbyjs/gatsby/issues/37186) ([34adbf1](https://github.com/gatsbyjs/gatsby/commit/34adbf1f6147f9c440dfc0900b8523010ca61d51))
+
 ## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.2.0/packages/gatsby-plugin-image) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

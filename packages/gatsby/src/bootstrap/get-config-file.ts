@@ -4,7 +4,7 @@ import report from "gatsby-cli/lib/reporter"
 import path from "path"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
-import { resolveJSFilepath } from "./resolve-js-file-path"
+import { resolveJSFilepath, maybeAddFileProtocol } from "./resolve-js-file-path"
 import { preferDefault } from "./prefer-default"
 
 export async function getConfigFile(
@@ -47,7 +47,7 @@ async function attemptImport(
     return { configFilePath: ``, configModule: undefined }
   }
 
-  const importedModule = await import(configFilePath)
+  const importedModule = await import(maybeAddFileProtocol(configFilePath))
   const configModule = preferDefault(importedModule)
 
   return { configFilePath, configModule }

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.3.1/packages/gatsby-core-utils) (2022-12-14)
+
+#### Other Changes
+
+- Revert "fix(deps): update dependency lmdb to v2.7.1 (#37160)" [#37160](https://github.com/gatsbyjs/gatsby/issues/37160) [#37255](https://github.com/gatsbyjs/gatsby/issues/37255) [#37258](https://github.com/gatsbyjs/gatsby/issues/37258) ([e9aafe4](https://github.com/gatsbyjs/gatsby/commit/e9aafe4cde8738e8ae938e87320de3a4f729ccd5))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.3.0/packages/gatsby-core-utils) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- update dependency lmdb to v2.7.1 [#37160](https://github.com/gatsbyjs/gatsby/issues/37160) ([fecf779](https://github.com/gatsbyjs/gatsby/commit/fecf77947145cea5099be8e8e9037cab7cdf2231))
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update dependency msw to ^0.49.1 for gatsby-core-utils [#37187](https://github.com/gatsbyjs/gatsby/issues/37187) ([c41beac](https://github.com/gatsbyjs/gatsby/commit/c41beac5e18ff335a93be0db0924c5c70e7a6ccb))
+
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.2.0/packages/gatsby-core-utils) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

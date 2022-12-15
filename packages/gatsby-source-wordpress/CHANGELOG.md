@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.3.2/packages/gatsby-source-wordpress) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [7.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.3.1/packages/gatsby-source-wordpress) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.3.0/packages/gatsby-source-wordpress) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- Add back nodeType field that was removed in last version [#37212](https://github.com/gatsbyjs/gatsby/issues/37212) ([b7d7b07](https://github.com/gatsbyjs/gatsby/commit/b7d7b076d3505084e2a8d14b35c112aef1a88f1f))
+- Remove obsolete `unstable_onPluginInit` codepaths [#37176](https://github.com/gatsbyjs/gatsby/issues/37176) ([bb42840](https://github.com/gatsbyjs/gatsby/commit/bb4284044e2025df483dd7c52df19dc20ecc7f8c))
+- WPGraphQL 1.13.0 compatibility [#37134](https://github.com/gatsbyjs/gatsby/issues/37134) ([dd52a14](https://github.com/gatsbyjs/gatsby/commit/dd52a14fbec950fb50595e1810774a84786c8757))
+
+#### Chores
+
+- update semver [#37186](https://github.com/gatsbyjs/gatsby/issues/37186) ([34adbf1](https://github.com/gatsbyjs/gatsby/commit/34adbf1f6147f9c440dfc0900b8523010ca61d51))
+- update formatting & linting [#37159](https://github.com/gatsbyjs/gatsby/issues/37159) ([5a8879c](https://github.com/gatsbyjs/gatsby/commit/5a8879cfb91aa95321b109ef4543048eaaaf1f0f))
+- use wpgql 1.13 in itests [#37146](https://github.com/gatsbyjs/gatsby/issues/37146) ([33976b3](https://github.com/gatsbyjs/gatsby/commit/33976b3c4decee3fd43e34b410bac182f3930d7a))
+- update sharp [#37131](https://github.com/gatsbyjs/gatsby/issues/37131) ([5a5e419](https://github.com/gatsbyjs/gatsby/commit/5a5e419709cd4cf39ae344a887249b0630756baf))
+
+#### Other Changes
+
+- document new MediaItem.excludeFieldNames option [#37130](https://github.com/gatsbyjs/gatsby/issues/37130) ([df5e52a](https://github.com/gatsbyjs/gatsby/commit/df5e52abe0a9de9d46ea5b25cb328ccc775e84f0))
+
 ### [7.2.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.2.3/packages/gatsby-source-wordpress) (2022-12-08)
 
 #### Bug Fixes
