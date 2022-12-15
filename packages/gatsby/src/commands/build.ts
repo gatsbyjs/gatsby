@@ -91,7 +91,7 @@ module.exports = async function build(
 
   if (program.profile) {
     report.warn(
-      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.com/docs/profiling-site-performance-with-react-profiler/#performance-impact`
+      `zReact Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.com/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
 
