@@ -7,6 +7,7 @@ describe(`gatsby-node.js`, () => {
       `"footnotes" must be a boolean`,
       `"gfm" must be a boolean`,
       `"plugins" must be an array`,
+      `"jsFrontmatterEngine" must be a boolean`,
     ]
 
     const { errors, isValid } = await testPluginOptionsSchema(
@@ -15,6 +16,7 @@ describe(`gatsby-node.js`, () => {
         footnotes: `this should be a boolean`,
         gfm: `this should be a boolean`,
         plugins: `this should be an array`,
+        jsFrontmatterEngine: `this should be a boolean`,
       }
     )
 
@@ -37,6 +39,7 @@ describe(`gatsby-node.js`, () => {
             },
           },
         ],
+        jsFrontmatterEngine: true,
       }
     )
 
