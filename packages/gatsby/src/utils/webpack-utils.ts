@@ -208,7 +208,7 @@ export const createWebpackUtils = (
     name: `${assetRelativeRoot}[name]-[hash].[ext]`,
   }
 
-  if (stage === `build-html`) {
+  if (stage === `build-html` || stage === `develop-html`) {
     // build-html builds to `.cache/page-ssr/routes/` (ROUTES_DIRECTORY)
     // so this config is setting it to output assets to `public` (outputPath)
     // while preserving "url" (publicPath)
