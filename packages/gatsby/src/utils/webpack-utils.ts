@@ -204,7 +204,11 @@ export const createWebpackUtils = (
       return rule
     }
 
-  const fileLoaderCommonOptions: any = {
+  const fileLoaderCommonOptions: {
+    name: string
+    publicPath?: string
+    outputPath?: string
+  } = {
     name: `${assetRelativeRoot}[name]-[hash].[ext]`,
   }
 
