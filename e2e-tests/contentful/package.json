@@ -21,7 +21,7 @@
   "devDependencies": {
     "@cypress/snapshot": "^2.1.7",
     "cross-env": "^7.0.3",
-    "cypress": "^9.7.0",
+    "cypress": "^12.1.0",
     "cypress-image-snapshot": "^4.0.1",
     "gatsby-cypress": "next",
     "prettier": "^2.6.2",

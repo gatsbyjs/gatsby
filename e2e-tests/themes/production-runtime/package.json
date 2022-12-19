@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "cypress": "^9.7.0",
+    "cypress": "^12.1.0",
     "gatsby-cypress": "next",
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
