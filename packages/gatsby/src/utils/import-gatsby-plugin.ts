@@ -11,7 +11,7 @@ export function setGatsbyPluginCache(
   module: string,
   moduleObject: any
 ): void {
-  const key = `${plugin.name}/${module}`
+  const key = `${plugin.resolve || plugin.name}/${module}`
   pluginModuleCache.set(key, moduleObject)
 }
 
@@ -23,7 +23,7 @@ export async function importGatsbyPlugin(
   },
   module: string
 ): Promise<any> {
-  const key = `${plugin.name}/${module}`
+  const key = `${plugin.resolve || plugin.name}/${module}`
 
   let pluginModule = pluginModuleCache.get(key)
 

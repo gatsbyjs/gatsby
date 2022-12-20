@@ -1,17 +1,23 @@
 import _ from "lodash"
 import { Express } from "express"
 import type { TrailingSlash } from "gatsby-page-utils"
+import mod from "module"
 // TODO export it in index.d.ts
 type PluginEntry =
   | string
   | {
       resolve: string
       options?: Record<string, unknown>
+      parentDir: string
     }
 
 interface INormalizedPluginEntry {
   resolve: string
   options: Record<string, unknown>
+  /**
+   * Absolute path to the plugin, used to dedupe different package instances
+   */
+  _resolved: string
 }
 
 interface IGatsbyConfigInput {
@@ -42,15 +48,33 @@ type Mapping = IGatsbyConfigInput["mapping"]
  *  - { resolve: `gatsby-plugin-name`, options: {} }
  * are all considered equal
  */
-const normalizePluginEntry = (entry: PluginEntry): INormalizedPluginEntry =>
-  _.isString(entry)
-    ? {
-        resolve: entry,
-        options: {},
-      }
-    : _.isObject(entry)
-    ? { options: {}, ...entry }
-    : entry
+const normalizePluginEntry = (
+  entry: PluginEntry | INormalizedPluginEntry
+): INormalizedPluginEntry => {
+  if (_.isString(entry)) {
+    return {
+      resolve: entry,
+      options: {},
+      _resolved: require.resolve(entry),
+    }
+  } else if (_.isObject(entry)) {
+    let _resolved: string
+    if (`parentDir` in entry) {
+      const localRequire = mod.createRequire(entry.parentDir + `/:internal:`)
+      _resolved = localRequire.resolve(entry.resolve)
+    } else {
+      _resolved = entry._resolved
+    }
+
+    return {
+      options: {},
+      ...entry,
+      _resolved,
+    }
+  } else {
+    return entry
+  }
+}
 
 const howToMerge = {
   /**
@@ -63,13 +87,13 @@ const howToMerge = {
     _.merge({}, objA, objB),
   // plugins are concatenated and uniq'd, so we don't get two of the same plugin value
   plugins: (
-    a: Array<PluginEntry> = [],
-    b: Array<PluginEntry> = []
-  ): Array<PluginEntry> =>
+    a: Array<PluginEntry | INormalizedPluginEntry> = [],
+    b: Array<PluginEntry | INormalizedPluginEntry> = []
+  ): Array<PluginEntry | INormalizedPluginEntry> =>
     _.uniqWith(a.concat(b), (a, b) =>
       _.isEqual(
-        _.pick(normalizePluginEntry(a), [`resolve`, `options`]),
-        _.pick(normalizePluginEntry(b), [`resolve`, `options`])
+        _.pick(normalizePluginEntry(a), [`resolve`, `options`, `_resolved`]),
+        _.pick(normalizePluginEntry(b), [`resolve`, `options`, `_resolved`])
       )
     ),
   mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB),
