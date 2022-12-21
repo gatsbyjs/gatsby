@@ -157,7 +157,18 @@ module.exports = async (config, { configFilePath, rootDir }) => {
       .reduce(mergeGatsbyConfig, {})
       .then(newConfig => {
         return {
-          config: mergeGatsbyConfig(newConfig, config),
+          config: mergeGatsbyConfig(newConfig, {
+            ...config,
+            plugins: [
+              ...(config.plugins || []).map(plugin => {
+                return {
+                  resolve: typeof plugin === `string` ? plugin : plugin.resolve,
+                  options: plugin.options || {},
+                  parentDir: rootDir,
+                }
+              }),
+            ],
+          }),
           themes: themesA,
         }
       })
