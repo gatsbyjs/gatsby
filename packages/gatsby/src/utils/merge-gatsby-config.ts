@@ -2,16 +2,15 @@ import _ from "lodash"
 import { Express } from "express"
 import type { TrailingSlash } from "gatsby-page-utils"
 
+export type IPluginEntryWithParentDir = {
+  resolve: string
+  options?: Record<string, unknown>
+  parentDir: string
+}
 // TODO export it in index.d.ts
-type PluginEntry =
-  | string
-  | {
-      resolve: string
-      options?: Record<string, unknown>
-      parentDir: string
-    }
+export type PluginEntry = string | IPluginEntryWithParentDir
 
-interface IGatsbyConfigInput {
+export interface IGatsbyConfigInput {
   siteMetadata?: Record<string, unknown>
   plugins?: Array<PluginEntry>
   pathPrefix?: string
