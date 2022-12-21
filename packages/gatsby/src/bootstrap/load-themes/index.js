@@ -108,6 +108,14 @@ const processTheme = (
   }
 }
 
+function normalizePluginEntry(plugin, parentDir) {
+  return {
+    resolve: typeof plugin === `string` ? plugin : plugin.resolve,
+    options: plugin.options || {},
+    parentDir,
+  }
+}
+
 module.exports = async (config, { configFilePath, rootDir }) => {
   const themesA = await Promise.mapSeries(
     config.plugins || [],
@@ -135,13 +143,9 @@ module.exports = async (config, { configFilePath, rootDir }) => {
         return {
           ...themeConfig,
           plugins: [
-            ...(themeConfig.plugins || []).map(plugin => {
-              return {
-                resolve: typeof plugin === `string` ? plugin : plugin.resolve,
-                options: plugin.options || {},
-                parentDir: themeDir,
-              }
-            }),
+            ...(themeConfig.plugins || []).map(plugin =>
+              normalizePluginEntry(plugin, themeDir)
+            ),
             // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
             { resolve: themeName, options: themeSpec.options || {}, parentDir },
           ],
@@ -160,13 +164,9 @@ module.exports = async (config, { configFilePath, rootDir }) => {
           config: mergeGatsbyConfig(newConfig, {
             ...config,
             plugins: [
-              ...(config.plugins || []).map(plugin => {
-                return {
-                  resolve: typeof plugin === `string` ? plugin : plugin.resolve,
-                  options: plugin.options || {},
-                  parentDir: rootDir,
-                }
-              }),
+              ...(config.plugins || []).map(plugin =>
+                normalizePluginEntry(plugin, rootDir)
+              ),
             ],
           }),
           themes: themesA,
