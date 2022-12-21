@@ -27,6 +27,12 @@ module.exports = {
 }
 ```
 
+Edit `.babelrc`
+
+```
+plugins: [`babel-plugin-styled-components`]
+```
+
 ## Options
 
 You can pass options to the plugin, see the [Styled Components docs](https://styled-components.com/docs/tooling#babel-plugin) for a full list of options.
