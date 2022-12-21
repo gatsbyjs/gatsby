@@ -2,7 +2,7 @@ import _ from "lodash"
 import { Express } from "express"
 import type { TrailingSlash } from "gatsby-page-utils"
 
-export type IPluginEntryWithParentDir = {
+export interface IPluginEntryWithParentDir {
   resolve: string
   options?: Record<string, unknown>
   parentDir: string
