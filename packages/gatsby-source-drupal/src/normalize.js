@@ -212,10 +212,9 @@ const createNodeIdWithVersion = (
   // to "undefined".
   let langcodeNormalized = getOptions().languageConfig ? langcode : `und`
 
-  if (
-    getOptions().languageConfig &&
-    !getOptions().languageConfig?.enabledLanguages.includes(langcodeNormalized)
-  ) {
+  // The languages defined in languageConfig.enabledLanguages don't always match the langcode of the node itself,
+  // so we cannot rely on checking if a langcode is contained within the array of enabledLanguages from the config.
+  if (getOptions().languageConfig && langcodeNormalized === undefined) {
     langcodeNormalized = getOptions().languageConfig.defaultLanguage
   }
 
