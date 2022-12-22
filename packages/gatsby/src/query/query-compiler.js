@@ -112,7 +112,7 @@ export const parseQueries = async ({
   addError,
   parentSpan,
 }) => {
-  const filesRegex = `*.+?(m|c)(t|j)s?(x)`
+  const filesRegex = `*.?(m|c)+(t|j)s?(x)`
   // Pattern that will be appended to searched directories.
   // It will match any .js, .jsx, .ts, .tsx, .cjs, .cjsx,
   // .cts, .ctsx, .mjs, .mjsx, .mts, and .mtsx files,
