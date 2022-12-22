@@ -26,6 +26,7 @@ import { store } from "../../redux"
 import { validateEngines } from "../../utils/validate-engines"
 
 async function run(): Promise<void> {
+  process.env.GATSBY_SLICES = `1`
   // load config
   console.log(`loading config and plugins`)
   await loadConfigAndPlugins({
