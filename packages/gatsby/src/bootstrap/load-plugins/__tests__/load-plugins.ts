@@ -197,9 +197,7 @@ describe(`Load plugins`, () => {
         (plugin: { name: string }) => plugin.name === `gatsby-plugin-typescript`
       )
 
-      // TODO: I think we should probably be de-duping, so this should be 1.
-      // But this test is mostly here to ensure we don't add an _additional_ gatsby-plugin-typescript
-      expect(tsplugins.length).toEqual(2)
+      expect(tsplugins.length).toEqual(1)
     })
   })
 
@@ -330,9 +328,7 @@ describe(`Load plugins`, () => {
           plugin.name === `gatsby-plugin-gatsby-cloud`
       )
 
-      // TODO: I think we should probably be de-duping, so this should be 1.
-      // But this test is mostly here to ensure we don't add an _additional_ gatsby-plugin-typescript
-      expect(cloudPlugins.length).toEqual(2)
+      expect(cloudPlugins.length).toEqual(1)
     })
   })
 
