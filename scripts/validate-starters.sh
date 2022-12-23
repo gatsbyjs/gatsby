@@ -16,9 +16,9 @@ for folder in $GLOB; do
 
   # WordPress has React 17 deps :/
   if [ "$folder" = "starters/gatsby-starter-wordpress-blog" ]; then
-    npm install --legacy-peer-deps
+    npm ci --legacy-peer-deps
   else
-    npm install
+    npm ci
   fi
 
   # check both npm and yarn, sometimes yarn registry lags behind
