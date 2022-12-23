@@ -26,12 +26,7 @@ for folder in $GLOB; do
   echo "Validating $folder"
   echo ""
 
-  # WordPress has React 17 deps :/
-  if [ "$folder" = "starters/gatsby-starter-wordpress-blog" ]; then
-    npm ci --legacy-peer-deps || exit 1
-  else
-    npm ci || exit 1
-  fi
+  npm ci --legacy-peer-deps || exit 1
 
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&
