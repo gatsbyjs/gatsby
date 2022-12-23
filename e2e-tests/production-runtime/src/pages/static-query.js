@@ -21,6 +21,7 @@ const StaticQueryPage = () => {
       <UseStaticQuery.Variable data-testid="use-static-query-variable" />
       <UseStaticQuery.ExportedVariable data-testid="use-static-query-exported" />
       <UseStaticQuery.Destructuring data-testid="use-static-query-destructuring" />
+      <UseStaticQuery.MJS data-testid="use-static-query-mjs" />
     </Layout>
   )
 }
