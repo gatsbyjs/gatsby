@@ -99,6 +99,20 @@ export const query = graphql`
 
 ## Restrictions on using `<Slice>` placeholder
 
+### Must be in `src` directory
+
+Slice placeholders must be used in files that are nested below your site's top-level `src` directory. For example:
+
+Slice placeholders work in these files:
+
+- `<SITE_ROOT>/src/my-page.js`
+- `<SITE_ROOT>/src/components/my-component.js`
+
+Slice placeholders **do not** work in these files:
+
+- `<SITE_ROOT>/other-components/other-component.js`
+- `<SITE_ROOT>/other-library/other-component.js`
+
 ### Nested Slices
 
 Gatsby does not support nested Slice placeholders. This means if you have a high level `<Layout>` component as a slice component, other Slice placeholders cannot exist within that `<Layout>` component anywhere in the tree.
