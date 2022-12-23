@@ -1,4 +1,5 @@
 #!/bin/bash
+
 GLOB=$1
 IS_CI="${CI:-false}"
 BASE=$(pwd)
@@ -14,11 +15,13 @@ for folder in $GLOB; do
   # validate
   cd "$folder" || exit
 
+  echo "Validating $folder"
+
   # WordPress has React 17 deps :/
   if [ "$folder" = "starters/gatsby-starter-wordpress-blog" ]; then
-    npm ci --legacy-peer-deps
+    npm ci --legacy-peer-deps || exit 1
   else
-    npm ci
+    npm ci || exit 1
   fi
 
   # check both npm and yarn, sometimes yarn registry lags behind
