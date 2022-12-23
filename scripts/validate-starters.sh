@@ -15,7 +15,9 @@ for folder in $GLOB; do
   # validate
   cd "$folder" || exit
 
+  echo ""
   echo "Validating $folder"
+  echo ""
 
   # WordPress has React 17 deps :/
   if [ "$folder" = "starters/gatsby-starter-wordpress-blog" ]; then
