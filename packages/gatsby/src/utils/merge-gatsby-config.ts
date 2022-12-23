@@ -1,20 +1,16 @@
 import _ from "lodash"
 import { Express } from "express"
 import type { TrailingSlash } from "gatsby-page-utils"
-// TODO export it in index.d.ts
-type PluginEntry =
-  | string
-  | {
-      resolve: string
-      options?: Record<string, unknown>
-    }
 
-interface INormalizedPluginEntry {
+export interface IPluginEntryWithParentDir {
   resolve: string
-  options: Record<string, unknown>
+  options?: Record<string, unknown>
+  parentDir: string
 }
+// TODO export it in index.d.ts
+export type PluginEntry = string | IPluginEntryWithParentDir
 
-interface IGatsbyConfigInput {
+export interface IGatsbyConfigInput {
   siteMetadata?: Record<string, unknown>
   plugins?: Array<PluginEntry>
   pathPrefix?: string
@@ -35,23 +31,6 @@ type ConfigKey = keyof IGatsbyConfigInput
 type Metadata = IGatsbyConfigInput["siteMetadata"]
 type Mapping = IGatsbyConfigInput["mapping"]
 
-/**
- * Normalize plugin spec before comparing so
- *  - `gatsby-plugin-name`
- *  - { resolve: `gatsby-plugin-name` }
- *  - { resolve: `gatsby-plugin-name`, options: {} }
- * are all considered equal
- */
-const normalizePluginEntry = (entry: PluginEntry): INormalizedPluginEntry =>
-  _.isString(entry)
-    ? {
-        resolve: entry,
-        options: {},
-      }
-    : _.isObject(entry)
-    ? { options: {}, ...entry }
-    : entry
-
 const howToMerge = {
   /**
    * pick a truthy value by default.
@@ -65,13 +44,7 @@ const howToMerge = {
   plugins: (
     a: Array<PluginEntry> = [],
     b: Array<PluginEntry> = []
-  ): Array<PluginEntry> =>
-    _.uniqWith(a.concat(b), (a, b) =>
-      _.isEqual(
-        _.pick(normalizePluginEntry(a), [`resolve`, `options`]),
-        _.pick(normalizePluginEntry(b), [`resolve`, `options`])
-      )
-    ),
+  ): Array<PluginEntry> => a.concat(b),
   mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB),
 } as const
 
