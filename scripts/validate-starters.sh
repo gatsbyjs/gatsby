@@ -10,6 +10,13 @@ fi
 
 for folder in $GLOB; do
   [ -d "$folder" ] || continue # only directories
+
+  if [ "$folder" = "starters/gatsby-starter-theme-workspace" ]; then
+    # Theme starter directory layout doesn't play well with validation below
+    # so we skip it for now
+    continue
+  fi
+
   cd "$BASE" || exit
 
   # validate
