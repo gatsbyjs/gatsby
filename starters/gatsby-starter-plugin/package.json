@@ -12,5 +12,8 @@
     "gatsby-plugin"
   ],
   "author": "Kyle Gill <kyle.robert.gill@gmail.com>",
-  "license": "0BSD"
+  "license": "0BSD",
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
