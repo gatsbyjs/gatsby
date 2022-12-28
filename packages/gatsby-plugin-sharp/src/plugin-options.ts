@@ -26,6 +26,7 @@ export interface ISharpPluginOptions {
   defaultQuality: number
   failOn?: SharpOptions["failOn"]
   defaults?: PluginOptionsDefaults
+  extraSharpOptions?: SharpOptions
 }
 
 interface IDuotoneArgs {
