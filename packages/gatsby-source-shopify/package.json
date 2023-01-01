@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.20.7",
     "gatsby-core-utils": "^4.4.0-next.1",
     "gatsby-plugin-utils": "^4.4.0-next.1",
     "gatsby-source-filesystem": "^5.4.0-next.1",
