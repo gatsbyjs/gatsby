@@ -16871,10 +16871,10 @@ msw@^0.38.2:
     type-fest "^1.2.2"
     yargs "^17.3.1"
 
-msw@^0.49.1:
-  version "0.49.1"
-  resolved "https://registry.yarnpkg.com/msw/-/msw-0.49.1.tgz#615e5c35736d8ec9924da6dce1f0c5c3528d4f26"
-  integrity sha512-JpIIq4P65ofj0HVmDMkJuRwgP9s5kcdutpZ15evMTb2k91/USB7IKWRLV9J1Mzc3OqTdwNj4RwtOWJ5y/FulQQ==
+msw@^0.49.1, msw@^0.49.2:
+  version "0.49.2"
+  resolved "https://registry.yarnpkg.com/msw/-/msw-0.49.2.tgz#c815fa514a1b3532e3d3af01d308bb63329ad1e2"
+  integrity sha512-70/E10f+POE2UmMw16v8PnKatpZplpkUwVRLBqiIdimpgaC3le7y2yOq9JmOrL15jpwWM5wAcPTOj0f550LI3g==
   dependencies:
     "@mswjs/cookies" "^0.2.2"
     "@mswjs/interceptors" "^0.17.5"
