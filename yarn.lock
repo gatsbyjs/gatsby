@@ -1466,7 +1466,7 @@
   resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.5.4.tgz#1a89069978734e132fa4a59414ddb64e4b94fde7"
   integrity sha512-qnikpQgi30AS01aFlNQV6l8/qdZIcP76mp90ti+u4rucXHsn4afSKivQXApqxvrQG9+Ibv45STyvHizvxef/7A==
 
-"@contentful/rich-text-react-renderer@^15.15.1":
+"@contentful/rich-text-react-renderer@^15.16.2":
   version "15.16.2"
   resolved "https://registry.yarnpkg.com/@contentful/rich-text-react-renderer/-/rich-text-react-renderer-15.16.2.tgz#c3c3bf3d0bbfe21f20c6da76f6f3e9f016fb1553"
   integrity sha512-5UJxF+6DhcwkEsgJsHczJrCxveaQ95Oqj3NaJYmM9VDVKlvPK8cNXmSiWArHCEN0uw3yU/IS2sw16uIam3LsjQ==
@@ -7838,7 +7838,7 @@ contentful-sdk-core@^7.0.4:
     p-throttle "^4.1.1"
     qs "^6.9.4"
 
-contentful@^9.2.13:
+contentful@^9.2.14:
   version "9.2.14"
   resolved "https://registry.yarnpkg.com/contentful/-/contentful-9.2.14.tgz#ebc01eca958a393dbcd338fd8f59f17c624e5d32"
   integrity sha512-HL//idmpr3g46Y2h8IpDCuMGlerp69P1gSXIgP3YqOyERsmdSrKm1ziGNSk/c902+yE0wc0Rrh1HlxGY1EtpQw==
