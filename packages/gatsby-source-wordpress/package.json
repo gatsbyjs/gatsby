@@ -36,11 +36,11 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "p-queue": "^6.6.2",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.1",
     "read-chunk": "^3.2.0",
     "replaceall": "^0.1.6",
     "semver": "^7.3.8",
-    "sharp": "^0.31.2",
+    "sharp": "^0.31.3",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
