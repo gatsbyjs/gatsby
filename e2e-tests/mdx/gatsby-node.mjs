@@ -1,6 +1,9 @@
 import * as fs from "fs-extra"
 import * as path from "path"
 import slugify from "@sindresorhus/slugify"
+import { fileURLToPath } from "url"
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export const onPostBuild = async ({ graphql }) => {
   const results = await graphql(`
