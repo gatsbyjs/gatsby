@@ -25,7 +25,7 @@
   "scripts": {
     "prebuild": "del-cli -f assets && make-dir assets/blog",
     "build": "cross-env CYPRESS_SUPPORT=y gatsby build --prefix-paths",
-    "postbuild": "cpy --cwd=./public --parents '**/*' '../assets/blog'",
+    "postbuild": "cpy --cwd=./public '**/*' '../assets/blog'",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "npm run build && npm run start-server-and-test",

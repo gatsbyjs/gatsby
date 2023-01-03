@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.29.1",
-    "@testing-library/cypress": "^9.0.0",
+    "@testing-library/cypress": "^8.0.7",
     "cross-env": "^7.0.3",
     "cypress": "^9.7.0",
     "cypress-image-snapshot": "^4.0.1",

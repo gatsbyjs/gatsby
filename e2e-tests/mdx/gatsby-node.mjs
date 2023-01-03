@@ -1,9 +1,8 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import * as fs from "fs-extra"
+import * as path from "path"
+import slugify from "@sindresorhus/slugify"
 
-const slugify = require(`@sindresorhus/slugify`)
-
-exports.onPostBuild = async ({ graphql }) => {
+export const onPostBuild = async ({ graphql }) => {
   const results = await graphql(`
     {
       mdx(slug: { eq: "html" }) {
@@ -19,7 +18,7 @@ exports.onPostBuild = async ({ graphql }) => {
   )
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
+export const createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   createTypes(`
@@ -31,8 +30,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   `)
 }
+
 // Add custom fields to our MDX nodes
-exports.onCreateNode = async ({ node, actions, getNode, reporter, cache }) => {
+export const onCreateNode = async ({ node, actions, getNode, reporter, cache }) => {
   const { createNodeField } = actions
   if (node.internal.type === `Mdx`) {
     // Set slug based on frontmatter, fall back to filename
