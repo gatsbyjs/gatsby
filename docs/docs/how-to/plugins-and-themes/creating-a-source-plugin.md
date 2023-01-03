@@ -148,7 +148,6 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType,
 }) => {
   const { createNode } = actions
 
@@ -320,7 +319,6 @@ Now you can replace the hardcoded data in the `sourceNodes` function with a Grap
     actions,
     createContentDigest,
     createNodeId,
-    getNodesByType,
   }) => {
     const { createNode, touchNode, deleteNode } = actions
 
@@ -384,7 +382,6 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType,
 }) => {
   const { createNode, touchNode, deleteNode } = actions
 
@@ -784,7 +781,7 @@ Now the options you designated (like `previewMode: true`) will be passed into ea
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
-  { actions, createContentDigest, createNodeId, getNodesByType },
+  { actions, createContentDigest, createNodeId },
   pluginOptions // highlight-line
 ) => {
   const { createNode, touchNode, deleteNode } = actions
