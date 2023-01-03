@@ -84,7 +84,7 @@ exports.createPages = async ({ actions }) => {
 
 ## Queries
 
-Slices can use "slice queries", just as pages can use [page queries](/docs/how-to/querying-data/page-query). By exporting a `graphql` query, you can query Gatsby's data layer within the slice. Variables can be accessed from the `context` passed in [`createSlice](#createslice-action).
+Slices can use "slice queries", just as pages can use [page queries](/docs/how-to/querying-data/page-query). By exporting a `graphql` query, you can query Gatsby's data layer within the slice. Variables can be accessed from the `context` passed in [`createSlice`](#createslice-action).
 
 ```js:title=src/components/my-slice.js
 export const query = graphql`
