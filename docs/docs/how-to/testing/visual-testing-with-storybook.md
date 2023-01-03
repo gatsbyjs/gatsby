@@ -43,10 +43,8 @@ Then, update your [`.storybook/main.js`](https://storybook.js.org/docs/react/con
 
 ```js:title=.storybook/main.js
 module.exports = {
-  stories: [],
-  addons: [],
   // highlight-start
-   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
   framework: "@storybook/react",
   core: {
