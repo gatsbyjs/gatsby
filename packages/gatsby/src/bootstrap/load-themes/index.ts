@@ -1,22 +1,39 @@
-const { createRequireFromPath } = require(`gatsby-core-utils`)
-const path = require(`path`)
-import { mergeGatsbyConfig } from "../../utils/merge-gatsby-config"
-const Promise = require(`bluebird`)
-const _ = require(`lodash`)
-const debug = require(`debug`)(`gatsby:load-themes`)
+import { createRequireFromPath } from "gatsby-core-utils"
+import * as path from "path"
+import {
+  IGatsbyConfigInput,
+  mergeGatsbyConfig,
+  PluginEntry,
+  IPluginEntryWithParentDir,
+} from "../../utils/merge-gatsby-config"
+import { mapSeries } from "bluebird"
+import { flattenDeep, isEqual, isFunction, uniqWith } from "lodash"
+import DebugCtor from "debug"
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
 import { resolvePlugin } from "../load-plugins/resolve-plugin"
-const reporter = require(`gatsby-cli/lib/reporter`)
+import reporter from "gatsby-cli/lib/reporter"
+
+const debug = DebugCtor(`gatsby:load-themes`)
+
+interface IThemeObj {
+  themeName: string
+  themeConfig: IGatsbyConfigInput
+  themeDir: string
+  themeSpec: PluginEntry
+  parentDir: string
+  configFilePath?: string
+}
 
 // get the gatsby-config file for a theme
 const resolveTheme = async (
-  themeSpec,
-  configFileThatDeclaredTheme,
-  isMainConfig = false,
-  rootDir
-) => {
-  const themeName = themeSpec.resolve || themeSpec
+  themeSpec: PluginEntry,
+  configFileThatDeclaredTheme: string | undefined,
+  isMainConfig: boolean = false,
+  rootDir: string
+): Promise<IThemeObj> => {
+  const themeName =
+    typeof themeSpec === `string` ? themeSpec : themeSpec.resolve
   let themeDir
   try {
     const scopedRequire = createRequireFromPath(`${rootDir}/:internal:`)
@@ -59,13 +76,16 @@ const resolveTheme = async (
     themeDir,
     `gatsby-config`
   )
-  const theme = preferDefault(configModule)
+  const theme:
+    | IGatsbyConfigInput
+    | ((options?: Record<string, unknown>) => IGatsbyConfigInput) =
+    preferDefault(configModule)
 
   // if theme is a function, call it with the themeConfig
-  let themeConfig = theme
-  if (_.isFunction(theme)) {
-    themeConfig = theme(themeSpec.options || {})
-  }
+  const themeConfig = isFunction(theme)
+    ? theme(typeof themeSpec === `string` ? {} : themeSpec.options)
+    : theme
+
   return {
     themeName,
     themeConfig,
@@ -84,9 +104,9 @@ const resolveTheme = async (
 // no use case for a loop so I expect that to only happen if someone is very
 // off track and creating their own set of themes
 const processTheme = (
-  { themeName, themeConfig, themeSpec, themeDir, configFilePath },
-  { rootDir }
-) => {
+  { themeName, themeConfig, themeSpec, themeDir, configFilePath }: IThemeObj,
+  { rootDir }: { rootDir: string }
+): Promise<Array<IThemeObj>> => {
   const themesList = themeConfig && themeConfig.plugins
   // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
@@ -94,24 +114,53 @@ const processTheme = (
   if (themeConfig && themesList) {
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
-    return Promise.mapSeries(themesList, async spec => {
-      const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
-      return processTheme(themeObj, { rootDir: themeDir })
-    }).then(arr =>
-      arr.concat([
-        { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
-      ])
+    return mapSeries(
+      themesList,
+      async (spec: PluginEntry): Promise<Array<IThemeObj>> => {
+        const themeObj = await resolveTheme(
+          spec,
+          configFilePath,
+          false,
+          themeDir
+        )
+        return processTheme(themeObj, { rootDir: themeDir })
+      }
+    ).then(arr =>
+      flattenDeep(
+        arr.concat([
+          { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
+        ])
+      )
     )
   } else {
     // if a theme doesn't define additional themes, return the original theme
-    return [{ themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir }]
+    return Promise.resolve([
+      { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
+    ])
   }
 }
 
-module.exports = async (config, { configFilePath, rootDir }) => {
-  const themesA = await Promise.mapSeries(
+function normalizePluginEntry(
+  plugin: PluginEntry,
+  parentDir: string
+): IPluginEntryWithParentDir {
+  return {
+    resolve: typeof plugin === `string` ? plugin : plugin.resolve,
+    options: typeof plugin === `string` ? {} : plugin.options || {},
+    parentDir,
+  }
+}
+
+export async function loadThemes(
+  config: IGatsbyConfigInput,
+  { configFilePath, rootDir }: { configFilePath: string; rootDir: string }
+): Promise<{
+  config: IGatsbyConfigInput
+  themes: Array<IThemeObj>
+}> {
+  const themesA = await mapSeries(
     config.plugins || [],
-    async themeSpec => {
+    async (themeSpec: PluginEntry) => {
       const themeObj = await resolveTheme(
         themeSpec,
         configFilePath,
@@ -120,7 +169,7 @@ module.exports = async (config, { configFilePath, rootDir }) => {
       )
       return processTheme(themeObj, { rootDir })
     }
-  ).then(arr => _.flattenDeep(arr))
+  ).then(arr => flattenDeep(arr))
 
   // log out flattened themes list to aid in debugging
   debug(themesA)
@@ -129,21 +178,21 @@ module.exports = async (config, { configFilePath, rootDir }) => {
   // list in the config for the theme. This enables the usage of
   // gatsby-node, etc in themes.
   return (
-    Promise.mapSeries(
+    mapSeries(
       themesA,
       ({ themeName, themeConfig = {}, themeSpec, themeDir, parentDir }) => {
         return {
           ...themeConfig,
           plugins: [
-            ...(themeConfig.plugins || []).map(plugin => {
-              return {
-                resolve: typeof plugin === `string` ? plugin : plugin.resolve,
-                options: plugin.options || {},
-                parentDir: themeDir,
-              }
-            }),
+            ...(themeConfig.plugins || []).map(plugin =>
+              normalizePluginEntry(plugin, themeDir)
+            ),
             // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-            { resolve: themeName, options: themeSpec.options || {}, parentDir },
+            {
+              resolve: themeName,
+              options: typeof themeSpec === `string` ? {} : themeSpec.options,
+              parentDir,
+            },
           ],
         }
       }
@@ -156,8 +205,19 @@ module.exports = async (config, { configFilePath, rootDir }) => {
        */
       .reduce(mergeGatsbyConfig, {})
       .then(newConfig => {
+        const mergedConfig = mergeGatsbyConfig(newConfig, {
+          ...config,
+          plugins: [
+            ...(config.plugins || []).map(plugin =>
+              normalizePluginEntry(plugin, rootDir)
+            ),
+          ],
+        })
+
+        mergedConfig.plugins = uniqWith(mergedConfig.plugins, isEqual)
+
         return {
-          config: mergeGatsbyConfig(newConfig, config),
+          config: mergedConfig,
           themes: themesA,
         }
       })

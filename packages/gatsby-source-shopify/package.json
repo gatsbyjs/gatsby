@@ -28,7 +28,7 @@
     "gatsby-plugin-utils": "^4.4.0-next.1",
     "gatsby-source-filesystem": "^5.4.0-next.1",
     "node-fetch": "^2.6.7",
-    "sharp": "^0.31.2",
+    "sharp": "^0.31.3",
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "^3.4.0-next.1",
     "msw": "^0.38.2",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.1",
     "prettier-check": "^2.0.0",
     "tsc-watch": "^4.6.0",
     "typescript": "^4.9.3"

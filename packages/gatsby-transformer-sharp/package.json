@@ -14,7 +14,7 @@
     "gatsby-plugin-utils": "^4.4.0-next.1",
     "probe-image-size": "^7.2.3",
     "semver": "^7.3.8",
-    "sharp": "^0.31.2"
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",

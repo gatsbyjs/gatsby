@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
-    "babel-plugin-search-and-replace": "^1.1.0",
+    "babel-plugin-search-and-replace": "^1.1.1",
     "gatsby": "next",
     "gatsby-image": "next",
     "gatsby-plugin-image": "next",
@@ -59,19 +59,19 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.28.1",
+    "@playwright/test": "^1.29.1",
     "@testing-library/cypress": "^9.0.0",
     "cross-env": "^7.0.3",
     "cypress": "^9.7.0",
     "cypress-image-snapshot": "^4.0.1",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "fs-extra": "^11.1.0",
     "gatsby-core-utils": "next",
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
-    "prettier": "2.0.4",
+    "prettier": "^2.8.1",
     "start-server-and-test": "^1.14.0",
-    "typescript": "^4.9.3",
+    "typescript": "^4.9.4",
     "yargs": "^17.6.2"
   },
   "repository": {

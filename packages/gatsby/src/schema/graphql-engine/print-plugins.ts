@@ -53,24 +53,24 @@ async function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
   usedSubPlugins: IGatsbyState["flattenedPlugins"]
 ): Promise<string> {
-  const uniqGatsbyNode = uniq(usedPlugins)
   const uniqSubPlugins = uniq(usedSubPlugins)
 
-  const sanitizedUsedPlugins = usedPlugins.map(plugin => {
+  const sanitizedUsedPlugins = usedPlugins.map((plugin, i) => {
     // TODO: We don't support functions in pluginOptions here
     return {
       ...plugin,
       resolve: ``,
       pluginFilepath: ``,
       subPluginPaths: undefined,
+      importKey: i + 1,
     }
   })
 
-  const pluginsWithWorkers = await filterPluginsWithWorkers(uniqGatsbyNode)
+  const pluginsWithWorkers = await filterPluginsWithWorkers(usedPlugins)
 
   const subPluginModuleToImportNameMapping = new Map<string, string>()
   const imports: Array<string> = [
-    ...uniqGatsbyNode.map(
+    ...usedPlugins.map(
       (plugin, i) =>
         `import * as pluginGatsbyNode${i} from "${relativePluginPath(
           plugin.resolve
@@ -90,22 +90,28 @@ async function render(
       )}"`
     }),
   ]
-  const gatsbyNodeExports = uniqGatsbyNode.map(
-    (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
+  const gatsbyNodeExports = usedPlugins.map(
+    (plugin, i) =>
+      `{ name: "${plugin.name}", module: pluginGatsbyNode${i}, importKey: ${
+        i + 1
+      } },`
   )
   const gatsbyWorkerExports = pluginsWithWorkers.map(
-    (plugin, i) => `"${plugin.name}": pluginGatsbyWorker${i},`
+    (plugin, i) =>
+      `{ name: "${plugin.name}", module: pluginGatsbyWorker${i}, importKey: ${
+        i + 1
+      } },`
   )
   const output = `
 ${imports.join(`\n`)}
 
-export const gatsbyNodes = {
+export const gatsbyNodes = [
 ${gatsbyNodeExports.join(`\n`)}
-}
+]
 
-export const gatsbyWorkers = {
+export const gatsbyWorkers = [
 ${gatsbyWorkerExports.join(`\n`)}
-}
+]
 
 export const flattenedPlugins =
   ${JSON.stringify(
