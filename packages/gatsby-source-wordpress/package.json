@@ -31,7 +31,7 @@
     "gatsby-plugin-catch-links": "^5.4.0-next.1",
     "gatsby-plugin-utils": "^4.4.0-next.2",
     "gatsby-source-filesystem": "^5.4.0-next.2",
-    "glob": "^7.2.3",
+    "glob": "^8.0.3",
     "got": "^11.8.6",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
