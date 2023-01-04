@@ -59,18 +59,20 @@ export class GraphQLEngine {
         payload: flattenedPlugins,
       })
 
-      for (const pluginName of Object.keys(gatsbyNodes)) {
+      for (const plugin of gatsbyNodes) {
+        const { name, module, importKey } = plugin
         setGatsbyPluginCache(
-          { name: pluginName, resolve: `` },
+          { name, resolve: ``, importKey },
           `gatsby-node`,
-          gatsbyNodes[pluginName]
+          module
         )
       }
-      for (const pluginName of Object.keys(gatsbyWorkers)) {
+      for (const plugin of gatsbyWorkers) {
+        const { name, module, importKey } = plugin
         setGatsbyPluginCache(
-          { name: pluginName, resolve: `` },
+          { name, resolve: ``, importKey },
           `gatsby-worker`,
-          gatsbyWorkers[pluginName]
+          module
         )
       }
 

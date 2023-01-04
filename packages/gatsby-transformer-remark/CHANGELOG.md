@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.3.2/packages/gatsby-transformer-remark) (2022-12-20)
+
+#### Bug Fixes
+
+- Disallow JS frontmatter by default [#37244](https://github.com/gatsbyjs/gatsby/issues/37244) [#37297](https://github.com/gatsbyjs/gatsby/issues/37297) ([e333019](https://github.com/gatsbyjs/gatsby/commit/e33301960f14c45d3157f3e1ac929ad48fc62953))
+
 ### [6.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.3.1/packages/gatsby-transformer-remark) (2022-12-14)
 
 **Note:** Version bump only for package gatsby-transformer-remark

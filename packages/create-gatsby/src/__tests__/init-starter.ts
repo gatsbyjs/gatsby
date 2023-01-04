@@ -149,7 +149,15 @@ describe(`init-starter`, () => {
       expect(reporter.panic).not.toBeCalled()
       expect(execa).toBeCalledWith(
         `npm`,
-        [`install`, `--loglevel`, `error`, `--color`, `always`],
+        [
+          `install`,
+          `--loglevel`,
+          `error`,
+          `--color`,
+          `always`,
+          `--legacy-peer-deps`,
+          `--no-audit`,
+        ],
         { stderr: `inherit` }
       )
       expect(execa).toBeCalledWith(
@@ -161,6 +169,7 @@ describe(`init-starter`, () => {
           `--color`,
           `always`,
           `--legacy-peer-deps`,
+          `--no-audit`,
           `one-package`,
         ],
         { stderr: `inherit` }

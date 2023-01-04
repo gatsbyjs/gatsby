@@ -92,3 +92,19 @@ Static queries thus have these limitations:
 
 - `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
 - Because of how queries currently work in Gatsby, Gatsby supports only a single instance of `useStaticQuery` in a file
+
+## Other limitations
+
+### Must be in `src` directory
+
+`useStaticQuery` must be used in files that are nested below your site's top-level `src` directory. For example:
+
+`useStaticQuery` works in these files:
+
+- `<SITE_ROOT>/src/my-page.js`
+- `<SITE_ROOT>/src/components/my-component.js`
+
+`useStaticQuery` **does not** work in these files:
+
+- `<SITE_ROOT>/other-components/other-component.js`
+- `<SITE_ROOT>/other-library/other-component.js`

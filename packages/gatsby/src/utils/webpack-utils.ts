@@ -24,6 +24,7 @@ import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 import { store } from "../redux"
 import type { RuleSetUseItem } from "webpack"
+import { ROUTES_DIRECTORY } from "../constants"
 
 type Loader = string | { loader: string; options?: { [name: string]: any } }
 type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
@@ -203,6 +204,25 @@ export const createWebpackUtils = (
       return rule
     }
 
+  const fileLoaderCommonOptions: {
+    name: string
+    publicPath?: string
+    outputPath?: string
+  } = {
+    name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+  }
+
+  if (stage === `build-html` || stage === `develop-html`) {
+    // build-html and develop-html outputs to `.cache/page-ssr/routes/` (ROUTES_DIRECTORY)
+    // so this config is setting it to output assets to `public` (outputPath)
+    // while preserving "url" (publicPath)
+    fileLoaderCommonOptions.outputPath = path.relative(
+      ROUTES_DIRECTORY,
+      `public`
+    )
+    fileLoaderCommonOptions.publicPath = `/`
+  }
+
   const loaders: ILoaderUtils = {
     json: (options = {}) => {
       return {
@@ -349,7 +369,7 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`file-loader`),
         options: {
-          name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          ...fileLoaderCommonOptions,
           ...options,
         },
       }
@@ -360,7 +380,7 @@ export const createWebpackUtils = (
         loader: require.resolve(`url-loader`),
         options: {
           limit: 10000,
-          name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          ...fileLoaderCommonOptions,
           fallback: require.resolve(`file-loader`),
           ...options,
         },

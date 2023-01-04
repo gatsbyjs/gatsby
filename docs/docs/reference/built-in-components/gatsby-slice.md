@@ -84,7 +84,7 @@ exports.createPages = async ({ actions }) => {
 
 ## Queries
 
-Slices can use "slice queries", just as pages can use [page queries](/docs/how-to/querying-data/page-query). By exporting a `graphql` query, you can query Gatsby's data layer within the slice. Variables can be accessed from the `context` passed in [`createSlice](#createslice-action).
+Slices can use "slice queries", just as pages can use [page queries](/docs/how-to/querying-data/page-query). By exporting a `graphql` query, you can query Gatsby's data layer within the slice. Variables can be accessed from the `context` passed in [`createSlice`](#createslice-action).
 
 ```js:title=src/components/my-slice.js
 export const query = graphql`
@@ -98,6 +98,20 @@ export const query = graphql`
 ```
 
 ## Restrictions on using `<Slice>` placeholder
+
+### Must be in `src` directory
+
+Slice placeholders must be used in files that are nested below your site's top-level `src` directory. For example:
+
+Slice placeholders work in these files:
+
+- `<SITE_ROOT>/src/my-page.js`
+- `<SITE_ROOT>/src/components/my-component.js`
+
+Slice placeholders **do not** work in these files:
+
+- `<SITE_ROOT>/other-components/other-component.js`
+- `<SITE_ROOT>/other-library/other-component.js`
 
 ### Nested Slices
 

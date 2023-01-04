@@ -1,4 +1,5 @@
 #!/bin/bash
+
 GLOB=$1
 IS_CI="${CI:-false}"
 BASE=$(pwd)
@@ -9,17 +10,23 @@ fi
 
 for folder in $GLOB; do
   [ -d "$folder" ] || continue # only directories
+
+  if [ "$folder" = "starters/gatsby-starter-theme-workspace" ]; then
+    # Theme starter directory layout doesn't play well with validation below
+    # so we skip it for now
+    continue
+  fi
+
   cd "$BASE" || exit
 
   # validate
   cd "$folder" || exit
 
-  # WordPress has React 17 deps :/
-  if [ "$folder" = "starters/gatsby-starter-wordpress-blog" ]; then
-    npm install --legacy-peer-deps
-  else
-    npm install
-  fi
+  echo ""
+  echo "Validating $folder"
+  echo ""
+
+  npm ci --legacy-peer-deps || exit 1
 
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&

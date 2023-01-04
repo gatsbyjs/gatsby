@@ -3,6 +3,8 @@ import { WorkerPool } from "../"
 import { isPromise, isRunning } from "../utils"
 import { MessagesFromChild, MessagesFromParent } from "./fixtures/test-child"
 
+jest.setTimeout(15000)
+
 describe(`gatsby-worker`, () => {
   let workerPool:
     | WorkerPool<

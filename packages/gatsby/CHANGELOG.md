@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.3.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.3.3/packages/gatsby) (2022-12-20)
+
+#### Bug Fixes
+
+- [rendering engines] use results of exports removal if sourceMap was not generated alongside transformed code [#37282](https://github.com/gatsbyjs/gatsby/issues/37282) [#37296](https://github.com/gatsbyjs/gatsby/issues/37296) ([3e7e996](https://github.com/gatsbyjs/gatsby/commit/3e7e9962d3597a6bb8f03271c95fbe719ca1ba49))
+- don't output file-loader assets to .cache [#37284](https://github.com/gatsbyjs/gatsby/issues/37284) [#37295](https://github.com/gatsbyjs/gatsby/issues/37295) ([f448e12](https://github.com/gatsbyjs/gatsby/commit/f448e12db52841cbb8ff02f7358c865b0aebd49f))
+
 ### [5.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.3.2/packages/gatsby) (2022-12-14)
 
 #### Bug Fixes
