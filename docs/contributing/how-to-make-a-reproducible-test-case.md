@@ -20,14 +20,14 @@ A reproducible test case is a great way to share a specific environment that cau
 - Add any Gatsby plugins that relate to the issue. For example, if you're having problems with MDX you should install and configure [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
 - Add the code needed to recreate the error you've seen.
 - Verify that you're seeing the expected error(s) when running `gatsby develop`/`gatsby build`/`gatsby serve`.
-- Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/). While creating the issue, please give as many details as possible. This could also include screenshots of error message in e.g. the terminal or browser.
+- Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/) or opening a support ticket. While creating the issue/support ticket, please give as many details as possible. This could also include screenshots of error message in e.g. the terminal or browser.
 
 ### Optional steps
 
-Sometimes it might be necessary that you share additional information with the support team, e.g. when [Gatsby Cloud](/products/cloud/builds) or a CMS is involved. Here are some optional steps you can take in improving your minimal reproduction:
+Sometimes it might be necessary that you share additional information with the team, e.g. when [Gatsby Cloud](/products/cloud/builds) or a CMS is involved. Here are some optional steps you can take in improving your minimal reproduction:
 
 - If your Gatsby Cloud build failed, copy the URL and share it with us. If a live URL is misbehaving, also copy that specific URL and describe which behavior you're expecting and what behavior you're actually seeing. Screenshots or videos about problems on your site are also appreciated.
-- If your reproduction requires a successful connection to a CMS to build and show the error, please set up a non-production environment for that CMS that we can then use. In case that's not possible, please provide specific instructions on which changes we can make inside the environment.
+- If your reproduction requires a successful connection to a CMS to build and show the error, please set up a non-production environment for that CMS that we then can use. You can do this by e.g. setting up a new instance from scratch and filling it with some content. In case that's not possible, please provide specific instructions on how we can use your production environment.
 
 ## Online Development Environments
 
