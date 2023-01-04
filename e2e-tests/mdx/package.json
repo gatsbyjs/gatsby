@@ -4,13 +4,13 @@
   "version": "1.0.0",
   "dependencies": {
     "@mdx-js/react": "^2",
-    "@sindresorhus/slugify": "^1.0.0",
+    "@sindresorhus/slugify": "^2.1.1",
     "cypress": "^9.7.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^11.1.0",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
-    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.30",
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
@@ -43,10 +43,10 @@
     "update": "node scripts/update.js"
   },
   "devDependencies": {
-    "cross-env": "^5.2.0",
+    "cross-env": "^7.0.3",
     "gatsby-cypress": "next",
-    "is-ci": "^2.0.0",
-    "prettier": "2.0.4",
+    "is-ci": "^3.0.1",
+    "prettier": "^2.8.1",
     "start-server-and-test": "^1.14.0"
   }
 }
