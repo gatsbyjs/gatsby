@@ -1,12 +1,12 @@
 {
   "packageManager": "yarn@1.22.19",
   "devDependencies": {
-    "@babel/core": "^7.15.5",
+    "@babel/core": "^7.20.7",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/eslint-plugin": "^7.19.1",
-    "@babel/node": "^7.15.4",
-    "@babel/plugin-transform-typescript": "^7.15.4",
-    "@babel/runtime": "^7.15.4",
+    "@babel/node": "^7.20.7",
+    "@babel/plugin-transform-typescript": "^7.20.7",
+    "@babel/runtime": "^7.20.7",
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.3",
     "@types/better-queue": "^3.8.3",
