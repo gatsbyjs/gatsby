@@ -52,7 +52,7 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "ast-pretty-print": "^2.0.1",
-    "babel-plugin-macros": "^2.8.0",
+    "babel-plugin-macros": "^3.1.0",
     "cross-env": "^7.0.3",
     "cssnano": "^4.1.11",
     "del-cli": "^3.0.1",
