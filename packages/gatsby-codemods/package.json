@@ -31,7 +31,7 @@
     "@babel/runtime": "^7.20.7",
     "execa": "^5.1.1",
     "graphql": "^16.6.0",
-    "jscodeshift": "^0.12.0",
+    "jscodeshift": "^0.14.0",
     "recast": "^0.20.5"
   },
   "devDependencies": {
