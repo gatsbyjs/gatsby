@@ -15,13 +15,19 @@ The [most important part of any bug report](https://developer.mozilla.org/en-US/
 A reproducible test case is a great way to share a specific environment that causes a bug. Your reproducible test case is the best way to help people that want to help _you_.
 
 ## Steps to create a reproducible test case
-- Create a new Gatsby site with a starter, the official `gatsby-starter-minimal` starter is a great 'barebones' starting point here: `gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-minimal` There are other Gatsby starters you can use [here](https://www.gatsbyjs.com/starters/)
-- Add any Gatsby plugins that relate to the issue. For example, if you're having problems with Gatsby MDX you should install and configure [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/) in the directory of your site (i.e bug-repro). Remember to update your `gatsby-config.js` with the plugin you installed and only add plugins that are needed to demonstrate the problem.
+
+- Create a new Gatsby site with the official `gatsby-starter-minimal` starter: `npx gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-minimal`
+- Add any Gatsby plugins that relate to the issue. For example, if you're having problems with MDX you should install and configure [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
 - Add the code needed to recreate the error you've seen.
-- Build the site locally using `gatsby develop` and confirm you’re not seeing any errors.
-- Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](https://www.gatsbyjs.com/contributing/how-to-file-an-issue/)
-- What are you experiencing on your end?
-- Screenshot of the error message and screenshot of browser console
+- Verify that you're seeing the expected error(s) when running `gatsby develop`/`gatsby build`/`gatsby serve`.
+- Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/). While creating the issue, please give as many details as possible. This could also include screenshots of error message in e.g. the terminal or browser.
+
+### Optional steps
+
+Sometimes it might be necessary that you share additional information with the support team, e.g. when [Gatsby Cloud](/products/cloud/builds) or a CMS is involved. Here are some optional steps you can take in improving your minimal reproduction:
+
+- If your Gatsby Cloud build failed, copy the URL and share it with us. If a live URL is misbehaving, also copy that specific URL and describe which behavior you're expecting and what behavior you're actually seeing. Screenshots or videos about problems on your site are also appreciated.
+- If your reproduction requires a successful connection to a CMS to build and show the error, please set up a non-production environment for that CMS that we can then use. In case that's not possible, please provide specific instructions on which changes we can make inside the environment.
 
 ## Online Development Environments
 
@@ -30,36 +36,9 @@ Instead of cloning `gatsby-starter-minimal` to your local computer and working o
 - [CodeSandbox](https://githubbox.com/gatsbyjs/gatsby-starter-minimal)
 - [StackBlitz](https://githubblitz.com/gatsbyjs/gatsby-starter-minimal)
 
-
 ## Benefits of reproducible test cases
 
 - Smaller surface area: By removing everything but the error, you don't have to dig to find the bug.
 - No need to publish secret code: You might not be able to publish your main site (for many reasons). Remaking a small part of it as a reproducible test case allows you to publicly demonstrate a problem without exposing any secret code.
 - Proof of the bug: Sometimes a bug is caused by some combination of settings on your machine. A reproducible test case allows contributors to pull down your build and test it on their machines as well. This helps verify and narrow down the cause of a problem.
 - Get help with fixing your bug: If someone else can reproduce your problem, they often have a good chance of fixing the problem. It's almost impossible to fix a bug without first being able to reproduce it.
-
-What if I’m unable to create a reproducible test case?
-
-For Gatsby Cloud users, please provide the requested information below as it applies to your issue. 
-
-1. Link to the failed build as seen [here](https://support.gatsbyjs.com/hc/en-us/articles/360053099173-Build-Logs)
-2. Screenshot of the error
-3. Workspace name
-4. Link to the repo for the reproducible test case
-5. Path to the problematic URL
-6. What is the expected behavior of this URL?
-7. What are you experiencing on your end?
-8. Screenshot of the error message and screenshot of browser console
-9  Video recording of the issue. You'll find [loom](https://www.loom.com/) to be helpful for recordings. 
-
-### **For CMS Issues:**
-
-A reproduction would ideally include a minimal reproduction with access to a non-production CMS. When that isn’t possible, we can also use a production instance of the CMS with specific testing instructions that we are allowed to do in that environment.
-
-1. Access to the CMS instance or an account created for support@gatsbyjs.com
-2. Screenshot of the error and browser console logsI if applicable)
-3. Video of the issue if possible
-
-**Additional Context for all issues:**
-
-For any kind of issue, share any other thing you have tried that may be helpful in further investigating this issue. I.e. I did xyz and got abc, If I change this, I see this.
