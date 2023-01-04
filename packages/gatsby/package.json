@@ -172,7 +172,7 @@
     "webpack-dev-middleware": "^4.3.0",
     "webpack-merge": "^5.8.0",
     "webpack-stats-plugin": "^1.1.1",
-    "webpack-virtual-modules": "^0.3.2",
+    "webpack-virtual-modules": "^0.5.0",
     "xstate": "^4.35.1",
     "yaml-loader": "^0.6.0"
   },
