@@ -8,9 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.7",
-    "js-yaml": "^3.14.1",
-    "lodash": "^4.17.21",
-    "unist-util-select": "^1.5.0"
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
