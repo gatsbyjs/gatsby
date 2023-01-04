@@ -124,7 +124,7 @@
     "meant": "^1.0.3",
     "memoizee": "^0.4.15",
     "micromatch": "^4.0.5",
-    "mime": "^2.6.0",
+    "mime": "^3.0.0",
     "mini-css-extract-plugin": "1.6.2",
     "mitt": "^1.2.0",
     "moment": "^2.29.4",
