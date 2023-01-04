@@ -226,7 +226,7 @@ module.exports = (
           overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
         )
 
-    const title = node.title ? _.escape(node.title) : alt
+    const title = node.title ? _.escape(node.title) : ``
 
     const loading = options.loading
 

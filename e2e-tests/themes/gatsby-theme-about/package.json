@@ -22,7 +22,7 @@
     "gatsby-plugin-page-creator": "next"
   },
   "devDependencies": {
-    "prettier": "2.0.4"
+    "prettier": "2.8.1"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^0.0.0",

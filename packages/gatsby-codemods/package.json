@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
-    "@types/jscodeshift": "^0.11.5",
+    "@types/jscodeshift": "^0.11.6",
     "babel-preset-gatsby-package": "^3.4.0-next.0",
     "cross-env": "^7.0.3"
   },

@@ -80,13 +80,13 @@ Object {
       "columnNumber": 28,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/utils.js",
       "functionName": "Promise.then.completed",
-      "lineNumber": 390,
+      "lineNumber": 391,
     },
     Object {
       "columnNumber": 10,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/utils.js",
       "functionName": "callAsyncCircusFn",
-      "lineNumber": 315,
+      "lineNumber": 316,
     },
     Object {
       "columnNumber": 40,
