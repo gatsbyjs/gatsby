@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.7",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "gatsby-core-utils": "^4.4.0-next.2",
     "gatsby-plugin-sharp": "^5.4.0-next.2",
     "md5-file": "^5.0.0",

@@ -89,7 +89,7 @@
     "file-loader": "^6.2.0",
     "find-cache-dir": "^3.3.2",
     "fs-exists-cached": "1.0.0",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "gatsby-cli": "^5.4.0-next.2",
     "gatsby-core-utils": "^4.4.0-next.2",
     "gatsby-graphiql-explorer": "^3.4.0-next.1",
