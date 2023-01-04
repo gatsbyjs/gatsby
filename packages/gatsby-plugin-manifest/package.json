@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.7",
-    "gatsby-core-utils": "^4.4.0-next.1",
-    "gatsby-plugin-utils": "^4.4.0-next.1",
+    "gatsby-core-utils": "^4.4.0-next.2",
+    "gatsby-plugin-utils": "^4.4.0-next.2",
     "semver": "^7.3.8",
     "sharp": "^0.31.3"
   },

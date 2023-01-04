@@ -24,9 +24,9 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "dependencies": {
     "@babel/runtime": "^7.20.7",
-    "gatsby-core-utils": "^4.4.0-next.1",
-    "gatsby-plugin-utils": "^4.4.0-next.1",
-    "gatsby-source-filesystem": "^5.4.0-next.1",
+    "gatsby-core-utils": "^4.4.0-next.2",
+    "gatsby-plugin-utils": "^4.4.0-next.2",
+    "gatsby-source-filesystem": "^5.4.0-next.2",
     "node-fetch": "^2.6.7",
     "sharp": "^0.31.3",
     "shift-left": "^0.1.5"

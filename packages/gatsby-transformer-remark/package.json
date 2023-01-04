@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.7",
-    "gatsby-core-utils": "^4.4.0-next.1",
+    "gatsby-core-utils": "^4.4.0-next.2",
     "gray-matter": "^4.0.3",
     "hast-util-raw": "^6.1.0",
     "hast-util-to-html": "^7.1.3",
