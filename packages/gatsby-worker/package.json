@@ -10,7 +10,7 @@
     "@babel/core": "^7.15.5",
     "@babel/runtime": "^7.15.4",
     "fs-extra": "^10.0.0",
-    "signal-exit": "^3.0.5"
+    "signal-exit": "^3.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
