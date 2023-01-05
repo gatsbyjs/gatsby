@@ -61,11 +61,17 @@ export async function compileGatsbyFiles(
   retry: number = 0
 ): Promise<void> {
   try {
+    const gatsbyNodeName = `gatsby-node`
+
     // Check for gatsby-node.jsx and gatsby-node.tsx (or other misnamed variations)
-    const files = await readdir(siteRoot)
+    // We want to filter out directory names so we can use "withFileTypes"
+    // With "withFileTypes" the array will contain <fs.Dirent> objects
+    const filesAndDirectories = await readdir(siteRoot, { withFileTypes: true })
+    const files = filesAndDirectories
+      .filter(i => !i.isDirectory())
+      .map(i => i.name)
 
     let nearMatch = ``
-    const configName = `gatsby-node`
 
     for (const file of files) {
       if (nearMatch) {
@@ -82,7 +88,8 @@ export async function compileGatsbyFiles(
         break
       }
 
-      if (isNearMatch(name, configName, 3)) {
+      // Check for likely misnamed files
+      if (isNearMatch(name, gatsbyNodeName, 3)) {
         nearMatch = file
       }
     }
@@ -93,7 +100,7 @@ export async function compileGatsbyFiles(
       reporter.panic({
         id: `10128`,
         context: {
-          configName,
+          configName: gatsbyNodeName,
           nearMatch,
           isTSX,
         },
