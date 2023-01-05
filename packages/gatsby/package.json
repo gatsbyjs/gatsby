@@ -104,7 +104,7 @@
     "gatsby-script": "^2.4.0-next.0",
     "gatsby-telemetry": "^4.4.0-next.2",
     "gatsby-worker": "^2.4.0-next.1",
-    "glob": "^8.0.3",
+    "glob": "^7.2.3",
     "globby": "^11.1.0",
     "got": "^11.8.6",
     "graphql": "^16.6.0",
