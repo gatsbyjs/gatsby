@@ -174,7 +174,7 @@
     "webpack-stats-plugin": "^1.1.1",
     "webpack-virtual-modules": "^0.3.2",
     "xstate": "^4.35.1",
-    "yaml-loader": "^0.6.0"
+    "yaml-loader": "^0.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
