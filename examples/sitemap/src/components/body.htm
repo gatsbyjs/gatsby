@@ -1,0 +1,215 @@
+
+				<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">		    
+				<html>
+					<head>
+						<meta http-equiv="MSThemeCompatible" content="yes">
+						<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+						
+								<link rel="stylesheet" type="text/css" href='..\genericSkin\1248383926732.txt.css'/>
+								
+						
+							
+								<link href="../shared/ccc.css" type="text/css" rel="STYLESHEET" />
+	<script src="../shared/ccc.js"></script>
+	<script language="javascript">
+	<!--
+		function onpageload()
+		{
+			location='pcucmd://FrameDataLoaded'; 
+			var sCode = getParamVal("installationcode");
+			if (sCode != null && sCode.length == 24)
+			{
+				var ss = sCode.split("-");
+				if (ss.length == 5)
+				{
+					for (i = 0; i < 5; i++)
+					{
+						var oField = document.getElementById("txtInstCode" + (i + 1));
+						if (oField != null)
+							oField.value = ss[i].toUpperCase();
+					}
+				}
+			}
+			sCode = getParamVal("serial");
+			if ((sCode != null) && (sCode.length > 0))
+			{
+				location = "pcucmd://StoreParam?key=" + sCode;
+				var oKey = document.getElementById("txtKey");
+				if (null != oKey)
+				{
+					oKey.value = sCode.toUpperCase();
+					oKey.readOnly = true;
+				}
+			}
+			sCode = getParamVal("SourceID");
+			var sNumDays = getParamVal("NumDays");
+			if (sCode != null)
+			{
+				var oField = document.getElementById("txtID");
+				if (oField != null)
+				{
+					if (sNumDays != null)
+						sCode = sCode + " " + sNumDays;
+
+					oField.value = sCode;
+				}
+			}
+		}
+
+		function OnTxtFieldChanging()
+		{
+			var oKey = document.getElementById("txtKey");
+			var oAct = document.getElementById("txtActivationCode");
+
+			var strKey = "";
+			var strAct = "";
+
+			if (oKey != null)
+			{
+				strKey = removeAllSpaces(oKey.value);
+				location = "pcucmd://StoreParam?key=" + strKey;
+			}
+
+			if (oAct != null)
+			{
+				strAct = removeAllSpaces(oAct.value);
+				location = "pcucmd://StoreParam?activationcode=" + strAct;
+			}
+
+			if (oKey != null &&	oAct != null &&
+				  ValidateSerial(strKey) && ValidateActCode(strAct))
+			{
+				location="pcucmd://CanContinue?enable=true";
+			}
+			else
+			{
+				location="pcucmd://CanContinue?enable=false";
+			}
+		}
+
+		function OnBack()
+		{
+			var strSerial = getCookie("serial");
+			if ((strSerial != null) && (strSerial != ""))
+			{
+				location="pcucmd://SetKey?admin=yes&key="+strSerial;
+				deleteCookie("serial");
+			}
+			location="pcucmd://previous";
+		}
+
+	-->
+	</script>
+
+						
+						
+					</head>
+			    	
+			    	<body onload="onpageload();" tabindex="-1">
+							
+							
+								
+								
+								
+							
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+	
+
+
+<div id="ButtonBar" style="display: none;">
+	<div style="width: 100%; height: 100%; padding: 0px; margin: 0px; border: none;" id="Table1">
+		<div style="float:left;text-align:left">
+			<table align="center">
+				<tr>
+					
+				</tr>
+			</table>
+		</div>
+		<div style="float:right;text-align:right">
+			<table align="center">
+				<tr>
+					<td><button style='overflow:visible;width:100%' class='buttonBar' type='button' accessKey='B' id='pcubtnback' name='pcubtnback'  onclick="document.location='pcucmd://CallScriptFunc?funcname=OnBack'"><u>B</u>ack</button></td>
+<td><button style='overflow:visible;width:100%' class='buttonBar' type='button' accessKey='o' id='pcubtncontinue' name='pcubtncontinue'  onclick="OnUnlock()">C<u>o</u>ntinue</button></td>
+<td><button style='overflow:visible;width:100%' class='buttonBar' type='button' accessKey='C' id='pcubtncancel' name='pcubtncancel'  onclick="document.location='pcucmd://Cancel'"><u>C</u>ancel</button></td>
+
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+	
+
+
+						
+						
+							
+								<div id="pcu_data" style="display:none;">
+									PageDimension:613,490
+								</div>
+							
+							
+						
+						
+							
+							<style>
+	input {padding: 3px;}
+</style>	
+<div style="padding: 10px">
+	<p>To proceed, enter the Activation Code you receive from Customer Service in the corresponding space below.</p>
+	<table width="100%">
+		<tr>
+			<td width="25%" align="right">
+				<label for="txtInstCode1" accesskey="I"><u>I</u>nstallation Code:</label>
+			</td>
+			<td width="75%">
+				<input type="text" readonly="true" size="5" id="txtInstCode1" />-<input type="text" readonly="true" size="5" id="txtInstCode2" />-<input type="text" readonly="true" size="5" id="txtInstCode3" />-<input type="text" readonly="true" size="5" id="txtInstCode4" />-<input type="text" readonly="true" size="5" id="txtInstCode5" />
+			</td>
+		</tr>
+		<tr>
+			<td width="25%" align="right">
+				<label for="txtKey" accesskey="S"><u>S</u>erial number:</label>
+			</td>
+			<td width="75%">
+				<input type="text" id="txtKey" size="56" onpropertychange="OnTxtFieldChanging()" />
+			</td>
+		</tr>
+		<tr>
+			<td width="25%" align="right">
+				<label for="txtActivationCode" accesskey="A"><u>A</u>ctivation Code:</label>
+			</td>
+			<td width="75%">
+				<input type="text" id="txtActivationCode" size="40" onpropertychange="OnTxtFieldChanging()" />
+			</td>
+		</tr>
+		<tr>
+			<td width="25%" align="right">
+				<label for="txtID" accesskey="D">I<u>D</u>:</label>
+			</td>
+			<td width="75%">
+				<input type="text" readonly="true" size="10" id="txtID" />
+			</td>
+		</tr>
+	</table>
+</div>
+						
+					</body>
+				</html>
+				
