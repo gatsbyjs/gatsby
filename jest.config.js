@@ -106,7 +106,12 @@ const esModules = [
   `estree-util-to-js`,
 ].join(`|`)
 
-module.exports = {
+/** @type {import('jest').Config} */
+const config = {
+  snapshotFormat: {
+    escapeString: true,
+    printBasicPrototype: true,
+  },
   notify: true,
   verbose: true,
   roots: pkgs,
@@ -152,3 +157,5 @@ module.exports = {
   setupFilesAfterEnv: [`jest-extended`],
   testEnvironment: `<rootDir>/jest.environment.ts`,
 }
+
+module.exports = config
