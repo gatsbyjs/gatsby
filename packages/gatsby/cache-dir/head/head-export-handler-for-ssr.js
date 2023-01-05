@@ -64,7 +64,7 @@ export function headHandlerForSSR({
       } else {
         let element
         const attributes = { ...node.attributes, "data-gatsby-head": true }
-        if (rawTagName === `script`) {
+        if (rawTagName === `script` || rawTagName === `style`) {
           element = (
             <script
               {...attributes}
