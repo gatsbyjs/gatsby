@@ -49,8 +49,8 @@ const webpackRemoveExportsLoader: LoaderDefinitionFunction<IOptions> =
       (err, result) => {
         if (err) {
           callback(err)
-        } else if (result && result.code && result.map) {
-          callback(null, result?.code, result?.map)
+        } else if (result && result.code) {
+          callback(null, result?.code, result?.map ?? undefined)
         } else {
           callback(null, source, sourceMap)
         }

@@ -36,16 +36,17 @@ npx sb upgrade
 Add the following development dependencies to enable webpack 5 with Storybook:
 
 ```shell
-npm i -D @storybook/builder-webpack5 @storybook/manager-webpack5
+npm i @storybook/builder-webpack5 @storybook/manager-webpack5 --save-dev
 ```
 
 Then, update your [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview) to the following:
 
 ```js:title=.storybook/main.js
 module.exports = {
-  stories: [],
-  addons: [],
   // highlight-start
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  framework: "@storybook/react",
   core: {
     builder: "webpack5",
   },

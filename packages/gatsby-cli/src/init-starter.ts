@@ -25,6 +25,7 @@ const spawn = (
   cmd: string,
   options?: execa.Options
 ): execa.ExecaChildProcess => {
+  // Split on spaces, tabs, new lines
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
@@ -115,7 +116,9 @@ const install = async (rootPath: string): Promise<void> => {
       await spawn(`yarnpkg`)
     } else {
       await fs.remove(`yarn.lock`)
-      await spawn(`npm install`)
+      await spawn(
+        `npm install --loglevel error --color always --legacy-peer-deps --no-audit`
+      )
     }
   } finally {
     process.chdir(prevDir)

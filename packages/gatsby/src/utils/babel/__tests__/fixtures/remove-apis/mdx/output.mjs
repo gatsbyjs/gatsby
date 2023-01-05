@@ -3,7 +3,6 @@ import React from "react";
 import { graphql } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
 import { components } from "../components/shortcodes";
-
 const PostsTemplate = ({
   data,
   children
@@ -12,7 +11,6 @@ const PostsTemplate = ({
     components: components
   }, children));
 };
-
 export default function GatsbyMDXWrapper(props) {
   return React.createElement(PostsTemplate, props, React.createElement(GATSBY_COMPILED_MDX, props));
 }

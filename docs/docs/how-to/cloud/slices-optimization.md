@@ -7,10 +7,6 @@ description: "Learn how to optimize your Slices on Gatsby Cloud"
 
 ## Cloud Optimizations
 
-When using Slices, Gatsby Cloud can optimize your builds even further. You can take advantage of these optimzations by enabling the checkbox in your Build Features settings.
-
-![Slices API toggle in Gatsby Cloud](../../images/slices-api-optimization.png)
+When using Slices, Gatsby Cloud can optimize your builds even further. These optimizations are enabled by default for all Enterprise tier sites.
 
 By knowing which pieces of your site to build and host, Gatsby Cloud can increase build times on Slice changes by up to 90%.
-
-These optimizations for Slices requires [Unified Hosting](/docs/how-to/cloud/unified-hosting).

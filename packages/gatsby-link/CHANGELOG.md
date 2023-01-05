@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.3.1/packages/gatsby-link) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-link
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.3.0/packages/gatsby-link) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Chores
+
+- update dependency prepend-directive to ^1.1.0 for gatsby-link [#37189](https://github.com/gatsbyjs/gatsby/issues/37189) ([80b9473](https://github.com/gatsbyjs/gatsby/commit/80b947339cca93b5ecb8ee7b5b44b5c43be67de0))
+- Bump @gatsbyjs/reach-router to v2.0.0 [#37121](https://github.com/gatsbyjs/gatsby/issues/37121) ([aa5808b](https://github.com/gatsbyjs/gatsby/commit/aa5808becb16c4d98953082a7e04b6b7d40cd9a5))
+
 ## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.2.0/packages/gatsby-link) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

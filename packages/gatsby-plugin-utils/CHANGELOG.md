@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.3.1/packages/gatsby-plugin-utils) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.3.0/packages/gatsby-plugin-utils) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Features
+
+- add path prefix to image cdn urls fix [#36772](https://github.com/gatsbyjs/gatsby/issues/36772) ([5580c73](https://github.com/gatsbyjs/gatsby/commit/5580c736e32eb2a1c25f38f4ed60ba7c98c56306))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-utils [#37155](https://github.com/gatsbyjs/gatsby/issues/37155) ([8a874ed](https://github.com/gatsbyjs/gatsby/commit/8a874edfbc845451a47b95565012647c534c6c94))
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update dependency msw to ^0.49.1 for gatsby-plugin-utils [#37188](https://github.com/gatsbyjs/gatsby/issues/37188) ([2ec7a92](https://github.com/gatsbyjs/gatsby/commit/2ec7a9203c151650c2f240fa83981385867b5fdf))
+
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.2.0/packages/gatsby-plugin-utils) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

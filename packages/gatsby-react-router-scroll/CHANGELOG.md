@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@6.3.0/packages/gatsby-react-router-scroll) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Chores
+
+- Bump @gatsbyjs/reach-router to v2.0.0 [#37121](https://github.com/gatsbyjs/gatsby/issues/37121) ([aa5808b](https://github.com/gatsbyjs/gatsby/commit/aa5808becb16c4d98953082a7e04b6b7d40cd9a5))
+
 ## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@6.2.0/packages/gatsby-react-router-scroll) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

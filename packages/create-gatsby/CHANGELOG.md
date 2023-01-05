@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.3.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.3.1/packages/create-gatsby) (2022-12-14)
+
+**Note:** Version bump only for package create-gatsby
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.3.0/packages/create-gatsby) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- Update questionare [#37148](https://github.com/gatsbyjs/gatsby/issues/37148) ([1c84345](https://github.com/gatsbyjs/gatsby/commit/1c843453e5fd4e53df6768844032011971af782e))
+
 ## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.2.0/packages/create-gatsby) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
