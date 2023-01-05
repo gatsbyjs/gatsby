@@ -104,6 +104,7 @@ const esModules = [
   `estree-util-attach-comments`,
   `trim-lines`,
   `estree-util-to-js`,
+  `is-reference`,
 ].join(`|`)
 
 /** @type {import('jest').Config} */
@@ -138,6 +139,8 @@ const config = {
     "^ordered-binary$": `<rootDir>/node_modules/ordered-binary/dist/index.cjs`,
     "^msgpackr$": `<rootDir>/node_modules/msgpackr/dist/node.cjs`,
     "^estree-walker$": `<rootDir>/node_modules/estree-walker/src/index.js`,
+    "^periscopic$": `<rootDir>/node_modules/periscopic/src/index.js`,
+    "^is-reference$": `<rootDir>/node_modules/is-reference/src/index.js`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
@@ -148,7 +151,7 @@ const config = {
     : [`default`].concat(useJestUnit ? `jest-junit` : []),
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
-  setupFilesAfterEnv: [`jest-extended`],
+  setupFilesAfterEnv: [`jest-extended/all`],
   testEnvironment: `<rootDir>/jest.environment.ts`,
 }
 
