@@ -140,7 +140,8 @@ const config = {
     "^msgpackr$": `<rootDir>/node_modules/msgpackr/dist/node.cjs`,
     "^estree-walker$": `<rootDir>/node_modules/estree-walker/src/index.js`,
     "^periscopic$": `<rootDir>/node_modules/periscopic/src/index.js`,
-    "^is-reference$": `<rootDir>/node_modules/is-reference/src/index.js`,
+    "^is-reference$": `<rootDir>/node_modules/is-reference/dist/is-reference.es.js`,
+    // node_modules/is-reference/dist/is-reference.es.js
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
