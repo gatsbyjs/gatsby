@@ -4,7 +4,6 @@ export const {
   const {
     config
   } = 'hello'; // Ensure matching nested properties stay untouched
-
   return {
     defer: true
   };

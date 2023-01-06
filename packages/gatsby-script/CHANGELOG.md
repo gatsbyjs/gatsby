@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.3.0/packages/gatsby-script) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update dependency prepend-directive to ^1.1.0 for gatsby-script [#37190](https://github.com/gatsbyjs/gatsby/issues/37190) ([2f54c1d](https://github.com/gatsbyjs/gatsby/commit/2f54c1d94ac5c9f28d00d72d659e6ee0b6dffbbf))
+- Bump @gatsbyjs/reach-router to v2.0.0 [#37121](https://github.com/gatsbyjs/gatsby/issues/37121) ([aa5808b](https://github.com/gatsbyjs/gatsby/commit/aa5808becb16c4d98953082a7e04b6b7d40cd9a5))
+
 ## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.2.0/packages/gatsby-script) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

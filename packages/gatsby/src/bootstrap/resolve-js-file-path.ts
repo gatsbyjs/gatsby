@@ -1,5 +1,15 @@
 import path from "path"
+import { pathToFileURL } from "url"
 import report from "gatsby-cli/lib/reporter"
+
+/**
+ * On Windows, the file protocol is required for the path to be resolved correctly.
+ * On other platforms, the file protocol is not required, but supported, so we want to just always use it.
+ * Except jest doesn't work with that and in that environment we never add the file protocol.
+ */
+export const maybeAddFileProtocol = process.env.JEST_WORKER_ID
+  ? (module: string): string => module
+  : (module: string): string => pathToFileURL(module).href
 
 /**
  * Figure out if the file path is .js or .mjs without relying on the fs module, and return the file path if it exists.

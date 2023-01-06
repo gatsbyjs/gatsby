@@ -1,7 +1,7 @@
 {
   "name": "gatsby-parcel-config",
   "main": "lib/index.json",
-  "version": "1.4.0-next.0",
+  "version": "1.5.0-next.0",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parcel-config#readme",
   "description": "A minimal Parcel config for use in Gatsby",
   "repository": {
@@ -14,18 +14,18 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "2.4.0-next.0",
-    "@parcel/bundler-default": "2.8.1",
-    "@parcel/compressor-raw": "2.8.1",
-    "@parcel/namer-default": "2.8.1",
-    "@parcel/optimizer-terser": "2.8.1",
-    "@parcel/packager-js": "2.8.1",
-    "@parcel/packager-raw": "2.8.1",
-    "@parcel/reporter-dev-server": "2.8.1",
-    "@parcel/resolver-default": "2.8.1",
-    "@parcel/runtime-js": "2.8.1",
-    "@parcel/transformer-js": "2.8.1",
-    "@parcel/transformer-json": "2.8.1"
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "2.5.0-next.0",
+    "@parcel/bundler-default": "2.8.2",
+    "@parcel/compressor-raw": "2.8.2",
+    "@parcel/namer-default": "2.8.2",
+    "@parcel/optimizer-terser": "2.8.2",
+    "@parcel/packager-js": "2.8.2",
+    "@parcel/packager-raw": "2.8.2",
+    "@parcel/reporter-dev-server": "2.8.2",
+    "@parcel/resolver-default": "2.8.2",
+    "@parcel/runtime-js": "2.8.2",
+    "@parcel/transformer-js": "2.8.2",
+    "@parcel/transformer-json": "2.8.2"
   },
   "peerDependencies": {
     "@parcel/core": "^2.0.0"

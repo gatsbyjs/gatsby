@@ -124,7 +124,14 @@ const install = async (
       stderr: `inherit`,
     }
 
-    const config = [`--loglevel`, `error`, `--color`, `always`]
+    const npmAdditionalCliArgs = [
+      `--loglevel`,
+      `error`,
+      `--color`,
+      `always`,
+      `--legacy-peer-deps`,
+      `--no-audit`,
+    ]
 
     if (pm === `yarn` && checkForYarn()) {
       const args = packages.length
@@ -135,7 +142,7 @@ const install = async (
       await execa(`yarnpkg`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
-      await execa(`npm`, [`install`, ...config], options)
+      await execa(`npm`, [`install`, ...npmAdditionalCliArgs], options)
       await clearLine()
 
       reporter.success(`Installed Gatsby`)
@@ -145,7 +152,7 @@ const install = async (
 
       await execa(
         `npm`,
-        [`install`, ...config, `--legacy-peer-deps`, ...packages],
+        [`install`, ...npmAdditionalCliArgs, ...packages],
         options
       )
       await clearLine()

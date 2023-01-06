@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.3.0/packages/gatsby-worker) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Features
+
+- Show original stack trace [#37206](https://github.com/gatsbyjs/gatsby/issues/37206) ([3b75594](https://github.com/gatsbyjs/gatsby/commit/3b75594d9d45371c483df942ee680eef54471b82))
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+
 ## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.2.0/packages/gatsby-worker) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

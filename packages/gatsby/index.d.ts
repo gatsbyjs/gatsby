@@ -202,7 +202,7 @@ export interface SlicePlaceholderProps {
   alias: string
   allowEmpty?: boolean
   children?: React.ReactNode
-  [key: string]: SerializableProps
+  [key: string]: SerializableProps | React.ReactNode
 }
 
 /**

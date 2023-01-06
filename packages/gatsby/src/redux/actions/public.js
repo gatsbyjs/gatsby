@@ -1376,6 +1376,8 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
  * [this plugin](/plugins/gatsby-plugin-meta-redirect/) to generate meta redirect
  * html files for redirecting on any static file host.
+ * Keep the redirects configuration in sync with trailing slash configuration from
+ * [Gatsby Config API](/docs/reference/config-files/gatsby-config/#trailingslash).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
@@ -1392,12 +1394,12 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
  *   const { createRedirect } = actions
- *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', conditions: { language: 'zn' }})
- *   createRedirect({ fromPath: '/url', toPath: '/en/url', conditions: { language: ['ca', 'us'] }})
- *   createRedirect({ fromPath: '/url', toPath: '/ca/url', conditions: { country: 'ca' }})
- *   createRedirect({ fromPath: '/url', toPath: '/en/url', conditions: { country: ['ca', 'us'] }})
- *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ *   createRedirect({ fromPath: '/old-url/', toPath: '/new-url/', isPermanent: true })
+ *   createRedirect({ fromPath: '/url/', toPath: '/zn-CH/url/', conditions: { language: 'zn' }})
+ *   createRedirect({ fromPath: '/url/', toPath: '/en/url/', conditions: { language: ['ca', 'us'] }})
+ *   createRedirect({ fromPath: '/url/', toPath: '/ca/url/', conditions: { country: 'ca' }})
+ *   createRedirect({ fromPath: '/url/', toPath: '/en/url/', conditions: { country: ['ca', 'us'] }})
+ *   createRedirect({ fromPath: '/not_so-pretty_url/', toPath: '/pretty/url/', statusCode: 200 })
  *   // Create pages here
  * }
  */

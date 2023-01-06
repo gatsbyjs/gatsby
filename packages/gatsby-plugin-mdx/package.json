@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "5.4.0-next.0",
+  "version": "5.5.0-next.0",
   "description": "MDX integration for Gatsby",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,8 +34,8 @@
     "deepmerge": "^4.2.2",
     "estree-util-build-jsx": "^2.2.0",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^4.4.0-next.0",
-    "gatsby-plugin-utils": "^4.4.0-next.0",
+    "gatsby-core-utils": "^4.5.0-next.0",
+    "gatsby-plugin-utils": "^4.5.0-next.0",
     "gray-matter": "^4.0.3",
     "mdast-util-mdx": "^2.0.0",
     "mdast-util-to-hast": "^10.2.0",
@@ -48,17 +48,17 @@
     "vfile": "^5.3.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.18.2",
-    "@types/estree": "^0.0.50",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.7",
+    "@types/estree": "^0.0.52",
     "@types/mdast": "^3.0.10",
     "@types/unist": "^2.0.6",
-    "babel-preset-gatsby-package": "^3.4.0-next.0",
+    "babel-preset-gatsby-package": "^3.5.0-next.0",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "opentracing": "^0.14.7",
     "typescript": "^4.9.3",
-    "webpack": "^5.72.1"
+    "webpack": "^5.75.0"
   },
   "jest": {
     "testEnvironment": "node"

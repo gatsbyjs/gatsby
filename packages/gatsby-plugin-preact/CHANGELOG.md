@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@7.3.0/packages/gatsby-plugin-preact) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Chores
+
+- update formatting & linting [#37159](https://github.com/gatsbyjs/gatsby/issues/37159) ([5a8879c](https://github.com/gatsbyjs/gatsby/commit/5a8879cfb91aa95321b109ef4543048eaaaf1f0f))
+
 ## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@7.2.0/packages/gatsby-plugin-preact) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)

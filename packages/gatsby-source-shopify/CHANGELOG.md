@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.3.2/packages/gatsby-source-shopify) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [8.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.3.1/packages/gatsby-source-shopify) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [8.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.3.0/packages/gatsby-source-shopify) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- Remove obsolete `unstable_onPluginInit` codepaths [#37176](https://github.com/gatsbyjs/gatsby/issues/37176) ([bb42840](https://github.com/gatsbyjs/gatsby/commit/bb4284044e2025df483dd7c52df19dc20ecc7f8c))
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update sharp [#37131](https://github.com/gatsbyjs/gatsby/issues/37131) ([5a5e419](https://github.com/gatsbyjs/gatsby/commit/5a5e419709cd4cf39ae344a887249b0630756baf))
+
 ## [8.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.2.0/packages/gatsby-source-shopify) (2022-11-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
