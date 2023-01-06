@@ -1,7 +1,7 @@
 {
   "name": "gatsby-script",
   "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
-  "version": "2.4.0-next.0",
+  "version": "2.5.0-next.0",
   "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
