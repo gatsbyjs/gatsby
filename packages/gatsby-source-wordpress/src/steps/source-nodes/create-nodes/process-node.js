@@ -101,12 +101,17 @@ const findReferencedImageNodeIdsForCustomRegex = ({
     pluginOptions.html.createStaticFilesForImageIds,
     `gm`
   )
-  const matchedIds = execall(regex, nodeString)
-    .map(match => {
-      const dbId = match.subMatches[0]
-      return dbId ? b64e(`post:${dbId}`) : null
-    })
-    .filter(id => id !== node.id)
+  const matchedIds = []
+  execall(regex, nodeString).forEach(match => {
+    const dbId = match.subMatches[0]
+    if (dbId && !isNaN(dbId)) {
+      const nodeId = b64e(`post:${dbId}`)
+      if (nodeId !== node.id) {
+        matchedIds.push(nodeId)
+      }
+    }
+  })
+
   return matchedIds
 }
 
