@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-no-sourcemaps",
   "description": "Disable sourcemaps when building JavaScript",
-  "version": "5.4.0-next.0",
+  "version": "5.5.0-next.0",
   "author": "Stuart Taylor <stuart@freecodecamp.org>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -21,7 +21,7 @@
     "directory": "packages/gatsby-plugin-no-sourcemaps"
   },
   "dependencies": {
-    "@babel/runtime": "^7.15.4"
+    "@babel/runtime": "^7.20.7"
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next"

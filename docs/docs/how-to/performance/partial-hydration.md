@@ -15,7 +15,7 @@ We highly recommend reading the [Partial Hydration conceptual guide](/docs/conce
 - A Gatsby project set up with `gatsby@5.0.0` or later. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
 - `react@experimental` and `react-dom@experimental` installed. You can install it like this:
   ```shell
-  npm install --save-exact react@experimental react-dom@experimental
+  npm install --save-exact react@experimental react-dom@experimental --legacy-peer-deps
   ```
 - Enable the `PARTIAL_HYDRATION` flag in `gatsby-config`:
   ```js:title=gatsby-config.js
