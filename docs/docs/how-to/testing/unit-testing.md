@@ -276,7 +276,7 @@ npm install --save-dev ts-jest
 
 ```js:title=jest.config.js
 const { compilerOptions } = require("./tsconfig.json")
-const { pathsToModuleNameMapper } = require("ts-jest/utils")
+const { pathsToModuleNameMapper } = require("ts-jest")
 const paths = pathsToModuleNameMapper(compilerOptions.paths, {
   prefix: "<rootDir>/",
 })
