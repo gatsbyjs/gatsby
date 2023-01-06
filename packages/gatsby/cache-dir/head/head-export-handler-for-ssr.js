@@ -66,7 +66,7 @@ export function headHandlerForSSR({
         const attributes = { ...node.attributes, "data-gatsby-head": true }
         if (rawTagName === `script` || rawTagName === `style`) {
           element = (
-            <script
+            <node.rawTagName
               {...attributes}
               dangerouslySetInnerHTML={{
                 __html: node.text,
