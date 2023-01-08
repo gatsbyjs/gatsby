@@ -77,14 +77,9 @@ async function worker([url, options]) {
   if (typeof options.searchParams === `object`) {
     url = new URL(url)
     const searchParams = new URLSearchParams(options.searchParams)
-    const searchKeys = Array.from(searchParams.keys())
-    searchKeys.forEach(searchKey => {
-      // Only add search params to url if it has not already been
-      // added.
-      if (!url.searchParams.has(searchKey)) {
-        url.searchParams.set(searchKey, searchParams.get(searchKey))
-      }
-    })
+    for (const [key, value] of searchParams.entries()) {
+      url.searchParams.append(key, value)
+    }
     url = url.toString()
   }
   delete options.searchParams
@@ -522,15 +517,13 @@ ${JSON.stringify(webhookBody, null, 4)}`
               if (filters.hasOwnProperty(type)) {
                 url = new URL(url)
                 const filterParams = new URLSearchParams(filters[type])
-                const filterKeys = Array.from(filterParams.keys())
-                filterKeys.forEach(filterKey => {
-                  // Only add filter params to url if it has not already been
-                  // added.
-                  if (!url.searchParams.has(filterKey)) {
-                    url.searchParams.set(filterKey, filterParams.get(filterKey))
-                  }
-                })
+                for (const [key, value] of filterParams.entries()) {
+                  url.searchParams.append(key, value)
+                }
                 url = url.toString()
+                reporter.verbose(
+                  `applying filter to ${type} - ${decodeURI(url)}`
+                )
               }
             }
           }
