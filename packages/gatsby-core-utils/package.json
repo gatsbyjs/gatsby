@@ -65,7 +65,7 @@
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
     "fastq": "^1.13.0",
-    "file-type": "^16.5.3",
+    "file-type": "^16.5.4",
     "fs-extra": "^10.1.0",
     "got": "^11.8.5",
     "import-from": "^4.0.0",
