@@ -51,6 +51,8 @@
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "test": "npx jest ./src/__tests__ --runInBand",
+    "test:watch": "npx jest --watch ./src/__tests__ --runInBand"
   }
 }
