@@ -5,7 +5,7 @@ import type { Node } from "unist-util-visit"
 import type { Definition, Literal } from "mdast"
 import type { MdxJsxAttribute, MdxJsxFlowElement } from "mdast-util-mdx"
 
-// This plugin replaces html nodes with JSX divs that render given HTML via dangerouslySetInnerHTML
+// This plugin replaces html nodes with JSX spans that render given HTML via dangerouslySetInnerHTML
 // We have to find out if this is really a good idea, but its processing footprint is very low
 // compared to other solutions that would traverse the given HTML.
 export const remarkMdxHtmlPlugin = () =>
@@ -27,7 +27,7 @@ export const remarkMdxHtmlPlugin = () =>
       }
     })
 
-    // Turn raw & html nodes into JSX divs with dangerouslySetInnerHTML
+    // Turn raw & html nodes into JSX spans with dangerouslySetInnerHTML
     // Required to support gatsby-remark-images & gatsby-remark-autolink-headers
     visit(markdownAST, node => {
       if (![`html`, `raw`].includes(node.type)) {
@@ -36,7 +36,7 @@ export const remarkMdxHtmlPlugin = () =>
 
       const typedNode = node as MdxJsxFlowElement
       typedNode.type = `mdxJsxFlowElement`
-      typedNode.name = `div`
+      typedNode.name = `span`
       typedNode.attributes = [
         {
           type: `mdxJsxAttribute`,

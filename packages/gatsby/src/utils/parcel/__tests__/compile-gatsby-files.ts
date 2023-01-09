@@ -17,6 +17,7 @@ const dir = {
   tsOnlyInLocal: `${__dirname}/fixtures/ts-only-in-local-plugin`,
   misnamedJS: `${__dirname}/fixtures/misnamed-js`,
   misnamedTS: `${__dirname}/fixtures/misnamed-ts`,
+  gatsbyNodeAsDirectory: `${__dirname}/fixtures/gatsby-node-as-directory`,
 }
 
 jest.setTimeout(15000)
@@ -173,6 +174,30 @@ describe(`gatsby file compilation`, () => {
         expect(compiledGatsbyNode).toContain(`gatsby-node is working`)
       })
     })
+  })
+})
+
+describe(`gatsby-node directory is allowed`, () => {
+  beforeAll(async () => {
+    process.chdir(dir.gatsbyNodeAsDirectory)
+    await remove(`${dir.gatsbyNodeAsDirectory}/.cache`)
+  })
+  beforeEach(() => {
+    reporterPanicMock.mockClear()
+  })
+  it(`should not panic on gatsby-node dir`, async () => {
+    await compileGatsbyFiles(dir.gatsbyNodeAsDirectory)
+    expect(reporterPanicMock).not.toHaveBeenCalled()
+  })
+
+  it(`should compile gatsby-node file and its dir files`, async () => {
+    const compiledGatsbyNode = await readFile(
+      `${dir.gatsbyNodeAsDirectory}/.cache/compiled/gatsby-node.js`,
+      `utf-8`
+    )
+
+    expect(compiledGatsbyNode).toContain(`I am working!`)
+    expect(reporterPanicMock).not.toHaveBeenCalled()
   })
 })
 
