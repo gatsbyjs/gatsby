@@ -12,8 +12,10 @@ import fs from "fs-extra"
 import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions"
 import replaceAll from "replaceall"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
-import { gatsbyImageResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/gatsby-image-resolver"
-import { publicUrlResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/public-url-resolver"
+import {
+  gatsbyImageResolver,
+  publicUrlResolver,
+} from "gatsby-plugin-utils/polyfill-remote-file"
 
 import { formatLogMessage } from "~/utils/format-log-message"
 

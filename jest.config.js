@@ -104,9 +104,15 @@ const esModules = [
   `estree-util-attach-comments`,
   `trim-lines`,
   `estree-util-to-js`,
+  `is-reference`,
 ].join(`|`)
 
-module.exports = {
+/** @type {import('jest').Config} */
+const config = {
+  snapshotFormat: {
+    escapeString: true,
+    printBasicPrototype: true,
+  },
   notify: true,
   verbose: true,
   roots: pkgs,
@@ -132,13 +138,9 @@ module.exports = {
     "^weak-lru-cache$": `<rootDir>/node_modules/weak-lru-cache/dist/index.cjs`,
     "^ordered-binary$": `<rootDir>/node_modules/ordered-binary/dist/index.cjs`,
     "^msgpackr$": `<rootDir>/node_modules/msgpackr/dist/node.cjs`,
-    "^gatsby-page-utils/(.*)$": `gatsby-page-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
-    "^gatsby-core-utils/(.*)$": `gatsby-core-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
-    "^gatsby-plugin-utils/(.*)$": [
-      `gatsby-plugin-utils/dist/$1`,
-      `gatsby-plugin-utils/$1`,
-    ], // Workaround for https://github.com/facebook/jest/issues/9771
     "^estree-walker$": `<rootDir>/node_modules/estree-walker/src/index.js`,
+    "^periscopic$": `<rootDir>/node_modules/periscopic/src/index.js`,
+    "^is-reference$": `<rootDir>/node_modules/is-reference/dist/is-reference.es.js`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
@@ -149,6 +151,8 @@ module.exports = {
     : [`default`].concat(useJestUnit ? `jest-junit` : []),
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
-  setupFilesAfterEnv: [`jest-extended`],
+  setupFilesAfterEnv: [`jest-extended/all`],
   testEnvironment: `<rootDir>/jest.environment.ts`,
 }
+
+module.exports = config
