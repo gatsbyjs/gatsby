@@ -1396,10 +1396,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@builder.io/partytown@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.3.tgz#879052ca7175757eaa3e0a85b735f7231bc7c32f"
-  integrity sha512-hA6WYBFD/exyrEvs0JSvQIILfH0/Jlr5amqE3lt1nPehCus+eQm4ob3LBMRkSaFDWz9clHSLtsGwG52dUjGy3g==
+"@builder.io/partytown@^0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.4.tgz#7ac078bf288efc041ecec025679a58ca78ab4ab9"
+  integrity sha512-dcZBPNQiHbMhvDGmdWRFNe75Z/XYmeZ2bubYmC5BeQpF09ObbPcbSqIP2NaNOFonKlWLfsE6u1790o9ZmlfpIw==
 
 "@contentful/rich-text-react-renderer@^15.16.2":
   version "15.16.2"
