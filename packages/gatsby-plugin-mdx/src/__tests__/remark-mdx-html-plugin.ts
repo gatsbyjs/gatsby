@@ -65,16 +65,16 @@ describe(`remark: support old remark plugins that add raw and html nodes`, () =>
             function _createMdxContent(props) {
               const _components = Object.assign({
                 h1: \\"h1\\",
-                div: \\"div\\"
+                span: \\"span\\"
               }, props.components);
               return _jsxs(_Fragment, {
                 children: [_jsx(_components.h1, {
                   children: \\"Headline\\"
-                }), \\"/n\\", _jsx(_components.div, {
+                }), \\"/n\\", _jsx(_components.span, {
                   dangerouslySetInnerHTML: {
                     __html: \\"<hr/>\\"
                   }
-                }), \\"/n\\", _jsx(_components.div, {
+                }), \\"/n\\", _jsx(_components.span, {
                   dangerouslySetInnerHTML: {
                     __html: \\"<marquee direction=/\\"up/\\">Things from the past</marquee>\\"
                   }
@@ -118,7 +118,8 @@ describe(`remark: support old remark plugins that add raw and html nodes`, () =>
             function _createMdxContent(props) {
               const _components = Object.assign({
                 h1: \\"h1\\",
-                div: \\"div\\"
+                div: \\"div\\",
+                span: \\"span\\"
               }, props.components);
               return _jsxs(_Fragment, {
                 children: [_jsx(_components.h1, {
@@ -126,7 +127,7 @@ describe(`remark: support old remark plugins that add raw and html nodes`, () =>
                 }), \\"/n\\", _jsx(_components.div, {
                   \\"aria-label\\": \\"some permalink\\",
                   className: \\"customClass\\",
-                  children: _jsx(_components.div, {
+                  children: _jsx(_components.span, {
                     dangerouslySetInnerHTML: {
                       __html: \\"<img src=/\\"/\\" alt=/\\"/\\" />\\"
                     }
