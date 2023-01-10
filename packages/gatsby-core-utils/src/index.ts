@@ -21,5 +21,6 @@ export { createFilePath } from "./filename-utils"
 export { readConfigFile, getConfigPath } from "./utils"
 export { lock } from "./lock"
 export { murmurhash } from "./murmurhash"
+export * from "./hash"
 
 export type { IFetchRemoteFileOptions } from "./fetch-remote-file"
