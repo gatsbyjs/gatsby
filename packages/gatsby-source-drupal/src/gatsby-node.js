@@ -405,7 +405,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
-              handleDeletedNode({
+              await handleDeletedNode({
                 actions,
                 getNode,
                 cache,
