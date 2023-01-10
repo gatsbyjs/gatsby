@@ -28,6 +28,7 @@ async function build() {
       ...process.env,
       NODE_ENV: `production`,
     },
+    stdio: "inherit",
   })
 
   return stdout

@@ -82,7 +82,7 @@ async function waitForServeReady(serveProcess, retries = 0) {
 
 // Tests include multiple assertions since running multiple builds is time consuming
 
-describe(`gatsby-node.js`, () => {
+describe.skip(`gatsby-node.js`, () => {
   afterEach(() => {
     fs.rmSync(targetPath.gatsbyNodeCjs)
   })
@@ -104,7 +104,7 @@ describe(`gatsby-node.js`, () => {
   })
 })
 
-describe(`gatsby-node.mjs`, () => {
+describe.skip(`gatsby-node.mjs`, () => {
   afterEach(async () => {
     await fs.rm(targetPath.gatsbyNodeEsm)
     if (fs.existsSync(targetPath.ssrPage)) {

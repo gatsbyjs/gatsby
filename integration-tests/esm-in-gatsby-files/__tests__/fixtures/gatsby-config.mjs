@@ -15,6 +15,16 @@ const config = {
         slugify,
       },
     },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-test`,
+          }
+        ]
+      },
+    },
   ],
 }
 
