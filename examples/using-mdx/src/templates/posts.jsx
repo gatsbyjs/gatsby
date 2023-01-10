@@ -7,6 +7,9 @@ const PostsTemplate = ({ data, children }) => {
   return (
     <>
       <h1>{data.mdx.frontmatter.title}</h1>
+      <pre>
+        <code>{JSON.stringify(data.mdx.headings, null, 2)}</code>
+      </pre>
       <MDXProvider components={components}>{children}</MDXProvider>
     </>
   )
@@ -21,6 +24,10 @@ export const query = graphql`
     mdx(id: { eq: $id }) {
       frontmatter {
         title
+      }
+      headings {
+        depth
+        value
       }
     }
   }
