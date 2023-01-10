@@ -26,6 +26,7 @@ So check out the [notable bugfixes](#notable-bugfixes--improvements) section to 
   - Bump `yaml-loader` from `0.6.0` to `0.8.0` to address security warning, via [PR #37401](https://github.com/gatsbyjs/gatsby/pull/37401)
   - Improve `SlicePlaceholderProps` TypeScript type, via [PR #37409](https://github.com/gatsbyjs/gatsby/pull/37409)
   - Allow `gatsby-node` in folder names (e.g. `<root>/gatsby-node/on-pre-init.ts`), via [PR #36712](https://github.com/gatsbyjs/gatsby/pull/36712)
+  - Restore asset, path prefix for file-loader handled files (fixing a regression in `gatsby@5.3.3`), via [PR #37429](https://github.com/gatsbyjs/gatsby/pull/37429)
 
 ## Contributors
 
