@@ -5,22 +5,22 @@
   "version": "0.0.1",
   "author": "LekoArts",
   "dependencies": {
-    "@mdx-js/react": "^2.1.2",
-    "@nivo/core": "0.78.0",
-    "@nivo/line": "0.78.0",
-    "@sindresorhus/slugify": "^1",
+    "@mdx-js/react": "^2.2.1",
+    "@nivo/core": "^0.80.0",
+    "@nivo/line": "^0.80.0",
+    "@sindresorhus/slugify": "^2.1.1",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
-    "mdast-util-to-string": "^2",
+    "mdast-util-to-string": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reading-time": "^1.5.0",
-    "remark-gfm": "^1",
-    "remark-unwrap-images": "^2",
-    "unist-util-visit": "^2"
+    "remark-gfm": "^3.0.1",
+    "remark-unwrap-images": "^3.0.1",
+    "unist-util-visit": "^4.1.1"
   },
   "devDependencies": {
     "prettier": "^2.7.1"
@@ -32,7 +32,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,mjs}\"",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
