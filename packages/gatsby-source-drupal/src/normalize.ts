@@ -3,7 +3,8 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const path = require(`path`)
 const probeImageSize = require(`probe-image-size`)
 
-const { getOptions } = require(`./plugin-options`)
+import { getOptions } from "./plugin-options"
+
 const getHref = link => {
   if (typeof link === `object`) {
     return link.href
@@ -197,33 +198,44 @@ const isEntityReferenceRevision = (type, entityReferenceRevisions = []) =>
   ) !== -1
 
 const createNodeIdWithVersion = (
-  id,
-  type,
-  langcode,
-  revisionId,
+  id: string,
+  type: string,
+  langcode: string,
+  revisionId: string,
   entityReferenceRevisions = []
 ) => {
+  const options = getOptions()
+
   // Fallback to default language for entities that don't translate.
-  if (getOptions()?.languageConfig?.nonTranslatableEntities.includes(type)) {
-    langcode = getOptions().languageConfig.defaultLanguage
+  if (
+    options?.languageConfig?.nonTranslatableEntities?.includes(type) &&
+    options.languageConfig.defaultLanguage
+  ) {
+    langcode = options.languageConfig.defaultLanguage
   }
 
   // If the source plugin hasn't enabled `translation` then always just set langcode
   // to "undefined".
-  let langcodeNormalized = getOptions().languageConfig ? langcode : `und`
+  let langcodeNormalized = options.languageConfig ? langcode : `und`
 
   if (
-    getOptions().languageConfig &&
-    !getOptions().languageConfig?.enabledLanguages.includes(langcodeNormalized)
+    options.languageConfig &&
+    options.languageConfig.defaultLanguage &&
+    (!options?.languageConfig?.enabledLanguages?.includes(langcodeNormalized) ||
+      !options?.languageConfig?.renamedEnabledLanguages?.find(
+        lang => lang.as === langcodeNormalized
+      ))
   ) {
-    langcodeNormalized = getOptions().languageConfig.defaultLanguage
+    langcodeNormalized = options.languageConfig.defaultLanguage
   }
 
   // The relationship between an entity and another entity also depends on the revision ID if the field is of type
   // entity reference revision such as for paragraphs.
-  return isEntityReferenceRevision(type, entityReferenceRevisions)
+  const idVersion = isEntityReferenceRevision(type, entityReferenceRevisions)
     ? `${langcodeNormalized}.${id}.${revisionId || 0}`
     : `${langcodeNormalized}.${id}`
+
+  return idVersion
 }
 
 exports.createNodeIdWithVersion = createNodeIdWithVersion
