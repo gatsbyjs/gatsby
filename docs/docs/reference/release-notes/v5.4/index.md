@@ -32,6 +32,12 @@ So check out the [notable bugfixes](#notable-bugfixes--improvements) section to 
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [Simply007](https://github.com/Simply007): chore(gatsby): Adjust information about `trailingSlash` for `createRedirect` [PR #37259](https://github.com/gatsbyjs/gatsby/pull/37259)
+- [bicstone](https://github.com/bicstone): chore(docs): fix typo in reference guide [PR #37347](https://github.com/gatsbyjs/gatsby/pull/37347)
+- [demondragong](https://github.com/demondragong): chore(gatsby-plugin-google-analytics): Fix typo in README [PR #37276](https://github.com/gatsbyjs/gatsby/pull/37276)
+- [markacola](https://github.com/markacola): chore: Update `.gitpod` to use correct Node version [PR #37336](https://github.com/gatsbyjs/gatsby/pull/37336)
+- [openscript](https://github.com/openscript): docs(how-to): remove unecessary decomposition [PR #37341](https://github.com/gatsbyjs/gatsby/pull/37341)
+- [trentschnee](https://github.com/trentschnee): chore(docs): Update Storybook instructions [PR #37321](https://github.com/gatsbyjs/gatsby/pull/37321)
+- [xavivars](https://github.com/xavivars): fix(gatsby-source-contentful): Add contentTypeFilter to Joi schema [PR #37403](https://github.com/gatsbyjs/gatsby/pull/37403)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.4.0-next.0...gatsby@5.4.0
