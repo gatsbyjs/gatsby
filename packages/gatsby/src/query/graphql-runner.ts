@@ -1,4 +1,3 @@
-import crypto from "crypto"
 import { Span } from "opentracing"
 import {
   parse,
@@ -14,8 +13,9 @@ import {
 } from "graphql"
 import { debounce } from "lodash"
 import reporter from "gatsby-cli/lib/reporter"
-import { createPageDependency } from "../redux/actions/add-page-dependency"
+import { sha1 } from "gatsby-core-utils/hash"
 
+import { createPageDependency } from "../redux/actions/add-page-dependency"
 import withResolverContext from "../schema/context"
 import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
@@ -210,9 +210,9 @@ export class GraphQLRunner {
     if (this.stats) {
       this.stats.totalQueries++
 
-      this.stats.uniqueQueries.add(
-        crypto.createHash(`sha1`).update(queryText).digest(`hex`)
-      )
+      const hash = await sha1(queryText)
+
+      this.stats.uniqueQueries.add(hash)
     }
 
     const { errors, warnings, document } = this.validate(
