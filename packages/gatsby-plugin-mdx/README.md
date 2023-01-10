@@ -4,7 +4,8 @@
 
 MDX is markdown for the component era. It lets you write JSX embedded inside markdown. It’s a great combination because it allows you to use markdown’s often terse syntax (such as `# heading`) for the little things and JSX for more advanced components.
 
-## Table of contents
+<details>
+<summary><strong>Table of contents</strong></summary>
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -23,6 +24,8 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 - [Migrating from v3 to v4](#migrating-from-v3-to-v4)
 - [Why MDX?](#why-mdx)
 - [Related](#related)
+
+</details>
 
 ## Installation
 
@@ -82,7 +85,7 @@ module.exports = {
 }
 ```
 
-Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to/routing/mdx/) for more details.
+Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to/routing/mdx/) or the [Using MDX example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-mdx) for more details.
 
 ## Configuration
 
@@ -152,8 +155,13 @@ These configuration options are directly passed into the MDX compiler.
 
 See all available options in [the official documentation of `@mdx-js/mdx`](https://mdxjs.com/packages/mdx/#compilefile-options).
 
-```js:title=gatsby-config.js
-module.exports = {
+```js:title=gatsby-config.mjs
+import remarkGfm from "remark-gfm"
+import remarkExternalLinks from "remark-external-links"
+import rehypeSlug from "rehype-slug"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+
+const config = {
   plugins: [
     {
       resolve: `gatsby-plugin-mdx`,
@@ -161,61 +169,28 @@ module.exports = {
         mdxOptions: {
           remarkPlugins: [
             // Add GitHub Flavored Markdown (GFM) support
-            require(`remark-gfm`),
+            remarkGfm,
             // To pass options, use a 2-element array with the
             // configuration in an object in the second element
-            [require(`remark-external-links`), { target: false }],
+            [remarkExternalLinks, { target: false }],
           ],
           rehypePlugins: [
             // Generate heading ids for rehype-autolink-headings
-            require(`rehype-slug`),
+            rehypeSlug,
             // To pass options, use a 2-element array with the
             // configuration in an object in the second element
-            [require(`rehype-autolink-headings`), { behavior: `wrap` }],
+            [rehypeAutolinkHeadings, { behavior: `wrap` }],
           ],
         },
       },
     },
   ],
 }
+
+export default config
 ```
 
-> The following note will be removed once Gatsby fully supports ESM
-
-**Please Note:** Most of the remark ecosystem is ESM which means that packages like `remark-gfm` currently don't work out of the box with Gatsby. You have two options until Gatsby fully supports ESM:
-
-1. Use an older version of the `remark-*`/`rehype-*` package that is not ESM. Example: `remark-gfm` needs to be installed like this: `npm install remark-gfm@^1`.
-1. Wrap the plugin with an async function (which doesn't work with every plugin):
-
-   ```js
-   const wrapESMPlugin = name =>
-     function wrapESM(opts) {
-       return async (...args) => {
-         const mod = await import(name)
-         const plugin = mod.default(opts)
-         return plugin(...args)
-       }
-     }
-   ```
-
-   You then can use it like this:
-
-   ```js:title=gatsby-config.js
-   module.exports = {
-     plugins: [
-       {
-         resolve: `gatsby-plugin-mdx`,
-         options: {
-           mdxOptions: {
-             rehypePlugins: [
-               wrapESMPlugin(`rehype-slug`),
-             ],
-           },
-         },
-       },
-     ],
-   }
-   ```
+**Please Note:** Most of the remark/rehype ecosystem is ESM-only which means that packages like `remark-gfm` on its latest version can only be used inside `gatsby-config.mjs`. TODO LEARN MORE DOC.
 
 ## Imports
 
@@ -591,8 +566,8 @@ If you used any related plugins like `gatsby-remark-images`, also update them to
 
 ### GFM & ESM-only packages
 
-- [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) support was removed from MDX v2. You can re-enable it with [`mdxOptions`](#mdxoptions) (you have to install `remark-gfm@^1`)
-- Most of the remark ecosystem is ESM so just using the latest package version of `remark-*`/`rehype-*` most probably won't work. Check out the workarounds mentioned in [`mdxOptions`](#mdxoptions)
+- [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) support was removed from MDX v2. You can re-enable it with [`mdxOptions`](#mdxoptions) (you have to install `remark-gfm`)
+- Most of the remark ecosystem is ESM so when using the latest package version of `remark-*`/`rehype-*` you need to use the `.mjs` variants of `gatsby-config`/`gatsby-node`
 
 ### Updating `createPage` action in `gatsby-node`
 

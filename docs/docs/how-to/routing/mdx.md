@@ -413,9 +413,11 @@ To extend your GraphQL nodes, you can use the [`onCreateNode` API](/docs/referen
 
 You can find examples in the [README of `gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes).
 
-## `gatsby-remark-*` and `remark` plugins
+## `gatsby-remark-*`, `remark` & `rehype` plugins
 
-`gatsby-plugin-mdx` can also use `gatsby-remark-*` (e.g. `gatsby-remark-images`) and `remark` (e.g. `remark-gfm`) plugins. You can learn more about this in the [configuration section](/plugins/gatsby-plugin-mdx#configuration) of `gatsby-plugin-mdx`'s README.
+`gatsby-plugin-mdx` can also use `gatsby-remark-*` (e.g. `gatsby-remark-images`), `remark` (e.g. `remark-gfm`), and `rehype` (e.g. `rehype-attr`) plugins. You can learn more about this in the [configuration section](/plugins/gatsby-plugin-mdx#configuration) of `gatsby-plugin-mdx`'s README.
+
+**Please note:** All latest `remark` and `rehype` packages are published as ESM-only. When [configuring MDX](/plugins/gatsby-plugin-mdx#configuration) you'll want to use `gatsby-config.mjs` to be able to use ESM packages. Check out the [Using MDX](https://mdxjs.com/docs/using-mdx/) example to see it implemented.
 
 ## Additional Resources
 
