@@ -4,5 +4,5 @@ import * as React from "react"
 import logo from "../images/citrus-fruits.jpg"
 
 export default function FileLoaderPage() {
-  return <img src={logo} alt="Citrus fruits" />
+  return <img src={logo} alt="Citrus fruits" data-testid="file-loader-image" />
 }

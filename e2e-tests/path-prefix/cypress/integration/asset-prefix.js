@@ -80,10 +80,10 @@ describe(`assetPrefix`, () => {
 
 describe(`assetPrefix with assets handled by file-loader`, () => {
   beforeEach(() => {
-    cy.visit(`/file-loader`).waitForRouteChange()
+    cy.visit(`/file-loader/`).waitForRouteChange()
   })
 
   it(`prefixes an asset`, () => {
-    assetPrefixMatcher(cy.get(`img`), `src`)
+    assetPrefixMatcher(cy.getTestElement(`file-loader-image`), `src`)
   })
 })
