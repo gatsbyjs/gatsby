@@ -1,4 +1,4 @@
-let options = {}
+let options: Options = {}
 
 type RenamedLangCode = {
   langCode: string
@@ -11,7 +11,7 @@ type Options = {
 } & {
   languageConfig?: {
     enabledLanguages?: Array<string | RenamedLangCode>
-    complexEnabledLanguages?: Array<RenamedLangCode>
+    renamedEnabledLanguages?: Array<RenamedLangCode>
     defaultLanguage?: string
     translatableEntities?: Array<string>
     nonTranslatableEntities?: Array<string>
@@ -26,8 +26,8 @@ const mutateOptions = (options: Options) => {
         // move the as langcode of the complex code to the enabled languages array
         options!.languageConfig!.enabledLanguages!.push(lang.as)
         // then move the complex lang-code to a different array
-        options!.languageConfig!.complexEnabledLanguages ||= []
-        options!.languageConfig!.complexEnabledLanguages.push(lang)
+        options!.languageConfig!.renamedEnabledLanguages ||= []
+        options!.languageConfig!.renamedEnabledLanguages.push(lang)
       }
     })
 
