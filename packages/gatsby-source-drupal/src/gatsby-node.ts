@@ -872,7 +872,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       enabledLanguages: Joi.array()
         .items(
           Joi.string(),
-          Joi.Object({
+          Joi.object({
             langCode: Joi.string().required(),
             as: Joi.string().required(),
           })
