@@ -6,3 +6,5 @@ yarn.lock
 ./gatsby-config.js
 ./gatsby-config.mjs
 ./gatsby-config.ts
+./gatsby-node.js
+./gatsby-node.mjs

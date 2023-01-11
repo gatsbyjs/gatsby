@@ -21,17 +21,17 @@ type IImageWithPlaceholder = IImage & {
 async function getImageBase64({
   imageAddress,
   directory,
-  contentDigest,
+  imageId,
 }: {
   imageAddress: string
   directory: string
-  contentDigest: string
+  imageId: string
 }): Promise<string> {
   // Downloads file to the site cache and returns the file path for the given image (this is a path on the host system, not a URL)
   const filePath = await fetchRemoteFile({
     url: imageAddress,
     directory,
-    cacheKey: contentDigest,
+    cacheKey: imageId,
   })
   const buffer = readFileSync(filePath)
   return buffer.toString(`base64`)
@@ -103,7 +103,7 @@ export function makeResolveGatsbyImageData(cache: GatsbyCache) {
       const imageBase64 = await getImageBase64({
         imageAddress: lowResImageURL,
         directory: cache.directory as string,
-        contentDigest: image.internal.contentDigest,
+        imageId: image.id,
       })
 
       placeholderURL = getBase64DataURI({ imageBase64 })

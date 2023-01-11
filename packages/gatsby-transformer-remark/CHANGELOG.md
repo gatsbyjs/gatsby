@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.4.0/packages/gatsby-transformer-remark) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- Disallow JS frontmatter by default [#37244](https://github.com/gatsbyjs/gatsby/issues/37244) ([77b8ccd](https://github.com/gatsbyjs/gatsby/commit/77b8ccdf764790d027c75b6f62bab15a30e30a2b))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update dependency prismjs to ^1.29.0 for gatsby-remark-prismjs [#37191](https://github.com/gatsbyjs/gatsby/issues/37191) ([dc3d741](https://github.com/gatsbyjs/gatsby/commit/dc3d741260e057540ed1294558df78aa63126a8b))
+
 ### [6.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.3.2/packages/gatsby-transformer-remark) (2022-12-20)
 
 #### Bug Fixes

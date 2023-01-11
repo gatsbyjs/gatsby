@@ -19,6 +19,7 @@ import {
   ISiteConfig,
 } from "./types"
 import { resolvePlugin } from "./resolve-plugin"
+import { preferDefault } from "../prefer-default"
 
 interface IApi {
   version?: string
@@ -178,6 +179,27 @@ export async function handleBadExports({
   }
 }
 
+interface ISubPluginCustomReturn {
+  resolve: string
+  modulePath: string
+  options: {
+    [key: string]: unknown
+  }
+  module: any
+}
+
+const addModuleImport = async (
+  value: Array<ISubPluginCustomReturn>
+): Promise<Array<ISubPluginCustomReturn>> => {
+  for (const plugin of value) {
+    const importedModule = await import(plugin.modulePath)
+    const pluginModule = preferDefault(importedModule)
+    plugin.module = pluginModule
+  }
+
+  return value
+}
+
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
   rootDir: string
@@ -233,7 +255,6 @@ async function validatePluginsOptions(
                       `${resolvedPlugin.resolve}${entry ? `/${entry}` : ``}`
                     )
                     value.modulePath = modulePath
-                    value.module = require(modulePath)
 
                     const normalizedPath = helpers.state.path
                       .map((key, index) => {
@@ -266,7 +287,8 @@ async function validatePluginsOptions(
                   return value
                 })
               }, `Gatsby specific subplugin validation`)
-              .default([]),
+              .default([])
+              .external(addModuleImport, `add module key to subplugin`),
             args: (schema: any, args: any): any => {
               if (
                 args?.entry &&

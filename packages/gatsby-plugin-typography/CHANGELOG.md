@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@5.4.0/packages/gatsby-plugin-typography) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update dependency react-typography to ^0.16.23 for gatsby-plugin-typography [#37363](https://github.com/gatsbyjs/gatsby/issues/37363) ([b8ce9de](https://github.com/gatsbyjs/gatsby/commit/b8ce9de0feeb47ddcb55a4ef70e359c4f64815c7))
+
 ## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@5.3.0/packages/gatsby-plugin-typography) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
