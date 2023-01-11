@@ -220,7 +220,7 @@ export const createWebpackUtils = (
       ROUTES_DIRECTORY,
       `public`
     )
-    fileLoaderCommonOptions.publicPath = `/`
+    fileLoaderCommonOptions.publicPath = publicPath || `/`
   }
 
   const loaders: ILoaderUtils = {

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.4.0/packages/create-gatsby) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- Always use `--legacy-peer-deps` [#37280](https://github.com/gatsbyjs/gatsby/issues/37280) ([42a3034](https://github.com/gatsbyjs/gatsby/commit/42a303408da649d2457095c57a1f30d830586d01))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update [dev] minor and patch dependencies for create-gatsby [#37349](https://github.com/gatsbyjs/gatsby/issues/37349) ([3e10d56](https://github.com/gatsbyjs/gatsby/commit/3e10d56c885a7b8ba2e15bcbddaabc0426087714))
+
 ### [3.3.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.3.1/packages/create-gatsby) (2022-12-14)
 
 **Note:** Version bump only for package create-gatsby

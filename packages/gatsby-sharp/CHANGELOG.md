@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@1.4.0/packages/gatsby-sharp) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- update dependency sharp to ^0.31.3 [#37375](https://github.com/gatsbyjs/gatsby/issues/37375) ([9abf681](https://github.com/gatsbyjs/gatsby/commit/9abf681d6d3ba7cfa9bc357764f09c944afc21ef))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
 ## [1.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@1.3.0/packages/gatsby-sharp) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
