@@ -29,6 +29,5 @@ export const createContentDigest = (
     return hasher.hash(input)
   }
 
-  // TODO: Use hash-wasm
   return hashPrimitive(input)
 }
