@@ -535,6 +535,9 @@ describe(`gatsby-node`, () => {
         Array [
           "contentful-content-types-testSpaceId-master",
         ],
+        Array [
+          "contentful-foreign-reference-map-state-testSpaceId-master",
+        ],
       ]
     `)
 
@@ -547,6 +550,7 @@ describe(`gatsby-node`, () => {
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`
       Array [
         "contentful-content-types-testSpaceId-master",
+        "contentful-foreign-reference-map-state-testSpaceId-master",
       ]
     `)
     expect(actions.createNode).toHaveBeenCalledTimes(32)
