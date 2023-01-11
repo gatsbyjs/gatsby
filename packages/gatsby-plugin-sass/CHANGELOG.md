@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@6.4.0/packages/gatsby-plugin-sass) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-sass [#37380](https://github.com/gatsbyjs/gatsby/issues/37380) ([b880e94](https://github.com/gatsbyjs/gatsby/commit/b880e94f99e6fe2f7c283d4094191994c28a2c12))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
 ### [6.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@6.3.1/packages/gatsby-plugin-sass) (2022-12-14)
 
 **Note:** Version bump only for package gatsby-plugin-sass

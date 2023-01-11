@@ -347,10 +347,10 @@ export class BaseLoader {
       const page = this.pageDb.get(pagePath)
       if (process.env.BUILD_STAGE !== `develop` || !page.payload.stale) {
         if (page.error) {
-          return {
+          return Promise.resolve({
             error: page.error,
             status: page.status,
-          }
+          })
         }
 
         return Promise.resolve(page.payload)

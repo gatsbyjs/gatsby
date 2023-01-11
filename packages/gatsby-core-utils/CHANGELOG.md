@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.4.0/packages/gatsby-core-utils) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update dependency msw to ^0.49.2 for gatsby-core-utils [#37361](https://github.com/gatsbyjs/gatsby/issues/37361) ([2a72d2f](https://github.com/gatsbyjs/gatsby/commit/2a72d2fb2315232b4bdfef14a0dccd7b8549d130))
+
+#### Other Changes
+
+- Revert "fix(deps): update dependency lmdb to v2.7.1 (#37160)" [#37160](https://github.com/gatsbyjs/gatsby/issues/37160) [#37255](https://github.com/gatsbyjs/gatsby/issues/37255) ([9f6f6b8](https://github.com/gatsbyjs/gatsby/commit/9f6f6b8a2615856e95c948615a7e044131d3a93b))
+
 ### [4.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.3.1/packages/gatsby-core-utils) (2022-12-14)
 
 #### Other Changes

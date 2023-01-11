@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.4.0/packages/gatsby-source-wordpress) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-wordpress [#37382](https://github.com/gatsbyjs/gatsby/issues/37382) ([6dd2db3](https://github.com/gatsbyjs/gatsby/commit/6dd2db3783ee3c0965a3f75ddcaa6c2568f5b338))
+- update dependency sharp to ^0.31.3 [#37375](https://github.com/gatsbyjs/gatsby/issues/37375) ([9abf681](https://github.com/gatsbyjs/gatsby/commit/9abf681d6d3ba7cfa9bc357764f09c944afc21ef))
+- update dependency prettier to v2.8.1 [#37373](https://github.com/gatsbyjs/gatsby/issues/37373) ([6cc80df](https://github.com/gatsbyjs/gatsby/commit/6cc80df1ce1d6a077809a604408376179ccba5f7))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
+#### Other Changes
+
+- improve media item docs for large sites [#37238](https://github.com/gatsbyjs/gatsby/issues/37238) ([91d21a6](https://github.com/gatsbyjs/gatsby/commit/91d21a6292a6d55f7e7f234a409f97b198cfb9d6))
+
 ### [7.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.3.2/packages/gatsby-source-wordpress) (2022-12-14)
 
 **Note:** Version bump only for package gatsby-source-wordpress
