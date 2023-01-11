@@ -78,6 +78,15 @@ describe(`Head function export SSR'ed HTML output`, () => {
     expect(link.attributes.href).toEqual(data.queried.link)
   })
 
+  it(`should not hex enocode content of <style> and <script>`, () => {
+    const html = readFileSync(`${publicDir}${page.basic}/index.html`)
+    const dom = parse(html)
+    const { style, jsonLD } = getNodes(dom)
+
+    expect(style.innerHTML).toContain(`'${data.static.style}'`)
+    expect(jsonLD.innerHTML).toContain(data.static.jsonLD)
+  })
+
   it(`deduplicates multiple tags with same id`, () => {
     const html = readFileSync(`${publicDir}${page.deduplication}/index.html`)
     const dom = parse(html)

@@ -26,7 +26,8 @@ export function Head() {
       <style data-testid="style">
         {`
           h1 {
-            color: ${style};
+            color: rebeccapurple;
+            font-family: '${style}'
           }
         `}
       </style>
