@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@5.4.0/packages/gatsby-plugin-gatsby-cloud) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update [dev] minor and patch dependencies for gatsby-plugin-gatsby-cloud [#37385](https://github.com/gatsbyjs/gatsby/issues/37385) ([594886b](https://github.com/gatsbyjs/gatsby/commit/594886b23f11d19350eccc0f1e7d55abf9563780))
+- Update README [#37243](https://github.com/gatsbyjs/gatsby/issues/37243) ([33bc518](https://github.com/gatsbyjs/gatsby/commit/33bc518f7321243240d7c2156b9d1e10e7fbc027))
+
 ### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@5.3.1/packages/gatsby-plugin-gatsby-cloud) (2022-12-14)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

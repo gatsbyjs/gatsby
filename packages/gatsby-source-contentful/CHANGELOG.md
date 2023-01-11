@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.4.0/packages/gatsby-source-contentful) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- Add contentTypeFilter to Joi schema [#37403](https://github.com/gatsbyjs/gatsby/issues/37403) ([56ace78](https://github.com/gatsbyjs/gatsby/commit/56ace78708ef5f1d311cfe434bd0cc87558f0b29))
+- update minor and patch dependencies for gatsby-source-contentful [#37381](https://github.com/gatsbyjs/gatsby/issues/37381) ([8ff6dc1](https://github.com/gatsbyjs/gatsby/commit/8ff6dc17842c9e693f00704fd1ac044163b87b77))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
 ### [8.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.3.1/packages/gatsby-source-contentful) (2022-12-14)
 
 **Note:** Version bump only for package gatsby-source-contentful
