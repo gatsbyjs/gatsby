@@ -5,21 +5,17 @@ const probeImageSize = require(`probe-image-size`)
 
 import { getOptions } from "./plugin-options"
 
-const getHref = link => {
+export const getHref = link => {
   if (typeof link === `object`) {
     return link.href
   }
   return link
 }
 
-exports.getHref = getHref
-
-const imageCDNState = {
+export const imageCDNState = {
   foundPlaceholderStyle: false,
   hasLoggedNoPlaceholderStyle: false,
 }
-
-exports.imageCDNState = imageCDNState
 
 let four04WarningCount = 0
 let corruptFileWarningCount = 0
@@ -143,7 +139,7 @@ const getGatsbyImageCdnFields = async ({
   return {}
 }
 
-const nodeFromData = async (
+export const nodeFromData = async (
   datum,
   createNodeId,
   entityReferenceRevisions = [],
@@ -151,9 +147,12 @@ const nodeFromData = async (
   fileNodesExtendedData,
   reporter
 ) => {
-  const { attributes: { id: attributeId, ...attributes } = {} } = datum
+  const { attributes: { id: attributeId, ...attributes } = { id: null } } =
+    datum
+
   const preservedId =
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
+
   const langcode = attributes.langcode || `und`
   const type = datum.type.replace(/-|__|:|\.|\s/g, `_`)
 
@@ -165,16 +164,18 @@ const nodeFromData = async (
     reporter,
   })
 
+  const versionedId = createNodeIdWithVersion(
+    datum.id,
+    datum.type,
+    langcode,
+    attributes.drupal_internal__revision_id,
+    entityReferenceRevisions
+  )
+
+  const gatsbyId = createNodeId(versionedId)
+
   return {
-    id: createNodeId(
-      createNodeIdWithVersion(
-        datum.id,
-        datum.type,
-        langcode,
-        attributes.drupal_internal__revision_id,
-        entityReferenceRevisions
-      )
-    ),
+    id: gatsbyId,
     drupal_id: datum.id,
     parent: null,
     drupal_parent_menu_item: attributes.parent,
@@ -190,14 +191,12 @@ const nodeFromData = async (
   }
 }
 
-exports.nodeFromData = nodeFromData
-
 const isEntityReferenceRevision = (type, entityReferenceRevisions = []) =>
   entityReferenceRevisions.findIndex(
     revisionType => type.indexOf(revisionType) === 0
   ) !== -1
 
-const createNodeIdWithVersion = (
+export const createNodeIdWithVersion = (
   id: string,
   type: string,
   langcode: string,
@@ -229,23 +228,24 @@ const createNodeIdWithVersion = (
     langcodeNormalized = options.languageConfig.defaultLanguage
   }
 
+  const isReferenceRevision = isEntityReferenceRevision(
+    type,
+    entityReferenceRevisions
+  )
+
   // The relationship between an entity and another entity also depends on the revision ID if the field is of type
   // entity reference revision such as for paragraphs.
-  const idVersion = isEntityReferenceRevision(type, entityReferenceRevisions)
+  const idVersion = isReferenceRevision
     ? `${langcodeNormalized}.${id}.${revisionId || 0}`
     : `${langcodeNormalized}.${id}`
 
   return idVersion
 }
 
-exports.createNodeIdWithVersion = createNodeIdWithVersion
-
-const isFileNode = node => {
+export const isFileNode = node => {
   const type = node?.internal?.type
   return type === `files` || type === `file__file`
 }
-
-exports.isFileNode = isFileNode
 
 const getFileUrl = (node, baseUrl) => {
   let fileUrl = node.url
@@ -261,8 +261,8 @@ const getFileUrl = (node, baseUrl) => {
   return url
 }
 
-exports.downloadFile = async (
-  { node, store, cache, createNode, createNodeId, getCache, reporter },
+export const downloadFile = async (
+  { node, cache, createNode, createNodeId, getCache },
   { basicAuth, baseUrl }
 ) => {
   // handle file downloads
