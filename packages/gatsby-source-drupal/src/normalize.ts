@@ -217,13 +217,19 @@ export const createNodeIdWithVersion = (
   // to "undefined".
   let langcodeNormalized = options.languageConfig ? langcode : `und`
 
+  const renamedCode = options?.languageConfig?.renamedEnabledLanguages?.find(
+    lang => lang.langCode === langcodeNormalized
+  )
+
+  if (renamedCode) {
+    langcodeNormalized = renamedCode.as
+  }
+
   if (
+    !renamedCode &&
     options.languageConfig &&
     options.languageConfig.defaultLanguage &&
-    (!options?.languageConfig?.enabledLanguages?.includes(langcodeNormalized) ||
-      !options?.languageConfig?.renamedEnabledLanguages?.find(
-        lang => lang.as === langcodeNormalized
-      ))
+    !options?.languageConfig?.enabledLanguages?.includes(langcodeNormalized)
   ) {
     langcodeNormalized = options.languageConfig.defaultLanguage
   }
