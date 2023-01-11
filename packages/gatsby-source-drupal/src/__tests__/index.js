@@ -551,7 +551,13 @@ describe(`gatsby-source-drupal`, () => {
         apiBase,
         languageConfig: {
           defaultLanguage: `en_US`,
-          enabledLanguages: [`en_US`, `i18n-test`],
+          enabledLanguages: [
+            `en_US`,
+            {
+              langCode: `en-gb`,
+              as: `i18n-test`,
+            },
+          ],
           translatableEntities: [`node--article`],
           nonTranslatableEntities: [],
         },
