@@ -20,7 +20,7 @@ const config = {
       options: {
         plugins: [
           {
-            resolve: `gatsby-remark-test`,
+            resolve: `gatsby-remark-esm`,
           }
         ]
       },

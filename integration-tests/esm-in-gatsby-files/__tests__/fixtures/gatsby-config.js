@@ -7,7 +7,18 @@ helloDefaultCJS()
 helloNamedCJS()
 
 const config = {
-  plugins: [],
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-cjs`,
+          }
+        ]
+      },
+    },
+  ],
 }
 
 module.exports = config

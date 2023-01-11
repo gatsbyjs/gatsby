@@ -28,7 +28,6 @@ async function build() {
       ...process.env,
       NODE_ENV: `production`,
     },
-    stdio: "inherit",
   })
 
   return stdout
@@ -37,12 +36,16 @@ async function build() {
 // Tests include multiple assertions since running multiple builds is time consuming
 
 describe(`gatsby-config.js`, () => {
-  afterEach(() => {
-    fs.rmSync(configPath.cjs)
+  afterEach(async () => {
+    await fs.rm(configPath.cjs)
+    await fs.rm(localPluginTargetDir, { recursive: true })
   })
 
   it(`works with required CJS modules`, async () => {
     await fs.copyFile(fixturePath.cjs, configPath.cjs)
+
+    await fs.ensureDir(localPluginTargetDir)
+    await fs.copy(localPluginFixtureDir, localPluginTargetDir)
 
     const stdout = await build()
 
@@ -52,6 +55,9 @@ describe(`gatsby-config.js`, () => {
     // Requires work
     expect(stdout).toContain(`hello-default-cjs`)
     expect(stdout).toContain(`hello-named-cjs`)
+
+    // Local gatsby-remark-plugin works
+    expect(stdout).toContain(`gatsby-remark-cjs-gatsby-config-js`)
   })
 })
 
@@ -78,6 +84,9 @@ describe(`gatsby-config.mjs`, () => {
 
     // Local plugin gatsby-config.mjs works
     expect(stdout).toContain(`a-local-plugin-gatsby-config-mjs`)
+
+    // Local ESM gatsby-remark-plugin works
+    expect(stdout).toContain(`gatsby-remark-esm-gatsby-config-mjs`)
 
     // Local plugin with an esm module passed via options works, this implicitly tests gatsby-node.mjs too
     expect(stdout).toContain(`a-local-plugin-using-passed-esm-module`)
