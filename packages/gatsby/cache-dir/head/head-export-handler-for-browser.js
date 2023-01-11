@@ -11,6 +11,7 @@ import {
   warnForInvalidTags,
   diffNodes,
 } from "./utils"
+import { apiRunner } from "../api-runner-browser"
 
 const hiddenRoot = document.createElement(`div`)
 
@@ -104,7 +105,18 @@ export function headHandlerForBrowser({
 
       const { render } = reactDOMUtils()
 
-      const Head = pageComponent.Head
+      const HeadElement = () => (
+        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+      )
+
+      const wrappedHead = apiRunner(
+        `wrapRootElement`,
+        { element: <HeadElement /> },
+        <HeadElement />,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
 
       render(
         // just a hack to call the callback after react has done first render
@@ -112,9 +124,7 @@ export function headHandlerForBrowser({
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
           <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>
-              <Head {...filterHeadProps(pageComponentProps)} />
-            </LocationProvider>
+            <LocationProvider>{wrappedHead}</LocationProvider>
           </StaticQueryContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot

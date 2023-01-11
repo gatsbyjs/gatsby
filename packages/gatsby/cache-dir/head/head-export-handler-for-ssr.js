@@ -1,6 +1,5 @@
 const React = require(`react`)
 const { grabMatchParams } = require(`../find-path`)
-const { createElement } = require(`react`)
 const { StaticQueryContext } = require(`gatsby`)
 const {
   headExportValidator,
@@ -11,6 +10,7 @@ const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
 const { VALID_NODE_NAMES } = require(`./constants`)
+import { apiRunner } from "../api-runner-browser"
 
 export function headHandlerForSSR({
   pageComponent,
@@ -32,7 +32,20 @@ export function headHandlerForSSR({
         },
       }
 
-      return createElement(pageComponent.Head, filterHeadProps(_props))
+      const HeadElement = () => (
+        <pageComponent.Head {...filterHeadProps(_props)} />
+      )
+
+      const headWithWrapRootElment = apiRunner(
+        `wrapRootElement`,
+        { element: <HeadElement /> },
+        <HeadElement />,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
+
+      return headWithWrapRootElment
     }
 
     const routerElement = (
