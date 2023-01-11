@@ -22,6 +22,7 @@ const hashPrimitive = (input: BinaryLike | string): string =>
  * @param input The input to encrypt
  * @return The content digest
  */
+
 export const createContentDigest = (
   input: BinaryLike | string | any
 ): string => {
