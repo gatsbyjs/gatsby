@@ -213,7 +213,8 @@ async function validatePluginsOptions(
       let gatsbyNode
       try {
         const resolvedPlugin = resolvePlugin(plugin, rootDir)
-        gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
+        gatsbyNode = require(resolvedPlugin.resolvedCompiledGatsbyNode ??
+          `${resolvedPlugin.resolve}/gatsby-node`)
       } catch (err) {
         gatsbyNode = {}
       }
