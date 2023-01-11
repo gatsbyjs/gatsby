@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.4.0/packages/gatsby-cli) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-cli [#37378](https://github.com/gatsbyjs/gatsby/issues/37378) ([9fabd4f](https://github.com/gatsbyjs/gatsby/commit/9fabd4f86833de35ce4c1b59ad8addda50338785))
+- Always use `--legacy-peer-deps` [#37280](https://github.com/gatsbyjs/gatsby/issues/37280) ([42a3034](https://github.com/gatsbyjs/gatsby/commit/42a303408da649d2457095c57a1f30d830586d01))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update gatsby monorepo [#37366](https://github.com/gatsbyjs/gatsby/issues/37366) ([bbd6220](https://github.com/gatsbyjs/gatsby/commit/bbd62204a1a402efb681a16ead66421f6f017660))
+- update [dev] minor and patch dependencies for gatsby-cli [#37350](https://github.com/gatsbyjs/gatsby/issues/37350) ([86fc81d](https://github.com/gatsbyjs/gatsby/commit/86fc81d0c2a2a9dbfdf1552063a3b805e98cf689))
+
 ### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.3.1/packages/gatsby-cli) (2022-12-14)
 
 **Note:** Version bump only for package gatsby-cli

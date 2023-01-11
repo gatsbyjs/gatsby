@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.4.0/packages/gatsby-plugin-image) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- Encode space in data SVG URI [#37241](https://github.com/gatsbyjs/gatsby/issues/37241) ([09ea753](https://github.com/gatsbyjs/gatsby/commit/09ea7534d23a1ab4e8983de275f4ab43ec88731b))
+- Normalize filename for correct hashing [#37262](https://github.com/gatsbyjs/gatsby/issues/37262) ([397fa3f](https://github.com/gatsbyjs/gatsby/commit/397fa3fc605b5e053fa3b3804e39621734dc79d3))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update [dev] minor and patch dependencies for gatsby-plugin-image [#37352](https://github.com/gatsbyjs/gatsby/issues/37352) ([4c2ac49](https://github.com/gatsbyjs/gatsby/commit/4c2ac49b1805d24db81f1c7193a3518fc8c9a1b7))
+
 ### [3.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.3.2/packages/gatsby-plugin-image) (2022-12-14)
 
 #### Bug Fixes

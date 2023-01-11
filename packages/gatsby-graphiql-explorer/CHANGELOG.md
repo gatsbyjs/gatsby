@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@3.4.0/packages/gatsby-graphiql-explorer) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update [dev] minor and patch dependencies for gatsby-graphiql-explorer [#37351](https://github.com/gatsbyjs/gatsby/issues/37351) ([636e1d3](https://github.com/gatsbyjs/gatsby/commit/636e1d31d1a41e79ef6ad2d85eafd1aafa99abc0))
+
 ## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@3.3.0/packages/gatsby-graphiql-explorer) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
