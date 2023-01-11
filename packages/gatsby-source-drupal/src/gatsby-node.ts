@@ -2,6 +2,7 @@ const got = require(`got`)
 const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
+
 // const http2wrapper = require(`http2-wrapper`)
 const opentracing = require(`opentracing`)
 const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
@@ -15,12 +16,13 @@ const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
-const {
+import {
   nodeFromData,
   downloadFile,
   isFileNode,
   imageCDNState,
-} = require(`./normalize`)
+} from "./normalize"
+
 const {
   handleReferences,
   handleWebhookUpdate,
@@ -567,15 +569,19 @@ ${JSON.stringify(webhookBody, null, 4)}`
               throw error
             }
           }
+
           if (d.body.data) {
-            dataArray.push(...d.body.data)
+            // @ts-ignore
+            dataArray.push(...(d.body.data || []))
           }
+
           // Add support for includes. Includes allow entity data to be expanded
           // based on relationships. The expanded data is exposed as `included`
           // in the JSON API response.
           // See https://www.drupal.org/docs/8/modules/jsonapi/includes
           if (d.body.included) {
-            dataArray.push(...d.body.included)
+            // @ts-ignore
+            dataArray.push(...(d.body.included || []))
           }
 
           // If JSON:API extras is configured to add the resource count, we can queue
@@ -593,8 +599,8 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
               // Get count of API requests
               // We round down as we've already gotten the first page at this point.
-              const pageSize = new URL(d.body.links.next.href).searchParams.get(
-                `page[limit]`
+              const pageSize = Number(
+                new URL(d.body.links.next.href).searchParams.get(`page[limit]`)
               )
               const requestsCount = Math.floor(d.body.meta.count / pageSize)
 
@@ -604,11 +610,14 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
               const newUrl = new URL(d.body.links.next.href)
               await Promise.all(
-                _.range(requestsCount).map(pageOffset => {
+                _.range(requestsCount).map((pageOffset: number) => {
                   // We're starting 1 ahead.
                   pageOffset += 1
                   // Construct URL with new pageOffset.
-                  newUrl.searchParams.set(`page[offset]`, pageOffset * pageSize)
+                  newUrl.searchParams.set(
+                    `page[offset]`,
+                    String(pageOffset * pageSize)
+                  )
                   return getNext(newUrl.toString(), currentLanguage)
                 })
               )
@@ -626,6 +635,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
             const urlPath = url.href.split(`${apiBase}/`).pop()
             const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
             // The default language's JSON API is at the root.
+
             if (
               currentLanguage === getOptions().languageConfig.defaultLanguage ||
               baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
