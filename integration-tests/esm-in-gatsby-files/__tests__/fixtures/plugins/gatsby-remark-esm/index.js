@@ -1,4 +1,4 @@
-console.info(`gatsby-remark-test-gatsby-config-mjs`)
+console.info(`gatsby-remark-esm-gatsby-config-mjs`)
 
 export default ({ markdownAST }, pluginOptions) => {
   return markdownAST
