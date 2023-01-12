@@ -14,7 +14,9 @@ class CustomEnvironment extends NodeEnvironment {
         dbPath,
         rootDb,
       ] of this.global.__GATSBY_OPEN_ROOT_LMDBS.entries()) {
-        await rootDb.close()
+        if (rootDb.isOperational()) {
+          await rootDb.close()
+        }
         await fsExtra.remove(dbPath)
       }
       this.global.__GATSBY_OPEN_ROOT_LMDBS = undefined
