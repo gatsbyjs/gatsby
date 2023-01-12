@@ -1,7 +1,6 @@
 const React = require(`react`)
 const path = require(`path`)
 const {
-  renderToString,
   renderToStaticMarkup,
   renderToPipeableStream,
 } = require(`react-dom/server`)
@@ -178,11 +177,13 @@ export default async function staticPage({
 
     const setHtmlAttributes = attributes => {
       // TODO - we should remove deep merges
+      console.log({ htmlAttributes, attributes })
       htmlAttributes = deepMerge(htmlAttributes, attributes)
     }
 
     const setBodyAttributes = attributes => {
       // TODO - we should remove deep merges
+      console.log({ bodyAttributes, attributes })
       bodyAttributes = deepMerge(bodyAttributes, attributes)
     }
 
@@ -223,14 +224,6 @@ export default async function staticPage({
 
     const { componentChunkName, slicesMap } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
-
-    headHandlerForSSR({
-      pageComponent,
-      setHeadComponents,
-      staticQueryContext,
-      pageData,
-      pagePath,
-    })
 
     class RouteHandler extends React.Component {
       render() {
@@ -375,6 +368,16 @@ export default async function staticPage({
       scripts,
       styles,
       pathPrefix: __PATH_PREFIX__,
+    })
+
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      staticQueryContext,
+      pageData,
+      pagePath,
     })
 
     reversedScripts.forEach(script => {

@@ -15,6 +15,8 @@ const { VALID_NODE_NAMES } = require(`./constants`)
 export function headHandlerForSSR({
   pageComponent,
   setHeadComponents,
+  setHtmlAttributes,
+  setBodyAttributes,
   staticQueryContext,
   pageData,
   pagePath,
@@ -53,48 +55,60 @@ export function headHandlerForSSR({
     const headNodes = parse(rawString).childNodes
 
     const validHeadNodes = []
-
     const seenIds = new Map()
+
     for (const node of headNodes) {
       const { rawTagName } = node
       const id = node.attributes?.id
 
       if (!VALID_NODE_NAMES.includes(rawTagName)) {
         warnForInvalidTags(rawTagName)
-      } else {
-        let element
-        const attributes = { ...node.attributes, "data-gatsby-head": true }
-        if (rawTagName === `script` || rawTagName === `style`) {
-          element = (
-            <node.rawTagName
-              {...attributes}
-              dangerouslySetInnerHTML={{
-                __html: node.text,
-              }}
-            />
-          )
-        } else {
-          element =
-            node.textContent.length > 0 ? (
-              <node.rawTagName {...attributes}>
-                {node.textContent}
-              </node.rawTagName>
-            ) : (
-              <node.rawTagName {...attributes} />
-            )
-        }
+        continue
+      }
 
-        if (id) {
-          if (!seenIds.has(id)) {
-            validHeadNodes.push(element)
-            seenIds.set(id, validHeadNodes.length - 1)
-          } else {
-            const indexOfPreviouslyInsertedNode = seenIds.get(id)
-            validHeadNodes[indexOfPreviouslyInsertedNode] = element
-          }
-        } else {
+      if (rawTagName === `html`) {
+        setHtmlAttributes(node.attributes, true)
+        continue
+      }
+
+      if (rawTagName === `body`) {
+        setBodyAttributes(node.attributes, true)
+        continue
+      }
+
+      let element
+      const attributes = { ...node.attributes, "data-gatsby-head": true }
+
+      if (rawTagName === `script` || rawTagName === `style`) {
+        element = (
+          <node.rawTagName
+            {...attributes}
+            dangerouslySetInnerHTML={{
+              __html: node.text,
+            }}
+          />
+        )
+      } else {
+        element =
+          node.textContent.length > 0 ? (
+            <node.rawTagName {...attributes}>
+              {node.textContent}
+            </node.rawTagName>
+          ) : (
+            <node.rawTagName {...attributes} />
+          )
+      }
+
+      if (id) {
+        if (!seenIds.has(id)) {
           validHeadNodes.push(element)
+          seenIds.set(id, validHeadNodes.length - 1)
+        } else {
+          const indexOfPreviouslyInsertedNode = seenIds.get(id)
+          validHeadNodes[indexOfPreviouslyInsertedNode] = element
         }
+      } else {
+        validHeadNodes.push(element)
       }
     }
 

@@ -98,6 +98,7 @@ export default async function staticPage({
     }
 
     const setHtmlAttributes = attributes => {
+      console.log(`This got called`)
       htmlAttributes = merge(htmlAttributes, attributes)
     }
 
@@ -161,14 +162,6 @@ export default async function staticPage({
     const { componentChunkName } = pageData
 
     const pageComponent = await syncRequires.ssrComponents[componentChunkName]
-
-    headHandlerForSSR({
-      pageComponent,
-      setHeadComponents,
-      staticQueryContext: getStaticQueryResults(),
-      pageData,
-      pagePath,
-    })
 
     let scriptsAndStyles = flatten(
       [`commons`].map(chunkKey => {
@@ -312,6 +305,16 @@ export default async function staticPage({
       setPostBodyComponents,
       setBodyProps,
       pathname: pagePath,
+    })
+
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      staticQueryContext: getStaticQueryResults(),
+      pageData,
+      pagePath,
     })
 
     apiRunner(`onPreRenderHTML`, {

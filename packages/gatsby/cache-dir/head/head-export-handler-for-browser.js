@@ -13,6 +13,33 @@ import {
 } from "./utils"
 
 const hiddenRoot = document.createElement(`div`)
+const htmlAttributesList = new Set()
+const bodyAttributesList = new Set()
+
+const removePrevHtmlAttributes = () => {
+  htmlAttributesList.forEach(attributeName => {
+    const elementTag = document.getElementsByTagName(`html`)[0]
+    elementTag.removeAttribute(attributeName)
+  })
+}
+
+const removePrevBodyAttributes = () => {
+  bodyAttributesList.forEach(attributeName => {
+    const elementTag = document.getElementsByTagName(`body`)[0]
+    elementTag.removeAttribute(attributeName)
+  })
+}
+
+const updateAttribute = (tagName, attributeName, attributeValue) => {
+  const elementTag = document.getElementsByTagName(tagName)[0]
+
+  if (!elementTag) {
+    return
+  }
+
+  elementTag.setAttribute(attributeName, attributeValue)
+  htmlAttributesList.add(attributeName)
+}
 
 const removePrevHeadElements = () => {
   const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
@@ -24,43 +51,60 @@ const removePrevHeadElements = () => {
 
 const onHeadRendered = () => {
   const validHeadNodes = []
-
   const seenIds = new Map()
+
   for (const node of hiddenRoot.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
     const id = node.attributes?.id?.value
 
     if (!VALID_NODE_NAMES.includes(nodeName)) {
       warnForInvalidTags(nodeName)
-    } else {
-      let clonedNode = node.cloneNode(true)
-      clonedNode.setAttribute(`data-gatsby-head`, true)
+      continue
+    }
 
-      // Create an element for scripts to make script work
-      if (clonedNode.nodeName.toLowerCase() === `script`) {
-        const script = document.createElement(`script`)
-        for (const attr of clonedNode.attributes) {
-          script.setAttribute(attr.name, attr.value)
-        }
-        script.innerHTML = clonedNode.innerHTML
-        clonedNode = script
+    if (nodeName === `html`) {
+      for (const attribute of node.attributes) {
+        updateAttribute(`html`, attribute.name, attribute.value)
       }
+      continue
+    }
 
-      if (id) {
-        if (!seenIds.has(id)) {
-          validHeadNodes.push(clonedNode)
-          seenIds.set(id, validHeadNodes.length - 1)
-        } else {
-          const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
-            validHeadNodes[indexOfPreviouslyInsertedNode]
-          )
-          validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
-        }
-      } else {
+    if (nodeName === `body`) {
+      for (const attribute of node.attributes) {
+        updateAttribute(`body`, attribute.name, attribute.value)
+      }
+      continue
+    }
+
+    let clonedNode = node.cloneNode(true)
+    clonedNode.setAttribute(`data-gatsby-head`, true)
+
+    // Create an element for scripts to make script work
+    if (clonedNode.nodeName.toLowerCase() === `script`) {
+      const script = document.createElement(`script`)
+      for (const attr of clonedNode.attributes) {
+        script.setAttribute(attr.name, attr.value)
+      }
+      script.innerHTML = clonedNode.innerHTML
+      clonedNode = script
+    }
+
+    if (id) {
+      if (!seenIds.has(id)) {
         validHeadNodes.push(clonedNode)
+        seenIds.set(id, validHeadNodes.length - 1)
+      } else {
+        const indexOfPreviouslyInsertedNode = seenIds.get(id)
+        validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
+          validHeadNodes[indexOfPreviouslyInsertedNode]
+        )
+        validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
+
+        continue
       }
     }
+
+    validHeadNodes.push(clonedNode)
   }
 
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
@@ -123,6 +167,8 @@ export function headHandlerForBrowser({
 
     return () => {
       removePrevHeadElements()
+      removePrevHtmlAttributes()
+      removePrevBodyAttributes()
     }
   })
 }
