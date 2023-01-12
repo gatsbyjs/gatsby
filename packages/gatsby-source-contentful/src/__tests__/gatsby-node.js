@@ -14,6 +14,7 @@ import richTextFixture from "../__fixtures__/rich-text-data"
 import restrictedContentTypeFixture from "../__fixtures__/restricted-content-type"
 import unpublishedFieldDelivery from "../__fixtures__/unpublished-fields-delivery"
 import unpublishedFieldPreview from "../__fixtures__/unpublished-fields-preview"
+import preserveBackLinks from "../__fixtures__/preserve-back-links"
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
@@ -534,6 +535,9 @@ describe(`gatsby-node`, () => {
         Array [
           "contentful-content-types-testSpaceId-master",
         ],
+        Array [
+          "contentful-foreign-reference-map-state-testSpaceId-master",
+        ],
       ]
     `)
 
@@ -546,6 +550,7 @@ describe(`gatsby-node`, () => {
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`
       Array [
         "contentful-content-types-testSpaceId-master",
+        "contentful-foreign-reference-map-state-testSpaceId-master",
       ]
     `)
     expect(actions.createNode).toHaveBeenCalledTimes(32)
@@ -1306,5 +1311,48 @@ describe(`gatsby-node`, () => {
         },
       })
     )
+  })
+
+  it(`should preserve back reference when referencing entry wasn't touched`, async () => {
+    // @ts-ignore
+    fetchContentTypes.mockImplementation(preserveBackLinks.contentTypeItems)
+    fetchContent
+      // @ts-ignore
+      .mockImplementationOnce(preserveBackLinks.initialSync)
+      .mockImplementationOnce(preserveBackLinks.editJustEntryWithBackLinks)
+
+    let blogPostNodes
+    let blogCategoryNodes
+    await simulateGatsbyBuild()
+
+    blogPostNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogPost`
+    )
+    blogCategoryNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogCategory`
+    )
+
+    expect(blogPostNodes.length).toEqual(1)
+    expect(blogCategoryNodes.length).toEqual(1)
+    expect(blogCategoryNodes[0][`blog post___NODE`]).toEqual([
+      blogPostNodes[0].id,
+    ])
+    expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
+
+    await simulateGatsbyBuild()
+
+    blogPostNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogPost`
+    )
+    blogCategoryNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogCategory`
+    )
+
+    expect(blogPostNodes.length).toEqual(1)
+    expect(blogCategoryNodes.length).toEqual(1)
+    expect(blogCategoryNodes[0][`blog post___NODE`]).toEqual([
+      blogPostNodes[0].id,
+    ])
+    expect(blogCategoryNodes[0][`title`]).toEqual(`CMS edit #1`)
   })
 })
