@@ -14,7 +14,8 @@ plugins: [
   {
     resolve: "gatsby-plugin-google-tagmanager",
     options: {
-      id: "YOUR_GOOGLE_TAGMANAGER_ID",
+      // Still accepts `id`, which gets mapped to `ids` if not provided, otherwise `id` is ignored.
+      ids: ["YOUR_GOOGLE_TAGMANAGER_ID"],
 
       // Include GTM in development.
       //

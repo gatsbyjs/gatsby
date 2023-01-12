@@ -7,6 +7,7 @@ describe(`pluginOptionsSchema`, () => {
       pluginOptionsSchema,
       {
         id: `YOUR_GOOGLE_TAGMANAGER_ID`,
+        ids: [`YOUR_GOOGLE_TAGMANAGER_ID`],
         includeInDevelopment: false,
         defaultDataLayer: { platform: `gatsby` },
         gtmAuth: `YOUR_GOOGLE_TAGMANAGER_ENVIRONMENT_AUTH_STRING`,
