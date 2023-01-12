@@ -30,13 +30,11 @@ export const getBrowsersList = (directory: string): Array<string> => {
   const fallback =
     installedGatsbyVersion(directory) === 1 ? fallbackV1 : fallbackOthers
 
-  const config = browserslist.findConfig(directory)
+  const config = browserslist.loadConfig({
+    path: directory,
+  })
 
-  if (config && config.defaults) {
-    return config.defaults
-  }
-
-  return fallback
+  return config ?? fallback
 }
 
 export const hasES6ModuleSupport = (directory: string): boolean => {
