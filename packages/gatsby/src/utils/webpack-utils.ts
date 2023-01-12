@@ -232,8 +232,11 @@ export const createWebpackUtils = (
     },
     yaml: (options = {}) => {
       return {
-        options,
         loader: require.resolve(`yaml-loader`),
+        options: {
+          asJSON: true,
+          ...options,
+        },
       }
     },
 
