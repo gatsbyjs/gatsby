@@ -23,6 +23,36 @@ const removePrevHeadElements = () => {
   }
 }
 
+// Get all context providers from tree
+function getProvidersFromTree(tree) {
+  const providers = []
+
+  function traverse(node) {
+    if (node.type && node.type._context) {
+      providers.push({ context: node.type._context, value: node.props.value })
+    }
+
+    if (node.props && node.props.children) {
+      React.Children.forEach(node.props.children, traverse)
+    }
+  }
+
+  traverse(tree)
+
+  return providers
+}
+
+function wrapWithProviders(element, providers) {
+  return providers.reduceRight((acc, provider) => {
+    console.log({ acc, provider })
+    return React.createElement(
+      provider.context.Provider,
+      { value: provider.value },
+      acc
+    )
+  }, element)
+}
+
 const onHeadRendered = () => {
   const validHeadNodes = []
 
@@ -105,14 +135,20 @@ export function headHandlerForBrowser({
 
       const { render } = reactDOMUtils()
 
-      const HeadElement = () => (
-        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+      const HeadTree = (
+        <FireCallbackInEffect callback={onHeadRendered}>
+          <StaticQueryContext.Provider value={staticQueryResults}>
+            <LocationProvider>
+              <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+            </LocationProvider>
+          </StaticQueryContext.Provider>
+        </FireCallbackInEffect>
       )
 
-      const wrappedHead = apiRunner(
+      const WrapHeadTree = apiRunner(
         `wrapRootElement`,
-        { element: <HeadElement /> },
-        <HeadElement />,
+        { element: HeadTree },
+        HeadTree,
         ({ result }) => {
           return { element: result }
         }
@@ -122,11 +158,7 @@ export function headHandlerForBrowser({
         // just a hack to call the callback after react has done first render
         // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
-        <FireCallbackInEffect callback={onHeadRendered}>
-          <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>{wrappedHead}</LocationProvider>
-          </StaticQueryContext.Provider>
-        </FireCallbackInEffect>,
+        WrapHeadTree,
         hiddenRoot
       )
     }
