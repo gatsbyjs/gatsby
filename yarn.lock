@@ -6387,24 +6387,6 @@ babel-preset-fbjs@^3.4.0:
     "@babel/plugin-transform-template-literals" "^7.0.0"
     babel-plugin-syntax-trailing-function-commas "^7.0.0-beta.0"
 
-babel-preset-gatsby-package@^3.5.0-next.0:
-  version "3.5.0-next.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-gatsby-package/-/babel-preset-gatsby-package-3.5.0-next.0.tgz#16fedefe5a65168d9686d784f77c19fd8eea57b4"
-  integrity sha512-ydBCrQLTcx9TOdazacE4uUFfCoaxs6/iVAfooHFCWdlIa1QQ5vtEblUWFR7u5gKB8UQTVryUv1jNVYvMZky60A==
-  dependencies:
-    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.18.6"
-    "@babel/plugin-proposal-optional-chaining" "^7.20.7"
-    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
-    "@babel/plugin-transform-runtime" "^7.19.6"
-    "@babel/plugin-transform-typescript" "^7.20.7"
-    "@babel/preset-env" "^7.20.2"
-    "@babel/preset-flow" "^7.18.6"
-    "@babel/preset-react" "^7.18.6"
-    "@babel/runtime" "^7.20.7"
-    babel-plugin-dynamic-import-node "^2.3.3"
-    babel-plugin-lodash "^3.3.4"
-    core-js "^3.22.3"
-
 babel-preset-jest@^27.5.1:
   version "27.5.1"
   resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-27.5.1.tgz#91f10f58034cb7989cb4f962b69fa6eef6a6bc81"
