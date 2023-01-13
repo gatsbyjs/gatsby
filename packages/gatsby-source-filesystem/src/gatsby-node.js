@@ -29,8 +29,8 @@ const createFSMachine = (
     const fileNodePromise = createFileNode(
       path,
       createNodeId,
-      cache,
-      pluginOptions
+      pluginOptions,
+      cache
     ).then(fileNode => {
       createNode(fileNode)
       return null

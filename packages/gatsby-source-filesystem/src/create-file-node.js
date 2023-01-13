@@ -8,8 +8,8 @@ const { createContentDigest, slash, md5File } = require(`gatsby-core-utils`)
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
-  cache,
-  pluginOptions = {}
+  pluginOptions = {},
+  cache = null
 ) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
@@ -43,10 +43,10 @@ exports.createFileNode = async (
       contentDigest = key
     } else {
       // Generate a hash, but only if the file has changed.
-      contentDigest = await cache.get(key)
+      contentDigest = cache && (await cache.get(key))
       if (!contentDigest) {
         contentDigest = await md5File(slashedFile.absolutePath)
-        await cache.set(key, contentDigest)
+        if (cache) await cache.set(key, contentDigest)
       }
     }
 
