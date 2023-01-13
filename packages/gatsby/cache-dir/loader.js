@@ -33,6 +33,12 @@ const createPageDataUrl = rawPath => {
   }`
 }
 
+/**
+ * Utility to check the path that goes into doFetch for e.g. potential malicious intentions.
+ * It checks for "//" because with this you could do a fetch request to a different domain.
+ */
+const shouldAbortFetch = rawPath => rawPath.startsWith(`//`)
+
 function doFetch(url, method = `GET`) {
   return new Promise(resolve => {
     const req = new XMLHttpRequest()
@@ -876,6 +882,9 @@ export class ProdLoader extends BaseLoader {
   loadPageDataJson(rawPath) {
     return super.loadPageDataJson(rawPath).then(data => {
       if (data.notFound) {
+        if (shouldAbortFetch(rawPath)) {
+          return data
+        }
         // check if html file exist using HEAD request:
         // if it does we should navigate to it instead of showing 404
         return doFetch(rawPath, `HEAD`).then(req => {
@@ -900,6 +909,9 @@ export class ProdLoader extends BaseLoader {
   loadPartialHydrationJson(rawPath) {
     return super.loadPartialHydrationJson(rawPath).then(data => {
       if (data.notFound) {
+        if (shouldAbortFetch(rawPath)) {
+          return data
+        }
         // check if html file exist using HEAD request:
         // if it does we should navigate to it instead of showing 404
         return doFetch(rawPath, `HEAD`).then(req => {

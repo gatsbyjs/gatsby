@@ -20,6 +20,7 @@ import {
 } from "./types"
 import { resolvePlugin } from "./resolve-plugin"
 import { preferDefault } from "../prefer-default"
+import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
 
 interface IApi {
   version?: string
@@ -213,7 +214,7 @@ async function validatePluginsOptions(
       let gatsbyNode
       try {
         const resolvedPlugin = resolvePlugin(plugin, rootDir)
-        gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
+        gatsbyNode = await importGatsbyPlugin(resolvedPlugin, `gatsby-node`)
       } catch (err) {
         gatsbyNode = {}
       }
