@@ -2,8 +2,9 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
+const md5File = require(`md5-file`)
 
-const { createContentDigest, slash, md5File } = require(`gatsby-core-utils`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 exports.createFileNode = async (
   pathToFile,
