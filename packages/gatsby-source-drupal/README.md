@@ -465,7 +465,15 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         languageConfig: {
           defaultLanguage: `en`,
-          enabledLanguages: [`en`, `fil`],
+          enabledLanguages: [
+            `en`,
+            `fil`,
+            // add an object here if you've renamed a langcode in Drupal
+            {
+              langCode: `en-gb`,
+              as: `uk`,
+            },
+          ],
           translatableEntities: [`node--article`],
           nonTranslatableEntities: [`file--file`],
         },
