@@ -62,6 +62,12 @@ They will be added to the following default list:
 ../**/dist/**
 ```
 
+There is an alternative hashing mechanism available by passing the `fastHash` parameter.
+This option can significantly reduce build times on sites with many large files, but is potentially less robust
+because it uses the modification time to fingerprint the file rather than hashing it. On a modern OS this
+shouldn't be a problem, but can't be relied on completely across all systems, which is why it's an option.
+Note that if you're passing this option to an existing site it will force re-processing of all your files.
+
 To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
 
 ## How to query
