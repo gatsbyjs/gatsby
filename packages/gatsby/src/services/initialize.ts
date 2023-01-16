@@ -655,10 +655,15 @@ export async function initialize({
     }
   }
 
-  const initialWebhookBody: WebhookBody = process.env
-    .GATSBY_INITIAL_WEBHOOK_BODY
-    ? JSON.parse(process.env.GATSBY_INITIAL_WEBHOOK_BODY)
-    : undefined
+  let initialWebhookBody: WebhookBody = undefined
+
+  if (process.env.GATSBY_INITIAL_WEBHOOK_BODY) {
+    try {
+      initialWebhookBody = JSON.parse(process.env.GATSBY_INITIAL_WEBHOOK_BODY)
+    } catch (e) {
+      reporter.error(`Failed to parse GATSBY_INITIAL_WEBHOOK_BODY as JSON`)
+    }
+  }
 
   return {
     store,
