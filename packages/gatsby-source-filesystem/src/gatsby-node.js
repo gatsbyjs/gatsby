@@ -169,7 +169,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     name: Joi.string(),
     path: Joi.string(),
-    fastHash: Joi.boolean(),
+    fastHash: Joi.boolean().default(false),
     ignore: Joi.array().items(
       Joi.string(),
       Joi.object().regex(),

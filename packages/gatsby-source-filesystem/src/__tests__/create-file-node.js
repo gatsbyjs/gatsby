@@ -148,7 +148,6 @@ describe(`create-file-node`, () => {
     const dname = fs.mkdtempSync(`gatsby-create-file-node-test`).trim()
     try {
       const fname = path.join(dname, `f`)
-      console.log(dname, fname)
       fs.writeFileSync(fname, `data`)
       try {
         const createNodeId = createMockCreateNodeId()
@@ -174,7 +173,6 @@ describe(`create-file-node`, () => {
     const dname = fs.mkdtempSync(`gatsby-create-file-node-test`).trim()
     try {
       const fname = path.join(dname, `f`)
-      console.log(dname, fname)
       fs.writeFileSync(fname, `data`)
       try {
         const createNodeId = createMockCreateNodeId()
@@ -203,7 +201,6 @@ describe(`create-file-node`, () => {
     const dname = fs.mkdtempSync(`gatsby-create-file-node-test`).trim()
     try {
       const fname = path.join(dname, `f`)
-      console.log(dname, fname)
       fs.writeFileSync(fname, `data`)
       try {
         const createNodeId = createMockCreateNodeId()
