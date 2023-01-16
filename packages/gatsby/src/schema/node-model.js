@@ -16,7 +16,11 @@ import { store } from "../redux"
 import { getDataStore, getNode, getTypes } from "../datastore"
 import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
 import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
-import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
+import {
+  toNodeTypeNames,
+  fieldNeedToResolve,
+  maybeConvertSortInputObjectToSortPath,
+} from "./utils"
 import { getMaybeResolvedValue } from "./resolvers"
 
 type TypeOrTypeName = string | GraphQLOutputType
@@ -193,7 +197,7 @@ class LocalNodeModel {
   }
 
   async _query(args) {
-    const { query = {}, type, stats, tracer } = args || {}
+    let { query = {}, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -235,6 +239,8 @@ class LocalNodeModel {
         totalCount: async () => (nodeFoundById ? 1 : 0),
       }
     }
+
+    query = maybeConvertSortInputObjectToSortPath(query)
 
     let materializationActivity
     if (tracer) {

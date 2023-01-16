@@ -14,6 +14,7 @@ import {
   ObjectTypeComposer,
   SchemaComposer,
 } from "graphql-compose"
+import isPlainObject from "lodash/isPlainObject"
 
 import type { IGatsbyNodePartial } from "../datastore/in-memory/indexing"
 import { IGatsbyNode } from "../internal"
@@ -144,4 +145,84 @@ export function getResolvedFields(
   const typeName = node.internal.type
   const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
   return resolvedNodes?.get(node.id)
+}
+
+type NestedPathStructure = INestedPathStructureNode | true | "ASC" | "DESC"
+
+export interface INestedPathStructureNode {
+  [key: string]: NestedPathStructure
+}
+
+export function pathObjectToPathString(input: INestedPathStructureNode): {
+  path: string
+  leaf: any
+} {
+  const path: Array<string> = []
+  let currentValue: NestedPathStructure | undefined = input
+  let leaf: any = undefined
+  while (currentValue) {
+    if (isPlainObject(currentValue)) {
+      const entries = Object.entries(currentValue)
+      if (entries.length !== 1) {
+        throw new Error(`Invalid field arg`)
+      }
+      for (const [key, value] of entries) {
+        path.push(key)
+        currentValue = value
+      }
+    } else {
+      leaf = currentValue
+      currentValue = undefined
+    }
+  }
+
+  return {
+    path: path.join(`.`),
+    leaf,
+  }
+}
+
+export function maybeConvertSortInputObjectToSortPath(args: any): any {
+  if (!args.sort) {
+    return args
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+    // check if it's already in expected format
+    if (
+      Array.isArray(args.sort?.fields) &&
+      Array.isArray(args.sort?.order) &&
+      args.sort.order.every(
+        item =>
+          typeof item === `string` &&
+          (item.toLowerCase() === `asc` || item.toLowerCase() === `desc`)
+      )
+    ) {
+      return args
+    }
+
+    let sorts = args.sort
+
+    if (!Array.isArray(sorts)) {
+      sorts = [sorts]
+    }
+
+    const modifiedSort: any = {
+      fields: [],
+      order: [],
+    }
+
+    for (const sort of sorts) {
+      const { path, leaf } = pathObjectToPathString(sort)
+      modifiedSort.fields.push(path)
+      modifiedSort.order.push(leaf)
+    }
+
+    return {
+      ...args,
+      sort: modifiedSort,
+    }
+  }
+
+  return args
 }
