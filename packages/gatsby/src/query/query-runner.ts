@@ -2,8 +2,8 @@ import { Span } from "opentracing"
 import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
-import crypto from "crypto"
 import { ExecutionResult, GraphQLError } from "graphql"
+import { sha1 } from "gatsby-core-utils/hash"
 
 import path from "path"
 import { store } from "../redux"
@@ -172,10 +172,7 @@ export async function queryRunner(
   }
 
   const resultJSON = JSON.stringify(result)
-  const resultHash = crypto
-    .createHash(`sha1`)
-    .update(resultJSON)
-    .digest(`base64`)
+  const resultHash = await sha1(resultJSON)
 
   const resultHashCache = getResultHashCache()
 

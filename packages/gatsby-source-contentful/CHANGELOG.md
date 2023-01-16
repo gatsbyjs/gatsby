@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.4.1/packages/gatsby-source-contentful) (2023-01-13)
+
+#### Bug Fixes
+
+- maintain back reference map between runs [#37442](https://github.com/gatsbyjs/gatsby/issues/37442) [#37455](https://github.com/gatsbyjs/gatsby/issues/37455) ([efdc5fa](https://github.com/gatsbyjs/gatsby/commit/efdc5faa84dd72d68af97cb8f131ccfbf35d7ea0))
+
 ## [8.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.4.0/packages/gatsby-source-contentful) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
