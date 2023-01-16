@@ -4,96 +4,27 @@ import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
-import { VALID_NODE_NAMES } from "./constants"
 import {
   headExportValidator,
   filterHeadProps,
-  warnForInvalidTags,
   diffNodes,
+  getValidHeadNodes,
 } from "./utils"
 import { apiRunner } from "../api-runner-browser"
 
-const hiddenRoot = document.createElement(`div`)
-
 const removePrevHeadElements = () => {
   const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
-
   for (const node of prevHeadNodes) {
     node.parentNode.removeChild(node)
   }
+  const whatsLEft = document.querySelectorAll(`[data-gatsby-head]`)
 }
 
-// Get all context providers from tree
-function getProvidersFromTree(tree) {
-  const providers = []
-
-  function traverse(node) {
-    if (node.type && node.type._context) {
-      providers.push({ context: node.type._context, value: node.props.value })
-    }
-
-    if (node.props && node.props.children) {
-      React.Children.forEach(node.props.children, traverse)
-    }
-  }
-
-  traverse(tree)
-
-  return providers
-}
-
-function wrapWithProviders(element, providers) {
-  return providers.reduceRight((acc, provider) => {
-    console.log({ acc, provider })
-    return React.createElement(
-      provider.context.Provider,
-      { value: provider.value },
-      acc
-    )
-  }, element)
-}
+const hiddenRoot = document.createElement(`div`)
 
 const onHeadRendered = () => {
-  const validHeadNodes = []
-
-  const seenIds = new Map()
-  for (const node of hiddenRoot.childNodes) {
-    const nodeName = node.nodeName.toLowerCase()
-    const id = node.attributes?.id?.value
-
-    if (!VALID_NODE_NAMES.includes(nodeName)) {
-      warnForInvalidTags(nodeName)
-    } else {
-      let clonedNode = node.cloneNode(true)
-      clonedNode.setAttribute(`data-gatsby-head`, true)
-
-      // Create an element for scripts to make script work
-      if (clonedNode.nodeName.toLowerCase() === `script`) {
-        const script = document.createElement(`script`)
-        for (const attr of clonedNode.attributes) {
-          script.setAttribute(attr.name, attr.value)
-        }
-        script.innerHTML = clonedNode.innerHTML
-        clonedNode = script
-      }
-
-      if (id) {
-        if (!seenIds.has(id)) {
-          validHeadNodes.push(clonedNode)
-          seenIds.set(id, validHeadNodes.length - 1)
-        } else {
-          const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
-            validHeadNodes[indexOfPreviouslyInsertedNode]
-          )
-          validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
-        }
-      } else {
-        validHeadNodes.push(clonedNode)
-      }
-    }
-  }
-
+  const validHeadNodes = getValidHeadNodes(hiddenRoot)
+  console.log(`validHeadNodes`, validHeadNodes)
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
   if (existingHeadElements.length === 0) {
@@ -135,20 +66,14 @@ export function headHandlerForBrowser({
 
       const { render } = reactDOMUtils()
 
-      const HeadTree = (
-        <FireCallbackInEffect callback={onHeadRendered}>
-          <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>
-              <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
-            </LocationProvider>
-          </StaticQueryContext.Provider>
-        </FireCallbackInEffect>
+      const HeadElement = (
+        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
       )
 
-      const WrapHeadTree = apiRunner(
+      const WrapHeadElement = apiRunner(
         `wrapRootElement`,
-        { element: HeadTree },
-        HeadTree,
+        { element: HeadElement },
+        HeadElement,
         ({ result }) => {
           return { element: result }
         }
@@ -158,7 +83,11 @@ export function headHandlerForBrowser({
         // just a hack to call the callback after react has done first render
         // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
-        WrapHeadTree,
+        <FireCallbackInEffect callback={onHeadRendered}>
+          <StaticQueryContext.Provider value={staticQueryResults}>
+            <LocationProvider>{WrapHeadElement}</LocationProvider>
+          </StaticQueryContext.Provider>
+        </FireCallbackInEffect>,
         hiddenRoot
       )
     }

@@ -102,3 +102,60 @@ export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
     onNew(newNode)
   }
 }
+
+export function getValidHeadNodes(rootNode) {
+  let validHeadNodes = []
+  const seenIds = new Map()
+
+  for (const node of rootNode.childNodes) {
+    const nodeName = node.nodeName.toLowerCase()
+
+    if (isValidNodeName(nodeName)) {
+      const id = node.attributes?.id?.value
+      const clonedNode = node.cloneNode(true)
+      clonedNode.setAttribute(`data-gatsby-head`, true)
+
+      // This is hack to make script tags work
+      if (clonedNode.nodeName.toLowerCase() === `script`)
+        validHeadNodes.push(massageScript(node))
+
+      // Duplicate ids are not allowed in the head, so we need to dedupe them
+      if (id) {
+        if (!seenIds.has(id)) {
+          validHeadNodes.push(clonedNode)
+          seenIds.set(id, validHeadNodes.length - 1)
+        } else {
+          const indexOfPreviouslyInsertedNode = seenIds.get(id)
+          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
+            validHeadNodes[indexOfPreviouslyInsertedNode]
+          )
+          validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
+        }
+      } else {
+        validHeadNodes.push(clonedNode)
+      }
+    } else {
+      warnForInvalidTags(nodeName)
+    }
+
+    if (node.childNodes.length) {
+      validHeadNodes = validHeadNodes.concat(getValidHeadNodes(node))
+    }
+  }
+
+  return validHeadNodes
+}
+
+function massageScript(node) {
+  const script = document.createElement(`script`)
+  for (const attr of node.attributes) {
+    script.setAttribute(attr.name, attr.value)
+  }
+  script.innerHTML = node.innerHTML
+
+  return script
+}
+
+function isValidNodeName(nodeName) {
+  return VALID_NODE_NAMES.includes(nodeName)
+}
