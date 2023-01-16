@@ -661,7 +661,9 @@ export async function initialize({
     try {
       initialWebhookBody = JSON.parse(process.env.GATSBY_INITIAL_WEBHOOK_BODY)
     } catch (e) {
-      reporter.error(`Failed to parse GATSBY_INITIAL_WEBHOOK_BODY as JSON`)
+      reporter.error(
+        `Failed to parse GATSBY_INITIAL_WEBHOOK_BODY as JSON:\n"${e.message}"`
+      )
     }
   }
 
