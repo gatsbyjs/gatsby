@@ -21,6 +21,7 @@ import { IBuildContext } from "./types"
 import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
+import type { IDataLayerContext } from "./../state-machines/data-layer/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
@@ -71,12 +72,15 @@ process.on(`unhandledRejection`, (reason: unknown) => {
 // Otherwise leave commented out.
 // require(`../bootstrap/log-line-function`)
 
+type WebhookBody = IDataLayerContext["webhookBody"]
+
 export async function initialize({
   program: args,
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
   workerPool: WorkerPool.GatsbyWorkerPool
+  webhookBody?: WebhookBody
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -651,8 +655,14 @@ export async function initialize({
     }
   }
 
+  const initialWebhookBody: WebhookBody = process.env
+    .GATSBY_INITIAL_WEBHOOK_BODY
+    ? JSON.parse(process.env.GATSBY_INITIAL_WEBHOOK_BODY)
+    : undefined
+
   return {
     store,
     workerPool,
+    webhookBody: initialWebhookBody,
   }
 }
