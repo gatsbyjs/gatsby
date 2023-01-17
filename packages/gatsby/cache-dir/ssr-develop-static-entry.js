@@ -98,7 +98,6 @@ export default async function staticPage({
     }
 
     const setHtmlAttributes = attributes => {
-      console.log(`This got called`)
       htmlAttributes = merge(htmlAttributes, attributes)
     }
 
