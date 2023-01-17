@@ -17,14 +17,12 @@ const removePrevHeadElements = () => {
   for (const node of prevHeadNodes) {
     node.parentNode.removeChild(node)
   }
-  const whatsLEft = document.querySelectorAll(`[data-gatsby-head]`)
 }
 
 const hiddenRoot = document.createElement(`div`)
 
 const onHeadRendered = () => {
   const validHeadNodes = getValidHeadNodes(hiddenRoot)
-  console.log(`validHeadNodes`, validHeadNodes)
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
   if (existingHeadElements.length === 0) {
