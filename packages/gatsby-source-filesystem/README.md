@@ -1,35 +1,28 @@
 # gatsby-source-filesystem
 
-A Gatsby source plugin for sourcing data into your Gatsby application
-from your local filesystem.
+A Gatsby source plugin for sourcing data into your Gatsby application from your local filesystem.
 
-The plugin creates `File` nodes from files. The various "transformer"
-plugins can transform `File` nodes into various other types of data e.g.
-`gatsby-transformer-json` transforms JSON files into JSON data nodes and
-`gatsby-transformer-remark` transforms markdown files into `MarkdownRemark`
-nodes from which you can query an HTML representation of the markdown.
+The plugin creates `File` nodes from files. The various "transformer" plugins can transform `File` nodes into various other types of data e.g. [`gatsby-transformer-json`](https://www.gatsbyjs.com/plugins/gatsby-transformer-json/) transforms JSON files into JSON data nodes and [`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/) transforms markdown files into `MarkdownRemark` nodes from which you can query an HTML representation of the markdown.
 
 ## Install
 
-`npm install gatsby-source-filesystem`
+```shell
+npm install gatsby-source-filesystem
+```
 
 ## How to use
 
-```javascript
-// In your gatsby-config.js
+You can have multiple instances of this plugin to read source nodes from different locations on your filesystem. Be sure to give each instance a unique `name`.
+
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
-    // You can have multiple instances of this plugin
-    // to read source nodes from different locations on your
-    // filesystem.
-    //
-    // The following sets up the Jekyll pattern of having a
-    // "pages" directory for Markdown files and a "data" directory
-    // for `.json`, `.yaml`, `.csv`.
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        // The unique name for each instance
         name: `pages`,
+        // Path to the directory
         path: `${__dirname}/src/pages/`,
       },
     },
@@ -38,7 +31,10 @@ module.exports = {
       options: {
         name: `data`,
         path: `${__dirname}/src/data/`,
-        ignore: [`**/\.*`], // ignore files starting with a dot
+        // Ignore files starting with a dot
+        ignore: [`**/\.*`],
+        // Use "mtime" and "inode" to fingerprint files (to check if file has changed)
+        fastHash: true,
       },
     },
   ],
@@ -47,9 +43,23 @@ module.exports = {
 
 ## Options
 
-In addition to the name and path parameters you may pass an optional `ignore` array of file globs to ignore.
+### name
 
-They will be added to the following default list:
+**Required**
+
+A unique name for the `gatsby-source-filesytem` instance. This name will also be a key on the `File` node called `sourceInstanceName`. You can use this e.g. for filtering.
+
+### path
+
+**Required**
+
+Path to the folder that should be sourced. Ideally an absolute path.
+
+### ignore
+
+**Optional**
+
+Array of file globs to ignore. They will be added to the following default list:
 
 ```text
 **/*.un~
@@ -62,7 +72,23 @@ They will be added to the following default list:
 ../**/dist/**
 ```
 
+### fastHash
+
+**Optional**
+
+By default, `gatsby-source-filesystem` creates an MD5 hash of each file to determine if it has changed between sourcing. However, on sites with many large files this can lead to a significant slowdown. Thus you can enable the `fastHash` setting to use an alternative hashing mechanism.
+
+`fastHash` uses the `mtime` and `inode` to fingerprint the files. On a modern OS this can be considered a robust solution to determine if a file has changed, however on older systems it can be unreliable. Therefore it's not enabled by default.
+
+### Environment variables
+
 To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
+
+In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
+
+- `GATSBY_STALL_RETRY_LIMIT`, default: `3`
+- `GATSBY_STALL_TIMEOUT`, default: `30000`
+- `GATSBY_CONNECTION_TIMEOUT`, default: `30000`
 
 ## How to query
 
@@ -263,7 +289,7 @@ The `createFileNodeFromBuffer` helper accepts a `Buffer`, caches its contents to
 
 The name of the file can be passed to the `createFileNodeFromBuffer` helper. If no name is given, the content hash will be used to determine the name.
 
-## Example usage
+#### Example usage
 
 The following example is adapted from the source of [`gatsby-source-mysql`](https://github.com/malcolm-kee/gatsby-source-mysql):
 
@@ -338,11 +364,3 @@ function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
 
 module.exports = createMySqlNodes
 ```
-
-## Troubleshooting
-
-In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
-
-- `GATSBY_STALL_RETRY_LIMIT`, default: `3`
-- `GATSBY_STALL_TIMEOUT`, default: `30000`
-- `GATSBY_CONNECTION_TIMEOUT`, default: `30000`
