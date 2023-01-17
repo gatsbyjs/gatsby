@@ -177,13 +177,11 @@ export default async function staticPage({
 
     const setHtmlAttributes = attributes => {
       // TODO - we should remove deep merges
-      console.log({ htmlAttributes, attributes })
       htmlAttributes = deepMerge(htmlAttributes, attributes)
     }
 
     const setBodyAttributes = attributes => {
       // TODO - we should remove deep merges
-      console.log({ bodyAttributes, attributes })
       bodyAttributes = deepMerge(bodyAttributes, attributes)
     }
 
