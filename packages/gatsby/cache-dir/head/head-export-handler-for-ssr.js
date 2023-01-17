@@ -67,12 +67,12 @@ export function headHandlerForSSR({
       }
 
       if (rawTagName === `html`) {
-        setHtmlAttributes(node.attributes, true)
+        setHtmlAttributes(node.attributes)
         continue
       }
 
       if (rawTagName === `body`) {
-        setBodyAttributes(node.attributes, true)
+        setBodyAttributes(node.attributes)
         continue
       }
 
