@@ -1,4 +1,5 @@
 import { VALID_NODE_NAMES } from "./constants"
+import React from "react"
 
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
@@ -109,9 +110,9 @@ export function getValidHeadNodes(rootNode) {
 
   for (const node of rootNode.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
+    const id = node.attributes?.id?.value
 
     if (isValidNodeName(nodeName)) {
-      const id = node.attributes?.id?.value
       const clonedNode = node.cloneNode(true)
       clonedNode.setAttribute(`data-gatsby-head`, true)
 
@@ -140,6 +141,61 @@ export function getValidHeadNodes(rootNode) {
 
     if (node.childNodes.length) {
       validHeadNodes = validHeadNodes.concat(getValidHeadNodes(node))
+    }
+  }
+
+  return validHeadNodes
+}
+
+export function getValidHeadNodeForSSR(rootNode) {
+  const validHeadNodes = []
+  const seenIds = new Map()
+
+  for (const node of rootNode.childNodes) {
+    const { rawTagName } = node
+    const id = node.attributes?.id
+
+    if (isValidNodeName(rawTagName)) {
+      let element
+      const attributes = { ...node.attributes, "data-gatsby-head": true }
+
+      if (rawTagName === `script`) {
+        element = (
+          <script
+            {...attributes}
+            dangerouslySetInnerHTML={{
+              __html: node.text,
+            }}
+          />
+        )
+      } else {
+        element =
+          node.textContent.length > 0 ? (
+            <node.rawTagName {...attributes}>
+              {node.textContent}
+            </node.rawTagName>
+          ) : (
+            <node.rawTagName {...attributes} />
+          )
+      }
+
+      if (id) {
+        if (!seenIds.has(id)) {
+          validHeadNodes.push(element)
+          seenIds.set(id, validHeadNodes.length - 1)
+        } else {
+          const indexOfPreviouslyInsertedNode = seenIds.get(id)
+          validHeadNodes[indexOfPreviouslyInsertedNode] = element
+        }
+      } else {
+        validHeadNodes.push(element)
+      }
+    } else {
+      warnForInvalidTags(rawTagName)
+    }
+
+    if (node.childNodes.length) {
+      validHeadNodes.push(...getValidHeadNodeForSSR(node))
     }
   }
 
