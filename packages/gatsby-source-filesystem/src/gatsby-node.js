@@ -167,6 +167,11 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       Joi.object().regex(),
       Joi.function()
     ),
+    usePolling: Joi.boolean()
+      .default(false)
+      .description(
+        `Configure the "usePolling" option of https://github.com/paulmillr/chokidar`
+      ),
   })
 
 exports.sourceNodes = (api, pluginOptions) => {
@@ -207,6 +212,7 @@ See docs here - https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/
       `../**/dist/**`,
       ...(pluginOptions.ignore || []),
     ],
+    usePolling: pluginOptions.usePolling,
   })
 
   watcher.on(`add`, path => {
