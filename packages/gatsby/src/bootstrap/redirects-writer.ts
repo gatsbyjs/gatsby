@@ -1,10 +1,9 @@
 import _ from "lodash"
-import crypto from "crypto"
 import fs from "fs-extra"
+import { joinPath, md5 } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
 import { store, emitter } from "../redux"
 import { IRedirect } from "../redux/types"
-import { joinPath } from "gatsby-core-utils"
-import reporter from "gatsby-cli/lib/reporter"
 
 let lastHash: string | null = null
 let bootstrapFinished = false
@@ -53,10 +52,7 @@ export const writeRedirects = async (): Promise<void> => {
     )
   }
 
-  const newHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(browserRedirects))
-    .digest(`hex`)
+  const newHash = await md5(JSON.stringify(browserRedirects))
 
   if (newHash === lastHash) {
     return

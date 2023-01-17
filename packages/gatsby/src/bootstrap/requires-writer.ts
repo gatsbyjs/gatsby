@@ -1,11 +1,9 @@
 import _ from "lodash"
 import path from "path"
 import fs from "fs-extra"
-import crypto from "crypto"
-import { slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { match } from "@gatsbyjs/reach-router"
-import { joinPath } from "gatsby-core-utils"
+import { joinPath, md5, slash } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types"
 import {
@@ -177,22 +175,6 @@ const getMatchPaths = (
     })
 }
 
-const createHash = (
-  matchPaths: Array<IGatsbyPageMatchPath>,
-  components: Array<IGatsbyPageComponent>,
-  cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent>
-): string =>
-  crypto
-    .createHash(`md5`)
-    .update(
-      JSON.stringify({
-        matchPaths,
-        components,
-        cleanedSSRVisitedPageComponents,
-      })
-    )
-    .digest(`hex`)
-
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   const { program, slices } = state
@@ -212,10 +194,12 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     )
   }
 
-  const newHash = createHash(
-    matchPaths,
-    components,
-    cleanedSSRVisitedPageComponents
+  const newHash = await md5(
+    JSON.stringify({
+      matchPaths,
+      components,
+      cleanedSSRVisitedPageComponents,
+    })
   )
 
   if (newHash === lastHash) {

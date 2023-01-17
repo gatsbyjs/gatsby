@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.1/packages/gatsby) (2023-01-13)
+
+#### Bug Fixes
+
+- Use correct settings for yaml-loader [#37454](https://github.com/gatsbyjs/gatsby/issues/37454) [#37463](https://github.com/gatsbyjs/gatsby/issues/37463) ([8109b9b](https://github.com/gatsbyjs/gatsby/commit/8109b9b1c950a7371f965be9dd1d8b19b64796f0))
+
 ## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.0/packages/gatsby) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
