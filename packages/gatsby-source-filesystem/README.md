@@ -78,7 +78,7 @@ Array of file globs to ignore. They will be added to the following default list:
 
 By default, `gatsby-source-filesystem` creates an MD5 hash of each file to determine if it has changed between sourcing. However, on sites with many large files this can lead to a significant slowdown. Thus you can enable the `fastHash` setting to use an alternative hashing mechanism.
 
-`fastHash` uses the `mtime` and `inode` to fingerprint the files. On a modern OS this can be considered a robust solution to determine if a file changed, however on older systems it can be unreliable. Therefore it's not enabled by default.
+`fastHash` uses the `mtime` and `inode` to fingerprint the files. On a modern OS this can be considered a robust solution to determine if a file has changed, however on older systems it can be unreliable. Therefore it's not enabled by default.
 
 ### Environment variables
 
