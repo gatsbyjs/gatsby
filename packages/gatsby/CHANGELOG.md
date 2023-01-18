@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.4.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.2/packages/gatsby) (2023-01-17)
+
+#### Bug Fixes
+
+- nodeModel.findAll supports v5 sort argument structure [#37477](https://github.com/gatsbyjs/gatsby/issues/37477) [#37479](https://github.com/gatsbyjs/gatsby/issues/37479) ([00ed53a](https://github.com/gatsbyjs/gatsby/commit/00ed53a7c80c0670aec787a88c81335947ea7e9c))
+
 ### [5.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.1/packages/gatsby) (2023-01-13)
 
 #### Bug Fixes
