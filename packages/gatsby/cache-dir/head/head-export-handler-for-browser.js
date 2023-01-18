@@ -30,7 +30,12 @@ const removePrevBodyAttributes = () => {
   })
 }
 
-const updateAttribute = (tagName, attributeName, attributeValue) => {
+const updateAttribute = (
+  tagName,
+  attributeName,
+  attributeValue,
+  attributesList
+) => {
   const elementTag = document.getElementsByTagName(tagName)[0]
 
   if (!elementTag) {
@@ -38,7 +43,7 @@ const updateAttribute = (tagName, attributeName, attributeValue) => {
   }
 
   elementTag.setAttribute(attributeName, attributeValue)
-  htmlAttributesList.add(attributeName)
+  attributesList.add(attributeName)
 }
 
 const removePrevHeadElements = () => {
@@ -64,14 +69,24 @@ const onHeadRendered = () => {
 
     if (nodeName === `html`) {
       for (const attribute of node.attributes) {
-        updateAttribute(`html`, attribute.name, attribute.value)
+        updateAttribute(
+          `html`,
+          attribute.name,
+          attribute.value,
+          htmlAttributesList
+        )
       }
       continue
     }
 
     if (nodeName === `body`) {
       for (const attribute of node.attributes) {
-        updateAttribute(`body`, attribute.name, attribute.value)
+        updateAttribute(
+          `body`,
+          attribute.name,
+          attribute.value,
+          bodyAttributesList
+        )
       }
       continue
     }
