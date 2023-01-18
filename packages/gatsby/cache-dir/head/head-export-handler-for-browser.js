@@ -126,6 +126,25 @@ const onHeadRendered = () => {
 }
 
 if (process.env.BUILD_STAGE === `develop`) {
+  // sigh ... <html> and <body> elements are not valid descedents of <div> (our hidden element)
+  // react-dom in dev mode will warn about this. There doesn't seem to be a way to render arbitrary
+  // user Head without hitting this issue (our hidden element could be just "new Document()", but
+  // this can only have 1 child, and we don't control what is being rendered so that's not an option)
+  // instead we continue to render to <div>, and just silence warnings for <html> and <body> elements
+  // https://github.com/facebook/react/blob/e2424f33b3ad727321fc12e75c5e94838e84c2b5/packages/react-dom-bindings/src/client/validateDOMNesting.js#L498-L520
+  const originalConsoleError = console.error.bind(console)
+  console.error = (...args) => {
+    if (
+      Array.isArray(args) &&
+      args.length >= 2 &&
+      args[0]?.includes(`validateDOMNesting(...): %s cannot appear as`) &&
+      (args[1] === `<html>` || args[1] === `<body>`)
+    ) {
+      return
+    }
+    return originalConsoleError(...args)
+  }
+
   // We set up observer to be able to regenerate <head> after react-refresh
   // updates our hidden element.
   const observer = new MutationObserver(onHeadRendered)
