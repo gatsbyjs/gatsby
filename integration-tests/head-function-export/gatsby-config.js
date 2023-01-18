@@ -7,5 +7,8 @@ module.exports = {
     title: "head-function-export",
     headFunctionExport: headFunctionExportData.queried,
   },
+  flags: {
+    DEV_SSR: true,
+  },
   plugins: [],
 }
