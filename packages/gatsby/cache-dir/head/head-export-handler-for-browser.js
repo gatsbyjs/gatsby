@@ -117,9 +117,9 @@ const onHeadRendered = () => {
 
         continue
       }
+    } else {
+      validHeadNodes.push(clonedNode)
     }
-
-    validHeadNodes.push(clonedNode)
   }
 
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
