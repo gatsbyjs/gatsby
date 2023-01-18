@@ -59,7 +59,7 @@ export { Head } from "../another/location"
 
 ### Editing `<html>` and `<body>`
 
-> Support for the editing `<html>` and `<body>` added in in `gatsby@5.5.0`.
+> Support for the editing `<html>` and `<body>` added in `gatsby@5.5.0`.
 
 You can set `<html>` and `<body>` attributes:
 
@@ -109,7 +109,7 @@ You'll need to be aware of these things when using Gatsby Head:
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, `script`, and `noscript`.
-- `html` and `body` elements insde the `Head` function allow for setting attributes for those tags.
+- `html` and `body` tags insde the `Head` function are used for setting attributes for those tags.
 - Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 - As of now, `Head` can't access [React Context](https://reactjs.org/docs/context.html) that you defined in the [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement).
 
