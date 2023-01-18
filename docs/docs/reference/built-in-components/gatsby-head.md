@@ -57,6 +57,28 @@ export default Page
 export { Head } from "../another/location"
 ```
 
+### Editing `<html>` and `<body>`
+
+> Support for the editing `<html>` and `<body>` added in in `gatsby@5.5.0`.
+
+You can set `<html>` and `<body>` attributes:
+
+```jsx
+export function Head() {
+  return (
+    <>
+      <!-- highlight-start -->
+      <html lang="en">
+      <body className="my-body-class">
+      <!-- highlight-end -->
+      <title>Hello World</title>
+    </>
+  )
+}
+```
+
+Gatsby will use provided attributes and inject them into resulting html.
+
 ### Deduplication
 
 To avoid duplicate tags in your `<head>` you can use the `id` property on your tags to make sure that only one is rendered. Given the following example:
@@ -87,6 +109,7 @@ You'll need to be aware of these things when using Gatsby Head:
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, `script`, and `noscript`.
+- `html` and `body` elements insde the `Head` function allow for setting attributes for those tags.
 - Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 - As of now, `Head` can't access [React Context](https://reactjs.org/docs/context.html) that you defined in the [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement).
 
@@ -110,18 +133,6 @@ export const Head = ({ location, params, data, pageContext }) => (
     />
   </>
 )
-```
-
-## Editing `<html>` and `<body>`
-
-The scope of Gatsby Head is to modify the `<head>` portion of your pages. To edit other parts like `<html>` or `<body>`, please use the [Gatsby Server Rendering APIs](/docs/reference/config-files/gatsby-ssr/).
-
-One common use case is to modify the `<html>` element to e.g. add a `lang` attribute. You can achieve this the following way:
-
-```js:title=gatsby-ssr.js
-exports.onRenderBody = ({ setHtmlAttributes }) => {
-  setHtmlAttributes({ lang: "en" })
-}
 ```
 
 ## Additional Resources
