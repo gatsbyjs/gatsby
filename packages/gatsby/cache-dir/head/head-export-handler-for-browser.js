@@ -140,7 +140,7 @@ if (process.env.BUILD_STAGE === `develop`) {
       args[0]?.includes(`validateDOMNesting(...): %s cannot appear as`) &&
       (args[1] === `<html>` || args[1] === `<body>`)
     ) {
-      return
+      return undefined
     }
     return originalConsoleError(...args)
   }
