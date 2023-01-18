@@ -368,6 +368,8 @@ export default async function staticPage({
       pathPrefix: __PATH_PREFIX__,
     })
 
+    // we want to run Head after onRenderBody, so Html and Body attributes
+    // from Head wins over global ones from onRenderBody
     headHandlerForSSR({
       pageComponent,
       setHeadComponents,
