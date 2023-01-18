@@ -17,7 +17,7 @@ export function filterHeadProps(input) {
 }
 
 /**
- * Throw error if Head export is not a valid
+ * Throw error if Head export is not a valid function
  */
 export function headExportValidator(head) {
   if (typeof head !== `function`)
@@ -41,14 +41,14 @@ if (process.env.NODE_ENV !== `production`) {
 }
 
 /**
- * Warn for invalid tags in head.
+ * Warn for invalid tags in Head which may have been directly added or introduced by `wrapRootElement`
  * @param {string} tagName
  */
 export function warnForInvalidTags(tagName) {
   if (process.env.NODE_ENV !== `production`) {
-    const warning = `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
+    const warning = `<${tagName}> is not a valid head element. You can only use one of the following: ${VALID_NODE_NAMES.join(
       `, `
-    )}`
+    )}. You should also make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements`
 
     warnOnce(warning)
   }
@@ -105,10 +105,11 @@ export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
 }
 
 export function getValidHeadNodes(rootNode) {
-  let validHeadNodes = []
+  const validHeadNodes = []
   const seenIds = new Map()
 
-  for (const node of rootNode.childNodes) {
+  // Filter out non-element nodes before since we don't care about them
+  for (const node of getNodesOfElementType(rootNode.childNodes)) {
     const nodeName = node.nodeName.toLowerCase()
     const id = node.attributes?.id?.value
 
@@ -139,8 +140,10 @@ export function getValidHeadNodes(rootNode) {
       warnForInvalidTags(nodeName)
     }
 
+    // We only want to contine the recursive check if the childNodes of a node has elment node
     if (node.childNodes.length) {
-      validHeadNodes = validHeadNodes.concat(getValidHeadNodes(node))
+      // Filter out non-element nodes since we don't care about them
+      validHeadNodes.push(...getValidHeadNodes(node))
     }
   }
 
@@ -151,7 +154,8 @@ export function getValidHeadNodeForSSR(rootNode) {
   const validHeadNodes = []
   const seenIds = new Map()
 
-  for (const node of rootNode.childNodes) {
+  // Filter out non-element nodes before looping since we don't care about them
+  for (const node of getNodesOfElementType(rootNode.childNodes)) {
     const { rawTagName } = node
     const id = node.attributes?.id
 
@@ -214,4 +218,11 @@ function massageScript(node) {
 
 function isValidNodeName(nodeName) {
   return VALID_NODE_NAMES.includes(nodeName)
+}
+/*
+ * For Head, we only care about element nodes(type = 1), so we filter out the rest
+ * For Node type, see https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+ */
+function getNodesOfElementType(nodes) {
+  return Array.from(nodes).filter(childNode => childNode.nodeType === 1)
 }
