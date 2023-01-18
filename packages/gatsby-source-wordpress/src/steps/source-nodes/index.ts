@@ -12,23 +12,18 @@ import { sourcePreviews } from "~/steps/preview"
 const sourceNodes: Step = async helpers => {
   const { cache, webhookBody, refetchAll } = helpers
 
-  // if this is a preview we want to process it and return early
-  if (webhookBody.preview) {
-    await sourcePreviews(helpers)
-
-    return
-  }
-  // if it's not a preview but we have a token
-  // we should source any pending previews then continue sourcing
-  else if (webhookBody.token && webhookBody.userDatabaseId) {
-    await sourcePreviews(helpers)
-  }
-
-  const now = Date.now()
-
   // fetch non-node root fields such as settings.
   // For now, we're refetching them on every build
   const nonNodeRootFieldsPromise = fetchAndCreateNonNodeRootFields()
+
+  // if this is a preview we want to process it and return early
+  if (webhookBody.token && webhookBody.userDatabaseId) {
+    await sourcePreviews(helpers)
+    await nonNodeRootFieldsPromise
+    return
+  }
+
+  const now = Date.now()
 
   const lastCompletedSourceTime =
     webhookBody.refreshing && webhookBody.since
