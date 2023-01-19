@@ -1,6 +1,9 @@
 import { VALID_NODE_NAMES } from "./constants"
 import React from "react"
 
+const htmlAttributesList = new Set()
+const bodyAttributesList = new Set()
+
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
  * This e.g. filters out properties that are undefined during SSR.
@@ -108,41 +111,55 @@ export function getValidHeadNodes(rootNode) {
   const validHeadNodes = []
   const seenIds = new Map()
 
-  // Filter out non-element nodes before since we don't care about them
+  // Filter out non-element nodes before looping since we don't care about them
   for (const node of getNodesOfElementType(rootNode.childNodes)) {
     const nodeName = node.nodeName.toLowerCase()
     const id = node.attributes?.id?.value
 
     if (isValidNodeName(nodeName)) {
-      const clonedNode = node.cloneNode(true)
-      clonedNode.setAttribute(`data-gatsby-head`, true)
-
-      // This is hack to make script tags work
-      if (clonedNode.nodeName.toLowerCase() === `script`)
-        validHeadNodes.push(massageScript(node))
-
-      // Duplicate ids are not allowed in the head, so we need to dedupe them
-      if (id) {
-        if (!seenIds.has(id)) {
-          validHeadNodes.push(clonedNode)
-          seenIds.set(id, validHeadNodes.length - 1)
-        } else {
-          const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
-            validHeadNodes[indexOfPreviouslyInsertedNode]
+      // <html> and <body> tags are treated differently, in that we don't  render them, we only  extract the attributes and apply them
+      if (nodeName === `html` || nodeName === `body`) {
+        for (const attribute of node.attributes) {
+          const attributesList =
+            nodeName === `html` ? htmlAttributesList : bodyAttributesList
+          updateAttribute(
+            nodeName,
+            attribute.name,
+            attribute.value,
+            attributesList
           )
-          validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
         }
       } else {
-        validHeadNodes.push(clonedNode)
+        const clonedNode = node.cloneNode(true)
+        clonedNode.setAttribute(`data-gatsby-head`, true)
+
+        // This is hack to make script tags work
+        if (clonedNode.nodeName.toLowerCase() === `script`)
+          validHeadNodes.push(massageScript(node))
+
+        // Duplicate ids are not allowed in the head, so we need to dedupe them
+        if (id) {
+          if (!seenIds.has(id)) {
+            validHeadNodes.push(clonedNode)
+            seenIds.set(id, validHeadNodes.length - 1)
+          } else {
+            const indexOfPreviouslyInsertedNode = seenIds.get(id)
+            validHeadNodes[
+              indexOfPreviouslyInsertedNode
+            ].parentNode?.removeChild(
+              validHeadNodes[indexOfPreviouslyInsertedNode]
+            )
+            validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
+          }
+        } else {
+          validHeadNodes.push(clonedNode)
+        }
       }
     } else {
       warnForInvalidTags(nodeName)
     }
 
-    // We only want to contine the recursive check if the childNodes of a node has elment node
     if (node.childNodes.length) {
-      // Filter out non-element nodes since we don't care about them
       validHeadNodes.push(...getValidHeadNodes(node))
     }
   }
@@ -150,7 +167,10 @@ export function getValidHeadNodes(rootNode) {
   return validHeadNodes
 }
 
-export function getValidHeadNodeForSSR(rootNode) {
+export function getValidHeadNodeForSSR(
+  rootNode,
+  { setHtmlAttributes, setBodyAttributes }
+) {
   const validHeadNodes = []
   const seenIds = new Map()
 
@@ -160,46 +180,55 @@ export function getValidHeadNodeForSSR(rootNode) {
     const id = node.attributes?.id
 
     if (isValidNodeName(rawTagName)) {
-      let element
-      const attributes = { ...node.attributes, "data-gatsby-head": true }
+      if (rawTagName === `html` || rawTagName === `body`) {
+        if (rawTagName === `html`) setHtmlAttributes(node.attributes)
 
-      if (rawTagName === `script`) {
-        element = (
-          <script
-            {...attributes}
-            dangerouslySetInnerHTML={{
-              __html: node.text,
-            }}
-          />
-        )
+        if (rawTagName === `body`) setBodyAttributes(node.attributes)
       } else {
-        element =
-          node.textContent.length > 0 ? (
-            <node.rawTagName {...attributes}>
-              {node.textContent}
-            </node.rawTagName>
-          ) : (
-            <node.rawTagName {...attributes} />
+        let element
+        const attributes = { ...node.attributes, "data-gatsby-head": true }
+
+        if (rawTagName === `script`) {
+          element = (
+            <script
+              {...attributes}
+              dangerouslySetInnerHTML={{
+                __html: node.text,
+              }}
+            />
           )
-      }
-
-      if (id) {
-        if (!seenIds.has(id)) {
-          validHeadNodes.push(element)
-          seenIds.set(id, validHeadNodes.length - 1)
         } else {
-          const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode] = element
+          element =
+            node.textContent.length > 0 ? (
+              <node.rawTagName {...attributes}>
+                {node.textContent}
+              </node.rawTagName>
+            ) : (
+              <node.rawTagName {...attributes} />
+            )
         }
-      } else {
-        validHeadNodes.push(element)
+
+        if (id) {
+          if (!seenIds.has(id)) {
+            validHeadNodes.push(element)
+            seenIds.set(id, validHeadNodes.length - 1)
+          } else {
+            const indexOfPreviouslyInsertedNode = seenIds.get(id)
+            validHeadNodes[indexOfPreviouslyInsertedNode] = element
+          }
+        } else {
+          validHeadNodes.push(element)
+        }
       }
     } else {
       warnForInvalidTags(rawTagName)
     }
 
     if (node.childNodes.length) {
-      validHeadNodes.push(...getValidHeadNodeForSSR(node))
+      validHeadNodes.push(...getValidHeadNodeForSSR(node), {
+        setHtmlAttributes,
+        setBodyAttributes,
+      })
     }
   }
 
@@ -225,4 +254,41 @@ function isValidNodeName(nodeName) {
  */
 function getNodesOfElementType(nodes) {
   return Array.from(nodes).filter(childNode => childNode.nodeType === 1)
+}
+
+function updateAttribute(
+  tagName,
+  attributeName,
+  attributeValue,
+  attributesList
+) {
+  const elementTag = document.getElementsByTagName(tagName)[0]
+
+  if (!elementTag) {
+    return
+  }
+
+  elementTag.setAttribute(attributeName, attributeValue)
+  attributesList.add(attributeName)
+}
+
+export function removePrevHtmlAttributes() {
+  htmlAttributesList.forEach(attributeName => {
+    const elementTag = document.getElementsByTagName(`html`)[0]
+    elementTag.removeAttribute(attributeName)
+  })
+}
+
+export function removePrevBodyAttributes() {
+  bodyAttributesList.forEach(attributeName => {
+    const elementTag = document.getElementsByTagName(`body`)[0]
+    elementTag.removeAttribute(attributeName)
+  })
+}
+
+export function removePrevHeadElements() {
+  const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
+  for (const node of prevHeadNodes) {
+    node.parentNode.removeChild(node)
+  }
 }
