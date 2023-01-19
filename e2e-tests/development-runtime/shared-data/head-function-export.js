@@ -50,6 +50,7 @@ const data = {
     noscript: `You may be a puzzle, but I like the way the parts fit`,
     style: `green`,
     link: `/used-by-head-function-export-ssr.css`,
+    serverData: { hello: `world` },
   },
   invalidElements: {
     title: `I should actually be inserted, unlike the others`,
