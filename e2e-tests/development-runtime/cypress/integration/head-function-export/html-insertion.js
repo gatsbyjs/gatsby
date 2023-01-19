@@ -97,5 +97,8 @@ describe(`Head function export html insertion`, () => {
     cy.getTestElement(`link`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.ssr.link)
+    cy.getTestElement(`server-data`)
+      .invoke(`attr`, `content`)
+      .should(`equal`, JSON.stringify(data.ssr.serverData))
   })
 })
