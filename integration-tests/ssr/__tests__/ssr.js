@@ -64,6 +64,24 @@ describe(`SSR`, () => {
     const ssrHead = ssrDom.querySelector(`[data-testid=title]`)
 
     expect(devSsrHead.textContent).toEqual(ssrHead.textContent)
+    expect(devSsrDom.querySelector(`html`).attributes).toEqual(
+      ssrDom.querySelector(`html`).attributes
+    )
+    expect(devSsrDom.querySelector(`html`).attributes).toMatchInlineSnapshot(`
+      Object {
+        "data-foo": "bar",
+        "lang": "fr",
+      }
+    `)
+
+    expect(devSsrDom.querySelector(`body`).attributes).toEqual(
+      ssrDom.querySelector(`body`).attributes
+    )
+    expect(devSsrDom.querySelector(`body`).attributes).toMatchInlineSnapshot(`
+      Object {
+        "data-foo": "baz",
+      }
+    `)
   })
 
   describe(`it generates an error page correctly`, () => {

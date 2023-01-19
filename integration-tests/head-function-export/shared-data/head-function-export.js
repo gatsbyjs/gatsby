@@ -8,6 +8,7 @@ const page = {
   warnings: `${path}/warnings/`,
   allProps: `${path}/all-props/`,
   deduplication: `${path}/deduplication/`,
+  bodyAndHtmlAttributes: `${path}/html-and-body-attributes/`,
 }
 
 const data = {

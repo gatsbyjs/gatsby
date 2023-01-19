@@ -162,14 +162,6 @@ export default async function staticPage({
 
     const pageComponent = await syncRequires.ssrComponents[componentChunkName]
 
-    headHandlerForSSR({
-      pageComponent,
-      setHeadComponents,
-      staticQueryContext: getStaticQueryResults(),
-      pageData,
-      pagePath,
-    })
-
     let scriptsAndStyles = flatten(
       [`commons`].map(chunkKey => {
         const fetchKey = `assetsByChunkName[${chunkKey}]`
@@ -312,6 +304,18 @@ export default async function staticPage({
       setPostBodyComponents,
       setBodyProps,
       pathname: pagePath,
+    })
+
+    // we want to run Head after onRenderBody, so Html and Body attributes
+    // from Head wins over global ones from onRenderBody
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      staticQueryContext: getStaticQueryResults(),
+      pageData,
+      pagePath,
     })
 
     apiRunner(`onPreRenderHTML`, {
