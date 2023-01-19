@@ -130,13 +130,13 @@ export function getValidHeadNodes(rootNode) {
           )
         }
       } else {
-        const clonedNode = node.cloneNode(true)
+        let clonedNode = node.cloneNode(true)
         clonedNode.setAttribute(`data-gatsby-head`, true)
 
-        // This is hack to make script tags work
-        if (clonedNode.nodeName.toLowerCase() === `script`)
-          validHeadNodes.push(massageScript(node))
-
+        // // This is hack to make script tags work
+        if (clonedNode.nodeName.toLowerCase() === `script`) {
+          clonedNode = massageScript(clonedNode)
+        }
         // Duplicate ids are not allowed in the head, so we need to dedupe them
         if (id) {
           if (!seenIds.has(id)) {

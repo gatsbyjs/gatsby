@@ -9,7 +9,7 @@ const {
 const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
-import { apiRunner } from "../api-runner-browser"
+import { apiRunner } from "../api-runner-ssr"
 
 export function headHandlerForSSR({
   pageComponent,
