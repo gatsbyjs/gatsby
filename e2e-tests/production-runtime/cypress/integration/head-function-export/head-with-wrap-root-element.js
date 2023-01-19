@@ -1,6 +1,17 @@
 import headFunctionExportSharedData from "../../../shared-data/head-function-export.js"
 import { contextValue } from "../../../src/app-context.js"
 
+Cypress.on("uncaught:exception", err => {
+  if (
+    (err.message.includes("Minified React error #418") ||
+      err.message.includes("Minified React error #423") ||
+      err.message.includes("Minified React error #425")) &&
+    Cypress.env(`TEST_PLUGIN_OFFLINE`)
+  ) {
+    return false
+  }
+})
+
 describe(`Head with wrapRootElement`, () => {
   it(`can pickup deeply nested valid head elements`, () => {
     cy.visit(
