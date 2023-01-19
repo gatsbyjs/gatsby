@@ -23,7 +23,7 @@ export const fetchAndCreateSingleNode = async ({
   singleName,
   id,
   actionType,
-  cachedNodeIds,
+  cachedNodeIds = [],
   token = null,
   isPreview = false,
   isDraft = false,
