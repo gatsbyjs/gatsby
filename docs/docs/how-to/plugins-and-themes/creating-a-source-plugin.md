@@ -217,17 +217,15 @@ The above snippet shows a contrived example for the `cache`, but it can be used 
 exports.sourceNodes = async ({ cache }) => {
   // get the last timestamp from the cache
   const lastFetched = await cache.get(`timestamp`)
-
+  const newTimestamp = Date.now()
   // pull data from some remote source using cached data as an option in the request
   const data = await fetch(
     `https://remotedatasource.com/posts?lastUpdated=${lastFetched}`
   )
+ 
+  // If the fetch succeeds, store the new timestamp in the cache
+  await cache.set(`timestamp`, newTimestamp)
   // ...
-}
-
-exports.onPostBuild = async ({ cache }) => {
-  // set a timestamp at the end of the build
-  await cache.set(`timestamp`, Date.now())
 }
 ```
 
