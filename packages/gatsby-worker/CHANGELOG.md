@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.4.0/packages/gatsby-worker) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- update dependency signal-exit to ^3.0.7 for gatsby-worker [#37376](https://github.com/gatsbyjs/gatsby/issues/37376) ([03297ff](https://github.com/gatsbyjs/gatsby/commit/03297ff333d88c2821550a3f9a3278eb41d05300))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
+#### Other Changes
+
+- increase jest timeout [#37325](https://github.com/gatsbyjs/gatsby/issues/37325) ([5498013](https://github.com/gatsbyjs/gatsby/commit/549801302c0e5ce13c16be7a0f49a97e6389d418))
+
 ## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.3.0/packages/gatsby-worker) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)

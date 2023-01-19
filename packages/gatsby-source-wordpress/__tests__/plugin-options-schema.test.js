@@ -1,4 +1,4 @@
-import { testPluginOptionsSchema } from "gatsby-plugin-utils/dist/test-plugin-options-schema"
+import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "gatsby-source-wordpress/dist/steps/declare-plugin-options-schema"
 
 describe(`pluginOptionsSchema`, () => {

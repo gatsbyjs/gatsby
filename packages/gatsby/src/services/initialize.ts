@@ -2,8 +2,7 @@ import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
 import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
-import md5File from "md5-file"
-import crypto from "crypto"
+import { md5, md5File } from "gatsby-core-utils"
 import path from "path"
 import telemetry from "gatsby-telemetry"
 import glob from "globby"
@@ -338,10 +337,7 @@ export async function initialize({
     )
   )
 
-  const pluginsHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(pluginVersions.concat(hashes)))
-    .digest(`hex`)
+  const pluginsHash = await md5(JSON.stringify(pluginVersions.concat(hashes)))
 
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 

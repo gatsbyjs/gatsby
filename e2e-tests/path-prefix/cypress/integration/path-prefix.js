@@ -98,3 +98,15 @@ describe(`Production pathPrefix`, () => {
     cy.getTestElement(`server-data`).contains(`foo`)
   })
 })
+
+describe(`pathPrefix with assets handled by file-loader`, () => {
+  beforeEach(() => {
+    cy.visit(`/file-loader/`).waitForRouteChange()
+  })
+
+  it(`prefixes an asset`, () => {
+    cy.getTestElement(`file-loader-image`)
+      .invoke(`attr`, `src`)
+      .should(`include`, withTrailingSlash(pathPrefix))
+  })
+})

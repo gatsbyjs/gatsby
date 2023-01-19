@@ -1,6 +1,6 @@
 {
   "name": "gatsby-codemods",
-  "version": "4.5.0-next.0",
+  "version": "4.5.0-next.1",
   "description": "A collection of codemod scripts for use with JSCodeshift that help migrate to newer versions of Gatsby.",
   "main": "index.js",
   "scripts": {
@@ -31,8 +31,8 @@
     "@babel/runtime": "^7.20.7",
     "execa": "^5.1.1",
     "graphql": "^16.6.0",
-    "jscodeshift": "^0.12.0",
-    "recast": "^0.20.5"
+    "jscodeshift": "0.13.1",
+    "recast": "0.20.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

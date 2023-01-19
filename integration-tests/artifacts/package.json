@@ -18,7 +18,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "fs-extra": "^10.1.0",
-    "jest": "^27.2.1"
+    "fs-extra": "^11.1.0",
+    "jest": "^29.3.1"
   }
 }

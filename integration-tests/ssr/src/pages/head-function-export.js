@@ -5,5 +5,11 @@ export default function PageWithHeadFunctionExport() {
 }
 
 export function Head() {
-  return <title data-testid="title">Hello world</title>
+  return (
+    <>
+      <html lang="fr" data-foo="bar" />
+      <body data-foo="baz" />
+      <title data-testid="title">Hello world</title>
+    </>
+  )
 }

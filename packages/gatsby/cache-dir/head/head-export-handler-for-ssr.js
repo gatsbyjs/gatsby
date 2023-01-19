@@ -14,6 +14,8 @@ import { apiRunner } from "../api-runner-browser"
 export function headHandlerForSSR({
   pageComponent,
   setHeadComponents,
+  setHtmlAttributes,
+  setBodyAttributes,
   staticQueryContext,
   pageData,
   pagePath,
@@ -62,7 +64,10 @@ export function headHandlerForSSR({
 
     const rawString = renderToString(routerElement)
     const rootNode = parse(rawString)
-    const validHeadNodes = getValidHeadNodeForSSR(rootNode)
+    const validHeadNodes = getValidHeadNodeForSSR(rootNode, {
+      setHtmlAttributes,
+      setBodyAttributes,
+    })
 
     setHeadComponents(validHeadNodes)
   }

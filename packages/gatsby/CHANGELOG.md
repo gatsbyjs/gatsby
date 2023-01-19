@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.4.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.2/packages/gatsby) (2023-01-17)
+
+#### Bug Fixes
+
+- nodeModel.findAll supports v5 sort argument structure [#37477](https://github.com/gatsbyjs/gatsby/issues/37477) [#37479](https://github.com/gatsbyjs/gatsby/issues/37479) ([00ed53a](https://github.com/gatsbyjs/gatsby/commit/00ed53a7c80c0670aec787a88c81335947ea7e9c))
+
+### [5.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.1/packages/gatsby) (2023-01-13)
+
+#### Bug Fixes
+
+- Use correct settings for yaml-loader [#37454](https://github.com/gatsbyjs/gatsby/issues/37454) [#37463](https://github.com/gatsbyjs/gatsby/issues/37463) ([8109b9b](https://github.com/gatsbyjs/gatsby/commit/8109b9b1c950a7371f965be9dd1d8b19b64796f0))
+
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.0/packages/gatsby) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- Restore asset, path prefix for file-loader handled files fix [#37429](https://github.com/gatsbyjs/gatsby/issues/37429) fix [#37430](https://github.com/gatsbyjs/gatsby/issues/37430) ([e2084f6](https://github.com/gatsbyjs/gatsby/commit/e2084f60694f41f3d70b5375c6a6edadb375c518))
+- Allow "gatsby-node" directory for Parcel Compilation [#36712](https://github.com/gatsbyjs/gatsby/issues/36712) ([57607f1](https://github.com/gatsbyjs/gatsby/commit/57607f1fb4e95e3cb2a3ec14cbe17813942bf812))
+- update parcel to v2.8.2 [#37383](https://github.com/gatsbyjs/gatsby/issues/37383) ([7fda6d1](https://github.com/gatsbyjs/gatsby/commit/7fda6d163eadb9a871b7954c51abfd450939b32d))
+- update minor and patch dependencies for gatsby [#37377](https://github.com/gatsbyjs/gatsby/issues/37377) ([919efc0](https://github.com/gatsbyjs/gatsby/commit/919efc09499760a4db43e1b8f90a36d9730d42a9))
+- update dependency eslint-plugin-react to ^7.31.11 [#37368](https://github.com/gatsbyjs/gatsby/issues/37368) ([4d464b4](https://github.com/gatsbyjs/gatsby/commit/4d464b4f47cb8063e76c201c0e03af45eb570aaf))
+- extract queries from .mjs files [#37320](https://github.com/gatsbyjs/gatsby/issues/37320) ([01724ef](https://github.com/gatsbyjs/gatsby/commit/01724eff19a701ab7cb0bb3f777e13bdee83ded5))
+- handle initializing multiple instances of gatsby-plugin-sharp [#37306](https://github.com/gatsbyjs/gatsby/issues/37306) ([26f2b72](https://github.com/gatsbyjs/gatsby/commit/26f2b72a63b29ef8425cd33ae70708279cd4af87))
+- don't output file-loader assets to .cache [#37284](https://github.com/gatsbyjs/gatsby/issues/37284) ([3cbad19](https://github.com/gatsbyjs/gatsby/commit/3cbad19275fb1e2596d6ed6d5f342c5439691050))
+- [rendering engines] use results of exports removal if sourceMap was not generated alongside transformed code [#37282](https://github.com/gatsbyjs/gatsby/issues/37282) ([770748d](https://github.com/gatsbyjs/gatsby/commit/770748d33f8fbe08adf4c7911d71f453bb14befb))
+- use file:// protocol when importing gatsby-config/node [#37257](https://github.com/gatsbyjs/gatsby/issues/37257) ([e0ea47c](https://github.com/gatsbyjs/gatsby/commit/e0ea47cc43f4d5523edea7c3eaa0ae384750c773))
+- Improve readability of page data / long running query warnings [#37220](https://github.com/gatsbyjs/gatsby/issues/37220) ([031a08f](https://github.com/gatsbyjs/gatsby/commit/031a08f92224ff4027c12448bb2011d504651827))
+
+#### Chores
+
+- Improve SlicePlaceholderProps type [#37409](https://github.com/gatsbyjs/gatsby/issues/37409) ([c7b5e7c](https://github.com/gatsbyjs/gatsby/commit/c7b5e7c46597327cd819bf97bebf7c02e805cfa9))
+- Bump yaml-loader [#37401](https://github.com/gatsbyjs/gatsby/issues/37401) ([7a382f2](https://github.com/gatsbyjs/gatsby/commit/7a382f2b080ad02dbecbb93d21c9e90e9f529162))
+- update [dev] minor and patch dependencies for gatsby [#37384](https://github.com/gatsbyjs/gatsby/issues/37384) ([6e7c57f](https://github.com/gatsbyjs/gatsby/commit/6e7c57f12bcbc8099c7a1044ddd43efe1d76f556))
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update gatsby monorepo [#37366](https://github.com/gatsbyjs/gatsby/issues/37366) ([bbd6220](https://github.com/gatsbyjs/gatsby/commit/bbd62204a1a402efb681a16ead66421f6f017660))
+- bump socket.io [#37272](https://github.com/gatsbyjs/gatsby/issues/37272) ([cad26d7](https://github.com/gatsbyjs/gatsby/commit/cad26d7568bfbc642e2f3d7036432249748a36c4))
+- Adjust information about `trailingSlash` for `createRedirect` [#37259](https://github.com/gatsbyjs/gatsby/issues/37259) ([2ac113b](https://github.com/gatsbyjs/gatsby/commit/2ac113b3e6be4b106de7d067991544afb9f1c607))
+
+#### Other Changes
+
+- Revert "fix(deps): update dependency lmdb to v2.7.1 (#37160)" [#37160](https://github.com/gatsbyjs/gatsby/issues/37160) [#37255](https://github.com/gatsbyjs/gatsby/issues/37255) ([9f6f6b8](https://github.com/gatsbyjs/gatsby/commit/9f6f6b8a2615856e95c948615a7e044131d3a93b))
+
 ### [5.3.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.3.3/packages/gatsby) (2022-12-20)
 
 #### Bug Fixes

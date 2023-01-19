@@ -220,7 +220,7 @@ export const createWebpackUtils = (
       ROUTES_DIRECTORY,
       `public`
     )
-    fileLoaderCommonOptions.publicPath = `/`
+    fileLoaderCommonOptions.publicPath = publicPath || `/`
   }
 
   const loaders: ILoaderUtils = {
@@ -232,8 +232,11 @@ export const createWebpackUtils = (
     },
     yaml: (options = {}) => {
       return {
-        options,
         loader: require.resolve(`yaml-loader`),
+        options: {
+          asJSON: true,
+          ...options,
+        },
       }
     },
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@7.4.0/packages/gatsby-remark-code-repls) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- update dependency recursive-readdir to ^2.2.3 for gatsby-remark-code-repls [#37374](https://github.com/gatsbyjs/gatsby/issues/37374) ([aafe028](https://github.com/gatsbyjs/gatsby/commit/aafe028cb359763eef60bc7de77e63183601bf76))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
 ## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@7.3.0/packages/gatsby-remark-code-repls) (2022-12-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)

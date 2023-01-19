@@ -16,14 +16,21 @@ exports.onPreInit = ({ reporter }) => {
  * Create a state machine to manage Chokidar's not-ready/ready states.
  */
 const createFSMachine = (
-  { actions: { createNode, deleteNode }, getNode, createNodeId, reporter },
+  {
+    actions: { createNode, deleteNode },
+    getNode,
+    createNodeId,
+    reporter,
+    cache,
+  },
   pluginOptions
 ) => {
   const createAndProcessNode = path => {
     const fileNodePromise = createFileNode(
       path,
       createNodeId,
-      pluginOptions
+      pluginOptions,
+      cache
     ).then(fileNode => {
       createNode(fileNode)
       return null
@@ -162,6 +169,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     name: Joi.string(),
     path: Joi.string(),
+    fastHash: Joi.boolean().default(false),
     ignore: Joi.array().items(
       Joi.string(),
       Joi.object().regex(),
