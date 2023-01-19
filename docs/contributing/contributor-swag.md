@@ -8,7 +8,9 @@ To show our appreciation, _**everyone who contributes to Gatsby is eligible to r
 
 ![Gatsby contributors wearing swag. Left image shows a woman wearing a black T-Shirt with a light gray Gatsby logo on it. Middle image shows the Gatsby socks. Right image shows a man wearing a purple T-Shirt with a light purple Gatsby logo on it.](./images/gatsby-swag.jpg)
 
-## How to claim your free swag
+## Now u guys think how to claim ur swags,ryt?!!
+
+Here is an idea to claim the bunch o f swags!!
 
 If you contribute to the Gatsby organization on GitHub, you can claim your swag by [logging into the Gatsby Store](https://store.gatsbyjs.org/) and requesting a discount code. With five or more contributions, you can claim your _**Level 2**_ swag.
 
