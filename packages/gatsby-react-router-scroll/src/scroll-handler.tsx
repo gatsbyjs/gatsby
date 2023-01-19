@@ -59,10 +59,13 @@ export class ScrollHandler extends React.Component<
       scrollPosition = this._stateStorage.read(this.props.location, key)
     }
 
-    if (scrollPosition) {
-      this.windowScroll(scrollPosition, undefined)
-    } else if (hash) {
+    /** If a hash is present in the browser url as the component mounts (i.e. the user is navigating
+     * from an external website) then scroll to the hash instead of any previously stored scroll
+     * position. */
+    if (hash) {
       this.scrollToHash(decodeURI(hash), undefined)
+    } else if (scrollPosition) {
+      this.windowScroll(scrollPosition, undefined)
     }
   }
 
