@@ -13,6 +13,7 @@ const page = {
   fsRouteApi: `${path}/fs-route-api/`,
   deduplication: `${path}/deduplication/`,
   htmlAndBodyAttributes: `${path}/html-and-body-attributes/`,
+  headWithWrapRooElement: `${path}/head-with-wrap-root-element/`,
 }
 
 const data = {
@@ -57,7 +58,7 @@ const data = {
   fsRouteApi: {
     slug: `/fs-route-api`,
   },
-  context: {
+  pageContext: {
     key: "value",
     someKey: "someValue",
   },

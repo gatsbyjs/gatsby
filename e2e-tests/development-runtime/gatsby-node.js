@@ -262,7 +262,7 @@ exports.createPages = async function createPages({
     component: path.resolve(
       `src/templates/head-function-export/correct-props.js`
     ),
-    context: headFunctionExportSharedData.data.context,
+    context: headFunctionExportSharedData.data.pageContext,
   })
 
   createRedirect({
