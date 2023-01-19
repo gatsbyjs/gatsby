@@ -182,15 +182,14 @@ export function getValidHeadNodeForSSR(
     if (isValidNodeName(rawTagName)) {
       if (rawTagName === `html` || rawTagName === `body`) {
         if (rawTagName === `html`) setHtmlAttributes(node.attributes)
-
         if (rawTagName === `body`) setBodyAttributes(node.attributes)
       } else {
         let element
         const attributes = { ...node.attributes, "data-gatsby-head": true }
 
-        if (rawTagName === `script`) {
+        if (rawTagName === `script` || rawTagName === `style`) {
           element = (
-            <script
+            <node.rawTagName
               {...attributes}
               dangerouslySetInnerHTML={{
                 __html: node.text,
@@ -225,10 +224,12 @@ export function getValidHeadNodeForSSR(
     }
 
     if (node.childNodes.length) {
-      validHeadNodes.push(...getValidHeadNodeForSSR(node), {
-        setHtmlAttributes,
-        setBodyAttributes,
-      })
+      validHeadNodes.push(
+        ...getValidHeadNodeForSSR(node, {
+          setHtmlAttributes,
+          setBodyAttributes,
+        })
+      )
     }
   }
 
