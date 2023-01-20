@@ -1,6 +1,7 @@
 import chalk from "chalk"
 import {
   ContentfulClientApi,
+  ContentTypeCollection,
   createClient,
   CreateClientParams,
 } from "contentful"
@@ -10,7 +11,6 @@ import { formatPluginOptionsForCLI } from "./plugin-options"
 import { CODES } from "./report"
 import {
   ContentType,
-  Entry,
   EntryCollection,
   Locale,
   Space,
@@ -380,7 +380,7 @@ export async function fetchContent({
   // We need to fetch tags with the non-sync API as the sync API doesn't support this.
   let tagItems
   try {
-    const tagsResult = await pagedGet(client, `getTags`, pageLimit)
+    const tagsResult = await pagedGet<Tag>(client, `getTags`, pageLimit)
     if (!tagsResult) {
       throw new Error()
     }
@@ -422,7 +422,7 @@ export async function fetchContentTypes({
 }: {
   pluginConfig: IProcessedPluginOptions
   reporter: Reporter
-}): Promise<Array<Entry<ContentType>> | null> {
+}): Promise<Array<ContentType> | null> {
   const contentfulClientOptions = createContentfulClientOptions({
     pluginConfig,
     reporter,
@@ -433,7 +433,7 @@ export async function fetchContentTypes({
     `environment`
   )}`
 
-  let contentTypes: Array<Entry<ContentType>> = []
+  let contentTypes: Array<ContentType> = []
 
   try {
     reporter.verbose(`Fetching content types (${sourceId})`)
@@ -449,7 +449,7 @@ export async function fetchContentTypes({
         reporter.verbose(
           `Content types fetched ${contentTypeCollection.items.length} (${sourceId})`
         )
-        contentTypes = contentTypeCollection.items
+        contentTypes = contentTypeCollection.items as Array<ContentType>
       }
     } catch (e) {
       reporter.panic({
@@ -480,7 +480,7 @@ function pagedGet<T>(
   query = {},
   skip = 0,
   aggregatedResponse?: EntryCollection<T>
-): Promise<EntryCollection<T> | undefined> {
+): Promise<EntryCollection<T> | ContentTypeCollection | undefined> {
   if (!client[method]) {
     throw new Error(`Contentful Client does not support the method ${method}`)
   }

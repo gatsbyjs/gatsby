@@ -3,7 +3,7 @@ import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
-import { GatsbyNode } from "gatsby"
+import { GatsbyNode, Node } from "gatsby"
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -16,7 +16,8 @@ import {
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
 import { IPluginOptions } from "./types/plugin"
-import { IContentfulAsset, IContentfulEntity } from "./types/contentful"
+import { IContentfulAsset, IContentfulEntry } from "./types/contentful"
+import { ContentType } from "./types/contentful-js-sdk"
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 
@@ -136,7 +137,9 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       space,
     } = await fetchContent({ syncToken, pluginConfig, reporter })
 
-    const contentTypeItems = await cache.get(CACHE_CONTENT_TYPES)
+    const contentTypeItems = (await cache.get(
+      CACHE_CONTENT_TYPES
+    )) as Array<ContentType>
 
     const locales = allLocales.filter(pluginConfig.get(`localeFilter`))
     reporter.verbose(
@@ -186,7 +189,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         (n.internal.owner === `gatsby-source-contentful` &&
           n.internal.type.indexOf(`ContentfulContentType`) === 0) ||
         n.internal.type === `ContentfulAsset`
-    ) as Array<IContentfulEntity>
+    ) as Array<IContentfulEntry>
 
     // Report existing, new and updated nodes
     const nodeCounts = {
@@ -315,7 +318,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
 
         return (
           field.type === `Link` ||
-          (field.type === `Array` && field.items.type === `Link`)
+          (field.type === `Array` && field.items?.type === `Link`)
         )
       })
       if (referenceFields.length) {
@@ -365,9 +368,10 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
             }
 
             // Add non existing references to reference field
-            if (n[name] && !n[name].includes(nodeId)) {
+            const field = n[name]
+            if (field && Array.isArray(field) && !field.includes(nodeId)) {
               existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
-              n[name].push(nodeId)
+              field.push(nodeId)
             }
           })
         }
@@ -408,7 +412,10 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     // otherwise changes won't actually persist
     if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
       for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
-        function addChildrenToList(node, nodeList = [node]) {
+        function addChildrenToList(
+          node,
+          nodeList: Array<Node> = [node]
+        ): Array<Node> {
           for (const childNodeId of node?.children ?? []) {
             const childNode = getNode(childNodeId)
             if (

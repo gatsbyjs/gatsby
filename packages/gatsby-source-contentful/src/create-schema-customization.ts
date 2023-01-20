@@ -22,7 +22,7 @@ import {
   ContentTypeField,
   FieldItem,
 } from "./types/contentful-js-sdk/content-type"
-import { Entry } from "./types/contentful-js-sdk/entry"
+
 import { IContentfulEntry } from "./types/contentful"
 
 interface IContentfulGraphQLField
@@ -136,7 +136,7 @@ const getLinkFieldType = (
       // Single content type
       if (translatedTypeNames.length === 1) {
         const typeName = translatedTypeNames.shift()
-        if (!typeName) {
+        if (!typeName || field.id) {
           throw new Error(`Translated type name can not be empty`)
         }
         return {
@@ -225,7 +225,7 @@ async function getContentTypesFromContentful({
   cache,
   reporter,
   pluginConfig,
-}): Promise<Array<Entry<ContentType>>> {
+}): Promise<Array<ContentType>> {
   // Get content type items from Contentful
   const allContentTypeItems = await fetchContentTypes({
     pluginConfig,

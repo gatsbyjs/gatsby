@@ -7,6 +7,7 @@ import {
   IGatsbyImageHelperArgs,
   ImageFormat,
 } from "gatsby-plugin-image"
+import { GraphQLResolveInfo } from "gatsby/graphql"
 import path from "path"
 
 import {
@@ -296,6 +297,8 @@ export function generateImageSource(
 export async function resolveGatsbyImageData(
   image: IContentfulAsset,
   options: IContentfulImageAPITransformerOptions,
+  _context: any,
+  _info: GraphQLResolveInfo,
   { cache }: { cache: GatsbyCache }
 ): Promise<IGatsbyImageData | null> {
   if (!isImage(image)) return null

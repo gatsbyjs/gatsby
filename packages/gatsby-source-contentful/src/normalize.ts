@@ -120,7 +120,7 @@ export const buildEntryList = ({
   contentTypeItems,
   currentSyncData,
 }: {
-  contentTypeItems: Array<Entry<unknown>>
+  contentTypeItems: Array<ContentType>
   currentSyncData: SyncCollection
 }): Array<Array<Entry<unknown>>> => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
@@ -183,6 +183,13 @@ export const buildForeignReferenceMap = ({
   defaultLocale,
   space,
   useNameForId,
+}: {
+  contentTypeItems: Array<ContentType>
+  entryList: Array<Array<Entry<unknown>>>
+  resolvable: Set<string>
+  defaultLocale: string
+  space: Space
+  useNameForId: boolean
 }): IForeignReferenceMap => {
   const foreignReferenceMap: IForeignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -197,7 +204,7 @@ export const buildForeignReferenceMap = ({
     }
 
     entryList[i].forEach(entryItem => {
-      const entryItemFields = entryItem.fields
+      const entryItemFields = entryItem.fields as Entry<typeof contentTypeItem>
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         if (entryItemFields[entryItemFieldKey]) {
           const entryItemFieldValue =
@@ -261,7 +268,7 @@ interface IContentfulTextNode extends Node {
   sys: Partial<IContentfulSys>
 }
 
-function prepareTextNode(id, node, key, text): IContentfulTextNode {
+function prepareTextNode(id, node, _key, text): IContentfulTextNode {
   const str = _.isString(text) ? text : ``
   const textNode: IContentfulTextNode = {
     id,
@@ -448,197 +455,195 @@ export const createNodesForContentType = ({
     const childrenNodes: Array<Node> = []
 
     // First create nodes for each of the entries of that content type
-    const entryNodes: Array<IContentfulEntry> = entries
-      .map(entryItem => {
-        const entryNodeId = mId(
-          space.sys.id,
-          entryItem.sys.id,
-          entryItem.sys.type
-        )
+    const entryNodes = entries.map(entryItem => {
+      const entryNodeId = mId(
+        space.sys.id,
+        entryItem.sys.id,
+        entryItem.sys.type
+      )
 
-        const existingNode = getNode(entryNodeId)
-        if (existingNode?.updatedAt === entryItem.sys.updatedAt) {
-          // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-          // of an entry did not change, then we can trust that none of its children were changed either.
-          return null
+      const existingNode = getNode(entryNodeId)
+      if (existingNode?.updatedAt === entryItem.sys.updatedAt) {
+        // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+        // of an entry did not change, then we can trust that none of its children were changed either.
+        return null
+      }
+
+      // Get localized fields.
+      const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
+        const fieldProps = contentTypeItem.fields.find(field => field.id === k)
+
+        if (!fieldProps) {
+          throw new Error(`Unable to translate field ${k}`)
         }
 
-        // Get localized fields.
-        const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
-          const fieldProps = contentTypeItem.fields.find(
-            field => field.id === k
-          )
+        const localizedField = fieldProps.localized
+          ? getField(v)
+          : v[defaultLocale]
 
-          if (!fieldProps) {
-            throw new Error(`Unable to translate field ${k}`)
-          }
+        return localizedField
+      })
 
-          const localizedField = fieldProps.localized
-            ? getField(v)
-            : v[defaultLocale]
+      // Prefix any conflicting fields
+      // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
+      conflictFields.forEach(conflictField => {
+        entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
+          entryItemFields[conflictField]
+        delete entryItemFields[conflictField]
+      })
 
-          return localizedField
-        })
-
-        // Prefix any conflicting fields
-        // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
-        conflictFields.forEach(conflictField => {
-          entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
-            entryItemFields[conflictField]
-          delete entryItemFields[conflictField]
-        })
-
-        // Add linkages to other nodes based on foreign references
-        Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-          if (entryItemFields[entryItemFieldKey]) {
-            const entryItemFieldValue = entryItemFields[entryItemFieldKey]
-            if (Array.isArray(entryItemFieldValue)) {
-              if (entryItemFieldValue[0]?.sys?.type === `Link`) {
-                // Check if there are any values in entryItemFieldValue to prevent
-                // creating an empty node field in case when original key field value
-                // is empty due to links to missing entities
-                const resolvableEntryItemFieldValue = entryItemFieldValue
-                  .filter(v => resolvable.has(createRefId(v)))
-                  .map(function (v) {
-                    return mId(
-                      space.sys.id,
-                      v.sys.id,
-                      v.sys.linkType || v.sys.type
-                    )
-                  })
-                if (resolvableEntryItemFieldValue.length !== 0) {
-                  entryItemFields[entryItemFieldKey] =
-                    resolvableEntryItemFieldValue
-                }
-              }
-            } else if (entryItemFieldValue?.sys?.type === `Link`) {
-              if (resolvable.has(createRefId(entryItemFieldValue))) {
-                entryItemFields[entryItemFieldKey] = mId(
-                  space.sys.id,
-                  entryItemFieldValue.sys.id,
-                  entryItemFieldValue.sys.linkType ||
-                    entryItemFieldValue.sys.type
-                )
+      // Add linkages to other nodes based on foreign references
+      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+        if (entryItemFields[entryItemFieldKey]) {
+          const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+          if (Array.isArray(entryItemFieldValue)) {
+            if (entryItemFieldValue[0]?.sys?.type === `Link`) {
+              // Check if there are any values in entryItemFieldValue to prevent
+              // creating an empty node field in case when original key field value
+              // is empty due to links to missing entities
+              const resolvableEntryItemFieldValue = entryItemFieldValue
+                .filter(v => resolvable.has(createRefId(v)))
+                .map(function (v) {
+                  return mId(
+                    space.sys.id,
+                    v.sys.id,
+                    v.sys.linkType || v.sys.type
+                  )
+                })
+              if (resolvableEntryItemFieldValue.length !== 0) {
+                entryItemFields[entryItemFieldKey] =
+                  resolvableEntryItemFieldValue
               }
             }
+          } else if (entryItemFieldValue?.sys?.type === `Link`) {
+            if (resolvable.has(createRefId(entryItemFieldValue))) {
+              entryItemFields[entryItemFieldKey] = mId(
+                space.sys.id,
+                entryItemFieldValue.sys.id,
+                entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
+              )
+            }
           }
-        })
+        }
+      })
 
-        // Add reverse linkages if there are any for this node
-        const foreignReferences = foreignReferenceMap[createRefId(entryItem)]
-        if (foreignReferences) {
-          foreignReferences.forEach(foreignReference => {
-            const existingReference = entryItemFields[foreignReference.name]
-            if (existingReference) {
-              // If the existing reference is a string, we're dealing with a
-              // many-to-one reference which has already been recorded, so we can
-              // skip it. However, if it is an array, add it:
-              if (Array.isArray(existingReference)) {
-                entryItemFields[foreignReference.name].push(
-                  mId(
-                    foreignReference.spaceId,
-                    foreignReference.id,
-                    foreignReference.type
-                  )
-                )
-              }
-            } else {
-              // If there is one foreign reference, there can be many.
-              // Best to be safe and put it in an array to start with.
-              entryItemFields[foreignReference.name] = [
+      // Add reverse linkages if there are any for this node
+      const foreignReferences = foreignReferenceMap[createRefId(entryItem)]
+      if (foreignReferences) {
+        foreignReferences.forEach(foreignReference => {
+          const existingReference = entryItemFields[foreignReference.name]
+          if (existingReference) {
+            // If the existing reference is a string, we're dealing with a
+            // many-to-one reference which has already been recorded, so we can
+            // skip it. However, if it is an array, add it:
+            if (Array.isArray(existingReference)) {
+              entryItemFields[foreignReference.name].push(
                 mId(
                   foreignReference.spaceId,
                   foreignReference.id,
                   foreignReference.type
-                ),
-              ]
-            }
-          })
-        }
-
-        // Create actual entry node
-        let entryNode: IContentfulEntry = {
-          id: entryNodeId,
-          parent: contentTypeItemId,
-          children: [],
-          internal: {
-            type: `${makeTypeName(contentTypeItemId)}`,
-            // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-            contentDigest: entryItem.sys.updatedAt,
-            owner: `gatsby-source-contentful`,
-          },
-          // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
-          // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
-          sys: {
-            type: entryItem.sys.type,
-            id: entryItem.sys.id,
-            locale: locale.code,
-            spaceId: entryItem.sys.space.sys.id,
-            environmentId: entryItem.sys.environment.sys.id,
-            contentType: createNodeId(contentTypeItemId),
-            firstPublishedAt: entryItem.sys.createdAt,
-            publishedAt: entryItem.sys.updatedAt,
-            publishedVersion: entryItem.sys.revision,
-          },
-          metadata: {
-            tags: entryItem.metadata.tags.map(tag =>
-              createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
-            ),
-          },
-        }
-
-        contentfulCreateNodeManifest({
-          pluginConfig,
-          entryItem,
-          entryNode,
-          space,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          unstable_createNodeManifest,
-        })
-
-        // Replace text fields with text nodes so we can process their markdown
-        // into HTML.
-        Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-          // @todo: how expensive is this?
-          const field = contentTypeItem.fields.find(
-            f =>
-              (restrictedNodeFields.includes(f.id)
-                ? `${conflictFieldPrefix}${f.id}`
-                : f.id) === entryItemFieldKey
-          )
-          if (field?.type === `Text`) {
-            const textNodeId = createNodeId(
-              `${entryNodeId}${entryItemFieldKey}TextNode`
-            )
-
-            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-            // of an entry did not change, then we can trust that none of its children were changed either.
-            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
-            const existingNode = getNode(textNodeId)
-            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
-              const textNode = prepareTextNode(
-                textNodeId,
-                entryNode,
-                entryItemFieldKey,
-                entryItemFields[entryItemFieldKey]
+                )
               )
-
-              childrenNodes.push(textNode)
             }
-
-            entryItemFields[entryItemFieldKey] = textNodeId
+          } else {
+            // If there is one foreign reference, there can be many.
+            // Best to be safe and put it in an array to start with.
+            entryItemFields[foreignReference.name] = [
+              mId(
+                foreignReference.spaceId,
+                foreignReference.id,
+                foreignReference.type
+              ),
+            ]
           }
         })
+      }
 
-        entryNode = {
-          ...entryItemFields,
-          ...entryNode,
-        }
-        return entryNode
+      // Create actual entry node
+      let entryNode: IContentfulEntry = {
+        id: entryNodeId,
+        parent: contentTypeItemId,
+        children: [],
+        internal: {
+          type: makeTypeName(contentTypeItemId),
+          // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
+          contentDigest: entryItem.sys.updatedAt,
+          owner: `gatsby-source-contentful`,
+        },
+        // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
+        // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
+        sys: {
+          type: entryItem.sys.type,
+          id: entryItem.sys.id,
+          locale: locale.code,
+          spaceId: entryItem.sys.space.sys.id,
+          environmentId: entryItem.sys.environment.sys.id,
+          contentType: createNodeId(contentTypeItemId),
+          firstPublishedAt: entryItem.sys.createdAt,
+          publishedAt: entryItem.sys.updatedAt,
+          publishedVersion: entryItem.sys.revision,
+        },
+        metadata: {
+          tags: entryItem.metadata.tags.map(tag =>
+            createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+          ),
+        },
+      }
+
+      contentfulCreateNodeManifest({
+        pluginConfig,
+        entryItem,
+        entryNode,
+        space,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        unstable_createNodeManifest,
       })
-      .filter(Boolean)
+
+      // Replace text fields with text nodes so we can process their markdown
+      // into HTML.
+      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+        // @todo: how expensive is this?
+        const field = contentTypeItem.fields.find(
+          f =>
+            (restrictedNodeFields.includes(f.id)
+              ? `${conflictFieldPrefix}${f.id}`
+              : f.id) === entryItemFieldKey
+        )
+        if (field?.type === `Text`) {
+          const textNodeId = createNodeId(
+            `${entryNodeId}${entryItemFieldKey}TextNode`
+          )
+
+          // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+          // of an entry did not change, then we can trust that none of its children were changed either.
+          // (That's why child nodes use the updatedAt of the parent node as their digest, too)
+          const existingNode = getNode(textNodeId)
+          if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
+            const textNode = prepareTextNode(
+              textNodeId,
+              entryNode,
+              entryItemFieldKey,
+              entryItemFields[entryItemFieldKey]
+            )
+
+            childrenNodes.push(textNode)
+          }
+
+          entryItemFields[entryItemFieldKey] = textNodeId
+        }
+      })
+
+      entryNode = {
+        ...entryItemFields,
+        ...entryNode,
+      }
+      return entryNode
+    })
 
     entryNodes.forEach(entryNode => {
+      if (!entryNode) {
+        return
+      }
       createNodePromises.push(createNode(entryNode))
     })
     childrenNodes.forEach(entryNode => {

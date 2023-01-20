@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { createUrl } from "./image-helpers"
 import {
   IContentfulAsset,
-  IContentfulImageAPIUrlBuilderOptions,
+  IContentfulImageAPITransformerOptions,
 } from "./types/contentful"
 
 interface IUseContentfulImageArgs {
@@ -18,7 +18,7 @@ export function useContentfulImage({
 }: IUseContentfulImageArgs): IGatsbyImageData {
   return useMemo(
     () =>
-      getImageData<IContentfulImageAPIUrlBuilderOptions>({
+      getImageData<IContentfulImageAPITransformerOptions>({
         baseUrl: image.url,
         sourceWidth: image.width,
         sourceHeight: image.height,

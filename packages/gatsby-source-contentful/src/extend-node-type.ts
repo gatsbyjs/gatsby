@@ -6,20 +6,6 @@ import { GatsbyNode } from "gatsby"
 import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
 
-// type IContentfulImageFieldConfig =
-// ObjectTypeAs<
-//   //ObjectTypeComposerFieldConfigAsObjectDefinition<
-//     unknown,
-//     unknown,
-//     IGatsbyImageFieldArgs & {
-//       jpegProgressive: unknown
-//       resizingBehavior: unknown
-//       cropFocus: unknown
-//       cornerRadius: unknown
-//       quality: unknown
-//     }
-//   >
-
 export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] =
   async function setFieldsOnGraphQLNodeType({ type, cache }) {
     if (type.name !== `ContentfulAsset`) {

@@ -12,7 +12,7 @@ export const CODES = {
 }
 
 interface IErrorMap {
-  [code: string]: IErrorMapEntry
+  [code: string]: Omit<IErrorMapEntry, `type`>
 }
 
 export const ERROR_MAP: IErrorMap = {
