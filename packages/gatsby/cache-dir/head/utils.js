@@ -104,13 +104,15 @@ export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
   }
 }
 
-export function getValidHeadNodesAndAttributes(rootNode) {
-  const seenIds = new Map()
-  const validHeadNodes = []
-  const htmlAndBodyAttributes = {
+export function getValidHeadNodesAndAttributes(
+  rootNode,
+  htmlAndBodyAttributes = {
     html: {},
     body: {},
   }
+) {
+  const seenIds = new Map()
+  let validHeadNodes = []
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of getNodesOfElementType(rootNode.childNodes)) {
@@ -157,8 +159,9 @@ export function getValidHeadNodesAndAttributes(rootNode) {
     }
 
     if (node.childNodes.length) {
-      validHeadNodes.push(
-        ...getValidHeadNodesAndAttributes(node).validHeadNodes
+      validHeadNodes = validHeadNodes.concat(
+        ...getValidHeadNodesAndAttributes(node, htmlAndBodyAttributes)
+          .validHeadNodes
       )
     }
   }
@@ -166,13 +169,15 @@ export function getValidHeadNodesAndAttributes(rootNode) {
   return { validHeadNodes, htmlAndBodyAttributes }
 }
 
-export function getValidHeadNodesAndAttributesSSR(rootNode) {
-  const seenIds = new Map()
-  const validHeadNodes = []
-  const htmlAndBodyAttributes = {
+export function getValidHeadNodesAndAttributesSSR(
+  rootNode,
+  htmlAndBodyAttributes = {
     html: {},
     body: {},
   }
+) {
+  const seenIds = new Map()
+  const validHeadNodes = []
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of getNodesOfElementType(rootNode.childNodes)) {
@@ -181,11 +186,9 @@ export function getValidHeadNodesAndAttributesSSR(rootNode) {
 
     if (isValidNodeName(rawTagName)) {
       if (rawTagName === `html` || rawTagName === `body`) {
-        for (const attribute of Array.from(node.attributes)) {
-          htmlAndBodyAttributes[rawTagName] = {
-            ...htmlAndBodyAttributes[rawTagName],
-            [attribute.name]: attribute.value,
-          }
+        htmlAndBodyAttributes[rawTagName] = {
+          ...htmlAndBodyAttributes[rawTagName],
+          ...node.attributes,
         }
       } else {
         let element
@@ -229,7 +232,8 @@ export function getValidHeadNodesAndAttributesSSR(rootNode) {
 
     if (node.childNodes.length) {
       validHeadNodes.push(
-        ...getValidHeadNodesAndAttributesSSR(node).validHeadNodes
+        ...getValidHeadNodesAndAttributesSSR(node, htmlAndBodyAttributes)
+          .validHeadNodes
       )
     }
   }
