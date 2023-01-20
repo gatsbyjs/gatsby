@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.4.1/packages/gatsby-source-wordpress) (2023-01-19)
+
+#### Bug Fixes
+
+- fix preview issues fix [#37492](https://github.com/gatsbyjs/gatsby/issues/37492) fix [#37496](https://github.com/gatsbyjs/gatsby/issues/37496) ([e19a400](https://github.com/gatsbyjs/gatsby/commit/e19a400e7758725d78af600d5467d376487945e2))
+
 ## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.4.0/packages/gatsby-source-wordpress) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
