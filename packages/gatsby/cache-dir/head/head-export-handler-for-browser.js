@@ -8,17 +8,32 @@ import {
   headExportValidator,
   filterHeadProps,
   diffNodes,
-  getValidHeadNodes,
-  removePrevBodyAttributes,
+  getValidHeadNodesAndAttributes,
   removePrevHeadElements,
-  removePrevHtmlAttributes,
+  applyHtmlAndBodyAttributes,
+  removeHtmlAndBodyAttributes,
 } from "./utils"
 import { apiRunner } from "../api-runner-browser"
 
 const hiddenRoot = document.createElement(`div`)
+const keysOfHtmlAndBodyAttributes = {
+  html: [],
+  body: [],
+}
 
 const onHeadRendered = () => {
-  const validHeadNodes = getValidHeadNodes(hiddenRoot)
+  const { validHeadNodes, htmlAndBodyAttributes } =
+    getValidHeadNodesAndAttributes(hiddenRoot)
+
+  keysOfHtmlAndBodyAttributes.html = Object.keys(htmlAndBodyAttributes.html)
+  keysOfHtmlAndBodyAttributes.body = Object.keys(htmlAndBodyAttributes.body)
+
+  applyHtmlAndBodyAttributes(htmlAndBodyAttributes)
+
+  /**
+   * The rest of the code block below is a diffing mechanism to ensure that
+   * the head elements aren't duplicted on every re-render.
+   */
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
   if (existingHeadElements.length === 0) {
@@ -57,8 +72,9 @@ if (process.env.BUILD_STAGE === `develop`) {
     return originalConsoleError(...args)
   }
 
-  // We set up observer to be able to regenerate <head> after react-refresh
-  // updates our hidden element.
+  /* We set up observer to be able to regenerate <head> after react-refresh
+     updates our hidden element.
+  */
   const observer = new MutationObserver(onHeadRendered)
   observer.observe(hiddenRoot, {
     attributes: true,
@@ -107,8 +123,7 @@ export function headHandlerForBrowser({
 
     return () => {
       removePrevHeadElements()
-      removePrevHtmlAttributes()
-      removePrevBodyAttributes()
+      removeHtmlAndBodyAttributes(keysOfHtmlAndBodyAttributes)
     }
   })
 }

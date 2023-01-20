@@ -4,7 +4,8 @@ const { StaticQueryContext } = require(`gatsby`)
 const {
   headExportValidator,
   filterHeadProps,
-  getValidHeadNodeForSSR,
+  getValidHeadNodesAndAttributesSSR,
+  applyHtmlAndBodyAttributesSSR,
 } = require(`./utils`)
 const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
@@ -64,7 +65,10 @@ export function headHandlerForSSR({
 
     const rawString = renderToString(routerElement)
     const rootNode = parse(rawString)
-    const validHeadNodes = getValidHeadNodeForSSR(rootNode, {
+    const { validHeadNodes, htmlAndBodyAttributes } =
+      getValidHeadNodesAndAttributesSSR(rootNode)
+
+    applyHtmlAndBodyAttributesSSR(htmlAndBodyAttributes, {
       setHtmlAttributes,
       setBodyAttributes,
     })

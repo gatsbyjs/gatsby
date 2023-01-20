@@ -1,9 +1,6 @@
 import { VALID_NODE_NAMES } from "./constants"
 import React from "react"
 
-const htmlAttributesList = new Set()
-const bodyAttributesList = new Set()
-
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
  * This e.g. filters out properties that are undefined during SSR.
@@ -107,9 +104,13 @@ export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
   }
 }
 
-export function getValidHeadNodes(rootNode) {
-  const validHeadNodes = []
+export function getValidHeadNodesAndAttributes(rootNode) {
   const seenIds = new Map()
+  const validHeadNodes = []
+  const htmlAndBodyAttributes = {
+    html: {},
+    body: {},
+  }
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of getNodesOfElementType(rootNode.childNodes)) {
@@ -117,17 +118,13 @@ export function getValidHeadNodes(rootNode) {
     const id = node.attributes?.id?.value
 
     if (isValidNodeName(nodeName)) {
-      // <html> and <body> tags are treated differently, in that we don't  render them, we only  extract the attributes and apply them
+      // <html> and <body> tags are treated differently, in that we don't  render them, we only  extract the attributes and apply them separetely
       if (nodeName === `html` || nodeName === `body`) {
         for (const attribute of node.attributes) {
-          const attributesList =
-            nodeName === `html` ? htmlAttributesList : bodyAttributesList
-          updateAttribute(
-            nodeName,
-            attribute.name,
-            attribute.value,
-            attributesList
-          )
+          htmlAndBodyAttributes[nodeName] = {
+            ...htmlAndBodyAttributes[nodeName],
+            [attribute.name]: attribute.value,
+          }
         }
       } else {
         let clonedNode = node.cloneNode(true)
@@ -160,19 +157,22 @@ export function getValidHeadNodes(rootNode) {
     }
 
     if (node.childNodes.length) {
-      validHeadNodes.push(...getValidHeadNodes(node))
+      validHeadNodes.push(
+        ...getValidHeadNodesAndAttributes(node).validHeadNodes
+      )
     }
   }
 
-  return validHeadNodes
+  return { validHeadNodes, htmlAndBodyAttributes }
 }
 
-export function getValidHeadNodeForSSR(
-  rootNode,
-  { setHtmlAttributes, setBodyAttributes }
-) {
-  const validHeadNodes = []
+export function getValidHeadNodesAndAttributesSSR(rootNode) {
   const seenIds = new Map()
+  const validHeadNodes = []
+  const htmlAndBodyAttributes = {
+    html: {},
+    body: {},
+  }
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of getNodesOfElementType(rootNode.childNodes)) {
@@ -181,8 +181,12 @@ export function getValidHeadNodeForSSR(
 
     if (isValidNodeName(rawTagName)) {
       if (rawTagName === `html` || rawTagName === `body`) {
-        if (rawTagName === `html`) setHtmlAttributes(node.attributes)
-        if (rawTagName === `body`) setBodyAttributes(node.attributes)
+        for (const attribute of Array.from(node.attributes)) {
+          htmlAndBodyAttributes[rawTagName] = {
+            ...htmlAndBodyAttributes[rawTagName],
+            [attribute.name]: attribute.value,
+          }
+        }
       } else {
         let element
         const attributes = { ...node.attributes, "data-gatsby-head": true }
@@ -225,15 +229,12 @@ export function getValidHeadNodeForSSR(
 
     if (node.childNodes.length) {
       validHeadNodes.push(
-        ...getValidHeadNodeForSSR(node, {
-          setHtmlAttributes,
-          setBodyAttributes,
-        })
+        ...getValidHeadNodesAndAttributesSSR(node).validHeadNodes
       )
     }
   }
 
-  return validHeadNodes
+  return { validHeadNodes, htmlAndBodyAttributes }
 }
 
 function massageScript(node) {
@@ -257,39 +258,68 @@ function getNodesOfElementType(nodes) {
   return Array.from(nodes).filter(childNode => childNode.nodeType === 1)
 }
 
-function updateAttribute(
-  tagName,
-  attributeName,
-  attributeValue,
-  attributesList
-) {
-  const elementTag = document.getElementsByTagName(tagName)[0]
-
-  if (!elementTag) {
-    return
-  }
-
-  elementTag.setAttribute(attributeName, attributeValue)
-  attributesList.add(attributeName)
-}
-
-export function removePrevHtmlAttributes() {
-  htmlAttributesList.forEach(attributeName => {
-    const elementTag = document.getElementsByTagName(`html`)[0]
-    elementTag.removeAttribute(attributeName)
-  })
-}
-
-export function removePrevBodyAttributes() {
-  bodyAttributesList.forEach(attributeName => {
-    const elementTag = document.getElementsByTagName(`body`)[0]
-    elementTag.removeAttribute(attributeName)
-  })
-}
-
+/**
+ * Removes all the head elements that were added by `Head`
+ */
 export function removePrevHeadElements() {
   const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
   for (const node of prevHeadNodes) {
     node.parentNode.removeChild(node)
+  }
+}
+
+export function applyHtmlAndBodyAttributes(htmlAndBodyAttributes) {
+  if (!htmlAndBodyAttributes) return
+
+  const { html, body } = htmlAndBodyAttributes
+
+  const htmlElement = document.querySelector(`html`)
+  if (htmlElement) {
+    Object.entries(html).forEach(([attributeName, attributeValue]) => {
+      htmlElement.setAttribute(attributeName, attributeValue)
+    })
+  }
+
+  const bodyElement = document.querySelector(`body`)
+  if (bodyElement) {
+    Object.entries(body).forEach(([attributeName, attributeValue]) => {
+      bodyElement.setAttribute(attributeName, attributeValue)
+    })
+  }
+}
+
+export function applyHtmlAndBodyAttributesSSR(
+  htmlAndBodyAttributes,
+  { setHtmlAttributes, setBodyAttributes }
+) {
+  if (!htmlAndBodyAttributes) return
+
+  const { html, body } = htmlAndBodyAttributes
+
+  setHtmlAttributes(html)
+  setBodyAttributes(body)
+}
+
+export function removeHtmlAndBodyAttributes(htmlAndBodyattributeList) {
+  if (!htmlAndBodyattributeList) return
+
+  const { html, body } = htmlAndBodyattributeList
+
+  if (html) {
+    const htmlElement = document.querySelector(`html`)
+    html.forEach(attributeName => {
+      if (htmlElement) {
+        htmlElement.removeAttribute(attributeName)
+      }
+    })
+  }
+
+  if (body) {
+    const bodyElement = document.querySelector(`body`)
+    body.forEach(attributeName => {
+      if (bodyElement) {
+        bodyElement.removeAttribute(attributeName)
+      }
+    })
   }
 }
