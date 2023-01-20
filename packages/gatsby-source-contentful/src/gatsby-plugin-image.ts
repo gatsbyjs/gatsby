@@ -1,8 +1,14 @@
 import fs from "fs-extra"
 import { GatsbyCache } from "gatsby"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
-import { IGatsbyImageData, ImageFormat } from "gatsby-plugin-image"
+import {
+  Fit,
+  IGatsbyImageData,
+  IGatsbyImageHelperArgs,
+  ImageFormat,
+} from "gatsby-plugin-image"
 import path from "path"
+
 import {
   createUrl,
   isImage,
@@ -11,8 +17,9 @@ import {
   CONTENTFUL_IMAGE_MAX_SIZE,
 } from "./image-helpers"
 import {
+  contentfulImageApiBackgroundColor,
   IContentfulAsset,
-  IContentfulImageAPIUrlBuilderOptions,
+  IContentfulImageAPITransformerOptions,
 } from "./types/contentful"
 
 // Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
@@ -26,7 +33,7 @@ const getBase64Image = (
   imageProps: {
     image: IContentfulAsset
     baseUrl: string
-    options: IContentfulImageAPIUrlBuilderOptions
+    options: IContentfulImageAPITransformerOptions
     aspectRatio: number
   },
   cache: GatsbyCache
@@ -40,15 +47,18 @@ const getBase64Image = (
     return null
   }
 
+  const placeholderWidth = imageProps.options.blurredOptions?.width || 20
   // Keep aspect ratio, image format and other transform options
   const { aspectRatio } = imageProps
   const originalFormat = imageProps.image.mimeType.split(`/`)[1]
-  const toFormat = imageProps.options.toFormat
+  const toFormat =
+    imageProps.options.blurredOptions?.toFormat || imageProps.options.toFormat
+
   const imageOptions = {
     ...imageProps.options,
     toFormat,
-    width: 20,
-    height: Math.floor(20 / aspectRatio),
+    width: placeholderWidth,
+    height: Math.floor(placeholderWidth / aspectRatio),
   }
 
   const requestUrl = createUrl(imageProps.baseUrl, imageOptions)
@@ -97,7 +107,7 @@ const getTracedSVG = async ({
   cache,
 }: {
   image: IContentfulAsset
-  options: IContentfulImageAPIUrlBuilderOptions
+  options: IContentfulImageAPITransformerOptions
   cache: GatsbyCache
 }): Promise<string | null> => {
   const { traceSVG } = await import(`gatsby-plugin-sharp`)
@@ -137,7 +147,7 @@ const getDominantColor = async ({
   cache,
 }: {
   image: IContentfulAsset
-  options: IContentfulImageAPIUrlBuilderOptions
+  options: IContentfulImageAPITransformerOptions
   cache: GatsbyCache
 }): Promise<string> => {
   let pluginSharp
@@ -225,8 +235,7 @@ export function generateImageSource(
   width: number,
   height: number,
   toFormat: "gif" | ImageFormat,
-  _fit: string, // We use resizingBehavior instead
-  imageTransformOptions: any
+  imageTransformOptions: IContentfulImageAPITransformerOptions
 ): { width: number; height: number; format: string; src: string } | undefined {
   const imageFormatDefaults = imageTransformOptions[`${toFormat}Options`]
 
@@ -272,7 +281,10 @@ export function generateImageSource(
     height,
     toFormat,
     resizingBehavior,
-    background: backgroundColor?.replace(`#`, `rgb:`),
+    background: backgroundColor?.replace(
+      `#`,
+      `rgb:`
+    ) as contentfulImageApiBackgroundColor,
     quality,
     jpegProgressive,
     cropFocus,
@@ -282,10 +294,8 @@ export function generateImageSource(
 }
 
 export async function resolveGatsbyImageData(
-  image,
-  options: IContentfulImageAPIUrlBuilderOptions,
-  _context,
-  _info,
+  image: IContentfulAsset,
+  options: IContentfulImageAPITransformerOptions,
   { cache }: { cache: GatsbyCache }
 ): Promise<IGatsbyImageData | null> {
   if (!isImage(image)) return null
@@ -319,13 +329,15 @@ export async function resolveGatsbyImageData(
     image,
     options
   )
-  let [, format] = mimeType.split(`/`)
-  if (format === `jpeg`) {
-    format = `jpg`
+  let [, fileFormat] = mimeType.split(`/`)
+  if (fileFormat === `jpeg`) {
+    fileFormat = `jpg`
   }
 
+  const format: ImageFormat = fileFormat as ImageFormat
+
   // Translate Contentful resize parameter to gatsby-plugin-image css object fit
-  const fitMap = new Map([
+  const fitMap: Map<string | undefined, Fit> = new Map([
     [`pad`, `contain`],
     [`fill`, `cover`],
     [`scale`, `fill`],
@@ -338,9 +350,10 @@ export async function resolveGatsbyImageData(
     pluginName: `gatsby-source-contentful`,
     sourceMetadata: { width, height, format },
     filename: baseUrl,
-    generateImageSource,
+    generateImageSource:
+      generateImageSource as unknown as IGatsbyImageHelperArgs["generateImageSource"],
     fit: fitMap.get(options.resizingBehavior),
-    options,
+    options: options as unknown as Record<string, unknown>,
   })
 
   let placeholderDataURI: string | null = null

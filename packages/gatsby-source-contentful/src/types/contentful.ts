@@ -76,9 +76,22 @@ type IntRange<F extends number, T extends number> = Exclude<
   Enumerate<F>
 >
 
-type contentfulImageApiBackgroundColor = `rgb:${string}`
+export type contentfulImageApiBackgroundColor = `rgb:${string}`
 
-export interface IContentfulImageAPIUrlBuilderOptions {
+type contentfulCropFocus =
+  | "top"
+  | "top_left"
+  | "top_right"
+  | "bottom"
+  | "bottom_left"
+  | "bottom_right"
+  | "right"
+  | "left"
+  | "face"
+  | "faces"
+  | "center"
+
+export interface IContentfulImageAPITransformerOptions {
   cornerRadius?: number | "max"
   width?: number
   height?: number
@@ -86,17 +99,21 @@ export interface IContentfulImageAPIUrlBuilderOptions {
   jpegProgressive?: number
   quality?: IntRange<0, 100>
   resizingBehavior?: "pad" | "fill" | "scale" | "crop" | "thumb"
-  cropFocus?:
-    | "top"
-    | "top_left"
-    | "top_right"
-    | "bottom"
-    | "bottom_left"
-    | "bottom_right"
-    | "right"
-    | "left"
-    | "face"
-    | "faces"
-    | "center"
+  cropFocus?: contentfulCropFocus
+  backgroundColor?: string
+  placeholder?: "dominantColor" | "blurred" | "tracedSVG"
+  blurredOptions?: { width?: number; toFormat: ImageFormat }
+  tracedSVGOptions?: { [key: string]: unknown }
+}
+
+export interface IContentfulImageAPIUrlBuilderOptions {
+  width?: number
+  height?: number
+  toFormat?: ImageFormat | "auto" | "jpg" | "png" | "webp" | "gif" | "avif"
+  resizingBehavior?: "pad" | "fill" | "scale" | "crop" | "thumb"
   background?: contentfulImageApiBackgroundColor
+  quality?: IntRange<0, 100>
+  jpegProgressive?: number
+  cropFocus?: contentfulCropFocus
+  cornerRadius?: number | "max"
 }
