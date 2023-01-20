@@ -222,7 +222,7 @@ exports.sourceNodes = async ({ cache }) => {
   const data = await fetch(
     `https://remotedatasource.com/posts?lastUpdated=${lastFetched}`
   )
- 
+
   // If the fetch succeeds, store the new timestamp in the cache
   await cache.set(`timestamp`, newTimestamp)
   // ...
