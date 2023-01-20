@@ -1,5 +1,4 @@
 import { VALID_NODE_NAMES } from "./constants"
-import React from "react"
 
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
@@ -169,78 +168,6 @@ export function getValidHeadNodesAndAttributes(
   return { validHeadNodes, htmlAndBodyAttributes }
 }
 
-export function getValidHeadNodesAndAttributesSSR(
-  rootNode,
-  htmlAndBodyAttributes = {
-    html: {},
-    body: {},
-  }
-) {
-  const seenIds = new Map()
-  const validHeadNodes = []
-
-  // Filter out non-element nodes before looping since we don't care about them
-  for (const node of getNodesOfElementType(rootNode.childNodes)) {
-    const { rawTagName } = node
-    const id = node.attributes?.id
-
-    if (isValidNodeName(rawTagName)) {
-      if (rawTagName === `html` || rawTagName === `body`) {
-        htmlAndBodyAttributes[rawTagName] = {
-          ...htmlAndBodyAttributes[rawTagName],
-          ...node.attributes,
-        }
-      } else {
-        let element
-        const attributes = { ...node.attributes, "data-gatsby-head": true }
-
-        if (rawTagName === `script` || rawTagName === `style`) {
-          element = (
-            <node.rawTagName
-              {...attributes}
-              dangerouslySetInnerHTML={{
-                __html: node.text,
-              }}
-            />
-          )
-        } else {
-          element =
-            node.textContent.length > 0 ? (
-              <node.rawTagName {...attributes}>
-                {node.textContent}
-              </node.rawTagName>
-            ) : (
-              <node.rawTagName {...attributes} />
-            )
-        }
-
-        if (id) {
-          if (!seenIds.has(id)) {
-            validHeadNodes.push(element)
-            seenIds.set(id, validHeadNodes.length - 1)
-          } else {
-            const indexOfPreviouslyInsertedNode = seenIds.get(id)
-            validHeadNodes[indexOfPreviouslyInsertedNode] = element
-          }
-        } else {
-          validHeadNodes.push(element)
-        }
-      }
-    } else {
-      warnForInvalidTags(rawTagName)
-    }
-
-    if (node.childNodes.length) {
-      validHeadNodes.push(
-        ...getValidHeadNodesAndAttributesSSR(node, htmlAndBodyAttributes)
-          .validHeadNodes
-      )
-    }
-  }
-
-  return { validHeadNodes, htmlAndBodyAttributes }
-}
-
 function massageScript(node) {
   const script = document.createElement(`script`)
   for (const attr of node.attributes) {
@@ -251,14 +178,14 @@ function massageScript(node) {
   return script
 }
 
-function isValidNodeName(nodeName) {
+export function isValidNodeName(nodeName) {
   return VALID_NODE_NAMES.includes(nodeName)
 }
 /*
  * For Head, we only care about element nodes(type = 1), so we filter out the rest
  * For Node type, see https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
  */
-function getNodesOfElementType(nodes) {
+export function getNodesOfElementType(nodes) {
   return Array.from(nodes).filter(childNode => childNode.nodeType === 1)
 }
 
@@ -290,18 +217,6 @@ export function applyHtmlAndBodyAttributes(htmlAndBodyAttributes) {
       bodyElement.setAttribute(attributeName, attributeValue)
     })
   }
-}
-
-export function applyHtmlAndBodyAttributesSSR(
-  htmlAndBodyAttributes,
-  { setHtmlAttributes, setBodyAttributes }
-) {
-  if (!htmlAndBodyAttributes) return
-
-  const { html, body } = htmlAndBodyAttributes
-
-  setHtmlAttributes(html)
-  setBodyAttributes(body)
 }
 
 export function removeHtmlAndBodyAttributes(htmlAndBodyattributeList) {

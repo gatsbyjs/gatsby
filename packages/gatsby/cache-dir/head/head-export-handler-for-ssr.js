@@ -4,13 +4,98 @@ const { StaticQueryContext } = require(`gatsby`)
 const {
   headExportValidator,
   filterHeadProps,
-  getValidHeadNodesAndAttributesSSR,
-  applyHtmlAndBodyAttributesSSR,
+  getNodesOfElementType,
+  isValidNodeName,
+  warnForInvalidTags,
 } = require(`./utils`)
 const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
 import { apiRunner } from "../api-runner-ssr"
+
+export function applyHtmlAndBodyAttributesSSR(
+  htmlAndBodyAttributes,
+  { setHtmlAttributes, setBodyAttributes }
+) {
+  if (!htmlAndBodyAttributes) return
+
+  const { html, body } = htmlAndBodyAttributes
+
+  setHtmlAttributes(html)
+  setBodyAttributes(body)
+}
+
+export function getValidHeadNodesAndAttributesSSR(
+  rootNode,
+  htmlAndBodyAttributes = {
+    html: {},
+    body: {},
+  }
+) {
+  const seenIds = new Map()
+  const validHeadNodes = []
+
+  // Filter out non-element nodes before looping since we don't care about them
+  for (const node of getNodesOfElementType(rootNode.childNodes)) {
+    const { rawTagName } = node
+    const id = node.attributes?.id
+
+    if (isValidNodeName(rawTagName)) {
+      if (rawTagName === `html` || rawTagName === `body`) {
+        htmlAndBodyAttributes[rawTagName] = {
+          ...htmlAndBodyAttributes[rawTagName],
+          ...node.attributes,
+        }
+      } else {
+        let element
+        const attributes = { ...node.attributes, "data-gatsby-head": true }
+
+        if (rawTagName === `script` || rawTagName === `style`) {
+          element = (
+            <node.rawTagName
+              {...attributes}
+              dangerouslySetInnerHTML={{
+                __html: node.text,
+              }}
+            />
+          )
+        } else {
+          element =
+            node.textContent.length > 0 ? (
+              <node.rawTagName {...attributes}>
+                {node.textContent}
+              </node.rawTagName>
+            ) : (
+              <node.rawTagName {...attributes} />
+            )
+        }
+
+        if (id) {
+          if (!seenIds.has(id)) {
+            validHeadNodes.push(element)
+            seenIds.set(id, validHeadNodes.length - 1)
+          } else {
+            const indexOfPreviouslyInsertedNode = seenIds.get(id)
+            validHeadNodes[indexOfPreviouslyInsertedNode] = element
+          }
+        } else {
+          validHeadNodes.push(element)
+        }
+      }
+    } else {
+      warnForInvalidTags(rawTagName)
+    }
+
+    if (node.childNodes.length) {
+      validHeadNodes.push(
+        ...getValidHeadNodesAndAttributesSSR(node, htmlAndBodyAttributes)
+          .validHeadNodes
+      )
+    }
+  }
+
+  return { validHeadNodes, htmlAndBodyAttributes }
+}
 
 export function headHandlerForSSR({
   pageComponent,
