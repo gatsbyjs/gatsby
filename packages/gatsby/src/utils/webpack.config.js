@@ -588,17 +588,7 @@ module.exports = async (
           framework: {
             chunks: `all`,
             name: `framework`,
-            // See "build-javascript" stage for explanations
-            test: module => {
-              if (
-                module.rawRequest === `react-dom/server` ||
-                module.rawRequest.includes(`/react-dom-server`)
-              ) {
-                return false
-              }
-
-              return FRAMEWORK_BUNDLES_REGEX.test(module.nameForCondition())
-            },
+            test: FRAMEWORK_BUNDLES_REGEX,
             priority: 40,
             // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
             enforce: true,
