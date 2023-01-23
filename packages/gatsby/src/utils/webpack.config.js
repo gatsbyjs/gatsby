@@ -642,8 +642,8 @@ module.exports = async (
             // - "node_modules/react-dom/cjs/react-dom-server-legacy.browser.production.min.js"
             // Use a "/" before "react-dom-server" so that we don't match packages that contain "react-dom-server" in their name
             if (
-              module.rawRequest === `react-dom/server` ||
-              module.rawRequest.includes(`/react-dom-server`)
+              module?.rawRequest === `react-dom/server` ||
+              module?.rawRequest?.includes(`/react-dom-server`)
             ) {
               return false
             }
