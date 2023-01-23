@@ -119,14 +119,12 @@ export function headHandlerForSSR({
         },
       }
 
-      const HeadElement = () => (
-        <pageComponent.Head {...filterHeadProps(_props)} />
-      )
+      const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />
 
       const headWithWrapRootElement = apiRunner(
         `wrapRootElement`,
-        { element: <HeadElement /> },
-        <HeadElement />,
+        { element: HeadElement },
+        HeadElement,
         ({ result }) => {
           return { element: result }
         }
