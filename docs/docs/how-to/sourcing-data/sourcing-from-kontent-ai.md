@@ -122,7 +122,7 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
 
 Now that you have a pretty way to define the path for your pages, you can create the pages programmatically:
 
-```javascript:title=gatsby-node.js
+```js:title=gatsby-node.js
 const path = require(`path`) // highlight-line
 
 exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
