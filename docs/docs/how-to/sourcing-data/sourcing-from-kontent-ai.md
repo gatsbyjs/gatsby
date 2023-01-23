@@ -20,7 +20,7 @@ Once you have a subscription to Kontent.ai, you need some content to retrieve. I
 
 The created Sample Project is a comprehensive presentation of a fictional coffee company named Dancing Goat that showcases various Kontent.ai features. It can be displayed in various channels, as you can see by going to the [Quickstart page in Kontent.ai](https://app.kontent.ai/quickstart) from within that project.
 
-For this guide, you don't have to worry about most of the features. You'll pull some data to display within the Gatsby site you'll create in the next step. The only thing you need to get is your Project ID, which you can find in Kontent.ai under _Project settings_ -> _API keys_.
+For this guide, you don't have to worry about most of the features. You'll pull some data to display within the Gatsby site you'll create in the next step. The only thing you need to get is your Project ID, which you can find in Kontent.ai under **"Project settings"** -> **"API keys"**.
 
 ### Gatsby
 
