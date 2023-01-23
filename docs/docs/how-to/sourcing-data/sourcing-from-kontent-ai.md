@@ -143,11 +143,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await graphql(`
     {
       allKontentItemArticle {
-        edges {
-          node {
-            fields {
-              slug
-            }
+        nodes {
+          fields {
+            slug
           }
         }
       }
