@@ -127,6 +127,10 @@ exports.onRenderBody = ({ setHtmlAttributes }) => {
 
 As of version gatsby version `5.5, `Head` can access [React Context](https://reactjs.org/docs/context.html) that you define via the [`wrapRootElement`API](/docs/reference/config-files/gatsby-browser/#wrapRootElement) and will show warnings if it encounters invalid head tags introduced by`wrapRootElement`.
 
+## Invalid Head elements
+
+TBD: Some docs about how wraproot element can lead to this error and list of valid head elements
+
 ## Additional Resources
 
 - [Adding an SEO component](/docs/how-to/adding-common-features/adding-seo-component)
