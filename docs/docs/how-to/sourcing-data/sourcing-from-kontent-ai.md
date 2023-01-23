@@ -153,7 +153,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   // Create pages
-  result.data.allKontentItemArticle.edges.forEach(({ node }) => {
+  result.data.allKontentItemArticle.nodes.forEach((node) => {
     createPage({
       path: node.fields.slug,
       component: path.resolve(`src/templates/article.js`),
