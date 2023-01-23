@@ -19,7 +19,7 @@
     "gatsby-transformer-json": "next",
     "gatsby-transformer-remark": "next",
     "gatsby-transformer-sharp": "next",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.3.0",
     "prop-types": "^15.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.29.1",
-    "@testing-library/cypress": "^8.0.7",
+    "@testing-library/cypress": "^9.0.0",
     "cross-env": "^7.0.3",
     "cypress": "^9.7.0",
     "cypress-image-snapshot": "^4.0.1",
