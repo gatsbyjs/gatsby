@@ -69,6 +69,10 @@ gatsby develop
 
 To see all the content that's available from Kontent.ai, you can test out GraphQL queries in [GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/) at `http://localhost:8000/___graphql`. The queries generated from Kontent.ai will be prefixed with `kontentItem` (for single nodes) or `allKontentItem`.
 
+## Using the plugin
+
+### Adding content to existing pages
+
 To see how to put that data into your site, first go to `http://localhost:8000/`. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kontent.ai.
 
 The title here is generated in the layout from the site metadata. By default, the Kontent.ai Sample Project has a single item named "Home" that is the only item of the Home type. So you can change the layout component to query the metadata of that item and then use that data to populate your title.
