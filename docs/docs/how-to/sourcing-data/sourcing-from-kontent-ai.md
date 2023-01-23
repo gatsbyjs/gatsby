@@ -216,7 +216,7 @@ Now you know how to create pages programmatically and pull their content from Ko
 
 ### Continuous deployment
 
-To keep your site static but always up to date with the latest content from Kontent.ai, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://docs.netlify.com/site-deploys/create-deploys/#deploy-with-git), but the principle is similar using other services like [Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324654-Connecting-to-Kontent), or [Travis CI](https://travis-ci.org/), etc...
+To keep your site static but always up to date with the latest content from Kontent.ai, it helps to set up automatic deployment whenever your published content changes. Read the [Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324654-Connecting-to-Kontent) instructions to learn more.
 
 For automatic deployment from Netlify you'll want to [create a new build hook](https://docs.netlify.com/configure-builds/build-hooks/) with a name like "Change in Kontent.ai content" and copy the URL. Then go to Kontent.ai. Under **"Project settings"**, choose **"Webhooks"** and create a new webhook. Give it a name like "Netlify build", paste the URL into the **"URL address"** field and choose the [events to trigger the webhook](https://docs.kontent.ai/reference/webhooks-reference#a-events-to-trigger-a-webhook), you want to select just "DELIVERY API TRIGGERS" for content item events: "Publish" and "Unpublish". And that's it. Now whenever published content changes, your webhook will trigger a build in Netlify to ensure your static content is updated to the latest version.
 
