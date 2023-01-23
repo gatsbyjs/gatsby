@@ -125,11 +125,11 @@ exports.onRenderBody = ({ setHtmlAttributes }) => {
 
 ## Accessing context
 
-As of version gatsby version `5.5, `Head` can access [React Context](https://reactjs.org/docs/context.html) that you define via the [`wrapRootElement`API](/docs/reference/config-files/gatsby-browser/#wrapRootElement) and will show warnings if it encounters invalid head tags introduced by`wrapRootElement`.
+As of version gatsby version `5.5, `Head` can access [React Context](https://reactjs.org/docs/context.html) that you define via the [`wrapRootElement`API](/docs/reference/config-files/gatsby-browser/#wrapRootElement).
 
 ## Invalid Head elements
 
-TBD: Some docs about how wraproot element can lead to this error and list of valid head elements
+The following elements: `link`, `meta`, `style`, `title`, `base`, `noscript`, `script`, `html` and `body` are considered valid for use within the Gatsby `Head` component. If Gatsby encounters any other elements, it will generate a warning. If the warning persists after removing any invalid elements from `Head`, it's recommended to check if they were added by the [`wrapRootElement`API](/docs/reference/config-files/gatsby-browser/#wrapRootElement) . It's important to note that `wrapRootElement` should only be used to set up Provider components that will wrap your application.
 
 ## Additional Resources
 
