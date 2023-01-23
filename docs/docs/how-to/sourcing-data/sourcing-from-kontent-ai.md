@@ -108,7 +108,7 @@ It's great to be able to add content to existing static pages, but one of the gr
 
 Start by making use of the URL pattern in the Article type to generate slugs for your Article nodes:
 
-```javascript:title=gatsby-node.js
+```js:title=gatsby-node.js
 exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
   if (node.internal.type === `kontent_item_article`) {
     createNodeField({
