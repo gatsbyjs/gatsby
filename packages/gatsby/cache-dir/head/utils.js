@@ -47,7 +47,7 @@ export function warnForInvalidTags(tagName) {
   if (process.env.NODE_ENV !== `production`) {
     const warning = `<${tagName}> is not a valid head element. You can only use one of the following: ${VALID_NODE_NAMES.join(
       `, `
-    )}.You should also make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements`
+    )}.You should also make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: \nhttps://gatsby.dev/invalid-head-elements`
 
     warnOnce(warning)
   }
@@ -111,7 +111,7 @@ export function getValidHeadNodesAndAttributes(
   }
 ) {
   const seenIds = new Map()
-  let validHeadNodes = []
+  const validHeadNodes = []
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of getNodesOfElementType(rootNode.childNodes)) {
@@ -158,8 +158,8 @@ export function getValidHeadNodesAndAttributes(
     }
 
     if (node.childNodes.length) {
-      validHeadNodes = validHeadNodes.concat(
-        ...getValidHeadNodesAndAttributes(node, htmlAndBodyAttributes)
+      validHeadNodes.push(
+        getValidHeadNodesAndAttributes(node, htmlAndBodyAttributes)
           .validHeadNodes
       )
     }
