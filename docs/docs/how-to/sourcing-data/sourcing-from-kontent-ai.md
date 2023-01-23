@@ -8,7 +8,7 @@ Kontent.ai is a hosted CMS that offers you Content as a Service (CaaS) for all y
 
 You can also take advantage of Kontent.ai ability to deliver content in multiple languages and create relationships among various content with linked items. However you structure your content in Kontent.ai, the [source plugin](https://github.com/kontent-ai/gatsby-packages/tree/master/packages/gatsby-source) will ensure the proper nodes are created for your Gatsby site.
 
-\_Note: For this guide, you'll work from scratch from the [Gatsby default starter](https://github.com/gatsbyjs/gatsby-starter-default) to get a feel for how sourcing from Kontent.ai works. If you'd like to look at an example of a complete basic site, have a look at the [Kontent.ai Gatsby starter site](https://github.com/kontent-ai/gatsby-starter), which includes worked examples for querying content.
+Note: For this guide, you'll work from scratch from the [Gatsby default starter](https://github.com/gatsbyjs/gatsby-starter-default) to get a feel for how sourcing from Kontent.ai works. If you'd like to look at an example of a complete basic site, have a look at the [Kontent.ai Gatsby starter site](https://github.com/kontent-ai/gatsby-starter), which includes working examples for querying content.
 
 ## Setup
 
