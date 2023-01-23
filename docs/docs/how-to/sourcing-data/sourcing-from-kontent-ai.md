@@ -102,7 +102,7 @@ If you look at `http://localhost:8000/`, you'll notice the title is now "Dancing
 
 So you've seen how to add content to existing pages in Gatsby using Kontent.ai. Next, you will start creating new pages of your own.
 
-#### Creating new pages
+### Creating new pages
 
 It's great to be able to add content to existing static pages, but one of the great benefits of using CaaS is being able to define pages in Kontent.ai and having them generated automatically. To see how, you'll add pages based on content from the Sample Project in the Article type (feel free to explore how these are structured in Kontent.ai).
 
