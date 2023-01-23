@@ -4,7 +4,7 @@ const { StaticQueryContext } = require(`gatsby`)
 const {
   headExportValidator,
   filterHeadProps,
-  getNodesOfElementType,
+  isElementType,
   isValidNodeName,
   warnForInvalidTags,
 } = require(`./utils`)
@@ -36,9 +36,11 @@ export function getValidHeadNodesAndAttributesSSR(
   const validHeadNodes = []
 
   // Filter out non-element nodes before looping since we don't care about them
-  for (const node of getNodesOfElementType(rootNode.childNodes)) {
+  for (const node of rootNode.childNodes) {
     const { rawTagName } = node
     const id = node.attributes?.id
+
+    if (!isElementType(node)) continue
 
     if (isValidNodeName(rawTagName)) {
       if (rawTagName === `html` || rawTagName === `body`) {

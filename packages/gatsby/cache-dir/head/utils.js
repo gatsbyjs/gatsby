@@ -114,9 +114,11 @@ export function getValidHeadNodesAndAttributes(
   const validHeadNodes = []
 
   // Filter out non-element nodes before looping since we don't care about them
-  for (const node of getNodesOfElementType(rootNode.childNodes)) {
+  for (const node of rootNode.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
     const id = node.attributes?.id?.value
+
+    if (!isElementType(node)) continue
 
     if (isValidNodeName(nodeName)) {
       // <html> and <body> tags are treated differently, in that we don't  render them, we only  extract the attributes and apply them separetely
@@ -182,11 +184,11 @@ export function isValidNodeName(nodeName) {
   return VALID_NODE_NAMES.includes(nodeName)
 }
 /*
- * For Head, we only care about element nodes(type = 1), so we filter out the rest
+ * For Head, we only care about element nodes(type = 1), so this util is used to skip over non-element nodes
  * For Node type, see https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
  */
-export function getNodesOfElementType(nodes) {
-  return Array.from(nodes).filter(childNode => childNode.nodeType === 1)
+export function isElementType(node) {
+  return node.nodeType === 1
 }
 
 /**
