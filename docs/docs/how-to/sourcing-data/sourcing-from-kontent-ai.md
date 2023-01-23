@@ -39,7 +39,7 @@ npm install @kontent-ai/gatsby-source
 
 Once that's done, you need to add the plugin to `gatsby-config`:
 
-```javascript
+```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     // ...
