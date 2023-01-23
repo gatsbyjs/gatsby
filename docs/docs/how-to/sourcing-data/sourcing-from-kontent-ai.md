@@ -39,7 +39,7 @@ Next, install the [Kontent.ai source plugin](https://github.com/kontent-ai/gatsb
 npm install @kontent-ai/gatsby-source
 ```
 
-Once that's done, you need to add the plugin to `gatsby-config.js`:
+Once that's done, you need to add the plugin to `gatsby-config`:
 
 ```javascript
 module.exports = {
