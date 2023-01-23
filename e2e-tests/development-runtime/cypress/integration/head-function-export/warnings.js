@@ -13,7 +13,9 @@ describe(`Head function export should warn`, () => {
   it(`for elements that belong in the body`, () => {
     cy.get(`@consoleWarn`).should(
       `be.calledWith`,
-      `<h1> is not a valid head element. You can only use one of the following: ${VALID_NODE_NAMES.join(`, `)}.You should also make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements`
+      `<h1> is not a valid head element. You can only use one of the following: ${VALID_NODE_NAMES.join(
+        `, `
+      )}.You should also make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: \nhttps://gatsby.dev/invalid-head-elements`
     )
   })
 })
