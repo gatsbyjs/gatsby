@@ -161,7 +161,7 @@ export function getValidHeadNodesAndAttributes(
 
     if (node.childNodes.length) {
       validHeadNodes.push(
-        getValidHeadNodesAndAttributes(node, htmlAndBodyAttributes)
+        ...getValidHeadNodesAndAttributes(node, htmlAndBodyAttributes)
           .validHeadNodes
       )
     }
