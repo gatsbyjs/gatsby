@@ -21,6 +21,7 @@ import {
 import { resolvePlugin } from "./resolve-plugin"
 import { preferDefault } from "../prefer-default"
 import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
+import { maybeAddFileProtocol } from "../resolve-js-file-path"
 
 interface IApi {
   version?: string
@@ -193,7 +194,7 @@ const addModuleImport = async (
   value: Array<ISubPluginCustomReturn>
 ): Promise<Array<ISubPluginCustomReturn>> => {
   for (const plugin of value) {
-    const importedModule = await import(plugin.modulePath)
+    const importedModule = await import(maybeAddFileProtocol(plugin.modulePath))
     const pluginModule = preferDefault(importedModule)
     plugin.module = pluginModule
   }
