@@ -16,6 +16,11 @@ plugins: [
     options: {
       id: "YOUR_GOOGLE_TAGMANAGER_ID",
 
+      // Conditionally enable or disable GTM.
+      //
+      // Defaults to true.
+      enable: true,
+
       // Include GTM in development.
       //
       // Defaults to false meaning GTM will only be loaded in production.

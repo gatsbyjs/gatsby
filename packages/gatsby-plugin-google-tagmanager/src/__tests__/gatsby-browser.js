@@ -46,6 +46,18 @@ afterEach(() => {
 })
 
 describe(`onRouteUpdate`, () => {
+  it(`does not register if enabled is set to false`, () => {
+    const { onRouteUpdate } = getAPI(() => {
+      process.env.NODE_ENV = `production`
+    })
+
+    onRouteUpdate({}, { enable: false })
+
+    jest.runAllTimers()
+
+    expect(window.dataLayer).toHaveLength(0)
+  })
+
   it(`does not register if NODE_ENV is not production`, () => {
     const { onRouteUpdate } = getAPI(() => {
       process.env.NODE_ENV = `development`

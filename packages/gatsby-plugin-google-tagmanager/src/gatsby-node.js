@@ -17,6 +17,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     id: Joi.string().description(
       `Google Tag Manager ID that can be found in your Tag Manager dashboard.`
     ),
+    enable: Joi.boolean()
+      .default(true)
+      .description(`Conditionally enable or disable GTM.`),
     includeInDevelopment: Joi.boolean()
       .default(false)
       .description(

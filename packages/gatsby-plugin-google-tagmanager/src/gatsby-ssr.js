@@ -40,6 +40,7 @@ exports.onRenderBody = (
   { setHeadComponents, setPreBodyComponents, reporter },
   {
     id,
+    enable = true,
     includeInDevelopment = false,
     gtmAuth,
     gtmPreview,
@@ -49,6 +50,10 @@ exports.onRenderBody = (
     selfHostedOrigin = `https://www.googletagmanager.com`,
   }
 ) => {
+  if (!enable) {
+    return
+  }
+
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     const environmentParamStr =
       gtmAuth && gtmPreview

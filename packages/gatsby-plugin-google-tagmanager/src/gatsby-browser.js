@@ -56,31 +56,40 @@ function sendToGTM({ name, value, id }, dataLayer) {
   })
 }
 
-export function onRouteUpdate(_, pluginOptions) {
-  if (
-    process.env.NODE_ENV === `production` ||
-    pluginOptions.includeInDevelopment
-  ) {
+export function onRouteUpdate(
+  _,
+  {
+    enable = true,
+    includeInDevelopment,
+    dataLayerName,
+    routeChangeEventName = `gatsby-route-change`,
+  }
+) {
+  if (!enable) {
+    return
+  }
+
+  if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     // wrap inside a timeout to ensure the title has properly been changed
     setTimeout(() => {
-      const data = pluginOptions.dataLayerName
-        ? window[pluginOptions.dataLayerName]
-        : window.dataLayer
-      const eventName = pluginOptions.routeChangeEventName
-        ? pluginOptions.routeChangeEventName
-        : `gatsby-route-change`
+      const data = dataLayerName ? window[dataLayerName] : window.dataLayer
+      const eventName = routeChangeEventName
 
       data.push({ event: eventName })
     }, 50)
   }
 }
 
-export function onInitialClientRender(_, pluginOptions) {
+export function onInitialClientRender(
+  _,
+  { enable = true, enableWebVitalsTracking, dataLayerName }
+) {
+  if (!enable) {
+    return
+  }
+
   // we only load the polyfill in production so we can't enable it in development
-  if (
-    process.env.NODE_ENV === `production` &&
-    pluginOptions.enableWebVitalsTracking
-  ) {
-    sendWebVitals(pluginOptions.dataLayerName)
+  if (process.env.NODE_ENV === `production` && enableWebVitalsTracking) {
+    sendWebVitals(dataLayerName)
   }
 }
