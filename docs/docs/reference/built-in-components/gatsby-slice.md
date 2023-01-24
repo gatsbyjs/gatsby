@@ -101,7 +101,7 @@ export const query = graphql`
 
 ### JSS support and Styled component support
 
-Using Styled-components or JSS in slices won't work, Alternatively you can use emotion or normal css.
+Using Styled-components or JSS within Slice components is currently [not supported](https://github.com/gatsbyjs/gatsby/issues/37278). Alternatively, you can use emotion or normal CSS.
 
 
 ### Must be in `src` directory
