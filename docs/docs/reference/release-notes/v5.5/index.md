@@ -60,10 +60,26 @@ As you can see, already the enhancements achieved through `hash-wasm` are great!
 
 Last but not least, it's important to note that the upgrades were made to the `createFileNode` function. So if you're using this utility in your site/plugin, you can also benefit from this.
 
+## Editing `<html>` and `<body>` attributes
+
+You can now edit the attributes of the `<html>` and `<body>` tags using the Head API. Gatsby will automatically incorporate these attributes into the page, with any attributes specified in the Head API taking precedence over those set through [Gatsby Server Rendering APIs](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/)
+
+```jsx
+export function Head() {
+  return (
+    <>
+      <html lang="en">
+      <body className="my-body-class">
+      <title>Hello World</title>
+    </>
+  )
+}
+```
+
 ## Notable bugfixes & improvements
 
 - `gatsby`:
-  - TODO
+  - pass `serverData` into Gatsby Head, via [PR #37500](https://github.com/gatsbyjs/gatsby/pull/37500)
 
 ## Contributors
 
