@@ -47,7 +47,7 @@ export function warnForInvalidTags(tagName) {
   if (process.env.NODE_ENV !== `production`) {
     const warning = `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
       `, `
-    )}.You should also make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: \nhttps://gatsby.dev/invalid-head-elements`
+    )}.\n\nAlso make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: https://gatsby.dev/invalid-head-elements`
 
     warnOnce(warning)
   }
