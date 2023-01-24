@@ -6,7 +6,7 @@ const {
   filterHeadProps,
   isElementType,
   isValidNodeName,
-  warnForInvalidTags,
+  warnForInvalidTag,
 } = require(`./utils`)
 const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
@@ -85,7 +85,7 @@ export function getValidHeadNodesAndAttributesSSR(
         }
       }
     } else {
-      warnForInvalidTags(rawTagName)
+      warnForInvalidTag(rawTagName)
     }
 
     if (node.childNodes.length) {

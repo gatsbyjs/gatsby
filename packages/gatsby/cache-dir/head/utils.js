@@ -43,14 +43,17 @@ if (process.env.NODE_ENV !== `production`) {
  * Warn for invalid tags in Head which may have been directly added or introduced by `wrapRootElement`
  * @param {string} tagName
  */
-export function warnForInvalidTags(tagName) {
+export function warnForInvalidTag(tagName) {
   if (process.env.NODE_ENV !== `production`) {
-    const warning = `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
-      `, `
-    )}.\n\nAlso make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: https://gatsby.dev/invalid-head-elements`
-
+    const warning = createWarningForInvalidTag(tagName)
     warnOnce(warning)
   }
+}
+
+export function createWarningForInvalidTag(tagName) {
+  return `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
+    `, `
+  )}.\n\nAlso make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: https://gatsby.dev/invalid-head-elements`)
 }
 
 /**
@@ -156,7 +159,7 @@ export function getValidHeadNodesAndAttributes(
         }
       }
     } else {
-      warnForInvalidTags(nodeName)
+      warnForInvalidTag(nodeName)
     }
 
     if (node.childNodes.length) {
