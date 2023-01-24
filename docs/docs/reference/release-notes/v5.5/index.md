@@ -91,6 +91,14 @@ export function Head() {
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [FraserThompson](https://github.com/FraserThompson): feat(gatsby-source-filesystem): Only generate hashes when a file has changed, and add an option for skipping hashing [PR #37464](https://github.com/gatsbyjs/gatsby/pull/37464)
+- [palmiak](https://github.com/palmiak): chore(docs): Adds Kinsta Application hosting to other services [PR #37476](https://github.com/gatsbyjs/gatsby/pull/37476)
+- [beadlespouse](https://github.com/beadlespouse): fix(gatsby-source-shopify): Use `id` as cacheKey for base64 image [PR #37397](https://github.com/gatsbyjs/gatsby/pull/37397)
+- [chrissantamaria](https://github.com/chrissantamaria): fix(gatsby): Multi-environment browserslist configs [PR #35081](https://github.com/gatsbyjs/gatsby/pull/35081)
+- [labifrancis](https://github.com/labifrancis): chore(docs): Update "Minimal Reproduction" instructions [PR #37231](https://github.com/gatsbyjs/gatsby/pull/37231)
+- [markacola](https://github.com/markacola): fix(gatsby): Update `loader.loadPage` to return a Promise on error [PR #37337](https://github.com/gatsbyjs/gatsby/pull/37337)
+- [chawes13](https://github.com/chawes13): docs: fix v5 release notes slice example [PR #37465](https://github.com/gatsbyjs/gatsby/pull/37465)
+- [sapiensfio](https://github.com/sapiensfio): fix(gatsby-react-router-scroll): fix issues with anchor links [PR #37498](https://github.com/gatsbyjs/gatsby/pull/37498)
+- [jonrutter](https://github.com/jonrutter): chore(docs): Fix `ts-jest` import statement in Unit Testing Guide [PR #37411](https://github.com/gatsbyjs/gatsby/pull/37411)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.5.0-next.0...gatsby@5.5.0
