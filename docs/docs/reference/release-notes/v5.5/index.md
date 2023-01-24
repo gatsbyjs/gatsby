@@ -9,6 +9,7 @@ Welcome to `gatsby@5.5.0` release (January 2023 #2)
 Key highlights of this release:
 
 - [Faster Hashing for `gatsby-source-filesytem`](#faster-hashing-for-gatsby-source-filesytem)
+- [Setting `<html>` and `<body>` attributes](#setting-html-and-body-attributes)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -60,9 +61,9 @@ As you can see, already the enhancements achieved through `hash-wasm` are great!
 
 Last but not least, it's important to note that the upgrades were made to the `createFileNode` function. So if you're using this utility in your site/plugin, you can also benefit from this.
 
-## Editing `<html>` and `<body>` attributes
+## Setting `<html>` and `<body>` attributes
 
-You can now edit the attributes of the `<html>` and `<body>` tags using the Head API. Gatsby will automatically incorporate these attributes into the page, with any attributes specified in the Head API taking precedence over those set through [Gatsby Server Rendering APIs](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/)
+You can now set the attributes of the `<html>` and `<body>` tags using the [Head API](/docs/reference/built-in-components/gatsby-head/). Gatsby will automatically incorporate these attributes into the page, with any attributes specified in the [Head API](/docs/reference/built-in-components/gatsby-head/) taking precedence over those set through [Gatsby Server Rendering APIs](/docs/reference/config-files/gatsby-ssr/).
 
 ```jsx
 export function Head() {
@@ -80,6 +81,11 @@ export function Head() {
 
 - `gatsby`:
   - pass `serverData` into Gatsby Head, via [PR #37500](https://github.com/gatsbyjs/gatsby/pull/37500)
+  - fix regression with `file-loader` imports when `pathPrefix` and/or `assetPrefix` is used, via [PR #37423](https://github.com/gatsbyjs/gatsby/pull/37423)
+  - fix `pluginOptionsSchema` not being called for local plugins with `gatsby-node.ts`, via [PR #37443](https://github.com/gatsbyjs/gatsby/pull/37443)
+  - support updated `sort` argument syntax in `nodeModel.findAll` function, via [PR #37477](https://github.com/gatsbyjs/gatsby/pull/37477)
+- `gatsby-source-contentful`:
+  - fix back reference fields disapearing after some content updates, via [PR #37442](https://github.com/gatsbyjs/gatsby/pull/37442)
 
 ## Contributors
 
