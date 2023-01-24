@@ -99,6 +99,11 @@ export const query = graphql`
 
 ## Restrictions on using `<Slice>` placeholder
 
+### JSS support and Styled component support
+
+Using Styled-components or JSS in slices won't work, Alternatively you can use emotion or normal css.
+
+
 ### Must be in `src` directory
 
 Slice placeholders must be used in files that are nested below your site's top-level `src` directory. For example:
