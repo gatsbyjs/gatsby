@@ -16,7 +16,7 @@ import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@gatsbyjs/reach-router"
 import { headHandlerForSSR } from "./head/head-export-handler-for-ssr"
 import { getStaticQueryResults } from "./loader"
-import { WritableAsPromise } from "./server-utils/writable-as-promise."
+import { WritableAsPromise } from "./server-utils/writable-as-promise"
 
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
@@ -298,10 +298,10 @@ export default async function staticPage({
         const writableStream = new WritableAsPromise()
         const { pipe } = renderToPipeableStream(bodyComponent, {
           onAllReady() {
-            pipe(writeableStream)
+            pipe(writableStream)
           },
           onError(error) {
-            writeableStream.destroy(error)
+            writableStream.destroy(error)
           },
         })
 
