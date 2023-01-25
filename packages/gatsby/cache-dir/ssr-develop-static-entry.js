@@ -1,11 +1,7 @@
 /* global BROWSER_ESM_ONLY */
 import React from "react"
 import fs from "fs-extra"
-import {
-  renderToString,
-  renderToStaticMarkup,
-  renderToPipeableStream,
-} from "react-dom/server"
+import { renderToStaticMarkup, renderToPipeableStream } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
 import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
@@ -294,7 +290,6 @@ export default async function staticPage({
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        // bodyHtml = renderToString(bodyComponent)
         const writableStream = new WritableAsPromise()
         const { pipe } = renderToPipeableStream(bodyComponent, {
           onAllReady() {
