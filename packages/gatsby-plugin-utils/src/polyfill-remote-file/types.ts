@@ -1,17 +1,31 @@
-import type { Node, GatsbyNode } from "gatsby"
+import type { Node, GatsbyNode, NodeInput } from "gatsby"
 
-export interface IRemoteFileNode extends Node {
+interface IRemoteFileNodeFields {
   url: string
   mimeType: string
   filename: string
   filesize?: number
 }
 
-export interface IRemoteImageNode extends IRemoteFileNode {
+export interface IRemoteFileNode extends IRemoteFileNodeFields, Node {}
+
+export interface IRemoteFileNodeInput
+  extends IRemoteFileNodeFields,
+    NodeInput {}
+
+interface IRemoteImageNodeFields {
   width: number
   height: number
   placeholderUrl?: string
 }
+
+export interface IRemoteImageNode
+  extends IRemoteImageNodeFields,
+    IRemoteFileNode {}
+
+export interface IRemoteImageNodeInput
+  extends IRemoteImageNodeFields,
+    NodeInput {}
 
 type GraphqlType<T> = T extends number
   ? "Int" | "Float"
