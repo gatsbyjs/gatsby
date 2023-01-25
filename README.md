@@ -163,3 +163,9 @@ Licensed under the [MIT License](./LICENSE).
 Thanks go out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
 
 A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.
+
+## Thanks to all the contributors ❤️
+<a href = "https://github.com/gatsbyjs/gatsby/contributors">
+  <img src = "https://contrib.rocks/image?repo=gatsbyjs/gatsby"/>
+</a>
+
