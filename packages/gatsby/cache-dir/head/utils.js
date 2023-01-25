@@ -50,7 +50,7 @@ export function warnForInvalidTag(tagName) {
   }
 }
 
-export function createWarningForInvalidTag(tagName) {
+function createWarningForInvalidTag(tagName) {
   return `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
     `, `
   )}.\n\nAlso make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: https://gatsby.dev/invalid-head-elements`
