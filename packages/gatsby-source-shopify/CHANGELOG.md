@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.5.0/packages/gatsby-source-shopify) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Bug Fixes
+
+- Use `id` as cacheKey for base64 image [#37397](https://github.com/gatsbyjs/gatsby/issues/37397) ([75ced40](https://github.com/gatsbyjs/gatsby/commit/75ced4077cf7b8fb127484f1ff71ecbe5d074edc))
+
 ## [8.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.4.0/packages/gatsby-source-shopify) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)

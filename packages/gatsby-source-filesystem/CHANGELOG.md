@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.5.0/packages/gatsby-source-filesystem) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Features
+
+- Only generate hashes when a file has changed, and add an option for skipping hashing [#37464](https://github.com/gatsbyjs/gatsby/issues/37464) ([df58891](https://github.com/gatsbyjs/gatsby/commit/df588911265de18737ccdbbda17ac3708a6098b0))
+
+#### Chores
+
+- Improve README [#37480](https://github.com/gatsbyjs/gatsby/issues/37480) ([16685a6](https://github.com/gatsbyjs/gatsby/commit/16685a62275843914023349de2ba26720ed5e80c))
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+
 ## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.4.0/packages/gatsby-source-filesystem) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)

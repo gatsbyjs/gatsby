@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.5.0/packages/gatsby-core-utils) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Features
+
+- Add hashing methods from `hash-wasm` [#37433](https://github.com/gatsbyjs/gatsby/issues/37433) ([df27ff4](https://github.com/gatsbyjs/gatsby/commit/df27ff4a5dbaf8bbcd481dcd0d9a297c51283fde))
+
+#### Chores
+
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.4.0/packages/gatsby-core-utils) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.5.0/packages/gatsby-source-wordpress) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Bug Fixes
+
+- fix preview issues fix [#37492](https://github.com/gatsbyjs/gatsby/issues/37492) ([48d4069](https://github.com/gatsbyjs/gatsby/commit/48d406914eeb9f6db50ea7975f45c4d3e753396a))
+- Force removal of types [#37424](https://github.com/gatsbyjs/gatsby/issues/37424) ([447a558](https://github.com/gatsbyjs/gatsby/commit/447a558f1c2514d42440c9eecf2bb8fbc9b41502))
+
+#### Chores
+
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+- Upgrade to Jest 29 [#37408](https://github.com/gatsbyjs/gatsby/issues/37408) ([315edc6](https://github.com/gatsbyjs/gatsby/commit/315edc64c9aa87b7f5bf43c7698e47187aeb6450))
+
 ### [7.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.4.1/packages/gatsby-source-wordpress) (2023-01-19)
 
 #### Bug Fixes
