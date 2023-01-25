@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.5.0/packages/gatsby-plugin-mdx) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Bug Fixes
+
+- Default remark node to span [#37423](https://github.com/gatsbyjs/gatsby/issues/37423) ([824e3de](https://github.com/gatsbyjs/gatsby/commit/824e3deef1f765b46aecfc81fc930a5aa1a2a180))
+
+#### Chores
+
+- Improve v5 migration guide around MDX [#37485](https://github.com/gatsbyjs/gatsby/issues/37485) ([e4f841f](https://github.com/gatsbyjs/gatsby/commit/e4f841fa9959583a7b461c995cc1a5c8a6578880))
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+
 ## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.4.0/packages/gatsby-plugin-mdx) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
