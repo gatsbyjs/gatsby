@@ -105,7 +105,7 @@ In this case only the second `<link id="icon" rel="icon" href="icon-specific-for
 
 You'll need to be aware of these things when using Gatsby Head:
 
-- You can only define the `Head` export inside a page, not in a component.
+- You can only define the `Head` export inside a page (that includes templates for [`createPage`](/docs/reference/config-files/actions/#createPage)), not in a component.
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, `script`, and `noscript`.
