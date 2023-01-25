@@ -25,7 +25,7 @@ export interface IRemoteImageNode
 
 export interface IRemoteImageNodeInput
   extends IRemoteImageNodeFields,
-    NodeInput {}
+    IRemoteFileNodeInput {}
 
 type GraphqlType<T> = T extends number
   ? "Int" | "Float"
