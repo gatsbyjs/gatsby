@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.5.0/packages/gatsby-plugin-sitemap) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.4.0/packages/gatsby-plugin-sitemap) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
