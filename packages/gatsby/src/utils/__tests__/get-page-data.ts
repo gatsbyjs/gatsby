@@ -365,11 +365,6 @@ describe(`get-page-data-util`, () => {
   })
 })
 
-it(`fails`, () => {
-  console.log(`fails?`)
-  expect(`a`).toEqual(`b`)
-})
-
 function createPage(
   page: Partial<IGatsbyPage>,
   contextModified: boolean = false
