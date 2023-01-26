@@ -99,9 +99,9 @@ export const query = graphql`
 
 ## Restrictions on using `<Slice>` placeholder
 
-### JSS and Styled Components Support
+### JSS and styled-components support
 
-Using Styled-components or JSS within Slice components is currently [not supported](https://github.com/gatsbyjs/gatsby/issues/37278). Alternatively, you can use emotion or normal CSS.
+Using styled-components or JSS within Slice components is currently [not supported](https://github.com/gatsbyjs/gatsby/issues/37278). Alternatively, you can use emotion or normal CSS.
 
 ### Must be in `src` directory
 
