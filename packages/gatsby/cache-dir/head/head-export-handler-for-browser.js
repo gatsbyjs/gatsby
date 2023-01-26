@@ -4,124 +4,36 @@ import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
-import { VALID_NODE_NAMES } from "./constants"
 import {
   headExportValidator,
   filterHeadProps,
-  warnForInvalidTags,
   diffNodes,
+  getValidHeadNodesAndAttributes,
+  removePrevHeadElements,
+  applyHtmlAndBodyAttributes,
+  removeHtmlAndBodyAttributes,
 } from "./utils"
+import { apiRunner } from "../api-runner-browser"
 
 const hiddenRoot = document.createElement(`div`)
-const htmlAttributesList = new Set()
-const bodyAttributesList = new Set()
-
-const removePrevHtmlAttributes = () => {
-  htmlAttributesList.forEach(attributeName => {
-    const elementTag = document.getElementsByTagName(`html`)[0]
-    elementTag.removeAttribute(attributeName)
-  })
-}
-
-const removePrevBodyAttributes = () => {
-  bodyAttributesList.forEach(attributeName => {
-    const elementTag = document.getElementsByTagName(`body`)[0]
-    elementTag.removeAttribute(attributeName)
-  })
-}
-
-const updateAttribute = (
-  tagName,
-  attributeName,
-  attributeValue,
-  attributesList
-) => {
-  const elementTag = document.getElementsByTagName(tagName)[0]
-
-  if (!elementTag) {
-    return
-  }
-
-  elementTag.setAttribute(attributeName, attributeValue)
-  attributesList.add(attributeName)
-}
-
-const removePrevHeadElements = () => {
-  const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
-
-  for (const node of prevHeadNodes) {
-    node.parentNode.removeChild(node)
-  }
+const keysOfHtmlAndBodyAttributes = {
+  html: [],
+  body: [],
 }
 
 const onHeadRendered = () => {
-  const validHeadNodes = []
-  const seenIds = new Map()
+  const { validHeadNodes, htmlAndBodyAttributes } =
+    getValidHeadNodesAndAttributes(hiddenRoot)
 
-  for (const node of hiddenRoot.childNodes) {
-    const nodeName = node.nodeName.toLowerCase()
-    const id = node.attributes?.id?.value
+  keysOfHtmlAndBodyAttributes.html = Object.keys(htmlAndBodyAttributes.html)
+  keysOfHtmlAndBodyAttributes.body = Object.keys(htmlAndBodyAttributes.body)
 
-    if (!VALID_NODE_NAMES.includes(nodeName)) {
-      warnForInvalidTags(nodeName)
-      continue
-    }
+  applyHtmlAndBodyAttributes(htmlAndBodyAttributes)
 
-    if (nodeName === `html`) {
-      for (const attribute of node.attributes) {
-        updateAttribute(
-          `html`,
-          attribute.name,
-          attribute.value,
-          htmlAttributesList
-        )
-      }
-      continue
-    }
-
-    if (nodeName === `body`) {
-      for (const attribute of node.attributes) {
-        updateAttribute(
-          `body`,
-          attribute.name,
-          attribute.value,
-          bodyAttributesList
-        )
-      }
-      continue
-    }
-
-    let clonedNode = node.cloneNode(true)
-    clonedNode.setAttribute(`data-gatsby-head`, true)
-
-    // Create an element for scripts to make script work
-    if (clonedNode.nodeName.toLowerCase() === `script`) {
-      const script = document.createElement(`script`)
-      for (const attr of clonedNode.attributes) {
-        script.setAttribute(attr.name, attr.value)
-      }
-      script.innerHTML = clonedNode.innerHTML
-      clonedNode = script
-    }
-
-    if (id) {
-      if (!seenIds.has(id)) {
-        validHeadNodes.push(clonedNode)
-        seenIds.set(id, validHeadNodes.length - 1)
-      } else {
-        const indexOfPreviouslyInsertedNode = seenIds.get(id)
-        validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
-          validHeadNodes[indexOfPreviouslyInsertedNode]
-        )
-        validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
-
-        continue
-      }
-    } else {
-      validHeadNodes.push(clonedNode)
-    }
-  }
-
+  /**
+   * The rest of the code block below is a diffing mechanism to ensure that
+   * the head elements aren't duplicted on every re-render.
+   */
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
   if (existingHeadElements.length === 0) {
@@ -160,8 +72,9 @@ if (process.env.BUILD_STAGE === `develop`) {
     return originalConsoleError(...args)
   }
 
-  // We set up observer to be able to regenerate <head> after react-refresh
-  // updates our hidden element.
+  /* We set up observer to be able to regenerate <head> after react-refresh
+     updates our hidden element.
+  */
   const observer = new MutationObserver(onHeadRendered)
   observer.observe(hiddenRoot, {
     attributes: true,
@@ -182,7 +95,18 @@ export function headHandlerForBrowser({
 
       const { render } = reactDOMUtils()
 
-      const Head = pageComponent.Head
+      const HeadElement = (
+        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+      )
+
+      const WrapHeadElement = apiRunner(
+        `wrapRootElement`,
+        { element: HeadElement },
+        HeadElement,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
 
       render(
         // just a hack to call the callback after react has done first render
@@ -190,9 +114,7 @@ export function headHandlerForBrowser({
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
           <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>
-              <Head {...filterHeadProps(pageComponentProps)} />
-            </LocationProvider>
+            <LocationProvider>{WrapHeadElement}</LocationProvider>
           </StaticQueryContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot
@@ -201,8 +123,7 @@ export function headHandlerForBrowser({
 
     return () => {
       removePrevHeadElements()
-      removePrevHtmlAttributes()
-      removePrevBodyAttributes()
+      removeHtmlAndBodyAttributes(keysOfHtmlAndBodyAttributes)
     }
   })
 }

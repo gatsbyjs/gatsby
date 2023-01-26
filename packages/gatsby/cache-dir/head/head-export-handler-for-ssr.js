@@ -1,16 +1,103 @@
 const React = require(`react`)
 const { grabMatchParams } = require(`../find-path`)
-const { createElement } = require(`react`)
 const { StaticQueryContext } = require(`gatsby`)
 const {
   headExportValidator,
   filterHeadProps,
-  warnForInvalidTags,
+  isElementType,
+  isValidNodeName,
+  warnForInvalidTag,
 } = require(`./utils`)
 const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
-const { VALID_NODE_NAMES } = require(`./constants`)
+import { apiRunner } from "../api-runner-ssr"
+
+export function applyHtmlAndBodyAttributesSSR(
+  htmlAndBodyAttributes,
+  { setHtmlAttributes, setBodyAttributes }
+) {
+  if (!htmlAndBodyAttributes) return
+
+  const { html, body } = htmlAndBodyAttributes
+
+  setHtmlAttributes(html)
+  setBodyAttributes(body)
+}
+
+export function getValidHeadNodesAndAttributesSSR(
+  rootNode,
+  htmlAndBodyAttributes = {
+    html: {},
+    body: {},
+  }
+) {
+  const seenIds = new Map()
+  const validHeadNodes = []
+
+  // Filter out non-element nodes before looping since we don't care about them
+  for (const node of rootNode.childNodes) {
+    const { rawTagName } = node
+    const id = node.attributes?.id
+
+    if (!isElementType(node)) continue
+
+    if (isValidNodeName(rawTagName)) {
+      if (rawTagName === `html` || rawTagName === `body`) {
+        htmlAndBodyAttributes[rawTagName] = {
+          ...htmlAndBodyAttributes[rawTagName],
+          ...node.attributes,
+        }
+      } else {
+        let element
+        const attributes = { ...node.attributes, "data-gatsby-head": true }
+
+        if (rawTagName === `script` || rawTagName === `style`) {
+          element = (
+            <node.rawTagName
+              {...attributes}
+              dangerouslySetInnerHTML={{
+                __html: node.text,
+              }}
+            />
+          )
+        } else {
+          element =
+            node.textContent.length > 0 ? (
+              <node.rawTagName {...attributes}>
+                {node.textContent}
+              </node.rawTagName>
+            ) : (
+              <node.rawTagName {...attributes} />
+            )
+        }
+
+        if (id) {
+          if (!seenIds.has(id)) {
+            validHeadNodes.push(element)
+            seenIds.set(id, validHeadNodes.length - 1)
+          } else {
+            const indexOfPreviouslyInsertedNode = seenIds.get(id)
+            validHeadNodes[indexOfPreviouslyInsertedNode] = element
+          }
+        } else {
+          validHeadNodes.push(element)
+        }
+      }
+    } else {
+      warnForInvalidTag(rawTagName)
+    }
+
+    if (node.childNodes.length) {
+      validHeadNodes.push(
+        ...getValidHeadNodesAndAttributesSSR(node, htmlAndBodyAttributes)
+          .validHeadNodes
+      )
+    }
+  }
+
+  return { validHeadNodes, htmlAndBodyAttributes }
+}
 
 export function headHandlerForSSR({
   pageComponent,
@@ -34,7 +121,18 @@ export function headHandlerForSSR({
         },
       }
 
-      return createElement(pageComponent.Head, filterHeadProps(_props))
+      const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />
+
+      const headWithWrapRootElement = apiRunner(
+        `wrapRootElement`,
+        { element: HeadElement },
+        HeadElement,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
+
+      return headWithWrapRootElement
     }
 
     const routerElement = (
@@ -50,67 +148,15 @@ export function headHandlerForSSR({
       </StaticQueryContext.Provider>
     )
 
-    // extract head nodes from string
     const rawString = renderToString(routerElement)
-    const headNodes = parse(rawString).childNodes
+    const rootNode = parse(rawString)
+    const { validHeadNodes, htmlAndBodyAttributes } =
+      getValidHeadNodesAndAttributesSSR(rootNode)
 
-    const validHeadNodes = []
-    const seenIds = new Map()
-
-    for (const node of headNodes) {
-      const { rawTagName } = node
-      const id = node.attributes?.id
-
-      if (!VALID_NODE_NAMES.includes(rawTagName)) {
-        warnForInvalidTags(rawTagName)
-        continue
-      }
-
-      if (rawTagName === `html`) {
-        setHtmlAttributes(node.attributes)
-        continue
-      }
-
-      if (rawTagName === `body`) {
-        setBodyAttributes(node.attributes)
-        continue
-      }
-
-      let element
-      const attributes = { ...node.attributes, "data-gatsby-head": true }
-
-      if (rawTagName === `script` || rawTagName === `style`) {
-        element = (
-          <node.rawTagName
-            {...attributes}
-            dangerouslySetInnerHTML={{
-              __html: node.text,
-            }}
-          />
-        )
-      } else {
-        element =
-          node.textContent.length > 0 ? (
-            <node.rawTagName {...attributes}>
-              {node.textContent}
-            </node.rawTagName>
-          ) : (
-            <node.rawTagName {...attributes} />
-          )
-      }
-
-      if (id) {
-        if (!seenIds.has(id)) {
-          validHeadNodes.push(element)
-          seenIds.set(id, validHeadNodes.length - 1)
-        } else {
-          const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode] = element
-        }
-      } else {
-        validHeadNodes.push(element)
-      }
-    }
+    applyHtmlAndBodyAttributesSSR(htmlAndBodyAttributes, {
+      setHtmlAttributes,
+      setBodyAttributes,
+    })
 
     setHeadComponents(validHeadNodes)
   }
