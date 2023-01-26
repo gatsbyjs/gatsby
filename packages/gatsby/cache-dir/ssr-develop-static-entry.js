@@ -1,7 +1,7 @@
 /* global BROWSER_ESM_ONLY */
 import React from "react"
 import fs from "fs-extra"
-import { renderToString, renderToStaticMarkup } from "react-dom/server"
+import { renderToStaticMarkup, renderToPipeableStream } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
 import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
@@ -12,6 +12,7 @@ import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@gatsbyjs/reach-router"
 import { headHandlerForSSR } from "./head/head-export-handler-for-ssr"
 import { getStaticQueryResults } from "./loader"
+import { WritableAsPromise } from "./server-utils/writable-as-promise"
 
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
@@ -289,7 +290,17 @@ export default async function staticPage({
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        bodyHtml = renderToString(bodyComponent)
+        const writableStream = new WritableAsPromise()
+        const { pipe } = renderToPipeableStream(bodyComponent, {
+          onAllReady() {
+            pipe(writableStream)
+          },
+          onError(error) {
+            writableStream.destroy(error)
+          },
+        })
+
+        bodyHtml = await writableStream
       } catch (e) {
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e
