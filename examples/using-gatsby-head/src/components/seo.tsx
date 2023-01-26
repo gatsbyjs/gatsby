@@ -20,6 +20,7 @@ export const SEO: React.FC<React.PropsWithChildren<SEOProps>> = ({ title, descri
 
   return (
     <>
+      <html lang="en-US" />
       <title>{seo.title}</title>
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />

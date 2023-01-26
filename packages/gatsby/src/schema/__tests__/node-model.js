@@ -676,6 +676,7 @@ describe(`NodeModel`, () => {
           nested: {
             foo: `foo1`,
             bar: `bar1`,
+            sort_order: 10,
           },
           internal: {
             type: `Test`,
@@ -689,6 +690,7 @@ describe(`NodeModel`, () => {
           nested: {
             foo: `foo2`,
             bar: `bar2`,
+            sort_order: 9,
           },
           internal: {
             type: `Test`,
@@ -1120,6 +1122,49 @@ describe(`NodeModel`, () => {
       expect(result2).toBeTruthy()
       expect(count2).toBe(1)
       expect(result2[0].id).toBe(`id2`)
+    })
+
+    it(`findAll sorts using v5 sort fields`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            sort: [{ nested: { sort_order: `asc` } }],
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      const result = Array.from(entries)
+
+      expect(result.length).toBe(2)
+      expect(result[0].id).toBe(`id2`)
+      expect(result[1].id).toBe(`id1`)
+    })
+
+    it(`findAll sorts using legacy (pre-v5) sort fields`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            sort: {
+              fields: [`nested.sort_order`],
+              order: [`asc`],
+            },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      const result = Array.from(entries)
+
+      expect(result.length).toBe(2)
+      expect(result[0].id).toBe(`id2`)
+      expect(result[1].id).toBe(`id1`)
     })
 
     it(`always uses a custom resolvers for query fields`, async () => {

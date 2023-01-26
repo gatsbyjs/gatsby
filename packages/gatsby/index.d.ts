@@ -156,7 +156,11 @@ export type PageProps<
 /**
  * A props object passed into the Head function for [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
-export type HeadProps<DataType = object, PageContextType = object> = {
+export type HeadProps<
+  DataType = object,
+  PageContextType = object,
+  ServerDataType = object
+> = {
   location: {
     /**
      * Returns the Location object's URL's path.
@@ -173,6 +177,10 @@ export type HeadProps<DataType = object, PageContextType = object> = {
    * A context object which is passed in during the creation of the page.
    */
   pageContext: PageContextType
+  /**
+   * Data passed into the page via the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) SSR function.
+   */
+  serverData: ServerDataType
 }
 
 /**

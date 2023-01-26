@@ -2,8 +2,7 @@ import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
 import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
-import md5File from "md5-file"
-import crypto from "crypto"
+import { md5, md5File } from "gatsby-core-utils"
 import path from "path"
 import telemetry from "gatsby-telemetry"
 import glob from "globby"
@@ -22,6 +21,7 @@ import { IBuildContext } from "./types"
 import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
+import type { IDataLayerContext } from "./../state-machines/data-layer/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
@@ -72,12 +72,15 @@ process.on(`unhandledRejection`, (reason: unknown) => {
 // Otherwise leave commented out.
 // require(`../bootstrap/log-line-function`)
 
+type WebhookBody = IDataLayerContext["webhookBody"]
+
 export async function initialize({
   program: args,
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
   workerPool: WorkerPool.GatsbyWorkerPool
+  webhookBody?: WebhookBody
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -338,10 +341,7 @@ export async function initialize({
     )
   )
 
-  const pluginsHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(pluginVersions.concat(hashes)))
-    .digest(`hex`)
+  const pluginsHash = await md5(JSON.stringify(pluginVersions.concat(hashes)))
 
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
@@ -655,8 +655,21 @@ export async function initialize({
     }
   }
 
+  let initialWebhookBody: WebhookBody = undefined
+
+  if (process.env.GATSBY_INITIAL_WEBHOOK_BODY) {
+    try {
+      initialWebhookBody = JSON.parse(process.env.GATSBY_INITIAL_WEBHOOK_BODY)
+    } catch (e) {
+      reporter.error(
+        `Failed to parse GATSBY_INITIAL_WEBHOOK_BODY as JSON:\n"${e.message}"`
+      )
+    }
+  }
+
   return {
     store,
     workerPool,
+    webhookBody: initialWebhookBody,
   }
 }

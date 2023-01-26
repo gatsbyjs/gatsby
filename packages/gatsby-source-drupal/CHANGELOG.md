@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.5.0/packages/gatsby-source-drupal) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Features
+
+- drupal langcode as notlangcode [#37445](https://github.com/gatsbyjs/gatsby/issues/37445) ([3e8bb5a](https://github.com/gatsbyjs/gatsby/commit/3e8bb5ae2b8b56d426cd37d0e7751dc9186bd4aa))
+
+#### Bug Fixes
+
+- await async handleDeletedNode [#37435](https://github.com/gatsbyjs/gatsby/issues/37435) ([e575a0a](https://github.com/gatsbyjs/gatsby/commit/e575a0ab9e8e438931ec3ea553bbd41080d8b333))
+
+### [6.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.4.1/packages/gatsby-source-drupal) (2023-01-13)
+
+#### Features
+
+- drupal langcode as notlangcode [#37445](https://github.com/gatsbyjs/gatsby/issues/37445) [#37462](https://github.com/gatsbyjs/gatsby/issues/37462) [#37445](https://github.com/gatsbyjs/gatsby/issues/37445) ([0df719e](https://github.com/gatsbyjs/gatsby/commit/0df719e33a6a539b8127f7e561b3c32f6b379e89))
+
+#### Bug Fixes
+
+- await async handleDeletedNode [#37435](https://github.com/gatsbyjs/gatsby/issues/37435) [#37461](https://github.com/gatsbyjs/gatsby/issues/37461) ([1761903](https://github.com/gatsbyjs/gatsby/commit/1761903fa7c81b1b792a99966cf0734826f2c229))
+
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.4.0/packages/gatsby-source-drupal) (2023-01-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)

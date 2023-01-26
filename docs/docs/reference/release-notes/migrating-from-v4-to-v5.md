@@ -265,6 +265,8 @@ The default setting for the `output` option changed from `/sitemap` to `/`. This
 
 You can uninstall `remark-unwrap-images` from your project if you used it inside the `mdxOptions.remarkPlugins` array.
 
+**Please note:** If you haven't done the [migration from v3 to v4 for `gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/#migrating-from-v3-to-v4), please be aware that you'll **need to** go through that migration process if you want to use the latest version of `gatsby-plugin-mdx` with Gatsby 5.
+
 ## Future breaking changes
 
 This section explains deprecations that were made for Gatsby 5. These old behaviors will be removed in v6, at which point they will no longer work. For now, you can still use the old behaviors in v5, but we recommend updating to the new signatures to make future updates easier.

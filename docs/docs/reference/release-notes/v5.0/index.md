@@ -71,7 +71,7 @@ export const DefaultLayout = ({ children, headerClassName }) => {
   return (
     <div className={styles.defaultLayout} />
       <Slice alias="header" className={headerClassName} />
-      {content}
+      {children}
       <Footer />
     </div>
   )

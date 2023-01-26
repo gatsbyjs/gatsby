@@ -30,9 +30,13 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 // After switching to import to support esm, point file path resolution to the real compiled JS files in dist instead.
 jest.mock(`../../resolve-js-file-path`, () => {
   return {
-    resolveJSFilepath: jest.fn(
-      ({ filePath }) => `${filePath.replace(`src`, `dist`)}.js`
-    ),
+    resolveJSFilepath: jest.fn(({ filePath }: { filePath: string }) => {
+      if (filePath.includes(`load-plugins/__tests__/fixtures`)) {
+        return filePath
+      }
+
+      return `${filePath.replace(`src`, `dist`)}.js`
+    }),
     maybeAddFileProtocol: jest.fn(val => val),
   }
 })

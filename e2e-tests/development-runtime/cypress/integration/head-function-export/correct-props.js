@@ -16,7 +16,7 @@ it(`Head function export receive correct props`, () => {
     pathname: headFunctionExportSharedData.page.correctProps,
   }
 
-  const pageContext = headFunctionExportSharedData.data.context
+  const pageContext = headFunctionExportSharedData.data.pageContext
 
   cy.getTestElement(`pageContext`)
     .invoke(`attr`, `content`)
