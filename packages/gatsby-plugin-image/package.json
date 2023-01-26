@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "3.6.0-next.0",
+  "version": "3.6.0-next.1",
   "scripts": {
     "build": "npm-run-all --npm-path npm -s clean -p build:*",
     "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"use client\"",
@@ -93,7 +93,7 @@
     "common-tags": "^1.8.2",
     "fs-extra": "^11.1.0",
     "gatsby-core-utils": "^4.6.0-next.0",
-    "gatsby-plugin-utils": "^4.6.0-next.0",
+    "gatsby-plugin-utils": "^4.6.0-next.1",
     "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.8.1"
   },
