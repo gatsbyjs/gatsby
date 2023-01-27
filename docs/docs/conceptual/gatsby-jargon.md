@@ -60,7 +60,7 @@ GraphQL is a query language (the QL part of its name) that Gatsby uses to genera
 
 Using a special syntax, you describe the data you want in your component and then that data is given to you, such as site metadata from your `gatsby-config.js`, connected WordPress posts, Markdown files, images, and more. Gatsby uses GraphQL to enable components to declare the data they need and apply it to render on a page. Using GraphQL in Gatsby provides many [benefits](/docs/why-gatsby-uses-graphql/), such as the ability to return data from multiple sources in one query, and transform that data at the same time (such as using Gatsby Image).
 
-Here is how you get started using GraphQL in Gatsby: [Tutorial - Part 4](/docs/tutorial/part-4/)
+Here is how you get started using GraphQL in Gatsby: [Tutorial - Part 4](/docs/tutorial/getting-started/part-4/)
 
 ## webpack
 

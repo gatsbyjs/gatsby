@@ -25,11 +25,11 @@ You can sign up for the following accounts now or as you need to use each of the
 - [Snipcart](https://snipcart.com/): add a shopping cart to your site
 - [Netlify](https://www.netlify.com/): host your site and register a domain
 
-To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](/docs/tutorial/part-0/). It includes detailed instructions on how to set up a local development environment.
+To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](/docs/tutorial/getting-started/part-0/). It includes detailed instructions on how to set up a local development environment.
 
 - [Node.js](https://nodejs.org): run JavaScript on your computer
 - [Git](https://git-scm.com/downloads): track changes to your code
-- [Gatsby command line interface (CLI)](/docs/tutorial/part-0/#using-the-gatsby-cli): run Gatsby commands on your computer
+- [Gatsby command line interface (CLI)](/docs/tutorial/getting-started/part-0/#using-the-gatsby-cli): run Gatsby commands on your computer
 
 ## Provisioning Your Site on Gatsby Cloud
 

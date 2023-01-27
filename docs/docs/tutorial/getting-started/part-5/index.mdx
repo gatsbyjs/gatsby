@@ -8,7 +8,7 @@ import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
-In [Part 4](/docs/tutorial/part-4/), you used the `gatsby-source-filesystem` source plugin to build a Blog page that lists the names of your blog post files. But you weren't able to actually render the contents of your post files, because `gatsby-source-filesystem` doesn't provide a field for it. To do that, you'll need another type of plugin called a **transformer plugin**.
+In [Part 4](/docs/tutorial/getting-started/part-4/), you used the `gatsby-source-filesystem` source plugin to build a Blog page that lists the names of your blog post files. But you weren't able to actually render the contents of your post files, because `gatsby-source-filesystem` doesn't provide a field for it. To do that, you'll need another type of plugin called a **transformer plugin**.
 
 Sometimes, the format of the data you get from source plugins isn't exactly what you want to use to build your website. For example, the filesystem source plugin lets you query data _about_ files, but it doesn't let you use the data _inside_ the files themselves. To make this possible, Gatsby supports transformer plugins, which take the raw content from source plugins and transform it into something more usable.
 
@@ -154,7 +154,7 @@ Now that you have some MDX content inside your blog posts, it's time set up the 
 
 <Announcement>
 
-**Quick Refresher:** Remember the process for adding a plugin to your site (from [Part 3](/docs/tutorial/part-3/))? See if you can remember the three steps from memory before checking your answer. (Science has shown that the act of trying to [actively recall information](https://www.cultofpedagogy.com/retrieval-practice/) helps you retain it better!)
+**Quick Refresher:** Remember the process for adding a plugin to your site (from [Part 3](/docs/tutorial/getting-started/part-3/))? See if you can remember the three steps from memory before checking your answer. (Science has shown that the act of trying to [actively recall information](https://www.cultofpedagogy.com/retrieval-practice/) helps you retain it better!)
 
 </Announcement>
 
@@ -220,7 +220,7 @@ You can use the `allMdx` field to request data for multiple MDX nodes at once (s
 
 <Announcement>
 
-**Quick Refresher:** Remember how to access GraphiQL? See if you can remember the steps before checking for the answer in Part 4. (Check the section called ["Use GraphiQL to explore the data layer and write GraphQL queries"](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries)).
+**Quick Refresher:** Remember how to access GraphiQL? See if you can remember the steps before checking for the answer in Part 4. (Check the section called ["Use GraphiQL to explore the data layer and write GraphQL queries"](/docs/tutorial/getting-started/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries)).
 
 </Announcement>
 
@@ -427,7 +427,7 @@ query MyQuery {
 
 Now that your GraphQL query is all set up, it's time to replace the page query in your Blog page component.
 
-1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!) And if you haven't already from completing the [task in Part 4](/docs/tutorial/part-4/#task-use-a-page-query-to-pull-the-list-of-post-filenames-into-your-blog-page), you'll need to import the `graphql` tag from the `gatsby` package.
+1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!) And if you haven't already from completing the [task in Part 4](/docs/tutorial/getting-started/part-4/#task-use-a-page-query-to-pull-the-list-of-post-filenames-into-your-blog-page), you'll need to import the `graphql` tag from the `gatsby` package.
 
    ```js:title=src/pages/blog.js
    import * as React from 'react'
@@ -624,7 +624,7 @@ Right now, all your blog posts and their excerpts are being rendered in one long
 In Part 6, you'll learn how to use Gatsby's filesystem route API to dynamically create new pages for each of your blog posts.
 
 <LinkButton
-  to="/docs/tutorial/part-6/"
+  to="/docs/tutorial/getting-started/part-6/"
   rightIcon={<MdArrowForward />}
   variant="SECONDARY"
 >

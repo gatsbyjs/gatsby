@@ -33,17 +33,17 @@
 </p>
 
 <h3 align="center">
-  <a href="https://gatsbyjs.com/docs/">Quickstart</a>
+  <a href="https://www.gatsbyjs.com/docs/quick-start/">Quickstart</a>
   <span> · </span>
-  <a href="https://gatsbyjs.com/tutorial/">Tutorial</a>
+  <a href="https://www.gatsbyjs.com/docs/tutorial/getting-started/">Tutorial</a>
   <span> · </span>
-  <a href="https://gatsbyjs.com/plugins/">Plugins</a>
+  <a href="https://www.gatsbyjs.com/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.com/docs/gatsby-starters/">Starters</a>
+  <a href="https://www.gatsbyjs.com/starters/">Starters</a>
   <span> · </span>
-  <a href="https://gatsbyjs.com/showcase/">Showcase</a>
+  <a href="https://www.gatsbyjs.com/showcase/">Showcase</a>
   <span> · </span>
-  <a href="https://gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
+  <a href="https://www.gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
   Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>
   <span> & </span>

@@ -43,7 +43,7 @@ There are multiple ways on how you can get started with `gatsby-plugin-mdx` v4:
 
 - Initialize a new project with `npm init gatsby` and choose the **"Add Markdown and MDX support"** option
 - Follow the [Adding MDX pages](/docs/how-to/routing/mdx/) guide
-- Follow our [beginner friendly tutorial](/docs/tutorial/) to learn how to create a blog with MDX
+- Follow our [beginner friendly tutorial](/docs/tutorial/getting-started/) to learn how to create a blog with MDX
 - Try out the [using-mdx example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-mdx)
 - Fork this [CodeSandbox](https://codesandbox.io/s/github/gatsbyjs/gatsby/tree/master/examples/using-mdx)
 

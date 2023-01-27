@@ -13,7 +13,7 @@ The [Gatsby documentation site](/docs) includes four different types of material
 - [**How-To Guides**](/docs/how-to/) are practical step-by-step guides to help readers achieve a specific goal. These are most useful when readers are trying to get something done.
 - [**Reference Guides**](/docs/reference/) are nitty-gritty technical descriptions of how Gatsby works. These are most useful when readers need detailed information about Gatsby's APIs.
 - [**Conceptual Guides**](/docs/conceptual/) are big-picture explanations of higher-level Gatsby concepts. These are most useful when readers want to deepen their understanding of a particular topic.
-- The [**Tutorial**](/docs/tutorial/) is a self-contained introduction that guides readers step-by-step through creating their first Gatsby site. This is most useful when readers are first getting started with Gatsby.
+- The [**Tutorial**](/docs/tutorial/getting-started/) is a self-contained introduction that guides readers step-by-step through creating their first Gatsby site. This is most useful when readers are first getting started with Gatsby.
 
 ![Each of the four types of docs has a different intended audience. The Tutorial is for learning-oriented readers, who want practical steps to help when they're studying. How-To Guides are for problem-oriented readers, who want practical steps to help when they're working. Reference Guides are for information-oriented readers, who want theoretical knowledge to help when they're working. Conceptual Guides are for understanding-oriented readers, who want theoretical knowledge to help when they're studying.](./doc-type-quadrants.svg)
 
