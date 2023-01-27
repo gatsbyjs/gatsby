@@ -40,7 +40,7 @@ const ingestRemoteSchema = async (helpers, pluginOptions) => {
   }
 
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`ingest WPGraphQL schema`)
+    formatLogMessage(`Ingest WPGraphQL schema`)
   )
 
   activity.start()

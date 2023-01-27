@@ -85,10 +85,10 @@ const refetcher = async (
         formatLogMessage(`Content update error: "${e.message}"`)
       )
       reconnectionActivity.start()
-      reconnectionActivity.setStatus(`retrying...`)
+      reconnectionActivity.setStatus(`Retrying...`)
     } else {
       retryCount++
-      reconnectionActivity.setStatus(`retried ${retryCount} times`)
+      reconnectionActivity.setStatus(`Retried ${retryCount} times`)
     }
 
     // retry after retry count times 5 seconds

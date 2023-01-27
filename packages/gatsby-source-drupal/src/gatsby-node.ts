@@ -199,7 +199,7 @@ exports.sourceNodes = async (
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
-      `loading Drupal content changes`,
+      `Loading Drupal content changes`,
       {
         parentSpan,
       }
@@ -302,7 +302,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched
 
     reporter.verbose(
-      `[gatsby-source-drupal]: value of lastFetched for fastbuilds "${lastFetched}"`
+      `[gatsby-source-drupal]: Value of lastFetched for fastbuilds "${lastFetched}"`
     )
 
     let requireFullRebuild = false
@@ -605,7 +605,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
               const requestsCount = Math.floor(d.body.meta.count / pageSize)
 
               reporter.verbose(
-                `queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
+                `Queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
               )
 
               const newUrl = new URL(d.body.links.next.href)

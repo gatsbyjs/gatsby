@@ -30,7 +30,7 @@ const runSteps = async (
 
       if (timeStep) {
         activity = helpers.reporter.activityTimer(
-          formatLogMessage(`step -${!apiName ? `-` : ``}> ${step.name}`, {
+          formatLogMessage(`Step -${!apiName ? `-` : ``}> ${step.name}`, {
             useVerboseStyle: true,
           })
         )

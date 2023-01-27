@@ -16,7 +16,7 @@ const fetchAndCreateNonNodeRootFields = async () => {
 
   const { reporter } = helpers
 
-  const activity = reporter.activityTimer(formatLogMessage(`fetch root fields`))
+  const activity = reporter.activityTimer(formatLogMessage(`Fetch root fields`))
 
   activity.start()
 

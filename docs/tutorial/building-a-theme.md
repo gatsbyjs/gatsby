@@ -275,7 +275,7 @@ exports.onPreBootstrap = ({ reporter }) => {
   const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
-    reporter.info(`creating the ${contentPath} directory`)
+    reporter.info(`Creating the ${contentPath} directory`)
     fs.mkdirSync(contentPath)
   }
 }
@@ -299,7 +299,7 @@ exports.onPreBootstrap = ({ reporter }) => {
   const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
-    reporter.info(`creating the ${contentPath} directory`)
+    reporter.info(`Creating the ${contentPath} directory`)
     fs.mkdirSync(contentPath)
   }
 }
@@ -340,7 +340,7 @@ exports.onPreBootstrap = ({ reporter }) => {
   const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
-    reporter.info(`creating the ${contentPath} directory`)
+    reporter.info(`Creating the ${contentPath} directory`)
     fs.mkdirSync(contentPath)
   }
 }

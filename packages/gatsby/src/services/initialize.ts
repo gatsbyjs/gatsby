@@ -168,13 +168,13 @@ export async function initialize({
   const siteDirectory = program.directory
 
   // Compile root gatsby files
-  let activity = reporter.activityTimer(`compile gatsby files`)
+  let activity = reporter.activityTimer(`Compile Gatsby files`)
   activity.start()
   await compileGatsbyFiles(siteDirectory)
   activity.end()
 
   // Load gatsby config
-  activity = reporter.activityTimer(`load gatsby config`, {
+  activity = reporter.activityTimer(`Load Gatsby config`, {
     parentSpan,
   })
   activity.start()
@@ -185,7 +185,7 @@ export async function initialize({
   activity.end()
 
   // Load plugins
-  activity = reporter.activityTimer(`load plugins`, {
+  activity = reporter.activityTimer(`Load plugins`, {
     parentSpan,
   })
   activity.start()
@@ -273,7 +273,7 @@ export async function initialize({
     !cacheDirExists
   ) {
     activity = reporter.activityTimer(
-      `delete html and css files from previous builds`,
+      `Delete HTML and CSS files from previous builds`,
       {
         parentSpan,
       }
@@ -298,7 +298,7 @@ export async function initialize({
   // We should clean this directory to remove stale files that a worker might accidentally reuse then
   if (workerCacheDirExists) {
     activity = reporter.activityTimer(
-      `delete worker cache from previous builds`,
+      `Delete worker cache from previous builds`,
       {
         parentSpan,
       }
@@ -310,7 +310,7 @@ export async function initialize({
     activity.end()
   }
 
-  activity = reporter.activityTimer(`initialize cache`, {
+  activity = reporter.activityTimer(`Initialize cache`, {
     parentSpan,
   })
   activity.start()
@@ -490,7 +490,7 @@ export async function initialize({
 
   activity.end()
 
-  activity = reporter.activityTimer(`copy gatsby files`, {
+  activity = reporter.activityTimer(`Copy Gatsby files`, {
     parentSpan,
   })
 

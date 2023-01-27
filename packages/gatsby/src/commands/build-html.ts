@@ -829,7 +829,7 @@ export async function stitchSlicesIntoPagesHTML({
   publicDir: string
   parentSpan?: Span
 }): Promise<void> {
-  const stichSlicesActivity = reporter.activityTimer(`stiching slices`, {
+  const stichSlicesActivity = reporter.activityTimer(`Stiching slices`, {
     parentSpan,
   })
   stichSlicesActivity.start()

@@ -25,7 +25,7 @@ export function makeSourceFromOperation(
     const { reporter } = gatsbyApi
 
     const operationTimer = reporter.activityTimer(
-      `source ${lastBuildTime ? `changed ` : ``}shopify ${op.name}`
+      `Source ${lastBuildTime ? `changed ` : ``}Shopify ${op.name}`
     )
 
     operationTimer.start()
