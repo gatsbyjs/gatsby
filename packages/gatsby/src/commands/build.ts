@@ -295,7 +295,7 @@ module.exports = async function build(
 
   if (shouldGenerateEngines()) {
     const validateEnginesActivity = report.activityTimer(
-      `Validating Rendering Engines`,
+      `Validating rendering engines`,
       {
         parentSpan: buildSpan,
       }

@@ -25,7 +25,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 
   dirs.forEach(dir => {
     if (!fs.existsSync(dir)) {
-      reporter.log(`creating the ${dir} directory`)
+      reporter.log(`Creating the ${dir} directory`)
       mkdirp.sync(dir)
     }
   })

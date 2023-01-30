@@ -102,7 +102,7 @@ const getGatsbyImageCdnFields = async ({
     if (e.message.includes(`404`)) {
       if (four04WarningCount < 10) {
         four04WarningCount++
-        reporter.warn(`[gatsby-source-drupal] file returns 404: ${url}`)
+        reporter.warn(`[gatsby-source-drupal] File returns 404: ${url}`)
       }
 
       return {}

@@ -84,7 +84,7 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   } catch (err) {
     if (process.env.gatsby_log_level === `verbose`) {
       reporter.panicOnBuild(
-        `plugin "${pluginName} threw the following error:\n`,
+        `Plugin "${pluginName} threw the following error:\n`,
         err
       )
     } else {
