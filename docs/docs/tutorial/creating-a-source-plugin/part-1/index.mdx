@@ -1,5 +1,6 @@
 ---
-title: "TODO"
+title: "Part 1: Project setup"
+tableOfContentsDepth: 2
 ---
 
 import { LinkButton } from "gatsby-interface"
@@ -8,17 +9,58 @@ import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
+Now that you have the necessary background knowledge and your development environment set up, it's time to get your project set up locally!
+
+By the end of this part of the tutorial, you will have:
+
+- Cloned the companion repository on your local machine
+- Explored the structure of the project
+- Installed required dependencies and built the projects
+- Become familiar with the development workflow we will use throughout the tutorial
+
+## Clone the repository
+
+The first step is to clone the [companion repository](https://github.com/gatsbyjs/creating-source-plugin-tutorial) from GitHub.
+
+<Collapsible
+  summary={<em>A note on GitHub cloning</em>}
+>
+  In case you are unfamiliar with GitHub as a hosting provider, here is [GitHub's documentation for how to clone a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+</Collapsible>
+
+Once you have a copy of the `creating-source-plugin-tutorial` project locally, it's time to explore!
+
+## Project structure
+
+The `creating-source-plugin-tutorial` project includes three directories:
+
+- `api` is the example backend API you will source from
+- `plugin` is the example source plugin
+- `site` is the example site
+
+The source plugin consumes the API, and the site uses the source plugin.
+
+You might also notice that the project is set up as a [Yarn Workspace](https://yarnpkg.com/features/workspaces).
+
+<Collapsible
+  summary={<em>A note on workspaces</em>}
+>
+  You don't need to be familiar with all features of Yarn Workspaces. For the purposes of this tutorial, we will use it so that changes made in one child project appear when running another (e.g. changes in the plugin show up when running the site).
+  
+  Also, we use the `yarn workspace [workspace-name] [command]` syntax to execute child project commands from the root of the project.
+</Collapsible>
+
+If you open the top level `package.json` file, you will see several scripts we will use to clean, build, develop, serve and test the project. More on that later.
+
+Unless you are particularly curious about it, you can mostly ignore the `api` directory throughout the tutorial. In a real scenario you are more likely to source from a third party endpoint and refer to the endpoint's documention. It is included in the example project for convenience and so this tutorial does not rely on outside resources.
+
+Feel free to poke around the `plugin/package.json` file and `plugin/src` files, this is where the interesting parts of the source plugin live!
+
+## Install dependencies and build
+
 TODO
 
-## TODO
-
-TODO
-
-## Summary
-
-TODO
-
-### Key takeaways
+## Development workflow
 
 TODO
 
@@ -37,9 +79,9 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 TODO
 
 <LinkButton
-  to="/docs/tutorial/creating-a-source-plugin/part-X/"
+  to="/docs/tutorial/creating-a-source-plugin/part-2/"
   rightIcon={<MdArrowForward />}
   variant="SECONDARY"
 >
-  Continue to Part X
+  Continue to Part 2
 </LinkButton>
