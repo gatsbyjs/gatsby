@@ -29,7 +29,7 @@ In your command line output, you should then see the text listed below. This tex
 ```shell
 $ gatsby develop
 success open and validate gatsby-configs - 0.051s
-success load plugins - 1.047s
+success Load plugins - 1.047s
 logging to the console from plugins folder
 logging to the console from a plugin in another project with require.resolve
 logging to the console from site's gatsby-node
@@ -72,7 +72,7 @@ When you run `gatsby develop` now, you should see the last plugin logging anothe
 ```diff
 $ gatsby develop
   success open and validate gatsby-configs - 0.051s
-  success load plugins - 1.047s
+  success Load plugins - 1.047s
   logging to the console from plugins folder
   logging to the console from a plugin in another project with require.resolve
 + logging to the console from a plugin in another project with npm/yarn link
