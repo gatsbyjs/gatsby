@@ -23,4 +23,13 @@ describe(`creates pages using the file system routing API`, () => {
     cy.contains(`This is a page that should include a slash slug`)
     cy.contains(`"slug": "/about/embedded"`)
   })
+
+  it(`works when template and content file paths contain spaces`, () => {
+    cy.visit(
+      `/fs-api/space%20and%20static%20query/file-with-space/`
+    ).waitForRouteChange()
+    cy.get(`[data-cy="static-query-result"]`)
+      .invoke(`text`)
+      .should(`eq`, `Gatsby MDX e2e`)
+  })
 })
