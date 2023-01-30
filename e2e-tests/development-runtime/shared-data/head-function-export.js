@@ -12,6 +12,8 @@ const page = {
   invalidElements: `${path}/invalid-elements/`,
   fsRouteApi: `${path}/fs-route-api/`,
   deduplication: `${path}/deduplication/`,
+  htmlAndBodyAttributes: `${path}/html-and-body-attributes/`,
+  headWithWrapRooElement: `${path}/head-with-wrap-root-element/`,
 }
 
 const data = {
@@ -23,7 +25,7 @@ const data = {
     style: `rebeccapurple`,
     link: `/used-by-head-function-export-basic.css`,
     extraMeta: `Extra meta tag that should be removed during navigation`,
-    jsonLD: `{"@context":"https://schema.org","@type":"Organization","url":"https://www.spookytech.com","name":"Spookytechnologies","contactPoint":{"@type":"ContactPoint","telephone":"+5-601-785-8543","contactType":"CustomerSupport"}}`
+    jsonLD: `{"@context":"https://schema.org","@type":"Organization","url":"https://www.spookytech.com","name":"Spookytechnologies","contactPoint":{"@type":"ContactPoint","telephone":"+5-601-785-8543","contactType":"CustomerSupport"}}`,
   },
   queried: {
     base: `http://localhost:8000`,
@@ -49,6 +51,7 @@ const data = {
     noscript: `You may be a puzzle, but I like the way the parts fit`,
     style: `green`,
     link: `/used-by-head-function-export-ssr.css`,
+    serverData: { hello: `world` },
   },
   invalidElements: {
     title: `I should actually be inserted, unlike the others`,
@@ -56,7 +59,7 @@ const data = {
   fsRouteApi: {
     slug: `/fs-route-api`,
   },
-  context: {
+  pageContext: {
     key: "value",
     someKey: "someValue",
   },

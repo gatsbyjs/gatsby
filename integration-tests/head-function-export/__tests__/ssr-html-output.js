@@ -105,4 +105,60 @@ describe(`Head function export SSR'ed HTML output`, () => {
     // alternate links are not using id, so should have multiple instances
     expect(dom.querySelectorAll(`link[rel=alternate]`)?.length).toEqual(2)
   })
+
+  it(`should allow setting html and body attributes`, () => {
+    const html = readFileSync(
+      `${publicDir}${page.bodyAndHtmlAttributes}/index.html`
+    )
+    const dom = parse(html)
+    expect(dom.querySelector(`html`).attributes).toMatchInlineSnapshot(`
+      {
+        "data-foo": "bar",
+        "lang": "fr",
+      }
+    `)
+
+    expect(dom.querySelector(`body`).attributes).toMatchInlineSnapshot(`
+      {
+        "class": "foo",
+        "data-foo": "baz",
+      }
+    `)
+  })
+
+  it(`can use context provided via wrapRootElement`, () => {
+    const html = readFileSync(
+      `${publicDir}${page.headWithWrapRooElement}/index.html`
+    )
+    const dom = parse(html)
+    const { title, meta } = getNodes(dom)
+
+    expect(title.text).toEqual(
+      `${data.contextValues.contextA.name}(${data.contextValues.contextA.age})`
+    )
+    expect(meta.attributes.content).toEqual(
+      `${data.contextValues.contextB.name}(${data.contextValues.contextB.age})`
+    )
+  })
+
+  it(`adds deeply nested valid head tags to document head`, () => {
+    const html = readFileSync(
+      `${publicDir}${page.headWithWrapRooElement}/index.html`
+    )
+    const dom = parse(html)
+    const { base, noscript, style, link, jsonLD, title, meta } = getNodes(dom)
+
+    expect(base.attributes.href).toEqual(data.static.base)
+    expect(noscript.text).toEqual(data.static.noscript)
+    expect(style.text).toContain(data.static.style)
+    expect(link.attributes.href).toEqual(data.static.link)
+    expect(jsonLD.text).toEqual(data.static.jsonLD)
+
+    expect(title.text).toEqual(
+      `${data.contextValues.contextA.name}(${data.contextValues.contextA.age})`
+    )
+    expect(meta.attributes.content).toEqual(
+      `${data.contextValues.contextB.name}(${data.contextValues.contextB.age})`
+    )
+  })
 })

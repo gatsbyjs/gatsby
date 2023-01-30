@@ -6,15 +6,13 @@ title: Using Slices
 
 To further the improvements seen by [Incremental Builds](/blog/2020-04-22-announcing-incremental-builds/), Gatsby includes the [Slice API](/docs/reference/built-in-components/gatsby-slice) that allows you to split pages into individual parts.
 
-By using the `<Slice>` React component in combination with the [`createSlice`](/docs/reference/config-files/actions/#createSlice) API for common UI features, Gatsby will be able to build and deploy individual pieces of your site that had content changes, not just entire pages.
+By using the `<Slice>` React component in combination with the [`createSlice`](/docs/reference/config-files/actions/#createSlice) API for common UI features, Gatsby will be able to build and deploy individual pieces of your site that had content changes, not just entire pages. In today's frameworks, when you re-order the header content, the entire site needs to be rebuilt. However, if the header was created as a Slice component, the new header content only need to be built once and all pages will pull the new header when it's needed.
 
 The `<Slice>` React component is also referred to as "Slice placeholder". The React component you pass to `createSlice` via its `component` key is also referred to as "Slice component".
 
 ## Faster builds in Gatsby Cloud
 
-With the introduction of Incremental Builds, Gatsby Cloud has been able to reduce build times signficantly by only building the pages that changed. The Gatsby Slice API helps reduce those builds times further.
-
-Common components that are shared across the majority of pages on your site might include a header, footer, or contact form. In today's frameworks, when you re-order the header content, the entire site needs to be rebuilt. However, if the header was created as a Slice component, the new header content only need to be built once and all pages will pull the new header when it's needed.
+With the introduction of Incremental Builds, Gatsby Cloud has been able to reduce build times signficantly by only building the pages that changed. With Slices, we've seen improvements in build time by up to 20%. With [Gatsby Cloud Enterprise](/pricing), however, your Slice component changes can build up to 90% faster. By knowing the intricate details of your site and the Slices within it, Gatsby Cloud can build and deploy the exact pieces needed to get your site updated with the latest content.
 
 ## Using Slices in your site
 

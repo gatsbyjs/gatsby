@@ -4,7 +4,10 @@
 
 MDX is markdown for the component era. It lets you write JSX embedded inside markdown. It’s a great combination because it allows you to use markdown’s often terse syntax (such as `# heading`) for the little things and JSX for more advanced components.
 
-## Table of contents
+<details>
+<summary><strong>Table of contents</strong></summary>
+
+Table of contents
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -23,6 +26,8 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 - [Migrating from v3 to v4](#migrating-from-v3-to-v4)
 - [Why MDX?](#why-mdx)
 - [Related](#related)
+
+</details>
 
 ## Installation
 
@@ -554,13 +559,11 @@ Read more about injecting your own components in the [official MDX provider guid
 
 `gatsby-plugin-mdx@^4.0.0` is a complete rewrite of the original plugin with the goal of making the plugin faster, compatible with [MDX v2](https://mdxjs.com/blog/v2/), leaner, and more maintainable. While doing this rewrite we took the opportunity to fix long-standing issues and remove some functionalities that we now think should be handled by the user, not the plugin. In doing so there will be of course breaking changes you'll have to handle – but with the help of this migration guide and the codemods you'll be on the new version in no time!
 
-**Please Note:** Loading MDX from other sources as the file system is not yet supported in `gatsby-plugin-mdx@^4.0.0`.
-
 ### Updating dependencies
 
 ```shell
 npm remove @mdx-js/mdx
-npm install gatsby@latest gatsby-plugin-mdx@latest @mdx-js/react@latest
+npm install gatsby-plugin-mdx@latest @mdx-js/react@latest
 ```
 
 If you used any related plugins like `gatsby-remark-images`, also update them to their `@latest` version.
@@ -715,6 +718,8 @@ In our testing, most of the time the issue were curly brackets that needed to be
 + You can upload this to `Git{Hub,Lab}`
 ```
 
+You can also use [`eslint-mdx`](https://github.com/mdx-js/eslint-mdx) to find all culprits and in some cases automatically fix them through ESLint.
+
 ### Updating MDX nodes
 
 Since most MDX nodes are moved to userland you'll have to [extend the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) and update your queries accordingly. However, you can [alias your `fields`](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#aliasing-fields) to have them at the root of the GraphQL node.
@@ -778,6 +783,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 - Removed `timeToRead`, `rawBody`, `slug`, `headings`, `html`, `mdxAST`, `wordCount`, `fileAbsolutePath` from the query result. You can check [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) to learn how to re-implement some of them on your own. Also check [Updating MDX nodes](#updating-mdx-nodes) for guidance on changing your queries
 - `gatsby-plugin-mdx` only applies to local files (that are sourced with `gatsby-source-filesystem`)
 - Removed the ability to use `js` and `json` in frontmatter
+- Loading MDX from other sources as the filesystem is not supported. If you have a need for that, please comment in the [GitHub Discussion](https://github.com/gatsbyjs/gatsby/discussions/25068)
 - All [MDX v2 migration](https://mdxjs.com/migrating/v2/) notes apply
 
 As mentioned above the `html` field was removed from the GraphQL node. We know that some of you used this for e.g. `gatsby-plugin-feed`. Unfortunately, for compatibility and performance reasons we had to remove it. We recommend using the `excerpt` field in the meantime until we find a feasible solution to provide MDX rendered as HTML. If you have any suggestions, please comment on the [GitHub Discussion](https://github.com/gatsbyjs/gatsby/discussions/25068).
