@@ -22,7 +22,7 @@
     "clean": "del-cli dist/*"
   },
   "devDependencies": {
-    "@gatsbyjs/reach-router": "^2.0.0",
+    "@gatsbyjs/reach-router": "^2.0.1",
     "@testing-library/react": "^11.2.7",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",

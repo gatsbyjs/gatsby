@@ -19,7 +19,7 @@
     "@babel/traverse": "^7.20.10",
     "@babel/types": "^7.20.7",
     "@builder.io/partytown": "^0.7.4",
-    "@gatsbyjs/reach-router": "^2.0.0",
+    "@gatsbyjs/reach-router": "^2.0.1",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
     "@graphql-codegen/add": "^3.2.3",
     "@graphql-codegen/core": "^2.6.8",
