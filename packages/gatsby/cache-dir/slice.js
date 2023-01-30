@@ -33,7 +33,10 @@ export function Slice(props) {
     } else if (slicesContext.renderEnvironment === `browser`) {
       // in the browser, we'll just render the component as is
       return <InlineSlice {...internalProps} />
-    } else if (slicesContext.renderEnvironment === `engines`) {
+    } else if (
+      slicesContext.renderEnvironment === `engines` ||
+      slicesContext.renderEnvironment === `dev-ssr`
+    ) {
       // if we're in SSR, we'll just render the component as is
       return <InlineSlice {...internalProps} />
     } else if (slicesContext.renderEnvironment === `slices`) {
