@@ -32,4 +32,13 @@ describe(`creates pages using the file system routing API`, () => {
       .invoke(`text`)
       .should(`eq`, `Gatsby MDX e2e`)
   })
+
+  it(`works when template and content file paths contain plusses`, () => {
+    cy.visit(
+      `/fs-api/plus+and+static+query/file-with-plus/`
+    ).waitForRouteChange()
+    cy.get(`[data-cy="static-query-result"]`)
+      .invoke(`text`)
+      .should(`eq`, `Gatsby MDX e2e`)
+  })
 })

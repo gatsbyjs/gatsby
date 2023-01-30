@@ -1,12 +1,12 @@
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
-export default function FSAPIWithSpaceComponent(props) {
+export default function FSAPIWithPlusComponent(props) {
   const data = useStaticQuery(graphql`
     {
       site {
         siteMetadata {
-          space: title
+          plus: title
         }
       }
     }
@@ -15,7 +15,7 @@ export default function FSAPIWithSpaceComponent(props) {
     <>
       <pre>
         <code data-cy="static-query-result">
-          {data?.site?.siteMetadata?.space}
+          {data?.site?.siteMetadata?.plus}
         </code>
       </pre>
       <hr />
