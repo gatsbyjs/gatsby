@@ -1696,7 +1696,7 @@ export interface Node extends NodeInput {
   parent: string | null
   children: string[]
   internal: NodeInput["internal"] & {
-    owner: string
+    owner?: string
   }
   [key: string]: unknown
 }

@@ -14,6 +14,7 @@ import { IPluginOptions } from "./types/plugin"
 import {
   GraphQLFieldConfig,
   GraphQLInt,
+  GraphQLJSON,
   GraphQLString,
   GraphQLType,
 } from "gatsby/graphql"
@@ -23,7 +24,11 @@ import {
   FieldItem,
 } from "./types/contentful-js-sdk/content-type"
 
-import { IContentfulEntry } from "./types/contentful"
+import {
+  IContentfulAsset,
+  IContentfulEntry,
+  IContentfulImageAPITransformerOptions,
+} from "./types/contentful"
 
 interface IContentfulGraphQLField
   extends Omit<Partial<GraphQLFieldConfig<unknown, unknown>>, "type"> {
@@ -379,7 +384,10 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     // Assets
     const gatsbyImageData = getGatsbyImageFieldConfig(
-      async (...args) => resolveGatsbyImageData(...args, { cache }),
+      async (
+        image: IContentfulAsset,
+        options: IContentfulImageAPITransformerOptions
+      ) => resolveGatsbyImageData(image, options, { cache }),
       {
         jpegProgressive: {
           type: `Boolean`,
@@ -401,6 +409,27 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         quality: {
           type: `Int`,
           defaultValue: 50,
+        },
+        backgroundColor: {
+          type: GraphQLString,
+        },
+        blurredOptions: {
+          type: GraphQLJSON,
+        },
+        height: {
+          type: GraphQLInt,
+        },
+        placeholder: {
+          type: GraphQLString,
+        },
+        toFormat: {
+          type: GraphQLString,
+        },
+        tracedSVGOptions: {
+          type: GraphQLJSON,
+        },
+        width: {
+          type: GraphQLInt,
         },
       }
     )

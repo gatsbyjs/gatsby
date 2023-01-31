@@ -1,11 +1,21 @@
 import { stripIndent } from "common-tags"
-import { GraphQLBoolean, GraphQLInt } from "gatsby/graphql"
+import {
+  GraphQLBoolean,
+  GraphQLInt,
+  GraphQLJSON,
+  GraphQLString,
+} from "gatsby/graphql"
 import { hasFeature } from "gatsby-plugin-utils"
 import { GatsbyNode } from "gatsby"
 
 import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
+import {
+  IContentfulAsset,
+  IContentfulImageAPITransformerOptions,
+} from "./types/contentful"
 
+// @todo DO WE STILL NEED THIS?
 export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] =
   async function setFieldsOnGraphQLNodeType({ type, cache }) {
     if (type.name !== `ContentfulAsset`) {
@@ -19,7 +29,10 @@ export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"
       )
 
       const fieldConfig = getGatsbyImageFieldConfig(
-        async (...args) => resolveGatsbyImageData(...args, { cache }),
+        async (
+          image: IContentfulAsset,
+          options: IContentfulImageAPITransformerOptions
+        ) => resolveGatsbyImageData(image, options, { cache }),
         {
           jpegProgressive: {
             type: GraphQLBoolean,
@@ -39,6 +52,27 @@ export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"
          Pass \`-1\` for a full circle/ellipse.`,
           },
           quality: {
+            type: GraphQLInt,
+          },
+          backgroundColor: {
+            type: GraphQLString,
+          },
+          blurredOptions: {
+            type: GraphQLJSON,
+          },
+          height: {
+            type: GraphQLInt,
+          },
+          placeholder: {
+            type: GraphQLString,
+          },
+          toFormat: {
+            type: GraphQLString,
+          },
+          tracedSVGOptions: {
+            type: GraphQLJSON,
+          },
+          width: {
             type: GraphQLInt,
           },
         }

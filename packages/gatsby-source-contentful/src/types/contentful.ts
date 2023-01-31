@@ -38,13 +38,18 @@ export interface IContentfulLink {
   sys: IContentfulLinkSys
 }
 
-export interface IContentfulEntity extends Node {
+// type UContentfulField = string | boolean | Array<string>
+
+interface IContentfulEntity extends Node {
   id: string
   sys: IContentfulSys
   metadata: IContentfulMetadata
 }
 
 export type IContentfulEntry = IContentfulEntity
+//  & {
+//   [fieldName: string]: UContentfulField
+// }
 
 export interface IContentfulAsset extends IContentfulEntity {
   // @todo this field type might be defined by Gatsby already?

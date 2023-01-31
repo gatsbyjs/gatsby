@@ -46,8 +46,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       parentSpan,
     } = args
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
-      actions
+    const { createNode, touchNode, deleteNode } = actions
     const online = await isOnline()
 
     // Gatsby only checks if a node has been touched on the first sourcing.
@@ -497,11 +496,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         createNodesForContentType({
           contentTypeItem,
           entries: entryList[i],
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          unstable_createNodeManifest,
-          createNode,
-          createNodeId,
-          getNode,
           resolvable,
           foreignReferenceMap,
           defaultLocale,
@@ -509,6 +503,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           space,
           useNameForId,
           pluginConfig,
+          ...actions,
+          ...args,
         })
       )
     }
