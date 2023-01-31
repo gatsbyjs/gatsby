@@ -2,7 +2,9 @@
 title: Deploying to Vercel
 ---
 
-[Vercel](https://vercel.com/home) is a cloud platform that enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with zero configuration. They provide a global edge network, SSL encryption, asset compression, cache invalidation, and more.
+[Vercel](https://vercel.com/home) is the platform for frontend developers, providing the speed and reliability innovators need to create at the moment of inspiration. They support over 35 frontend frameworks, including Gatsby.
+
+Vercel supports Gatsby features like SSG, SSR, DSG, API Routes, and more.
 
 ## Prerequisites
 
@@ -18,8 +20,6 @@ You can use Vercel with Gatsby in multiple ways:
 - With [Vercel for Git](https://vercel.com/guides/deploying-gatsby-with-vercel#vercel-for-git)
 
 If you want to use a Custom Domain with your Vercel deployment, you can **Add** or **Transfer in** your domain via your Vercel [account Domain settings](https://vercel.com/dashboard/domains).
-
-Vercel doesn't support advanced features like [SSR](/docs/how-to/rendering-options/using-server-side-rendering/), [DSG](/docs/how-to/rendering-options/using-deferred-static-generation/), or [Image CDN](/docs/how-to/images-and-media/using-gatsby-plugin-image/#gatsby-cloud-image-cdn). You can get all features and faster builds by signing up to [Gatsby Cloud](/dashboard/signup).
 
 ## Additional resources
 
