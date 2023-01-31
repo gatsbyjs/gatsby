@@ -7,7 +7,6 @@ import {
   IGatsbyImageHelperArgs,
   ImageFormat,
 } from "gatsby-plugin-image"
-import { GraphQLResolveInfo } from "gatsby/graphql"
 import path from "path"
 
 import {

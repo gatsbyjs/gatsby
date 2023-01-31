@@ -20,6 +20,10 @@ export interface IContentfulSys {
   locale: string
 }
 
+export interface ILocalizedField {
+  [locale: string]: unknown
+}
+
 // export interface IContentfulTag {
 //   name: string
 //   contentful_id: string

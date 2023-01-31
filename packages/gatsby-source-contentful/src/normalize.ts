@@ -8,20 +8,21 @@ import {
   IContentfulEntry,
   IContentfulLink,
   IContentfulSys,
+  ILocalizedField,
 } from "./types/contentful"
 import { Actions, Node, SourceNodesArgs } from "gatsby"
 import {
   SyncCollection,
-  Entry,
   Asset,
   ContentType,
   Space,
   Locale,
-  FieldItem,
   LocaleCode,
   AssetFile,
+  EntryWithAllLocalesAndWithoutLinkResolution,
 } from "./types/contentful-js-sdk"
 import { IProcessedPluginOptions } from "./types/plugin"
+import { FieldsType } from "./types/contentful-js-sdk/query/util"
 
 export const makeTypeName = (
   type: string,
@@ -44,10 +45,10 @@ export const getLocalizedField = ({
   locale,
   localesFallback,
 }: {
-  field: FieldItem
+  field: ILocalizedField
   locale: Locale
   localesFallback: IContententfulLocaleFallback
-}): null | FieldItem => {
+}): unknown => {
   if (!field) {
     return null
   }
@@ -78,7 +79,7 @@ export const buildFallbackChain = (
 }
 const makeGetLocalizedField =
   ({ locale, localesFallback }) =>
-  (field: FieldItem): null | FieldItem =>
+  (field: ILocalizedField): unknown =>
     getLocalizedField({ field, locale, localesFallback })
 
 export const makeId = ({
@@ -110,7 +111,10 @@ const makeMakeId =
 // Generates an unique id per space for reference resolving
 // @todo space id is actually not factored in here!
 export const createRefId = (
-  node: Entry<unknown> | IContentfulEntry | Asset
+  node:
+    | EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
+    | IContentfulEntry
+    | Asset
 ): string => `${node.sys.id}___${node.sys.type}`
 
 export const createLinkRefId = (link: IContentfulLink): string =>
@@ -122,11 +126,14 @@ export const buildEntryList = ({
 }: {
   contentTypeItems: Array<ContentType>
   currentSyncData: SyncCollection
-}): Array<Array<Entry<unknown>>> => {
+}): Array<
+  Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+> => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
-  const map: Map<string, Array<Entry<unknown>>> = new Map(
-    contentTypeItems.map(contentType => [contentType.sys.id, []])
-  )
+  const map: Map<
+    string,
+    Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+  > = new Map(contentTypeItems.map(contentType => [contentType.sys.id, []]))
   // Now fill the buckets. Ignore entries for which there exists no bucket. (This happens when filterContentType is used)
   currentSyncData.entries.map(entry => {
     const arr = map.get(entry.sys.contentType.sys.id)
@@ -143,7 +150,9 @@ export const buildResolvableSet = ({
   existingNodes = [],
   assets = [],
 }: {
-  entryList: Array<Array<Entry<unknown>>>
+  entryList: Array<
+    Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+  >
   existingNodes: Array<IContentfulEntry>
   assets: Array<Asset>
 }): Set<string> => {
@@ -185,7 +194,9 @@ export const buildForeignReferenceMap = ({
   useNameForId,
 }: {
   contentTypeItems: Array<ContentType>
-  entryList: Array<Array<Entry<unknown>>>
+  entryList: Array<
+    Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+  >
   resolvable: Set<string>
   defaultLocale: string
   space: Space
@@ -204,7 +215,7 @@ export const buildForeignReferenceMap = ({
     }
 
     entryList[i].forEach(entryItem => {
-      const entryItemFields = entryItem.fields as Entry<typeof contentTypeItem>
+      const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         if (entryItemFields[entryItemFieldKey]) {
           const entryItemFieldValue =
@@ -365,7 +376,9 @@ function contentfulCreateNodeManifest({
 
 interface ICreateNodesForContentTypeArgs extends Actions, SourceNodesArgs {
   contentTypeItem: ContentType
-  entries: Array<Entry<unknown>>
+  entries: Array<
+    EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
+  >
   resolvable: Set<string>
   foreignReferenceMap: IForeignReferenceMap
   defaultLocale: string

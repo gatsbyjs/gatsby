@@ -111,7 +111,7 @@ const unionsNameSet = new Set()
 
 const getLinkFieldType = (
   linkType: string | undefined,
-  field: ContentTypeField | FieldItem,
+  field: ContentTypeField,
   schema,
   createTypes
 ): IContentfulGraphQLField => {
@@ -208,7 +208,12 @@ const translateFieldType = (
     fieldType = { ...fieldData, type: `[${fieldData.type}]` }
   } else if (field.type === `Link`) {
     // Contentful Link (reference) field types
-    fieldType = getLinkFieldType(field.linkType, field, schema, createTypes)
+    fieldType = getLinkFieldType(
+      field.linkType,
+      field as ContentTypeField,
+      schema,
+      createTypes
+    )
   } else {
     // Primitive field types
     const primitiveType = ContentfulDataTypes.get(field.type)
