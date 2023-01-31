@@ -5,7 +5,7 @@ import { IPluginOptions, IProcessedPluginOptions } from "./types/plugin"
 
 const DEFAULT_PAGE_LIMIT = 1000
 
-const defaultOptions: IPluginOptions = {
+const defaultOptions: Omit<IPluginOptions, "spaceId" | "accessToken"> = {
   host: `cdn.contentful.com`,
   environment: `master`,
   downloadLocal: false,

@@ -484,6 +484,7 @@ function pagedGet<T>(
   if (!client[method]) {
     throw new Error(`Contentful Client does not support the method ${method}`)
   }
+
   return client[method]({
     ...query,
     skip: skip,

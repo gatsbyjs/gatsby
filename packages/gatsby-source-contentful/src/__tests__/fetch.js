@@ -124,7 +124,7 @@ afterAll(() => {
 })
 
 it(`calls contentful.createClient with expected params`, async () => {
-  await fetchContent({ pluginConfig, reporter, syncToken: null })
+  await fetchContent({ pluginConfig, reporter, syncToken: `` })
   expect(reporter.panic).not.toBeCalled()
   expect(createClient).toBeCalledWith(
     expect.objectContaining({
@@ -144,7 +144,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
       spaceId: `rocybtov1ozk`,
     }),
     reporter,
-    syncToken: null,
+    syncToken: ``,
   })
 
   expect(reporter.panic).not.toBeCalled()
@@ -202,7 +202,7 @@ describe(`Tags feature`, () => {
         pageLimit: 50,
       }),
       reporter,
-      syncToken: null,
+      syncToken: ``,
     })
 
     expect(reporter.panic).not.toBeCalled()
@@ -220,7 +220,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw new Error(`error`)
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -258,7 +258,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -299,7 +299,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchContent({
       pluginConfig: masterConfig,
       reporter,
-      syncToken: null,
+      syncToken: ``,
     })
 
     expect(reporter.panic).toBeCalledWith(
@@ -339,7 +339,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -380,7 +380,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
