@@ -39,7 +39,7 @@ export interface IActivityArgs {
   tags?: { [key: string]: any }
 }
 
-let isVerbose = isTruthy(process.env.GATSBY_REPORTER_ISVERBOSE)
+const isVerbose = isTruthy(process.env.GATSBY_REPORTER_ISVERBOSE)
 
 function isLogIntentMessage(msg: any): msg is ILogIntent {
   return msg && msg.type === `LOG_INTENT`
