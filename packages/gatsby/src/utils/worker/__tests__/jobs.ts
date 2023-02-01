@@ -119,28 +119,28 @@ describe(`worker (jobs)`, () => {
       it(`.then on createJobV2 action creator is called when job finishes`, () => {
         // we expect .then callback in worker to be called with results
         expect(workersJobsMeta).toSatisfyAll(
-          ({ dotThenWasCalledWith }: typeof workersJobsMeta[0]) =>
+          ({ dotThenWasCalledWith }: (typeof workersJobsMeta)[0]) =>
             dotThenWasCalledWith?.processed === `PROCESSED: .then() job`
         )
       })
 
       it(`await on createJobV2 resumes when job finishes`, () => {
         expect(workersJobsMeta).toSatisfyAll(
-          ({ awaitReturnedWith }: typeof workersJobsMeta[0]) =>
+          ({ awaitReturnedWith }: (typeof workersJobsMeta)[0]) =>
             awaitReturnedWith?.processed === `PROCESSED: Awaited job`
         )
       })
 
       it(`.catch on createJobV2 action creator is called when job fails`, () => {
         expect(workersJobsMeta).toSatisfyAll(
-          ({ dotCatchWasCalledWith }: typeof workersJobsMeta[0]) =>
+          ({ dotCatchWasCalledWith }: (typeof workersJobsMeta)[0]) =>
             dotCatchWasCalledWith === `ERRORED: .catch() job`
         )
       })
 
       it(`error is caught when awaited job fails`, () => {
         expect(workersJobsMeta).toSatisfyAll(
-          ({ awaitThrewWith }: typeof workersJobsMeta[0]) =>
+          ({ awaitThrewWith }: (typeof workersJobsMeta)[0]) =>
             awaitThrewWith === `ERRORED: try/catched awaited job`
         )
       })

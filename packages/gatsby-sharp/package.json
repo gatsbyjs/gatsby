@@ -14,7 +14,7 @@
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-sharp#readme",
   "dependencies": {
-    "@types/sharp": "^0.31.0",
+    "@types/sharp": "^0.31.1",
     "sharp": "^0.31.3"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "babel-plugin-replace-ts-export-assignment": "^0.0.2",
     "cross-env": "^7.0.3",
     "npm-run-all": "4.1.5",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.4"
   },
   "engines": {
     "node": ">=18.0.0"
