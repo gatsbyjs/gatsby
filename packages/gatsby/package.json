@@ -182,7 +182,7 @@
     "@types/babel-core": "^6.25.7",
     "@types/eslint": "^8.4.10",
     "@types/estree": "^1.0.0",
-    "@types/express": "^4.17.15",
+    "@types/express": "^4.17.16",
     "@types/express-http-proxy": "^1.6.3",
     "@types/micromatch": "^4.0.2",
     "@types/normalize-path": "^3.0.0",
