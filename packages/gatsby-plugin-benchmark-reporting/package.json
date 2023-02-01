@@ -22,7 +22,7 @@
     "@babel/runtime": "^7.20.7",
     "fast-glob": "^3.2.12",
     "gatsby-core-utils": "^4.6.0-next.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.8"
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next"
