@@ -2,21 +2,16 @@ import constructError from "../construct-error"
 import { errorMap } from "../error-map"
 import { Level } from "../types"
 
-let log
-let processExit
-beforeEach(() => {
-  log = jest.spyOn(console, `log`).mockImplementation(() => {})
-  processExit = (
-    jest.spyOn(process, `exit`) as unknown as jest.Mock
-  ).mockImplementation(() => {})
+const processExit = (
+  jest.spyOn(process, `exit`) as unknown as jest.Mock
+).mockImplementation(() => {})
+const log = (
+  jest.spyOn(console, `log`) as unknown as jest.Mock
+).mockImplementation(() => {})
 
-  log.mockReset()
-  processExit.mockReset()
-})
-
-afterAll(() => {
-  ;(console.log as jest.Mock).mockClear()
-  ;(process.exit as unknown as jest.Mock).mockClear()
+afterEach(() => {
+  log.mockClear()
+  processExit.mockClear()
 })
 
 test(`it exits on invalid error schema`, () => {
