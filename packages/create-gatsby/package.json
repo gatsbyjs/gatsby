@@ -29,7 +29,7 @@
     "gatsby-plugin-utils": "^4.6.0-next.1",
     "joi": "^17.7.0",
     "microbundle": "^0.15.1",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^2.6.8",
     "string-length": "^4.0.2",
     "terminal-link": "^2.1.1",
     "tiny-spin": "^1.0.2"
