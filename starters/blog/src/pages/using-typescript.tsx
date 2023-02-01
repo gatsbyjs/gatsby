@@ -19,9 +19,9 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({
   <Layout title="Using TypeScript" location={location}>
     <h1>Gatsby supports TypeScript by default!</h1>
     <p>
-      This means that you can create and write <em>.ts/.tsx</em> files for your
-      pages, components etc. Please note that the <em>gatsby-*.js</em> files
-      (like gatsby-node.js) currently don't support TypeScript yet.
+      This means that you can create and write <code>.ts/.tsx</code> files for
+      your pages, components, and <code>gatsby-*</code> configuration files (for
+      example <code>gatsby-config.ts</code>).
     </p>
     <p>
       For type checking you'll want to install <em>typescript</em> via npm and
