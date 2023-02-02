@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.7",
+    "@babel/runtime": "^7.20.13",
     "@soda/friendly-errors-webpack-plugin": "1.8.1",
     "copy-webpack-plugin": "^7.0.0",
     "html-webpack-plugin": "^5.5.0",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "babel-preset-gatsby-package": "^3.6.0-next.0",
     "cross-env": "^7.0.3",
     "react": "^18.2.0",
