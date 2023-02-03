@@ -9,9 +9,9 @@ Serving users content in a way that is adapted to their language & culture is pa
 
 There are two hard parts of internationalization:
 
-- **Content storage and workflow.** Coordinating with internal or external translators to translate both existing and new content into required languages can be time-consuming. In addition, adding another approver into the content publishing process can slow things down without careful workflow design.
+- **Content storage and workflow.** Coordinating with internal or external translators to translate both existing and new content into the required languages can be time-consuming. In addition, adding another approver into the content publishing process can slow things down without careful workflow design.
 
-- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg `fr.example.com/blog`) or path prefix (eg `example.com/fr/blog`). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
+- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg `fr.example.com/blog`) or a path prefix (eg `example.com/fr/blog`). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
 
 This guide is a brief look at the options that exist for enhancing your Gatsby project for internationalization.
 
@@ -43,9 +43,9 @@ More detailed information about react-intl's [APIs](https://github.com/formatjs/
 
 React-i18next is an internationalization library built on the i18next framework. It uses components to make sure translations render correctly or to re-render your content when the user language changes.
 
-React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with webpack.
+React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load the translations from your server, or bundling translations with webpack.
 
-This framework also has experimental support for the React suspense API and it supports a stable version of React hooks.
+This framework also has experimental support for the React suspense API, and it supports a stable version of React hooks.
 
 ## Other resources
 
