@@ -21,6 +21,7 @@ You can use Vercel with Gatsby in multiple ways:
 
 If you want to use a Custom Domain with your Vercel deployment, you can **Add** or **Transfer in** your domain via your Vercel [account Domain settings](https://vercel.com/dashboard/domains).
 
+Vercel doesn't currently support `File` nodes inside of SSR/DSG, as well as the [Image CDN](/docs/how-to/images-and-media/using-gatsby-plugin-image/#gatsby-cloud-image-cdn).
 ## Additional resources
 
 - [Example Source](https://github.com/vercel/vercel/tree/main/examples/gatsby)
