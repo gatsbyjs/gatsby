@@ -393,7 +393,7 @@ Change your `gatsby-node.js` as following:
 
 ```diff
 const path = require("path")
-+ const postTemplate = path.resolve(`./src/templates/post.jsx`)
++ const postTemplate = path.resolve(`./src/templates/posts.jsx`)
 
 // Rest of the createPages API...
 
