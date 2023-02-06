@@ -67,7 +67,7 @@ You do this by passing a function that prevents page refresh as an `onSubmit` pr
 
 The `handleSubmit` function calls `preventDefault()` on the event which prevents the page from refreshing. After this, you'll want to insert desired behavior, like sending the data to a third-party service.
 
-You may want to make additional changes to visual form display after submit, like disabling the form submit button after submission, showing a spinning wheel, or changing the button color.
+You may want to make additional changes in the visual form display after submit, like disabling the form submit button after submission, showing a spinning wheel, or changing the button color.
 
 If you need to use any sort of authentication token to submit data, you can use Gatsby Functions (Gatsby's implementation of serverless functions) to [run this logic while keeping any of your credentials secure](https://www.gatsbyjs.com/docs/reference/functions/getting-started/#forms).
 
