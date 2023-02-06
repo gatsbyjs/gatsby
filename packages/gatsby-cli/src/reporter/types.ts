@@ -18,43 +18,43 @@ export interface ILogIntent {
   payload:
     | {
         name: "createLog"
-        args: Parameters<typeof ActionCreators["createLog"]>
+        args: Parameters<(typeof ActionCreators)["createLog"]>
       }
     | {
         name: "createPendingActivity"
-        args: Parameters<typeof ActionCreators["createPendingActivity"]>
+        args: Parameters<(typeof ActionCreators)["createPendingActivity"]>
       }
     | {
         name: "setStatus"
-        args: Parameters<typeof ActionCreators["setStatus"]>
+        args: Parameters<(typeof ActionCreators)["setStatus"]>
       }
     | {
         name: "startActivity"
-        args: Parameters<typeof ActionCreators["startActivity"]>
+        args: Parameters<(typeof ActionCreators)["startActivity"]>
       }
     | {
         name: "endActivity"
-        args: Parameters<typeof ActionCreators["endActivity"]>
+        args: Parameters<(typeof ActionCreators)["endActivity"]>
       }
     | {
         name: "updateActivity"
-        args: Parameters<typeof ActionCreators["updateActivity"]>
+        args: Parameters<(typeof ActionCreators)["updateActivity"]>
       }
     | {
         name: "setActivityErrored"
-        args: Parameters<typeof ActionCreators["setActivityErrored"]>
+        args: Parameters<(typeof ActionCreators)["setActivityErrored"]>
       }
     | {
         name: "setActivityStatusText"
-        args: Parameters<typeof ActionCreators["setActivityStatusText"]>
+        args: Parameters<(typeof ActionCreators)["setActivityStatusText"]>
       }
     | {
         name: "setActivityTotal"
-        args: Parameters<typeof ActionCreators["setActivityTotal"]>
+        args: Parameters<(typeof ActionCreators)["setActivityTotal"]>
       }
     | {
         name: "activityTick"
-        args: Parameters<typeof ActionCreators["activityTick"]>
+        args: Parameters<(typeof ActionCreators)["activityTick"]>
       }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-script",
   "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
-  "version": "2.6.0-next.0",
+  "version": "2.7.0-next.0",
   "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -22,13 +22,13 @@
     "clean": "del-cli dist/*"
   },
   "devDependencies": {
-    "@gatsbyjs/reach-router": "^2.0.0",
+    "@gatsbyjs/reach-router": "^2.0.1",
     "@testing-library/react": "^11.2.7",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "microbundle": "^0.15.1",
     "prepend-directive": "^1.1.0",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.4"
   },
   "peerDependencies": {
     "@gatsbyjs/reach-router": "^2.0.0",

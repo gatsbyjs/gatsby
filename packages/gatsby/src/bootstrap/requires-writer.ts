@@ -189,8 +189,10 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     ]
 
     // Remove any page components that no longer exist.
-    cleanedSSRVisitedPageComponents = components.filter(c =>
-      ssrVisitedPageComponents.some(s => s === c.componentChunkName)
+    cleanedSSRVisitedPageComponents = components.filter(
+      c =>
+        ssrVisitedPageComponents.some(s => s === c.componentChunkName) ||
+        c.componentChunkName.startsWith(`slice---`)
     )
   }
 

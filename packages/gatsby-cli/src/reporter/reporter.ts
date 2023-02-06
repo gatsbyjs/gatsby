@@ -39,6 +39,7 @@ export interface IActivityArgs {
   tags?: { [key: string]: any }
 }
 
+// eslint-disable-next-line prefer-const
 let isVerbose = isTruthy(process.env.GATSBY_REPORTER_ISVERBOSE)
 
 function isLogIntentMessage(msg: any): msg is ILogIntent {

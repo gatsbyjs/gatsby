@@ -19,7 +19,7 @@
     "gatsby-transformer-json": "next",
     "gatsby-transformer-remark": "next",
     "gatsby-transformer-sharp": "next",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^2.6.8",
     "prop-types": "^15.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -59,7 +59,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.29.1",
+    "@playwright/test": "^1.30.0",
     "@testing-library/cypress": "^8.0.7",
     "cross-env": "^7.0.3",
     "cypress": "^9.7.0",
@@ -69,8 +69,8 @@
     "gatsby-core-utils": "next",
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
-    "prettier": "^2.8.1",
-    "start-server-and-test": "^1.14.0",
+    "prettier": "^2.8.3",
+    "start-server-and-test": "^1.15.3",
     "typescript": "^4.9.4",
     "yargs": "^17.6.2"
   },

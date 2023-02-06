@@ -1,9 +1,9 @@
 import React, { useContext } from "react"
-import { ContextForSlices } from "../context-for-slices"
+import { AppContext } from "../app-context"
 
 // Use as a Slice
 function Footer({ framework, lang, sliceContext: { framework: frameworkViaContext }}) {
-  const { posts } = useContext(ContextForSlices)
+  const { posts } = useContext(AppContext)
 
   return (
     <footer

@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.5.0/packages/gatsby) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Features
+
+- add initial webhook body env var to bootstrap context [#37478](https://github.com/gatsbyjs/gatsby/issues/37478) ([000e23e](https://github.com/gatsbyjs/gatsby/commit/000e23e0f1247af61b8ecdc2f7274e53e89e82bf))
+- Allow `<html>` and `<body>` attributes to be updated from `Head` [#37449](https://github.com/gatsbyjs/gatsby/issues/37449) ([fe65c29](https://github.com/gatsbyjs/gatsby/commit/fe65c295952f49345dc9e4a3b8da49b674b198ff))
+- Add hashing methods from `hash-wasm` [#37433](https://github.com/gatsbyjs/gatsby/issues/37433) ([df27ff4](https://github.com/gatsbyjs/gatsby/commit/df27ff4a5dbaf8bbcd481dcd0d9a297c51283fde))
+
+#### Bug Fixes
+
+- Use windows import helper for validate [#37520](https://github.com/gatsbyjs/gatsby/issues/37520) [#37522](https://github.com/gatsbyjs/gatsby/issues/37522) ([3b1b6a5](https://github.com/gatsbyjs/gatsby/commit/3b1b6a5bd33d7cf828ce6994a4aa266ce2d71197))
+- pass serverData to Head [#37500](https://github.com/gatsbyjs/gatsby/issues/37500) ([0017375](https://github.com/gatsbyjs/gatsby/commit/0017375e857c929e97a19853db01188c6702df25))
+- nodeModel.findAll supports v5 sort argument structure [#37477](https://github.com/gatsbyjs/gatsby/issues/37477) ([949132b](https://github.com/gatsbyjs/gatsby/commit/949132baa5e334e2e8e6a1c6776e9f9e8de19662))
+- Check rawPath in loadPage [#37451](https://github.com/gatsbyjs/gatsby/issues/37451) ([4a721df](https://github.com/gatsbyjs/gatsby/commit/4a721dfdcd82d8e5e4803854f7b996c216788a7c))
+- Use correct settings for yaml-loader [#37454](https://github.com/gatsbyjs/gatsby/issues/37454) ([3ef4f44](https://github.com/gatsbyjs/gatsby/commit/3ef4f444e8e5aca7866794512bfc367d5a2b057b))
+- pluginOptionsSchema in local TS plugin [#37443](https://github.com/gatsbyjs/gatsby/issues/37443) ([c57c060](https://github.com/gatsbyjs/gatsby/commit/c57c0604db0ada5798e16e7871f6d5694a6e7a26))
+- Multi-environment browserslist configs [#35081](https://github.com/gatsbyjs/gatsby/issues/35081) ([5e7e8fa](https://github.com/gatsbyjs/gatsby/commit/5e7e8fab5411d735f2ce2d5c55d37ace2ae6a4ba))
+- Support ESM-only `gatsby-remark-*` plugins [#37440](https://github.com/gatsbyjs/gatsby/issues/37440) ([9762642](https://github.com/gatsbyjs/gatsby/commit/97626421f4adf0b993de53471d5927a647907a00))
+- Update `loader.loadPage` to return a Promise on error [#37337](https://github.com/gatsbyjs/gatsby/issues/37337) ([5665bc4](https://github.com/gatsbyjs/gatsby/commit/5665bc45c460d3c7876b83cb7f6d37b1e9a18f97))
+- Prevent escape on style tags content [#37410](https://github.com/gatsbyjs/gatsby/issues/37410) ([5f82fa6](https://github.com/gatsbyjs/gatsby/commit/5f82fa638a24aaf6c8b7e4877836ed9acc0567c3))
+- Restore asset, path prefix for file-loader handled files fix [#37429](https://github.com/gatsbyjs/gatsby/issues/37429) ([b0c0913](https://github.com/gatsbyjs/gatsby/commit/b0c09137667b17d7c028ba449ff6c0b721c48728))
+
+#### Chores
+
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+- Upgrade to Jest 29 [#37408](https://github.com/gatsbyjs/gatsby/issues/37408) ([315edc6](https://github.com/gatsbyjs/gatsby/commit/315edc64c9aa87b7f5bf43c7698e47187aeb6450))
+- Bump partytown [#37421](https://github.com/gatsbyjs/gatsby/issues/37421) ([1775627](https://github.com/gatsbyjs/gatsby/commit/177562749be8f167a172349175452004123e0332))
+
 ### [5.4.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.4.2/packages/gatsby) (2023-01-17)
 
 #### Bug Fixes
