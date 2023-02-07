@@ -111,7 +111,7 @@ You'll need to be aware of these things when using Gatsby Head:
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, `script`, and `noscript`.
 - `html` and `body` tags defined in `Head` overwrite the attributes defined in [`onRenderBody`](/docs/reference/config-files/gatsby-ssr/#onRenderBody) (`setHtmlAttributes` and `setBodyAttributes`).
 - Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
-- As of `gatsby@5.6.0`, `Head` can access [React Context](https://reactjs.org/docs/context.html) that you defined in the [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement).
+- As of `gatsby@5.6.0`, `Head` can access [React Context](https://reactjs.org/docs/context.html) that you defined in the [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement). It's important to note that `wrapRootElement` should only be used to set up context providers. UI components should be defined in [`wrapPageElement` API](/docs/reference/config-files/gatsby-browser/#wrapPageElement).
 
 ## Properties
 
