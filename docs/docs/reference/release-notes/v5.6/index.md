@@ -31,7 +31,7 @@ Be sure to join [our Discord](https://gatsby.dev/discord), follow [Gatsby](https
 
 ## Head API supports context providers from `wrapRootElement`
 
-`Head` now has access to React context provided by [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement)`. Example setup:
+`Head` now has access to React context provided by [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement). Example setup:
 
 ```jsx:title=gatsby-ssr/browser.js
 import * as React from "react";
