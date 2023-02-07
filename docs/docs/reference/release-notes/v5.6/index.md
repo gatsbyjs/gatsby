@@ -9,7 +9,7 @@ Welcome to `gatsby@5.6.0` release (February 2023 #1)
 Key highlights of this release:
 
 - [Gatsby is joining Netlify](#gatsby-is-joining-netlify)
-- [Head API supports providers from `wrapRootElement`](#head-api-supports-providers-from-wraprootelement)
+- [Head API supports context providers from `wrapRootElement`](#head-api-supports-context-providers-from-wraprootelement)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -29,9 +29,71 @@ In case you have missed the news, [Gatsby is joining Netlify](https://www.gatsby
 
 Be sure to join [our Discord](https://gatsby.dev/discord), follow [Gatsby](https://twitter.com/gatsbyjs) and [Netlify](https://twitter.com/Netlify) on Twitter or continue to read these release notes to know when we share our plans for the future.
 
-## Head API supports providers from `wrapRootElement`
+## Head API supports context providers from `wrapRootElement`
 
-TODO
+`Head` now has access to React context provided by [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement)`. Example setup:
+
+```jsx:title=gatsby-ssr/browser.js
+import * as React from "react";
+import { AppProviders } from "./src/components/app-providers";
+
+export const wrapRootElement = ({ element }) => (
+  <AppProviders>{element}</AppProviders>
+);
+```
+
+```jsx:title=src/components/app-providers.js
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
+
+const SiteMetadataContext = React.createContext();
+
+export const AppProviders = ({ children }) => {
+  const data = useStaticQuery(graphql`
+    {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `);
+
+  return (
+    <SiteMetadataContext.Provider value={data.site.siteMetadata}>
+      {children}
+    </SiteMetadataContext.Provider>
+  );
+};
+
+export function useSiteMetadataContext() {
+  return React.useContext(SiteMetadataContext);
+}
+
+```
+
+```jsx:title=src/templates/default.js
+import * as React from "react";
+// highlight-next-line
+import { useSiteMetadataContext } from "../components/app-providers";
+
+export function Head() {
+  // highlight-next-line
+  const { title } = useSiteMetadataContext();
+
+  return (
+    <>
+      <title>{title}</title>
+    </>
+  );
+}
+
+export default function DefaultPageTemplate() {
+  // template details.
+}
+```
+
+If [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement) is used to wrap templates with UI components those will be skipped and you will see warnings in browser console about invalid head elements. In this case it's recommended to move UI elements to [`wrapPageElement` API](/docs/reference/config-files/gatsby-browser/#wrapPageElement).
 
 ## Notable bugfixes & improvements
 
