@@ -33,7 +33,7 @@ Be sure to join [our Discord](https://gatsby.dev/discord), follow [Gatsby](https
 
 `Head` now has access to React context provided by [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement). Example setup:
 
-```jsx:title=gatsby-ssr/browser.js
+```jsx:title=gatsby-ssr.js/gatsby-browser.js
 import * as React from "react";
 import { AppProviders } from "./src/components/app-providers";
 
@@ -108,6 +108,14 @@ If [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRoot
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [IvanKiral](https://github.com/IvanKiral): chore(docs): Update "Sourcing from Kontent.ai" [PR #37484](https://github.com/gatsbyjs/gatsby/pull/37484)
+- [Khaledgarbaya](https://github.com/Khaledgarbaya): chore(docs): Update gatsby-slice.md to reference styled components non-support [PR #37525](https://github.com/gatsbyjs/gatsby/pull/37525)
+- [MEddarhri](https://github.com/MEddarhri): chore(docs): Fix typo in adding common features [PR #37611](https://github.com/gatsbyjs/gatsby/pull/37611)
+- [OddDev](https://github.com/OddDev): chore: Update using-remark example [PR #37546](https://github.com/gatsbyjs/gatsby/pull/37546)
+- [marvinjude](https://github.com/marvinjude)
+  - feat(gatsby): Safely wrap `Head` with `wrapRootElement` [PR #37439](https://github.com/gatsbyjs/gatsby/pull/37439)
+- [panzacoder](https://github.com/panzacoder): fix(gatsby): Render to pipeable stream in dev SSR [PR #37534](https://github.com/gatsbyjs/gatsby/pull/37534)
+- [robations](https://github.com/robations): chore(gatsby-source-wordpress): Fix apostrophe typos [PR #37486](https://github.com/gatsbyjs/gatsby/pull/37486)
+- [tqureshi-uog](https://github.com/tqureshi-uog): fix(gatsby-source-drupal): Make Image CDN error only `panicOnBuild` [PR #37601](https://github.com/gatsbyjs/gatsby/pull/37601)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.6.0-next.0...gatsby@5.6.0
