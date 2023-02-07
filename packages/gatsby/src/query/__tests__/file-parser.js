@@ -9,6 +9,9 @@ jest.mock(`../../utils/api-runner-node`, () => () => [])
 jest.mock(`gatsby-cli/lib/reporter/index`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs-extra`)
+const { store } = require(`../../redux`)
+
+const dispatchSpy = jest.spyOn(store, `dispatch`)
 
 const FileParser = require(`../file-parser`).default
 
@@ -51,6 +54,26 @@ export default () => {
 }
 `,
 }
+
+const HEAD_FILE_INFO = {
+  "no-head": `import React from "react"
+
+export function config() {}`,
+  "head-exported-function-declaration.js": `import React from "react"
+
+export function Head() {
+  return <title>foo</title>
+}
+`,
+  "head-exported-const-arrow-function.js": `import React from "react"
+
+export const Head = () => {
+  return <title>foo</title>
+}
+`,
+}
+
+const HEAD_SAMPLES_WITHOUT_HEAD = [`no-head`]
 
 const QUERY_FILE_INFO = {
   "no-query.js": `import React from "react"`,
@@ -311,7 +334,11 @@ const query = graphql\`{ __typename }\`
 `,
 }
 
-const MOCK_FILE_INFO = { ...SLICES_FILE_INFO, ...QUERY_FILE_INFO }
+const MOCK_FILE_INFO = {
+  ...SLICES_FILE_INFO,
+  ...QUERY_FILE_INFO,
+  ...HEAD_FILE_INFO,
+}
 
 describe(`File parser`, () => {
   const parser = new FileParser()
@@ -324,6 +351,7 @@ describe(`File parser`, () => {
 
   beforeEach(() => {
     reporter.warn.mockClear()
+    dispatchSpy.mockClear()
   })
 
   it(`extracts query AST correctly from files`, async () => {
@@ -393,4 +421,23 @@ describe(`File parser`, () => {
       }).toMatchSnapshot()
     }
   )
+
+  describe(`Head export`, () => {
+    const HEAD_KEYS = Object.keys(HEAD_FILE_INFO)
+    it.each(HEAD_KEYS)(
+      `extracts Head feature correctly (%s)`,
+      async headFileName => {
+        await parser.parseFile(`${headFileName}`, jest.fn())
+
+        expect(dispatchSpy).toHaveBeenCalledTimes(1)
+        expect(dispatchSpy).toHaveBeenLastCalledWith({
+          type: `SET_COMPONENT_FEATURES`,
+          payload: expect.objectContaining({
+            componentPath: headFileName,
+            Head: !HEAD_SAMPLES_WITHOUT_HEAD.includes(headFileName),
+          }),
+        })
+      }
+    )
+  })
 })
