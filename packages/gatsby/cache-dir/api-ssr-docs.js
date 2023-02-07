@@ -151,7 +151,7 @@ exports.onPreRenderHTML = true
  * Allow a plugin to wrap the page element.
  *
  * This is useful for setting wrapper components around pages that won't get
- * unmounted on page changes. For setting Provider components, use [wrapRootElement](#wrapRootElement).
+ * unmounted on page changes. For setting context providers, use [wrapRootElement](#wrapRootElement).
  *
  * _Note:_
  * There is an equivalent hook in Gatsby's [Browser API](/docs/browser-apis/#wrapPageElement).
@@ -177,7 +177,7 @@ exports.wrapPageElement = true
 /**
  * Allow a plugin to wrap the root element.
  *
- * This is useful to set up any Provider components that will wrap your application.
+ * This is useful to set up any context providers that will wrap your application.
  * For setting persistent UI elements around pages use [wrapPageElement](#wrapPageElement).
  *
  * _Note:_
