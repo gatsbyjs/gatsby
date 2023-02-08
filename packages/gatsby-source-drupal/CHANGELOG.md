@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.6.0/packages/gatsby-source-drupal) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- Make Image CDN error only `panicOnBuild` [#37601](https://github.com/gatsbyjs/gatsby/issues/37601) ([90cc0c5](https://github.com/gatsbyjs/gatsby/commit/90cc0c5344716423df271b719c540ffd0f6163aa))
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
 ## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.5.0/packages/gatsby-source-drupal) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

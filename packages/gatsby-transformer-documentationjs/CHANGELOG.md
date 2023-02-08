@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@7.6.0/packages/gatsby-transformer-documentationjs) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- update minor and patch dependencies for gatsby-transformer-documentationjs [#37582](https://github.com/gatsbyjs/gatsby/issues/37582) ([b4a231c](https://github.com/gatsbyjs/gatsby/commit/b4a231cde5bef2c034aa02e36b3457391718e144))
+
 ## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@7.5.0/packages/gatsby-transformer-documentationjs) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

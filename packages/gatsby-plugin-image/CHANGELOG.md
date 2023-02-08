@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.6.0/packages/gatsby-plugin-image) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-plugin-image [#37584](https://github.com/gatsbyjs/gatsby/issues/37584) ([c997776](https://github.com/gatsbyjs/gatsby/commit/c997776da4b4ad897318c7474865835288990d1c))
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+
 ## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.5.0/packages/gatsby-plugin-image) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.6.0/packages/gatsby-core-utils) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+#### Chores
+
+- update dependency msw to ^0.49.3 for gatsby-core-utils [#37564](https://github.com/gatsbyjs/gatsby/issues/37564) ([d8d9d61](https://github.com/gatsbyjs/gatsby/commit/d8d9d612b268788544f02ad93fe370c52586a5d6))
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+
 ## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.5.0/packages/gatsby-core-utils) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
