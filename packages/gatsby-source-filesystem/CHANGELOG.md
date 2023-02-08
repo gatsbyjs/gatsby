@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.6.0/packages/gatsby-source-filesystem) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- update dependency xstate to ^4.35.3 for gatsby-source-filesystem [#37579](https://github.com/gatsbyjs/gatsby/issues/37579) ([e0caa73](https://github.com/gatsbyjs/gatsby/commit/e0caa7380a599f748a430fe7c37034f7be0ea141))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.5.0/packages/gatsby-source-filesystem) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

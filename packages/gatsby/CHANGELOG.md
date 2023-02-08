@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.6.0/packages/gatsby) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Features
+
+- Safely wrap `Head` with `wrapRootElement` [#37439](https://github.com/gatsbyjs/gatsby/issues/37439) ([ebbebac](https://github.com/gatsbyjs/gatsby/commit/ebbebac0cbc1b06d2cf0b7c53a65f996c8900261))
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- update minor and patch dependencies for gatsby [#37580](https://github.com/gatsbyjs/gatsby/issues/37580) ([990b870](https://github.com/gatsbyjs/gatsby/commit/990b870f218d2bf0dc06cc370ab3dfac342fe727))
+- update parcel to v2.8.3 [#37583](https://github.com/gatsbyjs/gatsby/issues/37583) ([c2192cc](https://github.com/gatsbyjs/gatsby/commit/c2192cc7c30c79bbef179de7e03898fce6c0f9af))
+- update dependency eslint-plugin-import to ^2.27.5 [#37598](https://github.com/gatsbyjs/gatsby/issues/37598) ([b31d6a0](https://github.com/gatsbyjs/gatsby/commit/b31d6a06e77b33475794ec88948b1c99321f57c9))
+- update dependency prettier to v2.8.3 [#37578](https://github.com/gatsbyjs/gatsby/issues/37578) ([ad721ee](https://github.com/gatsbyjs/gatsby/commit/ad721ee33ed0a5c6ff7643c08ee77e084f3a99dc))
+- update dependency eslint-plugin-jsx-a11y to ^6.7.1 [#37599](https://github.com/gatsbyjs/gatsby/issues/37599) ([a838a03](https://github.com/gatsbyjs/gatsby/commit/a838a03a086931f75390c229261d82bca658548d))
+- fix static query mapping when contentFilePath contains a space fix [#37544](https://github.com/gatsbyjs/gatsby/issues/37544) ([3a7ba32](https://github.com/gatsbyjs/gatsby/commit/3a7ba329eec98bcff84cc315fb136a052c8b47f4))
+- support slices in DEV_SSR [#37542](https://github.com/gatsbyjs/gatsby/issues/37542) ([58b0625](https://github.com/gatsbyjs/gatsby/commit/58b062554ebe05ad033900b9517e125c476a80e6))
+- Render to pipeable stream in dev SSR [#37534](https://github.com/gatsbyjs/gatsby/issues/37534) ([049e8e1](https://github.com/gatsbyjs/gatsby/commit/049e8e18e762909dcf41f141eb1943d687ec8515))
+- Move "react-dom-server" out of framework chunk [#37508](https://github.com/gatsbyjs/gatsby/issues/37508) ([ab85362](https://github.com/gatsbyjs/gatsby/commit/ab85362af427f636d40f12227beac4e55858f2a5))
+- Use windows import helper for validate [#37520](https://github.com/gatsbyjs/gatsby/issues/37520) ([77c9469](https://github.com/gatsbyjs/gatsby/commit/77c9469c997362f90fe5e24d783a77022ba48a95))
+
+#### Chores
+
+- update dependency @types/sharp to ^0.31.1 [#37562](https://github.com/gatsbyjs/gatsby/issues/37562) ([e86d87c](https://github.com/gatsbyjs/gatsby/commit/e86d87c851ac5e09cf9eaff7a7500a64b55b6075))
+- update dependency @types/express to ^4.17.16 for gatsby [#37561](https://github.com/gatsbyjs/gatsby/issues/37561) ([9889611](https://github.com/gatsbyjs/gatsby/commit/988961122e456ec84e8261700f1b803cf5cca4d3))
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+- bump @gatsbyjs/reach-router [#37547](https://github.com/gatsbyjs/gatsby/issues/37547) ([7a83513](https://github.com/gatsbyjs/gatsby/commit/7a83513f147c8ab2e3c0a38f99e15743c79d1e25))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.5.0/packages/gatsby) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

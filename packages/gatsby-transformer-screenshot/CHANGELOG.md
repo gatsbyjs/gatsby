@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@5.6.0/packages/gatsby-transformer-screenshot) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+#### Chores
+
+- update dependency aws-sdk to ^2.1304.0 [#37587](https://github.com/gatsbyjs/gatsby/issues/37587) ([8d0b30f](https://github.com/gatsbyjs/gatsby/commit/8d0b30f9a67e06fd6efaddb42251122ecd5ecc10))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@5.5.0/packages/gatsby-transformer-screenshot) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

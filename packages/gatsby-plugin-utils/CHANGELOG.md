@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.6.0/packages/gatsby-plugin-utils) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- Export two `IRemoteFile` utility types [#37532](https://github.com/gatsbyjs/gatsby/issues/37532) ([d5a10f8](https://github.com/gatsbyjs/gatsby/commit/d5a10f830cb606bb7fc21033421317c055701758))
+
+#### Chores
+
+- update dependency msw to ^0.49.3 for gatsby-plugin-utils [#37565](https://github.com/gatsbyjs/gatsby/issues/37565) ([c4b92c8](https://github.com/gatsbyjs/gatsby/commit/c4b92c803bcfefd7c70a60f9b7fe32a2b9da9937))
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+
 ## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.5.0/packages/gatsby-plugin-utils) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
