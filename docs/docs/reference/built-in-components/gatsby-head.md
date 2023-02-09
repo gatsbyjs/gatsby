@@ -68,8 +68,8 @@ export function Head() {
   return (
     <>
       <!-- highlight-start -->
-      <html lang="en">
-      <body className="my-body-class">
+      <html lang="en" />
+      <body className="my-body-class" />
       <!-- highlight-end -->
       <title>Hello World</title>
     </>
