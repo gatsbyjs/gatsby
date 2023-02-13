@@ -377,6 +377,7 @@ export const renderHTMLProd = async ({
   const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
   const unsafeBuiltinsUsageByPagePath = {}
+  const nonFatalErrorsByPagePath = {}
   const previewErrors = {}
   const allSlicesProps = {}
 
@@ -408,7 +409,7 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const { html, unsafeBuiltinsUsage, sliceData } =
+        const { html, unsafeBuiltinsUsage, sliceData, nonFatalErrors } =
           await htmlComponentRenderer.default({
             pagePath,
             pageData,
@@ -423,6 +424,10 @@ export const renderHTMLProd = async ({
 
         if (unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
+        }
+
+        if (nonFatalErrors.length > 0) {
+          nonFatalErrorsByPagePath[pagePath] = nonFatalErrors
         }
 
         await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
@@ -466,6 +471,7 @@ export const renderHTMLProd = async ({
     unsafeBuiltinsUsageByPagePath,
     previewErrors,
     slicesPropsPerPage: allSlicesProps,
+    nonFatalErrorsByPagePath,
   }
 }
 

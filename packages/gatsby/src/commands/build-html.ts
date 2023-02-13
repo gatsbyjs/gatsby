@@ -317,6 +317,7 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 }
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+  nonFatalErrorsByPagePath: Record<string, Array<string>>
   previewErrors: Record<string, any>
 
   slicesPropsPerPage: Record<
@@ -359,6 +360,7 @@ const renderHTMLQueue = async (
       : workerPool.single.renderHTMLDev
 
   const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
+  const uniqueNonFatalErrorStacks = new Set<string>()
 
   try {
     await Bluebird.map(segments, async pageSegment => {
@@ -433,6 +435,27 @@ const renderHTMLQueue = async (
         )) {
           for (const unsafeUsageStack of arrayOfUsages) {
             uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+          }
+        }
+
+        for (const arrayOfErrors of Object.values(
+          htmlRenderMeta.nonFatalErrorsByPagePath
+        )) {
+          for (const nonFatalErrorStack of arrayOfErrors) {
+            if (!uniqueNonFatalErrorStacks.has(nonFatalErrorStack)) {
+              uniqueNonFatalErrorStacks.add(nonFatalErrorStack)
+
+              const prettyError = createErrorFromString(
+                nonFatalErrorStack,
+                `${htmlComponentRendererPath}.map`
+              )
+
+              reporter.error({
+                id: `95316`,
+                context: {},
+                error: prettyError,
+              })
+            }
           }
         }
       }

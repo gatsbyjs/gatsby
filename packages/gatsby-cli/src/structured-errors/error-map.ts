@@ -65,6 +65,12 @@ const errors: Record<string, IErrorMapEntry> = {
     category: ErrorCategory.USER,
     type: Type.ENGINE_EXECUTION,
   },
+  "95316": {
+    text: (): string => `Non fatal error during static HTML generation`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+    type: Type.HTML_GENERATION,
+  },
   "98001": {
     text: (): string =>
       `Built Rendering Engines failed validation.\n\nPlease open an issue with a reproduction at https://gatsby.dev/new-issue for more help.`,

@@ -333,6 +333,8 @@ export default async function staticPage({
       pathPrefix: __PATH_PREFIX__,
     })
 
+    const nonFatalErrors = []
+
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
@@ -342,6 +344,12 @@ export default async function staticPage({
             pipe(writableStream)
           },
           onError(error) {
+            // onError is triggered for fatal onShellError as well
+            // but in this case we do throw fatal error and non fatal errors
+            // are just discarded
+            nonFatalErrors.push(error.stack)
+          },
+          onShellError(error) {
             writableStream.destroy(error)
           },
         })
@@ -528,6 +536,7 @@ export default async function staticPage({
     return {
       html,
       unsafeBuiltinsUsage: global.unsafeBuiltinUsage,
+      nonFatalErrors,
       sliceData: sliceProps,
     }
   } catch (e) {
