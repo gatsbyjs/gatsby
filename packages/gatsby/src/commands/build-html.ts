@@ -788,6 +788,8 @@ export async function buildSlices({
     }
   }
 
+  const uniqueNonFatalErrorStacks = new Set<string>()
+
   if (slicesProps.length > 0) {
     const buildHTMLActivityProgress = reporter.activityTimer(
       `Building slices HTML (${slicesProps.length})`,
@@ -801,12 +803,33 @@ export async function buildSlices({
     try {
       const slices = Array.from(state.slices.entries())
 
-      await workerPool.single.renderSlices({
+      const { nonFatalErrors } = await workerPool.single.renderSlices({
         publicDir: path.join(program.directory, `public`),
         htmlComponentRendererPath,
         slices,
         slicesProps,
       })
+
+      try {
+        for (const nonFatalErrorStack of nonFatalErrors) {
+          if (!uniqueNonFatalErrorStacks.has(nonFatalErrorStack)) {
+            uniqueNonFatalErrorStacks.add(nonFatalErrorStack)
+
+            const prettyError = createErrorFromString(
+              nonFatalErrorStack,
+              `${htmlComponentRendererPath}.map`
+            )
+
+            reporter.error({
+              id: `95316`,
+              context: {},
+              error: prettyError,
+            })
+          }
+        }
+      } catch (e) {
+        console.log({ e })
+      }
     } catch (err) {
       const prettyError = createErrorFromString(
         err.stack,

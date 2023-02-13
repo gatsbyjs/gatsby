@@ -584,6 +584,8 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
     </SlicesContext.Provider>
   )
 
+  const nonFatalErrors = []
+
   const writableStream = new WritableAsPromise()
   const { pipe } = renderToPipeableStream(
     sliceWrappedWithWrapRootElementAndContexts,
@@ -592,10 +594,21 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
         pipe(writableStream)
       },
       onError(error) {
+        // onError is triggered for fatal onShellError as well
+        // but in this case we do throw fatal error and non fatal errors
+        // are just discarded
+        nonFatalErrors.push(error.stack)
+      },
+      onShellError(error) {
         writableStream.destroy(error)
       },
     }
   )
 
-  return await writableStream
+  const html = await writableStream
+
+  return {
+    html,
+    nonFatalErrors,
+  }
 }

@@ -714,8 +714,11 @@ export async function renderSlices({
   slices: Array<[string, IGatsbySlice]>
   slicesProps: Array<ISlicePropsEntry>
   htmlComponentRendererPath: string
-}): Promise<void> {
+}): Promise<{
+  nonFatalErrors: Array<string>
+}> {
   const htmlComponentRenderer = require(htmlComponentRendererPath)
+  const nonFatalErrors: Array<string> = []
 
   for (const { sliceId, props, sliceName, hasChildren } of slicesProps) {
     const sliceEntry = slices.find(f => f[0] === sliceName)
@@ -735,17 +738,21 @@ export async function renderSlices({
     const sliceData = await readSliceData(publicDir, slice.name)
 
     try {
-      const html = await htmlComponentRenderer.renderSlice({
-        slice,
-        staticQueryContext,
-        props: {
-          data: sliceData?.result?.data,
-          ...(hasChildren ? { children: MAGIC_CHILDREN_STRING } : {}),
-          ...props,
-        },
-      })
+      const { html, nonFatalErrors: nonFatalErrorsForCurrentSlice } =
+        await htmlComponentRenderer.renderSlice({
+          slice,
+          staticQueryContext,
+          props: {
+            data: sliceData?.result?.data,
+            ...(hasChildren ? { children: MAGIC_CHILDREN_STRING } : {}),
+            ...props,
+          },
+        })
       const split = html.split(MAGIC_CHILDREN_STRING)
 
+      if (nonFatalErrorsForCurrentSlice.length > 0) {
+        nonFatalErrors.push(...nonFatalErrorsForCurrentSlice)
+      }
       // TODO always generate both for now
       let index = 1
       for (const htmlChunk of split) {
@@ -765,4 +772,6 @@ export async function renderSlices({
       throw renderSliceError
     }
   }
+
+  return { nonFatalErrors }
 }
