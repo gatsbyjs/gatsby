@@ -445,6 +445,12 @@ export async function renderHTML({
         sliceData,
       })
 
+      if (results.nonFatalErrors && results.nonFatalErrors.length > 0) {
+        for (const error of results.nonFatalErrors) {
+          reporter.error(error)
+        }
+      }
+
       return results.html.replace(
         `<slice-start id="_gatsby-scripts-1"></slice-start><slice-end id="_gatsby-scripts-1"></slice-end>`,
         GATSBY_SLICES_SCRIPT
