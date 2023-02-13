@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@3.6.0/packages/gatsby-plugin-benchmark-reporting) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- update dependency node-fetch to ^2.6.8 for gatsby-plugin-benchmark-reporting [#37573](https://github.com/gatsbyjs/gatsby/issues/37573) ([3d5c11c](https://github.com/gatsbyjs/gatsby/commit/3d5c11cbe99241b1e5ba95f9d33b7233872a864e))
+
 ## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@3.5.0/packages/gatsby-plugin-benchmark-reporting) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

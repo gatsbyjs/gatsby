@@ -169,6 +169,7 @@ export interface IGatsbyPageComponent {
   serverData: boolean
   config: boolean
   isSlice: boolean
+  Head: boolean
 }
 
 export interface IDefinitionMeta {

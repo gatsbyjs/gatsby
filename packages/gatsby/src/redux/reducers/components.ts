@@ -22,6 +22,7 @@ export const componentsReducer = (
           serverData: false,
           config: false,
           isSlice: true,
+          Head: false,
         }
       }
       component.pages.add(action.payload.name)
@@ -47,6 +48,7 @@ export const componentsReducer = (
           serverData: false,
           config: false,
           isSlice: false,
+          Head: false,
         }
       }
       component.pages.add(action.payload.path)
@@ -72,6 +74,7 @@ export const componentsReducer = (
       if (component) {
         component.serverData = action.payload.serverData
         component.config = action.payload.config
+        component.Head = action.payload.Head
       }
       return state
     }

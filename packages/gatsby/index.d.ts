@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router" // These come from `@types/reach__router`
+import { WindowLocation, NavigateOptions } from "@reach/router" // These come from `@types/reach__router`
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { Span } from "opentracing"
 export { Reporter }
@@ -96,8 +96,6 @@ export type PageProps<
   uri: string
   /** An extended version of window.document which comes from @react/router */
   location: WindowLocation<LocationState>
-  /** A way to handle programmatically controlling navigation */
-  navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
   children: undefined
   /** The URL parameters when the page has a `matchPath` */
@@ -1463,10 +1461,12 @@ export interface Actions {
 
   printTypeDefinitions(
     this: void,
-    path?: string,
-    include?: { types?: Array<string>; plugins?: Array<string> },
-    exclude?: { types?: Array<string>; plugins?: Array<string> },
-    withFieldTypes?: boolean,
+    options: {
+      path?: string
+      include?: { types?: Array<string>; plugins?: Array<string> }
+      exclude?: { types?: Array<string>; plugins?: Array<string> }
+      withFieldTypes?: boolean
+    },
     plugin?: ActionPlugin,
     traceId?: string
   ): void
