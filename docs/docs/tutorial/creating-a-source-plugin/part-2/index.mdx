@@ -8,13 +8,192 @@ import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
-TODO
+Time to get started with implementing the core part of a source plugin!
+
+Gatsby exposes many [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/) (some people also refer to such APIs as "hooks") that allow anyone, including source plugins, to hook into Gatsby's build process. You could create pages, modify the bundler configuration, or in the case of a source plugin add data to Gatsby's GraphQL data layer.
+
+In this part of the tutorial, you'll learn how to use the `sourceNodes` Node API.
 
 By the end of this part of the tutorial, you will be able to:
 
-- TODO
+- Fetch data from an external backend API
+- Insert that data into Gatsby's GraphQL data layer
+- Display your results inside a Gatsby site
 
-## TODO
+The diagram below shows a high-level view of how a Gatsby source plugin works. (Don't worry if this doesn't make sense yet. You'll learn about each step as you go.)
+
+TODO: Insert diagram showing the API => sourceNodes => createNode => Show in page flow (like part1 main tutorial)
+
+## Source data from an API
+
+Before making changes to your plugin, double check that you're running the `develop:deps` script in your terminal (or more general: That you're recompiling your plugin on changes). Otherwise you'll wonder why you don't see your changes reflected in your example site (don't ask how we know).
+
+### Add `sourceNodes` lifecycle
+
+Create a new file called `source-nodes.ts` inside the plugin's `src` folder with a named `sourceNodes` export:
+
+```ts:title=plugin/src/source-nodes.ts
+import type { GatsbyNode } from "gatsby"
+
+export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+  const { reporter } = gatsbyApi
+
+  reporter.info(`Example plugin sourceNodes...`)
+}
+```
+
+You're importing the TypeScript type `GatsbyNode` from `gatsby`. The `GatsbyNode` type is a representation of all available Gatsby Node APIs and you can access each type with the bracket notation, e.g. you'd get the TypeScript type for the `onPluginInit` API like this: ``GatsbyNode[`onPluginInit`]``.
+
+Each Gatsby Node API receives its available [Node API helpers](/docs/reference/config-files/node-api-helpers/) as its first parameter, the plugin's options is the second parameter to the function.
+
+In the example above you're adding a log to the terminal output for initial testing purposes. You'll learn more about plugin options and the `reporter` API in [Part 4](/docs/tutorial/creating-a-source-plugin/part-4/).
+
+<Announcement>
+
+**Pro tip:** You're not immediately destructuring the Node API helpers in the function, but only in the function body. This way you'll be able to more easily pass `gatsbyApi` to utility functions.
+
+A destructured version would look like this:
+
+```ts
+export const sourceNodes: GatsbyNode[`sourceNodes`] = async ({ reporter }) => {
+  reporter.info(`Example plugin sourceNodes...`)
+}
+```
+
+The problem with this is that if you want to pass `reporter` or any other helper to a utility function, you'll always need to update all function parameters when you add/remove a helper. `gatsbyApi` contains everything and inside the helper function you can access what you need. You'll see this applied in just a bit.
+
+</Announcement>
+
+Next, add the `sourceNodes` export to the plugin's `gatsby-node.ts`. Gatsby checks for named exports in `gatsby-node` file, and only when those are given it runs the different Node APIs.
+
+```ts:title=plugin/src/gatsby-node.ts
+export type { IPluginOptions } from "./types"
+
+export { onPluginInit } from "./on-plugin-init"
+// highlight-next-line
+export { sourceNodes } from "./source-nodes"
+```
+
+In a second terminal window run (or restart if it's still running) the `develop:site` script:
+
+```shell
+yarn develop:site
+```
+
+You should see the new log `info Example plugin sourceNodes...` printed to the terminal.
+
+### Fetch data
+
+Now that you've learned how to add the `sourceNodes` API to your plugin, it's time to do more than just outputting a message.
+
+Open the `source-nodes.ts` file, remove the previous `reporter` usage, and import the `fetchGraphQL` utility. You'll use it to make requests against the example GraphQL API and it returns an object containing `data` and `errors`.
+
+```ts:title=plugin/src/source-nodes.ts
+import type { GatsbyNode } from "gatsby"
+import { fetchGraphQL } from "./utils"
+
+export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+  const { data, errors } = await fetchGraphQL(
+    `http://localhost:4000/graphql`,
+    ``
+  )
+}
+```
+
+The first argument to `fetchGraphQL` is the endpoint, the second argument is the GraphQL query you want to make against the API.
+
+<Collapsible
+  summary={<em>Working with a remote backend API</em>}
+>
+
+The topic of "working with a remote backend API" is a really broad topic and not something we can cover here in its entirety as part of this tutorial. However, here are some comments and tips that will help you while working on your plugin:
+
+- Feel free to either use a barebones fetch function (via [`node-fetch`](https://www.npmjs.com/package/node-fetch)) or something more batteries-included like [`got`](https://www.npmjs.com/package/got). It depends on your API, e.g. if its unreliable, add retry logic to your fetching. If it's your small API that you know, a more barebones approach will probably be just fine.
+- Check if the source you're trying to access has its own SDK. Many CMSs have their own SDK, e.g. Contentful with their [`contentful`](https://www.npmjs.com/package/contentful) package. When available, we'd recommend using these first.
+- It's good practice to gracefully handle errors when trying to access a remote API. This includes errors directly from the API but also ones like sudden internet connection loss. You don't want to silently fail on such errors but show them to the user of your plugin.
+
+You can also explore the API if you're not familiar with it or have it written yourself. For example, you can visit `http://localhost:4000/graphql` to explore the example API of this tutorial. It's a fully functional GraphiQL IDE window and with its help you can create your queries and test them.
+
+</Collapsible>
+
+Add the GraphQL query to the second parameter of `fetchGraphQL` and add the correct TypeScript types:
+
+```ts:title=plugin/src/source-nodes.ts
+import type { GatsbyNode } from "gatsby"
+import { fetchGraphQL } from "./utils"
+// highlight-next-line
+import type { IAuthorInput, IPostInput } from "./types"
+
+export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+  // highlight-start
+  interface IApiResponse {
+    data: {
+      posts: Array<IPostInput>
+      authors: Array<IAuthorInput>
+    }
+    errors?: Array<{
+      message: string
+      locations: Array<unknown>
+    }>
+  }
+  // highlight-end
+
+  const { data, errors } = await fetchGraphQL<IApiResponse>(
+    `http://localhost:4000/graphql`,
+    // highlight-start
+    `query FetchApi {
+      posts {
+        id
+        slug
+        title
+        image {
+          url
+          alt
+          width
+          height
+        }
+        author
+      }
+      authors {
+        id
+        name
+      }
+    }
+    `
+    // highlight-end
+  )
+}
+```
+
+To see if you can successfully source the data from the API, `console.log` the `data` result:
+
+```ts:title=plugin/src/source-nodes.ts
+// Imports...
+
+export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+  // Rest of the code ...
+
+  console.log({ data })
+}
+```
+
+<Announcement>
+
+**Pro tip:** Something about console.log with object
+
+</Announcement>
+
+Restart the `develop:site` script and if everything worked correctly, you should see something like this in your terminal output:
+
+```shell
+TODO
+```
+
+## Create GraphQL nodes
+
+TODO
+
+## Display results in your site
 
 TODO
 

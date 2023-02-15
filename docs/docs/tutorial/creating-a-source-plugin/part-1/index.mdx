@@ -17,7 +17,7 @@ By the end of this part of the tutorial, you will have:
 - Cloned the companion repository to your local machine
 - Explored the project structure
 - Installed all required dependencies and built all packages
-- Spun up the local development servers
+- Spun up the local development server
 
 ## Clone the repository
 
@@ -65,8 +65,6 @@ So the `site` uses the `plugin` which sources its data from `api`. As mentioned 
 
 You can ignore the `api` folder unless you're curious how a [GraphQL Yoga server](https://github.com/dotansimha/graphql-yoga) is set up. For the purpose of this tutorial the example backend API was included so that this explanation doesn't rely on outside resources. This way you can run everything locally.
 
-For your real-world project, refer to the API's documentation or available SDKs. Most likely you'll only have a `plugin` and `site` folder in your own project.
-
 </Announcement>
 
 The `plugin` itself has a structure we'd also recommend following:
@@ -78,11 +76,23 @@ The `plugin` itself has a structure we'd also recommend following:
   - A root `gatsby-node.ts` file that exports [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/) from individual files
   - Individual files that only contain the specific Node API (in [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case)), e.g. `onPluginInit` becomes `on-plugin-init.ts`. This will also make unit testing your plugin easier.
 
+How you organize your `src` folder is of course up to you, we'd recommend keeping things consistent and files lowercase.
+
+<Collapsible
+  summary={<em>Wondering about a source plugin template for new projects?</em>}
+>
+
+Above we said that you can ignore the `api` folder. This is because for your real-world project you'll most probably source the data from an external API, not an API locally in your repository.
+
+The companion repository not only has a `start` branch but also a `template` branch without the `api` folder. You'll learn more about this at the end in the [What's next?](/docs/tutorial/creating-a-source-plugin/whats-next/) part. For now, go through the tutorial and at the end you'll know how to leverage the repository as a template for your new projects!
+
+</Collapsible>
+
 ## Start the project
 
 Ready to see something happen in your browser? Then let's go!
 
-First, you'll need to install the necessary dependencies to run everything:
+First, install the necessary dependencies to run everything:
 
 ```shell
 yarn
