@@ -177,6 +177,7 @@ exports.sourceNodes = async (
     fastBuilds = false,
     entityReferenceRevisions = [],
     languageConfig = {
+      filterByLanguages: false,
       defaultLanguage: `und`,
       enabledLanguages: [`und`],
       translatableEntities: [],
@@ -929,6 +930,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
           })
         )
         .required(),
+      filterByLanguages: Joi.boolean().default(false),
       translatableEntities: Joi.array().items(Joi.string()).required(),
       nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
