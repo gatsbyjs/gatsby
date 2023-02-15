@@ -129,6 +129,6 @@
     "packages/*"
   ],
   "resolutions": {
-    "@babel/plugin-transform-modules-commonjs": "7.20.7"
+    "@babel/plugin-transform-modules-commonjs": "7.18.6"
   }
 }
