@@ -1,7 +1,19 @@
-const path = require(`path`)
 const { onCreateWebpackConfig, onCreateBabelConfig } = require(`../gatsby-node`)
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
+
+const FRAMEWORK_BUNDLES_GATSBY = [
+  `react`,
+  `react-dom`,
+  `scheduler`,
+  `prop-types`,
+]
+
+const FRAMEWORK_BUNDLES_REGEX_GATSBY = new RegExp(
+  `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES_GATSBY.join(
+    `|`
+  )})[\\\\/]`
+)
 
 describe(`gatsby-plugin-preact`, () => {
   it(`sets the correct webpack config in development`, () => {
@@ -53,7 +65,6 @@ describe(`gatsby-plugin-preact`, () => {
   })
 
   it(`sets the correct webpack config in production`, () => {
-    const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
     const getConfig = jest.fn(() => {
       return {
         optimization: {
@@ -65,14 +76,20 @@ describe(`gatsby-plugin-preact`, () => {
               framework: {
                 chunks: `all`,
                 name: `framework`,
-                // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
-                test: new RegExp(
-                  `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-                    `|`
-                  )})[\\\\/]`
-                ),
+                // Mirrors what we have in gatsby/../webpack.config.js
+                test: module => {
+                  if (
+                    module?.rawRequest === `react-dom/server` ||
+                    module?.rawRequest?.includes(`/react-dom-server`)
+                  ) {
+                    return false
+                  }
+
+                  return FRAMEWORK_BUNDLES_REGEX_GATSBY.test(
+                    module.nameForCondition()
+                  )
+                },
                 priority: 40,
-                // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
                 enforce: true,
               },
             },
@@ -121,7 +138,7 @@ describe(`gatsby-plugin-preact`, () => {
                       "enforce": true,
                       "name": "framework",
                       "priority": 40,
-                      "test": [Function],
+                      "test": /\\(\\?<!node_modules\\.\\*\\)\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(preact\\|react\\|react-dom\\|scheduler\\|prop-types\\)\\[\\\\\\\\/\\]/,
                     },
                     "vendors": false,
                   },
@@ -141,7 +158,7 @@ describe(`gatsby-plugin-preact`, () => {
                       "enforce": true,
                       "name": "framework",
                       "priority": 40,
-                      "test": /\\(\\?<!node_modules\\.\\*\\)\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|prop-types\\)\\[\\\\\\\\/\\]/,
+                      "test": [Function],
                     },
                     "vendors": false,
                   },
