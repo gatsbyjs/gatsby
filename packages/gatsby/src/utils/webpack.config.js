@@ -635,6 +635,7 @@ module.exports = async (
         framework: {
           chunks: `all`,
           name: `framework`,
+          // Important: If you change something here, also update "gatsby-plugin-preact"
           test: module => {
             // Packages like gatsby-plugin-image might import from "react-dom/server". We don't want to include react-dom-server in the framework bundle.
             // A rawRequest might look like these:

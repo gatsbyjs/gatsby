@@ -1,5 +1,20 @@
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 
+const FRAMEWORK_BUNDLES_PREACT = [
+  `preact`,
+  `react`,
+  `react-dom`,
+  `scheduler`,
+  `prop-types`,
+]
+
+// This regex ignores nested copies of framework libraries so they're bundled with their issuer
+const FRAMEWORK_BUNDLES_REGEX_PREACT = new RegExp(
+  `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES_PREACT.join(
+    `|`
+  )})[\\\\/]`
+)
+
 export function onCreateBabelConfig({ actions, stage }) {
   if (stage === `develop`) {
     // enable react-refresh babel plugin to enable hooks
@@ -45,15 +60,9 @@ export function onCreateWebpackConfig({ stage, actions, getConfig }) {
     if (
       webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test
     ) {
-      const frameworkRegex =
-        webpackConfig.optimization.splitChunks.cacheGroups.framework.test
-
       // replace react libs with preact
       webpackConfig.optimization.splitChunks.cacheGroups.framework.test =
-        module =>
-          /(?<!node_modules.*)[\\/]node_modules[\\/](preact)[\\/]/.test(
-            module.resource
-          ) || frameworkRegex.test(module.resource)
+        FRAMEWORK_BUNDLES_REGEX_PREACT
     }
   }
 
