@@ -281,7 +281,7 @@ export type NodeBuilderInput =
 // Rest of types...
 ```
 
-You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with the `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
+You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
 
 ### Create `nodeBuilder` utility
 
@@ -340,6 +340,37 @@ query {
   }
 }
 ```
+
+Now that you know how a barebones version of `createNode` works, DRY (acronym for "Do not repeat yourself") things up by creating the `nodeBuilder` function inside `source-nodes.ts`. Import the `SourceNodesArgs` type from `gatsby` and the `NodeBuilderInput` type from `types.ts`:
+
+```ts:title=plugin/src/source-nodes.ts
+// highlight-next-line
+import type { GatsbyNode, SourceNodesArgs } from "gatsby"
+import { fetchGraphQL } from "./utils"
+// highlight-next-line
+import type { IAuthorInput, IPostInput, NodeBuilderInput } from "./types"
+
+export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+  // Contents of sourceNodes...
+}
+
+// highlight-start
+interface INodeBuilderArgs {
+  gatsbyApi: SourceNodesArgs
+  input: NodeBuilderInput
+}
+
+function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {}
+// highlight-end
+```
+
+<Announcement>
+
+**TypeScript tip:** The `gatsbyApi` that a Gatsby Node API receives isn't always the same on each Node API. Therefore types in the naming scheme "Node API name" (in PascalCase) + "Args" exist, e.g. `sourceNodes` => `SourceNodesArgs`, `createSchemaCustomization` => `CreateSchemaCustomizationArgs`. Those utility TypeScript types are helpful when passing `gatsbyApi` or parts of it to another function.
+
+</Announcement>
+
+The `input` will be
 
 ## Display results in your site
 
