@@ -3,9 +3,10 @@ const path = require(`path`)
 const _ = require(`lodash`)
 
 const exclusionList = [
-  `gatsby-starter-theme-workspace`,
   `gatsby-starter-minimal`,
   `gatsby-starter-minimal-ts`,
+  `gatsby-starter-plugin`,
+  `gatsby-starter-theme-workspace`,
 ]
 
 module.exports = {
