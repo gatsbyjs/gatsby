@@ -2,6 +2,12 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const _ = require(`lodash`)
 
+const exclusionList = [
+  `gatsby-starter-theme-workspace`,
+  `gatsby-starter-minimal`,
+  `gatsby-starter-minimal-ts`,
+]
+
 module.exports = {
   transforms: {
     LIST_STARTERS() {
@@ -9,8 +15,8 @@ module.exports = {
       const starters = fs
         .readdirSync(base)
         .filter(dir => fs.statSync(path.join(base, dir)).isDirectory())
-        // theme starters have their own README so skip those
-        .filter(dir => !dir.includes(`theme`))
+        // Filter out excluded starters
+        .filter(dir => !exclusionList.includes(dir))
         .reduce((merged, dir) => {
           merged[dir] = JSON.parse(
             fs.readFileSync(path.join(base, dir, `package.json`), `utf8`)
@@ -33,6 +39,11 @@ module.exports = {
     },
     STARTER(content, options, { originalPath }) {
       const starter = path.basename(path.dirname(originalPath))
+
+      if (exclusionList.includes(starter)) {
+        return ``
+      }
+
       const template = fs.readFileSync(
         path.join(process.cwd(), `starters`, `README-template.md`),
         `utf8`
