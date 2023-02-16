@@ -165,7 +165,7 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 }
 ```
 
-To see if you can successfully source the data from the API, `console.log` the `data` result:
+To see if you can successfully source the data from the API, `console.dir` the `data` result:
 
 ```ts:title=plugin/src/source-nodes.ts
 // Imports...
@@ -173,25 +173,173 @@ To see if you can successfully source the data from the API, `console.log` the `
 export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
   // Rest of the code ...
 
-  console.log({ data })
+  console.dir(data, { depth: null })
 }
 ```
 
 <Announcement>
 
-**Pro tip:** Something about console.log with object
+**Pro tip:** If you'd use `console.log(data)` (feel free to try it), not the whole depth of the object will be shown. You can instead use `console.dir` with a `depth` setting to display everything.
 
 </Announcement>
 
 Restart the `develop:site` script and if everything worked correctly, you should see something like this in your terminal output:
 
 ```shell
-TODO
+{
+  posts: [
+    {
+      id: '1',
+      slug: 'post-1',
+      title: 'The first post',
+      image: {
+        url: 'https://images.unsplash.com/photo-1615751072497-5f5169febe17?fm=jpg',
+        alt: 'brown and white long coated dog',
+        width: 3024,
+        height: 4032
+      },
+      author: 'Jay Gatsby'
+    },
+    {
+      id: '2',
+      slug: 'post-2',
+      title: 'The second post',
+      image: {
+        url: 'https://images.unsplash.com/photo-1591160690555-5debfba289f0?fm=jpg',
+        alt: 'golden retriever puppy on focus',
+        width: 5394,
+        height: 6743
+      },
+      author: 'Jay Gatsby'
+    },
+    {
+      id: '3',
+      slug: 'post-3',
+      title: 'The third post',
+      image: {
+        url: 'https://images.unsplash.com/photo-1547525623-c7d42c20284c?fm=jpg',
+        alt: 'long fur white dog on grass',
+        width: 4000,
+        height: 6000
+      },
+      author: 'Daisy Buchanan'
+    }
+  ],
+  authors: [
+    { id: '1', name: 'Jay Gatsby' },
+    { id: '2', name: 'Daisy Buchanan' }
+  ]
+}
+warn The plugin plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.
 ```
+
+This means that you can successfully access data from the example API! Gatsby is smart enough to notice that you run a plugin with a `sourceNodes` API but that it doesn't generate any nodes. That's why the warning is showing up. You'll fix this in the next step.
 
 ## Create GraphQL nodes
 
-TODO
+Before immediately diving into the node creation process, take a step back and think through what you want to create from `data` inside Gatsby. While in the scope of this tutorial the question is simpler to answer (nodes of type `Post` and `Author`), this won't be the case for every API you'll work with. Inspect the data that is available, think of fitting node types and their relationships, and write it down. Only after doing that start writing actual code.
+
+As an example:
+
+- You're requesting the REST API endpoint called `/authors` and it gives you back a list of authors, each with a unique ID. However, this API response doesn't contain the details for each author, instead you're supposed to call `/author/<author-id>` to request additional information.
+- The strict 1:1 mapping of API endpoints to node types would mean you'd have `Author` and `AuthorDetail`
+- But you shouldn't create `Author` and `AuthorDetail` node types but instead only a `Author` one. While creating the `Author` one, access the information from the author detail endpoint and enrich the `Author` information.
+
+<Announcement>
+
+**Need a refresher on what "nodes" are?** Don't worry!
+
+Inside the Gatsby's data layer, information is stored in objects called **nodes**. A node is the smallest form unit of data in the data layer. Different source plugins create different types of nodes, each of which have their own properties. For example, `gatsby-source-filesystem` creates `File` nodes.
+
+Also be sure to checkout the [GraphQL concepts](/docs/conceptual/graphql-concepts/) page if you need more information.
+
+</Announcement>
+
+### Define constants
+
+Since you'll need to use the name of your node types in a couple of places, it's easy to introduce typos while using them. Create a `constants.ts` file to define your names once and reuse them everywhere. This way you can also more easily change the names after the fact. Neat!
+
+Add the following to your new `constants.ts` file:
+
+```ts:title=plugin/src/constants.ts
+export const NODE_TYPES = {
+  Post: `Post`,
+  Author: `Author`,
+} as const
+```
+
+For the next step you'll also need some additional TypeScript types, so go ahead and add the following to the `types.ts` file:
+
+```ts:title=plugin/src/types.ts
+// Rest of imports...
+import { NODE_TYPES } from "./constants"
+
+export type NodeBuilderInput =
+  | { type: typeof NODE_TYPES.Author; data: IAuthorInput }
+  | { type: typeof NODE_TYPES.Post; data: IPostInput }
+
+// Rest of types...
+```
+
+You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with the `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
+
+### Create `nodeBuilder` utility
+
+You'll create a utility function called `nodeBuilder` and its purpose is to take in data, mutate it (if necessary), and then call [`createNode`](/docs/reference/config-files/actions/#createNode) for each node type with its respective data. You're then calling `nodeBuilder` for each of your entries from the API response, filling Gatsby's data store with the data from the example API.
+
+A basic usage of `createNode` looks like this:
+
+```ts:title=gatsby-node.ts
+import type { GatsbyNode } from "gatsby"
+
+export const sourceNodes: GatsbyNode[`sourceNodes`] = (gatsbyApi) => {
+  // Your arbitrary, serializable data
+  const yourData = {
+    hello: `world`,
+  }
+
+  const node = {
+    ...yourData,
+    // Required fields
+    id: gatsbyApi.createNodeId(`some-string`),
+    parent: null,
+    children: [],
+    internal: {
+      type: `TypeName`,
+      contentDigest: gatsbyApi.createContentDigest(yourData)
+    }
+  }
+
+  gatsbyApi.actions.createNode(node)
+}
+```
+
+<Collapsible
+  summary={<em>Explanation on each required node field</em>}
+>
+
+Here's a short explanation on each required field for your convenience:
+
+- `id`: The node's ID that Gatsby uses to track it. It must be a globally unique ID. You should use the [`createNodeId`](/docs/reference/config-files/node-api-helpers/#createNodeId) helper to create it.
+- `parent`: If a node is derived from another node, set the ID of the parent node here. Otherwise it can just be `null`.
+- `children`: You can place node IDs from child nodes here, if necessary. Most often you'll see yourself using `createParentChildLink`.
+- `internal`: An object that only allows a defined set of keys (see API reference)
+  - `type`: The name of the node type
+  - `contentDigest`: A hash (or short digital summary) of the conents of a node. The digest should be unique to the content of the node since it's used for caching. If the content changes, this digest should also change. Use the [`createContentDigest`](/docs/reference/config-files/node-api-helpers/#createContentDigest) helper to create that hash.
+
+You can use the [`createNode` API reference](/docs/reference/config-files/actions/#createNode) in the future if you're creating more advanced node types, e.g. ones where you have to define the `mediaType`.
+
+</Collapsible>
+
+Afterwards one is able to query the `TypeName` type with a `hello` key:
+
+```graphql
+query {
+  typeName {
+    hello
+  }
+}
+```
 
 ## Display results in your site
 
