@@ -239,7 +239,7 @@ This means that you can successfully access data from the example API! Gatsby is
 
 Before immediately diving into the node creation process, take a step back and think through what you want to create from `data` inside Gatsby. While in the scope of this tutorial the question is simpler to answer (nodes of type `Post` and `Author`), this won't be the case for every API you'll work with. Inspect the data that is available, think of fitting node types and their relationships, and write it down. Only after doing that start writing actual code.
 
-As an example:
+Here's an example of an API where you'll need to think about fitting node types:
 
 - You're requesting the REST API endpoint called `/authors` and it gives you back a list of authors, each with a unique ID. However, this API response doesn't contain the details for each author, instead you're supposed to call `/author/<author-id>` to request additional information.
 - The strict 1:1 mapping of API endpoints to node types would mean you'd have `Author` and `AuthorDetail`
@@ -441,13 +441,147 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 }
 ```
 
+Now you can see the benefit of creating a helper function: You don't have to repeat yourself inside the loops, making the whole code more concise and clear.
+
 ## Display results in your site
 
-TODO
+Now that you've created GraphQL nodes from your data it's time to display them also in your site.
+
+Restart the `develop:site` script in your terminal. Once the development server is running, go to Gatsby's GraphiQL IDE (Need a refresher? Read the [introduction to GraphiQL](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries)) at `http://localhost:8000/___graphql`.
+
+Inside GraphiQL, try a query against your newly created `Author` and `Post` nodes, for example:
+
+```graphql
+query MyQuery {
+  allAuthor {
+    nodes {
+      name
+    }
+  }
+  allPost {
+    nodes {
+      title
+      slug
+      image {
+        url
+      }
+      author
+    }
+  }
+}
+```
+
+You should see a result in your browser:
+
+![A screenshot of "localhost:8000/___graphql" in a web browser. The GraphiQL IDE shows the results of the GraphQL query mentioned above.](./01-graphiql-interface.png)
+
+Great, you successfully queried your data in a Gatsby site! As the last step of this part, create pages from all available posts and also display them on the index page.
+
+First, edit the index page to display all posts and link to their individual pages (which you'll create in just a second):
+
+```tsx:title=site/src/pages/index.tsx
+import * as React from "react"
+import { Link, graphql, HeadFC, PageProps } from "gatsby"
+
+export default function IndexPage({
+  data: {
+    allPost: { nodes: posts },
+  },
+}: PageProps<Queries.IndexPageQuery>): React.ReactElement {
+  return (
+    <main>
+      <h1>All posts</h1>
+      <section className="posts-grid">
+        {posts.map((post) => (
+          <Link key={post.id} to={post.slug} className="posts-card">
+            <h2>{post.title}</h2>
+            <span>Author: {post.author}</span>
+          </Link>
+        ))}
+      </section>
+    </main>
+  )
+}
+
+export const Head: HeadFC = () => (
+  <React.Fragment>
+    <title>Example Site</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌈</text></svg>"
+    />
+  </React.Fragment>
+)
+
+export const query = graphql`
+  query IndexPage {
+    allPost {
+      nodes {
+        id
+        slug
+        title
+        author
+      }
+    }
+  }
+`
+```
+
+Your index page should now look like this:
+
+![A screenshot of "localhost:8000" in a web browser. A heading says "All posts" and under it are three cards with the subheadings "The first post", "The second post", and "The third post". They link to their individual pages.](./02-index-page.png)
+
+To add the individual pages that the cards link to, create a new file called `{Post.slug}.tsx` inside `site/src/pages` with the following contents:
+
+```tsx:title=site/src/pages/{Post.slug}.tsx
+import * as React from "react"
+import { Link, graphql, PageProps, HeadFC } from "gatsby"
+
+export default function PostPage({ data: { post } }: PageProps<{ post: Queries.Post }>): React.ReactElement {
+  return (
+    <main>
+      <h1>{post.title}</h1>
+      <p>Author: {post.author}</p>
+      <br />
+      <Link to="/">Back to home page</Link>
+    </main>
+  )
+}
+
+export const Head: HeadFC<{ post: Queries.Post }> = ({ data: { post } }) => (
+  <React.Fragment>
+    <title>{post.title}</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌈</text></svg>"
+    />
+  </React.Fragment>
+)
+
+export const query = graphql`
+  query PostPage($slug: String!) {
+    post(slug: { eq: $slug }) {
+      title
+      author
+    }
+  }
+`
+```
+
+If you now click on one of the cards, e.g. the "The first post" card you should be linked to `http://localhost:8000/post-1/` and see the individual post:
+
+![A screenshot of "localhost:8000/post-1/" in a web browser. A heading says "The first post" and under it says "Author: Jay Gatsby". A link at the bottom links one to the homepage.](./03-post-detail-page.png)
 
 ## Summary
 
-TODO
+Good job! You've finished the most important part of creating a source plugin.
+
+Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
+
+- Which Gatsby Node API is the appropriate one to add data to Gatsby's data layer?
+- How do you fetch data from a remote API?
+- What is the purpose of `createNode`?
+- How do you create GraphQL nodes from your data?
 
 ### Key takeaways
 
