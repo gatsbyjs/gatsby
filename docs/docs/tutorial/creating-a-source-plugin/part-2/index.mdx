@@ -84,7 +84,7 @@ You should see the new log `info Example plugin sourceNodes...` printed to the t
 
 ### Fetch data
 
-Now that you've learned how to add the `sourceNodes` API to your plugin, it's time to do more than just outputting a message.
+After learning how to add the `sourceNodes` API to your plugin, it's time to do more than just outputting a message.
 
 Open the `source-nodes.ts` file, remove the previous `reporter` usage, and import the `fetchGraphQL` utility. You'll use it to make requests against the example GraphQL API and it returns an object containing `data` and `errors`.
 
@@ -179,7 +179,7 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 
 <Announcement>
 
-**Pro tip:** If you'd use `console.log(data)` (feel free to try it), not the whole depth of the object will be shown. You can instead use `console.dir` with a `depth` setting to display everything.
+**Pro tip:** If you'd use `console.log(data)`, not the whole depth of the object will be shown. You can instead use `console.dir` with a `depth` setting to display everything.
 
 </Announcement>
 
@@ -243,7 +243,7 @@ Here's an example of an API where you'll need to think about fitting node types:
 
 - You're requesting the REST API endpoint called `/authors` and it gives you back a list of authors, each with a unique ID. However, this API response doesn't contain the details for each author, instead you're supposed to call `/author/<author-id>` to request additional information.
 - The strict 1:1 mapping of API endpoints to node types would mean you'd have `Author` and `AuthorDetail`
-- But you shouldn't create `Author` and `AuthorDetail` node types but instead only a `Author` one. While creating the `Author` one, access the information from the author detail endpoint and enrich the `Author` information.
+- However, you shouldn't create `Author` and `AuthorDetail` node types but instead only a `Author` one. While creating the `Author` one, access the information from the author detail endpoint and enrich the `Author` information.
 
 <Announcement>
 
@@ -441,11 +441,11 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 }
 ```
 
-Now you can see the benefit of creating a helper function: You don't have to repeat yourself inside the loops, making the whole code more concise and clear.
+You can see the benefit of creating a helper function: You don't have to repeat yourself inside the loops, making the whole code more concise and clear.
 
 ## Display results in your site
 
-Now that you've created GraphQL nodes from your data it's time to display them also in your site.
+You've created GraphQL nodes from your data, time to display them also in your site.
 
 Restart the `develop:site` script in your terminal. Once the development server is running, go to Gatsby's GraphiQL IDE (Need a refresher? Read the [introduction to GraphiQL](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries)) at `http://localhost:8000/___graphql`.
 
@@ -473,7 +473,7 @@ query MyQuery {
 
 You should see a result in your browser:
 
-![A screenshot of "localhost:8000/___graphql" in a web browser. The GraphiQL IDE shows the results of the GraphQL query mentioned above.](./01-graphiql-interface.png)
+![A screenshot of "localhost:8000/___graphql" in a web browser. The GraphiQL IDE shows the results of the GraphQL query mentioned above.](./02-graphiql-interface.png)
 
 Great, you successfully queried your data in a Gatsby site! As the last step of this part, create pages from all available posts and also display them on the index page.
 
@@ -529,7 +529,7 @@ export const query = graphql`
 
 Your index page should now look like this:
 
-![A screenshot of "localhost:8000" in a web browser. A heading says "All posts" and under it are three cards with the subheadings "The first post", "The second post", and "The third post". They link to their individual pages.](./02-index-page.png)
+![A screenshot of "localhost:8000" in a web browser. A heading says "All posts" and under it are three cards with the subheadings "The first post", "The second post", and "The third post". They link to their individual pages.](./03-index-page.png)
 
 To add the individual pages that the cards link to, create a new file called `{Post.slug}.tsx` inside `site/src/pages` with the following contents:
 
@@ -570,7 +570,7 @@ export const query = graphql`
 
 If you now click on one of the cards, e.g. the "The first post" card you should be linked to `http://localhost:8000/post-1/` and see the individual post:
 
-![A screenshot of "localhost:8000/post-1/" in a web browser. A heading says "The first post" and under it says "Author: Jay Gatsby". A link at the bottom links one to the homepage.](./03-post-detail-page.png)
+![A screenshot of "localhost:8000/post-1/" in a web browser. A heading says "The first post" and under it says "Author: Jay Gatsby". A link at the bottom links one to the homepage.](./04-post-detail-page.png)
 
 ## Summary
 
@@ -585,7 +585,10 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 
 ### Key takeaways
 
-TODO
+- Source plugins pull data from their original location into Gatsby's GraphQL data layer through the `sourceNodes` Node API.
+- When creating nodes with `createNode` you'll need to think about reserved and required fields, modifying your incoming data if necessary.
+- You can create a utility function around `createNode` to more efficiently create nodes.
+- You can use your example site to immediately test out if your source plugin works correctly.
 
 <Announcement>
 
@@ -599,7 +602,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-TODO
+In Part 3, you'll explicitly define the GraphQL schema of your source plugin and create a foreign-key relationship between the `Post` and `Author` node types.
 
 <LinkButton
   to="/docs/tutorial/creating-a-source-plugin/part-3/"
