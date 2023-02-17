@@ -22,7 +22,19 @@ By the end of this part of the tutorial, you will be able to:
 
 The diagram below shows a high-level view of how a Gatsby source plugin works. (Don't worry if this doesn't make sense yet. You'll learn about each step as you go.)
 
-TODO: Insert diagram showing the API => sourceNodes => createNode => Show in page flow (like part1 main tutorial)
+![The overview of how a source plugin works. Extended description below.](./01-source-nodes-diagram.png)
+
+<Collapsible
+  summary={<em>Expand for detailed description</em>}
+>
+
+To get data into Gatsby's GraphQL data layer the source plugin goes through these steps:
+
+1. Fetch data from a remote REST/GraphQL API, CMS, database, or any other data source you can think of.
+1. Call `createNode` API to create GraphQL nodes.
+1. Use these newly created GraphQL nodes for GraphQL queries in your site.
+
+</Collapsible>
 
 ## Source data from an API
 
@@ -582,6 +594,22 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 - How do you fetch data from a remote API?
 - What is the purpose of `createNode`?
 - How do you create GraphQL nodes from your data?
+
+As a quick review, here's the diagram outlining the process:
+
+![The overview of how a source plugin works. Extended description below.](./01-source-nodes-diagram.png)
+
+<Collapsible
+  summary={<em>Expand for detailed description</em>}
+>
+
+To get data into Gatsby's GraphQL data layer the source plugin goes through these steps:
+
+1. Fetch data from a remote REST/GraphQL API, CMS, database, or any other data source you can think of.
+1. Call `createNode` API to create GraphQL nodes.
+1. Use these newly created GraphQL nodes for GraphQL queries in your site.
+
+</Collapsible>
 
 ### Key takeaways
 
