@@ -10,7 +10,7 @@
   "dependencies": {
     "@fontsource/merriweather": "^4.5.14",
     "@fontsource/montserrat": "^4.5.14",
-    "gatsby": "^5.6.0",
+    "gatsby": "^5.6.1",
     "gatsby-plugin-feed": "^5.6.0",
     "gatsby-plugin-image": "^3.6.0",
     "gatsby-plugin-manifest": "^5.6.0",
@@ -26,7 +26,7 @@
     "react-dom": "^18.1.0"
   },
   "devDependencies": {
-    "prettier": "^2.8.3"
+    "prettier": "^2.8.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [

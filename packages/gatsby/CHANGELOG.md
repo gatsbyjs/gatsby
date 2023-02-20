@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.6.1/packages/gatsby) (2023-02-16)
+
+#### Bug Fixes
+
+- Adjust framework chunk overwrite [#37658](https://github.com/gatsbyjs/gatsby/issues/37658) [#37666](https://github.com/gatsbyjs/gatsby/issues/37666) ([b5978a6](https://github.com/gatsbyjs/gatsby/commit/b5978a6a0f3e15f4470decf7ae1c5756dc2d85b2))
+
 ## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.6.0/packages/gatsby) (2023-02-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
