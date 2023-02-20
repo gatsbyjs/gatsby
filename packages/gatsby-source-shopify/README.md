@@ -170,6 +170,10 @@ Not set by default. If set to a string (example `My Sales Channel`), only produc
 
 💡 Note: The `salesChannel` plugin option defaults to the value of `process.env.GATBSY_SHOPIFY_SALES_CHANNEL`. If that value is not set the plugin will source only objects that are published to the `online store` sales channel.
 
+`apiVersion: string`
+
+The API version that should be used. More information: https://shopify.dev/docs/api/usage/versioning.
+
 ## Images
 
 You have two options for displaying Shopify images in your Gatsby site. The default option is to use the Shopify CDN along with [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/), but you can also opt-in to downloading the images as part of the build process. Your choice will result in differences to the schema. Both options are explained below.
