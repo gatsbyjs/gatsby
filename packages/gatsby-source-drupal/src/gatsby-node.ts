@@ -22,7 +22,6 @@ import {
   isFileNode,
   imageCDNState,
 } from "./normalize"
-import { filter } from "lodash"
 
 const {
   handleReferences,
