@@ -4,7 +4,7 @@ version: "5.7.0"
 title: "v5.7 Release Notes"
 ---
 
-Welcome to `gatsby@5.7.0` release (February 2023 # TODO)
+Welcome to `gatsby@5.7.0` release (February 2023 #2)
 
 Check out [notable bugfixes](#notable-bugfixes--improvements).
 
