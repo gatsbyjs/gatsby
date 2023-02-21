@@ -6,11 +6,7 @@ title: "v5.7 Release Notes"
 
 Welcome to `gatsby@5.7.0` release (February 2023 # TODO)
 
-Key highlights of this release:
-
-- [Hightlight Name](#highlight-name)
-
-Also check out [notable bugfixes](#notable-bugfixes--improvements).
+Check out [notable bugfixes](#notable-bugfixes--improvements).
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
@@ -20,14 +16,10 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## Hightlight Name
-
-TODO
-
 ## Notable bugfixes & improvements
 
-- `gatsby`:
-  - TODO
+- `gatsby`: Improve memory usage in `gatsby develop` command, via [PR #37619](https://github.com/gatsbyjs/gatsby/pull/37619)
+- `gatsby-source-contentful`: Fix engine validation, via [PR #37660](https://github.com/gatsbyjs/gatsby/pull/37660)
 
 ## Contributors
 
