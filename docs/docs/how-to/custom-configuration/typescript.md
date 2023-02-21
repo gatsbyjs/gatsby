@@ -429,7 +429,7 @@ You can't use `require.resolve` in your files. You'll need to replace these inst
 ```diff
 + import path from "path"
 
-+ const template = path.resolve(`src/templates/template.tsx`)
++ const template = path.resolve(`./src/templates/template.tsx`)
 - const template = require.resolve(`./src/templates/template.tsx`)
 ```
 
