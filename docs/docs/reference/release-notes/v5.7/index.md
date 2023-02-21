@@ -25,6 +25,10 @@ Check out [notable bugfixes](#notable-bugfixes--improvements).
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [MarcusCole518](https://github.com/MarcusCole518): chore(docs): update cloud docs [PR #37652](https://github.com/gatsbyjs/gatsby/pull/37652)
+- [adnjoo](https://github.com/adnjoo): chore(docs): Update MDX layout template instructions [PR #37615](https://github.com/gatsbyjs/gatsby/pull/37615)
+- [gh640](https://github.com/gh640): chore(docs): Fix typo in Head API reference [PR #37630](https://github.com/gatsbyjs/gatsby/pull/37630)
+- [leerob](https://github.com/leerob): chore(docs): Update Vercel hosting information [PR #37551](https://github.com/gatsbyjs/gatsby/pull/37551)
+- [marvinjude](https://github.com/marvinjude): chore(docs): Docs for `wrapRootElement` + `Head` [PR #37519](https://github.com/gatsbyjs/gatsby/pull/37519)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.7.0-next.0...gatsby@5.7.0
