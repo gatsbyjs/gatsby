@@ -1,5 +1,5 @@
 ---
-title: "Defining the GraphQL Schema"
+title: "Part 3: Define the GraphQL Schema"
 ---
 
 import { LinkButton } from "gatsby-interface"
@@ -8,17 +8,95 @@ import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
-TODO
+In the last part you learned how to create GraphQL nodes and use them in your site. In this part you'll dive deeper into the GraphQL schema creation process and learn how to modify the schema. This knowledge will be valuable for the reliability and usability of your plugin.
+
+In this part of the tutorial, you'll learn how to use the `createSchemaCustomization` Node API.
 
 By the end of this part of the tutorial, you will be able to:
 
-- TODO
+- Understand how Gatsby automatically creates GraphQL types
+- Explicitly define the GraphQL schema for your plugin
+- Create a foreign-key relationship between your `Post` and `Author` nodes
 
-## TODO
+## Automatic type inference
+
+Before explaining how you can explicitly define your GraphQL schema, it's important for you to understand how Gatsby's automatic type inference works. It'll then make more sense why you'd want to define a schema manually and what benefits you'll receive.
+
+One of Gatsby’s main strengths is the ability to query data from a variety of sources in a uniform way with GraphQL. For this to work, a GraphQL schema must be generated that defines the shape of the data. Gatsby is able to automatically infer a GraphQL Schema from your data, and in many cases, this is really all you need. There are however situations when you either want to explicitly define the data shape, or add custom functionality to the query layer — this is what Gatsby’s `createSchemaCustomization` API provides.
+
+In order to translate the data shape into GraphQL type definitions, Gatsby has to inspect the contents of every field and check its type. There is a big problem with this approach though: If the values on a field are of different types, Gatsby cannot decide which one is the correct one. A consequence of this is that if your data sources change, type inference could suddenly fail. For example, this could happen when data from your source is optional and thus can sometimes exist, sometimes not exist.
+
+The diagram below shows how inference works:
+
+![Overview of how GraphQL inference works in Gatsby. Extended description below.](./01-graphql-inference.png)
+
+<Collapsible
+  summary={<em>Expand for detailed description</em>}
+>
+
+You source your incoming data, for example the `Post` information:
+
+```json
+{
+  slug: 'post-1',
+  title: 'The first post',
+  image: {
+    url: 'https://images.unsplash.com/photo-1615751072497-5f5169febe17?fm=jpg',
+    alt: 'brown and white long coated dog',
+    width: 3024,
+    height: 4032
+  },
+  author: 'Jay Gatsby'
+}
+```
+
+When you pass this data through `createNode` (as shown in [Part 2](/docs/tutorial/creating-a-source-plugin/part-2/)) Gatsby inspects the data and tries to figure out ("infer") the appropriate GraphQL types. So a JavaScript `String` becomes a GraphQL `String`, a JavaScript `Number` becomes an `Int`, and a JavaScript object becomes a new GraphQL type.
+
+The `Post` will be translated to this:
+
+```graphql
+type Post implements Node {
+  slug: String
+  title: String
+  image: PostImage
+  author: String
+}
+
+type PostImage {
+  url: String
+  alt: String
+  width: Int
+  height: Int
+}
+```
+
+</Collapsible>
+
+Now let's imagine that not every key on the `Post` input data is always given. There could be an additional, new field called `subTitle` on the `Post` input. Not every post will have a subtitle, therefore it's an optional field.
+
+The diagram below shows the problem with inference when data has optional fields:
+
+![Overview how inference errors happen. Extended description below.](./02-optional-fields-inference.png)
+
+<Collapsible
+  summary={<em>Expand for detailed description</em>}
+>
+
+TODO
+
+</Collapsible>
+
+## Explicitly define your GraphQL schema
+
+TODO
 
 - Explain why it’s important (required with Valhalla) to explicitly define the GraphQL schema
-- Explain that Gatsby otherwise infers data. Downsides, e.g. no optional data possible
-- Explain foreign-key relationship between `Post` and `Author`
+
+## Add a foreign-key relationship
+
+TODO
+
+- Between `Post` and `Author`
 
 ## Summary
 
