@@ -115,6 +115,10 @@ All forms set up in this way come with reCAPTCHA by default, but you can also en
 
 Because the input is hidden, Formspree will know that only a bot could have made the submission and it will be silently ignored!
 
+### Github pages forms
+[github pages forms](https://fabform.io/a/create-a-static-website-with-contact-form-on-github-pages)
+
+
 ### Run your own server
 
 If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server - this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com/).
