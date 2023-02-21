@@ -42,5 +42,10 @@ export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): unknown {
       .description(
         `Not set by default. If set to a string (example \`MyStore\`) node names will be \`allMyStoreShopifyProducts\` instead of \`allShopifyProducts\``
       ),
+    apiVersion: Joi.string()
+      .default(`2022-04`)
+      .description(
+        `The API version that should be used. More information: https://shopify.dev/docs/api/usage/versioning`
+      ),
   })
 }
