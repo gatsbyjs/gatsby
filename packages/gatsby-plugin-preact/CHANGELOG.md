@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@7.7.0/packages/gatsby-plugin-preact) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+#### Bug Fixes
+
+- Adjust framework chunk overwrite [#37658](https://github.com/gatsbyjs/gatsby/issues/37658) ([d47ef5e](https://github.com/gatsbyjs/gatsby/commit/d47ef5e1e64f3ae0284b34d4ad822cece26f6f08))
+
 ### [7.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@7.6.1/packages/gatsby-plugin-preact) (2023-02-16)
 
 #### Bug Fixes

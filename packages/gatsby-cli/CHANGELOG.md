@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.7.0/packages/gatsby-cli) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+#### Chores
+
+- Fix typo in error message Fix [#37637](https://github.com/gatsbyjs/gatsby/issues/37637) ([7dfef03](https://github.com/gatsbyjs/gatsby/commit/7dfef0383c206142acf1a700306688615f66e3a7))
+
 ## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.6.0/packages/gatsby-cli) (2023-02-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
