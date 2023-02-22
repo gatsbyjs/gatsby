@@ -12,7 +12,7 @@ Time to get started with implementing the core part of a source plugin!
 
 Gatsby exposes many [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/) (some people also refer to such APIs as "hooks") that allow anyone, including source plugins, to hook into Gatsby's build process. You could create pages, modify the bundler configuration, or in the case of a source plugin add data to Gatsby's GraphQL data layer.
 
-In this part of the tutorial, you'll learn how to use the `sourceNodes` Node API.
+In this part of the tutorial, you'll learn how to use the [`sourceNodes` Node API](/docs/reference/config-files/gatsby-node/#sourceNodes).
 
 By the end of this part of the tutorial, you will be able to:
 
@@ -98,14 +98,14 @@ You should see the new log `info Example plugin sourceNodes...` printed to the t
 
 After learning how to add the `sourceNodes` API to your plugin, it's time to do more than just outputting a message.
 
-Open the `source-nodes.ts` file, remove the previous `reporter` usage, and import the `fetchGraphQL` utility. You'll use it to make requests against the example GraphQL API and it returns an object containing `data` and `errors`.
+Open the `source-nodes.ts` file, remove the previous `reporter` usage, and import the `fetchGraphQL` utility. You'll use it to make requests against the example GraphQL API and it returns an object containing `data` and `errors` (you'll only use `data` for now).
 
 ```ts:title=plugin/src/source-nodes.ts
 import type { GatsbyNode } from "gatsby"
 import { fetchGraphQL } from "./utils"
 
 export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-  const { data, errors } = await fetchGraphQL(
+  const { data } = await fetchGraphQL(
     `http://localhost:4000/graphql`,
     ``
   )
@@ -150,7 +150,7 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
   }
   // highlight-end
 
-  const { data, errors } = await fetchGraphQL<IApiResponse>(
+  const { data } = await fetchGraphQL<IApiResponse>(
     `http://localhost:4000/graphql`,
     // highlight-start
     `query FetchApi {
@@ -295,7 +295,7 @@ export type NodeBuilderInput =
 
 You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
 
-### Create `nodeBuilder` utility
+### Task: Create `nodeBuilder` utility
 
 You'll create a utility function called `nodeBuilder` and its purpose is to take in data, mutate it (if necessary), and then call [`createNode`](/docs/reference/config-files/actions/#createNode) for each node type with its respective data. You're then calling `nodeBuilder` for each of your entries from the API response, filling Gatsby's data store with the data from the example API.
 

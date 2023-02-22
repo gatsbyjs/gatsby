@@ -10,7 +10,7 @@ import { MdArrowForward } from "react-icons/md"
 
 In the last part you learned how to create GraphQL nodes and use them in your site. In this part you'll dive deeper into the GraphQL schema creation process and learn how to modify the schema. This knowledge will be valuable for the reliability and usability of your plugin.
 
-In this part of the tutorial, you'll learn how to use the `createSchemaCustomization` Node API.
+In this part of the tutorial, you'll learn how to use the [`createSchemaCustomization` Node API](/docs/reference/config-files/gatsby-node/#createSchemaCustomization).
 
 By the end of this part of the tutorial, you will be able to:
 
@@ -82,15 +82,198 @@ The diagram below shows the problem with inference when data has optional fields
   summary={<em>Expand for detailed description</em>}
 >
 
-TODO
+On the first run the incoming data has `title` and `subTitle` so Gatsby also infers both fields for its `Post` GraphQL type. You can then query it in your page/static queries and expect it to exist in the schema.
+
+But on the second run the `subTitle` was removed from the data and as a consequence Gatsby didn't infer this field. `subTitle` now doesn't exist in the `Post` GraphQL type, but in the GraphQL query you're still trying to query it. This leads to an error where Gatsby complains that it can't find the field.
+
+The error would be something like this (in your terminal):
+
+```shell
+There was an error in your GraphQL query:
+
+Cannot query field "subTitle" on type "Post".
+```
 
 </Collapsible>
 
+So while you know that `subTitle` is optional, Gatsby can't automatically infer this. Therefore you'll need to help Gatsby interpret your data and define the GraphQL schema — which you'll learn in the next step.
+
 ## Explicitly define your GraphQL schema
 
-TODO
+To best support [Valhalla Content Hub](/products/valhalla-content-hub) you'll be **required** to explicitly define the GraphQL schema for your source plugin. This way the pitfalls you've read above won't occur. In general, it's considered best practice to define types as it adds reliablity and usability to your plugin.
 
-- Explain why it’s important (required with Valhalla) to explicitly define the GraphQL schema
+Without further ado, add a new file called `create-schema-customization.ts` to the plugin with the following contents:
+
+```ts:title=plugin/src/create-schema-customization.ts
+import type { GatsbyNode } from "gatsby"
+
+export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
+  ({ actions }) => {
+    const { createTypes } = actions
+  }
+```
+
+Add the new `createSchemaCustomization` export to the `gatsby-node.ts` file so that it gets executed:
+
+```ts:title=plugin/src/gatsby-node.ts
+export type { IPluginOptions } from "./types"
+
+export { onPluginInit } from "./on-plugin-init"
+export { sourceNodes } from "./source-nodes"
+// highlight-next-line
+export { createSchemaCustomization } from "./create-schema-customization"
+```
+
+### `createTypes`
+
+Before using [`createTypes`](/docs/reference/config-files/actions/#createTypes), here are some things to note for its usage:
+
+- Type definitions can be provided either in GraphQL's [schema definition language (SDL)](https://graphql.org/learn/schema/), Gatsby Type Builders, or a combination of both. You'll use the SDL syntax for the rest of this tutorial but you can also read an example for Gatsby's Type Builder syntax in this part.
+- By default, explicit type definitions you add with `createTypes` will be merged with inferred field types. So if you only want to define a subset of fields, the rest will be inferred as before. You can modify this behavior with the `@infer` and `@dontInfer` directives. You'll learn more about directives in [Add a foreign-key relationship](#add-a-foreign-key-relationship).
+- Type definitions targeting root node types, e.g. `MarkdownRemark` or others added in `sourceNodes`/`onCreateNode` like `Post` and `Author`, need to implement the `Node` interface. You can do this by adding the `implements Node` to the SDL.
+
+As an example, this is the incoming data to `createNode` that gets inspected and inferred:
+
+```json
+{
+  "name": "Gatsby",
+  "address": {
+    "street": "Some street",
+    "city": "San Francisco",
+    "state": "California",
+  }
+}
+```
+
+Since `state` is not always given you want to explicitly define it. As `street` will always be defined, you can mark it as [Non-Null](https://graphql.org/learn/schema/#lists-and-non-null) with a `!`. `city` will be automatically inferred and merged with the custom types.
+
+```ts
+import type { GatsbyNode } from "gatsby"
+
+export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
+  ({ actions }) => {
+    const { createTypes } = actions
+
+    createTypes(`
+      type User implements Node {
+        address: UserAddress
+      }
+
+      type UserAddress {
+        street: String!
+        state: String
+      }
+    `)
+  }
+```
+
+In this example the `User` type is a root node type, so you'll be able to query it with `allUser` and `user` in GraphQL.
+
+<Collapsible
+  summary={<em>Gatsby Type Builder example</em>}
+>
+
+In many cases, GraphQL SDL provides a succinct way to provide type definitions for your schema. If however you need more flexibility, `createTypes` also accepts type definitions provided with the help of Gatsby Type Builders, which are more flexible than SDL syntax. They are accessible on the `schema` argument passed to Node APIs.
+
+```ts
+import type { GatsbyNode } from "gatsby"
+
+export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
+  ({ actions, schema }) => {
+    const { createTypes } = actions
+
+    const typeDefs = [
+      schema.buildObjectType({
+        name: `User`,
+        interfaces: [`Node`],
+        fields: {
+          address: `UserAddress`,
+        },
+      }),
+      schema.buildObjectType({
+        name: `UserAddress`,
+        fields: {
+          street: {
+            type: `String!`,
+          },
+          state: `String`,
+        },
+      }),
+    ]
+
+    createTypes(typeDefs)
+  }
+```
+
+</Collapsible>
+
+### Task: Add types for `Post` and `Author`
+
+Going back to your `create-schema-customization.ts` file, begin writing out the GraphQL types inside `createTypes`. Start by creating the root node types:
+
+```ts:title=plugin/src/create-schema-customization.ts
+import type { GatsbyNode } from "gatsby"
+
+export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
+  ({ actions }) => {
+    const { createTypes } = actions
+
+    createTypes(`
+      type Post implements Node {}
+
+      type Author implements Node {}
+    `)
+  }
+```
+
+Try to add the fields for both root node types. Can you figure it out by inspecting the data shape used in `source-nodes.ts`? Don't worry if not, you can use the solution below.
+
+<Collapsible
+  summary={<em>Show me the solution</em>}
+>
+
+```ts:title=plugin/src/create-schema-customization.ts
+import type { GatsbyNode } from "gatsby"
+
+export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
+  ({ actions }) => {
+    const { createTypes } = actions
+
+    createTypes(`
+      type Post implements Node {
+        id: ID!
+        _id: Int!
+        slug: String!
+        title: String!
+        author: String!
+        image: PostImage!
+      }
+
+      type Author implements Node {
+        id: ID!
+        _id: Int!
+        name: String!
+      }
+
+      type PostImage {
+        url: String!
+        alt: String!
+        width: Int!
+        height: Int!
+      }
+    `)
+  }
+```
+
+</Collapsible>
+
+<Announcement>
+
+**Pro tip:** If you use the [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen/) option, during `gatsby develop` the file `.cache/typegen/schema.graphql` will be generated. This is the current GraphQL schema inside Gatsby and you can use it to copy/paste types.
+
+You can also use the [documentation explorer in GraphiQL](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries) to figure out the exact shape of GraphQL types.
+
+</Announcement>
 
 ## Add a foreign-key relationship
 
