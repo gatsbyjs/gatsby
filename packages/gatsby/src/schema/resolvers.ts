@@ -16,7 +16,6 @@ import {
   SelectionNode,
   FieldNode,
 } from "graphql"
-import isPlainObject from "lodash/isPlainObject"
 import { Path } from "graphql/jsutils/Path"
 import reporter from "gatsby-cli/lib/reporter"
 import { pathToArray } from "../query/utils"
@@ -29,49 +28,19 @@ import {
 import { IGatsbyNode } from "../redux/types"
 import { IQueryResult } from "../datastore/types"
 import { GatsbyIterable } from "../datastore/common/iterable"
-import { getResolvedFields, fieldPathNeedToResolve } from "./utils"
+import {
+  getResolvedFields,
+  fieldPathNeedToResolve,
+  INestedPathStructureNode,
+  pathObjectToPathString,
+} from "./utils"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
 type nestedListOfStrings = Array<string | nestedListOfStrings>
 type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
 
-type NestedPathStructure = INestedPathStructureNode | true | "ASC" | "DESC"
-
-interface INestedPathStructureNode {
-  [key: string]: NestedPathStructure
-}
-
-function pathObjectToPathString(input: INestedPathStructureNode): {
-  path: string
-  leaf: any
-} {
-  const path: Array<string> = []
-  let currentValue: NestedPathStructure | undefined = input
-  let leaf: any = undefined
-  while (currentValue) {
-    if (isPlainObject(currentValue)) {
-      const entries = Object.entries(currentValue)
-      if (entries.length !== 1) {
-        throw new Error(`Invalid field arg`)
-      }
-      for (const [key, value] of entries) {
-        path.push(key)
-        currentValue = value
-      }
-    } else {
-      leaf = currentValue
-      currentValue = undefined
-    }
-  }
-
-  return {
-    path: path.join(`.`),
-    leaf,
-  }
-}
-
-function getMaybeResolvedValue(
+export function getMaybeResolvedValue(
   node: IGatsbyNode,
   field: string | INestedPathStructureNode,
   nodeInterfaceName: string
@@ -113,39 +82,6 @@ export function findOne<TSource, TArgs>(
 
 type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number; sort: any }
 
-function maybeConvertSortInputObjectToSortPath<TArgs>(
-  args: PaginatedArgs<TArgs>
-): any {
-  if (!args.sort) {
-    return args
-  }
-
-  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
-    let sorts = args.sort
-    if (!Array.isArray(sorts)) {
-      sorts = [sorts]
-    }
-
-    const modifiedSort: any = {
-      fields: [],
-      order: [],
-    }
-
-    for (const sort of sorts) {
-      const { path, leaf } = pathObjectToPathString(sort)
-      modifiedSort.fields.push(path)
-      modifiedSort.order.push(leaf)
-    }
-
-    return {
-      ...args,
-      sort: modifiedSort,
-    }
-  }
-
-  return args
-}
-
 export function findManyPaginated<TSource, TArgs>(
   typeName: string
 ): GatsbyResolver<TSource, PaginatedArgs<TArgs>> {
@@ -169,7 +105,7 @@ export function findManyPaginated<TSource, TArgs>(
     const limit = typeof args.limit === `number` ? args.limit + 2 : undefined
 
     const extendedArgs = {
-      ...maybeConvertSortInputObjectToSortPath(args),
+      ...args,
       group: group || [],
       distinct: distinct || [],
       max: max || [],

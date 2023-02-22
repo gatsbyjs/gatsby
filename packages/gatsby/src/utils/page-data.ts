@@ -182,6 +182,9 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
+let staleNodeManifests = false
+const maxManifestIdsToLog = 50
+
 type IDataTask =
   | {
       type: "page"
@@ -208,6 +211,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     queries,
     slices,
     slicesByTemplate,
+    nodeManifests,
   } = store.getState()
   const isBuild = program?._?.[0] !== `develop`
 
@@ -221,6 +225,25 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
     // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
     nodeManifestPagePathMap = await processNodeManifests()
+  } else if (nodeManifests.length > 0 && staleNodeManifests) {
+    staleNodeManifests = false
+
+    reporter.warn(
+      `[gatsby] node manifests were created but no page-data.json files were written, so manifest ID's were not added to page-data.json files. This may be a bug or it may be due to a source plugin creating a node manifest for a node that did not change. Node manifest IDs: ${nodeManifests
+        .map(n => n.manifestId)
+        .slice(0, maxManifestIdsToLog)
+        .join(`,`)}${
+        nodeManifests.length > maxManifestIdsToLog
+          ? ` There were ${
+              nodeManifests.length - maxManifestIdsToLog
+            } additional ID's that were not logged due to output length.`
+          : ``
+      }`
+    )
+
+    nodeManifestPagePathMap = await processNodeManifests()
+  } else if (nodeManifests.length > 0) {
+    staleNodeManifests = true
   }
 
   if (pagePaths.size > 0 || sliceNames.size > 0) {
@@ -428,4 +451,46 @@ export async function handleStalePageData(parentSpan: Span): Promise<void> {
   await Promise.all(deletionPromises)
 
   activity.end()
+}
+
+interface IModifyPageDataForErrorMessage {
+  errors: {
+    graphql?: IPageDataWithQueryResult["result"]["errors"]
+    getServerData?: IPageDataWithQueryResult["getServerDataError"]
+  }
+  graphqlExtensions?: IPageDataWithQueryResult["result"]["extensions"]
+  pageContext?: IPageDataWithQueryResult["result"]["pageContext"]
+  path: IPageDataWithQueryResult["path"]
+  matchPath: IPageDataWithQueryResult["matchPath"]
+  slicesMap: IPageDataWithQueryResult["slicesMap"]
+}
+
+export function modifyPageDataForErrorMessage(
+  input: IPageDataWithQueryResult
+): IModifyPageDataForErrorMessage {
+  const optionalData = {
+    ...(input.result?.pageContext
+      ? { pageContext: input.result.pageContext }
+      : {}),
+    ...(input.result?.pageContext
+      ? { pageContext: input.result.pageContext }
+      : {}),
+  }
+
+  const optionalErrors = {
+    ...(input.result?.errors ? { graphql: input.result.errors } : {}),
+    ...(input.getServerDataError
+      ? { getServerData: input.getServerDataError }
+      : {}),
+  }
+
+  return {
+    errors: {
+      ...optionalErrors,
+    },
+    path: input.path,
+    matchPath: input.matchPath,
+    slicesMap: input.slicesMap,
+    ...optionalData,
+  }
 }

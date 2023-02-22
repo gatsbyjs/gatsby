@@ -1,7 +1,6 @@
 const React = require(`react`)
 const path = require(`path`)
 const {
-  renderToString,
   renderToStaticMarkup,
   renderToPipeableStream,
 } = require(`react-dom/server`)
@@ -28,10 +27,6 @@ const { ServerSliceRenderer } = require(`./slice/server-slice-renderer`)
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
-// const testRequireError = require("./test-require-error")
-// For some extremely mysterious reason, webpack adds the above module *after*
-// this module so that when this code runs, testRequireError is undefined.
-// So in the meantime, we'll just inline it.
 const testRequireError = (moduleName, err) => {
   const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
   const firstLine = err.toString().split(`\n`)[0]
@@ -228,14 +223,6 @@ export default async function staticPage({
     const { componentChunkName, slicesMap } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
-    headHandlerForSSR({
-      pageComponent,
-      setHeadComponents,
-      staticQueryContext,
-      pageData,
-      pagePath,
-    })
-
     class RouteHandler extends React.Component {
       render() {
         const props = {
@@ -379,6 +366,18 @@ export default async function staticPage({
       scripts,
       styles,
       pathPrefix: __PATH_PREFIX__,
+    })
+
+    // we want to run Head after onRenderBody, so Html and Body attributes
+    // from Head wins over global ones from onRenderBody
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      staticQueryContext,
+      pageData,
+      pagePath,
     })
 
     reversedScripts.forEach(script => {
@@ -556,12 +555,9 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
   }
 
   const sliceElement = (
-    <SlicesContext.Provider value={slicesContext}>
-      <StaticQueryContext.Provider value={staticQueryContext}>
-        <SliceComponent sliceContext={slice.context} {...props} />
-      </StaticQueryContext.Provider>
-    </SlicesContext.Provider>
+    <SliceComponent sliceContext={slice.context} {...props} />
   )
+
   const sliceWrappedWithWrapRootElement = apiRunner(
     `wrapRootElement`,
     { element: sliceElement },
@@ -571,15 +567,26 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
     }
   ).pop()
 
+  const sliceWrappedWithWrapRootElementAndContexts = (
+    <SlicesContext.Provider value={slicesContext}>
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        {sliceWrappedWithWrapRootElement}
+      </StaticQueryContext.Provider>
+    </SlicesContext.Provider>
+  )
+
   const writableStream = new WritableAsPromise()
-  const { pipe } = renderToPipeableStream(sliceWrappedWithWrapRootElement, {
-    onAllReady() {
-      pipe(writableStream)
-    },
-    onError(error) {
-      writableStream.destroy(error)
-    },
-  })
+  const { pipe } = renderToPipeableStream(
+    sliceWrappedWithWrapRootElementAndContexts,
+    {
+      onAllReady() {
+        pipe(writableStream)
+      },
+      onError(error) {
+        writableStream.destroy(error)
+      },
+    }
+  )
 
   return await writableStream
 }

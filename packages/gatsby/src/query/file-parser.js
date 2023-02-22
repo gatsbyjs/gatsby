@@ -23,7 +23,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 import type { DocumentNode } from "graphql"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { codeFrameColumns } from "@babel/code-frame"
-import { getPathToLayoutComponent } from "gatsby-core-utils"
+import { getPathToLayoutComponent, md5 } from "gatsby-core-utils"
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { actions } = require(`../redux/actions`)
@@ -519,16 +519,13 @@ export default class FileParser {
       !text.includes(`gatsby-plugin-image`) &&
       !text.includes(`getServerData`) &&
       !text.includes(`config`) &&
-      !text.includes(`Slice`)
+      !text.includes(`Slice`) &&
+      !text.includes(`Head`)
     ) {
       return null
     }
 
-    const hash = crypto
-      .createHash(`md5`)
-      .update(file)
-      .update(text)
-      .digest(`hex`)
+    const hash = await md5(file + text)
 
     try {
       if (!cache[hash]) {

@@ -20,6 +20,10 @@
     - Create a stub for documentation including bullet points for how to use the feature, code snippets (including from happy path tests), etc.
 -->
 
+### Tests
+
+<!-- Did you add tests (unit tests, E2E tests, etc.)? How did you test this change? -->
+
 ## Related Issues
 
 <!--

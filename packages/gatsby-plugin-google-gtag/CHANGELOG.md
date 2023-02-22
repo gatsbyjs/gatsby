@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.7.0/packages/gatsby-plugin-google-gtag) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-plugin-google-gtag
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.6.0/packages/gatsby-plugin-google-gtag) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.5.0/packages/gatsby-plugin-google-gtag) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+**Note:** Version bump only for package gatsby-plugin-google-gtag
+
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.4.0/packages/gatsby-plugin-google-gtag) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.3.0/packages/gatsby-plugin-google-gtag) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+**Note:** Version bump only for package gatsby-plugin-google-gtag
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.2.0/packages/gatsby-plugin-google-gtag) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- correct script to match google's current [#36993](https://github.com/gatsbyjs/gatsby/issues/36993) ([5cb5014](https://github.com/gatsbyjs/gatsby/commit/5cb50143057e42ca2e00e90b597bb681cdba7300))
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.1.0/packages/gatsby-plugin-google-gtag) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Features
+
+- Add `delayOnRouteUpdate` option [#37017](https://github.com/gatsbyjs/gatsby/issues/37017) ([c132f2d](https://github.com/gatsbyjs/gatsby/commit/c132f2d9099ccb7c9bf9a0a82f8179c3a6050f19))
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@5.0.0/packages/gatsby-plugin-google-gtag) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@4.24.0/packages/gatsby-plugin-google-gtag) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

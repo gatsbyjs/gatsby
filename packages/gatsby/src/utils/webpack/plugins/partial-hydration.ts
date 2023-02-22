@@ -7,6 +7,7 @@ import webpack, {
   javascript,
   Compilation,
   Compiler,
+  AsyncDependenciesBlock,
 } from "webpack"
 import type Reporter from "gatsby-cli/lib/reporter"
 
@@ -247,6 +248,17 @@ export class PartialHydrationPlugin {
 
           for (const connection of incomingConnections) {
             if (connection.dependency) {
+              const dependencyBlock = compilation.moduleGraph.getParentBlock(
+                connection.dependency
+              )
+
+              if (
+                dependencyBlock instanceof AsyncDependenciesBlock &&
+                dependencyBlock?.chunkName?.startsWith(`slice---`)
+              ) {
+                continue
+              }
+
               if (connection.originModule instanceof NormalModule) {
                 if (
                   connection.originModule.resource.includes(`async-requires`)

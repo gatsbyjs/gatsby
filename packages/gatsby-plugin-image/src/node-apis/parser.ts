@@ -3,6 +3,7 @@ import { NodePath } from "@babel/core"
 import { JSXOpeningElement } from "@babel/types"
 import { parse, ParserOptions } from "@babel/parser"
 import babel from "@babel/core"
+import { slash } from "gatsby-core-utils"
 import { evaluateImageAttributes, hashOptions } from "../babel-helpers"
 import { IStaticImageProps } from "../components/static-image.server"
 
@@ -74,6 +75,7 @@ export function babelParseToAst(
  */
 export const extractStaticImageProps = (
   ast: babel.types.File,
+  filename: string,
   onError?: (prop: string, nodePath: NodePath) => void
 ): Map<string, IStaticImageProps> => {
   const images: Map<string, IStaticImageProps> = new Map()
@@ -93,6 +95,11 @@ export const extractStaticImageProps = (
         nodePath as unknown as NodePath<JSXOpeningElement>,
         onError
       ) as unknown as IStaticImageProps
+      // When the image props are the same for multiple StaticImage but they are in different locations
+      // the hash will be the same then. We need to make sure that the hash is unique.
+      // The filename should already be normalized but better safe than sorry.
+      image.filename = slash(filename)
+
       images.set(hashOptions(image), image)
     },
   })

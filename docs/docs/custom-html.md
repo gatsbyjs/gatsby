@@ -27,10 +27,7 @@ Note: the various props that are rendered into pages _are_ required e.g.
 
 ## Inserting HTML into the `<head>`
 
-Anything you render in the `html.js` component will _not_ be made "live" in
-the client like other components. If you want to dynamically update your
-`<head>` we recommend using
-[React Helmet](/plugins/gatsby-plugin-react-helmet/)
+Anything you render in the `html.js` component will _not_ be made "live" in the client like other components. If you want to dynamically update your `<head>` we recommend using [Gatsby's Head API](/docs/reference/built-in-components/gatsby-head/).
 
 ## Inserting HTML into the `<footer>`
 
@@ -58,9 +55,11 @@ You can add custom JavaScript to your HTML document by using React's [`dangerous
 <script
   dangerouslySetInnerHTML={{
     __html: `
-            var name = 'world';
-            console.log('Hello ' + name);
-        `,
+      var name = 'world';
+      console.log('Hello ' + name);
+    `,
   }}
 />
 ```
+
+However, we do recommend that you use [Gatsby's Script API](/docs/reference/built-in-components/gatsby-script/) instead.

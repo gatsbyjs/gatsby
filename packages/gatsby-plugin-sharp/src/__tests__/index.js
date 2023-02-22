@@ -588,7 +588,7 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.tracedSVG).toBeUndefined()
     })
 
-    it(`runs on demand`, async () => {
+    it(`runs on demand (and falls back to blurred)`, async () => {
       const args = {
         maxWidth: 100,
         width: 100,
@@ -602,14 +602,20 @@ describe(`gatsby-plugin-sharp`, () => {
         args,
       })
 
-      expect(fixedSvg).toMatchSnapshot()
+      expect(fixedSvg).toMatchSnapshot(`fixed`)
+
+      expect(fixedSvg.tracedSVG).toMatch(`data:image/png;base64`)
+      expect(fixedSvg.tracedSVG).not.toMatch(`data:image/svg+xml`)
 
       const fluidSvg = await fluid({
         file,
         args,
       })
 
-      expect(fluidSvg).toMatchSnapshot()
+      expect(fluidSvg).toMatchSnapshot(`fluid`)
+
+      expect(fluidSvg.tracedSVG).toMatch(`data:image/png;base64`)
+      expect(fluidSvg.tracedSVG).not.toMatch(`data:image/svg+xml`)
     })
   })
 

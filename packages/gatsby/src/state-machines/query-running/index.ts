@@ -10,6 +10,7 @@ import { queryActions } from "./actions"
 const PAGE_QUERY_ENQUEUING_TIMEOUT = 50
 
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
+  predictableActionArguments: true,
   initial: `extractingQueries`,
   id: `queryRunningMachine`,
   on: {

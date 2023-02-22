@@ -5,10 +5,6 @@ import { merge } from "lodash"
 import { apiRunner } from "./api-runner-ssr"
 import asyncRequires from "$virtual/async-requires"
 
-// import testRequireError from "./test-require-error"
-// For some extremely mysterious reason, webpack adds the above module *after*
-// this module so that when this code runs, testRequireError is undefined.
-// So in the meantime, we'll just inline it.
 const testRequireError = (moduleName, err) => {
   const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
   const firstLine = err.toString().split(`\n`)[0]

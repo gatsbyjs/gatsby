@@ -65,8 +65,6 @@ Start the Gatsby development environment with `gatsby develop`. Once running, yo
 
 From here, you will be able to browse the generated GraphQL schema of your Gatsby project.
 
-![GraphCMS Schema](./images/graphcms-schema.png)
-
 The generated Gatsby types for the GraphCMS project models will all be prefixed accordingly. For example, the `Post` model from our GraphCMS project becomes a `GraphCMS_Post` type inside of Gatsby. This prefix can be [configured](https://github.com/GraphCMS/gatsby-source-graphcms#options).
 
 Query fields also follow a similar naming convention and are prefixed by the same value as types. Gatsby will generate two root query fields per type. For example, for our `Post` model Gatsby will generate the following root query fields:
@@ -75,8 +73,6 @@ Query fields also follow a similar naming convention and are prefixed by the sam
 - `graphCmsPost` for querying a single `Post` entry
 
 ### Querying for content
-
-![GraphCMS Query](./images/graphcms-query.png)
 
 Using the generated schema, we can begin to write GraphQL queries for Gatsby data. Consider the query below, which will return a full list of all available `GraphCMS_Post` nodes.
 
@@ -186,7 +182,7 @@ export default IndexPage
 
 #### Static query hook
 
-Static queries also run at build time, but can be used in all components via the `useStaticQuery` hook or `<StaticQuery />` component. However they do **not** accept GraphQL variables.
+Static queries also run at build time, but can be used in all components via the `useStaticQuery` component. However they do **not** accept GraphQL variables.
 
 ```jsx
 import React from "react"

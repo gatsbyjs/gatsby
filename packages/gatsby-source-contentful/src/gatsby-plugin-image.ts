@@ -101,46 +101,6 @@ const getBase64Image = (
   })
 }
 
-const getTracedSVG = async ({
-  image,
-  options,
-  cache,
-}: {
-  image: IContentfulAsset
-  options: IContentfulImageAPITransformerOptions
-  cache: GatsbyCache
-}): Promise<string | null> => {
-  const { traceSVG } = await import(`gatsby-plugin-sharp`)
-  const { url: imgUrl, filename, mimeType } = image
-
-  if (mimeType.indexOf(`image/`) !== 0) {
-    return null
-  }
-
-  const extension = mimeTypeExtensions.get(mimeType)
-  const url = createUrl(imgUrl, options)
-  const name = path.basename(filename, extension)
-
-  const absolutePath = await fetchRemoteFile({
-    url,
-    name,
-    directory: cache.directory,
-    ext: extension,
-    cacheKey: image.internal.contentDigest,
-  })
-
-  return traceSVG({
-    file: {
-      internal: image.internal,
-      name: filename,
-      extension,
-      absolutePath,
-    },
-    args: { toFormat: ``, ...options.tracedSVGOptions },
-    fileArgs: options,
-  })
-}
-
 const getDominantColor = async ({
   image,
   options,
@@ -293,6 +253,7 @@ export function generateImageSource(
   return { width, height, format: toFormat, src }
 }
 
+let didShowTraceSVGRemovalWarning = false
 export async function resolveGatsbyImageData(
   image: IContentfulAsset,
   options: IContentfulImageAPITransformerOptions,
@@ -326,6 +287,17 @@ export async function resolveGatsbyImageData(
   }
 
   options = doMergeDefaults(options, defaults)
+
+  
+  if (options.placeholder === `tracedSVG`) {
+    if (!didShowTraceSVGRemovalWarning) {
+      console.warn(
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in ContentfulAsset.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarning = true
+    }
+    options.placeholder = `dominantColor`
+  }
 
   const { baseUrl, mimeType, width, height, aspectRatio } = getBasicImageProps(
     image,
@@ -378,14 +350,6 @@ export async function resolveGatsbyImageData(
       },
       cache
     )
-  }
-
-  if (options.placeholder === `tracedSVG`) {
-    placeholderDataURI = await getTracedSVG({
-      image,
-      options,
-      cache,
-    })
   }
 
   if (placeholderDataURI) {

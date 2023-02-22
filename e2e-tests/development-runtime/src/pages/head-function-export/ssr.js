@@ -11,11 +11,11 @@ export default function HeadFunctionExportSSR() {
 
 export async function getServerData() {
   return {
-    hello: `world`,
+    props: data.ssr.serverData,
   }
 }
 
-export function Head() {
+export function Head({ serverData }) {
   const { base, title, meta, noscript, style, link } = data.ssr
 
   return (
@@ -32,6 +32,11 @@ export function Head() {
         `}
       </style>
       <link data-testid="link" href={link} rel="stylesheet" />
+      <meta
+        data-testid="server-data"
+        name="server-data"
+        content={JSON.stringify(serverData)}
+      />
     </>
   )
 }

@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.7.0/packages/gatsby-plugin-google-analytics) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.6.0/packages/gatsby-plugin-google-analytics) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.5.0/packages/gatsby-plugin-google-analytics) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Chores
+
+- Upgrade to Jest 29 [#37408](https://github.com/gatsbyjs/gatsby/issues/37408) ([315edc6](https://github.com/gatsbyjs/gatsby/commit/315edc64c9aa87b7f5bf43c7698e47187aeb6450))
+
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.4.0/packages/gatsby-plugin-google-analytics) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- Fix typo in README Fix [#37276](https://github.com/gatsbyjs/gatsby/issues/37276) ([86e1685](https://github.com/gatsbyjs/gatsby/commit/86e16851efd497fecd6cf3995239b606bd5d365a))
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.3.0/packages/gatsby-plugin-google-analytics) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Chores
+
+- update formatting & linting [#37159](https://github.com/gatsbyjs/gatsby/issues/37159) ([5a8879c](https://github.com/gatsbyjs/gatsby/commit/5a8879cfb91aa95321b109ef4543048eaaaf1f0f))
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.2.0/packages/gatsby-plugin-google-analytics) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.1.0/packages/gatsby-plugin-google-analytics) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Chores
+
+- Update `minimatch` [#37029](https://github.com/gatsbyjs/gatsby/issues/37029) ([8569655](https://github.com/gatsbyjs/gatsby/commit/85696552292c34a1bc4b69e6708a850e342d6371))
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@5.0.0/packages/gatsby-plugin-google-analytics) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@4.24.0/packages/gatsby-plugin-google-analytics) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

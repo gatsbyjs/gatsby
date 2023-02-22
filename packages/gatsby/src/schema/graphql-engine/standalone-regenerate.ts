@@ -18,12 +18,15 @@ node node_modules/gatsby/dist/schema/graphql-engine/standalone-regenerate.js
 */
 
 import { createGraphqlEngineBundle } from "./bundle-webpack"
+import { createPageSSRBundle } from "./../../utils/page-ssr-module/bundle-webpack"
 import reporter from "gatsby-cli/lib/reporter"
 import { loadConfigAndPlugins } from "../../utils/worker/child/load-config-and-plugins"
 import * as fs from "fs-extra"
+import { store } from "../../redux"
 import { validateEngines } from "../../utils/validate-engines"
 
 async function run(): Promise<void> {
+  process.env.GATSBY_SLICES = `1`
   // load config
   console.log(`loading config and plugins`)
   await loadConfigAndPlugins({
@@ -34,9 +37,12 @@ async function run(): Promise<void> {
     console.log(`clearing webpack cache\n\n`)
     // get rid of cache if it exist
     await fs.remove(process.cwd() + `/.cache/webpack/query-engine`)
+    await fs.remove(process.cwd() + `/.cache/webpack/page-ssr`)
   } catch (e) {
     // eslint-disable no-empty
   }
+
+  const state = store.getState()
 
   // recompile
   const buildActivityTimer = reporter.activityTimer(
@@ -44,7 +50,17 @@ async function run(): Promise<void> {
   )
   try {
     buildActivityTimer.start()
-    await createGraphqlEngineBundle(process.cwd(), reporter, true)
+    await Promise.all([
+      createGraphqlEngineBundle(process.cwd(), reporter, true),
+      createPageSSRBundle({
+        rootDir: process.cwd(),
+        components: store.getState().components,
+        staticQueriesByTemplate: state.staticQueriesByTemplate,
+        webpackCompilationHash: state.webpackCompilationHash, // we set webpackCompilationHash above
+        reporter,
+        isVerbose: state.program.verbose,
+      }),
+    ])
   } catch (err) {
     buildActivityTimer.panic(err)
   } finally {

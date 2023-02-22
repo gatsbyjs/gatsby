@@ -90,6 +90,7 @@ export interface IGatsbyFunction {
 
 export interface IGraphQLTypegenOptions {
   typesOutputPath: string
+  documentSearchPaths: Array<string>
   generateOnBuild: boolean
 }
 
@@ -168,6 +169,7 @@ export interface IGatsbyPageComponent {
   serverData: boolean
   config: boolean
   isSlice: boolean
+  Head: boolean
 }
 
 export interface IDefinitionMeta {

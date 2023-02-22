@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "name": "esm-in-gatsby-files-integration-test",
+  "version": "1.0.0",
+  "scripts": {
+    "clean": "gatsby clean",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "gatsby-transformer-remark": "next",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "babel-preset-gatsby-package": "^2.4.0",
+    "execa": "^4.0.1",
+    "fs-extra": "^11.1.0",
+    "jest": "^29.3.1",
+    "node-fetch": "^2.6.0",
+    "typescript": "^4.8.4"
+  }
+}

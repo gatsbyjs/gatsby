@@ -27,7 +27,9 @@ const fullPropsExample = {
           name: `john`,
         },
       },
-      serverData: null,
+      serverData: {
+        hello: `world`,
+      },
     },
     page: {
       componentChunkName: `component---src-pages-person-name-tsx`,
@@ -53,7 +55,9 @@ const fullPropsExample = {
       name: `john`,
     },
   },
-  serverData: null,
+  serverData: {
+    hello: `world`,
+  },
   params: {
     name: `john`,
   },
@@ -114,6 +118,9 @@ describe(`head utils`, () => {
         params: {
           name: `john`,
         },
+        serverData: {
+          hello: `world`,
+        },
         data: {
           site: {
             siteMetadata: {
@@ -137,6 +144,7 @@ describe(`head utils`, () => {
           pathname: `/john/`,
         },
         params: {},
+        serverData: null,
         data: {},
         pageContext: {},
       })

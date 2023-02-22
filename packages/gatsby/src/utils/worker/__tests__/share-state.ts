@@ -98,6 +98,7 @@ describe(`worker (share-state)`, () => {
       Object {
         "components": Map {
           "/foo" => Object {
+            "Head": false,
             "componentChunkName": undefined,
             "componentPath": "/foo",
             "config": false,
@@ -121,6 +122,7 @@ describe(`worker (share-state)`, () => {
       Object {
         "components": Map {
           "/foo" => Object {
+            "Head": false,
             "componentChunkName": undefined,
             "componentPath": "/foo",
             "config": false,
@@ -235,6 +237,7 @@ describe(`worker (share-state)`, () => {
 
     expect(components).toMatchInlineSnapshot(`
       Object {
+        "Head": false,
         "componentPath": "/foo",
         "config": false,
         "isInBootstrap": true,

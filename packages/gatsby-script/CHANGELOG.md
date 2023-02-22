@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.7.0/packages/gatsby-script) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-script
+
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.6.0/packages/gatsby-script) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Chores
+
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+- bump @gatsbyjs/reach-router [#37547](https://github.com/gatsbyjs/gatsby/issues/37547) ([7a83513](https://github.com/gatsbyjs/gatsby/commit/7a83513f147c8ab2e3c0a38f99e15743c79d1e25))
+
+## [2.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.5.0/packages/gatsby-script) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+**Note:** Version bump only for package gatsby-script
+
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.4.0/packages/gatsby-script) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+**Note:** Version bump only for package gatsby-script
+
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.3.0/packages/gatsby-script) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update dependency prepend-directive to ^1.1.0 for gatsby-script [#37190](https://github.com/gatsbyjs/gatsby/issues/37190) ([2f54c1d](https://github.com/gatsbyjs/gatsby/commit/2f54c1d94ac5c9f28d00d72d659e6ee0b6dffbbf))
+- Bump @gatsbyjs/reach-router to v2.0.0 [#37121](https://github.com/gatsbyjs/gatsby/issues/37121) ([aa5808b](https://github.com/gatsbyjs/gatsby/commit/aa5808becb16c4d98953082a7e04b6b7d40cd9a5))
+
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.2.0/packages/gatsby-script) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- correct script to match google's current [#36993](https://github.com/gatsbyjs/gatsby/issues/36993) ([5cb5014](https://github.com/gatsbyjs/gatsby/commit/5cb50143057e42ca2e00e90b597bb681cdba7300))
+
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.1.0/packages/gatsby-script) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-script
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.0.0/packages/gatsby-script) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- Update partial hydration directive [#36868](https://github.com/gatsbyjs/gatsby/issues/36868) ([7f1b57c](https://github.com/gatsbyjs/gatsby/commit/7f1b57c5a5849b3bc997957b3370c3119e79d279))
+
+#### Chores
+
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.9.0/packages/gatsby-script) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

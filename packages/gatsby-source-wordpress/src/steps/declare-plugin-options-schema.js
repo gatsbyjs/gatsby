@@ -314,7 +314,7 @@ Default is false because sometimes non-critical errors are returned alongside va
       allow404Images: Joi.boolean()
         .default(false)
         .description(
-          `This option allows images url's that return a 404 to not fail production builds.`
+          `This option allows image urls that return a 404 to not fail production builds.`
         )
         .meta({
           example: wrapOptions(`
@@ -326,7 +326,7 @@ Default is false because sometimes non-critical errors are returned alongside va
       allow401Images: Joi.boolean()
         .default(false)
         .description(
-          `This option allows images url's that return a 401 to not fail production builds. 401s are sometimes returned in place of 404's for protected content to hide whether the content exists.`
+          `This option allows image urls that return a 401 to not fail production builds. 401s are sometimes returned in place of 404s for protected content to hide whether the content exists.`
         )
         .meta({
           example: wrapOptions(`
@@ -453,7 +453,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         .positive()
         .default(5)
         .description(
-          `The maximum number times a type can appear as it's own descendant.`
+          `The maximum number times a type can appear as its own descendant.`
         )
         .meta({
           example: wrapOptions(`
@@ -675,7 +675,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         .default(true)
         .allow(null)
         .description(
-          `When this is true, any url's which are wrapped in "", '', or () and which contain /wp-content/uploads will be transformed into static files and the url's will be rewritten. This adds support for video, audio, and anchor tags which point at WP media item uploads as well as inline-html css like background-image: url().`
+          `When this is true, any urls which are wrapped in "", '', or () and which contain /wp-content/uploads will be transformed into static files and the urls will be rewritten. This adds support for video, audio, and anchor tags which point at WP media item uploads as well as inline-html css like background-image: url().`
         )
         .meta({
           example: wrapOptions(`
@@ -765,6 +765,20 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       MediaItem: Joi.object({
+        excludeFieldNames: Joi.array()
+          .items(Joi.string())
+          .allow(null)
+          .allow(false)
+          .description(`Excludes fields on the MediaItem type by field name.`)
+          .meta({
+            example: wrapOptions(`
+            type: {
+              MediaItem: {
+                excludeFieldNames: [\`dateGmt\`, \`parent\`],
+              },
+            },
+          `),
+          }),
         placeholderSizeName: Joi.string()
           .default(`gatsby-image-placeholder`)
           .description(

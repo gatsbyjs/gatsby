@@ -50,6 +50,8 @@ module.exports = {
           exclude: ["/preview/**", "/do-not-track/me/too/"],
           // Defaults to https://www.googletagmanager.com
           origin: "YOUR_SELF_HOSTED_ORIGIN",
+          // Delays processing pageview events on route update (in milliseconds)
+          delayOnRouteUpdate: 0,
         },
       },
     },
@@ -137,3 +139,7 @@ If you enable this optional option, Google Global Site Tag will not be loaded at
 ## The "pluginConfig.exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+## The "pluginConfig.delayOnRouteUpdate" option
+
+If you need to delay processing pageview events on route update (e.g. to wait for page transitions with [`gatsby-plugin-transition-link`](https://www.gatsbyjs.com/plugins/gatsby-plugin-transition-link/)), then this option adds a delay before generating the pageview event.

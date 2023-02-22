@@ -11,20 +11,6 @@ describe(`NodeModel`, () => {
   let schema
   const createPageDependency = jest.fn()
 
-  const allNodeTypes = [
-    `File`,
-    `Directory`,
-    `Site`,
-    `SitePage`,
-    `SiteFunction`,
-    `SitePlugin`,
-    `SiteBuildMetadata`,
-    `Author`,
-    `Contributor`,
-    `ExternalFile`,
-    `Post`,
-  ]
-
   describe(`normal node tests`, () => {
     beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
@@ -598,6 +584,84 @@ describe(`NodeModel`, () => {
     })
   })
 
+  describe(`normal node tests (with materialization)`, () => {
+    const articleNode = {
+      id: `article-1`,
+      name: `Article 1`,
+      articleType: `article-type-1`,
+      parent: null,
+      children: [],
+      internal: {
+        type: `Article`,
+        contentDigest: `0`,
+      },
+    }
+    beforeEach(async () => {
+      store.dispatch({ type: `DELETE_CACHE` })
+      const nodes = (() => [
+        {
+          id: `article-type-1`,
+          name: `Article Type 1`,
+          parent: null,
+          children: [],
+          internal: {
+            type: `ArticleType`,
+            contentDigest: `0`,
+          },
+        },
+        articleNode,
+      ])()
+      nodes.forEach(node =>
+        actions.createNode(
+          { ...node, internal: { ...node.internal } },
+          { name: `test` }
+        )(store.dispatch)
+      )
+
+      const types = `
+        type ArticleType implements Node {
+          name: String!
+        }
+      
+        type Article implements Node {
+          name: String!
+          articleType: ArticleType @link
+        }
+      `
+      store.dispatch({
+        type: `CREATE_TYPES`,
+        payload: types,
+      })
+
+      await build({})
+      let schemaComposer
+      ;({
+        schemaCustomization: { composer: schemaComposer },
+        schema,
+      } = store.getState())
+
+      nodeModel = new LocalNodeModel({
+        schema,
+        schemaComposer,
+        createPageDependency,
+      })
+    })
+
+    beforeEach(() => {
+      createPageDependency.mockClear()
+    })
+
+    describe(`getFieldValue`, () => {
+      it(`gets the materialized field value`, async () => {
+        const fieldValue = await nodeModel.getFieldValue(
+          articleNode,
+          `articleType.name`
+        )
+        expect(fieldValue).toBe(`Article Type 1`)
+      })
+    })
+  })
+
   describe(`materialization`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
@@ -612,6 +676,7 @@ describe(`NodeModel`, () => {
           nested: {
             foo: `foo1`,
             bar: `bar1`,
+            sort_order: 10,
           },
           internal: {
             type: `Test`,
@@ -625,6 +690,7 @@ describe(`NodeModel`, () => {
           nested: {
             foo: `foo2`,
             bar: `bar2`,
+            sort_order: 9,
           },
           internal: {
             type: `Test`,
@@ -1056,6 +1122,49 @@ describe(`NodeModel`, () => {
       expect(result2).toBeTruthy()
       expect(count2).toBe(1)
       expect(result2[0].id).toBe(`id2`)
+    })
+
+    it(`findAll sorts using v5 sort fields`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            sort: [{ nested: { sort_order: `asc` } }],
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      const result = Array.from(entries)
+
+      expect(result.length).toBe(2)
+      expect(result[0].id).toBe(`id2`)
+      expect(result[1].id).toBe(`id1`)
+    })
+
+    it(`findAll sorts using legacy (pre-v5) sort fields`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            sort: {
+              fields: [`nested.sort_order`],
+              order: [`asc`],
+            },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      const result = Array.from(entries)
+
+      expect(result.length).toBe(2)
+      expect(result[0].id).toBe(`id2`)
+      expect(result[1].id).toBe(`id1`)
     })
 
     it(`always uses a custom resolvers for query fields`, async () => {

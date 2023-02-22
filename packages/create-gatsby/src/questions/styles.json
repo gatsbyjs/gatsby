@@ -16,17 +16,16 @@
     "message": "Theme UI",
     "dependencies": [
       "theme-ui",
+      "@theme-ui/mdx",
       "@emotion/react",
-      "@emotion/styled",
-      "@mdx-js/react@v1"
+      "@mdx-js/react"
     ]
   },
   "gatsby-plugin-vanilla-extract": {
     "message": "vanilla-extract",
     "dependencies": [
       "@vanilla-extract/webpack-plugin",
-      "@vanilla-extract/css",
-      "@vanilla-extract/babel-plugin"
+      "@vanilla-extract/css"
     ]
   }
 }

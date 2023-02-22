@@ -25,12 +25,12 @@
     "cy:run": "node ../../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
-    "cross-env": "^5.2.0",
+    "cross-env": "^7.0.3",
     "cypress": "^9.7.0",
     "gatsby-cypress": "next",
-    "is-ci": "^2.0.0",
-    "prettier": "2.0.4",
-    "start-server-and-test": "^1.7.11"
+    "is-ci": "^3.0.1",
+    "prettier": "^2.8.3",
+    "start-server-and-test": "^1.15.3"
   },
   "repository": {
     "type": "git",

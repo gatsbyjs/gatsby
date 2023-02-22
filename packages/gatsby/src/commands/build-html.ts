@@ -2,7 +2,7 @@ import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import { chunk, truncate } from "lodash"
+import { chunk } from "lodash"
 import { build, watch } from "../utils/webpack/bundle"
 import * as path from "path"
 import fastq from "fastq"
@@ -18,7 +18,6 @@ import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
 import { ROUTES_DIRECTORY } from "../constants"
 import { PackageJson } from "../.."
-import { IPageDataWithQueryResult } from "../utils/page-data"
 import { getPublicPath } from "../utils/get-public-path"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
@@ -26,6 +25,7 @@ import { stitchSliceForAPage } from "../utils/slices/stitching"
 import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
 import { getPageMode } from "../utils/page-mode"
 import { extractUndefinedGlobal } from "../utils/extract-undefined-global"
+import { modifyPageDataForErrorMessage } from "../utils/page-data"
 
 type IActivity = any // TODO
 
@@ -532,20 +532,6 @@ class BuildHTMLError extends Error {
   }
 }
 
-const truncateObjStrings = (obj): IPageDataWithQueryResult => {
-  // Recursively truncate strings nested in object
-  // These objs can be quite large, but we want to preserve each field
-  for (const key in obj) {
-    if (typeof obj[key] === `object`) {
-      truncateObjStrings(obj[key])
-    } else if (typeof obj[key] === `string`) {
-      obj[key] = truncate(obj[key], { length: 250 })
-    }
-  }
-
-  return obj
-}
-
 export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
@@ -563,22 +549,23 @@ export const doBuildPages = async (
 
     if (error?.context?.path) {
       const pageData = await getPageData(error.context.path)
-      const truncatedPageData = truncateObjStrings(pageData)
+      const modifiedPageDataForErrorMessage =
+        modifyPageDataForErrorMessage(pageData)
 
-      const pageDataMessage = `Page data from page-data.json for the failed page "${
+      const errorMessage = `Truncated page data information for the failed page "${
         error.context.path
-      }": ${JSON.stringify(truncatedPageData, null, 2)}`
+      }": ${JSON.stringify(modifiedPageDataForErrorMessage, null, 2)}`
 
       // This is our only error during preview so customize it a bit + add the
       // pretty build error.
       if (isPreview) {
         reporter.error({
           id: `95314`,
-          context: { pageData: pageDataMessage },
+          context: { errorMessage },
           error: buildError,
         })
       } else {
-        reporter.error(pageDataMessage)
+        reporter.error(errorMessage)
       }
     }
 
@@ -657,7 +644,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         Stage.BuildHTML
       )
     } catch (err) {
-      let id = `95313` // TODO: verify error IDs exist
+      let id = `95313`
       const context = {
         errorPath: err.context && err.context.path,
         undefinedGlobal: ``,

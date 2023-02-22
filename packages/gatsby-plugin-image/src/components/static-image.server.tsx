@@ -11,6 +11,7 @@ export interface IStaticImageProps
   extends Omit<GatsbyImageProps, "image">,
     Omit<ISharpGatsbyImageArgs, "backgroundColor"> {
   src: string
+  filename?: string
 }
 
 // These values are added by Babel. Do not add them manually
