@@ -193,7 +193,7 @@ interface IForeignReferenceMapState {
 function cleanupReferencesFromEntry(
   foreignReferenceMapState: IForeignReferenceMapState,
   entry: EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
-) {
+): void {
   const { links, backLinks } = foreignReferenceMapState
   const entryId = entry.sys.id
 

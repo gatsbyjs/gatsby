@@ -421,8 +421,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           type: `Int`,
           defaultValue: 50,
         },
+        // @todo fix the type for extraArgs in gatsby-plugin-iomage so we dont have to cast to any here
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any
-      // @todo fix the type for extraArgs in gatsby-plugin-iomage so we dont have to cast to any here
     )
     gatsbyImageData.type = `JSON`
     createTypes(
