@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.7.0/packages/gatsby) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+#### Bug Fixes
+
+- Adjust framework chunk overwrite [#37658](https://github.com/gatsbyjs/gatsby/issues/37658) ([d47ef5e](https://github.com/gatsbyjs/gatsby/commit/d47ef5e1e64f3ae0284b34d4ad822cece26f6f08))
+- fix types for printTypeDefinitions action fix [#37647](https://github.com/gatsbyjs/gatsby/issues/37647) ([bc6c3ef](https://github.com/gatsbyjs/gatsby/commit/bc6c3efb139b09576e12ce4b4cde8e61b148f86c))
+
+#### Performance Improvements
+
+- don't create Head modules in develop if it's not used [#37619](https://github.com/gatsbyjs/gatsby/issues/37619) ([890396e](https://github.com/gatsbyjs/gatsby/commit/890396eb70807bc927c713af6d9252e1185ce805))
+
+#### Chores
+
+- Docs for `wrapRootElement` + `Head` [#37519](https://github.com/gatsbyjs/gatsby/issues/37519) ([9e3698e](https://github.com/gatsbyjs/gatsby/commit/9e3698e9240dc378be1adc0977b001a8b9a20303))
+- Remove `navigate` from `PageProps` [#37624](https://github.com/gatsbyjs/gatsby/issues/37624) ([7eb0ae6](https://github.com/gatsbyjs/gatsby/commit/7eb0ae6e0e5e95d8a87a31ad19ae53336a340f62))
+
 ### [5.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.6.1/packages/gatsby) (2023-02-16)
 
 #### Bug Fixes

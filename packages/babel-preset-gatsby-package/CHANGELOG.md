@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@3.7.0/packages/babel-preset-gatsby-package) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+#### Bug Fixes
+
+- Pin `@babel/plugin-transform-modules-commonjs` to 7.18.6 [#37660](https://github.com/gatsbyjs/gatsby/issues/37660) ([389b100](https://github.com/gatsbyjs/gatsby/commit/389b100067708c7ee1ee0038cfb4a71233553a3c))
+
 ## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@3.6.0/packages/babel-preset-gatsby-package) (2023-02-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)

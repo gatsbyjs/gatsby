@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.7.0/packages/gatsby-core-utils) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-core-utils
+
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.6.0/packages/gatsby-core-utils) (2023-02-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
