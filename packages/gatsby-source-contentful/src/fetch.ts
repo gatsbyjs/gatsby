@@ -294,7 +294,7 @@ export async function fetchContent({
   }
 
   // Fetch entries and assets via Contentful CDA sync API
-  const pageLimit = pluginConfig.get(`pageLimit`) | 100
+  const pageLimit = pluginConfig.get(`pageLimit`) || 100
   reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
   const syncProgress = reporter.createProgress(
     `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
@@ -428,7 +428,7 @@ export async function fetchContentTypes({
     reporter,
   })
   const client = createClient(contentfulClientOptions)
-  const pageLimit = pluginConfig.get(`pageLimit`) | 100
+  const pageLimit = pluginConfig.get(`pageLimit`) || 100
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
     `environment`
   )}`

@@ -233,14 +233,14 @@ export const buildForeignReferenceMap = ({
   defaultLocale: string
   space: Space
   useNameForId: boolean
-  previousForeignReferenceMapState: IForeignReferenceMapState
+  previousForeignReferenceMapState?: IForeignReferenceMapState
   deletedEntries: Array<
     EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
   >
 }): IForeignReferenceMapState => {
   const foreignReferenceMapState: IForeignReferenceMapState =
     previousForeignReferenceMapState || {
-      links: {},
+      links: [],
       backLinks: {},
     }
 
@@ -281,7 +281,7 @@ export const buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
-                const key = createRefId(v)
+                const key = createLinkRefId(v)
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
                   return
@@ -308,7 +308,7 @@ export const buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = createRefId(entryItemFieldValue)
+            const key = createLinkRefId(entryItemFieldValue)
             // Don't create link to an unresolvable field.
             if (!resolvable.has(key)) {
               return
@@ -354,7 +354,6 @@ function prepareTextNode(id, node, _key, text): IContentfulTextNode {
       content: str,
       // entryItem.sys.publishedAt is source of truth from contentful
       contentDigest: node.sys.publishedAt,
-      owner: `gatsby-source-contentful`,
     },
     children: [],
     sys: {
@@ -578,7 +577,7 @@ export const createNodesForContentType = ({
               // creating an empty node field in case when original key field value
               // is empty due to links to missing entities
               const resolvableEntryItemFieldValue = entryItemFieldValue
-                .filter(v => resolvable.has(createRefId(v)))
+                .filter(v => resolvable.has(createLinkRefId(v)))
                 .map(function (v) {
                   return mId(
                     space.sys.id,
@@ -592,7 +591,7 @@ export const createNodesForContentType = ({
               }
             }
           } else if (entryItemFieldValue?.sys?.type === `Link`) {
-            if (resolvable.has(createRefId(entryItemFieldValue))) {
+            if (resolvable.has(createLinkRefId(entryItemFieldValue))) {
               entryItemFields[entryItemFieldKey] = mId(
                 space.sys.id,
                 entryItemFieldValue.sys.id,
@@ -644,7 +643,6 @@ export const createNodesForContentType = ({
           type: makeTypeName(contentTypeItemId),
           // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
           contentDigest: entryItem.sys.updatedAt,
-          owner: `gatsby-source-contentful`,
         },
         // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
         // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field

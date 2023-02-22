@@ -13,8 +13,8 @@ import { GatsbyNode } from "gatsby"
 import { IPluginOptions } from "./types/plugin"
 import {
   GraphQLFieldConfig,
+  GraphQLFloat,
   GraphQLInt,
-  GraphQLJSON,
   GraphQLString,
   GraphQLType,
 } from "gatsby/graphql"
@@ -67,7 +67,7 @@ const ContentfulDataTypes: Map<
   [
     `Number`,
     (): IContentfulGraphQLField => {
-      return { type: `Float` }
+      return { type: GraphQLFloat }
     },
   ],
   [
@@ -141,8 +141,14 @@ const getLinkFieldType = (
       // Single content type
       if (translatedTypeNames.length === 1) {
         const typeName = translatedTypeNames.shift()
-        if (!typeName || field.id) {
-          throw new Error(`Translated type name can not be empty`)
+        if (!typeName || !field.id) {
+          throw new Error(
+            `Translated type name can not be empty. A field id is required as well. ${JSON.stringify(
+              { typeName, field, translatedTypeNames, shortTypeNames },
+              null,
+              2
+            )}`
+          )
         }
         return {
           type: typeName,
@@ -220,7 +226,7 @@ const translateFieldType = (
     if (!primitiveType) {
       throw new Error(`Contentful field type ${field.type} is not supported.`)
     }
-    fieldType = field
+    fieldType = primitiveType(field)
   }
 
   // @todo what do we do when preview is enabled? Emptry required fields are valid for Contentfuls CP-API
@@ -415,28 +421,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           type: `Int`,
           defaultValue: 50,
         },
-        backgroundColor: {
-          type: GraphQLString,
-        },
-        blurredOptions: {
-          type: GraphQLJSON,
-        },
-        height: {
-          type: GraphQLInt,
-        },
-        placeholder: {
-          type: GraphQLString,
-        },
-        toFormat: {
-          type: GraphQLString,
-        },
-        tracedSVGOptions: {
-          type: GraphQLJSON,
-        },
-        width: {
-          type: GraphQLInt,
-        },
-      }
+      } as any
+      // @todo fix the type for extraArgs in gatsby-plugin-iomage so we dont have to cast to any here
     )
     gatsbyImageData.type = `JSON`
     createTypes(

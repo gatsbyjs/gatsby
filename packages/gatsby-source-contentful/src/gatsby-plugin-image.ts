@@ -7,6 +7,7 @@ import {
   IGatsbyImageHelperArgs,
   ImageFormat,
 } from "gatsby-plugin-image"
+import { ImageFit } from "gatsby-plugin-utils/polyfill-remote-file/types"
 import path from "path"
 
 import {
@@ -188,13 +189,13 @@ function getBasicImageProps(
     height,
   }
 }
-
 // Generate image source data for gatsby-plugin-image
 export function generateImageSource(
   filename: string,
   width: number,
   height: number,
   toFormat: "gif" | ImageFormat,
+  _fit: ImageFit | null,
   imageTransformOptions: IContentfulImageAPITransformerOptions
 ): { width: number; height: number; format: string; src: string } | undefined {
   const imageFormatDefaults = imageTransformOptions[`${toFormat}Options`]
@@ -288,7 +289,6 @@ export async function resolveGatsbyImageData(
 
   options = doMergeDefaults(options, defaults)
 
-  
   if (options.placeholder === `tracedSVG`) {
     if (!didShowTraceSVGRemovalWarning) {
       console.warn(

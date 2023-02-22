@@ -60,10 +60,6 @@ jest.mock(`../plugin-options`, () => {
   }
 })
 
-// jest so test output is not filled with contentful plugin logs
-// @ts-ignore
-global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
-
 const proxyOption = {
   host: `localhost`,
   port: 9001,
@@ -113,6 +109,9 @@ beforeEach(() => {
   global.process.exit.mockClear()
   reporter.panic.mockClear()
   mockClient.getLocales.mockClear()
+  mockClient.getContentTypes.mockClear()
+  mockClient.getSpace.mockClear()
+  mockClient.getTags.mockClear()
   // @ts-ignore
   formatPluginOptionsForCLI.mockClear()
   // @ts-ignore

@@ -79,25 +79,6 @@ Array [
         "dontInfer": Object {},
       },
       "fields": Object {
-        "tags": Object {
-          "extensions": Object {
-            "link": Object {
-              "by": "id",
-              "from": "tags",
-            },
-          },
-          "type": "[ContentfulTag]!",
-        },
-      },
-      "name": "ContentfulMetadata",
-    },
-  ],
-  Array [
-    Object {
-      "extensions": Object {
-        "dontInfer": Object {},
-      },
-      "fields": Object {
         "contentful_id": Object {
           "type": "String!",
         },
@@ -112,6 +93,25 @@ Array [
         "Node",
       ],
       "name": "ContentfulTag",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "tags": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "tags",
+            },
+          },
+          "type": "[ContentfulTag]!",
+        },
+      },
+      "name": "ContentfulMetadata",
     },
   ],
   Array [
