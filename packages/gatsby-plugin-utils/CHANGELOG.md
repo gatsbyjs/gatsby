@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.7.0/packages/gatsby-plugin-utils) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.6.0/packages/gatsby-plugin-utils) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- Export two `IRemoteFile` utility types [#37532](https://github.com/gatsbyjs/gatsby/issues/37532) ([d5a10f8](https://github.com/gatsbyjs/gatsby/commit/d5a10f830cb606bb7fc21033421317c055701758))
+
+#### Chores
+
+- update dependency msw to ^0.49.3 for gatsby-plugin-utils [#37565](https://github.com/gatsbyjs/gatsby/issues/37565) ([c4b92c8](https://github.com/gatsbyjs/gatsby/commit/c4b92c803bcfefd7c70a60f9b7fe32a2b9da9937))
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.5.0/packages/gatsby-plugin-utils) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Chores
+
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.4.0/packages/gatsby-plugin-utils) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update dependency msw to ^0.49.2 for gatsby-plugin-utils [#37362](https://github.com/gatsbyjs/gatsby/issues/37362) ([8dc9156](https://github.com/gatsbyjs/gatsby/commit/8dc915636f5be79bc44ca67d57458ac687403f88))
+
+### [4.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.3.1/packages/gatsby-plugin-utils) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.3.0/packages/gatsby-plugin-utils) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Features
+
+- add path prefix to image cdn urls fix [#36772](https://github.com/gatsbyjs/gatsby/issues/36772) ([5580c73](https://github.com/gatsbyjs/gatsby/commit/5580c736e32eb2a1c25f38f4ed60ba7c98c56306))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-utils [#37155](https://github.com/gatsbyjs/gatsby/issues/37155) ([8a874ed](https://github.com/gatsbyjs/gatsby/commit/8a874edfbc845451a47b95565012647c534c6c94))
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update dependency msw to ^0.49.1 for gatsby-plugin-utils [#37188](https://github.com/gatsbyjs/gatsby/issues/37188) ([2ec7a92](https://github.com/gatsbyjs/gatsby/commit/2ec7a9203c151650c2f240fa83981385867b5fdf))
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.2.0/packages/gatsby-plugin-utils) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.1.0/packages/gatsby-plugin-utils) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.0.0/packages/gatsby-plugin-utils) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- Update to GraphQL 16 [#36813](https://github.com/gatsbyjs/gatsby/issues/36813) ([9f840ad](https://github.com/gatsbyjs/gatsby/commit/9f840adc2e5fada5014f27814b49fbdf914d4ef9))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [3.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.18.0/packages/gatsby-plugin-utils) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

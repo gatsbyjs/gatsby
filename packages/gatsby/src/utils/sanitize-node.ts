@@ -3,15 +3,15 @@ import _ from "lodash"
 import type { IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
 
-type data = IGatsbyNode | GatsbyIterable<IGatsbyNode>
+type Data = IGatsbyNode | GatsbyIterable<IGatsbyNode>
+
+type OmitUndefined = (data: Data) => Partial<Data>
 
 /**
  * @param {Object|Array} data
  * @returns {Object|Array} data without undefined values
  */
-type omitUndefined = (data: data) => Partial<data>
-
-const omitUndefined: omitUndefined = data => {
+const omitUndefined: OmitUndefined = data => {
   const isPlainObject = _.isPlainObject(data)
   if (isPlainObject) {
     return _.pickBy(data, p => p !== undefined)
@@ -20,12 +20,12 @@ const omitUndefined: omitUndefined = data => {
   return (data as GatsbyIterable<IGatsbyNode>).filter(p => p !== undefined)
 }
 
+type isTypeSupported = (data: Data) => boolean
+
 /**
  * @param {*} data
- * @return {boolean}
+ * @return {boolean} Boolean if type is supported
  */
-type isTypeSupported = (data: data) => boolean
-
 const isTypeSupported: isTypeSupported = data => {
   if (data === null) {
     return true
@@ -41,42 +41,67 @@ const isTypeSupported: isTypeSupported = data => {
   return isSupported
 }
 
+type sanitizeNode = (
+  data: Data,
+  isNode?: boolean,
+  path?: Set<unknown>
+) => Data | undefined
+
 /**
  * Make data serializable
  * @param {(Object|Array)} data to sanitize
  * @param {boolean} isNode = true
  * @param {Set<string>} path = new Set
  */
-
-type sanitizeNode = (
-  data: data,
-  isNode?: boolean,
-  path?: Set<unknown>
-) => data | undefined
-
-const sanitizeNode: sanitizeNode = (data, isNode = true, path = new Set()) => {
+export const sanitizeNode: sanitizeNode = (
+  data,
+  isNode = true,
+  path = new Set()
+) => {
   const isPlainObject = _.isPlainObject(data)
+  const isArray = _.isArray(data)
 
-  if (isPlainObject || _.isArray(data)) {
+  if (isPlainObject || isArray) {
     if (path.has(data)) return data
     path.add(data)
 
-    const returnData = isPlainObject ? {} : []
+    const returnData = isPlainObject
+      ? ({} as IGatsbyNode)
+      : ([] as Array<IGatsbyNode>)
     let anyFieldChanged = false
-    _.each(data, (o, key) => {
+
+    // _.each is a "Collection" method and thus objects with "length" property are iterated as arrays
+    const hasLengthProperty = isPlainObject
+      ? Object.prototype.hasOwnProperty.call(data, `length`)
+      : false
+    let lengthProperty
+    if (hasLengthProperty) {
+      lengthProperty = (data as IGatsbyNode).length
+      delete (data as IGatsbyNode).length
+    }
+
+    _.each(data, (value, key) => {
       if (isNode && key === `internal`) {
-        returnData[key] = o
+        returnData[key] = value
         return
       }
-      returnData[key] = sanitizeNode(o as data, false, path)
+      returnData[key] = sanitizeNode(value as Data, false, path)
 
-      if (returnData[key] !== o) {
+      if (returnData[key] !== value) {
         anyFieldChanged = true
       }
     })
 
+    if (hasLengthProperty) {
+      ;(data as IGatsbyNode).length = lengthProperty
+      returnData.length = sanitizeNode(lengthProperty as Data, false, path)
+      if (returnData.length !== lengthProperty) {
+        anyFieldChanged = true
+      }
+    }
+
     if (anyFieldChanged) {
-      data = omitUndefined(returnData as data) as data
+      data = omitUndefined(returnData as Data) as Data
     }
 
     // arrays and plain objects are supported - no need to to sanitize
@@ -89,5 +114,3 @@ const sanitizeNode: sanitizeNode = (data, isNode = true, path = new Set()) => {
     return data
   }
 }
-
-export default sanitizeNode

@@ -4,65 +4,36 @@ import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
-import { VALID_NODE_NAMES } from "./constants"
 import {
   headExportValidator,
   filterHeadProps,
-  warnForInvalidTags,
   diffNodes,
+  getValidHeadNodesAndAttributes,
+  removePrevHeadElements,
+  applyHtmlAndBodyAttributes,
+  removeHtmlAndBodyAttributes,
 } from "./utils"
+import { apiRunner } from "../api-runner-browser"
 
 const hiddenRoot = document.createElement(`div`)
-
-const removePrevHeadElements = () => {
-  const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
-
-  for (const node of prevHeadNodes) {
-    node.parentNode.removeChild(node)
-  }
+const keysOfHtmlAndBodyAttributes = {
+  html: [],
+  body: [],
 }
 
 const onHeadRendered = () => {
-  const validHeadNodes = []
+  const { validHeadNodes, htmlAndBodyAttributes } =
+    getValidHeadNodesAndAttributes(hiddenRoot)
 
-  const seenIds = new Map()
-  for (const node of hiddenRoot.childNodes) {
-    const nodeName = node.nodeName.toLowerCase()
-    const id = node.attributes?.id?.value
+  keysOfHtmlAndBodyAttributes.html = Object.keys(htmlAndBodyAttributes.html)
+  keysOfHtmlAndBodyAttributes.body = Object.keys(htmlAndBodyAttributes.body)
 
-    if (!VALID_NODE_NAMES.includes(nodeName)) {
-      warnForInvalidTags(nodeName)
-    } else {
-      let clonedNode = node.cloneNode(true)
-      clonedNode.setAttribute(`data-gatsby-head`, true)
+  applyHtmlAndBodyAttributes(htmlAndBodyAttributes)
 
-      // Create an element for scripts to make script work
-      if (clonedNode.nodeName.toLowerCase() === `script`) {
-        const script = document.createElement(`script`)
-        for (const attr of clonedNode.attributes) {
-          script.setAttribute(attr.name, attr.value)
-        }
-        script.innerHTML = clonedNode.innerHTML
-        clonedNode = script
-      }
-
-      if (id) {
-        if (!seenIds.has(id)) {
-          validHeadNodes.push(clonedNode)
-          seenIds.set(id, validHeadNodes.length - 1)
-        } else {
-          const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
-            validHeadNodes[indexOfPreviouslyInsertedNode]
-          )
-          validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
-        }
-      } else {
-        validHeadNodes.push(clonedNode)
-      }
-    }
-  }
-
+  /**
+   * The rest of the code block below is a diffing mechanism to ensure that
+   * the head elements aren't duplicted on every re-render.
+   */
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
   if (existingHeadElements.length === 0) {
@@ -82,8 +53,28 @@ const onHeadRendered = () => {
 }
 
 if (process.env.BUILD_STAGE === `develop`) {
-  // We set up observer to be able to regenerate <head> after react-refresh
-  // updates our hidden element.
+  // sigh ... <html> and <body> elements are not valid descedents of <div> (our hidden element)
+  // react-dom in dev mode will warn about this. There doesn't seem to be a way to render arbitrary
+  // user Head without hitting this issue (our hidden element could be just "new Document()", but
+  // this can only have 1 child, and we don't control what is being rendered so that's not an option)
+  // instead we continue to render to <div>, and just silence warnings for <html> and <body> elements
+  // https://github.com/facebook/react/blob/e2424f33b3ad727321fc12e75c5e94838e84c2b5/packages/react-dom-bindings/src/client/validateDOMNesting.js#L498-L520
+  const originalConsoleError = console.error.bind(console)
+  console.error = (...args) => {
+    if (
+      Array.isArray(args) &&
+      args.length >= 2 &&
+      args[0]?.includes?.(`validateDOMNesting(...): %s cannot appear as`) &&
+      (args[1] === `<html>` || args[1] === `<body>`)
+    ) {
+      return undefined
+    }
+    return originalConsoleError(...args)
+  }
+
+  /* We set up observer to be able to regenerate <head> after react-refresh
+     updates our hidden element.
+  */
   const observer = new MutationObserver(onHeadRendered)
   observer.observe(hiddenRoot, {
     attributes: true,
@@ -104,7 +95,18 @@ export function headHandlerForBrowser({
 
       const { render } = reactDOMUtils()
 
-      const Head = pageComponent.Head
+      const HeadElement = (
+        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+      )
+
+      const WrapHeadElement = apiRunner(
+        `wrapRootElement`,
+        { element: HeadElement },
+        HeadElement,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
 
       render(
         // just a hack to call the callback after react has done first render
@@ -112,9 +114,7 @@ export function headHandlerForBrowser({
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
           <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>
-              <Head {...filterHeadProps(pageComponentProps)} />
-            </LocationProvider>
+            <LocationProvider>{WrapHeadElement}</LocationProvider>
           </StaticQueryContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot
@@ -123,6 +123,7 @@ export function headHandlerForBrowser({
 
     return () => {
       removePrevHeadElements()
+      removeHtmlAndBodyAttributes(keysOfHtmlAndBodyAttributes)
     }
   })
 }

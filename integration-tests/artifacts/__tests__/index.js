@@ -14,23 +14,6 @@ const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 const manifest = {}
 const filesToRevert = {}
 
-let _CFLAGS_ = {
-  GATSBY_MAJOR: `4`,
-}
-if (process.env.COMPILER_OPTIONS) {
-  // COMPILER_OPTIONS syntax is key=value,key2=value2
-  _CFLAGS_ = process.env.COMPILER_OPTIONS.split(`,`).reduce((acc, curr) => {
-    const [key, value] = curr.split(`=`)
-
-    if (key) {
-      acc[key] = value
-    }
-
-    return acc
-  }, _CFLAGS_)
-}
-
-let SLICES_ENABLED = _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
 let exitCode
 
 function runGatsbyWithRunTestSetup(runNumber = 1) {
@@ -346,6 +329,70 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
   })
+
+  describe(`/slices/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html stitched correctly and slice is up to date`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `Gatsby Slice Test (before edit)`
+          : `Gatsby Slice Test (after edit)`
+      )
+    })
+
+    it(`has correct html when prop is passed to slice component`, () => {
+      expect(htmlContent).toContain(`a-large-header`)
+    })
+  })
+
+  describe(`/slices/blog-1/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `blog-1`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html stitched correctly and slice is up to date`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `Gatsby Slice Test (before edit)`
+          : `Gatsby Slice Test (after edit)`
+      )
+    })
+
+    it("node change results in correct HTML for slice", () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `who lives and works in San Francisco building useful things(before edit)`
+          : `who lives and works in San Francisco building useful things(after edit)`
+      )
+    })
+  })
+
+  describe(`/slices/blog-2/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `blog-2`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`uses correct slice when a slice is changed in createPage mappping`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2 ? `Josh Johnson` : `Kyle Mathews`
+      )
+    })
+  })
 }
 
 function assertNodeCorrectness(runNumber) {
@@ -638,6 +685,8 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/page-query-template-change/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
     `/changing-context/`,
+    "/slices/blog-2/",
+    "/slices/",
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [
@@ -720,146 +769,127 @@ describe(`Second run (different pages created, data changed)`, () => {
   assertNodeCorrectness(runNumber)
 })
 
-describe(
-  SLICES_ENABLED
-    ? `Third run (js template change, just pages of that template are recreated, all pages are stitched)`
-    : `Third run (js change, all pages are recreated)`,
+describe(`Third run (js template change, just pages of that template are recreated, all pages are stitched)`, () => {
+  const runNumber = 3
 
-  () => {
-    const runNumber = 3
+  const expectedPagesToRemainFromPreviousBuild = [
+    `/stale-pages/stable/`,
+    `/page-query-stable/`,
+    `/page-query-changing-but-not-invalidating-html/`,
+    `/static-query-result-tracking/stable/`,
+    `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
+    `/page-that-will-have-trailing-slash-removed`,
+  ]
 
-    const expectedPagesToRemainFromPreviousBuild = [
-      `/stale-pages/stable/`,
-      `/page-query-stable/`,
-      `/page-query-changing-but-not-invalidating-html/`,
-      `/static-query-result-tracking/stable/`,
-      `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
-      `/page-that-will-have-trailing-slash-removed`,
-    ]
+  const expectedPagesToBeGenerated = [
+    // this is page that gets template change
+    `/gatsby-browser/`,
+    // those change happen on every build
+    `/page-query-dynamic-3/`,
+    `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
+    `/changing-context/`,
+  ]
 
-    const expectedPagesToBeGenerated = [
-      // this is page that gets template change
-      `/gatsby-browser/`,
-      // those change happen on every build
-      `/page-query-dynamic-3/`,
-      `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
-      `/changing-context/`,
-    ]
+  const expectedPages = [
+    // this page should remain from first build
+    ...expectedPagesToRemainFromPreviousBuild,
+    // those pages should have been (re)created
+    ...expectedPagesToBeGenerated,
+  ]
 
-    const expectedPages = [
-      // this page should remain from first build
-      ...expectedPagesToRemainFromPreviousBuild,
-      // those pages should have been (re)created
-      ...expectedPagesToBeGenerated,
-    ]
+  const unexpectedPages = [
+    `/stale-pages/only-in-first/`,
+    `/page-query-dynamic-1/`,
+    `/page-query-dynamic-2/`,
+    `/stateful-page-not-recreated-in-third-run/`,
+  ]
 
-    const unexpectedPages = [
-      `/stale-pages/only-in-first/`,
-      `/page-query-dynamic-1/`,
-      `/page-query-dynamic-2/`,
-      `/stateful-page-not-recreated-in-third-run/`,
-    ]
+  let changedFileOriginalContent
+  const changedFileAbspath = path.join(
+    process.cwd(),
+    `src`,
+    `pages`,
+    `gatsby-browser.js`
+  )
 
-    let changedFileOriginalContent
-    const changedFileAbspath = path.join(
-      process.cwd(),
-      `src`,
-      `pages`,
-      `gatsby-browser.js`
-    )
+  beforeAll(async () => {
+    // make change to some .js
+    changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
+    filesToRevert[changedFileAbspath] = changedFileOriginalContent
 
-    beforeAll(async () => {
-      // make change to some .js
-      changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
-      filesToRevert[changedFileAbspath] = changedFileOriginalContent
+    const newContent = changedFileOriginalContent.replace(/sad/g, `not happy`)
 
-      const newContent = changedFileOriginalContent.replace(/sad/g, `not happy`)
-
-      if (newContent === changedFileOriginalContent) {
-        throw new Error(`Test setup failed`)
-      }
-
-      fs.writeFileSync(changedFileAbspath, newContent)
-      await runGatsbyWithRunTestSetup(runNumber)()
-    })
-
-    assertExitCode(runNumber)
-
-    describe(`html files`, () => {
-      const type = `html`
-
-      describe(`should have expected html files`, () => {
-        assertFileExistenceForPagePaths({
-          pagePaths: expectedPages,
-          type,
-          shouldExist: true,
-        })
-      })
-
-      describe(`shouldn't have unexpected html files`, () => {
-        assertFileExistenceForPagePaths({
-          pagePaths: unexpectedPages,
-          type,
-          shouldExist: false,
-        })
-      })
-
-      if (SLICES_ENABLED) {
-        it(`should recreate only some html files`, () => {
-          expect(manifest[runNumber].generated.sort()).toEqual(
-            expectedPagesToBeGenerated.sort()
-          )
-        })
-
-        it(`should stitch fragments back in all html files (browser bundle changed)`, () => {
-          expect(manifest[runNumber].stitched.sort()).toEqual(
-            manifest[runNumber].allPages.sort()
-          )
-        })
-      } else {
-        it(`should recreate all html files`, () => {
-          expect(manifest[runNumber].generated.sort()).toEqual(
-            manifest[runNumber].allPages.sort()
-          )
-        })
-      }
-    })
-
-    describe(`page-data files`, () => {
-      const type = `page-data`
-
-      describe(`should have expected page-data files`, () => {
-        assertFileExistenceForPagePaths({
-          pagePaths: expectedPages,
-          type,
-          shouldExist: true,
-        })
-      })
-
-      describe(`shouldn't have unexpected page-data files`, () => {
-        assertFileExistenceForPagePaths({
-          pagePaths: unexpectedPages,
-          type,
-          shouldExist: false,
-        })
-      })
-    })
-
-    if (SLICES_ENABLED) {
-      // third run - we modify template used by both ssr and browser bundle - global, shared SSR won't change
-      // as the change is localized in just one of templates, which in Gatsby 5 doesn't invalidate all html
-      // files anymore
-      assertWebpackBundleChanges({ browser: true, ssr: false, runNumber })
-    } else {
-      // third run - we modify module used by both ssr and browser bundle - both bundles should change
-      assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
+    if (newContent === changedFileOriginalContent) {
+      throw new Error(`Test setup failed`)
     }
 
-    assertHTMLCorrectness(runNumber)
+    fs.writeFileSync(changedFileAbspath, newContent)
+    await runGatsbyWithRunTestSetup(runNumber)()
+  })
 
-    assertNodeCorrectness(runNumber)
-  }
-)
+  assertExitCode(runNumber)
+
+  describe(`html files`, () => {
+    const type = `html`
+
+    describe(`should have expected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+
+    it(`should recreate only some html files`, () => {
+      expect(manifest[runNumber].generated.sort()).toEqual(
+        expectedPagesToBeGenerated.sort()
+      )
+    })
+
+    it(`should stitch fragments back in all html files (browser bundle changed)`, () => {
+      expect(manifest[runNumber].stitched.sort()).toEqual(
+        manifest[runNumber].allPages.sort()
+      )
+    })
+  })
+
+  describe(`page-data files`, () => {
+    const type = `page-data`
+
+    describe(`should have expected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+  })
+
+  // third run - we modify template used by both ssr and browser bundle - global, shared SSR won't change
+  // as the change is localized in just one of templates, which in Gatsby 5 doesn't invalidate all html
+  // files anymore
+  assertWebpackBundleChanges({ browser: true, ssr: false, runNumber })
+
+  assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
+})
 
 describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
   const runNumber = 4

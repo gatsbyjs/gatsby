@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.7.0/packages/gatsby-remark-images) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.6.0/packages/gatsby-remark-images) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.5.0/packages/gatsby-remark-images) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.4.0/packages/gatsby-remark-images) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- Do not fallback title value to alt value [#37395](https://github.com/gatsbyjs/gatsby/issues/37395) ([f6543bb](https://github.com/gatsbyjs/gatsby/commit/f6543bb8aeeb6e76a1bcb3df742160e63765c25b))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
+### [7.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.3.1/packages/gatsby-remark-images) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.3.0/packages/gatsby-remark-images) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Features
+
+- Add `avif` to supportedExtensions [#37112](https://github.com/gatsbyjs/gatsby/issues/37112) ([fbb3a3c](https://github.com/gatsbyjs/gatsby/commit/fbb3a3c0d86c7d55bd2ae34e48fa7d0da18ea825))
+
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.2.0/packages/gatsby-remark-images) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+
+#### Other Changes
+
+- Update pluginOptionsSchema tests [#27904](https://github.com/gatsbyjs/gatsby/issues/27904) ([2d967cb](https://github.com/gatsbyjs/gatsby/commit/2d967cbf3be81bb036f1f1cbc108a5e36c49785c))
+
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.1.0/packages/gatsby-remark-images) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@7.0.0/packages/gatsby-remark-images) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [6.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.24.0/packages/gatsby-remark-images) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

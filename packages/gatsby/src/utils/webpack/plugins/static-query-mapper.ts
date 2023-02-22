@@ -21,11 +21,11 @@ export const removeExportQueryParam = (
   if (!path?.includes(`?`)) {
     return path
   }
-  const [filePath, queryParams] = path?.split(`?`)
-  const params = new URLSearchParams(queryParams)
+  const [filePath, queryParams] = path.split(`?`)
+  const params = new URLSearchParams(queryParams.replace(/[+]/g, `%2B`))
   params.delete(`export`)
 
-  const paramsString = params.toString()
+  const paramsString = params.toString().replace(/[+]/g, `%20`)
 
   return `${filePath}${
     paramsString ? `?${decodeURIComponent(paramsString)}` : ``

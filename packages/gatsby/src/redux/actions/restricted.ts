@@ -436,6 +436,26 @@ export const actions = {
       }
     },
 
+  /**
+   * Create a new Slice. See the technical docs for the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
+   *
+   * @availableIn [createPages]
+   *
+   * @param {object} $0
+   * @param {Object} slice a slice object
+   * @param {string} slice.id The unique ID for this slice
+   * @param {string} slice.component The absolute path to the component for this slice
+   * @param {Object} slice.context Context data for this slice. Passed as props
+   * to the component `this.props.sliceContext` as well as to the graphql query
+   * as graphql arguments.
+   * @example
+   * exports.createPages = ({ actions }) => {
+   *   actions.createSlice({
+   *     id: `navigation-bar`,
+   *     component: path.resolve(`./src/components/navigation-bar.js`),
+   *   })
+   * }
+   */
   createSlice: (
     payload: ICreateSliceInput,
     plugin: IGatsbyPlugin,

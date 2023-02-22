@@ -11,7 +11,7 @@ import { actions } from "../../redux/actions"
 import reporter from "gatsby-cli/lib/reporter"
 import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
-import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
+import { setGatsbyPluginCache } from "../../utils/import-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
@@ -59,18 +59,20 @@ export class GraphQLEngine {
         payload: flattenedPlugins,
       })
 
-      for (const pluginName of Object.keys(gatsbyNodes)) {
+      for (const plugin of gatsbyNodes) {
+        const { name, module, importKey } = plugin
         setGatsbyPluginCache(
-          { name: pluginName, resolve: `` },
+          { name, resolve: ``, importKey },
           `gatsby-node`,
-          gatsbyNodes[pluginName]
+          module
         )
       }
-      for (const pluginName of Object.keys(gatsbyWorkers)) {
+      for (const plugin of gatsbyWorkers) {
+        const { name, module, importKey } = plugin
         setGatsbyPluginCache(
-          { name: pluginName, resolve: `` },
+          { name, resolve: ``, importKey },
           `gatsby-worker`,
-          gatsbyWorkers[pluginName]
+          module
         )
       }
 

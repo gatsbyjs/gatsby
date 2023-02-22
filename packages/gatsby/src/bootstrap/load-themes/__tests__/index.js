@@ -1,4 +1,4 @@
-const loadThemes = require(`..`)
+const { loadThemes } = require(`..`)
 const path = require(`path`)
 
 describe(`loadThemes`, () => {

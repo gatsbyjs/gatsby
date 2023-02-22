@@ -89,15 +89,17 @@ describe(`generic`, () => {
       entryList,
     })
 
-    const foreignReferenceMap = buildForeignReferenceMap({
+    const foreignReferenceMapState = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
       space,
       useNameForId: true,
+      previousForeignReferenceMapState: undefined,
+      deletedEntries: [],
     })
-    const referenceKeys = Object.keys(foreignReferenceMap)
+    const referenceKeys = Object.keys(foreignReferenceMapState.backLinks)
     const expectedReferenceKeys = [
       `2Y8LhXLnYAYqKCGEWG4EKI___Asset`,
       `3wtvPBbBjiMKqKKga8I2Cu___Asset`,
@@ -117,7 +119,7 @@ describe(`generic`, () => {
     expect(referenceKeys).toHaveLength(expectedReferenceKeys.length)
     expect(referenceKeys).toEqual(expect.arrayContaining(expectedReferenceKeys))
 
-    Object.keys(foreignReferenceMap).forEach(referenceId => {
+    Object.keys(foreignReferenceMapState.backLinks).forEach(referenceId => {
       expect(resolvable).toContain(referenceId)
 
       let expectedLength = 1
@@ -127,7 +129,9 @@ describe(`generic`, () => {
       if (referenceId === `7LAnCobuuWYSqks6wAwY2a___Entry`) {
         expectedLength = 3
       }
-      expect(foreignReferenceMap[referenceId]).toHaveLength(expectedLength)
+      expect(foreignReferenceMapState.backLinks[referenceId]).toHaveLength(
+        expectedLength
+      )
     })
   })
 })
@@ -144,22 +148,26 @@ describe(`Process contentful data (by name)`, () => {
       entryList,
     })
 
-    const foreignReferenceMap = buildForeignReferenceMap({
+    const foreignReferenceMapState = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
       space,
       useNameForId: true,
+      previousForeignReferenceMapState: undefined,
+      deletedEntries: [],
     })
 
-    expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
-      `product`
-    )
+    expect(
+      foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
+        .name
+    ).toBe(`product`)
 
-    expect(foreignReferenceMap[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0].name).toBe(
-      `brand`
-    )
+    expect(
+      foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
+        .name
+    ).toBe(`brand`)
   })
 
   it(`creates nodes for each entry`, () => {
@@ -180,6 +188,8 @@ describe(`Process contentful data (by name)`, () => {
       defaultLocale,
       space,
       useNameForId: true,
+      previousForeignReferenceMapState: undefined,
+      deletedEntries: [],
     })
 
     const createNode = jest.fn()
@@ -269,6 +279,8 @@ describe(`Process existing mutated nodes in warm build`, () => {
       defaultLocale,
       space,
       useNameForId: true,
+      previousForeignReferenceMapState: undefined,
+      deletedEntries: [],
     })
 
     const createNode = jest.fn()
@@ -345,22 +357,26 @@ describe(`Process contentful data (by id)`, () => {
       assets: currentSyncData.assets,
       entryList,
     })
-    const foreignReferenceMap = buildForeignReferenceMap({
+    const foreignReferenceMapState = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
       space,
       useNameForId: false,
+      previousForeignReferenceMapState: undefined,
+      deletedEntries: [],
     })
 
-    expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
-      `2pqfxujwe8qsykum0u6w8m`
-    )
+    expect(
+      foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
+        .name
+    ).toBe(`2pqfxujwe8qsykum0u6w8m`)
 
-    expect(foreignReferenceMap[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0].name).toBe(
-      `sfztzbsum8coewygeuyes`
-    )
+    expect(
+      foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
+        .name
+    ).toBe(`sfztzbsum8coewygeuyes`)
   })
 
   it(`creates nodes for each entry`, () => {
@@ -379,6 +395,8 @@ describe(`Process contentful data (by id)`, () => {
       defaultLocale,
       space,
       useNameForId: false,
+      previousForeignReferenceMapState: undefined,
+      deletedEntries: [],
     })
 
     const createNode = jest.fn()

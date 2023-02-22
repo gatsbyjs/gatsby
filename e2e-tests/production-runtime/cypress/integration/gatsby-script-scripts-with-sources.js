@@ -8,8 +8,13 @@ const page = {
   navigation: `/gatsby-script-navigation/`,
 }
 
-Cypress.on('uncaught:exception', (err) => {
-  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+Cypress.on(`uncaught:exception`, err => {
+  if (
+    (err.message.includes(`Minified React error #418`) ||
+      err.message.includes(`Minified React error #423`) ||
+      err.message.includes(`Minified React error #425`)) &&
+    Cypress.env(`TEST_PLUGIN_OFFLINE`)
+  ) {
     return false
   }
 })
@@ -131,8 +136,8 @@ describe(`scripts with sources`, () => {
     it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
       cy.visit(page.navigation).waitForRouteChange()
       cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
-      cy.go(`back`)
-      cy.go(`forward`)
+      cy.go(`back`).waitForRouteChange()
+      cy.go(`forward`).waitForRouteChange()
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
@@ -162,8 +167,8 @@ describe(`scripts with sources`, () => {
     it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
       cy.visit(page.navigation).waitForRouteChange()
       cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
-      cy.go(`back`)
-      cy.go(`forward`)
+      cy.go(`back`).waitForRouteChange()
+      cy.go(`forward`).waitForRouteChange()
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()

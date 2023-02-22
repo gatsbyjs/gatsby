@@ -3,8 +3,6 @@ title: "Creating a Source Plugin"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement } from "gatsby-interface"
-
 Source plugins are reusable integrations with content and data backends. There are already [100s of ready-to-use source plugins for popular content APIs](/plugins/?=gatsby-source) like Contentful, Drupal, and WordPress. This tutorial teaches you how to build your own integration.
 
 In this tutorial, you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
@@ -150,7 +148,6 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType,
 }) => {
   const { createNode } = actions
 
@@ -220,17 +217,15 @@ The above snippet shows a contrived example for the `cache`, but it can be used 
 exports.sourceNodes = async ({ cache }) => {
   // get the last timestamp from the cache
   const lastFetched = await cache.get(`timestamp`)
-
+  const newTimestamp = Date.now()
   // pull data from some remote source using cached data as an option in the request
   const data = await fetch(
     `https://remotedatasource.com/posts?lastUpdated=${lastFetched}`
   )
-  // ...
-}
 
-exports.onPostBuild = async ({ cache }) => {
-  // set a timestamp at the end of the build
-  await cache.set(`timestamp`, Date.now())
+  // If the fetch succeeds, store the new timestamp in the cache
+  await cache.set(`timestamp`, newTimestamp)
+  // ...
 }
 ```
 
@@ -322,7 +317,6 @@ Now you can replace the hardcoded data in the `sourceNodes` function with a Grap
     actions,
     createContentDigest,
     createNodeId,
-    getNodesByType,
   }) => {
     const { createNode, touchNode, deleteNode } = actions
 
@@ -386,7 +380,6 @@ exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
-  getNodesByType,
 }) => {
   const { createNode, touchNode, deleteNode } = actions
 
@@ -556,7 +549,7 @@ if (fileNode) {
 
 By using [`createNodeField`](/docs/reference/config-files/actions/#createNodeField) you're extending the existing node and place a new field named `localFile` under the `fields` key.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** Do not mutate the `node` directly and use `createNodeField` instead. Otherwise the change won't be persisted and you might see inconsistent data. This behavior changed with Gatsby 4, read the [migration guide](/docs/reference/release-notes/migrating-from-v3-to-v4/#dont-mutate-nodes-outside-of-expected-apis) to learn more.
 
@@ -786,7 +779,7 @@ Now the options you designated (like `previewMode: true`) will be passed into ea
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
-  { actions, createContentDigest, createNodeId, getNodesByType },
+  { actions, createContentDigest, createNodeId },
   pluginOptions // highlight-line
 ) => {
   const { createNode, touchNode, deleteNode } = actions
@@ -818,10 +811,10 @@ The source plugin needs to create node manifests using the [`unstable_createNode
 
 The first thing you'll want to do is identify which nodes you'll want to create a node manifest for. These will typically be nodes that you can preview, entry nodes, top level nodes, etc. An example of this could be a blog post or an article, any node that can be the "owner" of a page. A good place to call this action is whenever you call `createNode`.
 
-An easy way to keep track of your manifest logic is to parse it out into a different util function. Either inside the `createNodeManifest` util or before you call it you'll need to vet which nodes you'll want to create manifests for.
+An easy way to keep track of your manifest logic is to parse it out into a different util function. Before you call `unstable_createNodeManifest` you'll need to vet which nodes you'll want to create manifests for.
 
 ```javascript:title=source-plugin/gatsby-node.js
-import { createNodeManifest } from "./utils.js"
+import { customCreateNodeManifest } from "./utils.js"
 exports.sourceNodes = async (
   { actions }
 ) => {
@@ -834,7 +827,7 @@ exports.sourceNodes = async (
 
     const nodeIsEntryNode = `some condition`
     if (nodeIsEntryNode) {
-      createNodeManifest({
+      customCreateNodeManifest({
         entryItem: node,
         entryNode: gatsbyNode,
         project,
@@ -848,10 +841,10 @@ exports.sourceNodes = async (
 
 ##### Check for support
 
-At the moment you'll only want to create node manifests for preview content and because this is a newer API, we'll need to check if the Gatsby version supports [`unstable_createNodeManifest`](/docs/reference/config-files/actions/#unstable_createNodeManifest).
+At the moment you'll only want to create node manifests for preview content. You may also want to filter out certain types of nodes, for example if your CMS has nodes that will never be previewed like redirect nodes or other types of non-content data.
 
 ```javascript:title=source-plugin/utils.js
-export function createNodeManifest({
+export function customCreateNodeManifest({
   entryItem, // the raw data source/cms content data
   project,   // the cms project data
   entryNode, // the Gatsby node
@@ -861,10 +854,7 @@ export function createNodeManifest({
   // This env variable is provided automatically on Gatsby Cloud hosting
   const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
-  const createNodeManifestIsSupported =
-    typeof unstable_createNodeManifest === `function`
-
-  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
+  const shouldCreateNodeManifest = isPreview && !!customNodeFilteringFn(entryNode)
   // highlight-end
 
   if (shouldCreateNodeManifest) {
@@ -878,7 +868,7 @@ export function createNodeManifest({
 Next we will build up the `manifestId` and call `unstable_createNodeManifest`. The `manifestId` needs to be created with information that comes from the CMS **NOT** Gatsby (the CMS will need to create the exact same manifest), which is why we use the `entryItem` id as opposed to the `entryNode` id. This `manifestId` must be uniquely tied to a specific revision of specific content. We use the CMS project space (you may not need this), the id of the content, and finally the timestamp that it was updated at.
 
 ```javascript:title=source-plugin/utils.js
-export function createNodeManifest({
+export function customCreateNodeManifest({
   // ...
 }) {
   // ...
@@ -907,7 +897,7 @@ Lastly we'll want to give our users a good experience and give a warning if they
 let warnOnceForNoSupport = false
 // highlight-end
 
-export function createNodeManifest({
+export function customCreateNodeManifest({
   // ...
 }) {
   // ...

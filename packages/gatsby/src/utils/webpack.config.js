@@ -26,9 +26,15 @@ import { shouldGenerateEngines } from "./engines-helpers"
 import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
-import { satisfiesSemvers } from "./flags"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
+
+// This regex ignores nested copies of framework libraries so they're bundled with their issuer
+const FRAMEWORK_BUNDLES_REGEX = new RegExp(
+  `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
+    `|`
+  )})[\\\\/]`
+)
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -582,12 +588,7 @@ module.exports = async (
           framework: {
             chunks: `all`,
             name: `framework`,
-            // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
-            test: new RegExp(
-              `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-                `|`
-              )})[\\\\/]`
-            ),
+            test: FRAMEWORK_BUNDLES_REGEX,
             priority: 40,
             // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
             enforce: true,
@@ -634,12 +635,22 @@ module.exports = async (
         framework: {
           chunks: `all`,
           name: `framework`,
-          // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
-          test: new RegExp(
-            `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-              `|`
-            )})[\\\\/]`
-          ),
+          // Important: If you change something here, also update "gatsby-plugin-preact"
+          test: module => {
+            // Packages like gatsby-plugin-image might import from "react-dom/server". We don't want to include react-dom-server in the framework bundle.
+            // A rawRequest might look like these:
+            // - "react-dom/server"
+            // - "node_modules/react-dom/cjs/react-dom-server-legacy.browser.production.min.js"
+            // Use a "/" before "react-dom-server" so that we don't match packages that contain "react-dom-server" in their name
+            if (
+              module?.rawRequest === `react-dom/server` ||
+              module?.rawRequest?.includes(`/react-dom-server`)
+            ) {
+              return false
+            }
+
+            return FRAMEWORK_BUNDLES_REGEX.test(module.nameForCondition())
+          },
           priority: 40,
           // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
           enforce: true,

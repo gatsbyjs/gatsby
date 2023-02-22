@@ -98,12 +98,16 @@ export async function resizeResolver(
     )
   }
 
-  const src = generateImageUrl(source, {
-    ...(args as IResizeArgs),
-    width,
-    height,
-    format,
-  })
+  const src = generateImageUrl(
+    source,
+    {
+      ...(args as IResizeArgs),
+      width,
+      height,
+      format,
+    },
+    store
+  )
 
   return {
     src,

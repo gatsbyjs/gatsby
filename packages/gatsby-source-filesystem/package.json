@@ -1,27 +1,26 @@
 {
   "name": "gatsby-source-filesystem",
   "description": "Gatsby source plugin for building websites from local data. Markdown, JSON, images, YAML, CSV, and dozens of other data types supported.",
-  "version": "5.0.0-next.2",
+  "version": "5.8.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.20.13",
     "chokidar": "^3.5.3",
     "file-type": "^16.5.4",
-    "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^4.0.0-next.2",
-    "md5-file": "^5.0.0",
-    "mime": "^2.5.2",
-    "pretty-bytes": "^5.4.1",
+    "fs-extra": "^11.1.0",
+    "gatsby-core-utils": "^4.8.0-next.0",
+    "mime": "^3.0.0",
+    "pretty-bytes": "^5.6.0",
     "valid-url": "^1.0.9",
-    "xstate": "4.32.1"
+    "xstate": "^4.35.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^3.0.0-next.1",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "babel-preset-gatsby-package": "^3.8.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme",
@@ -31,7 +30,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.0.0-alpha-v5"
+    "gatsby": "^5.0.0-next"
   },
   "repository": {
     "type": "git",

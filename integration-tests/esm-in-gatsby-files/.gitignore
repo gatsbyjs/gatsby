@@ -1,0 +1,10 @@
+__tests__/__debug__
+node_modules
+yarn.lock
+
+# These are removed and created during the test lifecycle
+./gatsby-config.js
+./gatsby-config.mjs
+./gatsby-config.ts
+./gatsby-node.js
+./gatsby-node.mjs

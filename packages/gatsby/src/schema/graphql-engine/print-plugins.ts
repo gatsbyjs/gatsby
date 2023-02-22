@@ -5,7 +5,7 @@ import * as _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
-import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
+import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
 
 export const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
@@ -26,13 +26,11 @@ export async function printQueryEnginePlugins(): Promise<void> {
   } catch (e) {
     // no-op
   }
-  return await fs.writeFile(
-    schemaCustomizationPluginsPath,
-    renderQueryEnginePlugins()
-  )
+  const queryEnginePlugins = await renderQueryEnginePlugins()
+  return await fs.writeFile(schemaCustomizationPluginsPath, queryEnginePlugins)
 }
 
-function renderQueryEnginePlugins(): string {
+async function renderQueryEnginePlugins(): Promise<string> {
   const { flattenedPlugins } = store.getState()
   const usedPlugins = flattenedPlugins.filter(
     p =>
@@ -41,7 +39,8 @@ function renderQueryEnginePlugins(): string {
         p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api)))
   )
   const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
-  return render(usedPlugins, usedSubPlugins)
+  const result = await render(usedPlugins, usedSubPlugins)
+  return result
 }
 
 function relativePluginPath(resolve: string): string {
@@ -50,28 +49,28 @@ function relativePluginPath(resolve: string): string {
   )
 }
 
-function render(
+async function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
   usedSubPlugins: IGatsbyState["flattenedPlugins"]
-): string {
-  const uniqGatsbyNode = uniq(usedPlugins)
+): Promise<string> {
   const uniqSubPlugins = uniq(usedSubPlugins)
 
-  const sanitizedUsedPlugins = usedPlugins.map(plugin => {
+  const sanitizedUsedPlugins = usedPlugins.map((plugin, i) => {
     // TODO: We don't support functions in pluginOptions here
     return {
       ...plugin,
       resolve: ``,
       pluginFilepath: ``,
       subPluginPaths: undefined,
+      importKey: i + 1,
     }
   })
 
-  const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
+  const pluginsWithWorkers = await filterPluginsWithWorkers(usedPlugins)
 
   const subPluginModuleToImportNameMapping = new Map<string, string>()
   const imports: Array<string> = [
-    ...uniqGatsbyNode.map(
+    ...usedPlugins.map(
       (plugin, i) =>
         `import * as pluginGatsbyNode${i} from "${relativePluginPath(
           plugin.resolve
@@ -91,22 +90,28 @@ function render(
       )}"`
     }),
   ]
-  const gatsbyNodeExports = uniqGatsbyNode.map(
-    (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
+  const gatsbyNodeExports = usedPlugins.map(
+    (plugin, i) =>
+      `{ name: "${plugin.name}", module: pluginGatsbyNode${i}, importKey: ${
+        i + 1
+      } },`
   )
   const gatsbyWorkerExports = pluginsWithWorkers.map(
-    (plugin, i) => `"${plugin.name}": pluginGatsbyWorker${i},`
+    (plugin, i) =>
+      `{ name: "${plugin.name}", module: pluginGatsbyWorker${i}, importKey: ${
+        i + 1
+      } },`
   )
   const output = `
 ${imports.join(`\n`)}
 
-export const gatsbyNodes = {
+export const gatsbyNodes = [
 ${gatsbyNodeExports.join(`\n`)}
-}
+]
 
-export const gatsbyWorkers = {
+export const gatsbyWorkers = [
 ${gatsbyWorkerExports.join(`\n`)}
-}
+]
 
 export const flattenedPlugins =
   ${JSON.stringify(
@@ -144,16 +149,23 @@ export const flattenedPlugins =
   return output
 }
 
-function filterPluginsWithWorkers(
+async function filterPluginsWithWorkers(
   plugins: IGatsbyState["flattenedPlugins"]
-): IGatsbyState["flattenedPlugins"] {
-  return plugins.filter(plugin => {
+): Promise<IGatsbyState["flattenedPlugins"]> {
+  const filteredPlugins: Array<any> = []
+
+  for (const plugin of plugins) {
     try {
-      return Boolean(requireGatsbyPlugin(plugin, `gatsby-worker`))
-    } catch (err) {
-      return false
+      const pluginWithWorker = await importGatsbyPlugin(plugin, `gatsby-worker`)
+      if (pluginWithWorker) {
+        filteredPlugins.push(plugin)
+      }
+    } catch (_) {
+      // Do nothing
     }
-  })
+  }
+
+  return filteredPlugins
 }
 
 type ArrayElement<ArrayType extends Array<unknown>> = ArrayType extends Array<

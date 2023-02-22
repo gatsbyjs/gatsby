@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router" // These come from `@types/reach__router`
+import { WindowLocation, NavigateOptions } from "@reach/router" // These come from `@types/reach__router`
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { Span } from "opentracing"
 export { Reporter }
@@ -96,8 +96,6 @@ export type PageProps<
   uri: string
   /** An extended version of window.document which comes from @react/router */
   location: WindowLocation<LocationState>
-  /** A way to handle programmatically controlling navigation */
-  navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
   children: undefined
   /** The URL parameters when the page has a `matchPath` */
@@ -156,7 +154,11 @@ export type PageProps<
 /**
  * A props object passed into the Head function for [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
-export type HeadProps<DataType = object, PageContextType = object> = {
+export type HeadProps<
+  DataType = object,
+  PageContextType = object,
+  ServerDataType = object
+> = {
   location: {
     /**
      * Returns the Location object's URL's path.
@@ -173,6 +175,10 @@ export type HeadProps<DataType = object, PageContextType = object> = {
    * A context object which is passed in during the creation of the page.
    */
   pageContext: PageContextType
+  /**
+   * Data passed into the page via the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) SSR function.
+   */
+  serverData: ServerDataType
 }
 
 /**
@@ -196,22 +202,22 @@ interface ISerializableObject {
 }
 
 /**
- * A props object for [slice placholder](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice placholder](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export interface SlicePlaceholderProps {
   alias: string
   allowEmpty?: boolean
   children?: React.ReactNode
-  [key: string]: SerializableProps
+  [key: string]: SerializableProps | React.ReactNode
 }
 
 /**
- * Component used as a slice placholder, to mark a place in the page where a [slice](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
+ * Component used as a slice placholder, to mark a place in the page where a [slice](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
  */
 export declare function Slice(props: SlicePlaceholderProps): JSX.Element
 
 /**
- * A props object for [slice component](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice component](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export type SliceComponentProps<
   DataType = object,
@@ -302,6 +308,7 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 export interface GraphQLTypegenOptions {
   typesOutputPath?: string
+  documentSearchPaths?: string[]
   generateOnBuild?: boolean
 }
 
@@ -431,12 +438,34 @@ export interface GatsbyNode<
    * transform nodes created by other plugins should implement this API.
    *
    * See also the documentation for `createNode`
-   * and [`createNodeField`](https://www.gatsbyjs.com/docs/actions/#createNodeField)
+   * and [`createNodeField`](https://www.gatsbyjs.com/docs/reference/config-files/actions/#createNodeField)
+   * @param {object} $0
+   * @param {object} $0.node A node object.
+   * @param {object} $0.actions
+   * @param {function} $0.actions.createNode Create a new node.
+   * @param {function} $0.actions.createNodeField Extend another node. The new node field is placed under the fields key on the extended node object.
    * @example
-   * exports.onCreateNode = ({ node, actions }) => {
-   *   const { createNode, createNodeField } = actions
-   *   // Transform the new node here and create a new node or
-   *   // create a new node field.
+   * exports.onCreateNode = ({ node, getNode, actions }) => {
+   *   const { createNodeField } = actions
+   *
+   *   if (node.internal.type === `MarkdownRemark`) {
+   *     const nodePath = node.fileAbsolutePath
+   *
+   *     if (nodePath.match(/\/blog\//)) {
+   *       const postSlug = createFilePath({
+   *         node,
+   *         getNode,
+   *         basePath: `src/content`,
+   *         trailingSlash: true,
+   *       })
+   *
+   *       createNodeField({
+   *         node,
+   *         name: `slug`,
+   *         value: `/blog/${postSlug}/`,
+   *       })
+   *     }
+   *   }
    * }
    */
   onCreateNode?(
@@ -1432,10 +1461,12 @@ export interface Actions {
 
   printTypeDefinitions(
     this: void,
-    path?: string,
-    include?: { types?: Array<string>; plugins?: Array<string> },
-    exclude?: { types?: Array<string>; plugins?: Array<string> },
-    withFieldTypes?: boolean,
+    options: {
+      path?: string
+      include?: { types?: Array<string>; plugins?: Array<string> }
+      exclude?: { types?: Array<string>; plugins?: Array<string> }
+      withFieldTypes?: boolean
+    },
     plugin?: ActionPlugin,
     traceId?: string
   ): void

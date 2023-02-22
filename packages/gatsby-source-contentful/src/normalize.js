@@ -104,6 +104,28 @@ export const buildResolvableSet = ({
   return resolvable
 }
 
+function cleanupReferencesFromEntry(foreignReferenceMapState, entry) {
+  const { links, backLinks } = foreignReferenceMapState
+  const entryId = entry.sys.id
+
+  const entryLinks = links[entryId]
+  if (entryLinks) {
+    entryLinks.forEach(link => {
+      const backLinksForLink = backLinks[link]
+      if (backLinksForLink) {
+        const newBackLinks = backLinksForLink.filter(({ id }) => id !== entryId)
+        if (newBackLinks.lenth > 0) {
+          backLinks[link] = newBackLinks
+        } else {
+          delete backLinks[link]
+        }
+      }
+    })
+  }
+
+  delete links[entryId]
+}
+
 export const buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
@@ -111,8 +133,21 @@ export const buildForeignReferenceMap = ({
   defaultLocale,
   space,
   useNameForId,
+  previousForeignReferenceMapState,
+  deletedEntries,
 }) => {
-  const foreignReferenceMap = {}
+  const foreignReferenceMapState = previousForeignReferenceMapState || {
+    links: {},
+    backLinks: {},
+  }
+
+  const { links, backLinks } = foreignReferenceMapState
+
+  for (const deletedEntry of deletedEntries) {
+    // remove stored entries from entry that is being deleted
+    cleanupReferencesFromEntry(foreignReferenceMapState, deletedEntry)
+  }
+
   contentTypeItems.forEach((contentTypeItem, i) => {
     // Establish identifier for content type
     //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -125,6 +160,9 @@ export const buildForeignReferenceMap = ({
     }
 
     entryList[i].forEach(entryItem => {
+      // clear links added in previous runs for given entry, as we will recreate them anyway
+      cleanupReferencesFromEntry(foreignReferenceMapState, entryItem)
+
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         if (entryItemFields[entryItemFieldKey]) {
@@ -146,15 +184,21 @@ export const buildForeignReferenceMap = ({
                   return
                 }
 
-                if (!foreignReferenceMap[key]) {
-                  foreignReferenceMap[key] = []
+                if (!backLinks[key]) {
+                  backLinks[key] = []
                 }
-                foreignReferenceMap[key].push({
+                backLinks[key].push({
                   name: contentTypeItemId,
                   id: entryItem.sys.id,
                   spaceId: space.sys.id,
                   type: entryItem.sys.type,
                 })
+
+                if (!links[entryItem.sys.id]) {
+                  links[entryItem.sys.id] = []
+                }
+
+                links[entryItem.sys.id].push(key)
               })
             }
           } else if (
@@ -167,22 +211,28 @@ export const buildForeignReferenceMap = ({
               return
             }
 
-            if (!foreignReferenceMap[key]) {
-              foreignReferenceMap[key] = []
+            if (!backLinks[key]) {
+              backLinks[key] = []
             }
-            foreignReferenceMap[key].push({
+            backLinks[key].push({
               name: contentTypeItemId,
               id: entryItem.sys.id,
               spaceId: space.sys.id,
               type: entryItem.sys.type,
             })
+
+            if (!links[entryItem.sys.id]) {
+              links[entryItem.sys.id] = []
+            }
+
+            links[entryItem.sys.id].push(key)
           }
         }
       })
     })
   })
 
-  return foreignReferenceMap
+  return foreignReferenceMapState
 }
 
 function prepareTextNode(id, node, key, text) {

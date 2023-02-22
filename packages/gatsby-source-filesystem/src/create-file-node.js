@@ -3,13 +3,13 @@ const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
-const md5File = require(`md5-file`)
-const { createContentDigest, slash } = require(`gatsby-core-utils`)
+const { createContentDigest, slash, md5File } = require(`gatsby-core-utils`)
 
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
-  pluginOptions = {}
+  pluginOptions = {},
+  cache = null
 ) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
@@ -35,7 +35,21 @@ exports.createFileNode = async (
       description: `Directory "${path.relative(process.cwd(), slashed)}"`,
     }
   } else {
-    const contentDigest = await md5File(slashedFile.absolutePath)
+    const key = stats.mtimeMs.toString() + stats.ino.toString()
+    let contentDigest
+
+    if (pluginOptions.fastHash) {
+      // Skip hashing.
+      contentDigest = key
+    } else {
+      // Generate a hash, but only if the file has changed.
+      contentDigest = cache && (await cache.get(key))
+      if (!contentDigest) {
+        contentDigest = await md5File(slashedFile.absolutePath)
+        if (cache) await cache.set(key, contentDigest)
+      }
+    }
+
     const mediaType = mime.getType(slashedFile.ext)
     internal = {
       contentDigest,

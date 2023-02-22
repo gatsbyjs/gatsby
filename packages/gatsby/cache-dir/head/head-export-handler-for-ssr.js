@@ -1,72 +1,60 @@
 const React = require(`react`)
 const { grabMatchParams } = require(`../find-path`)
-const { createElement } = require(`react`)
 const { StaticQueryContext } = require(`gatsby`)
 const {
   headExportValidator,
   filterHeadProps,
-  warnForInvalidTags,
+  isElementType,
+  isValidNodeName,
+  warnForInvalidTag,
 } = require(`./utils`)
 const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
-const { VALID_NODE_NAMES } = require(`./constants`)
+import { apiRunner } from "../api-runner-ssr"
 
-export function headHandlerForSSR({
-  pageComponent,
-  setHeadComponents,
-  staticQueryContext,
-  pageData,
-  pagePath,
-}) {
-  if (pageComponent?.Head) {
-    headExportValidator(pageComponent.Head)
+export function applyHtmlAndBodyAttributesSSR(
+  htmlAndBodyAttributes,
+  { setHtmlAttributes, setBodyAttributes }
+) {
+  if (!htmlAndBodyAttributes) return
 
-    function HeadRouteHandler(props) {
-      const _props = {
-        ...props,
-        ...pageData.result,
-        params: {
-          ...grabMatchParams(props.location.pathname),
-          ...(pageData.result?.pageContext?.__params || {}),
-        },
-      }
+  const { html, body } = htmlAndBodyAttributes
 
-      return createElement(pageComponent.Head, filterHeadProps(_props))
-    }
+  setHtmlAttributes(html)
+  setBodyAttributes(body)
+}
 
-    const routerElement = (
-      <StaticQueryContext.Provider value={staticQueryContext}>
-        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-          <Router
-            baseuri={__BASE_PATH__}
-            component={({ children }) => <>{children}</>}
-          >
-            <HeadRouteHandler path="/*" />
-          </Router>
-        </ServerLocation>
-      </StaticQueryContext.Provider>
-    )
+export function getValidHeadNodesAndAttributesSSR(
+  rootNode,
+  htmlAndBodyAttributes = {
+    html: {},
+    body: {},
+  }
+) {
+  const seenIds = new Map()
+  const validHeadNodes = []
 
-    // extract head nodes from string
-    const rawString = renderToString(routerElement)
-    const headNodes = parse(rawString).childNodes
+  // Filter out non-element nodes before looping since we don't care about them
+  for (const node of rootNode.childNodes) {
+    const { rawTagName } = node
+    const id = node.attributes?.id
 
-    const validHeadNodes = []
+    if (!isElementType(node)) continue
 
-    const seenIds = new Map()
-    for (const node of headNodes) {
-      const { rawTagName } = node
-      const id = node.attributes?.id
-
-      if (!VALID_NODE_NAMES.includes(rawTagName)) {
-        warnForInvalidTags(rawTagName)
+    if (isValidNodeName(rawTagName)) {
+      if (rawTagName === `html` || rawTagName === `body`) {
+        htmlAndBodyAttributes[rawTagName] = {
+          ...htmlAndBodyAttributes[rawTagName],
+          ...node.attributes,
+        }
       } else {
         let element
         const attributes = { ...node.attributes, "data-gatsby-head": true }
-        if (rawTagName === `script`) {
+
+        if (rawTagName === `script` || rawTagName === `style`) {
           element = (
-            <script
+            <node.rawTagName
               {...attributes}
               dangerouslySetInnerHTML={{
                 __html: node.text,
@@ -96,7 +84,79 @@ export function headHandlerForSSR({
           validHeadNodes.push(element)
         }
       }
+    } else {
+      warnForInvalidTag(rawTagName)
     }
+
+    if (node.childNodes.length) {
+      validHeadNodes.push(
+        ...getValidHeadNodesAndAttributesSSR(node, htmlAndBodyAttributes)
+          .validHeadNodes
+      )
+    }
+  }
+
+  return { validHeadNodes, htmlAndBodyAttributes }
+}
+
+export function headHandlerForSSR({
+  pageComponent,
+  setHeadComponents,
+  setHtmlAttributes,
+  setBodyAttributes,
+  staticQueryContext,
+  pageData,
+  pagePath,
+}) {
+  if (pageComponent?.Head) {
+    headExportValidator(pageComponent.Head)
+
+    function HeadRouteHandler(props) {
+      const _props = {
+        ...props,
+        ...pageData.result,
+        params: {
+          ...grabMatchParams(props.location.pathname),
+          ...(pageData.result?.pageContext?.__params || {}),
+        },
+      }
+
+      const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />
+
+      const headWithWrapRootElement = apiRunner(
+        `wrapRootElement`,
+        { element: HeadElement },
+        HeadElement,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
+
+      return headWithWrapRootElement
+    }
+
+    const routerElement = (
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+          <Router
+            baseuri={__BASE_PATH__}
+            component={({ children }) => <>{children}</>}
+          >
+            <HeadRouteHandler path="/*" />
+          </Router>
+        </ServerLocation>
+      </StaticQueryContext.Provider>
+    )
+
+    const rawString = renderToString(routerElement)
+    const rootNode = parse(rawString)
+    const { validHeadNodes, htmlAndBodyAttributes } =
+      getValidHeadNodesAndAttributesSSR(rootNode)
+
+    applyHtmlAndBodyAttributesSSR(htmlAndBodyAttributes, {
+      setHtmlAttributes,
+      setBodyAttributes,
+    })
 
     setHeadComponents(validHeadNodes)
   }

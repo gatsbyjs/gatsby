@@ -170,5 +170,5 @@ export function createConfig(
     }
   }
 
-  return value
+  return value as IGatsbyFunctionConfigProcessed
 }

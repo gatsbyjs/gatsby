@@ -19,6 +19,9 @@ import {
   ISiteConfig,
 } from "./types"
 import { resolvePlugin } from "./resolve-plugin"
+import { preferDefault } from "../prefer-default"
+import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
+import { maybeAddFileProtocol } from "../resolve-js-file-path"
 
 interface IApi {
   version?: string
@@ -178,6 +181,27 @@ export async function handleBadExports({
   }
 }
 
+interface ISubPluginCustomReturn {
+  resolve: string
+  modulePath: string
+  options: {
+    [key: string]: unknown
+  }
+  module: any
+}
+
+const addModuleImport = async (
+  value: Array<ISubPluginCustomReturn>
+): Promise<Array<ISubPluginCustomReturn>> => {
+  for (const plugin of value) {
+    const importedModule = await import(maybeAddFileProtocol(plugin.modulePath))
+    const pluginModule = preferDefault(importedModule)
+    plugin.module = pluginModule
+  }
+
+  return value
+}
+
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
   rootDir: string
@@ -191,7 +215,7 @@ async function validatePluginsOptions(
       let gatsbyNode
       try {
         const resolvedPlugin = resolvePlugin(plugin, rootDir)
-        gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
+        gatsbyNode = await importGatsbyPlugin(resolvedPlugin, `gatsby-node`)
       } catch (err) {
         gatsbyNode = {}
       }
@@ -233,7 +257,6 @@ async function validatePluginsOptions(
                       `${resolvedPlugin.resolve}${entry ? `/${entry}` : ``}`
                     )
                     value.modulePath = modulePath
-                    value.module = require(modulePath)
 
                     const normalizedPath = helpers.state.path
                       .map((key, index) => {
@@ -266,7 +289,8 @@ async function validatePluginsOptions(
                   return value
                 })
               }, `Gatsby specific subplugin validation`)
-              .default([]),
+              .default([])
+              .external(addModuleImport, `add module key to subplugin`),
             args: (schema: any, args: any): any => {
               if (
                 args?.entry &&
@@ -403,13 +427,18 @@ export async function validateConfigPluginsOptions(
 /**
  * Identify which APIs each plugin exports
  */
-export function collatePluginAPIs({
+export async function collatePluginAPIs({
   currentAPIs,
   flattenedPlugins,
+  rootDir,
 }: {
   currentAPIs: ICurrentAPIs
   flattenedPlugins: Array<IPluginInfo & Partial<IFlattenedPlugin>>
-}): { flattenedPlugins: Array<IFlattenedPlugin>; badExports: IEntryMap } {
+  rootDir: string
+}): Promise<{
+  flattenedPlugins: Array<IFlattenedPlugin>
+  badExports: IEntryMap
+}> {
   // Get a list of bad exports
   const badExports: IEntryMap = {
     node: [],
@@ -417,7 +446,7 @@ export function collatePluginAPIs({
     ssr: [],
   }
 
-  flattenedPlugins.forEach(plugin => {
+  for (const plugin of flattenedPlugins) {
     plugin.nodeAPIs = []
     plugin.browserAPIs = []
     plugin.ssrAPIs = []
@@ -425,17 +454,22 @@ export function collatePluginAPIs({
     // Discover which APIs this plugin implements and store an array against
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
-    const pluginNodeExports = resolveModuleExports(
+    const pluginNodeExports = await resolveModuleExports(
       plugin.resolvedCompiledGatsbyNode ?? `${plugin.resolve}/gatsby-node`,
       {
-        mode: `require`,
+        mode: `import`,
+        rootDir,
       }
     )
-    const pluginBrowserExports = resolveModuleExports(
-      `${plugin.resolve}/gatsby-browser`
+    const pluginBrowserExports = await resolveModuleExports(
+      `${plugin.resolve}/gatsby-browser`,
+      {
+        rootDir,
+      }
     )
-    const pluginSSRExports = resolveModuleExports(
-      `${plugin.resolve}/gatsby-ssr`
+    const pluginSSRExports = await resolveModuleExports(
+      `${plugin.resolve}/gatsby-ssr`,
+      { rootDir }
     )
 
     if (pluginNodeExports.length > 0) {
@@ -461,7 +495,7 @@ export function collatePluginAPIs({
         getBadExports(plugin, pluginSSRExports, currentAPIs.ssr)
       ) // Collate any bad exports
     }
-  })
+  }
 
   return {
     flattenedPlugins: flattenedPlugins as Array<IFlattenedPlugin>,

@@ -24,7 +24,7 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
  * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
  * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
  */
-export class GatsbyLink<TState> extends React.Component<
+export class Link<TState> extends React.Component<
   GatsbyLinkProps<TState>,
   any
 > {}

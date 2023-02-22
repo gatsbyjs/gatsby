@@ -2,6 +2,7 @@
 
 exports[`report.error handles "Array of Errors" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Message 3 from new Error",
   },
@@ -10,11 +11,13 @@ Object {
   "level": "ERROR",
   "stack": Any<Array>,
   "text": "Message 3 from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "Error" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Message from new Error",
   },
@@ -23,11 +26,13 @@ Object {
   "level": "ERROR",
   "stack": Any<Array>,
   "text": "Message from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "String" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Error created in Jest",
   },
@@ -35,11 +40,13 @@ Object {
   "level": "ERROR",
   "stack": Array [],
   "text": "Error created in Jest",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "String, Error" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Error string passed to reporter Message from new Error",
   },
@@ -48,11 +55,13 @@ Object {
   "level": "ERROR",
   "stack": Any<Array>,
   "text": "Error string passed to reporter Message from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
 exports[`report.error handles "String, Error, pluginName" signature correctly 1`] = `
 Object {
+  "category": "UNKNOWN",
   "context": Object {
     "sourceMessage": "Error string passed to reporter Message from new Error",
   },
@@ -71,52 +80,71 @@ Object {
       "columnNumber": 28,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/utils.js",
       "functionName": "Promise.then.completed",
-      "lineNumber": 390,
+      "lineNumber": 290,
     },
     Object {
       "columnNumber": 10,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/utils.js",
       "functionName": "callAsyncCircusFn",
-      "lineNumber": 315,
+      "lineNumber": 223,
     },
     Object {
       "columnNumber": 40,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "_callCircusTest",
-      "lineNumber": 218,
+      "lineNumber": 248,
     },
     Object {
       "columnNumber": 3,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "_runTest",
-      "lineNumber": 155,
+      "lineNumber": 184,
     },
     Object {
       "columnNumber": 9,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "_runTestsForDescribeBlock",
-      "lineNumber": 66,
+      "lineNumber": 86,
     },
     Object {
       "columnNumber": 9,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "_runTestsForDescribeBlock",
-      "lineNumber": 60,
+      "lineNumber": 81,
     },
     Object {
       "columnNumber": 3,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "run",
-      "lineNumber": 25,
+      "lineNumber": 26,
     },
     Object {
       "columnNumber": 21,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js",
       "functionName": "runAndTransformResultsToJestFormat",
-      "lineNumber": 170,
+      "lineNumber": 120,
+    },
+    Object {
+      "columnNumber": 19,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js",
+      "functionName": "jestAdapter",
+      "lineNumber": 79,
+    },
+    Object {
+      "columnNumber": 16,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-runner/build/runTest.js",
+      "functionName": "runTestInternal",
+      "lineNumber": 367,
+    },
+    Object {
+      "columnNumber": 34,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-runner/build/runTest.js",
+      "functionName": "runTest",
+      "lineNumber": 444,
     },
   ],
   "text": "Error string passed to reporter Message from new Error",
+  "type": "UNKNOWN",
 }
 `;
 
@@ -131,6 +159,7 @@ Object {
   "level": "ERROR",
   "stack": Array [],
   "text": "\\"navigator\\" is not available during server-side rendering. Enable \\"DEV_SSR\\" to debug this during \\"gatsby develop\\".",
+  "type": "HTML.COMPILATION",
 }
 `;
 
@@ -144,6 +173,7 @@ Object {
   "level": "ERROR",
   "stack": Array [],
   "text": "Error text is test123",
+  "type": "PLUGIN",
 }
 `;
 
@@ -158,5 +188,6 @@ Object {
   "pluginName": "gatsby-plugin-foo-bar",
   "stack": Array [],
   "text": "Error text is test123",
+  "type": "PLUGIN",
 }
 `;

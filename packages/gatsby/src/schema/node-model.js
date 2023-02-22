@@ -13,17 +13,15 @@ const {
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 import { store } from "../redux"
-import {
-  getDataStore,
-  getNode,
-  getNodes,
-  getNodesByType,
-  getTypes,
-} from "../datastore"
+import { getDataStore, getNode, getTypes } from "../datastore"
 import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
-import { reportOnce } from "../utils/report-once"
 import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
-import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
+import {
+  toNodeTypeNames,
+  fieldNeedToResolve,
+  maybeConvertSortInputObjectToSortPath,
+} from "./utils"
+import { getMaybeResolvedValue } from "./resolvers"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -61,6 +59,7 @@ export interface NodeModel {
   ): nodesOrNodes;
   findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null;
   trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node;
+  getFieldValue(node: Node, fieldPath: string): Promise<any>;
 }
 
 class LocalNodeModel {
@@ -107,10 +106,9 @@ class LocalNodeModel {
    * an empty new Map.
    *
    * @param {undefined | null | FiltersCache} map
-   *   (This cached is used in redux/nodes.js and caches a set of buckets (Sets)
-   *   of Nodes based on filter and tracks this for each set of types which are
-   *   actually queried. If the filter targets `id` directly, only one Node is
-   *   cached instead of a Set of Nodes. If null, don't create or use a cache.
+   * This cache caches a set of buckets (Sets) of Nodes based on filter and tracks this for each set of types which are
+   * actually queried. If the filter targets `id` directly, only one Node is
+   * cached instead of a Set of Nodes. If null, don't create or use a cache.
    */
   replaceFiltersCache(map = new Map()) {
     this._filtersCache = map // See redux/nodes.js for usage
@@ -128,6 +126,13 @@ class LocalNodeModel {
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the node
    * @param {PageDependencies} [pageDependencies]
    * @returns {(Node|null)}
+   * @example
+   * // Using only the id
+   * getNodeById({ id: `123` })
+   * // Using id and type
+   * getNodeById({ id: `123`, type: `MyType` })
+   * // Providing page dependencies
+   * getNodeById({ id: `123` }, { path: `/` })
    */
   getNodeById(args, pageDependencies) {
     const { id, type } = args || {}
@@ -159,6 +164,15 @@ class LocalNodeModel {
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
    * @param {PageDependencies} [pageDependencies]
    * @returns {Node[]}
+   * @example
+   * // Using only the id
+   * getNodeByIds({ ids: [`123`, `456`] })
+   *
+   * // Using id and type
+   * getNodeByIds({ ids: [`123`, `456`], type: `MyType` })
+   *
+   * // Providing page dependencies
+   * getNodeByIds({ ids: [`123`, `456`] }, { path: `/` })
    */
   getNodesByIds(args, pageDependencies) {
     const { ids, type } = args || {}
@@ -183,7 +197,7 @@ class LocalNodeModel {
   }
 
   async _query(args) {
-    const { query = {}, type, stats, tracer } = args || {}
+    let { query = {}, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -225,6 +239,8 @@ class LocalNodeModel {
         totalCount: async () => (nodeFoundById ? 1 : 0),
       }
     }
+
+    query = maybeConvertSortInputObjectToSortPath(query)
 
     let materializationActivity
     if (tracer) {
@@ -296,11 +312,35 @@ class LocalNodeModel {
    * Get all nodes in the store, or all nodes of a specified type (optionally with limit/skip).
    * Returns slice of result as iterable and total count of nodes.
    *
+   * You can directly return its `entries` result in your resolver.
+   *
    * @param {*} args
    * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
    * @return {Promise<Object>} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
+   * @example
+   * // Get all nodes of a type
+   * const { entries, totalCount } = await findAll({ type: `MyType` })
+   *
+   * // Get all nodes of a type while filtering and sorting
+   * const { entries, totalCount } = await findAll({
+   *   type: `MyType`,
+   *   query: {
+   *     sort: { fields: [`date`], order: [`desc`] },
+   *     filter: { published: { eq: false } },
+   *   },
+   * })
+   *
+   * // The `entries` return value is a `GatsbyIterable` (check its TypeScript definition for more details) and allows you to execute array like methods like filter, map, slice, forEach. Calling these methods is more performant than first turning the iterable into an array and then calling the array methods.
+   * const { entries, totalCount } = await findAll({ type: `MyType` })
+   *
+   * const count = await totalCount()
+   * const filteredEntries = entries.filter(entry => entry.published)
+   *
+   * // However, if a method is not available on the `GatsbyIterable` you can turn it into an array first.
+   * const filteredEntries = entries.filter(entry => entry.published)
+   * return Array.from(posts).length
    */
   async findAll(args, pageDependencies = {}) {
     const { gqlType, ...result } = await this._query(args, pageDependencies)
@@ -317,13 +357,19 @@ class LocalNodeModel {
   }
 
   /**
-   * Get one node in the store. Only returns the first result.
+   * Get one node in the store. Only returns the first result. When possible, always use this method instead of fetching all nodes and then filtering them. `findOne` is more performant in that regard.
    *
    * @param {*} args
    * @param {Object} args.query Query arguments (e.g. `filter`). Doesn't support `sort`, `limit`, `skip`.
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
    * @returns {Promise<Node>}
+   * @example
+   * // Get one node of type `MyType` by its title
+   * const node = await findOne({
+   *   type: `MyType`,
+   *   query: { filter: { title: { eq: `My Title` } } },
+   * })
    */
   async findOne(args, pageDependencies = {}) {
     const { query = {} } = args
@@ -548,6 +594,30 @@ class LocalNodeModel {
 
     return result
   }
+
+  /**
+   * Utility to get a field value from a node, even when that value needs to be materialized first (e.g. nested field that was connected via @link directive)
+   * @param {Node} node
+   * @param {string} fieldPath
+   * @returns {any}
+   * @example
+   * // Example: Via schema customization the author ID is linked to the Author type
+   * const blogPostNode = {
+   *   author: 'author-id-1',
+   *   // Rest of node fields...
+   * }
+   *
+   * getFieldValue(blogPostNode, 'author.name')
+   */
+  getFieldValue = async (node, fieldPath) => {
+    const fieldToResolve = pathToObject(fieldPath)
+    const typeName = node.internal.type
+    const type = this.schema.getType(typeName)
+
+    await this.prepareNodes(type, fieldToResolve, fieldToResolve)
+
+    return getMaybeResolvedValue(node, fieldPath, typeName)
+  }
 }
 
 class ContextualNodeModel {
@@ -624,6 +694,8 @@ class ContextualNodeModel {
       this._getFullDependencies(pageDependencies)
     )
   }
+
+  getFieldValue = (...args) => this.nodeModel.getFieldValue(...args)
 }
 
 const getNodeById = id => (id != null ? getNode(id) : null)

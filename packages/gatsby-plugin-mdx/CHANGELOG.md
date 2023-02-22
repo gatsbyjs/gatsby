@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.7.0/packages/gatsby-plugin-mdx) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.6.0/packages/gatsby-plugin-mdx) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+#### Chores
+
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.5.0/packages/gatsby-plugin-mdx) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Bug Fixes
+
+- Default remark node to span [#37423](https://github.com/gatsbyjs/gatsby/issues/37423) ([824e3de](https://github.com/gatsbyjs/gatsby/commit/824e3deef1f765b46aecfc81fc930a5aa1a2a180))
+
+#### Chores
+
+- Improve v5 migration guide around MDX [#37485](https://github.com/gatsbyjs/gatsby/issues/37485) ([e4f841f](https://github.com/gatsbyjs/gatsby/commit/e4f841fa9959583a7b461c995cc1a5c8a6578880))
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.4.0/packages/gatsby-plugin-mdx) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+- update [dev] minor and patch dependencies for gatsby-plugin-mdx [#37353](https://github.com/gatsbyjs/gatsby/issues/37353) ([9077a3f](https://github.com/gatsbyjs/gatsby/commit/9077a3f5dafa84637dcc82cf9ebe5d532ee99528))
+
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.3.1/packages/gatsby-plugin-mdx) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.3.0/packages/gatsby-plugin-mdx) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-mdx [#37154](https://github.com/gatsbyjs/gatsby/issues/37154) ([0d40674](https://github.com/gatsbyjs/gatsby/commit/0d40674a77e496f6b9095b059caf3a664eede813))
+
+#### Chores
+
+- update dependency typescript to ^4.9.3 [#37192](https://github.com/gatsbyjs/gatsby/issues/37192) ([204ed0e](https://github.com/gatsbyjs/gatsby/commit/204ed0e220eb9c1c5cdec692e82bce8e3e82e915))
+- update formatting & linting [#37159](https://github.com/gatsbyjs/gatsby/issues/37159) ([5a8879c](https://github.com/gatsbyjs/gatsby/commit/5a8879cfb91aa95321b109ef4543048eaaaf1f0f))
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.2.0/packages/gatsby-plugin-mdx) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Chores
+
+- Clarify MDX sourcing instructions [#37088](https://github.com/gatsbyjs/gatsby/issues/37088) ([ce0d8b2](https://github.com/gatsbyjs/gatsby/commit/ce0d8b2e6e976df3c2eab73fbc2ddf7422760377))
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.1.0/packages/gatsby-plugin-mdx) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.0.0/packages/gatsby-plugin-mdx) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- Better AST error [#36866](https://github.com/gatsbyjs/gatsby/issues/36866) ([58d5f2a](https://github.com/gatsbyjs/gatsby/commit/58d5f2aa51212e50ca90e4d7eeee039bbd9dfcd0))
+- Unwrap images [#36856](https://github.com/gatsbyjs/gatsby/issues/36856) ([94d18fa](https://github.com/gatsbyjs/gatsby/commit/94d18fa164efa2725dc9eadc71be55ebdba61ae9))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- make unstable_shouldOnCreateNode stable [#36516](https://github.com/gatsbyjs/gatsby/issues/36516) ([90f9ab4](https://github.com/gatsbyjs/gatsby/commit/90f9ab47593ba7458fc5bc677c4b0282b30808c8))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.3.0/packages/gatsby-plugin-mdx) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

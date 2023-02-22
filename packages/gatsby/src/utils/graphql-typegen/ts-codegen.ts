@@ -3,8 +3,8 @@ import { join } from "path"
 import { codegen } from "@graphql-codegen/core"
 import { GraphQLSchema, Kind } from "graphql"
 import type { Types } from "@graphql-codegen/plugin-helpers"
-import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript/config"
-import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations/config"
+import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript"
+import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations"
 import { CodeFileLoader } from "@graphql-tools/code-file-loader"
 import { loadDocuments } from "@graphql-tools/load"
 import {
@@ -19,6 +19,10 @@ import {
 } from "./utils"
 
 export const DEFAULT_TYPES_OUTPUT_PATH = `src/gatsby-types.d.ts`
+export const DEFAULT_DOCUMENT_SEARCH_PATHS = [
+  `./gatsby-node.ts`,
+  `./plugins/**/gatsby-node.ts`,
+]
 const NAMESPACE = `Queries`
 
 // These override the defaults from
@@ -103,7 +107,7 @@ export async function writeTypeScriptTypes(
   // TODO: This codepath can be made obsolete if Gatsby itself already places the queries inside gatsby-node into the `definitions`
   try {
     gatsbyNodeDocuments = await loadDocuments(
-      [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
+      graphqlTypegenOptions.documentSearchPaths,
       {
         loaders: [
           new CodeFileLoader({

@@ -121,3 +121,17 @@ await fs.writeFile("pathToFile", "my custom content")
 
 await mutex.release()
 ```
+
+### Hashing
+
+Parts of [`hash-wasm`](https://github.com/Daninet/hash-wasm) are re-exported from `gatsby-core-utils` or used in custom functions. When working on hashing where you'd normally use `crypto` from Node.js, you can use these functions instead. They especially show their advantage on large inputs so don't feel obliged to _always_ use them. Refer to `hash-wasm`'s documentation for more details on usage for the re-exported functions.
+
+```js
+const { md5File, md5, createMD5, sha256, sha1 } = require("gatsby-core-utils")
+
+// For md5, createMD5, sha256, sha1 refer to hash-wasm
+await md5(`some-string`)
+
+// md5File gives you the MD5 hex hash for a given filepath
+await md5File(`package.json`)
+```

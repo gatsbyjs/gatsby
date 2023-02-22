@@ -110,7 +110,7 @@ Previously, images generated their own type by default, e.g. JPG, PNG, etc. You 
 
 Previously, transformations like `grayscale` and quality options such as `pngQuality` were top level query arguments. This has changed.
 
-`grayscale` now exists within the `transformOptions` argument, and `pngQuality` becomes `quality` inside `pngOptions`. The `traceSVG` object is now `tracedSVGOptions`. See the [`gatsby-plugin-image` Reference Guide](/docs/reference/built-in-components/gatsby-plugin-image) for specifics.
+`grayscale` now exists within the `transformOptions` argument, and `pngQuality` becomes `quality` inside `pngOptions`. See the [`gatsby-plugin-image` Reference Guide](/docs/reference/built-in-components/gatsby-plugin-image) for specifics.
 
 ### Breaking changes
 

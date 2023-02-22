@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-layout",
-  "version": "4.0.0-next.1",
+  "version": "4.8.0-next.0",
   "description": "Reimplements the behavior of layout components in gatsby@1, which was removed in version 2.",
   "main": "index.js",
   "scripts": {
@@ -24,16 +24,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.15.4"
+    "@babel/runtime": "^7.20.13"
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^3.0.0-next.1",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "babel-preset-gatsby-package": "^3.8.0-next.0",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "^5.0.0-alpha-v5"
+    "gatsby": "^5.0.0-next"
   },
   "engines": {
     "node": ">=18.0.0"

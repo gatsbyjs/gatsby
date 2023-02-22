@@ -63,6 +63,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.excludeFieldNames](#typemediaitemexcludefieldnames)
     - [type.MediaItem.placeholderSizeName](#typemediaitemplaceholdersizename)
     - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
@@ -436,7 +437,7 @@ This option is experimental. When set to true, media files will be hard-cached o
 
 ### production.allow404Images
 
-This option allows images url's that return a 404 to not fail production builds.
+This option allows image urls that return a 404 to not fail production builds.
 
 **Field type**: `Boolean`
 
@@ -456,7 +457,7 @@ This option allows images url's that return a 404 to not fail production builds.
 
 ### production.allow401Images
 
-This option allows images url's that return a 401 to not fail production builds. 401s are sometimes returned in place of 404's for protected content to hide whether the content exists.
+This option allows image urls that return a 401 to not fail production builds. 401s are sometimes returned in place of 404s for protected content to hide whether the content exists.
 
 **Field type**: `Boolean`
 
@@ -676,7 +677,7 @@ The maximum field depth the remote schema will be queried to.
 
 ### schema.circularQueryLimit
 
-The maximum number times a type can appear as it's own descendant.
+The maximum number times a type can appear as its own descendant.
 
 **Field type**: `Number`
 
@@ -1010,7 +1011,7 @@ Determines the image quality that Sharp will use when generating inline html ima
 
 ### html.createStaticFiles
 
-When this is true, any url's which are wrapped in "", '', or () and which contain /wp-content/uploads will be transformed into static files and the url's will be rewritten. This adds support for video, audio, and anchor tags which point at WP media item uploads as well as inline-html css like background-image: url().
+When this is true, any urls which are wrapped in "", '', or () and which contain /wp-content/uploads will be transformed into static files and the urls will be rewritten. This adds support for video, audio, and anchor tags which point at WP media item uploads as well as inline-html css like background-image: url().
 
 **Field type**: `Boolean`
 
@@ -1229,6 +1230,26 @@ A special type which is applied to any non-node root fields that are ingested an
 ### type.MediaItem
 
 **Field type**: `Object`
+
+#### type.MediaItem.excludeFieldNames
+
+Excludes fields on the MediaItem type by field name.
+
+**Field type**: `Array`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    type: {
+      MediaItem: {
+        excludeFieldNames: [`dateGmt`, `parent`],
+      },
+    },
+  },
+}
+
+```
 
 #### type.MediaItem.placeholderSizeName
 

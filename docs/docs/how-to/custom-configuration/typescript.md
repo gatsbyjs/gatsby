@@ -289,6 +289,59 @@ export const Head: HeadFC<DataProps> = props => {
 }
 ```
 
+### Gatsby Slice API
+
+> Support added in `gatsby@5.0.0`
+
+You can use `SliceComponentProps` to type your Slice component from the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/). `SliceComponentProps` can receive three [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType`, `SliceContextType`, and `AdditionalSerializableProps`). This way you can type the `data` and `pageContext` prop that gets passed to your Slice component.
+
+```tsx
+import * as React from "react"
+import { SliceComponentProps, graphql } from "gatsby"
+
+type DataType = {
+  site: {
+    siteMetadata: {
+      title: string
+    }
+  }
+}
+
+type SliceContextType = {
+  locale: string
+}
+
+type AdditionalSerializableProps = {
+  theme: "light" | "dark"
+}
+
+const Navigation = ({
+  data,
+  sliceContext,
+  theme,
+}: SliceComponentProps<
+  DataType,
+  SliceContextType,
+  AdditionalSerializableProps
+>) => (
+  <nav className={`theme---${theme}`}>
+    Menu for {sliceContext.locale} at {data.site.siteMetadata.title}
+  </nav>
+)
+
+export default Navigation
+
+export const query = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
+
 ### Local Plugins
 
 > Support added in `gatsby@4.9.0`
@@ -347,7 +400,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
 
 - Run `gatsby clean` to remove any old artifacts
 - Convert your `.js`/`.jsx` files to `.ts/.tsx`
-- Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as `devDependencies`
+- Install `@types/node`, `@types/react`, `@types/react-dom`, and `typescript` as `devDependencies`
 - Add a `tsconfig.json` file using `npx tsc --init` or use the one from [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json)
 - Rename `gatsby-*` files:
   - `gatsby-node.js` to `gatsby-node.ts`
@@ -376,7 +429,7 @@ You can't use `require.resolve` in your files. You'll need to replace these inst
 ```diff
 + import path from "path"
 
-+ const template = path.resolve(`src/templates/template.tsx`)
++ const template = path.resolve(`./src/templates/template.tsx`)
 - const template = require.resolve(`./src/templates/template.tsx`)
 ```
 
@@ -384,7 +437,7 @@ Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/
 
 ### Other
 
-- Workspaces (e.g. Yarn) are not supported. We'll add documentation on how to use this feature inside a workspace soon.
+- Workspaces (e.g. Yarn) are not supported.
 - When changing `siteMetadata` in `gatsby-config` no hot-reloading will occur during `gatsby develop`. A restart is needed at the moment.
 
 ## Other Resources

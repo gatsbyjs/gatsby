@@ -1,4 +1,5 @@
 /* global __prefresh_errors__ */
+/* eslint-disable camelcase */
 import formatWebpackErrors from "./formatWebpackErrors"
 
 const singletonKey = `__webpack_hot_middleware_reporter__`

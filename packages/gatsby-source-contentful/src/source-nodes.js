@@ -108,6 +108,7 @@ export async function sourceNodes(
 
   const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
+  const CACHE_FOREIGN_REFERENCE_MAP_STATE = `contentful-foreign-reference-map-state-${sourceId}`
 
   /*
    * Subsequent calls of Contentfuls sync API return only changed data.
@@ -224,7 +225,7 @@ export async function sourceNodes(
     currentSyncData,
     contentTypeItems,
   })
-  const { assets } = currentSyncData
+  const { assets } = currentSyncData || { assets: [] }
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
@@ -234,16 +235,24 @@ export async function sourceNodes(
     assets,
   })
 
-  // Build foreign reference map before starting to insert any nodes
+  const previousForeignReferenceMapState = await cache.get(
+    CACHE_FOREIGN_REFERENCE_MAP_STATE
+  )
   const useNameForId = pluginConfig.get(`useNameForId`)
-  const foreignReferenceMap = buildForeignReferenceMap({
+  // Build foreign reference map before starting to insert any nodes
+  const foreignReferenceMapState = buildForeignReferenceMap({
     contentTypeItems,
     entryList,
     resolvable,
     defaultLocale,
     space,
     useNameForId,
+    previousForeignReferenceMapState,
+    deletedEntries: currentSyncData?.deletedEntries,
   })
+
+  await cache.set(CACHE_FOREIGN_REFERENCE_MAP_STATE, foreignReferenceMapState)
+  const foreignReferenceMap = foreignReferenceMapState.backLinks
 
   reporter.verbose(`Resolving Contentful references`)
 
@@ -254,7 +263,10 @@ export async function sourceNodes(
     })
   })
 
-  const { deletedEntries, deletedAssets } = currentSyncData
+  const { deletedEntries, deletedAssets } = currentSyncData || {
+    deletedEntries: [],
+    deletedAssets: [],
+  }
   const deletedEntryGatsbyReferenceIds = new Set()
 
   function deleteContentfulNode(node) {

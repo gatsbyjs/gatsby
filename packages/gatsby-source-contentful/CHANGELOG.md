@@ -3,6 +3,109 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.7.0/packages/gatsby-source-contentful) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+### [8.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.6.1/packages/gatsby-source-contentful) (2023-02-16)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [8.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.6.0/packages/gatsby-source-contentful) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+#### Chores
+
+- update dependency nock to ^13.3.0 for gatsby-source-contentful [#37592](https://github.com/gatsbyjs/gatsby/issues/37592) ([511ad1b](https://github.com/gatsbyjs/gatsby/commit/511ad1b3228749dba8dbceebfc0d9624bfd31006))
+
+## [8.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.5.0/packages/gatsby-source-contentful) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Bug Fixes
+
+- maintain back reference map between runs [#37442](https://github.com/gatsbyjs/gatsby/issues/37442) ([76f979c](https://github.com/gatsbyjs/gatsby/commit/76f979c68f8d8b2c5204bc102e94f48ed5b2e4eb))
+
+#### Chores
+
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+
+### [8.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.4.1/packages/gatsby-source-contentful) (2023-01-13)
+
+#### Bug Fixes
+
+- maintain back reference map between runs [#37442](https://github.com/gatsbyjs/gatsby/issues/37442) [#37455](https://github.com/gatsbyjs/gatsby/issues/37455) ([efdc5fa](https://github.com/gatsbyjs/gatsby/commit/efdc5faa84dd72d68af97cb8f131ccfbf35d7ea0))
+
+## [8.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.4.0/packages/gatsby-source-contentful) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Bug Fixes
+
+- Add contentTypeFilter to Joi schema [#37403](https://github.com/gatsbyjs/gatsby/issues/37403) ([56ace78](https://github.com/gatsbyjs/gatsby/commit/56ace78708ef5f1d311cfe434bd0cc87558f0b29))
+- update minor and patch dependencies for gatsby-source-contentful [#37381](https://github.com/gatsbyjs/gatsby/issues/37381) ([8ff6dc1](https://github.com/gatsbyjs/gatsby/commit/8ff6dc17842c9e693f00704fd1ac044163b87b77))
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
+### [8.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.3.1/packages/gatsby-source-contentful) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [8.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.3.0/packages/gatsby-source-contentful) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-contentful [#37162](https://github.com/gatsbyjs/gatsby/issues/37162) ([f57ce08](https://github.com/gatsbyjs/gatsby/commit/f57ce0852e3ed95573495b57d5fd4db2231a8026))
+
+#### Chores
+
+- update semver [#37186](https://github.com/gatsbyjs/gatsby/issues/37186) ([34adbf1](https://github.com/gatsbyjs/gatsby/commit/34adbf1f6147f9c440dfc0900b8523010ca61d51))
+
+## [8.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.2.0/packages/gatsby-source-contentful) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+#### Bug Fixes
+
+- update dependency contentful to ^9.1.34 for gatsby-source-contentful [#36514](https://github.com/gatsbyjs/gatsby/issues/36514) ([fb15745](https://github.com/gatsbyjs/gatsby/commit/fb15745827fb29c6e8ae5bd7c491cf903bfa4211))
+
+#### Chores
+
+- remove tracedSVG [#37093](https://github.com/gatsbyjs/gatsby/issues/37093) ([94c2d73](https://github.com/gatsbyjs/gatsby/commit/94c2d735ad378bf05836e74cc47f7ca9523cabdc))
+- Add note about RichTextField to README [#36102](https://github.com/gatsbyjs/gatsby/issues/36102) ([f7b922f](https://github.com/gatsbyjs/gatsby/commit/f7b922f8711597c19d5c80fe48f66c0deb492fe0))
+
+## [8.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.1.0/packages/gatsby-source-contentful) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [8.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.0.0/packages/gatsby-source-contentful) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- GraphiQL v2 [#36541](https://github.com/gatsbyjs/gatsby/issues/36541) ([55a601d](https://github.com/gatsbyjs/gatsby/commit/55a601d759589286fb99e97db0ba095a1e6ed894))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- Update to GraphQL 16 [#36813](https://github.com/gatsbyjs/gatsby/issues/36813) ([9f840ad](https://github.com/gatsbyjs/gatsby/commit/9f840adc2e5fada5014f27814b49fbdf914d4ef9))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+- Correct image embed code sample [#36670](https://github.com/gatsbyjs/gatsby/issues/36670) ([1e8b95c](https://github.com/gatsbyjs/gatsby/commit/1e8b95c4cc2a8c1d59adde9fad9a3ea457c6ad48))
+
 ## [7.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.22.0/packages/gatsby-source-contentful) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

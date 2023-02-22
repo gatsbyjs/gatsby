@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.7.0/packages/gatsby-source-filesystem) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.6.0/packages/gatsby-source-filesystem) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- update dependency xstate to ^4.35.3 for gatsby-source-filesystem [#37579](https://github.com/gatsbyjs/gatsby/issues/37579) ([e0caa73](https://github.com/gatsbyjs/gatsby/commit/e0caa7380a599f748a430fe7c37034f7be0ea141))
+
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.5.0/packages/gatsby-source-filesystem) (2023-01-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
+
+#### Features
+
+- Only generate hashes when a file has changed, and add an option for skipping hashing [#37464](https://github.com/gatsbyjs/gatsby/issues/37464) ([df58891](https://github.com/gatsbyjs/gatsby/commit/df588911265de18737ccdbbda17ac3708a6098b0))
+
+#### Chores
+
+- Improve README [#37480](https://github.com/gatsbyjs/gatsby/issues/37480) ([16685a6](https://github.com/gatsbyjs/gatsby/commit/16685a62275843914023349de2ba26720ed5e80c))
+- Upgrade some non-breaking major versions [#37406](https://github.com/gatsbyjs/gatsby/issues/37406) ([2ea80c0](https://github.com/gatsbyjs/gatsby/commit/2ea80c02e464fe9306f6a1eccbb6c74983a76208))
+
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.4.0/packages/gatsby-source-filesystem) (2023-01-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.4)
+
+#### Chores
+
+- update babel monorepo [#37386](https://github.com/gatsbyjs/gatsby/issues/37386) ([b941876](https://github.com/gatsbyjs/gatsby/commit/b94187633d94d0f0071b38ffe93380dd802ec70f))
+
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.3.1/packages/gatsby-source-filesystem) (2022-12-14)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.3.0/packages/gatsby-source-filesystem) (2022-12-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.3)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-filesystem [#37163](https://github.com/gatsbyjs/gatsby/issues/37163) ([21f815f](https://github.com/gatsbyjs/gatsby/commit/21f815f53a76c511e548dd4f1ae0d71078b5e783))
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.2.0/packages/gatsby-source-filesystem) (2022-11-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.2)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.1.0/packages/gatsby-source-filesystem) (2022-11-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.1)
+
+#### Bug Fixes
+
+- Use xstate `predictableActionArguments` & update to 4.34 [#36342](https://github.com/gatsbyjs/gatsby/issues/36342) [#36355](https://github.com/gatsbyjs/gatsby/issues/36355) [#36451](https://github.com/gatsbyjs/gatsby/issues/36451) [#36393](https://github.com/gatsbyjs/gatsby/issues/36393) [#36393](https://github.com/gatsbyjs/gatsby/issues/36393) ([3032a1b](https://github.com/gatsbyjs/gatsby/commit/3032a1b07dbcfed292b7f32f12eef485ea2258a0))
+- decode uri-encode filename for remote file [#35637](https://github.com/gatsbyjs/gatsby/issues/35637) ([086c862](https://github.com/gatsbyjs/gatsby/commit/086c862e078a9808ebd5a3c8ba146e9931e3646d))
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.0.0/packages/gatsby-source-filesystem) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.24.0/packages/gatsby-source-filesystem) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-preload-fonts",
   "description": "Gatsby plugin for preloading fonts per page",
-  "version": "4.0.0-next.2",
+  "version": "4.8.0-next.0",
   "author": "Aaron Ross <superhawk610@gmail.com>",
   "main": "index.js",
   "bin": {
@@ -11,19 +11,19 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.20.13",
     "chalk": "^4.1.2",
-    "date-fns": "^2.28.0",
-    "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^4.0.0-next.2",
+    "date-fns": "^2.29.3",
+    "fs-extra": "^11.1.0",
+    "gatsby-core-utils": "^4.8.0-next.0",
     "graphql-request": "^1.8.2",
     "progress": "^2.0.3",
     "puppeteer": "^3.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^3.0.0-next.1",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "babel-preset-gatsby-package": "^3.8.0-next.0",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0"
   },
@@ -37,7 +37,7 @@
   ],
   "license": "ISC",
   "peerDependencies": {
-    "gatsby": "^5.0.0-alpha-v5"
+    "gatsby": "^5.0.0-next"
   },
   "repository": {
     "type": "git",
@@ -45,9 +45,9 @@
     "directory": "packages/gatsby-plugin-preload-fonts"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\" --ignore **/__mocks__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --ignore \"**/__mocks__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --ignore **/__mocks__",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --ignore \"**/__mocks__\"",
     "clean": "del-cli index.js prepare"
   }
 }

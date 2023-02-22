@@ -11,12 +11,13 @@ export function filterHeadProps(input) {
     },
     params: input.params,
     data: input.data || {},
+    serverData: input.serverData,
     pageContext: input.pageContext,
   }
 }
 
 /**
- * Throw error if Head export is not a valid
+ * Throw error if Head export is not a valid function
  */
 export function headExportValidator(head) {
   if (typeof head !== `function`)
@@ -40,17 +41,20 @@ if (process.env.NODE_ENV !== `production`) {
 }
 
 /**
- * Warn for invalid tags in head.
+ * Warn for invalid tags in Head which may have been directly added or introduced by `wrapRootElement`
  * @param {string} tagName
  */
-export function warnForInvalidTags(tagName) {
+export function warnForInvalidTag(tagName) {
   if (process.env.NODE_ENV !== `production`) {
-    const warning = `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
-      `, `
-    )}`
-
+    const warning = createWarningForInvalidTag(tagName)
     warnOnce(warning)
   }
+}
+
+function createWarningForInvalidTag(tagName) {
+  return `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
+    `, `
+  )}.\n\nAlso make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: https://gatsby.dev/invalid-head-elements`
 }
 
 /**
@@ -100,5 +104,147 @@ export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
   // remaing new nodes didn't have matching old node, so need to be added
   for (const newNode of newNodes) {
     onNew(newNode)
+  }
+}
+
+export function getValidHeadNodesAndAttributes(
+  rootNode,
+  htmlAndBodyAttributes = {
+    html: {},
+    body: {},
+  }
+) {
+  const seenIds = new Map()
+  const validHeadNodes = []
+
+  // Filter out non-element nodes before looping since we don't care about them
+  for (const node of rootNode.childNodes) {
+    const nodeName = node.nodeName.toLowerCase()
+    const id = node.attributes?.id?.value
+
+    if (!isElementType(node)) continue
+
+    if (isValidNodeName(nodeName)) {
+      // <html> and <body> tags are treated differently, in that we don't  render them, we only  extract the attributes and apply them separetely
+      if (nodeName === `html` || nodeName === `body`) {
+        for (const attribute of node.attributes) {
+          htmlAndBodyAttributes[nodeName] = {
+            ...htmlAndBodyAttributes[nodeName],
+            [attribute.name]: attribute.value,
+          }
+        }
+      } else {
+        let clonedNode = node.cloneNode(true)
+        clonedNode.setAttribute(`data-gatsby-head`, true)
+
+        // // This is hack to make script tags work
+        if (clonedNode.nodeName.toLowerCase() === `script`) {
+          clonedNode = massageScript(clonedNode)
+        }
+        // Duplicate ids are not allowed in the head, so we need to dedupe them
+        if (id) {
+          if (!seenIds.has(id)) {
+            validHeadNodes.push(clonedNode)
+            seenIds.set(id, validHeadNodes.length - 1)
+          } else {
+            const indexOfPreviouslyInsertedNode = seenIds.get(id)
+            validHeadNodes[
+              indexOfPreviouslyInsertedNode
+            ].parentNode?.removeChild(
+              validHeadNodes[indexOfPreviouslyInsertedNode]
+            )
+            validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
+          }
+        } else {
+          validHeadNodes.push(clonedNode)
+        }
+      }
+    } else {
+      warnForInvalidTag(nodeName)
+    }
+
+    if (node.childNodes.length) {
+      validHeadNodes.push(
+        ...getValidHeadNodesAndAttributes(node, htmlAndBodyAttributes)
+          .validHeadNodes
+      )
+    }
+  }
+
+  return { validHeadNodes, htmlAndBodyAttributes }
+}
+
+function massageScript(node) {
+  const script = document.createElement(`script`)
+  for (const attr of node.attributes) {
+    script.setAttribute(attr.name, attr.value)
+  }
+  script.innerHTML = node.innerHTML
+
+  return script
+}
+
+export function isValidNodeName(nodeName) {
+  return VALID_NODE_NAMES.includes(nodeName)
+}
+/*
+ * For Head, we only care about element nodes(type = 1), so this util is used to skip over non-element nodes
+ * For Node type, see https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+ */
+export function isElementType(node) {
+  return node.nodeType === 1
+}
+
+/**
+ * Removes all the head elements that were added by `Head`
+ */
+export function removePrevHeadElements() {
+  const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
+  for (const node of prevHeadNodes) {
+    node.parentNode.removeChild(node)
+  }
+}
+
+export function applyHtmlAndBodyAttributes(htmlAndBodyAttributes) {
+  if (!htmlAndBodyAttributes) return
+
+  const { html, body } = htmlAndBodyAttributes
+
+  const htmlElement = document.querySelector(`html`)
+  if (htmlElement) {
+    Object.entries(html).forEach(([attributeName, attributeValue]) => {
+      htmlElement.setAttribute(attributeName, attributeValue)
+    })
+  }
+
+  const bodyElement = document.querySelector(`body`)
+  if (bodyElement) {
+    Object.entries(body).forEach(([attributeName, attributeValue]) => {
+      bodyElement.setAttribute(attributeName, attributeValue)
+    })
+  }
+}
+
+export function removeHtmlAndBodyAttributes(htmlAndBodyattributeList) {
+  if (!htmlAndBodyattributeList) return
+
+  const { html, body } = htmlAndBodyattributeList
+
+  if (html) {
+    const htmlElement = document.querySelector(`html`)
+    html.forEach(attributeName => {
+      if (htmlElement) {
+        htmlElement.removeAttribute(attributeName)
+      }
+    })
+  }
+
+  if (body) {
+    const bodyElement = document.querySelector(`body`)
+    body.forEach(attributeName => {
+      if (bodyElement) {
+        bodyElement.removeAttribute(attributeName)
+      }
+    })
   }
 }
