@@ -51,6 +51,13 @@ export function generateComponentChunkName(
     const { program } = store.getState()
     const directory = program?.directory || `/`
     let name = pathRelative(directory, componentPath)
+    if (name.includes(`__contentFilePath`)) {
+      name = name.replace(
+        /__contentFilePath=([^&]*)/,
+        (_match, contentFilePath) =>
+          `__contentFilePath=${pathRelative(directory, contentFilePath)}`
+      )
+    }
     name = replaceUnifiedRoutesKeys(kebabCase(name), name)
 
     /**
