@@ -267,37 +267,17 @@ Also be sure to checkout the [GraphQL concepts](/docs/conceptual/graphql-concept
 
 </Announcement>
 
-### Define constants
+### `createNode`
 
-Since you'll need to use the name of your node types in a couple of places, it's easy to introduce typos while using them. Create a `constants.ts` file to define your names once and reuse them everywhere. This way you can also more easily change the names after the fact. Neat!
+Besides fetching of the actual data, the creation of nodes is another important piece to a source plugin.
 
-Add the following to your new `constants.ts` file:
+<Announcement>
 
-```ts:title=plugin/src/constants.ts
-export const NODE_TYPES = {
-  Post: `Post`,
-  Author: `Author`,
-} as const
-```
+**Key Gatsby Concept** 💡
 
-For the next step you'll also need some additional TypeScript types, so go ahead and add the following to the `types.ts` file:
+Be sure to read this section carefully as understanding how [`createNode`](/docs/reference/config-files/actions/#createNode) works is really important for the rest of this tutorial and for source plugins in general.
 
-```ts:title=plugin/src/types.ts
-// Rest of imports...
-import { NODE_TYPES } from "./constants"
-
-export type NodeBuilderInput =
-  | { type: typeof NODE_TYPES.Author; data: IAuthorInput }
-  | { type: typeof NODE_TYPES.Post; data: IPostInput }
-
-// Rest of types...
-```
-
-You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
-
-### Task: Create `nodeBuilder` utility
-
-You'll create a utility function called `nodeBuilder` and its purpose is to take in data, mutate it (if necessary), and then call [`createNode`](/docs/reference/config-files/actions/#createNode) for each node type with its respective data. You're then calling `nodeBuilder` for each of your entries from the API response, filling Gatsby's data store with the data from the example API.
+</Announcement>
 
 A basic usage of `createNode` looks like this:
 
@@ -352,6 +332,38 @@ query {
   }
 }
 ```
+
+### Define constants
+
+Since you'll need to use the name of your node types in a couple of places, it's easy to introduce typos while using them. Create a `constants.ts` file to define your names once and reuse them everywhere. This way you can also more easily change the names after the fact. Neat!
+
+Add the following to your new `constants.ts` file:
+
+```ts:title=plugin/src/constants.ts
+export const NODE_TYPES = {
+  Post: `Post`,
+  Author: `Author`,
+} as const
+```
+
+For the next step you'll also need some additional TypeScript types, so go ahead and add the following to the `types.ts` file:
+
+```ts:title=plugin/src/types.ts
+// Rest of imports...
+import { NODE_TYPES } from "./constants"
+
+export type NodeBuilderInput =
+  | { type: typeof NODE_TYPES.Author; data: IAuthorInput }
+  | { type: typeof NODE_TYPES.Post; data: IPostInput }
+
+// Rest of types...
+```
+
+You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
+
+### Task: Create `nodeBuilder` utility
+
+You'll create a utility function called `nodeBuilder` and its purpose is to take in data, mutate it (if necessary), and then call [`createNode`](/docs/reference/config-files/actions/#createNode) for each node type with its respective data. You're then calling `nodeBuilder` for each of your entries from the API response, filling Gatsby's data store with the data from the example API.
 
 Now that you know how a barebones version of `createNode` works, DRY (acronym for "Do not repeat yourself") things up by creating the `nodeBuilder` function inside `source-nodes.ts`. Import the `SourceNodesArgs` and `NodeInput` type from `gatsby` and the `NodeBuilderInput` type from `types.ts`:
 
@@ -550,7 +562,9 @@ To add the individual pages that the cards link to, create a new file called `{P
 import * as React from "react"
 import { Link, graphql, PageProps, HeadFC } from "gatsby"
 
-export default function PostPage({ data: { post } }: PageProps<{ post: Queries.Post }>): React.ReactElement {
+export default function PostPage({
+  data: { post },
+}: PageProps<{ post: Queries.Post }>): React.ReactElement {
   return (
     <main>
       <h1>{post.title}</h1>

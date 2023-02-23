@@ -1,5 +1,5 @@
 ---
-title: "Part 3: Define the GraphQL Schema"
+title: "Part 3: Define GraphQL Schema"
 ---
 
 import { LinkButton } from "gatsby-interface"
@@ -9,6 +9,8 @@ import { MdArrowForward } from "react-icons/md"
 ## Introduction
 
 In the last part you learned how to create GraphQL nodes and use them in your site. In this part you'll dive deeper into the GraphQL schema creation process and learn how to modify the schema. This knowledge will be valuable for the reliability and usability of your plugin.
+
+One of Gatsby’s main strengths is the ability to query data from a variety of sources in a uniform way with GraphQL. For this to work, a GraphQL schema must be generated that defines the shape of the data. Gatsby is able to automatically infer a GraphQL Schema from your data, and in many cases, this is really all you need. There are however situations when you either want to explicitly define the data shape, or add custom functionality to the query layer — this is what Gatsby’s `createSchemaCustomization` Node API provides.
 
 In this part of the tutorial, you'll learn how to use the [`createSchemaCustomization` Node API](/docs/reference/config-files/gatsby-node/#createSchemaCustomization).
 
@@ -21,8 +23,6 @@ By the end of this part of the tutorial, you will be able to:
 ## Automatic type inference
 
 Before explaining how you can explicitly define your GraphQL schema, it's important for you to understand how Gatsby's automatic type inference works. It'll then make more sense why you'd want to define a schema manually and what benefits you'll receive.
-
-One of Gatsby’s main strengths is the ability to query data from a variety of sources in a uniform way with GraphQL. For this to work, a GraphQL schema must be generated that defines the shape of the data. Gatsby is able to automatically infer a GraphQL Schema from your data, and in many cases, this is really all you need. There are however situations when you either want to explicitly define the data shape, or add custom functionality to the query layer — this is what Gatsby’s `createSchemaCustomization` API provides.
 
 In order to translate the data shape into GraphQL type definitions, Gatsby has to inspect the contents of every field and check its type. There is a big problem with this approach though: If the values on a field are of different types, Gatsby cannot decide which one is the correct one. A consequence of this is that if your data sources change, type inference could suddenly fail. For example, this could happen when data from your source is optional and thus can sometimes exist, sometimes not exist.
 
@@ -129,7 +129,7 @@ export { createSchemaCustomization } from "./create-schema-customization"
 Before using [`createTypes`](/docs/reference/config-files/actions/#createTypes), here are some things to note for its usage:
 
 - Type definitions can be provided either in GraphQL's [schema definition language (SDL)](https://graphql.org/learn/schema/), Gatsby Type Builders, or a combination of both. You'll use the SDL syntax for the rest of this tutorial but you can also read an example for Gatsby's Type Builder syntax in this part.
-- By default, explicit type definitions you add with `createTypes` will be merged with inferred field types. So if you only want to define a subset of fields, the rest will be inferred as before. You can modify this behavior with the `@infer` and `@dontInfer` directives. You'll learn more about directives in [Add a foreign-key relationship](#add-a-foreign-key-relationship).
+- By default, explicit type definitions you add with `createTypes` will be merged with inferred field types. So if you only want to define a subset of fields, the rest will be inferred as before. You can modify this behavior with the `@infer` and `@dontInfer` extensions. You'll learn more about extensions in [Add a foreign-key relationship](#add-a-foreign-key-relationship).
 - Type definitions targeting root node types, e.g. `MarkdownRemark` or others added in `sourceNodes`/`onCreateNode` like `Post` and `Author`, need to implement the `Node` interface. You can do this by adding the `implements Node` to the SDL.
 
 As an example, this is the incoming data to `createNode` that gets inspected and inferred:
@@ -226,36 +226,60 @@ export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] 
   }
 ```
 
-Try to add the fields for both root node types. Can you figure it out by inspecting the data shape used in `source-nodes.ts`? Don't worry if not, you can use the solution below.
-
-<Collapsible
-  summary={<em>Show me the solution</em>}
->
+Since you've defined the names for your node types in the `NODE_TYPES` constant, use them through string interpolation:
 
 ```ts:title=plugin/src/create-schema-customization.ts
 import type { GatsbyNode } from "gatsby"
+// highlight-next-line
+import { NODE_TYPES } from "./constants"
 
 export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
   ({ actions }) => {
     const { createTypes } = actions
 
     createTypes(`
-      type Post implements Node {
+// highlight-next-line
+      type ${NODE_TYPES.Post} implements Node {}
+
+// highlight-next-line
+      type ${NODE_TYPES.Author} implements Node {}
+    `)
+  }
+```
+
+Try to add the fields for both root node types. Can you figure it out by inspecting the data shape used in `source-nodes.ts`? Don't worry if not, you can use the solution below.
+
+<Collapsible
+  summary={<em>Show me the solution</em>}
+>
+
+Your solution could look something like this:
+
+```ts:title=plugin/src/create-schema-customization.ts
+import type { GatsbyNode } from "gatsby"
+import { NODE_TYPES } from "./constants"
+
+export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
+  ({ actions }) => {
+    const { createTypes } = actions
+
+    createTypes(`
+      type ${NODE_TYPES.Post} implements Node {
         id: ID!
         _id: Int!
         slug: String!
         title: String!
         author: String!
-        image: PostImage!
+        image: ${NODE_TYPES.Post}Image!
       }
 
-      type Author implements Node {
+      type ${NODE_TYPES.Author} implements Node {
         id: ID!
         _id: Int!
         name: String!
       }
 
-      type PostImage {
+      type ${NODE_TYPES.Post}Image {
         url: String!
         alt: String!
         width: Int!
@@ -264,6 +288,10 @@ export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] 
     `)
   }
 ```
+
+One note on the usage of `id: ID!`: Each GraphQL type that implements the `Node` interface needs an unique `id: ID!`. Since you're currently still reyling on inference and are adjusting individual fields, you could omit the `id` in the definitions above.
+
+However, if you'd write `type Post implements Node @dontInfer {}` to turn off automatic inference, you must define the `id` field.
 
 </Collapsible>
 
@@ -275,19 +303,250 @@ You can also use the [documentation explorer in GraphiQL](/docs/tutorial/part-4/
 
 </Announcement>
 
+When restarting the `develop:site` script you won't see any difference in your frontend at `http://localhost:8000` since only the GraphQL types behind the scenes slightly changed.
+
+If you go to `site/src/pages/index.tsx` in your editor, you can hover over e.g. `<h2>{post.title}</h2>` and verify that the TypeScript type is now `string`. Previously, the type would have been `string | null` as the GraphQL type was also nullable. Thus defining GraphQL types explicitly and marking fields as non-null has the nice benefit of making [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen/) more accurate, too.
+
 ## Add a foreign-key relationship
 
-TODO
+As mentioned in the introduction, you can use the `createSchemaCustomization` Node API not only for defining the data shape, but also to add additional functionality. Out of the box, Gatsby provides ready to use extensions you can use without having to manually write GraphQL field resolvers. The easiest way of using them is through a directive in the SDL.
 
-- Between `Post` and `Author`
+If you want to learn more, read our documentation about [extensions and directives](/docs/reference/graphql-data-layer/schema-customization/#extensions-and-directives) and how you can create your own [custom extensions](/docs/reference/graphql-data-layer/schema-customization/#creating-custom-extensions).
+
+In this tutorial you'll use the `@link` extension to create a foreigh-key relationship between your `Post` and `Author` nodes. This relationship can either be already existent in your data source (and you want to replicate it) or it can be a completely new behavior.
+
+<Announcement>
+
+**Foreign-key relationship:** This term comes from relational databases. A foreign-key is a set of attributes in a table that refers to the primary key of another table. The foreign-key links these two tables.
+
+</Announcement>
+
+When inspecting the incoming `Post` and `Author` data, do you see the foreign-key between both data sets?
+
+`Post`:
+
+```json
+{
+  id: '1',
+  slug: 'post-1',
+  title: 'The first post',
+  image: {
+    url: 'https://images.unsplash.com/photo-1615751072497-5f5169febe17?fm=jpg',
+    alt: 'brown and white long coated dog',
+    width: 3024,
+    height: 4032
+  },
+  author: 'Jay Gatsby'
+}
+```
+
+`Author`:
+
+```json
+{ 
+  id: '1',
+  name: 'Jay Gatsby'
+}
+```
+
+The `author` field on `Post` is the foreign-key to the `Author` data set. It is the unique identifier that could link both data sets together.
+
+<Announcement>
+
+**Key Gatsby Concept** 💡
+
+The goal of a foreign-key relationship through `@link` in Gatsby is to expand the provided field value to a full node. You can enrich the information of a node by adding relevant/additional data from another node.
+
+This is a really powerful ability in Gatsby's data layer.
+
+Imagine this example: "Team Gatsby" likes to author their blog posts in Markdown, "Team Daisy" is responsible for keeping author information up do date and keeps track of that in a CMS. As long as both teams use the same unique identifier, both nodes can be linked together in Gatsby's data layer. Both teams can work independently on their data.
+
+</Announcement>
+
+In the previous section you already defined the GraphQL types for `Post` and `Author` so all the necessary boilerplate is already done. You can now use the `@link` extension (as a directive in the SDL). Before showing that, here's a short explainer on the `@link` extension:
+
+- `@link` can receive two arguments (`by` and `from`) but if no argument is given, Gatsby will use the `id` field as the foreign-key field (equivalent to `@link(by: "id")`). You'll use this default behavior in [Part 6](/docs/tutorial/creating-a-source-plugin/part-6/) for the Image CDN feature.
+- `by` is the field you link **to** (on the target node).
+- `from` is the field you link **from** (on the current node).
+- You'll also need to adjust the GraphQL type of the field on the current node since you're extending the field from a `String`/`Int` to a full node.
+
+As you want to link the `author` field of `Post` to the `name` field of `Author`, you'll need to write the `@link` extension like so:
+
+```
+@link(by: "name")
+```
+
+The GraphQL type of `author` needs to be changed from `String!` to `Author` as this field now should hold a full `Author` node.
+
+Open the `create-schema-customization.ts` file and make the necessary changes:
+
+```ts:title=plugin/src/create-schema-customization.ts
+import type { GatsbyNode } from "gatsby"
+import { NODE_TYPES } from "./constants"
+
+export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] =
+  ({ actions }) => {
+    const { createTypes } = actions
+
+    createTypes(`
+      type ${NODE_TYPES.Post} implements Node {
+        id: ID!
+        _id: Int!
+        slug: String!
+        title: String!
+// highlight-next-line
+        author: ${NODE_TYPES.Author} @link(by: "name")
+        image: ${NODE_TYPES.Post}Image!
+      }
+
+      type ${NODE_TYPES.Author} implements Node {
+        id: ID!
+        _id: Int!
+        name: String!
+      }
+
+      type ${NODE_TYPES.Post}Image {
+        url: String!
+        alt: String!
+        width: Int!
+        height: Int!
+      }
+    `)
+  }
+```
+
+Restart the `develop:site` script. The terminal should print out an error like this:
+
+```shell
+GraphQLError: Field "author" of type "Author" must have a selection of subfields. Did you mean "author { ... }"?
+```
+
+This is actually a good sign! It means that the current GraphQL queries in `src/pages/index.tsx` and `src/pages/{Post.slug}.tsx` are outdated with their usage of `author`.
+
+Open GraphiQL at `http://localhost:8000/___graphql` and run the following query:
+
+```graphql
+query MyQuery {
+  allPost {
+    nodes {
+      title
+      author {
+        name
+      }
+    }
+  }
+}
+```
+
+You should get the following result back:
+
+![A screenshot of "localhost:8000/___graphql" in a web browser. The GraphiQL IDE shows the results of the GraphQL query mentioned above.](./03-graphql-query.png)
+
+Awesome, you successfully linked the `Post` and `Author` nodes! To wrap up this part of the tutorial, update the index page and page template in your example site.
+
+Update the query and usage in `src/pages/index.tsx` like so:
+
+```tsx:title=site/src/pages/index.tsx
+// Imports...
+
+export default function IndexPage({
+  data: {
+    allPost: { nodes: posts },
+  },
+}: PageProps<Queries.IndexPageQuery>): React.ReactElement {
+  return (
+    <main>
+      <h1>All posts</h1>
+      <section className="posts-grid">
+        {posts.map((post) => (
+          <Link key={post.id} to={post.slug} className="posts-card">
+            <h2>{post.title}</h2>
+            {/* highlight-next-line */}
+            <span>Author: {post.author.name}</span>
+          </Link>
+        ))}
+      </section>
+    </main>
+  )
+}
+
+// Head API...
+
+export const query = graphql`
+  query IndexPage {
+    allPost {
+      nodes {
+        id
+        slug
+        title
+// highlight-start
+        author {
+          name
+        }
+// highlight-end
+      }
+    }
+  }
+`
+```
+
+And in `src/pages/{Post.slug}.tsx` like so:
+
+```tsx:title=site/src/pages/{Post.slug}.tsx
+// Imports...
+
+export default function PostPage({
+  data: { post },
+}: PageProps<{ post: Queries.Post }>): React.ReactElement {
+  return (
+    <main>
+      <h1>{post.title}</h1>
+      {/* highlight-next-line */}
+      <p>Author: {post.author.name}</p>
+      <br />
+      <Link to="/">Back to home page</Link>
+    </main>
+  )
+}
+
+
+// Head API...
+
+export const query = graphql`
+  query PostPage($slug: String!) {
+    post(slug: { eq: $slug }) {
+      title
+// highlight-start
+      author {
+        name
+      }
+// highlight-end
+    }
+  }
+`
+```
+
+Go visit your index page in the browser, everything should be working again.
 
 ## Summary
 
-TODO
+Good job! You've extended your knowledge about Gatsby's data layer.
+
+Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
+
+- How does Gatsby's automatic type inference work?
+- What are pitfalls of this automatic inference?
+- What Node API and functions should you use to prevent those pitfalls?
+- What is a foreign-key relationship and how to you set one up in Gatsby?
 
 ### Key takeaways
 
-TODO
+- One of Gatsby’s main strengths is the ability to query data from a variety of sources in a uniform way with GraphQL. For this to work, a GraphQL schema must be generated that defines the shape of the data.
+- Gatsby's GraphQL schema is automatically inferred from your data. Gatsby inspects the contents of every field and checks its type in order to convert it to GraphQL types. This automatic type inference though has problems with values of different types.
+- To make your plugin more reliable, you should explicitly define the GraphQL schema for it. This way the pitfalls from the automatic type inference won’t occur.
+- You can use the `createTypes` function to define a GraphQL schema (in SDL syntax or via Gatsby Type Builders)
+- Gatsby has existing GraphQL extensions like `@link` that enable you to add functionality to your schema
+- You can use `@link` to create a foreign-key relationship between GraphQL nodes
 
 <Announcement>
 
@@ -301,7 +560,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-TODO
+In Part 4 of the Tutorial, you'll learn all about utilities available to plugin authors to improve the functionality of your plugin.
 
 <LinkButton
   to="/docs/tutorial/creating-a-source-plugin/part-4/"
