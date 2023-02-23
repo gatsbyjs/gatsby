@@ -12,6 +12,7 @@ type Options = {
   languageConfig?: {
     enabledLanguages?: Array<string | RenamedLangCode>
     renamedEnabledLanguages?: Array<RenamedLangCode>
+    filterByLanguages?: boolean
     defaultLanguage?: string
     translatableEntities?: Array<string>
     nonTranslatableEntities?: Array<string>

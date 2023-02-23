@@ -474,6 +474,8 @@ module.exports = {
               as: `uk`,
             },
           ],
+          filterByLanguages: false
+          // add a boolean `true` here if you'd like to filter the Drupal API response by the current language
           translatableEntities: [`node--article`],
           nonTranslatableEntities: [`file--file`],
         },
