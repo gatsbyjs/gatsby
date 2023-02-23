@@ -23,6 +23,7 @@ import { detectLmdbStore } from "../datastore"
 import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
+import type { IDataLayerContext } from "./../state-machines/data-layer/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
@@ -74,12 +75,15 @@ process.on(`unhandledRejection`, (reason: unknown) => {
 // Otherwise leave commented out.
 // require(`../bootstrap/log-line-function`)
 
+type WebhookBody = IDataLayerContext["webhookBody"]
+
 export async function initialize({
   program: args,
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
   workerPool: WorkerPool.GatsbyWorkerPool
+  webhookBody?: WebhookBody
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -663,8 +667,21 @@ export async function initialize({
     }
   }
 
+  let initialWebhookBody: WebhookBody = undefined
+
+  if (process.env.GATSBY_INITIAL_WEBHOOK_BODY) {
+    try {
+      initialWebhookBody = JSON.parse(process.env.GATSBY_INITIAL_WEBHOOK_BODY)
+    } catch (e) {
+      reporter.error(
+        `Failed to parse GATSBY_INITIAL_WEBHOOK_BODY as JSON:\n"${e.message}"`
+      )
+    }
+  }
+
   return {
     store,
     workerPool,
+    webhookBody: initialWebhookBody,
   }
 }
