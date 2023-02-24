@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.7.1/packages/gatsby-source-drupal) (2023-02-23)
+
+#### Features
+
+- filter api requests by languages [#37684](https://github.com/gatsbyjs/gatsby/issues/37684) [#37690](https://github.com/gatsbyjs/gatsby/issues/37690) ([81619b2](https://github.com/gatsbyjs/gatsby/commit/81619b25b0c9d8d60f7bbc639eded68c4fb330e1))
+
 ## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.7.0/packages/gatsby-source-drupal) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
