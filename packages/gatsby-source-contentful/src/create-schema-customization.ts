@@ -390,7 +390,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     )
 
     const { getGatsbyImageFieldConfig } = await import(
-      `gatsby-plugin-image/graphql-utils`
+      `gatsby-plugin-image/graphql-utils.js`
     )
 
     // Assets

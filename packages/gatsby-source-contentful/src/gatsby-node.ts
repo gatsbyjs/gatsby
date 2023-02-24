@@ -47,8 +47,9 @@ export const onPreInit: GatsbyNode["onPreInit"] = async ({
 }) => {
   // if gatsby-plugin-image is not installed
   try {
-    await import(`gatsby-plugin-image/graphql-utils`)
+    await import(`gatsby-plugin-image/graphql-utils.js`)
   } catch (err) {
+    console.log(err)
     reporter.panic({
       id: CODES.GatsbyPluginMissing,
       context: {

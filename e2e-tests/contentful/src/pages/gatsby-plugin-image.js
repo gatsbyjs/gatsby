@@ -1,7 +1,7 @@
 import { graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 import * as React from "react"
-import { useContentfulImage } from "gatsby-source-contentful/hooks"
+import { useContentfulImage } from "gatsby-source-contentful"
 
 import Layout from "../components/layout"
 import Grid from "../components/grid"

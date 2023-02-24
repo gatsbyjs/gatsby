@@ -4,7 +4,7 @@ import * as React from "react"
 import slugify from "slugify"
 
 import { BLOCKS, MARKS, INLINES } from "@contentful/rich-text-types"
-import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { renderRichText } from "gatsby-source-contentful"
 
 import Layout from "../components/layout"
 
