@@ -20,8 +20,8 @@ const {
 } = require(`./data.json`)
 
 const pluginConfig = createPluginConfig({
-  accessToken: "mocked",
-  spaceId: "mocked",
+  accessToken: `mocked`,
+  spaceId: `mocked`,
 })
 const unstable_createNodeManifest = jest.fn()
 

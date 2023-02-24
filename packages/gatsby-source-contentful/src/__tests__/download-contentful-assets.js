@@ -76,7 +76,7 @@ describe(`downloadContentfulAssets`, () => {
       get: jest.fn(() => Promise.resolve(null)),
       set: jest.fn(() => Promise.resolve(null)),
       directory: __dirname,
-      name: "mocked",
+      name: `mocked`,
       del: jest.fn(() => Promise.resolve()),
     }
 
