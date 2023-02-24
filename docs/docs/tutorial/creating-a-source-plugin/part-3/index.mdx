@@ -100,7 +100,7 @@ So while you know that `subTitle` is optional, Gatsby can't automatically infer 
 
 ## Explicitly define your GraphQL schema
 
-To best support [Valhalla Content Hub](/products/valhalla-content-hub) you'll be **required** to explicitly define the GraphQL schema for your source plugin. This way the pitfalls you've read above won't occur. In general, it's considered best practice to define types as it adds reliablity and usability to your plugin.
+We **strongly** recommend to explicitly define the GraphQL schema for your source plugin to ensure future compatibility with Gatsby's ecosystem. This way the pitfalls you've read above won't occur. In general, it's considered best practice to define types as it adds reliablity and usability to your plugin.
 
 Without further ado, add a new file called `create-schema-customization.ts` to the plugin with the following contents:
 
