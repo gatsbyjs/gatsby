@@ -36,7 +36,7 @@ Another option is to use an external search engine. This solution is much more s
 There are many options available, including both self-hosted and commercially hosted open source:
 
 - [Algolia](https://www.algolia.com/) — SaaS, [has Gatsby plugin](/plugins/gatsby-plugin-algolia/)
-- [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS, commercial hosting available, [has Gatsby plugin](/plugins/@logilab/gatsby-plugin-elasticsearch/)
+- [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS, commercial hosting available
 - [Solr](https://solr.apache.org) — OSS and has commercial hosting available
 - [Meilisearch](https://www.meilisearch.com/) - OSS, [has Gatsby plugin](/plugins/gatsby-plugin-meilisearch/)
 - [Typesense](https://typesense.org/) - OSS, [has hosted version](https://cloud.typesense.org), [has Gatsby plugin](/plugins/gatsby-plugin-typesense/)
