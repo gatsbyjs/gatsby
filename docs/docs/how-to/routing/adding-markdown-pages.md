@@ -112,7 +112,7 @@ export default function BlogPostTemplate({
   )
 }
 
-export const pageQuery = graphql`
+export const PageQuery = graphql`
   query($id: String!) {
     markdownRemark(id: { eq: $id }) {
       html
