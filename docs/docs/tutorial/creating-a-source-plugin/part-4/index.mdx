@@ -203,6 +203,25 @@ You'll now exactly learn that by adding an activity for the sourcing and node cr
 
     With the `start()` call the timer is running until you'll eventually call `end()`.
 
+1. If the sourcing fails, the timer should be stopped. So update the `panicOnBuild` call to use the `sourcingTimer` instead:
+
+    ```ts:title=plugin/src/source-nodes.ts
+    // Imports
+
+    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+      // Rest of sourceNodes
+
+      if (errors) {
+        // highlight-next-line
+        sourcingTimer.panicOnBuild(errors[0].message)
+      }
+
+      // Rest of sourceNodes
+    }
+
+    // Rest of file
+    ```
+
 1. Right now the `sourcingTimer` shows "Sourcing from plugin API" together with a time in seconds. You can use the `setStatus()` method to append text.
 
     ```ts:title=plugin/src/source-nodes.ts
@@ -365,7 +384,7 @@ You don't need to worry about other plugins or Gatsby itself as the IDs are name
       // Rest of sourceNodes
 
       if (errors) {
-        reporter.panicOnBuild({
+        sourcingTimer.panicOnBuild({
           id: ERROR_CODES.GraphQLSourcing,
           context: {
             sourceMessage: `Sourcing from the GraphQL API failed`,
