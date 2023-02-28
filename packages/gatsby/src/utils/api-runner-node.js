@@ -222,6 +222,7 @@ function extendLocalReporterToCatchPluginErrors({
     error,
     panic,
     panicOnBuild,
+    // If you change arguments here, update reporter.ts as well
     activityTimer: (text, activityArgs = {}) => {
       let args = [text, activityArgs]
 
@@ -247,8 +248,14 @@ function extendLocalReporterToCatchPluginErrors({
 
       return activity
     },
+    // If you change arguments here, update reporter.ts as well
+    createProgress: (text, total = 0, start = 0, activityArgs = {}) => {
+      let args = [text, total, start, activityArgs]
 
-    createProgress: (...args) => {
+      if (pluginName && setErrorMap) {
+        args = [...args, pluginName]
+      }
+
       // eslint-disable-next-line prefer-spread
       const activity = reporter.createProgress.apply(reporter, args)
 
