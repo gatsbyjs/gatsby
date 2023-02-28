@@ -1,20 +1,9 @@
-import { handlers, parse, resolver } from "react-docgen"
-import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
 import { codeFrameColumns } from "@babel/code-frame"
 import { createDisplayNameHandler } from "./displayname-handler"
 import { applyPropDoclets, cleanDoclets, parseDoclets } from "./doclets"
 
-const defaultHandlers = [
-  handlers.propTypeHandler,
-  handlers.propTypeCompositionHandler,
-  handlers.propDocBlockHandler,
-  handlers.flowTypeHandler,
-  handlers.defaultPropsHandler,
-  handlers.componentDocblockHandler,
-  handlers.componentMethodsHandler,
-  handlers.componentMethodsJsDocHandler,
-]
-
+let reactDocgen = null
+let defaultHandlers = null
 let fileCount = 0
 
 /**
@@ -34,7 +23,21 @@ function makeHandlers(node, handlers) {
   ]
 }
 
-export default function parseMetadata(content, node, options) {
+export default async function parseMetadata(content, node, options) {
+  if (!reactDocgen) {
+    reactDocgen = await import(`react-docgen`)
+    defaultHandlers = [
+      handlers.propTypeHandler,
+      handlers.propTypeCompositionHandler,
+      handlers.propDocBlockHandler,
+      handlers.flowTypeHandler,
+      handlers.defaultPropsHandler,
+      handlers.componentDocblockHandler,
+      handlers.componentMethodsHandler,
+      handlers.componentMethodsJsDocHandler,
+    ]
+  }
+  const { parse, resolver, ERROR_MISSING_DEFINITION } = reactDocgen
   let components = []
   const { handlers, resolver: userResolver, ...parseOptions } = options || {}
   try {
