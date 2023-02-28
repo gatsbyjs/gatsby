@@ -180,10 +180,10 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 To see if you can successfully source the data from the API, `console.dir` the `data` result:
 
 ```ts:title=plugin/src/source-nodes.ts
-// Imports...
+// Imports
 
 export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-  // Rest of the code ...
+  // Rest of the code
 
   console.dir(data, { depth: null })
 }
@@ -349,14 +349,14 @@ export const NODE_TYPES = {
 For the next step you'll also need some additional TypeScript types, so go ahead and add the following to the `types.ts` file:
 
 ```ts:title=plugin/src/types.ts
-// Rest of imports...
+// Rest of imports
 import { NODE_TYPES } from "./constants"
 
 export type NodeBuilderInput =
   | { type: typeof NODE_TYPES.Author; data: IAuthorInput }
   | { type: typeof NODE_TYPES.Post; data: IPostInput }
 
-// Rest of types...
+// Rest of types
 ```
 
 You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
@@ -375,7 +375,7 @@ import { fetchGraphQL } from "./utils"
 import type { IAuthorInput, IPostInput, NodeBuilderInput } from "./types"
 
 export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-  // Contents of sourceNodes...
+  // Contents of sourceNodes
 }
 
 // highlight-start
@@ -403,7 +403,7 @@ Apply the same logic as the barebones `createNode` example to the `nodeBuilder` 
 - Call `createNode`
 
 ```ts:title=plugin/src/source-nodes.ts
-// Rest of the file...
+// Rest of the file
 
 function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {
   const id = gatsbyApi.createNodeId(`${input.type}-${input.data.id}`)
@@ -435,10 +435,10 @@ Great, you wrote a reusable helper function to create nodes! Now it's time to pu
 Scroll up in `source-nodes.ts` to the place where you're calling `console.dir()` and remove that log. Replace it with a destructuring assignment of `data` to get the `posts` and `authors` results out of it (you can also set an empty array as a default value):
 
 ```ts:title=plugin/src/source-nodes.ts
-// Rest of the file...
+// Rest of the file
 
 export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-  // Rest of sourceNodes...
+  // Rest of sourceNodes
 
   const { posts = [], authors = [] } = data
 }
@@ -447,10 +447,10 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 So both `posts` and `authors` are an array of objects that you should iterate over. Each object will become a Gatsby node. Iterate over both arrays and call `nodeBuilder` inside the loops:
 
 ```ts:title=plugin/src/source-nodes.ts
-// Rest of the file...
+// Rest of the file
 
 export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-  // Rest of sourceNodes...
+  // Rest of sourceNodes
 
   const { posts = [], authors = [] } = data
 

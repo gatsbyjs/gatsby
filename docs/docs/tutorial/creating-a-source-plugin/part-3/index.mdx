@@ -449,7 +449,7 @@ Awesome, you successfully linked the `Post` and `Author` nodes! To wrap up this 
 Update the query and usage in `src/pages/index.tsx` like so:
 
 ```tsx:title=site/src/pages/index.tsx
-// Imports...
+// Imports
 
 export default function IndexPage({
   data: {
@@ -472,7 +472,7 @@ export default function IndexPage({
   )
 }
 
-// Head API...
+// Head API
 
 export const query = graphql`
   query IndexPage {
@@ -495,7 +495,7 @@ export const query = graphql`
 And in `src/pages/{Post.slug}.tsx` like so:
 
 ```tsx:title=site/src/pages/{Post.slug}.tsx
-// Imports...
+// Imports
 
 export default function PostPage({
   data: { post },
@@ -512,7 +512,7 @@ export default function PostPage({
 }
 
 
-// Head API...
+// Head API
 
 export const query = graphql`
   query PostPage($slug: String!) {
