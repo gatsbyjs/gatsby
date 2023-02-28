@@ -244,7 +244,8 @@ class Reporter {
    */
   activityTimer = (
     text: string,
-    activityArgs: IActivityArgs = {}
+    activityArgs: IActivityArgs = {},
+    pluginName?: string
   ): ITimerReporter => {
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
@@ -260,6 +261,7 @@ class Reporter {
       span,
       reporter: this,
       reporterActions,
+      pluginName,
     })
   }
 
