@@ -21,10 +21,12 @@ jest.mock(`../get-cache`, () => {
 
 const start = jest.fn()
 const end = jest.fn()
+const panicOnBuild = jest.fn()
 
 const mockActivity = {
   start,
   end,
+  panicOnBuild,
   done: end,
 }
 
@@ -203,6 +205,34 @@ describe(`api-runner-node`, () => {
         level: `ERROR`,
         docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
+    })
+  })
+
+  it(`setErrorMap works with activityTimer`, async () => {
+    store.getState.mockImplementation(() => {
+      return {
+        program: {},
+        config: {},
+        flattenedPlugins: [
+          {
+            name: `test-plugin-activity-map`,
+            resolve: path.join(fixtureDir, `test-plugin-activity-map`),
+            nodeAPIs: [`onPreInit`],
+          },
+        ],
+      }
+    })
+    await apiRunnerNode(`onPreInit`)
+    expect(reporter.setErrorMap).toBeCalledTimes(1)
+    expect(panicOnBuild).toBeCalledTimes(1)
+    expect(reporter.activityTimer.mock.calls[3]).toEqual([
+      `Test Activity`,
+      {},
+      `test-plugin-activity-map`,
+    ])
+    expect(panicOnBuild.mock.calls[0][0]).toEqual({
+      id: `1337`,
+      context: { someProp: `Naruto` },
     })
   })
 })
