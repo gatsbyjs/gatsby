@@ -327,9 +327,9 @@ Let's get to work:
     // highlight-end
     ```
 
-The keys of the `ERROR_CODES` object can be arbitrary, we'd recommend using names that make it easy to differentiate them for their different purposes. The value of each entry is the unique ID. So make sure that each ID only exists once inside `ERROR_CODES`.
+    The keys of the `ERROR_CODES` object can be arbitrary, we'd recommend using names that make it easy to differentiate them for their different purposes. The value of each entry is the unique ID. So make sure that each ID only exists once inside `ERROR_CODES`.
 
-You don't need to worry about other plugins or Gatsby itself as the IDs are namespaced with your plugin. If possible, use IDs that are not already used by Gatsby itself.
+    You don't need to worry about other plugins or Gatsby itself as the IDs are namespaced with your plugin. If possible, use IDs that are not already used by Gatsby itself.
 
 1. Import `ERROR_CODES` into `plugin/src/on-plugin-init.ts` and initialize `setErrorMap`. Remove the existing `info` call:
 
