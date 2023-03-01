@@ -119,6 +119,12 @@ In Part 2 you also added the `fetchGraphQL` function that accesses the GraphQL A
     // Rest of file
     ```
 
+    <Announcement>
+
+    **Pro tip:** Try to rely on TypeScript types to check if the error you're getting back is a valid `Error` type. If not, you might need to modify the error a little bit to fit the requirements.
+
+    </Announcement>
+
 1. To see if it works, add a typo to your GraphQL request inside `fetchGraphQL`:
 
     ```ts:title=plugin/src/source-nodes.ts
@@ -157,6 +163,12 @@ In Part 2 you also added the `fetchGraphQL` function that accesses the GraphQL A
 
     Yes, it works 🎉 Don't forget to remove the typo again. In [Task: Define custom errors](#task-define-custom-errors) you'll learn how to further customize this error.
 
+    <Announcement>
+
+    **Pro tip:** This is the error that the GraphQL API directly returns. You can see the same error if you go to `http://localhost:4000/graphql` (the GraphQL API from `api` folder) and try the query there. Get yourself familiar with how, when, and in which form your API throws errors.
+
+    </Announcement>
+
 You're now surfacing any errors that occur during the data fetching to your users. Use the `error`, `panicOnBuild`, and `panic` methods throughout your code to display all relevant errors to your user.
 
 **Please note:** If necessary, add context to your error messages instead of only passing the error along. This is especially true if the error could be thrown in multiple places or if the original error is not clear enough.
@@ -167,7 +179,7 @@ Since your source plugin is retrieving information from a third-party API the pr
 
 You'll now exactly learn that by adding an activity for the sourcing and node creation process of your plugin.
 
-1. Create a new `activityTimer` and store that in a variable (the name doesn't matter). You'll use the variable to start, update, and stop the timer.
+1. Create a new `activityTimer` and store that in a variable (the name doesn't matter). You'll use the variable to start, update, and stop the timer. Try to use a text that clearly indicates your plugin name and what it's doing.
 
     ```ts:title=plugin/src/source-nodes.ts
     // Imports
@@ -221,6 +233,12 @@ You'll now exactly learn that by adding an activity for the sourcing and node cr
 
     // Rest of file
     ```
+
+    <Announcement>
+
+    **Please note:** When looking at the TypeScript types for `sourcingTimer` you'll notice that it also implements `panicOnBuild` and `panic`. You can pass in the same arguments as you're used to, the `activityTimer` will handle everything for you. If you would continue to use `reporter.panicOnBuild` the terminal would output a successful message for the timer which is incorrect of course!
+
+    </Announcement>
 
 1. Right now the `sourcingTimer` shows "Sourcing from plugin API" together with a time in seconds. You can use the `setStatus()` method to append text.
 
@@ -371,6 +389,12 @@ Let's get to work:
 
     `text` has to be a function that returns a `string` and receives a freeform `context`. You can pass through any information you'd like in `context` and then use it to construct the final message that is shown to the user. So the error above requires `sourceMessage` and `graphqlError` to work.
 
+    <Announcement>
+
+    **Pro tip:** If your `text` should be a multi-line string, consider using the `stripIndent` function from [common-tags](https://www.npmjs.com/package/common-tags#stripindent). This way your error will be displayed correctly independent from how you write the string.
+
+    </Announcement>
+
 1. In this step you'll invoke the error with the custom ID and pass along the required `context` information. Open `plugin/src/source-nodes.ts` and add the `ERROR_CODES` import and use it inside the existing `panicOnBuild` call:
 
     ```ts:title=plugin/src/source-nodes.ts
@@ -384,6 +408,7 @@ Let's get to work:
       // Rest of sourceNodes
 
       if (errors) {
+        // highlight-start
         sourcingTimer.panicOnBuild({
           id: ERROR_CODES.GraphQLSourcing,
           context: {
@@ -391,6 +416,7 @@ Let's get to work:
             graphqlError: errors[0].message,
           },
         })
+        // highlight-end
       }
 
       // Rest of sourceNodes
@@ -409,13 +435,150 @@ Let's get to work:
     failed Sourcing from plugin API - 0.029s
     ```
 
+Your error now has a custom ID (`#plugin_10000`), it prints the name of the plugin (`PLUGIN`), and you've added additional context to the error itself (`Sourcing from the GraphQL API failed:`). Whenever you need to output an error message, create a new structured error inside `setErrorMap` and use it to display the best possible error to the user.
+
 ## `cache` API
 
-TODO
+You might already know that Gatsby creates two folders during its build phase: `.cache` and `public`. It's recommended to keep both folders around in between builds as then Gatsby can leverage its caching functionalities the best.
+
+With the [cache API](/docs/reference/config-files/node-api-helpers/#cache) you have access to a key-value store to persist data inside the `.cache` folder. You can use it to persist timestamps, tokens, etc. to use delta updates, or to store the artifacts of time/memory/cpu intensive tasks (e.g. images, big files).
+
+If the term "delta update" doesn't ring a bell, here's a short explanation in context of a source plugin: A delta update requires the source plugin to only fetch data from the remote API that is new, or has been changed from a previous state, in contrast to having to fetch all the data again.
+
+<Announcement>
+
+**Example usage:** Your API endpoint accepts an optional query parameter of `lastFetched`. If used, only updates since that date are returned. When storing the timestamp of last sourcing with the `cache` API you then can use that date in your request, e.g. `http://yourapi.com/endpoint?lastFetched=2023-01-1`.
+
+</Announcement>
+
+**Important:** Your remote API has to support delta updates, it's not a universal thing that works everywhere.
 
 ### Task: Save the timestamp of last sourcing
 
-TODO
+The most common use case of the `cache` API is to store timestamps, tokens, etc. and therefore you'll learn exactly that. Even though the example API this tutorial uses doesn't support delta updates, you'll go through all the necessary steps in this task to apply it to your own source plugin.
+
+The `cache` API is a key-value store, so you save specific data under a key, and then can retrieve a value with a given key.
+
+1. Store the name of the key in an constants to minimize the likelyhood of typos. Open `plugin/src/constants.ts` and add:
+
+    ```ts:title=plugin/src/constants.ts
+    export const NODE_TYPES = {
+      Post: `Post`,
+      Author: `Author`,
+    } as const
+
+    export const ERROR_CODES = {
+      GraphQLSourcing: `10000`,
+    } as const
+
+    // highlight-start
+    export const CACHE_KEYS = {
+      Timestamp: `timestamp`,
+    } as const
+    // highlight-end
+    ```
+
+1. Import the new `CACHE_KEYS` variable into `plugin/src/source-nodes.ts` and grab the `cache` API from `gatsbyApi` inside `sourceNodes`:
+
+    ```ts:title=plugin/src/source-nodes.ts
+    // Rest of imports
+    // highlight-next-line
+    import { ERROR_CODES, CACHE_KEYS } from "./constants"
+
+    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+      // highlight-next-line
+      const { reporter, cache } = gatsbyApi
+
+      // Rest of sourceNodes
+    }
+
+    // Rest of file
+    ```
+
+1. Generate a date timestamp just before the `fetchGraphQL` call and use `cache.set` to save the timestamp after the successful fetch. This way you're ensuring accurate timestamps that are only saved when a successful data call happened.
+
+    ```ts:title=plugin/src/source-nodes.ts
+    // Imports
+
+    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+      // Rest of sourceNodes
+
+      // highlight-next-line
+      const lastFetchedDateCurrent = Date.now()
+
+      const { data, errors } = await fetchGraphQL<IApiResponse>(/* Query */)
+
+      if (errors) {
+        sourcingTimer.panicOnBuild({
+          id: ERROR_CODES.GraphQLSourcing,
+          context: {
+            sourceMessage: `Sourcing from the GraphQL API failed`,
+            graphqlError: errors[0].message,
+          },
+        })
+      }
+
+      // highlight-next-line
+      await cache.set(CACHE_KEYS.Timestamp, lastFetchedDateCurrent)
+
+      // Rest of sourceNodes
+    }
+
+    // Rest of file
+    ```
+
+    <Announcement>
+
+    `Date.now()` returns the number of milliseconds elapsed since the epoch. If you need another format, read the [Date.now() documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now).
+
+    </Announcement>
+
+1. The next step is to use `cache.get` to retrieve the timestamp from the cache before the `fetchGraphQL` call. Since you won't use it for delta fetching in this tutorial, output the information in the `verbose` mode of Gatsby with `reporter.verbose`:
+
+    ```ts:title=plugin/src/source-nodes.ts
+    // Imports
+
+    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+      // Rest of sourceNodes
+
+      // highlight-next-line
+      const lastFetchedDate: number = await cache.get(CACHE_KEYS.Timestamp)
+      const lastFetchedDateCurrent = Date.now()
+
+      // highlight-next-line
+      reporter.verbose(`[plugin] Last fetched date: ${lastFetchedDate}`)
+
+      // Rest of sourceNodes
+    }
+
+    // Rest of file
+    ```
+
+1. Time to test your changes! Restart the `develop:site` script but this time with the `--verbose` flag enabled:
+
+    ```shell
+    yarn develop:site --verbose
+    ```
+
+    The output got a lot busier! You should see a new log:
+
+    ```shell
+    verbose [plugin] Last fetched date: undefined
+    ```
+
+    You're seeing this because on this first run the `lastFetcheDate` didn't exist yet and thus `undefined` is returned from the `cache.get` call. Stop the development server and restart the script. You now should see a timestamp defined that looks something like this:
+
+    ```shell
+    verbose [plugin] Last fetched date: 1677669643651
+    ```
+
+    Great, it's working!
+
+    <Announcement>
+
+    **Pro tip:** If you'd save files with the `cache` API you could also inspect what is saved by going to the `.cache/caches` folder and looking for a folder named like your plugin. For this tutorial the path would be `site/.cache/caches/plugin`.
+
+    </Announcement>
 
 ## `pluginOptionsSchema` API
 

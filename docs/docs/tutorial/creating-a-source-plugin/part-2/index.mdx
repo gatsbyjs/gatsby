@@ -346,6 +346,12 @@ export const NODE_TYPES = {
 } as const
 ```
 
+<Announcement>
+
+**TypeScript tip:** You're using a [`const` assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) here to make the object read-only and tell the compiler to infer the most specific type it can. In this specific instance you use `as const` to enable a `enum`-like pattern instead of directly using TypeScript's `enum`.
+
+</Announcement>
+
 For the next step you'll also need some additional TypeScript types, so go ahead and add the following to the `types.ts` file:
 
 ```ts:title=plugin/src/types.ts
