@@ -36,46 +36,43 @@ export async function loadConfig({
     })
   }
 
-  if (config && processFlags) {
+  if (processFlags) {
     // Setup flags
-    if (config) {
-      // Get flags
-      const {
-        enabledConfigFlags,
-        unknownFlagMessage,
-        unfitFlagMessage,
-        message,
-      } = handleFlags(availableFlags, config.flags)
+    const {
+      enabledConfigFlags,
+      unknownFlagMessage,
+      unfitFlagMessage,
+      message,
+    } = handleFlags(availableFlags, config?.flags ?? {})
 
-      if (unknownFlagMessage !== ``) {
-        reporter.warn(unknownFlagMessage)
+    if (unknownFlagMessage !== ``) {
+      reporter.warn(unknownFlagMessage)
+    }
+    if (unfitFlagMessage !== ``) {
+      reporter.warn(unfitFlagMessage)
+    }
+    //  set process.env for each flag
+    enabledConfigFlags.forEach(flag => {
+      process.env[flag.env] = `true`
+    })
+
+    // Print out message.
+    if (message !== ``) {
+      reporter.info(message)
+    }
+
+    process.env.GATSBY_SLICES = `true`
+
+    //  track usage of feature
+    enabledConfigFlags.forEach(flag => {
+      if (flag.telemetryId) {
+        telemetry.trackFeatureIsUsed(flag.telemetryId)
       }
-      if (unfitFlagMessage !== ``) {
-        reporter.warn(unfitFlagMessage)
-      }
-      //  set process.env for each flag
-      enabledConfigFlags.forEach(flag => {
-        process.env[flag.env] = `true`
-      })
+    })
 
-      // Print out message.
-      if (message !== ``) {
-        reporter.info(message)
-      }
-
-      process.env.GATSBY_SLICES = `true`
-
-      //  track usage of feature
-      enabledConfigFlags.forEach(flag => {
-        if (flag.telemetryId) {
-          telemetry.trackFeatureIsUsed(flag.telemetryId)
-        }
-      })
-
-      // Track the usage of config.flags
-      if (config.flags) {
-        telemetry.trackFeatureIsUsed(`ConfigFlags`)
-      }
+    // Track the usage of config.flags
+    if (config?.flags) {
+      telemetry.trackFeatureIsUsed(`ConfigFlags`)
     }
   }
 
