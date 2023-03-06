@@ -1,5 +1,4 @@
-const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
-const { isWebUri } = require(`valid-url`)
+const { fetchRemoteFile, isHttpUrl } = require(`gatsby-core-utils`)
 const { createFileNode } = require(`./create-file-node`)
 
 /********************
@@ -135,7 +134,7 @@ module.exports = function createRemoteFileNode({
     return processingCache[url]
   }
 
-  if (!url || isWebUri(url) === undefined) {
+  if (!url || !isHttpUrl(url)) {
     throw new Error(
       `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
     )
