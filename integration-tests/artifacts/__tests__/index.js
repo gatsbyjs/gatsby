@@ -393,6 +393,22 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
   })
+
+  describe(`/react-lazy/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `react-lazy`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`changing lazily imported component result in correct regeneration of html file`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 3 ? `before edit` : `after edit`
+      )
+    })
+  })
 }
 
 function assertNodeCorrectness(runNumber) {
@@ -784,6 +800,8 @@ describe(`Third run (js template change, just pages of that template are recreat
   const expectedPagesToBeGenerated = [
     // this is page that gets template change
     `/gatsby-browser/`,
+    // this is page that lazily imports file that gets changed
+    `/react-lazy/`,
     // those change happen on every build
     `/page-query-dynamic-3/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
@@ -804,26 +822,64 @@ describe(`Third run (js template change, just pages of that template are recreat
     `/stateful-page-not-recreated-in-third-run/`,
   ]
 
-  let changedFileOriginalContent
-  const changedFileAbspath = path.join(
+  let changedTemplateFileOriginalContent
+  const changedTemplateFileAbspath = path.join(
     process.cwd(),
     `src`,
     `pages`,
     `gatsby-browser.js`
   )
 
+  let changedLazilyImportedFileOriginalContent
+  const changedLazilyImportedFileAbspath = path.join(
+    process.cwd(),
+    `src`,
+    `components`,
+    `react-lazily-imported.js`
+  )
+
   beforeAll(async () => {
-    // make change to some .js
-    changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
-    filesToRevert[changedFileAbspath] = changedFileOriginalContent
+    // make change to some .js files
 
-    const newContent = changedFileOriginalContent.replace(/sad/g, `not happy`)
+    // page template
+    changedTemplateFileOriginalContent = fs.readFileSync(
+      changedTemplateFileAbspath,
+      `utf-8`
+    )
+    filesToRevert[changedTemplateFileAbspath] =
+      changedTemplateFileOriginalContent
 
-    if (newContent === changedFileOriginalContent) {
-      throw new Error(`Test setup failed`)
+    const newTemplateContent = changedTemplateFileOriginalContent.replace(
+      /sad/g,
+      `not happy`
+    )
+
+    if (newTemplateContent === changedTemplateFileOriginalContent) {
+      throw new Error(`Test setup failed 1`)
     }
 
-    fs.writeFileSync(changedFileAbspath, newContent)
+    fs.writeFileSync(changedTemplateFileAbspath, newTemplateContent)
+
+    // lazily imported component
+    changedLazilyImportedFileOriginalContent = fs.readFileSync(
+      changedLazilyImportedFileAbspath,
+      `utf-8`
+    )
+    filesToRevert[changedLazilyImportedFileAbspath] =
+      changedLazilyImportedFileOriginalContent
+
+    const newLazilyImportedContent =
+      changedLazilyImportedFileOriginalContent.replace(
+        `before edit`,
+        `after edit`
+      )
+
+    if (newLazilyImportedContent === changedLazilyImportedFileOriginalContent) {
+      throw new Error(`Test setup failed 2`)
+    }
+
+    fs.writeFileSync(changedLazilyImportedFileAbspath, newLazilyImportedContent)
+
     await runGatsbyWithRunTestSetup(runNumber)()
   })
 

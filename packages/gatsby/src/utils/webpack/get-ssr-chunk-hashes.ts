@@ -17,16 +17,16 @@ function getHashes(
     hashes.push(chunk.hash)
   }
 
-  for (const childChunkGroups of Object.values(
-    chunkGroup.getChildrenByOrders(
-      compilation.moduleGraph,
-      compilation.chunkGraph
+  for (const childChunkGroup of chunkGroup.childrenIterable) {
+    const isNotImportedByAsyncRequires = childChunkGroup.origins.every(
+      origin => !origin.module.identifier().includes(`async-requires`)
     )
-  )) {
-    for (const childChunkGroup of childChunkGroups) {
+
+    if (isNotImportedByAsyncRequires) {
       getHashes(childChunkGroup, compilation, hashes)
     }
   }
+
   return hashes
 }
 
