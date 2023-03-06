@@ -16,8 +16,8 @@ By the end of this part of the tutorial, you will be able to:
 
 - Use the `reporter` API to output structured terminal messages
 - Use the `cache` API to save artifacts between runs
-- Use the `pluginOptionsSchema` API to verify your plugin's options
 - Define custom errors for your plugin through `reporter.setErrorMap`
+- Use the `pluginOptionsSchema` API to verify your plugin's options
 
 ## `reporter` API
 
@@ -582,19 +582,253 @@ The `cache` API is a key-value store, so you save specific data under a key, and
 
 ## `pluginOptionsSchema` API
 
-TODO
+In most cases a Gatsby source plugin needs one or more options as it interacts with third-party APIs that require customization and authentication (e.g. different endpoints or API keys). You don't want other users to use your credentials, so you'll need a way for your users to provide theirs. That's where plugin options come in!
 
-### Task: Verify your plugin's options
+The [Configuring Plugin Usage with Plugin Options](/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/) guide goes into depth about plugin options and the [`pluginOptionsSchema` API](/docs/reference/config-files/gatsby-node/#pluginOptionsSchema) so if you want to know more beyond this guide, be sure to give it a read. But to give a short summary:
 
-TODO
+- A Gatsby plugin with options included makes those options available in the second argument of Gatsby [Node](/docs/reference/config-files/gatsby-node/), [Browser](/docs/reference/config-files/gatsby-browser/), and [SSR](/docs/reference/config-files/gatsby-ssr/) APIs.
+
+    A sample `gatsby-config` file:
+
+    ```js:title=gatsby-config.js
+    module.exports = {
+      plugins: [
+        {
+          resolve: `gatsby-plugin-console-log`,
+          options: { message: "Hello world" },
+        },
+      ],
+    }
+    ```
+
+    Usage of that option in a Node API:
+
+    ```js:title=plugins/gatsby-plugin-console-log/gatsby-node.js
+    exports.onPreInit = (_, pluginOptions) => {
+      console.log(
+        `logging: "${pluginOptions.message}" to the console` // highlight-line
+      )
+    }
+    ```
+- A plugin can optionally define a schema (through the `pluginOptionsSchema` API) to enforce a type for each option. Gatsby will validate that the options users pass match the schema to help them correctly set up their site.
+
+    ```js:title=plugins/gatsby-plugin-console-log/gatsby-node.js
+    exports.pluginOptionsSchema = ({ Joi }) => {
+      return Joi.object({
+        message: Joi.string()
+          .required()
+          .description(`The message logged to the console.`),
+      })
+    }
+    ```
+
+Here are some tips when working with plugin options:
+
+- **Consider the options a public API contract between your users and your plugin.** Follow [SemVer](https://semver.org/) versioning when adding, modyfing, and removing options. For example, if you want to remove an option you should only do this in a major release of your plugin since it's a breaking change.
+- **Add as little plugin options as possible.** In the beginning, use safe defaults where possible (to the best of your knowledge) and when users wish to have new options available ask yourself really hard if you should add them. Once added, you'll need to maintain the option forever (or until you remove it again).
+- **Use clear names.** Naming things is hard, but take extra care in using clear names for your plugin's options. Best case scenario is that an option is clear enough without any additional description.
+- **Use "enable" options, not negated options.** An example: Instead of using `noWarnings: true`, use `warnings: false`. The double negation that would occur with `noWarnings: false` is really confusing.
+- **Pass options through.** If your source plugin is using a library under the hood (e.g. an SDK from a CMS) that has options on its own, allow people to configure all those options, too. You could collect those under a new key in the `options` object (e.g. `options.sdkOptions`) and then refer people to the SDK's documentation.
+
+### Task: Use `endpoint` option
+
+Instead of hardcoding the URL to the GraphQL API, you'll use an `endpoint` option and thus make the URL configurable.
+
+1. The boilerplate you cloned at the beginning already has an `endpoint` option defined in the site's `gatsby-config`. Go to `site/gatsby-config.ts` to inspect the code:
+
+    ```ts:title=site/gatsby-config.ts
+    import type { GatsbyConfig } from "gatsby"
+    import type { IPluginOptions } from "plugin"
+
+    // highlight-next-line
+    const GRAPHQL_ENDPOINT = `http://localhost:4000/graphql`
+
+    const config: GatsbyConfig = {
+      graphqlTypegen: true,
+      plugins: [
+        {
+          resolve: `plugin`,
+          options: {
+            // highlight-next-line
+            endpoint: GRAPHQL_ENDPOINT,
+          } satisfies IPluginOptions,
+        },
+        `gatsby-plugin-image`,
+        `gatsby-plugin-sharp`,
+        `gatsby-transformer-sharp`,
+      ],
+    }
+
+    export default config
+    ```
+
+    So the plugin already receives the GraphQL endpoint through the `endpoint` option.
+
+1. Open the file `plugin/src/source-nodes.ts` and validate that you can access the option. You can do this by accessing the second parameter of the `sourceNodes` function and `console.log` it. Use the `IPluginOptionsInternal` type for it:
+
+    ```ts:title=plugin/src/source-nodes.ts
+    // Rest of imports
+    import type {
+      IAuthorInput,
+      IPostInput,
+      NodeBuilderInput,
+      // highlight-next-line
+      IPluginOptionsInternal,
+    } from "./types"
+
+    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (
+      gatsbyApi,
+      // highlight-next-line
+      pluginOptions: IPluginOptionsInternal
+    ) => {
+      const { reporter, cache } = gatsbyApi
+
+      console.log({ pluginOptions })
+
+      // Rest of sourceNodes
+    }
+
+    // Rest of file
+    ```
+
+1. Restart the `develop:site` script and you should see an output in the terminal like this:
+
+    ```shell
+    {
+      pluginOptions: { plugins: [], endpoint: 'http://localhost:4000/graphql' }
+    }
+    ```
+
+    Don't worry about the `plugins` key there. Since Gatsby's plugins can also have sub-plugins, the key `plugins` is added by default to the `pluginOptions` object. The `endpoint` option successfully comes through.
+
+1. Destructure `endpoint` from the `pluginOptions` object and use it in the `fetchGraphQL` call:
+
+    ```ts:title=plugin/src/source-nodes.ts
+    // Imports
+
+    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (
+      gatsbyApi,
+      pluginOptions: IPluginOptionsInternal
+    ) => {
+      const { reporter, cache } = gatsbyApi
+      // highlight-next-line
+      const { endpoint } = pluginOptions
+
+      // Rest of sourceNodes
+
+      const { data, errors } = await fetchGraphQL<IApiResponse>(
+        // highlight-next-line
+        endpoint,
+        `/* GraphQL Query */`
+      )
+
+      // Rest of sourceNodes
+    }
+
+    // Rest of file
+    ```
+
+    Once again, restart the `develop:site` script and you should see the log `Sourcing from plugin API - 0.033s - Processing 3 posts and 2 authors` to indicate that the sourcing was successful.
+
+You've successfully used a plugin option in your source plugin's source code.
+
+### Task: Verify `endpoint` option
+
+Right now a user could use any serializable value for `endpoint` like numbers, objects, strings, or booleans. But those are not valid options for `endpoint`, it should be a string, more specifically a valid URI. Use the `pluginOptionsSchema` API to validate exactly that.
+
+1. Create a new file called `plugin-options-schema.ts` inside the plugin's `src` folder with the following contents:
+
+    ```ts:title=plugin/src/plugin-options-schema.ts
+    import type { GatsbyNode } from "gatsby"
+    import type { ObjectSchema } from "gatsby-plugin-utils"
+
+    export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
+      Joi,
+    }): ObjectSchema => {
+      return Joi.object({})
+    }
+    ```
+
+    `pluginOptionsSchema` uses [Joi](https://joi.dev/) to define a validation schema. Use its [API documentation](https://joi.dev/api/) to discover all available options.
+
+1. Define `endpoint` in the schema. It should be a string (a valid URI), should be required, and have a short description. You can write something like this:
+
+    ```ts:title=plugin/src/plugin-options-schema.ts
+    import type { GatsbyNode } from "gatsby"
+    import type { ObjectSchema } from "gatsby-plugin-utils"
+
+    export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
+      Joi,
+    }): ObjectSchema => {
+      return Joi.object({
+        // highlight-start
+        endpoint: Joi.string()
+          .uri()
+          .required()
+          .description(`The endpoint of your GraphQL API`),
+        // highlight-end
+      })
+    }
+    ```
+
+1. Export the `pluginOptionsSchema` API in the plugin's `gatsby-node` file so that it is run:
+
+    ```ts:title=plugin/src/gatsby-node.ts
+    export type { IPluginOptions } from "./types"
+
+    export { onPluginInit } from "./on-plugin-init"
+    export { sourceNodes } from "./source-nodes"
+    export { createSchemaCustomization } from "./create-schema-customization"
+    // highlight-next-line
+    export { pluginOptionsSchema } from "./plugin-options-schema"
+    ```
+
+1. You can test that it works correctly by opening up the site's `gatsby-config` and changing the option to an invalid value, e.g. entering a number:
+
+    ```ts:title=site/gatsby-config.ts
+    {
+      resolve: `plugin`,
+      options: {
+        // highlight-next-line
+        endpoint: 12345,
+      } satisfies IPluginOptions,
+    },
+    ```
+
+    Restart the `develop:site` script. The development server should crash and show an error:
+
+    ```shell
+    ERROR #11331  API.NODE.VALIDATION
+
+    Invalid plugin options for "plugin":
+
+    - "endpoint" must be a string
+    ```
+
+    It's working correctly, great! Go back to `site/gatsby-config.ts` and use the correct `endpoint` option again.
+
+Joi as a validation library is really powerful and as shown in [Configuring Plugin Usage with Plugin Options](/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/) you can define a really fine-grained validation schema.
 
 ## Summary
 
-TODO
+Awesome! You've learned a lot about plugin options.
+
+Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
+
+- How can you use the `reporter` API and what methods does it have?
+- What is the difference between the methods `panicOnBuild` and `panic`?
+- How can you show an activity for e.g. the time it takes to source data?
+- What are the advantages of custom errors defined through `setErrorMap`?
+- Which type of storage is the `cache` API and for which purposes is it useful?
+- How can you access plugin options?
+- How can you validate that the user input for plugin options is correct?
 
 ### Key takeaways
 
-TODO
+- Use the `reporter` API and its methods to output information (warnings, errors, logs, timers, etc.) to the terminal during `gatsby develop` and `gatsby build`. You can also stop the entire Gatsby process on errors if necessary.
+- By default, a generic error handler is used. You can use the `setErrorMap` API to define your own, custom errors to show richer information to your users.
+- The `cache` API gives you access to a key-value store to save data between runs.
+- Use the `pluginOptionsSchema` API to validate the input of your plugin options.
 
 <Announcement>
 
@@ -608,7 +842,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-TODO
+In Part 5 you'll learn all about Incremental Builds and how to best build your API and plugin for it.
 
 <LinkButton
   to="/docs/tutorial/creating-a-source-plugin/part-5/"
