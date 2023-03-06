@@ -2,9 +2,8 @@ import { b64e } from "~/utils/string-encoding"
 const fs = require(`fs-extra`)
 const { remoteFileDownloaderBarPromise } = require(`./progress-bar-promise`)
 const got = require(`got`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, isHttpUrl } = require(`gatsby-core-utils`)
 const path = require(`path`)
-const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
@@ -425,7 +424,7 @@ module.exports = ({
     return processingCache[url]
   }
 
-  if (!url || isWebUri(url) === undefined) {
+  if (!url || !isHttpUrl(url)) {
     return Promise.reject(
       new Error(
         `url passed to create-remote-file-node is either missing or not a proper web uri: ${url}`

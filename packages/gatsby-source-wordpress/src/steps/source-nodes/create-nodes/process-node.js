@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import { isWebUri } from "valid-url"
+import { isHttpUrl } from "gatsby-core-utils"
 import { GatsbyImage } from "gatsby-plugin-image"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
@@ -327,7 +327,7 @@ const getCheerioElementsFromMatches = ({ imgTagMatches, wpUrl }) =>
         return false
       }
 
-      return isWebUri(encodeURI(attribs.src))
+      return isHttpUrl(encodeURI(attribs.src))
     })
 
 const getLargestSizeFromSizesAttribute = sizesString => {
@@ -770,7 +770,7 @@ const replaceFileLinks = async ({
 
     const mediaItemUrls = mediaItemUrlsAndMatches
       .map(({ url }) => url)
-      .filter(isWebUri)
+      .filter(isHttpUrl)
 
     const mediaItemNodesBySourceUrl =
       await fetchReferencedMediaItemsAndCreateNodes({
