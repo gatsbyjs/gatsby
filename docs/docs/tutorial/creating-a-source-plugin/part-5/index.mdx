@@ -8,7 +8,9 @@ import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
-TODO
+With the release of [Gatsby 3](/docs/reference/release-notes/v3.0/#incremental-builds-in-oss) Incremental Builds for everyone were introduced. Only a subset of HTML files will be regenerated for each change, making builds significantly faster. This works by tracking certain things like page templates, results of page and static queries, and frontend source code. This is a more generic approach and works with every site, regardless of which sources it uses. While the time it takes to generate the artifacts is decreased through that, often times a large portion of the build is spent on sourcing data from remote APIs through Gatsby source plugins.
+
+And this is where you, the author of a source plugin, comes in!
 
 By the end of this part of the tutorial, you will be able to:
 
