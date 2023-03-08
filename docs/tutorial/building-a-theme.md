@@ -1266,7 +1266,7 @@ To continue applying theme styles, you can use the [`Themed` import](https://the
 import React from "react"
 import { Link } from "gatsby"
 // highlight-next-line
-import { Themed } from "theme-ui"
+import { Themed } from "@theme-ui/mdx"
 
 const EventList = ({ events }) => {
   return (
