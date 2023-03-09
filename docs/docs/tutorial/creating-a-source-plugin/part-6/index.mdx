@@ -17,7 +17,13 @@ By the end of this part of the tutorial, you will be able to:
 
 ## Add Image CDN to your plugin
 
-TODO
+Gatsby's Image CDN feature can be
+
+<Announcement>
+
+**Pro tip:** Gatsby's Image CDN feature is smart enough to work on all platforms, even if no CDN provider like on Gatsby Cloud or Netlify is available. In those cases (including locally on your computer) it automatically falls back to processing images during the build. 
+
+</Announcement>
 
 ### Task: Write `createAssetNode` utility
 
@@ -34,13 +40,6 @@ TODO
 ### Task: Update individual post pages
 
 TODO
-
-## TODO
-
-- Why it’s better than file downloading
-- Local / Remote experience (as in: locally it processes files normally, remote it uses CDN)
-- How-To piece
-- Explain that remote API plays a big part here again. If not all data available, explain how to use https://github.com/nodeca/probe-image-size (short snippet)
 
 ## Summary
 
@@ -62,7 +61,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-TODO
+In Part 7 advanced topics like Content Sync, testing, debugging, and more will be explained.
 
 <LinkButton
   to="/docs/tutorial/creating-a-source-plugin/part-7/"
