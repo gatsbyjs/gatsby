@@ -1,6 +1,6 @@
-import { Actions, SourceNodesArgs } from "gatsby"
+import type { Actions, SourceNodesArgs } from "gatsby"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
-import { IContentfulAsset } from "./types/contentful"
+import type { IContentfulAsset } from "./types/contentful"
 
 /**
  * @name distributeWorkload

@@ -1,16 +1,4 @@
-import { fetchContentTypes } from "./fetch"
-import { createPluginConfig } from "./plugin-options"
-import { CODES } from "./report"
-
-import { getRichTextEntityLinks } from "@contentful/rich-text-links"
-import { stripIndent } from "common-tags"
-import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
-
-import { resolveGatsbyImageData } from "./gatsby-plugin-image"
-import { makeTypeName } from "./normalize"
-import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
-import { GatsbyNode } from "gatsby"
-import { IPluginOptions } from "./types/plugin"
+import type { GatsbyNode } from "gatsby"
 import {
   GraphQLFieldConfig,
   GraphQLFloat,
@@ -18,13 +6,24 @@ import {
   GraphQLString,
   GraphQLType,
 } from "gatsby/graphql"
-import {
+import { getRichTextEntityLinks } from "@contentful/rich-text-links"
+import { stripIndent } from "common-tags"
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
+
+import { fetchContentTypes } from "./fetch"
+import { createPluginConfig } from "./plugin-options"
+import { CODES } from "./report"
+import { resolveGatsbyImageData } from "./gatsby-plugin-image"
+import { makeTypeName } from "./normalize"
+import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
+import type { IPluginOptions } from "./types/plugin"
+import type {
   ContentType,
   ContentTypeField,
   FieldItem,
 } from "./types/contentful-js-sdk/content-type"
 
-import {
+import type {
   IContentfulAsset,
   IContentfulEntry,
   IContentfulImageAPITransformerOptions,

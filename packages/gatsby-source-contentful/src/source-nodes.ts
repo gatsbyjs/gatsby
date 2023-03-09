@@ -1,9 +1,9 @@
+import type { GatsbyNode, Node } from "gatsby"
 import isOnline from "is-online"
 import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
-import { GatsbyNode, Node } from "gatsby"
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -15,9 +15,9 @@ import {
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
-import { IPluginOptions } from "./types/plugin"
-import { IContentfulAsset, IContentfulEntry } from "./types/contentful"
-import { ContentType } from "./types/contentful-js-sdk"
+import type { IPluginOptions } from "./types/plugin"
+import type { IContentfulAsset, IContentfulEntry } from "./types/contentful"
+import type { ContentType } from "./types/contentful-js-sdk"
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 

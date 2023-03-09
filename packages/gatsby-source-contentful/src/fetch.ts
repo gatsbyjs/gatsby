@@ -5,11 +5,12 @@ import {
   createClient,
   CreateClientParams,
 } from "contentful"
-import { Reporter } from "gatsby"
+import type { Reporter } from "gatsby"
 import _ from "lodash"
+
 import { formatPluginOptionsForCLI } from "./plugin-options"
 import { CODES } from "./report"
-import {
+import type {
   ContentType,
   EntryCollection,
   Locale,
@@ -17,7 +18,7 @@ import {
   SyncCollection,
   Tag,
 } from "./types/contentful-js-sdk"
-import { IProcessedPluginOptions } from "./types/plugin"
+import type { IProcessedPluginOptions } from "./types/plugin"
 
 /**
  * Generate a user friendly error message.

@@ -1,5 +1,5 @@
 import fs from "fs-extra"
-import { GatsbyCache } from "gatsby"
+import type { GatsbyCache } from "gatsby"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import {
   Fit,
@@ -7,7 +7,7 @@ import {
   IGatsbyImageHelperArgs,
   ImageFormat,
 } from "gatsby-plugin-image"
-import { ImageFit } from "gatsby-plugin-utils/polyfill-remote-file/types"
+import type { ImageFit } from "gatsby-plugin-utils/polyfill-remote-file/types"
 import path from "path"
 
 import {
@@ -17,7 +17,7 @@ import {
   validImageFormats,
   CONTENTFUL_IMAGE_MAX_SIZE,
 } from "./image-helpers"
-import {
+import type {
   contentfulImageApiBackgroundColor,
   IContentfulAsset,
   IContentfulImageAPITransformerOptions,

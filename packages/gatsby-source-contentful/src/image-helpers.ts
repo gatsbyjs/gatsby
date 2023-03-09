@@ -1,5 +1,5 @@
 import { URLSearchParams } from "url"
-import {
+import type {
   IContentfulAsset,
   IContentfulImageAPIUrlBuilderOptions,
 } from "./types/contentful"

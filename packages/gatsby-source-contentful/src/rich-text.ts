@@ -8,7 +8,7 @@ import {
   EntryLinkInline,
 } from "@contentful/rich-text-types"
 import React from "react"
-import { IContentfulEntry, IContentfulAsset } from "./types/contentful"
+import type { IContentfulEntry, IContentfulAsset } from "./types/contentful"
 
 interface IContentfulRichTextLinksAssets {
   block: Array<IContentfulAsset>

@@ -1,17 +1,17 @@
+import type { Actions, Node, SourceNodesArgs } from "gatsby"
 import _ from "lodash"
 import { getGatsbyVersion } from "gatsby-core-utils"
 import { lt, prerelease } from "semver"
 
 import { restrictedNodeFields, conflictFieldPrefix } from "./config"
-import {
+import type {
   IContentfulAsset,
   IContentfulEntry,
   IContentfulLink,
   IContentfulSys,
   ILocalizedField,
 } from "./types/contentful"
-import { Actions, Node, SourceNodesArgs } from "gatsby"
-import {
+import type {
   SyncCollection,
   Asset,
   ContentType,
@@ -21,8 +21,8 @@ import {
   AssetFile,
   EntryWithAllLocalesAndWithoutLinkResolution,
 } from "./types/contentful-js-sdk"
-import { IProcessedPluginOptions } from "./types/plugin"
-import { FieldsType } from "./types/contentful-js-sdk/query/util"
+import type { IProcessedPluginOptions } from "./types/plugin"
+import type { FieldsType } from "./types/contentful-js-sdk/query/util"
 
 export const makeTypeName = (
   type: string,

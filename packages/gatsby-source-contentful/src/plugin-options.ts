@@ -1,7 +1,7 @@
 import chalk from "chalk"
 import _ from "lodash"
 
-import { IPluginOptions, IProcessedPluginOptions } from "./types/plugin"
+import type { IPluginOptions, IProcessedPluginOptions } from "./types/plugin"
 
 const DEFAULT_PAGE_LIMIT = 1000
 

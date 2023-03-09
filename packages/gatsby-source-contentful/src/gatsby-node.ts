@@ -1,11 +1,10 @@
+import type { GatsbyNode } from "gatsby"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
+
 import { CODES } from "./report"
-
 import { maskText } from "./plugin-options"
-import { GatsbyNode } from "gatsby"
-
 export { createSchemaCustomization } from "./create-schema-customization"
 export { sourceNodes } from "./source-nodes"
 

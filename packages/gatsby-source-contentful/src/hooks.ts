@@ -2,7 +2,7 @@ import { getImageData, IGatsbyImageData } from "gatsby-plugin-image"
 import { useMemo } from "react"
 
 import { createUrl } from "./image-helpers"
-import {
+import type {
   IContentfulAsset,
   IContentfulImageAPITransformerOptions,
 } from "./types/contentful"
