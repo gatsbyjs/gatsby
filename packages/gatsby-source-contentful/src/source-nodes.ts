@@ -296,7 +296,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       })
 
       localizedNodes.forEach(node => {
-        // @todo nodes of text fields should be deleted as well
+        // TODO: nodes of text fields should be deleted as well
         if (node) {
           deleteNode(node)
         }
@@ -337,7 +337,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       }
     }
 
-    // @todo mirror structure of Contentful GraphQL API, as it prevents field name overlaps
+    // TODO: mirror structure of Contentful GraphQL API, as it prevents field name overlaps
     const reverseReferenceFields = contentTypeItems.map(contentTypeItem =>
       useNameForId
         ? contentTypeItem.name.toLowerCase()
@@ -547,7 +547,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         await createNode({
           id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
           name: tag.name,
-          // @todo update the structure of tags
+          // TODO: update the structure of tags
           contentful_id: tag.sys.id,
           internal: {
             type: `ContentfulTag`,

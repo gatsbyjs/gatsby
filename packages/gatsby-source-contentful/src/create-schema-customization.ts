@@ -228,7 +228,7 @@ const translateFieldType = (
     fieldType = primitiveType(field)
   }
 
-  // @todo what do we do when preview is enabled? Emptry required fields are valid for Contentfuls CP-API
+  // TODO: what do we do when preview is enabled? Emptry required fields are valid for Contentfuls CP-API
   // if (field.required) {
   //   fieldType.type = `${fieldType.type}!`
   // }
@@ -420,7 +420,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           type: `Int`,
           defaultValue: 50,
         },
-        // @todo fix the type for extraArgs in gatsby-plugin-iomage so we dont have to cast to any here
+        // TODO: fix the type for extraArgs in gatsby-plugin-iomage so we dont have to cast to any here
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any
     )
@@ -593,14 +593,14 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     )
 
     // Text
-    // @todo Is there a way to have this as string and let transformer-remark replace it with an object?
+    // TODO: Is there a way to have this as string and let transformer-remark replace it with an object?
     createTypes(
       schema.buildObjectType({
         name: `ContentfulText`,
         fields: {
           raw: `String!`,
         },
-        // @todo do we need a node interface here?
+        // TODO: do we need a node interface here?
         interfaces: [`Node`],
         extensions: {
           dontInfer: {},

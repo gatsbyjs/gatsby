@@ -56,9 +56,9 @@ export type IContentfulEntry = IContentfulEntity
 // }
 
 export interface IContentfulAsset extends IContentfulEntity {
-  // @todo this field type might be defined by Gatsby already?
+  // TODO: this field type might be defined by Gatsby already?
   gatsbyImageData: unknown
-  // @todo this field type might be defined by Gatsby already?
+  // TODO: this field type might be defined by Gatsby already?
   downloadLocal?: string
   title?: string
   description?: string

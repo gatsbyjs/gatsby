@@ -109,7 +109,7 @@ const makeMakeId =
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 // Generates an unique id per space for reference resolving
-// @todo space id is actually not factored in here!
+// TODO: space id is actually not factored in here!
 export const createRefId = (
   node:
     | EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
@@ -676,7 +676,7 @@ export const createNodesForContentType = ({
       // Replace text fields with text nodes so we can process their markdown
       // into HTML.
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        // @todo: how expensive is this?
+        // TODO:: how expensive is this?
         const field = contentTypeItem.fields.find(
           f =>
             (restrictedNodeFields.includes(f.id)
