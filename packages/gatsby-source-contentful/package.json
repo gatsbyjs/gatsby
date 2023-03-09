@@ -3,6 +3,8 @@
   "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
   "version": "8.0.0-next.3",
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com), Benedikt Rötsch <benedikt@hashbite.net> (hashbite.net)",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -35,7 +37,7 @@
     "del-cli": "^5.0.0",
     "gatsby-plugin-sharp": "^5.8.0-next.0",
     "nock": "^13.3.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
   "keywords": [
@@ -46,7 +48,6 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
-    "gatsby-cli": "^5.0.0",
     "gatsby-plugin-image": "^3.0.0-next",
     "sharp": "^0.30.1"
   },
@@ -65,7 +66,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "main": "index.js",
-  "types": "dist/index.d.ts"
+  }
 }
