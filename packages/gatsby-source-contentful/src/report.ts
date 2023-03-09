@@ -9,6 +9,7 @@ export const CODES = {
   GatsbyPluginMissing: `111005`,
   ContentTypesMissing: `111006`,
   FetchTags: `111007`,
+  GenericContentfulError: `111008`,
 }
 
 interface IErrorMap {
@@ -50,5 +51,10 @@ export const ERROR_MAP: IErrorMap = {
     text: context => context.sourceMessage,
     level: `ERROR`,
     category: `USER`,
+  },
+  [CODES.GenericContentfulError]: {
+    text: context => context.sourceMessage,
+    level: `ERROR`,
+    category: `THIRD_PARTY`,
   },
 }

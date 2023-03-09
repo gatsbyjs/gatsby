@@ -258,8 +258,6 @@ let didShowTraceSVGRemovalWarning = false
 export async function resolveGatsbyImageData(
   image: IContentfulAsset,
   options: IContentfulImageAPITransformerOptions,
-  // _context: any,
-  // _info: GraphQLResolveInfo,
   { cache }: { cache: GatsbyCache }
 ): Promise<IGatsbyImageData | null> {
   if (!isImage(image)) return null

@@ -342,7 +342,12 @@ interface IContentfulTextNode extends Node {
   sys: Partial<IContentfulSys>
 }
 
-function prepareTextNode(id, node, _key, text): IContentfulTextNode {
+function prepareTextNode(
+  id: string,
+  node: IContentfulEntry,
+  _key: string,
+  text: unknown
+): IContentfulTextNode {
   const str = _.isString(text) ? text : ``
   const textNode: IContentfulTextNode = {
     id,
@@ -382,6 +387,12 @@ function contentfulCreateNodeManifest({
   space,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   unstable_createNodeManifest,
+}: {
+  pluginConfig: IProcessedPluginOptions
+  entryItem: EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
+  entryNode: IContentfulEntry
+  space: Space
+  unstable_createNodeManifest: SourceNodesArgs["unstable_createNodeManifest"]
 }): void {
   const isPreview = pluginConfig.get(`host`) === `preview.contentful.com`
 

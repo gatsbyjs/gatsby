@@ -1,4 +1,8 @@
-import type { GatsbyNode } from "gatsby"
+import type {
+  GatsbyNode,
+  NodePluginSchema,
+  CreateSchemaCustomizationArgs,
+} from "gatsby"
 import {
   GraphQLFieldConfig,
   GraphQLFloat,
@@ -28,6 +32,8 @@ import type {
   IContentfulEntry,
   IContentfulImageAPITransformerOptions,
 } from "./types/contentful"
+
+type CreateTypes = CreateSchemaCustomizationArgs["actions"]["createTypes"]
 
 interface IContentfulGraphQLField
   extends Omit<Partial<GraphQLFieldConfig<unknown, unknown>>, "type"> {
@@ -111,8 +117,8 @@ const unionsNameSet = new Set()
 const getLinkFieldType = (
   linkType: string | undefined,
   field: ContentTypeField,
-  schema,
-  createTypes
+  schema: NodePluginSchema,
+  createTypes: CreateTypes
 ): IContentfulGraphQLField => {
   // Check for validations
   const validations =
@@ -190,8 +196,8 @@ const getLinkFieldType = (
 // Translate Contentful field types to GraphQL field types
 const translateFieldType = (
   field: ContentTypeField | FieldItem,
-  schema,
-  createTypes
+  schema: NodePluginSchema,
+  createTypes: CreateTypes
 ): GraphQLFieldConfig<unknown, unknown> => {
   let fieldType
   if (field.type === `Array`) {

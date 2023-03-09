@@ -44,8 +44,6 @@ export function renderRichText(
   return documentToReactComponents(json, options)
 }
 
-exports.renderRichText = renderRichText
-
 /**
  * Helper function to simplify Rich Text rendering. Based on:
  * https://www.contentful.com/blog/2021/04/14/rendering-linked-assets-entries-in-contentful/

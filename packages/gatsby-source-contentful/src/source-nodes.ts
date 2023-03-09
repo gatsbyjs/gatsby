@@ -45,7 +45,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       reporter,
       parentSpan,
     } = args
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { createNode, touchNode, deleteNode } = actions
     const online = await isOnline()
 

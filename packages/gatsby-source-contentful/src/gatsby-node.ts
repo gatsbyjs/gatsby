@@ -5,12 +5,15 @@ import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remo
 
 import { CODES } from "./report"
 import { maskText } from "./plugin-options"
+import type { IPluginOptions } from "./types/plugin"
 export { createSchemaCustomization } from "./create-schema-customization"
 export { sourceNodes } from "./source-nodes"
 
 const fetch = fetchRetry(origFetch)
 
-const validateContentfulAccess = async (pluginOptions): Promise<undefined> => {
+const validateContentfulAccess = async (
+  pluginOptions: IPluginOptions
+): Promise<undefined> => {
   if (process.env.NODE_ENV === `test`) return undefined
 
   await fetch(

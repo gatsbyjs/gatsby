@@ -25,7 +25,7 @@ import type { IProcessedPluginOptions } from "./types/plugin"
  *
  * Contentful's API has its own error message structure, which might change depending of internal server or authentification errors.
  */
-const createContentfulErrorMessage = (e): string => {
+const createContentfulErrorMessage = (e: any): string => {
   // Handle axios error messages
   if (e.isAxiosError) {
     const axiosErrorMessage = [e.code, e.status]
@@ -113,7 +113,11 @@ const createContentfulErrorMessage = (e): string => {
 function createContentfulClientOptions({
   pluginConfig,
   reporter,
-  syncProgress = { total: 0, tick: (a): unknown => a },
+  syncProgress = { total: 0, tick: a => a },
+}: {
+  pluginConfig: IProcessedPluginOptions
+  reporter: Reporter
+  syncProgress?: { total: number; tick: (a: number) => unknown }
 }): CreateClientParams {
   let syncItemCount = 0
 
@@ -177,6 +181,11 @@ function handleContentfulError({
   reporter,
   contentfulClientOptions,
   pluginConfig,
+}: {
+  e: any
+  reporter: Reporter
+  contentfulClientOptions: CreateClientParams
+  pluginConfig: IProcessedPluginOptions
 }): void {
   let details
   let errors
@@ -229,6 +238,7 @@ function handleContentfulError({
   }
 
   reporter.panic({
+    id: CODES.GenericContentfulError,
     context: {
       sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
         e

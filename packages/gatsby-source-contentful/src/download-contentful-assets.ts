@@ -7,7 +7,6 @@ import type { IContentfulAsset } from "./types/contentful"
  * @param workers A list of async functions to complete
  * @param {number} count The number of task runners to use (see assetDownloadWorkers in config)
  */
-
 async function distributeWorkload(workers, count = 50): Promise<void> {
   const methods = workers.slice()
 
@@ -20,17 +19,16 @@ async function distributeWorkload(workers, count = 50): Promise<void> {
   await Promise.all(new Array(count).fill(undefined).map(() => task()))
 }
 
+interface IRemoteData {
+  fileNodeID: string
+}
+
 /**
  * @name downloadContentfulAssets
  * @description Downloads Contentful assets to the local filesystem.
  * The asset files will be downloaded and cached. Use `localFile` to link to them
  * @param gatsbyFunctions - Gatsby's internal helper functions
  */
-
-interface IRemoteData {
-  fileNodeID: string
-}
-
 export async function downloadContentfulAssets(
   gatsbyFunctions: SourceNodesArgs,
   actions: Actions,
