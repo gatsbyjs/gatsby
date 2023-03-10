@@ -68,7 +68,7 @@ export async function startWebpackServer({
       `print gatsby instructions`,
       async function (stats, done) {
         if (isFirstCompile) {
-          webpackWatching.suspend()
+          // webpackWatching.suspend()
         }
 
         const urls = prepareUrls(
@@ -109,6 +109,10 @@ export async function startWebpackServer({
           }
 
           if (!isSuccessful) {
+            const { errors: errorsFromStatsToJson } = stats.toJson({
+              errors: true,
+            })
+            console.log({ errorsFromStatsToJson })
             const errors = structureWebpackErrors(
               Stage.Develop,
               stats.compilation.errors

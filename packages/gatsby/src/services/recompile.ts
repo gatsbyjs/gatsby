@@ -28,9 +28,9 @@ async function recompileDevBundle({
       resolve(stats)
     }
     emitter.on(`COMPILATION_DONE`, finish)
-    webpackWatching.resume()
+    // webpackWatching.resume()
     // Suspending is just a flag, so it's safe to re-suspend right away
-    webpackWatching.suspend()
+    // webpackWatching.suspend()
   })
 }
 

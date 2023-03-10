@@ -1,5 +1,16 @@
 // needed for fast refresh
-import "@gatsbyjs/webpack-hot-middleware/client"
+// import "@gatsbyjs/webpack-hot-middleware/client"
+
+import "./rspack-init"
+
+import "@rspack/dev-client/react-refresh"
+
+import "@rspack/dev-client/clients/WebSocketClient"
+
+import "@rspack/dev-client"
+
+// hot
+import "@rspack/dev-client/devServer"
 
 import React from "react"
 import ReactDOM from "react-dom"
@@ -24,14 +35,21 @@ import "./blank.css"
 // Enable fast-refresh for virtual sync-requires, gatsby-browser & navigation
 // To ensure that our <Root /> component can hot reload in case anything below doesn't
 // satisfy fast-refresh constraints
-module.hot.accept(
-  [`$virtual/async-requires`, `./api-runner-browser`, `./navigation`],
-  () => {
-    // asyncRequires should be automatically updated here (due to ESM import and webpack HMR spec),
-    // but loader doesn't know that and needs to be manually nudged
-    loader.updateAsyncRequires(asyncRequires)
-  }
-)
+if (module.hot) {
+  module.hot.accept(
+    [
+      `$virtual/async-requires`,
+      `./.cache/_this_is_virtual_fs_path_/$virtual/async-requires.js`,
+      `./api-runner-browser`,
+      `./navigation`,
+    ],
+    () => {
+      // asyncRequires should be automatically updated here (due to ESM import and webpack HMR spec),
+      // but loader doesn't know that and needs to be manually nudged
+      loader.updateAsyncRequires(asyncRequires)
+    }
+  )
+}
 
 window.___emitter = emitter
 

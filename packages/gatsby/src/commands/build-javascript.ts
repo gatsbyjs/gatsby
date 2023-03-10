@@ -17,5 +17,5 @@ export const buildProductionBundle = async (
     { parentSpan }
   )
 
-  return build(compilerConfig)
+  return build(compilerConfig, `rspack`)
 }

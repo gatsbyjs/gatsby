@@ -1,10 +1,15 @@
 import webpack from "webpack"
+import { rspack } from "@rspack/core"
 
-export function build(webpackConfig: webpack.Configuration): Promise<{
+export function build(
+  webpackConfig: webpack.Configuration,
+  bundler: `webpack` | `rspack` = `webpack`
+): Promise<{
   stats: webpack.Stats
   close: () => Promise<void>
 }> {
-  const compiler = webpack(webpackConfig)
+  const compiler =
+    bundler === `rspack` ? rspack(webpackConfig) : webpack(webpackConfig)
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {

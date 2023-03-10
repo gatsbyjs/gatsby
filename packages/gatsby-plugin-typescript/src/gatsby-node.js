@@ -21,21 +21,21 @@ function onCreateWebpackConfig({ actions, loaders }) {
     return
   }
 
-  actions.setWebpackConfig({
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          use: ({ resourceQuery, issuer }) => [
-            loaders.js({
-              isPageTemplate: /async-requires/.test(issuer),
-              resourceQuery,
-            }),
-          ],
-        },
-      ],
-    },
-  })
+  // actions.setWebpackConfig({
+  //   module: {
+  //     rules: [
+  //       {
+  //         test: /\.tsx?$/,
+  //         use: ({ resourceQuery, issuer }) => [
+  //           loaders.js({
+  //             isPageTemplate: /async-requires/.test(issuer),
+  //             resourceQuery,
+  //           }),
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // })
 }
 
 exports.pluginOptionsSchema = ({ Joi }) =>

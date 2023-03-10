@@ -56,7 +56,20 @@ module.exports = async (
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
+
+  const isRspack = stage === `build-javascript` || stage === `develop`
+
+  const { rules, loaders, plugins } = createWebpackUtils(stage, program, {
+    isRspack,
+  })
+
+  let rsPackDefine = {}
+  if (isRspack) {
+    plugins.define = someObject => {
+      rsPackDefine = { ...rsPackDefine, ...someObject }
+      return undefined
+    }
+  }
 
   const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 
@@ -210,7 +223,7 @@ module.exports = async (
 
   function getPlugins() {
     let configPlugins = [
-      plugins.moment(),
+      // plugins.moment(),
 
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
@@ -237,46 +250,46 @@ module.exports = async (
       case `develop`: {
         configPlugins = configPlugins
           .concat([
-            (fastRefreshPlugin = plugins.fastRefresh({ modulesThatUseGatsby })),
-            new ForceCssHMRForEdgeCases(),
-            plugins.hotModuleReplacement(),
-            plugins.noEmitOnErrors(),
+            // (fastRefreshPlugin = plugins.fastRefresh({ modulesThatUseGatsby })),
+            // new ForceCssHMRForEdgeCases(),
+            // plugins.hotModuleReplacement(),
+            // plugins.noEmitOnErrors(),
             new StaticQueryMapper(store),
           ])
           .filter(Boolean)
 
-        configPlugins.push(
-          plugins.extractText({
-            filename: `[name].css`,
-            chunkFilename: `[id].css`,
-          })
-        )
+        // configPlugins.push(
+        //   plugins.extractText({
+        //     filename: `[name].css`,
+        //     chunkFilename: `[id].css`,
+        //   })
+        // )
 
         if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
           configPlugins.push(plugins.extractStats())
         }
 
-        const isCustomEslint = hasLocalEslint(program.directory)
+        // const isCustomEslint = hasLocalEslint(program.directory)
 
-        // if no local eslint config, then add gatsby config
-        if (!isCustomEslint) {
-          configPlugins.push(plugins.eslint())
-        }
+        // // if no local eslint config, then add gatsby config
+        // if (!isCustomEslint) {
+        //   configPlugins.push(plugins.eslint())
+        // }
 
-        // Enforce fast-refresh rules even with local eslint config
-        if (isCustomEslint) {
-          configPlugins.push(plugins.eslintRequired())
-        }
+        // // Enforce fast-refresh rules even with local eslint config
+        // if (isCustomEslint) {
+        //   configPlugins.push(plugins.eslintRequired())
+        // }
 
         break
       }
       case `build-javascript`: {
         configPlugins = configPlugins
           .concat([
-            plugins.extractText({
-              filename: `[name].[contenthash].css`,
-              chunkFilename: `[name].[contenthash].css`,
-            }),
+            // plugins.extractText({
+            //   filename: `[name].[contenthash].css`,
+            //   chunkFilename: `[name].[contenthash].css`,
+            // }),
             // Write out stats object mapping named dynamic imports (aka page
             // components) to all their async chunks.
             plugins.extractStats(),
@@ -315,7 +328,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `eval-cheap-module-source-map`
+        return `cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -358,9 +371,9 @@ module.exports = async (
       },
       {
         test: /\.js$/i,
-        descriptionData: {
-          type: `module`,
-        },
+        // descriptionData: {
+        //   type: `module`,
+        // },
         resolve: {
           byDependency: {
             esm: {
@@ -396,13 +409,13 @@ module.exports = async (
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
-    if (stage === `build-javascript` && !hasES6ModuleSupport(directory)) {
-      configRules.push(
-        rules.dependencies({
-          modulesThatUseGatsby,
-        })
-      )
-    }
+    // if (stage === `build-javascript` && !hasES6ModuleSupport(directory)) {
+    //   configRules.push(
+    //     rules.dependencies({
+    //       modulesThatUseGatsby,
+    //     })
+    //   )
+    // }
 
     switch (stage) {
       case `develop`: {
@@ -491,6 +504,7 @@ module.exports = async (
           `@gatsbyjs/webpack-hot-middleware`
         ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
+        webpack: getPackageRoot(`webpack`),
       },
       plugins: [
         new CoreJSResolver(),
@@ -579,35 +593,34 @@ module.exports = async (
   const isCssModule = module => module.type === `css/mini-extract`
 
   if (stage === `develop`) {
-    config.optimization = {
-      splitChunks: {
-        chunks: `all`,
-        cacheGroups: {
-          default: false,
-          defaultVendors: false,
-          framework: {
-            chunks: `all`,
-            name: `framework`,
-            test: FRAMEWORK_BUNDLES_REGEX,
-            priority: 40,
-            // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
-            enforce: true,
-          },
-          // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
-          // TODO make an exception for css-modules
-          styles: {
-            test(module) {
-              return isCssModule(module)
-            },
-
-            name: `commons`,
-            priority: 40,
-            enforce: true,
-          },
-        },
-      },
-      minimize: false,
-    }
+    // config.optimization = {
+    //   splitChunks: {
+    //     chunks: `all`,
+    //     cacheGroups: {
+    //       default: false,
+    //       defaultVendors: false,
+    //       framework: {
+    //         chunks: `all`,
+    //         name: `framework`,
+    //         test: FRAMEWORK_BUNDLES_REGEX,
+    //         priority: 40,
+    //         // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
+    //         enforce: true,
+    //       },
+    //       // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
+    //       // TODO make an exception for css-modules
+    //       styles: {
+    //         test(module) {
+    //           return isCssModule(module)
+    //         },
+    //         name: `commons`,
+    //         priority: 40,
+    //         enforce: true,
+    //       },
+    //     },
+    //   },
+    //   minimize: false,
+    // }
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
@@ -664,18 +677,19 @@ module.exports = async (
               /node_modules[/\\]/.test(module.identifier())
             )
           },
-          name(module) {
-            const hash = crypto.createHash(`sha1`)
-            if (!module.libIdent) {
-              throw new Error(
-                `Encountered unknown module type: ${module.type}. Please open an issue.`
-              )
-            }
+          name: `lib`,
+          // name(module) {
+          //   const hash = crypto.createHash(`sha1`)
+          //   if (!module.libIdent) {
+          //     throw new Error(
+          //       `Encountered unknown module type: ${module.type}. Please open an issue.`
+          //     )
+          //   }
 
-            hash.update(module.libIdent({ context: program.directory }))
+          //   hash.update(module.libIdent({ context: program.directory }))
 
-            return hash.digest(`hex`).substring(0, 8)
-          },
+          //   return hash.digest(`hex`).substring(0, 8)
+          // },
           priority: 30,
           minChunks: 1,
           reuseExistingChunk: true,
@@ -697,14 +711,15 @@ module.exports = async (
 
             return !isCssModule(module)
           },
-          name(module, chunks) {
-            const hash = crypto
-              .createHash(`sha1`)
-              .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
-              .digest(`hex`)
+          name: `shared`,
+          // name(module, chunks) {
+          //   const hash = crypto
+          //     .createHash(`sha1`)
+          //     .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
+          //     .digest(`hex`)
 
-            return hash
-          },
+          //   return hash
+          // },
           priority: 10,
           minChunks: 2,
           reuseExistingChunk: true,
@@ -737,21 +752,21 @@ module.exports = async (
       },
       // TODO fix our partial hydration manifest
       mangleExports: !isPartialHydrationEnabled,
-      splitChunks,
+      // splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
-        !program.noUglify &&
-          plugins.minifyJs(
-            program.profile
-              ? {
-                  terserOptions: {
-                    keep_classnames: true,
-                    keep_fnames: true,
-                  },
-                }
-              : {}
-          ),
-        plugins.minifyCss(),
+        // !program.noUglify &&
+        //   plugins.minifyJs(
+        //     program.profile
+        //       ? {
+        //           terserOptions: {
+        //             keep_classnames: true,
+        //             keep_fnames: true,
+        //           },
+        //         }
+        //       : {}
+        //   ),
+        // plugins.minifyCss(),
       ].filter(Boolean),
     }
   }
@@ -872,10 +887,11 @@ module.exports = async (
   }
 
   if (
-    stage === `build-javascript` ||
-    stage === `build-html` ||
-    stage === `develop` ||
-    stage === `develop-html`
+    !isRspack &&
+    (stage === `build-javascript` ||
+      stage === `build-html` ||
+      stage === `develop` ||
+      stage === `develop-html`)
   ) {
     const cacheLocation = path.join(
       program.directory,
@@ -907,6 +923,25 @@ module.exports = async (
 
     config.cache = cacheConfig
   }
+
+  if (isRspack) {
+    config.builtins = {
+      define: rsPackDefine,
+    }
+
+    if (stage === `develop`) {
+      config.builtins.react = {
+        runtime: `classic`,
+        refresh: true,
+        development: true,
+      }
+      config.devServer = {
+        hot: true,
+      }
+    }
+  }
+
+  // console.log({ stage, builtins: config.builtins })
 
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
@@ -970,5 +1005,9 @@ module.exports = async (
     fastRefreshPlugin.options.include = includeRegex
   }
 
+  // const c = getConfig()
+  // if (stage === `develop`) {
+  //   console.log(`9`, c.module.rules[9])
+  // }
   return getConfig()
 }

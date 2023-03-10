@@ -175,7 +175,10 @@ const vendorRegex = /(node_modules|bower_components)/
  */
 export const createWebpackUtils = (
   stage: Stage,
-  program: IProgram
+  program: IProgram,
+  opts: {
+    isRspack?: boolean
+  } = {}
 ): IWebpackUtils => {
   const assetRelativeRoot = `static/`
   const supportedBrowsers = getBrowsersList(program.directory)
@@ -443,20 +446,21 @@ export const createWebpackUtils = (
     } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
-        include: (modulePath: string): boolean => {
-          // when it's not coming from node_modules we treat it as a source file.
-          if (!vendorRegex.test(modulePath)) {
-            return true
-          }
+        // include: (modulePath: string): boolean => {
+        //   // when it's not coming from node_modules we treat it as a source file.
+        //   if (!vendorRegex.test(modulePath)) {
+        //     return true
+        //   }
 
-          // If the module uses Gatsby as a dependency
-          // we want to treat it as src so we can extract queries
-          return modulesThatUseGatsby.some(module =>
-            modulePath.includes(module.path)
-          )
-        },
-        type: `javascript/auto`,
-        use: ({ resourceQuery, issuer }): Array<RuleSetUseItem> => [
+        //   // If the module uses Gatsby as a dependency
+        //   // we want to treat it as src so we can extract queries
+        //   return modulesThatUseGatsby.some(module =>
+        //     modulePath.includes(module.path)
+        //   )
+        // },
+        type: opts?.isRspack ? `jsx` : `javascript/auto`,
+        // ({ resourceQuery, issuer }): Array<RuleSetUseItem> =>
+        use: [
           // If a JS import comes from async-requires, assume it is for a page component.
           // Using `issuer` allows us to avoid mutating async-requires for this case.
           //
@@ -470,8 +474,8 @@ export const createWebpackUtils = (
             ...options,
             configFile: true,
             compact: PRODUCTION,
-            isPageTemplate: /async-requires/.test(issuer),
-            resourceQuery,
+            isPageTemplate: true, /// async-requires/.test(issuer),
+            // resourceQuery,
           }),
         ],
       }
@@ -635,7 +639,8 @@ export const createWebpackUtils = (
       ].filter(Boolean) as RuleSetRule["use"]
 
       return {
-        use,
+        // use,
+        type: `css`,
         test: /\.css$/,
       }
     }
@@ -650,6 +655,7 @@ export const createWebpackUtils = (
       const rule = css({ ...options, modules: true })
       delete rule.exclude
       rule.test = /\.module\.css$/
+      rule.type = `css/module`
       return rule
     }
 

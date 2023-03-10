@@ -1,7 +1,9 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
-import webpackDevMiddleware from "webpack-dev-middleware"
+// import webpackDevMiddleware from "webpack-dev-middleware"
+import rdm, { getRspackMemoryAssets } from "@rspack/dev-middleware"
 import got, { Method } from "got"
 import webpack from "webpack"
+import { rspack } from "@rspack/core"
 import express from "express"
 import compression from "compression"
 import { createHandler as createGraphqlEndpointHandler } from "graphql-http/lib/use/express"
@@ -149,20 +151,20 @@ export async function startServer(
     }
   )
 
-  const compiler = webpack(devConfig)
+  const compiler = rspack(devConfig)
 
   /**
    * Set up the express app.
    **/
   app.use(compression())
   app.use(telemetry.expressMiddleware(`DEVELOP`))
-  app.use(
-    webpackHotMiddleware(compiler, {
-      log: false,
-      path: `/__webpack_hmr`,
-      heartbeat: 10 * 1000,
-    })
-  )
+  // app.use(
+  //   webpackHotMiddleware(compiler, {
+  //     log: false,
+  //     path: `/__webpack_hmr`,
+  //     heartbeat: 10 * 1000,
+  //   })
+  // )
 
   app.use(cors())
 
@@ -274,13 +276,26 @@ export async function startServer(
 
   addImageRoutes(app, store)
 
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-    publicPath: devConfig.output.publicPath,
-    stats: `errors-only`,
-    serverSideRender: true,
-  })
+  // const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
+  //   publicPath: devConfig.output.publicPath,
+  //   stats: `errors-only`,
+  //   serverSideRender: true,
+  // })
 
-  app.use(webpackDevMiddlewareInstance)
+  // app.use(webpackDevMiddlewareInstance)
+  let webpackDevMiddlewareInstance
+  app.use(
+    getRspackMemoryAssets(
+      compiler as any,
+      (webpackDevMiddlewareInstance = rdm(compiler as any, {
+        publicPath: devConfig.output.publicPath,
+        stats: `errors-only`,
+        serverSideRender: true,
+      }))
+    )
+  )
+
+  debugger
 
   app.get(
     `/page-data/:pagePath(*)/page-data.json`,
@@ -620,9 +635,9 @@ export async function startServer(
   // This fixes "Unexpected token < in JSON at position 0" runtime
   // errors after restarting development server and
   // cause automatic hard refresh in the browser.
-  app.use(/.*\.hot-update\.json$/i, (_, res) => {
-    res.status(404).end()
-  })
+  // app.use(/.*\.hot-update\.json$/i, (_, res) => {
+  //   res.status(404).end()
+  // })
 
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
@@ -770,7 +785,7 @@ export async function startServer(
     routeLoadingIndicatorRequests(app)
   }
 
-  app.use(async (req, res) => {
+  app.use(async (req, res, next) => {
     // in this catch-all block we don't support POST so we should 404
     if (req.method === `POST`) {
       res.status(404).end()
@@ -782,6 +797,9 @@ export async function startServer(
     if (fullUrl.endsWith(`app-data.json`)) {
       res.json({ webpackCompilationHash: `123` })
       // If this gets here, it's a non-existent file so just send back 404.
+    } else if (fullUrl.endsWith(`hot-update.json`)) {
+      next()
+      return
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {
@@ -841,8 +859,64 @@ export async function startServer(
   const server = program.ssl
     ? new https.Server(program.ssl, app)
     : new http.Server(app)
+
+  const { RspackDevServer } = require(`@rspack/dev-server`)
+  class GatsbyRspackDevServer extends RspackDevServer {
+    constructor(options = {}, compiler) {
+      super(options, compiler)
+
+      this.app = app
+      this.server = server
+    }
+
+    setupApp(): void {
+      this.app = app
+    }
+
+    createServer(): void {
+      this.server = server
+
+      this.server.on(
+        `connection`,
+        /**
+         * @param {Socket} socket
+         */
+        socket => {
+          // Add socket to list
+          this.sockets.push(socket)
+
+          socket.once("close", () => {
+            // Remove socket from list
+            this.sockets.splice(this.sockets.indexOf(socket), 1)
+          })
+        }
+      )
+    }
+  }
+
+  const devServer = new GatsbyRspackDevServer(
+    {
+      hot: true,
+      webSocketServer: {
+        type: `ws`,
+        options: {
+          path: `/ws`,
+        },
+      },
+    },
+    compiler
+  )
+
   const socket = websocketManager.init({ server })
-  const listener = server.listen(program.port, program.host)
+  const listener = server.listen(program.port, program.host, undefined, () => {
+    // ugh, that's a hack
+    // webpack-dev-server controls this and I don't see option to disable it without c&p of internals of webpack-dev-server
+    // commenting out the listen - so instead after we already used .listen we will just make it noop to avoid
+    server.listen = (_options, cb) => {
+      cb()
+    }
+    devServer.start()
+  })
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)

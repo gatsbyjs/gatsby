@@ -18,50 +18,62 @@ export class GatsbyWebpackStatsExtractor {
   }
   apply(compiler: Compiler): void {
     compiler.hooks.done.tapAsync(this.plugin.name, async (stats, done) => {
+      // stats.toJson().entrypoints.app.assets
+      const jsonStats = stats.toJson()
+      // return done()
+
       const assets: { [key: string]: Array<string> } = {}
       const assetsMap = {}
       const childAssets = {}
-      for (const chunkGroup of stats.compilation.chunkGroups) {
-        if (chunkGroup.name) {
-          const files: Array<string> = []
-          for (const chunk of chunkGroup.chunks) {
-            if (chunk.chunkReason !== PARTIAL_HYDRATION_CHUNK_REASON) {
-              files.push(...chunk.files)
-            }
-          }
-          assets[chunkGroup.name] = files.filter(f => f.slice(-4) !== `.map`)
-          assetsMap[chunkGroup.name] = files
-            .filter(
-              f =>
-                f.slice(-4) !== `.map` &&
-                f.slice(0, chunkGroup.name?.length) === chunkGroup.name
-            )
-            .map(filename => `/${filename}`)
+      debugger
+      // for (const chunkGroup of stats.compilation.chunkGroups) {
+      //   if (chunkGroup.name) {
+      //     const files: Array<string> = []
+      //     for (const chunk of chunkGroup.chunks) {
+      //       if (chunk.chunkReason !== PARTIAL_HYDRATION_CHUNK_REASON) {
+      //         files.push(...chunk.files)
+      //       }
+      //     }
+      //     assets[chunkGroup.name] = files.filter(f => f.slice(-4) !== `.map`)
+      //     assetsMap[chunkGroup.name] = files
+      //       .filter(
+      //         f =>
+      //           f.slice(-4) !== `.map` &&
+      //           f.slice(0, chunkGroup.name?.length) === chunkGroup.name
+      //       )
+      //       .map(filename => `/${filename}`)
 
-          for (const [rel, childChunkGroups] of Object.entries(
-            chunkGroup.getChildrenByOrders(
-              stats.compilation.moduleGraph,
-              stats.compilation.chunkGraph
-            )
-          )) {
-            if (!(chunkGroup.name in childAssets)) {
-              childAssets[chunkGroup.name] = {}
-            }
+      //     for (const [rel, childChunkGroups] of Object.entries(
+      //       chunkGroup.getChildrenByOrders(
+      //         stats.compilation.moduleGraph,
+      //         stats.compilation.chunkGraph
+      //       )
+      //     )) {
+      //       if (!(chunkGroup.name in childAssets)) {
+      //         childAssets[chunkGroup.name] = {}
+      //       }
 
-            const childFiles: Array<string> = []
-            for (const childChunkGroup of childChunkGroups) {
-              for (const chunk of childChunkGroup.chunks) {
-                childFiles.push(...chunk.files)
-              }
-            }
+      //       const childFiles: Array<string> = []
+      //       for (const childChunkGroup of childChunkGroups) {
+      //         for (const chunk of childChunkGroup.chunks) {
+      //           childFiles.push(...chunk.files)
+      //         }
+      //       }
 
-            childAssets[chunkGroup.name][rel] = childFiles
-          }
+      //       childAssets[chunkGroup.name][rel] = childFiles
+      //     }
+      //   }
+      // }
+      for (const [entryName, { assets: assetsForEntry }] of Object.entries(
+        jsonStats.entrypoints
+      )) {
+        if (assetsForEntry) {
+          assets[entryName] = assetsForEntry.map(asset => asset.name)
         }
+        // assetsMap[entryName] = assets
       }
-
       const webpackStats = {
-        ...stats.toJson({ all: false, chunkGroups: true }),
+        ...jsonStats, //stats.toJson({ all: false, chunkGroups: true }),
         assetsByChunkName: assets,
         childAssetsByChunkName: childAssets,
       }

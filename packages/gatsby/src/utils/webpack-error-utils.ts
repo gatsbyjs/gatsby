@@ -128,7 +128,7 @@ const transformWebpackError = (
     // or one of loaders (for example babel-loader) and doesn't provide
     // much value to user, so it's purposely omitted.
 
-    // error: webpackError?.error || webpackError,
+    error: webpackError?.error || webpackError,
   }
 }
 

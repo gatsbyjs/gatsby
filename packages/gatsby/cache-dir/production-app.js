@@ -43,6 +43,8 @@ window.___loader = publicLoader
 
 navigationInit()
 
+console.log(`do you even execute?`)
+
 const reloadStorageKey = `gatsby-reload-compilation-hash-match`
 
 apiRunnerAsync(`onClientEntry`).then(() => {

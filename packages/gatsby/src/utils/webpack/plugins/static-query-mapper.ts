@@ -83,293 +83,293 @@ export class StaticQueryMapper {
       }
     })
 
-    compiler.hooks.finishMake.tapPromise(
-      {
-        name: this.name,
-        before: `PartialHydrationPlugin`,
-      },
-      async compilation => {
-        if (compilation.compiler.parentCompilation) {
-          return
-        }
+    // compiler.hooks.finishMake.tapPromise(
+    //   {
+    //     name: this.name,
+    //     before: `PartialHydrationPlugin`,
+    //   },
+    //   async compilation => {
+    //     if (compilation.compiler.parentCompilation) {
+    //       return
+    //     }
 
-        const entryModules = new Set()
-        const gatsbyBrowserPlugins = slash(
-          path.join(
-            program.directory,
-            `.cache`,
-            `api-runner-browser-plugins.js`
-          )
-        )
-        const asyncRequiresPath = slash(
-          path.join(
-            program.directory,
-            `.cache`,
-            `_this_is_virtual_fs_path_`,
-            `$virtual`,
-            `async-requires.js`
-          )
-        )
-        for (const entry of compilation.entries.values()) {
-          for (const dependency of entry.dependencies) {
-            const mod = compilation.moduleGraph.getModule(dependency)
-            entryModules.add(mod)
-          }
-        }
+    //     const entryModules = new Set()
+    //     const gatsbyBrowserPlugins = slash(
+    //       path.join(
+    //         program.directory,
+    //         `.cache`,
+    //         `api-runner-browser-plugins.js`
+    //       )
+    //     )
+    //     const asyncRequiresPath = slash(
+    //       path.join(
+    //         program.directory,
+    //         `.cache`,
+    //         `_this_is_virtual_fs_path_`,
+    //         `$virtual`,
+    //         `async-requires.js`
+    //       )
+    //     )
+    //     for (const entry of compilation.entries.values()) {
+    //       for (const dependency of entry.dependencies) {
+    //         const mod = compilation.moduleGraph.getModule(dependency)
+    //         entryModules.add(mod)
+    //       }
+    //     }
 
-        const realPathCache = new Map<string, string>()
+    //     const realPathCache = new Map<string, string>()
 
-        const webpackModulesByStaticQueryId = new Map<
-          string,
-          Set<NormalModule>
-        >()
-        const webpackModulesByUsedSlicePlaceholderAlias = new Map<
-          NormalModule,
-          ICollectedSlices
-        >()
-        const componentModules = new Map<NormalModule, IGatsbyPageComponent>()
-        let asyncRequiresModule: NormalModule | undefined
+    //     const webpackModulesByStaticQueryId = new Map<
+    //       string,
+    //       Set<NormalModule>
+    //     >()
+    //     const webpackModulesByUsedSlicePlaceholderAlias = new Map<
+    //       NormalModule,
+    //       ICollectedSlices
+    //     >()
+    //     const componentModules = new Map<NormalModule, IGatsbyPageComponent>()
+    //     let asyncRequiresModule: NormalModule | undefined
 
-        for (const webpackModule of compilation.modules) {
-          if (!(webpackModule instanceof NormalModule)) {
-            // the only other type can be CssModule at this stage, which we don't care about
-            // this also acts as a type guard, providing fuller typeing for webpackModule
-            continue
-          }
+    //     for (const webpackModule of compilation.modules) {
+    //       if (!(webpackModule instanceof NormalModule)) {
+    //         // the only other type can be CssModule at this stage, which we don't care about
+    //         // this also acts as a type guard, providing fuller typeing for webpackModule
+    //         continue
+    //       }
 
-          if (doesModuleMatchResourcePath(asyncRequiresPath, webpackModule)) {
-            asyncRequiresModule = webpackModule
-            continue
-          }
+    //       if (doesModuleMatchResourcePath(asyncRequiresPath, webpackModule)) {
+    //         asyncRequiresModule = webpackModule
+    //         continue
+    //       }
 
-          if (
-            doesModuleMatchResourcePath(gatsbyBrowserPlugins, webpackModule)
-          ) {
-            entryModules.add(webpackModule)
-            continue
-          }
+    //       if (
+    //         doesModuleMatchResourcePath(gatsbyBrowserPlugins, webpackModule)
+    //       ) {
+    //         entryModules.add(webpackModule)
+    //         continue
+    //       }
 
-          for (const staticQuery of staticQueryComponents.values()) {
-            const staticQueryComponentPath = getRealPath(
-              realPathCache,
-              staticQuery.componentPath
-            )
+    //       for (const staticQuery of staticQueryComponents.values()) {
+    //         const staticQueryComponentPath = getRealPath(
+    //           realPathCache,
+    //           staticQuery.componentPath
+    //         )
 
-            if (
-              !doesModuleMatchResourcePath(
-                staticQueryComponentPath,
-                webpackModule
-              )
-            ) {
-              continue
-            }
+    //         if (
+    //           !doesModuleMatchResourcePath(
+    //             staticQueryComponentPath,
+    //             webpackModule
+    //           )
+    //         ) {
+    //           continue
+    //         }
 
-            let set = webpackModulesByStaticQueryId.get(staticQuery.hash)
+    //         let set = webpackModulesByStaticQueryId.get(staticQuery.hash)
 
-            if (!set) {
-              set = new Set()
-              webpackModulesByStaticQueryId.set(staticQuery.hash, set)
-            }
+    //         if (!set) {
+    //           set = new Set()
+    //           webpackModulesByStaticQueryId.set(staticQuery.hash, set)
+    //         }
 
-            set.add(webpackModule)
-          }
+    //         set.add(webpackModule)
+    //       }
 
-          for (const [filePath, slices] of componentsUsingSlices) {
-            const componentComponentPath = getRealPath(realPathCache, filePath)
+    //       for (const [filePath, slices] of componentsUsingSlices) {
+    //         const componentComponentPath = getRealPath(realPathCache, filePath)
 
-            if (
-              !doesModuleMatchResourcePath(
-                componentComponentPath,
-                webpackModule
-              )
-            ) {
-              continue
-            }
+    //         if (
+    //           !doesModuleMatchResourcePath(
+    //             componentComponentPath,
+    //             webpackModule
+    //           )
+    //         ) {
+    //           continue
+    //         }
 
-            webpackModulesByUsedSlicePlaceholderAlias.set(webpackModule, slices)
-          }
+    //         webpackModulesByUsedSlicePlaceholderAlias.set(webpackModule, slices)
+    //       }
 
-          for (const component of components.values()) {
-            const componentComponentPath = getRealPath(
-              realPathCache,
-              component.componentPath
-            )
+    //       for (const component of components.values()) {
+    //         const componentComponentPath = getRealPath(
+    //           realPathCache,
+    //           component.componentPath
+    //         )
 
-            if (
-              !doesModuleMatchResourcePath(
-                componentComponentPath,
-                webpackModule
-              )
-            ) {
-              continue
-            }
+    //         if (
+    //           !doesModuleMatchResourcePath(
+    //             componentComponentPath,
+    //             webpackModule
+    //           )
+    //         ) {
+    //           continue
+    //         }
 
-            componentModules.set(webpackModule, component)
-          }
-        }
+    //         componentModules.set(webpackModule, component)
+    //       }
+    //     }
 
-        function traverseModule(
-          module: NormalModule,
-          config: {
-            onComponent(component: IGatsbyPageComponent): void
-            onRoot(): void
-          },
-          visitedModules = new Set<NormalModule>()
-        ): void {
-          if (visitedModules.has(module)) {
-            return
-          }
-          visitedModules.add(module)
+    //     function traverseModule(
+    //       module: NormalModule,
+    //       config: {
+    //         onComponent(component: IGatsbyPageComponent): void
+    //         onRoot(): void
+    //       },
+    //       visitedModules = new Set<NormalModule>()
+    //     ): void {
+    //       if (visitedModules.has(module)) {
+    //         return
+    //       }
+    //       visitedModules.add(module)
 
-          if (module === asyncRequiresModule) {
-            return
-          }
+    //       if (module === asyncRequiresModule) {
+    //         return
+    //       }
 
-          const component = componentModules.get(module)
-          if (component) {
-            config.onComponent(component)
-            // don't return here yet, as component might be imported by another one, and we want to traverse up until we reach async-requires
-          }
+    //       const component = componentModules.get(module)
+    //       if (component) {
+    //         config.onComponent(component)
+    //         // don't return here yet, as component might be imported by another one, and we want to traverse up until we reach async-requires
+    //       }
 
-          if (entryModules.has(module)) {
-            config.onRoot()
-            return
-          }
+    //       if (entryModules.has(module)) {
+    //         config.onRoot()
+    //         return
+    //       }
 
-          const incomingConnections =
-            compilation.moduleGraph.getIncomingConnections(module)
-          for (const connection of incomingConnections) {
-            if (connection.originModule instanceof NormalModule) {
-              traverseModule(connection.originModule, config, visitedModules)
-            }
-          }
-        }
+    //       const incomingConnections =
+    //         compilation.moduleGraph.getIncomingConnections(module)
+    //       for (const connection of incomingConnections) {
+    //         if (connection.originModule instanceof NormalModule) {
+    //           traverseModule(connection.originModule, config, visitedModules)
+    //         }
+    //       }
+    //     }
 
-        const globalStaticQueries = new Set<string>()
-        const staticQueriesByComponents = new Map<string, Set<string>>()
-        for (const [
-          staticQueryId,
-          modules,
-        ] of webpackModulesByStaticQueryId.entries()) {
-          for (const module of modules) {
-            traverseModule(module, {
-              onComponent(component: IGatsbyPageComponent) {
-                let staticQueriesForComponent = staticQueriesByComponents.get(
-                  component.componentPath
-                )
-                if (!staticQueriesForComponent) {
-                  staticQueriesForComponent = new Set()
-                  staticQueriesByComponents.set(
-                    component.componentPath,
-                    staticQueriesForComponent
-                  )
-                }
+    //     const globalStaticQueries = new Set<string>()
+    //     const staticQueriesByComponents = new Map<string, Set<string>>()
+    //     for (const [
+    //       staticQueryId,
+    //       modules,
+    //     ] of webpackModulesByStaticQueryId.entries()) {
+    //       for (const module of modules) {
+    //         traverseModule(module, {
+    //           onComponent(component: IGatsbyPageComponent) {
+    //             let staticQueriesForComponent = staticQueriesByComponents.get(
+    //               component.componentPath
+    //             )
+    //             if (!staticQueriesForComponent) {
+    //               staticQueriesForComponent = new Set()
+    //               staticQueriesByComponents.set(
+    //                 component.componentPath,
+    //                 staticQueriesForComponent
+    //               )
+    //             }
 
-                staticQueriesForComponent.add(staticQueryId)
-              },
-              onRoot() {
-                globalStaticQueries.add(staticQueryId)
-              },
-            })
-          }
-        }
+    //             staticQueriesForComponent.add(staticQueryId)
+    //           },
+    //           onRoot() {
+    //             globalStaticQueries.add(staticQueryId)
+    //           },
+    //         })
+    //       }
+    //     }
 
-        let globalSliceUsage: ICollectedSlices = {}
-        const slicesByComponents = new Map<string, ICollectedSlices>()
-        for (const [
-          module,
-          slices,
-        ] of webpackModulesByUsedSlicePlaceholderAlias.entries()) {
-          traverseModule(module, {
-            onComponent(component: IGatsbyPageComponent) {
-              slicesByComponents.set(
-                component.componentPath,
-                mergePreviouslyCollectedSlices(
-                  slices,
-                  slicesByComponents.get(component.componentPath)
-                )
-              )
-            },
-            onRoot() {
-              globalSliceUsage = mergePreviouslyCollectedSlices(
-                slices,
-                globalSliceUsage
-              )
-            },
-          })
-        }
+    //     let globalSliceUsage: ICollectedSlices = {}
+    //     const slicesByComponents = new Map<string, ICollectedSlices>()
+    //     for (const [
+    //       module,
+    //       slices,
+    //     ] of webpackModulesByUsedSlicePlaceholderAlias.entries()) {
+    //       traverseModule(module, {
+    //         onComponent(component: IGatsbyPageComponent) {
+    //           slicesByComponents.set(
+    //             component.componentPath,
+    //             mergePreviouslyCollectedSlices(
+    //               slices,
+    //               slicesByComponents.get(component.componentPath)
+    //             )
+    //           )
+    //         },
+    //         onRoot() {
+    //           globalSliceUsage = mergePreviouslyCollectedSlices(
+    //             slices,
+    //             globalSliceUsage
+    //           )
+    //         },
+    //       })
+    //     }
 
-        for (const component of components.values()) {
-          const allStaticQueries = new Set([
-            ...globalStaticQueries,
-            ...(staticQueriesByComponents.get(component.componentPath) ?? []),
-          ])
-          const staticQueryHashes = Array.from(allStaticQueries).sort()
+    //     for (const component of components.values()) {
+    //       const allStaticQueries = new Set([
+    //         ...globalStaticQueries,
+    //         ...(staticQueriesByComponents.get(component.componentPath) ?? []),
+    //       ])
+    //       const staticQueryHashes = Array.from(allStaticQueries).sort()
 
-          const allSlices = mergePreviouslyCollectedSlices(
-            slicesByComponents.get(component.componentPath) ?? {},
-            component.isSlice ? {} : cloneDeep(globalSliceUsage)
-          )
+    //       const allSlices = mergePreviouslyCollectedSlices(
+    //         slicesByComponents.get(component.componentPath) ?? {},
+    //         component.isSlice ? {} : cloneDeep(globalSliceUsage)
+    //       )
 
-          const slices = Object.keys(allSlices)
-            .sort()
-            .reduce((obj, key) => {
-              obj[key] = allSlices[key]
-              return obj
-            }, {})
+    //       const slices = Object.keys(allSlices)
+    //         .sort()
+    //         .reduce((obj, key) => {
+    //           obj[key] = allSlices[key]
+    //           return obj
+    //         }, {})
 
-          const didSlicesChange = !isEqual(
-            this.store.getState().slicesByTemplate.get(component.componentPath),
-            slices
-          )
-          const didStaticQueriesChange = !isEqual(
-            this.store
-              .getState()
-              .staticQueriesByTemplate.get(component.componentPath),
-            staticQueryHashes
-          )
+    //       const didSlicesChange = !isEqual(
+    //         this.store.getState().slicesByTemplate.get(component.componentPath),
+    //         slices
+    //       )
+    //       const didStaticQueriesChange = !isEqual(
+    //         this.store
+    //           .getState()
+    //           .staticQueriesByTemplate.get(component.componentPath),
+    //         staticQueryHashes
+    //       )
 
-          if (didStaticQueriesChange || didSlicesChange) {
-            if (component.isSlice) {
-              this.store.dispatch({
-                type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`,
-                payload: {
-                  componentPath: component.componentPath,
-                  sliceNames: component.pages,
-                },
-              })
-            } else {
-              this.store.dispatch({
-                type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
-                payload: {
-                  componentPath: component.componentPath,
-                  pages: component.pages,
-                },
-              })
-            }
-          }
+    //       if (didStaticQueriesChange || didSlicesChange) {
+    //         if (component.isSlice) {
+    //           this.store.dispatch({
+    //             type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`,
+    //             payload: {
+    //               componentPath: component.componentPath,
+    //               sliceNames: component.pages,
+    //             },
+    //           })
+    //         } else {
+    //           this.store.dispatch({
+    //             type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+    //             payload: {
+    //               componentPath: component.componentPath,
+    //               pages: component.pages,
+    //             },
+    //           })
+    //         }
+    //       }
 
-          if (didSlicesChange) {
-            this.store.dispatch({
-              type: `SET_SLICES_BY_TEMPLATE`,
-              payload: {
-                componentPath: component.componentPath,
-                slices,
-              },
-            })
-          }
+    //       if (didSlicesChange) {
+    //         this.store.dispatch({
+    //           type: `SET_SLICES_BY_TEMPLATE`,
+    //           payload: {
+    //             componentPath: component.componentPath,
+    //             slices,
+    //           },
+    //         })
+    //       }
 
-          if (didStaticQueriesChange) {
-            this.store.dispatch({
-              type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
-              payload: {
-                componentPath: component.componentPath,
-                staticQueryHashes,
-              },
-            })
-          }
-        }
-      }
-    )
+    //       if (didStaticQueriesChange) {
+    //         this.store.dispatch({
+    //           type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
+    //           payload: {
+    //             componentPath: component.componentPath,
+    //             staticQueryHashes,
+    //           },
+    //         })
+    //       }
+    //     }
+    //   }
+    // )
   }
 }

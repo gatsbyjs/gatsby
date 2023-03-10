@@ -69,17 +69,16 @@ const initialState = {
 
 function DevOverlay({ children }) {
   const [state, dispatch] = React.useReducer(reducer, initialState)
+  const gatsbyEvents = window._gatsbyEvents || []
 
+  window._gatsbyEvents = {
+    push: ([channel, event]) => {
+      if (channel === `FAST_REFRESH`) {
+        dispatch(event)
+      }
+    },
+  }
   React.useEffect(() => {
-    const gatsbyEvents = window._gatsbyEvents || []
-    window._gatsbyEvents = {
-      push: ([channel, event]) => {
-        if (channel === `FAST_REFRESH`) {
-          dispatch(event)
-        }
-      },
-    }
-
     gatsbyEvents.forEach(([channel, event]) => {
       if (channel === `FAST_REFRESH`) {
         dispatch(event)

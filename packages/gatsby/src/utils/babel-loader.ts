@@ -1,5 +1,5 @@
 import babelLoader from "babel-loader"
-import type { Compiler } from "webpack"
+import type { Compiler, LoaderContext } from "webpack"
 import Babel, { ConfigItem } from "@babel/core"
 import {
   prepareOptions,
@@ -39,15 +39,21 @@ const babelrcFileToCacheKey = new Map()
 const customBabelLoader = babelLoader.custom(babel => {
   return {
     // Passed the loader options.
-    customOptions({
-      stage = `test` as Stage,
-      reactRuntime = `classic`,
-      reactImportSource,
-      isPageTemplate,
-      resourceQuery,
-      rootDir = process.cwd(),
-      ...options
-    }): IBabelCustomLoader {
+    customOptions(
+      this: LoaderContext<unknown>,
+      {
+        stage = `test` as Stage,
+        reactRuntime = `classic`,
+        reactImportSource,
+        isPageTemplate,
+        resourceQuery,
+        rootDir = process.cwd(),
+        ...options
+      }
+    ): IBabelCustomLoader {
+      if (!resourceQuery) {
+        resourceQuery = this?.resourceQuery ?? ``
+      }
       const customOptionsCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
 
       if (customOptionsCache.has(customOptionsCacheKey)) {
