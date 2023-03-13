@@ -256,11 +256,11 @@ You'll now exactly learn that by adding an activity for the sourcing and node cr
       // highlight-end
 
       for (const post of posts) {
-        nodeBuilder({ gatsbyApi, input: { type: `Post`, data: post } })
+        nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Post, data: post } })
       }
 
       for (const author of authors) {
-        nodeBuilder({ gatsbyApi, input: { type: `Author`, data: author } })
+        nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Author, data: author } })
       }
     }
 
@@ -288,11 +288,11 @@ You'll now exactly learn that by adding an activity for the sourcing and node cr
       )
 
       for (const post of posts) {
-        nodeBuilder({ gatsbyApi, input: { type: `Post`, data: post } })
+        nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Post, data: post } })
       }
 
       for (const author of authors) {
-        nodeBuilder({ gatsbyApi, input: { type: `Author`, data: author } })
+        nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Author, data: author } })
       }
 
       // highlight-next-line
@@ -401,7 +401,7 @@ Let's get to work:
     import { fetchGraphQL } from "./utils"
     import type { IAuthorInput, IPostInput, NodeBuilderInput } from "./types"
     // highlight-next-line
-    import { ERROR_CODES } from "./constants"
+    import { NODE_TYPES, ERROR_CODES } from "./constants"
 
     export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
       // Rest of sourceNodes
@@ -482,7 +482,7 @@ The `cache` API is a key-value store, so you save specific data under a key, and
     ```ts:title=plugin/src/source-nodes.ts
     // Rest of imports
     // highlight-next-line
-    import { ERROR_CODES, CACHE_KEYS } from "./constants"
+    import { NODE_TYPES, ERROR_CODES, CACHE_KEYS } from "./constants"
 
     export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
       // highlight-next-line
@@ -662,6 +662,19 @@ Instead of hardcoding the URL to the GraphQL API, you'll use an `endpoint` optio
     ```
 
     So the plugin already receives the GraphQL endpoint through the `endpoint` option.
+
+1. Update the TypeScript types inside `plugin/src/types.ts` so that both internally and externally the types are correct:
+
+    ```ts:title=plugin/src/types.ts
+    // Rest of types
+
+    interface IPluginOptionsKeys {
+      // highlight-next-line
+      endpoint: string
+    }
+
+    // Rest of types
+    ```
 
 1. Open the file `plugin/src/source-nodes.ts` and validate that you can access the option. You can do this by accessing the second parameter of the `sourceNodes` function and `console.log` it. Use the `IPluginOptionsInternal` type for it:
 
