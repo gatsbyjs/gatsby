@@ -18,13 +18,13 @@ If you're looking for a primary CMS (general-purpose, flexible content modelling
 
 Focus on top-flight general-purpose CMSs with first-class Gatsby integrations and popularity among Gatsby users.
 
-A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds and is known to the Gatsby team to be high-quality. For popularity, you can see [top integrations listed by monthly downloads](/plugins?=gatsby-source).
+A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby — previews and incremental builds and is known to the Gatsby team to be high-quality. For popularity, you can see [top integrations listed by monthly downloads](/plugins?=gatsby-source).
 
 Eight CMSs with first-class integrations used by over 1% of Gatsby users (November 2021):
 
-- **headless CMSs**: Contentful, DatoCMS, Prismic, Contentstack, Sanity and Strapi
-- **full-stack CMSs**: Drupal and WordPress
-- **e-commerce platform**: Shopify
+- **Headless CMSs**: Contentful, DatoCMS, Prismic, Contentstack, Sanity and Strapi
+- **Full-stack CMSs**: Drupal and WordPress
+- **E-commerce platform**: Shopify
 
 ### Consider the price point given your budget
 
