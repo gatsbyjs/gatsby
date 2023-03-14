@@ -391,7 +391,9 @@ export const fetchMediaItemsBySourceUrl = async ({
               ${sourceUrls
                 .map(
                   (sourceUrl, index) => /* GraphQL */ `
-                mediaItem__index_${index}: mediaItem(id: "${sourceUrl}", idType: SOURCE_URL) {
+                mediaItem__index_${index}: mediaItem(id: "${encodeURI(
+                    sourceUrl
+                  )}", idType: SOURCE_URL) {
                   ...MediaItemFragment
                 }
               `
