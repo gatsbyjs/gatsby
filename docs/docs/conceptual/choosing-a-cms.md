@@ -29,7 +29,7 @@ Eight CMSs with first-class integrations used by over 1% of Gatsby users (Novemb
 ### Consider the price point given your budget
 
 - "Personal" project or prototype (generous free tier): Contentful, DatoCMS, Prismic, Sanity, Strapi.
-- "Team", "Pro" or "Business":  (e.g. 50-250 $/month): Contentful, DatoCMS, Prismic, Sanity, Strapi, Drupal and WordPress.
+- "Team", "Pro" or "Business": (e.g. 50-250 $/month): Contentful, DatoCMS, Prismic, Sanity, Strapi, Drupal and WordPress.
 - "Enterprise" project (>= 1000 $/month): Contentful, Contentstack, Sanity, and Strapi.
 
 ### Specialized requirements
