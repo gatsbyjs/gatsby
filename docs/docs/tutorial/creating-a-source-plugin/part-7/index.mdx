@@ -3,7 +3,6 @@ title: "Part 7: Advanced Topics"
 ---
 
 import { LinkButton } from "gatsby-interface"
-import Collapsible from "@components/collapsible"
 import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
@@ -173,7 +172,7 @@ Here are the other steps to integrate Content Sync into your CMS:
 
 ### Tips
 
-Here are some things to keep in mind and some "gotchas" depending on how the CMS acts.
+Here are some things to keep in mind and some "gotchas" depending on how the CMS acts:
 
 - Inside the CMS, sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend. You will need the _most_ up to date timestamp when opening the Content Sync UI waiting room.
 - Make sure that a preview webhook is being sent to Gatsby Cloud after the content is edited, whether it's before you press the "Open Preview" button or the "Open Preview" is the trigger that sends the webhook.
@@ -243,6 +242,13 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 - What are end-to-end tests good for?
 - What is Content Sync?
 - What happens when a source plugin defines a `mediaType` for its nodes?
+
+### Key takeaways
+
+- A good mixture of unit tests (testing the heart of the source plugin) and end-to-end tests (testing the functionality from start to finish) will give you confidence in shipping changes.
+- Content Sync can improve the preview experience for content editors.
+- MIME types can help Gatsby transformers discover nodes from source plugins.
+- You can use tracing to inspect your source plugin more deeply.
 
 <Announcement>
 
