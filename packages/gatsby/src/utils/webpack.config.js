@@ -891,10 +891,11 @@ module.exports = async (
       )
       .map(
         async plugin =>
-          await resolveJSFilepath({
+          plugin.resolvedCompiledGatsbyNode ??
+          (await resolveJSFilepath({
             rootDir: plugin.resolve,
             filePath: path.join(plugin.resolve, `gatsby-node`),
-          })
+          }))
       )
     const pluginsPaths = await Promise.all(pluginsPathsPromises)
 
