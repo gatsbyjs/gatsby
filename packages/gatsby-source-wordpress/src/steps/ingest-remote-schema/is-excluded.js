@@ -17,9 +17,6 @@ const blockListedTypenameParts = [
 const seenTypesWhileBlockingByParts = {}
 
 function typenamePartIsBlocked(name) {
-  if (!name) {
-    debugger
-  }
   if (seenTypesWhileBlockingByParts[name]) {
     return seenTypesWhileBlockingByParts[name]
   }
@@ -33,14 +30,11 @@ function typenamePartIsBlocked(name) {
   return typenameContainsBlocklistedPart
 }
 
-const typeIsExcluded = ({ pluginOptions, typeName }) => {
-  return (
-    typenamePartIsBlocked(typeName) ||
-    (pluginOptions &&
-      pluginOptions.type[typeName] &&
-      pluginOptions.type[typeName].exclude)
-  )
-}
+const typeIsExcluded = ({ pluginOptions, typeName }) =>
+  typenamePartIsBlocked(typeName) ||
+  (pluginOptions &&
+    pluginOptions.type[typeName] &&
+    pluginOptions.type[typeName].exclude)
 
 const fieldIsExcludedOnAll = ({ pluginOptions, field }) => {
   const allFieldSettings = pluginOptions?.type?.__all
