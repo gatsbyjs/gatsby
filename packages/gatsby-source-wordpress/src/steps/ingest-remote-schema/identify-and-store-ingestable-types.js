@@ -83,7 +83,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
         if (nodeListField) {
           if (
             typeIsExcluded({
-              typeName: findNamedTypeName(nodeListField.type).name,
+              typeName: findNamedTypeName(nodeListField.type),
               pluginOptions,
             })
           ) {
@@ -101,7 +101,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
           for (const innerField of nodeListFieldType.fields) {
             if (
               !typeIsExcluded({
-                typeName: findNamedTypeName(innerField.type).name,
+                typeName: findNamedTypeName(innerField.type),
                 pluginOptions,
               })
             ) {
@@ -127,7 +127,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
             for (const type of nodeInterfaceType?.possibleTypes || []) {
               if (
                 !typeIsExcluded({
-                  typeName: findNamedTypeName(type).name,
+                  typeName: findNamedTypeName(type),
                   pluginOptions,
                 })
               ) {
