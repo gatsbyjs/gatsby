@@ -9,6 +9,7 @@ import {
   fieldIsExcludedOnAll,
 } from "~/steps/ingest-remote-schema/is-excluded"
 import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
+import { typeIsExcluded } from "../is-excluded"
 
 export const transformInlineFragments = ({
   possibleTypes,
@@ -60,6 +61,15 @@ export const transformInlineFragments = ({
       const typeSettings = getTypeSettingsByType(type)
 
       if (typeSettings.exclude) {
+        return false
+      }
+
+      if (
+        typeIsExcluded({
+          pluginOptions,
+          typeName: findNamedTypeName(type),
+        })
+      ) {
         return false
       }
 
@@ -531,6 +541,10 @@ const transformFields = ({
         !fieldIsExcludedOnAll({
           pluginOptions,
           field,
+        }) &&
+        !typeIsExcluded({
+          pluginOptions,
+          typeName: findNamedTypeName(field.type),
         })
     )
     .map(field => {

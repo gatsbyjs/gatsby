@@ -13,6 +13,7 @@ export const CODES = {
   /* GraphQL Errors */
   RemoteGraphQLError: `112001`,
   MissingAppendedPath: `112002`,
+  InconsistentSchemaCustomization: `112004`,
 
   /* CodeErrors */
   SourcePluginCodeError: `112003`,
@@ -62,6 +63,12 @@ export const ERROR_MAP: IErrorMap = {
     text: getErrorText,
     level: `ERROR`,
     category: `THIRD_PARTY`,
+  },
+  [CODES.InconsistentSchemaCustomization]: {
+    text: getErrorText,
+    level: `ERROR`,
+    category: `SYSTEM`,
+    type: `PLUGIN`,
   },
   [CODES.SourcePluginCodeError]: {
     text: getErrorText,
