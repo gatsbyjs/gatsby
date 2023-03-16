@@ -63,7 +63,12 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       continue
     }
 
-    if (typeIsExcluded({ pluginOptions, typeName: field.type.name })) {
+    if (
+      typeIsExcluded({
+        pluginOptions,
+        typeName: findNamedType(field.type).name,
+      })
+    ) {
       continue
     }
 
@@ -76,6 +81,15 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
         const nodeListField = type.fields.find(nodeListFilter)
 
         if (nodeListField) {
+          if (
+            typeIsExcluded({
+              typeName: findNamedTypeName(nodeListField.type).name,
+              pluginOptions,
+            })
+          ) {
+            continue
+          }
+
           nodeInterfaceTypes.push(findNamedTypeName(nodeListField.type))
 
           store.dispatch.remoteSchema.addFetchedType(nodeListField.type)
@@ -85,7 +99,14 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
           )
 
           for (const innerField of nodeListFieldType.fields) {
-            store.dispatch.remoteSchema.addFetchedType(innerField.type)
+            if (
+              !typeIsExcluded({
+                typeName: findNamedTypeName(innerField.type).name,
+                pluginOptions,
+              })
+            ) {
+              store.dispatch.remoteSchema.addFetchedType(innerField.type)
+            }
           }
 
           if (
@@ -104,8 +125,15 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
             // we need to mark all the possible types as being fetched
             // and also need to record the possible type as a node type
             for (const type of nodeInterfaceType?.possibleTypes || []) {
-              nodeInterfacePossibleTypeNames.push(type.name)
-              store.dispatch.remoteSchema.addFetchedType(type)
+              if (
+                !typeIsExcluded({
+                  typeName: findNamedTypeName(type).name,
+                  pluginOptions,
+                })
+              ) {
+                nodeInterfacePossibleTypeNames.push(type.name)
+                store.dispatch.remoteSchema.addFetchedType(type)
+              }
             }
 
             nodeListRootFields.push(field)
@@ -114,7 +142,13 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
           continue
         }
       } else if (nodeField) {
-        if (fieldBlacklist.includes(field.name)) {
+        if (
+          fieldBlacklist.includes(field.name) ||
+          typeIsExcluded({
+            typeName: findNamedType(field.type).name,
+            pluginOptions,
+          })
+        ) {
           continue
         }
 
@@ -185,7 +219,13 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
 
     if (interfaceType.fields) {
       for (const interfaceField of interfaceType.fields) {
-        if (interfaceField.type) {
+        if (
+          interfaceField.type &&
+          !typeIsExcluded({
+            typeName: findNamedType(interfaceField.type).name,
+            pluginOptions,
+          })
+        ) {
           store.dispatch.remoteSchema.addFetchedType(interfaceField.type)
         }
       }
