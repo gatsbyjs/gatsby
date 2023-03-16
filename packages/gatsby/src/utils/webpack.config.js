@@ -26,6 +26,7 @@ import { shouldGenerateEngines } from "./engines-helpers"
 import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
+import { resolveJSFilepath } from "../bootstrap/resolve-js-file-path"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -883,25 +884,26 @@ module.exports = async (
       `webpack`,
       `stage-` + stage
     )
+    const pluginsPathsPromises = store
+      .getState()
+      .flattenedPlugins.filter(plugin =>
+        plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
+      )
+      .map(
+        async plugin =>
+          await resolveJSFilepath({
+            rootDir: plugin.resolve,
+            filePath: path.join(plugin.resolve, `gatsby-node`),
+          })
+      )
+    const pluginsPaths = await Promise.all(pluginsPathsPromises)
 
     const cacheConfig = {
       type: `filesystem`,
       name: stage,
       cacheLocation,
       buildDependencies: {
-        config: [
-          __filename,
-          ...store
-            .getState()
-            .flattenedPlugins.filter(plugin =>
-              plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
-            )
-            .map(
-              plugin =>
-                plugin.resolvedCompiledGatsbyNode ??
-                path.join(plugin.resolve, `gatsby-node.js`)
-            ),
-        ],
+        config: [__filename, ...pluginsPaths],
       },
     }
 
