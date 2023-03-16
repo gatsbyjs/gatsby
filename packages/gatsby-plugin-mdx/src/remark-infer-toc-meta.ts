@@ -49,8 +49,12 @@ const remarkInferTocMeta: Plugin<[IRemarkTocOptions]> = options => {
           if (item.type === `link`) {
             typedCurrent.url = item.url
           }
-          if (item.type === `text`) {
-            typedCurrent.title = item.value
+          if (item.type === `text` || item.type === `inlineCode`) {
+            if (typedCurrent.title) {
+              typedCurrent.title += item.value
+            } else {
+              typedCurrent.title = item.value
+            }
           }
         })
 
