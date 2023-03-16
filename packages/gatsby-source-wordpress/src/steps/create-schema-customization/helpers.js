@@ -319,7 +319,7 @@ function mergeDuplicateTypesAndReturnDedupedList(typeDefs) {
       d => d.config.name === def.config.name
     )
 
-    let newDef = {}
+    const newDef = {}
 
     for (const dDef of duplicateDefs) {
       merge(newDef, dDef)
@@ -397,6 +397,8 @@ export async function diffBuiltTypeDefs(typeDefs) {
           }
         )}`
       }
+
+      return null
     })
     .filter(Boolean)
 
@@ -426,7 +428,7 @@ export async function diffBuiltTypeDefs(typeDefs) {
 
   if (
     process.env.NODE_ENV === `development` &&
-    process.env.WP_INCONSISTENT_SCHEMA_WARN !== "true"
+    process.env.WP_INCONSISTENT_SCHEMA_WARN !== `true`
   ) {
     reporter.info(
       formatLogMessage(
