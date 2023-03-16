@@ -2,6 +2,9 @@ import store from "~/store"
 import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
+import { diffString } from "json-diff"
+import { formatLogMessage } from "../../utils/format-log-message"
+import { CODES } from "../../utils/report"
 
 export const buildInterfacesListForType = type => {
   let shouldAddNodeType = false
@@ -297,4 +300,146 @@ export const introspectionFieldTypeToSDL = fieldType => {
   }
 
   return openingTagsList.join(``) + closingTagsList.reverse().join(``)
+}
+
+/**
+ * This is an expensive fn but it doesn't matter because it's only to show a debugging warning message when something is wrong.
+ */
+function mergeDuplicateTypesAndReturnDedupedList(typeDefs) {
+  const clonedDefs = cloneDeep(typeDefs)
+
+  const newList = []
+
+  for (const def of clonedDefs) {
+    if (!def) {
+      continue
+    }
+
+    const duplicateDefs = clonedDefs.filter(
+      d => d.config.name === def.config.name
+    )
+
+    let newDef = {}
+
+    for (const dDef of duplicateDefs) {
+      merge(newDef, dDef)
+    }
+
+    newList.push(newDef)
+  }
+
+  return newList
+}
+
+/**
+ * Diffs the built types between this build and the last one with the same remote schema hash.
+ * This is to catch and add helpful error messages for when an inconsistent schema between builds is inadvertently created due to some bug
+ */
+export async function diffBuiltTypeDefs(typeDefs) {
+  const state = store.getState()
+
+  const {
+    gatsbyApi: {
+      helpers: { cache, reporter },
+    },
+    remoteSchema,
+  } = state
+
+  const previousTypeDefinitions = await cache.get(`previousTypeDefinitions`)
+  const typeDefString = JSON.stringify(typeDefs)
+  const typeNames = typeDefs.map(typeDef => typeDef.config.name)
+
+  const remoteSchemaChanged =
+    !previousTypeDefinitions ||
+    previousTypeDefinitions?.schemaHash !== remoteSchema.schemaHash
+
+  if (remoteSchemaChanged) {
+    await cache.set(`previousTypeDefinitions`, {
+      schemaHash: remoteSchema.schemaHash,
+      typeDefString,
+      typeNames,
+    })
+    return
+  }
+
+  // type defs are the same as last time, so don't check for missing/inconsistent types
+  if (previousTypeDefinitions?.typeDefString === typeDefString) {
+    return
+  }
+
+  const missingTypeNames = previousTypeDefinitions.typeNames.filter(
+    name => !typeNames.includes(name)
+  )
+
+  const previousTypeDefJson = mergeDuplicateTypesAndReturnDedupedList(
+    JSON.parse(previousTypeDefinitions.typeDefString)
+  )
+
+  const newParsedTypeDefs = mergeDuplicateTypesAndReturnDedupedList(
+    JSON.parse(typeDefString)
+  )
+
+  const changedTypeDefs = newParsedTypeDefs
+    .map(typeDef => {
+      const previousTypeDef = previousTypeDefJson.find(
+        previousTypeDef => previousTypeDef.config.name === typeDef.config.name
+      )
+
+      const isDifferent = diffString(previousTypeDef, typeDef)
+
+      if (isDifferent) {
+        return `Typename ${typeDef.config.name} diff:\n${diffString(
+          previousTypeDef,
+          typeDef,
+          {
+            // diff again to also show unchanged lines
+            full: true,
+          }
+        )}`
+      }
+    })
+    .filter(Boolean)
+
+  let errorMessage = formatLogMessage(
+    `The remote WPGraphQL schema hasn't changed but local generated type definitions have. This is a bug, please open an issue on Github${
+      missingTypeNames.length || changedTypeDefs.length
+        ? ` and include the following text.`
+        : ``
+    }.${
+      missingTypeNames.length
+        ? `\n\nMissing type names: ${missingTypeNames.join(`\n`)}\n`
+        : ``
+    }${
+      changedTypeDefs.length
+        ? `\n\nChanged type defs:\n\n${changedTypeDefs.join(`\n`)}`
+        : ``
+    }`
+  )
+
+  const maxErrorLength = 5000
+
+  if (errorMessage.length > maxErrorLength) {
+    errorMessage =
+      errorMessage.substring(0, maxErrorLength) +
+      `\n\n...\n[Diff exceeded ${maxErrorLength} characters and was truncated]`
+  }
+
+  if (
+    process.env.NODE_ENV === `development` &&
+    process.env.WP_INCONSISTENT_SCHEMA_WARN !== "true"
+  ) {
+    reporter.info(
+      formatLogMessage(
+        `Panicking due to inconsistent schema customization. Turn this into a warning by setting process.env.WP_INCONSISTENT_SCHEMA_WARN to a string of "true"`
+      )
+    )
+    reporter.panic({
+      id: CODES.InconsistentSchemaCustomization,
+      context: {
+        sourceMessage: errorMessage,
+      },
+    })
+  } else {
+    reporter.warn(errorMessage)
+  }
 }
