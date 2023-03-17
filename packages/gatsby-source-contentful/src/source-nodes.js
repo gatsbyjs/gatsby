@@ -1,7 +1,7 @@
 // @ts-check
 import isOnline from "is-online"
 import _ from "lodash"
-
+// import * as heapdump from "heapdump"
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
 import {
@@ -29,6 +29,15 @@ const restrictedNodeFields = [
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 
+let heaploggedCount = 0
+function logHeapUsageInMB() {
+  console.log(
+    `${
+      process.memoryUsage().heapUsed / 1024 / 1024
+    }MB heap currently allocated (checked ${++heaploggedCount} times)`
+  )
+}
+
 /***
  * Localization algorithm
  *
@@ -40,7 +49,7 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
  * or the fallback field or the default field.
  */
 
-let isFirstSource = true
+let isFirstSourceNodesCallOfCurrentNodeProcess = true
 export async function sourceNodes(
   {
     actions,
@@ -55,6 +64,7 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
+  logHeapUsageInMB()
   const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
     actions
   const online = await isOnline()
@@ -62,7 +72,8 @@ export async function sourceNodes(
   // Gatsby only checks if a node has been touched on the first sourcing.
   // As iterating and touching nodes can grow quite expensive on larger sites with
   // 1000s of nodes, we'll skip doing this on subsequent sources.
-  if (isFirstSource) {
+  // on the very first source there will be no nodes here at all. If the process ends and is restarted there will be nodes in cache but they will be stale and this code will run.
+  if (isFirstSourceNodesCallOfCurrentNodeProcess) {
     getNodes().forEach(node => {
       if (node.internal.owner !== `gatsby-source-contentful`) {
         return
@@ -73,8 +84,9 @@ export async function sourceNodes(
         touchNode(getNode(node.fields.localFile))
       }
     })
-    isFirstSource = false
+    isFirstSourceNodesCallOfCurrentNodeProcess = false
   }
+  logHeapUsageInMB()
 
   if (
     !online &&
@@ -134,6 +146,7 @@ export async function sourceNodes(
       CACHE_SYNC_TOKEN
     ]
 
+  logHeapUsageInMB()
   // Actual fetch of data from Contentful
   const {
     currentSyncData,
@@ -142,7 +155,7 @@ export async function sourceNodes(
     locales: allLocales,
     space,
   } = await fetchContent({ syncToken, pluginConfig, reporter })
-
+  logHeapUsageInMB()
   const contentTypeItems = await cache.get(CACHE_CONTENT_TYPES)
 
   const locales = allLocales.filter(pluginConfig.get(`localeFilter`))
@@ -230,20 +243,31 @@ export async function sourceNodes(
 
   reporter.verbose(`Building Contentful reference map`)
 
+  logHeapUsageInMB()
   const entryList = buildEntryList({ contentTypeItems, currentSyncData })
   const { assets } = currentSyncData
 
+  console.log(`contentful existingNodes.length`, existingNodes.length)
+  console.log(`contentful entryList.length`, entryList.length)
   // Create map of resolvable ids so we can check links against them while creating
   // links.
+  console.log(`contentful start buildResolvableSet`)
+  logHeapUsageInMB()
   const resolvable = buildResolvableSet({
     existingNodes,
     entryList,
     assets,
   })
+  console.log(`contentful end buildResolvableSet`)
+  logHeapUsageInMB()
+  console.log(`contentful resolvable.size`, resolvable.size)
 
   const previousForeignReferenceMapState = await cache.get(
     CACHE_FOREIGN_REFERENCE_MAP_STATE
   )
+
+  console.log(`contentful start buildForeignReferenceMap`)
+  logHeapUsageInMB()
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMapState = buildForeignReferenceMap({
     contentTypeItems,
@@ -255,8 +279,15 @@ export async function sourceNodes(
     previousForeignReferenceMapState,
     deletedEntries: currentSyncData?.deletedEntries,
   })
+  logHeapUsageInMB()
+  console.log(`contentful end buildForeignReferenceMap`)
 
   await cache.set(CACHE_FOREIGN_REFERENCE_MAP_STATE, foreignReferenceMapState)
+  console.log(
+    `contentful end cache.set(CACHE_FOREIGN_REFERENCE_MAP_STATE, foreignReferenceMapState)`
+  )
+  logHeapUsageInMB()
+
   const foreignReferenceMap = foreignReferenceMapState.backLinks
 
   reporter.verbose(`Resolving Contentful references`)
@@ -267,6 +298,8 @@ export async function sourceNodes(
       newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
+  logHeapUsageInMB()
+  console.log(`contentful newOrUpdatedEntries.size`, newOrUpdatedEntries.size)
 
   const { deletedEntries, deletedAssets } = currentSyncData
   const deletedEntryGatsbyReferenceIds = new Set()
@@ -315,6 +348,10 @@ export async function sourceNodes(
 
   // Update existing entry nodes that weren't updated but that need reverse links added or removed.
   const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
+  logHeapUsageInMB()
+  console.log(
+    `start building existingNodesThatNeedReverseLinksUpdateInDatastore`
+  )
   existingNodes
     .filter(
       n =>
@@ -384,9 +421,16 @@ export async function sourceNodes(
       }
     })
 
+  logHeapUsageInMB()
+
   // We need to call `createNode` on nodes we modified reverse links on,
   // otherwise changes won't actually persist
   if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
+    console.log(
+      `contentful existingNodesThatNeedReverseLinksUpdateInDatastore.size`,
+      existingNodesThatNeedReverseLinksUpdateInDatastore.size
+    )
+    logHeapUsageInMB()
     for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
       function addChildrenToList(node, nodeList = [node]) {
         for (const childNodeId of node?.children ?? []) {
@@ -411,13 +455,13 @@ export async function sourceNodes(
         // We need to remove properties from existing fields
         // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
         // Gatsby automatically will set `.owner` it back
-        delete nodeToUpdate.internal.owner
+        nodeToUpdate.internal.owner = undefined
         // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
         // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
         // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
         // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
         // we would also need to restore that field ourselves after re-creating a node)
-        delete nodeToUpdate.fields // plugin adds node field on asset nodes which don't have reverse links
+        nodeToUpdate.fields = undefined // plugin adds node field on asset nodes which don't have reverse links
 
         // We add or modify counter postfix to contentDigest
         // to make sure Gatsby treat this as data update
@@ -441,6 +485,7 @@ export async function sourceNodes(
         createNode(nodeToUpdate)
       }
     }
+    logHeapUsageInMB()
   }
 
   const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
@@ -448,6 +493,7 @@ export async function sourceNodes(
   })
   creationActivity.start()
 
+  logHeapUsageInMB()
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
@@ -484,6 +530,7 @@ export async function sourceNodes(
       })
     )
   }
+  logHeapUsageInMB()
 
   if (assets.length) {
     reporter.info(`Creating ${assets.length} Contentful asset nodes`)
@@ -507,10 +554,13 @@ export async function sourceNodes(
     )
   }
 
+  logHeapUsageInMB()
+
   // Create tags entities
   if (tagItems.length) {
     reporter.info(`Creating ${tagItems.length} Contentful Tag nodes`)
 
+    logHeapUsageInMB()
     for (const tag of tagItems) {
       await createNode({
         id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
@@ -522,6 +572,7 @@ export async function sourceNodes(
         },
       })
     }
+    logHeapUsageInMB()
   }
 
   creationActivity.end()
@@ -540,4 +591,12 @@ export async function sourceNodes(
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
   }
+
+  // heapdump.writeSnapshot((err, filename) => {
+  //   if (err) {
+  //     reporter.panic(err)
+  //   }
+
+  //   console.log("Heap dump written to", filename)
+  // })
 }
