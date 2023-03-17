@@ -135,9 +135,11 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   }
 }
 
-async function sqipContentful({ type, cache, store }) {
+async function sqipContentful({ cache, store }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
+    createUrl,
+    mimeTypeExtensions,
   } = require(`gatsby-source-contentful`)
 
   const program = store.getState().program
@@ -189,11 +191,6 @@ async function sqipContentful({ type, cache, store }) {
         },
       },
       async resolve(asset, fieldArgs) {
-        const {
-          createUrl,
-          mimeTypeExtensions,
-        } = require(`gatsby-source-contentful/image-helpers`)
-
         const { mimeType, url: imgUrl, filename } = asset
 
         if (!mimeType.includes(`image/`)) {

@@ -393,7 +393,7 @@ With `useContentfulImage` and the URL to the image on the Contentful Image API y
 ```js
 import { GatsbyImage } from "gatsby-plugin-image"
 import * as React from "react"
-import { useContentfulImage } from "gatsby-source-contentful/hooks"
+import { useContentfulImage } from "gatsby-source-contentful"
 
 const MyComponent = () => {
   const dynamicImage = useContentfulImage({
@@ -507,7 +507,7 @@ query pageQuery($id: String!) {
 
 ```jsx
 import { BLOCKS, MARKS } from "@contentful/rich-text-types"
-import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { renderRichText } from "gatsby-source-contentful"
 
 const Bold = ({ children }) => <span className="bold">{children}</span>
 const Text = ({ children }) => <p className="align-center">{children}</p>
@@ -545,7 +545,7 @@ function BlogPostTemplate({ data }) {
 **Import**
 
 ```js
-import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { renderRichText } from "gatsby-source-contentful"
 ```
 
 **GraphQL**
