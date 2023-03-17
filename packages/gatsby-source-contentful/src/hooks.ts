@@ -24,7 +24,7 @@ export function useContentfulImage({
         sourceHeight: image.height,
         backgroundColor: undefined,
         urlBuilder: ({ baseUrl, width, height, options, format }) =>
-          createUrl(`https:${baseUrl}`, {
+          createUrl(baseUrl, {
             ...options,
             height,
             width,
