@@ -799,7 +799,7 @@ exports.initialSync = () => {
   }
 }
 
-// @todo this fixture is unused
+// TODO: this fixture is unused
 exports.deleteLinkedPage = () => {
   return {
     currentSyncData: {

@@ -19,7 +19,10 @@ const {
   space,
 } = require(`./data.json`)
 
-const pluginConfig = createPluginConfig({})
+const pluginConfig = createPluginConfig({
+  accessToken: `mocked`,
+  spaceId: `mocked`,
+})
 const unstable_createNodeManifest = jest.fn()
 
 // Counts the created nodes per node type

@@ -23,6 +23,10 @@ const reporter = {
   }),
 }
 
+const getNode = jest.fn()
+const touchNode = jest.fn()
+const createNodeField = jest.fn()
+
 const mockedContentfulEntity = {
   sys: { id: `mocked` },
 }
@@ -71,6 +75,9 @@ describe(`downloadContentfulAssets`, () => {
     const cache = {
       get: jest.fn(() => Promise.resolve(null)),
       set: jest.fn(() => Promise.resolve(null)),
+      directory: __dirname,
+      name: `mocked`,
+      del: jest.fn(() => Promise.resolve()),
     }
 
     const assetNodes = []
@@ -89,13 +96,12 @@ describe(`downloadContentfulAssets`, () => {
       )
     }
 
-    await downloadContentfulAssets({
-      actions: { touchNode: jest.fn() },
+    await downloadContentfulAssets(
+      { createNodeId, cache, reporter, getNode },
+      { createNode, touchNode, createNodeField },
       assetNodes,
-      cache,
-      assetDownloadWorkers: 50,
-      reporter,
-    })
+      50
+    )
 
     assetNodes.forEach(n => {
       expect(cache.get).toHaveBeenCalledWith(

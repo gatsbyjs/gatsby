@@ -60,10 +60,6 @@ jest.mock(`../plugin-options`, () => {
   }
 })
 
-// jest so test output is not filled with contentful plugin logs
-// @ts-ignore
-global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
-
 const proxyOption = {
   host: `localhost`,
   port: 9001,
@@ -113,6 +109,9 @@ beforeEach(() => {
   global.process.exit.mockClear()
   reporter.panic.mockClear()
   mockClient.getLocales.mockClear()
+  mockClient.getContentTypes.mockClear()
+  mockClient.getSpace.mockClear()
+  mockClient.getTags.mockClear()
   // @ts-ignore
   formatPluginOptionsForCLI.mockClear()
   // @ts-ignore
@@ -124,7 +123,7 @@ afterAll(() => {
 })
 
 it(`calls contentful.createClient with expected params`, async () => {
-  await fetchContent({ pluginConfig, reporter, syncToken: null })
+  await fetchContent({ pluginConfig, reporter, syncToken: `` })
   expect(reporter.panic).not.toBeCalled()
   expect(createClient).toBeCalledWith(
     expect.objectContaining({
@@ -144,7 +143,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
       spaceId: `rocybtov1ozk`,
     }),
     reporter,
-    syncToken: null,
+    syncToken: ``,
   })
 
   expect(reporter.panic).not.toBeCalled()
@@ -202,7 +201,7 @@ describe(`Tags feature`, () => {
         pageLimit: 50,
       }),
       reporter,
-      syncToken: null,
+      syncToken: ``,
     })
 
     expect(reporter.panic).not.toBeCalled()
@@ -220,7 +219,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw new Error(`error`)
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -258,7 +257,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -299,7 +298,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchContent({
       pluginConfig: masterConfig,
       reporter,
-      syncToken: null,
+      syncToken: ``,
     })
 
     expect(reporter.panic).toBeCalledWith(
@@ -339,7 +338,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -380,7 +379,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
