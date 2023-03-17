@@ -244,7 +244,8 @@ class Reporter {
    */
   activityTimer = (
     text: string,
-    activityArgs: IActivityArgs = {}
+    activityArgs: IActivityArgs = {},
+    pluginName?: string
   ): ITimerReporter => {
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
@@ -260,6 +261,7 @@ class Reporter {
       span,
       reporter: this,
       reporterActions,
+      pluginName,
     })
   }
 
@@ -295,7 +297,8 @@ class Reporter {
     text: string,
     total = 0,
     start = 0,
-    activityArgs: IActivityArgs = {}
+    activityArgs: IActivityArgs = {},
+    pluginName?: string
   ): IProgressReporter => {
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
@@ -312,6 +315,7 @@ class Reporter {
       span,
       reporter: this,
       reporterActions,
+      pluginName,
     })
   }
 
