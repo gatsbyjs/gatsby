@@ -359,15 +359,7 @@ function makeQueuedCreateNode({ nodeCount, createNode }) {
     let createdNodeCount = 0
 
     const createNodesQueue = fastq((node, cb) => {
-      createdNodeCount++
-
-      if (nodeCount > 10000 && createdNodeCount % 10000) {
-        setTimeout(() => {
-          createNode(node)?.then(() => {
-            cb(null)
-          }) || cb(null)
-        }, 100)
-      } else if (createdNodeCount % 100 === 0) {
+      if (++createdNodeCount % 100 === 0) {
         setImmediate(() => {
           createNode(node)?.then(() => {
             cb(null)
