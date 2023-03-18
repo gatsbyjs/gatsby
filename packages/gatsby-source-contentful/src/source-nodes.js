@@ -560,10 +560,11 @@ export async function sourceNodes(
     setImmediate(() => res(null))
   })
 
-  const assetTimer = reporter.activityTimer(
+  const assetTimer = reporter.createProgress(
     `Creating ${assets.length} Contentful asset nodes`
   )
 
+  assetTimer.total = assets.length
   assetTimer.start()
 
   const assetNodes = []
@@ -580,6 +581,7 @@ export async function sourceNodes(
         pluginConfig,
       }))
     )
+    assetTimer.tick()
   }
 
   assetTimer.end()
