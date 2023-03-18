@@ -581,6 +581,17 @@ export async function sourceNodes(
         pluginConfig,
       }))
     )
+
+    if (i % 10000 === 0) {
+      logHeapUsageInMB()
+    }
+
+    assets[i] = undefined
+    if (i % 1000 === 0) {
+      await new Promise(res => {
+        setImmediate(() => res(null))
+      })
+    }
     assetTimer.tick()
   }
 
