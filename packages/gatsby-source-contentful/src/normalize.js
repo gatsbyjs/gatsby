@@ -366,7 +366,9 @@ function makeQueuedCreateNode({ nodeCount, createNode }) {
           }) || cb(null)
         })
       } else {
-        createNode(node)?.then(() => cb(null)) || cb(null)
+        createNode(node)?.then(() => {
+          cb(null)
+        }) || cb(null)
       }
     }, 10)
 
@@ -377,18 +379,15 @@ function makeQueuedCreateNode({ nodeCount, createNode }) {
     })
 
     return {
-      create: node => createNodesQueue.push(node),
+      create: (node, callback) => createNodesQueue.push(node, callback),
       createNodesPromise: queueFinished,
     }
   } else {
     const nodePromises = []
-    const createNodesQueue = {
-      push: node => nodePromises.push(createNode(node)),
-    }
     const queueFinished = () => Promise.all(nodePromises)
 
     return {
-      create: node => createNodesQueue.push(node),
+      create: node => nodePromises.push(createNode(node)),
       createNodesPromise: queueFinished(),
     }
   }
@@ -776,13 +775,17 @@ export const createNodesForContentType = async ({
       return entryNode
     })
 
-    entryNodes.forEach(entryNode => {
+    entryNodes.forEach((entryNode, index) => {
       if (entryNode) {
-        create(entryNode)
+        create(entryNode, () => {
+          entryNodes[index] = undefined
+        })
       }
     })
-    childrenNodes.forEach(entryNode => {
-      create(entryNode)
+    childrenNodes.forEach((entryNode, index) => {
+      create(entryNode, () => {
+        childrenNodes[index] = undefined
+      })
     })
   })
 
