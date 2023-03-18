@@ -1,7 +1,6 @@
 // @ts-check
 import isOnline from "is-online"
 import _ from "lodash"
-// import * as heapdump from "heapdump"
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
 import {
@@ -200,8 +199,9 @@ export async function sourceNodes(
   )
   processingActivity.start()
 
+  logHeapUsageInMB()
   // Array of all existing Contentful nodes
-  const existingNodes = getNodes().filter(
+  let existingNodes = getNodes().filter(
     n =>
       n.internal.owner === `gatsby-source-contentful` &&
       (pluginConfig.get(`enableTags`)
@@ -253,11 +253,12 @@ export async function sourceNodes(
   // links.
   console.log(`contentful start buildResolvableSet`)
   logHeapUsageInMB()
-  const resolvable = buildResolvableSet({
+  let resolvable = buildResolvableSet({
     existingNodes,
     entryList,
     assets,
   })
+
   console.log(`contentful end buildResolvableSet`)
   logHeapUsageInMB()
   console.log(`contentful resolvable.size`, resolvable.size)
@@ -292,7 +293,7 @@ export async function sourceNodes(
 
   reporter.verbose(`Resolving Contentful references`)
 
-  const newOrUpdatedEntries = new Set()
+  let newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
       newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
@@ -422,6 +423,17 @@ export async function sourceNodes(
     })
 
   logHeapUsageInMB()
+  console.log(`free existingNodes and newOrUpdatedEntries`)
+  // attempt to convince node to garbage collect
+  existingNodes = undefined
+  // @ts-ignore
+  newOrUpdatedEntries = undefined
+  await new Promise(res => {
+    setImmediate(() => {
+      res(null)
+    })
+  })
+  logHeapUsageInMB()
 
   // We need to call `createNode` on nodes we modified reverse links on,
   // otherwise changes won't actually persist
@@ -497,62 +509,80 @@ export async function sourceNodes(
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
-    if (entryList[i].length) {
-      reporter.info(
-        `Creating ${entryList[i].length} Contentful ${
-          pluginConfig.get(`useNameForId`)
-            ? contentTypeItem.name
-            : contentTypeItem.sys.id
-        } nodes`
-      )
-    }
+    const timer = reporter.activityTimer(
+      `Creating ${entryList[i].length} Contentful ${
+        pluginConfig.get(`useNameForId`)
+          ? contentTypeItem.name
+          : contentTypeItem.sys.id
+      } nodes`
+    )
+
+    timer.start()
 
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
-    // TODO add batching in gatsby-core
-    await Promise.all(
-      createNodesForContentType({
-        contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
-        entries: entryList[i],
-        createNode,
-        createNodeId,
-        getNode,
-        resolvable,
-        foreignReferenceMap,
-        defaultLocale,
-        locales,
-        space,
-        useNameForId: pluginConfig.get(`useNameForId`),
-        pluginConfig,
-        unstable_createNodeManifest,
-      })
+    await createNodesForContentType({
+      contentTypeItem,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      entries: entryList[i],
+      createNode,
+      createNodeId,
+      getNode,
+      resolvable,
+      foreignReferenceMap,
+      defaultLocale,
+      locales,
+      space,
+      useNameForId: pluginConfig.get(`useNameForId`),
+      pluginConfig,
+      unstable_createNodeManifest,
+    })
+    console.log(
+      `finished creating nodes for content type ${contentTypeItem.name}`
     )
-  }
-  logHeapUsageInMB()
+    logHeapUsageInMB()
 
-  if (assets.length) {
-    reporter.info(`Creating ${assets.length} Contentful asset nodes`)
+    // attempt to convince node to garbage collect
+    contentTypeItems[i] = undefined
+    entryList[i] = undefined
+    await new Promise(res => {
+      setImmediate(() => res(null))
+    })
+    logHeapUsageInMB()
+    timer.end()
   }
+
+  // attempt to convince node to garbage collect
+  // @ts-ignore
+  resolvable = undefined
+  await new Promise(res => {
+    setImmediate(() => res(null))
+  })
+
+  const assetTimer = reporter.activityTimer(
+    `Creating ${assets.length} Contentful asset nodes`
+  )
+
+  assetTimer.start()
 
   const assetNodes = []
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
     assetNodes.push(
-      ...(await Promise.all(
-        createAssetNodes({
-          assetItem: assets[i],
-          createNode,
-          createNodeId,
-          defaultLocale,
-          locales,
-          space,
-          pluginConfig,
-        })
-      ))
+      ...(await createAssetNodes({
+        assetItem: assets[i],
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+        pluginConfig,
+      }))
     )
   }
+
+  assetTimer.end()
 
   logHeapUsageInMB()
 
@@ -591,12 +621,4 @@ export async function sourceNodes(
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
   }
-
-  // heapdump.writeSnapshot((err, filename) => {
-  //   if (err) {
-  //     reporter.panic(err)
-  //   }
-
-  //   console.log("Heap dump written to", filename)
-  // })
 }
