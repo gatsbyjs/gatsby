@@ -1,5 +1,4 @@
 import _ from "lodash"
-import glob from "globby"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import {
@@ -28,6 +27,7 @@ import {
   getPluginInstance,
   ICreateAPageFromNodeArgs,
 } from "./tracked-nodes-state"
+import { findCollectionPageFiles } from "./find-collection-page-files"
 import { getCollectionRouteParams } from "./get-collection-route-params"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "gatsby-core-utils/match-path"
@@ -421,9 +421,7 @@ export async function onPluginInit(
   }
 
   try {
-    const pagesGlob = `**/**\\{*\\}**`
-
-    const files = await glob(pagesGlob, { cwd: pagesPath })
+    const files = await findCollectionPageFiles(pagesPath)
 
     if (files.length > 0) {
       trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
