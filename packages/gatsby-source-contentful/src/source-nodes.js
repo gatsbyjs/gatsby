@@ -274,7 +274,7 @@ export async function sourceNodes(
 
   console.log(`contentful start buildForeignReferenceMap`)
   logHeapUsageInMB()
-  // Build foreign reference map before starting to insert any nodes
+  // Build foreign reference map before starting to insert any nodes.
   const foreignReferenceMapState = buildForeignReferenceMap({
     contentTypeItems,
     entryList,
