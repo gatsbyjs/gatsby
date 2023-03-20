@@ -125,7 +125,7 @@ export function compose(
 }
 
 // Use globby to find all page files with collection routes
-export const pagesGlob = [`**/**\\{*\\}**`, `**/**\\{*\\}**/**`]
+export const pagesGlob = `**/**\\{*\\}**(/**)`
 export const findCollectionPageFiles = (
   pagesPath: string
 ): Promise<Array<string>> => glob(pagesGlob, { cwd: pagesPath })
