@@ -5,20 +5,23 @@ import displayNameHandler, {
 } from "../displayname-handler"
 
 const {
-  resolver: { findAllComponentDefinitions },
+  builtinResolvers: { FindAllDefinitionsResolver },
 } = docgen
 
-function parse(source, handler) {
+async function parse(source, handler) {
   const code = `
     var React = require('react');
     ${source}
   `
-  return docgen.parse(code, findAllComponentDefinitions, [handler])[0]
+  return await docgen.parse(code, {
+    resolver: new FindAllDefinitionsResolver(),
+    handlers: [handler],
+  })[0]
 }
 
 describe(`DisplayNameHandler`, () => {
-  it(`Explicitly set displayName as member of React.createClass`, () => {
-    const doc = parse(
+  it(`Explicitly set displayName as member of React.createClass`, async () => {
+    const doc = await parse(
       `
     var MyComponent = React.createClass({ displayName: 'foo' });
   `,
@@ -29,7 +32,7 @@ describe(`DisplayNameHandler`, () => {
   })
 
   it(`Explicitly set displayName as static class member`, () => {
-    const doc = parse(
+    const doc = await parse(
       `
     class MyComponent extends React.Component { static displayName = 'foo'; render() {} }
   `,
@@ -39,9 +42,9 @@ describe(`DisplayNameHandler`, () => {
     expect(doc).toEqual({ displayName: `foo` })
   })
 
-  it(`Infer displayName from function declaration/expression name`, () => {
+  it(`Infer displayName from function declaration/expression name`, async () => {
     {
-      const doc = parse(
+      const doc = await parse(
         `
       function MyComponent() { return <div />; }
     `,
@@ -51,7 +54,7 @@ describe(`DisplayNameHandler`, () => {
       expect(doc).toEqual({ displayName: `MyComponent` })
     }
     {
-      const doc = parse(
+      const doc = await parse(
         `
       var x = function MyComponent() { return <div />; }
     `,
@@ -62,9 +65,9 @@ describe(`DisplayNameHandler`, () => {
     }
   })
 
-  it(`Infer displayName from class declaration/expression name`, () => {
+  it(`Infer displayName from class declaration/expression name`, async () => {
     {
-      const doc = parse(
+      const doc = await parse(
         `
       class MyComponent extends React.Component { render() {} }
     `,
@@ -74,7 +77,7 @@ describe(`DisplayNameHandler`, () => {
       expect(doc).toEqual({ displayName: `MyComponent` })
     }
     {
-      const doc = parse(
+      const doc = await parse(
         `
       var x = class MyComponent extends React.Component { render() {} }
     `,
@@ -85,8 +88,8 @@ describe(`DisplayNameHandler`, () => {
     }
   })
 
-  it(`Infer displayName from variable declaration name`, () => {
-    const doc = parse(
+  it(`Infer displayName from variable declaration name`, async () => {
+    const doc = await parse(
       `
     var Foo = React.createClass({});
   `,
@@ -95,8 +98,8 @@ describe(`DisplayNameHandler`, () => {
     expect(doc).toEqual({ displayName: `Foo` })
   })
 
-  it(`Infer displayName from assignment`, () => {
-    const doc = parse(
+  it(`Infer displayName from assignment`, async () => {
+    const doc = await parse(
       `
     var Foo = {};
     Foo.Bar = () => <div />
@@ -107,8 +110,8 @@ describe(`DisplayNameHandler`, () => {
     expect(doc).toEqual({ displayName: `Foo.Bar` })
   })
 
-  it(`Infer displayName from file name`, () => {
-    const doc = parse(
+  it(`Infer displayName from file name`, async () => {
+    const doc = await parse(
       `
     module.exports = () => <div />;
   `,
@@ -117,9 +120,9 @@ describe(`DisplayNameHandler`, () => {
     expect(doc).toEqual({ displayName: `MyComponent` })
   })
 
-  it(`Infer displayName from file path`, () => {
+  it(`Infer displayName from file path`, async () => {
     {
-      const doc = parse(
+      const doc = await parse(
         `
       module.exports = () => <div />;
     `,
@@ -129,7 +132,7 @@ describe(`DisplayNameHandler`, () => {
       expect(doc).toEqual({ displayName: `MyComponent` })
     }
     {
-      const doc = parse(
+      const doc = await parse(
         `
       module.exports = () => <div />;
     `,
@@ -140,8 +143,8 @@ describe(`DisplayNameHandler`, () => {
     }
   })
 
-  it(`Use default if displayName cannot be inferred`, () => {
-    const doc = parse(
+  it(`Use default if displayName cannot be inferred`, async () => {
+    const doc = await parse(
       `
     module.exports = () => <div />;
   `,

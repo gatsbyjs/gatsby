@@ -1,3 +1,4 @@
+// @ts-check
 const { onCreateNode, shouldOnCreateNode } = require(`./on-node-create`)
 exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

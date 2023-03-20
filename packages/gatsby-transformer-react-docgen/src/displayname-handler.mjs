@@ -1,20 +1,15 @@
-/* @flow */
-
-const path = require(`path`)
-const { namedTypes: types } = require(`ast-types`)
-const { utils } = require(`react-docgen`)
-
-const { getMemberValuePath, getNameOrValue, isExportsOrModuleAssignment } =
-  utils
+// @ts-check
+import path from "path"
+import { namedTypes as types } from "ast-types"
 
 const DEFAULT_NAME = `UnknownComponent`
 
-function getNameFromPath(path: NodePath): ?string {
+function getNameFromPath(path, utils) {
   const node = path.node
   switch (node.type) {
     case types.Identifier.name:
     case types.Literal.name:
-      return getNameOrValue(path)
+      return utils.getNameOrValue(path)
     case types.MemberExpression.name:
       return utils
         .getMembers(path)
@@ -30,17 +25,17 @@ function getNameFromPath(path: NodePath): ?string {
   }
 }
 
-function getStaticDisplayName(path: NodePath): ?string {
+function getStaticDisplayName(path, utils) {
   let displayName = null
-  const staticMember: ?NodePath = getMemberValuePath(path, `displayName`)
+  const staticMember = utils.getMemberValuePath(path, `displayName`)
   if (staticMember && types.Literal.check(staticMember.node)) {
-    displayName = getNameFromPath(staticMember)
+    displayName = getNameFromPath(staticMember, utils)
   }
 
   return displayName || null
 }
 
-function getNodeIdentifier(path: NodePath): ?string {
+function getNodeIdentifier(path, utils) {
   let displayName = null
   if (
     types.FunctionExpression.check(path.node) ||
@@ -48,26 +43,26 @@ function getNodeIdentifier(path: NodePath): ?string {
     types.ClassExpression.check(path.node) ||
     types.ClassDeclaration.check(path.node)
   ) {
-    displayName = getNameFromPath(path.get(`id`))
+    displayName = getNameFromPath(path.get(`id`), utils)
   }
 
   return displayName || null
 }
 
-function getVariableIdentifier(path: NodePath): ?string {
+function getVariableIdentifier(path, utils) {
   let displayName = null
   let searchPath = path
 
   while (searchPath !== null) {
     if (types.VariableDeclarator.check(searchPath.node)) {
-      displayName = getNameFromPath(searchPath.get(`id`))
+      displayName = getNameFromPath(searchPath.get(`id`), utils)
       break
     }
     if (
       types.AssignmentExpression.check(searchPath.node) &&
-      !isExportsOrModuleAssignment(searchPath)
+      !utils.isExportsOrModuleAssignment(searchPath)
     ) {
-      displayName = getNameFromPath(searchPath.get(`left`))
+      displayName = getNameFromPath(searchPath.get(`left`), utils)
       break
     }
     searchPath = searchPath.parentPath
@@ -76,7 +71,7 @@ function getVariableIdentifier(path: NodePath): ?string {
   return displayName || null
 }
 
-function getNameFromFilePath(filePath: string = ``): ?string {
+function getNameFromFilePath(filePath = ``) {
   let displayName = null
 
   const filename = path.basename(filePath, path.extname(filePath))
@@ -94,18 +89,13 @@ function getNameFromFilePath(filePath: string = ``): ?string {
     .replace(/-([a-z])/, (_, match) => match.toUpperCase())
 }
 
-export function createDisplayNameHandler(
-  filePath: string
-): (documentation: Documentation, path: NodePath) => void {
-  return function displayNameHandler(
-    documentation: Documentation,
-    path: NodePath
-  ): void {
-    let displayName: ?string = [
+export function createDisplayNameHandler(filePath, utils) {
+  return function displayNameHandler(documentation, path) {
+    let displayName = [
       getStaticDisplayName,
       getNodeIdentifier,
       getVariableIdentifier,
-    ].reduce((name, getDisplayName) => name || getDisplayName(path), ``)
+    ].reduce((name, getDisplayName) => name || getDisplayName(path, utils), ``)
 
     if (!displayName) {
       displayName = getNameFromFilePath(filePath)

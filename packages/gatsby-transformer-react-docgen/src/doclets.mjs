@@ -1,3 +1,4 @@
+// @ts-check
 const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim
 
 const cleanDocletValue = str => {

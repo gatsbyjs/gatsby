@@ -1,3 +1,4 @@
+// @ts-check
 import parseMetadata from "./parse"
 
 const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`

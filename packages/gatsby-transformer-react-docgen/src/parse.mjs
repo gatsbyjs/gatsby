@@ -1,3 +1,4 @@
+// @ts-check
 import { codeFrameColumns } from "@babel/code-frame"
 import { createDisplayNameHandler } from "./displayname-handler"
 import { applyPropDoclets, cleanDoclets, parseDoclets } from "./doclets"
@@ -9,7 +10,7 @@ let fileCount = 0
 /**
  * Wrap handlers to pass in additional arguments such as the File node
  */
-function makeHandlers(node, handlers) {
+function makeHandlers(node, handlers, utils) {
   handlers = (handlers || []).map(
     h =>
       (...args) =>
@@ -17,7 +18,8 @@ function makeHandlers(node, handlers) {
   )
   return [
     createDisplayNameHandler(
-      node.absolutePath || `/UnknownComponent${++fileCount}`
+      node.absolutePath || `/UnknownComponent${++fileCount}`,
+      utils
     ),
     ...handlers,
   ]
@@ -27,31 +29,30 @@ export default async function parseMetadata(content, node, options) {
   if (!reactDocgen) {
     reactDocgen = await import(`react-docgen`)
     defaultHandlers = [
-      handlers.propTypeHandler,
-      handlers.propTypeCompositionHandler,
-      handlers.propDocBlockHandler,
-      handlers.flowTypeHandler,
-      handlers.defaultPropsHandler,
-      handlers.componentDocblockHandler,
-      handlers.componentMethodsHandler,
-      handlers.componentMethodsJsDocHandler,
+      reactDocgen.builtinHandlers.propTypeHandler,
+      reactDocgen.builtinHandlers.propTypeCompositionHandler,
+      reactDocgen.builtinHandlers.propDocBlockHandler,
+      reactDocgen.builtinHandlers.codeTypeHandler,
+      reactDocgen.builtinHandlers.defaultPropsHandler,
+      reactDocgen.builtinHandlers.componentDocblockHandler,
+      reactDocgen.builtinHandlers.componentMethodsHandler,
+      reactDocgen.builtinHandlers.componentMethodsJsDocHandler,
     ]
   }
-  const { parse, resolver, ERROR_MISSING_DEFINITION } = reactDocgen
+  const { parse, ERROR_CODES, FindAllDefinitionsResolver } = reactDocgen
   let components = []
   const { handlers, resolver: userResolver, ...parseOptions } = options || {}
   try {
-    components = parse(
-      content,
-      userResolver || resolver.findAllComponentDefinitions,
-      makeHandlers(node, handlers).concat(defaultHandlers),
-      {
-        ...parseOptions,
-        filename: node.absolutePath,
-      }
-    )
+    components = await parse(content, {
+      resolver: userResolver || FindAllDefinitionsResolver,
+      handlers: makeHandlers(node, handlers, reactDocgen.utils).concat(
+        defaultHandlers
+      ),
+      filename: node.absolutePath,
+      ...parseOptions,
+    })
   } catch (err) {
-    if (err.message === ERROR_MISSING_DEFINITION) return []
+    if (err.code === ERROR_CODES.MISSING_DEFINITION) return []
     // reset the stack to here since it's not helpful to see all the react-docgen guts
     // const parseErr = new Error(err.message)
     if (err.loc) {
