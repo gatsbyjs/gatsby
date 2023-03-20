@@ -27,7 +27,7 @@ import {
   getPluginInstance,
   ICreateAPageFromNodeArgs,
 } from "./tracked-nodes-state"
-import { findCollectionPageFiles } from "./find-collection-page-files"
+import { findCollectionPageFiles } from "./path-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "gatsby-core-utils/match-path"
