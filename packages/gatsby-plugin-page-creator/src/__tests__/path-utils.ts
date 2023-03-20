@@ -1,4 +1,4 @@
-import { pagesGlob } from "../find-collection-page-files"
+import { pagesGlob } from "../path-utils"
 import micromatch from "micromatch"
 
 describe(`pagesGlob`, () => {
