@@ -245,7 +245,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         })
         .option(`profile`, {
           type: `boolean`,
-          default: false,
+          default:
+            process.env.REACT_PROFILE === `true` ||
+            process.env.REACT_PROFILE === `1`,
           describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
         })
         .option(`graphql-tracing`, {
