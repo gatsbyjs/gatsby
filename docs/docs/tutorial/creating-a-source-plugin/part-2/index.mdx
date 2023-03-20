@@ -317,7 +317,9 @@ Here's a short explanation on each required field for your convenience:
 - `children`: You can place node IDs from child nodes here, if necessary. Most often you'll see yourself using `createParentChildLink`.
 - `internal`: An object that only allows a defined set of keys (see API reference)
   - `type`: The name of the node type
-  - `contentDigest`: A hash (or short digital summary) of the conents of a node. The digest should be unique to the content of the node since it's used for caching. If the content changes, this digest should also change. Use the [`createContentDigest`](/docs/reference/config-files/node-api-helpers/#createContentDigest) helper to create that hash.
+  - `contentDigest`: A hash (or short digital summary) of the contents of a node. The digest should be unique to the node since it's used for caching. If the node changes, this digest should also change. You can use the [`createContentDigest`](/docs/reference/config-files/node-api-helpers/#createContentDigest) helper to create that hash.
+  
+  If your node contains information like a revision ID or an `lastUpdated` timestamp, you should use this instead of creating your own content digest. This will lead to lower CPU utilization and still achieve the goal of invalidating the cache for the node when said node changes.
 
 You can use the [`createNode` API reference](/docs/reference/config-files/actions/#createNode) in the future if you're creating more advanced node types, e.g. ones where you have to define the `mediaType`.
 
@@ -336,6 +338,14 @@ query {
 ### Task: Define constants
 
 Since you'll need to use the name of your node types in a couple of places, it's easy to introduce typos while using them. Create a `constants.ts` file to define your names once and reuse them everywhere. This way you can also more easily change the names after the fact. Neat!
+
+<Announcement>
+
+You don't always need constants for your node types. It depends on your data source and the data you have to work with.
+
+If you're working with a more barebones API you might need to manually map endpoints and/or data to node types. Working with a CMS on the other hand node types will often be dynamic and defined through the CMS data. In those instances you won't need to manually define types as the CMS will drive that.
+
+</Announcement>
 
 Add the following to your new `constants.ts` file:
 

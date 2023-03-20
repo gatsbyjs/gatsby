@@ -221,12 +221,18 @@ export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] 
     const { createTypes } = actions
 
     createTypes(`
-      type Post implements Node {}
+      type Post implements Node {
+        id: ID!
+      }
 
-      type Author implements Node {}
+      type Author implements Node {
+        id: ID!
+      }
     `)
   }
 ```
+
+One note on the usage of `id: ID!`: Each GraphQL type that implements the `Node` interface needs to define the field `id` with type `ID!`.
 
 Since you've defined the names for your node types in the `NODE_TYPES` constant, use them through string interpolation:
 
@@ -241,10 +247,14 @@ export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] 
 
     createTypes(`
 // highlight-next-line
-      type ${NODE_TYPES.Post} implements Node {}
+      type ${NODE_TYPES.Post} implements Node {
+        id: ID!
+      }
 
 // highlight-next-line
-      type ${NODE_TYPES.Author} implements Node {}
+      type ${NODE_TYPES.Author} implements Node {
+        id: ID!
+      }
     `)
   }
 ```
@@ -291,10 +301,6 @@ export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] 
   }
 ```
 
-One note on the usage of `id: ID!`: Each GraphQL type that implements the `Node` interface needs an unique `id: ID!`. Since you're currently still reyling on inference and are adjusting individual fields, you could omit the `id` in the definitions above.
-
-However, if you'd write `type Post implements Node @dontInfer {}` to turn off automatic inference, you must define the `id` field.
-
 </Collapsible>
 
 <Announcement>
@@ -315,7 +321,15 @@ As mentioned in the introduction, you can use the `createSchemaCustomization` No
 
 If you want to learn more, read our documentation about [extensions and directives](/docs/reference/graphql-data-layer/schema-customization/#extensions-and-directives) and how you can create your own [custom extensions](/docs/reference/graphql-data-layer/schema-customization/#creating-custom-extensions).
 
+<Announcement>
+
+**Pro tip:** The `createSchemaCustomization` API is really powerful and also allows you to create [custom resolvers](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api). However, in the context of a source plugin the usage of custom resolvers should be discouraged! Please use a combination of `@link`/`@proxy` instead of custom resolvers due to performance reasons.
+
+</Announcement>
+
 In this tutorial you'll use the `@link` extension to create a foreigh-key relationship between your `Post` and `Author` nodes. This relationship can either be already existent in your data source (and you want to replicate it) or it can be a completely new behavior.
+
+You can also use the [`@proxy` directive](/docs/reference/graphql-data-layer/schema-customization/#aliasing-fields) to model your GraphQL types to your liking but it won't be covered in this tutorial.
 
 <Announcement>
 

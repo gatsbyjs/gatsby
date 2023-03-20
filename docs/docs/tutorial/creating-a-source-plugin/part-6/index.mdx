@@ -170,7 +170,7 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 
 Time to apply your theoretical knowledge about Image CDN to your own plugin.
 
-You'll create a new root node called `PluginAsset` through a `createAssetNode` utility. You can think of it as a more specialized version of the `nodeBuilder` utility, only responsible for creating nodes that should become `PluginAsset` and hence Image CDN capable. Creating a separate `PluginAsset` type will also make schema customization in the next task easier.
+You'll create a new root node called `Asset` through a `createAssetNode` utility. You can think of it as a more specialized version of the `nodeBuilder` utility, only responsible for creating nodes that should become `Asset` and hence Image CDN capable. Creating a separate `Asset` type will also make schema customization in the next task easier.
 
 1. Open `plugin/src/constants.ts` and add a new node type:
 
@@ -179,7 +179,7 @@ You'll create a new root node called `PluginAsset` through a `createAssetNode` u
       Post: `Post`,
       Author: `Author`,
       // highlight-next-line
-      PluginAsset: `PluginAsset`,
+      Asset: `Asset`,
     } as const
 
     // Rest of contants
@@ -230,14 +230,14 @@ You'll create a new root node called `PluginAsset` through a `createAssetNode` u
       gatsbyApi: SourceNodesArgs,
       data: IPostImageInput
     ) {
-      const id = gatsbyApi.createNodeId(`${NODE_TYPES.PluginAsset}-${data.url}`)
+      const id = gatsbyApi.createNodeId(`${NODE_TYPES.Asset}-${data.url}`)
 
       const assetNode = {
         id,
         parent: null,
         children: [],
         internal: {
-          type: NODE_TYPES.PluginAsset,
+          type: NODE_TYPES.Asset,
           contentDigest: gatsbyApi.createContentDigest(data),
         },
       } satisfies IRemoteImageNodeInput
@@ -261,7 +261,7 @@ You'll create a new root node called `PluginAsset` through a `createAssetNode` u
       gatsbyApi: SourceNodesArgs,
       data: IPostImageInput
     ) {
-      const id = gatsbyApi.createNodeId(`${NODE_TYPES.PluginAsset}-${data.url}`)
+      const id = gatsbyApi.createNodeId(`${NODE_TYPES.Asset}-${data.url}`)
 
       const assetNode = {
         id,
@@ -277,7 +277,7 @@ You'll create a new root node called `PluginAsset` through a `createAssetNode` u
         parent: null,
         children: [],
         internal: {
-          type: NODE_TYPES.PluginAsset,
+          type: NODE_TYPES.Asset,
           contentDigest: gatsbyApi.createContentDigest(data),
         },
       } satisfies IRemoteImageNodeInput
@@ -286,17 +286,17 @@ You'll create a new root node called `PluginAsset` through a `createAssetNode` u
     }
     ```
 
-    And that's it, you can create `PluginAsset` nodes now! In the next task you'll actually use `createAssetNode`.
+    And that's it, you can create `Asset` nodes now! In the next task you'll actually use `createAssetNode`.
 
 ### Task: Apply schema customizations
 
-So far your `createAssetNode` utility isn't doing anything. You'll need to use it inside the `nodeBuilder` utility to add an additional `image` field to `Post` nodes. However, this will only work once you successfully implemented the second requirement of Image CDN: That `PluginAsset` implements the `RemoteFile` interface.
+So far your `createAssetNode` utility isn't doing anything. You'll need to use it inside the `nodeBuilder` utility to add an additional `image` field to `Post` nodes. However, this will only work once you successfully implemented the second requirement of Image CDN: That `Asset` implements the `RemoteFile` interface.
 
 A lot of this task builds upon your knowledge from [Part 3](/docs/tutorial/creating-a-source-plugin/part-3/), specifically the [foreign-key relationship](/docs/tutorial/creating-a-source-plugin/part-3/#add-a-foreign-key-relationship) section. Feel free to revisit those sections if you need a refresher.
 
-You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root node. Then you'll create a foreign-key relationship between `PluginAsset` and the `image` field on `Post`.
+You'll implement the `RemoteFile` interface for `Asset` and make it a root node. Then you'll create a foreign-key relationship between `Asset` and the `image` field on `Post`.
 
-1. Open `plugin/src/create-schema-customization.ts`. Change the name of `PostImage` to `PluginAsset` and implement both `Node` and `RemoteFile` for it:
+1. Open `plugin/src/create-schema-customization.ts`. Change the name of `PostImage` to `Asset` and implement both `Node` and `RemoteFile` for it:
 
     ```ts:title=plugin/src/create-schema-customization.ts
     import type { GatsbyNode } from "gatsby"
@@ -323,7 +323,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
           }
 
     // highlight-next-line
-          type ${NODE_TYPES.PluginAsset} implements Node & RemoteFile {
+          type ${NODE_TYPES.Asset} implements Node & RemoteFile {
             url: String!
             alt: String!
             width: Int!
@@ -343,7 +343,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
 
     ```ts
     schema.buildObjectType({
-      name: NODE_TYPES.PluginAsset,
+      name: NODE_TYPES.Asset,
       fields: {
         url: `String!`,
         alt: `String!`,
@@ -356,7 +356,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
 
     </Collapsible>
 
-1. Create a foreign-key relationship between `Post` and `PluginAsset` through `@link` on the `image` field.
+1. Create a foreign-key relationship between `Post` and `Asset` through `@link` on the `image` field.
 
     ```ts:title=plugin/src/create-schema-customization.ts
     createTypes(`
@@ -367,7 +367,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
         title: String!
         author: ${NODE_TYPES.Author} @link(by: "name")
     // highlight-next-line
-        image: ${NODE_TYPES.PluginAsset} @link
+        image: ${NODE_TYPES.Asset} @link
       }
 
       type ${NODE_TYPES.Author} implements Node {
@@ -376,7 +376,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
         name: String!
       }
 
-      type ${NODE_TYPES.PluginAsset} implements Node & RemoteFile {
+      type ${NODE_TYPES.Asset} implements Node & RemoteFile {
         url: String!
         alt: String!
         width: Int!
@@ -394,7 +394,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
       gatsbyApi: SourceNodesArgs,
       data: IPostImageInput
     ) {
-      const id = gatsbyApi.createNodeId(`${NODE_TYPES.PluginAsset}-${data.url}`)
+      const id = gatsbyApi.createNodeId(`${NODE_TYPES.Asset}-${data.url}`)
 
       const assetNode = {/* Contents */} satisfies IRemoteImageNodeInput
 
@@ -405,7 +405,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
     }
     ```
 
-1. A node of type `Post` should have the generated `id` of `PluginAsset` as its `image` field. Because only posts can have images. You can conditionally add data to the node if certain contiditions are met like this:
+1. A node of type `Post` should have the generated `id` of `Asset` as its `image` field. Because only posts can have images. You can conditionally add data to the node if certain contiditions are met like this:
 
     ```ts:title=plugin/src/source-nodes.ts
     export function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {
@@ -438,7 +438,7 @@ You'll implement the `RemoteFile` interface for `PluginAsset` and make it a root
     }
     ```
 
-1. The `some-id` string should be replaced by the `PluginAsset` id of course. Since `createAssetNode` returns the `id`, you can use its result:
+1. The `some-id` string should be replaced by the `Asset` id of course. Since `createAssetNode` returns the `id`, you can use its result:
 
     ```ts:title=plugin/src/source-nodes.ts
     export function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {
