@@ -778,11 +778,17 @@ export async function buildSlices({
     try {
       const slices = Array.from(state.slices.entries())
 
+      // TODO?: maybe filter out page templates and only pass slices
+      const staticQueriesByTemplate = Object.fromEntries(
+        state.staticQueriesByTemplate
+      )
+
       await workerPool.single.renderSlices({
         publicDir: path.join(program.directory, `public`),
         htmlComponentRendererPath,
         slices,
         slicesProps,
+        staticQueriesByTemplate,
       })
     } catch (err) {
       const prettyError = createErrorFromString(

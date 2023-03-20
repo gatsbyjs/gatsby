@@ -703,11 +703,13 @@ export async function renderSlices({
   htmlComponentRendererPath,
   publicDir,
   slicesProps,
+  staticQueriesByTemplate,
 }: {
   publicDir: string
   slices: Array<[string, IGatsbySlice]>
   slicesProps: Array<ISlicePropsEntry>
   htmlComponentRendererPath: string
+  staticQueriesByTemplate: Record<string, Array<string>>
 }): Promise<void> {
   const htmlComponentRenderer = require(htmlComponentRendererPath)
 
@@ -718,11 +720,11 @@ export async function renderSlices({
         `Slice name "${sliceName}" not found when rendering slices`
       )
     }
+    const slice = sliceEntry[1]
+    const staticQueryHashes = staticQueriesByTemplate[slice.componentPath] || []
 
-    const [_fileName, slice] = sliceEntry
-
-    const staticQueryContext = await readStaticQueryContext(
-      slice.componentChunkName
+    const { staticQueryContext } = await getStaticQueryContext(
+      staticQueryHashes
     )
 
     const MAGIC_CHILDREN_STRING = `__DO_NOT_USE_OR_ELSE__`

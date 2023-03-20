@@ -10,7 +10,6 @@ import {
   getScriptsAndStylesForTemplate,
   readWebpackStats,
 } from "../client-assets-for-template"
-import { writeStaticQueryContext } from "../static-query-utils"
 import { IGatsbyState } from "../../redux/types"
 import { store } from "../../redux"
 
@@ -20,27 +19,15 @@ const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
 
-export async function writeQueryContext({
-  staticQueriesByTemplate,
-  components,
-}: {
+// eslint-disable-next-line
+export async function copyStaticQueriesToEngine(_args: {
+  engineTemplatePaths: Set<string>
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
-  components: IGatsbyState["components"]
 }): Promise<void> {
-  const waitingForWrites: Array<Promise<unknown>> = []
-  for (const pageTemplate of components.values()) {
-    const staticQueryHashes =
-      staticQueriesByTemplate.get(pageTemplate.componentPath) || []
-
-    waitingForWrites.push(
-      writeStaticQueryContext(
-        staticQueryHashes,
-        pageTemplate.componentChunkName
-      )
-    )
-  }
-
-  return Promise.all(waitingForWrites).then(() => {})
+  // TODO: collect static queries for engine template paths (need to traverse slices used by a template too)
+  const sourceDir = path.join(process.cwd(), `public`, `page-data`, `sq`, `d`)
+  const destDir = path.join(outputDir, `sq`)
+  await fs.copy(sourceDir, destDir)
 }
 
 export async function createPageSSRBundle({
