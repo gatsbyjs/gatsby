@@ -80,17 +80,13 @@ export async function sourceNodes(
     // As iterating and touching nodes can grow quite expensive on larger sites with
     // 1000s of nodes, we'll skip doing this on subsequent sources.
     // on the very first source there will be no nodes here at all. If the process ends and is restarted there will be nodes in cache but they will be stale and this code will run.
-    // do this during this filter to save CPU cycles for massive sites. we're already iterating over all nodes here.
+    // also do this during this filter to save CPU cycles for massive sites. we're already iterating over all nodes here, no need to do it twice.
     if (isFirstSourceNodesCallOfCurrentNodeProcess) {
-      touchNode({
-        id: node?.id,
-      })
+      touchNode(node)
 
       if (node?.fields?.localFile) {
         // Prevent GraphQL type inference from crashing on this property
-        touchNode({
-          id: node.fields.localFile,
-        })
+        touchNode(getNode(node.fields.localFile))
       }
     }
 
@@ -577,9 +573,7 @@ export async function sourceNodes(
     setImmediate(() => res(null))
   })
 
-  const assetTimer = reporter.createProgress(
-    `Creating ${assets.length} Contentful asset nodes`
-  )
+  const assetTimer = reporter.createProgress(`Creating Contentful asset nodes`)
 
   assetTimer.total = assets.length
   assetTimer.start()
