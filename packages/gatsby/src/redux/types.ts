@@ -264,6 +264,7 @@ export interface IGatsbyState {
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
   requestHeaders: Map<string, { [header: string]: string }>
+  touchNodeOptOutTypes: Set<string>
   telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
@@ -487,6 +488,7 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
+  | ITouchNodeOptOutType
   | ICreateSliceAction
   | IDeleteSliceAction
   | ISetSSRTemplateWebpackCompilationHashAction
@@ -1132,6 +1134,13 @@ export interface ISetDomainRequestHeaders {
     headers: {
       [header: string]: string
     }
+  }
+}
+
+export interface ITouchNodeOptOutType {
+  type: `ADD_TOUCH_NODE_OPTOUT_TYPE`
+  payload: {
+    typeName: string
   }
 }
 

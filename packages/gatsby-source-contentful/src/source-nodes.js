@@ -1,4 +1,5 @@
 // @ts-check
+import { hasFeature } from "gatsby-plugin-utils/has-feature"
 import isOnline from "is-online"
 import _ from "lodash"
 
@@ -11,6 +12,7 @@ import {
   createAssetNodes,
   createNodesForContentType,
   makeId,
+  makeTypeName,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
@@ -40,7 +42,7 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
  * or the fallback field or the default field.
  */
 
-let isFirstSource = true
+let isFirstSourceNodesCallOfCurrentNodeProcess = true
 export async function sourceNodes(
   {
     actions,
@@ -55,14 +57,21 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
-  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
-    actions
+  const needToTouchNodes = !hasFeature(`disable-stale-node-type-checks`)
+
+  const {
+    createNode: originalCreateNode,
+    touchNode,
+    deleteNode,
+    unstable_createNodeManifest,
+    disableStaleNodeTypeCheck,
+  } = actions
   const online = await isOnline()
 
   // Gatsby only checks if a node has been touched on the first sourcing.
   // As iterating and touching nodes can grow quite expensive on larger sites with
   // 1000s of nodes, we'll skip doing this on subsequent sources.
-  if (isFirstSource) {
+  if (isFirstSourceNodesCallOfCurrentNodeProcess && needToTouchNodes) {
     getNodes().forEach(node => {
       if (node.internal.owner !== `gatsby-source-contentful`) {
         return
@@ -73,8 +82,9 @@ export async function sourceNodes(
         touchNode(getNode(node.fields.localFile))
       }
     })
-    isFirstSource = false
   }
+
+  isFirstSourceNodesCallOfCurrentNodeProcess = false
 
   if (
     !online &&
@@ -115,6 +125,7 @@ export async function sourceNodes(
 
   fetchActivity.start()
 
+  const CREATED_TYPENAMES = `contentful-created-typenames-${sourceId}`
   const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
   const CACHE_FOREIGN_REFERENCE_MAP_STATE = `contentful-foreign-reference-map-state-${sourceId}`
@@ -298,6 +309,20 @@ export async function sourceNodes(
       touchNode(node)
       deleteNode(node)
     })
+  }
+
+  const createdTypeNames = !needToTouchNodes
+    ? new Set((await cache.get(CREATED_TYPENAMES)) || [])
+    : null
+
+  // wrap createNode so we can track the typenames of nodes we create
+  // and call disableStaleNodeTypeCheck for them
+  const createNode = node => {
+    if (createdTypeNames && node?.internal?.type) {
+      createdTypeNames.add(node.internal.type)
+    }
+
+    return originalCreateNode(node)
   }
 
   if (deletedEntries.length || deletedAssets.length) {
@@ -539,5 +564,13 @@ export async function sourceNodes(
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
+  }
+
+  if (!needToTouchNodes) {
+    reporter.verbose(
+      `Contentful disabling garbage collection for ${createdTypeNames.size} node types`
+    )
+    createdTypeNames.forEach(disableStaleNodeTypeCheck)
+    await cache.set(CREATED_TYPENAMES, [...createdTypeNames])
   }
 }
