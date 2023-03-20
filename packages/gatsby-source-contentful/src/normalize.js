@@ -6,7 +6,8 @@ import { lt, prerelease } from "semver"
 import fastq from "fastq"
 
 const typePrefix = `Contentful`
-const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+export const makeTypeName = type =>
+  _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
 const gatsbyVersion =

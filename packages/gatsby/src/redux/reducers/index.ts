@@ -32,6 +32,7 @@ import { telemetryReducer } from "./telemetry"
 import { nodeManifestReducer } from "./node-manifest"
 import { reducer as pageTreeReducer } from "gatsby-cli/lib/reporter/redux/reducers/page-tree"
 import { setRequestHeadersReducer } from "./set-request-headers"
+import { touchNodeOptOutReducer } from "./touchnode-optout"
 import { slicesReducer } from "./slices"
 import { componentsUsingSlicesReducer } from "./components-using-slices"
 import { slicesByTemplateReducer } from "./slices-by-template"
@@ -73,6 +74,7 @@ export {
   nodeManifestReducer as nodeManifests,
   pageTreeReducer as pageTree,
   setRequestHeadersReducer as requestHeaders,
+  touchNodeOptOutReducer as touchNodeOptOutTypes,
   slicesReducer as slices,
   componentsUsingSlicesReducer as componentsUsingSlices,
   slicesByTemplateReducer as slicesByTemplate,

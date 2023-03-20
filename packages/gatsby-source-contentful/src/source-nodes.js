@@ -1,4 +1,5 @@
 // @ts-check
+import { hasFeature } from "gatsby-plugin-utils/has-feature"
 import isOnline from "is-online"
 import _ from "lodash"
 import { downloadContentfulAssets } from "./download-contentful-assets"
@@ -10,6 +11,7 @@ import {
   createAssetNodes,
   createNodesForContentType,
   makeId,
+  makeTypeName,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
@@ -63,6 +65,9 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
+  const hasTouchNodeOptOut = hasFeature(`touchnode-optout`)
+  const needToTouchNodes = !hasTouchNodeOptOut
+
   logHeapUsageInMB()
   const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
     actions
@@ -71,6 +76,10 @@ export async function sourceNodes(
   // Array of all existing Contentful nodes
   let existingNodes = getNodes().filter(node => {
     const isContentfulNode = node.internal.owner === `gatsby-source-contentful`
+
+    if (!needToTouchNodes) {
+      return isContentfulNode
+    }
 
     if (!isContentfulNode) {
       return false
@@ -92,6 +101,15 @@ export async function sourceNodes(
 
     return true
   })
+
+  if (isFirstSourceNodesCallOfCurrentNodeProcess && hasTouchNodeOptOut) {
+    const typesToOptOut = [
+      `ContentfulAsset`,
+      `ContentfulEntry`,
+      `ContentfulTag`,
+      makeTypeName(`ContentType`),
+    ]
+  }
 
   isFirstSourceNodesCallOfCurrentNodeProcess = false
 

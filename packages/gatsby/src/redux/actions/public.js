@@ -1514,6 +1514,20 @@ actions.unstable_createNodeManifest = (
 }
 
 /**
+ * Stores a typename for which nodes of that type shouldn't need to have touchNode called on them.
+ *
+ * @param {string} typeName the Gatsby Node typename you want to opt-out of needing to call touchNode on.
+ */
+actions.optTypeOutOfTouchNode = (typeName: string) => {
+  return {
+    type: `ADD_TOUCH_NODE_OPTOUT_TYPE`,
+    payload: {
+      typeName,
+    },
+  }
+}
+
+/**
  * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
  *
  * @param {Object} $0
