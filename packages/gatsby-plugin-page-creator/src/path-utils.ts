@@ -125,6 +125,8 @@ export function compose(
 }
 
 // Use globby to find all page files with collection routes
+// We want to find all files in a given path where any segment includes text wrapped in curly braces
+// e.g. "{Collection.field}.tsx" and "{Collection.field}/nestedpage.tsx"
 export const pagesGlob = `**/**\\{*\\}**(/**)`
 export const findCollectionPageFiles = (
   pagesPath: string
