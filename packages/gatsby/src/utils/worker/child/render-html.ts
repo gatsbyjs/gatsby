@@ -66,23 +66,6 @@ const inFlightResourcesForTemplate = new Map<
   Promise<IResourcesForTemplate>
 >()
 
-const readStaticQueryContext = async (
-  templatePath: string
-): Promise<Record<string, { data: unknown }>> => {
-  const filePath = path.join(
-    // TODO: Better way to get this?
-    process.cwd(),
-    `.cache`,
-    `page-ssr`,
-    `sq-context`,
-    templatePath,
-    `sq-context.json`
-  )
-  const rawSQContext = await fs.readFile(filePath, `utf-8`)
-
-  return JSON.parse(rawSQContext)
-}
-
 function clearCaches(): void {
   clearStaticQueryCaches()
   resourcesForTemplateCache.clear()
