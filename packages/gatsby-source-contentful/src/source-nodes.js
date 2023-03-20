@@ -68,23 +68,37 @@ export async function sourceNodes(
     actions
   const online = await isOnline()
 
-  // Gatsby only checks if a node has been touched on the first sourcing.
-  // As iterating and touching nodes can grow quite expensive on larger sites with
-  // 1000s of nodes, we'll skip doing this on subsequent sources.
-  // on the very first source there will be no nodes here at all. If the process ends and is restarted there will be nodes in cache but they will be stale and this code will run.
-  if (isFirstSourceNodesCallOfCurrentNodeProcess) {
-    getNodes().forEach(node => {
-      if (node.internal.owner !== `gatsby-source-contentful`) {
-        return
-      }
-      touchNode(node)
+  // Array of all existing Contentful nodes
+  let existingNodes = getNodes().filter(node => {
+    const isContentfulNode = node.internal.owner === `gatsby-source-contentful`
+
+    if (!isContentfulNode) {
+      return false
+    }
+
+    // Gatsby only checks if a node has been touched on the first sourcing.
+    // As iterating and touching nodes can grow quite expensive on larger sites with
+    // 1000s of nodes, we'll skip doing this on subsequent sources.
+    // on the very first source there will be no nodes here at all. If the process ends and is restarted there will be nodes in cache but they will be stale and this code will run.
+    // do this during this filter to save CPU cycles for massive sites. we're already iterating over all nodes here.
+    if (isFirstSourceNodesCallOfCurrentNodeProcess) {
+      touchNode({
+        id: node?.id,
+      })
+
       if (node?.fields?.localFile) {
         // Prevent GraphQL type inference from crashing on this property
-        touchNode(getNode(node.fields.localFile))
+        touchNode({
+          id: node.fields.localFile,
+        })
       }
-    })
-    isFirstSourceNodesCallOfCurrentNodeProcess = false
-  }
+    }
+
+    return true
+  })
+
+  isFirstSourceNodesCallOfCurrentNodeProcess = false
+
   logHeapUsageInMB()
 
   if (
@@ -200,14 +214,6 @@ export async function sourceNodes(
   processingActivity.start()
 
   logHeapUsageInMB()
-  // Array of all existing Contentful nodes
-  let existingNodes = getNodes().filter(
-    n =>
-      n.internal.owner === `gatsby-source-contentful` &&
-      (pluginConfig.get(`enableTags`)
-        ? n.internal.type !== `ContentfulTag`
-        : true)
-  )
 
   // Report existing, new and updated nodes
   const nodeCounts = {
@@ -220,6 +226,9 @@ export async function sourceNodes(
     deletedEntry: currentSyncData.deletedEntries.length,
     deletedAsset: currentSyncData.deletedAssets.length,
   }
+  existingNodes = existingNodes.filter(n =>
+    pluginConfig.get(`enableTags`) ? n.internal.type !== `ContentfulTag` : true
+  )
   existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
   currentSyncData.entries.forEach(entry =>
     entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
@@ -348,7 +357,7 @@ export async function sourceNodes(
   }
 
   // Update existing entry nodes that weren't updated but that need reverse links added or removed.
-  const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
+  let existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
   logHeapUsageInMB()
   console.log(
     `start building existingNodesThatNeedReverseLinksUpdateInDatastore`
@@ -499,6 +508,14 @@ export async function sourceNodes(
     }
     logHeapUsageInMB()
   }
+
+  // @ts-ignore
+  existingNodesThatNeedReverseLinksUpdateInDatastore = undefined
+  await new Promise(res => {
+    setImmediate(() => {
+      res(null)
+    })
+  })
 
   const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
     parentSpan,
