@@ -1518,7 +1518,7 @@ actions.unstable_createNodeManifest = (
  *
  * @param {string} typeName the Gatsby Node typename you want to opt-out of needing to call touchNode on.
  */
-actions.optTypeOutOfTouchNode = (typeName: string) => {
+actions.disableNodeTypeGarbageCollection = (typeName: string) => {
   return {
     type: `ADD_TOUCH_NODE_OPTOUT_TYPE`,
     payload: {
