@@ -20,7 +20,7 @@ By the end of this part of the tutorial, you will be able to:
 
 ## `reporter` API
 
-You, as a source plugin author, can interact with your users in a variety of ways. You can share information in the README, chat in issues & PRs, create guides etc. But you or rather your source plugin will interact the most with your users through the terminal when they run `gatsby develop` or `gatsby build`. Gatsby outputs what it does behind the scenes with the goal of giving the users rich information that helps them be more productive with Gatsby itself.
+You, as a source plugin author, can interact with your users in a variety of ways. You can share information in the README, chat in issues & PRs, create guides, etc. But no matter how active of a maintainer you are, it is your source plugin that will interact the most with your users through the terminal when they run `gatsby develop` or `gatsby build`. Gatsby outputs what it does behind the scenes with the goal of giving the users rich information that helps them be more productive with Gatsby itself.
 
 For this, Gatsby internally uses the `reporter` API and you can use it, too! When adding logs to the terminal be mindful of keeping of them concise, informative, and to a minimum. Most Gatsby plugins don't even need to add logs (other than errors), so in doubt leave them out at the beginning and reevaluate once you have a bigger user base.
 
@@ -33,7 +33,7 @@ export const onPluginInit = ({ reporter }) => {
 }
 ```
 
-Here's a short explainer on the most important methods:
+Here's a short explanation on the most important methods:
 
 - `info`: Print a message to the terminal.
 - `warn`: Print a warning message to the terminal.
@@ -623,8 +623,8 @@ The [Configuring Plugin Usage with Plugin Options](/docs/how-to/plugins-and-them
 
 Here are some tips when working with plugin options:
 
-- **Consider the options a public API contract between your users and your plugin.** Follow [SemVer](https://semver.org/) versioning when adding, modyfing, and removing options. For example, if you want to remove an option you should only do this in a major release of your plugin since it's a breaking change.
-- **Add as little plugin options as possible.** In the beginning, use safe defaults where possible (to the best of your knowledge) and when users wish to have new options available ask yourself really hard if you should add them. Once added, you'll need to maintain the option forever (or until you remove it again).
+- **Consider the options a public API contract between your users and your plugin.** Follow [SemVer](https://semver.org/) versioning when adding, modifying, and removing options. For example, if you want to remove an option you should only do this in a major release of your plugin since it's a breaking change.
+- **Add as few plugin options as necessary.** In the beginning, use safe defaults where possible (to the best of your knowledge) and when users wish to have new options available, seriously contemplate if you should add them. Once added, you'll need to maintain the option forever (or until you remove it again).
 - **Use clear names.** Naming things is hard, but take extra care in using clear names for your plugin's options. Best case scenario is that an option is clear enough without any additional description.
 - **Use "enable" options, not negated options.** An example: Instead of using `noWarnings: true`, use `warnings: false`. The double negation that would occur with `noWarnings: false` is really confusing.
 - **Pass options through.** If your source plugin is using a library under the hood (e.g. an SDK from a CMS) that has options on its own, allow people to configure all those options, too. You could collect those under a new key in the `options` object (e.g. `options.sdkOptions`) and then refer people to the SDK's documentation.
@@ -711,7 +711,7 @@ Instead of hardcoding the URL to the GraphQL API, you'll use an `endpoint` optio
     }
     ```
 
-    Don't worry about the `plugins` key there. Since Gatsby's plugins can also have sub-plugins, the key `plugins` is added by default to the `pluginOptions` object. The `endpoint` option successfully comes through.
+    Don't worry about the `plugins` key there. Since Gatsby's plugins can also have sub-plugins, the key `plugins` is added by default to the `pluginOptions` object. What you really should care about is that the `endpoint` option successfully comes through.
 
 1. Destructure `endpoint` from the `pluginOptions` object and use it in the `fetchGraphQL` call:
 

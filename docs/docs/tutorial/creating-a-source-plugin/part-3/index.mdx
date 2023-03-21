@@ -134,7 +134,7 @@ Before using [`createTypes`](/docs/reference/config-files/actions/#createTypes),
 - By default, explicit type definitions you add with `createTypes` will be merged with inferred field types. So if you only want to define a subset of fields, the rest will be inferred as before. You can modify this behavior with the `@infer` and `@dontInfer` extensions. You'll learn more about extensions in [Add a foreign-key relationship](#add-a-foreign-key-relationship).
 - Type definitions targeting root node types, e.g. `MarkdownRemark` or others added in `sourceNodes`/`onCreateNode` like `Post` and `Author`, need to implement the `Node` interface. You can do this by adding the `implements Node` to the SDL.
 
-As an example, this is the incoming data to `createNode` that gets inspected and inferred:
+Using an arbitrary example, let's imagine this is the shape of incoming data to `createNode` that gets inspected and inferred:
 
 ```json
 {
@@ -147,7 +147,7 @@ As an example, this is the incoming data to `createNode` that gets inspected and
 }
 ```
 
-Since `state` is not always given you want to explicitly define it. As `street` will always be defined, you can mark it as [Non-Null](https://graphql.org/learn/schema/#lists-and-non-null) with a `!`. `city` will be automatically inferred and merged with the custom types.
+In this example, let's pretend that you know `state` is not always provided — meaning that you want to explicitly define it to avoid the situation described above. Conversely, you also know that `street` will always be defined, and as such, you can mark it as [Non-Null](https://graphql.org/learn/schema/#lists-and-non-null) with a `!`. Lastly, `city` will be automatically inferred and merged with the custom types.
 
 ```ts
 import type { GatsbyNode } from "gatsby"
@@ -327,7 +327,7 @@ If you want to learn more, read our documentation about [extensions and directiv
 
 </Announcement>
 
-In this tutorial you'll use the `@link` extension to create a foreigh-key relationship between your `Post` and `Author` nodes. This relationship can either be already existent in your data source (and you want to replicate it) or it can be a completely new behavior.
+In this tutorial you'll use the `@link` extension to create a foreign-key relationship between your `Post` and `Author` nodes. This relationship can either already exist in your data source (and you want to replicate it) or it can be a completely new association you want to create.
 
 You can also use the [`@proxy` directive](/docs/reference/graphql-data-layer/schema-customization/#aliasing-fields) to model your GraphQL types to your liking but it won't be covered in this tutorial.
 
@@ -379,7 +379,7 @@ Imagine this example: "Team Gatsby" likes to author their blog posts in Markdown
 
 </Announcement>
 
-In the previous section you already defined the GraphQL types for `Post` and `Author` so all the necessary boilerplate is already done. You can now use the `@link` extension (as a directive in the SDL). Before showing that, here's a short explainer on the `@link` extension:
+In the previous section you already defined the GraphQL types for `Post` and `Author` so all the necessary boilerplate is already done. You can now use the `@link` extension (as a directive in the SDL). Before showing that, here's a short explanation on the `@link` extension:
 
 - `@link` can receive two arguments (`by` and `from`) but if no argument is given, Gatsby will use the `id` field as the foreign-key field (equivalent to `@link(by: "id")`). You'll use this default behavior in [Part 6](/docs/tutorial/creating-a-source-plugin/part-6/) for the Image CDN feature.
 - `by` is the field you link **to** (on the target node).
@@ -542,7 +542,7 @@ export const query = graphql`
 `
 ```
 
-Go visit your index page in the browser, everything should be working again.
+Go visit your index page in the browser and everything should be working again.
 
 ## Summary
 
@@ -558,7 +558,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 ### Key takeaways
 
 - One of Gatsby’s main strengths is the ability to query data from a variety of sources in a uniform way with GraphQL. For this to work, a GraphQL schema must be generated that defines the shape of the data.
-- Gatsby's GraphQL schema is automatically inferred from your data. Gatsby inspects the contents of every field and checks its type in order to convert it to GraphQL types. This automatic type inference though has problems with values of different types.
+- By default, Gatsby's GraphQL schema is automatically inferred from your data. Gatsby inspects the contents of every field and checks its type in order to convert it to GraphQL types. However, while powerful, this automatic type inference has problems with field values of different types.
 - To make your plugin more reliable, you should explicitly define the GraphQL schema for it. This way the pitfalls from the automatic type inference won’t occur.
 - You can use the `createTypes` function to define a GraphQL schema (in SDL syntax or via Gatsby Type Builders)
 - Gatsby has existing GraphQL extensions like `@link` that enable you to add functionality to your schema
