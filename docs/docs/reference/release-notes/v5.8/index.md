@@ -4,13 +4,9 @@ version: "5.8.0"
 title: "v5.8 Release Notes"
 ---
 
-Welcome to `gatsby@5.8.0` release (March 2023 # TODO)
+Welcome to `gatsby@5.8.0` release (March 2023 #1 TODO)
 
-Key highlights of this release:
-
-- [Hightlight Name](#highlight-name)
-
-Also check out [notable bugfixes](#notable-bugfixes--improvements).
+Check out [notable bugfixes](#notable-bugfixes--improvements).
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
@@ -20,14 +16,14 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## Hightlight Name
-
-TODO
-
 ## Notable bugfixes & improvements
 
 - `gatsby`:
-  - TODO
+  - Regenerate HTML if lazily imported components change, via [PR #37712](https://github.com/gatsbyjs/gatsby/pull/37712)
+  - Invalidate webpack cache when `gatsby-node.mjs` changes, via [PR #37750](https://github.com/gatsbyjs/gatsby/pull/37750)
+- `gatsby-plugin-page-creator`: Correctly recreate delete pages during `gatsby develop`, via [PR #37745](https://github.com/gatsbyjs/gatsby/pull/37745)
+- `gatsby-plugin-mdx`: Account for links and inline code in table of contents, via [PR #37789](https://github.com/gatsbyjs/gatsby/pull/37739)
+- `gatsby-source-wordpress`: Add compatibility with `WPGraphQL` version `1.14.0`, via [PR #37749](https://github.com/gatsbyjs/gatsby/pull/37749)
 
 ## Contributors
 
