@@ -9,44 +9,37 @@ import type { GatsbyIterable } from "../datastore/common/iterable"
 
 const { deleteNode } = actions
 
-/**
- * Finds the name of all plugins which implement Gatsby APIs that
- * may create nodes, but which have not actually created any nodes.
- */
-function discoverPluginsWithoutNodes(
-  storeState: IGatsbyState,
-  nodes: GatsbyIterable<IGatsbyNode>
-): Array<string> {
-  // Find out which plugins own already created nodes
-  const nodeOwnerSet = new Set([`default-site-plugin`])
-  nodes.forEach(node => nodeOwnerSet.add(node.internal.owner))
-
-  return storeState.flattenedPlugins
-    .filter(
-      plugin =>
-        // "Can generate nodes"
-        plugin.nodeAPIs.includes(`sourceNodes`) &&
-        // "Has not generated nodes"
-        !nodeOwnerSet.has(plugin.name)
-    )
-    .map(plugin => plugin.name)
-}
+// console.log(`ya`, nodeOwnerSet.keys())
+// /**
+//  * Finds the name of all plugins which implement Gatsby APIs that
+//  * may create nodes, but which have not actually created any nodes.
+//  * owners are added to nodeOwnerSet from within the createNode action
+//  */
+// function discoverPluginsWithoutNodes(storeState: IGatsbyState): Array<string> {
+//   return storeState.flattenedPlugins
+//     .filter(
+//       plugin =>
+//         // "Can generate nodes"
+//         plugin.nodeAPIs.includes(`sourceNodes`) &&
+//         // "Has not generated nodes"
+//         !nodeOwnerSet.has(plugin.name)
+//     )
+//     .map(plugin => plugin.name)
+// }
 
 /**
  * Warn about plugins that should have created nodes but didn't.
  */
-function warnForPluginsWithoutNodes(
-  state: IGatsbyState,
-  nodes: GatsbyIterable<IGatsbyNode>
-): void {
-  const pluginsWithNoNodes = discoverPluginsWithoutNodes(state, nodes)
+// function warnForPluginsWithoutNodes(state: IGatsbyState): void {
+//   console.log(`ya2`, nodeOwnerSet.keys())
+//   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state)
 
-  pluginsWithNoNodes.map(name =>
-    report.warn(
-      `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`
-    )
-  )
-}
+//   pluginsWithNoNodes.map(name =>
+//     report.warn(
+//       `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`
+//     )
+//   )
+// }
 
 /**
  * Return the set of nodes for which its root node has not been touched
@@ -74,6 +67,10 @@ function getStaleNodes(
       )
     }
 
+    if (state.touchNodeOptOutTypes.has(rootNode.internal.type)) {
+      return false
+    }
+
     return !state.nodesTouched.has(rootNode.id)
   })
 }
@@ -81,13 +78,39 @@ function getStaleNodes(
 /**
  * Find all stale nodes and delete them
  */
-function deleteStaleNodes(
-  state: IGatsbyState,
-  nodes: GatsbyIterable<IGatsbyNode>
-): void {
-  const staleNodes = getStaleNodes(state, nodes)
+async function deleteStaleNodes(state: IGatsbyState): Promise<void> {
+  let deleteCount = 0
 
-  staleNodes.forEach(node => store.dispatch(deleteNode(node)))
+  const cleanupStaleNodesActivity =
+    report.createProgress(`clean up stale nodes`)
+  cleanupStaleNodesActivity.start()
+
+  for (const typeName of getDataStore().getTypes()) {
+    if (state.touchNodeOptOutTypes.has(typeName)) {
+      continue
+    }
+
+    report.info(`checking for ${typeName} nodes to delete`)
+
+    const nodes = getDataStore().iterateNodesByType(typeName)
+    const staleNodes = getStaleNodes(state, nodes)
+
+    for (const node of staleNodes) {
+      store.dispatch(deleteNode(node))
+      cleanupStaleNodesActivity.tick()
+
+      if (++deleteCount % 5000) {
+        // dont block event loop
+        await new Promise(res => {
+          setImmediate(() => {
+            res(null)
+          })
+        })
+      }
+    }
+  }
+
+  cleanupStaleNodesActivity.end()
 }
 
 let isInitialSourcing = true
@@ -119,12 +142,10 @@ export default async ({
   // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
   if (isInitialSourcing) {
     const state = store.getState()
-    for (const typeName of getDataStore().getTypes()) {
-      const nodes = getDataStore().iterateNodesByType(typeName)
 
-      warnForPluginsWithoutNodes(state, nodes)
-      deleteStaleNodes(state, nodes)
-    }
+    await deleteStaleNodes(state)
+    // warnForPluginsWithoutNodes(state)
+
     isInitialSourcing = false
   }
 
