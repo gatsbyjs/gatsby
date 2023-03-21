@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "3.8.0-next.0",
+  "version": "3.9.0-next.0",
   "scripts": {
     "build": "npm-run-all --npm-path npm -s clean -p build:*",
     "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"use client\"",
@@ -87,13 +87,13 @@
     "@babel/runtime": "^7.20.13",
     "@babel/traverse": "^7.20.13",
     "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "^5.8.0-next.0",
+    "babel-plugin-remove-graphql-queries": "^5.9.0-next.0",
     "camelcase": "^6.3.0",
     "chokidar": "^3.5.3",
     "common-tags": "^1.8.2",
     "fs-extra": "^11.1.0",
-    "gatsby-core-utils": "^4.8.0-next.0",
-    "gatsby-plugin-utils": "^4.8.0-next.0",
+    "gatsby-core-utils": "^4.9.0-next.0",
+    "gatsby-plugin-utils": "^4.9.0-next.0",
     "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.8.1"
   },
