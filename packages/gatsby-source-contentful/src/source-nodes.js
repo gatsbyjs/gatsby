@@ -1,4 +1,5 @@
 // @ts-check
+import { getDataStore } from "gatsby/dist/datastore"
 import { hasFeature } from "gatsby-plugin-utils/has-feature"
 import isOnline from "is-online"
 import _ from "lodash"
@@ -11,7 +12,6 @@ import {
   createAssetNodes,
   createNodesForContentType,
   makeId,
-  makeTypeName,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
@@ -30,12 +30,13 @@ const restrictedNodeFields = [
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 
-let heaploggedCount = 0
-function logHeapUsageInMB() {
+let memLoggedCount = 0
+function logMemUsage() {
+  const { rss, heapTotal } = process.memoryUsage()
   console.log(
-    `${
-      process.memoryUsage().heapUsed / 1024 / 1024
-    }MB heap currently allocated (checked ${++heaploggedCount} times)`
+    `${rss / 1024 / 1024}MB rss and ${
+      heapTotal / 1024 / 1024
+    }MB heapTotal currently allocated (checked ${++memLoggedCount} times)`
   )
 }
 
@@ -50,12 +51,13 @@ function logHeapUsageInMB() {
  * or the fallback field or the default field.
  */
 
+// Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
+const existingNodes = []
 let isFirstSourceNodesCallOfCurrentNodeProcess = true
 export async function sourceNodes(
   {
     actions,
     getNode,
-    getNodes,
     createNodeId,
     store,
     cache,
@@ -66,54 +68,83 @@ export async function sourceNodes(
   pluginOptions
 ) {
   const hasTouchNodeOptOut = hasFeature(`touchnode-optout`)
-  const needToTouchNodes = !hasTouchNodeOptOut
+  const needToTouchNodes =
+    !hasTouchNodeOptOut && isFirstSourceNodesCallOfCurrentNodeProcess
 
-  logHeapUsageInMB()
-  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
-    actions
+  logMemUsage()
+  const {
+    createNode: originalCreateNode,
+    deleteNode: originalDeleteNode,
+    touchNode,
+    unstable_createNodeManifest,
+    disableNodeTypeGarbageCollection,
+  } = actions
+
   const online = await isOnline()
 
-  // Array of all existing Contentful nodes
-  let existingNodes = getNodes().filter(node => {
-    const isContentfulNode = node.internal.owner === `gatsby-source-contentful`
+  logMemUsage()
 
-    if (!needToTouchNodes) {
-      return isContentfulNode
-    }
+  const pluginConfig = createPluginConfig(pluginOptions)
+  const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+    `environment`
+  )}`
 
-    if (!isContentfulNode) {
-      return false
-    }
+  const CREATED_TYPENAMES = `contentful-created-typenames-${sourceId}`
+  const createdTypeNames = new Set((await cache.get(CREATED_TYPENAMES)) || [])
 
-    // Gatsby only checks if a node has been touched on the first sourcing.
-    // As iterating and touching nodes can grow quite expensive on larger sites with
-    // 1000s of nodes, we'll skip doing this on subsequent sources.
-    // on the very first source there will be no nodes here at all. If the process ends and is restarted there will be nodes in cache but they will be stale and this code will run.
-    // also do this during this filter to save CPU cycles for massive sites. we're already iterating over all nodes here, no need to do it twice.
-    if (isFirstSourceNodesCallOfCurrentNodeProcess) {
-      touchNode(node)
-
-      if (node?.fields?.localFile) {
-        // Prevent GraphQL type inference from crashing on this property
-        touchNode(getNode(node.fields.localFile))
-      }
-    }
-
-    return true
-  })
-
-  if (isFirstSourceNodesCallOfCurrentNodeProcess && hasTouchNodeOptOut) {
-    const typesToOptOut = [
-      `ContentfulAsset`,
-      `ContentfulEntry`,
-      `ContentfulTag`,
-      makeTypeName(`ContentType`),
-    ]
+  // Report existing, new and updated nodes
+  const nodeCounts = {
+    newEntry: 0,
+    newAsset: 0,
+    updatedEntry: 0,
+    updatedAsset: 0,
+    existingEntry: 0,
+    existingAsset: 0,
   }
 
-  isFirstSourceNodesCallOfCurrentNodeProcess = false
+  let allNodesLoopCount = 0
 
-  logHeapUsageInMB()
+  logMemUsage()
+  if (isFirstSourceNodesCallOfCurrentNodeProcess) {
+    console.log(`getting existing nodes`)
+    for (const typeName of createdTypeNames) {
+      const typeNodes = getDataStore().iterateNodesByType(typeName)
+
+      for (const node of typeNodes) {
+        if (needToTouchNodes) {
+          touchNode(node)
+
+          if (node?.fields?.includes(`localFile`)) {
+            // Prevent GraphQL type inference from crashing on this property
+            touchNode(getNode(getNode(node.id).fields.localFile))
+          }
+        }
+
+        if (++allNodesLoopCount % 5000 === 0) {
+          // dont block the event loop
+          await new Promise(resolve => setImmediate(() => resolve(null)))
+        }
+
+        // @ts-ignore
+        nodeCounts[`existing${node.sys.type}`]++
+
+        if (
+          pluginConfig.get(`enableTags`) &&
+          node.internal.type === `ContentfulTag`
+        ) {
+          continue
+        }
+
+        existingNodes.push(node)
+      }
+
+      // dont block the event loop
+      await new Promise(resolve => setImmediate(() => resolve(null)))
+    }
+  }
+  logMemUsage()
+
+  isFirstSourceNodesCallOfCurrentNodeProcess = false
 
   if (
     !online &&
@@ -123,10 +154,42 @@ export async function sourceNodes(
     return
   }
 
-  const pluginConfig = createPluginConfig(pluginOptions)
-  const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-    `environment`
-  )}`
+  // wrap createNode so we can track the typenames of nodes we create
+  // and call disableNodeTypeGarbageCollection for them
+  const createNode = node => {
+    if (node?.internal?.type) {
+      createdTypeNames.add(node.internal.type)
+    } else {
+      reporter.info(node)
+      throw new Error(`Contentful Node is missing internal.type`)
+    }
+
+    if (!isFirstSourceNodesCallOfCurrentNodeProcess) {
+      const existingNodeIndex = existingNodes.findIndex(
+        existingNode => existingNode.id === node.id
+      )
+
+      if (existingNodeIndex !== -1) {
+        existingNodes[existingNodeIndex] = node
+      }
+    }
+
+    return originalCreateNode(node)
+  }
+
+  const deleteNode = node => {
+    if (!isFirstSourceNodesCallOfCurrentNodeProcess) {
+      const existingNodeIndex = existingNodes.findIndex(
+        existingNode => existingNode.id === node.id
+      )
+
+      if (existingNodeIndex !== -1) {
+        delete existingNodes[existingNodeIndex]
+      }
+    }
+
+    return originalDeleteNode(node)
+  }
 
   const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
     parentSpan,
@@ -173,7 +236,7 @@ export async function sourceNodes(
       CACHE_SYNC_TOKEN
     ]
 
-  logHeapUsageInMB()
+  logMemUsage()
   // Actual fetch of data from Contentful
   const {
     currentSyncData,
@@ -182,7 +245,7 @@ export async function sourceNodes(
     locales: allLocales,
     space,
   } = await fetchContent({ syncToken, pluginConfig, reporter })
-  logHeapUsageInMB()
+  logMemUsage()
   const contentTypeItems = await cache.get(CACHE_CONTENT_TYPES)
 
   const locales = allLocales.filter(pluginConfig.get(`localeFilter`))
@@ -227,29 +290,23 @@ export async function sourceNodes(
   )
   processingActivity.start()
 
-  logHeapUsageInMB()
+  logMemUsage()
 
-  // Report existing, new and updated nodes
-  const nodeCounts = {
-    newEntry: 0,
-    newAsset: 0,
-    updatedEntry: 0,
-    updatedAsset: 0,
-    existingEntry: 0,
-    existingAsset: 0,
-    deletedEntry: currentSyncData.deletedEntries.length,
-    deletedAsset: currentSyncData.deletedAssets.length,
+  if (currentSyncData) {
+    nodeCounts.deletedEntry = currentSyncData.deletedEntries.length
+    nodeCounts.deletedAsset = currentSyncData.deletedAssets.length
+
+    currentSyncData.entries.forEach(entry =>
+      entry.sys.revision === 1
+        ? nodeCounts.newEntry++
+        : nodeCounts.updatedEntry++
+    )
+    currentSyncData.assets.forEach(asset =>
+      asset.sys.revision === 1
+        ? nodeCounts.newAsset++
+        : nodeCounts.updatedAsset++
+    )
   }
-  existingNodes = existingNodes.filter(n =>
-    pluginConfig.get(`enableTags`) ? n.internal.type !== `ContentfulTag` : true
-  )
-  existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
-  currentSyncData.entries.forEach(entry =>
-    entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
-  )
-  currentSyncData.assets.forEach(asset =>
-    asset.sys.revision === 1 ? nodeCounts.newAsset++ : nodeCounts.updatedAsset++
-  )
 
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
@@ -266,8 +323,10 @@ export async function sourceNodes(
 
   reporter.verbose(`Building Contentful reference map`)
 
-  logHeapUsageInMB()
+  logMemUsage()
   const entryList = buildEntryList({ contentTypeItems, currentSyncData })
+
+  // @ts-ignore
   const { assets } = currentSyncData
 
   console.log(`contentful existingNodes.length`, existingNodes.length)
@@ -275,7 +334,7 @@ export async function sourceNodes(
   // Create map of resolvable ids so we can check links against them while creating
   // links.
   console.log(`contentful start buildResolvableSet`)
-  logHeapUsageInMB()
+  logMemUsage()
   let resolvable = buildResolvableSet({
     existingNodes,
     entryList,
@@ -283,7 +342,7 @@ export async function sourceNodes(
   })
 
   console.log(`contentful end buildResolvableSet`)
-  logHeapUsageInMB()
+  logMemUsage()
   console.log(`contentful resolvable.size`, resolvable.size)
 
   const previousForeignReferenceMapState = await cache.get(
@@ -291,7 +350,7 @@ export async function sourceNodes(
   )
 
   console.log(`contentful start buildForeignReferenceMap`)
-  logHeapUsageInMB()
+  logMemUsage()
   // Build foreign reference map before starting to insert any nodes.
   const foreignReferenceMapState = buildForeignReferenceMap({
     contentTypeItems,
@@ -303,14 +362,14 @@ export async function sourceNodes(
     previousForeignReferenceMapState,
     deletedEntries: currentSyncData?.deletedEntries,
   })
-  logHeapUsageInMB()
+  logMemUsage()
   console.log(`contentful end buildForeignReferenceMap`)
 
   await cache.set(CACHE_FOREIGN_REFERENCE_MAP_STATE, foreignReferenceMapState)
   console.log(
     `contentful end cache.set(CACHE_FOREIGN_REFERENCE_MAP_STATE, foreignReferenceMapState)`
   )
-  logHeapUsageInMB()
+  logMemUsage()
 
   const foreignReferenceMap = foreignReferenceMapState.backLinks
 
@@ -322,7 +381,7 @@ export async function sourceNodes(
       newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
-  logHeapUsageInMB()
+  logMemUsage()
   console.log(`contentful newOrUpdatedEntries.size`, newOrUpdatedEntries.size)
 
   const { deletedEntries, deletedAssets } = currentSyncData
@@ -372,7 +431,7 @@ export async function sourceNodes(
 
   // Update existing entry nodes that weren't updated but that need reverse links added or removed.
   let existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
-  logHeapUsageInMB()
+  logMemUsage()
   console.log(
     `start building existingNodesThatNeedReverseLinksUpdateInDatastore`
   )
@@ -445,10 +504,9 @@ export async function sourceNodes(
       }
     })
 
-  logHeapUsageInMB()
+  logMemUsage()
   console.log(`free existingNodes and newOrUpdatedEntries`)
   // attempt to convince node to garbage collect
-  existingNodes = undefined
   // @ts-ignore
   newOrUpdatedEntries = undefined
   await new Promise(res => {
@@ -456,7 +514,7 @@ export async function sourceNodes(
       res(null)
     })
   })
-  logHeapUsageInMB()
+  logMemUsage()
 
   // We need to call `createNode` on nodes we modified reverse links on,
   // otherwise changes won't actually persist
@@ -465,7 +523,7 @@ export async function sourceNodes(
       `contentful existingNodesThatNeedReverseLinksUpdateInDatastore.size`,
       existingNodesThatNeedReverseLinksUpdateInDatastore.size
     )
-    logHeapUsageInMB()
+    logMemUsage()
     for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
       function addChildrenToList(node, nodeList = [node]) {
         for (const childNodeId of node?.children ?? []) {
@@ -520,7 +578,7 @@ export async function sourceNodes(
         createNode(nodeToUpdate)
       }
     }
-    logHeapUsageInMB()
+    logMemUsage()
   }
 
   // @ts-ignore
@@ -536,19 +594,24 @@ export async function sourceNodes(
   })
   creationActivity.start()
 
-  logHeapUsageInMB()
+  logMemUsage()
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
-    const timer = reporter.activityTimer(
-      `Creating ${entryList[i].length} Contentful ${
-        pluginConfig.get(`useNameForId`)
-          ? contentTypeItem.name
-          : contentTypeItem.sys.id
-      } nodes`
-    )
+    const timer =
+      entryList[i].length > 0
+        ? reporter.activityTimer(
+            `Creating ${entryList[i].length} Contentful ${
+              pluginConfig.get(`useNameForId`)
+                ? contentTypeItem.name
+                : contentTypeItem.sys.id
+            } nodes`
+          )
+        : null
 
-    timer.start()
+    if (timer) {
+      timer.start()
+    }
 
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
@@ -569,10 +632,11 @@ export async function sourceNodes(
       pluginConfig,
       unstable_createNodeManifest,
     })
-    console.log(
-      `finished creating nodes for content type ${contentTypeItem.name}`
-    )
-    logHeapUsageInMB()
+
+    if (timer) {
+      timer.end()
+      logMemUsage()
+    }
 
     // attempt to convince node to garbage collect
     contentTypeItems[i] = undefined
@@ -580,8 +644,6 @@ export async function sourceNodes(
     await new Promise(res => {
       setImmediate(() => res(null))
     })
-    logHeapUsageInMB()
-    timer.end()
   }
 
   // attempt to convince node to garbage collect
@@ -612,11 +674,11 @@ export async function sourceNodes(
     )
 
     if (i % 10000 === 0) {
-      logHeapUsageInMB()
+      logMemUsage()
     }
 
     assets[i] = undefined
-    if (i % 1000 === 0) {
+    if (i % 100 === 0) {
       await new Promise(res => {
         setImmediate(() => res(null))
       })
@@ -626,13 +688,17 @@ export async function sourceNodes(
 
   assetTimer.end()
 
-  logHeapUsageInMB()
+  await new Promise(res => {
+    setImmediate(() => res(null))
+  })
+
+  logMemUsage()
 
   // Create tags entities
   if (tagItems.length) {
     reporter.info(`Creating ${tagItems.length} Contentful Tag nodes`)
 
-    logHeapUsageInMB()
+    logMemUsage()
     for (const tag of tagItems) {
       await createNode({
         id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
@@ -644,7 +710,7 @@ export async function sourceNodes(
         },
       })
     }
-    logHeapUsageInMB()
+    logMemUsage()
   }
 
   creationActivity.end()
@@ -663,4 +729,12 @@ export async function sourceNodes(
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
   }
+
+  if (hasTouchNodeOptOut) {
+    createdTypeNames.forEach(typeName => {
+      disableNodeTypeGarbageCollection(typeName)
+    })
+  }
+
+  await cache.set(CREATED_TYPENAMES, [...createdTypeNames])
 }
