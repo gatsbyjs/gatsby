@@ -296,8 +296,6 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = (gatsbyApi) => {
     ...yourData,
     // Required fields
     id: gatsbyApi.createNodeId(`some-string`),
-    parent: null,
-    children: [],
     internal: {
       type: `TypeName`,
       contentDigest: gatsbyApi.createContentDigest(yourData)
@@ -315,15 +313,13 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = (gatsbyApi) => {
 Here's a short explanation on each required field for your convenience:
 
 - `id`: The node's ID that Gatsby uses to track it. It must be a globally unique ID. You should use the [`createNodeId`](/docs/reference/config-files/node-api-helpers/#createNodeId) helper to create it.
-- `parent`: If a node is derived from another node, set the ID of the parent node here. Otherwise it can just be `null`.
-- `children`: You can place node IDs from child nodes here, if necessary. Most often you'll see yourself using `createParentChildLink`.
 - `internal`: An object that only allows a defined set of keys (see API reference)
   - `type`: The name of the node type
   - `contentDigest`: A hash (or short digital summary) of the contents of a node. The digest should be unique to the node since it's used for caching. If the node changes, this digest should also change. You can use the [`createContentDigest`](/docs/reference/config-files/node-api-helpers/#createContentDigest) helper to create that hash.
   
     If your node contains information like a revision ID or an `lastUpdated` timestamp, you should use this instead of creating your own content digest. This will lead to lower CPU utilization and still achieve the goal of invalidating the cache for the node when said node changes.
 
-You can use the [`createNode` API reference](/docs/reference/config-files/actions/#createNode) in the future if you're creating more advanced node types, e.g. ones where you have to define the `mediaType`.
+You can use the [`createNode` API reference](/docs/reference/config-files/actions/#createNode) in the future if you're creating more advanced node types, e.g. ones where you have to define the [`mediaType`](/docs/tutorial/creating-a-source-plugin/part-7/#mime-types).
 
 </Collapsible>
 
