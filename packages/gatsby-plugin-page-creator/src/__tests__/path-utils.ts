@@ -1,17 +1,20 @@
-import { pagesGlob } from "../path-utils"
-import micromatch from "micromatch"
+import { findCollectionPageFiles } from "../path-utils"
+import path from "path"
 
-// We test pagesGlob with micromatch in order to test glob logic without having to mock the filesystem to generate patterns.
-describe(`pagesGlob`, () => {
-  it(`will match files with collection routes in any segment of their file path.`, async () => {
-    const pathPatterns = [
-      `{a.slug}.tsx`,
-      `a/{b.slug}.tsx`,
-      `a/{b.slug}/c.tsx`,
-      `a/{b.slug}/c/d.tsx`,
-    ]
-    expect(micromatch(pathPatterns, pagesGlob)).toHaveLength(
-      pathPatterns.length
-    )
+describe(`findCollectionPageFiles`, () => {
+  it(`will find all and only the collection routes in a fixture`, async () => {
+    expect(
+      await findCollectionPageFiles(
+        path.join(__dirname, `fixtures`, `page-utils`, `collection-routes`)
+      )
+    ).toMatchInlineSnapshot(`
+      Array [
+        "{Other.extension}.js",
+        "{RootItem.name}.tsx",
+        "nested/{NestedItem.name}.tsx",
+        "nested/{NestedDirectoryOnlyItem}/edit.tsx",
+        "nested/{NestedDirectoryOnlyItem}/index.tsx",
+      ]
+    `)
   })
 })
