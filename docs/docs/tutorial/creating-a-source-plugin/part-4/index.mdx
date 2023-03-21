@@ -663,7 +663,7 @@ Instead of hardcoding the URL to the GraphQL API, you'll use an `endpoint` optio
 
     So the plugin already receives the GraphQL endpoint through the `endpoint` option.
 
-1. Update the TypeScript types inside `plugin/src/types.ts` so that both internally and externally the types are correct:
+1. The `IPluginOptionsKeys` TypeScript type inside `plugin/src/types.ts` currently has a generic `[key: string]: any` catch-all. Replace it with your `endpoint` option so that both internally and externally the types are correct:
 
     ```ts:title=plugin/src/types.ts
     // Rest of types
@@ -695,6 +695,7 @@ Instead of hardcoding the URL to the GraphQL API, you'll use an `endpoint` optio
     ) => {
       const { reporter, cache } = gatsbyApi
 
+      // highlight-next-line
       console.log({ pluginOptions })
 
       // Rest of sourceNodes
