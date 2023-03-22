@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.8.0/packages/gatsby-cli) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Pass `pluginName` to `reporter.activityTimer` & `reporter.createProgress` [#37710](https://github.com/gatsbyjs/gatsby/issues/37710) ([21e798b](https://github.com/gatsbyjs/gatsby/commit/21e798b198b334cef238c3c40da67b7657390f16))
+
+#### Other Changes
+
+- feat:(gatsby-cli) - support REACT_PROFILE env var value to set profile cli argument [#37754](https://github.com/gatsbyjs/gatsby/issues/37754) ([7bda38a](https://github.com/gatsbyjs/gatsby/commit/7bda38ac161fbd9521cb6f000675e07d810e634f))
+
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.7.0/packages/gatsby-cli) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
