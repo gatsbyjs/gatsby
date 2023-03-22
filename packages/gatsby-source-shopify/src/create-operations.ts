@@ -206,31 +206,31 @@ export function createOperations(
   }
 
   return {
-    productsOperation: createOperationObject(
+    productsOperation: exports.createOperationObject(
       graphqlClient,
       new ProductsQuery(pluginOptions).query(lastBuildTime),
       `products`
     ),
 
-    productVariantsOperation: createOperationObject(
+    productVariantsOperation: exports.createOperationObject(
       graphqlClient,
       new ProductVariantsQuery(pluginOptions).query(lastBuildTime),
       `variants`
     ),
 
-    ordersOperation: createOperationObject(
+    ordersOperation: exports.createOperationObject(
       graphqlClient,
       new OrdersQuery(pluginOptions).query(lastBuildTime),
       `orders`
     ),
 
-    collectionsOperation: createOperationObject(
+    collectionsOperation: exports.createOperationObject(
       graphqlClient,
       new CollectionsQuery(pluginOptions).query(lastBuildTime),
       `collections`
     ),
 
-    locationsOperation: createOperationObject(
+    locationsOperation: exports.createOperationObject(
       graphqlClient,
       new LocationsQuery(pluginOptions).query(lastBuildTime),
       `locations`

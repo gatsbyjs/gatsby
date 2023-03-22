@@ -35,18 +35,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
-                  id
-                }
+                id
               }
               feedback {
                 details {
@@ -318,18 +307,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
-                      id
-                    }
+                    id
                   }
                 }
               }
@@ -699,18 +677,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
-                  id
-                }
+                id
               }
               feedback {
                 details {
@@ -982,18 +949,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
-                      id
-                    }
+                    id
                   }
                 }
               }
@@ -1363,18 +1319,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
-                  id
-                }
+                id
               }
               feedback {
                 details {
@@ -1646,18 +1591,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
-                      id
-                    }
+                    id
                   }
                 }
               }
@@ -2027,18 +1961,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
-                  id
-                }
+                id
               }
               feedback {
                 details {
@@ -2310,18 +2233,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
-                      id
-                    }
+                    id
                   }
                 }
               }
