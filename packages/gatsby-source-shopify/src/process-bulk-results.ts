@@ -97,8 +97,6 @@ export async function processBulkResults(
         },
       } as IShopifyNode
 
-      console.log(node)
-
       if (pluginOptions.downloadImages && imageFields) {
         promises.push(
           processShopifyImages(gatsbyApi, node).then(() =>
