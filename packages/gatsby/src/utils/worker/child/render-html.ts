@@ -686,13 +686,13 @@ export async function renderSlices({
   htmlComponentRendererPath,
   publicDir,
   slicesProps,
-  staticQueriesByTemplate,
+  staticQueriesBySliceTemplate,
 }: {
   publicDir: string
   slices: Array<[string, IGatsbySlice]>
   slicesProps: Array<ISlicePropsEntry>
   htmlComponentRendererPath: string
-  staticQueriesByTemplate: Record<string, Array<string>>
+  staticQueriesBySliceTemplate: Record<string, Array<string>>
 }): Promise<void> {
   const htmlComponentRenderer = require(htmlComponentRendererPath)
 
@@ -704,7 +704,8 @@ export async function renderSlices({
       )
     }
     const slice = sliceEntry[1]
-    const staticQueryHashes = staticQueriesByTemplate[slice.componentPath] || []
+    const staticQueryHashes =
+      staticQueriesBySliceTemplate[slice.componentPath] || []
 
     const { staticQueryContext } = await getStaticQueryContext(
       staticQueryHashes
