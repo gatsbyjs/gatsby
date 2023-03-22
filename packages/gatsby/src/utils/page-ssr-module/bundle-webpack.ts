@@ -19,15 +19,45 @@ const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
 
-// eslint-disable-next-line
-export async function copyStaticQueriesToEngine(_args: {
+export async function copyStaticQueriesToEngine({
+  engineTemplatePaths,
+  components,
+  staticQueriesByTemplate,
+}: {
   engineTemplatePaths: Set<string>
+  components: IGatsbyState["components"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
 }): Promise<void> {
-  // TODO: collect static queries for engine template paths (need to traverse slices used by a template too)
+  const staticQueriesToCopy = new Set<string>()
+
+  for (const component of components.values()) {
+    // figuring out needed slices for each pages using componentPath is not straightforward
+    // so for now we just collect static queries for all slices + engine templates
+    if (component.isSlice || engineTemplatePaths.has(component.componentPath)) {
+      const staticQueryHashes =
+        staticQueriesByTemplate.get(component.componentPath) || []
+
+      for (const hash of staticQueryHashes) {
+        staticQueriesToCopy.add(hash)
+      }
+    }
+  }
+
   const sourceDir = path.join(process.cwd(), `public`, `page-data`, `sq`, `d`)
   const destDir = path.join(outputDir, `sq`)
-  await fs.copy(sourceDir, destDir)
+
+  await fs.ensureDir(destDir)
+  await fs.emptyDir(destDir)
+
+  const promisesToAwait: Array<Promise<void>> = []
+  for (const hash of staticQueriesToCopy) {
+    const sourcePath = path.join(sourceDir, `${hash}.json`)
+    const destPath = path.join(destDir, `${hash}.json`)
+
+    promisesToAwait.push(fs.copy(sourcePath, destPath))
+  }
+
+  await Promise.all(promisesToAwait)
 }
 
 export async function createPageSSRBundle({

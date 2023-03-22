@@ -408,6 +408,7 @@ module.exports = async function build(
   await copyStaticQueriesToEngine({
     engineTemplatePaths,
     staticQueriesByTemplate: store.getState().staticQueriesByTemplate,
+    components: store.getState().components,
   })
 
   if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
