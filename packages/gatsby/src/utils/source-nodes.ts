@@ -95,6 +95,7 @@ async function deleteStaleNodes(state: IGatsbyState): Promise<void> {
     const nodes = getDataStore().iterateNodesByType(typeName)
     const staleNodes = getStaleNodes(state, nodes)
 
+    const initialCount = deleteCount
     for (const node of staleNodes) {
       store.dispatch(deleteNode(node))
       cleanupStaleNodesActivity.tick()
@@ -108,6 +109,8 @@ async function deleteStaleNodes(state: IGatsbyState): Promise<void> {
         })
       }
     }
+    const amountDeleted = deleteCount - initialCount
+    report.verbose(`Deleted ${amountDeleted} stale ${typeName} nodes`)
   }
 
   cleanupStaleNodesActivity.end()

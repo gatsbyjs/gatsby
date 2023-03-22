@@ -171,6 +171,8 @@ export async function sourceNodes(
 
       if (existingNodeIndex !== -1) {
         existingNodes[existingNodeIndex] = node
+      } else {
+        existingNodes.push(node)
       }
     }
 
