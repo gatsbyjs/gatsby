@@ -37,9 +37,15 @@ const incrementalReducer = (
 
     case `BUILD_TYPE_METADATA`: {
       // Overwrites existing metadata
-      const { nodes, typeName } = action.payload
+      const { nodes, typeName, clearExistingMetadata, callback } =
+        action.payload
       if (!state[typeName]?.ignored) {
-        state[typeName] = addNodes(initialTypeMetadata(), nodes)
+        const initialMetadata = clearExistingMetadata
+          ? initialTypeMetadata()
+          : state[typeName]
+
+        state[typeName] = addNodes(initialMetadata, nodes)
+        callback()
       }
       return state
     }
