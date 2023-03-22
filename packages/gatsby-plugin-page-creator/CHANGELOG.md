@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.8.0/packages/gatsby-plugin-page-creator) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Track correct `knownPagePaths` [#37745](https://github.com/gatsbyjs/gatsby/issues/37745) ([b121057](https://github.com/gatsbyjs/gatsby/commit/b1210574cfd59752b2f95e7146b8d83ea20a7110))
+
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.7.0/packages/gatsby-plugin-page-creator) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
