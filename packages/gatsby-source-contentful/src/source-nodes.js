@@ -53,9 +53,9 @@ function logMemUsage() {
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 const existingNodes = new Map()
 
+// store only the fields we need to compare to reduce memory usage. if a node is updated we'll use getNode to grab the whole node before updating it
 function addNodeToExistingNodesCache(node) {
-  // only store the fields we need to compare. if a node is updated we'll use getNode to grab the whole node before updating it
-  existingNodes.set(node.id, {
+  const cacheNode = {
     id: node.id,
     contentful_id: node.contentful_id,
     sys: {
@@ -66,13 +66,20 @@ function addNodeToExistingNodesCache(node) {
     internal: {
       owner: node.internal.owner,
     },
-  })
+    __memcache: true,
+  }
+
+  for (const key of Object.keys(node)) {
+    if (key.endsWith(`___NODE`)) {
+      cacheNode[key] = node[key]
+    }
+  }
+
+  existingNodes.set(node.id, cacheNode)
 }
 
 function removeNodeFromExistingNodesCache(node) {
-  if (existingNodes.has(node.id)) {
-    existingNodes.delete(node.id)
-  }
+  existingNodes.delete(node.id)
 }
 
 let isFirstSourceNodesCallOfCurrentNodeProcess = true
@@ -142,8 +149,6 @@ export async function sourceNodes(
     newAsset: 0,
     updatedEntry: 0,
     updatedAsset: 0,
-    existingEntry: 0,
-    existingAsset: 0,
   }
 
   let allNodesLoopCount = 0
@@ -179,7 +184,9 @@ export async function sourceNodes(
 
           if (node?.fields?.includes(`localFile`)) {
             // Prevent GraphQL type inference from crashing on this property
-            touchNode(getNode(getNode(node.id).fields.localFile))
+            const fullNode = getNode(node.id)
+            const localFileNode = getNode(fullNode.fields.localFile)
+            touchNode(localFileNode)
           }
         }
 
@@ -187,9 +194,6 @@ export async function sourceNodes(
           // dont block the event loop
           await new Promise(resolve => setImmediate(() => resolve(null)))
         }
-
-        // @ts-ignore
-        nodeCounts[`existing${node.sys.type}`]++
 
         if (
           pluginConfig.get(`enableTags`) &&
@@ -339,15 +343,11 @@ export async function sourceNodes(
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
   reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
-  reporter.info(
-    `Contentful: ${nodeCounts.existingEntry / locales.length} cached entries`
-  )
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
-  reporter.info(
-    `Contentful: ${nodeCounts.existingAsset / locales.length} cached assets`
-  )
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
+
+  reporter.info(`Contentful: ${existingNodes.size} memory cached nodes`)
 
   reporter.verbose(`Building Contentful reference map`)
 
@@ -549,16 +549,25 @@ export async function sourceNodes(
   })
   logMemUsage()
 
+  console.log(
+    `contentful existingNodesThatNeedReverseLinksUpdateInDatastore.size`,
+    existingNodesThatNeedReverseLinksUpdateInDatastore.size
+  )
   // We need to call `createNode` on nodes we modified reverse links on,
   // otherwise changes won't actually persist
   if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
-    console.log(
-      `contentful existingNodesThatNeedReverseLinksUpdateInDatastore.size`,
-      existingNodesThatNeedReverseLinksUpdateInDatastore.size
-    )
     logMemUsage()
     let existingNodesLoopCount = 0
+    const loggedTypes = new Set()
     for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
+      if (!loggedTypes.has(node.sys.type)) {
+        console.log(
+          `contentful existingNodesThatNeedReverseLinksUpdateInDatastore type`,
+          node.sys.type
+        )
+        loggedTypes.add(node.sys.type)
+      }
+
       function addChildrenToList(node, nodeList = [node]) {
         for (const childNodeId of node?.children ?? []) {
           const childNode = getNode(childNodeId)
@@ -578,12 +587,9 @@ export async function sourceNodes(
         // We should not mutate original node as Gatsby will still
         // compare against what's in in-memory weak cache, so we
         // clone original node to ensure reference identity is not possible
-        const nodeToUpdate = getNode(nodeToUpdateOriginal.id)
-
-        if (!nodeToUpdate) {
-          // @TODO this is just for debugging so I can limit total nodes so remove it
-          continue
-        }
+        const nodeToUpdate = nodeToUpdateOriginal.__memcache
+          ? getNode(nodeToUpdateOriginal.id)
+          : nodeToUpdateOriginal
 
         let counter
         const [initialContentDigest, counterStr] =
@@ -623,7 +629,7 @@ export async function sourceNodes(
 
         createNode(newNode)
 
-        if (existingNodesLoopCount++ % 100 === 0) {
+        if (existingNodesLoopCount++ % 2000 === 0) {
           // dont block the event loop
           await new Promise(res => {
             setImmediate(() => {
@@ -738,7 +744,7 @@ export async function sourceNodes(
     }
 
     assets[i] = undefined
-    if (i % 100 === 0) {
+    if (i % 1000 === 0) {
       await new Promise(res => {
         setImmediate(() => res(null))
       })
