@@ -78,14 +78,17 @@ function getStaleNodes(
 /**
  * Find all stale nodes and delete them
  */
-async function deleteStaleNodes(state: IGatsbyState): Promise<void> {
+async function deleteStaleNodes(
+  state: IGatsbyState,
+  initialTypeNames: Array<string>
+): Promise<void> {
   let deleteCount = 0
 
   const cleanupStaleNodesActivity =
     report.createProgress(`clean up stale nodes`)
   cleanupStaleNodesActivity.start()
 
-  for (const typeName of getDataStore().getTypes()) {
+  for (const typeName of initialTypeNames) {
     if (state.touchNodeOptOutTypes.has(typeName)) {
       continue
     }
@@ -100,7 +103,7 @@ async function deleteStaleNodes(state: IGatsbyState): Promise<void> {
       store.dispatch(deleteNode(node))
       cleanupStaleNodesActivity.tick()
 
-      if (++deleteCount % 5000) {
+      if (++deleteCount % 1000) {
         // dont block event loop
         await new Promise(res => {
           setImmediate(() => {
@@ -129,6 +132,14 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
+  await getDataStore().ready()
+
+  const potentiallyStaleNodeTypes: Array<string> = []
+
+  for (const typeName of getDataStore().getTypes()) {
+    potentiallyStaleNodeTypes.push(typeName)
+  }
+
   const traceId = isInitialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
@@ -146,7 +157,8 @@ export default async ({
   if (isInitialSourcing) {
     const state = store.getState()
 
-    await deleteStaleNodes(state)
+    // Pass type names †hat existed before sourcing because no need to check for types that didn't exist before. none of those are stale.
+    await deleteStaleNodes(state, potentiallyStaleNodeTypes)
     // warnForPluginsWithoutNodes(state)
 
     isInitialSourcing = false
