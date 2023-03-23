@@ -9,7 +9,7 @@ import { MdArrowForward } from "react-icons/md"
 
 Welcome to the "Creating a Gatsby source plugin" tutorial. We're excited you're here!
 
-In this tutorial you'll learn how to create a Gatsby source plugin that is following best practices, using Gatsby's latest features, and ultimately is how the Gatsby team wants you to build source plugins. By following our instructions your plugin will have great developer experience for you, and great reliability and usability for your users.
+In this tutorial you'll learn how to create a Gatsby source plugin that follows best practices, uses Gatsby's latest features, and aligns with how the Gatsby team wants you to build source plugins. By following our instructions, your plugin will have great developer experience for you, and great reliability and usability for your users.
 
 Source plugins are an integral part to Gatsby's [GraphQL data layer](/docs/reference/graphql-data-layer/) as they are responsible for bringing data into that layer. They play a key role in hiding complex pieces of software (e.g. fetching and normalizing data from a remote API) behind an easy-to-use plugin. This also means that they have to be reliable, performant, and use best practices behind the scenes.
 
@@ -17,7 +17,7 @@ There is already a wealth of [existing source plugins](/plugins?=gatsby-source) 
 
 <Announcement>
 
-This tutorial is indended to be an **additive guide**. Each part builds up on each other so we recommend you going through it from start to finish. However, if you want to revisit a specific topic each part should have all the necessary information on its own to be informative.
+This tutorial is intended to be an **additive guide**. Each part builds up on each other so we recommend you going through it from start to finish. However, if you want to revisit a specific topic each part should have all the necessary information on its own to be informative.
 
 You'll have a functioning source plugin at the end of part 2. The later parts are improving the plugin, adding functionalities, and explaining advanced topics. So while you can already publish what you have after part 2, we highly recommend going through all parts to learn how you can further improve your plugin.
 
@@ -25,8 +25,8 @@ You'll have a functioning source plugin at the end of part 2. The later parts ar
 
 By the end of this part of the tutorial, you will:
 
-- Know what background knowledge is assumed throughout the tutorial
-- Understand what a source plugin is and why you would want to create one
+- Identify what background knowledge is assumed throughout the tutorial
+- Describe what a source plugin is and why you would want to create one
 - Install the necessary software
 
 ## Background knowledge
@@ -45,9 +45,9 @@ In terms of the other technologies, you should be comfortable writing GraphQL qu
 
 ## What is a source plugin?
 
-A plugin that adds additional data sources (content and data backends, e.g. CMSs like Contentful, WordPress, Drupal) to Gatsby that can then be queried by your pages and components. You can access these created nodes via Gatsby's universal GraphQL data layer.
+A plugin that adds additional data sources (content and data backends, e.g. content management systems like Contentful, WordPress, Drupal) to Gatsby that can then be queried by your pages and components. You can access these created nodes via Gatsby's universal GraphQL data layer.
 
-At a high-level, a source plugin is:
+At a high-level, a source plugin:
 
 - Sourcing data from an external API in the best possible way
 - Creating new nodes and establishing relationships between them
@@ -81,7 +81,7 @@ Gatsby plugins are most often thought of as modules that are published to [npm](
 
 This same logic applies to source plugins. If you create a source plugin that you think others might make use of and you care to maintain it, please do publish it and [submit to the Gatsby plugin library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/)! However, there is certainly no obligation to publish your plugin. If it serves its purpose for your use case just fine, keep it a local plugin.
 
-The later parts of this tutorial will teach you how to go about developing a plugin in a way that makes it easy to publish later.
+The parts at the end of this tutorial will teach you how to go about developing a plugin in a way that makes it easy to publish later.
 
 ## Development environment
 

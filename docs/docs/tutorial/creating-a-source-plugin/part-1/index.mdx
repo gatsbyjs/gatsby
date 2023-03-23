@@ -10,7 +10,7 @@ import { MdArrowForward } from "react-icons/md"
 
 Now that you have the necessary background knowledge and your development environment set up, you can get your local project running!
 
-There are many ways to author a Gatsby plugin or more generally speaking an npm package. Since we don't want you to be stuck in decision fatique on how to do things, you'll learn how to build a Gatsby source plugin in TypeScript with just `tsc` (that is the TypeScript compiler). Later you can decide to use other tooling if you wish. The repository you'll clone will also show how to test your plugin in a Gatsby site.
+There are many ways to author a Gatsby plugin or more generally speaking an npm package. Since we don't want you to be stuck in decision fatigue on how to do things, you'll learn how to build a Gatsby source plugin in TypeScript with just `tsc` (that is the TypeScript compiler). Later you can decide to use other tooling if you wish. The repository you'll clone will also show how to test your plugin in a Gatsby site.
 
 By the end of this part of the tutorial, you will have:
 
@@ -59,7 +59,7 @@ The `creating-source-plugin-tutorial` project includes three directories:
 - `plugin`: The source plugin
 - `site`: An example Gatsby site
 
-So the `site` uses the `plugin` which sources its data from `api`. As mentioned in [Part 0](/docs/tutorial/creating-a-source-plugin/part-0/#development-environment) this project uses yarn workspaces to make this setup work.
+The `site` uses the `plugin` which sources its data from `api`. As mentioned in [Part 0](/docs/tutorial/creating-a-source-plugin/part-0/#development-environment) this project uses yarn workspaces to make this setup work.
 
 By having the plugin and an example site that uses the plugin in the same repository, you can more easily test your plugin.
 
@@ -73,18 +73,18 @@ The `plugin` itself has a structure we'd also recommend following:
 
 - A `package.json` file that sets `gatsby` and `gatsby-plugin` as its `"keywords"` so that Gatsby's plugin search can pick it up
 - A root `gatsby-node.js` that requires `./dist/gatsby-node` (the compiled TypeScript file). At the moment Gatsby looks for a root `gatsby-node.js` file as its entry file.
-- A well-written `README` that explains the user in concise steps how to install, use, and configure your plugin (also see [How to write a plugin README](/contributing/docs-contributions/how-to-write-a-plugin-readme/))
+- A well-written `README` that explains to the user in concise steps how to install, use, and configure your plugin (also see [How to write a plugin README](/contributing/docs-contributions/how-to-write-a-plugin-readme/))
 - A `src` folder with the plugin's source code
   - A root `gatsby-node.ts` file that exports [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/) from individual files
   - Individual files that only contain the specific Node API (in [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case)), e.g. `onPluginInit` becomes `on-plugin-init.ts`. This will also make unit testing your plugin easier.
 
-How you organize your `src` folder is of course up to you, we'd recommend keeping things consistent and files lowercase.
+How you organize your `src` folder is of course up to you, but we'd recommend keeping things consistent and files lowercase.
 
 <Collapsible
   summary={<em>Wondering about a source plugin template for new projects?</em>}
 >
 
-Above we said that you can ignore the `api` folder. This is because for your real-world project you'll most probably source the data from an external API, not an API locally in your repository.
+Above we said that you can ignore the `api` folder. This is because for your real-world project you'll most likely source the data from an external API, not an API locally in your repository.
 
 The companion repository not only has a `start` branch but also a `template` branch without the `api` folder. You'll learn more about this at the end in the [What's next?](/docs/tutorial/creating-a-source-plugin/whats-next/) part. For now, go through the tutorial and at the end you'll know how to leverage the repository as a template for your new projects!
 
@@ -102,13 +102,13 @@ yarn
 
 Afterwards, open a new window in your terminal (you should have two now).
 
-In the first window, run `develop:deps` to start watching the `api` and `plugin` directories. If you change something inside `api`, the GraphQL server will be restarted, if you change something in `plugin` the TypeScript compiler will output updated files.
+In the first window, run the `develop:deps` script to start watching the `api` and `plugin` directories. If you change something inside `api`, the GraphQL server will be restarted, if you change something in `plugin` the TypeScript compiler will output updated files.
 
 ```shell
 yarn develop:deps
 ```
 
-You should see something like this in your terminal:
+You should find something like this in your terminal:
 
 ```shell
 [develop:api   ] 14:48:03 - Starting compilation in watch mode...
@@ -123,13 +123,13 @@ You should see something like this in your terminal:
 [develop:api   ] Server is running at http://localhost:4000/graphql
 ```
 
-Now, in your second terminal window, run `develop:site`. This runs `gatsby develop` for the example site:
+Now, in your second terminal window, run the `develop:site` script. This runs `gatsby develop` for the example site:
 
 ```shell
 yarn develop:site
 ```
 
-While `gatsby develop` is running you should also see the `info Example plugin loaded...` log. This shows that the plugin was successfully loaded for this initial demo. Yey 🎉
+While `gatsby develop` is running you should also note the `info Example plugin loaded...` log. This verifies that the plugin was successfully loaded for this initial demo. Yay 🎉
 
 <Announcement>
 
@@ -159,7 +159,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-In Part 2 you'll learn how to do the most important part of a Gatsby source plugin: Sourcing data and displaying it on your site.
+In Part 2 you'll learn how to do the most important part of a Gatsby source plugin: sourcing data and displaying it on your site.
 
 <LinkButton
   to="/docs/tutorial/creating-a-source-plugin/part-2/"

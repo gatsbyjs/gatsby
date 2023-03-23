@@ -122,7 +122,7 @@ For this tutorial you'll be querying the `Post` and `Author` entities from the e
 
 The topic of "working with a remote backend API" is a really broad topic and not something we can cover here in its entirety as part of this tutorial. However, here are some comments and tips that will help you while working on your plugin:
 
-- Feel free to either use a barebones fetch function (via [`node-fetch`](https://www.npmjs.com/package/node-fetch)) or something more batteries-included like [`got`](https://www.npmjs.com/package/got). It depends on your API, e.g. if its unreliable, add retry logic to your fetching. If it's your small API that you know, a more barebones approach will probably be just fine.
+- Feel free to either use a barebones fetch function (via [`node-fetch`](https://www.npmjs.com/package/node-fetch)) or something more batteries-included like [`got`](https://www.npmjs.com/package/got). It depends on your API, e.g. if it's unreliable, add retry logic to your fetching. If it's your small API that you know, a more barebones approach will probably be just fine.
 - Check if the source you're trying to access has its own SDK. Many CMSs have their own SDK, e.g. Contentful with their [`contentful`](https://www.npmjs.com/package/contentful) package. When available, we'd recommend using these first.
 - It's good practice to gracefully handle errors when trying to access a remote API. This includes errors directly from the API but also ones like sudden internet connection loss. You don't want to silently fail on such errors but show them to the user of your plugin.
 
