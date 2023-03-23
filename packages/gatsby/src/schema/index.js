@@ -97,7 +97,12 @@ const buildInferenceMetadata = ({ types }) =>
         await dispatchNodes()
       }
 
-      resolve()
+      if (typeNames.length > 0) {
+        // dont block the event loop
+        setImmediate(() => processNextType())
+      } else {
+        resolve()
+      }
     }
     processNextType()
   })
