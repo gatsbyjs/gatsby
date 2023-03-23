@@ -66,23 +66,6 @@ const inFlightResourcesForTemplate = new Map<
   Promise<IResourcesForTemplate>
 >()
 
-const readStaticQueryContext = async (
-  templatePath: string
-): Promise<Record<string, { data: unknown }>> => {
-  const filePath = path.join(
-    // TODO: Better way to get this?
-    process.cwd(),
-    `.cache`,
-    `page-ssr`,
-    `sq-context`,
-    templatePath,
-    `sq-context.json`
-  )
-  const rawSQContext = await fs.readFile(filePath, `utf-8`)
-
-  return JSON.parse(rawSQContext)
-}
-
 function clearCaches(): void {
   clearStaticQueryCaches()
   resourcesForTemplateCache.clear()
@@ -703,11 +686,13 @@ export async function renderSlices({
   htmlComponentRendererPath,
   publicDir,
   slicesProps,
+  staticQueriesBySliceTemplate,
 }: {
   publicDir: string
   slices: Array<[string, IGatsbySlice]>
   slicesProps: Array<ISlicePropsEntry>
   htmlComponentRendererPath: string
+  staticQueriesBySliceTemplate: Record<string, Array<string>>
 }): Promise<void> {
   const htmlComponentRenderer = require(htmlComponentRendererPath)
 
@@ -718,11 +703,12 @@ export async function renderSlices({
         `Slice name "${sliceName}" not found when rendering slices`
       )
     }
+    const slice = sliceEntry[1]
+    const staticQueryHashes =
+      staticQueriesBySliceTemplate[slice.componentPath] || []
 
-    const [_fileName, slice] = sliceEntry
-
-    const staticQueryContext = await readStaticQueryContext(
-      slice.componentChunkName
+    const { staticQueryContext } = await getStaticQueryContext(
+      staticQueryHashes
     )
 
     const MAGIC_CHILDREN_STRING = `__DO_NOT_USE_OR_ELSE__`
