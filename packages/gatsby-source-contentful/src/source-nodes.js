@@ -2,7 +2,6 @@
 import { getDataStore } from "gatsby/dist/datastore"
 import { hasFeature } from "gatsby-plugin-utils/has-feature"
 import isOnline from "is-online"
-import _ from "lodash"
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
 import {
@@ -583,26 +582,13 @@ export async function sourceNodes(
         // We should not mutate original node as Gatsby will still
         // compare against what's in in-memory weak cache, so we
         // clone original node to ensure reference identity is not possible
-        const nodeToUpdate = _.cloneDeep(getNode(nodeToUpdateOriginal.id))
+        const nodeToUpdate = getNode(nodeToUpdateOriginal.id)
 
         if (!nodeToUpdate) {
           // @TODO this is just for debugging so I can limit total nodes so remove it
           continue
         }
 
-        // We need to remove properties from existing fields
-        // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
-        // Gatsby automatically will set `.owner` it back
-        nodeToUpdate.internal.owner = undefined
-        // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
-        // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
-        // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
-        // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
-        // we would also need to restore that field ourselves after re-creating a node)
-        nodeToUpdate.fields = undefined // plugin adds node field on asset nodes which don't have reverse links
-
-        // We add or modify counter postfix to contentDigest
-        // to make sure Gatsby treat this as data update
         let counter
         const [initialContentDigest, counterStr] =
           nodeToUpdate.internal.contentDigest.split(
@@ -619,8 +605,27 @@ export async function sourceNodes(
           counter++
         }
 
-        nodeToUpdate.internal.contentDigest = `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`
-        createNode(nodeToUpdate)
+        const newNode = {
+          ...nodeToUpdate,
+          internal: {
+            ...nodeToUpdate.internal,
+            // We need to remove properties from existing fields
+            // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
+            // Gatsby automatically will set `.owner` it back
+            owner: undefined,
+            // We add or modify counter postfix to contentDigest
+            // to make sure Gatsby treat this as data update
+            contentDigest: `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`,
+          },
+          // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
+          // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
+          // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
+          // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
+          // we would also need to restore that field ourselves after re-creating a node)
+          fields: undefined, // plugin adds node field on asset nodes which don't have reverse links
+        }
+
+        createNode(newNode)
 
         if (existingNodesLoopCount++ % 100 === 0) {
           // dont block the event loop
