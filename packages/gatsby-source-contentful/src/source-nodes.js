@@ -52,7 +52,30 @@ function logMemUsage() {
  */
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
-const existingNodes = []
+const existingNodes = new Map()
+
+function addNodeToExistingNodesCache(node) {
+  // only store the fields we need to compare. if a node is updated we'll use getNode to grab the whole node before updating it
+  existingNodes.set(node.id, {
+    id: node.id,
+    contentful_id: node.contentful_id,
+    sys: {
+      type: node.sys.type,
+    },
+    node_locale: node.node_locale,
+    children: node.children,
+    internal: {
+      owner: node.internal.owner,
+    },
+  })
+}
+
+function removeNodeFromExistingNodesCache(node) {
+  if (existingNodes.has(node.id)) {
+    existingNodes.delete(node.id)
+  }
+}
+
 let isFirstSourceNodesCallOfCurrentNodeProcess = true
 export async function sourceNodes(
   {
@@ -90,7 +113,30 @@ export async function sourceNodes(
   )}`
 
   const CREATED_TYPENAMES = `contentful-created-typenames-${sourceId}`
+
+  const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
+  const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
+  const CACHE_FOREIGN_REFERENCE_MAP_STATE = `contentful-foreign-reference-map-state-${sourceId}`
+
+  /*
+   * Subsequent calls of Contentfuls sync API return only changed data.
+   *
+   * In some cases, especially when using rich-text fields, there can be data
+   * missing from referenced entries. This breaks the reference matching.
+   *
+   * To workround this, we cache the initial sync data and merge it
+   * with all data from subsequent syncs. Afterwards the references get
+   * resolved via the Contentful JS SDK.
+   */
+  const syncToken =
+    store.getState().status.plugins?.[`gatsby-source-contentful`]?.[
+      CACHE_SYNC_TOKEN
+    ]
+
   const createdTypeNames = new Set((await cache.get(CREATED_TYPENAMES)) || [])
+  console.log(`previously cached createdTypeNames.size`, createdTypeNames.size)
+  const isUncachedBuild = !syncToken
+  const isCachedBuild = !isUncachedBuild
 
   // Report existing, new and updated nodes
   const nodeCounts = {
@@ -105,7 +151,20 @@ export async function sourceNodes(
   let allNodesLoopCount = 0
 
   logMemUsage()
-  if (isFirstSourceNodesCallOfCurrentNodeProcess) {
+
+  // a code change cleared the cache so we need to clear the existing nodes cache
+  // since it's a global variable and might still exist
+  if (isUncachedBuild && existingNodes.size > 0) {
+    existingNodes.clear()
+    // dont block the event loop so node might remove node cache from memory
+    await new Promise(res => {
+      setImmediate(() => {
+        res(null)
+      })
+    })
+  }
+
+  if (existingNodes.size === 0) {
     console.log(`getting existing nodes`)
     for (const typeName of createdTypeNames) {
       const typeNodes = getDataStore().iterateNodesByType(typeName)
@@ -135,7 +194,7 @@ export async function sourceNodes(
           continue
         }
 
-        existingNodes.push(node)
+        addNodeToExistingNodesCache(node)
       }
 
       // dont block the event loop
@@ -155,7 +214,7 @@ export async function sourceNodes(
   }
 
   // wrap createNode so we can track the typenames of nodes we create
-  // and call disableNodeTypeGarbageCollection for them
+  // and call disableNodeTypeGarbageCollection for them as well as cache them in memory for faster lookups when finding backreferences
   const createNode = node => {
     if (node?.internal?.type) {
       createdTypeNames.add(node.internal.type)
@@ -164,30 +223,16 @@ export async function sourceNodes(
       throw new Error(`Contentful Node is missing internal.type`)
     }
 
-    if (!isFirstSourceNodesCallOfCurrentNodeProcess) {
-      const existingNodeIndex = existingNodes.findIndex(
-        existingNode => existingNode.id === node.id
-      )
-
-      if (existingNodeIndex !== -1) {
-        existingNodes[existingNodeIndex] = node
-      } else {
-        existingNodes.push(node)
-      }
+    if (!isUncachedBuild) {
+      addNodeToExistingNodesCache(node)
     }
 
     return originalCreateNode(node)
   }
 
   const deleteNode = node => {
-    if (!isFirstSourceNodesCallOfCurrentNodeProcess) {
-      const existingNodeIndex = existingNodes.findIndex(
-        existingNode => existingNode.id === node.id
-      )
-
-      if (existingNodeIndex !== -1) {
-        delete existingNodes[existingNodeIndex]
-      }
+    if (!isUncachedBuild) {
+      removeNodeFromExistingNodesCache(node)
     }
 
     return originalDeleteNode(node)
@@ -218,25 +263,6 @@ export async function sourceNodes(
   }
 
   fetchActivity.start()
-
-  const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
-  const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
-  const CACHE_FOREIGN_REFERENCE_MAP_STATE = `contentful-foreign-reference-map-state-${sourceId}`
-
-  /*
-   * Subsequent calls of Contentfuls sync API return only changed data.
-   *
-   * In some cases, especially when using rich-text fields, there can be data
-   * missing from referenced entries. This breaks the reference matching.
-   *
-   * To workround this, we cache the initial sync data and merge it
-   * with all data from subsequent syncs. Afterwards the references get
-   * resolved via the Contentful JS SDK.
-   */
-  const syncToken =
-    store.getState().status.plugins?.[`gatsby-source-contentful`]?.[
-      CACHE_SYNC_TOKEN
-    ]
 
   logMemUsage()
   // Actual fetch of data from Contentful
@@ -331,7 +357,7 @@ export async function sourceNodes(
   // @ts-ignore
   const { assets } = currentSyncData
 
-  console.log(`contentful existingNodes.length`, existingNodes.length)
+  console.log(`contentful existingNodes.size`, existingNodes.size)
   console.log(`contentful entryList.length`, entryList.length)
   // Create map of resolvable ids so we can check links against them while creating
   // links.
@@ -434,17 +460,21 @@ export async function sourceNodes(
   // Update existing entry nodes that weren't updated but that need reverse links added or removed.
   let existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
   logMemUsage()
-  console.log(
-    `start building existingNodesThatNeedReverseLinksUpdateInDatastore`
-  )
-  existingNodes
-    .filter(
-      n =>
-        n.sys.type === `Entry` &&
-        !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`) &&
-        !deletedEntryGatsbyReferenceIds.has(n.id)
+  if (isCachedBuild) {
+    console.log(
+      `start building existingNodesThatNeedReverseLinksUpdateInDatastore`
     )
-    .forEach(n => {
+    existingNodes.forEach(n => {
+      if (
+        !(
+          n.sys.type === `Entry` &&
+          !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`) &&
+          !deletedEntryGatsbyReferenceIds.has(n.id)
+        )
+      ) {
+        return
+      }
+
       if (
         n.contentful_id &&
         foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
@@ -505,9 +535,10 @@ export async function sourceNodes(
         })
       }
     })
+  }
 
   logMemUsage()
-  console.log(`free existingNodes and newOrUpdatedEntries`)
+  console.log(`free newOrUpdatedEntries`)
   // attempt to convince node to garbage collect
   // @ts-ignore
   newOrUpdatedEntries = undefined
@@ -526,6 +557,7 @@ export async function sourceNodes(
       existingNodesThatNeedReverseLinksUpdateInDatastore.size
     )
     logMemUsage()
+    let existingNodesLoopCount = 0
     for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
       function addChildrenToList(node, nodeList = [node]) {
         for (const childNodeId of node?.children ?? []) {
@@ -546,7 +578,13 @@ export async function sourceNodes(
         // We should not mutate original node as Gatsby will still
         // compare against what's in in-memory weak cache, so we
         // clone original node to ensure reference identity is not possible
-        const nodeToUpdate = _.cloneDeep(nodeToUpdateOriginal)
+        const nodeToUpdate = _.cloneDeep(getNode(nodeToUpdateOriginal.id))
+
+        if (!nodeToUpdate) {
+          // @TODO this is just for debugging so I can limit total nodes so remove it
+          continue
+        }
+
         // We need to remove properties from existing fields
         // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
         // Gatsby automatically will set `.owner` it back
@@ -578,6 +616,15 @@ export async function sourceNodes(
 
         nodeToUpdate.internal.contentDigest = `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`
         createNode(nodeToUpdate)
+
+        if (existingNodesLoopCount++ % 100 === 0) {
+          // dont block the event loop
+          await new Promise(res => {
+            setImmediate(() => {
+              res(null)
+            })
+          })
+        }
       }
     }
     logMemUsage()
@@ -602,8 +649,8 @@ export async function sourceNodes(
 
     const timer =
       entryList[i].length > 0
-        ? reporter.activityTimer(
-            `Creating ${entryList[i].length} Contentful ${
+        ? reporter.createProgress(
+            `Creating Contentful ${
               pluginConfig.get(`useNameForId`)
                 ? contentTypeItem.name
                 : contentTypeItem.sys.id
@@ -622,7 +669,12 @@ export async function sourceNodes(
       restrictedNodeFields,
       conflictFieldPrefix,
       entries: entryList[i],
-      createNode,
+      createNode: timer?.tick
+        ? node => {
+            timer.tick()
+            return createNode(node)
+          }
+        : createNode,
       createNodeId,
       getNode,
       resolvable,
@@ -733,6 +785,9 @@ export async function sourceNodes(
   }
 
   if (hasTouchNodeOptOut) {
+    console.log(
+      `Contentful disabling garbage collection for ${createdTypeNames.size} node types`
+    )
     createdTypeNames.forEach(typeName => {
       disableNodeTypeGarbageCollection(typeName)
     })
