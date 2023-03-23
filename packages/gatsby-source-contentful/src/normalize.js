@@ -80,7 +80,7 @@ export const buildEntryList = ({ contentTypeItems, currentSyncData }) => {
 
 export const buildResolvableSet = ({
   entryList,
-  existingNodes = [],
+  existingNodes = new Map(),
   assets = [],
 }) => {
   const resolvable = new Set()
