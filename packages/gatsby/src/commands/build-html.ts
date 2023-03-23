@@ -784,13 +784,6 @@ export async function buildSlices({
           state.staticQueriesByTemplate.get(slice.componentPath)
       }
 
-      console.log({
-        staticQueriesByTemplate: Object.fromEntries(
-          state.staticQueriesByTemplate
-        ),
-        staticQueriesBySliceTemplate,
-      })
-
       await workerPool.single.renderSlices({
         publicDir: path.join(program.directory, `public`),
         htmlComponentRendererPath,
