@@ -25,6 +25,14 @@ it(`Builds cache-dir with minimal config`, done => {
   })
 
   spawn.on(`close`, function () {
+    stderr = stderr
+      .replace(`Browserslist: caniuse-lite is outdated. Please run:`, ``)
+      .replace(`npx update-browserslist-db@latest`, ``)
+      .replace(
+        `Why you should do it regularly: https://github.com/browserslist/update-db#readme`
+      )
+      .trim()
+
     expect(stderr).toEqual(``)
     expect(stdout).not.toEqual(``)
     done()
