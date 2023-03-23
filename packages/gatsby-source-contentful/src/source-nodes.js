@@ -134,8 +134,7 @@ export async function sourceNodes(
 
   const createdTypeNames = new Set((await cache.get(CREATED_TYPENAMES)) || [])
   console.log(`previously cached createdTypeNames.size`, createdTypeNames.size)
-  const isUncachedBuild = !syncToken
-  const isCachedBuild = !isUncachedBuild
+  const isCachedBuild = !!syncToken
 
   // Report existing, new and updated nodes
   const nodeCounts = {
@@ -151,14 +150,15 @@ export async function sourceNodes(
 
   logMemUsage()
 
+  console.info({
+    isCachedBuild,
+    existingNodesSize: existingNodes.size,
+    syncTokenExists: !!syncToken,
+  })
   // a code change cleared the cache so we need to clear the existing nodes cache
   // since it's a global variable and might still exist
-  if (isUncachedBuild && existingNodes.size > 0) {
-    console.log(`clearing existingNode cache`, {
-      existingNodesSize: existingNodes.size,
-      isUncachedBuild,
-      syncToken,
-    })
+  if (!isCachedBuild && existingNodes.size > 0) {
+    console.log(`clearing existingNode cache`)
     existingNodes.clear()
     // dont block the event loop so node might remove node cache from memory
     await new Promise(res => {
@@ -227,17 +227,13 @@ export async function sourceNodes(
       throw new Error(`Contentful Node is missing internal.type`)
     }
 
-    if (!isUncachedBuild) {
-      addNodeToExistingNodesCache(node)
-    }
+    addNodeToExistingNodesCache(node)
 
     return originalCreateNode(node)
   }
 
   const deleteNode = node => {
-    if (!isUncachedBuild) {
-      removeNodeFromExistingNodesCache(node)
-    }
+    removeNodeFromExistingNodesCache(node)
 
     return originalDeleteNode(node)
   }
