@@ -779,13 +779,17 @@ export async function buildSlices({
       const slices = Array.from(state.slices.entries())
 
       const staticQueriesBySliceTemplate = {}
-      const staticQueriesByTemplate = Object.fromEntries(
-        state.staticQueriesByTemplate
-      )
       for (const slice of state.slices.values()) {
-        staticQueriesBySliceTemplate[slice.componentChunkName] =
-          staticQueriesByTemplate[slice.componentChunkName]
+        staticQueriesBySliceTemplate[slice.componentPath] =
+          state.staticQueriesByTemplate.get(slice.componentPath)
       }
+
+      console.log({
+        staticQueriesByTemplate: Object.fromEntries(
+          state.staticQueriesByTemplate
+        ),
+        staticQueriesBySliceTemplate,
+      })
 
       await workerPool.single.renderSlices({
         publicDir: path.join(program.directory, `public`),
