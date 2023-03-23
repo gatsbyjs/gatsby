@@ -155,6 +155,11 @@ export async function sourceNodes(
   // a code change cleared the cache so we need to clear the existing nodes cache
   // since it's a global variable and might still exist
   if (isUncachedBuild && existingNodes.size > 0) {
+    console.log(`clearing existingNode cache`, {
+      existingNodesSize: existingNodes.size,
+      isUncachedBuild,
+      syncToken,
+    })
     existingNodes.clear()
     // dont block the event loop so node might remove node cache from memory
     await new Promise(res => {
