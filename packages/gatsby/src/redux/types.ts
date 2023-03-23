@@ -1060,7 +1060,6 @@ interface IBuildTypeMetadataAction {
     nodes: Array<IGatsbyNode>
     clearExistingMetadata: boolean
     typeName: string
-    callback: () => void
   }
 }
 

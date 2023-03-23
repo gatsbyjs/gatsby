@@ -74,13 +74,13 @@ const buildInferenceMetadata = ({ types }) =>
               // only clear metadata on the first chunk for this type
               clearExistingMetadata: dispatchCount++ === 0,
               nodes: processingNodes,
-              callback: () => {
-                processingNodes = []
-                setImmediate(() => {
-                  res(null)
-                })
-              },
             },
+          })
+          setImmediate(() => {
+            processingNodes = []
+            setImmediate(() => {
+              res(null)
+            })
           })
         })
       }
