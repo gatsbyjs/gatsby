@@ -81,7 +81,7 @@ The `touchNode` API is primarily useful for source plugins fetching nodes from a
 
 This technique can be shown in your source plugin, so open the `plugin/src/source-nodes.ts` file and follow the steps:
 
-1. Initialize a `isFirstSouce` boolean variable above the `sourceNodes` API. Inside `sourceNodes` you'll set it to false and then on subsequent runs the codepath it'll be used in won't get called again.
+1. Initialize a `isFirstSource` boolean variable above the `sourceNodes` API. Inside `sourceNodes` you'll set it to false and then on subsequent runs the codepath it'll be used in won't get called again.
 
     ```ts:title=plugin/src/source-nodes.ts
     // Imports
