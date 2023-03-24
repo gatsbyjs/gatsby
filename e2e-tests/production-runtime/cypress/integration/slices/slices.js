@@ -41,4 +41,10 @@ describe(`Slices`, () => {
       .invoke(`text`)
       .should(`contain`, `2`)
   })
+
+  it(`Slice with static query works`, () => {
+    cy.getTestElement(`footer-static-query-title`).contains(
+      `Gatsby Default Starter`
+    )
+  })
 })

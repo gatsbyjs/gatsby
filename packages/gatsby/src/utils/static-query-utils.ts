@@ -5,8 +5,6 @@ const { join } = path.posix
 import type { IScriptsAndStyles } from "./client-assets-for-template"
 import { IPageDataWithQueryResult } from "./page-data"
 
-const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
-
 export const getStaticQueryPath = (hash: string): string =>
   join(`page-data`, `sq`, `d`, `${hash}.json`)
 
@@ -63,27 +61,6 @@ export const getStaticQueryContext = async (
   }
 
   await Promise.all(staticQueryResultPromises)
-
-  return { staticQueryContext }
-}
-
-export const writeStaticQueryContext = async (
-  staticQueryHashes: IPageDataWithQueryResult["staticQueryHashes"],
-  templatePath: string
-): Promise<{
-  staticQueryContext: IResourcesForTemplate["staticQueryContext"]
-}> => {
-  const outputFilePath = path.join(
-    outputDir,
-    `sq-context`,
-    templatePath,
-    `sq-context.json`
-  )
-
-  const { staticQueryContext } = await getStaticQueryContext(staticQueryHashes)
-
-  const stringifiedContext = JSON.stringify(staticQueryContext)
-  await fs.outputFile(outputFilePath, stringifiedContext)
 
   return { staticQueryContext }
 }

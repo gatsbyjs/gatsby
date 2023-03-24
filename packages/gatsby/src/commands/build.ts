@@ -56,7 +56,7 @@ import {
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import {
   createPageSSRBundle,
-  writeQueryContext,
+  copyStaticQueriesToEngine,
 } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
@@ -379,14 +379,37 @@ module.exports = async function build(
     })
   }
 
-  // create scope so we don't leak state object
+  const engineTemplatePaths = new Set<string>()
   {
-    const state = store.getState()
-    await writeQueryContext({
-      staticQueriesByTemplate: state.staticQueriesByTemplate,
-      components: state.components,
+    let SSGCount = 0
+    let DSGCount = 0
+    let SSRCount = 0
+
+    for (const page of store.getState().pages.values()) {
+      if (page.mode === `SSR`) {
+        SSRCount++
+        engineTemplatePaths.add(page.componentPath)
+      } else if (page.mode === `DSG`) {
+        DSGCount++
+        engineTemplatePaths.add(page.componentPath)
+      } else {
+        SSGCount++
+      }
+    }
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      totalPagesCount: store.getState().pages.size, // total number of pages
+      SSRCount,
+      DSGCount,
+      SSGCount,
     })
   }
+
+  await copyStaticQueriesToEngine({
+    engineTemplatePaths,
+    staticQueriesByTemplate: store.getState().staticQueriesByTemplate,
+    components: store.getState().components,
+  })
 
   if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
     if (process.send && shouldGenerateEngines()) {
@@ -577,29 +600,9 @@ module.exports = async function build(
     }
   }
 
-  {
-    let SSGCount = 0
-    let DSGCount = 0
-    let SSRCount = 0
-    for (const page of store.getState().pages.values()) {
-      if (page.mode === `SSR`) {
-        SSRCount++
-      } else if (page.mode === `DSG`) {
-        DSGCount++
-      } else {
-        SSGCount++
-      }
-    }
-
-    telemetry.addSiteMeasurement(`BUILD_END`, {
-      pagesCount: toRegenerate.length, // number of html files that will be written
-      totalPagesCount: store.getState().pages.size, // total number of pages
-      SSRCount,
-      DSGCount,
-      SSGCount,
-    })
-  }
-
+  telemetry.addSiteMeasurement(`BUILD_END`, {
+    totalPagesCount: store.getState().pages.size, // total number of pages
+  })
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,
   })
