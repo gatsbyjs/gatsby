@@ -57,7 +57,8 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
-  const needToTouchNodes = !hasFeature(`disable-stale-node-type-checks`)
+  const canDisableStaleNodeChecks = hasFeature(`disable-stale-node-type-checks`)
+  const needToTouchNodes = !canDisableStaleNodeChecks
 
   const {
     createNode: originalCreateNode,
@@ -311,7 +312,7 @@ export async function sourceNodes(
     })
   }
 
-  const createdTypeNames = !needToTouchNodes
+  const createdTypeNames = canDisableStaleNodeChecks
     ? new Set((await cache.get(CREATED_TYPENAMES)) || [])
     : null
 
@@ -566,7 +567,7 @@ export async function sourceNodes(
     })
   }
 
-  if (!needToTouchNodes) {
+  if (canDisableStaleNodeChecks && createdTypeNames) {
     reporter.verbose(
       `Contentful disabling garbage collection for ${createdTypeNames.size} node types`
     )
