@@ -1,8 +1,9 @@
 export function orderTypeBuilder(prefix: string): string {
   return `
       type ${prefix}LineItem implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         id: ID!
-        product: ${prefix}Product @link(from: "product.shopifyId", by: "shopifyId")
+        product: ${prefix}Product @link(from: "_product", by: "id")
         shopifyId: String!
       }
 

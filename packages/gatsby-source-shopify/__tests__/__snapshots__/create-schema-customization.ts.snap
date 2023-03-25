@@ -698,11 +698,12 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProduct implements Node @dontInfer {
+        _featuredMedia: String! # Temporary field so we don't break existing users
         createdAt: Date! @dateformat
         description: String!
         descriptionHtml: String!
         featuredImage: __PREFIX__ShopifyImage
-        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"featuredMedia.shopifyId\\", by: \\"shopifyId\\")
+        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
         handle: String!
@@ -764,6 +765,7 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProductVariant implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         availableForSale: Boolean!
         barcode: String
         compareAtPrice: Float
@@ -780,7 +782,7 @@ Array [
         position: Int!
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
-        product: __PREFIX__ShopifyProduct! @link(from: \\"product.shopifyId\\", by: \\"shopifyId\\")
+        product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int!
@@ -925,9 +927,10 @@ Array [
       }
 
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
+        _location: String! # Temporary field so we don't break existing users
         available: Int!
         id: ID!
-        location: __PREFIX__ShopifyLocation! @link(from: \\"location.shopifyId\\", by: \\"shopifyId\\")
+        location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
       }
 
@@ -976,8 +979,9 @@ Array [
     ",
       "
       type __PREFIX__ShopifyLineItem implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         id: ID!
-        product: __PREFIX__ShopifyProduct @link(from: \\"product.shopifyId\\", by: \\"shopifyId\\")
+        product: __PREFIX__ShopifyProduct @link(from: \\"_product\\", by: \\"id\\")
         shopifyId: String!
       }
 
@@ -1704,11 +1708,12 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProduct implements Node @dontInfer {
+        _featuredMedia: String! # Temporary field so we don't break existing users
         createdAt: Date! @dateformat
         description: String!
         descriptionHtml: String!
         featuredImage: __PREFIX__ShopifyImage
-        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"featuredMedia.shopifyId\\", by: \\"shopifyId\\")
+        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
         handle: String!
@@ -1770,6 +1775,7 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProductVariant implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         availableForSale: Boolean!
         barcode: String
         compareAtPrice: Float
@@ -1786,7 +1792,7 @@ Array [
         position: Int!
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
-        product: __PREFIX__ShopifyProduct! @link(from: \\"product.shopifyId\\", by: \\"shopifyId\\")
+        product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int!
@@ -2524,11 +2530,12 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProduct implements Node @dontInfer {
+        _featuredMedia: String! # Temporary field so we don't break existing users
         createdAt: Date! @dateformat
         description: String!
         descriptionHtml: String!
         featuredImage: __PREFIX__ShopifyImage
-        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"featuredMedia.shopifyId\\", by: \\"shopifyId\\")
+        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
         handle: String!
@@ -2590,6 +2597,7 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProductVariant implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         availableForSale: Boolean!
         barcode: String
         compareAtPrice: Float
@@ -2606,7 +2614,7 @@ Array [
         position: Int!
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
-        product: __PREFIX__ShopifyProduct! @link(from: \\"product.shopifyId\\", by: \\"shopifyId\\")
+        product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int!
@@ -2751,9 +2759,10 @@ Array [
       }
 
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
+        _location: String! # Temporary field so we don't break existing users
         available: Int!
         id: ID!
-        location: __PREFIX__ShopifyLocation! @link(from: \\"location.shopifyId\\", by: \\"shopifyId\\")
+        location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
       }
 
@@ -2802,8 +2811,9 @@ Array [
     ",
       "
       type __PREFIX__ShopifyLineItem implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         id: ID!
-        product: __PREFIX__ShopifyProduct @link(from: \\"product.shopifyId\\", by: \\"shopifyId\\")
+        product: __PREFIX__ShopifyProduct @link(from: \\"_product\\", by: \\"id\\")
         shopifyId: String!
       }
 
@@ -3525,11 +3535,12 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProduct implements Node @dontInfer {
+        _featuredMedia: String! # Temporary field so we don't break existing users
         createdAt: Date! @dateformat
         description: String!
         descriptionHtml: String!
         featuredImage: __PREFIX__ShopifyImage
-        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"featuredMedia.shopifyId\\", by: \\"shopifyId\\")
+        featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
         handle: String!
@@ -3591,6 +3602,7 @@ Array [
     ",
       "
       type __PREFIX__ShopifyProductVariant implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         availableForSale: Boolean!
         barcode: String
         compareAtPrice: Float
@@ -3607,7 +3619,7 @@ Array [
         position: Int!
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
-        product: __PREFIX__ShopifyProduct! @link(from: \\"product.shopifyId\\", by: \\"shopifyId\\")
+        product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int!
