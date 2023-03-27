@@ -29,7 +29,8 @@ it(`Builds cache-dir with minimal config`, done => {
       .replace(`Browserslist: caniuse-lite is outdated. Please run:`, ``)
       .replace(`npx update-browserslist-db@latest`, ``)
       .replace(
-        `Why you should do it regularly: https://github.com/browserslist/update-db#readme`
+        `Why you should do it regularly: https://github.com/browserslist/update-db#readme`,
+        ``
       )
       .trim()
 
