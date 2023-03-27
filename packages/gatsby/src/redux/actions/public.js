@@ -921,8 +921,6 @@ actions.createNode =
     }
   }
 
-const touchNodeDeprecationWarningDisplayedMessages = new Set()
-
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
  * be garbage collected. Primarily useful for source plugins fetching
