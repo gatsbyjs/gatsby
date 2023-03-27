@@ -539,8 +539,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   return actions
 }
 
-const deleteNodeDeprecationWarningDisplayedMessages = new Set()
-
 /**
  * Delete a node
  * @param {object} node A node object. See the "createNode" action for more information about the node object details.
