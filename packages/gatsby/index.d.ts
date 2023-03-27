@@ -85,12 +85,12 @@ export const prefetchPathname: (path: string) => void
  * export default (props: IndexPageProps) => {
  *   ..
  */
-export interface PageProps<
-  DataType = Record<string, unknown>,
-  PageContextType = Record<string, unknown>,
+export type PageProps<
+  DataType = object,
+  PageContextType = object,
   LocationState = WindowLocation["state"],
-  ServerDataType = Record<string, unknown>
-> {
+  ServerDataType = object
+> = {
   /** The path for this current page */
   path: string
   /** The URI for the current page */
@@ -155,11 +155,11 @@ export interface PageProps<
 /**
  * A props object passed into the Head function for [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
-export interface HeadProps<
-  DataType = Record<string, unknown>,
-  PageContextType = Record<string, unknown>,
-  ServerDataType = Record<string, unknown>
-> {
+export type HeadProps<
+  DataType = object,
+  PageContextType = object,
+  ServerDataType = object
+> = {
   location: {
     /**
      * Returns the Location object's URL's path.
@@ -185,10 +185,9 @@ export interface HeadProps<
 /**
  * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
-export type HeadFC<
-  DataType = Record<string, unknown>,
-  PageContextType = Record<string, unknown>
-> = (props: HeadProps<DataType, PageContextType>) => JSX.Element
+export type HeadFC<DataType = object, PageContextType = object> = (
+  props: HeadProps<DataType, PageContextType>
+) => JSX.Element
 
 type SerializableProps =
   | ISerializableObject
@@ -222,12 +221,9 @@ export declare function Slice(props: SlicePlaceholderProps): JSX.Element
  * A props object for [slice component](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export type SliceComponentProps<
-  DataType = Record<string, unknown>,
-  SliceContextType = Record<string, unknown>,
-  AdditionalSerializableProps extends ISerializableObject = Record<
-    string,
-    unknown
-  >
+  DataType = object,
+  SliceContextType = object,
+  AdditionalSerializableProps extends ISerializableObject = object
 > = {
   data: DataType
   sliceContext: SliceContextType
@@ -237,7 +233,7 @@ export type SliceComponentProps<
 /**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
-export interface GetServerDataProps {
+export type GetServerDataProps = {
   headers: Map<string, unknown>
   method: string
   url: string
@@ -313,11 +309,11 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 export interface GraphQLTypegenOptions {
   typesOutputPath?: string
-  documentSearchPaths?: Array<string>
+  documentSearchPaths?: string[]
   generateOnBuild?: boolean
 }
 
-interface Proxy {
+type Proxy = {
   prefix: string
   url: string
 }
@@ -351,7 +347,7 @@ export interface GatsbyConfig {
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.com/docs/api-proxy/
    * */
-  proxy?: Proxy | Array<Proxy>
+  proxy?: Proxy | Proxy[]
   /**
    * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
    * @see https://gatsby.dev/gatsby-script
@@ -902,7 +898,7 @@ export interface GatsbySSR<
 }
 
 export interface PluginOptions {
-  plugins: Array<unknown>
+  plugins: unknown[]
   [key: string]: unknown
 }
 
@@ -971,7 +967,7 @@ export interface ResolvableExtensionsArgs extends ParentSpanPluginArgs {
 export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
   type: {
     name: string
-    nodes: Array<any>
+    nodes: any[]
   }
   traceId: "initial-setFieldsOnGraphQLNodeType"
 }
@@ -1041,7 +1037,7 @@ export interface SourceNodesArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
-  intermediateSchema: Record<string, unknown>
+  intermediateSchema: object
   createResolvers: Function
   traceId: "initial-createResolvers"
 }
@@ -1051,12 +1047,12 @@ export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
 }
 
 export interface PreRenderHTMLArgs {
-  getHeadComponents: () => Array<React.ReactNode>
-  replaceHeadComponents: (comp: Array<React.ReactNode>) => void
-  getPreBodyComponents: () => Array<React.ReactNode>
-  replacePreBodyComponents: (comp: Array<React.ReactNode>) => void
-  getPostBodyComponents: () => Array<React.ReactNode>
-  replacePostBodyComponents: (comp: Array<React.ReactNode>) => void
+  getHeadComponents: () => React.ReactNode[]
+  replaceHeadComponents: (comp: React.ReactNode[]) => void
+  getPreBodyComponents: () => React.ReactNode[]
+  replacePreBodyComponents: (comp: React.ReactNode[]) => void
+  getPostBodyComponents: () => React.ReactNode[]
+  replacePostBodyComponents: (comp: React.ReactNode[]) => void
   pathname: string
 }
 
@@ -1067,22 +1063,22 @@ type ReactProps<T extends Element> = React.DetailedHTMLProps<
 export interface RenderBodyArgs {
   loadPageDataSync: (pathname: string) => { result: Record<string, unknown> }
   pathname: string
-  setHeadComponents: (comp: Array<React.ReactNode>) => void
+  setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
   setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
-  setPreBodyComponents: (comp: Array<React.ReactNode>) => void
-  setPostBodyComponents: (comp: Array<React.ReactNode>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
 }
 
 export interface ReplaceRendererArgs {
   replaceBodyHTMLString: (str: string) => void
   bodyComponent: React.ReactNode
-  setHeadComponents: (comp: Array<React.ReactNode>) => void
+  setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
   setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
-  setPreBodyComponents: (comp: Array<React.ReactNode>) => void
-  setPostBodyComponents: (comp: Array<React.ReactNode>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
   pathname: string
 }
@@ -1165,7 +1161,7 @@ export interface NodePluginArgs {
    * @example
    * const allNodes = getNodes()
    */
-  getNodes(this: void): Array<Node>
+  getNodes(this: void): Node[]
 
   /**
    * Get single node by given ID.
@@ -1187,7 +1183,7 @@ export interface NodePluginArgs {
    * @example
    * const markdownNodes = getNodesByType(`MarkdownRemark`)
    */
-  getNodesByType(this: void, type: string): Array<Node>
+  getNodesByType(this: void, type: string): Node[]
 
   /**
    * Set of utilities to output information to user
@@ -1250,10 +1246,7 @@ export interface NodePluginArgs {
    *   }
    * }
    */
-  createContentDigest(
-    this: void,
-    input: string | Record<string, unknown>
-  ): string
+  createContentDigest(this: void, input: string | object): string
 
   /**
    * Set of utilities that allow adding more detailed tracing for plugins.
@@ -1362,37 +1355,25 @@ export interface Actions {
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setWebpackConfig */
-  setWebpackConfig(
-    this: void,
-    config: Record<string, unknown>,
-    plugin?: ActionPlugin
-  ): void
+  setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#replaceWebpackConfig */
-  replaceWebpackConfig(
-    this: void,
-    config: Record<string, unknown>,
-    plugin?: ActionPlugin
-  ): void
+  replaceWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelOptions */
-  setBabelOptions(
-    this: void,
-    options: Record<string, unknown>,
-    plugin?: ActionPlugin
-  ): void
+  setBabelOptions(this: void, options: object, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPlugin */
   setBabelPlugin(
     this: void,
-    config: { name: string; options: Record<string, unknown> },
+    config: { name: string; options: object },
     plugin?: ActionPlugin
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPreset */
   setBabelPreset(
     this: void,
-    config: { name: string; options: Record<string, unknown> },
+    config: { name: string; options: object },
     plugin?: ActionPlugin
   ): void
 
@@ -1408,7 +1389,7 @@ export interface Actions {
     this: void,
     job: {
       name: string
-      inputPaths: Array<string>
+      inputPaths: string[]
       outputDir: string
       args: Record<string, unknown>
     },
@@ -1454,7 +1435,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.com/docs/actions/#addThirdPartySchema */
   addThirdPartySchema(
     this: void,
-    args: { schema: Record<string, unknown> },
+    args: { schema: object },
     plugin?: ActionPlugin,
     traceId?: string
   ): void
@@ -1474,7 +1455,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.com/docs/actions/#createFieldExtension */
   createFieldExtension(
     this: void,
-    extension: Record<string, unknown>,
+    extension: object,
     plugin?: ActionPlugin,
     traceId?: string
   ): void
@@ -1499,7 +1480,7 @@ export interface Store {
   replaceReducer: Function
 }
 
-export interface ActivityTracker {
+export type ActivityTracker = {
   start(): () => void
   end(): () => void
   span: Object
@@ -1514,7 +1495,7 @@ export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
   total: number
 }
 
-export interface ActivityArgs {
+export type ActivityArgs = {
   parentSpan?: Object
   id?: string
 }
@@ -1572,8 +1553,8 @@ export interface GatsbyCache {
 }
 
 export interface Tracing {
-  tracer: Record<string, unknown>
-  parentSpan: Record<string, unknown>
+  tracer: object
+  parentSpan: object
   startSpan: Function
 }
 
@@ -1594,7 +1575,7 @@ export interface PackageJson {
   peerDependencies?: Record<string, string>
   optionalDependencies?: Record<string, string>
   bundledDependencies?: Array<string>
-  keywords?: Array<string>
+  keywords?: string[]
 }
 
 export interface WebpackRules {
@@ -1731,7 +1712,7 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
 export interface NodeInput {
   id: string
   parent?: string | null
-  children?: Array<string>
+  children?: string[]
   internal: {
     type: string
     mediaType?: string
@@ -1745,7 +1726,7 @@ export interface NodeInput {
 
 export interface Node extends NodeInput {
   parent: string | null
-  children: Array<string>
+  children: string[]
   internal: NodeInput["internal"] & {
     owner: string
   }
@@ -1779,7 +1760,7 @@ export interface IPluginRefObject {
 export type PluginRef = string | IPluginRefObject
 
 export interface IPluginRefOptions {
-  plugins?: Array<PluginRef>
+  plugins?: PluginRef[]
   path?: string
   [option: string]: unknown
 }
@@ -1854,7 +1835,7 @@ export interface GatsbyFunctionConfig {
   bodyParser?: GatsbyFunctionBodyParserConfig
 }
 
-declare namespace NodeJS {
+declare module NodeJS {
   interface Global {
     __GATSBY: {
       buildId: string
