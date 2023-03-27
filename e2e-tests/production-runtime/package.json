@@ -36,6 +36,7 @@
     "start": "npm run develop",
     "clean": "gatsby clean",
     "test": "npm run build && npm run start-server-and-test && npm run test-env-vars",
+    "test:dir-traversel-access": "! curl -f http://localhost:9000/%2e%2e/SHOULD_NOT_SERVE",
     "test:offline": "npm run build:offline && yarn start-server-and-test:offline && npm run test-env-vars",
     "test-env-vars": " node __tests__/env-vars.js",
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 serve-static-files http://localhost:8888 combined",
@@ -51,7 +52,7 @@
     "playwright:debug": "playwright test --project=chromium --debug",
     "start-server-and-test:playwright": "start-server-and-test serve http://localhost:9000 serve-static-files http://localhost:8888 playwright",
     "start-server-and-test:playwright-debug": "start-server-and-test serve http://localhost:9000 serve-static-files http://localhost:8888 playwright:debug",
-    "combined": "npm run playwright && npm run cy:run",
+    "combined": "npm run playwright && npm run cy:run && npm run test:dir-traversel-access",
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
