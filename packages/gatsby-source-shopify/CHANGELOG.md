@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.8.1/packages/gatsby-source-shopify) (2023-03-27)
+
+#### Features
+
+- use gatsby node id to enable relationships [#37775](https://github.com/gatsbyjs/gatsby/issues/37775) [#37786](https://github.com/gatsbyjs/gatsby/issues/37786) ([0f838b2](https://github.com/gatsbyjs/gatsby/commit/0f838b2c44f9bc979ce139f8c8fbfcacc2994b3b))
+
 ## [8.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.8.0/packages/gatsby-source-shopify) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
