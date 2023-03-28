@@ -16,7 +16,6 @@ const addInferredFields = ({
   typeComposer,
   exampleValue,
   typeMapping,
-  parentSpan,
 }) => {
   const config = getInferenceConfig({
     typeComposer,
@@ -35,22 +34,12 @@ const addInferredFields = ({
   })
 
   if (deprecatedNodeKeys.size > 0) {
-    reportOnce(
-      `The ___NODE convention is deprecated. Please use the @link directive instead.\nMigration: https://gatsby.dev/node-convention-deprecation`,
-      `verbose`
-    )
-    reportOnce(
-      `Set process.env.GATSBY_LOG_NODE_DEPRECATED_NODE_FIELDS to "true" to see which fields are using the deprecated ___NODE convention.`,
-      `verbose`
-    )
+    const plugin = typeComposer.getExtension(`plugin`)
 
-    if (process.env.GATSBY_LOG_NODE_DEPRECATED_NODE_FIELDS === `true`)
-      reportOnce(
-        `Type with ___NODE fields: ${typeComposer.getTypeName()}, Fields: ${Array.from(
-          deprecatedNodeKeys
-        ).join(`, `)}\n`,
-        `verbose`
-      )
+    reportOnce(
+      `Plugin "${plugin}" is using the ___NODE convention which is deprecated. This plugin should use the @link directive instead.\nMigration: https://gatsby.dev/node-convention-deprecation`,
+      `verbose`
+    )
   }
 }
 
