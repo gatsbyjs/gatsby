@@ -7,7 +7,7 @@ import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
-In the previous parts you built the foundation of your source plugin, from now on it's about adding new functionalities, improving the user experience, and making the plugin overall better.
+In the previous parts you built the foundation of your source plugin, from now on it's about adding new functionalities, improving the user experience, and making the plugin better overall.
 
 This part of the tutorial will focus on a subset of the [Node API helpers](/docs/reference/config-files/node-api-helpers/). Feel free to revisit this document as it can also work as standalone instructions for those APIs.
 
@@ -174,9 +174,9 @@ You're now surfacing any errors that occur during the data fetching to your user
 
 ### Task: Show activities and timings
 
-Since your source plugin is retrieving information from a third-party API the process of doing that could take a while, especially if it's fetching a lot of data. In these instances you can use the `activityTimer` method to let the user know that something is happening in the background. You shouldn't add separate `activityTimer` instances (remember: Keep the output concise and to a minimum) but instead use the `setStatus` method on `activityTimer` to update its text.
+Since your source plugin is retrieving information from a third-party API, that process could take a while, especially if it's fetching a lot of data. In these instances you can use the `activityTimer` method to let the user know that something is happening in the background. You shouldn't add separate `activityTimer` instances (remember: Keep the output concise and to a minimum) but instead use the `setStatus` method on `activityTimer` to update its text.
 
-You'll now exactly learn that by adding an activity for the sourcing and node creation process of your plugin.
+Now you'll learn exactly that, by adding an activity for the sourcing and node creation process of your plugin.
 
 1. Create a new `activityTimer` and store that in a variable (the name doesn't matter). You'll use the variable to start, update, and stop the timer. Try to use a text that clearly indicates your plugin name and what it's doing.
 
@@ -235,7 +235,7 @@ You'll now exactly learn that by adding an activity for the sourcing and node cr
 
     <Announcement>
 
-    **Please note:** When looking at the TypeScript types for `sourcingTimer` you'll notice that it also implements `panicOnBuild` and `panic`. You can pass in the same arguments as you're used to, the `activityTimer` will handle everything for you. If you would continue to use `reporter.panicOnBuild` the terminal would output a successful message for the timer which is incorrect of course!
+    **Please note:** When looking at the TypeScript types for `sourcingTimer` you'll notice that it also implements `panicOnBuild` and `panic`. You can pass in the same arguments as you're used to, the `activityTimer` will handle everything for you. If you had continued to use `reporter.panicOnBuild` the terminal would output a successful message for the timer which is incorrect of course!
 
     </Announcement>
 
@@ -565,7 +565,7 @@ The `cache` API is a key-value store, so you save specific data under a key, and
     verbose [plugin] Last fetched date: undefined
     ```
 
-    You're seeing this because on this first run the `lastFetcheDate` didn't exist yet and thus `undefined` is returned from the `cache.get` call. Stop the development server and restart the script. You now should see a timestamp defined that looks something like this:
+    You're seeing this because on this first run the `lastFetchedDate` didn't exist yet and thus `undefined` is returned from the `cache.get` call. Stop the development server and restart the script. You now should see a timestamp defined that looks something like this:
 
     ```shell
     verbose [plugin] Last fetched date: 1677669643651
@@ -575,7 +575,7 @@ The `cache` API is a key-value store, so you save specific data under a key, and
 
     <Announcement>
 
-    **Pro tip:** If you'd save files with the `cache` API you could also inspect what is saved by going to the `.cache/caches` folder and looking for a folder named like your plugin. For this tutorial the path would be `site/.cache/caches/plugin`.
+    **Pro tip:** If you save files with the `cache` API you can also inspect what is saved by going to the `.cache/caches` folder and looking for a folder named like your plugin. For this tutorial the path would be `site/.cache/caches/plugin`.
 
     </Announcement>
 

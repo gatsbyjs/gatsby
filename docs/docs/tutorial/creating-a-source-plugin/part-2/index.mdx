@@ -10,7 +10,7 @@ import { MdArrowForward } from "react-icons/md"
 
 Time to get started with implementing the core part of a source plugin!
 
-Gatsby exposes many [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/) (some people also refer to such APIs as "hooks") that allow anyone, including source plugins, to hook into Gatsby's build process. You could create pages, modify the bundler configuration, or in the case of a source plugin add data to Gatsby's GraphQL data layer.
+Gatsby exposes many [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/) (some people also refer to such APIs as "hooks") that allow anyone, including source plugins, to hook into Gatsby's build process. You can create pages, modify the bundler configuration, or in the case of a source plugin add data to Gatsby's GraphQL data layer.
 
 In this part of the tutorial, you'll learn how to use the [`sourceNodes` Node API](/docs/reference/config-files/gatsby-node/#sourceNodes).
 
@@ -54,9 +54,9 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 }
 ```
 
-You're importing the TypeScript type `GatsbyNode` from `gatsby`. The `GatsbyNode` type is a representation of all available Gatsby Node APIs and you can access each type with the bracket notation, e.g. you'd get the TypeScript type for the `onPluginInit` API like this: ``GatsbyNode[`onPluginInit`]``.
+You're importing the TypeScript type `GatsbyNode` from `gatsby`. The `GatsbyNode` type is a representation of all available Gatsby Node APIs and you can access each type with bracket notation. For example, you can get the TypeScript type for the `onPluginInit` API like this: ``GatsbyNode[`onPluginInit`]``.
 
-Each Gatsby Node API receives its available [Node API helpers](/docs/reference/config-files/node-api-helpers/) as its first parameter, the plugin's options is the second parameter to the function.
+Each Gatsby Node API receives its available [Node API helpers](/docs/reference/config-files/node-api-helpers/) as its first parameter. The second parameter to the function is the plugin's options. 
 
 In the example above you're adding a log to the terminal output for initial testing purposes. You'll learn more about plugin options and the `reporter` API in [Part 4](/docs/tutorial/creating-a-source-plugin/part-4/).
 
@@ -120,7 +120,7 @@ For this tutorial you'll be querying the `Post` and `Author` entities from the e
   summary={<em>Working with a remote backend API</em>}
 >
 
-The topic of "working with a remote backend API" is a really broad topic and not something we can cover here in its entirety as part of this tutorial. However, here are some comments and tips that will help you while working on your plugin:
+The topic of "working with a remote backend API" is a really broad topic and not something we can cover here in its entirety as part of this tutorial. However, here are some tips that will help you while working on your plugin:
 
 - Feel free to either use a barebones fetch function (via [`node-fetch`](https://www.npmjs.com/package/node-fetch)) or something more batteries-included like [`got`](https://www.npmjs.com/package/got). It depends on your API, e.g. if it's unreliable, add retry logic to your fetching. If it's your small API that you know, a more barebones approach will probably be just fine.
 - Check if the source you're trying to access has its own SDK. Many CMSs have their own SDK, e.g. Contentful with their [`contentful`](https://www.npmjs.com/package/contentful) package. When available, we'd recommend using these first.
@@ -194,7 +194,7 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
 
 <Announcement>
 
-**Pro tip:** If you'd use `console.log(data)`, not the whole depth of the object will be shown. You can instead use `console.dir` with a `depth` setting to display everything.
+**Pro tip:** If you use `console.log(data)`, the whole depth of the object won't be shown. You can use `console.dir` instead, with a `depth` setting to display everything.
 
 </Announcement>
 
@@ -263,7 +263,7 @@ For instance, while it's not the API you'll be working with in this tutorial, he
 
 **Need a refresher on what "nodes" are?** Don't worry!
 
-Inside the Gatsby's data layer, information is stored in objects called **nodes**. A node is the smallest form unit of data in the data layer. Different source plugins create different types of nodes, each of which have their own properties. For example, `gatsby-source-filesystem` creates `File` nodes.
+Inside Gatsby's data layer, information is stored in objects called **nodes**. A node is the smallest form unit of data in the data layer. Different source plugins create different types of nodes, each of which have their own properties. For example, `gatsby-source-filesystem` creates `File` nodes.
 
 Also be sure to checkout the [GraphQL concepts](/docs/conceptual/graphql-concepts/) page if you need more information.
 
@@ -317,7 +317,7 @@ Here's a short explanation on each required field for your convenience:
   - `type`: The name of the node type
   - `contentDigest`: A hash (or short digital summary) of the contents of a node. The digest should be unique to the node since it's used for caching. If the node changes, this digest should also change. You can use the [`createContentDigest`](/docs/reference/config-files/node-api-helpers/#createContentDigest) helper to create that hash.
   
-    If your node contains information like a revision ID or an `lastUpdated` timestamp, you should use this instead of creating your own content digest. This will lead to lower CPU utilization and still achieve the goal of invalidating the cache for the node when said node changes.
+    If your node contains information like a revision ID or a `lastUpdated` timestamp, you should use this instead of creating your own content digest. This will lead to lower CPU utilization and still achieve the goal of invalidating the cache for the node when said node changes.
 
 You can use the [`createNode` API reference](/docs/reference/config-files/actions/#createNode) in the future if you're creating more advanced node types, e.g. ones where you have to define the [`mediaType`](/docs/tutorial/creating-a-source-plugin/part-7/#mime-types).
 
@@ -341,7 +341,7 @@ Since you'll need to use the name of your node types in a couple of places, it's
 
 You don't always need constants for your node types. It depends on your data source and the data you have to work with.
 
-If you're working with a more barebones API you might need to manually map endpoints and/or data to node types. Working with a CMS on the other hand node types will often be dynamic and defined through the CMS data. In those instances you won't need to manually define types as the CMS will drive that.
+If you're working with a more barebones API you might need to manually map endpoints and/or data to node types. Meanwhile, when you work with a CMS, node types will often be dynamic and defined through the CMS data. In those instances you won't need to manually define types as the CMS will drive that.
 
 </Announcement>
 
@@ -356,7 +356,7 @@ export const NODE_TYPES = {
 
 <Announcement>
 
-**TypeScript tip:** You're using a [`const` assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) here to make the object read-only and tell the compiler to infer the most specific type it can. In this specific instance you use `as const` to enable a `enum`-like pattern instead of directly using TypeScript's `enum`.
+**TypeScript tip:** You're using a [`const` assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) here to make the object read-only and tell the compiler to infer the most specific type it can. In this specific instance you use `as const` to enable an `enum`-like pattern instead of directly using TypeScript's `enum`.
 
 </Announcement>
 
@@ -373,11 +373,11 @@ export type NodeBuilderInput =
 // Rest of types
 ```
 
-You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensure that e.g. with `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
+You're setting up [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) here which will be used as the input type for the `nodeBuilder` utility. It ensures that e.g. with `type: "Author"` only the `data` in the shape of `IAuthorInput` can be passed in.
 
 ### Task: Create `nodeBuilder` utility
 
-You'll create a utility function called `nodeBuilder` and its purpose is to take in data, mutate it (if necessary), and then call [`createNode`](/docs/reference/config-files/actions/#createNode) for each node type with its respective data. You're then calling `nodeBuilder` for each of your entries from the API response, filling Gatsby's data store with the data from the example API.
+You'll create a utility function called `nodeBuilder`. Its purpose is to take in data, mutate it (if necessary), and then call [`createNode`](/docs/reference/config-files/actions/#createNode) for each node type with its respective data. You're then calling `nodeBuilder` for each of your entries from the API response, filling Gatsby's data store with the data from the example API.
 
 Now that you know how a barebones version of `createNode` works, DRY (acronym for "Do not repeat yourself") things up by creating the `nodeBuilder` function inside `source-nodes.ts`.
 
@@ -413,7 +413,7 @@ Now that you know how a barebones version of `createNode` works, DRY (acronym fo
 
     </Announcement>
 
-1. Apply the same logic as the barebones `createNode` example to the `nodeBuilder` function now, so:
+1. Apply the same logic as the barebones `createNode` example to the `nodeBuilder` function:
 
     - Generate a unique `id`, dependent on the `input.type` and `id` from `input.data`
     - Fill out the [necessary fields](/docs/reference/config-files/actions/#createNode) on the node (as explained in "Explanation on each required node field" above)
@@ -486,7 +486,7 @@ Now that you know how a barebones version of `createNode` works, DRY (acronym fo
     }
     ```
 
-Hopefully you can see the benefit of creating a helper function: You don't have to repeat yourself inside the loops, making the code for sourcing data and creating nodes more readable, concise and clear.
+Hopefully you can see the benefit of creating a helper function: You don't have to repeat yourself inside the loops, making the code for sourcing data and creating nodes more readable, concise, and clear.
 
 ## Display results in your site
 
@@ -574,7 +574,7 @@ export const query = graphql`
 
 <Announcement>
 
-After copy & pasting the above contents of the index page into your file, your editor might complain about `Queries.IndexPageQuery` (TypeScript error). This type gets autogenerated through the GraphQL query at the bottom of the file. Your editor might need a second until it finds the type. If it doesn't fix itself, a reload of the code editor often helps.
+After copying & pasting the above contents of the index page into your file, your editor might complain about `Queries.IndexPageQuery` (TypeScript error). This type gets autogenerated through the GraphQL query at the bottom of the file. Your editor might need a second until it finds the type. If it doesn't fix itself, a reload of the code editor often helps.
 
 </Announcement>
 

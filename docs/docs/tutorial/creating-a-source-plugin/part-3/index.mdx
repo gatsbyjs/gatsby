@@ -10,19 +10,19 @@ import { MdArrowForward } from "react-icons/md"
 
 In the last part you learned how to create GraphQL nodes and use them in your site. In this part you'll dive deeper into the GraphQL schema creation process and learn how to modify the schema. This knowledge will be valuable for the reliability and usability of your plugin.
 
-One of Gatsby’s main strengths is the ability to query data from a variety of sources in a uniform way with GraphQL. For this to work, a GraphQL schema must be generated that defines the shape of the data. Gatsby is able to automatically infer a GraphQL Schema from your data, and in many cases, this is really all you need. There are however situations when you either want to explicitly define the data shape, or add custom functionality to the query layer — this is what Gatsby’s `createSchemaCustomization` Node API provides.
+One of Gatsby’s main strengths is the ability to query data from a variety of sources in a uniform way with GraphQL. For this to work, a GraphQL schema must be generated that defines the shape of the data. Gatsby is able to automatically infer a GraphQL Schema from your data, and in many cases, this is really all you need. However, there are situations when you either want to explicitly define the data shape, or add custom functionality to the query layer — this is what Gatsby’s `createSchemaCustomization` Node API provides.
 
 In this part of the tutorial, you'll learn how to use the [`createSchemaCustomization` Node API](/docs/reference/config-files/gatsby-node/#createSchemaCustomization).
 
 By the end of this part of the tutorial, you will be able to:
 
-- Understand how Gatsby automatically creates GraphQL types
+- Describe how Gatsby automatically creates GraphQL types
 - Explicitly define the GraphQL schema for your plugin
 - Create a foreign-key relationship between your `Post` and `Author` nodes
 
 ## Automatic type inference
 
-Before explaining how you can explicitly define your GraphQL schema, it's important for you to understand how Gatsby's automatic type inference works. It'll then make more sense why you'd want to define a schema manually and what benefits you'll receive.
+Before explaining how you can explicitly define your GraphQL schema, it's important for you to understand how Gatsby's automatic type inference works. Then, it'll make more sense why you'd want to define a schema manually and what benefits this offers.
 
 In order to translate the data shape into GraphQL type definitions, Gatsby has to inspect the contents of every field and check its type. There is a big problem with this approach though: If the values on a field are of different types, Gatsby cannot decide which one is the correct one. A consequence of this is that if your data sources change, type inference could suddenly fail. For example, this could happen when data from your source is optional and thus can sometimes exist, sometimes not exist.
 
@@ -132,7 +132,7 @@ Before using [`createTypes`](/docs/reference/config-files/actions/#createTypes),
 
 - Type definitions can be provided either in GraphQL's [schema definition language (SDL)](https://graphql.org/learn/schema/), Gatsby Type Builders, or a combination of both. You'll use the SDL syntax for the rest of this tutorial but you can also read an example for Gatsby's Type Builder syntax in this part.
 - By default, explicit type definitions you add with `createTypes` will be merged with inferred field types. So if you only want to define a subset of fields, the rest will be inferred as before. You can modify this behavior with the `@infer` and `@dontInfer` extensions. You'll learn more about extensions in [Add a foreign-key relationship](#add-a-foreign-key-relationship).
-- Type definitions targeting root node types, e.g. `MarkdownRemark` or others added in `sourceNodes`/`onCreateNode` like `Post` and `Author`, need to implement the `Node` interface. You can do this by adding the `implements Node` to the SDL.
+- Type definitions targeting root node types, e.g. `MarkdownRemark` or others added in `sourceNodes`/`onCreateNode` like `Post` and `Author`, need to implement the `Node` interface. You can do this by adding `implements Node` to the SDL.
 
 Using an arbitrary example, let's imagine this is the shape of incoming data to `createNode` that gets inspected and inferred:
 
@@ -542,7 +542,7 @@ export const query = graphql`
 `
 ```
 
-Go visit your index page in the browser and everything should be working again.
+Visit your index page in the browser and everything should be working again.
 
 ## Summary
 
