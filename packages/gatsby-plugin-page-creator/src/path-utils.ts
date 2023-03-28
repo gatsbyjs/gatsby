@@ -1,3 +1,5 @@
+import glob from "globby"
+
 // Regex created with: https://spec.graphql.org/draft/#sec-Names
 // First char only letter, underscore; rest letter, underscore, digit
 const extractModelRegex = /\{([a-zA-Z_][\w]*)\./
@@ -121,3 +123,11 @@ export function compose(
   return (filePart: string): string =>
     functions.reduce((value, fn) => fn(value), filePart)
 }
+
+// Use globby to find all page files with collection routes
+// We want to find all files in a given path where any segment includes text wrapped in curly braces
+// e.g. "{Collection.field}.tsx" and "{Collection.field}/nestedpage.tsx"
+export const pagesGlob = `**/**\\{*\\}**(/**)`
+export const findCollectionPageFiles = (
+  pagesPath: string
+): Promise<Array<string>> => glob(pagesGlob, { cwd: pagesPath })
