@@ -39,7 +39,9 @@ export class ProductsQuery extends BulkQuery {
                 width
               }
               featuredMedia {
-                id
+                ... on Node {
+                  id
+                }
               }
               feedback {
                 details {
