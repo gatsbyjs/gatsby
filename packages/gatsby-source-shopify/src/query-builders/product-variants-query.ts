@@ -80,7 +80,9 @@ export class ProductVariantsQuery extends BulkQuery {
               media {
                 edges {
                   node {
-                    id
+                    ... on Node {
+                      id
+                    }
                   }
                 }
               }
