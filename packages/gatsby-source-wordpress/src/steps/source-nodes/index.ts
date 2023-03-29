@@ -8,9 +8,14 @@ import store from "~/store"
 import fetchAndCreateNonNodeRootFields from "./create-nodes/fetch-and-create-non-node-root-fields"
 import { allowFileDownloaderProgressBarToClear } from "./create-nodes/create-remote-file-node/progress-bar-promise"
 import { sourcePreviews } from "~/steps/preview"
+import { hasStatefulSourceNodes } from "~/utils/gatsby-features"
 
 const sourceNodes: Step = async helpers => {
-  const { cache, webhookBody, refetchAll } = helpers
+  const { cache, webhookBody, refetchAll, actions } = helpers
+
+  if (hasStatefulSourceNodes) {
+    actions.enableStatefulSourceNodes()
+  }
 
   // fetch non-node root fields such as settings.
   // For now, we're refetching them on every build
