@@ -1,11 +1,11 @@
-import { IGatsbyState, ITouchNodeOptOutType } from "../types"
+import { IGatsbyState, IStatefulSourcePluginAction } from "../types"
 
 /**
  * Flags a source plugin as being "stateful" which means it manages its own data updates and Gatsby doesn't look for "stale" nodes after each `sourceNodes` run.
  */
 export const statefulSourcePluginsReducer = (
   statefulSourcePlugins: IGatsbyState["statefulSourcePlugins"] = new Set(),
-  action: ITouchNodeOptOutType
+  action: IStatefulSourcePluginAction
 ): IGatsbyState["statefulSourcePlugins"] => {
   switch (action.type) {
     case `DECLARE_STATEFUL_SOURCE_PLUGIN`: {

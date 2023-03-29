@@ -495,7 +495,7 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
-  | ITouchNodeOptOutType
+  | IStatefulSourcePluginAction
   | ICreateSliceAction
   | IDeleteSliceAction
   | ISetSSRTemplateWebpackCompilationHashAction
@@ -995,9 +995,9 @@ export interface ISetSiteFunctions {
 
 export interface ISetTypeOwnerAction {
   type: `SET_TYPE_OWNER`
+  plugin: IGatsbyPlugin
   payload: {
     typeName: IGatsbyNode["internal"]["type"]
-    owner: IGatsbyNode["internal"]["owner"]
   }
 }
 
@@ -1152,7 +1152,7 @@ export interface ISetDomainRequestHeaders {
   }
 }
 
-export interface ITouchNodeOptOutType {
+export interface IStatefulSourcePluginAction {
   type: `DECLARE_STATEFUL_SOURCE_PLUGIN`
   plugin: IGatsbyPlugin
 }
