@@ -33,16 +33,17 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
     const decodedURI = decodeURIComponent(req.path)
     const pathOnDisk = path.resolve(path.join(`./public/`, decodedURI))
 
-    if (await pathExists(pathOnDisk)) {
-      return res.sendFile(pathOnDisk)
-    }
-
     const jobContentDigest = await cache.get(decodedURI)
     const cacheResult = jobContentDigest
       ? await cache.get(jobContentDigest)
       : null
 
     if (!cacheResult) {
+      // this handler is meant to handle lazy images only (images that were registered for
+      // processing, but deffered to be processed only on request in develop server).
+      // If we don't have cache result - it means that this is not lazy image or that
+      // image was already handled in which case `express.static` handler (that is earlier
+      // than this handler) should take care of handling request.
       return next()
     }
 
@@ -64,6 +65,9 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
       await removeCachedValue(cache, jobContentDigest)
     }
 
+    // we reach this point only when this is a lazy image that we just processed
+    // because `express.static` is earlier handler, we do have to manually serve
+    // produced file for current request
     return res.sendFile(pathOnDisk)
   })
 }
