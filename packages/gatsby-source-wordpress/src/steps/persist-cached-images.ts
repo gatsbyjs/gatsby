@@ -2,6 +2,7 @@ import { Step } from "./../utils/run-steps"
 import store from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { getPersistentCache } from "~/utils/cache"
+import { needToTouchNodes } from "~/utils/gatsby-features"
 
 const persistPreviouslyCachedImages: Step = async (): Promise<void> => {
   const { helpers, pluginOptions } = getGatsbyApi()
@@ -11,9 +12,11 @@ const persistPreviouslyCachedImages: Step = async (): Promise<void> => {
     `${pluginOptions.schema.typePrefix}MediaItem`
   )
 
-  // and touch them so they aren't garbage collected.
-  // we will remove them as needed when receiving DELETE events from WP
-  mediaItemNodes.forEach(node => helpers.actions.touchNode(node))
+  if (needToTouchNodes) {
+    // and if needed touch them so they aren't garbage collected.
+    // we will remove them as needed when receiving DELETE events from WP
+    mediaItemNodes.forEach(node => helpers.actions.touchNode(node))
+  }
 
   const imageNodeMetaByUrl = await getPersistentCache({
     key: `image-node-meta-by-url`,

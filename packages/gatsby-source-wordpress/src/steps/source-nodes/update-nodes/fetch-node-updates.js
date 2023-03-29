@@ -3,8 +3,13 @@ import { fetchAndRunWpActions } from "./wp-actions"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { getPersistentCache } from "~/utils/cache"
+import { needToTouchNodes } from "../../../utils/gatsby-features"
 
 export const touchValidNodes = async () => {
+  if (!needToTouchNodes) {
+    return
+  }
+
   const { helpers } = getGatsbyApi()
   const { actions } = helpers
 
