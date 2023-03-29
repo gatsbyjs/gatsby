@@ -10,6 +10,45 @@ import type { GatsbyIterable } from "../datastore/common/iterable"
 const { deleteNode } = actions
 
 /**
+ * Finds the name of all plugins which implement Gatsby APIs that
+ * may create nodes, but which have not actually created any nodes.
+ */
+function discoverPluginNamesWithoutNodes(): Array<string> {
+  const { pluginNamesToOwnedNodeTypes, flattenedPlugins } = store.getState()
+
+  // Find out which plugins own already created nodes
+  const pluginNamesThatCreatedNodes = new Set([`default-site-plugin`])
+
+  pluginNamesToOwnedNodeTypes.forEach((_ownedTypes, pluginName) =>
+    // each plugin that owns node types created a node at some point
+    pluginNamesThatCreatedNodes.add(pluginName)
+  )
+
+  return flattenedPlugins
+    .filter(
+      plugin =>
+        // "Can generate nodes"
+        plugin.nodeAPIs.includes(`sourceNodes`) &&
+        // "Has not generated nodes"
+        !pluginNamesThatCreatedNodes.has(plugin.name)
+    )
+    .map(plugin => plugin.name)
+}
+
+/**
+ * Warn about plugins that should have created nodes but didn't.
+ */
+function warnForPluginsWithoutNodes(): void {
+  const pluginNamesWithNoNodes = discoverPluginNamesWithoutNodes()
+
+  pluginNamesWithNoNodes.map(name =>
+    report.warn(
+      `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`
+    )
+  )
+}
+
+/**
  * Return the set of nodes for which its root node has not been touched
  */
 function getStaleNodes(
@@ -137,6 +176,8 @@ export default async ({
   // We only warn for plugins w/o nodes and delete stale nodes on the first sourceNodes call of the current process.
   if (isInitialSourceNodesOfCurrentNodeProcess) {
     isInitialSourceNodesOfCurrentNodeProcess = false
+
+    warnForPluginsWithoutNodes()
 
     if (
       // if this is the very first source and no types existed before this sourceNodes run, there's no need to check for stale nodes. They wont be stale because they were just created. Only check for stale nodes in node types that never existed before.
