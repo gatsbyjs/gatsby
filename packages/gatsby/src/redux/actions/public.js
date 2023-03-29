@@ -882,7 +882,6 @@ const createNode = (
     plugin,
     payload: {
       typeName: node.internal.type,
-      owner: node.internal.owner,
     },
   }
 
