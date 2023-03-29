@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.8.2/packages/gatsby-source-shopify) (2023-03-28)
+
+#### Bug Fixes
+
+- Correct interface query [#37788](https://github.com/gatsbyjs/gatsby/issues/37788) [#37791](https://github.com/gatsbyjs/gatsby/issues/37791) ([944b074](https://github.com/gatsbyjs/gatsby/commit/944b074d248039060060f4826abb13239e87449b))
+
 ### [8.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.8.1/packages/gatsby-source-shopify) (2023-03-27)
 
 #### Features
