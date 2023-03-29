@@ -19,10 +19,10 @@ function discoverPluginNamesWithoutNodes(): Array<string> {
   // Find out which plugins own already created nodes
   const pluginNamesThatCreatedNodes = new Set([`default-site-plugin`])
 
-  pluginNamesToOwnedNodeTypes.forEach((_ownedTypes, pluginName) =>
+  for (const pluginName of pluginNamesToOwnedNodeTypes.keys()) {
     // each plugin that owns node types created a node at some point
     pluginNamesThatCreatedNodes.add(pluginName)
-  )
+  }
 
   return flattenedPlugins
     .filter(
@@ -101,6 +101,7 @@ async function deleteStaleNodes(
 
   const typeNamesToOwnerPluginName = new Map()
 
+  // build up a map of type names -> plugin names
   pluginNamesToOwnedNodeTypes.forEach((ownedTypes, pluginName) => {
     ownedTypes.forEach(typeName => {
       typeNamesToOwnerPluginName.set(typeName, pluginName)
