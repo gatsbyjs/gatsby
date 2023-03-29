@@ -6,7 +6,8 @@ export const pluginNamesToOwnedNodeTypesReducer = (
 ): IGatsbyState["pluginNamesToOwnedNodeTypes"] => {
   switch (action.type) {
     case `SET_TYPE_OWNER`: {
-      const { owner, typeName } = action.payload
+      const { typeName } = action.payload
+      const owner = action.plugin.name
 
       const existingOwner = pluginNamesToOwnedNodeTypes.get(owner)
 
