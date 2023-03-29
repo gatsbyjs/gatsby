@@ -149,7 +149,7 @@ function createJob(job, { reporter }) {
 function lazyJobsEnabled() {
   return (
     process.env.gatsby_executing_command === `develop` &&
-    !isCI() &&
+    (!isCI() || process.env.GATSBY_ENABLE_LAZY_IMAGES_IN_CI) &&
     !(
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
