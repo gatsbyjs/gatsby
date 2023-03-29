@@ -20,7 +20,7 @@ Gatsby has a built-in [Gatsby Script Component](/docs/reference/built-in-compone
 
 ## Guides to common analytics tools
 
-- [Google Analytics (using gtag.js)](/plugins/gatsby-plugin-google-gtag/))
+- [Google Analytics (using gtag.js)](/plugins/gatsby-plugin-google-gtag/)
 - [Google Tag Manager](/plugins/gatsby-plugin-google-tagmanager/)
 - [Segment](/plugins/gatsby-plugin-segment-js)
 

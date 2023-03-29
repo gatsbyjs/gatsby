@@ -32,7 +32,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=y GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI=y gatsby develop",
+    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=y GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI=y GATSBY_ENABLE_LAZY_IMAGES_IN_CI=y gatsby develop",
     "serve-static-files": "node ./serve-static-files.mjs",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
@@ -40,6 +40,7 @@
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "npm run start-server-and-test || (npm run reset && exit 1)",
+    "test:dir-traversel-access": "! curl -f http://localhost:8000/%2e%2e/SHOULD_NOT_SERVE",
     "posttest": "npm run reset",
     "reset": "node scripts/reset.js",
     "reset:preview": "curl -X POST http://localhost:8000/__refresh",
@@ -55,7 +56,7 @@
     "playwright:debug": "playwright test --project=chromium --debug",
     "start-server-and-test:playwright": "start-server-and-test develop http://localhost:8000 serve-static-files http://localhost:8888 playwright",
     "start-server-and-test:playwright-debug": "start-server-and-test develop http://localhost:8000 serve-static-files http://localhost:8888 playwright:debug",
-    "combined": "npm run playwright && npm run cy:run",
+    "combined": "npm run playwright && npm run cy:run && npm run test:dir-traversel-access",
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {

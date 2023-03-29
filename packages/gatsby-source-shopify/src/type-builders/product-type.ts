@@ -1,11 +1,12 @@
 export function productTypeBuilder(prefix: string): string {
   return `
       type ${prefix}Product implements Node @dontInfer {
+        _featuredMedia: String! # Temporary field so we don't break existing users
         createdAt: Date! @dateformat
         description: String!
         descriptionHtml: String!
         featuredImage: ${prefix}Image
-        featuredMedia: ${prefix}Media @link(from: "featuredMedia.shopifyId", by: "shopifyId")
+        featuredMedia: ${prefix}Media @link(from: "_featuredMedia", by: "id")
         feedback: ${prefix}ResourceFeedback
         giftCardTemplateSuffix: String
         handle: String!
