@@ -877,10 +877,19 @@ const createNode = (
     }
   }
 
+  const setTypeOwnerAction = {
+    type: `SET_TYPE_OWNER`,
+    plugin,
+    payload: {
+      typeName: node.internal.type,
+      owner: node.internal.owner,
+    },
+  }
+
   if (deleteActions && deleteActions.length) {
-    return [...deleteActions, updateNodeAction]
+    return [...deleteActions, updateNodeAction, setTypeOwnerAction]
   } else {
-    return updateNodeAction
+    return [updateNodeAction, setTypeOwnerAction]
   }
 }
 
@@ -1510,16 +1519,14 @@ actions.unstable_createNodeManifest = (
 }
 
 /**
- * Stores a typename for which nodes of that type shouldn't need to have touchNode called on them.
+ * Marks a source plugin as "stateful" which disables automatically deleting untouched nodes. Stateful source plugins manage deleting their own nodes without stale node checks in Gatsby.
  *
- * @param {string} typeName the Gatsby Node typename you want to opt-out of needing to call touchNode on.
+ * @param {void} $0
  */
-actions.disableStaleNodeTypeCheck = (typeName: string) => {
+actions.enableStatefulSourceNodes = (plugin: Plugin) => {
   return {
-    type: `ADD_TOUCH_NODE_OPTOUT_TYPE`,
-    payload: {
-      typeName,
-    },
+    type: `DECLARE_STATEFUL_SOURCE_PLUGIN`,
+    plugin,
   }
 }
 

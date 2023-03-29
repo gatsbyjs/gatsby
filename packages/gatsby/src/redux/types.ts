@@ -262,9 +262,13 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
+  pluginNamesToOwnedNodeTypes: Map<
+    IGatsbyPlugin[`name`],
+    Set<IGatsbyNode[`internal`][`type`]>
+  >
   nodeManifests: Array<INodeManifest>
   requestHeaders: Map<string, { [header: string]: string }>
-  touchNodeOptOutTypes: Set<string>
+  statefulSourcePlugins: Set<string>
   telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
@@ -398,6 +402,8 @@ export type GatsbyStateKeys = keyof IGatsbyState
 
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
+  pluginNamesToOwnedNodeTypes?: IGatsbyState["pluginNamesToOwnedNodeTypes"]
+  statefulSourcePlugins?: IGatsbyState["statefulSourcePlugins"]
   status: IGatsbyState["status"]
   components: IGatsbyState["components"]
   jobsV2: IGatsbyState["jobsV2"]
@@ -419,6 +425,7 @@ export type ActionsUnion =
   | IAddThirdPartySchema
   | IApiFinishedAction
   | ICreateFieldExtension
+  | ISetTypeOwnerAction
   | ICreateNodeAction
   | ICreatePageAction
   | ICreatePageDependencyAction
@@ -986,6 +993,14 @@ export interface ISetSiteFunctions {
   payload: IGatsbyState["functions"]
 }
 
+export interface ISetTypeOwnerAction {
+  type: `SET_TYPE_OWNER`
+  payload: {
+    typeName: IGatsbyNode["internal"]["type"]
+    owner: IGatsbyNode["internal"]["owner"]
+  }
+}
+
 export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
@@ -1138,10 +1153,8 @@ export interface ISetDomainRequestHeaders {
 }
 
 export interface ITouchNodeOptOutType {
-  type: `ADD_TOUCH_NODE_OPTOUT_TYPE`
-  payload: {
-    typeName: string
-  }
+  type: `DECLARE_STATEFUL_SOURCE_PLUGIN`
+  plugin: IGatsbyPlugin
 }
 
 export interface IProcessGatsbyImageSourceUrlAction {

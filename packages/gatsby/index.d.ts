@@ -21,7 +21,7 @@ export type AvailableFeatures =
   | "image-cdn"
   | "graphql-typegen"
   | "content-file-path"
-  | "disable-stale-node-type-checks"
+  | "stateful-source-nodes"
 
 export {
   Link,
@@ -433,6 +433,11 @@ export interface GatsbyNode<
     options: PluginOptions,
     calllback: PluginCallback<void>
   ): void | Promise<void>
+
+  /**
+   * Marks the source plugin that called this function as stateful. Gatsby will not check for stale nodes for any plugin that calls this.
+   */
+  enableStatefulSourceNodes?(this: void, plugin?: ActionPlugin)
 
   /**
    * Called when a new node is created. Plugins wishing to extend or

@@ -35,7 +35,7 @@ function getStaleNodes(
       )
     }
 
-    if (state.touchNodeOptOutTypes.has(rootNode.internal.type)) {
+    if (state.statefulSourcePlugins.has(rootNode.internal.owner)) {
       return false
     }
 
@@ -46,21 +46,37 @@ function getStaleNodes(
 /**
  * Find all stale nodes and delete them unless the node type has been opted out of stale node garbage collection.
  */
-async function deleteStaleNodes(): Promise<void> {
+async function deleteStaleNodes(
+  previouslyExistingNodeTypeNames: Array<string>
+): Promise<void> {
   const state = store.getState()
 
   let deleteCount = 0
 
   const cleanupStaleNodesActivity =
-    report.createProgress(`clean up stale nodes`)
+    report.createProgress(`Clean up stale nodes`)
+
   cleanupStaleNodesActivity.start()
 
-  for (const typeName of getDataStore().getTypes()) {
-    if (state.touchNodeOptOutTypes.has(typeName)) {
+  const { pluginNamesToOwnedNodeTypes, statefulSourcePlugins } = state
+
+  const typeNamesToOwnerPluginName = new Map()
+
+  pluginNamesToOwnedNodeTypes.forEach((ownedTypes, pluginName) => {
+    ownedTypes.forEach(typeName => {
+      typeNamesToOwnerPluginName.set(typeName, pluginName)
+    })
+  })
+
+  for (const typeName of previouslyExistingNodeTypeNames) {
+    const pluginName = typeNamesToOwnerPluginName.get(typeName)
+
+    // no need to check this type if its owner has declared its a stateful source plugin
+    if (pluginName && statefulSourcePlugins.has(pluginName)) {
       continue
     }
 
-    report.verbose(`checking for stale ${typeName} nodes`)
+    report.verbose(`Checking for stale ${typeName} nodes`)
 
     const nodes = getDataStore().iterateNodesByType(typeName)
     const staleNodes = getStaleNodes(state, nodes)
@@ -83,7 +99,7 @@ async function deleteStaleNodes(): Promise<void> {
   cleanupStaleNodesActivity.end()
 }
 
-let isInitialSourcing = true
+let isInitialSourceNodesOfCurrentNodeProcess = true
 let sourcingCount = 0
 export default async ({
   webhookBody,
@@ -96,9 +112,18 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
-  const traceId = isInitialSourcing
+  const traceId = isInitialSourceNodesOfCurrentNodeProcess
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
+
+  await getDataStore().ready()
+
+  const previouslyExistingNodeTypeNames: Array<string> = []
+
+  for (const typeName of getDataStore().getTypes()) {
+    previouslyExistingNodeTypeNames.push(typeName)
+  }
+
   await sourceNodesApiRunner({
     traceId,
     deferNodeMutation,
@@ -109,10 +134,16 @@ export default async ({
 
   await getDataStore().ready()
 
-  // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
-  if (isInitialSourcing) {
-    await deleteStaleNodes()
-    isInitialSourcing = false
+  // We only warn for plugins w/o nodes and delete stale nodes on the first sourceNodes call of the current process.
+  if (isInitialSourceNodesOfCurrentNodeProcess) {
+    isInitialSourceNodesOfCurrentNodeProcess = false
+
+    if (
+      // if this is the very first source and no types existed before this sourceNodes run, there's no need to check for stale nodes. They wont be stale because they were just created. Only check for stale nodes in node types that never existed before.
+      previouslyExistingNodeTypeNames.length > 0
+    ) {
+      await deleteStaleNodes(previouslyExistingNodeTypeNames)
+    }
   }
 
   store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))

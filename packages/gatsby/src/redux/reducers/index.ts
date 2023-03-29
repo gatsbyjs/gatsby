@@ -1,3 +1,4 @@
+import { pluginNamesToOwnedNodeTypesReducer } from "./type-owners"
 import { nodesReducer } from "./nodes"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducers/logs"
 import { pagesReducer } from "./pages"
@@ -32,7 +33,7 @@ import { telemetryReducer } from "./telemetry"
 import { nodeManifestReducer } from "./node-manifest"
 import { reducer as pageTreeReducer } from "gatsby-cli/lib/reporter/redux/reducers/page-tree"
 import { setRequestHeadersReducer } from "./set-request-headers"
-import { touchNodeOptOutReducer } from "./touchnode-optout"
+import { statefulSourcePluginsReducer } from "./stateful-source-plugins"
 import { slicesReducer } from "./slices"
 import { componentsUsingSlicesReducer } from "./components-using-slices"
 import { slicesByTemplateReducer } from "./slices-by-template"
@@ -43,6 +44,7 @@ import { slicesByTemplateReducer } from "./slices-by-template"
 export {
   definitionsReducer as definitions,
   programReducer as program,
+  pluginNamesToOwnedNodeTypesReducer as pluginNamesToOwnedNodeTypes,
   nodesReducer as nodes,
   nodesByTypeReducer as nodesByType,
   resolvedNodesCacheReducer as resolvedNodesCache,
@@ -74,7 +76,7 @@ export {
   nodeManifestReducer as nodeManifests,
   pageTreeReducer as pageTree,
   setRequestHeadersReducer as requestHeaders,
-  touchNodeOptOutReducer as touchNodeOptOutTypes,
+  statefulSourcePluginsReducer as statefulSourcePlugins,
   slicesReducer as slices,
   componentsUsingSlicesReducer as componentsUsingSlices,
   slicesByTemplateReducer as slicesByTemplate,
