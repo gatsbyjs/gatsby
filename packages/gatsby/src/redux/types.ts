@@ -895,6 +895,7 @@ interface IBuildTypeMetadataAction {
   type: `BUILD_TYPE_METADATA`
   payload: {
     nodes: Array<IGatsbyNode>
+    clearExistingMetadata: boolean
     typeName: string
   }
 }
