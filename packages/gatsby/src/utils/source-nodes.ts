@@ -155,12 +155,15 @@ export default async ({
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
 
-  await getDataStore().ready()
-
   const previouslyExistingNodeTypeNames: Array<string> = []
 
-  for (const typeName of getDataStore().getTypes()) {
-    previouslyExistingNodeTypeNames.push(typeName)
+  // this is persisted to cache between builds, so it will always have an up to date list of previously created types by plugin name
+  const { pluginNamesToOwnedNodeTypes } = store.getState()
+
+  for (const nodeTypes of pluginNamesToOwnedNodeTypes.values()) {
+    nodeTypes.forEach(typeName =>
+      previouslyExistingNodeTypeNames.push(typeName)
+    )
   }
 
   await sourceNodesApiRunner({
