@@ -495,7 +495,7 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
-  | IStatefulSourcePluginAction
+  | IEnableStatefulSourcePluginAction
   | ICreateSliceAction
   | IDeleteSliceAction
   | ISetSSRTemplateWebpackCompilationHashAction
@@ -1152,8 +1152,8 @@ export interface ISetDomainRequestHeaders {
   }
 }
 
-export interface IStatefulSourcePluginAction {
-  type: `DECLARE_STATEFUL_SOURCE_PLUGIN`
+export interface IEnableStatefulSourcePluginAction {
+  type: `ENABLE_STATEFUL_SOURCE_PLUGIN`
   plugin: IGatsbyPlugin
 }
 

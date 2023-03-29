@@ -1525,7 +1525,7 @@ actions.unstable_createNodeManifest = (
  */
 actions.enableStatefulSourceNodes = (plugin: Plugin) => {
   return {
-    type: `DECLARE_STATEFUL_SOURCE_PLUGIN`,
+    type: `ENABLE_STATEFUL_SOURCE_PLUGIN`,
     plugin,
   }
 }
