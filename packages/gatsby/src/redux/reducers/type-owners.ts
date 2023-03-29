@@ -5,16 +5,15 @@ export const pluginNamesToOwnedNodeTypesReducer = (
   action: ActionsUnion
 ): IGatsbyState["pluginNamesToOwnedNodeTypes"] => {
   switch (action.type) {
-    case `SET_TYPE_OWNER`: {
-      const { typeName } = action.payload
-      const owner = action.plugin.name
+    case `CREATE_NODE`: {
+      const { owner, type } = action.payload.internal
 
       const existingOwner = pluginNamesToOwnedNodeTypes.get(owner)
 
       if (!existingOwner) {
-        pluginNamesToOwnedNodeTypes.set(owner, new Set([typeName]))
+        pluginNamesToOwnedNodeTypes.set(owner, new Set([type]))
       } else {
-        existingOwner.add(typeName)
+        existingOwner.add(type)
       }
 
       return pluginNamesToOwnedNodeTypes

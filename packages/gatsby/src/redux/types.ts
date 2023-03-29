@@ -425,7 +425,6 @@ export type ActionsUnion =
   | IAddThirdPartySchema
   | IApiFinishedAction
   | ICreateFieldExtension
-  | ISetTypeOwnerAction
   | ICreateNodeAction
   | ICreatePageAction
   | ICreatePageDependencyAction
@@ -991,14 +990,6 @@ export interface ISetSiteConfig {
 export interface ISetSiteFunctions {
   type: `SET_SITE_FUNCTIONS`
   payload: IGatsbyState["functions"]
-}
-
-export interface ISetTypeOwnerAction {
-  type: `SET_TYPE_OWNER`
-  plugin: IGatsbyPlugin
-  payload: {
-    typeName: IGatsbyNode["internal"]["type"]
-  }
 }
 
 export interface ICreateNodeAction {

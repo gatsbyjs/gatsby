@@ -877,18 +877,10 @@ const createNode = (
     }
   }
 
-  const setTypeOwnerAction = {
-    type: `SET_TYPE_OWNER`,
-    plugin,
-    payload: {
-      typeName: node.internal.type,
-    },
-  }
-
   if (deleteActions && deleteActions.length) {
-    return [...deleteActions, updateNodeAction, setTypeOwnerAction]
+    return [...deleteActions, updateNodeAction]
   } else {
-    return [updateNodeAction, setTypeOwnerAction]
+    return updateNodeAction
   }
 }
 
