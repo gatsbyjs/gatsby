@@ -98,14 +98,20 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
         doubleBoundActionCreators[key] = (...args) => {
+          if (args.length === 0) {
+            return boundActionCreator(plugin, actionOptions)
+          }
           // Let action callers override who the plugin is. Shouldn't be
           // used that often.
-          if (args.length === 1) {
+          else if (args.length === 1) {
             return boundActionCreator(args[0], plugin, actionOptions)
           } else if (args.length === 2) {
             return boundActionCreator(args[0], args[1], actionOptions)
           }
-          return undefined
+
+          throw new Error(
+            `Unhandled redux action: ${key}, in plugin: ${plugin.name}`
+          )
         }
       }
     }
