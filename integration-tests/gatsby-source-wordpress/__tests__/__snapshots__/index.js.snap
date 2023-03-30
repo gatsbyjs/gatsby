@@ -1001,12 +1001,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "node",
-    ],
-    "name": "WpActionMonitorActionConnectionEdgeType",
-  },
-  Object {
-    "fields": Array [
       "default",
       "extraAttr",
       "forceDefault",
@@ -5557,18 +5551,6 @@ Array [
     "name": "WpEdgeType",
   },
   Object {
-    "fields": Array [
-      "node",
-    ],
-    "name": "WpEnqueuedScriptConnectionEdgeType",
-  },
-  Object {
-    "fields": Array [
-      "node",
-    ],
-    "name": "WpEnqueuedStylesheetConnectionEdgeType",
-  },
-  Object {
     "fields": null,
     "name": "WpFieldsEnum",
   },
@@ -7239,12 +7221,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "node",
-    ],
-    "name": "WpPluginConnectionEdgeType",
-  },
-  Object {
-    "fields": Array [
       "author",
       "authorDatabaseId",
       "authorId",
@@ -8456,12 +8432,6 @@ Array [
   Object {
     "fields": null,
     "name": "WpTermNodeSortInput",
-  },
-  Object {
-    "fields": Array [
-      "node",
-    ],
-    "name": "WpThemeConnectionEdgeType",
   },
   Object {
     "fields": Array [

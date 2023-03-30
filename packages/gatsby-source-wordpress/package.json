@@ -32,7 +32,8 @@
     "gatsby-plugin-utils": "^3.19.0",
     "gatsby-source-filesystem": "^4.25.0",
     "glob": "^7.2.3",
-    "got": "^11.8.5",
+    "got": "^11.8.6",
+    "json-diff": "^1.0.3",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "p-queue": "^6.6.2",
@@ -60,8 +61,7 @@
     "identity-obj-proxy": "^3.0.0",
     "react-test-renderer": "^16.14.0",
     "rimraf": "^3.0.2",
-    "tree-kill": "^1.2.2",
-    "wait-on": "^4.0.2"
+    "tree-kill": "^1.2.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
   "keywords": [

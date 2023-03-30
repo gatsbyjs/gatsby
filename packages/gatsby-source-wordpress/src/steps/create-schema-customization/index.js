@@ -1,6 +1,6 @@
 import store from "~/store"
 
-import { buildInterfacesListForType, fieldOfTypeWasFetched } from "./helpers"
+import { diffBuiltTypeDefs, fieldOfTypeWasFetched } from "./helpers"
 
 import buildType from "./build-types"
 import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
@@ -105,6 +105,7 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
     )
   )
 
+  diffBuiltTypeDefs(typeDefs)
   actions.createTypes(typeDefs)
 }
 
