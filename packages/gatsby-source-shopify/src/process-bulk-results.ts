@@ -30,8 +30,14 @@ export async function processBulkResults(
   const promises: Array<Promise<void>> = []
   const children: IDecoratedResultChildren = {}
 
+  const gatsbyCreateNodeId = (shopifyId: string): string =>
+    createNodeId(shopifyId, gatsbyApi, pluginOptions)
+
   for (let i = results.length - 1; i >= 0; i -= 1) {
-    const result = decorateBulkObject(results[i]) as IDecoratedResult
+    const result = decorateBulkObject(
+      results[i],
+      gatsbyCreateNodeId
+    ) as IDecoratedResult
     /**
      * @todo detect the following different as JSON.stringify order is not deterministic
      */

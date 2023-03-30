@@ -8,7 +8,7 @@
     "build": "gatsby build"
   },
   "dependencies": {
-    "gatsby": "^5.7.0",
+    "gatsby": "^5.8.1",
     "gatsby-theme-minimal": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.8.0/packages/gatsby-script) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+**Note:** Version bump only for package gatsby-script
+
 ## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.7.0/packages/gatsby-script) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.8.1/packages/gatsby-plugin-sharp) (2023-03-29)
+
+#### Bug Fixes
+
+- don't serve static assets that are not result of currently triggered deferred job [#37796](https://github.com/gatsbyjs/gatsby/issues/37796) [#37799](https://github.com/gatsbyjs/gatsby/issues/37799) ([5f44208](https://github.com/gatsbyjs/gatsby/commit/5f442081b227cc0879babb96858f970c4ce94c6b))
+
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.8.0/packages/gatsby-plugin-sharp) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.7.0/packages/gatsby-plugin-sharp) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)

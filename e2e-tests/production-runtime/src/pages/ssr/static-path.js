@@ -1,4 +1,5 @@
 import React from "react"
+import { Slice } from "gatsby"
 
 const UseEnv = ({ heading, envVar }) => (
   <React.Fragment>
@@ -30,7 +31,7 @@ export default function StaticPath({ serverData }) {
         heading="process.env.FROM_COMMAND_LINE"
         envVar={process.env.FROM_COMMAND_LINE}
       />
-       <UseEnv
+      <UseEnv
         heading="process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE"
         envVar={process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE}
       />
@@ -51,10 +52,11 @@ export default function StaticPath({ serverData }) {
         heading="serverData.envVars.FROM_COMMAND_LINE"
         envVar={serverData?.envVars?.FROM_COMMAND_LINE}
       />
-       <UseEnv
+      <UseEnv
         heading="serverData.envVars.GATSBY_PREFIXED_FROM_COMMAND_LINE"
         envVar={serverData?.envVars?.GATSBY_PREFIXED_FROM_COMMAND_LINE}
       />
+      <Slice alias="footer" framework="Gatsby" lang="js" />
     </div>
   )
 }
@@ -63,7 +65,8 @@ export async function getServerData(arg) {
   const VERY_SECRET_ALIAS_VAR = process.env.VERY_SECRET_VAR
   const EXISTING_VAR = process.env.EXISTING_VAR
   const FROM_COMMAND_LINE = process.env.FROM_COMMAND_LINE
-  const GATSBY_PREFIXED_FROM_COMMAND_LINE = process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE
+  const GATSBY_PREFIXED_FROM_COMMAND_LINE =
+    process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE
 
   return {
     props: {
@@ -72,7 +75,7 @@ export async function getServerData(arg) {
         VERY_SECRET_ALIAS_VAR,
         EXISTING_VAR,
         FROM_COMMAND_LINE,
-        GATSBY_PREFIXED_FROM_COMMAND_LINE
+        GATSBY_PREFIXED_FROM_COMMAND_LINE,
       },
     },
   }

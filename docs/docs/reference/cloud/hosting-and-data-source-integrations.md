@@ -19,7 +19,7 @@ Hosting integrations simplify deploying your site to the internet. The following
 
 When you set up a hosting integration, your site will automatically be deployed to your chosen service any time a Production Build completes successfully.
 
-## Data source ntegrations
+## Data source integrations
 
 Data source integrations make it easy to connect your site to a content management system (CMS). The following CMS providers are officially supported and can be automatically configured with [Quick Connect](/docs/reference/cloud/quick-connect):
 
