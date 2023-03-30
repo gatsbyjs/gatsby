@@ -289,7 +289,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     const pluginConfig = createPluginConfig(pluginOptions as IPluginOptions)
 
-    let contentTypeItems
+    const useNameForId = pluginConfig.get(`useNameForId`)
+
+    let contentTypeItems: Array<ContentType>
     if (process.env.GATSBY_WORKER_ID) {
       const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
         `environment`
@@ -323,6 +325,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           id: { type: `ID!` },
           sys: { type: `ContentfulSys!` },
           metadata: { type: `ContentfulMetadata!` },
+          linkedFrom: { type: `ContentfulLinkedFrom` },
         },
         interfaces: [`ContentfulEntity`, `Node`],
       })
@@ -398,6 +401,39 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       `gatsby-plugin-image/graphql-utils.js`
     )
 
+    const reverseLinkFields = {}
+
+    contentTypeItems.forEach(contentType => {
+      let contentTypeItemId
+      if (useNameForId) {
+        contentTypeItemId = makeTypeName(contentType.name)
+      } else {
+        contentTypeItemId = makeTypeName(contentType.sys.id)
+      }
+
+      if (
+        contentType.fields.some(
+          field => field.linkType || field.items?.linkType
+        )
+      ) {
+        reverseLinkFields[contentTypeItemId] = {
+          type: `[${contentTypeItemId}]`,
+          extensions: {
+            link: { by: `id`, from: contentTypeItemId },
+          },
+        }
+      }
+    })
+
+    const linkedFromName = `ContentfulLinkedFrom`
+    createTypes(
+      schema.buildObjectType({
+        name: linkedFromName,
+        fields: reverseLinkFields,
+        extensions: { dontInfer: {} },
+      })
+    )
+
     // Assets
     const gatsbyImageData = getGatsbyImageFieldConfig(
       async (
@@ -461,6 +497,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             size: { type: `Int` },
             width: { type: `Int` },
             height: { type: `Int` },
+            linkedFrom: { type: linkedFromName },
           },
           interfaces: [`ContentfulEntity`, `Node`],
           extensions: { dontInfer: {} },
@@ -632,7 +669,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           fields[field.id] = translateFieldType(field, schema, createTypes)
         })
 
-        const type = pluginConfig.get(`useNameForId`)
+        const type = useNameForId
           ? contentTypeItem.name
           : contentTypeItem.sys.id
 
@@ -644,6 +681,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
               sys: { type: `ContentfulSys!` },
               metadata: { type: `ContentfulMetadata!` },
               ...fields,
+              linkedFrom: linkedFromName,
             },
             interfaces: [`ContentfulEntity`, `ContentfulEntry`, `Node`],
             extensions: { dontInfer: {} },

@@ -120,6 +120,43 @@ Array [
         "dontInfer": Object {},
       },
       "fields": Object {
+        "ContentfulContentTypeContentReference": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "ContentfulContentTypeContentReference",
+            },
+          },
+          "type": "[ContentfulContentTypeContentReference]",
+        },
+        "ContentfulContentTypeMediaReference": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "ContentfulContentTypeMediaReference",
+            },
+          },
+          "type": "[ContentfulContentTypeMediaReference]",
+        },
+        "ContentfulContentTypeValidatedContentReference": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "ContentfulContentTypeValidatedContentReference",
+            },
+          },
+          "type": "[ContentfulContentTypeValidatedContentReference]",
+        },
+      },
+      "name": "ContentfulLinkedFrom",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
         "contentType": Object {
           "type": "String!",
         },
@@ -222,6 +259,9 @@ Ignored if layout = FLUID.",
         },
         "id": Object {
           "type": "ID!",
+        },
+        "linkedFrom": Object {
+          "type": "ContentfulLinkedFrom",
         },
         "metadata": Object {
           "type": "ContentfulMetadata!",
@@ -371,6 +411,7 @@ Ignored if layout = FLUID.",
         "integerLocalized": Object {
           "type": "Int",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "metadata": Object {
           "type": "ContentfulMetadata!",
         },
@@ -398,6 +439,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "longLocalized": Object {
           "extensions": Object {
             "link": Object {
@@ -464,6 +506,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "many": Object {
           "extensions": Object {
             "link": Object {
@@ -533,6 +576,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "metadata": Object {
           "type": "ContentfulMetadata!",
         },
@@ -584,6 +628,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "metadata": Object {
           "type": "ContentfulMetadata!",
         },
@@ -611,6 +656,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "location": Object {
           "type": "ContentfulLocation",
         },
@@ -650,6 +696,7 @@ Ignored if layout = FLUID.",
         "jsonLocalized": Object {
           "type": "JSON",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "metadata": Object {
           "type": "ContentfulMetadata!",
         },
@@ -677,6 +724,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "metadata": Object {
           "type": "ContentfulMetadata!",
         },
@@ -713,6 +761,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "many": Object {
           "extensions": Object {
             "link": Object {
@@ -776,6 +825,7 @@ Ignored if layout = FLUID.",
         "id": Object {
           "type": "ID!",
         },
+        "linkedFrom": "ContentfulLinkedFrom",
         "metadata": Object {
           "type": "ContentfulMetadata!",
         },
@@ -877,6 +927,9 @@ Array [
       "fields": Object {
         "id": Object {
           "type": "ID!",
+        },
+        "linkedFrom": Object {
+          "type": "ContentfulLinkedFrom",
         },
         "metadata": Object {
           "type": "ContentfulMetadata!",
