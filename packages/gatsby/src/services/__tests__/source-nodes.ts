@@ -6,7 +6,6 @@ import { actions } from "../../redux/actions"
 import { getDataStore } from "../../datastore"
 
 jest.mock(`../../utils/api-runner-node`)
-jest.setTimeout(1e6)
 
 const mockAPIs = {}
 
