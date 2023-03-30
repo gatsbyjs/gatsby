@@ -1,5 +1,5 @@
-const { defineConfig } = require(`cypress`)
-const { addMatchImageSnapshotPlugin } = require(`@simonsmith/cypress-image-snapshot/plugin`)
+import { defineConfig } from "cypress"
+import { addMatchImageSnapshotPlugin } from "@simonsmith/cypress-image-snapshot/plugin"
 
 export default defineConfig({
   e2e: {
@@ -7,7 +7,7 @@ export default defineConfig({
     specPattern: `cypress/integration/*.{js,ts}`,
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config)
-      on("before:browser:launch", (browser = {}, launchOptions) => {
+      on("before:browser:launch", (browser = {} as Cypress.Browser, launchOptions) => {
         if (browser.family === "chromium" || browser.name === "chrome") {
           // Make retina screens run at 1x density so they match the versions in CI
           launchOptions.args.push("--force-device-scale-factor=1")

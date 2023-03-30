@@ -1,6 +1,6 @@
-const { defineConfig } = require('cypress')
+import { defineConfig } from "cypress"
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
     specPattern: [`cypress/integration/ignore.js`, `cypress/integration/functions.js`, `cypress/integration/static.js`]
   },
