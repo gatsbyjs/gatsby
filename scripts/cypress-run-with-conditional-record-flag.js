@@ -22,6 +22,10 @@ const cypressArgs = [`run`, ...process.argv.slice(2)]
 
 if (shouldRecord) {
   cypressArgs.push(`--record`)
+
+  if (process.env.CYPRESS_GROUP_NAME) {
+    cypressArgs.push(`--group`, process.env.CYPRESS_GROUP_NAME)
+  }
 }
 
 childProcess.execFileSync(cypressBin, cypressArgs, {
