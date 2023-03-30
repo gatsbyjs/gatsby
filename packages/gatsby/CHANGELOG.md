@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.8.1/packages/gatsby) (2023-03-29)
+
+#### Bug Fixes
+
+- don't block event loop during inference [#37780](https://github.com/gatsbyjs/gatsby/issues/37780) [#37800](https://github.com/gatsbyjs/gatsby/issues/37800) ([facb07f](https://github.com/gatsbyjs/gatsby/commit/facb07f6368641662c08a6e93490b0db1ea426ee))
+
 ## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.8.0/packages/gatsby) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
