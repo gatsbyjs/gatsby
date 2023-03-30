@@ -139,7 +139,10 @@ async function deleteStaleNodes(
   cleanupStaleNodesActivity.end()
 }
 
-let isInitialSourceNodesOfCurrentNodeProcess = true
+export const is = {
+  initialSourceNodesOfCurrentNodeProcess: true,
+}
+
 let sourcingCount = 0
 export default async ({
   webhookBody,
@@ -152,7 +155,7 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
-  const traceId = isInitialSourceNodesOfCurrentNodeProcess
+  const traceId = is.initialSourceNodesOfCurrentNodeProcess
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
 
@@ -178,8 +181,8 @@ export default async ({
   await getDataStore().ready()
 
   // We only warn for plugins w/o nodes and delete stale nodes on the first sourceNodes call of the current process.
-  if (isInitialSourceNodesOfCurrentNodeProcess) {
-    isInitialSourceNodesOfCurrentNodeProcess = false
+  if (is.initialSourceNodesOfCurrentNodeProcess) {
+    is.initialSourceNodesOfCurrentNodeProcess = false
 
     warnForPluginsWithoutNodes()
 
