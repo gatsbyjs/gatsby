@@ -19,7 +19,7 @@ Gatsby supports Incremental Builds to varying degrees and in different places:
 By the end of this part of the tutorial, you will be able to:
 
 - Use Node APIs to optimize node creation
-- Understand in more detail how delta updates work
+- Describe in more detail how delta updates work
 
 ## Overview
 
@@ -229,7 +229,7 @@ You can view the whole source code under the GitHub permalinks for [source-nodes
     } = await fetchContent({ syncToken, pluginConfig, reporter })
     ```
 
-    And coming back is the `currentSyncData` or: The delta update.
+    And coming back is the `currentSyncData`, the delta update.
 
 1. The `fetchContent` utility function itself uses Contentful's [Sync API](https://www.contentful.com/developers/docs/concepts/sync/) to get delta updates. Here's the relevant code snippet:
 

@@ -8,7 +8,7 @@ import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
-Gatsby always had best-in-class image support with its [`gatsby-plugin-image`](/plugins/gatsby-plugin-image/) feature. With it you can easily add responsive, optimized images to sites in all modern formats. Traditionally, images were downloaded and transformed to enable this behavior. Image CDN solves this by skipping image processing during the build, and instead deferring and offloading it to a dedicated image CDN. Visitors still get images in the most optimized formats such as AVIF and WebP, but site builds complete in a fraction of the time.
+Gatsby has best-in-class image support with its [`gatsby-plugin-image`](/plugins/gatsby-plugin-image/) feature. With it you can easily add responsive, optimized images to sites in all modern formats. Traditionally, images were downloaded and transformed to enable this behavior. Image CDN solves this by skipping image processing during the build, and instead deferring and offloading it to a dedicated image CDN. Visitors still get images in the most optimized formats such as AVIF and WebP, but site builds complete in a fraction of the time.
 
 By the end of this part of the tutorial, you will be able to:
 
@@ -17,7 +17,7 @@ By the end of this part of the tutorial, you will be able to:
 
 ## Add Image CDN to your plugin
 
-Gatsby's Image CDN feature can be added to any Gatsby source plugin. We'd recommend using it over manual file downloading for the reasons above. As long as your API gives back an URL to an image, you should be able to implement the required code. Basically, for Image CDN to work you need two things:
+Gatsby's Image CDN feature can be added to any Gatsby source plugin. We recommend using it over manual file downloading for the reasons above. As long as your API gives back a URL to an image, you should be able to implement the required code. Basically, for Image CDN to work you need two things:
 
 - A GraphQL root node type that implements the `RemoteFile` interface
 - During node creation for that GraphQL node type, certain fields must exist on the node to match what `RemoteFile` expects
@@ -49,9 +49,9 @@ interface RemoteFile {
 For node types implementing `RemoteFile` this means:
 
 - Always required are `publicUrl` (the url to the image/file), [`mimeType`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_Types) (e.g. `image/jpg` or `application/pdf`), and `filename`. `publicUrl` will be defined through `url` during node creation.
-- `width`, `height`, `resize`, and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDFs
+- `width`, `height`, `resize`, and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDFs.
 
-So for node types that are images this means: `publicUrl`, `mimeType`, `filename`, `width`, and `height` are mandatory.
+For node types that are images this means: `publicUrl`, `mimeType`, `filename`, `width`, and `height` are mandatory.
 
 <Announcement>
 
@@ -405,7 +405,7 @@ You'll implement the `RemoteFile` interface for `Asset` and make it a root node.
     }
     ```
 
-1. A node of type `Post` should have the generated `id` of `Asset` as its `image` field. Because only posts can have images. You can conditionally add data to the node if certain contiditions are met like this:
+1. A node of type `Post` should have the generated `id` of `Asset` as its `image` field. Because only posts can have images, you can conditionally add data to the node if certain conditions are met like this:
 
     ```ts:title=plugin/src/source-nodes.ts
     export function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {
@@ -595,7 +595,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 ### Key takeaways
 
 - By using Image CDN you can offload the heavy image generation to dedicated providers, giving users of your source plugin great build performance.
-- GraphQL root node types of your plugin that represent files and/or images, should implement the `RemoteFile` interface and have all required fields on their node.
+- GraphQL root node types of your plugin that represent files and/or images should implement the `RemoteFile` interface and have all required fields on their node.
 - You can use `gatsbyImage` in your GraphQL result together with `gatsby-plugin-image` like you're used to.
 
 <Announcement>
