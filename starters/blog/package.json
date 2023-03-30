@@ -10,11 +10,11 @@
   "dependencies": {
     "@fontsource/merriweather": "^4.5.14",
     "@fontsource/montserrat": "^4.5.14",
-    "gatsby": "^5.8.0",
+    "gatsby": "^5.8.1",
     "gatsby-plugin-feed": "^5.8.0",
     "gatsby-plugin-image": "^3.8.0",
     "gatsby-plugin-manifest": "^5.8.0",
-    "gatsby-plugin-sharp": "^5.8.0",
+    "gatsby-plugin-sharp": "^5.8.1",
     "gatsby-remark-images": "^7.8.0",
     "gatsby-remark-prismjs": "^7.8.0",
     "gatsby-remark-responsive-iframe": "^6.8.0",
