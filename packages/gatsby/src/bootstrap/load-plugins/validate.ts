@@ -365,14 +365,10 @@ async function validatePluginsOptions(
         }
 
         // Validate subplugins
-        const subPluginsOrRemarkPlugins =
-          plugin.options?.plugins || plugin.options?.gatsbyRemarkPlugins
-          // gatsby-plugin-mdx uses gatsbyRemarkPlugins as its sub plugin key
-
-        if (subPluginsOrRemarkPlugins) {
+        if (plugin.options?.plugins) {
           const { errors: subErrors, plugins: subPlugins } =
             await validatePluginsOptions(
-              subPluginsOrRemarkPlugins as Array<IPluginRefObject>,
+              plugin.options.plugins as Array<IPluginRefObject>,
               rootDir
             )
           plugin.options.plugins = subPlugins
