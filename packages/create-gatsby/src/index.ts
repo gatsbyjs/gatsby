@@ -315,7 +315,7 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
   reporter.info(
     stripIndent`
     ${maybeUseEmoji(`🎉  `)}Your new Gatsby site ${colors.bold(
-      dirName
+      siteName
     )} has been successfully created
     at ${colors.bold(fullPath)}.
     `
