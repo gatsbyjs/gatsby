@@ -112,7 +112,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
       message: `What would you like to call your site?`,
       initial: `My Gatsby Site`,
       format: (value: string): string => colors.cyan(value),
-    } as any)
+    })
 
     npmSafeSiteName = makeNpmSafe(name)
     siteName = name
@@ -329,7 +329,7 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
   `)
 
   reporter.info(`See all commands at\n
-  ${colors.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
+  ${colors.blueBright(`https://www.gatsbyjs.com/docs/reference/gatsby-cli/`)}
   `)
 
   const siteHash = md5(fullPath)
