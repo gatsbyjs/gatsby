@@ -126,7 +126,7 @@ The topic of "working with a remote backend API" is a really broad topic and not
 - Check if the source you're trying to access has its own SDK. Many CMSs have their own SDK, e.g. Contentful with their [`contentful`](https://www.npmjs.com/package/contentful) package. When available, we'd recommend using these first.
 - It's good practice to gracefully handle errors when trying to access a remote API. This includes errors directly from the API but also ones like sudden internet connection loss. You don't want to silently fail on such errors but show them to the user of your plugin.
 
-You can also explore the API if you're not familiar with it or have it written yourself. For example, you can visit `http://localhost:4000/graphql` to explore the example API of this tutorial. It's a fully functional GraphiQL IDE window and with its help you can create your queries and test them.
+You can also explore the API if you're not familiar with it. For example, you can visit `http://localhost:4000/graphql` to explore the example API of this tutorial. It's a fully functional GraphiQL IDE window and with its help you can create your queries and test them. Check if your remote API has interactive documentation or other forms of exploring the API.
 
 </Collapsible>
 
@@ -323,7 +323,7 @@ You can use the [`createNode` API reference](/docs/reference/config-files/action
 
 </Collapsible>
 
-Afterwards one is able to query the `TypeName` type with a `hello` key:
+Once the `sourceNodes` API with its `createNode` call is run one is able to query the `TypeName` type with a `hello` key:
 
 ```graphql
 query {
