@@ -8,7 +8,6 @@ import type {
   IContentfulAsset,
   IContentfulEntry,
   IContentfulLink,
-  IContentfulSys,
   ILocalizedField,
 } from "./types/contentful"
 import type {
@@ -338,18 +337,14 @@ export const buildForeignReferenceMap = ({
   return foreignReferenceMapState
 }
 
-interface IContentfulTextNode extends Node {
-  sys: Partial<IContentfulSys>
-}
-
 function prepareTextNode(
   id: string,
   node: IContentfulEntry,
   _key: string,
   text: unknown
-): IContentfulTextNode {
+): Node {
   const str = _.isString(text) ? text : ``
-  const textNode: IContentfulTextNode = {
+  const textNode: Node = {
     id,
     parent: node.id,
     raw: str,
@@ -361,9 +356,6 @@ function prepareTextNode(
       contentDigest: node.sys.publishedAt,
     },
     children: [],
-    sys: {
-      type: `TextNode`,
-    },
   }
 
   return textNode

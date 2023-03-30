@@ -353,8 +353,9 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           !deletedEntryGatsbyReferenceIds.has(n.id)
       )
       .forEach(n => {
-        if (n.sys.id && foreignReferenceMap[createRefId(n)]) {
-          foreignReferenceMap[createRefId(n)].forEach(foreignReference => {
+        const refId = createRefId(n)
+        if (n.sys.id && foreignReferenceMap[refId]) {
+          foreignReferenceMap[refId].forEach(foreignReference => {
             const { name, id, type, spaceId } = foreignReference
 
             const nodeId = createNodeId(
