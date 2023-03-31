@@ -375,4 +375,4 @@ export const query = graphql`
 
 - [GraphQL specification](https://spec.graphql.org/October2016/)
 - [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
-- [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)
+- [Relay Compiler (which Gatsby uses to process queries)](https://relay.dev/docs/principles-and-architecture/compiler-architecture/)
