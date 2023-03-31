@@ -139,6 +139,7 @@ async function deleteStaleNodes(
   cleanupStaleNodesActivity.end()
 }
 
+// exported for unit tests purposes only to allow internal module state resets
 export const is = {
   initialSourceNodesOfCurrentNodeProcess: true,
 }
