@@ -426,13 +426,13 @@ describe(`nodes db tests`, () => {
 
     const state = store.getState()
 
-    const ownerOne = state.pluginNamesToOwnedNodeTypes.get(`test-owner-1`)
+    const ownerOne = state.typeOwners.pluginsToTypes.get(`test-owner-1`)
     expect(ownerOne).toBeTruthy()
     expect(ownerOne.has(`OwnerOneTestTypeOne`)).toBeTrue()
     expect(ownerOne.has(`OwnerOneTestTypeTwo`)).toBeTrue()
     expect(ownerOne.has(`OwnerTwoTestTypeThree`)).toBeFalse()
 
-    const ownerTwo = state.pluginNamesToOwnedNodeTypes.get(`test-owner-2`)
+    const ownerTwo = state.typeOwners.pluginsToTypes.get(`test-owner-2`)
     expect(ownerTwo).toBeTruthy()
     expect(ownerTwo.has(`OwnerOneTestTypeTwo`)).toBeFalse()
     expect(ownerTwo.has(`OwnerTwoTestTypeThree`)).toBeTrue()

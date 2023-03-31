@@ -14,15 +14,14 @@ const { deleteNode } = actions
  * may create nodes, but which have not actually created any nodes.
  */
 function discoverPluginNamesWithoutNodes(): Array<string> {
-  const { pluginNamesToOwnedNodeTypes, flattenedPlugins } = store.getState()
+  const { typeOwners, flattenedPlugins } = store.getState()
 
   // Find out which plugins own already created nodes
-  const pluginNamesThatCreatedNodes = new Set([`default-site-plugin`])
-
-  for (const pluginName of pluginNamesToOwnedNodeTypes.keys()) {
+  const pluginNamesThatCreatedNodes = new Set([
+    `default-site-plugin`,
     // each plugin that owns node types created a node at some point
-    pluginNamesThatCreatedNodes.add(pluginName)
-  }
+    ...Array.from(typeOwners.pluginsToTypes.keys()),
+  ])
 
   return flattenedPlugins
     .filter(
@@ -97,19 +96,10 @@ async function deleteStaleNodes(
 
   cleanupStaleNodesActivity.start()
 
-  const { pluginNamesToOwnedNodeTypes, statefulSourcePlugins } = state
-
-  const typeNamesToOwnerPluginName = new Map()
-
-  // build up a map of type names -> plugin names
-  pluginNamesToOwnedNodeTypes.forEach((ownedTypes, pluginName) => {
-    ownedTypes.forEach(typeName => {
-      typeNamesToOwnerPluginName.set(typeName, pluginName)
-    })
-  })
+  const { typeOwners, statefulSourcePlugins } = state
 
   for (const typeName of previouslyExistingNodeTypeNames) {
-    const pluginName = typeNamesToOwnerPluginName.get(typeName)
+    const pluginName = typeOwners.typesToPlugins.get(typeName)
 
     // no need to check this type if its owner has declared its a stateful source plugin
     if (pluginName && statefulSourcePlugins.has(pluginName)) {
@@ -163,9 +153,9 @@ export default async ({
   const previouslyExistingNodeTypeNames: Array<string> = []
 
   // this is persisted to cache between builds, so it will always have an up to date list of previously created types by plugin name
-  const { pluginNamesToOwnedNodeTypes } = store.getState()
+  const { typeOwners } = store.getState()
 
-  for (const nodeTypes of pluginNamesToOwnedNodeTypes.values()) {
+  for (const nodeTypes of typeOwners.pluginsToTypes.values()) {
     nodeTypes.forEach(typeName =>
       previouslyExistingNodeTypeNames.push(typeName)
     )

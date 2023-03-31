@@ -793,47 +793,6 @@ const createNode = (
 
   const oldNode = getNode(node.id)
 
-  // Ensure the plugin isn't creating a node type owned by another
-  // plugin. Type "ownership" is first come first served.
-  if (plugin) {
-    const pluginName = plugin.name
-
-    if (!typeOwners[node.internal.type])
-      typeOwners[node.internal.type] = pluginName
-    else if (typeOwners[node.internal.type] !== pluginName)
-      throw new Error(stripIndent`
-        The plugin "${pluginName}" created a node of a type owned by another plugin.
-
-        The node type "${node.internal.type}" is owned by "${
-        typeOwners[node.internal.type]
-      }".
-
-        If you copy and pasted code from elsewhere, you'll need to pick a new type name
-        for your new node(s).
-
-        The node object passed to "createNode":
-
-        ${JSON.stringify(node, null, 4)}
-
-        The plugin creating the node:
-
-        ${JSON.stringify(plugin, null, 4)}
-      `)
-
-    // If the node has been created in the past, check that
-    // the current plugin is the same as the previous.
-    if (oldNode && oldNode.internal.owner !== pluginName) {
-      throw new Error(
-        stripIndent`
-        Nodes can only be updated by their owner. Node "${node.id}" is
-        owned by "${oldNode.internal.owner}" and another plugin "${pluginName}"
-        tried to update it.
-
-        `
-      )
-    }
-  }
-
   if (actionOptions.parentSpan) {
     actionOptions.parentSpan.setTag(`nodeId`, node.id)
     actionOptions.parentSpan.setTag(`nodeType`, node.id)

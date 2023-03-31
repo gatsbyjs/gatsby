@@ -1,4 +1,4 @@
-import { pluginNamesToOwnedNodeTypesReducer } from "./type-owners"
+import { typeOwnersReducer } from "./type-owners"
 import { nodesReducer } from "./nodes"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducers/logs"
 import { pagesReducer } from "./pages"
@@ -44,7 +44,7 @@ import { slicesByTemplateReducer } from "./slices-by-template"
 export {
   definitionsReducer as definitions,
   programReducer as program,
-  pluginNamesToOwnedNodeTypesReducer as pluginNamesToOwnedNodeTypes,
+  typeOwnersReducer as typeOwners,
   nodesReducer as nodes,
   nodesByTypeReducer as nodesByType,
   resolvedNodesCacheReducer as resolvedNodesCache,

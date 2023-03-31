@@ -262,10 +262,13 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
-  pluginNamesToOwnedNodeTypes: Map<
-    IGatsbyPlugin[`name`],
-    Set<IGatsbyNode[`internal`][`type`]>
-  >
+  typeOwners: {
+    pluginsToTypes: Map<
+      IGatsbyPlugin[`name`],
+      Set<IGatsbyNode[`internal`][`type`]>
+    >
+    typesToPlugins: Map<IGatsbyNode[`internal`][`type`], IGatsbyPlugin[`name`]>
+  }
   nodeManifests: Array<INodeManifest>
   requestHeaders: Map<string, { [header: string]: string }>
   statefulSourcePlugins: Set<string>
@@ -402,7 +405,7 @@ export type GatsbyStateKeys = keyof IGatsbyState
 
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
-  pluginNamesToOwnedNodeTypes?: IGatsbyState["pluginNamesToOwnedNodeTypes"]
+  typeOwners?: IGatsbyState["typeOwners"]
   statefulSourcePlugins?: IGatsbyState["statefulSourcePlugins"]
   status: IGatsbyState["status"]
   components: IGatsbyState["components"]
