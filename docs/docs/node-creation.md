@@ -69,13 +69,14 @@ Any nodes that aren't touched by the end of the `source-nodes` phase, are delete
 
 Stale node deletion is a very expensive process because all nodes in the data store need to be iterated on to check if they're stale or not. Iterating on nodes to check for staleness also requires loading that entire node into memory, so all nodes created by a source plugin are loaded into memory to check for their staleness, even if they're otherwise not needed in memory.
 
-Source plugins can skip this expensive step by calling the `enableStatefulSourceNodes` action. This will stop Gatsby from checking for stale nodes created by the source plugin that called the action.
-This is a major performance improvement for medium and large sites and it means those sites will need less total memory to build.
+Source plugins can skip this expensive step by calling the `enableStatefulSourceNodes` action.
+This will stop Gatsby from checking for stale nodes created by the source plugin that called the action.
+This is a major performance improvement for medium and large sites and those sites will need less total memory to build.
 
 When enabling stateful sourcing plugin authors need to be sure their plugins properly handle deleting nodes when they need to be deleted. Since Gatsby is no longer checking for node staleness, data which should no longer exist could stick around.
 `enableStatefulSourceNodes` should only be enabled for source plugins that can fully support all delete operations in their data source.
 
-Note that if `enableStatefulSourceNodes` is supported by the users Gatsby version the action should be called every time `sourceNodes` runs.
+Note that if `enableStatefulSourceNodes` is supported by the user's `gatsby` version, the action should be called every time `sourceNodes` runs.
 
 Example:
 
