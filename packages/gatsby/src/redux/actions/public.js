@@ -1511,6 +1511,19 @@ actions.unstable_createNodeManifest = (
 
 /**
  * Marks a source plugin as "stateful" which disables automatically deleting untouched nodes. Stateful source plugins manage deleting their own nodes without stale node checks in Gatsby.
+ * Enabling this is a major performance improvement for source plugins that manage their own node deletion. It also lowers the total memory required by a source plugin.
+ * When using this action, check if it's supported first with `hasFeature('stateful-source-nodes')`, `hasFeature` is exported from `gatsby-plugin-utils`.
+ *
+ * @example
+ * import { hasFeature } from "gatsby-plugin-utils"
+ *
+ * exports.sourceNodes = ({ actions }) => {
+ *    if (hasFeature(`stateful-source-nodes`)) {
+ *      actions.enableStatefulSourceNodes()
+ *    } else {
+ *     // fallback to old behavior where all nodes are iterated on and touchNode is called.
+ *    }
+ * }
  *
  * @param {void} $0
  */
