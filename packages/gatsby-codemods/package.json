@@ -29,7 +29,7 @@
     "@babel/plugin-syntax-jsx": "^7.18.6",
     "@babel/plugin-syntax-typescript": "^7.20.0",
     "@babel/runtime": "^7.20.13",
-    "execa": "^5.1.1",
+    "execa": "^7.1.1",
     "graphql": "^16.6.0",
     "jscodeshift": "0.13.1",
     "recast": "0.20.5"
