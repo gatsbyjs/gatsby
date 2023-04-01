@@ -18,7 +18,7 @@
     "lodash": "^4.17.21",
     "probe-image-size": "^7.2.3",
     "semver": "^7.3.8",
-    "sharp": "^0.31.3"
+    "sharp": "^0.32.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
