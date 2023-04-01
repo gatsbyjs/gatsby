@@ -22,7 +22,7 @@
     "@types/common-tags": "^1.8.1",
     "better-opn": "^2.1.1",
     "boxen": "^5.1.2",
-    "chalk": "^4.1.2",
+    "chalk": "^5.2.0",
     "clipboardy": "^2.3.0",
     "common-tags": "^1.8.2",
     "convert-hrtime": "^3.0.0",
