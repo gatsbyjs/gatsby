@@ -56,7 +56,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.30.0",
+    "@playwright/test": "^1.32.1",
     "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "fs-extra": "^11.1.0",
