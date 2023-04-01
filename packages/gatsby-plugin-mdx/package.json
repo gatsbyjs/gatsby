@@ -48,8 +48,8 @@
     "vfile": "^5.3.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.3",
     "@types/estree": "^0.0.52",
     "@types/mdast": "^3.0.10",
     "@types/unist": "^2.0.6",
