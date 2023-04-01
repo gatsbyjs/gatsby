@@ -30,7 +30,7 @@
     "hex2rgba": "^0.0.1"
   },
   "devDependencies": {
-    "agadoo": "^2.0.0",
+    "agadoo": "^3.0.0",
     "cross-env": "^7.0.3",
     "microbundle": "^0.15.0",
     "preval.macro": "^5.0.0"
