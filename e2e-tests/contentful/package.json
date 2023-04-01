@@ -16,7 +16,7 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "slugify": "^1.5.0"
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@cypress/snapshot": "^2.1.7",
