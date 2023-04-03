@@ -60,7 +60,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.30.0",
+    "@playwright/test": "^1.32.1",
     "@testing-library/cypress": "^8.0.7",
     "cross-env": "^7.0.3",
     "cypress": "^9.7.0",
@@ -70,10 +70,10 @@
     "gatsby-core-utils": "next",
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.7",
     "start-server-and-test": "^1.15.3",
     "typescript": "^4.9.4",
-    "yargs": "^17.6.2"
+    "yargs": "^17.7.1"
   },
   "repository": {
     "type": "git",
