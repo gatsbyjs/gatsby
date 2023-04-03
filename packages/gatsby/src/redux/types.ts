@@ -1002,6 +1002,7 @@ export interface ICreateNodeAction {
   traceId: string
   parentSpan: Span
   followsSpan: Span
+  plugin: IGatsbyPlugin
 }
 
 export interface IAddFieldToNodeAction {
@@ -1020,6 +1021,7 @@ export interface IDeleteNodeAction {
   // FIXME: figure out why payload can be undefined here
   payload: IGatsbyNode | void
   internalNode: IGatsbyNode
+  plugin: IGatsbyPlugin
 }
 
 export interface ISetSiteFlattenedPluginsAction {
@@ -1059,6 +1061,7 @@ export interface ITouchNodeAction {
   type: `TOUCH_NODE`
   payload: Identifier
   typeName: IGatsbyNode["internal"]["type"]
+  plugin: IGatsbyPlugin
 }
 
 interface IStartIncrementalInferenceAction {

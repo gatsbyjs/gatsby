@@ -64,12 +64,13 @@ export const typeOwnersReducer = (
   typeOwners: IGatsbyState["typeOwners"] = {
     pluginsToTypes: new Map(),
     typesToPlugins: new Map(),
-  },
-  action: ActionsUnion,
-  plugin: IGatsbyPlugin
+  } as IGatsbyState["typeOwners"],
+  action: ActionsUnion
 ): IGatsbyState["typeOwners"] => {
   switch (action.type) {
     case `DELETE_NODE`: {
+      const { plugin } = action
+
       if (plugin) {
         const pluginName = plugin.name
         const { internalNode } = action
@@ -103,10 +104,10 @@ export const typeOwnersReducer = (
       return typeOwners
     }
     case `TOUCH_NODE`: {
-      return setTypeOwner(action.typeName, plugin, typeOwners)
+      return setTypeOwner(action.typeName, action.plugin, typeOwners)
     }
     case `CREATE_NODE`: {
-      const { oldNode, payload: node } = action
+      const { plugin, oldNode, payload: node } = action
       const { owner, type } = node.internal
 
       setTypeOwner(type, plugin, typeOwners, node)
