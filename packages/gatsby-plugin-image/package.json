@@ -63,7 +63,7 @@
     "prepend-directive": "^1.1.0",
     "semver": "^7.3.8",
     "terser": "^5.16.1",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.2"
   },
   "peerDependencies": {
     "@babel/core": "^7.12.3",
@@ -91,7 +91,7 @@
     "camelcase": "^6.3.0",
     "chokidar": "^3.5.3",
     "common-tags": "^1.8.2",
-    "fs-extra": "^11.1.0",
+    "fs-extra": "^11.1.1",
     "gatsby-core-utils": "^4.9.0-next.0",
     "gatsby-plugin-utils": "^4.9.0-next.0",
     "objectFitPolyfill": "^2.3.5",
