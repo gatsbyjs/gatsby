@@ -54,6 +54,12 @@ const IndexPage = () => (
         <Link to="/tags">/tags</Link>
       </li>
     </ul>
+    <h2>Gatsby</h2>
+    <ul>
+      <li>
+        <Link to="/ssr">SSR</Link>
+      </li>
+    </ul>
   </Layout>
 )
 
