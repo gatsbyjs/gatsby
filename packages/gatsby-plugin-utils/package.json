@@ -47,13 +47,13 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "fastq": "^1.13.0",
-    "fs-extra": "^11.1.0",
+    "fastq": "^1.15.0",
+    "fs-extra": "^11.1.1",
     "gatsby-core-utils": "^4.9.0-next.0",
     "gatsby-sharp": "^1.9.0-next.0",
     "graphql-compose": "^9.0.10",
     "import-from": "^4.0.0",
-    "joi": "^17.7.0",
+    "joi": "^17.9.1",
     "mime": "^3.0.0"
   },
   "devDependencies": {
@@ -63,7 +63,7 @@
     "cross-env": "^7.0.3",
     "msw": "^0.49.3",
     "rimraf": "^3.0.2",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.2"
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
