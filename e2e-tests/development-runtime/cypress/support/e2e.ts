@@ -1,6 +1,47 @@
-import "@testing-library/cypress/add-commands"
-import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command"
 import "gatsby-cypress"
+import "@testing-library/cypress/add-commands"
+import { addMatchImageSnapshotCommand } from "@simonsmith/cypress-image-snapshot/command"
+
+addMatchImageSnapshotCommand({
+  customDiffDir: `/__diff_output__`,
+  customDiffConfig: {
+    threshold: 0.1,
+  },
+  failureThreshold: 0.08,
+  failureThresholdType: `percent`,
+})
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Assert the current URL
+       * @param route
+       * @example cy.assertRoute('/page-2')
+       */
+      assertRoute(value: string): Chainable<JQuery<HTMLElement>>
+      lifecycleCallCount(action: string): Chainable<number>
+      lifecycleCallOrder(expectedActionCallOrder: Array<string>): Chainable<boolean>
+      assertRouterWrapperFocus(shouldBeFocused?: boolean): Chainable<JQuery<HTMLElement>>
+      navigateAndWaitForRouteChange(pathname: string): Chainable<JQuery<HTMLElement>>
+      changeFocus(): Chainable<JQuery<HTMLElement>>
+      waitForHmr(message?: string): Chainable<JQuery<HTMLElement>>
+      getFastRefreshOverlay(): Chainable<JQuery<HTMLElement>>
+      assertNoFastRefreshOverlay(): Chainable<JQuery<HTMLElement>>
+      getRecord(key: string, metric: string, raw?: boolean): Chainable<string | number>
+    }
+  }
+  interface Window {
+    ___PageComponentLifecycleCallsLog: Array<{
+      action: string
+      pathname?: string
+      pageComponent?: string
+      locationPath?: string
+      pagePath?: string
+    }>
+    ___navigate(to: string, options?: any): void
+  }
+}
 
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy
@@ -66,6 +107,7 @@ Cypress.Commands.add(
       win.___navigate(pathname)
     })
 
+    // @ts-expect-error - gatsby-cypress doesn't have types
     return cy.waitForAPI(`onRouteUpdate`).then(() => subject)
   }
 )
@@ -100,6 +142,7 @@ Cypress.Commands.overwrite("visit", (orig, url, options = {}) => {
     },
   }
 
+  // @ts-ignore - TODO: fix this
   return orig(url, newOptions)
 })
 
@@ -115,15 +158,6 @@ Cypress.Commands.add(`getFastRefreshOverlay`, () =>
 Cypress.Commands.add(`assertNoFastRefreshOverlay`, () =>
   cy.get(`gatsby-fast-refresh`).should(`not.exist`)
 )
-
-addMatchImageSnapshotCommand({
-  customDiffDir: `/__diff_output__`,
-  customDiffConfig: {
-    threshold: 0.1,
-  },
-  failureThreshold: 0.08,
-  failureThresholdType: `percent`,
-})
 
 /**
  * Get a record from a table cell in one of the test components.
