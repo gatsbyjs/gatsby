@@ -200,7 +200,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
-    "typescript": "^5.0.2",
+    "typescript": "^5.0.3",
     "xhr-mock": "^2.5.1",
     "zipkin": "^0.22.0",
     "zipkin-javascript-opentracing": "^3.0.0",
