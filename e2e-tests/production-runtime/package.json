@@ -16,7 +16,7 @@
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-stylus": "next",
     "gatsby-source-filesystem": "next",
-    "glob": "^8.0.3",
+    "glob": "^9.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.32.8",
@@ -63,7 +63,7 @@
     "gatsby-core-utils": "next",
     "is-ci": "^3.0.1",
     "prettier": "^2.8.3",
-    "start-server-and-test": "^1.15.3"
+    "start-server-and-test": "^2.0.0"
   },
   "repository": {
     "type": "git",
