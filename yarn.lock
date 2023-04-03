@@ -4834,7 +4834,7 @@
   resolved "https://registry.yarnpkg.com/@types/yoga-layout/-/yoga-layout-1.9.2.tgz#efaf9e991a7390dc081a0b679185979a83a9639a"
   integrity sha512-S9q47ByT2pPvD65IvrWp7qppVMpk9WGMbVq9wbWZOHg6tnXSD4vyhao6nOSBwwfDdV2p3Kx9evA9vI+XWTfDvw==
 
-"@typescript-eslint/eslint-plugin@^5.49.0", "@typescript-eslint/eslint-plugin@^5.57.0":
+"@typescript-eslint/eslint-plugin@^5.57.0":
   version "5.57.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.57.0.tgz#52c8a7a4512f10e7249ca1e2e61f81c62c34365c"
   integrity sha512-itag0qpN6q2UMM6Xgk6xoHa0D0/P+M17THnr4SVgqn9Rgam5k/He33MA7/D7QoJcdMxHFyX7U9imaBonAX/6qA==
@@ -4850,7 +4850,7 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/parser@^5.49.0", "@typescript-eslint/parser@^5.57.0":
+"@typescript-eslint/parser@^5.57.0":
   version "5.57.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.57.0.tgz#f675bf2cd1a838949fd0de5683834417b757e4fa"
   integrity sha512-orrduvpWYkgLCyAdNtR1QIWovcNZlEm6yL8nwH/eTxWLd8gsP+25pdLHYzL2QdkqrieaDwLpytHqycncv0woUQ==
@@ -23194,7 +23194,7 @@ typescript@^4.1.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
-typescript@^5.0.2:
+typescript@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.3.tgz#fe976f0c826a88d0a382007681cbb2da44afdedf"
   integrity sha512-xv8mOEDnigb/tN9PSMTwSEqAnUvkoXMQlicOb0IUVDBSQCgBSaAAROUZYy2IcUy5qU6XajK5jjjO7TMWqBTKZA==
