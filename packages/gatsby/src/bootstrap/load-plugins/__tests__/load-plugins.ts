@@ -576,6 +576,58 @@ describe(`Load plugins`, () => {
       expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
 
+    it(`validates subplugin schemas (if not in options.plugins)`, async () => {
+      await loadPlugins(
+        {
+          plugins: [
+            {
+              resolve: `gatsby-plugin-mdx`,
+              options: {
+                gatsbyRemarkPlugins: [
+                  {
+                    resolve: `gatsby-remark-autolink-headers`,
+                    options: {
+                      maintainCase: `should be boolean`,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        process.cwd()
+      )
+
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((reporter.error as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "context": Object {
+              "configDir": null,
+              "pluginName": "gatsby-remark-autolink-headers",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "maintainCase",
+                    "label": "maintainCase",
+                    "value": "should be boolean",
+                  },
+                  "message": "\\"maintainCase\\" must be a boolean",
+                  "path": Array [
+                    "maintainCase",
+                  ],
+                  "type": "boolean.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
+        ]
+      `)
+      expect(mockProcessExit).toHaveBeenCalledWith(1)
+    })
+
     it(`subplugins are resolved using "main" in package.json`, async () => {
       // in fixtures/subplugins/node_modules/gatsby-plugin-child-with-main/package.json
       // "main" field points to "lib/index.js"

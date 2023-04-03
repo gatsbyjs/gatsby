@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "5.9.0-next.0",
+  "version": "5.9.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
@@ -26,18 +26,18 @@
     "clipboardy": "^2.3.0",
     "common-tags": "^1.8.2",
     "convert-hrtime": "^3.0.0",
-    "create-gatsby": "^3.9.0-next.0",
+    "create-gatsby": "^3.9.0-next.1",
     "envinfo": "^7.8.1",
     "execa": "^5.1.1",
     "fs-exists-cached": "^1.0.0",
-    "fs-extra": "^11.1.0",
+    "fs-extra": "^11.1.1",
     "gatsby-core-utils": "^4.9.0-next.0",
     "gatsby-telemetry": "^4.9.0-next.0",
     "hosted-git-info": "^3.0.8",
     "is-valid-path": "^0.1.1",
-    "joi": "^17.7.0",
+    "joi": "^17.9.1",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.8",
+    "node-fetch": "^2.6.9",
     "opentracing": "^0.14.7",
     "pretty-error": "^2.1.2",
     "progress": "^2.0.3",
@@ -72,7 +72,7 @@
     "rollup": "^2.79.1",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-internal": "^1.0.4",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.3"
   },
   "files": [
     "lib/",
