@@ -1019,6 +1019,7 @@ export interface IDeleteNodeAction {
   type: `DELETE_NODE`
   // FIXME: figure out why payload can be undefined here
   payload: IGatsbyNode | void
+  internalNode: IGatsbyNode
 }
 
 export interface ISetSiteFlattenedPluginsAction {
@@ -1057,6 +1058,7 @@ export interface IAddSliceDataStatsAction {
 export interface ITouchNodeAction {
   type: `TOUCH_NODE`
   payload: Identifier
+  typeName: IGatsbyNode["internal"]["type"]
 }
 
 interface IStartIncrementalInferenceAction {

@@ -551,36 +551,13 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const internalNode = getNode(id)
-  if (plugin) {
-    const pluginName = plugin.name
-
-    if (
-      internalNode &&
-      typeOwners[internalNode.internal.type] &&
-      typeOwners[internalNode.internal.type] !== pluginName
-    )
-      throw new Error(stripIndent`
-          The plugin "${pluginName}" deleted a node of a type owned by another plugin.
-
-          The node type "${internalNode.internal.type}" is owned by "${
-        typeOwners[internalNode.internal.type]
-      }".
-
-          The node object passed to "deleteNode":
-
-          ${JSON.stringify(internalNode, null, 4)}
-
-          The plugin deleting the node:
-
-          ${JSON.stringify(plugin, null, 4)}
-        `)
-  }
 
   const createDeleteAction = node => {
     return {
       type: `DELETE_NODE`,
       plugin,
       payload: node,
+      internalNode,
     }
   }
 
@@ -610,8 +587,6 @@ function getNextNodeCounter() {
   }
   return lastNodeCounter + 1
 }
-
-const typeOwners = {}
 
 // memberof notation is added so this code can be referenced instead of the wrapper.
 /**
@@ -889,10 +864,6 @@ actions.createNode =
  * touchNode(node)
  */
 actions.touchNode = (node: any, plugin?: Plugin) => {
-  if (node && !typeOwners[node.internal.type]) {
-    typeOwners[node.internal.type] = node.internal.owner
-  }
-
   const nodeId = node?.id
 
   if (!nodeId) {
@@ -904,6 +875,7 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
     type: `TOUCH_NODE`,
     plugin,
     payload: nodeId,
+    typeName: node.internal.type,
   }
 }
 
