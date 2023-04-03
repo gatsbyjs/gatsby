@@ -1,4 +1,5 @@
 import { stripIndent } from "common-tags"
+import { reportOnce } from "../../utils/report-once"
 import {
   ActionsUnion,
   IGatsbyNode,
@@ -12,7 +13,12 @@ function setTypeOwner(
   typeOwners: IGatsbyState["typeOwners"],
   fullNode?: IGatsbyNode
 ): IGatsbyState["typeOwners"] {
-  const ownerName = plugin.name
+  const ownerName = plugin?.name || fullNode?.internal.owner
+
+  if (!ownerName) {
+    reportOnce(`No plugin owner for type "${typeName}"`)
+    return typeOwners
+  }
 
   const existingOwnerTypes = typeOwners.pluginsToTypes.get(ownerName)
 
