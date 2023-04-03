@@ -141,7 +141,7 @@ The source plugin needs to create node manifests using the [`unstable_createNode
 
 The CMS needs to send a preview webhook to Gatsby Cloud when content is changed and open the Content Sync waiting room. The details of the instructions below will differ from CMS to CMS depending on how extensions and their settings are created/stored.
 
-You'll need two information from Gatsby Cloud:
+You'll need two pieces of information from Gatsby Cloud:
 
 - Preview webhook URL (format: `https://webhook.gatsbyjs.com/hooks/data_source/<id>`)
 - Content Sync URL (format: `https://gatsbyjs.com/content-sync/<siteId>`)
@@ -205,7 +205,7 @@ Source plugins are responsible for setting the `mediaType` on their nodes (if ne
 
 This distinction between Gatsby source plugins and transformer plugins is important as it allows both to be contained and focused on their specific job. Source plugins don't need to worry about transforming their data, transformer plugins don't care where the data is coming from.
 
-For example, the node above with the `text/markdown` MIME type will be transformer by `gatsby-transformer-remark` into further `MarkdownRemark` nodes.
+For example, the node above with the `text/markdown` MIME type will be transformed by `gatsby-transformer-remark` into further `MarkdownRemark` nodes.
 
 ## Tracing
 

@@ -114,7 +114,7 @@ Be sure to go through this checklist before publishing your plugin for the first
 
     If you've generated TypeScript types, consider [adding a `types` key](https://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html).
 
-- Add a `prepare` script to your plugin's `package.json` that runs before `npm publish`. If your `build` script isn't automatically clearing the `dist` folder before doing a new build, add an additional `clean` script. This is to ensure that inside the `dist` folder no old artifacts are being published (e.g. you're renaming a file and without the `clean` the old file would still be published through `dist`). You could e.g. use [del-cli](https://www.npmjs.com/package/del-cli) to achieve this. It would look something like this:
+- Add a `prepare` script to your plugin's `package.json` that runs before `npm publish`. If your `build` script isn't automatically clearing the `dist` folder before doing a new build, add an additional `clean` script. This is to ensure that inside the `dist` folder no old artifacts are being published (e.g. you're renaming a file and without the `clean` the old file would still be published through `dist`). You could use [del-cli](https://www.npmjs.com/package/del-cli) to achieve this. It would look something like this:
 
     ```json:title=package.json
     {
