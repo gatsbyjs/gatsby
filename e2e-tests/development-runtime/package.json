@@ -60,7 +60,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.30.0",
+    "@playwright/test": "^1.32.1",
     "@testing-library/cypress": "^8.0.7",
     "cross-env": "^7.0.3",
     "cypress": "^9.7.0",
