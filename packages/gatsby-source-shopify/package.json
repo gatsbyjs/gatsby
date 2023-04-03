@@ -27,21 +27,21 @@
     "gatsby-core-utils": "^4.9.0-next.0",
     "gatsby-plugin-utils": "^4.9.0-next.0",
     "gatsby-source-filesystem": "^5.9.0-next.0",
-    "node-fetch": "^2.6.8",
+    "node-fetch": "^2.6.9",
     "sharp": "^0.31.3",
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
-    "@types/node-fetch": "^2.6.2",
+    "@types/node-fetch": "^2.6.3",
     "@types/sharp": "^0.31.1",
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "^3.9.0-next.0",
     "msw": "^1.2.1",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.7",
     "prettier-check": "^2.0.0",
     "tsc-watch": "^6.0.0",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.2"
   },
   "peerDependencies": {
     "gatsby-plugin-image": "^3.0.0-next"

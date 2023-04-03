@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "lz-string": "^1.4.4",
+    "lz-string": "^1.5.0",
     "normalize-path": "^3.0.0",
     "npm-package-arg": "^8.1.5",
     "recursive-readdir": "^2.2.3",
