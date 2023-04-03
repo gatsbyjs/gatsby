@@ -24,7 +24,7 @@
     "cypress": "^9.7.0",
     "cypress-image-snapshot": "^4.0.1",
     "gatsby-cypress": "next",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.7",
     "srcset": "^5.0.0",
     "start-server-and-test": "^1.15.3"
   },
