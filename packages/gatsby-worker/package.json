@@ -36,7 +36,7 @@
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\"  --extensions \".ts,.js\"",
-    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
+    "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
   },
   "engines": {
     "node": ">=18.0.0"
