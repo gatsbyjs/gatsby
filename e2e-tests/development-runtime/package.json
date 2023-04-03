@@ -20,7 +20,6 @@
     "gatsby-transformer-remark": "next",
     "gatsby-transformer-sharp": "next",
     "node-fetch": "^2.6.9",
-    "prop-types": "^15.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.60.0"
