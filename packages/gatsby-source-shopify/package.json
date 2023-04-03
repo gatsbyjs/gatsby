@@ -41,7 +41,7 @@
     "prettier": "^2.8.7",
     "prettier-check": "^2.0.0",
     "tsc-watch": "^4.6.2",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.3"
   },
   "peerDependencies": {
     "gatsby-plugin-image": "^3.0.0-next"

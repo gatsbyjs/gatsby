@@ -57,7 +57,7 @@
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "opentracing": "^0.14.7",
-    "typescript": "^5.0.2",
+    "typescript": "^5.0.3",
     "webpack": "^5.77.0"
   },
   "jest": {
