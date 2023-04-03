@@ -98,6 +98,7 @@ Object {
     "pagePaths": Set {},
     "sliceNames": Set {},
   },
+  "pluginNamesToOwnedNodeTypes": Map {},
   "queries": Object {
     "byConnection": Map {},
     "byNode": Map {},
@@ -123,6 +124,7 @@ Object {
   },
   "slices": Map {},
   "slicesByTemplate": Map {},
+  "statefulSourcePlugins": Set {},
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {

@@ -339,4 +339,103 @@ describe(`nodes db tests`, () => {
     })
     expect(getNodes()).toHaveLength(0)
   })
+
+  it(`records the node type owner when a node is created`, async () => {
+    // creating a node
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `1`,
+          internal: {
+            type: `OwnerOneTestTypeOne`,
+            contentDigest: `ok`,
+          },
+        },
+        {
+          name: `test-owner-1`,
+        }
+      )
+    )
+    // and creating a second node in the same type
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `2`,
+          internal: {
+            type: `OwnerOneTestTypeOne`,
+            contentDigest: `ok`,
+          },
+        },
+        {
+          name: `test-owner-1`,
+        }
+      )
+    )
+
+    // and a third node of a different type but same plugin
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `3`,
+          internal: {
+            type: `OwnerOneTestTypeTwo`,
+            contentDigest: `ok`,
+          },
+        },
+        {
+          name: `test-owner-1`,
+        }
+      )
+    )
+
+    // fourth node by a different plugin
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `4`,
+          internal: {
+            type: `OwnerTwoTestTypeThree`,
+            contentDigest: `ok`,
+          },
+        },
+        {
+          name: `test-owner-2`,
+        }
+      )
+    )
+
+    // fifth node by second plugin but the node is deleted. Deleted nodes still have type owners
+    const nodeFive = {
+      id: `5`,
+      internal: {
+        type: `OwnerTwoTestTypeFour`,
+        contentDigest: `ok`,
+      },
+    }
+    store.dispatch(
+      actions.createNode(nodeFive, {
+        name: `test-owner-2`,
+      })
+    )
+    store.dispatch(
+      actions.deleteNode(nodeFive, {
+        name: `test-owner-2`,
+      })
+    )
+    expect(getNode(`5`)).toBeUndefined()
+
+    const state = store.getState()
+
+    const ownerOne = state.typeOwners.pluginsToTypes.get(`test-owner-1`)
+    expect(ownerOne).toBeTruthy()
+    expect(ownerOne.has(`OwnerOneTestTypeOne`)).toBeTrue()
+    expect(ownerOne.has(`OwnerOneTestTypeTwo`)).toBeTrue()
+    expect(ownerOne.has(`OwnerTwoTestTypeThree`)).toBeFalse()
+
+    const ownerTwo = state.typeOwners.pluginsToTypes.get(`test-owner-2`)
+    expect(ownerTwo).toBeTruthy()
+    expect(ownerTwo.has(`OwnerOneTestTypeTwo`)).toBeFalse()
+    expect(ownerTwo.has(`OwnerTwoTestTypeThree`)).toBeTrue()
+    expect(ownerTwo.has(`OwnerTwoTestTypeFour`)).toBeTrue()
+  })
 })

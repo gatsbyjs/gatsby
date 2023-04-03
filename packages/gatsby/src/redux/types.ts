@@ -262,9 +262,16 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
+  typeOwners: {
+    pluginsToTypes: Map<
+      IGatsbyPlugin[`name`],
+      Set<IGatsbyNode[`internal`][`type`]>
+    >
+    typesToPlugins: Map<IGatsbyNode[`internal`][`type`], IGatsbyPlugin[`name`]>
+  }
   nodeManifests: Array<INodeManifest>
   requestHeaders: Map<string, { [header: string]: string }>
-  touchNodeOptOutTypes: Set<string>
+  statefulSourcePlugins: Set<string>
   telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
@@ -398,6 +405,8 @@ export type GatsbyStateKeys = keyof IGatsbyState
 
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
+  typeOwners?: IGatsbyState["typeOwners"]
+  statefulSourcePlugins?: IGatsbyState["statefulSourcePlugins"]
   status: IGatsbyState["status"]
   components: IGatsbyState["components"]
   jobsV2: IGatsbyState["jobsV2"]
@@ -488,7 +497,7 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
-  | ITouchNodeOptOutType
+  | IEnableStatefulSourcePluginAction
   | ICreateSliceAction
   | IDeleteSliceAction
   | ISetSSRTemplateWebpackCompilationHashAction
@@ -993,6 +1002,7 @@ export interface ICreateNodeAction {
   traceId: string
   parentSpan: Span
   followsSpan: Span
+  plugin: IGatsbyPlugin
 }
 
 export interface IAddFieldToNodeAction {
@@ -1010,6 +1020,8 @@ export interface IDeleteNodeAction {
   type: `DELETE_NODE`
   // FIXME: figure out why payload can be undefined here
   payload: IGatsbyNode | void
+  internalNode: IGatsbyNode
+  plugin: IGatsbyPlugin
 }
 
 export interface ISetSiteFlattenedPluginsAction {
@@ -1048,6 +1060,8 @@ export interface IAddSliceDataStatsAction {
 export interface ITouchNodeAction {
   type: `TOUCH_NODE`
   payload: Identifier
+  typeName: IGatsbyNode["internal"]["type"]
+  plugin: IGatsbyPlugin
 }
 
 interface IStartIncrementalInferenceAction {
@@ -1058,6 +1072,7 @@ interface IBuildTypeMetadataAction {
   type: `BUILD_TYPE_METADATA`
   payload: {
     nodes: Array<IGatsbyNode>
+    clearExistingMetadata: boolean
     typeName: string
   }
 }
@@ -1137,11 +1152,9 @@ export interface ISetDomainRequestHeaders {
   }
 }
 
-export interface ITouchNodeOptOutType {
-  type: `ADD_TOUCH_NODE_OPTOUT_TYPE`
-  payload: {
-    typeName: string
-  }
+export interface IEnableStatefulSourcePluginAction {
+  type: `ENABLE_STATEFUL_SOURCE_PLUGIN`
+  plugin: IGatsbyPlugin
 }
 
 export interface IProcessGatsbyImageSourceUrlAction {

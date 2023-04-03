@@ -539,8 +539,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   return actions
 }
 
-const deleteNodeDeprecationWarningDisplayedMessages = new Set()
-
 /**
  * Delete a node
  * @param {object} node A node object. See the "createNode" action for more information about the node object details.
@@ -553,36 +551,13 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const internalNode = getNode(id)
-  if (plugin) {
-    const pluginName = plugin.name
-
-    if (
-      internalNode &&
-      typeOwners[internalNode.internal.type] &&
-      typeOwners[internalNode.internal.type] !== pluginName
-    )
-      throw new Error(stripIndent`
-          The plugin "${pluginName}" deleted a node of a type owned by another plugin.
-
-          The node type "${internalNode.internal.type}" is owned by "${
-        typeOwners[internalNode.internal.type]
-      }".
-
-          The node object passed to "deleteNode":
-
-          ${JSON.stringify(internalNode, null, 4)}
-
-          The plugin deleting the node:
-
-          ${JSON.stringify(plugin, null, 4)}
-        `)
-  }
 
   const createDeleteAction = node => {
     return {
       type: `DELETE_NODE`,
       plugin,
       payload: node,
+      internalNode,
     }
   }
 
@@ -612,8 +587,6 @@ function getNextNodeCounter() {
   }
   return lastNodeCounter + 1
 }
-
-const typeOwners = {}
 
 // memberof notation is added so this code can be referenced instead of the wrapper.
 /**
@@ -795,47 +768,6 @@ const createNode = (
 
   const oldNode = getNode(node.id)
 
-  // Ensure the plugin isn't creating a node type owned by another
-  // plugin. Type "ownership" is first come first served.
-  if (plugin) {
-    const pluginName = plugin.name
-
-    if (!typeOwners[node.internal.type])
-      typeOwners[node.internal.type] = pluginName
-    else if (typeOwners[node.internal.type] !== pluginName)
-      throw new Error(stripIndent`
-        The plugin "${pluginName}" created a node of a type owned by another plugin.
-
-        The node type "${node.internal.type}" is owned by "${
-        typeOwners[node.internal.type]
-      }".
-
-        If you copy and pasted code from elsewhere, you'll need to pick a new type name
-        for your new node(s).
-
-        The node object passed to "createNode":
-
-        ${JSON.stringify(node, null, 4)}
-
-        The plugin creating the node:
-
-        ${JSON.stringify(plugin, null, 4)}
-      `)
-
-    // If the node has been created in the past, check that
-    // the current plugin is the same as the previous.
-    if (oldNode && oldNode.internal.owner !== pluginName) {
-      throw new Error(
-        stripIndent`
-        Nodes can only be updated by their owner. Node "${node.id}" is
-        owned by "${oldNode.internal.owner}" and another plugin "${pluginName}"
-        tried to update it.
-
-        `
-      )
-    }
-  }
-
   if (actionOptions.parentSpan) {
     actionOptions.parentSpan.setTag(`nodeId`, node.id)
     actionOptions.parentSpan.setTag(`nodeType`, node.id)
@@ -921,8 +853,6 @@ actions.createNode =
     }
   }
 
-const touchNodeDeprecationWarningDisplayedMessages = new Set()
-
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
  * be garbage collected. Primarily useful for source plugins fetching
@@ -934,10 +864,6 @@ const touchNodeDeprecationWarningDisplayedMessages = new Set()
  * touchNode(node)
  */
 actions.touchNode = (node: any, plugin?: Plugin) => {
-  if (node && !typeOwners[node.internal.type]) {
-    typeOwners[node.internal.type] = node.internal.owner
-  }
-
   const nodeId = node?.id
 
   if (!nodeId) {
@@ -949,6 +875,7 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
     type: `TOUCH_NODE`,
     plugin,
     payload: nodeId,
+    typeName: node.internal.type,
   }
 }
 
@@ -1514,16 +1441,27 @@ actions.unstable_createNodeManifest = (
 }
 
 /**
- * Stores a typename for which nodes of that type shouldn't need to have touchNode called on them.
+ * Marks a source plugin as "stateful" which disables automatically deleting untouched nodes. Stateful source plugins manage deleting their own nodes without stale node checks in Gatsby.
+ * Enabling this is a major performance improvement for source plugins that manage their own node deletion. It also lowers the total memory required by a source plugin.
+ * When using this action, check if it's supported first with `hasFeature('stateful-source-nodes')`, `hasFeature` is exported from `gatsby-plugin-utils`.
  *
- * @param {string} typeName the Gatsby Node typename you want to opt-out of needing to call touchNode on.
+ * @example
+ * import { hasFeature } from "gatsby-plugin-utils"
+ *
+ * exports.sourceNodes = ({ actions }) => {
+ *    if (hasFeature(`stateful-source-nodes`)) {
+ *      actions.enableStatefulSourceNodes()
+ *    } else {
+ *     // fallback to old behavior where all nodes are iterated on and touchNode is called.
+ *    }
+ * }
+ *
+ * @param {void} $0
  */
-actions.disableStaleNodeTypeCheck = (typeName: string) => {
+actions.enableStatefulSourceNodes = (plugin: Plugin) => {
   return {
-    type: `ADD_TOUCH_NODE_OPTOUT_TYPE`,
-    payload: {
-      typeName,
-    },
+    type: `ENABLE_STATEFUL_SOURCE_PLUGIN`,
+    plugin,
   }
 }
 

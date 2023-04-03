@@ -60,18 +60,48 @@ const buildInferenceMetadata = ({ types }) =>
     // TODO: use async iterators when we switch to node>=10
     //  or better investigate if we can offload metadata building to worker/Jobs API
     //  and then feed the result into redux?
-    const processNextType = () => {
+    const processNextType = async () => {
       const typeName = typeNames.pop()
-      store.dispatch({
-        type: `BUILD_TYPE_METADATA`,
-        payload: {
-          typeName,
-          nodes: getDataStore().iterateNodesByType(typeName),
-        },
-      })
+
+      let processingNodes = []
+      let dispatchCount = 0
+      function dispatchNodes() {
+        return new Promise(res => {
+          store.dispatch({
+            type: `BUILD_TYPE_METADATA`,
+            payload: {
+              typeName,
+              // only clear metadata on the first chunk for this type
+              clearExistingMetadata: dispatchCount++ === 0,
+              nodes: processingNodes,
+            },
+          })
+          setImmediate(() => {
+            // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
+            processingNodes = []
+            // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
+            setImmediate(() => {
+              res(null)
+            })
+          })
+        })
+      }
+
+      for (const node of getDataStore().iterateNodesByType(typeName)) {
+        processingNodes.push(node)
+
+        if (processingNodes.length > 1000) {
+          await dispatchNodes()
+        }
+      }
+
+      if (processingNodes.length > 0) {
+        await dispatchNodes()
+      }
+
       if (typeNames.length > 0) {
-        // Give event-loop a break
-        setTimeout(processNextType, 0)
+        // dont block the event loop
+        setImmediate(() => processNextType())
       } else {
         resolve()
       }

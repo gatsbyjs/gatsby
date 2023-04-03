@@ -57,22 +57,26 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
-  const canDisableStaleNodeChecks = hasFeature(`disable-stale-node-type-checks`)
-  const needToTouchNodes = !canDisableStaleNodeChecks
+  const hasStatefulSourceNodes = hasFeature(`stateful-source-nodes`)
+  const needToTouchNodes = !hasStatefulSourceNodes
 
   const {
-    createNode: originalCreateNode,
+    createNode,
     touchNode,
     deleteNode,
     unstable_createNodeManifest,
-    disableStaleNodeTypeCheck,
+    enableStatefulSourceNodes,
   } = actions
+
   const online = await isOnline()
 
+  if (hasStatefulSourceNodes) {
+    enableStatefulSourceNodes()
+  }
   // Gatsby only checks if a node has been touched on the first sourcing.
   // As iterating and touching nodes can grow quite expensive on larger sites with
   // 1000s of nodes, we'll skip doing this on subsequent sources.
-  if (isFirstSourceNodesCallOfCurrentNodeProcess && needToTouchNodes) {
+  else if (isFirstSourceNodesCallOfCurrentNodeProcess && needToTouchNodes) {
     getNodes().forEach(node => {
       if (node.internal.owner !== `gatsby-source-contentful`) {
         return
@@ -126,7 +130,6 @@ export async function sourceNodes(
 
   fetchActivity.start()
 
-  const CREATED_TYPENAMES = `contentful-created-typenames-${sourceId}`
   const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
   const CACHE_FOREIGN_REFERENCE_MAP_STATE = `contentful-foreign-reference-map-state-${sourceId}`
@@ -310,20 +313,6 @@ export async function sourceNodes(
       touchNode(node)
       deleteNode(node)
     })
-  }
-
-  const createdTypeNames = canDisableStaleNodeChecks
-    ? new Set((await cache.get(CREATED_TYPENAMES)) || [])
-    : null
-
-  // wrap createNode so we can track the typenames of nodes we create
-  // and call disableStaleNodeTypeCheck for them
-  const createNode = node => {
-    if (createdTypeNames && node?.internal?.type) {
-      createdTypeNames.add(node.internal.type)
-    }
-
-    return originalCreateNode(node)
   }
 
   if (deletedEntries.length || deletedAssets.length) {
@@ -565,13 +554,5 @@ export async function sourceNodes(
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
-  }
-
-  if (canDisableStaleNodeChecks && createdTypeNames) {
-    reporter.verbose(
-      `Contentful disabling garbage collection for ${createdTypeNames.size} node types`
-    )
-    createdTypeNames.forEach(disableStaleNodeTypeCheck)
-    await cache.set(CREATED_TYPENAMES, [...createdTypeNames])
   }
 }
