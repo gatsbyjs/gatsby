@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
-    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
   },
