@@ -98,7 +98,6 @@ Object {
     "pagePaths": Set {},
     "sliceNames": Set {},
   },
-  "pluginNamesToOwnedNodeTypes": Map {},
   "queries": Object {
     "byConnection": Map {},
     "byNode": Map {},
@@ -131,6 +130,10 @@ Object {
     "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
     "plugins": Object {},
+  },
+  "typeOwners": Object {
+    "pluginsToTypes": Map {},
+    "typesToPlugins": Map {},
   },
   "webpackCompilationHash": "",
 }

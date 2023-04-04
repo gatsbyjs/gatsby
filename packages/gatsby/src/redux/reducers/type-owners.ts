@@ -73,7 +73,12 @@ export const typeOwnersReducer = (
 
       if (plugin) {
         const pluginName = plugin.name
-        const { internalNode } = action
+        const { payload: internalNode } = action
+
+        if (!internalNode) {
+          return typeOwners
+        }
+
         const previouslyRecordedOwnerName = typeOwners.typesToPlugins.get(
           internalNode.internal.type
         )

@@ -557,7 +557,6 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
       type: `DELETE_NODE`,
       plugin,
       payload: node,
-      internalNode,
     }
   }
 
