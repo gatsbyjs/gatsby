@@ -69,11 +69,11 @@ export const typeOwnersReducer = (
 ): IGatsbyState["typeOwners"] => {
   switch (action.type) {
     case `DELETE_NODE`: {
-      const { plugin } = action
+      const { plugin, payload: internalNode } = action
 
-      if (plugin) {
+      if (plugin && internalNode && !action.isRecursiveChildrenDelete) {
         const pluginName = plugin.name
-        const { internalNode } = action
+
         const previouslyRecordedOwnerName = typeOwners.typesToPlugins.get(
           internalNode.internal.type
         )

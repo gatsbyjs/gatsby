@@ -1020,8 +1020,8 @@ export interface IDeleteNodeAction {
   type: `DELETE_NODE`
   // FIXME: figure out why payload can be undefined here
   payload: IGatsbyNode | void
-  internalNode: IGatsbyNode
   plugin: IGatsbyPlugin
+  isRecursiveChildrenDelete?: boolean
 }
 
 export interface ISetSiteFlattenedPluginsAction {

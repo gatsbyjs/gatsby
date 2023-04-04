@@ -32,7 +32,7 @@
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
-    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
+    "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
   },
   "keywords": [
     "gatsby"
@@ -47,13 +47,13 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "fastq": "^1.13.0",
-    "fs-extra": "^11.1.0",
+    "fastq": "^1.15.0",
+    "fs-extra": "^11.1.1",
     "gatsby-core-utils": "^4.9.0-next.0",
     "gatsby-sharp": "^1.9.0-next.0",
     "graphql-compose": "^9.0.10",
     "import-from": "^4.0.0",
-    "joi": "^17.7.0",
+    "joi": "^17.9.1",
     "mime": "^3.0.0"
   },
   "devDependencies": {
@@ -61,9 +61,9 @@
     "@babel/core": "^7.20.12",
     "babel-preset-gatsby-package": "^3.9.0-next.0",
     "cross-env": "^7.0.3",
-    "msw": "^0.49.3",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.9.4"
+    "msw": "^1.2.1",
+    "rimraf": "^4.4.1",
+    "typescript": "^5.0.3"
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
