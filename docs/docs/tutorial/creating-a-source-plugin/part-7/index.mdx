@@ -216,14 +216,9 @@ In context of source plugins, the [tracing](/docs/reference/config-files/node-ap
 When calling `startSpan` on the root tracer pass the `parentSpan` along, for example:
 
 ```ts
-import opentracing from "opentracing"
+export const sourceNodes = ({ tracing }) => {
+  const fetchSpan = tracing.startSpan(`sourceNodes.fetch`)
 
-export const sourceNodes = ({ parentSpan }) => {
-  const tracer = opentracing.globalTracer()
-
-  const fetchSpan = tracer.startSpan(`sourceNodes.fetch`, {
-    childOf: parentSpan,
-  })
   fetchSpan.setTag(`sourceNodes.fetch.type`, `delta`)
 
   // Do things

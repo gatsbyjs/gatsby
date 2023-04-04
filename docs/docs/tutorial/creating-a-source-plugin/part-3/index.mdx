@@ -207,6 +207,10 @@ export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] 
   }
 ```
 
+The SDL syntax is easier to read and should be used with GraphQL schemas that are predefined ("hardcoded"). The SDL syntax becomes harder to read once it's generated through string interpolation due to a dynamic GraphQL schema.
+
+This is where the Type Builders come in. They are better suited for a GraphQL schema that should be dynamically generated, e.g. when your CMS has the ability to create custom types.
+
 </Collapsible>
 
 ### Task: Add types for `Post` and `Author`
@@ -382,9 +386,9 @@ Imagine this example: "Team Gatsby" likes to author their blog posts in Markdown
 In the previous section you already defined the GraphQL types for `Post` and `Author` so all the necessary boilerplate is already done. You can now use the `@link` extension (as a directive in the SDL). Before showing that, here's a short explanation on the `@link` extension:
 
 - `@link` can receive two arguments (`by` and `from`) but if no argument is given, Gatsby will use the `id` field as the foreign-key field (equivalent to `@link(by: "id")`). You'll use this default behavior in [Part 6](/docs/tutorial/creating-a-source-plugin/part-6/) for the Image CDN feature.
-- `by` is the field you link **to** (on the target node).
-- `from` is the field you link **from** (on the current node).
-- You'll also need to adjust the GraphQL type of the field on the current node since you're extending the field from a `String`/`Int` to a full node.
+- `by` is the field you link **to** (on the target node)
+- `from` is the field you link **from** (on the current node). Check the [foreign-key documentation](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) for more details.
+- You'll also need to adjust the GraphQL type of the field on the current node since you're extending the field from a `String`/`Int` to a full node
 
 As you want to link the `author` field of `Post` to the `name` field of `Author`, you'll need to write the `@link` extension like so:
 

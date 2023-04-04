@@ -99,7 +99,7 @@ In Part 2 you also added the `fetchGraphQL` function that accesses the GraphQL A
     // Rest of file
     ```
 
-1. Inside the `errors` conditional, use `panicOnBuild` to output the error message that you're receiving from your API. `error`, `panicOnBuild`, and `panic` accept a `string`, `Error` or a structured error (you'll learn about the latter in [Task: Define custom errors](#task-define-custom-errors)).
+1. Inside the `errors` conditional, use `panicOnBuild` to output the error message that you're receiving from your API. `error`, `panicOnBuild`, and `panic` accept a `string`, `Error` or a structured error (you'll learn about the latter in [Task: Define custom errors](#task-define-custom-errors)). Also add an early return to not continue creating nodes.
 
     ```ts:title=plugin/src/source-nodes.ts
     // Imports
@@ -110,6 +110,9 @@ In Part 2 you also added the `fetchGraphQL` function that accesses the GraphQL A
       if (errors) {
         // highlight-next-line
         reporter.panicOnBuild(errors[0].message)
+
+        // highlight-next-line
+        return
       }
 
       // Rest of sourceNodes
@@ -225,6 +228,8 @@ Now you'll learn exactly that, by adding an activity for the sourcing and node c
       if (errors) {
         // highlight-next-line
         sourcingTimer.panicOnBuild(errors[0].message)
+
+        return
       }
 
       // Rest of sourceNodes
@@ -416,6 +421,8 @@ Let's get to work:
           },
         })
         // highlight-end
+
+        return
       }
 
       // Rest of sourceNodes
@@ -494,7 +501,7 @@ The `cache` API is a key-value store, so you save specific data under a key, and
     // Rest of file
     ```
 
-1. Generate a date timestamp just before the `fetchGraphQL` call and use `cache.set` to save the timestamp after the successful fetch. This way you're ensuring accurate timestamps that are only saved when a successful data call happened.
+1. Generate a date timestamp just before the `fetchGraphQL` call and use `cache.set` to save the timestamp after the successful fetch. This way you're ensuring accurate timestamps that are only saved when a successful data call happened. **The key you use for `cache.set` has to be unique.**
 
     ```ts:title=plugin/src/source-nodes.ts
     // Imports
@@ -515,6 +522,8 @@ The `cache` API is a key-value store, so you save specific data under a key, and
             graphqlError: errors[0].message,
           },
         })
+
+        return
       }
 
       // highlight-next-line
@@ -531,6 +540,8 @@ The `cache` API is a key-value store, so you save specific data under a key, and
     `Date.now()` returns the number of milliseconds elapsed since the epoch. If you need another format, read the [Date.now() documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now).
 
     </Announcement>
+
+    It's also important to know that `cache` is shared by all instances of your plugin. So if your user can add your plugin multiple times to `gatsby-config` (e.g. by setting a different `workspaceId` in the plugin options), you need to ensure that those `cache.set` calls use unique keys. In those cases, use a unique instance identifier, for example said plugin options.
 
 1. The next step is to use `cache.get` to retrieve the timestamp from the cache before the `fetchGraphQL` call. Since you won't use it for delta fetching in this tutorial, output the information in the `verbose` mode of Gatsby with `reporter.verbose`:
 
