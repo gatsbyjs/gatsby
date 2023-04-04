@@ -70,21 +70,20 @@ describe(
         }).as(`appDataFetch`)
         cy.waitForAPI("onInitialClientRender")
 
-        // cy.waitForAPI()
-        cy.window().then(window => {
-          // just setting some property on the window
-          // we will later assert that property to know wether
-          // browser reload happened or not.
-          window.notReloaded = true
-          window.___navigate(`/deep-link-page/`)
-        })
+        // just setting some property on the window
+        // we will later assert that property to know wether
+        // browser reload happened or not
+        cy.window().then(w => w.beforeReload = true)
+        cy.window().should('have.prop', 'beforeReload', true)
+
+        cy.window().then(w => w.___navigate(`/deep-link-page/`))
 
         // wait for refresh
         cy.wait("@deepLinkPage")
         cy.waitForRouteChange()
 
         // we expect reload to happen so our window property shouldn't be set anymore
-        cy.window().its(`notReloaded`).should(`not.equal`, true)
+        cy.window().should('not.have.prop', 'beforeReload')
 
         // let's make sure we actually see the content
         cy.contains(
