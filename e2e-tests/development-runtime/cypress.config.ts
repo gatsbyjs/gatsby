@@ -6,7 +6,7 @@ import { blockResourcesUtils } from "./cypress/utils/block-resources"
 export default defineConfig({
   e2e: {
     baseUrl: `http://localhost:8000`,
-    specPattern: `cypress/integration/*.{js,ts}`,
+    specPattern: `cypress/integration/**/*.{js,ts}`,
     chromeWebSecurity: false,
     defaultCommandTimeout: 30000,
     retries: 2,

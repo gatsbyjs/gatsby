@@ -4,7 +4,7 @@ import { addMatchImageSnapshotPlugin } from "@simonsmith/cypress-image-snapshot/
 export default defineConfig({
   e2e: {
     baseUrl: `http://localhost:9000`,
-    specPattern: `cypress/integration/*.{js,ts}`,
+    specPattern: `cypress/integration/**/*.{js,ts}`,
     viewportWidth: 1440,
     viewportHeight: 900,
     retries: {
