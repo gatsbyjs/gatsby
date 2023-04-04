@@ -560,7 +560,7 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
       type: `DELETE_NODE`,
       plugin,
       payload: node,
-      // main node need to be owened by plugin that calls deleteNode
+      // main node need to be owned by plugin that calls deleteNode
       // child nodes should skip ownership check
       isRecursiveChildrenDelete: node !== internalNode,
     }
