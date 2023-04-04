@@ -56,7 +56,7 @@ export const writeRedirects = async (): Promise<void> => {
       normalizedFromPath = decodeURIComponent(normalizedFromPath)
     } catch (error) {
       reporter.panicOnBuild(
-        `Invalid redirect for redirect with fromPath - ${redirect.fromPath}`,
+        `Invalid redirect with fromPath - ${redirect.fromPath}. Please check the URL`,
         error
       )
     }
