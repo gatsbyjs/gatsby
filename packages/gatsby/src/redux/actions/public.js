@@ -486,6 +486,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       ...actionOptions,
       plugin: { name: `internal-data-bridge` },
       type: `TOUCH_NODE`,
+      typeName: node.internal.type,
       payload: node.id,
     }
   } else {
@@ -782,6 +783,7 @@ const createNode = (
       plugin,
       type: `TOUCH_NODE`,
       payload: node.id,
+      typeName: node.internal.type,
     }
   } else {
     // Remove any previously created descendant nodes as they're all due
