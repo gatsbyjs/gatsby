@@ -499,6 +499,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           type: `DELETE_NODE`,
           plugin: { name: `internal-data-bridge` },
           payload: node,
+          isRecursiveChildrenDelete: true,
         }
       }
       deleteActions = findChildren(oldNode.children)
@@ -559,6 +560,9 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
       type: `DELETE_NODE`,
       plugin,
       payload: node,
+      // main node need to be owened by plugin that calls deleteNode
+      // child nodes should skip ownership check
+      isRecursiveChildrenDelete: node !== internalNode,
     }
   }
 
@@ -795,6 +799,7 @@ const createNode = (
           type: `DELETE_NODE`,
           plugin,
           payload: node,
+          isRecursiveChildrenDelete: true,
         }
       }
       deleteActions = findChildren(oldNode.children)
