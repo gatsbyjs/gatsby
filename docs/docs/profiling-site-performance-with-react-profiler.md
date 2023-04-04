@@ -12,7 +12,7 @@ React's profiling API was introduced in **React 16.5**. Therefore you must be ru
 
 Profiling will be enabled automatically in Development. If you have React DevTools it will [show a “Profiler” tab](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html#profiling-an-application). Caution should be given to the validity of profiling within Development as this does not reflect the performance of the Production build and therefore the experience of your users.
 
-To enable profiling for a Production build an additional CLI option `--profile` must be provided when running the build command. See [gatsby build command](/docs/reference/gatsby-cli/#options-1) for further information.
+To enable profiling for a Production build an additional CLI option `--profile` must be provided when running the build command. See [gatsby build command](/docs/reference/gatsby-cli/#options-1) for further information. Alternatively, you may set the `REACT_PROFILE` environment variable to `true` or `1`.
 
 ## Performance impact
 

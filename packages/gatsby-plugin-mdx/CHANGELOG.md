@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.8.0/packages/gatsby-plugin-mdx) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Account for links/inline code in ToC [#37739](https://github.com/gatsbyjs/gatsby/issues/37739) ([3241b34](https://github.com/gatsbyjs/gatsby/commit/3241b3486e39de571004f3433a60e3e12f38e1ff))
+
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.7.0/packages/gatsby-plugin-mdx) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)

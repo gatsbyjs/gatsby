@@ -314,16 +314,10 @@ export async function renderPageData({
     }
   }
 }
-
-const readStaticQueryContext = async (
-  templatePath: string
+const readStaticQuery = async (
+  staticQueryHash: string
 ): Promise<Record<string, { data: unknown }>> => {
-  const filePath = path.join(
-    __dirname,
-    `sq-context`,
-    templatePath,
-    `sq-context.json`
-  )
+  const filePath = path.join(__dirname, `sq`, `${staticQueryHash}.json`)
   const rawSQContext = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawSQContext)
@@ -399,20 +393,19 @@ export async function renderHTML({
         readStaticQueryContextActivity.start()
       }
 
-      const uniqueUsedComponentChunkNames = [data.page.componentChunkName]
+      const staticQueryHashes = new Set<string>(pageData.staticQueryHashes)
       for (const singleSliceData of Object.values(sliceData)) {
-        if (
-          singleSliceData.componentChunkName &&
-          !uniqueUsedComponentChunkNames.includes(
-            singleSliceData.componentChunkName
-          )
-        ) {
-          uniqueUsedComponentChunkNames.push(singleSliceData.componentChunkName)
+        for (const staticQueryHash of singleSliceData.staticQueryHashes) {
+          staticQueryHashes.add(staticQueryHash)
         }
       }
 
       const contextsToMerge = await Promise.all(
-        uniqueUsedComponentChunkNames.map(readStaticQueryContext)
+        Array.from(staticQueryHashes).map(async staticQueryHash => {
+          return {
+            [staticQueryHash]: await readStaticQuery(staticQueryHash),
+          }
+        })
       )
 
       staticQueryContext = Object.assign({}, ...contextsToMerge)

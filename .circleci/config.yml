@@ -220,7 +220,7 @@ jobs:
 
   integration_tests_gatsby_source_wordpress:
     machine:
-      image: "ubuntu-2204:2022.10.1"
+      image: "ubuntu-2204:2023.02.1"
     steps:
       - run:
           command: |

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.8.2/packages/gatsby-source-shopify) (2023-03-28)
+
+#### Bug Fixes
+
+- Correct interface query [#37788](https://github.com/gatsbyjs/gatsby/issues/37788) [#37791](https://github.com/gatsbyjs/gatsby/issues/37791) ([944b074](https://github.com/gatsbyjs/gatsby/commit/944b074d248039060060f4826abb13239e87449b))
+
+### [8.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.8.1/packages/gatsby-source-shopify) (2023-03-27)
+
+#### Features
+
+- use gatsby node id to enable relationships [#37775](https://github.com/gatsbyjs/gatsby/issues/37775) [#37786](https://github.com/gatsbyjs/gatsby/issues/37786) ([0f838b2](https://github.com/gatsbyjs/gatsby/commit/0f838b2c44f9bc979ce139f8c8fbfcacc2994b3b))
+
+## [8.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.8.0/packages/gatsby-source-shopify) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Features
+
+- Add `apiVersion` option [#37605](https://github.com/gatsbyjs/gatsby/issues/37605) ([d0e0c49](https://github.com/gatsbyjs/gatsby/commit/d0e0c49e06e0eba0ba8a5d122b9b8728029e12e4))
+
 ## [8.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.7.0/packages/gatsby-source-shopify) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)

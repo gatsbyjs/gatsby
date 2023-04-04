@@ -39,9 +39,10 @@ export function locationTypeBuilder(prefix: string): string {
       }
 
       type ${prefix}InventoryLevel implements Node @dontInfer {
+        _location: String! # Temporary field so we don't break existing users
         available: Int!
         id: ID!
-        location: ${prefix}Location! @link(from: "location.shopifyId", by: "shopifyId")
+        location: ${prefix}Location! @link(from: "_location", by: "id")
         shopifyId: String!
       }
 
