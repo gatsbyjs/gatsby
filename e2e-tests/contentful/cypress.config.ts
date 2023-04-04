@@ -11,6 +11,7 @@ export default defineConfig({
       runMode: 0,
       openMode: 0
     },
+    videoUploadOnPasses: false,
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config)
       on("before:browser:launch", (browser = {} as Cypress.Browser, launchOptions) => {

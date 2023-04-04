@@ -6,6 +6,7 @@ export default defineConfig({
     baseUrl: `http://localhost:9000`,
     specPattern: `cypress/integration/**/*.{js,ts}`,
     chromeWebSecurity: false,
+    videoUploadOnPasses: false,
     setupNodeEvents(on) {
       on(`task`, {
         ...blockResourcesUtils

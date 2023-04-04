@@ -5,5 +5,6 @@ export default defineConfig({
     baseUrl: `http://localhost:9000`,
     specPattern: `cypress/integration/**/*.{js,ts}`,
   },
+  videoUploadOnPasses: false,
   chromeWebSecurity: false,
 })

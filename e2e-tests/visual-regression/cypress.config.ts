@@ -17,6 +17,7 @@ export default defineConfig({
     },
   },
   video: false,
+  videoUploadOnPasses: false,
   reporter: `junit`,
   reporterOptions: {
     mochaFile: `cypress/results/junit-[hash].xml`,
