@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-plugin-search-and-replace": "^1.1.1",
-    "cypress": "^9.7.0",
+    "cypress": "^12.9.0",
     "gatsby": "next",
     "gatsby-cypress": "next",
     "gatsby-plugin-image": "next",
@@ -63,7 +63,7 @@
     "gatsby-core-utils": "next",
     "is-ci": "^3.0.1",
     "prettier": "^2.8.7",
-    "start-server-and-test": "^1.15.3"
+    "start-server-and-test": "^2.0.0"
   },
   "repository": {
     "type": "git",

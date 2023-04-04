@@ -1,18 +1,21 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const { fixedPagePath } = require(`gatsby-core-utils`)
+import * as fs from "fs-extra"
+import * as path from "path"
+import { fixedPagePath } from "gatsby-core-utils"
+
 const publicDir = path.join(__dirname, `..`, `..`, `public`)
 
+type Filter = 'all' | 'page-data' | 'static-query-data' | 'page-template' | 'extra'
+
 function getAssetManifest() {
-  const { assetsByChunkName } = require(`${publicDir}/webpack.stats.json`)
+  const { assetsByChunkName }: { assetsByChunkName: Record<string, Array<string>> } = require(`${publicDir}/webpack.stats.json`)
   return assetsByChunkName
 }
 
-function getPageDataPath(pagePath) {
+function getPageDataPath(pagePath: string) {
   return path.posix.join(`page-data`, fixedPagePath(pagePath), `page-data.json`)
 }
 
-const filterAssets = (assetsForPath, filter) => {
+const filterAssets = (assetsForPath: Array<string>, filter: Filter) => {
   return assetsForPath.filter(asset => {
     if (filter === `all`) {
       return true
@@ -30,18 +33,18 @@ const filterAssets = (assetsForPath, filter) => {
   })
 }
 
-function getAssetsForChunk({ filter }) {
+function getAssetsForChunk({ filter }: { filter: Filter }) {
   const assetManifest = getAssetManifest()
 
   return assetManifest[filter].map(asset => `/${asset}`)
 }
 
-function getAssetsForPage({ pagePath, filter }) {
+function getAssetsForPage({ pagePath, filter }: { pagePath: string; filter: Filter }) {
   const assetManifest = getAssetManifest()
 
   const pageDataUrl = getPageDataPath(pagePath)
   const pageData = JSON.parse(
-    fs.readFileSync(path.join(publicDir, pageDataUrl))
+    fs.readFileSync(path.join(publicDir, pageDataUrl), `utf8`)
   )
   const { componentChunkName } = pageData
   const assetsForPath = assetManifest[componentChunkName]
@@ -61,7 +64,7 @@ function getAssetsForPage({ pagePath, filter }) {
   return assets
 }
 
-module.exports = {
+export const blockResourcesUtils = {
   getAssetsForPage,
   getAssetsForChunk,
 }

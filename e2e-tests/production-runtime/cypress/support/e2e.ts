@@ -1,3 +1,31 @@
+import "gatsby-cypress"
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      lifecycleCallCount(action: string): Chainable<number>
+      getScrollPosition(): Chainable<number>
+      storeScrollPosition(id: string): Chainable<JQuery<HTMLElement>>
+      shouldMatchScrollPosition(id: string): void
+      shouldNotMatchScrollPosition(id: string): void
+      assertRouterWrapperFocus(shouldBeFocused?: boolean): Chainable<JQuery<HTMLElement>>
+      navigateAndWaitForRouteChange(pathname: string): Chainable<JQuery<HTMLElement>>
+      changeFocus(): Chainable<JQuery<HTMLElement>>
+      getRecord(key: string, metric: string, raw?: boolean): Chainable<string | number>
+    }
+  }
+  interface Window {
+    ___PageComponentLifecycleCallsLog: Array<{
+      action: string
+      pathname?: string
+      pageComponent?: string
+      locationPath?: string
+      pagePath?: string
+    }>
+    ___navigate(to: string, options?: any): void
+  }
+}
+
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy
     .window()
@@ -54,6 +82,7 @@ Cypress.Commands.add(
       win.___navigate(pathname)
     })
 
+    // @ts-expect-error - gatsby-cypress doesn't have types
     return cy.waitForAPI(`onRouteUpdate`).then(() => subject)
   }
 )
