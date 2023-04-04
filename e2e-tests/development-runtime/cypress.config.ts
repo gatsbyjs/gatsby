@@ -2,7 +2,6 @@ import { defineConfig } from "cypress"
 import { addMatchImageSnapshotPlugin } from "@simonsmith/cypress-image-snapshot/plugin"
 import { gatsbyConfigUtils } from "./cypress/utils/gatsby-config"
 import { blockResourcesUtils } from "./cypress/utils/block-resources"
-import cypressSplit from "cypress-split"
 
 export default defineConfig({
   e2e: {
@@ -13,7 +12,6 @@ export default defineConfig({
     retries: 2,
     videoUploadOnPasses: false,
     setupNodeEvents(on, config) {
-      cypressSplit(on, config)
       addMatchImageSnapshotPlugin(on, config)
       on(`task`, {
         ...blockResourcesUtils,
@@ -26,9 +24,6 @@ export default defineConfig({
         }
         return launchOptions
       })
-
-      // Important: Return the config object
-      return config
     },
   },
 })
