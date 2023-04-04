@@ -20,9 +20,8 @@
     "@babel/core": "^7.20.12",
     "babel-preset-gatsby-package": "^3.9.0-next.0",
     "cross-env": "^7.0.3",
-    "del-cli": "^3.0.1",
-    "msw": "^0.49.3",
-    "node-fetch": "^2.6.9"
+    "del-cli": "^5.0.0",
+    "msw": "^1.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [
