@@ -1,16 +1,16 @@
-// this is partial copy of e2e-tests/production-runtime/cypress/plugins/block-resources.js
-// partial because there is no asset blocking possibly in develop (we have single, virtual development bundle)
+// This is partial copy of e2e-tests/production-runtime/cypress/utils/block-resources.ts
+// Partial because there is no asset blocking possibly in develop (we have single, virtual development bundle)
 
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const glob = require(`glob`)
-const { fixedPagePath } = require(`gatsby-core-utils`)
+import * as fs from "fs-extra"
+import * as path from "path"
+import * as glob from "glob"
+import { fixedPagePath } from "gatsby-core-utils"
 
 const siteDir = path.join(__dirname, `..`, `..`)
 const srcDir = path.join(siteDir, `src`)
 const publicDir = path.join(siteDir, `public`)
 
-const moveAsset = (from, to) => {
+const moveAsset = (from: string, to: string) => {
   const fromExists = fs.existsSync(from)
   const toExists = fs.existsSync(to)
 
@@ -21,7 +21,7 @@ const moveAsset = (from, to) => {
   }
 }
 
-const restoreAsset = hiddenPath => {
+const restoreAsset = (hiddenPath: string) => {
   if (path.basename(hiddenPath).charAt(0) !== `_`) {
     throw new Error(`hiddenPath should have _ prefix`)
   }
@@ -32,7 +32,7 @@ const restoreAsset = hiddenPath => {
   moveAsset(hiddenPath, restoredPath)
 }
 
-const getPageDataPath = pagePath => {
+const getPageDataPath = (pagePath: string) => {
   return path.join(
     publicDir,
     `page-data`,
@@ -41,7 +41,7 @@ const getPageDataPath = pagePath => {
   )
 }
 
-const getHiddenPageDataPath = pagePath => {
+const getHiddenPageDataPath = (pagePath: string) => {
   return path.join(
     publicDir,
     `page-data`,
@@ -50,10 +50,10 @@ const getHiddenPageDataPath = pagePath => {
   )
 }
 
-const blockPageData = pagePath =>
+const blockPageData = (pagePath: string) =>
   moveAsset(getPageDataPath(pagePath), getHiddenPageDataPath(pagePath))
 
-const blockAssetsForPage = ({ pagePath, filter }) => {
+const blockAssetsForPage = ({ pagePath, filter }: { pagePath: string; filter: 'all' | 'page-data' }) => {
   if (filter === `all` || filter === `page-data`) {
     blockPageData(pagePath)
   }
@@ -62,7 +62,7 @@ const blockAssetsForPage = ({ pagePath, filter }) => {
   return null
 }
 
-function blockPageComponent({ path: pageComponentPath }) {
+function blockPageComponent({ path: pageComponentPath }: { path: string }) {
   const hiddenPath = path.join(
     path.dirname(pageComponentPath),
     `_` + path.basename(pageComponentPath)
@@ -89,7 +89,7 @@ const restore = () => {
   return null
 }
 
-module.exports = {
+export const blockResourcesUtils = {
   restoreAllBlockedResources: restore,
   blockAssetsForPage,
   blockPageComponent,
