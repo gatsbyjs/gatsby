@@ -480,10 +480,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   let deleteActions
   let updateNodeAction
+  // marking internal-data-bridge as owner of SitePage instead of plugin that calls createPage
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
       ...actionOptions,
-      plugin,
+      plugin: { name: `internal-data-bridge` },
       type: `TOUCH_NODE`,
       payload: node.id,
     }
@@ -495,7 +496,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         return {
           ...actionOptions,
           type: `DELETE_NODE`,
-          plugin,
+          plugin: { name: `internal-data-bridge` },
           payload: node,
         }
       }
@@ -509,7 +510,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     updateNodeAction = {
       ...actionOptions,
       type: `CREATE_NODE`,
-      plugin,
+      plugin: { name: `internal-data-bridge` },
       oldNode,
       payload: node,
     }
