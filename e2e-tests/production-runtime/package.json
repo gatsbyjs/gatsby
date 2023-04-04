@@ -47,7 +47,7 @@
     "cy:run": "npm run cy:run:normal && npm run cy:run:bot",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run:normal": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e",
-    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config specPatern=prefetching.js",
+    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config specPattern=\"cypress/integration/prefetching.js\"",
     "playwright": "playwright test --project=chromium",
     "playwright:debug": "playwright test --project=chromium --debug",
     "start-server-and-test:playwright": "start-server-and-test serve http://localhost:9000 serve-static-files http://localhost:8888 playwright",
