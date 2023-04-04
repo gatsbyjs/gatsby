@@ -27,8 +27,8 @@ after(() => {
 const errorPlaceholder = `false`
 const errorReplacement = `true`
 
-describe(`testing error overlay and ability to automatically recover from runtime errors (static queries variant)`, () => {
-  it(`displays content initially (no errors yet)`, () => {
+describe(`testing error overlay and ability to automatically recover from runtime errors (static queries variant)`, { testIsolation: false }, () => {
+  before(() => {
     cy.visit(`/error-handling/static-query-result-runtime-error/`, {
       // Hacky way to disable "uncaught:exception" message in error message itself
       // See https://github.com/cypress-io/cypress/issues/254#issuecomment-292190924
@@ -36,6 +36,9 @@ describe(`testing error overlay and ability to automatically recover from runtim
         win.onerror = null
       },
     }).waitForRouteChange()
+  })
+
+  it(`displays content initially (no errors yet)`, () => {
     cy.findByTestId(`hot`).should(`contain.text`, `Working`)
     cy.findByTestId(`results`).should(`contain.text`, `"hasError": false`)
   })
