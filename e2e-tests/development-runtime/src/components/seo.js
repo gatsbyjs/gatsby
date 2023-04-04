@@ -1,8 +1,7 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { graphql, useStaticQuery } from "gatsby"
 
-function Seo({ children, description, lang, keywords, title }) {
+function Seo({ children, description, lang = `en`, keywords = [], title = `` }) {
   const data = useStaticQuery(graphql`
     query DefaultSEOQuery {
       site {
@@ -40,19 +39,6 @@ function Seo({ children, description, lang, keywords, title }) {
       {children}
     </>
   )
-}
-
-Seo.defaultProps = {
-  lang: `en`,
-  keywords: [],
-  title: ``,
-}
-
-Seo.propTypes = {
-  description: PropTypes.string,
-  title: PropTypes.string,
-  lang: PropTypes.string,
-  keywords: PropTypes.arrayOf(PropTypes.string),
 }
 
 export default Seo
