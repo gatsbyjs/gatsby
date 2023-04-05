@@ -10,8 +10,7 @@ const IS_CI = !!(
   false
 )
 
-const shouldRecord =
-  !!process.env.CYPRESS_PROJECT_ID && !!process.env.CYPRESS_RECORD_KEY && IS_CI
+const shouldRecord = !!process.env.CYPRESS_RECORD_KEY && IS_CI
 
 const cypressBin = path.join(process.cwd(), `node_modules/.bin/cypress`)
 
