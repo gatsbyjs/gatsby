@@ -7,6 +7,7 @@ import { IDataStore, ILmdbDatabases, IQueryResult } from "../types"
 import { emitter, replaceReducer } from "../../redux"
 import { GatsbyIterable } from "../common/iterable"
 import { doRunQuery } from "./query/run-query"
+import fastq from "fastq"
 import {
   IRunFilterArg,
   runFastFiltersAndSort,
@@ -217,7 +218,24 @@ async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
   return Promise.resolve(runFastFiltersAndSort(args))
 }
 
-let lastOperationPromise: Promise<any> = Promise.resolve()
+const lastOperationPromise: Promise<any> = Promise.resolve()
+
+// new fastq
+const updateQueue = fastq(updateDataStore, 1)
+
+let queueCounter = 0
+function queueDataStoreUpdate(action: ActionsUnion): void {
+  if (queueCounter++ % 100 === 0) {
+    queueCounter = 0
+    updateQueue.pause()
+    setImmediate(() => {
+      updateQueue.resume()
+      updateQueue.push(action)
+    })
+  } else {
+    updateQueue.push(action)
+  }
+}
 
 function updateDataStore(action: ActionsUnion): void {
   switch (action.type) {
@@ -243,11 +261,8 @@ function updateDataStore(action: ActionsUnion): void {
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
     case `MATERIALIZE_PAGE_MODE`: {
       const dbs = getDatabases()
-      const operationPromise = Promise.all([
-        updateNodes(dbs.nodes, action),
-        updateNodesByType(dbs.nodesByType, action),
-      ])
-      lastOperationPromise = operationPromise
+      updateNodes(dbs.nodes, action)
+      updateNodesByType(dbs.nodesByType, action)
 
       // if create is used in the same transaction as delete we should remove it from cache
       if (action.type === `CREATE_NODE`) {
@@ -256,12 +271,7 @@ function updateDataStore(action: ActionsUnion): void {
 
       if (action.type === `DELETE_NODE` && action.payload?.id) {
         preSyncDeletedNodeIdsCache.add(action.payload.id)
-        operationPromise.then(() => {
-          // only clear if no other operations have been done in the meantime
-          if (lastOperationPromise === operationPromise) {
-            preSyncDeletedNodeIdsCache.clear()
-          }
-        })
+        preSyncDeletedNodeIdsCache.clear()
       }
     }
   }
@@ -295,7 +305,7 @@ export function setupLmdbStore({
   })
   emitter.on(`*`, action => {
     if (action) {
-      updateDataStore(action)
+      queueDataStoreUpdate(action)
     }
   })
   // TODO: remove this when we have support for incremental indexes in lmdb
