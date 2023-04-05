@@ -1,7 +1,11 @@
 // @ts-check
-import { hasFeature } from "gatsby-plugin-utils/has-feature"
 import isOnline from "is-online"
 import _ from "lodash"
+import {
+  addNodeToExistingNodesCache,
+  getExistingCachedNodes,
+  removeNodeFromExistingNodesCache,
+} from "./backreferences"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
@@ -12,7 +16,6 @@ import {
   createAssetNodes,
   createNodesForContentType,
   makeId,
-  makeTypeName,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
@@ -41,13 +44,10 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
  * possible for each localized node i.e. get the localized field if it exists
  * or the fallback field or the default field.
  */
-
-let isFirstSourceNodesCallOfCurrentNodeProcess = true
 export async function sourceNodes(
   {
     actions,
     getNode,
-    getNodes,
     createNodeId,
     store,
     cache,
@@ -57,61 +57,39 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
-  const hasStatefulSourceNodes = hasFeature(`stateful-source-nodes`)
-  const needToTouchNodes = !hasStatefulSourceNodes
-
   const {
-    createNode,
+    createNode: originalCreateNode,
     touchNode,
-    deleteNode,
+    deleteNode: originalDeleteNode,
     unstable_createNodeManifest,
-    enableStatefulSourceNodes,
   } = actions
 
-  const online = await isOnline()
-
-  if (hasStatefulSourceNodes) {
-    enableStatefulSourceNodes()
-  }
-  // Gatsby only checks if a node has been touched on the first sourcing.
-  // As iterating and touching nodes can grow quite expensive on larger sites with
-  // 1000s of nodes, we'll skip doing this on subsequent sources.
-  else if (isFirstSourceNodesCallOfCurrentNodeProcess && needToTouchNodes) {
-    getNodes().forEach(node => {
-      if (node.internal.owner !== `gatsby-source-contentful`) {
-        return
-      }
-      touchNode(node)
-      if (node?.fields?.localFile) {
-        // Prevent GraphQL type inference from crashing on this property
-        touchNode(getNode(node.fields.localFile))
-      }
-    })
-  }
-
-  isFirstSourceNodesCallOfCurrentNodeProcess = false
-
-  if (
-    !online &&
-    process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
-    process.env.NODE_ENV !== `production`
-  ) {
-    return
-  }
-
   const pluginConfig = createPluginConfig(pluginOptions)
-  const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-    `environment`
-  )}`
 
-  const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
-    parentSpan,
+  // wrap createNode so we can cache them in memory for faster lookups when finding backreferences
+  const createNode = node => {
+    addNodeToExistingNodesCache(node)
+
+    return originalCreateNode(node)
+  }
+
+  const deleteNode = node => {
+    removeNodeFromExistingNodesCache(node)
+
+    return originalDeleteNode(node)
+  }
+
+  // Array of all existing Contentful nodes
+  const existingNodes = await getExistingCachedNodes({
+    actions,
+    getNode,
+    pluginConfig,
   })
 
   // If the user knows they are offline, serve them cached result
   // For prod builds though always fail if we can't get the latest data
   if (
-    !online &&
+    !(await isOnline()) &&
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
@@ -121,12 +99,19 @@ export async function sourceNodes(
     )
 
     return
-  }
-  if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
+  } else if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
     reporter.info(
       `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
     )
   }
+
+  const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+    `environment`
+  )}`
+
+  const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
+    parentSpan,
+  })
 
   fetchActivity.start()
 
@@ -148,6 +133,7 @@ export async function sourceNodes(
     store.getState().status.plugins?.[`gatsby-source-contentful`]?.[
       CACHE_SYNC_TOKEN
     ]
+  const isCachedBuild = !!syncToken
 
   // Actual fetch of data from Contentful
   const {
@@ -202,45 +188,29 @@ export async function sourceNodes(
   )
   processingActivity.start()
 
-  // Array of all existing Contentful nodes
-  const existingNodes = getNodes().filter(
-    n =>
-      n.internal.owner === `gatsby-source-contentful` &&
-      (pluginConfig.get(`enableTags`)
-        ? n.internal.type !== `ContentfulTag`
-        : true)
-  )
-
   // Report existing, new and updated nodes
   const nodeCounts = {
     newEntry: 0,
     newAsset: 0,
     updatedEntry: 0,
     updatedAsset: 0,
-    existingEntry: 0,
-    existingAsset: 0,
-    deletedEntry: currentSyncData.deletedEntries.length,
-    deletedAsset: currentSyncData.deletedAssets.length,
+    deletedEntry: currentSyncData?.deletedEntries?.length || 0,
+    deletedAsset: currentSyncData?.deletedAssets?.length || 0,
   }
-  existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
-  currentSyncData.entries.forEach(entry =>
+
+  currentSyncData?.entries?.forEach(entry =>
     entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
   )
-  currentSyncData.assets.forEach(asset =>
+  currentSyncData?.assets?.forEach(asset =>
     asset.sys.revision === 1 ? nodeCounts.newAsset++ : nodeCounts.updatedAsset++
   )
 
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
   reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
-  reporter.info(
-    `Contentful: ${nodeCounts.existingEntry / locales.length} cached entries`
-  )
+  reporter.info(`Contentful: ${existingNodes.size} memory cached nodes`)
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
-  reporter.info(
-    `Contentful: ${nodeCounts.existingAsset / locales.length} cached assets`
-  )
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
   reporter.verbose(`Building Contentful reference map`)
@@ -276,7 +246,7 @@ export async function sourceNodes(
 
   reporter.verbose(`Resolving Contentful references`)
 
-  const newOrUpdatedEntries = new Set()
+  let newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
       newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
@@ -329,15 +299,23 @@ export async function sourceNodes(
   }
 
   // Update existing entry nodes that weren't updated but that need reverse links added or removed.
-  const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
-  existingNodes
-    .filter(
-      n =>
-        n.sys.type === `Entry` &&
-        !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`) &&
-        !deletedEntryGatsbyReferenceIds.has(n.id)
+  let existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
+
+  if (isCachedBuild) {
+    console.log(
+      `start building existingNodesThatNeedReverseLinksUpdateInDatastore`
     )
-    .forEach(n => {
+    existingNodes.forEach(n => {
+      if (
+        !(
+          n.sys.type === `Entry` &&
+          !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`) &&
+          !deletedEntryGatsbyReferenceIds.has(n.id)
+        )
+      ) {
+        return
+      }
+
       if (
         n.contentful_id &&
         foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
@@ -398,11 +376,33 @@ export async function sourceNodes(
         })
       }
     })
+  }
+
+  // allow node to gc if it needs to
+  // @ts-ignore
+  newOrUpdatedEntries = undefined
+  await new Promise(res => {
+    setImmediate(() => {
+      res(null)
+    })
+  })
 
   // We need to call `createNode` on nodes we modified reverse links on,
   // otherwise changes won't actually persist
+  // We need to call `createNode` on nodes we modified reverse links on,
+  // otherwise changes won't actually persist
   if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
+    let existingNodesLoopCount = 0
+    const loggedTypes = new Set()
     for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
+      if (!loggedTypes.has(node.sys.type)) {
+        console.log(
+          `contentful existingNodesThatNeedReverseLinksUpdateInDatastore type`,
+          node.sys.type
+        )
+        loggedTypes.add(node.sys.type)
+      }
+
       function addChildrenToList(node, nodeList = [node]) {
         for (const childNodeId of node?.children ?? []) {
           const childNode = getNode(childNodeId)
@@ -422,20 +422,10 @@ export async function sourceNodes(
         // We should not mutate original node as Gatsby will still
         // compare against what's in in-memory weak cache, so we
         // clone original node to ensure reference identity is not possible
-        const nodeToUpdate = _.cloneDeep(nodeToUpdateOriginal)
-        // We need to remove properties from existing fields
-        // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
-        // Gatsby automatically will set `.owner` it back
-        delete nodeToUpdate.internal.owner
-        // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
-        // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
-        // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
-        // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
-        // we would also need to restore that field ourselves after re-creating a node)
-        delete nodeToUpdate.fields // plugin adds node field on asset nodes which don't have reverse links
+        const nodeToUpdate = nodeToUpdateOriginal.__memcache
+          ? getNode(nodeToUpdateOriginal.id)
+          : nodeToUpdateOriginal
 
-        // We add or modify counter postfix to contentDigest
-        // to make sure Gatsby treat this as data update
         let counter
         const [initialContentDigest, counterStr] =
           nodeToUpdate.internal.contentDigest.split(
@@ -452,11 +442,48 @@ export async function sourceNodes(
           counter++
         }
 
-        nodeToUpdate.internal.contentDigest = `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`
-        createNode(nodeToUpdate)
+        const newNode = {
+          ...nodeToUpdate,
+          internal: {
+            ...nodeToUpdate.internal,
+            // We need to remove properties from existing fields
+            // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
+            // Gatsby automatically will set `.owner` it back
+            owner: undefined,
+            // We add or modify counter postfix to contentDigest
+            // to make sure Gatsby treat this as data update
+            contentDigest: `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`,
+          },
+          // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
+          // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
+          // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
+          // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
+          // we would also need to restore that field ourselves after re-creating a node)
+          fields: undefined, // plugin adds node field on asset nodes which don't have reverse links
+        }
+
+        createNode(newNode)
+
+        if (existingNodesLoopCount++ % 2000 === 0) {
+          // dont block the event loop
+          await new Promise(res => {
+            setImmediate(() => {
+              res(null)
+            })
+          })
+        }
       }
     }
   }
+
+  // allow node to gc if it needs to
+  // @ts-ignore
+  existingNodesThatNeedReverseLinksUpdateInDatastore = undefined
+  await new Promise(res => {
+    setImmediate(() => {
+      res(null)
+    })
+  })
 
   const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
     parentSpan,
@@ -466,61 +493,102 @@ export async function sourceNodes(
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
-    if (entryList[i].length) {
-      reporter.info(
-        `Creating ${entryList[i].length} Contentful ${
-          pluginConfig.get(`useNameForId`)
-            ? contentTypeItem.name
-            : contentTypeItem.sys.id
-        } nodes`
-      )
+    // if (entryList[i].length) {
+    //   reporter.info(
+    //     `Creating ${entryList[i].length} Contentful ${
+    //       pluginConfig.get(`useNameForId`)
+    //         ? contentTypeItem.name
+    //         : contentTypeItem.sys.id
+    //     } nodes`
+    //   )
+    // }
+
+    const timer =
+      entryList[i].length > 0
+        ? reporter.createProgress(
+            `Creating Contentful ${
+              pluginConfig.get(`useNameForId`)
+                ? contentTypeItem.name
+                : contentTypeItem.sys.id
+            } nodes`
+          )
+        : null
+
+    if (timer) {
+      timer.start()
     }
 
+    let nodeCreatedCount = 0
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
-    // TODO add batching in gatsby-core
-    await Promise.all(
-      createNodesForContentType({
-        contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
-        entries: entryList[i],
-        createNode,
-        createNodeId,
-        getNode,
-        resolvable,
-        foreignReferenceMap,
-        defaultLocale,
-        locales,
-        space,
-        useNameForId: pluginConfig.get(`useNameForId`),
-        pluginConfig,
-        unstable_createNodeManifest,
-      })
-    )
+    await createNodesForContentType({
+      contentTypeItem,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      entries: entryList[i],
+      createNode: timer?.tick
+        ? node => {
+            timer.total = ++nodeCreatedCount
+            timer.tick()
+            return createNode(node)
+          }
+        : createNode,
+      createNodeId,
+      getNode,
+      resolvable,
+      foreignReferenceMap,
+      defaultLocale,
+      locales,
+      space,
+      useNameForId: pluginConfig.get(`useNameForId`),
+      pluginConfig,
+      unstable_createNodeManifest,
+    })
+
+    if (timer) {
+      timer.end()
+    }
+
+    // allow node to garbage collect these items if it needs to
+    contentTypeItems[i] = undefined
+    entryList[i] = undefined
+    await new Promise(res => {
+      setImmediate(() => res(null))
+    })
   }
 
-  if (assets.length) {
-    reporter.info(`Creating ${assets.length} Contentful asset nodes`)
-  }
+  const assetTimer = reporter.createProgress(`Creating Contentful asset nodes`)
+  assetTimer.total = assets.length
 
   const assetNodes = []
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
     assetNodes.push(
-      ...(await Promise.all(
-        createAssetNodes({
-          assetItem: assets[i],
-          createNode,
-          createNodeId,
-          defaultLocale,
-          locales,
-          space,
-          pluginConfig,
-        })
-      ))
+      ...(await createAssetNodes({
+        assetItem: assets[i],
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+        pluginConfig,
+      }))
     )
+
+    assets[i] = undefined
+    if (i % 1000 === 0) {
+      await new Promise(res => {
+        setImmediate(() => res(null))
+      })
+    }
+    assetTimer.tick()
   }
+
+  assetTimer.end()
+
+  await new Promise(res => {
+    setImmediate(() => res(null))
+  })
 
   // Create tags entities
   if (tagItems.length) {

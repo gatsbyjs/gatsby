@@ -1,8 +1,85 @@
+// @ts-check
+import { hasFeature } from "gatsby-plugin-utils/index"
+import { getDataStore } from "gatsby/dist/datastore"
+
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 const existingNodes = new Map()
 
+let allNodesLoopCount = 0
+let isFirstSourceNodesCallOfCurrentNodeProcess = true
+
+export async function getExistingCachedNodes({
+  actions,
+  getNode,
+  pluginConfig,
+}) {
+  const { enableStatefulSourceNodes, touchNode } = actions
+
+  const hasStatefulSourceNodes = hasFeature(`stateful-source-nodes`)
+
+  if (hasStatefulSourceNodes) {
+    enableStatefulSourceNodes()
+  }
+
+  const needToTouchNodes =
+    !hasStatefulSourceNodes && isFirstSourceNodesCallOfCurrentNodeProcess
+
+  if (existingNodes.size === 0) {
+    console.log(`getting existing nodes`)
+    const dataStore = getDataStore()
+    const allNodeTypeNames = Array.from(dataStore.getTypes())
+
+    for (const typeName of allNodeTypeNames) {
+      const typeNodes = dataStore.iterateNodesByType(typeName)
+
+      const firstNodeOfType = Array.from(typeNodes.slice(0, 1))[0]
+
+      if (
+        !firstNodeOfType ||
+        firstNodeOfType.internal.owner !== `gatsby-source-contentful`
+      ) {
+        continue
+      }
+
+      for (const node of typeNodes) {
+        if (needToTouchNodes) {
+          touchNode(node)
+
+          if (node?.fields?.includes(`localFile`)) {
+            // Prevent GraphQL type inference from crashing on this property
+            const fullNode = getNode(node.id)
+            const localFileNode = getNode(fullNode.fields.localFile)
+            touchNode(localFileNode)
+          }
+        }
+
+        if (++allNodesLoopCount % 5000 === 0) {
+          // dont block the event loop
+          await new Promise(resolve => setImmediate(() => resolve(null)))
+        }
+
+        if (
+          pluginConfig.get(`enableTags`) &&
+          node.internal.type === `ContentfulTag`
+        ) {
+          continue
+        }
+
+        addNodeToExistingNodesCache(node)
+      }
+
+      // dont block the event loop
+      await new Promise(resolve => setImmediate(() => resolve(null)))
+    }
+  }
+
+  isFirstSourceNodesCallOfCurrentNodeProcess = false
+
+  return existingNodes
+}
+
 // store only the fields we need to compare to reduce memory usage. if a node is updated we'll use getNode to grab the whole node before updating it
-function addNodeToExistingNodesCache(node) {
+export function addNodeToExistingNodesCache(node) {
   const cacheNode = {
     id: node.id,
     contentful_id: node.contentful_id,
@@ -26,6 +103,6 @@ function addNodeToExistingNodesCache(node) {
   existingNodes.set(node.id, cacheNode)
 }
 
-function removeNodeFromExistingNodesCache(node) {
+export function removeNodeFromExistingNodesCache(node) {
   existingNodes.delete(node.id)
 }
