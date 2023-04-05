@@ -5,6 +5,7 @@ export default defineConfig({
   e2e: {
     baseUrl: `http://localhost:9000`,
     specPattern: `cypress/integration/**/*.{js,ts}`,
+    projectId: `2193cm`,
     viewportWidth: 1440,
     viewportHeight: 900,
     retries: {

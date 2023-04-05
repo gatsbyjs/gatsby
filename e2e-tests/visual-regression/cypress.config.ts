@@ -5,6 +5,7 @@ export default defineConfig({
   e2e: {
     baseUrl: `http://localhost:9000`,
     specPattern: `cypress/integration/*.{js,ts}`,
+    projectId: `nz99aw`,
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config)
       on("before:browser:launch", (browser = {} as Cypress.Browser, launchOptions) => {
