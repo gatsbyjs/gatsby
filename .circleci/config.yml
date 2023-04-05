@@ -317,7 +317,7 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_PATH_PREFIX
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_PATH_PREFIX}
     steps:
       - e2e-test:
           test_path: e2e-tests/path-prefix
@@ -376,7 +376,7 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_DEV_RUNTIME_REACT_18
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_DEV_RUNTIME_REACT_18}
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -386,13 +386,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=$CY_CLOUD_PROD_RUNTIME_REACT_18 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=$CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18 yarn test:offline
+          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_REACT_18} yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18} yarn test:offline
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_THEMES_DEV_RUNTIME
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_THEMES_DEV_RUNTIME}
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
@@ -402,7 +402,7 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_THEMES_PROD_RUNTIME
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_THEMES_PROD_RUNTIME}
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
@@ -412,7 +412,7 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_MDX
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_MDX}
     steps:
       - e2e-test:
           test_path: e2e-tests/mdx
@@ -421,7 +421,7 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_VISUAL_REGRESSION
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_VISUAL_REGRESSION}
     steps:
       - e2e-test:
           test_path: e2e-tests/visual-regression
@@ -434,7 +434,7 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_CONTENTFUL
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_CONTENTFUL}
     steps:
       - e2e-test:
           test_path: e2e-tests/contentful
@@ -451,7 +451,7 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: $CY_CLOUD_TRAILING_SLASH
+      CYPRESS_RECORD_KEY: ${CY_CLOUD_TRAILING_SLASH}
     steps:
       - e2e-test:
           test_path: e2e-tests/trailing-slash
