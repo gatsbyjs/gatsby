@@ -162,19 +162,6 @@ commands:
           name: Install gatsby-dev@next
           command: yarn global add gatsby-dev-cli@next --ignore-engines
       - run:
-          name: Setup Environment Variables
-          command: |
-            echo 'export CY_CLOUD_CONTENTFUL="${CY_CLOUD_CONTENTFUL}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_DEV_RUNTIME_REACT_18="${CY_CLOUD_DEV_RUNTIME_REACT_18}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_MDX="${CY_CLOUD_MDX}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_PATH_PREFIX="${CY_CLOUD_PATH_PREFIX}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18="${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_PROD_RUNTIME_REACT_18="${CY_CLOUD_PROD_RUNTIME_REACT_18}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_THEMES_DEV_RUNTIME="${CY_CLOUD_THEMES_DEV_RUNTIME}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_THEMES_PROD_RUNTIME="${CY_CLOUD_THEMES_PROD_RUNTIME}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_TRAILING_SLASH="${CY_CLOUD_TRAILING_SLASH}"' >> "$BASH_ENV"
-            echo 'export CY_CLOUD_VISUAL_REGRESSION="${CY_CLOUD_VISUAL_REGRESSION}"' >> "$BASH_ENV"
-      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
@@ -328,10 +315,8 @@ jobs:
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_PATH_PREFIX}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_PATH_PREFIX}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/path-prefix
 
@@ -387,55 +372,47 @@ jobs:
 
   e2e_tests_development_runtime_with_react_18:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_DEV_RUNTIME_REACT_18}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_DEV_RUNTIME_REACT_18}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/development-runtime
 
   e2e_tests_production_runtime_with_react_18:
     <<: *e2e-executor
     steps:
+      - run: echo 'export CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18="${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18}"' >> "$BASH_ENV"
+      - run: echo 'export CY_CLOUD_PROD_RUNTIME_REACT_18="${CY_CLOUD_PROD_RUNTIME_REACT_18}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_REACT_18} yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18} yarn test:offline
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_THEMES_DEV_RUNTIME}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_DEV_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
           test_command: cd development-runtime; yarn test
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_THEMES_PROD_RUNTIME}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_PROD_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
           test_command: cd production-runtime; yarn test
 
   e2e_tests_mdx:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_MDX}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_MDX}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/mdx
 
   e2e_tests_visual-regression:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_VISUAL_REGRESSION}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_VISUAL_REGRESSION}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/visual-regression
       - store_artifacts:
@@ -445,10 +422,8 @@ jobs:
 
   e2e_tests_contentful:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_CONTENTFUL}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_CONTENTFUL}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/contentful
       # we build a second time to see if warm/cached builds are successful
@@ -462,10 +437,8 @@ jobs:
 
   e2e_tests_trailing-slash:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_RECORD_KEY: ${CY_CLOUD_TRAILING_SLASH}
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_TRAILING_SLASH}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/trailing-slash
       - store_test_results:
