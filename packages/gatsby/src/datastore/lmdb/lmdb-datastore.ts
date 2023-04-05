@@ -220,21 +220,22 @@ async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
 
 const lastOperationPromise: Promise<any> = Promise.resolve()
 
-// new fastq
-const updateQueue = fastq(updateDataStore, 1)
-
 let queueCounter = 0
-function queueDataStoreUpdate(action: ActionsUnion): void {
+const updateQueue = fastq(action => {
   if (queueCounter++ % 100 === 0) {
     queueCounter = 0
     updateQueue.pause()
     setImmediate(() => {
+      updateDataStore(action)
       updateQueue.resume()
-      updateQueue.push(action)
     })
   } else {
-    updateQueue.push(action)
+    updateDataStore(action)
   }
+}, 1)
+
+function queueDataStoreUpdate(action: ActionsUnion): void {
+  updateQueue.push(action)
 }
 
 function updateDataStore(action: ActionsUnion): void {
