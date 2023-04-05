@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.8.1/packages/gatsby) (2023-03-29)
+
+#### Bug Fixes
+
+- don't block event loop during inference [#37780](https://github.com/gatsbyjs/gatsby/issues/37780) [#37800](https://github.com/gatsbyjs/gatsby/issues/37800) ([facb07f](https://github.com/gatsbyjs/gatsby/commit/facb07f6368641662c08a6e93490b0db1ea426ee))
+
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.8.0/packages/gatsby) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Correctly cache gatsby-node.mjs in webpack [#37750](https://github.com/gatsbyjs/gatsby/issues/37750) ([438ddda](https://github.com/gatsbyjs/gatsby/commit/438dddab5b7643cf0518383bda6c94615857185a))
+- track changes to lazy components [#37712](https://github.com/gatsbyjs/gatsby/issues/37712) ([2794ed3](https://github.com/gatsbyjs/gatsby/commit/2794ed31f693c74921d20011aa4b060bc32eaec0))
+- setup base flags when config file doesn't exist [#37714](https://github.com/gatsbyjs/gatsby/issues/37714) ([44cbfb5](https://github.com/gatsbyjs/gatsby/commit/44cbfb55f04c0d239b347ed882d157f13f2d6af0))
+- Pass `pluginName` to `reporter.activityTimer` & `reporter.createProgress` [#37710](https://github.com/gatsbyjs/gatsby/issues/37710) ([21e798b](https://github.com/gatsbyjs/gatsby/commit/21e798b198b334cef238c3c40da67b7657390f16))
+- Change backdrop position to `fixed` [#37698](https://github.com/gatsbyjs/gatsby/issues/37698) ([66aff8c](https://github.com/gatsbyjs/gatsby/commit/66aff8cec0adb9db30f8942d8feeea3290c1e7b1))
+- hide absolute path of \_\_contentFilePath in component chunk name [#37687](https://github.com/gatsbyjs/gatsby/issues/37687) ([db2d5e8](https://github.com/gatsbyjs/gatsby/commit/db2d5e8d97e19a069c73474f29caa698e441c68c))
+- Use optional chaining in `onHeadRendered` [#37669](https://github.com/gatsbyjs/gatsby/issues/37669) ([66584a2](https://github.com/gatsbyjs/gatsby/commit/66584a22426d8ce03cfcc9a1eb39d4342ef7f755))
+
+#### Chores
+
+- Remove obsolete `st` package [#37726](https://github.com/gatsbyjs/gatsby/issues/37726) ([240f5a9](https://github.com/gatsbyjs/gatsby/commit/240f5a9dc9f0cc5f5369e3087244378aad3d5ccf))
+
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.7.0/packages/gatsby) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)

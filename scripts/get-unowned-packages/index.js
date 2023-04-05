@@ -8,7 +8,8 @@ const { exec, execSync } = require(`child_process`)
 const execP = util.promisify(exec)
 
 const getPackagesWithReadWriteAccess = async user => {
-  const cmd = `npm access ls-packages ${user}`
+  // Requires npm 9.0.0 or higher
+  const cmd = `npm access list packages ${user} --json`
   const { stdout } = await execP(cmd)
   const permissions = JSON.parse(stdout)
   return Object.entries(permissions).reduce((lookup, [pkgName, access]) => {

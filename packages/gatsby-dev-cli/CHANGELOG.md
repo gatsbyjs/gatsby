@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.8.0/packages/gatsby-dev-cli) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Add `self_path` to verdaccio config [#37727](https://github.com/gatsbyjs/gatsby/issues/37727) ([b9def24](https://github.com/gatsbyjs/gatsby/commit/b9def24d957d16d8ba6b520ef71bed459ee9a784))
+
+### [5.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.7.1/packages/gatsby-dev-cli) (2023-03-10)
+
+#### Bug Fixes
+
+- Add `self_path` to verdaccio config [#37727](https://github.com/gatsbyjs/gatsby/issues/37727) [#37736](https://github.com/gatsbyjs/gatsby/issues/37736) ([9da5bdd](https://github.com/gatsbyjs/gatsby/commit/9da5bdd1f129e8d7afe56b60aef07bac38164daf))
+
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.7.0/packages/gatsby-dev-cli) (2023-02-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)

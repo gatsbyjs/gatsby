@@ -1,8 +1,8 @@
 ---
-title: Choosing Your CMS(s)
+title: Choosing Your CMSs
 ---
 
-At their core, most medium-sized and large Gatsby websites are backed by a so-called "headless CMS". Headless CMSes excel at allowing content editors to flexibly create a content schema of interrelated content models.
+At their core, most medium-sized and large Gatsby websites are backed by a so-called "headless CMS". Headless CMSs excel at allowing content editors to flexibly create a content schema of interrelated content models.
 
 One of the key questions people ask when building a Gatsby site is "which CMS should I use?"
 
@@ -10,37 +10,33 @@ One of the key questions people ask when building a Gatsby site is "which CMS sh
 
 If you're looking for a primary CMS (general-purpose, flexible content modelling) to power your website, there are three main factors you can use to narrow your search:
 
-### 1) Popular, first-class Gatsby integrations
+- Popular CMS with first-class Gatsby integrations
+- Price point
+- Specialized requirements
 
-**First**, when possible, we recommend you focus on **top-flight general-purpose CMSs** with **first-class Gatsby integrations** and **high popularity** among Gatsby users.
+### Popular CMS with first-class Gatsby integrations
 
-A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds and is known to the Gatsby team to be high-quality.
+Focus on top-flight general-purpose CMSs with first-class Gatsby integrations and popularity among Gatsby users.
 
-For popularity, you can see [top integrations listed by monthly downloads here](/plugins?=gatsby-source).
+A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby — previews and incremental builds and is known to the Gatsby team to be high-quality. For popularity, you can see [top integrations listed by monthly downloads](/plugins?=gatsby-source).
 
-There are currently (November 2021) eight CMSs with first-class integrations used by over 1% of Gatsby users. These are:
+Eight CMSs with first-class integrations used by over 1% of Gatsby users (November 2021):
 
-- **six general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Contentstack, Sanity and Strapi
+- **Headless CMSs**: Contentful, DatoCMS, Prismic, Contentstack, Sanity and Strapi
+- **Full-stack CMSs**: Drupal and WordPress
+- **E-commerce platform**: Shopify
 
-- **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and WordPress
+### Consider the price point given your budget
 
-- **one e-commerce platform**: Shopify
+- "Personal" project or prototype (generous free tier): Contentful, DatoCMS, Prismic, Sanity, Strapi.
+- "Team", "Pro" or "Business": (e.g. 50-250 $/month): Contentful, DatoCMS, Prismic, Sanity, Strapi, Drupal and WordPress.
+- "Enterprise" project (>= 1000 $/month): Contentful, Contentstack, Sanity, and Strapi.
 
-### 2) The right price point
+### Specialized requirements
 
-**Second**, it's important to consider the price point given your budget:
+Other project requirements and team preferences will play a role.
 
-- If you're working on a personal project or prototype, a few of these have a generous free tier (Contentful, DatoCMS, Prismic, Sanity, Strapi).
-
-- If you're looking more at "Team", "Pro", or "Business" price points (e.g. 50, 100, or 250 dollars per month), the above CMSs are all good options, plus Drupal and WordPress.
-
-- If you're looking more at an "enterprise" project in the four digits per month and up, your main options are Contentful, Contentstack, Sanity, and Strapi.
-
-### 3) Meeting specialized requirements
-
-**Third,** other project requirements and team preferences will play a role.
-
-**Contentful** is the most common headless CMS used with Gatsby. As an early player in the space, they've built a fairly mature product in terms of features and revenue and are sometimes seen as the "default" choice.
+**Contentful** is the most common headless CMS used with Gatsby. Early player with a fairly mature product in terms of features and revenue. Sometimes seen as the "default" choice.
 
 Users choosing other CMSs typically have a specific reason for their choice. Some trends we've noticed include:
 

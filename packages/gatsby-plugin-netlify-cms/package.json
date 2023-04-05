@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-netlify-cms",
   "description": "A Gatsby plugin which generates the Netlify CMS single page app",
-  "version": "7.8.0-next.0",
+  "version": "7.9.0-next.0",
   "author": "Shawn Erquhart <shawn@erquh.art>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "babel-preset-gatsby-package": "^3.8.0-next.0",
+    "babel-preset-gatsby-package": "^3.9.0-next.0",
     "cross-env": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
