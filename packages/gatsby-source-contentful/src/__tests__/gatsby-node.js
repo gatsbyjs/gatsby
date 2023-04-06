@@ -87,6 +87,7 @@ describe(`gatsby-node`, () => {
       currentNodeMap.delete(node.id)
     }),
     touchNode: jest.fn(),
+    enableStatefulSourceNodes: jest.fn(),
   }
   const schema = {
     buildObjectType: jest.fn(() => {

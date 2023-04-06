@@ -65,6 +65,33 @@ When a `source-nodes` plugin runs again, it generally recreates nodes (which aut
 
 Any nodes that aren't touched by the end of the `source-nodes` phase, are deleted. This is performed via a diff between the `nodesTouched` and `nodes` Redux namespaces, in [source-nodes.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/source-nodes.ts)
 
+### Opting out of stale node deletion
+
+Stale node deletion is a very expensive process because all nodes in the data store need to be iterated on to check if they're stale or not. Iterating on nodes to check for staleness also requires loading that entire node into memory, so all nodes created by a source plugin are loaded into memory to check for their staleness, even if they're otherwise not needed in memory.
+
+Source plugins can skip this expensive step by calling the `enableStatefulSourceNodes` action.
+This will stop Gatsby from checking for stale nodes created by the source plugin that called the action.
+This is a major performance improvement for medium and large sites and those sites will need less total memory to build.
+
+When enabling stateful sourcing plugin authors need to be sure their plugins properly handle deleting nodes when they need to be deleted. Since Gatsby is no longer checking for node staleness, data which should no longer exist could stick around.
+`enableStatefulSourceNodes` should only be enabled for source plugins that can fully support all delete operations in their data source.
+
+Note that if `enableStatefulSourceNodes` is supported by the user's `gatsby` version, the action should be called every time `sourceNodes` runs.
+
+Example:
+
+```js
+import { hasFeature } from "gatsby-plugin-utils"
+
+exports.sourceNodes = ({ actions }) => {
+  if (hasFeature(`stateful-source-nodes`)) {
+    actions.enableStatefulSourceNodes()
+  } else {
+    // fallback to old behavior where all nodes are iterated on and touchNode is called.
+  }
+}
+```
+
 ## Changing a node's fields
 
 From a site developer's point of view, nodes are immutable. In the sense that if you change a node object, those changes will not be seen by other parts of Gatsby. To make a change to a node, it must be persisted to Redux via an action.

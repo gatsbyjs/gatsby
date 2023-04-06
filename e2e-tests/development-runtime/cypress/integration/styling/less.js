@@ -24,12 +24,11 @@ describe(`styling: less`, () => {
   })
 
   describe(`hot reloading`, () => {
-    it(`plain less`, () => {
-      // we don't want to visit page for each test - we want to visit once and then test HMR
-      cy.window().then(win => {
-        cy.spy(win.console, `log`).as(`hmrConsoleLog`)
-      })
+    beforeEach(() => {
+      cy.visit(`/styling/less`).waitForRouteChange()
+    })
 
+    it(`plain less`, () => {
       cy.exec(
         `npm run update -- --file src/pages/styling/less-plain.less --replacements "red:blue" --exact`
       )
@@ -44,11 +43,6 @@ describe(`styling: less`, () => {
     })
 
     it(`less module`, () => {
-      // we don't want to visit page for each test - we want to visit once and then test HMR
-      cy.window().then(win => {
-        cy.spy(win.console, `log`).as(`hmrConsoleLog`)
-      })
-
       cy.exec(
         `npm run update -- --file src/pages/styling/less.module.less --replacements "green:blue" --exact`
       )
