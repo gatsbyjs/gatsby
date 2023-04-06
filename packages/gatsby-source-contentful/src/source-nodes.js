@@ -302,9 +302,6 @@ export async function sourceNodes(
   let existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
 
   if (isCachedBuild) {
-    console.log(
-      `start building existingNodesThatNeedReverseLinksUpdateInDatastore`
-    )
     existingNodes.forEach(n => {
       if (
         !(
@@ -393,16 +390,7 @@ export async function sourceNodes(
   // otherwise changes won't actually persist
   if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
     let existingNodesLoopCount = 0
-    const loggedTypes = new Set()
     for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
-      if (!loggedTypes.has(node.sys.type)) {
-        console.log(
-          `contentful existingNodesThatNeedReverseLinksUpdateInDatastore type`,
-          node.sys.type
-        )
-        loggedTypes.add(node.sys.type)
-      }
-
       function addChildrenToList(node, nodeList = [node]) {
         for (const childNodeId of node?.children ?? []) {
           const childNode = getNode(childNodeId)
