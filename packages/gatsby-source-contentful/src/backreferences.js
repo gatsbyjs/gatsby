@@ -1,6 +1,7 @@
 // @ts-check
 import { hasFeature } from "gatsby-plugin-utils/index"
 import { getDataStore } from "gatsby/dist/datastore"
+import { untilNextEventLoopTick } from "./utils"
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 const existingNodes = new Map()
@@ -25,7 +26,6 @@ export async function getExistingCachedNodes({
     !hasStatefulSourceNodes && isFirstSourceNodesCallOfCurrentNodeProcess
 
   if (existingNodes.size === 0) {
-    console.log(`getting existing nodes`)
     const dataStore = getDataStore()
     const allNodeTypeNames = Array.from(dataStore.getTypes())
 
@@ -55,7 +55,7 @@ export async function getExistingCachedNodes({
 
         if (++allNodesLoopCount % 5000 === 0) {
           // dont block the event loop
-          await new Promise(resolve => setImmediate(() => resolve(null)))
+          await untilNextEventLoopTick()
         }
 
         if (
@@ -69,7 +69,7 @@ export async function getExistingCachedNodes({
       }
 
       // dont block the event loop
-      await new Promise(resolve => setImmediate(() => resolve(null)))
+      await untilNextEventLoopTick()
     }
   }
 

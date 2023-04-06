@@ -6,6 +6,7 @@ import {
   getExistingCachedNodes,
   removeNodeFromExistingNodesCache,
 } from "./backreferences"
+import { untilNextEventLoopTick } from "./utils"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
@@ -378,14 +379,8 @@ export async function sourceNodes(
   // allow node to gc if it needs to
   // @ts-ignore
   newOrUpdatedEntries = undefined
-  await new Promise(res => {
-    setImmediate(() => {
-      res(null)
-    })
-  })
+  await untilNextEventLoopTick()
 
-  // We need to call `createNode` on nodes we modified reverse links on,
-  // otherwise changes won't actually persist
   // We need to call `createNode` on nodes we modified reverse links on,
   // otherwise changes won't actually persist
   if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
@@ -467,11 +462,7 @@ export async function sourceNodes(
   // allow node to gc if it needs to
   // @ts-ignore
   existingNodesThatNeedReverseLinksUpdateInDatastore = undefined
-  await new Promise(res => {
-    setImmediate(() => {
-      res(null)
-    })
-  })
+  await untilNextEventLoopTick()
 
   const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
     parentSpan,
@@ -530,9 +521,7 @@ export async function sourceNodes(
     // allow node to garbage collect these items if it needs to
     contentTypeItems[i] = undefined
     entryList[i] = undefined
-    await new Promise(res => {
-      setImmediate(() => res(null))
-    })
+    await untilNextEventLoopTick()
   }
 
   const assetTimer = reporter.createProgress(`Creating Contentful asset nodes`)
@@ -555,18 +544,14 @@ export async function sourceNodes(
 
     assets[i] = undefined
     if (i % 1000 === 0) {
-      await new Promise(res => {
-        setImmediate(() => res(null))
-      })
+      await untilNextEventLoopTick()
     }
     assetTimer.tick()
   }
 
   assetTimer.end()
 
-  await new Promise(res => {
-    setImmediate(() => res(null))
-  })
+  await untilNextEventLoopTick()
 
   // Create tags entities
   if (tagItems.length) {
