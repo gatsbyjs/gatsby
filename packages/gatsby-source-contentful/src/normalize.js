@@ -791,7 +791,7 @@ export const createNodesForContentType = async ({
   return createNodesPromise
 }
 
-export const createAssetNodes = ({
+export const createAssetNodes = async ({
   assetItem,
   createNode,
   createNodeId,
@@ -877,5 +877,6 @@ export const createAssetNodes = ({
     create(assetNode)
   })
 
-  return createNodesPromise.then(() => assetNodes)
+  await createNodesPromise
+  return assetNodes
 }
