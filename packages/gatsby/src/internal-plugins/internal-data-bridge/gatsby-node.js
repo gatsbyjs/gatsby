@@ -212,9 +212,11 @@ emitter.on(`DELETE_PAGE`, action => {
   if (action.deferNodeMutation) {
     emitter.emit(`ENQUEUE_NODE_MUTATION`, {
       type: `deleteNode`,
-      payload: [node, action.plugin, action],
+      payload: [node, { name: `internal-data-bridge` }, action],
     })
   } else {
-    store.dispatch(actions.deleteNode(node))
+    store.dispatch(
+      actions.deleteNode(node, { name: `internal-data-bridge` }, action)
+    )
   }
 })
