@@ -493,16 +493,6 @@ export async function sourceNodes(
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
-    // if (entryList[i].length) {
-    //   reporter.info(
-    //     `Creating ${entryList[i].length} Contentful ${
-    //       pluginConfig.get(`useNameForId`)
-    //         ? contentTypeItem.name
-    //         : contentTypeItem.sys.id
-    //     } nodes`
-    //   )
-    // }
-
     const timer =
       entryList[i].length > 0
         ? reporter.createProgress(
