@@ -4,8 +4,7 @@ import { nodesReducer } from "../reducers/nodes"
 import { IGatsbyNode } from "../types"
 import { nodesTouchedReducer } from "../reducers/nodes-touched"
 
-const dispatch = jest.fn()
-
+const dispatch = jest.spyOn(store, `dispatch`)
 type MapObject = Record<string, IGatsbyNode>
 
 const fromMapToObject = (map: Map<string, any>): MapObject => {
@@ -18,8 +17,8 @@ const fromMapToObject = (map: Map<string, any>): MapObject => {
 
 describe(`Create and update nodes`, (): void => {
   beforeEach((): void => {
-    dispatch.mockClear()
     store.dispatch({ type: `DELETE_CACHE` })
+    dispatch.mockClear()
   })
 
   it(`allows creating nodes`, (): void => {
@@ -80,7 +79,7 @@ describe(`Create and update nodes`, (): void => {
         children: [],
         parent: `test`,
         internal: {
-          contentDigest: `hasdfljds`,
+          contentDigest: `hasdfljds2`,
           type: `Test`,
         },
         pickle: false,

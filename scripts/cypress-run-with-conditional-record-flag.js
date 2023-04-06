@@ -10,8 +10,7 @@ const IS_CI = !!(
   false
 )
 
-const shouldRecord =
-  !!process.env.CYPRESS_PROJECT_ID && !!process.env.CYPRESS_RECORD_KEY && IS_CI
+const shouldRecord = !!process.env.CYPRESS_RECORD_KEY && IS_CI
 
 const cypressBin = path.join(process.cwd(), `node_modules/.bin/cypress`)
 
@@ -22,6 +21,10 @@ const cypressArgs = [`run`, ...process.argv.slice(2)]
 
 if (shouldRecord) {
   cypressArgs.push(`--record`)
+
+  if (process.env.CYPRESS_GROUP_NAME) {
+    cypressArgs.push(`--group`, process.env.CYPRESS_GROUP_NAME)
+  }
 }
 
 childProcess.execFileSync(cypressBin, cypressArgs, {

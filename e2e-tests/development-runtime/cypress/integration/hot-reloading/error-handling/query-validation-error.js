@@ -13,9 +13,12 @@ after(() => {
 const errorPlaceholder = `# query-validation-error`
 const errorReplacement = `fieldThatDoesNotExistOnSiteMapType`
 
-describe(`testing error overlay and ability to automatically recover from query extraction validation errors`, () => {
-  it(`displays content initially (no errors yet)`, () => {
+describe(`testing error overlay and ability to automatically recover from query extraction validation errors`, { testIsolation: false }, () => {
+  before(() => {
     cy.visit(`/error-handling/query-validation-error/`).waitForRouteChange()
+  })
+
+  it(`displays content initially (no errors yet)`, () => {
     cy.findByTestId(`hot`).should(`contain.text`, `Working`)
   })
 

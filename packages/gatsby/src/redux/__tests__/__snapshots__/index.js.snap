@@ -123,12 +123,17 @@ Object {
   },
   "slices": Map {},
   "slicesByTemplate": Map {},
+  "statefulSourcePlugins": Set {},
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
     "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
     "plugins": Object {},
+  },
+  "typeOwners": Object {
+    "pluginsToTypes": Map {},
+    "typesToPlugins": Map {},
   },
   "webpackCompilationHash": "",
 }

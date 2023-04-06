@@ -110,6 +110,8 @@ export const saveState = (): void => {
 
   return writeToCache({
     nodes: state.nodes,
+    typeOwners: state.typeOwners,
+    statefulSourcePlugins: state.statefulSourcePlugins,
     status: state.status,
     components: state.components,
     jobsV2: state.jobsV2,

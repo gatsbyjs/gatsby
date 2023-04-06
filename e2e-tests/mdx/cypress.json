@@ -1,6 +1,0 @@
-{
-  "baseUrl": "http://localhost:9000",
-  "env": {
-    "GATSBY_COMMAND": "build"
-  }
-}

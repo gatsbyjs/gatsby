@@ -22,11 +22,11 @@ describe(
 
       // trigger intersection observer
       cy.scrollTo("top")
-      cy.wait(100)
+      cy.wait(200)
       cy.scrollTo("bottom", {
-        duration: 500,
+        duration: 600,
       })
-      cy.wait(500)
+      cy.wait(600)
     })
 
     async function testImages(images, expectations) {
