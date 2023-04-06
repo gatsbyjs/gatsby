@@ -209,5 +209,12 @@ exports.createResolvers = ({ createResolvers }) => {
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
-  store.dispatch(actions.deleteNode(node))
+  if (action.deferNodeMutation) {
+    emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+      type: `deleteNode`,
+      payload: [node, action.plugin, action],
+    })
+  } else {
+    store.dispatch(actions.deleteNode(node))
+  }
 })
