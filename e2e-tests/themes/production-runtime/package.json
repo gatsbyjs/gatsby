@@ -18,16 +18,17 @@
     "start": "npm run develop",
     "test": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
-    "cy:open": "cypress open",
-    "cy:run": "node ../../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
+    "cy:open": "cypress open --browser chrome --e2e",
+    "cy:run": "node ../../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "cypress": "^9.7.0",
+    "cypress": "^12.9.0",
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
     "prettier": "^2.8.7",
-    "start-server-and-test": "^1.15.3"
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.0.3"
   },
   "repository": {
     "type": "git",

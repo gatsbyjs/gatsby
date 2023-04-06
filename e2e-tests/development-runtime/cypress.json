@@ -1,8 +1,0 @@
-{
-  "baseUrl": "http://localhost:8000",
-  "failOnStatusCode": false,
-  "chromeWebSecurity": false,
-  "defaultCommandTimeout": 30000,
-  "retries": 2,
-  "videoUploadOnPasses": false
-}
