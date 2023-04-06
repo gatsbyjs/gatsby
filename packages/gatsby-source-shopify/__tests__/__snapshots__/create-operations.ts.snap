@@ -35,16 +35,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
+                ... on Node {
                   id
                 }
               }
@@ -318,16 +309,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
+                    ... on Node {
                       id
                     }
                   }
@@ -699,16 +681,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
+                ... on Node {
                   id
                 }
               }
@@ -982,16 +955,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
+                    ... on Node {
                       id
                     }
                   }
@@ -1363,16 +1327,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
+                ... on Node {
                   id
                 }
               }
@@ -1646,16 +1601,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
+                    ... on Node {
                       id
                     }
                   }
@@ -2027,16 +1973,7 @@ Array [
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
+                ... on Node {
                   id
                 }
               }
@@ -2310,16 +2247,7 @@ Array [
               media {
                 edges {
                   node {
-                    ... on ExternalVideo {
-                      id
-                    }
-                    ... on MediaImage {
-                      id
-                    }
-                    ... on Model3d {
-                      id
-                    }
-                    ... on Video {
+                    ... on Node {
                       id
                     }
                   }

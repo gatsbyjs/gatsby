@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@3.8.0/packages/babel-preset-gatsby-package) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@3.7.0/packages/babel-preset-gatsby-package) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+#### Bug Fixes
+
+- Pin `@babel/plugin-transform-modules-commonjs` to 7.18.6 [#37660](https://github.com/gatsbyjs/gatsby/issues/37660) ([389b100](https://github.com/gatsbyjs/gatsby/commit/389b100067708c7ee1ee0038cfb4a71233553a3c))
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@3.6.0/packages/babel-preset-gatsby-package) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+#### Chores
+
+- update dependency @types/babel\_\_core to ^7.20.0 for babel-preset-gatsby-package [#37586](https://github.com/gatsbyjs/gatsby/issues/37586) ([973d9a6](https://github.com/gatsbyjs/gatsby/commit/973d9a6ed29d672e2585286ab9b66104edb9e683))
+
 ## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@3.5.0/packages/babel-preset-gatsby-package) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

@@ -1,4 +1,5 @@
 // @ts-check
+import { hasFeature } from "gatsby-plugin-utils/has-feature"
 import isOnline from "is-online"
 import _ from "lodash"
 
@@ -11,6 +12,7 @@ import {
   createAssetNodes,
   createNodesForContentType,
   makeId,
+  makeTypeName,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
@@ -40,7 +42,7 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
  * or the fallback field or the default field.
  */
 
-let isFirstSource = true
+let isFirstSourceNodesCallOfCurrentNodeProcess = true
 export async function sourceNodes(
   {
     actions,
@@ -55,14 +57,26 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
-  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
-    actions
+  const hasStatefulSourceNodes = hasFeature(`stateful-source-nodes`)
+  const needToTouchNodes = !hasStatefulSourceNodes
+
+  const {
+    createNode,
+    touchNode,
+    deleteNode,
+    unstable_createNodeManifest,
+    enableStatefulSourceNodes,
+  } = actions
+
   const online = await isOnline()
 
+  if (hasStatefulSourceNodes) {
+    enableStatefulSourceNodes()
+  }
   // Gatsby only checks if a node has been touched on the first sourcing.
   // As iterating and touching nodes can grow quite expensive on larger sites with
   // 1000s of nodes, we'll skip doing this on subsequent sources.
-  if (isFirstSource) {
+  else if (isFirstSourceNodesCallOfCurrentNodeProcess && needToTouchNodes) {
     getNodes().forEach(node => {
       if (node.internal.owner !== `gatsby-source-contentful`) {
         return
@@ -73,8 +87,9 @@ export async function sourceNodes(
         touchNode(getNode(node.fields.localFile))
       }
     })
-    isFirstSource = false
   }
+
+  isFirstSourceNodesCallOfCurrentNodeProcess = false
 
   if (
     !online &&

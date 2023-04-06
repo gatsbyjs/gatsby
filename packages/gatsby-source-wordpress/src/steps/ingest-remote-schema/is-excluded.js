@@ -4,10 +4,37 @@ import {
   getTypeSettingsByType,
 } from "~/steps/create-schema-customization/helpers"
 
+// these types do not work in Gatsby because there's no way to reliably invalidate caches or do partial data updates for them
+const blockListedTypenameParts = [
+  `PluginConnection`,
+  `ThemeConnection`,
+  `ActionMonitorAction`,
+  `EnqueuedScript`,
+  `EnqueuedStylesheet`,
+  `EnqueuedAsset`,
+]
+
+const seenTypesWhileBlockingByParts = {}
+
+function typenamePartIsBlocked(name) {
+  if (seenTypesWhileBlockingByParts[name]) {
+    return seenTypesWhileBlockingByParts[name]
+  }
+
+  const typenameContainsBlocklistedPart = !!blockListedTypenameParts.find(b =>
+    name?.includes(b)
+  )
+
+  seenTypesWhileBlockingByParts[name] = typenameContainsBlocklistedPart
+
+  return typenameContainsBlocklistedPart
+}
+
 const typeIsExcluded = ({ pluginOptions, typeName }) =>
-  pluginOptions &&
-  pluginOptions.type[typeName] &&
-  pluginOptions.type[typeName].exclude
+  typenamePartIsBlocked(typeName) ||
+  (pluginOptions &&
+    pluginOptions.type[typeName] &&
+    pluginOptions.type[typeName].exclude)
 
 const fieldIsExcludedOnAll = ({ pluginOptions, field }) => {
   const allFieldSettings = pluginOptions?.type?.__all

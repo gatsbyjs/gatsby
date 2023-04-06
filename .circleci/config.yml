@@ -220,7 +220,7 @@ jobs:
 
   integration_tests_gatsby_source_wordpress:
     machine:
-      image: "ubuntu-2204:2022.10.1"
+      image: "ubuntu-2204:2023.02.1"
     steps:
       - run:
           command: |
@@ -315,11 +315,8 @@ jobs:
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: pzj19c
-      CYPRESS_RECORD_KEY: c9ea1b91-eed6-4bac-be41-eccd75a48969
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_PATH_PREFIX}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/path-prefix
 
@@ -375,39 +372,32 @@ jobs:
 
   e2e_tests_development_runtime_with_react_18:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: nusozx
-      CYPRESS_RECORD_KEY: 6500fa9b-7710-4968-b321-1a544c9a1fdc
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_DEV_RUNTIME_REACT_18}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/development-runtime
 
   e2e_tests_production_runtime_with_react_18:
     <<: *e2e-executor
     steps:
+      - run: echo 'export CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18="${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18}"' >> "$BASH_ENV"
+      - run: echo 'export CY_CLOUD_PROD_RUNTIME_REACT_18="${CY_CLOUD_PROD_RUNTIME_REACT_18}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=ec36ff6b-3db9-48a9-8f7b-2faf301ab800 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=2a4f4f31-0dfb-4a56-80e0-9ed42a1131a4 yarn test:offline
+          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_REACT_18} yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18} yarn test:offline
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: 9parq5
-      CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_DEV_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
           test_command: cd development-runtime; yarn test
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: c9rs27
-      CYPRESS_RECORD_KEY: e4e7b3b8-e1e7-4a74-a0c9-9ac76585236b
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_PROD_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
           test_command: cd production-runtime; yarn test
@@ -415,20 +405,16 @@ jobs:
   e2e_tests_mdx:
     <<: *e2e-executor
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_MDX}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/mdx
-          test_command: CYPRESS_PROJECT_ID=spbj28 CYPRESS_RECORD_KEY=af30ea46-121f-4fb7-97dd-f17ec224402e yarn test
 
   e2e_tests_visual-regression:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: nz99aw
-      CYPRESS_RECORD_KEY: ed4b1af1-bd97-47d4-bb09-3cab2435a147
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_VISUAL_REGRESSION}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/visual-regression
-          test_command: yarn test
       - store_artifacts:
           path: e2e-tests/visual-regression/__diff_output__
       - store_test_results:
@@ -436,14 +422,10 @@ jobs:
 
   e2e_tests_contentful:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: 2193cm
-      CYPRESS_RECORD_KEY: 57e9563e-af49-494c-837c-5af53c2d6f76
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_CONTENTFUL}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/contentful
-          test_command: yarn test
       # we build a second time to see if warm/cached builds are successful
       - e2e-test:
           test_path: e2e-tests/contentful
@@ -455,14 +437,10 @@ jobs:
 
   e2e_tests_trailing-slash:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: ofxgw8
-      CYPRESS_RECORD_KEY: 29c32742-6b85-40e0-9b45-a4c722749d52
     steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_TRAILING_SLASH}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/trailing-slash
-          test_command: yarn test
       - store_test_results:
           path: e2e-tests/trailing-slash/cypress/results
 

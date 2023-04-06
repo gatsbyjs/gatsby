@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@contentful/rich-text-types": "^16.0.2",
+    "@contentful/rich-text-types": "^16.0.3",
     "gatsby": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-sharp": "next",
@@ -12,21 +12,22 @@
     "gatsby-transformer-remark": "next",
     "gatsby-transformer-sharp": "next",
     "gatsby-transformer-sqip": "next",
-    "modern-normalize": "^1.0.0",
-    "prop-types": "^15.7.2",
+    "modern-normalize": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "slugify": "^1.5.0"
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@cypress/snapshot": "^2.1.7",
+    "@simonsmith/cypress-image-snapshot": "^6.0.1",
+    "@types/simonsmith__cypress-image-snapshot": "npm:@types/cypress-image-snapshot",
     "cross-env": "^7.0.3",
-    "cypress": "^9.7.0",
-    "cypress-image-snapshot": "^4.0.1",
+    "cypress": "^12.9.0",
     "gatsby-cypress": "next",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.7",
     "srcset": "^5.0.0",
-    "start-server-and-test": "^1.14.0"
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.0.2"
   },
   "keywords": [
     "gatsby"
@@ -40,8 +41,8 @@
     "test": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
-    "cy:open": "cypress open",
-    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
+    "cy:open": "cypress open --browser chrome --e2e",
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e"
   },
   "repository": {
     "type": "git",

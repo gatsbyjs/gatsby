@@ -98,13 +98,12 @@ Gatsby is dedicated to building a welcoming, diverse, safe community. We expect 
 
 ### A note on how this repository is organized
 
-This repository is a [monorepo][monorepo] managed using [Lerna][lerna]. This means there are [multiple packages--starters!!--][starters] managed in this codebase that are independently versioned but co-exist within this repository.
+This repository is a [monorepo][monorepo] managed using [Lerna][lerna]. This means there are multiple packages managed in this codebase that are independently versioned but co-exist within this repository.
 
-We have set-up read-only clones of all of the [starters][starters] in the official gatsbyjs organization. For example, the [`default` starter](starters/default) is available as a read-only clone at [`gatsbyjs/gatsby-starter-default`][gatsby-starter-default]. Please open PRs versus **this** repository rather than the read-only clones. Upon merge any starters that have been modified will be tagged and released.
+We have set-up read-only clones of all of the starters in the official gatsbyjs organization. For example, the `default` starter is available as a read-only clone at [`gatsbyjs/gatsby-starter-default`][gatsby-starter-default]. Please open PRs versus **this** repository rather than the read-only clones. Upon merge any starters that have been modified will be tagged and released.
 
 [code-of-conduct]: https://gatsbyjs.com/contributing/code-of-conduct/
 [contributing-guide]: https://gatsbyjs.com/contributing/how-to-contribute/
 [monorepo]: https://trunkbaseddevelopment.com/monorepos
 [lerna]: https://github.com/lerna/lerna
-[starters]: /starters
 [gatsby-starter-default]: https://github.com/gatsbyjs/gatsby-starter-default

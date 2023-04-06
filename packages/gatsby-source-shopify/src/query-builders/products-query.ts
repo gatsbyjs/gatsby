@@ -39,16 +39,7 @@ export class ProductsQuery extends BulkQuery {
                 width
               }
               featuredMedia {
-                ... on ExternalVideo {
-                  id
-                }
-                ... on MediaImage {
-                  id
-                }
-                ... on Model3d {
-                  id
-                }
-                ... on Video {
+                ... on Node {
                   id
                 }
               }

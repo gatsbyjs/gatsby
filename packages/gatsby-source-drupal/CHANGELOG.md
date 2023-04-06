@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.8.0/packages/gatsby-source-drupal) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Features
+
+- filter api requests by languages [#37684](https://github.com/gatsbyjs/gatsby/issues/37684) ([310b30d](https://github.com/gatsbyjs/gatsby/commit/310b30d3dac26a4557bda8fdd915115e4839bd6d))
+
+### [6.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.7.1/packages/gatsby-source-drupal) (2023-02-23)
+
+#### Features
+
+- filter api requests by languages [#37684](https://github.com/gatsbyjs/gatsby/issues/37684) [#37690](https://github.com/gatsbyjs/gatsby/issues/37690) ([81619b2](https://github.com/gatsbyjs/gatsby/commit/81619b25b0c9d8d60f7bbc639eded68c4fb330e1))
+
+## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.7.0/packages/gatsby-source-drupal) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.6.0/packages/gatsby-source-drupal) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- Make Image CDN error only `panicOnBuild` [#37601](https://github.com/gatsbyjs/gatsby/issues/37601) ([90cc0c5](https://github.com/gatsbyjs/gatsby/commit/90cc0c5344716423df271b719c540ffd0f6163aa))
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
 ## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.5.0/packages/gatsby-source-drupal) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

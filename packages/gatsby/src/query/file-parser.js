@@ -519,7 +519,8 @@ export default class FileParser {
       !text.includes(`gatsby-plugin-image`) &&
       !text.includes(`getServerData`) &&
       !text.includes(`config`) &&
-      !text.includes(`Slice`)
+      !text.includes(`Slice`) &&
+      !text.includes(`Head`)
     ) {
       return null
     }

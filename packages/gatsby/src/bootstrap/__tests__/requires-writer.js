@@ -73,6 +73,7 @@ describe(`requires-writer`, () => {
         pages,
         program,
         slices: new Map(),
+        components: new Map(),
       })
 
       expect(spy).toBeCalledWith(
@@ -126,6 +127,7 @@ describe(`requires-writer`, () => {
         pages,
         program,
         slices: new Map(),
+        components: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
@@ -165,6 +167,7 @@ describe(`requires-writer`, () => {
         pages,
         program,
         slices: new Map(),
+        components: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
@@ -193,6 +196,7 @@ describe(`requires-writer`, () => {
         pages,
         program,
         slices: new Map(),
+        components: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/`).path)
@@ -259,6 +263,7 @@ describe(`requires-writer`, () => {
         pages,
         program,
         slices: new Map(),
+        components: new Map(),
       })
 
       expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
@@ -286,6 +291,7 @@ describe(`requires-writer`, () => {
         pages,
         program,
         slices: new Map(),
+        components: new Map(),
       })
 
       const matchPathsForInvertedInput = matchPaths
@@ -294,6 +300,7 @@ describe(`requires-writer`, () => {
         pages,
         program,
         slices: new Map(),
+        components: new Map(),
       })
 
       expect(matchPathsForInvertedInput).toEqual(matchPaths)
@@ -306,6 +313,7 @@ describe(`requires-writer`, () => {
           pages,
           program,
           slices: new Map(),
+          components: new Map(),
         })
 
         const allMatchingPages = matchPaths
@@ -391,9 +399,10 @@ describe(`requires-writer`, () => {
       const pages = [...pagesInput.values()]
       const pagesReversed = [...pagesInput.values()].reverse()
       const slices = new Map()
+      const components = new Map()
 
-      expect(requiresWriter.getComponents(pages, slices)).toEqual(
-        requiresWriter.getComponents(pagesReversed, slices)
+      expect(requiresWriter.getComponents(pages, slices, components)).toEqual(
+        requiresWriter.getComponents(pagesReversed, slices, components)
       )
     })
   })

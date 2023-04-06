@@ -64,7 +64,7 @@ if (process.env.BUILD_STAGE === `develop`) {
     if (
       Array.isArray(args) &&
       args.length >= 2 &&
-      args[0]?.includes(`validateDOMNesting(...): %s cannot appear as`) &&
+      args[0]?.includes?.(`validateDOMNesting(...): %s cannot appear as`) &&
       (args[1] === `<html>` || args[1] === `<body>`)
     ) {
       return undefined

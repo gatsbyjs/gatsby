@@ -353,9 +353,9 @@ For further reading, check out the [createPages](/docs/reference/config-files/ga
 
 ### Make a layout template for your posts
 
-You can create a file called `posts.jsx` in `src/templates` - this component will be rendered as the template for all posts. Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title:
+You can create a file called `post.jsx` in `src/templates` - this component will be rendered as the template for every post. Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title:
 
-```jsx:title=src/templates/posts.jsx
+```jsx:title=src/templates/post.jsx
 import React from "react"
 import { graphql } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
@@ -385,7 +385,7 @@ export const query = graphql`
 `
 ```
 
-Now you need to tell `gatsby-plugin-mdx` to use your `PageTemplate` component as layout for your posts. To do this, you need to change the structure of the `component` URI in your `createPage` call:
+Now you need to tell `gatsby-plugin-mdx` to use your `PageTemplate` component as layout for your post. To do this, you need to change the structure of the `component` URI in your `createPage` call:
 
 From an absolute path to your component (e.g. `/absolute/path/to/layout-component.js`) to a path that contains a query parameter `__contentFilePath` (e.g. `/absolute/path/to/layout-component.js?__contentFilePath=/absolute/path/to/content.mdx`).
 
@@ -405,7 +405,7 @@ createPage({
 })
 ```
 
-That's it, you're done. Run `gatsby develop` to see your posts wrapped with `posts.jsx`.
+That's it, you're done. Run `gatsby develop` to see your posts wrapped with `post.jsx`.
 
 ## Adding additional fields to your GraphQL MDX nodes
 

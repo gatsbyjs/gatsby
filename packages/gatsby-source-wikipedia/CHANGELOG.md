@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@5.8.0/packages/gatsby-source-wikipedia) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+**Note:** Version bump only for package gatsby-source-wikipedia
+
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@5.7.0/packages/gatsby-source-wikipedia) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-source-wikipedia
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@5.6.0/packages/gatsby-source-wikipedia) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- update dependency node-fetch to ^2.6.8 for gatsby-source-wikipedia [#37575](https://github.com/gatsbyjs/gatsby/issues/37575) ([468bc3c](https://github.com/gatsbyjs/gatsby/commit/468bc3c2b601946f17753df0841b3b1d31e62c68))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@5.5.0/packages/gatsby-source-wikipedia) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

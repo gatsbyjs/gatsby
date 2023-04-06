@@ -307,36 +307,6 @@ const defaultPluginOptions: IPluginOptions = {
        */
       beforeChangeNode: menuBeforeChangeNode,
     },
-    // the next two types can't be sourced in Gatsby properly yet
-    // @todo instead of excluding these manually, auto exclude them
-    // based on how they behave (no single node query available)
-    EnqueuedScript: {
-      exclude: true,
-    },
-    EnqueuedStylesheet: {
-      exclude: true,
-    },
-    EnqueuedAsset: {
-      exclude: true,
-    },
-    ContentNodeToEnqueuedScriptConnection: {
-      exclude: true,
-    },
-    ContentNodeToEnqueuedStylesheetConnection: {
-      exclude: true,
-    },
-    TermNodeToEnqueuedScriptConnection: {
-      exclude: true,
-    },
-    TermNodeToEnqueuedStylesheetConnection: {
-      exclude: true,
-    },
-    UserToEnqueuedScriptConnection: {
-      exclude: true,
-    },
-    UserToEnqueuedStylesheetConnection: {
-      exclude: true,
-    },
   },
 }
 

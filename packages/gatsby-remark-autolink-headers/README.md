@@ -26,7 +26,7 @@ module.exports = {
 }
 ```
 
-**Please note:** If you are using `gatsby-remark-prismjs`, make sure that it’s listed after this plugin. Otherwise, you might face an issue with [redudant details](https://github.com/gatsbyjs/gatsby/issues/5764).
+**Please note:** If you are using `gatsby-remark-prismjs`, make sure that it’s listed after this plugin. Otherwise, you might face an issue with [redundant details](https://github.com/gatsbyjs/gatsby/issues/5764).
 
 ```javascript
 // good

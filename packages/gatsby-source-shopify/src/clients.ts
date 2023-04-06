@@ -9,7 +9,7 @@ const MAX_BACKOFF_MILLISECONDS = 60000
 export function createGraphqlClient(
   options: IShopifyPluginOptions
 ): IGraphQLClient {
-  const url = `https://${options.storeUrl}/admin/api/2021-07/graphql.json`
+  const url = `https://${options.storeUrl}/admin/api/${options.apiVersion}/graphql.json`
 
   async function graphqlFetch<T>(
     query: string,
@@ -46,7 +46,7 @@ export function createGraphqlClient(
 }
 
 export function createRestClient(options: IShopifyPluginOptions): IRestClient {
-  const baseUrl = `https://${options.storeUrl}/admin/api/2021-01`
+  const baseUrl = `https://${options.storeUrl}/admin/api/${options.apiVersion}`
 
   async function shopifyFetch(
     path: string,

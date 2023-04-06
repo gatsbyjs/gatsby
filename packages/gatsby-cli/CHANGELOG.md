@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.8.0/packages/gatsby-cli) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Pass `pluginName` to `reporter.activityTimer` & `reporter.createProgress` [#37710](https://github.com/gatsbyjs/gatsby/issues/37710) ([21e798b](https://github.com/gatsbyjs/gatsby/commit/21e798b198b334cef238c3c40da67b7657390f16))
+
+#### Other Changes
+
+- feat:(gatsby-cli) - support REACT_PROFILE env var value to set profile cli argument [#37754](https://github.com/gatsbyjs/gatsby/issues/37754) ([7bda38a](https://github.com/gatsbyjs/gatsby/commit/7bda38ac161fbd9521cb6f000675e07d810e634f))
+
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.7.0/packages/gatsby-cli) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+#### Chores
+
+- Fix typo in error message Fix [#37637](https://github.com/gatsbyjs/gatsby/issues/37637) ([7dfef03](https://github.com/gatsbyjs/gatsby/commit/7dfef0383c206142acf1a700306688615f66e3a7))
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.6.0/packages/gatsby-cli) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- Bad prettier change ([692bee2](https://github.com/gatsbyjs/gatsby/commit/692bee28ac50e6a37078d6a22d3ab3ab65fd7720))
+- update minor and patch dependencies for gatsby-cli [#37581](https://github.com/gatsbyjs/gatsby/issues/37581) ([86f33a5](https://github.com/gatsbyjs/gatsby/commit/86f33a54a53f886362d49762bb4f502527935bea))
+- update dependency prettier to v2.8.3 [#37578](https://github.com/gatsbyjs/gatsby/issues/37578) ([ad721ee](https://github.com/gatsbyjs/gatsby/commit/ad721ee33ed0a5c6ff7643c08ee77e084f3a99dc))
+
+#### Chores
+
+- Fix construct-error tests ([1fef624](https://github.com/gatsbyjs/gatsby/commit/1fef624c316d423f147a92c5e15ff4a08da0281f))
+- Update snapshot ([115db66](https://github.com/gatsbyjs/gatsby/commit/115db661949e8cab565f524b58ac7455f937e2c4))
+- update dependency @types/yargs to ^15.0.15 for gatsby-cli [#37563](https://github.com/gatsbyjs/gatsby/issues/37563) ([d86027d](https://github.com/gatsbyjs/gatsby/commit/d86027d95d2c7ef1d25bc6eff12cf63e6c03a9d2))
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.5.0/packages/gatsby-cli) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)
