@@ -14,8 +14,11 @@ const errorPlaceholder = `// compile-error`
 const errorReplacement = `a b`
 
 describe(`testing error overlay and ability to automatically recover from webpack compile errors`, () => {
-  it(`displays content initially (no errors yet)`, () => {
+  beforeEach(() => {
     cy.visit(`/error-handling/compile-error/`).waitForRouteChange()
+  })
+
+  it(`displays content initially (no errors yet)`, () => {
     cy.findByTestId(`hot`).should(`contain.text`, `Working`)
   })
 

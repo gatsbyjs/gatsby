@@ -1,4 +1,4 @@
-import { assertPageVisits } from "../support/utils/trailing-slash"
+import { assertPageVisits } from "../utils/trailing-slash"
 
 const IS_BUILD = Cypress.env(`IS_BUILD`)
 

@@ -4,12 +4,11 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "cypress": "^9.7.0",
+    "cypress": "^12.9.0",
     "gatsby": "next",
     "gatsby-plugin-feed": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-manifest": "next",
-    "gatsby-plugin-offline": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-sitemap": "next",
     "gatsby-source-filesystem": "next",
@@ -30,13 +29,13 @@
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "npm run build && npm run start-server-and-test",
-    "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
-    "start-server-and-test:locally": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:open",
+    "start-server-and-test": "start-server-and-test serve http://localhost:9000/blog/ cy:run",
+    "start-server-and-test:locally": "start-server-and-test serve http://localhost:9000/blog/ cy:open",
     "serve": "npm-run-all --parallel serve:*",
     "serve:site": "gatsby serve --prefix-paths",
     "serve:assets": "node scripts/serve.js",
-    "cy:open": "cypress open",
-    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
+    "cy:open": "cypress open --browser chrome --e2e",
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e"
   },
   "devDependencies": {
     "cpy-cli": "^4.2.0",
@@ -46,8 +45,9 @@
     "is-ci": "^3.0.1",
     "make-dir-cli": "^3.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "2.8.3",
-    "start-server-and-test": "^1.15.3",
+    "prettier": "^2.8.7",
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.0.3",
     "wait-on": "^7.0.1"
   },
   "repository": {

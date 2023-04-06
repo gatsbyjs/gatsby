@@ -24,12 +24,11 @@ describe(`styling: sass`, () => {
   })
 
   describe(`hot reloading`, () => {
-    it(`plain sass`, () => {
-      // we don't want to visit page for each test - we want to visit once and then test HMR
-      cy.window().then(win => {
-        cy.spy(win.console, `log`).as(`hmrConsoleLog`)
-      })
+    beforeEach(() => {
+      cy.visit(`/styling/sass`).waitForRouteChange()
+    })
 
+    it(`plain sass`, () => {
       cy.exec(
         `npm run update -- --file src/pages/styling/sass-plain.scss --replacements "red:blue" --exact`
       )
@@ -44,11 +43,6 @@ describe(`styling: sass`, () => {
     })
 
     it(`sass module`, () => {
-      // we don't want to visit page for each test - we want to visit once and then test HMR
-      cy.window().then(win => {
-        cy.spy(win.console, `log`).as(`hmrConsoleLog`)
-      })
-
       cy.exec(
         `npm run update -- --file src/pages/styling/sass.module.scss --replacements "green:blue" --exact`
       )

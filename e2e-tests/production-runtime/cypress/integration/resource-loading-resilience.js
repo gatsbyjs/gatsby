@@ -15,6 +15,7 @@ function runTests(testNameSuffix) {
   })
 
   it(`Navigates to second page - ${testNameSuffix}`, () => {
+    cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`page2`).click()
     cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
 
@@ -23,6 +24,7 @@ function runTests(testNameSuffix) {
   })
 
   it(`Navigates to 404 page - ${testNameSuffix}`, () => {
+    cy.visit(`/page-2/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`404`).click()
     cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.location(`pathname`).should(`equal`, `/page-3/`)
@@ -39,6 +41,9 @@ function runTests(testNameSuffix) {
   })
 
   it(`Can navigate from 404 to index - ${testNameSuffix}`, () => {
+    cy.visit(`/page-3/`, {
+      failOnStatusCode: false,
+    }).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`index`).click()
     cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
 

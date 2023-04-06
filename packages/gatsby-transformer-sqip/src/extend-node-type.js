@@ -42,11 +42,8 @@ module.exports = async args => {
   return {}
 }
 
-async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
-  const program = store.getState().program
-  const cacheDir = path.resolve(
-    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
-  )
+async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
+  const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
 
   await fs.ensureDir(cacheDir)
 
@@ -135,15 +132,12 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   }
 }
 
-async function sqipContentful({ type, cache, store }) {
+async function sqipContentful({ cache }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
 
-  const program = store.getState().program
-  const cacheDir = path.resolve(
-    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
-  )
+  const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
 
   await fs.ensureDir(cacheDir)
 

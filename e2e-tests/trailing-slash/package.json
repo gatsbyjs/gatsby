@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "LekoArts",
   "dependencies": {
-    "cypress": "^9.7.0",
+    "cypress": "^12.9.0",
     "gatsby": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -16,12 +16,12 @@
     "clean": "gatsby clean",
     "serve": "gatsby serve",
     "format": "prettier --write '**/*.js' --ignore-path .gitignore",
-    "cy:open:develop": "cypress open --config baseUrl=http://localhost:8000",
-    "cy:open:build": "cypress open --config baseUrl=http://localhost:9000 --env IS_BUILD=y",
+    "cy:open:develop": "cypress open --browser chrome --e2e --config baseUrl=http://localhost:8000",
+    "cy:open:build": "cypress open --browser chrome --e2e --config baseUrl=http://localhost:9000 --env IS_BUILD=y",
     "debug:develop": "start-server-and-test develop http://localhost:8000 cy:open:develop",
     "debug:build": "start-server-and-test serve http://localhost:9000 cy:open:build",
-    "cy:develop:option": "cross-env-shell node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file \"cypress-$OPTION.json\" --config baseUrl=http://localhost:8000",
-    "cy:build:option": "cross-env-shell node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file \"cypress-$OPTION.json\" --config baseUrl=http://localhost:9000 --env IS_BUILD=y",
+    "cy:develop:option": "cross-env-shell CYPRESS_GROUP_NAME=develop-$OPTION node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file \"cypress/configs/$OPTION.ts\" --config baseUrl=http://localhost:8000",
+    "cy:build:option": "cross-env-shell CYPRESS_GROUP_NAME=build-$OPTION node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file \"cypress/configs/$OPTION.ts\" --config baseUrl=http://localhost:9000 --env IS_BUILD=y",
     "develop:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby develop",
     "build:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby build",
     "t:opt:develop": "cross-env-shell OPTION=$OPTION start-server-and-test develop:option http://localhost:8000 cy:develop:option",
@@ -35,7 +35,8 @@
     "cross-env": "^7.0.3",
     "gatsby-cypress": "next",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.3",
-    "start-server-and-test": "^1.15.3"
+    "prettier": "^2.8.7",
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.0.3"
   }
 }
