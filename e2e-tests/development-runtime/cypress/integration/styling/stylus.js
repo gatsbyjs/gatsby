@@ -24,12 +24,11 @@ describe(`styling: stylus`, () => {
   })
 
   describe(`hot reloading`, () => {
-    it(`plain stylus`, () => {
-      // we don't want to visit page for each test - we want to visit once and then test HMR
-      cy.window().then(win => {
-        cy.spy(win.console, `log`).as(`hmrConsoleLog`)
-      })
+    beforeEach(() => {
+      cy.visit(`/styling/stylus`).waitForRouteChange()
+    })
 
+    it(`plain stylus`, () => {
       cy.exec(
         `npm run update -- --file src/pages/styling/stylus-plain.styl --replacements "red:blue" --exact`
       )
@@ -44,11 +43,6 @@ describe(`styling: stylus`, () => {
     })
 
     it(`stylus module`, () => {
-      // we don't want to visit page for each test - we want to visit once and then test HMR
-      cy.window().then(win => {
-        cy.spy(win.console, `log`).as(`hmrConsoleLog`)
-      })
-
       cy.exec(
         `npm run update -- --file src/pages/styling/stylus.module.styl --replacements "green:blue" --exact`
       )

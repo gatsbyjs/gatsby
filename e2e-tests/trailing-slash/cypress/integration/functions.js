@@ -1,4 +1,4 @@
-import { assertPageVisits } from "../support/utils/trailing-slash"
+import { assertPageVisits } from "../utils/trailing-slash"
 
 describe(`functions`, () => {
   describe(`src/api/test.js`, () => {

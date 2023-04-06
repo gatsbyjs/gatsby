@@ -1,5 +1,3 @@
-import { parseSrcset } from "srcset"
-
 const testConfig = {
   retries: {
     runMode: 2,
