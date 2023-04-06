@@ -1,31 +1,45 @@
-const { resolve } = require(`path`)
+import { resolve } from "path"
 
-const { exists, readFile, writeFile } = require(`fs-extra`)
-const sqip = require(`sqip`)
+import { promises } from "fs"
+import { sqip } from "sqip"
 
-const generateSqip = require(`../generate-sqip.js`)
+import { generateSqip } from "../generate-sqip"
 
-jest.mock(`sqip`, () =>
-  jest.fn(() => {
-    return {
-      final_svg: `<svg><!-- Mocked SQIP SVG --></svg>`,
-    }
-  })
-)
-
-jest.mock(`fs-extra`, () => {
+jest.mock(`sqip`, () => {
+  const originalModule = jest.requireActual(`sqip`)
   return {
-    exists: jest.fn(() => false),
-    readFile: jest.fn(() => `<svg><!-- Cached SQIP SVG --></svg>`),
-    writeFile: jest.fn(),
+    ...originalModule,
+    sqip: jest.fn(() => {
+      return {
+        content: Buffer.from(`<svg><!-- Mocked SQIP SVG --></svg>`),
+      }
+    }),
+  }
+})
+
+jest.mock(`fs`, () => {
+  const originalModule = jest.requireActual(`fs`)
+  return {
+    ...originalModule,
+    promises: {
+      ...originalModule.promises,
+      // access: access,
+      access: jest.fn(() => {
+        throw new Error(`file does not exist`)
+      }),
+      readFile: jest.fn(() =>
+        Buffer.from(`<svg><!-- Cached SQIP SVG --></svg>`)
+      ),
+      writeFile: jest.fn(),
+    },
   }
 })
 
 afterEach(() => {
   sqip.mockClear()
-  exists.mockClear()
-  readFile.mockClear()
-  writeFile.mockClear()
+  promises.access.mockClear()
+  promises.readFile.mockClear()
+  promises.writeFile.mockClear()
 })
 
 describe(`gatsby-transformer-sqip`, () => {
@@ -54,19 +68,18 @@ describe(`gatsby-transformer-sqip`, () => {
         mode,
       })
       expect(result).toMatchSnapshot()
-
       expect(sqip).toHaveBeenCalledTimes(1)
       const sqipArgs = sqip.mock.calls[0][0]
-      expect(sqipArgs.filename).toMatch(absolutePath)
-      delete sqipArgs.filename
+      expect(sqipArgs.input).toMatch(absolutePath)
+      delete sqipArgs.number
       expect(sqipArgs).toMatchSnapshot()
 
-      expect(exists).toHaveBeenCalledTimes(1)
-      expect(writeFile).toHaveBeenCalledTimes(1)
-      expect(readFile).toHaveBeenCalledTimes(0)
+      expect(promises.access).toHaveBeenCalledTimes(1)
+      expect(promises.writeFile).toHaveBeenCalledTimes(1)
+      expect(promises.readFile).toHaveBeenCalledTimes(0)
     })
     it(`cached`, async () => {
-      exists.mockImplementationOnce(() => true)
+      promises.access.mockImplementationOnce(() => true)
       const cache = {
         get: jest.fn(),
         set: jest.fn(),
@@ -87,12 +100,12 @@ describe(`gatsby-transformer-sqip`, () => {
 
       expect(sqip).toHaveBeenCalledTimes(0)
 
-      expect(exists).toHaveBeenCalledTimes(1)
-      expect(writeFile).toHaveBeenCalledTimes(0)
-      expect(readFile).toHaveBeenCalledTimes(1)
+      expect(promises.access).toHaveBeenCalledTimes(1)
+      expect(promises.writeFile).toHaveBeenCalledTimes(0)
+      expect(promises.readFile).toHaveBeenCalledTimes(1)
     })
     it(`returns null for unsupported files`, async () => {
-      exists.mockImplementationOnce(() => true)
+      promises.access.mockImplementationOnce(() => true)
 
       const cache = {
         get: jest.fn(),
@@ -113,9 +126,9 @@ describe(`gatsby-transformer-sqip`, () => {
       expect(result).toBe(null)
 
       expect(sqip).toHaveBeenCalledTimes(0)
-      expect(exists).toHaveBeenCalledTimes(0)
-      expect(writeFile).toHaveBeenCalledTimes(0)
-      expect(readFile).toHaveBeenCalledTimes(0)
+      expect(promises.access).toHaveBeenCalledTimes(0)
+      expect(promises.writeFile).toHaveBeenCalledTimes(0)
+      expect(promises.readFile).toHaveBeenCalledTimes(0)
     })
   })
 })
