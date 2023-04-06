@@ -28,4 +28,7 @@ export default defineConfig({
       })
     },
   },
+  env: {
+    requireSnapshots: true,
+  }
 })

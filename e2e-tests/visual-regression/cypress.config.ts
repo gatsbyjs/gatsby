@@ -25,5 +25,8 @@ export default defineConfig({
     overwrite: false,
     html: false,
     json: true,
+  },
+  env: {
+    requireSnapshots: true,
   }
 })
