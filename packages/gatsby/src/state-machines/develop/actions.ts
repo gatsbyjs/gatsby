@@ -3,7 +3,6 @@ import {
   AnyEventObject,
   ActionFunction,
   spawn,
-  ActionFunctionMap,
   DoneEventObject,
 } from "xstate"
 import { IBuildContext } from "../../services"
@@ -252,7 +251,7 @@ export const definitionsTypegen: ActionFunction<
   }
 }
 
-export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
+export const buildActions = {
   callApi,
   markNodesDirty,
   addNodeMutation,
