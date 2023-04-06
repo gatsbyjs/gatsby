@@ -28,4 +28,22 @@ describe(`removeExportQueryParam`, () => {
       )
     ).toEqual(`${post}?__contentFilePath=/Users/dolores/project/file.mdx`)
   })
+  it(`should handle space (" ") in __contentFilePath param correctly`, () => {
+    expect(
+      removeExportQueryParam(
+        `/Users/dolores/project with space/post.tsx?__contentFilePath=/Users/dolores/project with space/file.mdx&export=default`
+      )
+    ).toEqual(
+      `/Users/dolores/project with space/post.tsx?__contentFilePath=/Users/dolores/project with space/file.mdx`
+    )
+  })
+  it(`should handle pluses ("+") in __contentFilePath param correctly`, () => {
+    expect(
+      removeExportQueryParam(
+        `/Users/dolores/project+with+plus/post.tsx?__contentFilePath=/Users/dolores/project+with+plus/file.mdx&export=default`
+      )
+    ).toEqual(
+      `/Users/dolores/project+with+plus/post.tsx?__contentFilePath=/Users/dolores/project+with+plus/file.mdx`
+    )
+  })
 })

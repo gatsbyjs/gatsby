@@ -1299,9 +1299,10 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/Order/3838572757198",
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "id": "9932036d-8c94-5314-a07b-c28d1cf8a8d0",
       "internal": Object {
-        "contentDigest": "aac61e83a93a97a7a9abf72f4ad38a6d",
+        "contentDigest": "9a8ebbb830875c4f84463f9dde0e044b",
         "type": "ShopifyLineItem",
       },
       "product": Object {
@@ -1557,9 +1558,10 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/Order/3838572757198",
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "id": "9932036d-8c94-5314-a07b-c28d1cf8a8d0",
       "internal": Object {
-        "contentDigest": "aac61e83a93a97a7a9abf72f4ad38a6d",
+        "contentDigest": "9a8ebbb830875c4f84463f9dde0e044b",
         "type": "ShopifyLineItem",
       },
       "product": Object {
@@ -1982,6 +1984,7 @@ Array [
   ],
   Array [
     Object {
+      "_featuredMedia": "8fc15b46-8400-5778-b85c-05db5c009326",
       "collections___NODE": Array [],
       "createdAt": "2022-02-15T22:22:42Z",
       "description": "Test Description",
@@ -2008,7 +2011,7 @@ Array [
       "hasOutOfStockVariants": false,
       "id": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "internal": Object {
-        "contentDigest": "d3777fdb65c5ecc3128f8ed6b2d2eed6",
+        "contentDigest": "87b12a51632f4ce873d5342bbf8232b2",
         "type": "ShopifyProduct",
       },
       "isGiftCard": false,
@@ -2475,6 +2478,7 @@ Array [
   ],
   Array [
     Object {
+      "_featuredMedia": "8fc15b46-8400-5778-b85c-05db5c009326",
       "collections___NODE": Array [],
       "createdAt": "2022-02-15T22:22:42Z",
       "description": "Test Description",
@@ -2501,7 +2505,7 @@ Array [
       "hasOutOfStockVariants": false,
       "id": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "internal": Object {
-        "contentDigest": "d3777fdb65c5ecc3128f8ed6b2d2eed6",
+        "contentDigest": "87b12a51632f4ce873d5342bbf8232b2",
         "type": "ShopifyProduct",
       },
       "isGiftCard": false,
@@ -2801,10 +2805,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41009157308622",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 0,
       "id": "cedae3ee-f225-5c34-9dd8-f1a25f8d810c",
       "internal": Object {
-        "contentDigest": "1fff8771ebc89cb33b23f9707784164f",
+        "contentDigest": "452845f46b6d785b2a2b79f1c19cf91b",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -2815,6 +2820,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "1386d0f3-354b-584c-a6bb-d11936c8f6fb",
       "availableForSale": false,
       "barcode": null,
       "compareAtPrice": null,
@@ -2823,10 +2829,11 @@ Array [
       "id": "cba433a6-1513-576f-97c0-80b36fb8afa6",
       "image": null,
       "internal": Object {
-        "contentDigest": "c932ec1c3fd74f6614b0e646f0f8f546",
+        "contentDigest": "6153d74ac94feac2cf2a9e198017ae0e",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "cba433a6-1513-576f-97c0-80b36fb8afa6",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T22:38:58Z",
         "duplicateSkuCount": 0,
@@ -2884,10 +2891,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41009157275854",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 0,
       "id": "8970ecd9-9a83-5e55-915b-682cfff58699",
       "internal": Object {
-        "contentDigest": "53a8f523b8c13f83aa3fe5e691f4fb05",
+        "contentDigest": "900b607c641a129fc9b314be805064ac",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -2898,6 +2906,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "1386d0f3-354b-584c-a6bb-d11936c8f6fb",
       "availableForSale": false,
       "barcode": null,
       "compareAtPrice": null,
@@ -2906,10 +2915,11 @@ Array [
       "id": "a0191127-d288-510d-94e5-14f7a6404454",
       "image": null,
       "internal": Object {
-        "contentDigest": "1c944c6f155b3c10b799f6a08d1b0cb0",
+        "contentDigest": "88ceea90890315ebbd90fa608fe8fc87",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "a0191127-d288-510d-94e5-14f7a6404454",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T22:38:58Z",
         "duplicateSkuCount": 0,
@@ -2967,10 +2977,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41009157243086",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 0,
       "id": "6eeb7894-1eb4-5556-a797-396fdf229a63",
       "internal": Object {
-        "contentDigest": "7330b3b265ff5cd9c919d17c8b1f2738",
+        "contentDigest": "ecd7ff4a931ca7f110d9da8e085c69ed",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -2981,6 +2992,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "1386d0f3-354b-584c-a6bb-d11936c8f6fb",
       "availableForSale": false,
       "barcode": null,
       "compareAtPrice": null,
@@ -2989,10 +3001,11 @@ Array [
       "id": "435874ba-a8b0-5b29-a96a-8691e694bf3a",
       "image": null,
       "internal": Object {
-        "contentDigest": "4cb70d6ca286cc721cc0479339de1b9b",
+        "contentDigest": "ac479013a12b548eb17f918738d4507b",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "435874ba-a8b0-5b29-a96a-8691e694bf3a",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T22:38:58Z",
         "duplicateSkuCount": 0,
@@ -3050,10 +3063,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41007759655118",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 1,
       "id": "e8f4985b-ed74-5a19-836d-b5d310c277e5",
       "internal": Object {
-        "contentDigest": "1213164ee47eb1e013bc51a08f113f51",
+        "contentDigest": "9d3d2135ce505be5bb10cb49481048fa",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3064,6 +3078,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "availableForSale": true,
       "barcode": "",
       "compareAtPrice": null,
@@ -3080,10 +3095,11 @@ Array [
         "width": 1920,
       },
       "internal": Object {
-        "contentDigest": "6dd1c018442c91aad3818dd37d98abd9",
+        "contentDigest": "cb4f9b7f7aa04ed5f938999889d1a7be",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "480d2d09-c1b1-5f7c-94a2-635e73e50ef4",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T13:53:31Z",
         "duplicateSkuCount": 0,
@@ -3141,10 +3157,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41007759622350",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 1,
       "id": "453dda5f-1323-5aa3-8e75-9a0dd08025c2",
       "internal": Object {
-        "contentDigest": "65646031ede60f67d5cfb68bd885a993",
+        "contentDigest": "1d0ee94937b283d852538b020a63a1c7",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3155,6 +3172,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "availableForSale": true,
       "barcode": "",
       "compareAtPrice": null,
@@ -3171,10 +3189,11 @@ Array [
         "width": 1920,
       },
       "internal": Object {
-        "contentDigest": "b34a736069b229b9f2baa1e10141dde2",
+        "contentDigest": "9c925f92d1e4581f17799fc3101ccd5d",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "266c6a92-078a-519d-8c03-257b4ed15b84",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T13:53:31Z",
         "duplicateSkuCount": 0,
@@ -3232,10 +3251,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41007759589582",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 1,
       "id": "2261ddf5-7c64-5934-a990-7dc64fe17040",
       "internal": Object {
-        "contentDigest": "49766e299f7c1185b12100197cf22289",
+        "contentDigest": "662364c3f80cabf5fdad46fe50fe71eb",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3246,6 +3266,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "availableForSale": true,
       "barcode": "",
       "compareAtPrice": null,
@@ -3262,10 +3283,11 @@ Array [
         "width": 1920,
       },
       "internal": Object {
-        "contentDigest": "0ae9309bd718d3d7f77eae710574ab8f",
+        "contentDigest": "d7275dcc7296046a96102da46bd7254a",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "232cdd32-2de5-5bdd-a327-08d539ecd51e",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T13:53:31Z",
         "duplicateSkuCount": 0,
@@ -3550,10 +3572,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41009157308622",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 0,
       "id": "cedae3ee-f225-5c34-9dd8-f1a25f8d810c",
       "internal": Object {
-        "contentDigest": "1fff8771ebc89cb33b23f9707784164f",
+        "contentDigest": "452845f46b6d785b2a2b79f1c19cf91b",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3564,6 +3587,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "1386d0f3-354b-584c-a6bb-d11936c8f6fb",
       "availableForSale": false,
       "barcode": null,
       "compareAtPrice": null,
@@ -3572,10 +3596,11 @@ Array [
       "id": "cba433a6-1513-576f-97c0-80b36fb8afa6",
       "image": null,
       "internal": Object {
-        "contentDigest": "c932ec1c3fd74f6614b0e646f0f8f546",
+        "contentDigest": "6153d74ac94feac2cf2a9e198017ae0e",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "cba433a6-1513-576f-97c0-80b36fb8afa6",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T22:38:58Z",
         "duplicateSkuCount": 0,
@@ -3633,10 +3658,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41009157275854",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 0,
       "id": "8970ecd9-9a83-5e55-915b-682cfff58699",
       "internal": Object {
-        "contentDigest": "53a8f523b8c13f83aa3fe5e691f4fb05",
+        "contentDigest": "900b607c641a129fc9b314be805064ac",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3647,6 +3673,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "1386d0f3-354b-584c-a6bb-d11936c8f6fb",
       "availableForSale": false,
       "barcode": null,
       "compareAtPrice": null,
@@ -3655,10 +3682,11 @@ Array [
       "id": "a0191127-d288-510d-94e5-14f7a6404454",
       "image": null,
       "internal": Object {
-        "contentDigest": "1c944c6f155b3c10b799f6a08d1b0cb0",
+        "contentDigest": "88ceea90890315ebbd90fa608fe8fc87",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "a0191127-d288-510d-94e5-14f7a6404454",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T22:38:58Z",
         "duplicateSkuCount": 0,
@@ -3716,10 +3744,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41009157243086",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 0,
       "id": "6eeb7894-1eb4-5556-a797-396fdf229a63",
       "internal": Object {
-        "contentDigest": "7330b3b265ff5cd9c919d17c8b1f2738",
+        "contentDigest": "ecd7ff4a931ca7f110d9da8e085c69ed",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3730,6 +3759,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "1386d0f3-354b-584c-a6bb-d11936c8f6fb",
       "availableForSale": false,
       "barcode": null,
       "compareAtPrice": null,
@@ -3738,10 +3768,11 @@ Array [
       "id": "435874ba-a8b0-5b29-a96a-8691e694bf3a",
       "image": null,
       "internal": Object {
-        "contentDigest": "4cb70d6ca286cc721cc0479339de1b9b",
+        "contentDigest": "ac479013a12b548eb17f918738d4507b",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "435874ba-a8b0-5b29-a96a-8691e694bf3a",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T22:38:58Z",
         "duplicateSkuCount": 0,
@@ -3799,10 +3830,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41007759655118",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 1,
       "id": "e8f4985b-ed74-5a19-836d-b5d310c277e5",
       "internal": Object {
-        "contentDigest": "1213164ee47eb1e013bc51a08f113f51",
+        "contentDigest": "9d3d2135ce505be5bb10cb49481048fa",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3813,6 +3845,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "availableForSale": true,
       "barcode": "",
       "compareAtPrice": null,
@@ -3829,10 +3862,11 @@ Array [
         "width": 1920,
       },
       "internal": Object {
-        "contentDigest": "6dd1c018442c91aad3818dd37d98abd9",
+        "contentDigest": "cb4f9b7f7aa04ed5f938999889d1a7be",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "480d2d09-c1b1-5f7c-94a2-635e73e50ef4",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T13:53:31Z",
         "duplicateSkuCount": 0,
@@ -3890,10 +3924,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41007759622350",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 1,
       "id": "453dda5f-1323-5aa3-8e75-9a0dd08025c2",
       "internal": Object {
-        "contentDigest": "65646031ede60f67d5cfb68bd885a993",
+        "contentDigest": "1d0ee94937b283d852538b020a63a1c7",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3904,6 +3939,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "availableForSale": true,
       "barcode": "",
       "compareAtPrice": null,
@@ -3920,10 +3956,11 @@ Array [
         "width": 1920,
       },
       "internal": Object {
-        "contentDigest": "b34a736069b229b9f2baa1e10141dde2",
+        "contentDigest": "9c925f92d1e4581f17799fc3101ccd5d",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "266c6a92-078a-519d-8c03-257b4ed15b84",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T13:53:31Z",
         "duplicateSkuCount": 0,
@@ -3981,10 +4018,11 @@ Array [
   Array [
     Object {
       "__parentId": "gid://shopify/ProductVariant/41007759589582",
+      "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "available": 1,
       "id": "2261ddf5-7c64-5934-a990-7dc64fe17040",
       "internal": Object {
-        "contentDigest": "49766e299f7c1185b12100197cf22289",
+        "contentDigest": "662364c3f80cabf5fdad46fe50fe71eb",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3995,6 +4033,7 @@ Array [
   ],
   Array [
     Object {
+      "_product": "87b524a6-a707-5eb9-b193-059b3fcf96e5",
       "availableForSale": true,
       "barcode": "",
       "compareAtPrice": null,
@@ -4011,10 +4050,11 @@ Array [
         "width": 1920,
       },
       "internal": Object {
-        "contentDigest": "0ae9309bd718d3d7f77eae710574ab8f",
+        "contentDigest": "d7275dcc7296046a96102da46bd7254a",
         "type": "ShopifyProductVariant",
       },
       "inventoryItem": Object {
+        "_variant": "232cdd32-2de5-5bdd-a327-08d539ecd51e",
         "countryCodeOfOrigin": null,
         "createdAt": "2022-03-14T13:53:31Z",
         "duplicateSkuCount": 0,

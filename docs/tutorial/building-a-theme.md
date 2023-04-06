@@ -1091,7 +1091,7 @@ You can make your theme styles extendable using the `gatsby-plugin-theme-ui` pac
 Install dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui
+yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @theme-ui/mdx @emotion/react
 ```
 
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
@@ -1266,7 +1266,7 @@ To continue applying theme styles, you can use the [`Themed` import](https://the
 import React from "react"
 import { Link } from "gatsby"
 // highlight-next-line
-import { Themed } from "theme-ui"
+import { Themed } from "@theme-ui/mdx"
 
 const EventList = ({ events }) => {
   return (

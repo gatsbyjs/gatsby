@@ -1,6 +1,7 @@
 export function productVariantTypeBuilder(prefix: string): string {
   return `
       type ${prefix}ProductVariant implements Node @dontInfer {
+        _product: String! # Temporary field so we don't break existing users
         availableForSale: Boolean!
         barcode: String
         compareAtPrice: Float
@@ -17,7 +18,7 @@ export function productVariantTypeBuilder(prefix: string): string {
         position: Int!
         presentmentPrices: [${prefix}ProductVariantPricePair!]!
         price: Float!
-        product: ${prefix}Product! @link(from: "product.shopifyId", by: "shopifyId")
+        product: ${prefix}Product! @link(from: "_product", by: "id")
         requiresShipping: Boolean! @deprecated(reason: "Use \`InventoryItem.requiresShipping\` instead.")
         selectedOptions: [${prefix}SelectedOption!]!
         sellingPlanGroupCount: Int!

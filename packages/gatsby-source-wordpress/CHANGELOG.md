@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.8.0/packages/gatsby-source-wordpress) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- prevent inconsistent schema customization [#37749](https://github.com/gatsbyjs/gatsby/issues/37749) ([9f26b67](https://github.com/gatsbyjs/gatsby/commit/9f26b6722955463492776965182baabe779216f8))
+
+## [7.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.7.0/packages/gatsby-source-wordpress) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.6.0/packages/gatsby-source-wordpress) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+- update dependency prettier to v2.8.3 [#37578](https://github.com/gatsbyjs/gatsby/issues/37578) ([ad721ee](https://github.com/gatsbyjs/gatsby/commit/ad721ee33ed0a5c6ff7643c08ee77e084f3a99dc))
+- update dependency node-fetch to ^2.6.8 for gatsby-source-wordpress [#37576](https://github.com/gatsbyjs/gatsby/issues/37576) ([a71e261](https://github.com/gatsbyjs/gatsby/commit/a71e2619e68cebe2d28ead10d38613ab3fc75502))
+
+#### Chores
+
+- Fix apostrophe typos Fix [#37486](https://github.com/gatsbyjs/gatsby/issues/37486) ([82e040c](https://github.com/gatsbyjs/gatsby/commit/82e040c0b8ef0284f7975c5cbf8a0734d21ff191))
+
 ## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.5.0/packages/gatsby-source-wordpress) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

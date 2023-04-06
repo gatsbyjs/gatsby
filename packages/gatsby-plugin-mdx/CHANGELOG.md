@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.8.0/packages/gatsby-plugin-mdx) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Account for links/inline code in ToC [#37739](https://github.com/gatsbyjs/gatsby/issues/37739) ([3241b34](https://github.com/gatsbyjs/gatsby/commit/3241b3486e39de571004f3433a60e3e12f38e1ff))
+
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.7.0/packages/gatsby-plugin-mdx) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.6.0/packages/gatsby-plugin-mdx) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
+#### Chores
+
+- update typescript [#37596](https://github.com/gatsbyjs/gatsby/issues/37596) ([4f1d1f2](https://github.com/gatsbyjs/gatsby/commit/4f1d1f260472d7768b57960b1e274c8755ca5a67))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.5.0/packages/gatsby-plugin-mdx) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

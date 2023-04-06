@@ -4,6 +4,7 @@ exports[`redux db should write redux cache to disk 1`] = `
 Object {
   "components": Map {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
+      "Head": false,
       "componentChunkName": "component---users-username-dev-site-src-templates-my-sweet-new-page-js",
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
       "config": false,
@@ -122,12 +123,17 @@ Object {
   },
   "slices": Map {},
   "slicesByTemplate": Map {},
+  "statefulSourcePlugins": Set {},
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
     "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
     "plugins": Object {},
+  },
+  "typeOwners": Object {
+    "pluginsToTypes": Map {},
+    "typesToPlugins": Map {},
   },
   "webpackCompilationHash": "",
 }

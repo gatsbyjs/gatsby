@@ -35,6 +35,7 @@ it("generates the expected api output", done => {
           "graphql-typegen",
           "content-file-path",
           "slices",
+          "stateful-source-nodes",
         ],
         "node": Object {
           "createPages": Object {},

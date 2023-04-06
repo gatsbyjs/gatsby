@@ -13,6 +13,12 @@ import { ServerLocation, Router, isRedirect } from "@gatsbyjs/reach-router"
 import { headHandlerForSSR } from "./head/head-export-handler-for-ssr"
 import { getStaticQueryResults } from "./loader"
 import { WritableAsPromise } from "./server-utils/writable-as-promise"
+import {
+  SlicesResultsContext,
+  SlicesContext,
+  SlicesMapContext,
+  SlicesPropsContext,
+} from "./slice/context"
 
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
@@ -159,7 +165,7 @@ export default async function staticPage({
 
     const pageData = getPageData(pagePath)
 
-    const { componentChunkName } = pageData
+    const { componentChunkName, slicesMap } = pageData
 
     const pageComponent = await syncRequires.ssrComponents[componentChunkName]
 
@@ -264,7 +270,7 @@ export default async function staticPage({
         </ServerLocation>
       ) : null
 
-    const bodyComponent = apiRunner(
+    let bodyComponent = apiRunner(
       `wrapRootElement`,
       { element: routerElement, pathname: pagePath },
       routerElement,
@@ -272,6 +278,54 @@ export default async function staticPage({
         return { element: result, pathname: pagePath }
       }
     ).pop()
+
+    if (process.env.GATSBY_SLICES) {
+      const readSliceData = sliceName => {
+        const filePath = nodePath.join(
+          publicDir,
+          `slice-data`,
+          `${sliceName}.json`
+        )
+
+        const rawSliceData = fs.readFileSync(filePath, `utf-8`)
+        return JSON.parse(rawSliceData)
+      }
+
+      const slicesContext = {
+        renderEnvironment: `dev-ssr`,
+      }
+      const sliceProps = {}
+      const slicesDb = new Map()
+      const sliceData = {}
+      for (const sliceName of Object.values(slicesMap)) {
+        sliceData[sliceName] = await readSliceData(sliceName)
+      }
+
+      for (const sliceName of Object.values(slicesMap)) {
+        const slice = sliceData[sliceName]
+        const { default: SliceComponent } = await getPageChunk(slice)
+
+        const sliceObject = {
+          component: SliceComponent,
+          sliceContext: slice.result.sliceContext,
+          data: slice.result.data,
+        }
+
+        slicesDb.set(sliceName, sliceObject)
+      }
+
+      bodyComponent = (
+        <SlicesContext.Provider value={slicesContext}>
+          <SlicesPropsContext.Provider value={sliceProps}>
+            <SlicesMapContext.Provider value={slicesMap}>
+              <SlicesResultsContext.Provider value={slicesDb}>
+                {bodyComponent}
+              </SlicesResultsContext.Provider>
+            </SlicesMapContext.Provider>
+          </SlicesPropsContext.Provider>
+        </SlicesContext.Provider>
+      )
+    }
 
     // Let the site or plugin render the page component.
     await apiRunnerAsync(`replaceRenderer`, {

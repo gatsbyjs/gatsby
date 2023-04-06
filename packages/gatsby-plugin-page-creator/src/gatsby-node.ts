@@ -28,6 +28,7 @@ import {
   getPluginInstance,
   ICreateAPageFromNodeArgs,
 } from "./tracked-nodes-state"
+import { findCollectionPageFiles } from "./path-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "gatsby-core-utils/match-path"
@@ -190,19 +191,19 @@ Please pick a path to an existing directory.`,
 
       const hasTrailingSlash = derivedPath.endsWith(`/`)
       const path = createPath(derivedPath, hasTrailingSlash, true)
+      const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+
       // We've already created a page with this path
-      if (this.knownPagePaths.has(path)) {
+      if (this.knownPagePaths.has(modifiedPath)) {
         return undefined
       }
-      this.knownPagePaths.add(path)
+      this.knownPagePaths.add(modifiedPath)
       // Params is supplied to the FE component on props.params
       const params = getCollectionRouteParams(createPath(filePath), path)
       // nodeParams is fed to the graphql query for the component
       const nodeParams = reverseLookupParams(node, absolutePath)
       // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
       const matchPath = getMatchPath(path)
-
-      const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
       const componentPath = contentFilePath
         ? `${absolutePath}?__contentFilePath=${contentFilePath}`
@@ -421,9 +422,7 @@ export async function onPluginInit(
   }
 
   try {
-    const pagesGlob = `**/**\\{*\\}**`
-
-    const files = await glob(pagesGlob, { cwd: pagesPath })
+    const files = await findCollectionPageFiles(pagesPath)
 
     if (files.length > 0) {
       trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)

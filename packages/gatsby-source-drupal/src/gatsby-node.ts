@@ -176,6 +176,7 @@ exports.sourceNodes = async (
     fastBuilds = false,
     entityReferenceRevisions = [],
     languageConfig = {
+      filterByLanguages: false,
       defaultLanguage: `und`,
       enabledLanguages: [`und`],
       translatableEntities: [],
@@ -512,7 +513,12 @@ ${JSON.stringify(webhookBody, null, 4)}`
           entityType => entityType === type
         )
 
-        const getNext = async (url, currentLanguage) => {
+        const getNext = async (
+          url,
+          currentLanguage,
+          filterByLanguages,
+          renamedEnabledLanguages
+        ) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
             url = url.href
@@ -570,6 +576,22 @@ ${JSON.stringify(webhookBody, null, 4)}`
             }
           }
 
+          if (d.body.data && currentLanguage && filterByLanguages) {
+            const languageCodeForFilter =
+              renamedEnabledLanguages &&
+              renamedEnabledLanguages.find(
+                language => language.as === currentLanguage
+              )
+                ? renamedEnabledLanguages.find(
+                    language => language.as === currentLanguage
+                  ).langCode
+                : currentLanguage
+
+            d.body.data = d.body.data.filter(
+              n => n.attributes.langcode === languageCodeForFilter
+            )
+          }
+
           if (d.body.data) {
             // @ts-ignore
             dataArray.push(...(d.body.data || []))
@@ -618,17 +640,27 @@ ${JSON.stringify(webhookBody, null, 4)}`
                     `page[offset]`,
                     String(pageOffset * pageSize)
                   )
-                  return getNext(newUrl.toString(), currentLanguage)
+                  return getNext(
+                    newUrl.toString(),
+                    currentLanguage,
+                    filterByLanguages,
+                    renamedEnabledLanguages
+                  )
                 })
               )
             }
           } else if (d.body.links?.next) {
-            await getNext(d.body.links.next, currentLanguage)
+            await getNext(
+              d.body.links.next,
+              currentLanguage,
+              filterByLanguages,
+              renamedEnabledLanguages
+            )
           }
         }
 
         if (isTranslatable === false) {
-          await getNext(url, ``)
+          await getNext(url, ``, false, ``)
         } else {
           for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
             let currentLanguage = languageConfig.enabledLanguages[i]
@@ -651,7 +683,16 @@ ${JSON.stringify(webhookBody, null, 4)}`
               urlPath
             )
 
-            await getNext(joinedUrl, currentLanguage)
+            const renamedEnabledLanguages =
+              getOptions().languageConfig.renamedEnabledLanguages
+            const filterByLanguages =
+              getOptions().languageConfig.filterByLanguages
+            await getNext(
+              joinedUrl,
+              currentLanguage,
+              filterByLanguages,
+              renamedEnabledLanguages
+            )
           }
         }
 
@@ -888,6 +929,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
           })
         )
         .required(),
+      filterByLanguages: Joi.boolean().default(false),
       translatableEntities: Joi.array().items(Joi.string()).required(),
       nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),

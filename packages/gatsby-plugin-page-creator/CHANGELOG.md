@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.8.0/packages/gatsby-plugin-page-creator) (2023-03-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
+
+#### Bug Fixes
+
+- Track correct `knownPagePaths` [#37745](https://github.com/gatsbyjs/gatsby/issues/37745) ([b121057](https://github.com/gatsbyjs/gatsby/commit/b1210574cfd59752b2f95e7146b8d83ea20a7110))
+
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.7.0/packages/gatsby-plugin-page-creator) (2023-02-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.7)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.6.0/packages/gatsby-plugin-page-creator) (2023-02-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.6)
+
+#### Bug Fixes
+
+- update babel monorepo [#37568](https://github.com/gatsbyjs/gatsby/issues/37568) ([13a0a9e](https://github.com/gatsbyjs/gatsby/commit/13a0a9e83dcb015b65dff6b73cdd5dea09c2988f))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.5.0/packages/gatsby-plugin-page-creator) (2023-01-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.5)

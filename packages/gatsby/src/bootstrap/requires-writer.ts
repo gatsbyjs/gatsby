@@ -16,6 +16,7 @@ import { devSSRWillInvalidate } from "../commands/build-html"
 interface IGatsbyPageComponent {
   componentPath: string
   componentChunkName: string
+  hasHeadComponent: boolean
 }
 
 interface IGatsbyPageMatchPath {
@@ -65,27 +66,33 @@ export const resetLastHash = (): void => {
 type IBareComponentData = Pick<
   IGatsbyPageComponent,
   `componentPath` | `componentChunkName`
->
-const pickComponentFields = (
-  page: IGatsbyPage | IGatsbySlice
-): IBareComponentData => {
-  return {
-    componentPath: page.componentPath,
-    componentChunkName: page.componentChunkName,
-  }
+> & {
+  hasHeadComponent: boolean
 }
 
 export const getComponents = (
   pages: Array<IGatsbyPage>,
-  slices: IGatsbyState["slices"]
-): Array<IGatsbyPageComponent> =>
-  _.orderBy(
+  slices: IGatsbyState["slices"],
+  components: IGatsbyState["components"]
+): Array<IGatsbyPageComponent> => {
+  const pickComponentFields = (
+    page: IGatsbyPage | IGatsbySlice
+  ): IBareComponentData => {
+    return {
+      componentPath: page.componentPath,
+      componentChunkName: page.componentChunkName,
+      hasHeadComponent: components.get(page.componentPath)?.Head ?? false,
+    }
+  }
+
+  return _.orderBy(
     _.uniqBy(
       _.map([...pages, ...slices.values()], pickComponentFields),
       c => c.componentChunkName
     ),
     c => c.componentChunkName
   )
+}
 
 /**
  * Get all dynamic routes and sort them by most specific at the top
@@ -180,7 +187,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   const { program, slices } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
-  const components = getComponents(pages, slices)
+  const components = getComponents(pages, slices, state.components)
   let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = []
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
@@ -189,8 +196,10 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     ]
 
     // Remove any page components that no longer exist.
-    cleanedSSRVisitedPageComponents = components.filter(c =>
-      ssrVisitedPageComponents.some(s => s === c.componentChunkName)
+    cleanedSSRVisitedPageComponents = components.filter(
+      c =>
+        ssrVisitedPageComponents.some(s => s === c.componentChunkName) ||
+        c.componentChunkName.startsWith(`slice---`)
     )
   }
 
@@ -268,7 +277,10 @@ const preferDefault = m => (m && m.default) || m
 }\n\n
 
 exports.head = {\n${components
-      .map((c: IGatsbyPageComponent): string => {
+      .map((c: IGatsbyPageComponent): string | undefined => {
+        if (!c.hasHeadComponent) {
+          return undefined
+        }
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
           getAbsolutePathForVirtualModule(`$virtual`),
@@ -283,6 +295,7 @@ exports.head = {\n${components
           c.componentChunkName
         }head" */)`
       })
+      .filter(Boolean)
       .join(`,\n`)}
 }\n\n`
   } else {

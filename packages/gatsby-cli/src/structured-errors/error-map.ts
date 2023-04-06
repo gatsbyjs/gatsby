@@ -67,7 +67,7 @@ const errors: Record<string, IErrorMapEntry> = {
   },
   "98001": {
     text: (): string =>
-      `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://gatsby.dev/new-issue for more help.`,
+      `Built Rendering Engines failed validation.\n\nPlease open an issue with a reproduction at https://gatsby.dev/new-issue for more help.`,
     type: Type.ENGINE_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
