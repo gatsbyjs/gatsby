@@ -4,7 +4,7 @@ title: How to Make a Minimal Reproduction
 
 ## What is a reproducible test case?
 
-A reproducible test case is a small Gatsby site built to demonstrate a problem - often this problem is caused by a bug in Gatsby or a Gatsby plugin. Your reproducible test case should contain the bare minimum features needed to clearly demonstrate the bug.
+A reproducible test case is a small Gatsby site built to demonstrate a problem - often this problem is caused by a bug in Gatsby, Gatsby plugin or user code. Your reproducible test case should contain the bare minimum features needed to clearly demonstrate the bug.
 
 ## Why should you create a reproducible test case?
 
@@ -16,15 +16,25 @@ A reproducible test case is a great way to share a specific environment that cau
 
 ## Steps to create a reproducible test case
 
-- Create a new Gatsby site with a starter, the official `hello-world` starter is a great 'barebones' starting point here: `gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-hello-world`
-- Add any Gatsby plugins that relate to the issue. For example, if you're having problems with Gatsby MDX you should install and configure [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
+- Create a new Gatsby site with the official `gatsby-starter-minimal` starter: `npx gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-minimal`
+- Add any Gatsby plugins that relate to the issue. For example, if you're having problems with MDX you should install and configure [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
 - Add the code needed to recreate the error you've seen.
-- Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/).
+- Verify that you're seeing the expected error(s) when running `gatsby develop`/`gatsby build`/`gatsby serve`.
+- Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/) or opening a support ticket. While creating the issue/support ticket, please give as many details as possible. This could also include screenshots of error message in e.g. the terminal or browser.
 
-## Places to develop a reproducible test case
+### Optional steps
 
-- Locally with a starter: You can start with a [Starter](/docs/starters) locally and then build it on your own machine. Gatsby's official [`hello-world`](https://github.com/gatsbyjs/gatsby/tree/master/starters/hello-world) or [`default`](https://github.com/gatsbyjs/gatsby-starter-default) starter are both good foundations for a reproducible test case.
-- Host on CodeSandbox: You can develop a Gatsby site straight from your browser with CodeSandbox using their [Gatsby template](https://codesandbox.io/s/github/gatsbyjs/gatsby-starter-default). CodeSandbox also hosts your site automatically, which can be useful to demonstrate the behavior of your site.
+Sometimes it might be necessary that you share additional information with the team, e.g. when [Gatsby Cloud](/products/cloud/builds) or a CMS is involved. Here are some optional steps you can take in improving your minimal reproduction:
+
+- If your Gatsby Cloud build failed, copy the URL and share it with us. If a live URL is misbehaving, also copy that specific URL and describe which behavior you're expecting and what behavior you're actually seeing. Screenshots or videos about problems on your site are also appreciated.
+- If your reproduction requires a successful connection to a CMS to build and show the error, please set up a non-production environment for that CMS that we then can use. You can do this by e.g. setting up a new instance from scratch and filling it with some content. In case that's not possible, please provide specific instructions on how we can use your production environment.
+
+## Online Development Environments
+
+Instead of cloning `gatsby-starter-minimal` to your local computer and working on it there, you can also use Online IDEs that set up the environment for you. Available options:
+
+- [CodeSandbox](https://githubbox.com/gatsbyjs/gatsby-starter-minimal)
+- [StackBlitz](https://githubblitz.com/gatsbyjs/gatsby-starter-minimal)
 
 ## Benefits of reproducible test cases
 

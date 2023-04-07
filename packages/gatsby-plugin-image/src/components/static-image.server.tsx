@@ -11,6 +11,7 @@ export interface IStaticImageProps
   extends Omit<GatsbyImageProps, "image">,
     Omit<ISharpGatsbyImageArgs, "backgroundColor"> {
   src: string
+  filename?: string
 }
 
 // These values are added by Babel. Do not add them manually
@@ -41,6 +42,8 @@ export function _getStaticImage(
     webpOptions,
     avifOptions,
     blurredOptions,
+    breakpoints,
+    outputPixelDensities,
     /* eslint-enable @typescript-eslint/no-unused-vars */
     ...props
   }): ReactElement {
@@ -61,9 +64,8 @@ export function _getStaticImage(
   }
 }
 
-const StaticImage: React.FC<
-  IStaticImageProps & IPrivateProps
-> = _getStaticImage(GatsbyImageServer)
+const StaticImage: React.FC<IStaticImageProps & IPrivateProps> =
+  _getStaticImage(GatsbyImageServer)
 
 const checkDimensionProps: PropTypes.Validator<number> = (
   props: IStaticImageProps & IPrivateProps,

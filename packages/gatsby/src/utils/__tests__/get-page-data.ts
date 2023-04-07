@@ -1,39 +1,66 @@
+import { fixedPagePath } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { getPageData, RETRY_INTERVAL } from "../get-page-data"
-import { fixedPagePath, flush as flushPageData } from "../page-data"
+import { flush as flushPageData, savePageQueryResult } from "../page-data"
 import {
   IGatsbyPage,
   IGatsbyPlugin,
   IQueryStartAction,
+  IPageQueryRunAction,
 } from "../../redux/types"
 import { pageQueryRun, queryStart } from "../../redux/actions/internal"
 import { join as pathJoin } from "path"
 
 let MOCK_FILE_INFO = {}
+let MOCK_LMDBCACHE_INFO = {}
 
 jest.mock(`fs-extra`, () => {
   return {
-    readFile: jest.fn(
-      async (path: string): Promise<any> => {
-        if (MOCK_FILE_INFO[path]) {
-          return MOCK_FILE_INFO[path]
-        }
-        throw new Error(`Cannot read file "${path}"`)
+    readFile: jest.fn(async (path: string): Promise<any> => {
+      if (MOCK_FILE_INFO[path]) {
+        return MOCK_FILE_INFO[path]
       }
-    ),
-    readJSON: jest.fn(
-      async (path: string): Promise<any> => {
-        if (MOCK_FILE_INFO[path]) {
-          return JSON.parse(MOCK_FILE_INFO[path])
-        }
-        throw new Error(`Cannot read file "${path}"`)
+      throw new Error(`Cannot read file "${path}"`)
+    }),
+    readJSON: jest.fn(async (path: string): Promise<any> => {
+      if (MOCK_FILE_INFO[path]) {
+        return JSON.parse(MOCK_FILE_INFO[path])
       }
-    ),
-    outputFile: jest.fn(
-      async (path: string, content: string): Promise<any> => {
-        MOCK_FILE_INFO[path] = content
+      throw new Error(`Cannot read file "${path}"`)
+    }),
+    outputFile: jest.fn(async (path: string, content: string): Promise<any> => {
+      MOCK_FILE_INFO[path] = content
+    }),
+  }
+})
+
+jest.mock(`../cache-lmdb`, () => {
+  return {
+    default: class MockedCache {
+      init(): MockedCache {
+        return this
       }
-    ),
+      async get<T = unknown>(key): Promise<T | undefined> {
+        return MOCK_LMDBCACHE_INFO[key]
+      }
+      async set<T>(key: string, value: T): Promise<T | undefined> {
+        MOCK_LMDBCACHE_INFO[key] = value
+        return value
+      }
+    },
+  }
+})
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    createProgress: (): any => {
+      return {
+        start: jest.fn(),
+        tick: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+    verbose: jest.fn(),
   }
 })
 
@@ -45,6 +72,7 @@ describe(`get-page-data-util`, () => {
   }
 
   const pageDataContent = {
+    componentChunkName: `foo`,
     path: `/foo`,
     result: queryResultContent,
     staticQueryHashes: [],
@@ -64,9 +92,11 @@ describe(`get-page-data-util`, () => {
   beforeAll(() => {
     Pages = {
       foo: {
+        componentChunkName: `foo`,
         path: `/foo`,
         componentPath: `/foo.js`,
         component: `/foo.js`,
+        mode: `SSG`, // TODO: need to test other modes in non-build environment
       },
     }
 
@@ -109,7 +139,7 @@ describe(`get-page-data-util`, () => {
 
   describe(`timeouts and retries`, () => {
     it(`it times out eventually (default timeout)`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers({ legacyFakeTimers: true })
 
       createPage(Pages.foo)
       const resultPromise = getPageData(Pages.foo.path)
@@ -139,7 +169,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`it times out eventually (7 second timeout - 5s + 2s)`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers({ legacyFakeTimers: true })
 
       createPage(Pages.foo)
       const resultPromise = getPageData(Pages.foo.path, 7000)
@@ -160,7 +190,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`Can resolve after retry`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers({ legacyFakeTimers: true })
 
       expect(clearTimeout).toHaveBeenCalledTimes(0)
 
@@ -195,7 +225,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`Can fallback to stale page-data if it exists (better to potentially unblock user to start doing some work than fail completely)`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers({ legacyFakeTimers: true })
 
       writePageDataFileToFs(Pages.foo, pageDataStaleContent)
 
@@ -293,7 +323,7 @@ describe(`get-page-data-util`, () => {
   describe(`Query on demand`, () => {
     let programToRestore
     beforeAll(() => {
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
+      process.env.GATSBY_QUERY_ON_DEMAND = `true`
       programToRestore = store.getState().program
       store.dispatch({
         type: `SET_PROGRAM`,
@@ -304,7 +334,7 @@ describe(`get-page-data-util`, () => {
       })
     })
     afterAll(() => {
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      delete process.env.GATSBY_QUERY_ON_DEMAND
       store.dispatch({
         type: `SET_PROGRAM`,
         payload: programToRestore,
@@ -312,6 +342,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`Will resolve with fresh results if query result was marked dirty while resolving request`, async () => {
+      jest.useFakeTimers({ legacyFakeTimers: true })
       createPage(Pages.foo)
       startPageQuery(Pages.foo)
       finishQuery(Pages.foo, queryResultStaleContent)
@@ -369,20 +400,15 @@ function finishQuery(
   page: Partial<IGatsbyPage>,
   jsonObject: Record<string, unknown>
 ): void {
-  const payload: IQueryStartAction["payload"] = {
+  const payload: IPageQueryRunAction["payload"] = {
     path: page.path!,
     componentPath: page.componentPath!,
     isPage: true,
+    resultHash: `resultHash`,
+    queryHash: `queryHash`,
   }
 
-  MOCK_FILE_INFO[
-    pathJoin(
-      __dirname,
-      `.cache`,
-      `json`,
-      `${page.path!.replace(/\//g, `_`)}.json`
-    )
-  ] = JSON.stringify(jsonObject)
+  savePageQueryResult(page.path!, JSON.stringify(jsonObject))
 
   store.dispatch(
     pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)
@@ -398,6 +424,7 @@ function finishQuery(
 
 function deletePageDataFilesFromFs(): void {
   MOCK_FILE_INFO = {}
+  MOCK_LMDBCACHE_INFO = {}
 }
 
 function writePageDataFileToFs(

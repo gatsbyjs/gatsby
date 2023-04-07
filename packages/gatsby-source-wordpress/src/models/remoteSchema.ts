@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { findTypeName } from "~/steps/create-schema-customization/helpers"
+import { findNamedTypeName } from "~/steps/create-schema-customization/helpers"
 
 interface IRemoteSchemaState {
   wpUrl: string
@@ -23,6 +23,7 @@ interface IRemoteSchemaState {
     internal: string
     plugin: string
     actionOptions: string
+    fields: string
   }
 }
 
@@ -89,6 +90,7 @@ const remoteSchema: IRemoteSchemaStore = {
       `previewRevisionDatabaseId`,
       `previewRevisionId`,
       `editingLockedBy`,
+      `cursor`,
     ],
     // @todo make this a plugin option
     fieldAliases: {
@@ -97,6 +99,7 @@ const remoteSchema: IRemoteSchemaStore = {
       internal: `wpInternal`,
       plugin: `wpPlugin`,
       actionOptions: `wpActionOptions`,
+      fields: `wpFields`,
     },
   },
 
@@ -128,7 +131,7 @@ const remoteSchema: IRemoteSchemaStore = {
     },
 
     addFetchedType(state, type) {
-      const key = findTypeName(type)
+      const key = findNamedTypeName(type)
 
       if (!key) {
         return state

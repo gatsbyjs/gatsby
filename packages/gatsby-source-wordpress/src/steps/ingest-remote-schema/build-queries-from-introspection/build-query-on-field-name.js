@@ -1,6 +1,5 @@
-import compress from "graphql-query-compress"
 import store from "~/store"
-import { findTypeName } from "~/steps/create-schema-customization/helpers"
+import { findNamedTypeName } from "~/steps/create-schema-customization/helpers"
 
 const buildReusableFragments = ({ fragments }) =>
   Object.values(fragments)
@@ -64,13 +63,12 @@ export const buildNodesQueryOnFieldName = ({
   queryVariables = ``,
   fieldVariables = ``,
 }) =>
-  compress(
-    buildQuery({
-      queryName: `NODE_LIST_QUERY`,
-      variables: `$first: Int!, $after: String, ${queryVariables}`,
-      fieldName,
-      fieldVariables: `first: $first, after: $after, ${fieldVariables}`,
-      builtSelectionSet: `
+  buildQuery({
+    queryName: `NODE_LIST_QUERY`,
+    variables: `$first: Int!, $after: String, ${queryVariables}`,
+    fieldName,
+    fieldVariables: `first: $first, after: $after, ${fieldVariables}`,
+    builtSelectionSet: `
         nodes {
           ${builtSelectionSet}
         }
@@ -79,9 +77,8 @@ export const buildNodesQueryOnFieldName = ({
           endCursor
         }
       `,
-      builtFragments,
-    })
-  )
+    builtFragments,
+  })
 
 const buildVariables = variables =>
   variables && typeof variables === `string` ? `(${variables})` : ``
@@ -162,7 +159,7 @@ export const buildSelectionSet = (
         }
       `
     } else if (fieldName) {
-      const fullFieldType = typeMap.get(findTypeName(fieldType))
+      const fullFieldType = typeMap.get(findNamedTypeName(fieldType))
 
       // if this field has subfields but we didn't build a selection set for it
       // we shouldn't fetch this field. This can happen when we have self referencing types that are limited by the schema.circularQueryLimit plugin option.
@@ -220,13 +217,11 @@ export const buildNodeQueryOnFieldName = ({
   fieldInputArguments = `id: $id`,
   queryName = `SINGLE_CONTENT_QUERY`,
 }) =>
-  compress(
-    buildQuery({
-      queryName,
-      variables,
-      fieldName,
-      fieldVariables: fieldInputArguments,
-      builtFragments,
-      builtSelectionSet,
-    })
-  )
+  buildQuery({
+    queryName,
+    variables,
+    fieldName,
+    fieldVariables: fieldInputArguments,
+    builtFragments,
+    builtSelectionSet,
+  })

@@ -1,13 +1,12 @@
 const sharp = require(`./safe-sharp`)
 const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
-const { isCI } = require(`gatsby-core-utils`)
+const { isCI } = require(`gatsby-core-utils/ci`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const { scheduleJob } = require(`./scheduler`)
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
 const {
@@ -16,7 +15,6 @@ const {
   createTransformObject,
   removeDefaultValues,
 } = require(`./plugin-options`)
-const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { getDimensionsAndAspectRatio } = require(`./utils`)
@@ -84,9 +82,12 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
 }
 
 function prepareQueue({ file, args }) {
-  const { pathPrefix, ...options } = args
-  const argsDigestShort = createArgsDigest(options)
-  const imgSrc = `/${file.name}.${options.toFormat}`
+  const { pathPrefix, duotone, ...rest } = args
+  // Duotone is a nested object inside transformOptions and has a [Object: Null Prototype]
+  // So it's flattened into a new object so that createArgsDigest also takes duotone into account
+  const digestArgs = Object.assign(rest, duotone)
+  const argsDigestShort = createArgsDigest(digestArgs)
+  const imgSrc = `/${file.name}.${args.toFormat}`
   const outputDir = path.join(
     process.cwd(),
     `public`,
@@ -100,11 +101,11 @@ function prepareQueue({ file, args }) {
 
   const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,
-    options
+    args
   )
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${args.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
@@ -138,14 +139,7 @@ function createJob(job, { reporter }) {
   // in resolve / reject handlers). If we would use async/await
   // entire closure would keep duplicate job in memory until
   // initial job finish.
-  let promise = null
-  if (actions.createJobV2) {
-    promise = actions.createJobV2(job)
-  } else {
-    promise = scheduleJob(job, actions, reporter)
-  }
-
-  promise.catch(err => {
+  const promise = actions.createJobV2(job).catch(err => {
     reporter.panic(`error converting image`, err)
   })
 
@@ -155,7 +149,7 @@ function createJob(job, { reporter }) {
 function lazyJobsEnabled() {
   return (
     process.env.gatsby_executing_command === `develop` &&
-    !isCI() &&
+    (!isCI() || process.env.GATSBY_ENABLE_LAZY_IMAGES_IN_CI) &&
     !(
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
@@ -165,15 +159,8 @@ function lazyJobsEnabled() {
 
 function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
-  const {
-    src,
-    width,
-    height,
-    aspectRatio,
-    relativePath,
-    outputDir,
-    options,
-  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
+  const { src, width, height, aspectRatio, relativePath, outputDir, options } =
+    prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -274,13 +261,12 @@ async function generateBase64({ file, args = {}, reporter }) {
   })
   let pipeline
   try {
-    pipeline = !options.failOnError
-      ? sharp(file.absolutePath, { failOnError: false })
-      : sharp(file.absolutePath)
+    pipeline = sharp({ failOn: pluginOptions.failOn })
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
@@ -395,32 +381,27 @@ async function base64(arg) {
   return await memoizedBase64(arg)
 }
 
+let didShowTraceSVGRemovalWarning = false
 async function traceSVG(args) {
-  if (args.cache) {
-    // Not all transformer plugins are going to provide cache
-    return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
+  if (!didShowTraceSVGRemovalWarning) {
+    console.warn(
+      `traceSVG placeholder generation is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+    )
+    didShowTraceSVGRemovalWarning = true
   }
-  return await memoizedTraceSVG(args)
-}
 
-async function getTracedSVG({ file, options, cache, reporter }) {
-  if (options.generateTracedSVG && options.tracedSVG) {
-    const tracedSVG = await traceSVG({
-      args: options.tracedSVG,
-      fileArgs: options,
-      file,
-      cache,
-      reporter,
-    })
-    return tracedSVG
-  }
-  return undefined
+  const { src } = await base64(args)
+  return src
 }
 
 async function stats({ file, reporter }) {
+  const pluginOptions = getPluginOptions()
   let imgStats
   try {
-    imgStats = await sharp(file.absolutePath).stats()
+    const pipeline = sharp({ failOn: pluginOptions.failOn })
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    imgStats = await pipeline.stats()
   } catch (err) {
     reportError(
       `Failed to get stats for image ${file.absolutePath}`,
@@ -435,29 +416,17 @@ async function stats({ file, reporter }) {
   }
 }
 
+let didShowTraceSVGRemovalWarningFluid = false
 async function fluid({ file, args = {}, reporter, cache }) {
-  const options = healOptions(getPluginOptions(), args, file.extension)
-  if (options.sizeByPixelDensity) {
-    /*
-     * We learned that `sizeByPixelDensity` is only valid for vector images,
-     * and Gatsby’s implementation of Sharp doesn’t support vector images.
-     * This means we should remove this option in the next major version of
-     * Gatsby, but for now we can no-op and warn.
-     *
-     * See https://github.com/gatsbyjs/gatsby/issues/12743
-     *
-     * TODO: remove the sizeByPixelDensity option in the next breaking release
-     */
-    reporter.warn(
-      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
-    )
-  }
+  const pluginOptions = getPluginOptions()
+  const options = healOptions(pluginOptions, args, file.extension)
 
-  // Account for images with a high pixel density. We assume that these types of
-  // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    metadata = await sharp(file.absolutePath).metadata()
+    const pipeline = sharp({ failOn: pluginOptions.failOn })
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    metadata = await pipeline.metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
@@ -566,8 +535,17 @@ async function fluid({ file, args = {}, reporter, cache }) {
     reporter,
   })
 
+  if (options.generateTracedSVG && options.tracedSVG) {
+    if (!didShowTraceSVGRemovalWarningFluid) {
+      console.warn(
+        `tracedSVG placeholder generation for fluid images is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarningFluid = true
+    }
+  }
+
   let base64Image
-  if (options.base64) {
+  if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
     const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
@@ -589,8 +567,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     // Get base64 version
     base64Image = await base64({ file, args: base64Args, reporter, cache })
   }
-
-  const tracedSVG = await getTracedSVG({ options, file, cache, reporter })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -638,7 +614,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
 
   return {
-    base64: base64Image && base64Image.src,
+    base64: (options.base64 && base64Image && base64Image.src) || undefined,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
@@ -649,10 +625,16 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
-    tracedSVG,
+    tracedSVG:
+      (options.generateTracedSVG &&
+        options.tracedSVG &&
+        base64Image &&
+        base64Image.src) ||
+      undefined,
   }
 }
 
+let didShowTraceSVGRemovalWarningFixed = false
 async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
@@ -705,8 +687,17 @@ async function fixed({ file, args = {}, reporter, cache }) {
     reporter,
   })
 
+  if (options.generateTracedSVG && options.tracedSVG) {
+    if (!didShowTraceSVGRemovalWarningFixed) {
+      console.warn(
+        `tracedSVG placeholder generation for fixed images is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/`
+      )
+      didShowTraceSVGRemovalWarningFixed = true
+    }
+  }
+
   let base64Image
-  if (options.base64) {
+  if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
     const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
@@ -734,8 +725,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
     })
   }
 
-  const tracedSVG = await getTracedSVG({ options, file, reporter, cache })
-
   const fallbackSrc = images[0].src
   const srcSet = images
     .map((image, i) => {
@@ -759,14 +748,19 @@ async function fixed({ file, args = {}, reporter, cache }) {
   const originalName = file.base
 
   return {
-    base64: base64Image && base64Image.src,
+    base64: (options.base64 && base64Image && base64Image.src) || undefined,
     aspectRatio: images[0].aspectRatio,
     width: images[0].width,
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
-    tracedSVG,
+    tracedSVG:
+      (options.generateTracedSVG &&
+        options.tracedSVG &&
+        base64Image &&
+        base64Image.src) ||
+      undefined,
   }
 }
 

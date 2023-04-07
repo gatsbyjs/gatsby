@@ -37,8 +37,8 @@ module.exports = function wrapCallback<T>(
       cb = args.pop()
     }
 
-    // eslint-disable-next-line @babel/no-invalid-this
-    const promise = fn.apply(this, args)
+    // @ts-ignore - unsure if fixing this introduces problems
+    const promise = fn.apply(this, args) // eslint-disable-line @babel/no-invalid-this
 
     if (typeof cb === `function`) {
       promise.then(

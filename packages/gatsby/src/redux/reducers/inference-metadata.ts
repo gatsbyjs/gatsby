@@ -13,10 +13,7 @@ import { typesWithoutInference } from "../../schema/types/type-defs"
 
 import { IGatsbyState, ActionsUnion } from "../types"
 
-const ignoredFields: Set<string> = new Set([
-  ...NodeInterfaceFields,
-  `__gatsby_resolved`,
-])
+const ignoredFields: Set<string> = new Set(NodeInterfaceFields)
 
 const initialTypeMetadata = (): { ignoredFields: Set<string> } => {
   return { ignoredFields }
@@ -40,9 +37,14 @@ const incrementalReducer = (
 
     case `BUILD_TYPE_METADATA`: {
       // Overwrites existing metadata
-      const { nodes, typeName } = action.payload
+      const { nodes, typeName, clearExistingMetadata } = action.payload
       if (!state[typeName]?.ignored) {
-        state[typeName] = addNodes(initialTypeMetadata(), nodes)
+        const initialMetadata =
+          clearExistingMetadata || !state[typeName]
+            ? initialTypeMetadata()
+            : state[typeName]
+
+        state[typeName] = addNodes(initialMetadata, nodes)
       }
       return state
     }

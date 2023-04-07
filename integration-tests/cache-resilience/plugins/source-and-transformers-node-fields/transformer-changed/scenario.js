@@ -67,7 +67,7 @@ const nodesTest = ({
           \\"foo\\": \\"run-1\\",
           \\"id\\": \\"parent_childChangeForFields\\",
           \\"internal\\": Object {
-            \\"contentDigest\\": \\"fb9e9b9c26522bceaa1f51c537b2aff2\\",
+            \\"contentDigest\\": \\"c6c5c686a949351323ba4a04b585840a\\",
             \\"fieldOwners\\": Object {
       -       \\"foo1\\": \\"source-and-transformers-node-fields/transformer-changed/gatsby-transformer\\",
       +       \\"foo2\\": \\"source-and-transformers-node-fields/transformer-changed/gatsby-transformer\\",
@@ -154,22 +154,22 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
             Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
-            Object {
               \\"name\\": \\"children\\",
             },
             Object {
-              \\"name\\": \\"internal\\",
+              \\"name\\": \\"fields\\",
             },
             Object {
               \\"name\\": \\"foo\\",
             },
             Object {
-              \\"name\\": \\"fields\\",
+              \\"name\\": \\"id\\",
+            },
+            Object {
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
             },
           ],
         },

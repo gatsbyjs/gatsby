@@ -6,6 +6,7 @@ import { FaGithub } from "react-icons/fa"
 
 import Layout from "../components/layout"
 import { colors } from "../utils/presets"
+import { getImage } from "gatsby-plugin-image"
 
 const FeatureList = styled(`ul`)`
   margin-left: 0;
@@ -24,16 +25,18 @@ const FeatureListItem = styled.li({
 const Index = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.childImageSharp.fluid}
+    image={getImage(data.coverImage)}
     imageTitle={`“Black and silver vintage camera” by Alexander Andrews (via unsplash.com)`}
     imageBackgroundColor={colors.ui.whisper}
   >
     <p>
-      <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">gatsby-image</a>
-      {` `}
-      is the official Image component for use in building Gatsby websites. It
-      provides the fastest, most optimized image loading performance possible
-      for Gatsby (and other React) websites.
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-image/">
+        gatsby-plugin-image
+      </a>
+      {` `} provides the fastest, most optimized image loading performance
+      possible for Gatsby (and other React) websites. It includes the
+      GatsbyImage and StaticImage components for use in building Gatsby
+      websites.
     </p>
     <p>
       The component requires
@@ -53,7 +56,7 @@ const Index = ({ data, location }) => (
     <p>
       See the
       {` `}
-      <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-image/">
         component’s documentation
       </a>
       {` `}
@@ -71,7 +74,7 @@ const Index = ({ data, location }) => (
         view this site’s source
       </a>
       {` `}
-      to learn how to start using gatsby-image on your Gatsby sites.
+      to learn how to start using gatsby-plugin-image on your Gatsby sites.
     </p>
     <h2>Out of the box it:</h2>
     <FeatureList>
@@ -88,14 +91,15 @@ const Index = ({ data, location }) => (
         show while the full image is loading
       </FeatureListItem>
       <FeatureListItem>
-        Alternatively provides a “traced placeholder” SVG of the image.
+        Alternatively provides a dominant-color or traced SVG placeholder of the
+        image.
       </FeatureListItem>
       <FeatureListItem>
         Lazy loads images which reduces bandwidth and speeds the initial load
         time
       </FeatureListItem>
       <FeatureListItem>
-        Uses WebP images if browser supports the format
+        Uses WebP and optionally AVIF images if the browser supports the format
       </FeatureListItem>
     </FeatureList>
   </Layout>
@@ -104,18 +108,18 @@ const Index = ({ data, location }) => (
 export default Index
 
 export const query = graphql`
-  query {
+  {
     coverImage: file(
       relativePath: { regex: "/alexander-andrews-260988-unsplash-edited/" }
     ) {
       childImageSharp {
-        fluid(
-          maxWidth: 800
+        gatsbyImageData(
           quality: 80
-          duotone: { highlight: "#ffffff", shadow: "#663399" }
-        ) {
-          ...GatsbyImageSharpFluid
-        }
+          transformOptions: {
+            duotone: { highlight: "#ffffff", shadow: "#663399" }
+          }
+          layout: CONSTRAINED
+        )
       }
     }
   }

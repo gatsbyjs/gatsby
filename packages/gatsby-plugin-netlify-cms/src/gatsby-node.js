@@ -1,10 +1,10 @@
 import path from "path"
 import { mapValues, isPlainObject, trim } from "lodash"
-import webpack from "webpack"
+import webpack from "gatsby/webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
+import { HtmlWebpackSkipAssetsPlugin } from "html-webpack-skip-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-// TODO: swap back when https://github.com/geowarin/friendly-errors-webpack-plugin/pull/86 lands
-import FriendlyErrorsPlugin from "@pieh/friendly-errors-webpack-plugin"
+import FriendlyErrorsPlugin from "@soda/friendly-errors-webpack-plugin"
 import CopyPlugin from "copy-webpack-plugin"
 import HtmlWebpackTagsPlugin from "html-webpack-tags-plugin"
 
@@ -28,9 +28,7 @@ function deepMap(obj, fn) {
   return obj
 }
 
-const cssTests = []
-
-function replaceRule(value, stage) {
+function replaceRule(value) {
   // If `value` does not have a `test` property, it isn't a rule object.
   if (!value || !value.test) {
     return value
@@ -96,20 +94,6 @@ exports.onCreateWebpackConfig = (
     return Promise.resolve()
   }
 
-  // populate cssTests array later used by isCssRule
-  if (`develop` === stage) {
-    cssTests.push(
-      ...[
-        rules.cssModules().test,
-        rules.css().test,
-        /\.s(a|c)ss$/,
-        /\.module\.s(a|c)ss$/,
-        /\.less$/,
-        /\.module\.less$/,
-      ].map(t => t.toString())
-    )
-  }
-
   const gatsbyConfig = getConfig()
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
@@ -161,7 +145,7 @@ exports.onCreateWebpackConfig = (
     },
     module: {
       rules: deepMap(gatsbyConfig.module.rules, value =>
-        replaceRule(value, stage)
+        replaceRule(value)
       ).filter(Boolean),
     },
     plugins: [
@@ -169,7 +153,11 @@ exports.onCreateWebpackConfig = (
       // application, or that we want to replace with our own instance.
       ...gatsbyConfig.plugins.filter(
         plugin =>
-          ![`MiniCssExtractPlugin`, `GatsbyWebpackStatsExtractor`].find(
+          ![
+            `MiniCssExtractPlugin`,
+            `GatsbyWebpackStatsExtractor`,
+            `StaticQueryMapper`,
+          ].find(
             pluginName =>
               plugin.constructor && plugin.constructor.name === pluginName
           )
@@ -182,6 +170,7 @@ exports.onCreateWebpackConfig = (
         new FriendlyErrorsPlugin({
           clearConsole: false,
           compilationSuccessInfo: {
+            // TODO(v5): change proxyPort back in port
             messages: [
               `Netlify CMS is running at ${
                 program.https ? `https://` : `http://`
@@ -201,22 +190,22 @@ exports.onCreateWebpackConfig = (
         title: htmlTitle,
         favicon: htmlFavicon,
         chunks: [`cms`],
-        excludeAssets: [/cms.css/],
         meta: {
           robots: includeRobots ? `all` : `none`, // Control whether search engines index this page
         },
       }),
 
-      // Exclude CSS from index.html, as any imported styles are assumed to be
-      // targeting the editor preview pane. Uses `excludeAssets` option from
-      // `HtmlWebpackPlugin` config
-      // not compatible with webpack 5
-      // new HtmlWebpackExcludeAssetsPlugin(),
+      // Exclude CSS from index.html, as any imported styles are assumed to be targeting the editor preview pane.
+      new HtmlWebpackSkipAssetsPlugin({
+        skipAssets: [`cms.css`],
+      }),
 
       // Pass in needed Gatsby config values.
-      new webpack.DefinePlugin({
+      plugins.define({
         __PATH__PREFIX__: pathPrefix,
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        CMS_MANUAL_INIT: JSON.stringify(manualInit),
+        PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
 
       new CopyPlugin({
@@ -224,11 +213,23 @@ exports.onCreateWebpackConfig = (
           ({ name, assetName, sourceMap, assetDir }) =>
             [
               {
-                from: require.resolve(path.join(name, assetDir, assetName)),
+                from: path.join(
+                  path.dirname(
+                    require.resolve(path.join(name, `package.json`))
+                  ),
+                  assetDir,
+                  assetName
+                ),
                 to: assetName,
               },
               sourceMap && {
-                from: require.resolve(path.join(name, assetDir, sourceMap)),
+                from: path.join(
+                  path.dirname(
+                    require.resolve(path.join(name, `package.json`))
+                  ),
+                  assetDir,
+                  sourceMap
+                ),
                 to: sourceMap,
               },
             ].filter(Boolean)
@@ -238,11 +239,6 @@ exports.onCreateWebpackConfig = (
       new HtmlWebpackTagsPlugin({
         tags: externals.map(({ assetName }) => assetName),
         append: false,
-      }),
-
-      new webpack.DefinePlugin({
-        CMS_MANUAL_INIT: JSON.stringify(manualInit),
-        PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
     ].filter(p => p),
 
@@ -295,7 +291,7 @@ exports.onCreateWebpackConfig = (
     plugins: enableIdentityWidget
       ? []
       : [
-          new webpack.IgnorePlugin({
+          plugins.ignore({
             resourceRegExp: /^netlify-identity-widget$/,
           }),
         ],

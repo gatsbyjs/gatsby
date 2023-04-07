@@ -6,7 +6,9 @@ This is a sub-plugin for `gatsby-transformer-remark`. As demoed below, add this 
 
 ## Install
 
-`npm install gatsby-remark-autolink-headers`
+```
+npm install gatsby-remark-autolink-headers
+```
 
 ## How to use
 
@@ -24,7 +26,7 @@ module.exports = {
 }
 ```
 
-Note: if you are using `gatsby-remark-prismjs`, make sure that it’s listed after this plugin. Otherwise, you might face an issue described here: https://github.com/gatsbyjs/gatsby/issues/5764.
+**Please note:** If you are using `gatsby-remark-prismjs`, make sure that it’s listed after this plugin. Otherwise, you might face an issue with [redundant details](https://github.com/gatsbyjs/gatsby/issues/5764).
 
 ```javascript
 // good
@@ -88,6 +90,8 @@ module.exports = {
 }
 ```
 
+**Please note:** The `enableCustomId` option is not compatible with `gatsby-plugin-mdx` as the syntax is invalid in MDX v2. You should use [`rehype-slug-custom-id`](https://github.com/unicorn-utterances/rehype-slug-custom-id) instead.
+
 ## How to style the anchor link
 
 By default, the anchor link has a class of `anchor` (see `className` option to change this name) on the element but has no additional styling. To make it fit your website, you'll have to write some CSS to change the appearance.
@@ -100,4 +104,4 @@ a.anchor {
 }
 ```
 
-Note: There are a variety of approaches to styling your Gatsby site, see [styling documentation](https://www.gatsbyjs.com/docs/styling/) for more detail.
+**Please note:** There are a variety of approaches to styling your Gatsby site, see [styling documentation](https://www.gatsbyjs.com/docs/styling/) for more detail.

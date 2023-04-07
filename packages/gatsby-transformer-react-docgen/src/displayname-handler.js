@@ -4,11 +4,8 @@ const path = require(`path`)
 const { namedTypes: types } = require(`ast-types`)
 const { utils } = require(`react-docgen`)
 
-const {
-  getMemberValuePath,
-  getNameOrValue,
-  isExportsOrModuleAssignment,
-} = utils
+const { getMemberValuePath, getNameOrValue, isExportsOrModuleAssignment } =
+  utils
 
 const DEFAULT_NAME = `UnknownComponent`
 

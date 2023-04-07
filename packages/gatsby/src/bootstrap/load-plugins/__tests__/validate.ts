@@ -24,7 +24,7 @@ import { resolveModuleExports } from "../../resolve-module-exports"
 beforeEach(() => {
   Object.keys(reporter).forEach(key => (reporter[key] as jest.Mock).mockReset())
 
-  const mocked = (getLatestAPIs as unknown) as jest.MockedFunction<
+  const mocked = getLatestAPIs as unknown as jest.MockedFunction<
     typeof getLatestAPIs
   >
   mocked.mockClear()
@@ -79,7 +79,10 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
+    const result = await collatePluginAPIs({
+      currentAPIs: apis,
+      flattenedPlugins,
+    })
     expect(result).toMatchSnapshot()
   })
 
@@ -106,7 +109,10 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
+    const result = await collatePluginAPIs({
+      currentAPIs: apis,
+      flattenedPlugins,
+    })
     expect(result).toMatchSnapshot()
   })
 })
@@ -287,9 +293,9 @@ describe(`handleBadExports`, () => {
     )
 
     expect(reporter.error).toHaveBeenCalledTimes(typoAPIs.length)
-    const calls = ((reporter.error as unknown) as jest.MockedFunction<
-      typeof reporter.error
-    >).mock.calls
+    const calls = (
+      reporter.error as unknown as jest.MockedFunction<typeof reporter.error>
+    ).mock.calls
 
     calls.forEach(([call]) => {
       expect(call).toEqual(
@@ -367,9 +373,9 @@ describe(`handleMultipleReplaceRenderers`, () => {
 
 describe(`warnOnIncompatiblePeerDependency`, () => {
   beforeEach(() => {
-    ;((reporter.warn as unknown) as jest.MockedFunction<
-      typeof reporter.warn
-    >).mockClear()
+    ;(
+      reporter.warn as unknown as jest.MockedFunction<typeof reporter.warn>
+    ).mockClear()
   })
 
   it(`Does not warn when no peer dependency`, () => {

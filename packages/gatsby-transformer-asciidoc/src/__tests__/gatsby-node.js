@@ -1,5 +1,5 @@
 const path = require(`path`)
-const { onCreateNode } = require(`../gatsby-node`)
+const { onCreateNode, shouldOnCreateNode } = require(`../gatsby-node`)
 
 jest.mock(`asciidoctor`, () => () => {
   return {
@@ -47,35 +47,50 @@ describe(`gatsby-transformer-asciidoc`, () => {
     createContentDigest = jest.fn(() => `digest`)
   })
 
-  it(`should do nothing when extension is not whitelisted`, async () => {
+  it(`should do nothing when extension is not allowed`, async () => {
     node.extension = `foo`
-    await onCreateNode(
-      { node, actions, loadNodeContent, createNodeId, createContentDigest },
-      {}
-    )
+    const shouldCreateNode = shouldOnCreateNode({ node }, {})
+
+    if (shouldCreateNode) {
+      await onCreateNode(
+        { node, actions, loadNodeContent, createNodeId, createContentDigest },
+        {}
+      )
+    }
     expect(actions.createNode).not.toHaveBeenCalled()
   })
 
   it(`should enhance available extension`, async () => {
     node.extension = `ad`
-    await onCreateNode(
-      { node, actions, loadNodeContent, createNodeId, createContentDigest },
+    const shouldCreateNode = shouldOnCreateNode(
+      { node },
       { fileExtensions: [`ad`] }
     )
+
+    if (shouldCreateNode) {
+      await onCreateNode(
+        { node, actions, loadNodeContent, createNodeId, createContentDigest },
+        { fileExtensions: [`ad`] }
+      )
+    }
     expect(actions.createNode).toHaveBeenCalled()
   })
 
   it(`should create node based on loaded asciidoc file`, async () => {
-    await onCreateNode(
-      {
-        node,
-        actions,
-        loadNodeContent,
-        createNodeId,
-        createContentDigest,
-      },
-      {}
-    )
+    const shouldCreateNode = shouldOnCreateNode({ node }, {})
+
+    if (shouldCreateNode) {
+      await onCreateNode(
+        {
+          node,
+          actions,
+          loadNodeContent,
+          createNodeId,
+          createContentDigest,
+        },
+        {}
+      )
+    }
     expect(actions.createNode).toHaveBeenCalledWith({
       author: null,
       children: [],

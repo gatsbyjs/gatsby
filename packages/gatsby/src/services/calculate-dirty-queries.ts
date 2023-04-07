@@ -12,13 +12,13 @@ export async function calculateDirtyQueries({
 }> {
   assertStore(store)
   const state = store.getState()
-  const queryIds = calcDirtyQueryIds(state)
+  const queryIds: Array<string> = calcDirtyQueryIds(state)
 
-  let queriesToRun: Array<string> = queryIds
+  let queriesToRun = queryIds
 
   if (
     process.env.gatsby_executing_command === `develop` &&
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    process.env.GATSBY_QUERY_ON_DEMAND
   ) {
     // 404 are special cases in our runtime that ideally use
     // generic things to work, but for now they have special handling
@@ -40,9 +40,12 @@ export async function calculateDirtyQueries({
       }
     }
 
-    // static queries are also not on demand
+    // static and slice queries are also not on demand
     queriesToRun = queryIds.filter(
-      queryId => queryId.startsWith(`sq--`) || pagePathFilter.has(queryId)
+      queryId =>
+        queryId.startsWith(`sq--`) ||
+        queryId.startsWith(`slice--`) ||
+        pagePathFilter.has(queryId)
     )
   }
 

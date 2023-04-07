@@ -5,16 +5,41 @@ const assetPrefixExpression = new RegExp(`^${assetPrefix}`)
 const assetPrefixMatcher = (chain, attr = `href`) =>
   chain.should(`have.attr`, attr).and(`matches`, assetPrefixExpression)
 
+beforeEach(() => {
+  cy.intercept(/page-data/).as("page-data")
+  cy.intercept(/slice-data/).as("slice-data")
+})
+
 describe(`assetPrefix`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
   })
 
-  describe(`runtime`, () => {
-    it(`prefixes preloads`, () => {
-      assetPrefixMatcher(cy.get(`head link[rel="preload"]`))
-    })
+  it(`page-data is prefixed with asset prefix`, () => {
+    cy.wait("@page-data")
 
+    cy.get("@page-data").then((...intercepts) => {
+      expect(intercepts).to.have.length(1)
+
+      for (const intercept of intercepts) {
+        expect(intercept.request.url).to.match(assetPrefixExpression)
+      }
+    })
+  })
+
+  it(`slice-data is prefixed with asset prefix`, () => {
+    cy.wait("@slice-data")
+
+    cy.get("@slice-data").then((...intercepts) => {
+      expect(intercepts).to.have.length(1)
+
+      for (const intercept of intercepts) {
+        expect(intercept.request.url).to.match(assetPrefixExpression)
+      }
+    })
+  })
+
+  describe(`runtime`, () => {
     it(`prefixes styles`, () => {
       assetPrefixMatcher(cy.get(`head style[data-href]`), `data-href`)
     })
@@ -50,5 +75,15 @@ describe(`assetPrefix`, () => {
     it(`prefixes RSS feed`, () => {
       assetPrefixMatcher(cy.get(`head link[type="application/rss+xml"]`))
     })
+  })
+})
+
+describe(`assetPrefix with assets handled by file-loader`, () => {
+  beforeEach(() => {
+    cy.visit(`/file-loader/`).waitForRouteChange()
+  })
+
+  it(`prefixes an asset`, () => {
+    assetPrefixMatcher(cy.getTestElement(`file-loader-image`), `src`)
   })
 })

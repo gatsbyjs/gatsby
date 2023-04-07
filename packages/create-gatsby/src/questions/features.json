@@ -1,0 +1,47 @@
+{
+  "gatsby-plugin-google-gtag": {
+    "message": "Add the Google gtag script for e.g. Google Analytics"
+  },
+  "gatsby-plugin-image": {
+    "message": "Add responsive images",
+    "plugins": [
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp",
+      "gatsby-source-filesystem:images"
+    ],
+    "options": {
+      "gatsby-source-filesystem:images": {
+        "name": "images",
+        "path": "./src/images/"
+      }
+    }
+  },
+  "gatsby-plugin-sitemap": { "message": "Add an automatic sitemap" },
+  "gatsby-plugin-manifest": {
+    "message": "Generate a manifest file",
+    "options": {
+      "gatsby-plugin-manifest": { "icon": "src/images/icon.png" }
+    }
+  },
+  "gatsby-plugin-mdx": {
+    "message": "Add Markdown and MDX support",
+    "plugins": ["gatsby-source-filesystem:pages"],
+    "dependencies": ["@mdx-js/react"],
+    "options": {
+      "gatsby-source-filesystem:pages": {
+        "name": "pages",
+        "path": "./src/pages/"
+      }
+    }
+  },
+  "gatsby-transformer-remark": {
+    "message": "Add Markdown support (without MDX)",
+    "plugins": ["gatsby-source-filesystem:pages"],
+    "options": {
+      "gatsby-source-filesystem:pages": {
+        "name": "pages",
+        "path": "./src/pages/"
+      }
+    }
+  }
+}

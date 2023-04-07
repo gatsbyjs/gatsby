@@ -1,5 +1,7 @@
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql, Script } from "gatsby"
+import { scripts } from "../gatsby-script-scripts"
+import { AppContextProvider } from "./app-context"
 
 const WrapRootElement = ({ element }) => (
   <StaticQuery
@@ -17,8 +19,10 @@ const WrapRootElement = ({ element }) => (
         siteMetadata: { title },
       },
     }) => (
-      <>
+      <AppContextProvider>
         {element}
+        <Script src={scripts.jQuery} strategy="post-hydrate" />
+        <Script src={scripts.popper} strategy="idle" />
         <div>
           StaticQuery in wrapRootElement test (should show site title):
           <span data-testid="wrap-root-element-result">{title}</span>
@@ -26,7 +30,7 @@ const WrapRootElement = ({ element }) => (
             %TEST_HMR_IN_GATSBY_BROWSER%
           </div>
         </div>
-      </>
+      </AppContextProvider>
     )}
   />
 )

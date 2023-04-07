@@ -4,6 +4,7 @@ exports[`actual compiling accepts identical fragment definitions 1`] = `
 Map {
   "mockFile" => Object {
     "hash": "hash",
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": false,
     "name": "mockFileQuery",
@@ -19,6 +20,7 @@ Map {
           id
         }",
     "path": "mockFile",
+    "templatePath": "mockFile",
     "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -29,8 +31,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
   },
 }
 `;
@@ -38,6 +39,7 @@ query mockFileQuery {
 exports[`actual compiling adds fragments from different documents 1`] = `
 Object {
   "hash": "hash",
+  "isConfigQuery": false,
   "isHook": false,
   "isStaticQuery": false,
   "name": "mockFileQuery",
@@ -49,6 +51,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -59,14 +62,14 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
 exports[`actual compiling adds fragments from same documents 1`] = `
 Object {
   "hash": "hash",
+  "isConfigQuery": false,
   "isHook": false,
   "isStaticQuery": false,
   "name": "mockFileQuery",
@@ -82,6 +85,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -92,14 +96,14 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
 exports[`actual compiling compiles a query 1`] = `
 Object {
   "hash": "hash",
+  "isConfigQuery": false,
   "isHook": false,
   "isStaticQuery": false,
   "name": "mockFileQuery",
@@ -111,14 +115,14 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
       id
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -126,7 +130,8 @@ exports[`actual compiling compiles static query 1`] = `
 Object {
   "hash": "hash",
   "id": Any<String>,
-  "isHook": undefined,
+  "isConfigQuery": false,
+  "isHook": false,
   "isStaticQuery": true,
   "name": "mockFileQuery",
   "originalText": "query mockFileQuery {
@@ -137,14 +142,14 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
       id
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -184,6 +189,7 @@ exports[`actual compiling errors on double root 2`] = `
 Map {
   "mockFile" => Object {
     "hash": "hash",
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": false,
     "name": "mockFileQuery",
@@ -203,14 +209,14 @@ Map {
             }
           }",
     "path": "mockFile",
+    "templatePath": "mockFile",
     "text": "query mockFileQuery {
   allPostsJson {
     nodes {
       id
     }
   }
-}
-",
+}",
   },
 }
 `;
@@ -218,6 +224,7 @@ Map {
 exports[`actual compiling handles fragments that use other fragments 1`] = `
 Object {
   "hash": "hash",
+  "isConfigQuery": false,
   "isHook": false,
   "isStaticQuery": false,
   "name": "mockFileQuery",
@@ -229,6 +236,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
   ...AnotherPostsJsonFragment
@@ -244,14 +252,14 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
 exports[`actual compiling removes unused fragments from documents 1`] = `
 Object {
   "hash": "hash",
+  "isConfigQuery": false,
   "isHook": false,
   "isStaticQuery": false,
   "name": "mockFileQuery",
@@ -271,6 +279,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -281,7 +290,6 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;

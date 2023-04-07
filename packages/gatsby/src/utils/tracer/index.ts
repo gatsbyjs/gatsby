@@ -18,12 +18,13 @@ let tracerProvider: ITracerProvider | undefined
  * `stop` - Run any tracer cleanup required before the node.js process
  * exits
  */
-export const initTracer = (tracerFile: string): Tracer => {
+export const initTracer = async (tracerFile: string): Promise<Tracer> => {
   let tracer: Tracer
   if (tracerFile) {
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE = tracerFile
     const resolvedPath = slash(path.resolve(tracerFile))
     tracerProvider = require(resolvedPath)
-    tracer = tracerProvider!.create()
+    tracer = await tracerProvider!.create()
   } else {
     tracer = new Tracer() // Noop
   }

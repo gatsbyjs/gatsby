@@ -1,6 +1,21 @@
 const fs = require(`fs`)
 const path = require(`path`)
 
+exports.onPluginInit = ({ reporter }, options = {}) => {
+  const filePath = path.resolve(options.path || `schema.gql`)
+  try {
+    if (fs.existsSync(filePath) && options.update) {
+      fs.unlinkSync(filePath)
+      reporter.info("Removed schema file")
+    }
+  } catch (error) {
+    reporter.error(
+      `The plugin \`gatsby-plugin-schema-snapshot\` encountered an error`,
+      error
+    )
+  }
+}
+
 exports.createSchemaCustomization = ({ actions, reporter }, options = {}) => {
   const { createTypes, printTypeDefinitions } = actions
 
@@ -21,7 +36,6 @@ exports.createSchemaCustomization = ({ actions, reporter }, options = {}) => {
       createTypes(schema, { name: `default-site-plugin` })
 
       if (options.update) {
-        fs.unlinkSync(filePath)
         printTypeDefinitions(options)
       }
     } else {
@@ -29,7 +43,8 @@ exports.createSchemaCustomization = ({ actions, reporter }, options = {}) => {
     }
   } catch (error) {
     reporter.error(
-      `The plugin \`gatsby-plugin-schema-snapshot\` encountered an error`, error
+      `The plugin \`gatsby-plugin-schema-snapshot\` encountered an error`,
+      error
     )
   }
 }

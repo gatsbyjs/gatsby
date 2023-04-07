@@ -59,10 +59,10 @@ describe(`the image data helper`, () => {
     const generateImageSource = `this should be a function`
 
     expect(() =>
-      generateImageData(({
+      generateImageData({
         ...args,
         generateImageSource,
-      } as any) as IGatsbyImageHelperArgs)
+      } as any as IGatsbyImageHelperArgs)
     ).toThrow()
   })
 
@@ -132,10 +132,10 @@ describe(`the image data helper`, () => {
   })
 
   it(`warns if there's no plugin name`, () => {
-    generateImageData(({
+    generateImageData({
       ...args,
       pluginName: undefined,
-    } as any) as IGatsbyImageHelperArgs)
+    } as any as IGatsbyImageHelperArgs)
     expect(args.reporter?.warn).toHaveBeenCalledWith(
       `[gatsby-plugin-image] "generateImageData" was not passed a plugin name`
     )
@@ -309,6 +309,11 @@ describe(`the helper utils`, () => {
   it(`gets a low-resolution image URL`, () => {
     const url = getLowResolutionImageURL(args)
     expect(url).toEqual(`https://example.com/afile.jpg/20/15/image.jpg`)
+  })
+
+  it(`gets a low-resolution image URL when width and height are set`, () => {
+    const url = getLowResolutionImageURL({ ...args, width: 200, height: 200 })
+    expect(url).toEqual(`https://example.com/afile.jpg/20/20/image.jpg`)
   })
 
   it(`gets a low-resolution image URL with correct aspect ratio`, () => {

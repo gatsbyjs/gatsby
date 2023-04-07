@@ -13,7 +13,15 @@ const args = yargs
     default: [],
     type: `array`,
   })
+  .option(`copy`, {
+    default: undefined,
+    type: `string`,
+  })
   .option(`exact`, {
+    default: false,
+    type: `boolean`,
+  })
+  .option(`delete`, {
     default: false,
     type: `boolean`,
   })
@@ -35,6 +43,9 @@ const args = yargs
     ).trim(),
     type: `string`,
   })
+  .option(`fileSource`, {
+    type: `string`,
+  })
   .option(`restore`, {
     default: false,
     type: `boolean`,
@@ -43,7 +54,7 @@ const args = yargs
 async function update() {
   const history = await getHistory()
 
-  const { file: fileArg, replacements, restore } = args
+  const { file: fileArg, replacements, restore, copy } = args
   const filePath = path.resolve(fileArg)
   if (restore) {
     const original = history.get(filePath)
@@ -60,11 +71,13 @@ async function update() {
   let exists = true
   if (!fs.existsSync(filePath)) {
     exists = false
-    await fs.writeFile(
-      filePath,
-      JSON.parse(args.fileContent).replace(/\+n/g, `\n`),
-      `utf8`
-    )
+    let fileContent
+    if (args.fileSource) {
+      fileContent = await fs.readFile(args.fileSource, `utf8`)
+    } else if (args.fileContent) {
+      fileContent = JSON.parse(args.fileContent).replace(/\+n/g, `\n`)
+    }
+    await fs.writeFile(filePath, fileContent, `utf8`)
   }
   const file = await fs.readFile(filePath, `utf8`)
 
@@ -72,15 +85,24 @@ async function update() {
     history.set(filePath, exists ? file : false)
   }
 
-  const contents = replacements.reduce((replaced, pair) => {
-    const [key, value] = pair.split(`:`)
-    return replaced.replace(
-      args.exact ? key : new RegExp(`%${key}%`, `g`),
-      value
-    )
-  }, file)
+  if (args.delete) {
+    if (exists) {
+      await fs.remove(filePath)
+    }
+  } else if(args.copy) {
+    const copyFileContent = await fs.readFile(args.copy)
+    await fs.writeFile(filePath, copyFileContent)
+  } else {
+    const contents = replacements.reduce((replaced, pair) => {
+      const [key, value] = pair.split(`:`)
+      return replaced.replace(
+        args.exact ? key : new RegExp(`%${key}%`, `g`),
+        value
+      )
+    }, file)
 
-  await fs.writeFile(filePath, contents, `utf8`)
+    await fs.writeFile(filePath, contents, `utf8`)
+  }
 
   await writeHistory(history)
 }

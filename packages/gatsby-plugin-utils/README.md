@@ -34,6 +34,7 @@ it(`should partially validate one value of a schema`, async () => {
       someOtherValue: Joi.string(),
       toVerify: Joi.boolean(),
     })
+  const expectedErrors = [`"toVerify" must be a boolean`]
 
   // Only the "toVerify" key of the schema will be verified in this test
   const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
@@ -41,6 +42,81 @@ it(`should partially validate one value of a schema`, async () => {
   })
 
   expect(isValid).toBe(false)
-  expect(errors).toEqual([`"toVerify" must be a boolean`])
+  expect(errors).toEqual(expectedErrors)
 })
+```
+
+### `isGatsbyNodeLifecycleSupported`
+
+Utility to be used by plugins to do runtime check against `gatsby` core package checking wether particular `gatsby-node` lifecycle API is supported. Useful for plugins to be able to support multiple `gatsby` core versions.
+
+#### Example
+
+```js
+const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+
+// only use createSchemaCustomization lifecycle only when it's available.
+if (isGatsbyNodeLifecycleSupported(`createSchemaCustomization`)) {
+  exports.createSchemaCustomization = function createSchemaCustomization({
+    actions,
+  }) {
+    // customize schema
+  }
+}
+```
+
+### `hasFeature`
+
+Feature detection is now part of Gatsby. As a plugin author you don't know what version of Gatsby a user is using. `hasFeature` allows you to check if the current version of Gatsby has a certain feature.
+
+Here's a list of features:
+// TODO
+
+#### Example
+
+```js
+const { hasFeature } = require(`gatsby-plugin-utils`)
+
+if (!hasFeature(`image-cdn`)) {
+  // You can polyfill image-cdn here so older versions have support as well
+}
+```
+
+### Add ImageCDN support
+
+Our new ImageCDN allows source plugins to lazily download and process images. if you're a plugin author please use this polyfill to add support for all Gatsby V4 versions.
+
+For more information (see here)[https://gatsby.dev/img]
+
+#### Example
+
+```js
+const {
+  addRemoteFilePolyfillInterface,
+  polyfillImageServiceDevRoutes,
+} = require(`gatsby-plugin-utils/pollyfill-remote-file`)
+
+exports.createSchemaCustomization ({ actions, schema, store }) => {
+  actions.createTypes([
+    addRemoteFilePolyfillInterface(
+      schema.buildObjectType({
+        name: `PrefixAsset`,
+        fields: {
+          // your fields
+        },
+        interfaces: [`Node`, 'RemoteFile'],
+      }),
+      {
+        schema,
+        actions,
+        store
+      }
+    )
+  ]);
+}
+
+/** @type {import('gatsby').onCreateDevServer} */
+exports.onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
+}
 ```

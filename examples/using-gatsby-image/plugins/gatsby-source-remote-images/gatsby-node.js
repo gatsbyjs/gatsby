@@ -1,29 +1,35 @@
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = async (
-  {
-    actions: { createNode },
-    node,
-    createContentDigest,
-    store,
-    cache,
-    reporter,
-  },
-  { filter, nodeName = `localFile` }
+  { actions: { createNode, createNodeField }, node, createNodeId, getCache },
+  { filter }
 ) => {
   if (filter(node)) {
     const fileNode = await createRemoteFileNode({
       url: node.url,
-      store,
-      cache,
+      parentNodeId: node.id,
+      getCache,
       createNode,
-      createNodeId: createContentDigest,
-      reporter,
+      createNodeId,
     })
 
     if (fileNode) {
-      const fileNodeLink = `${nodeName}___NODE`
-      node[fileNodeLink] = fileNode.id
+      createNodeField({ node, name: "localFile", value: fileNode.id })
     }
   }
+}
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type UnsplashImagesYaml implements Node {
+      url: String
+      title: String
+      credit: String
+      gallery: Boolean
+      localFile: File @link(from: "fields.localFile")
+    }
+
+  `)
 }

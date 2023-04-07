@@ -1,0 +1,30 @@
+{
+  "name": "head-function-export-integration-test",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Ty Hopp",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "clean": "gatsby clean",
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "serve": "gatsby serve",
+    "test:jest": "jest",
+    "test": "npm-run-all -s build test:jest"
+  },
+  "devDependencies": {
+    "babel-jest": "^29.3.1",
+    "babel-preset-gatsby-package": "^2.4.0",
+    "fs-extra": "^10.0.0",
+    "jest": "^29.3.1",
+    "node-html-parser": "^5.3.3",
+    "npm-run-all": "4.1.5"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

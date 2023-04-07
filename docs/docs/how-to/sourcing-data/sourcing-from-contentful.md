@@ -1,5 +1,8 @@
 ---
 title: Sourcing from Contentful
+examples:
+  - label: Using Contentful
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful"
 ---
 
 ## What is Contentful? Why choose it?
@@ -27,6 +30,10 @@ npm install gatsby-source-contentful
 ```
 
 ## How to use
+
+To get setup quickly with a new site and have Gatsby Cloud do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on gatsbyjs.com](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/contentful/starter-gatsby-blog).
+
+For more detailed instructions on manually configuring your Gatsby Contentful site for production builds and Preview builds visit [the Gatsby Cloud knowledgebase](https://support.gatsbyjs.com/hc/en-us/articles/360056047134-Add-the-Gatsby-Cloud-App-to-Contentful).
 
 ### With the Delivery API
 

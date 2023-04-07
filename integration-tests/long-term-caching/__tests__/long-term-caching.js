@@ -59,7 +59,8 @@ describe(`long term caching`, () => {
     const indexPath = `${rootPath}/src/pages/index.js`
     const data = await readFile(indexPath, `utf8`)
 
-    const import1 = `import gray from "gray-percentage"`
+    // unused imports are removed, so we need to use it somehow
+    const import1 = `import gray from "gray-percentage"\nconsole.log(gray)`
 
     const modifiedData = `${import1}\n${data}`
     await writeFile(`${pagesPath}/index.js`, modifiedData)

@@ -31,8 +31,8 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query {
-    allHnStory(sort: { fields: [order] }) {
+  {
+    allHnStory(sort: { order: ASC }) {
       edges {
         node {
           ...Story_item

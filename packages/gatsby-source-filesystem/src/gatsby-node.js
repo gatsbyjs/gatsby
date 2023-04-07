@@ -1,7 +1,7 @@
 const chokidar = require(`chokidar`)
 const fs = require(`fs`)
 const path = require(`path`)
-const { Machine, interpret } = require(`xstate`)
+const { createMachine, interpret, assign } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { ERROR_MAP } = require(`./error-utils`)
@@ -16,14 +16,21 @@ exports.onPreInit = ({ reporter }) => {
  * Create a state machine to manage Chokidar's not-ready/ready states.
  */
 const createFSMachine = (
-  { actions: { createNode, deleteNode }, getNode, createNodeId, reporter },
+  {
+    actions: { createNode, deleteNode },
+    getNode,
+    createNodeId,
+    reporter,
+    cache,
+  },
   pluginOptions
 ) => {
   const createAndProcessNode = path => {
     const fileNodePromise = createFileNode(
       path,
       createNodeId,
-      pluginOptions
+      pluginOptions,
+      cache
     ).then(fileNode => {
       createNode(fileNode)
       return null
@@ -61,13 +68,17 @@ const createFSMachine = (
   }
 
   const log = expr => (ctx, action, meta) => {
-    if (meta.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+    if (ctx.bootstrapped) {
       reporter.info(expr(ctx, action, meta))
     }
   }
 
-  const fsMachine = Machine(
+  const fsMachine = createMachine(
     {
+      predictableActionArguments: true,
+      context: {
+        bootstrapped: false,
+      },
       id: `fs`,
       type: `parallel`,
       states: {
@@ -81,6 +92,7 @@ const createFSMachine = (
             },
             BOOTSTRAPPED: {
               type: `final`,
+              entry: assign({ bootstrapped: true }),
             },
           },
         },
@@ -157,6 +169,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     name: Joi.string(),
     path: Joi.string(),
+    fastHash: Joi.boolean().default(false),
     ignore: Joi.array().items(
       Joi.string(),
       Joi.object().regex(),
@@ -171,7 +184,7 @@ exports.sourceNodes = (api, pluginOptions) => {
 The path passed to gatsby-source-filesystem does not exist on your file system:
 ${pluginOptions.path}
 Please pick a path to an existing directory.
-See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
+See docs here - https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/
       `)
   }
 

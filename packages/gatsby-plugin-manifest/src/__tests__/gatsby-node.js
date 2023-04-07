@@ -106,11 +106,6 @@ describe(`Test plugin manifest options`, () => {
     sharp.mockClear()
   })
 
-  // the require of gatsby-node performs the invoking
-  it(`invokes sharp.simd for optimization`, () => {
-    expect(sharp.simd).toHaveBeenCalledTimes(1)
-  })
-
   it(`correctly works with default parameters`, async () => {
     await onPostBootstrap(apiArgs, {
       name: `GatsbyJS`,
@@ -532,12 +527,12 @@ describe(`Test plugin manifest options`, () => {
 
 describe(`pluginOptionsSchema`, () => {
   it(`validates options correctly`, async () => {
-    expect(await testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
-      .toMatchInlineSnapshot(`
-      Object {
-        "errors": Array [],
-        "isValid": true,
-      }
-    `)
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      manifestOptions
+    )
+
+    expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

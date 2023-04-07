@@ -1,6 +1,7 @@
 describe(`highlight code and lines with PrismJS`, () => {
   afterEach(() => {
     jest.resetModules()
+    jest.clearAllMocks()
   })
 
   it(`for language cpp`, () => {
@@ -81,35 +82,27 @@ export default Counter
 
   describe(`with language-text`, () => {
     it(`escapes &, <, " elements and warns`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language = `text`
       const code = `<button />`
       expect(highlightCode(language, code, {}, [], true)).toMatch(
-        `&lt;button /&gt;`
-      )
-      expect(console.warn).toHaveBeenCalledWith(
-        `code block language not specified in markdown.`,
-        `applying generic code block`
+        `&lt;button />`
       )
     })
 
     it(`can warn about languages missing from inline code`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language = `text`
       const code = `<button />`
-      expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
-      expect(console.warn).toHaveBeenCalledWith(
-        `code block or inline code language not specified in markdown.`,
-        `applying generic code block`
-      )
+      expect(highlightCode(language, code)).toMatch(`&lt;button />`)
     })
 
     it(`warns once per language`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language1 = `text`
@@ -120,14 +113,9 @@ export default Counter
       highlightCode(language1, code1)
       highlightCode(language1, code2)
       highlightCode(language2, code3)
-      expect(console.warn).toHaveBeenCalledTimes(2)
+      expect(console.warn).toHaveBeenCalledTimes(1)
       expect(console.warn).toHaveBeenNthCalledWith(
         1,
-        `code block or inline code language not specified in markdown.`,
-        `applying generic code block`
-      )
-      expect(console.warn).toHaveBeenNthCalledWith(
-        2,
         `unable to find prism language 'raw' for highlighting.`,
         `applying generic code block`
       )

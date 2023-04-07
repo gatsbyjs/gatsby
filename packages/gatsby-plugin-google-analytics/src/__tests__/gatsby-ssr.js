@@ -190,6 +190,27 @@ describe(`gatsby-plugin-google-analytics`, () => {
           expect(result).not.toContain(`defer=1;`)
           expect(result).toContain(`async=1;`)
         })
+
+        it(`adds the web-vitals polyfill to the head`, () => {
+          const { setHeadComponents } = setup({
+            enableWebVitalsTracking: true,
+            head: false,
+          })
+
+          expect(setHeadComponents.mock.calls.length).toBe(2)
+          expect(setHeadComponents.mock.calls[1][0][0].key).toBe(
+            `gatsby-plugin-google-analytics-web-vitals`
+          )
+        })
+
+        it(`should not add the web-vitals polyfill when enableWebVitalsTracking is false `, () => {
+          const { setHeadComponents } = setup({
+            enableWebVitalsTracking: false,
+            head: false,
+          })
+
+          expect(setHeadComponents.mock.calls.length).toBe(1)
+        })
       })
     })
   })

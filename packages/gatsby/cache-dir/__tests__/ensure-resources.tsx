@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 import EnsureResources from "../ensure-resources"
 import { render, getNodeText, cleanup } from "@testing-library/react"
@@ -22,6 +26,7 @@ describe(`EnsureResources`, () => {
   it(`loads pages synchronously`, () => {
     const location = {
       pathname: `/`,
+      search: ``,
     }
     const { container } = render(
       <EnsureResources location={location}>

@@ -4,17 +4,19 @@ Easily add Google Global Site Tag to your Gatsby site.
 
 > The global site tag (gtag.js) is a JavaScript tagging framework and API that allows you to send event data to Google Analytics, Google Ads, Campaign Manager, Display & Video 360, and Search Ads 360.
 
-Global site tag (gtag.js) is meant to combine multiple Google tagging systems and can replace older ones such as [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/) ([gatsby-plugin-google-analytics](https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/)).
+Global site tag (gtag.js) is meant to combine multiple Google tagging systems and can replace older ones such as [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/) ([gatsby-plugin-google-analytics](https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/)).
 
 For more general information on gtag you can read Google's official documentation on the subject: https://developers.google.com/gtagjs/.
 
-If you're migrating from analytics.js (gatsby-plugin-google-analytics) you can read about the subtle API differences in more depth at: https://developers.google.com/analytics/devguides/collection/gtagjs/migration.
+If you're migrating from analytics.js (gatsby-plugin-google-analytics) you can read about the subtle API differences in more depth at: https://developers.google.com/analytics/devguides/migration/ua/analyticsjs-to-gtagjs.
 
-NOTE: This plugin only works in production mode! To test your Global Site Tag is installed and firing events correctly run: `gatsby build && gatsby serve.`
+**Please note:** This plugin only works in production mode! To test your Global Site Tag is installed and firing events correctly run: `gatsby build && gatsby serve.`
 
 ## Install
 
-`npm install gatsby-plugin-google-gtag`
+```shell
+npm install gatsby-plugin-google-gtag
+```
 
 ## How to use
 
@@ -46,6 +48,10 @@ module.exports = {
           respectDNT: true,
           // Avoids sending pageview hits from custom paths
           exclude: ["/preview/**", "/do-not-track/me/too/"],
+          // Defaults to https://www.googletagmanager.com
+          origin: "YOUR_SELF_HOSTED_ORIGIN",
+          // Delays processing pageview events on route update (in milliseconds)
+          delayOnRouteUpdate: 0,
         },
       },
     },
@@ -87,7 +93,7 @@ import { OutboundLink } from "gatsby-plugin-google-gtag"
 
 export default () => (
   <div>
-    <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-gtag/">
+    <OutboundLink href="https://www.gatsbyjs.com/plugins/gatsby-plugin-google-gtag/">
       Visit the Google Global Site Tag plugin page!
     </OutboundLink>
   </div>
@@ -116,7 +122,7 @@ document.cookie.indexOf(disableStr + "=true") > -1 && (window[disableStr] = !0)
 If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
 you can set a link e.g. in your imprint as follows:
 
-`<a href="javascript:gaOptout();">Deactive Google Tracking</a>`
+`<a href="javascript:gaOptout();">Deactivate Google Tracking</a>`
 
 ## The "gtagConfig.optimize_id" option
 
@@ -133,3 +139,7 @@ If you enable this optional option, Google Global Site Tag will not be loaded at
 ## The "pluginConfig.exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+## The "pluginConfig.delayOnRouteUpdate" option
+
+If you need to delay processing pageview events on route update (e.g. to wait for page transitions with [`gatsby-plugin-transition-link`](https://www.gatsbyjs.com/plugins/gatsby-plugin-transition-link/)), then this option adds a delay before generating the pageview event.

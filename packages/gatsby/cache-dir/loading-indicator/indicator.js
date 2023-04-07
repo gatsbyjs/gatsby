@@ -1,6 +1,6 @@
-import React from "react"
-import Portal from "./portal"
-import Style from "./style"
+import * as React from "react"
+import { ShadowPortal } from "../shadow-portal"
+import { Style } from "./style"
 import { isLoadingIndicatorEnabled } from "$virtual/loading-indicator"
 import { debugLog } from "../debug-log"
 
@@ -38,7 +38,7 @@ export function Indicator({ visible = true }) {
   }
 
   return (
-    <Portal>
+    <ShadowPortal identifier="gatsby-qod">
       <Style />
       <div
         data-gatsby-loading-indicator="root"
@@ -60,6 +60,6 @@ export function Indicator({ visible = true }) {
           {visible ? `Preparing requested page` : ``}
         </div>
       </div>
-    </Portal>
+    </ShadowPortal>
   )
 }

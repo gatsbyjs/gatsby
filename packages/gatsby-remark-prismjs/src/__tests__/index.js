@@ -199,24 +199,13 @@ describe(`remark prism plugin`, () => {
   })
 
   describe(`warnings`, () => {
-    it(`warns if the language is not specified for a code block`, () => {
-      spyOn(console, `warn`)
-      const code = `\`\`\`\n// Fake\n\`\`\``
+    it(`warns if the language doesn't exist`, () => {
+      jest.spyOn(console, `warn`)
+      const code = `\`\`\`notexist\n// Fake\n\`\`\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST }, { noInlineHighlight: true })
       expect(console.warn).toHaveBeenCalledWith(
-        `code block language not specified in markdown.`,
-        `applying generic code block`
-      )
-    })
-
-    it(`gives a different warning if inline code can be highlighted`, () => {
-      spyOn(console, `warn`)
-      const code = `\`foo bar\``
-      const markdownAST = remark.parse(code)
-      plugin({ markdownAST })
-      expect(console.warn).toHaveBeenCalledWith(
-        `code block or inline code language not specified in markdown.`,
+        `unable to find prism language 'notexist' for highlighting.`,
         `applying generic code block`
       )
     })

@@ -58,22 +58,22 @@ A starter is a simplified example to get up and running with Gatsby quickly and 
 
 ## Official Starters
 
-<!-- AUTO-GENERATED-CONTENT:START (LIST_STARTERS) -->
-
-|                                     Name                                      | Demo                                                                                                | Description                                                   |
-| :---------------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-|            [blog](https://github.com/gatsbyjs/gatsby-starter-blog)            | [gatsby-starter-blog-demo.netlify.app](https://gatsby-starter-blog-demo.netlify.app/)               | A starter for a blog powered by Gatsby and Markdown           |
-|         [default](https://github.com/gatsbyjs/gatsby-starter-default)         | [gatsby-starter-default-demo.netlify.app](https://gatsby-starter-default-demo.netlify.app/)         | A simple starter to get up and developing quickly with Gatsby |
-| [blog-theme-core](https://github.com/gatsbyjs/gatsby-starter-blog-theme-core) |                                                                                                     | Starter for the official Gatsby blog core theme               |
-|      [blog-theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)      |                                                                                                     | Starter for the official Gatsby blog theme                    |
-|       [mdx-basic](https://github.com/gatsbyjs/gatsby-starter-mdx-basic)       |                                                                                                     | Gatsby starter MDX basic.                                     |
-|         [minimal](https://github.com/gatsbyjs/gatsby-starter-minimal)         |                                                                                                     | A Gatsby starter with no plugins and a single welcome page.   |
-|     [notes-theme](https://github.com/gatsbyjs/gatsby-starter-notes-theme)     |                                                                                                     | Starter for the official Gatsby notes theme                   |
-| [theme-workspace](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) |                                                                                                     | Starter for creating a Gatsby Theme workspace                 |
-|           [theme](https://github.com/gatsbyjs/gatsby-starter-theme)           |                                                                                                     | Starter for the official Gatsby blog and notes themes.        |
-|     [hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)     | [gatsby-starter-hello-world-demo.netlify.app](https://gatsby-starter-hello-world-demo.netlify.app/) | A simplified bare-bones starter for Gatsby                    |
-
-<!-- AUTO-GENERATED-CONTENT:END -->
+| Starter                                                                                              | Demo/Docs                                                  | Use case                               | Features                     |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------- | ---------------------------- |
+| [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)                         | [Demo](https://gatsbystarterdefaultsource.gatsbyjs.io/)    | Appropriate for most use cases         | General Gatsby site          |
+| [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)                               | [Demo](https://gatsbystarterblogsource.gatsbyjs.io/)       | Create a basic blog                    | Blog post pages and listings |
+| [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)                 | [Demo](https://gatsbystarterhelloworldsource.gatsbyjs.io/) | Learn Gatsby                           | Gatsby bare essentials       |
+| [gatsby-starter-blog-theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)                   | [Docs](/docs/themes/)                                      | Blog posts and pages                   | Gatsby themes                |
+| [gatsby-starter-theme-workspace](https://github.com/gatsbyjs/gatsby-starter-theme-workspace)         | [Docs](/docs/how-to/plugins-and-themes/building-themes/)   | Building Gatsby Themes                 | Minimal theme workspace      |
+| [gatsby-starter-rendering-modes](https://github.com/gatsbyjs/gatsby-starter-rendering-modes)         | [Demo](https://gatsbystarterrenderingmodes.gatsbyjs.io/)   | Learn different rendering modes        | DSG and SSR                  |
+| [gatsby-starter-shopify](https://github.com/gatsbyjs/gatsby-starter-shopify)                         | [Demo](https://shopify-demo.gatsbyjs.com/)                 | E-commerce                             | Shopify integration          |
+| [gatsby-starter-wordpress-blog](https://github.com/gatsbyjs/gatsby-starter-wordpress-blog)           | [Demo](https://gatsbystarterwpblog.gatsbyjs.io/)           | WordPress blog post pages and listings | WordPress integration        |
+| [gatsby-starter-landing-page](https://github.com/gatsbyjs/gatsby-starter-landing-page)               | [Demo](https://landingpagestarter.gatsbyjs.io/)            | Dynamic marketing landing pages        | Contentful integration       |
+| [gatsby-starter-homepage-contentful](https://github.com/gatsbyjs/gatsby-starter-contentful-homepage) | [Demo](https://gatsbycontentfulhomepage.gatsbyjs.io/)      | Homepage template                      | Contentful integration       |
+| [gatsby-starter-homepage-wordpress](https://github.com/gatsbyjs/gatsby-starter-wordpress-homepage)   | [Demo](https://gatsbywordpresshomepage.gatsbyjs.io/)       | Homepage template                      | WordPress integration        |
+| [gatsby-starter-homepage-drupal](https://github.com/gatsbyjs/gatsby-starter-drupal-homepage)         | [Demo](https://gatsbydrupalhomepage.gatsbyjs.io/)          | Homepage template                      | Drupal integration           |
+| [gatsby-starter-homepage-datocms](https://github.com/gatsbyjs/gatsby-starter-datocms-homepage)       | [Demo](https://gatsbydatocmshomepage.gatsbyjs.io/)         | Homepage template                      | DatoCMS integration          |
+| [gatsby-starter-homepage-sanity](https://github.com/gatsbyjs/gatsby-starter-sanity-homepage)         | [Demo](https://gatsbystartersanityhomepage.gatsbyjs.io/)   | Homepage template                      | Sanity integration           |
 
 ## 🚀 Get Up and Running in 5 Minutes
 
@@ -98,13 +98,12 @@ Gatsby is dedicated to building a welcoming, diverse, safe community. We expect 
 
 ### A note on how this repository is organized
 
-This repository is a [monorepo][monorepo] managed using [Lerna][lerna]. This means there are [multiple packages--starters!!--][starters] managed in this codebase that are independently versioned but co-exist within this repository.
+This repository is a [monorepo][monorepo] managed using [Lerna][lerna]. This means there are multiple packages managed in this codebase that are independently versioned but co-exist within this repository.
 
-We have set-up read-only clones of all of the [starters][starters] in the official gatsbyjs organization. For example, the [`default` starter](starters/default) is available as a read-only clone at [`gatsbyjs/gatsby-starter-default`][gatsby-starter-default]. Please open PRs versus **this** repository rather than the read-only clones. Upon merge any starters that have been modified will be tagged and released.
+We have set-up read-only clones of all of the starters in the official gatsbyjs organization. For example, the `default` starter is available as a read-only clone at [`gatsbyjs/gatsby-starter-default`][gatsby-starter-default]. Please open PRs versus **this** repository rather than the read-only clones. Upon merge any starters that have been modified will be tagged and released.
 
 [code-of-conduct]: https://gatsbyjs.com/contributing/code-of-conduct/
 [contributing-guide]: https://gatsbyjs.com/contributing/how-to-contribute/
 [monorepo]: https://trunkbaseddevelopment.com/monorepos
 [lerna]: https://github.com/lerna/lerna
-[starters]: /starters
 [gatsby-starter-default]: https://github.com/gatsbyjs/gatsby-starter-default

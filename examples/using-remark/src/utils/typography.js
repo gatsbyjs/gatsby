@@ -4,8 +4,8 @@ import presets from "../utils/presets"
 
 const { baseHsl, colors } = styleColors
 
-const linkRaw = colors.link.substr(1)
-const linkHoverRaw = colors.linkHover.substr(1)
+const linkRaw = colors.link.slice(1)
+const linkHoverRaw = colors.linkHover.slice(1)
 
 const options = {
   baseFontSize: `17px`,

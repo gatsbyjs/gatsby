@@ -1,0 +1,3 @@
+;(() => {
+  window.Popper = () => `It loaded`
+})()

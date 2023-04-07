@@ -17,6 +17,17 @@ const cheerio = require(`cheerio`)
 const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
 
+// Should be the same as https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/supported-extensions.js
+const supportedExtensions = {
+  jpeg: true,
+  jpg: true,
+  png: true,
+  webp: true,
+  tif: true,
+  tiff: true,
+  avif: true,
+}
+
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
 // 2. Find the image's size
@@ -33,6 +44,7 @@ module.exports = (
     reporter,
     cache,
     compiler,
+    getRemarkFileDependency,
   },
   pluginOptions
 ) => {
@@ -96,6 +108,9 @@ module.exports = (
               }
               break
             case `alt`:
+              if (node.alt === EMPTY_ALT || overWrites.alt === EMPTY_ALT) {
+                return ``
+              }
               if (overWrites.alt) {
                 return overWrites.alt
               }
@@ -129,7 +144,31 @@ module.exports = (
   ) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the image isn't hosted locally.
-    const parentNode = getNode(markdownNode.parent)
+    let parentNode = getNode(markdownNode.parent)
+    // check if the parent node is a File node, otherwise go up the chain and
+    // search for the closest parent File node. This is necessary in case
+    // you have markdown in child nodes (e.g. gatsby-plugin-json-remark).
+    if (
+      parentNode &&
+      parentNode.internal &&
+      parentNode.internal.type !== `File`
+    ) {
+      let tempParentNode = parentNode
+      while (
+        tempParentNode &&
+        tempParentNode.internal &&
+        tempParentNode.internal.type !== `File`
+      ) {
+        tempParentNode = getNode(tempParentNode.parent)
+      }
+      if (
+        tempParentNode &&
+        tempParentNode.internal &&
+        tempParentNode.internal.type === `File`
+      ) {
+        parentNode = tempParentNode
+      }
+    }
     let imagePath
     if (parentNode && parentNode.dir) {
       imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
@@ -137,12 +176,22 @@ module.exports = (
       return null
     }
 
-    const imageNode = _.find(files, file => {
-      if (file && file.absolutePath) {
-        return file.absolutePath === imagePath
-      }
-      return null
-    })
+    let imageNode
+    if (getRemarkFileDependency) {
+      imageNode = await getRemarkFileDependency({
+        absolutePath: {
+          eq: imagePath,
+        },
+      })
+    } else {
+      // Legacy: no context, slower version of image query
+      imageNode = _.find(files, file => {
+        if (file && file.absolutePath) {
+          return file.absolutePath === imagePath
+        }
+        return null
+      })
+    }
 
     if (!imageNode || !imageNode.absolutePath) {
       return resolve()
@@ -177,7 +226,7 @@ module.exports = (
           overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
         )
 
-    const title = node.title ? _.escape(node.title) : alt
+    const title = node.title ? _.escape(node.title) : ``
 
     const loading = options.loading
 
@@ -187,6 +236,18 @@ module.exports = (
         ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
           `loading`
         )} option. Please pass one of "lazy", "eager" or "auto".
+      `)
+      )
+    }
+
+    const decoding = options.decoding
+
+    if (![`async`, `sync`, `auto`].includes(decoding)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(decoding)} is an invalid value for the ${chalk.bold(
+          `decoding`
+        )} option. Please pass one of "async", "sync" or "auto".
       `)
       )
     }
@@ -211,6 +272,7 @@ module.exports = (
         sizes="${fluidResult.sizes}"
         style="${imageStyle}"
         loading="${loading}"
+        decoding="${decoding}"
       />
     `.trim()
 
@@ -279,38 +341,14 @@ module.exports = (
             alt="${alt}"
             title="${title}"
             loading="${loading}"
+            decoding="${decoding}"
             style="${imageStyle}"
           />
         </picture>
       `.trim()
     }
 
-    let placeholderImageData = fluidResult.base64
-
-    // if options.tracedSVG is enabled generate the traced SVG and use that as the placeholder image
-    if (options.tracedSVG) {
-      let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
-
-      // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
-      const { Potrace } = require(`potrace`)
-      const argsKeys = Object.keys(args)
-      args = argsKeys.reduce((result, key) => {
-        const value = args[key]
-        result[key] = Potrace.hasOwnProperty(value) ? Potrace[value] : value
-        return result
-      }, {})
-
-      const tracedSVG = await traceSVG({
-        file: imageNode,
-        args,
-        fileArgs: args,
-        cache,
-        reporter,
-      })
-
-      // Escape single quotes so the SVG data can be used in inline style attribute with single quotes
-      placeholderImageData = tracedSVG.replace(/'/g, `\\'`)
-    }
+    const placeholderImageData = fluidResult.base64
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
@@ -407,13 +445,8 @@ module.exports = (
           }
           const fileType = getImageInfo(node.url).ext
 
-          // Ignore gifs as we can't process them,
-          // svgs as they are already responsive by definition
-          if (
-            isRelativeUrl(node.url) &&
-            fileType !== `gif` &&
-            fileType !== `svg`
-          ) {
+          // Only attempt to convert supported extensions
+          if (isRelativeUrl(node.url) && supportedExtensions[fileType]) {
             return generateImagesAndUpdateNode(
               node,
               resolve,
@@ -427,9 +460,9 @@ module.exports = (
                 }
                 node.type = `html`
                 node.value = rawHTML
-
-                resolve(node)
               }
+
+              return resolve(node)
             })
           } else {
             // Image isn't relative so there's nothing for us to do.
@@ -474,12 +507,10 @@ module.exports = (
 
               const fileType = getImageInfo(formattedImgTag.url).ext
 
-              // Ignore gifs as we can't process them,
-              // svgs as they are already responsive by definition
+              // Only attempt to convert supported extensions
               if (
                 isRelativeUrl(formattedImgTag.url) &&
-                fileType !== `gif` &&
-                fileType !== `svg`
+                supportedExtensions[fileType]
               ) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,

@@ -1,6 +1,5 @@
 import React from "react"
-import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql, Slice } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
@@ -29,13 +28,15 @@ const Layout = ({ children }) => (
         >
           {children}
         </div>
+        <Slice alias="footer" framework="Gatsby" lang="js"/>
+
+         {/** The slice below doesn't exist but it shouldn't break build */}
+        <Slice alias="this-alias-does-not-exist" allowEmpty/>
+
+         {/** Insert this here and expect it to fail   <Slice alias="this-alias-does-not-exist-too"/>*/}
       </>
     )}
   />
 )
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
 
 export default Layout

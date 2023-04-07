@@ -1,9 +1,9 @@
-import { Location } from "history"
+import { Path } from "history"
 const STATE_KEY_PREFIX = `@@scroll|`
 const GATSBY_ROUTER_SCROLL_STATE = `___GATSBY_REACT_ROUTER_SCROLL`
 
 export class SessionStorage {
-  read(location: Location, key: string): number {
+  read(location: Path, key: string): number {
     const stateKey = this.getStateKey(location, key)
 
     try {
@@ -28,7 +28,7 @@ export class SessionStorage {
     }
   }
 
-  save(location: Location, key: string, value: number): void {
+  save(location: Path, key: string, value: number): void {
     const stateKey = this.getStateKey(location, key)
     const storedValue = JSON.stringify(value)
 
@@ -50,7 +50,7 @@ export class SessionStorage {
     }
   }
 
-  getStateKey(location: Location, key: string): string {
+  getStateKey(location: Path, key: string): string {
     const stateKeyBase = `${STATE_KEY_PREFIX}${location.pathname}`
     return key === null || typeof key === `undefined`
       ? stateKeyBase

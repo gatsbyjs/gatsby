@@ -1,0 +1,20 @@
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="744.094" height="1052.362" focusable="false">
+  <defs>
+    <clipPath id="a">
+      <path d="M100 100h25v25h-25z"/>
+    </clipPath>
+    <clipPath id="c">
+      <path d="M200 200h25v25h-25z"/>
+    </clipPath>
+    <filter id="b">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+  <g transform="scale(2)">
+    <path clip-path="url(#a)" fill="red" filter="url(#b)" d="M100 100h50v50h-50z"/>
+    <path stroke="#000" fill="none" d="M100 100h50v50h-50z"/>
+    <svg x="100" y="100" width="300" height="300" viewBox="0 0 600 600">
+      <path clip-path="url(#c)" transform="scale(.5)" fill="#00f" filter="url(#b)" d="M200 200h50v50h-50z"/>
+    </svg>
+  </g>
+</svg>

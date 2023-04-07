@@ -76,6 +76,7 @@ module.exports = {
     `features/regexp`,
     `features/symbol`,
     `features/promise`,
+    `features/dom-collections`,
   ],
   // Will be used by preset-env to exclude already polyfilled features from the automatic polyfilling option
   CORE_JS_POLYFILL_EXCLUDE_LIST: [

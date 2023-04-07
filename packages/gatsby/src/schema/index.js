@@ -2,12 +2,13 @@
 
 const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
-const { getNodesByType, getTypes } = require(`../redux/nodes`)
+const { getDataStore, getTypes } = require(`../datastore`)
 const { createSchemaComposer } = require(`./schema-composer`)
-const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
+const { buildSchema } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
+const { shouldPrintEngineSnapshot } = require(`../utils/engines-helpers`)
 
 const getAllTypeDefinitions = () => {
   const {
@@ -59,18 +60,48 @@ const buildInferenceMetadata = ({ types }) =>
     // TODO: use async iterators when we switch to node>=10
     //  or better investigate if we can offload metadata building to worker/Jobs API
     //  and then feed the result into redux?
-    const processNextType = () => {
+    const processNextType = async () => {
       const typeName = typeNames.pop()
-      store.dispatch({
-        type: `BUILD_TYPE_METADATA`,
-        payload: {
-          typeName,
-          nodes: getNodesByType(typeName),
-        },
-      })
+
+      let processingNodes = []
+      let dispatchCount = 0
+      function dispatchNodes() {
+        return new Promise(res => {
+          store.dispatch({
+            type: `BUILD_TYPE_METADATA`,
+            payload: {
+              typeName,
+              // only clear metadata on the first chunk for this type
+              clearExistingMetadata: dispatchCount++ === 0,
+              nodes: processingNodes,
+            },
+          })
+          setImmediate(() => {
+            // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
+            processingNodes = []
+            // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
+            setImmediate(() => {
+              res(null)
+            })
+          })
+        })
+      }
+
+      for (const node of getDataStore().iterateNodesByType(typeName)) {
+        processingNodes.push(node)
+
+        if (processingNodes.length > 1000) {
+          await dispatchNodes()
+        }
+      }
+
+      if (processingNodes.length > 0) {
+        await dispatchNodes()
+      }
+
       if (typeNames.length > 0) {
-        // Give event-loop a break
-        setTimeout(processNextType, 0)
+        // dont block the event loop
+        setImmediate(() => processNextType())
       } else {
         resolve()
       }
@@ -81,24 +112,29 @@ const buildInferenceMetadata = ({ types }) =>
 const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
+  await getDataStore().ready()
 
   if (fullMetadataBuild) {
     // Build metadata for type inference and start updating it incrementally
-    // except for SitePage type: we rebuild it in rebuildWithSitePage anyway
-    // so it makes little sense to update it incrementally
-    // (and those updates may have significant performance overhead)
     await buildInferenceMetadata({ types: getTypes() })
     store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-    store.dispatch({ type: `DISABLE_TYPE_INFERENCE`, payload: [`SitePage`] })
   }
 
   const {
     schemaCustomization: { thirdPartySchemas, printConfig },
     inferenceMetadata,
     config: { mapping: typeMapping },
+    program: { directory },
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
+
+  const enginePrintConfig = shouldPrintEngineSnapshot()
+    ? {
+        path: `${directory}/.cache/schema.gql`,
+        rewrite: true,
+      }
+    : undefined
 
   const fieldExtensions = getAllFieldExtensions()
   const schemaComposer = createSchemaComposer({ fieldExtensions })
@@ -109,6 +145,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     thirdPartySchemas,
     typeMapping,
     printConfig,
+    enginePrintConfig,
     typeConflictReporter,
     inferenceMetadata,
     parentSpan,
@@ -131,53 +168,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
 const rebuild = async ({ parentSpan }) =>
   await build({ parentSpan, fullMetadataBuild: false })
 
-const rebuildWithSitePage = async ({ parentSpan }) => {
-  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
-  const span = tracer.startSpan(
-    `rebuild schema with SitePage context`,
-    spanArgs
-  )
-  await buildInferenceMetadata({ types: [`SitePage`] })
-
-  // Disabling incremental inference for SitePage after the initial build
-  // as it has a significant performance cost for zero benefits.
-  // The only benefit is that schema rebuilds when SitePage.context structure changes.
-  // (one can just restart `develop` in this case)
-  store.dispatch({ type: `DISABLE_TYPE_INFERENCE`, payload: [`SitePage`] })
-
-  const {
-    schemaCustomization: { composer: schemaComposer },
-    config: { mapping: typeMapping },
-    inferenceMetadata,
-  } = store.getState()
-
-  const typeConflictReporter = new TypeConflictReporter()
-
-  const schema = await rebuildSchemaWithSitePage({
-    schemaComposer,
-    fieldExtensions: getAllFieldExtensions(),
-    typeMapping,
-    typeConflictReporter,
-    inferenceMetadata,
-    parentSpan,
-  })
-
-  typeConflictReporter.printConflicts()
-
-  store.dispatch({
-    type: `SET_SCHEMA_COMPOSER`,
-    payload: schemaComposer,
-  })
-  store.dispatch({
-    type: `SET_SCHEMA`,
-    payload: schema,
-  })
-
-  span.finish()
-}
-
 module.exports = {
   build,
   rebuild,
-  rebuildWithSitePage,
 }

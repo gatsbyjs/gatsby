@@ -1,6 +1,7 @@
 *.min.js
 **/node_modules/**
 flow-typed
+deprecated-packages
 
 # webfont demo styles
 **/specimen_files
@@ -21,13 +22,13 @@ packages/**/*.js
 !packages/gatsby-plugin-mdx/**/*.js
 packages/gatsby-plugin-mdx/node_modules/**/*.js
 packages/gatsby/cache-dir/commonjs/**/*.js
-packages/gatsby-admin/public/styles.*
-packages/gatsby/gatsby-admin-public/styles.*
 packages/gatsby-source-wordpress/test-site/**
 
 # fixtures
 **/__testfixtures__/**
 **/__tests__/fixtures/**
+
+!packages/gatsby-worker/src/__tests__/fixtures/**
 
 # coverage
 coverage

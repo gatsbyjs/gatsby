@@ -1,8 +1,6 @@
 import _ from "lodash"
 import semver from "semver"
 
-import sampleSiteForExperiment from "./sample-site-for-experiment"
-
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
@@ -66,6 +64,13 @@ export interface IFlag {
    * (avoids showing unknown flag message and shows "no longer needed" message).
    */
   testFitness: (flag: IFlag) => fitnessEnum
+  /**
+   * Human-readable text explaining requirements for this feature to be available
+   * (e.g. requires Node 14+)
+   *
+   * It is shown to users when testFitness() returns `false` but flag is set in gatsby-config.js
+   */
+  requires?: string
   includedFlags?: Array<string>
   umbrellaIssue?: string
   noCI?: boolean
@@ -78,12 +83,8 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastDev`,
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time`,
-    includedFlags: [
-      `DEV_SSR`,
-      `PRESERVE_FILE_DOWNLOAD_CACHE`,
-      `PRESERVE_WEBPACK_CACHE`,
-    ],
+    description: `Enable all experiments aimed at improving develop server start time & develop DX.`,
+    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -94,56 +95,6 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (): fitnessEnum => {
-      if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
-  },
-  {
-    name: `QUERY_ON_DEMAND`,
-    env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
-    umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
-    name: `LAZY_IMAGES`,
-    env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
-    umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => {
-      const semverConstraints = {
-        // Because of this, this flag will never show up
-        "gatsby-plugin-sharp": `>=2.10.0`,
-      }
-      if (satisfiesSemvers(semverConstraints)) {
-        return `LOCKED_IN`
-      } else {
-        // gatsby-plugin-sharp is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
-    },
-  },
-  {
-    name: `PRESERVE_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
-    command: `all`,
-    telemetryId: `PreserveWebpackCache`,
-    experimental: false,
-    description: `Don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -165,6 +116,41 @@ const activeFlags: Array<IFlag> = [
     description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
     umbrellaIssue: `https://gatsby.dev/parallel-sourcing-feedback`,
     testFitness: (): fitnessEnum => true,
+  },
+  {
+    name: `DETECT_NODE_MUTATIONS`,
+    env: `GATSBY_DETECT_NODE_MUTATIONS`,
+    command: `all`,
+    telemetryId: `DetectNodeMutations`,
+    description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.`,
+    experimental: false,
+    testFitness: (): fitnessEnum => true,
+  },
+  {
+    name: `PARTIAL_HYDRATION`,
+    env: `GATSBY_PARTIAL_HYDRATION`,
+    command: `build`,
+    telemetryId: `PartialHydration`,
+    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
+    umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
+    experimental: true,
+    testFitness: (): fitnessEnum => {
+      const v18Constraint = {
+        react: `>=18.0.0`,
+      }
+      const v0Constraint = {
+        react: `^0.0.0`,
+      }
+
+      return (
+        _CFLAGS_.GATSBY_MAJOR === `5` &&
+        (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
+      )
+    },
+    requires:
+      Number(_CFLAGS_.GATSBY_MAJOR) < 5
+        ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
+        : `Partial hydration requires React 18+ to work.`,
   },
 ]
 

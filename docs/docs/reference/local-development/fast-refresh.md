@@ -16,9 +16,9 @@ Fast Refresh is enabled by default in Gatsby's development server and should sho
 
 ## Error Resilience
 
-The Fast Refresh integration is good at catching errors instead of silently failing. Gatsby takes this opportunity to present you with a custom overlay that further explains the error and how to resolve it. Once it's resolved Fast Refresh will recover from that state. The overlay will indicate whether it's a compile error, [GraphQL](/docs/glossary#graphql) error, or runtime error.
+The Fast Refresh integration is good at catching errors instead of silently failing. Gatsby takes this opportunity to present you with a custom overlay that further explains the error and how to resolve it. Once it's resolved Fast Refresh will recover from that state. The overlay will indicate whether it's a compile error, [GraphQL](/docs/glossary#graphql) error, runtime error, or `getServerData` error.
 
-![Three error overlays from left to right: Compile error, GraphQL errors, and runtime errors](../../reference/release-notes/v3.0/compile-graphql-runtime-errors.jpg)
+![Four error overlays from left to right, top to bottom: Compile error, GraphQL errors, runtime errors, and getServerData error](../../images/error-overlays.jpg)
 
 ### Compile Errors
 
@@ -33,6 +33,10 @@ GraphQL errors can occur due to a number of reasons, most often due to an error 
 If the runtime error didn't occur during rendering, the component state will be retained. However, if the error happened during rendering, React will remount your application using the updated code.
 
 If you have [error boundaries](https://reactjs.org/docs/error-boundaries) in your application (which is a good idea for graceful failures in production), they will retry rendering on the next edit after a rendering error. This means having an error boundary can prevent you from always getting reset to the root app state. However, keep in mind that error boundaries shouldn't be too granular. They are used by React in production, and should always be designed intentionally.
+
+### `getServerData` Error
+
+These errors originate from your `getServerData` function in your page and can't be dismissed. When using [Server-Side Rendering (SSR)](/docs/reference/rendering-options/server-side-rendering/) your code is run at runtime and will show up on your deployed site. Your own code can be faulty but also third-party requests, e.g. to an external API, thus it's a good idea to add error handling to your function.
 
 ## Limitations
 

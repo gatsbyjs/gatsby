@@ -1,7 +1,5 @@
 import Anser from "anser"
 
-const enterRegex = /^\s$/
-
 export function prettifyStack(errorInformation) {
   let txt
   if (Array.isArray(errorInformation)) {
@@ -9,21 +7,15 @@ export function prettifyStack(errorInformation) {
   } else {
     txt = errorInformation
   }
-  const generated = Anser.ansiToJson(txt, {
+  return Anser.ansiToJson(txt, {
     remove_empty: true,
     use_classes: true,
     json: true,
   })
-  // Sometimes the first line/entry is an "Enter", so we need to filter this out
-  const [firstLine, ...rest] = generated
-  if (enterRegex.test(firstLine.content)) {
-    return rest
-  }
-  return generated
 }
 
 export function openInEditor(file, lineNumber = 1) {
-  window.fetch(
+  fetch(
     `/__open-stack-frame-in-editor?fileName=` +
       window.encodeURIComponent(file) +
       `&lineNumber=` +
@@ -31,16 +23,32 @@ export function openInEditor(file, lineNumber = 1) {
   )
 }
 
-export function getCodeFrameInformation(stackTrace) {
-  const callSite = stackTrace.find(CallSite => CallSite.getFileName())
-  if (!callSite) {
+export function reloadPage() {
+  window.location.reload()
+}
+
+export function skipSSR() {
+  if (`URLSearchParams` in window) {
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.set(`skip-ssr`, `true`)
+    window.location.search = searchParams.toString()
+  }
+}
+
+export function getCodeFrameInformationFromStackTrace(stackTrace) {
+  const stackFrame = stackTrace.find(stackFrame => {
+    const fileName = stackFrame.getFileName()
+    return fileName && fileName !== `[native code]` // Quirk of Safari error stack frames
+  })
+
+  if (!stackFrame) {
     return null
   }
 
-  const moduleId = formatFilename(callSite.getFileName())
-  const lineNumber = callSite.getLineNumber()
-  const columnNumber = callSite.getColumnNumber()
-  const functionName = callSite.getFunctionName()
+  const moduleId = formatFilename(stackFrame.getFileName())
+  const lineNumber = stackFrame.getLineNumber()
+  const columnNumber = stackFrame.getColumnNumber()
+  const functionName = stackFrame.getFunctionName()
 
   return {
     moduleId,

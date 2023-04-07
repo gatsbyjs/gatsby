@@ -1,51 +1,42 @@
 import React from "react"
 import PropTypes from "prop-types"
 import loader, { PageResourceStatus } from "./loader"
-import redirects from "./redirects.json"
+import { maybeGetBrowserRedirect } from "./redirect-utils.js"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { navigate as reachNavigate } from "@gatsbyjs/reach-router"
-import { globalHistory } from "@gatsbyjs/reach-router/lib/history"
+import {
+  navigate as reachNavigate,
+  globalHistory,
+} from "@gatsbyjs/reach-router"
 import { parsePath } from "gatsby-link"
 
-// Convert to a map for faster lookup in maybeRedirect()
-
-const redirectMap = new Map()
-const redirectIgnoreCaseMap = new Map()
-
-redirects.forEach(redirect => {
-  if (redirect.ignoreCase) {
-    redirectIgnoreCaseMap.set(redirect.fromPath, redirect)
-  } else {
-    redirectMap.set(redirect.fromPath, redirect)
-  }
-})
-
 function maybeRedirect(pathname) {
-  let redirect = redirectMap.get(pathname)
-  if (!redirect) {
-    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
-  }
+  const redirect = maybeGetBrowserRedirect(pathname)
+  const { hash, search } = window.location
 
   if (redirect != null) {
-    if (process.env.NODE_ENV !== `production`) {
-      if (!loader.isPageNotFound(pathname)) {
-        console.error(
-          `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
-        )
-      }
-    }
-
-    window.___replace(redirect.toPath)
+    window.___replace(redirect.toPath + search + hash)
     return true
   } else {
     return false
   }
 }
 
+// Catch unhandled chunk loading errors and force a restart of the app.
+let nextRoute = ``
+
+window.addEventListener(`unhandledrejection`, event => {
+  if (/loading chunk \d* failed./i.test(event.reason)) {
+    if (nextRoute) {
+      window.location.pathname = nextRoute
+    }
+  }
+})
+
 const onPreRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
+    nextRoute = location.pathname
     apiRunner(`onPreRouteUpdate`, { location, prevLocation })
   }
 }
@@ -54,7 +45,7 @@ const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
     if (
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND &&
       process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
     ) {
       emitter.emit(`onRouteUpdate`, { location, prevLocation })
@@ -71,23 +62,19 @@ const navigate = (to, options = {}) => {
     return
   }
 
-  let { pathname } = parsePath(to)
-  let redirect = redirectMap.get(pathname)
-  if (!redirect) {
-    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
-  }
+  const { pathname, search, hash } = parsePath(to)
+  const redirect = maybeGetBrowserRedirect(pathname)
 
   // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.
   if (redirect) {
-    to = redirect.toPath
-    pathname = parsePath(to).pathname
+    to = redirect.toPath + search + hash
   }
 
   // If we had a service worker update, no matter the path, reload window and
   // reset the pathname whitelist
   if (window.___swUpdated) {
-    window.location = pathname
+    window.location = pathname + search + hash
     return
   }
 
@@ -100,7 +87,7 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.loadPage(pathname).then(pageResources => {
+  loader.loadPage(pathname + search).then(pageResources => {
     // If no page resources, then refresh the page
     // Do this, rather than simply `window.location.reload()`, so that
     // pressing the back/forward buttons work - otherwise when pressing
@@ -132,7 +119,7 @@ const navigate = (to, options = {}) => {
           })
         }
 
-        window.location = pathname
+        window.location = pathname + search + hash
       }
     }
     reachNavigate(to, options)
@@ -183,9 +170,6 @@ function init() {
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)
-
-  // Check for initial page-load redirect
-  maybeRedirect(window.location.pathname)
 }
 
 class RouteAnnouncer extends React.Component {
@@ -270,4 +254,4 @@ RouteUpdates.propTypes = {
   location: PropTypes.object.isRequired,
 }
 
-export { init, shouldUpdateScroll, RouteUpdates }
+export { init, shouldUpdateScroll, RouteUpdates, maybeGetBrowserRedirect }

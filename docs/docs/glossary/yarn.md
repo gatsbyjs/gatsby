@@ -8,7 +8,7 @@ Learn what the _Yarn_ package manager is, how to use it, and how it fits in to t
 
 ## What is Yarn?
 
-Yarn is a package manager for the [Node.js](/docs/glossary/node) JavaScript runtime. It's an alternative to Node's standard package manager, [npm](/docs/glossary/npm). [Contributing](/contributing/setting-up-your-local-dev-environment/) to Gatsby core requires Yarn. Gatsby core uses Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature to manage dependencies. Gatsby [theme development](/tutorial/building-a-theme/) also uses Yarn workspaces. For Gatsby site development, you can use Yarn or npm.
+Yarn is a package manager for the [Node.js](/docs/glossary/node) JavaScript runtime. It's an alternative to Node's standard package manager, [npm](/docs/glossary/npm). [Contributing](/contributing/code-contributions#setting-up-your-local-dev-environment) to Gatsby core requires Yarn. Gatsby core uses Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature to manage dependencies. Gatsby [theme development](/tutorial/building-a-theme/) also uses Yarn workspaces. For Gatsby site development, you can use Yarn or npm.
 
 > **Note:** Most tutorials and site development examples from the Gatsby docs use npm. To avoid confusion and possible conflicts with your dependencies, Gatsby recommends using npm for site development.
 
@@ -62,4 +62,4 @@ Using Yarn to install packages generates a `yarn.lock` file. The `yarn.lock` tra
 - [Building a Theme](/tutorial/building-a-theme/)
 - [Gatsby Theme Authoring](https://egghead.io/courses/gatsby-theme-authoring) from egghead.io
 - [How to change your default package manager for your next project?](/docs/reference/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) from the Gatsby CLI docs
-- [Setting Up Your Local Dev Environment](/contributing/setting-up-your-local-dev-environment/) for contributions to the Gatsby project
+- [Setting Up Your Local Dev Environment](/contributing/code-contributions#setting-up-your-local-dev-environment) for contributions to the Gatsby project

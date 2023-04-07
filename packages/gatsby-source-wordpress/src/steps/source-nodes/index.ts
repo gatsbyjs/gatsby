@@ -9,40 +9,34 @@ import fetchAndCreateNonNodeRootFields from "./create-nodes/fetch-and-create-non
 import { allowFileDownloaderProgressBarToClear } from "./create-nodes/create-remote-file-node/progress-bar-promise"
 import { sourcePreviews } from "~/steps/preview"
 
-const sourceNodes: Step = async (helpers, pluginOptions) => {
-  const { cache, webhookBody } = helpers
-
-  // if this is a preview we want to process it and return early
-  if (webhookBody.preview) {
-    await sourcePreviews(helpers, pluginOptions)
-
-    return
-  }
-  // if it's not a preview but we have a token
-  // we should source any pending previews then continue sourcing
-  else if (webhookBody.token && webhookBody.userDatabaseId) {
-    await sourcePreviews(helpers, pluginOptions)
-  }
-
-  const now = Date.now()
+const sourceNodes: Step = async helpers => {
+  const { cache, webhookBody, refetchAll } = helpers
 
   // fetch non-node root fields such as settings.
   // For now, we're refetching them on every build
   const nonNodeRootFieldsPromise = fetchAndCreateNonNodeRootFields()
+
+  // if this is a preview we want to process it and return early
+  if (webhookBody.token && webhookBody.userDatabaseId) {
+    await sourcePreviews(helpers)
+    await nonNodeRootFieldsPromise
+    return
+  }
+
+  const now = Date.now()
 
   const lastCompletedSourceTime =
     webhookBody.refreshing && webhookBody.since
       ? webhookBody.since
       : await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  const {
-    schemaWasChanged,
-    foundUsableHardCachedData,
-  } = store.getState().remoteSchema
+  const { schemaWasChanged, foundUsableHardCachedData } =
+    store.getState().remoteSchema
 
   const fetchEverything =
     foundUsableHardCachedData ||
     !lastCompletedSourceTime ||
+    refetchAll ||
     // don't refetch everything in development
     (process.env.NODE_ENV !== `development` &&
       // and the schema was changed

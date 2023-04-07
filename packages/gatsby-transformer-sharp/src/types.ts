@@ -8,7 +8,6 @@ import {
   GraphQLNonNull,
   GraphQLInputFieldConfigMap,
 } from "gatsby/graphql"
-import { Potrace } from "potrace"
 import type Sharp from "sharp"
 
 const sharp: typeof Sharp = require(`./safe-sharp`)
@@ -161,12 +160,12 @@ export const DuotoneGradientType = new GraphQLInputObjectType({
 export const PotraceTurnPolicyType = new GraphQLEnumType({
   name: `PotraceTurnPolicy`,
   values: {
-    TURNPOLICY_BLACK: { value: Potrace.TURNPOLICY_BLACK },
-    TURNPOLICY_WHITE: { value: Potrace.TURNPOLICY_WHITE },
-    TURNPOLICY_LEFT: { value: Potrace.TURNPOLICY_LEFT },
-    TURNPOLICY_RIGHT: { value: Potrace.TURNPOLICY_RIGHT },
-    TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
-    TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
+    TURNPOLICY_BLACK: { value: `black` },
+    TURNPOLICY_WHITE: { value: `white` },
+    TURNPOLICY_LEFT: { value: `left` },
+    TURNPOLICY_RIGHT: { value: `right` },
+    TURNPOLICY_MINORITY: { value: `minority` },
+    TURNPOLICY_MAJORITY: { value: `majority` },
   },
 })
 

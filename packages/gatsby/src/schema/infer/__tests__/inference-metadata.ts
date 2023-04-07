@@ -772,7 +772,7 @@ describe(`Get example value for type inference`, () => {
         },
       },
     ]
-    const nodes = (_nodes as unknown) as Array<Node>
+    const nodes = _nodes as unknown as Array<Node>
     it(`updates example value when nodes are added`, () => {
       let inferenceMetadata = {
         typeName: `IncrementalExampleValue`,

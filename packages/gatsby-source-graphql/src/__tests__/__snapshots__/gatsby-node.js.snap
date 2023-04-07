@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`validation throws on missing fieldName 1`] = `"gatsby-source-graphql requires option \`fieldName\` to be specified"`;
-
-exports[`validation throws on missing typename 1`] = `"gatsby-source-graphql requires option \`typeName\` to be specified"`;
-
-exports[`validation throws on missing url 1`] = `"gatsby-source-graphql requires either option \`url\` or \`createLink\` callback"`;

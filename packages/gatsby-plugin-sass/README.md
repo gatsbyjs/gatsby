@@ -48,7 +48,7 @@ plugins: [
 ]
 ```
 
-If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader):
+If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader).
 **Note:** Gatsby is using `css-loader@^5.0.0`.
 
 ```javascript:title=gatsby-config.js
@@ -59,6 +59,23 @@ plugins: [
       cssLoaderOptions: {
         camelCase: false,
       },
+    },
+  },
+]
+```
+
+### additionalData
+
+Prepends Sass code before the actual entry file. In this case, the `sass-loader` will not override the data option but just prepend the entry's content. You might use this to prepend things like environmental variables (as Sass variables) or even prepend a global Sass import to be used in other Sass files (functions, mixins, variables, etc.).
+
+See [webpack's sass-loader documentation](https://webpack.js.org/loaders/sass-loader/#additionaldata) for reference.
+
+```javascript:title=gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      additionalData: "$env: " + process.env.NODE_ENV + ";",
     },
   },
 ]
@@ -85,7 +102,7 @@ plugins: [
 
 ### Sass Precision
 
-Sass defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
+`sass` intentionally doesn't have support for setting a custom `precision`. `node-sass` defaults to [5 digits of precision](https://github.com/sass/node-sass#precision). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
 
 #### Bootstrap 4
 
@@ -96,6 +113,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
+      implementation: require("node-sass"),
       postCssPlugins: [somePostCssPlugin()],
       sassOptions: {
         precision: 6,
@@ -114,6 +132,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
+      implementation: require("node-sass"),
       postCssPlugins: [somePostCssPlugin()],
       sassOptions: {
         precision: 8,

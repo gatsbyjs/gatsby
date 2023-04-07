@@ -31,13 +31,10 @@ export async function runStaticQueries({
     }
   )
 
-  activity.start()
   await processStaticQueries(staticQueryIds, {
     state,
     activity,
     graphqlRunner,
     graphqlTracing: program?.graphqlTracing,
   })
-
-  activity.done()
 }

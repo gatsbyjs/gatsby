@@ -42,7 +42,7 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
   return descriptionNode
 }
 
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node
@@ -185,26 +185,23 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   return (
     node.internal.type === `File` &&
     (node.internal.mediaType === `application/javascript` ||
+      node.extension === `jsx` ||
       node.extension === `tsx` ||
       node.extension === `ts`)
   )
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
  */
 exports.onCreateNode = async ({ node, actions, ...helpers }) => {
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return null
-  }
-
   const { createNodeId, createContentDigest } = helpers
   const { createNode, createParentChildLink } = actions
 

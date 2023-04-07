@@ -142,7 +142,7 @@ This next query will pull in a sorted list of the blog posts:
 
 ```graphql
 {
-  allWordpressPost(sort: { fields: [date] }) {
+  allWordpressPost(sort: { date: ASC }) {
     edges {
       node {
         title
@@ -186,7 +186,7 @@ export default function Home({ data }) {
 //highlight-start
 export const pageQuery = graphql`
   query {
-    allWordpressPost(sort: { fields: [date] }) {
+    allWordpressPost(sort: { date: ASC }) {
       edges {
         node {
           title
@@ -215,7 +215,7 @@ To do this, you need to:
 1. Create pages for each blog post
 2. Link up the title on the index page with the post page.
 
-If you haven't already, please read through [Part 7](/docs/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
+If you haven't already, please read through [Part 7](/docs/tutorial/part-7/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
 
 ### Creating pages for each blog post
 
@@ -230,7 +230,7 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     {
-      allWordpressPost(sort: { fields: [date] }) {
+      allWordpressPost(sort: { date: ASC }) {
         edges {
           node {
             title
@@ -247,7 +247,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-Next, [stop and restart](/docs/tutorial/part-zero/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
+Next, [stop and restart](/docs/tutorial/part-0/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
 
 ![Two posts logged to the terminal](./images/wordpress-source-plugin-log.jpg)
 
@@ -299,7 +299,7 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     {
-      allWordpressPost(sort: { fields: [date] }) {
+      allWordpressPost(sort: { date: ASC }) {
         edges {
           node {
             title
@@ -368,7 +368,7 @@ export default function Home({ data }) {
 
 export const pageQuery = graphql`
   query {
-    allWordpressPost(sort: { fields: [date] }) {
+    allWordpressPost(sort: { date: ASC }) {
       edges {
         node {
           title

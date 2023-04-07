@@ -8,9 +8,9 @@ This page was created to collect accessibility information about the Gatsby ecos
 
 ## Gatsby products and services
 
-Gatsbyjs.org is the online home of the open source Gatsby website framework; it includes documentation, tutorials, and guides on how and why to build with Gatsby, as well as a blog, site showcase, and information on how to contribute to the project.
+Gatsbyjs.com contains both the information for the open source Gatsby website framework and for products from Gatsby, Inc. the startup building Gatsby.
 
-Gatsbyjs.com is the business website for Gatsby, Inc. the startup building Gatsby, including our first product, Gatsby Preview: a cloud service allowing team members to collaborate on a Gatsby site in development.
+The former includes documentation, tutorials, and guides on how and why to build with Gatsby, as well as a blog, site showcase, and information on how to contribute to the project. The latter holds information about Gatsby Preview, Gatsby Cloud, and Gatsby Hosting which combined make up a unified cloud platform specifically built for the Gatsby framework.
 
 ## Providing feedback and getting accessibility help
 
@@ -35,7 +35,7 @@ Our current recommendations for accessible CMS platforms are:
 
 For managing and deploying Gatsby sites with accessible tools, we recommend:
 
-- Netlify
+- Gatsby Cloud
 
 To provide feedback for third-party services, you can contact those vendors directly or [write to us](mailto:accessibility@gatsbyjs.com), and we will do our best to pass the information along. We're also interested in hearing about your successes with third-party platforms!
 

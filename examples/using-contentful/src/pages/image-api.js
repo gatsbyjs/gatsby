@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
+
 import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
@@ -8,76 +9,114 @@ const ImageAPI = props => {
   const assets = props.data.allContentfulAsset.edges
   return (
     <Layout>
-      <h1>Image API examples</h1>
-      <p>
-        Gatsby offers rich integration with
-        {` `}
-        <a href="https://www.contentful.com/developers/docs/references/images-api/">
-          {`Contentful's Image API`}
-        </a>
-      </p>
-      <p>
-        Open Graph
-        <em>i</em>
-        QL on your own site to experiment with the following options
-      </p>
-      <h2>Resize</h2>
-      {assets.map(({ node: { title, resize } }) => (
-        <img
-          key={resize.src}
-          alt={title}
-          src={resize.src}
-          width={resize.width}
-          height={resize.height}
+      <div
+        style={{
+          margin: `0 auto`,
+          marginTop: rhythm(1.5),
+          marginBottom: rhythm(1.5),
+          maxWidth: 650,
+          paddingLeft: rhythm(3 / 4),
+          paddingRight: rhythm(3 / 4),
+        }}
+      >
+        <h1>Image API examples</h1>
+        <p>
+          Gatsby offers rich integration with
+          {` `}
+          <a href="https://www.contentful.com/developers/docs/references/images-api/">
+            {`Contentful's Image API`}
+          </a>
+        </p>
+        <p>
+          Images can be display with three different layouts. Learn more about
+          them in the{` `}
+          <a href="https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#layout">
+            reference of gatsby-plugin-image
+          </a>
+        </p>
+        <ul>
+          <li>
+            <a href="#constrained">Constrained</a>
+          </li>
+          <li>
+            <a href="#fixed">Fixed</a>
+          </li>
+          <li>
+            <a href="#full-width">Full width</a>
+          </li>
+        </ul>
+        <p>
+          All placeholder variants are supported as well. See more at the
+          <a href="https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#placeholder">
+            reference of gatsby-plugin-image
+          </a>
+        </p>
+        <ul>
+          <li>
+            <a href="#blurred">Blurred</a>
+          </li>
+          <li>
+            <a href="#traced">Traced SVG</a>
+          </li>
+        </ul>
+        <h2 id="traced">Constrained</h2>
+        <p>
+          This is the default layout. It displays the image at the size of the
+          source image, or you can set a maximum size by passing in{` `}
+          <strong>width</strong> or
+          <strong>height</strong>). If the screen or container size is less than
+          the width of the image, it scales down to fit, maintaining its aspect
+          ratio. It generates smaller versions of the image so that a mobile
+          browser doesn’t need to load the full-size image.
+        </p>
+        <div
           style={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: rhythm(1 / 2),
-            border: `1px solid tomato`,
+            display: `grid`,
+            gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
+            gap: rhythm(1),
           }}
-        />
-      ))}
-      <h4>GraphQL query</h4>
-      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
-        <code
-          dangerouslySetInnerHTML={{
-            __html: `{
+        >
+          {assets.map(({ node: { id, title, constrained } }) => (
+            <div key={id}>
+              <GatsbyImage
+                image={constrained}
+                alt={title}
+                style={{ border: `1px solid red` }}
+              />
+            </div>
+          ))}
+        </div>
+        <h4>GraphQL query</h4>
+        <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+          <code
+            dangerouslySetInnerHTML={{
+              __html: `{
   allContentfulAsset {
     edges {
       node {
         title
-        resize(width: 100) {
-          src
-          width
-          height
-        }
+        gatsbyImageData(layout: CONSTRAINED, width: 186)
       }
     }
   }
 }`,
-          }}
-        />
-      </pre>
+            }}
+          />
+        </pre>
 
-      <h2>Fixed</h2>
-      <p>
-        If you make queries with <code>fixed</code> then Gatsby automatically
-        generates images with 1x, 1.5x, 2x, and 3x versions so your images look
-        great on whatever screen resolution of device {`they're`} on.
-      </p>
-      <p>
-        If {`you're`} on a retina class screen, notice how much sharper these
-        images are than the above {`"resized"`} images.
-      </p>
-      <p>
-        You should prefer this operator over <code>resize</code>.
-      </p>
-      {assets.map(({ node: { title, fixed } }) => (
-        <div key={fixed.src} style={{ display: `inline-block` }}>
-          <Img
-            key={fixed.src}
+        <h2 id="fixed">Fixed</h2>
+        <p>
+          This is a fixed-size image. It will always display at the same size,
+          and will not shrink to fit its container. This is either the size of
+          the source image, or the size set by the width and height props. Only
+          use this if you are certain that the container will never need to be
+          narrower than the image.
+        </p>
+        {assets.map(({ node: { id, title, fixed } }) => (
+          <GatsbyImage
+            key={id}
             alt={title}
-            fixed={fixed}
-            backgroundColor
+            image={fixed}
             style={{
               marginRight: rhythm(1 / 2),
               marginBottom: rhythm(1 / 2),
@@ -85,112 +124,44 @@ const ImageAPI = props => {
               display: `inline-block`,
             }}
           />
-        </div>
-      ))}
-      <h4>GraphQL query</h4>
-      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
-        <code
-          dangerouslySetInnerHTML={{
-            __html: `{
+        ))}
+        <h4>GraphQL query</h4>
+        <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+          <code
+            dangerouslySetInnerHTML={{
+              __html: `{
   allContentfulAsset {
     edges {
       node {
         title
-        fixed(width: 100) {
-          width
-          height
-          src
-          srcSet
-        }
+        gatsbyImageData(layout: FIXED, width: 100, height: 100)
       }
     }
   }
 }`,
-          }}
-        />
-      </pre>
-
-      <h2>Resizing</h2>
-      <p>
-        On both resize and fixed you can also add a{` `}
-        <code>height</code>
-        {` `}
-        argument to the GraphQL argument to crop the image to a certain size.
-      </p>
-      <p>
-        You can also set the
-        {` `}
-        <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/change-the-resizing-behavior">
-          resizing behavior
-        </a>
-        {` `}
-        and
-        {` `}
-        <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-focus-area-for-resizing">
-          resizing focus area
-        </a>
-      </p>
-      {assets.map(({ node: { title, resizing } }) => (
-        <div key={resizing.src} style={{ display: `inline-block` }}>
-          <Img
-            alt={title}
-            fixed={resizing}
-            style={{
-              marginRight: rhythm(1 / 2),
-              marginBottom: rhythm(1 / 2),
-              border: `1px solid tomato`,
             }}
           />
-        </div>
-      ))}
-      <h4>GraphQL query</h4>
-      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
-        <code
-          dangerouslySetInnerHTML={{
-            __html: `{
-  allContentfulAsset {
-    edges {
-      node {
-        title
-        fixed(width: 100, height: 100) {
-          width
-          height
-          src
-          srcSet
-        }
-      }
-    }
-  }
-}`,
-          }}
-        />
-      </pre>
+        </pre>
 
-      <h2>Fluid</h2>
-      <p>
-        This GraphQL option allows you to generate responsive images that
-        automatically respond to different device screen resolution and widths.
-        E.g. a smartphone browser will download a much smaller image than a
-        desktop device.
-      </p>
-      <p>
-        Instead of specifying a width and height, with <code>fluid</code> you
-        specify a{` `}
-        <code>maxWidth</code>, the max width the container of the images
-        reaches.
-      </p>
-      {assets.map(({ node: { title, fluid } }) => (
-        <Img
-          key={fluid.src}
-          alt={title}
-          fluid={fluid}
-          style={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: rhythm(1 / 2),
-            border: `1px solid tomato`,
-          }}
-        />
-      ))}
+        <h2 id="full-width">Full width</h2>
+        <p>
+          Use this for images that are always displayed at the full width of the
+          screen, such as banners or hero images. Like the constrained layout,
+          this resizes to fit the container. However it is not restricted to a
+          maximum size, so will grow to fill the container however large it is,
+          maintaining its aspect ratio. It generates several smaller image sizes
+          for different screen breakpoints, so that the browser only needs to
+          load one large enough to fit the screen. You can pass a breakpoints
+          prop if you want to specify the sizes to use, though in most cases you
+          can allow it to use the default.
+        </p>
+      </div>
+      <GatsbyImage
+        key={assets[1].node.id}
+        alt={assets[1].node.title}
+        image={assets[1].node.fullWidth}
+        style={{}}
+      />
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -200,10 +171,7 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        fluid(maxWidth: 613) {
-          src
-          srcSet
-        }
+        gatsbyImageData(layout: FULL_WIDTH)
       }
     }
   }
@@ -211,42 +179,28 @@ const ImageAPI = props => {
           }}
         />
       </pre>
-      <h2>WebP Images</h2>
+      <h2 id="dominant">Dominant color previews</h2>
       <p>
-        WebP is an image format that provides lossy and lossless compression
-        that may be better than JPEG or PNG. The <code>srcWebp</code> and
-        {` `}
-        <code>srcSetWebp</code> fields are available for
-        {` `}
-        <code>fixed</code> and <code>fluid</code> queries.
+        This calculates the dominant color of the source image and uses it as a
+        solid background color.
       </p>
-      <p>
-        WebP is currently only supported in
-        {` `}
-        <a href="https://caniuse.com/#feat=webp">Chrome and Oprah browsers</a>,
-        and {`you'll`} want to fall back to another format for other clients.
-        When this query is used with
-        {` `}
-        <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">
-          <code>gatsby-image</code>
-        </a>
-        {` `}
-        WebP will be used automatically in browsers that support it.
-      </p>
-      {assets.map(({ node: { title, webp } }) => (
-        <div key={webp.src} style={{ display: `inline-block` }}>
-          <Img
-            key={webp.src}
-            alt={title}
-            fixed={webp}
-            style={{
-              marginRight: rhythm(1 / 2),
-              marginBottom: rhythm(1 / 2),
-              border: `1px solid tomato`,
-            }}
-          />
-        </div>
-      ))}
+      <div
+        style={{
+          display: `grid`,
+          gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
+          gap: rhythm(1),
+        }}
+      >
+        {assets.map(({ node: { id, title, dominant } }) => (
+          <div key={id}>
+            <GatsbyImage
+              image={dominant}
+              alt={title}
+              style={{ border: `1px solid red` }}
+            />
+          </div>
+        ))}
+      </div>
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -256,14 +210,11 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        fixed(width: 100) {
-          width
-          height
-          src
-          srcSet
-          srcWebp
-          srcSetWebp
-        }
+        gatsbyImageData(
+          layout: CONSTRAINED
+          placeholder: DOMINANT_COLOR
+          width: 186
+        )
       }
     }
   }
@@ -271,24 +222,28 @@ const ImageAPI = props => {
           }}
         />
       </pre>
-      <h2>Traced SVG previews</h2>
+      <h2 id="blurred">Blurred previews</h2>
       <p>
-        You can show a traced SVG preview to your users. This works equivalent
-        to the responsive fluid feature except that you have to use the
-        GatsbyContentfulFixed_tracedSVG fragment
+        This generates a very low-resolution version of the source image and
+        displays it as a blurred background.
       </p>
-      {assets.map(({ node: { title, traced } }) => (
-        <Img
-          key={traced.src}
-          alt={title}
-          fluid={traced}
-          style={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: rhythm(1 / 2),
-            border: `1px solid tomato`,
-          }}
-        />
-      ))}
+      <div
+        style={{
+          display: `grid`,
+          gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
+          gap: rhythm(1),
+        }}
+      >
+        {assets.map(({ node: { id, title, blurred } }) => (
+          <div key={id}>
+            <GatsbyImage
+              image={blurred}
+              alt={title}
+              style={{ border: `1px solid red` }}
+            />
+          </div>
+        ))}
+      </div>
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -298,9 +253,55 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        fluid(maxWidth: 614) {
-          ...GatsbyContentfulFluid_tracedSVG
-        }
+        gatsbyImageData(
+          layout: CONSTRAINED
+          placeholder: BLURRED
+          width: 186
+        )
+      }
+    }
+  }
+}`,
+          }}
+        />
+      </pre>
+      <h2 id="traced">Traced SVG previews</h2>
+      <p>
+        This generates a simplified, flat SVG version of the source image, which
+        it displays as a placeholder. This works well for images with simple
+        shapes or that include transparency.
+      </p>
+      <div
+        style={{
+          display: `grid`,
+          gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
+          gap: rhythm(1),
+        }}
+      >
+        {assets.map(({ node: { id, title, traced } }) => (
+          <div key={id}>
+            <GatsbyImage
+              image={traced}
+              alt={title}
+              style={{ border: `1px solid red` }}
+            />
+          </div>
+        ))}
+      </div>
+      <h4>GraphQL query</h4>
+      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: `{
+  allContentfulAsset {
+    edges {
+      node {
+        title
+        gatsbyImageData(
+          layout: CONSTRAINED
+          placeholder: TRACED_SVG
+          width: 186
+        )
       }
     }
   }
@@ -320,26 +321,25 @@ export const pageQuery = graphql`
       edges {
         node {
           title
-          resize(width: 100) {
-            src
-            width
-            height
-          }
-          fixed(width: 100) {
-            ...GatsbyContentfulFixed_noBase64
-          }
-          resizing: fixed(width: 100, height: 100) {
-            ...GatsbyContentfulFixed_noBase64
-          }
-          webp: fixed(width: 100) {
-            ...GatsbyContentfulFixed_withWebp_noBase64
-          }
-          fluid(maxWidth: 613) {
-            ...GatsbyContentfulFluid_noBase64
-          }
-          traced: fluid(maxWidth: 614) {
-            ...GatsbyContentfulFluid_tracedSVG
-          }
+          id
+          constrained: gatsbyImageData(layout: CONSTRAINED, width: 186)
+          fixed: gatsbyImageData(layout: FIXED, width: 100, height: 100)
+          fullWidth: gatsbyImageData(layout: FULL_WIDTH)
+          dominant: gatsbyImageData(
+            layout: CONSTRAINED
+            placeholder: DOMINANT_COLOR
+            width: 186
+          )
+          blurred: gatsbyImageData(
+            layout: CONSTRAINED
+            placeholder: BLURRED
+            width: 186
+          )
+          traced: gatsbyImageData(
+            layout: CONSTRAINED
+            placeholder: TRACED_SVG
+            width: 186
+          )
         }
       }
     }

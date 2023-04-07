@@ -1,3 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
+
+// @ts-check
 import React from "react"
 import { render } from "@testing-library/react"
 import { renderRichText } from "gatsby-source-contentful/rich-text"
@@ -427,7 +432,12 @@ const references = [
 describe(`rich text`, () => {
   test(`renders with default options`, () => {
     const { container } = render(
-      renderRichText({ raw: cloneDeep(raw), references: cloneDeep(references) })
+      <>
+        {renderRichText({
+          raw: cloneDeep(raw),
+          references: cloneDeep(references),
+        })}
+      </>
     )
     expect(container).toMatchSnapshot()
   })
@@ -506,10 +516,12 @@ describe(`rich text`, () => {
       },
     }
     const { container } = render(
-      renderRichText(
-        { raw: cloneDeep(raw), references: cloneDeep(references) },
-        options
-      )
+      <>
+        {renderRichText(
+          { raw: cloneDeep(raw), references: cloneDeep(references) },
+          options
+        )}
+      </>
     )
     expect(container).toMatchSnapshot()
   })

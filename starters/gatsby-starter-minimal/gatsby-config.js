@@ -1,5 +1,9 @@
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
 module.exports = {
-    plugins: [
-
-    ]
+  siteMetadata: {
+    siteUrl: `https://www.yourdomain.tld`,
+  },
+  plugins: [],
 }

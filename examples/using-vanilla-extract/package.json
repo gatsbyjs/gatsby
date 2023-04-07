@@ -1,0 +1,31 @@
+{
+  "name": "using-vanilla-extract",
+  "version": "1.0.0",
+  "private": true,
+  "description": "using-vanilla-extract",
+  "author": "Jude Agboola",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vanilla-extract/css": "^1.9.2",
+    "@vanilla-extract/webpack-plugin": "^2.2.0",
+    "gatsby": "next",
+    "gatsby-plugin-vanilla-extract": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.10",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "typescript": "^4.6.2"
+  }
+}

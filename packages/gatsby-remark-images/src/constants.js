@@ -9,6 +9,7 @@ exports.DEFAULT_OPTIONS = {
   withAvif: false,
   tracedSVG: false,
   loading: `lazy`,
+  decoding: `async`,
   disableBgImageOnAlpha: false,
   disableBgImage: false,
 }

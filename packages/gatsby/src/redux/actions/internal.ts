@@ -16,39 +16,62 @@ import {
   IPageQueryRunAction,
   IRemoveStaleJobAction,
   ISetSiteConfig,
+  ISetSiteFunctions,
+  IGatsbyState,
   IDefinitionMeta,
   ISetGraphQLDefinitionsAction,
   IQueryStartAction,
   IApiFinishedAction,
   IQueryClearDirtyQueriesListToEmitViaWebsocket,
+  ICreateJobV2FromInternalAction,
+  ICreatePageDependencyActionPayloadType,
+  IDeleteNodeManifests,
+  IClearGatsbyImageSourceUrlAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
 import { didYouMean } from "../../utils/did-you-mean"
+import {
+  enqueueJob,
+  InternalJob,
+  removeInProgressJob,
+  getInProcessJobPromise,
+} from "../../utils/jobs/manager"
+import { getEngineContext } from "../../utils/engine-context"
 
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.
  * @private
  */
-export const createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string; nodeId?: string; connection?: string },
+export const createPageDependencies = (
+  payload: Array<ICreatePageDependencyActionPayloadType>,
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: payload.map(({ path, nodeId, connection }) => {
+      return {
+        path,
+        nodeId,
+        connection,
+      }
+    }),
   }
 }
+
+/**
+ * Create a dependency between a page and data. Probably for
+ * internal use only.
+ *
+ * Shorthand for createPageDependencies.
+ * @private
+ */
+export const createPageDependency = (
+  payload: ICreatePageDependencyActionPayloadType,
+  plugin = ``
+): ICreatePageDependencyAction => createPageDependencies([payload], plugin)
 
 /**
  * Delete dependencies between an array of pages and data. Probably for
@@ -97,8 +120,8 @@ export const apiFinished = (
 }
 
 /**
- * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
- * components, it calls this to store the query with its component.
+ * When the query watcher extracts a "static" GraphQL query from useStaticQuery
+ * it calls this to store the query with its component.
  * @private
  */
 export const replaceStaticQuery = (
@@ -256,11 +279,12 @@ export const queryStart = (
   }
 }
 
-export const clearDirtyQueriesListToEmitViaWebsocket = (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
-  return {
-    type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
+export const clearDirtyQueriesListToEmitViaWebsocket =
+  (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
+    return {
+      type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
+    }
   }
-}
 
 /**
  * Remove jobs which are marked as stale (inputPath doesn't exists)
@@ -287,7 +311,7 @@ export const removeStaleJob = (
  */
 export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
   const result = gatsbyConfigSchema.validate(config || {})
-  const normalizedPayload: IGatsbyConfig = result.value
+  const normalizedPayload = result.value as IGatsbyConfig
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(
@@ -328,3 +352,96 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
     payload: normalizedPayload,
   }
 }
+
+/**
+ * Set gatsby functions
+ * @private
+ */
+export const setFunctions = (
+  functions: IGatsbyState["functions"]
+): ISetSiteFunctions => {
+  return {
+    type: `SET_SITE_FUNCTIONS`,
+    payload: functions,
+  }
+}
+
+export const deleteNodeManifests = (): IDeleteNodeManifests => {
+  return {
+    type: `DELETE_NODE_MANIFESTS`,
+  }
+}
+
+export const createJobV2FromInternalJob =
+  (internalJob: InternalJob): ICreateJobV2FromInternalAction =>
+  (dispatch, getState): Promise<Record<string, unknown>> => {
+    const jobContentDigest = internalJob.contentDigest
+    const currentState = getState()
+
+    // Check if we already ran this job before, if yes we return the result
+    // We have an inflight (in progress) queue inside the jobs manager to make sure
+    // we don't waste resources twice during the process
+    if (
+      currentState.jobsV2 &&
+      currentState.jobsV2.complete.has(jobContentDigest)
+    ) {
+      return Promise.resolve(
+        currentState.jobsV2.complete.get(jobContentDigest)!.result
+      )
+    }
+    const engineContext = getEngineContext()
+
+    // Always set context, even if engineContext is undefined.
+    // We do this because the final list of jobs for a given engine request includes both:
+    //  - jobs with the same requestId
+    //  - jobs without requestId (technically with requestId === "")
+    //
+    // See https://nodejs.org/dist/latest-v16.x/docs/api/async_context.html#async_context_troubleshooting_context_loss
+    // on cases when async context could be lost.
+    dispatch({
+      type: `SET_JOB_V2_CONTEXT`,
+      payload: {
+        job: internalJob,
+        requestId: engineContext?.requestId ?? ``,
+      },
+    })
+
+    const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
+    if (inProgressJobPromise) {
+      return inProgressJobPromise
+    }
+
+    dispatch({
+      type: `CREATE_JOB_V2`,
+      payload: {
+        job: internalJob,
+      },
+      plugin: { name: internalJob.plugin.name },
+    })
+
+    const enqueuedJobPromise = enqueueJob(internalJob)
+    return enqueuedJobPromise.then(result => {
+      // store the result in redux so we have it for the next run
+      dispatch({
+        type: `END_JOB_V2`,
+        plugin: { name: internalJob.plugin.name },
+        payload: {
+          jobContentDigest,
+          result,
+        },
+      })
+
+      // remove the job from our inProgressJobQueue as it's available in our done state.
+      // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
+      removeInProgressJob(jobContentDigest)
+
+      return result
+    })
+  }
+
+export const clearGatsbyImageSourceUrls =
+  (): IClearGatsbyImageSourceUrlAction => {
+    return {
+      type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
+    }
+  }

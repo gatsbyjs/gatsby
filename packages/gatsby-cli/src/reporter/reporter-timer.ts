@@ -2,7 +2,7 @@
  * This module is used when calling reporter.
  * these logs
  */
-import * as reporterActions from "./redux/actions"
+import * as reporterActionsForTypes from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
@@ -14,16 +14,18 @@ interface ICreateTimerReporterArguments {
   id: string
   span: Span
   reporter: typeof gatsbyReporter
+  reporterActions: typeof reporterActionsForTypes
+  pluginName?: string
 }
 
 export interface ITimerReporter {
   start(): void
   setStatus(statusText: string): void
   panicOnBuild(
-    arg: any,
-    ...otherArgs: Array<any>
+    errorMeta: ErrorMeta,
+    error?: Error | Array<Error>
   ): IStructuredError | Array<IStructuredError>
-  panic(arg: any, ...otherArgs: Array<any>): void
+  panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): never
   end(): void
   span: Span
 }
@@ -33,6 +35,8 @@ export const createTimerReporter = ({
   id,
   span,
   reporter,
+  reporterActions,
+  pluginName,
 }: ICreateTimerReporterArguments): ITimerReporter => {
   return {
     start(): void {
@@ -60,10 +64,10 @@ export const createTimerReporter = ({
         id,
       })
 
-      return reporter.panicOnBuild(errorMeta, error)
+      return reporter.panicOnBuild(errorMeta, error, pluginName)
     },
 
-    panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): void {
+    panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): never {
       span.finish()
 
       reporterActions.endActivity({
@@ -71,7 +75,7 @@ export const createTimerReporter = ({
         status: ActivityStatuses.Failed,
       })
 
-      return reporter.panic(errorMeta, error)
+      return reporter.panic(errorMeta, error, pluginName)
     },
 
     end(): void {

@@ -15,6 +15,7 @@ import store from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
 import prettier from "prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
+import { findNamedTypeName } from "../../create-schema-customization/helpers"
 
 const recursivelyAliasFragments = field =>
   field.inlineFragments.map(fragment => {
@@ -66,9 +67,8 @@ const recursivelyAliasFragments = field =>
       // if any subfields have conflicting types, alias them
 
       if (updatedFragmentField.inlineFragments) {
-        updatedFragmentField.inlineFragments = recursivelyAliasFragments(
-          updatedFragmentField
-        )
+        updatedFragmentField.inlineFragments =
+          recursivelyAliasFragments(updatedFragmentField)
       }
 
       return updatedFragmentField
@@ -151,7 +151,15 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     const nodesField = fieldFields.find(nodeListFilter)
 
     // the type of this query
-    const nodesType = typeMap.get(nodesField.type.ofType.name)
+    const nodesType = typeMap.get(findNamedTypeName(nodesField.type))
+
+    if (!nodesType) {
+      reporter.panic(
+        formatLogMessage(
+          `Couldn't infer node type in the remote schema from the ${name} root field.`
+        )
+      )
+    }
 
     const { fields, possibleTypes } = nodesType
 

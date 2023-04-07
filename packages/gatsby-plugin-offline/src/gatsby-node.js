@@ -133,6 +133,13 @@ exports.onPostBuild = (
     // since these files have unique URLs and their contents will never change
     dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
     runtimeCaching: [
+      // ignore cypress endpoints (only for testing)
+      process.env.CYPRESS_SUPPORT
+        ? {
+            urlPattern: /\/__cypress\//,
+            handler: `NetworkOnly`,
+          }
+        : false,
       {
         // Use cacheFirst since these don't need to be revalidated (same RegExp
         // and same reason as above)
@@ -147,7 +154,8 @@ exports.onPostBuild = (
       },
       {
         // Add runtime caching of various other page resources
-        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        urlPattern:
+          /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `StaleWhileRevalidate`,
       },
       {
@@ -155,7 +163,7 @@ exports.onPostBuild = (
         urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
         handler: `StaleWhileRevalidate`,
       },
-    ],
+    ].filter(Boolean),
     skipWaiting: true,
     clientsClaim: true,
   }

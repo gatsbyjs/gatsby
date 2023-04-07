@@ -69,7 +69,6 @@ export async function writeImages({
   sourceDir,
   createNodeId,
   createNode,
-  store,
   filename,
 }: {
   images: Map<string, IStaticImageProps>
@@ -80,7 +79,6 @@ export async function writeImages({
   sourceDir: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
-  store: Store
   filename: string
 }): Promise<void> {
   const promises = [...images.entries()].map(
@@ -94,8 +92,8 @@ export async function writeImages({
       if (isRemoteURL(src)) {
         let createRemoteFileNode
         try {
-          createRemoteFileNode = require(`gatsby-source-filesystem`)
-            .createRemoteFileNode
+          createRemoteFileNode =
+            require(`gatsby-source-filesystem`).createRemoteFileNode
         } catch (e) {
           reporter.panic(`Please install gatsby-source-filesystem`)
         }
@@ -103,14 +101,12 @@ export async function writeImages({
         try {
           file = await createRemoteFileNode({
             url: src,
-            store,
             cache,
             createNode,
             createNodeId,
-            reporter,
           })
         } catch (err) {
-          reporter.error(`Error loading image ${src}`)
+          reporter.error(`Error loading image ${src}`, err)
           return
         }
         if (

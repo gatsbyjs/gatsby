@@ -2,17 +2,9 @@
 title: Querying Data in Components with the useStaticQuery Hook
 ---
 
-Gatsby v2.1.0 introduces `useStaticQuery`, a new Gatsby feature that provides the ability to use a [React Hook](https://reactjs.org/docs/hooks-intro.html) to query with GraphQL at _build time_.
+`useStaticQuery` provides the ability to use a [React Hook](https://reactjs.org/docs/hooks-intro.html) to query Gatsby's GraphQL data layer at build time. It allows your React components to retrieve data via a GraphQL query that will be parsed, evaluated, and injected into the component.
 
-Just like the [StaticQuery](/docs/how-to/querying-data/static-query/) component, it allows your React components to retrieve data via a GraphQL query that will be parsed, evaluated, and injected into the component. However, `useStaticQuery` is a hook rather than a component that takes a render prop!
-
-In this guide, you will walk through an example using `useStaticQuery`. If you're not familiar with static queries in Gatsby, you might want to check out [the difference between a static query and a page query](/docs/how-to/querying-data/static-query/#how-staticquery-differs-from-page-query).
-
-## How to use useStaticQuery in components
-
-> 💡 You'll need React and ReactDOM 16.8.0 or later to use `useStaticQuery`.
->
-> 📦 `npm install react@^16.8.0 react-dom@^16.8.0`
+## Directions
 
 `useStaticQuery` is a React Hook. All the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html) apply.
 
@@ -90,7 +82,29 @@ export default function Home() {
 }
 ```
 
-## Known Limitations
+## Differences between page queries & static queries
+
+Static queries differ from Gatsby page queries in a number of ways. For pages, Gatsby is capable of handling queries with variables because of its awareness of page context. However, page queries can only be made in **top-level page components**.
+
+In contrast, static queries do not take variables. This is because static queries are used inside specific components, and can appear lower in the component tree. Data fetched with a static query won't be dynamic (i.e. **they can't use variables**, hence the name "static" query), but they can be called at any level in the component tree.
+
+Static queries thus have these limitations:
 
 - `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
-- Because of how queries currently work in Gatsby, we support only a single instance of `useStaticQuery` in a file
+- Because of how queries currently work in Gatsby, Gatsby supports only a single instance of `useStaticQuery` in a file
+
+## Other limitations
+
+### Must be in `src` directory
+
+`useStaticQuery` must be used in files that are nested below your site's top-level `src` directory. For example:
+
+`useStaticQuery` works in these files:
+
+- `<SITE_ROOT>/src/my-page.js`
+- `<SITE_ROOT>/src/components/my-component.js`
+
+`useStaticQuery` **does not** work in these files:
+
+- `<SITE_ROOT>/other-components/other-component.js`
+- `<SITE_ROOT>/other-library/other-component.js`

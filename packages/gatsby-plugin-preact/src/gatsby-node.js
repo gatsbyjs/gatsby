@@ -1,6 +1,21 @@
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 
-exports.onCreateBabelConfig = ({ actions, stage }) => {
+const FRAMEWORK_BUNDLES_PREACT = [
+  `preact`,
+  `react`,
+  `react-dom`,
+  `scheduler`,
+  `prop-types`,
+]
+
+// This regex ignores nested copies of framework libraries so they're bundled with their issuer
+const FRAMEWORK_BUNDLES_REGEX_PREACT = new RegExp(
+  `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES_PREACT.join(
+    `|`
+  )})[\\\\/]`
+)
+
+export function onCreateBabelConfig({ actions, stage }) {
   if (stage === `develop`) {
     // enable react-refresh babel plugin to enable hooks
     // @see https://github.com/JoviDeCroock/prefresh/tree/master/packages/webpack#using-hooks
@@ -11,43 +26,55 @@ exports.onCreateBabelConfig = ({ actions, stage }) => {
   }
 }
 
-exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+export function onCreateWebpackConfig({ stage, actions, getConfig }) {
   const webpackPlugins = []
+  const webpackConfig = getConfig()
+
+  if (webpackConfig.resolve?.alias) {
+    delete webpackConfig.resolve.alias.react
+    delete webpackConfig.resolve.alias[`react-dom`]
+  }
+
   if (stage === `develop`) {
-    webpackPlugins.push(new PreactRefreshPlugin())
+    webpackPlugins.push(
+      new PreactRefreshPlugin({
+        overlay: {
+          module: require.resolve(`gatsby/dist/utils/fast-refresh-module`),
+        },
+      })
+    )
 
     // remove React refresh plugin, we want to add preact refresh instead.
-    const webpackConfig = getConfig()
     webpackConfig.plugins = webpackConfig.plugins.filter(
       plugin => plugin.constructor.name !== `ReactRefreshPlugin`
     )
-    actions.replaceWebpackConfig(webpackConfig)
+
+    // add webpack-hot-middleware/client to the commons entry
+    webpackConfig.entry.commons.unshift(
+      `@gatsbyjs/webpack-hot-middleware/client`
+    )
   }
 
   // add preact to the framework bundle
   if (stage === `build-javascript` || stage === `develop`) {
-    const webpackConfig = getConfig()
     if (
       webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test
     ) {
-      const frameworkRegex =
-        webpackConfig.optimization.splitChunks.cacheGroups.framework.test
-
       // replace react libs with preact
-      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = module =>
-        /(?<!node_modules.*)[\\/]node_modules[\\/](preact)[\\/]/.test(
-          module.resource
-        ) || frameworkRegex.test(module.resource)
-
-      actions.replaceWebpackConfig(webpackConfig)
+      webpackConfig.optimization.splitChunks.cacheGroups.framework.test =
+        FRAMEWORK_BUNDLES_REGEX_PREACT
     }
   }
+
+  actions.replaceWebpackConfig(webpackConfig)
 
   actions.setWebpackConfig({
     resolve: {
       alias: {
         react: `preact/compat`,
+        "react-dom/test-utils": `preact/test-utils`,
         "react-dom": `preact/compat`,
+        "react/jsx-runtime": `preact/jsx-runtime`,
       },
     },
     plugins: webpackPlugins,

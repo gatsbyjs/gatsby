@@ -35,6 +35,14 @@ describe(`gatsby-plugin-stylus`, () => {
       "PostCss plugins": {
         postCssPlugins: [`test1`],
       },
+      "css-loader use commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
   }
 

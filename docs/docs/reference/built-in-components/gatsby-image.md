@@ -39,7 +39,7 @@ _For in-depth install instructions, check out the docs on [Using Gatsby Image](/
 
 ### Gatsby image starts with a query
 
-To feed file data in to Gatsby Image, set up a [GraphQL query](/docs/graphql-reference/) and either pass it into a component as props or write it directly in the component. One technique is to leverage the [`useStaticQuery`](/docs/how-to/querying-data/use-static-query/) hook.
+To feed file data into Gatsby Image, set up a [GraphQL query](/docs/graphql-reference/) and either pass it into a component as props or write it directly in the component. One technique is to leverage the [`useStaticQuery`](/docs/how-to/querying-data/use-static-query/) hook.
 
 Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem](/plugins/gatsby-source-filesystem/), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/), but ultimately the options available to you will depend on your content sources.
 
@@ -294,27 +294,19 @@ GraphQL includes a concept called "query fragments", which are a part of a query
 
 - `GatsbyImageSharpFixed`
 - `GatsbyImageSharpFixed_noBase64`
-- `GatsbyImageSharpFixed_tracedSVG`
 - `GatsbyImageSharpFixed_withWebp`
 - `GatsbyImageSharpFixed_withWebp_noBase64`
-- `GatsbyImageSharpFixed_withWebp_tracedSVG`
 
 #### Fluid images
 
 - `GatsbyImageSharpFluid`
 - `GatsbyImageSharpFluid_noBase64`
-- `GatsbyImageSharpFluid_tracedSVG`
 - `GatsbyImageSharpFluid_withWebp`
 - `GatsbyImageSharpFluid_withWebp_noBase64`
-- `GatsbyImageSharpFluid_withWebp_tracedSVG`
 
 #### About `noBase64`
 
 If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyjs.org/blur-up/), choose the fragment with `noBase64` at the end.
-
-#### About `tracedSVG`
-
-If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.org/traced-svg/), choose the fragment with `tracedSVG` at the end.
 
 #### About `withWebp`
 
@@ -327,7 +319,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
   childImageSharp {
     fluid {
       // highlight-next-line
-      ...GatsbyImageSharpFluid_tracedSVG
+      ...GatsbyImageSharpFluid
     }
   }
 }

@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createResolvers Sets the correct resolvers with downloadImages and with connections 1`] = `
+Array [
+  Array [
+    Object {
+      "__PREFIX__ShopifyCollection": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyProduct": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyProductVariant": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+]
+`;
+
+exports[`createResolvers Sets the correct resolvers with downloadImages and without connections 1`] = `
+Array [
+  Array [
+    Object {
+      "__PREFIX__ShopifyProduct": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyProductVariant": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+]
+`;
+
+exports[`createResolvers Sets the correct resolvers without downloadImages and with connections 1`] = `
+Array [
+  Array [
+    Object {
+      "__PREFIX__ShopifyImage": Object {
+        "gatsbyImageData": Object {
+          "args": Object {
+            "aspectRatio": Object {
+              "description": "If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed.
+If neither width or height is provided, height will be set based on the intrinsic width of the source image.",
+              "type": "Float",
+            },
+            "backgroundColor": Object {
+              "description": "Background color applied to the wrapper, or when \\"letterboxing\\" an image to another aspect ratio.",
+              "type": "String",
+            },
+            "breakpoints": Object {
+              "description": "Specifies the image widths to generate. You should rarely need to change this. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
+based on the image size. For FULL_WIDTH images this can be used to override the default, which is [750, 1080, 1366, 1920].
+It will never generate any images larger than the source.",
+              "type": "[Int]",
+            },
+            "formats": Object {
+              "defaultValue": Array [
+                "",
+                "webp",
+              ],
+              "description": "The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, WEBP and AVIF.
+The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
+both PNG and JPG is not supported and will be ignored.",
+              "type": "[GatsbyImageFormat]",
+            },
+            "height": Object {
+              "description": "If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.",
+              "type": "Int",
+            },
+            "layout": Object {
+              "description": "The layout for the image.
+FIXED: A static image sized, that does not resize according to the screen width
+FULL_WIDTH: The image resizes to fit its container. Pass a \\"sizes\\" option if it isn't going to be the full width of the screen.
+CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.",
+              "type": "GatsbyImageLayout",
+            },
+            "outputPixelDensities": Object {
+              "description": "A list of image pixel densities to generate for FIXED and CONSTRAINED images. You should rarely need to change this. It will never generate images larger than the source, and will always include a 1x image.
+Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide.",
+              "type": "[Float]",
+            },
+            "placeholder": Object {
+              "description": "Format of generated placeholder image, displayed while the main image loads.
+BLURRED: a blurred, low resolution image, encoded as a base64 data URI.
+DOMINANT_COLOR: a solid color, calculated from the dominant color of the image (default).
+TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
+NONE: no placeholder. Set the argument \\"backgroundColor\\" to use a fixed background color.",
+              "type": "GatsbyImagePlaceholder",
+            },
+            "sizes": Object {
+              "description": "The \\"sizes\\" property, passed to the img tag. This describes the display size of the image.
+This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
+container will be the full width of the screen. In these cases we will generate an appropriate value.",
+              "type": "String",
+            },
+            "width": Object {
+              "description": "The display width of the generated image for layout = FIXED, and the display width of the largest image for layout = CONSTRAINED.
+The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
+Ignored if layout = FLUID.",
+              "type": "Int",
+            },
+          },
+          "resolve": [Function],
+          "type": "JSON",
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyCollection": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyProduct": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyProductVariant": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+]
+`;
+
+exports[`createResolvers Sets the correct resolvers without downloadImages and without connections 1`] = `
+Array [
+  Array [
+    Object {
+      "__PREFIX__ShopifyImage": Object {
+        "gatsbyImageData": Object {
+          "args": Object {
+            "aspectRatio": Object {
+              "description": "If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed.
+If neither width or height is provided, height will be set based on the intrinsic width of the source image.",
+              "type": "Float",
+            },
+            "backgroundColor": Object {
+              "description": "Background color applied to the wrapper, or when \\"letterboxing\\" an image to another aspect ratio.",
+              "type": "String",
+            },
+            "breakpoints": Object {
+              "description": "Specifies the image widths to generate. You should rarely need to change this. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
+based on the image size. For FULL_WIDTH images this can be used to override the default, which is [750, 1080, 1366, 1920].
+It will never generate any images larger than the source.",
+              "type": "[Int]",
+            },
+            "formats": Object {
+              "defaultValue": Array [
+                "",
+                "webp",
+              ],
+              "description": "The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, WEBP and AVIF.
+The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
+both PNG and JPG is not supported and will be ignored.",
+              "type": "[GatsbyImageFormat]",
+            },
+            "height": Object {
+              "description": "If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.",
+              "type": "Int",
+            },
+            "layout": Object {
+              "description": "The layout for the image.
+FIXED: A static image sized, that does not resize according to the screen width
+FULL_WIDTH: The image resizes to fit its container. Pass a \\"sizes\\" option if it isn't going to be the full width of the screen.
+CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.",
+              "type": "GatsbyImageLayout",
+            },
+            "outputPixelDensities": Object {
+              "description": "A list of image pixel densities to generate for FIXED and CONSTRAINED images. You should rarely need to change this. It will never generate images larger than the source, and will always include a 1x image.
+Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide.",
+              "type": "[Float]",
+            },
+            "placeholder": Object {
+              "description": "Format of generated placeholder image, displayed while the main image loads.
+BLURRED: a blurred, low resolution image, encoded as a base64 data URI.
+DOMINANT_COLOR: a solid color, calculated from the dominant color of the image (default).
+TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
+NONE: no placeholder. Set the argument \\"backgroundColor\\" to use a fixed background color.",
+              "type": "GatsbyImagePlaceholder",
+            },
+            "sizes": Object {
+              "description": "The \\"sizes\\" property, passed to the img tag. This describes the display size of the image.
+This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
+container will be the full width of the screen. In these cases we will generate an appropriate value.",
+              "type": "String",
+            },
+            "width": Object {
+              "description": "The display width of the generated image for layout = FIXED, and the display width of the largest image for layout = CONSTRAINED.
+The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
+Ignored if layout = FLUID.",
+              "type": "Int",
+            },
+          },
+          "resolve": [Function],
+          "type": "JSON",
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyProduct": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "__PREFIX__ShopifyProductVariant": Object {
+        "metafield": Object {
+          "resolve": [Function],
+        },
+      },
+    },
+  ],
+]
+`;

@@ -1,36 +1,74 @@
 import store from "~/store"
-import { findTypeName } from "~/steps/create-schema-customization/helpers"
+import {
+  findNamedTypeName,
+  getTypeSettingsByType,
+} from "~/steps/create-schema-customization/helpers"
+
+// these types do not work in Gatsby because there's no way to reliably invalidate caches or do partial data updates for them
+const blockListedTypenameParts = [
+  `PluginConnection`,
+  `ThemeConnection`,
+  `ActionMonitorAction`,
+  `EnqueuedScript`,
+  `EnqueuedStylesheet`,
+  `EnqueuedAsset`,
+]
+
+const seenTypesWhileBlockingByParts = {}
+
+function typenamePartIsBlocked(name) {
+  if (seenTypesWhileBlockingByParts[name]) {
+    return seenTypesWhileBlockingByParts[name]
+  }
+
+  const typenameContainsBlocklistedPart = !!blockListedTypenameParts.find(b =>
+    name?.includes(b)
+  )
+
+  seenTypesWhileBlockingByParts[name] = typenameContainsBlocklistedPart
+
+  return typenameContainsBlocklistedPart
+}
 
 const typeIsExcluded = ({ pluginOptions, typeName }) =>
-  pluginOptions &&
-  pluginOptions.type[typeName] &&
-  pluginOptions.type[typeName].exclude
+  typenamePartIsBlocked(typeName) ||
+  (pluginOptions &&
+    pluginOptions.type[typeName] &&
+    pluginOptions.type[typeName].exclude)
 
-const fieldIsExcludedOnParentType = ({ pluginOptions, field, parentType }) => {
-  const allTypeSettings = pluginOptions.type
+const fieldIsExcludedOnAll = ({ pluginOptions, field }) => {
+  const allFieldSettings = pluginOptions?.type?.__all
 
+  if (!allFieldSettings) {
+    return false
+  }
+  return !!allFieldSettings?.excludeFieldNames?.includes(field?.name)
+}
+
+const fieldIsExcludedOnParentType = ({ field, parentType }) => {
   const state = store.getState()
   const { typeMap } = state.remoteSchema
 
-  const fullType = typeMap.get(findTypeName(parentType))
+  const fullType = typeMap.get(findNamedTypeName(parentType))
 
   const parentTypeNodesField = fullType?.fields?.find(
     field => field.name === `nodes`
   )
 
-  const parentTypeNodesFieldTypeName = findTypeName(parentTypeNodesField?.type)
+  const parentTypeNameSettings = getTypeSettingsByType(parentType)
+  const parentTypeNodesFieldTypeNameSettings = getTypeSettingsByType(
+    parentTypeNodesField?.type
+  )
 
   const fieldIsExcludedOnParentType =
     // if this field is excluded on either the parent type
-    allTypeSettings[parentType?.name]?.excludeFieldNames?.includes(
-      field?.name
-    ) ||
+    parentTypeNameSettings?.excludeFieldNames?.includes(field?.name) ||
     // or the parent type has a "nodes" field and that type has this field excluded
-    allTypeSettings[parentTypeNodesFieldTypeName]?.excludeFieldNames?.includes(
+    parentTypeNodesFieldTypeNameSettings?.excludeFieldNames?.includes(
       field?.name
     )
 
   return !!fieldIsExcludedOnParentType
 }
 
-export { typeIsExcluded, fieldIsExcludedOnParentType }
+export { typeIsExcluded, fieldIsExcludedOnAll, fieldIsExcludedOnParentType }

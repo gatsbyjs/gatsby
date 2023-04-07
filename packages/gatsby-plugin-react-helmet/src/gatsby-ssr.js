@@ -13,13 +13,21 @@ export const onRenderBody = ({
   if (setBodyAttributes) {
     setBodyAttributes(helmet.bodyAttributes.toComponent())
   }
-  setHeadComponents([
-    helmet.title.toComponent(),
+
+  const components = [
     helmet.link.toComponent(),
     helmet.meta.toComponent(),
     helmet.noscript.toComponent(),
     helmet.script.toComponent(),
     helmet.style.toComponent(),
     helmet.base.toComponent(),
-  ])
+  ]
+
+  const titleComponent = helmet.title.toComponent()
+
+  setHeadComponents(
+    titleComponent?.[0]?.props?.children
+      ? [titleComponent, ...components]
+      : components
+  )
 }

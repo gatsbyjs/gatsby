@@ -1,11 +1,15 @@
 import store from "~/store"
 import {
   getTypeSettingsByType,
-  findTypeName,
+  findNamedTypeName,
   findTypeKind,
 } from "~/steps/create-schema-customization/helpers"
-import { fieldIsExcludedOnParentType } from "~/steps/ingest-remote-schema/is-excluded"
+import {
+  fieldIsExcludedOnParentType,
+  fieldIsExcludedOnAll,
+} from "~/steps/ingest-remote-schema/is-excluded"
 import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
+import { typeIsExcluded } from "../is-excluded"
 
 export const transformInlineFragments = ({
   possibleTypes,
@@ -57,6 +61,15 @@ export const transformInlineFragments = ({
       const typeSettings = getTypeSettingsByType(type)
 
       if (typeSettings.exclude) {
+        return false
+      }
+
+      if (
+        typeIsExcluded({
+          pluginOptions,
+          typeName: findNamedTypeName(type),
+        })
+      ) {
         return false
       }
 
@@ -162,7 +175,7 @@ export function transformField({
 
   // count the number of times this type has appeared as an ancestor of itself
   // somewhere up the tree
-  const typeName = findTypeName(field.type)
+  const typeName = findNamedTypeName(field.type)
   const typeKind = findTypeKind(field.type)
 
   const typeIncarnationCount = countIncarnations({
@@ -216,15 +229,15 @@ export function transformField({
     return false
   }
 
-  const fieldType = typeMap.get(findTypeName(field.type)) || {}
-  const ofType = typeMap.get(findTypeName(fieldType.ofType)) || {}
+  const fieldType = typeMap.get(findNamedTypeName(field.type)) || {}
+  const ofType = typeMap.get(findNamedTypeName(fieldType.ofType)) || {}
 
   if (
     fieldType.kind === `SCALAR` ||
     fieldType.kind === `ENUM` ||
     (fieldType.kind === `NON_NULL` && ofType.kind === `SCALAR`) ||
     (fieldType.kind === `LIST` && fieldType.ofType.kind === `SCALAR`) ||
-    // a list of enums has no type name, so findTypeName above finds the enum type
+    // a list of enums has no type name, so findNamedTypeName above finds the enum type
     // instead of the field type. Need to explicitly check here
     // instead of using helpers
     (field.type.kind === `LIST` && field.type?.ofType?.kind === `ENUM`)
@@ -249,7 +262,7 @@ export function transformField({
   ) {
     return {
       fieldName: fieldName,
-      fields: [`id`],
+      fields: [`__typename`, `id`],
       fieldType,
     }
   } else if (fieldType.kind === `LIST` && isListOfMediaItems && hasIdField) {
@@ -259,7 +272,7 @@ export function transformField({
       fieldType,
     }
   } else if (fieldType.kind === `LIST`) {
-    const listOfType = typeMap.get(findTypeName(fieldType))
+    const listOfType = typeMap.get(findNamedTypeName(fieldType))
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
@@ -303,39 +316,22 @@ export function transformField({
   const isAGatsbyNode =
     // if this is a gatsby node type
     gatsbyNodesInfo.typeNames.includes(typeName) ||
-    // or this type has a possible type which is a gatsby node type
+    // or all possible types on this type are Gatsby node types
     typeMap
       .get(typeName)
-      ?.possibleTypes?.find(possibleType =>
+      ?.possibleTypes?.every(possibleType =>
         gatsbyNodesInfo.typeNames.includes(possibleType.name)
       )
 
-  const isAMediaItemNode = isAGatsbyNode && typeName === `MediaItem`
-
-  // pull the id and __typename for connections to media item gatsby nodes
-  if (isAMediaItemNode && hasIdField) {
+  if (isAGatsbyNode && hasIdField) {
     return {
       fieldName: fieldName,
       fields: [`__typename`, `id`],
       fieldType,
     }
-  } else if (isAGatsbyNode && hasIdField) {
-    const isAnInterfaceType =
-      // if this is an interface
-      typeKind === `INTERFACE` || fieldType.kind === `INTERFACE`
-
-    return {
-      fieldName: fieldName,
-      fields: isAnInterfaceType
-        ? // we need the typename for interfaces
-          [`id`, `__typename`]
-        : // or just the id for 1:1 connections to gatsby nodes
-          [`id`],
-      fieldType,
-    }
   }
 
-  const typeInfo = typeMap.get(findTypeName(fieldType))
+  const typeInfo = typeMap.get(findNamedTypeName(fieldType))
 
   const { fields } = typeInfo || {}
 
@@ -437,7 +433,7 @@ const createFragment = ({
   mainType,
   buildingFragment = false,
 }) => {
-  const typeName = findTypeName(type)
+  const typeName = findNamedTypeName(type)
 
   if (buildingFragment) {
     // this fragment is inside a fragment that's already being built so we should exit
@@ -451,7 +447,7 @@ const createFragment = ({
   }
 
   const fragmentFields = fields.reduce((fragmentFields, field) => {
-    const fieldTypeName = findTypeName(field.type)
+    const fieldTypeName = findNamedTypeName(field.type)
     const fieldType = typeMap.get(fieldTypeName)
 
     if (
@@ -459,7 +455,7 @@ const createFragment = ({
       // we need to skip this field in the fragment to prevent nesting this type in itself a level down
       fieldType.name !== typeName &&
       fieldType?.fields?.find(
-        innerFieldField => findTypeName(innerFieldField.type) === typeName
+        innerFieldField => findNamedTypeName(innerFieldField.type) === typeName
       )
     ) {
       return fragmentFields
@@ -480,7 +476,7 @@ const createFragment = ({
       buildingFragment: typeName,
     })
 
-    if (findTypeName(field.type) !== typeName && !!transformedField) {
+    if (findNamedTypeName(field.type) !== typeName && !!transformedField) {
       fragmentFields.push(transformedField)
     }
 
@@ -539,11 +535,16 @@ const transformFields = ({
     ?.filter(
       field =>
         !fieldIsExcludedOnParentType({
-          pluginOptions,
           field,
           parentType,
-          mainType,
-          parentField,
+        }) &&
+        !fieldIsExcludedOnAll({
+          pluginOptions,
+          field,
+        }) &&
+        !typeIsExcluded({
+          pluginOptions,
+          typeName: findNamedTypeName(field.type),
         })
     )
     .map(field => {
@@ -568,7 +569,7 @@ const transformFields = ({
         store.dispatch.remoteSchema.addFetchedType(field.type)
       }
 
-      const typeName = findTypeName(field.type)
+      const typeName = findNamedTypeName(field.type)
       const fragment = fragments?.[typeName]
 
       // @todo add any adjacent fields and inline fragments directly to the stored fragment object so this logic can be changed to if (fragment) useTheFragment()
@@ -599,14 +600,15 @@ const transformFields = ({
         })
 
         if (transformedField?.inlineFragments?.length) {
-          transformedField.inlineFragments = transformedField.inlineFragments.filter(
-            fieldInlineFragment =>
-              // yes this is a horrible use of .find(). @todo refactor this for better perf
-              !fragment.inlineFragments.find(
-                fragmentInlineFragment =>
-                  fragmentInlineFragment.name === fieldInlineFragment.name
-              )
-          )
+          transformedField.inlineFragments =
+            transformedField.inlineFragments.filter(
+              fieldInlineFragment =>
+                // yes this is a horrible use of .find(). @todo refactor this for better perf
+                !fragment.inlineFragments.find(
+                  fragmentInlineFragment =>
+                    fragmentInlineFragment.name === fieldInlineFragment.name
+                )
+            )
         }
       }
 
@@ -672,7 +674,7 @@ const recursivelyTransformFields = ({
     return null
   }
 
-  const typeName = findTypeName(parentType)
+  const typeName = findNamedTypeName(parentType)
 
   const grandParentTypeName = ancestorTypeNames.length
     ? ancestorTypeNames[ancestorTypeNames.length - 1]
@@ -686,7 +688,7 @@ const recursivelyTransformFields = ({
     // that only an id needs to be fetched.
     // @todo maybe move this into transformFields() instead of here
     fields = fields.filter(field => {
-      const fieldTypeName = findTypeName(field.type)
+      const fieldTypeName = findNamedTypeName(field.type)
       return fieldTypeName !== grandParentTypeName
     })
   }

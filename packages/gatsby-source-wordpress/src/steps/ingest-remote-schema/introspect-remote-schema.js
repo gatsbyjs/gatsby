@@ -6,15 +6,56 @@ import { setPersistentCache, getPersistentCache } from "~/utils/cache"
 import fetchGraphql from "~/utils/fetch-graphql"
 import { introspectionQuery } from "~/utils/graphql-queries"
 
+/**
+ * Builds the cache key for retrieving cached introspection data
+ */
+const getCachedRemoteIntrospectionDataCacheKey = () => {
+  const state = store.getState()
+  const { pluginOptions } = state.gatsbyApi
+
+  const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-data`
+
+  return INTROSPECTION_CACHE_KEY
+}
+
+/**
+ * Returns cached introspection data for the remote WPGraphQL schema
+ */
+const getCachedRemoteIntrospectionData = async () => {
+  const INTROSPECTION_CACHE_KEY = getCachedRemoteIntrospectionDataCacheKey()
+  const introspectionData = await getPersistentCache({
+    key: INTROSPECTION_CACHE_KEY,
+  })
+
+  return introspectionData
+}
+
+/**
+ * Checks if WPGraphQL is exposing a field on a type
+ * for example `GatsbyPreviewData.manifestIds`
+ * This allows us to make otherwise breaking changes in a backwards compatible way
+ */
+export const remoteSchemaSupportsFieldNameOnTypeName = async ({
+  fieldName,
+  typeName,
+}) => {
+  const introspectionData = await getCachedRemoteIntrospectionData()
+
+  const type = introspectionData.__schema.types.find(
+    ({ name }) => name === typeName
+  )
+
+  const fieldExists = !!type?.fields?.find(({ name }) => name === fieldName)
+
+  return fieldExists
+}
+
 const introspectAndStoreRemoteSchema = async () => {
   const state = store.getState()
   const { pluginOptions } = state.gatsbyApi
   const { schemaWasChanged } = state.remoteSchema
 
-  const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-data`
-  let introspectionData = await getPersistentCache({
-    key: INTROSPECTION_CACHE_KEY,
-  })
+  let introspectionData = await getCachedRemoteIntrospectionData()
 
   const printSchemaDiff =
     pluginOptions?.debug?.graphql?.printIntrospectionDiff ||
@@ -32,6 +73,8 @@ const introspectAndStoreRemoteSchema = async () => {
     }
 
     introspectionData = data
+
+    const INTROSPECTION_CACHE_KEY = getCachedRemoteIntrospectionDataCacheKey()
 
     // cache introspection response
     await setPersistentCache({

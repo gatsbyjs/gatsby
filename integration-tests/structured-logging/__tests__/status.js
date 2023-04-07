@@ -4,19 +4,13 @@ const path = require(`path`)
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 describe(`Successful Build`, () => {
   let gatsbyProcess
   let events = []
 
-  beforeAll(async done => {
+  beforeAll(done => {
     gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
@@ -83,7 +77,7 @@ describe(`Failing Build`, () => {
   let gatsbyProcess
   let events = []
 
-  beforeAll(async done => {
+  beforeAll(done => {
     fs.writeFileSync(
       path.join(`src`, `pages`, `index.js`),
       `import React from "react"

@@ -2,12 +2,12 @@ import { execSync } from "child_process"
 import execa, { Options } from "execa"
 import fs from "fs-extra"
 import path from "path"
-import { reporter } from "./reporter"
+import { reporter } from "./utils/reporter"
 import { spin } from "tiny-spin"
-import { getConfigStore } from "./get-config-store"
+import { getConfigStore } from "./utils/get-config-store"
 type PackageManager = "yarn" | "npm"
-import c from "ansi-colors"
-import { clearLine, makeNpmSafe } from "./utils"
+import colors from "ansi-colors"
+import { clearLine } from "./utils/clear-line"
 
 const packageManagerConfigKey = `cli.packageManager`
 
@@ -81,12 +81,12 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
 
 const setNameInPackage = async (
   sitePath: string,
-  name: string
+  npmSafeSiteName: string
 ): Promise<void> => {
   const packageJsonPath = path.join(sitePath, `package.json`)
   const packageJson = await fs.readJSON(packageJsonPath)
-  packageJson.name = makeNpmSafe(name)
-  packageJson.description = name
+  packageJson.name = npmSafeSiteName
+  packageJson.description = npmSafeSiteName
   delete packageJson.license
   try {
     const result = await execa(`git`, [`config`, `user.name`])
@@ -109,7 +109,9 @@ const install = async (
 ): Promise<void> => {
   const prevDir = process.cwd()
 
-  reporter.info(`${c.blueBright(c.symbols.pointer)} Installing Gatsby...`)
+  reporter.info(
+    `${colors.blueBright(colors.symbols.pointer)} Installing Gatsby...`
+  )
 
   process.chdir(rootPath)
 
@@ -122,7 +124,14 @@ const install = async (
       stderr: `inherit`,
     }
 
-    const config = [`--loglevel`, `error`, `--color`, `always`]
+    const npmAdditionalCliArgs = [
+      `--loglevel`,
+      `error`,
+      `--color`,
+      `always`,
+      `--legacy-peer-deps`,
+      `--no-audit`,
+    ]
 
     if (pm === `yarn` && checkForYarn()) {
       const args = packages.length
@@ -133,15 +142,17 @@ const install = async (
       await execa(`yarnpkg`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
-      await execa(`npm`, [`install`, ...config], options)
+      await execa(`npm`, [`install`, ...npmAdditionalCliArgs], options)
       await clearLine()
 
       reporter.success(`Installed Gatsby`)
-      reporter.info(`${c.blueBright(c.symbols.pointer)} Installing plugins...`)
+      reporter.info(
+        `${colors.blueBright(colors.symbols.pointer)} Installing plugins...`
+      )
 
       await execa(
         `npm`,
-        [`install`, ...config, `--legacy-peer-deps`, ...packages],
+        [`install`, ...npmAdditionalCliArgs, ...packages],
         options
       )
       await clearLine()
@@ -149,7 +160,7 @@ const install = async (
 
     reporter.success(`Installed plugins`)
   } catch (e) {
-    reporter.panic(e.message)
+    reporter.panic((e as Error).message)
   } finally {
     process.chdir(prevDir)
   }
@@ -178,7 +189,7 @@ const clone = async (
 
     reporter.success(`Created site from template`)
   } catch (err) {
-    reporter.panic(err.message)
+    reporter.panic((err as Error).message)
   }
 
   stop()
@@ -200,13 +211,13 @@ export async function initStarter(
   starter: string,
   rootPath: string,
   packages: Array<string>,
-  siteName: string
+  npmSafeSiteName: string
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
 
-  await setNameInPackage(sitePath, siteName)
+  await setNameInPackage(sitePath, npmSafeSiteName)
 
   await install(rootPath, packages)
 

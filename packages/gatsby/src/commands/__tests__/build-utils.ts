@@ -4,14 +4,21 @@ import {
   IHtmlFileState,
   IStaticQueryResultState,
 } from "../../redux/types"
-import { calcDirtyHtmlFiles } from "../build-utils"
 
 interface IMinimalStateSliceForTest {
   html: IGatsbyState["html"]
   pages: IGatsbyState["pages"]
+  components: IGatsbyState["components"]
 }
 
 describe(`calcDirtyHtmlFiles`, () => {
+  let calcDirtyHtmlFiles
+  beforeEach(() => {
+    jest.isolateModules(() => {
+      calcDirtyHtmlFiles = require(`../build-utils`).calcDirtyHtmlFiles
+    })
+  })
+
   function generateStateToTestHelper(
     pages: Record<
       string,
@@ -30,7 +37,16 @@ describe(`calcDirtyHtmlFiles`, () => {
         unsafeBuiltinWasUsedInSSR: false,
         trackedStaticQueryResults: new Map<string, IStaticQueryResultState>(),
       },
+      components: new Map(),
     }
+    state.components.set(`/foo`, {
+      componentPath: `/foo`,
+      componentChunkName: `foo`,
+      pages: new Set(),
+      isInBootstrap: false,
+      query: ``,
+      serverData: false,
+    })
 
     for (const pagePath in pages) {
       const page = pages[pagePath]
@@ -49,6 +65,9 @@ describe(`calcDirtyHtmlFiles`, () => {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           pluginCreator___NODE: `foo`,
           updatedAt: 1,
+          mode: `SSG`,
+          defer: false,
+          ownerNodeId: ``,
         })
       }
 
@@ -222,6 +241,69 @@ describe(`calcDirtyHtmlFiles`, () => {
     expect(Array.from(results.toCleanupFromTrackedState).sort()).toEqual([
       `/slash-removed-without-onCreatePage/`,
     ])
+  })
+
+  describe(`onCreatePage + deletePage + createPage that change path casing of a page`, () => {
+    it(`linux (case sensitive file system)`, () => {
+      let isolatedCalcDirtyHtmlFiles
+      jest.isolateModules(() => {
+        process.env.TEST_FORCE_CASE_FS = `SENSITIVE`
+        isolatedCalcDirtyHtmlFiles =
+          require(`../build-utils`).calcDirtyHtmlFiles
+        delete process.env.TEST_FORCE_CASE_FS
+      })
+
+      const state = generateStateToTestHelper({
+        // page was created, then deleted and similar page with slightly different path was created for it
+        // different artifacts would be created for them
+        "/TEST/": {
+          dirty: 0,
+          removedOrDeleted: `deleted`,
+        },
+        "/test/": {
+          dirty: 1,
+        },
+      })
+
+      const results = isolatedCalcDirtyHtmlFiles(state)
+
+      // on case sensitive file systems /test/ and /TEST/ are different files so we do need to delete a file
+      expect(results.toRegenerate.sort()).toEqual([`/test/`])
+      expect(results.toDelete.sort()).toEqual([`/TEST/`])
+      expect(Array.from(results.toCleanupFromTrackedState).sort()).toEqual([])
+    })
+
+    it(`windows / mac (case insensitive file system)`, () => {
+      let isolatedCalcDirtyHtmlFiles
+      jest.isolateModules(() => {
+        process.env.TEST_FORCE_CASE_FS = `INSENSITIVE`
+        isolatedCalcDirtyHtmlFiles =
+          require(`../build-utils`).calcDirtyHtmlFiles
+        delete process.env.TEST_FORCE_CASE_FS
+      })
+
+      const state = generateStateToTestHelper({
+        // page was created, then deleted and similar page with slightly different path was created for it
+        // both page paths would result in same artifacts
+        "/TEST/": {
+          dirty: 0,
+          removedOrDeleted: `deleted`,
+        },
+        "/test/": {
+          dirty: 1,
+        },
+      })
+
+      const results = isolatedCalcDirtyHtmlFiles(state)
+
+      // on case insensitive file systems /test/ and /TEST/ are NOT different files so we should
+      // not delete files, but still we should cleanup tracked state
+      expect(results.toRegenerate.sort()).toEqual([`/test/`])
+      expect(results.toDelete.sort()).toEqual([])
+      expect(Array.from(results.toCleanupFromTrackedState).sort()).toEqual([
+        `/TEST/`,
+      ])
+    })
   })
 
   // cases above are to be able to pinpoint exact failure, kitchen sink case is to test all of above in one go

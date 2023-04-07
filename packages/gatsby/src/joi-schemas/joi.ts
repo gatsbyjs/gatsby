@@ -1,5 +1,9 @@
 import Joi from "joi"
 import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
+import {
+  DEFAULT_DOCUMENT_SEARCH_PATHS,
+  DEFAULT_TYPES_OUTPUT_PATH,
+} from "../utils/graphql-typegen/ts-codegen"
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.replace(/(\w)\/+$/, `$1`)
@@ -48,7 +52,37 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         })
       )
       .single(),
+    partytownProxiedURLs: Joi.array().items(Joi.string()),
     developMiddleware: Joi.func(),
+    jsxRuntime: Joi.string().valid(`automatic`, `classic`).default(`classic`),
+    jsxImportSource: Joi.string(),
+    trailingSlash: Joi.string()
+      .valid(`always`, `never`, `ignore`)
+      .default(`always`),
+    graphqlTypegen: Joi.alternatives(
+      Joi.boolean(),
+      Joi.object()
+        .keys({
+          typesOutputPath: Joi.string().default(DEFAULT_TYPES_OUTPUT_PATH),
+          documentSearchPaths: Joi.array()
+            .items(Joi.string())
+            .default(DEFAULT_DOCUMENT_SEARCH_PATHS),
+          generateOnBuild: Joi.boolean().default(false),
+        })
+        .unknown(false)
+    )
+      .default(false)
+      .custom(value => {
+        if (value === true) {
+          return {
+            typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
+            documentSearchPaths: DEFAULT_DOCUMENT_SEARCH_PATHS,
+            generateOnBuild: false,
+          }
+        }
+
+        return value
+      }),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(
@@ -109,6 +143,7 @@ export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
         description: Joi.string(),
         ignoreType: Joi.boolean(),
         counter: Joi.number(),
+        contentFilePath: Joi.string(),
       })
       .unknown(false), // Don't allow non-standard fields
   })

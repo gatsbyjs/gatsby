@@ -22,16 +22,16 @@ sudo apt install curl
 Once `curl` is installed, you can use it to install `nvm`, which will manage `node` and all its associated versions.
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but more recent version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `18`, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 10
-nvm use 10
+nvm install 18
+nvm use 18
 ```
 
 To confirm this has worked, use the following command.
@@ -53,16 +53,16 @@ sudo apt install git
 These distros come installed with `curl`, so you can use that to download `nvm`.
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but more recent version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `18`, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 10
-nvm use 10
+nvm install 18
+nvm use 18
 ```
 
 To confirm this has worked, use the following command.
@@ -90,7 +90,7 @@ sudo pacman -Sy
 These distros come installed with `curl`, so you can use that to download `nvm`.
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
@@ -101,11 +101,11 @@ Before using `nvm`, you need to install additional dependencies.
 sudo pacman -S grep awk tar git
 ```
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but more recent version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `18`, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 10
-nvm use 10
+nvm install 18
+nvm use 18
 ```
 
 To confirm this has worked, use the following command.
@@ -118,7 +118,7 @@ node -v
 
 ## Windows Subsystem Linux (WSL)
 
-This guide assumes that you already have WSL installed with a working Linux distro. If you don't, follow [this guide from Microsoft's site](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install WSL and a Linux distro of your choice.
+This guide assumes that you already have WSL installed with a working Linux distro. If you don't, follow [this guide from Microsoft's site](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install WSL and a Linux distro of your choice. Make sure that you installed **WSL 2**.
 
 As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are available via the Microsoft Store, there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
 
@@ -148,13 +148,13 @@ sudo apt install -y build-essential
 
 **Install node**
 
-Following the install instructions on nodejs.org leaves a slightly broken install (i.e. permission errors when trying to `npm install`). Instead try installing node versions using [n] which you can install with [n-install]:
+Following the install instructions on nodejs.org leaves a slightly broken install (i.e. permission errors when trying to `npm install`). Instead try installing node versions using [n](https://github.com/tj/n) which you can install with [n-install](https://github.com/mklement0/n-install):
 
 ```shell
-curl -L https://git.io/n-install | bash
+curl -L https://raw.githubusercontent.com/mklement0/n-install/stable/bin/n-install | bash
 ```
 
-There are other alternatives for managing your node versions such as [nvm] but this is known to slow down [bash startup] on WSL.
+There are other alternatives for managing your node versions such as [nvm](https://github.com/creationix/nvm) but this is known to slow down [bash startup](https://github.com/Microsoft/WSL/issues/776#issuecomment-266112578) on WSL.
 
 ### Using Windows Subsystem Linux: Debian
 

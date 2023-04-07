@@ -1,5 +1,8 @@
 ---
 title: Using the Gatsby Image plugin
+examples:
+  - label: Using Gatsby Image
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image"
 ---
 
 _If you're looking for a guide on using the deprecated `gatsby-image` package, it can be found in the [How to use Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image) doc._
@@ -32,13 +35,11 @@ If you already have some of these plugins installed, please check that they're u
 
 Note that `gatsby-source-filesystem` is not included in this config. If you are sourcing from your local filesystem to use `GatsbyImage` please configure accordingly. Otherwise, downloading the dependency without configuration is sufficient.
 
-<!-- TODO: add exact minimum version when we reach GA -->
-
 ## Using the Gatsby Image components
 
 ### Decide which component to use
 
-The Gatsby Image plugin includes two image components: one for static and one for dynamic images. The simplest way to decide which you need to is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
+The Gatsby Image plugin includes two image components: one for static and one for dynamic images. The simplest way to decide which you need is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
 
 ### Static images
 
@@ -103,15 +104,15 @@ If you are using an image that will be the same each time the component is used,
 
 ### Dynamic images
 
-If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms-or-cdn) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
+If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms-or-cdn) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This includes local data sources where e.g. a JSON file references an image by relative path. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
 
 1. **Add the image to your page query.**
 
    Any GraphQL File object that includes an image will have a `childImageSharp` field that you can use to query the image data. The exact data structure will vary according to your data source, but the syntax is like this:
 
    ```graphql:title=src/templates/blogpost.js
-   query {
-     blogPost(id: { eq: $Id }) {
+   query ($id: String) {
+     blogPost(id: { eq: $id }) {
        title
        body
        # highlight-start
@@ -130,8 +131,8 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 
    ```graphql:title=src/templates/blogpost.js
-   query {
-     blogPost(id: { eq: $Id }) {
+   query ($id: String) {
+     blogPost(id: { eq: $id }) {
        title
        body
        author
@@ -152,7 +153,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
 3. **Display the image.**
 
-   You can then use the `GatbsyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
+   You can then use the `GatsbyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
 
    ```jsx:title=src/templates/blogpost.js
    import { graphql } from "gatsby"
@@ -173,8 +174,8 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    }
 
    export const pageQuery = graphql`
-     query {
-       blogPost(id: { eq: $Id }) {
+     query ($id: String) {
+       blogPost(id: { eq: $id }) {
          title
          body
          author
@@ -192,29 +193,68 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    `
    ```
 
+## Customizing the defaults
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`,
+          quality: 50,
+          breakpoints: [750, 1080, 1366, 1920],
+          backgroundColor: `transparent`,
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {},
+        },
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
+
 ## Using images from a CMS or CDN
 
-Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
+### Gatsby Cloud Image CDN
 
-### Source plugins
+Image CDN is Gatsby Clouds image hosting and transformation service. It speeds up your build times by deferring image downloading and processing until the first user requests an image. Image CDN also speeds up your frontend performance by serving CDN hosted images on the same domain as your Gatsby Cloud site. In our testing this can shave up to 300ms off of frontend page load times and as a result improve your lighthouse scores.
 
-These source plugins support using `gatsby-plugin-image` with images served from their CDN.
+For more information on what Image CDN is, how to use it, and what the platform limits are, visit the [Gatsby Cloud knowledge base article on "What Is Image CDN?"](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-). To learn which source plugins currently support it and how to enable and use Image CDN on Gatsby Cloud take a look at the ["How-to Enable Image CDN" article](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171).
+
+For all supported source plugins, the query syntax and feature-set is identical. Check your source plugin's documentation or the [Gatsby Cloud knowledge base article on "Configuring source plugins for Image CDN"](https://support.gatsbyjs.com/hc/en-us/articles/4522338898579-Configuring-Source-Plugins-for-Image-CDN) for more info.
+
+### Source plugins with their own CDN
+
+Many source plugins have native support for `gatsby-plugin-image`, with images served directly from that CMS's content delivery network (CDN). This means that builds are faster than local images because there is no need to download images and process them. While this is faster for builds, it isn't as performant on the frontend as [Gatsby Cloud's Image CDN](#gatsby-cloud-image-cdn) due to images being served from a different domain than the domain your site is hosted on.
+
+The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
+
+These source plugins support using `gatsby-plugin-image` with images served from their own CDN.
 
 - [AgilityCMS](https://github.com/agility/gatsby-image-agilitycms)
 - [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
 - [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
-- [Sanity](https://www.gatsbyjs.com/plugins/gatsby-source-sanity/#using-images)
+- [GraphCMS](/plugins/gatsby-source-graphcms/#usage-with-gatsby-plugin-image)
+- [Prismic](/plugins/gatsby-source-prismic)
+- [Sanity](/plugins/gatsby-source-sanity/#using-images)
 - [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
-
-### Image CDNs
-
-A dedicated image CDN can be used with sources that don't have their own CDN, or where you need more transforms or formats than the CDN offers.
-
-- [imgix](https://www.gatsbyjs.com/plugins/@imgix/gatsby/)
 
 ### Plugin authors
 
-If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatbsy Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
+If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatsby Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
 
 ## Background images
 
@@ -324,7 +364,7 @@ If not, check steps 1 and 2 above.
 
 If you're using GatsbyImage:
 
-Run the query you're using in your site. Does it return a gatsbyImageData object?
+Run the query you're using in your site. Does it return a `gatsbyImageData` object?
 
 If not, check steps 1 and 2 above.
 
@@ -336,11 +376,11 @@ For StaticImage:
 
 Inspect the element on your page. Does it include a `div` with `gatsby-image-wrapper`? How about an internal `source` element?
 
-If not, double check the component usage. Did you use `src`? Is the relative path correct?
+If not, double-check the component usage. Did you use `src`? Is the relative path correct?
 
 For GatsbyImage:
 
-Trying using `console.log` to check the the object you're passing as the `image` prop. Is it there?
+Trying using `console.log` to check the object you're passing as the `image` prop. Is it there?
 
 If not, make sure you're using the same object you saw return from your query.
 

@@ -4,7 +4,7 @@ exports[`Add pages Fails if component path is missing 1`] = `"A component must b
 
 exports[`Add pages Fails if path is missing 1`] = `"The plugin \\"test\\" must set the page path when creating a page"`;
 
-exports[`Add pages Fails if the component path isn't absolute 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when create creating a page"`;
+exports[`Add pages Fails if the component path isn't absolute 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when creating a page"`;
 
 exports[`Add pages Fails if use a reserved field in the context object 1`] = `
 "The plugin \\"test\\" used reserved field names in the context object when creating a page:
@@ -50,25 +50,31 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "/hi/pizza/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
-    "internalComponentName": "ComponentHiPizza",
+    "internalComponentName": "Component/hi/pizza/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -76,23 +82,28 @@ Map {
 
 exports[`Add pages allows you to add pages 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
     "name": "test",
   },
+  "slicesModified": false,
   "type": "CREATE_PAGE",
 }
 `;
@@ -102,13 +113,16 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -116,25 +130,30 @@ Map {
 
 exports[`Add pages allows you to add pages with context 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
     },
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
     "name": "test",
   },
+  "slicesModified": false,
   "type": "CREATE_PAGE",
 }
 `;
@@ -144,15 +163,18 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
     },
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -160,23 +182,28 @@ Map {
 
 exports[`Add pages allows you to add pages with matchPath 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": "/hi-from-somewhere-else/",
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
     "name": "test",
   },
+  "slicesModified": false,
   "type": "CREATE_PAGE",
 }
 `;
@@ -186,13 +213,16 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": "/hi-from-somewhere-else/",
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }
@@ -205,13 +235,16 @@ Map {
   "/hi/" => Object {
     "component": "/whatever2/index.js",
     "componentChunkName": "component---whatever-2-index-js",
+    "componentPath": "/whatever2/index.js",
     "context": Object {},
-    "internalComponentName": "ComponentHi",
+    "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
+    "slices": Object {},
     "updatedAt": 1482363367071,
   },
 }

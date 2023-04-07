@@ -21,8 +21,8 @@ after(() => {
 const errorPlaceholder = `// runtime-error`
 const errorReplacement = `window.a.b.c.d.e.f.g()`
 
-describe(`testing error overlay and ability to automatically recover from runtime errors`, () => {
-  it(`displays content initially (no errors yet)`, () => {
+describe(`testing error overlay and ability to automatically recover from runtime errors`, { testIsolation: false }, () => {
+  before(() => {
     cy.visit(`/error-handling/runtime-error/`, {
       // Hacky way to disable "uncaught:exception" message in error message itself
       // See https://github.com/cypress-io/cypress/issues/254#issuecomment-292190924
@@ -30,6 +30,9 @@ describe(`testing error overlay and ability to automatically recover from runtim
         win.onerror = null
       },
     }).waitForRouteChange()
+  })
+
+  it(`displays content initially (no errors yet)`, () => {
     cy.findByTestId(`hot`).should(`contain.text`, `Working`)
   })
 
@@ -59,7 +62,7 @@ describe(`testing error overlay and ability to automatically recover from runtim
       .find(
         `[data-gatsby-overlay="accordion"] [data-gatsby-overlay="body__error-message"]`
       )
-      .should(`contain.text`, `Cannot read property 'b' of undefined`)
+      .should(`contain.text`, `Cannot read properties of undefined (reading 'b')`)
     cy.getFastRefreshOverlay().find(`[data-gatsby-overlay="body"] pre`)
   })
 

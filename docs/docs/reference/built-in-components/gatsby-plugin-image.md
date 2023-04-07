@@ -1,12 +1,15 @@
 ---
 title: Gatsby Image plugin
+examples:
+  - label: Using Gatsby Image
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image"
 ---
 
 This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options. While most of these options are available regardless of where you source your images, be sure to refer to the documentation of your source plugin if you are using images from a CMS, as the exact options are likely to vary.
 
 ## Components
 
-The Gatsby Image plugin includes two components to display responsive images on your site, used for static and dynamic images.
+The Gatsby Image plugin includes two components to display responsive images on your site. One is used for static and the other for dynamic images.
 
 - **[`StaticImage`](#staticimage):** Use this if the image is the same every time the component is used. _Examples: site logo, index page hero image_
 - **[`GatsbyImage`](#gatsbyimage):** Use this if the image is passed into the component as a prop, or otherwise changes. _Examples: Blog post hero image, author avatar_
@@ -51,7 +54,7 @@ This does not work:
 
 export function Logo({ logo }) {
   // You can't use a prop passed into the parent component
-  return <StaticImage src={logo}>
+  return <StaticImage src={logo} />
 }
 ```
 
@@ -61,9 +64,9 @@ export function Logo({ logo }) {
 // ⚠️ Doesn't work
 
 export function Dino() {
-    // Props can't come from function calls
-    const width = getTheWidthFromSomewhere();
-    return <StaticImage src="trex.png" width={width}>
+  // Props can't come from function calls
+  const width = getTheWidthFromSomewhere()
+  return <StaticImage src="trex.png" width={width} />
 }
 ```
 
@@ -71,10 +74,10 @@ You can use variables and expressions if they're in the scope of the file, e.g.:
 
 ```js
 // OK
-export function Dino()  {
-    // Local variables are fine
-    const width = 300
-    return <StaticImage src="trex.png" width={width}>
+export function Dino() {
+  // Local variables are fine
+  const width = 300
+  return <StaticImage src="trex.png" width={width} />
 }
 ```
 
@@ -84,14 +87,52 @@ export function Dino()  {
 // A variable in the same file is fine.
 const width = 300
 
-export function Dino()  {
-    // This works because the value can be statically-analyzed
-    const height = width * 16 / 9
-    return <StaticImage src="trex.png" width={width} height={height}>
+export function Dino() {
+  // This works because the value can be statically-analyzed
+  const height = (width * 16) / 9
+  return <StaticImage src="trex.png" width={width} height={height} />
 }
 ```
 
 If you find yourself wishing you could use a prop for the image `src` then it's likely that you should be using a dynamic image.
+
+#### Using `StaticImage` with CSS-in-JS libraries
+
+The `StaticImage` component does not support higher-order components, which includes the `styled` function from libraries such as Emotion and styled-components. The parser relies on being able to identify `StaticImage` components in the source, and passing them to a function means this is not possible.
+
+```js
+// ⚠️ Doesn't work
+
+const AwesomeImage = styled(StaticImage)`
+  border: 4px green dashed;
+`
+
+export function Dino() {
+  // Parser doesn't know that this is a StaticImage
+  return <AwesomeImage src="trex.png" />
+}
+```
+
+If you use Emotion you can use the provided `css` prop instead:
+
+```jsx
+// Emotion
+
+export function Dino() {
+  return (
+    <StaticImage
+      src="trex.png"
+      css={css`
+        border: 4px green dashed;
+      `}
+    />
+  )
+}
+```
+
+Unfortunately the [`css` prop from styled-components](https://styled-components.com/docs/api#css-prop) turns the code into a `styled` function under the hood and as explained above `StaticImage` doesn't support that syntax.
+
+You can also use a regular `style` or `className` prop. Note that in all of these cases the styling is applied to the wrapper, not the image itself. If you need to style the `<img>` tag, you can use `imgStyle` or `imgClassName`. The `className` or `imgClassName` prop is helpful if your styling library is giving you a computed class name string instead of the computed styles (e.g. if you use libraries like [linaria](https://github.com/callstack/linaria)).
 
 ### `GatsbyImage`
 
@@ -191,12 +232,11 @@ For `fullWidth` images you don't specify width or height, as it resizes to fit t
 
 Gatsby image components are lazy-loaded by default, which means that if they are offscreen they are not loaded by the browser until they come into view. To ensure that the layout does not jump around, a placeholder is displayed before the image loads. You can choose one of three types of placeholder (or not use a placeholder at all):
 
-| Placeholder    | Component prop value | Resolver prop value | Description                                                                                                                                                                        |
-| -------------- | -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dominant color | `"dominantColor"`    | `DOMINANT_COLOR`    | The default placeholder. This calculates the dominant color of the source image and uses it as a solid background color.                                                           |
-| Blurred        | `"blurred"`          | `BLURRED`           | This generates a very low-resolution version of the source image and displays it as a blurred background.                                                                          |
-| Traced SVG     | `"tracedSVG"`        | `TRACED_SVG`        | This generates a simplified, flat SVG version of the source image, which it displays as a placeholder. This works well for images with simple shapes or that include transparency. |
-| None           | `"none"`             | `NONE`              | No placeholder. You can use the background color option to set a static background if you wish.                                                                                    |
+| Placeholder    | Component prop value | Resolver prop value | Description                                                                                                              |
+| -------------- | -------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Dominant color | `"dominantColor"`    | `DOMINANT_COLOR`    | The default placeholder. This calculates the dominant color of the source image and uses it as a solid background color. |
+| Blurred        | `"blurred"`          | `BLURRED`           | This generates a very low-resolution version of the source image and displays it as a blurred background.                |
+| None           | `"none"`             | `NONE`              | No placeholder. You can use the background color option to set a static background if you wish.                          |
 
 ### `formats`
 
@@ -212,14 +252,14 @@ These values are passed in as an object to `transformOptions`, either as a prop 
 | ----------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `grayscale` | `false`                   | Convert image to grayscale                                                                                                                                    |
 | `duotone`   | `false`                   | Add duotone effect. Pass `false`, or options object containing `{highlight: string, shadow: string, opacity: number}`                                         |
-| `rotate`    | `0`                       | Rotate the image. Value in degrees.                                                                                                                           |
-| `trim`      | `false`                   | Trim "boring" pixels. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                                         |
+| `rotate`    | `auto`                    | Rotate the image. Value in degrees.                                                                                                                           |
+| `trim`      | `10`                      | Trim "boring" pixels. Value is the threshold. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                 |
 | `cropFocus` | `"attention"`/`ATTENTION` | Controls crop behavior. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#resize) for strategy, position and gravity.                  |
 | `fit`       | `"cover"`/`COVER`         | Controls behavior when resizing an image and proving both width and height. See [the sharp documentation.](https://sharp.pixelplumbing.com/api-resize#resize) |
 
 ## All options
 
-The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
+The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.com) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
 
 | Option                                  | Default                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -234,11 +274,43 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image 
 | `outputPixelDensities`                  | For fixed images: `[1, 2]`<br />For constrained: `[0.25, 0.5, 1, 2]` | A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image. The value is multiplied by the image width, to give the generated sizes. For example, a `400` px wide constrained image would generate `100`, `200`, `400` and `800` px wide images by default. Ignored for full width layout images, which use `breakpoints` instead. |
 | `breakpoints`                           | `[750, 1080, 1366, 1920]`                                            | Output widths to generate for full width images. Default is to generate widths for common device resolutions. It will never generate an image larger than the source image. The browser will automatically choose the most appropriate.                                                                                                                                                                       |
 | `blurredOptions`                        | None                                                                 | Options for the low-resolution placeholder image. Ignored unless [`placeholder`](#placeholder) is blurred.                                                                                                                                                                                                                                                                                                    |
-| `tracedSVGOptions`                      | None                                                                 | Options for traced placeholder SVGs. See [potrace options](https://www.npmjs.com/package/potrace#parameters). Ignored unless [`placeholder`](#placeholder) is traced SVG.                                                                                                                                                                                                                                     |
 | `jpgOptions`                            | None                                                                 | Options to pass to sharp when generating JPG images.                                                                                                                                                                                                                                                                                                                                                          |
 | `pngOptions`                            | None                                                                 | Options to pass to sharp when generating PNG images.                                                                                                                                                                                                                                                                                                                                                          |
 | `webpOptions`                           | None                                                                 | Options to pass to sharp when generating WebP images.                                                                                                                                                                                                                                                                                                                                                         |
 | `avifOptions`                           | None                                                                 | Options to pass to sharp when generating AVIF images.                                                                                                                                                                                                                                                                                                                                                         |
+
+## Customizing the default options
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`,
+          quality: 50,
+          breakpoints: [750, 1080, 1366, 1920],
+          backgroundColor: `transparent`,
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {},
+        },
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
 
 ## Helper functions
 

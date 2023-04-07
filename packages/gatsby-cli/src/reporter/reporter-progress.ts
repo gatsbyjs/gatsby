@@ -1,4 +1,4 @@
-import * as reporterActions from "./redux/actions"
+import * as reporterActionsForTypes from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
@@ -12,6 +12,8 @@ interface ICreateProgressReporterArguments {
   total: number
   span: Span
   reporter: typeof gatsbyReporter
+  reporterActions: typeof reporterActionsForTypes
+  pluginName?: string
 }
 
 export interface IProgressReporter {
@@ -19,10 +21,10 @@ export interface IProgressReporter {
   setStatus(statusText: string): void
   tick(increment?: number): void
   panicOnBuild(
-    arg: any,
-    ...otherArgs: Array<any>
+    errorMeta: ErrorMeta,
+    error?: Error | Array<Error>
   ): IStructuredError | Array<IStructuredError>
-  panic(arg: any, ...otherArgs: Array<any>): void
+  panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): never
   end(): void
   done(): void
   total: number
@@ -36,6 +38,8 @@ export const createProgressReporter = ({
   total,
   span,
   reporter,
+  reporterActions,
+  pluginName,
 }: ICreateProgressReporterArguments): IProgressReporter => {
   let lastUpdateTime = 0
   let unflushedProgress = 0
@@ -90,10 +94,10 @@ export const createProgressReporter = ({
         id,
       })
 
-      return reporter.panicOnBuild(errorMeta, error)
+      return reporter.panicOnBuild(errorMeta, error, pluginName)
     },
 
-    panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): void {
+    panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): never {
       span.finish()
 
       reporterActions.endActivity({
@@ -101,7 +105,7 @@ export const createProgressReporter = ({
         status: ActivityStatuses.Failed,
       })
 
-      return reporter.panic(errorMeta, error)
+      return reporter.panic(errorMeta, error, pluginName)
     },
 
     end(): void {
@@ -124,8 +128,12 @@ export const createProgressReporter = ({
     },
 
     set total(value: number) {
-      unflushedTotal = value
+      total = unflushedTotal = value
       updateProgress()
+    },
+
+    get total(): number {
+      return total
     },
 
     span,

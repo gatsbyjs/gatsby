@@ -1,10 +1,17 @@
 ---
 title: Localization and Internationalization with Gatsby (i18n)
+examples:
+  - label: Using-i18n
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n"
 ---
 
 Serving users content in a way that is adapted to their language & culture is part of a great user experience. When you make an effort to adapt web content to a user's location, that practice is called internationalization (i18n).
 
-In practice i18n involves translating text and formatting dates, numbers, and strings based on the user's detected location. For example, a date displayed for a user in the United States would follow the mm/dd/year date format, but for a user in the UK the date format would change to dd/mm/year.
+There are two hard parts of internationalization:
+
+- **Content storage and workflow.** Coordinating with internal or external translators to translate both existing and new content into the required languages can be time-consuming. In addition, adding another approver into the content publishing process can slow things down without careful workflow design.
+
+- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg `fr.example.com/blog`) or a path prefix (eg `example.com/fr/blog`). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
 
 This guide is a brief look at the options that exist for enhancing your Gatsby project for internationalization.
 
@@ -36,9 +43,9 @@ More detailed information about react-intl's [APIs](https://github.com/formatjs/
 
 React-i18next is an internationalization library built on the i18next framework. It uses components to make sure translations render correctly or to re-render your content when the user language changes.
 
-React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with webpack.
+React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load the translations from your server, or bundling translations with webpack.
 
-This framework also has experimental support for the React suspense API and it supports a stable version of React hooks.
+This framework also has experimental support for the React suspense API, and it supports a stable version of React hooks.
 
 ## Other resources
 
@@ -48,6 +55,6 @@ This framework also has experimental support for the React suspense API and it s
 
 - [Gatsby i18n packages](https://www.gatsbyjs.com/plugins/gatsby-plugin-i18n/?=i18)
 
-- [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/i18n/)
+- [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/localization/)
 
-- [W3C's i18n resources](https://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)
+- [W3C's i18n resources](https://www.w3.org/International/i18n-drafts/nav/contentdev#reference)

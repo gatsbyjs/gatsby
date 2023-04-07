@@ -2,12 +2,14 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
-import SEO from "../../components/seo"
+import Seo from "../../components/seo"
 
-export default function BlogPost({ data: { post }, pageContext: { fields__slug } }) {
+export default function BlogPost({
+  data: { post },
+  pageContext: { fields__slug },
+}) {
   return (
     <Layout>
-      <SEO title={post.frontmatter.title} description={post.excerpt} />
       <h1>{post.frontmatter.title}</h1>
       <h2 data-testid="slug">{post.fields.slug}</h2>
       <p data-testid="pagecontext">{fields__slug}</p>
@@ -31,3 +33,7 @@ export const blogPostQuery = graphql`
     }
   }
 `
+
+export const Head = ({ data: { post } }) => (
+  <Seo title={post.frontmatter.title} description={post.excerpt} />
+)

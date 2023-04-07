@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
+    helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+code {
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,
+    monospace;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+.gatsby-logo {
+  color: hsla(var(--color-neutral), var(--alpha-secondary));
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  padding: var(--px-12) var(--px-16);
+}
+
+.gatsby-logo .gatsby-logo-link {
+  text-decoration: none;
+  color: hsla(var(--color-neutral), var(--alpha-secondary));
+}
+
+.gatsby-logo-link {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.gatsby-logo-link:hover {
+  color: hsla(var(--color-neutral), 1);
+}
+
+.gatsby-logo-link svg {
+  margin-right: 0.5rem;
+}
