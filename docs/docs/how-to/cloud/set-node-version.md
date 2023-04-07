@@ -20,3 +20,7 @@ Example format:
 ```javascript:title=.nvmrc
 v18.9.0
 ```
+
+### Troubleshooting
+
+If it seems like Gatsby Cloud is not recognizing a new Node.js version after you set it, try disabling your builds / preview and then re-enabling them (Site Settings => Builds). That reset your build container and make sure it is building with the version of Node.js you have specified.
