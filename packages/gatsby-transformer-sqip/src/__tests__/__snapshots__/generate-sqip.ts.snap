@@ -41,7 +41,6 @@ Object {
 
 exports[`gatsby-transformer-sqip generateSqip not cached 2`] = `
 Object {
-  "input": "<PROJECT_ROOT>/src/__tests__/images/this-file-does-not-need-to-exist-for-the-test.jpg",
   "plugins": Array [
     Object {
       "name": "sqip-plugin-primitive",

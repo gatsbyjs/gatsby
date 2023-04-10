@@ -82,7 +82,7 @@ describe(`gatsby-transformer-sqip`, () => {
       expect(sqip).toHaveBeenCalledTimes(1)
       const sqipArgs = sqip.mock.calls[0][0]
       expect(sqipArgs.input).toMatch(absolutePath)
-      delete sqipArgs.number
+      delete sqipArgs.input
       expect(sqipArgs).toMatchSnapshot()
 
       expect(promises.access).toHaveBeenCalledTimes(1)
