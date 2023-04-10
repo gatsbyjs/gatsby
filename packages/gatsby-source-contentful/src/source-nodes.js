@@ -81,7 +81,7 @@ export async function sourceNodes(
   }
 
   // Array of all existing Contentful nodes
-  const existingNodes = await getExistingCachedNodes({
+  const { existingNodes, memoryNodeCounts } = await getExistingCachedNodes({
     actions,
     getNode,
     pluginConfig,
@@ -209,10 +209,16 @@ export async function sourceNodes(
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
   reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
-  reporter.info(`Contentful: ${existingNodes.size} memory cached nodes`)
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
+
+  reporter.info(
+    `Contentful: ${memoryNodeCounts.Content} memory cached content nodes`
+  )
+  reporter.info(
+    `Contentful: ${memoryNodeCounts.Asset} memory cached asset nodes`
+  )
 
   reporter.verbose(`Building Contentful reference map`)
 

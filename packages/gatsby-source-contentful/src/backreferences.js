@@ -2,6 +2,7 @@
 import { hasFeature } from "gatsby-plugin-utils/index"
 import { getDataStore } from "gatsby/dist/datastore"
 import { untilNextEventLoopTick } from "./utils"
+import { assetTypeName } from "./normalize"
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 const existingNodes = new Map()
@@ -75,11 +76,22 @@ export async function getExistingCachedNodes({
 
   isFirstSourceNodesCallOfCurrentNodeProcess = false
 
-  return existingNodes
+  return { existingNodes, memoryNodeCounts }
+}
+
+const memoryNodeCounts = {
+  Asset: 0,
+  Content: 0,
 }
 
 // store only the fields we need to compare to reduce memory usage. if a node is updated we'll use getNode to grab the whole node before updating it
 export function addNodeToExistingNodesCache(node) {
+  if (node.internal.type === assetTypeName) {
+    memoryNodeCounts.Asset++
+  } else {
+    memoryNodeCounts.Content++
+  }
+
   const cacheNode = {
     id: node.id,
     contentful_id: node.contentful_id,

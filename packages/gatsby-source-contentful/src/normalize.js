@@ -8,6 +8,7 @@ import fastq from "fastq"
 const typePrefix = `Contentful`
 export const makeTypeName = type =>
   _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+export const assetTypeName = makeTypeName(`Asset`)
 
 const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
 const gatsbyVersion =
@@ -841,7 +842,7 @@ export const createAssetNodes = async ({
         : ``,
       node_locale: locale.code,
       internal: {
-        type: `${makeTypeName(`Asset`)}`,
+        type: assetTypeName,
       },
       sys: {
         type: assetItem.sys.type,
