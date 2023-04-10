@@ -361,16 +361,25 @@ function makeQueuedCreateNode({ nodeCount, createNode }) {
     let createdNodeCount = 0
 
     const createNodesQueue = fastq((node, cb) => {
+      function runCreateNode() {
+        const maybeNodePromise = createNode(node)
+
+        // checking for `.then` is vastly more performant than using `instanceof Promise`
+        if (`then` in maybeNodePromise) {
+          maybeNodePromise.then(() => {
+            cb(null)
+          })
+        } else {
+          cb(null)
+        }
+      }
+
       if (++createdNodeCount % 100 === 0) {
         setImmediate(() => {
-          createNode(node)?.then(() => {
-            cb(null)
-          }) || cb(null)
+          runCreateNode()
         })
       } else {
-        createNode(node)?.then(() => {
-          cb(null)
-        }) || cb(null)
+        runCreateNode()
       }
     }, 10)
 
