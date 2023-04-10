@@ -1,33 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`gatsby-transformer-sqip generateSqip cached 1`] = `
-{
-  "additional_metadata": {
+Object {
+  "additional_metadata": Object {
     "mocked": "json",
   },
-  "metadata": {
-    "palette": {},
+  "metadata": Object {
+    "palette": Object {},
   },
   "svg": "<svg><!-- Cached SQIP SVG --></svg>",
 }
 `;
 
 exports[`gatsby-transformer-sqip generateSqip not cached 1`] = `
-{
-  "additional_metadata": {
+Object {
+  "additional_metadata": Object {
     "dataURI": "data:mocked",
   },
-  "metadata": {
-    "palette": {
-      "Vibrant": {
+  "metadata": Object {
+    "palette": Object {
+      "Vibrant": Object {
         "hex": "#M0CK3D",
-        "hsl": [
+        "hsl": Array [
           0.1,
           0.2,
           0.3,
         ],
         "population": 42,
-        "rgb": [
+        "rgb": Array [
           1,
           2,
           3,
@@ -40,19 +40,19 @@ exports[`gatsby-transformer-sqip generateSqip not cached 1`] = `
 `;
 
 exports[`gatsby-transformer-sqip generateSqip not cached 2`] = `
-{
-  "input": "/Users/bene/dev/customers/contentful/gatsby/packages/gatsby-transformer-sqip/src/__tests__/images/this-file-does-not-need-to-exist-for-the-test.jpg",
-  "plugins": [
-    {
+Object {
+  "input": "<PROJECT_ROOT>/src/__tests__/images/this-file-does-not-need-to-exist-for-the-test.jpg",
+  "plugins": Array [
+    Object {
       "name": "sqip-plugin-primitive",
-      "options": {
+      "options": Object {
         "mode": 3,
         "numberOfPrimitives": 5,
       },
     },
-    {
+    Object {
       "name": "sqip-plugin-blur",
-      "options": {
+      "options": Object {
         "blur": 0,
       },
     },

@@ -7,8 +7,6 @@ import { generateSqip } from "../generate-sqip"
 
 jest.mock(`sqip`, () => {
   const originalModule = jest.requireActual(`sqip`)
-  const Vibrant = jest.requireActual(`node-vibrant`)
-  const path = jest.requireActual(`path`)
   return {
     ...originalModule,
     sqip: jest.fn(() => {
