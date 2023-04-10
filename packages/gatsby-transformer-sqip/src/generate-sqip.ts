@@ -22,7 +22,7 @@ export async function generateSqip(options: {
   svg: string
   dataURI: string
   metadata: SqipImageMetadata
-  additional_metadata: { [key: string]: unknown }
+  additionalMetadata: { [key: string]: unknown }
 } | null> {
   const {
     cache,
@@ -153,7 +153,7 @@ export async function generateSqip(options: {
         primitiveData = {
           svg: svg.toString(),
           metadata,
-          additional_metadata: additionalMetadata,
+          additionalMetadata: additionalMetadata,
         }
 
         await cache.set(cacheKey, primitiveData)

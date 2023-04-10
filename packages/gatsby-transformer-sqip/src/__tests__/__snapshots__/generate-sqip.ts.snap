@@ -2,7 +2,7 @@
 
 exports[`gatsby-transformer-sqip generateSqip cached 1`] = `
 Object {
-  "additional_metadata": Object {
+  "additionalMetadata": Object {
     "mocked": "json",
   },
   "metadata": Object {
@@ -14,7 +14,7 @@ Object {
 
 exports[`gatsby-transformer-sqip generateSqip not cached 1`] = `
 Object {
-  "additional_metadata": Object {
+  "additionalMetadata": Object {
     "dataURI": "data:mocked",
   },
   "metadata": Object {

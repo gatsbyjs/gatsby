@@ -265,7 +265,7 @@ const sqipContentful: GatsbyNode["setFieldsOnGraphQLNodeType"] = async ({
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
           metadata: { type: SqipMetadata },
-          additional_metadata: { type: GraphQLJSON },
+          additionalMetadata: { type: GraphQLJSON },
         },
       }),
       args: {
