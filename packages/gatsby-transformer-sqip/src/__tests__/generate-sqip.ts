@@ -7,11 +7,24 @@ import { generateSqip } from "../generate-sqip"
 
 jest.mock(`sqip`, () => {
   const originalModule = jest.requireActual(`sqip`)
+  const Vibrant = jest.requireActual(`node-vibrant`)
+  const path = jest.requireActual(`path`)
   return {
     ...originalModule,
     sqip: jest.fn(() => {
       return {
         content: Buffer.from(`<svg><!-- Mocked SQIP SVG --></svg>`),
+        metadata: {
+          palette: {
+            Vibrant: {
+              rgb: [1, 2, 3],
+              hsl: [0.1, 0.2, 0.3],
+              hex: `#M0CK3D`,
+              population: 42,
+            },
+          },
+          dataURI: `data:mocked`,
+        },
       }
     }),
   }
@@ -75,11 +88,17 @@ describe(`gatsby-transformer-sqip`, () => {
       expect(sqipArgs).toMatchSnapshot()
 
       expect(promises.access).toHaveBeenCalledTimes(1)
-      expect(promises.writeFile).toHaveBeenCalledTimes(1)
+      expect(promises.writeFile).toHaveBeenCalledTimes(2)
       expect(promises.readFile).toHaveBeenCalledTimes(0)
     })
     it(`cached`, async () => {
-      promises.access.mockImplementationOnce(() => true)
+      promises.access.mockImplementation(() => true)
+      promises.readFile.mockImplementationOnce(() =>
+        Buffer.from(`<svg><!-- Cached SQIP SVG --></svg>`)
+      )
+      promises.readFile.mockImplementationOnce(() =>
+        Buffer.from(`{"mocked": "json", "palette": {}}`)
+      )
       const cache = {
         get: jest.fn(),
         set: jest.fn(),
@@ -98,11 +117,10 @@ describe(`gatsby-transformer-sqip`, () => {
 
       expect(result).toMatchSnapshot()
 
-      expect(sqip).toHaveBeenCalledTimes(0)
-
-      expect(promises.access).toHaveBeenCalledTimes(1)
+      expect(promises.access).toHaveBeenCalledTimes(2)
       expect(promises.writeFile).toHaveBeenCalledTimes(0)
-      expect(promises.readFile).toHaveBeenCalledTimes(1)
+      expect(promises.readFile).toHaveBeenCalledTimes(2)
+      expect(sqip).toHaveBeenCalledTimes(0)
     })
     it(`returns null for unsupported files`, async () => {
       promises.access.mockImplementationOnce(() => true)

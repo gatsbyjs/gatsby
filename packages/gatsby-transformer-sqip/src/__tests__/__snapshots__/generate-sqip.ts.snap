@@ -2,14 +2,39 @@
 
 exports[`gatsby-transformer-sqip generateSqip cached 1`] = `
 {
-  "dataURI": "data:image/svg+xml,%3csvg%3e%3c!-- Cached SQIP SVG --%3e%3c/svg%3e",
+  "additional_metadata": {
+    "mocked": "json",
+  },
+  "metadata": {
+    "palette": {},
+  },
   "svg": "<svg><!-- Cached SQIP SVG --></svg>",
 }
 `;
 
 exports[`gatsby-transformer-sqip generateSqip not cached 1`] = `
 {
-  "dataURI": "data:image/svg+xml,%3csvg%3e%3c!-- Mocked SQIP SVG --%3e%3c/svg%3e",
+  "additional_metadata": {
+    "dataURI": "data:mocked",
+  },
+  "metadata": {
+    "palette": {
+      "Vibrant": {
+        "hex": "#M0CK3D",
+        "hsl": [
+          0.1,
+          0.2,
+          0.3,
+        ],
+        "population": 42,
+        "rgb": [
+          1,
+          2,
+          3,
+        ],
+      },
+    },
+  },
   "svg": "<svg><!-- Mocked SQIP SVG --></svg>",
 }
 `;

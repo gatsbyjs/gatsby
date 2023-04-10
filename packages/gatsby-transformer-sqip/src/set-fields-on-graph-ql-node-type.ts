@@ -2,10 +2,9 @@ import path from "path"
 import Debug from "debug"
 import { promises as fs, constants } from "fs"
 import sharp from "sharp"
-import md5File from "md5-file"
 
 import type { GatsbyNode, Node } from "gatsby"
-import type { GraphQLFieldResolver } from "gatsby/graphql"
+import { GraphQLFieldResolver, GraphQLJSON } from "gatsby/graphql"
 import {
   GraphQLObjectType,
   GraphQLString,
@@ -20,34 +19,15 @@ import {
 } from "gatsby-transformer-sharp/types"
 
 import { generateSqip } from "./generate-sqip"
+import { SqipMetadata } from "./create-schema-customization"
 
 const debug = Debug(`gatsby-transformer-sqip`)
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
 
-export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] =
-  async args => {
-    const {
-      type: { name },
-    } = args
-
-    if (!SUPPORTED_NODES.includes(name)) {
-      return {}
-    }
-    if (name === `ImageSharp`) {
-      return sqipSharp(args)
-    }
-
-    if (name === `ContentfulAsset`) {
-      return sqipContentful(args)
-    }
-
-    return {}
-  }
-
-async function sqipSharp({
+const sqipSharp: GatsbyNode["setFieldsOnGraphQLNodeType"] = async ({
   cache,
   getNodeAndSavePathDependency,
-}): Promise<unknown> {
+}) => {
   const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
 
   try {
@@ -94,6 +74,10 @@ async function sqipSharp({
       duotone,
       cropFocus,
       rotate,
+    }
+
+    if (!image.parent) {
+      return null
     }
 
     const file = getNodeAndSavePathDependency(image.parent, context.path)
@@ -163,7 +147,10 @@ async function sqipSharp({
   }
 }
 
-async function sqipContentful({ cache }): Promise<unknown> {
+const sqipContentful: GatsbyNode["setFieldsOnGraphQLNodeType"] = async ({
+  cache,
+  createContentDigest,
+}) => {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
@@ -257,7 +244,7 @@ async function sqipContentful({ cache }): Promise<unknown> {
       ext: extension,
     })
 
-    const contentDigest = await md5File(absolutePath)
+    const contentDigest = await createContentDigest(absolutePath)
 
     return generateSqip({
       cache,
@@ -277,6 +264,8 @@ async function sqipContentful({ cache }): Promise<unknown> {
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
+          metadata: { type: SqipMetadata },
+          additional_metadata: { type: GraphQLJSON },
         },
       }),
       args: {
@@ -315,3 +304,23 @@ async function sqipContentful({ cache }): Promise<unknown> {
     },
   }
 }
+
+export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] =
+  async (args, options, cb) => {
+    const {
+      type: { name },
+    } = args
+
+    if (!SUPPORTED_NODES.includes(name)) {
+      return {}
+    }
+    if (name === `ImageSharp`) {
+      return sqipSharp(args, options, cb)
+    }
+
+    if (name === `ContentfulAsset`) {
+      return sqipContentful(args, options, cb)
+    }
+
+    return {}
+  }
