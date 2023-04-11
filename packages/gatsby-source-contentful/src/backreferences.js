@@ -2,7 +2,6 @@
 import { hasFeature } from "gatsby-plugin-utils/index"
 import { getDataStore } from "gatsby/dist/datastore"
 import { untilNextEventLoopTick } from "./utils"
-import { assetTypeName } from "./normalize"
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 export const existingNodes = new Map()
@@ -29,8 +28,8 @@ export async function getExistingCachedNodes({
     !hasStatefulSourceNodes && is.firstSourceNodesCallOfCurrentNodeProcess
 
   if (existingNodes.size === 0) {
-    memoryNodeIdsByType.assets = new Set()
-    memoryNodeIdsByType.entries = new Set()
+    memoryNodeCountsBySysType.Asset = 0
+    memoryNodeCountsBySysType.Entry = 0
 
     const dataStore = getDataStore()
     const allNodeTypeNames = Array.from(dataStore.getTypes())
@@ -83,24 +82,23 @@ export async function getExistingCachedNodes({
 
   return {
     existingNodes,
-    memoryNodeCounts: {
-      assets: memoryNodeIdsByType.assets.size || 0,
-      entries: memoryNodeIdsByType.entries.size || 0,
-    },
+    memoryNodeCountsBySysType,
   }
 }
 
-const memoryNodeIdsByType = {
-  assets: new Set(),
-  entries: new Set(),
+const memoryNodeCountsBySysType = {
+  Asset: 0,
+  Entry: 0,
 }
 
 // store only the fields we need to compare to reduce memory usage. if a node is updated we'll use getNode to grab the whole node before updating it
 export function addNodeToExistingNodesCache(node) {
-  if (node.sys.type === `Asset`) {
-    memoryNodeIdsByType.assets.add(node.contentful_id)
-  } else if (node.sys.type === `Entry`) {
-    memoryNodeIdsByType.entries.add(node.contentful_id)
+  if (
+    node.sys.type in memoryNodeCountsBySysType &&
+    !existingNodes.has(node.id)
+  ) {
+    memoryNodeCountsBySysType[node.sys.type] ||= 0
+    memoryNodeCountsBySysType[node.sys.type]++
   }
 
   const cacheNode = {
@@ -127,10 +125,16 @@ export function addNodeToExistingNodesCache(node) {
 }
 
 export function removeNodeFromExistingNodesCache(node) {
-  if (node.sys.type === `Asset`) {
-    memoryNodeIdsByType.assets.delete(node.contentful_id)
-  } else if (node.sys.type === `Entry`) {
-    memoryNodeIdsByType.entries.delete(node.contentful_id)
+  if (
+    node.sys.type in memoryNodeCountsBySysType &&
+    existingNodes.has(node.id)
+  ) {
+    memoryNodeCountsBySysType[node.sys.type] ||= 0
+    memoryNodeCountsBySysType[node.sys.type]--
+
+    if (memoryNodeCountsBySysType[node.sys.type] < 0) {
+      memoryNodeCountsBySysType[node.sys.type] = 0
+    }
   }
 
   existingNodes.delete(node.id)

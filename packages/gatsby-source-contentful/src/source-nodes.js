@@ -81,11 +81,12 @@ export async function sourceNodes(
   }
 
   // Array of all existing Contentful nodes
-  const { existingNodes, memoryNodeCounts } = await getExistingCachedNodes({
-    actions,
-    getNode,
-    pluginConfig,
-  })
+  const { existingNodes, memoryNodeCountsBySysType } =
+    await getExistingCachedNodes({
+      actions,
+      getNode,
+      pluginConfig,
+    })
 
   // If the user knows they are offline, serve them cached result
   // For prod builds though always fail if we can't get the latest data
@@ -209,11 +210,21 @@ export async function sourceNodes(
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
   reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
-  reporter.info(`Contentful: ${memoryNodeCounts.entries} cached entries`)
+  reporter.info(
+    `Contentful: ${
+      memoryNodeCountsBySysType.Entry / locales.length
+    } cached entries`
+  )
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
-  reporter.info(`Contentful: ${memoryNodeCounts.assets} cached assets`)
+  reporter.info(
+    `Contentful: ${
+      memoryNodeCountsBySysType.Asset / locales.length
+    } cached assets`
+  )
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
+
+  debugger
 
   reporter.verbose(`Building Contentful reference map`)
 
