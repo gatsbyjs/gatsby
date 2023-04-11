@@ -451,6 +451,18 @@ export async function sourceNodes(
           fields: undefined, // plugin adds node field on asset nodes which don't have reverse links
         }
 
+        // memory cached nodes are mutated during back reference checks
+        // so we need to carry over the changes to the updated node
+        if (node.__memcache) {
+          for (const key of Object.keys(node)) {
+            if (!key.endsWith(`___NODE`)) {
+              continue
+            }
+
+            newNode[key] = node[key]
+          }
+        }
+
         createNode(newNode)
 
         if (existingNodesLoopCount++ % 2000 === 0) {
