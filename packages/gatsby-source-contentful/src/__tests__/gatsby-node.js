@@ -130,9 +130,6 @@ describe(`gatsby-node`, () => {
     activityTimer: () => {
       return { start: jest.fn(), end: jest.fn() }
     },
-    createProgress: () => {
-      return { start: jest.fn(), end: jest.fn(), tick: jest.fn() }
-    },
   }
   const parentSpan = {}
   const createNodeId = jest.fn(value => value)

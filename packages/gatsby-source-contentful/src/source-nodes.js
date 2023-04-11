@@ -525,9 +525,6 @@ export async function sourceNodes(
     reporter.info(`Creating ${assets.length} Contentful asset nodes`)
   }
 
-  const assetTimer = reporter.createProgress(`Creating Contentful asset nodes`)
-  assetTimer.total = assets.length
-
   const assetNodes = []
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
@@ -547,10 +544,7 @@ export async function sourceNodes(
     if (i % 1000 === 0) {
       await untilNextEventLoopTick()
     }
-    assetTimer.tick()
   }
-
-  assetTimer.end()
 
   await untilNextEventLoopTick()
 
