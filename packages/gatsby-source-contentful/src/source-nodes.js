@@ -209,16 +209,11 @@ export async function sourceNodes(
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
   reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
+  reporter.info(`Contentful: ${memoryNodeCounts.entries} cached entries`)
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
+  reporter.info(`Contentful: ${memoryNodeCounts.assets} cached assets`)
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
-
-  reporter.info(
-    `Contentful: ${memoryNodeCounts.Content} memory cached content nodes`
-  )
-  reporter.info(
-    `Contentful: ${memoryNodeCounts.Asset} memory cached asset nodes`
-  )
 
   reporter.verbose(`Building Contentful reference map`)
 
@@ -490,22 +485,16 @@ export async function sourceNodes(
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
-    const timer =
-      entryList[i].length > 0
-        ? reporter.createProgress(
-            `Creating Contentful ${
-              pluginConfig.get(`useNameForId`)
-                ? contentTypeItem.name
-                : contentTypeItem.sys.id
-            } nodes`
-          )
-        : null
-
-    if (timer) {
-      timer.start()
+    if (entryList[i].length) {
+      reporter.info(
+        `Creating ${entryList[i].length} Contentful ${
+          pluginConfig.get(`useNameForId`)
+            ? contentTypeItem.name
+            : contentTypeItem.sys.id
+        } nodes`
+      )
     }
 
-    let nodeCreatedCount = 0
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
     await createNodesForContentType({
@@ -513,13 +502,7 @@ export async function sourceNodes(
       restrictedNodeFields,
       conflictFieldPrefix,
       entries: entryList[i],
-      createNode: timer?.tick
-        ? node => {
-            timer.total = ++nodeCreatedCount
-            timer.tick()
-            return createNode(node)
-          }
-        : createNode,
+      createNode,
       createNodeId,
       getNode,
       resolvable,
@@ -532,14 +515,14 @@ export async function sourceNodes(
       unstable_createNodeManifest,
     })
 
-    if (timer) {
-      timer.end()
-    }
-
     // allow node to garbage collect these items if it needs to
     contentTypeItems[i] = undefined
     entryList[i] = undefined
     await untilNextEventLoopTick()
+  }
+
+  if (assets.length) {
+    reporter.info(`Creating ${assets.length} Contentful asset nodes`)
   }
 
   const assetTimer = reporter.createProgress(`Creating Contentful asset nodes`)

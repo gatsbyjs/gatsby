@@ -76,20 +76,26 @@ export async function getExistingCachedNodes({
 
   isFirstSourceNodesCallOfCurrentNodeProcess = false
 
-  return { existingNodes, memoryNodeCounts }
+  return {
+    existingNodes,
+    memoryNodeCounts: {
+      assets: memoryNodeIdsByType.assets.size || 0,
+      entries: memoryNodeIdsByType.entries.size || 0,
+    },
+  }
 }
 
-const memoryNodeCounts = {
-  Asset: 0,
-  Content: 0,
+const memoryNodeIdsByType = {
+  assets: new Set(),
+  entries: new Set(),
 }
 
 // store only the fields we need to compare to reduce memory usage. if a node is updated we'll use getNode to grab the whole node before updating it
 export function addNodeToExistingNodesCache(node) {
-  if (node.internal.type === assetTypeName) {
-    memoryNodeCounts.Asset++
-  } else {
-    memoryNodeCounts.Content++
+  if (node.sys.type === `Asset`) {
+    memoryNodeIdsByType.assets.add(node.contentful_id)
+  } else if (node.sys.type === `Entry`) {
+    memoryNodeIdsByType.entries.add(node.contentful_id)
   }
 
   const cacheNode = {
@@ -116,5 +122,11 @@ export function addNodeToExistingNodesCache(node) {
 }
 
 export function removeNodeFromExistingNodesCache(node) {
+  if (node.sys.type === `Asset`) {
+    memoryNodeIdsByType.assets.delete(node.contentful_id)
+  } else if (node.sys.type === `Entry`) {
+    memoryNodeIdsByType.entries.delete(node.contentful_id)
+  }
+
   existingNodes.delete(node.id)
 }
