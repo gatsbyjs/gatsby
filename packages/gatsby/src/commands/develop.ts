@@ -2,7 +2,7 @@
 import path from "path"
 import tmp from "tmp"
 import { ChildProcess } from "child_process"
-import execa from "execa"
+import { execaNode } from "execa"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import fs from "fs-extra"
 import onExit from "signal-exit"
@@ -72,7 +72,7 @@ class ControllableScript {
       }
     }
 
-    this.process = execa.node(tmpFileName, args, {
+    this.process = execaNode(tmpFileName, args, {
       env: {
         ...process.env,
         GATSBY_NODE_GLOBALS: JSON.stringify(global.__GATSBY ?? {}),

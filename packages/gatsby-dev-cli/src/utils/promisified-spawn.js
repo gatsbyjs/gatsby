@@ -1,15 +1,15 @@
-const execa = require(`execa`)
+import { execa } from "execa"
 
 const defaultSpawnArgs = {
   cwd: process.cwd(),
   stdio: `inherit`,
 }
 
-exports.setDefaultSpawnStdio = stdio => {
+export const setDefaultSpawnStdio = stdio => {
   defaultSpawnArgs.stdio = stdio
 }
 
-exports.promisifiedSpawn = async ([cmd, args = [], spawnArgs = {}]) => {
+export const promisifiedSpawn = async ([cmd, args = [], spawnArgs = {}]) => {
   const spawnOptions = {
     ...defaultSpawnArgs,
     ...spawnArgs,

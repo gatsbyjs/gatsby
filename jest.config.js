@@ -105,6 +105,14 @@ const esModules = [
   `trim-lines`,
   `estree-util-to-js`,
   `is-reference`,
+  `execa`,
+  `strip-final-newline`,
+  `npm-run-path`,
+  `path-key`,
+  `onetime`,
+  `mimic-fn`,
+  `human-signals`,
+  `is-stream`,
 ].join(`|`)
 
 /** @type {import('jest').Config} */

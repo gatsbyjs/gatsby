@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { execSync } from "child_process"
-import execa from "execa"
+import { execa } from "execa"
 import fs from "fs-extra"
 import path from "path"
 import { initStarter } from "../init-starter"
