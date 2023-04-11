@@ -224,8 +224,6 @@ export async function sourceNodes(
   )
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
-  debugger
-
   reporter.verbose(`Building Contentful reference map`)
 
   const entryList = buildEntryList({ contentTypeItems, currentSyncData })
