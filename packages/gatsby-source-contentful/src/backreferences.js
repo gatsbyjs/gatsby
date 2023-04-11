@@ -5,10 +5,12 @@ import { untilNextEventLoopTick } from "./utils"
 import { assetTypeName } from "./normalize"
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
-const existingNodes = new Map()
+export const existingNodes = new Map()
 
 let allNodesLoopCount = 0
-let isFirstSourceNodesCallOfCurrentNodeProcess = true
+export const is = {
+  firstSourceNodesCallOfCurrentNodeProcess: true,
+}
 
 export async function getExistingCachedNodes({
   actions,
@@ -24,7 +26,7 @@ export async function getExistingCachedNodes({
   }
 
   const needToTouchNodes =
-    !hasStatefulSourceNodes && isFirstSourceNodesCallOfCurrentNodeProcess
+    !hasStatefulSourceNodes && is.firstSourceNodesCallOfCurrentNodeProcess
 
   if (existingNodes.size === 0) {
     const dataStore = getDataStore()
@@ -74,7 +76,7 @@ export async function getExistingCachedNodes({
     }
   }
 
-  isFirstSourceNodesCallOfCurrentNodeProcess = false
+  is.firstSourceNodesCallOfCurrentNodeProcess = false
 
   return {
     existingNodes,

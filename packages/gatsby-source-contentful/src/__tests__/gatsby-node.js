@@ -6,6 +6,7 @@ import {
   sourceNodes,
   onPreInit,
 } from "../gatsby-node"
+import { existingNodes, is, memoryNodeCounts } from "../backreferences"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -59,7 +60,12 @@ describe(`gatsby-node`, () => {
 
   const actions = {
     createTypes: jest.fn(),
-    setPluginStatus: jest.fn(),
+    setPluginStatus: jest.fn(pluginStatusObject => {
+      pluginStatus = {
+        ...pluginStatus,
+        ...pluginStatusObject,
+      }
+    }),
     createNode: jest.fn(async node => {
       // similar checks as gatsby does
       if (!_.isPlainObject(node)) {
@@ -99,9 +105,20 @@ describe(`gatsby-node`, () => {
     }),
     buildInterfaceType: jest.fn(),
   }
+  let pluginStatus = {}
+  const resetPluginStatus = () => {
+    pluginStatus = {}
+  }
   const store = {
     getState: jest.fn(() => {
-      return { program: { directory: process.cwd() }, status: {} }
+      return {
+        program: { directory: process.cwd() },
+        status: {
+          plugins: {
+            [`gatsby-source-contentful`]: pluginStatus,
+          },
+        },
+      }
     }),
   }
   const cache = createMockCache()
@@ -407,7 +424,11 @@ describe(`gatsby-node`, () => {
     })
   }
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    existingNodes.clear()
+    is.firstSourceNodesCallOfCurrentNodeProcess = true
+    resetPluginStatus()
+
     // @ts-ignore
     fetchContent.mockClear()
     // @ts-ignore
