@@ -29,6 +29,9 @@ export async function getExistingCachedNodes({
     !hasStatefulSourceNodes && is.firstSourceNodesCallOfCurrentNodeProcess
 
   if (existingNodes.size === 0) {
+    memoryNodeIdsByType.assets = new Set()
+    memoryNodeIdsByType.entries = new Set()
+
     const dataStore = getDataStore()
     const allNodeTypeNames = Array.from(dataStore.getTypes())
 
