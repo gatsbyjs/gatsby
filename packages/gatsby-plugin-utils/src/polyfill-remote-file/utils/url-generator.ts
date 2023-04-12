@@ -54,6 +54,8 @@ function appendUrlParamToSearchParams(
   searchParams.append(paramName, finalUrl)
 }
 
+const frontendHostName = process.env.IMAGE_CDN_HOSTNAME || ``
+
 export function generateFileUrl(
   {
     url,
@@ -78,7 +80,7 @@ export function generateFileUrl(
 
   appendUrlParamToSearchParams(parsedURL.searchParams, url)
 
-  return `${parsedURL.pathname}${parsedURL.search}`
+  return `${frontendHostName}${parsedURL.pathname}${parsedURL.search}`
 }
 
 export function generateImageUrl(
@@ -107,8 +109,10 @@ export function generateImageUrl(
     source.internal.contentDigest
   )
 
-  return `${parsedURL.pathname}${parsedURL.search}`
+  return `${frontendHostName}${parsedURL.pathname}${parsedURL.search}`
 }
+
+const routePrefix = process.env.IMAGE_CDN_ROUTE_PREFIX || `_gatsby`
 
 function generatePublicUrl(
   {
@@ -130,7 +134,9 @@ function generatePublicUrl(
 
   let publicUrl =
     pathPrefix +
-    (mimeType && isImage({ mimeType }) ? `/_gatsby/image/` : `/_gatsby/file/`)
+    (mimeType && isImage({ mimeType })
+      ? `/${routePrefix}/image/`
+      : `/${routePrefix}/file/`)
 
   publicUrl += `${remoteUrl}`
 
