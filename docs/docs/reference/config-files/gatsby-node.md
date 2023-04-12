@@ -9,7 +9,7 @@ apiCalls: NodeAPI
 
 Gatsby gives plugins and site builders many APIs for building your site. Code in the file `gatsby-node.js`/`gatsby-node.ts` is run once in the process of building your site. You can use its APIs to create pages dynamically, add data into GraphQL, or respond to events during the build lifecycle. To use the [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/), create a file named `gatsby-node.js`/`gatsby-node.ts` in the root of your site. Export any of the APIs you wish to use in this file.
 
-You can author the file in JavaScript or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-nodets).
+You can author the file in JavaScript (CommonJS or [ES Modules (ESM)](/docs/how-to/custom-configuration/es-modules/) syntax) or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-nodets).
 
 Every Gatsby Node API gets passed a [set of helper functions](/docs/reference/config-files/node-api-helpers/). These let you access several methods like reporting, or perform actions like creating new pages.
 
@@ -50,6 +50,8 @@ exports.createPages = async ({ graphql, actions }) => {
 ```
 
 The [TypeScript and Gatsby documentation](/docs/how-to/custom-configuration/typescript/#gatsby-nodets) shows how to set up a `gatsby-node` file in TypeScript.
+
+Read the [ES Modules (ESM) and Gatsby documentation](/docs/how-to/custom-configuration/es-modules/) if you don't want to use CommonJS syntax.
 
 ## Async vs. sync work
 
