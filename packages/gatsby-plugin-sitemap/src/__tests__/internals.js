@@ -97,4 +97,29 @@ describe(`gatsby-plugin-sitemap internals tests`, () => {
 
     expect(results).toMatchSnapshot()
   })
+
+  it(`pageFilter should filter correctly on consecutive runs`, () => {
+    const allPages = [
+      { path: `/to/keep/1` },
+      { path: `/to/keep/2` },
+      { path: `/404.html` },
+    ]
+    const filterPages = jest.fn()
+
+    const { filteredPages } = pageFilter({
+      allPages,
+      filterPages,
+      excludes: [],
+    })
+    expect(filteredPages).toHaveLength(2)
+    expect(filteredPages).not.toContainEqual({ path: `/404.html` })
+
+    const { filteredPages: filteredPages2 } = pageFilter({
+      allPages,
+      filterPages,
+      excludes: [],
+    })
+    expect(filteredPages2).toHaveLength(2)
+    expect(filteredPages2).not.toContainEqual({ path: `/404.html` })
+  })
 })

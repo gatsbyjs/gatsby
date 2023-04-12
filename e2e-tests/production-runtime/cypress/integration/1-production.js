@@ -22,11 +22,13 @@ describe(`Production build tests`, () => {
 
   if (Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
     it(`should activate the service worker`, () => {
+      cy.visit(`/`).waitForRouteChange()
       cy.waitForAPI(`onServiceWorkerActive`)
     })
   }
 
   it(`should navigate back after a reload`, () => {
+    cy.visit(`/`).waitForRouteChange()
     cy.getTestElement(`page2`).click()
 
     cy.waitForRouteChange().location(`pathname`).should(`equal`, `/page-2/`)
