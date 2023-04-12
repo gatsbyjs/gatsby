@@ -87,11 +87,8 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: require.resolve(`./content/images`),
-      },
+      resolve: require.resolve("./local-plugin-with-path"),
+      options: {},
     },
     {
       resolve: `gatsby-plugin-mdx`,
@@ -131,11 +128,8 @@ const config = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: require.resolve(`./content/images`),
-      },
+      resolve: require.resolve("./local-plugin-with-path"),
+      options: {},
     },
     {
       resolve: `gatsby-plugin-mdx`,
