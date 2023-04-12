@@ -435,11 +435,6 @@ export interface GatsbyNode<
   ): void | Promise<void>
 
   /**
-   * Marks the source plugin that called this function as stateful. Gatsby will not check for stale nodes for any plugin that calls this.
-   */
-  enableStatefulSourceNodes?(this: void, plugin?: ActionPlugin)
-
-  /**
    * Called when a new node is created. Plugins wishing to extend or
    * transform nodes created by other plugins should implement this API.
    *
@@ -1476,6 +1471,11 @@ export interface Actions {
     plugin?: ActionPlugin,
     traceId?: string
   ): void
+
+  /**
+   * Marks the source plugin that called this function as stateful. Gatsby will not check for stale nodes for any plugin that calls this.
+   */
+  enableStatefulSourceNodes?(this: void, plugin?: ActionPlugin)
 }
 
 export interface Store {
