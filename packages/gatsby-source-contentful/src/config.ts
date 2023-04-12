@@ -9,4 +9,5 @@ export const restrictedNodeFields = [
   `internal`,
   // Contentful Common resource attributes: https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
   `sys`,
+  `metadata`,
 ]
