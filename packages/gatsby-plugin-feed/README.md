@@ -48,8 +48,8 @@ module.exports = {
                   nodes {
                     excerpt
                     html
-                    fields { 
-                      slug 
+                    fields {
+                      slug
                     }
                     frontmatter {
                       title
@@ -68,6 +68,10 @@ module.exports = {
             match: "^/blog/",
             // optional configuration to specify external rss feed, such as feedburner
             link: "https://feeds.feedburner.com/gatsby/blog",
+            // optional to specify custom namespace for node elements
+            custom_namespaces: {
+              media: 'http://search.yahoo.com/mrss/',
+            }
           },
         ],
       },
@@ -75,6 +79,7 @@ module.exports = {
   ],
 }
 ```
+The GraphQL `query` property located directly under `options` queries `siteMetadata` from `gatsby-config` which contains the `title`, `description`, and `site_url` properties that are used to populate [the `feedOptions` of the `rss` package](https://www.npmjs.com/package/rss#feedoptions).
 
 Each feed must include `output`, `query`, `title`, and `serialize`. You'll need to write the `serialize` function in order to fit your use case.
 
