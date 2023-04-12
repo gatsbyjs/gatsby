@@ -45,7 +45,105 @@ export const onPostBuild = () => {
 
 ## Migrating from CommonJS to ES Modules
 
+- Use `import`/`export` syntax instead of `require`/`module.exports`
+- You can replicate the `__dirname` call with `import.meta.url`:
+
+  ```js
+  import { dirname } from "path"
+  import { fileURLToPath } from "url"
+
+  const __dirname = dirname(fileURLToPath(import.meta.url))
+  ```
+
+- You can replicate `require.resolve` with `createRequire`:
+
+  ```js
+  import { createRequire } from "module"
+
+  const require = createRequire(import.meta.url)
+  ```
+
 The documents [Interopability with CommonJS](https://nodejs.org/api/esm.html#interoperability-with-commonjs) and [Differences between ES Modules and CommonJS](https://nodejs.org/api/esm.html#differences-between-es-modules-and-commonjs) also apply to ESM in Gatsby.
+
+Here's how you'd migrate a `gatsby-config.js` file to `gatsby-config.mjs`.
+
+**Before:**
+
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `Using CJS`,
+  },
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/content/posts/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: require.resolve(`./content/images`),
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        mdxOptions: {
+          remarkPlugins: [require(`remark-gfm`)],
+        },
+      },
+    },
+  ],
+}
+```
+
+**After:**
+
+```js:title=gatsby-config.mjs
+import { createRequire } from "module"
+import { dirname } from "path"
+import { fileURLToPath } from "url"
+import remarkGfm from "remark-gfm"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const require = createRequire(import.meta.url)
+
+const config = {
+  siteMetadata: {
+    title: `Using ESM`,
+  },
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/content/posts/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: require.resolve(`./content/images`),
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      },
+    },
+  ],
+}
+
+export default config
+```
 
 ## Current limitations
 
