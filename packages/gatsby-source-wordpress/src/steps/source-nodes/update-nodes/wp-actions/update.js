@@ -314,7 +314,8 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
 
     if (existingNode) {
       // calling touchNode here ensures owners is populated before we delete.
-      // In some cases calling delete node without touching the node first throws an error. this is a bug in Gatsby that needs to be fixed
+      // In some cases calling delete node without touching the node first throws an error. this is a bug in Gatsby that has been fixed but this code remains to be backwards compatible with earlier versions that have the bug still.
+      // TODO remove in the next major version
       await actions.touchNode(existingNode)
       await actions.deleteNode(existingNode)
       reportUpdate({ setAction: `DELETE` })
