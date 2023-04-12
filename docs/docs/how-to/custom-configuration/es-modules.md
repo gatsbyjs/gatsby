@@ -46,6 +46,7 @@ export const onPostBuild = () => {
 ## Migrating from CommonJS to ES Modules
 
 - Use `import`/`export` syntax instead of `require`/`module.exports`
+- File extensions in imports are [mandatory](https://nodejs.org/api/esm.html#mandatory-file-extensions)
 - You can replicate the `__dirname` call with `import.meta.url`:
 
   ```js
@@ -70,9 +71,12 @@ Here's how you'd migrate a `gatsby-config.js` file to `gatsby-config.mjs`.
 **Before:**
 
 ```js:title=gatsby-config.js
+const { siteUrl } = require(`./defaults`)
+
 module.exports = {
   siteMetadata: {
     title: `Using CJS`,
+    siteUrl,
   },
   plugins: [
     {
@@ -108,6 +112,7 @@ import { createRequire } from "module"
 import { dirname } from "path"
 import { fileURLToPath } from "url"
 import remarkGfm from "remark-gfm"
+import { siteUrl } from "./defaults.mjs"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const require = createRequire(import.meta.url)
@@ -115,6 +120,7 @@ const require = createRequire(import.meta.url)
 const config = {
   siteMetadata: {
     title: `Using ESM`,
+    siteUrl,
   },
   plugins: [
     {
