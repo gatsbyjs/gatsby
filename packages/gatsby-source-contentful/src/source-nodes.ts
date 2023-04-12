@@ -269,6 +269,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       useNameForId,
       previousForeignReferenceMapState,
       deletedEntries: currentSyncData?.deletedEntries,
+      createNodeId,
     })
     await cache.set(CACHE_FOREIGN_REFERENCE_MAP_STATE, foreignReferenceMapState)
     const foreignReferenceMap = foreignReferenceMapState.backLinks
@@ -349,13 +350,33 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
 
     // TODO: mirror structure of Contentful GraphQL API, as it prevents field name overlaps
     const reverseReferenceFields = contentTypeItems.map(contentTypeItem =>
-      useNameForId
-        ? contentTypeItem.name.toLowerCase()
-        : contentTypeItem.sys.id.toLowerCase()
+      createNodeId(
+        useNameForId
+          ? contentTypeItem.name.toLowerCase()
+          : contentTypeItem.sys.id.toLowerCase()
+      )
     )
 
     // Update existing entry nodes that weren't updated but that need reverse links added or removed.
     const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
+
+    const removeReferencesToDeletedNodes = (fieldValue, node): void => {
+      if (Array.isArray(fieldValue)) {
+        fieldValue = fieldValue.filter(referenceId => {
+          const shouldRemove = deletedEntryGatsbyReferenceIds.has(referenceId)
+          if (shouldRemove) {
+            existingNodesThatNeedReverseLinksUpdateInDatastore.add(node)
+          }
+          return !shouldRemove
+        })
+      } else {
+        if (deletedEntryGatsbyReferenceIds.has(fieldValue)) {
+          existingNodesThatNeedReverseLinksUpdateInDatastore.add(node)
+          fieldValue = null
+        }
+      }
+    }
+
     existingNodes
       .filter(
         n =>
@@ -380,14 +401,14 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
             )
 
             // Create new reference field when none exists
-            if (!n[name]) {
+            if (!n.linkedFrom[name]) {
               existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
-              n[name] = [nodeId]
+              n.linkedFrom[name] = [nodeId]
               return
             }
 
             // Add non existing references to reference field
-            const field = n[name]
+            const field = n.linkedFrom[name]
             if (field && Array.isArray(field) && !field.includes(nodeId)) {
               existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
               field.push(nodeId)
@@ -401,28 +422,12 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           deletedEntryGatsbyReferenceIds.size &&
           referenceFieldMap.has(n.sys.contentType)
         ) {
-          const referenceFields = [
-            ...referenceFieldMap.get(n.sys.contentType),
-            ...reverseReferenceFields,
-          ]
+          referenceFieldMap.get(n.sys.contentType).forEach(name => {
+            removeReferencesToDeletedNodes(n[name], n)
+          })
 
-          referenceFields.forEach(name => {
-            const fieldValue = n[name]
-            if (Array.isArray(fieldValue)) {
-              n[name] = fieldValue.filter(referenceId => {
-                const shouldRemove =
-                  deletedEntryGatsbyReferenceIds.has(referenceId)
-                if (shouldRemove) {
-                  existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
-                }
-                return !shouldRemove
-              })
-            } else {
-              if (deletedEntryGatsbyReferenceIds.has(fieldValue)) {
-                existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
-                n[name] = null
-              }
-            }
+          reverseReferenceFields.forEach(name => {
+            removeReferencesToDeletedNodes(n.linkedFrom[name], n)
           })
         }
       })

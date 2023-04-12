@@ -39,7 +39,12 @@ function countCreatedNodeTypesFromMock(mock) {
   return nodeTypeCounts
 }
 
+const createNodeId = jest.fn(id => id)
+
 describe(`generic`, () => {
+  beforeEach(() => {
+    createNodeId.mockClear()
+  })
   it(`builds entry list`, () => {
     const entryList = buildEntryList({
       currentSyncData,
@@ -101,6 +106,7 @@ describe(`generic`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
     const referenceKeys = Object.keys(foreignReferenceMapState.backLinks)
     const expectedReferenceKeys = [
@@ -160,17 +166,18 @@ describe(`Process contentful data (by name)`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     expect(
       foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
         .name
-    ).toBe(`product`)
+    ).toBe(`ContentfulContentTypeProduct`)
 
     expect(
       foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
         .name
-    ).toBe(`brand`)
+    ).toBe(`ContentfulContentTypeBrand`)
   })
 
   it(`creates nodes for each entry`, () => {
@@ -193,10 +200,10 @@ describe(`Process contentful data (by name)`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
     const getNode = jest.fn(() => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({
@@ -244,7 +251,6 @@ describe(`Process contentful data (by name)`, () => {
 
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn(() => Promise.resolve())
-    const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       createAssetNodes({
@@ -284,10 +290,10 @@ describe(`Process existing mutated nodes in warm build`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
     let doReturn = true
     const getNode = jest.fn(id => {
       if (doReturn) {
@@ -369,17 +375,18 @@ describe(`Process contentful data (by id)`, () => {
       useNameForId: false,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     expect(
       foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
         .name
-    ).toBe(`2pqfxujwe8qsykum0u6w8m`)
+    ).toBe(`ContentfulContentType2PqfXuJwE8QSyKuM0U6W8M`)
 
     expect(
       foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
         .name
-    ).toBe(`sfztzbsum8coewygeuyes`)
+    ).toBe(`ContentfulContentTypeSFzTZbSuM8CoEwygeUYes`)
   })
 
   it(`creates nodes for each entry`, () => {
@@ -400,10 +407,10 @@ describe(`Process contentful data (by id)`, () => {
       useNameForId: false,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
     const getNode = jest.fn(() => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({

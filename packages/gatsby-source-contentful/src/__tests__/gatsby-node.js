@@ -7,7 +7,7 @@ import {
   onPreInit,
 } from "../gatsby-node"
 import { fetchContent, fetchContentTypes } from "../fetch"
-import { makeId } from "../normalize"
+import { makeId, makeTypeName } from "../normalize"
 
 import startersBlogFixture from "../__fixtures__/starter-blog-data"
 import richTextFixture from "../__fixtures__/rich-text-data"
@@ -278,13 +278,23 @@ describe(`gatsby-node`, () => {
       })
 
       // update all matchedObjets with our backreferences
-      for (const [nodeId, value] of references) {
-        const matchedObject = {
-          ...nodeMap.get(nodeId),
-          ...value,
-        }
+      if (references.size) {
+        for (const [nodeId, value] of references) {
+          const matchedObject = nodeMap.get(nodeId)
+          if (matchedObject) {
+            matchedObject.linkedFrom = {}
 
-        nodeMap.set(nodeId, matchedObject)
+            for (const k of Object.keys(value)) {
+              const typeName = makeTypeName(k)
+              if (matchedObject[`linkedFrom`][typeName]) {
+                matchedObject[`linkedFrom`][typeName].push(...value[k])
+              } else {
+                matchedObject[`linkedFrom`][typeName] = value[k]
+              }
+            }
+            nodeMap.set(nodeId, matchedObject)
+          }
+        }
       }
 
       // match all entry nodes
@@ -906,7 +916,7 @@ describe(`gatsby-node`, () => {
       )
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(48)
+    expect(actions.createNode).toHaveBeenCalledTimes(46)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
@@ -1301,7 +1311,9 @@ describe(`gatsby-node`, () => {
 
     expect(blogPostNodes.length).toEqual(1)
     expect(blogCategoryNodes.length).toEqual(1)
-    expect(blogCategoryNodes[0][`blog post`]).toEqual([blogPostNodes[0].id])
+    expect(
+      blogCategoryNodes[0][`linkedFrom`][`ContentfulContentTypeBlogPost`]
+    ).toEqual([blogPostNodes[0].id])
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
 
     await simulateGatsbyBuild()
@@ -1315,7 +1327,9 @@ describe(`gatsby-node`, () => {
 
     expect(blogPostNodes.length).toEqual(1)
     expect(blogCategoryNodes.length).toEqual(1)
-    expect(blogCategoryNodes[0][`blog post`]).toEqual([blogPostNodes[0].id])
+    expect(
+      blogCategoryNodes[0][`linkedFrom`][`ContentfulContentTypeBlogPost`]
+    ).toEqual([blogPostNodes[0].id])
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS edit #1`)
   })
 })
