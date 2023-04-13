@@ -64,7 +64,7 @@ export default function handler(
 
 Query strings and common body content types are automatically parsed and available at `req.query` and `req.body`
 
-Read more about [supported data formats](/docs/reference/functions/middleware-and-helpers) for information about support for Buffer and Steam via a custom `config`.
+Read more about [supported data formats](/docs/reference/functions/middleware-and-helpers) for information about support for Buffer and Stream via a custom `config`.
 
 ```js:title=src/api/contact-form.js
 export default function contactFormHandler(req, res) {
