@@ -19,6 +19,7 @@ import {
 } from "~/steps/create-schema-customization/helpers"
 import { processNode } from "~/steps/source-nodes/create-nodes/process-node"
 import { getPersistentCache, setPersistentCache } from "~/utils/cache"
+import { needToTouchNodes } from "../../../../utils/gatsby-features"
 
 export const fetchAndCreateSingleNode = async ({
   singleName,
@@ -170,7 +171,7 @@ export const createSingleNode = async ({
 
   const { typeInfo } = getQueryInfoBySingleFieldName(singleName)
 
-  if (!cachedNodeIds) {
+  if (!cachedNodeIds && needToTouchNodes) {
     cachedNodeIds = await getPersistentCache({ key: CREATED_NODE_IDS })
   }
 
@@ -259,12 +260,11 @@ export const createSingleNode = async ({
 
   if (remoteNode) {
     actions.createNode(remoteNode)
+  }
 
+  if (remoteNode && needToTouchNodes) {
     cachedNodeIds.push(remoteNode.id)
-
-    if (additionalNodeIds && additionalNodeIds.length) {
-      additionalNodeIds.forEach(id => cachedNodeIds.push(id))
-    }
+    additionalNodeIds?.forEach(id => cachedNodeIds.push(id))
 
     await setPersistentCache({ key: CREATED_NODE_IDS, value: cachedNodeIds })
   }
@@ -304,13 +304,18 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
   const existingNode = await getNode(nodeId)
 
   if (wpAction.referencedNodeStatus !== `publish`) {
-    // if the post status isn't publish anymore, we need to remove the node
-    // by removing it from cached nodes so it's garbage collected by Gatsby
-    const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
+    if (needToTouchNodes) {
+      // if the post status isn't publish anymore, we need to remove the node
+      // by removing it from cached nodes so it's garbage collected by Gatsby
+      const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
 
-    await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
+      await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
+    }
 
     if (existingNode) {
+      // calling touchNode here ensures owners is populated before we delete.
+      // In some cases calling delete node without touching the node first throws an error. this is a bug in Gatsby that has been fixed but this code remains to be backwards compatible with earlier versions that have the bug still.
+      // TODO remove in the next major version
       await actions.touchNode(existingNode)
       await actions.deleteNode(existingNode)
       reportUpdate({ setAction: `DELETE` })

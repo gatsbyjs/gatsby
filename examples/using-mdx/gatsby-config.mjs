@@ -1,7 +1,13 @@
+import remarkGfm from "remark-gfm"
+import { dirname } from "path"
+import { fileURLToPath } from "url"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
-module.exports = {
+const config = {
   siteMetadata: {
     title: `Using MDX example`,
     description: `Kick off your next, great Gatsby project with MDX.`,
@@ -27,10 +33,7 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         mdxOptions: {
-          remarkPlugins: [
-            require(`remark-gfm`),
-            require(`remark-unwrap-images`),
-          ],
+          remarkPlugins: [remarkGfm],
         },
         gatsbyRemarkPlugins: [
           {
@@ -44,3 +47,5 @@ module.exports = {
     },
   ],
 }
+
+export default config
