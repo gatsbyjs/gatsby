@@ -10,16 +10,15 @@ import { fetchGraphql } from "~/utils/fetch-graphql"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { CREATED_NODE_IDS } from "~/constants"
 import { setPersistentCache, getPersistentCache } from "~/utils/cache"
+import { needToTouchNodes } from "../../../../utils/gatsby-features"
 
-const wpActionDELETE = async ({
-  helpers,
-  // cachedNodeIds,
-  wpAction,
-}) => {
+const wpActionDELETE = async ({ helpers, wpAction }) => {
   const { reporter, actions, getNode } = helpers
 
   try {
-    const cachedNodeIds = await getPersistentCache({ key: CREATED_NODE_IDS })
+    const cachedNodeIds = needToTouchNodes
+      ? await getPersistentCache({ key: CREATED_NODE_IDS })
+      : null
 
     // get the node ID from the WPGQL id
     const nodeId = wpAction.referencedNodeGlobalRelayID
@@ -60,7 +59,7 @@ const wpActionDELETE = async ({
           wpStore: store,
         })) || {}
 
-      if (additionalNodeIds && additionalNodeIds.length) {
+      if (needToTouchNodes && additionalNodeIds && additionalNodeIds.length) {
         additionalNodeIds.forEach(id => cachedNodeIds.push(id))
       }
     }
@@ -81,12 +80,12 @@ const wpActionDELETE = async ({
       reporter.log(``)
     }
 
-    // Remove this from cached node id's so we don't try to touch it
-    const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
+    if (needToTouchNodes) {
+      // Remove this from cached node id's so we don't try to touch it
+      const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
 
-    await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
-
-    // return validNodeIds
+      await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
+    }
   } catch (e) {
     Object.entries(wpAction).forEach(([key, value]) => {
       reporter.warn(`${key} ${JSON.stringify(value)}`)
