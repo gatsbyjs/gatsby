@@ -19,7 +19,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests/themes/gatsby-theme-about#readme",
   "dependencies": {
     "@mdx-js/react": "^2.3.0",
-    "gatsby": "next",
+    "gatsby": "gatsby-dev",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-page-creator": "next",
     "gatsby-source-filesystem": "next"
