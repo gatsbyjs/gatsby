@@ -11,5 +11,13 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `./content/posts`,
+      },
+    },
+    `gatsby-plugin-mdx`,
   ],
 }
