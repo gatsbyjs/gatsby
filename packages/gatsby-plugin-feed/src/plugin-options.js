@@ -9,7 +9,6 @@ const feed = ({ Joi }) =>
     serialize: Joi.func().required(),
     match: Joi.string(),
     link: Joi.string(),
-    custom_namespaces: Joi.object(),
   })
     .unknown(true)
     .external(({ query }) => {
