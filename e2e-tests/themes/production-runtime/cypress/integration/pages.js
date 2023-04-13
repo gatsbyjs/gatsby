@@ -28,4 +28,8 @@ describe(`Pages`, () => {
     cy.visit(`/about`).waitForRouteChange()
     cy.getTestElement(`author`).contains(`Sidhartha Chatterjee`)
   })
+  it(`page templates with resourceQuery can be shadowed`, () => {
+    cy.visit(`/dune`).waitForRouteChange()
+    cy.getTestElement(`post-template`).contains(`Dune - Shadowed`)
+  })
 })

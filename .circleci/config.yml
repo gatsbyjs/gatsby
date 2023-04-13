@@ -392,7 +392,7 @@ jobs:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_DEV_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd development-runtime; yarn test
+          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; yarn test
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
@@ -400,7 +400,7 @@ jobs:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_PROD_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd production-runtime; yarn test
+          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; yarn test
 
   e2e_tests_mdx:
     <<: *e2e-executor
