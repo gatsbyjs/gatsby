@@ -20,6 +20,7 @@ import {
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
+import { hasFeature } from "gatsby-plugin-utils/has-feature"
 
 const conflictFieldPrefix = `contentful`
 
@@ -63,7 +64,12 @@ export async function sourceNodes(
     touchNode,
     deleteNode: originalDeleteNode,
     unstable_createNodeManifest,
+    enableStatefulSourceNodes,
   } = actions
+
+  if (hasFeature(`stateful-source-nodes`)) {
+    enableStatefulSourceNodes()
+  }
 
   const pluginConfig = createPluginConfig(pluginOptions)
 

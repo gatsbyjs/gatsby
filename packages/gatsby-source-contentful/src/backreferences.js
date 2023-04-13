@@ -7,6 +7,8 @@ import { untilNextEventLoopTick } from "./utils"
 export const existingNodes = new Map()
 
 let allNodesLoopCount = 0
+
+// "is" === object so it can be overridden by tests
 export const is = {
   firstSourceNodesCallOfCurrentNodeProcess: true,
 }
@@ -16,16 +18,11 @@ export async function getExistingCachedNodes({
   getNode,
   pluginConfig,
 }) {
-  const { enableStatefulSourceNodes, touchNode } = actions
-
-  const hasStatefulSourceNodes = hasFeature(`stateful-source-nodes`)
-
-  if (hasStatefulSourceNodes) {
-    enableStatefulSourceNodes()
-  }
+  const { touchNode } = actions
 
   const needToTouchNodes =
-    !hasStatefulSourceNodes && is.firstSourceNodesCallOfCurrentNodeProcess
+    !hasFeature(`stateful-source-nodes`) &&
+    is.firstSourceNodesCallOfCurrentNodeProcess
 
   if (existingNodes.size === 0) {
     memoryNodeCountsBySysType.Asset = 0
