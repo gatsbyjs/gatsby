@@ -91,6 +91,7 @@ const memoryNodeCountsBySysType = {
 // store only the fields we need to compare to reduce memory usage. if a node is updated we'll use getNode to grab the whole node before updating it
 export function addNodeToExistingNodesCache(node) {
   if (
+    // no sys.type for ContentfulTag nodes
     node?.sys?.type &&
     node.sys.type in memoryNodeCountsBySysType &&
     !existingNodes.has(node.id)
@@ -103,7 +104,8 @@ export function addNodeToExistingNodesCache(node) {
     id: node.id,
     contentful_id: node.contentful_id,
     sys: {
-      type: node.sys.type,
+      // no sys.type for ContentfulTag nodes
+      type: node?.sys?.type,
     },
     node_locale: node.node_locale,
     children: node.children,
