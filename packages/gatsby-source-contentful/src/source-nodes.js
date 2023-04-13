@@ -477,11 +477,7 @@ export async function sourceNodes(
 
         if (existingNodesLoopCount++ % 2000 === 0) {
           // dont block the event loop
-          await new Promise(res => {
-            setImmediate(() => {
-              res(null)
-            })
-          })
+          await untilNextEventLoopTick()
         }
       }
     }
