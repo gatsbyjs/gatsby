@@ -22,6 +22,7 @@ const DEFAULT_FILE_EXTENSIONS_CATEGORIES = {
   tsx: `code`,
   cjs: `code`,
   mjs: `code`,
+  mts: `code`,
   coffee: `code`,
 
   // JSON-like data formats
@@ -176,7 +177,15 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // check the user's project and the theme files
-  resolveComponentPath({ theme, component, originalRequestComponent }) {
+  resolveComponentPath({
+    theme,
+    component: componentWithPotentialResourceQuery,
+    originalRequestComponent,
+  }) {
+    const component = getPathToLayoutComponent(
+      componentWithPotentialResourceQuery
+    )
+
     // don't include matching theme in possible shadowing paths
     const themes = this.themes.filter(
       ({ themeName }) => themeName !== theme.themeName
@@ -196,10 +205,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     )
 
     for (const theme of themesArray) {
-      const possibleComponentPath = path.join(
-        theme,
-        getPathToLayoutComponent(component)
-      )
+      const possibleComponentPath = path.join(theme, component)
       debug(`possibleComponentPath`, possibleComponentPath)
 
       let dir
