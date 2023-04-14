@@ -266,7 +266,7 @@ export async function initStarter(
   rootPath: string,
   packages: Array<string>,
   npmSafeSiteName: string,
-  useTailwind: boolean
+  useTailwind?: boolean
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
