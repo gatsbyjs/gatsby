@@ -182,7 +182,8 @@ describe(`run`, () => {
         DEFAULT_STARTERS.js,
         dirName,
         [],
-        dirName
+        dirName,
+        false
       )
     })
     it(`should track JS was selected as language`, async () => {
@@ -208,7 +209,8 @@ describe(`run`, () => {
         DEFAULT_STARTERS.js,
         dirName,
         [],
-        siteName
+        siteName,
+        false
       )
     })
     it(`should track JS was selected as language`, async () => {
@@ -234,7 +236,8 @@ describe(`run`, () => {
         DEFAULT_STARTERS.ts,
         dirName,
         [],
-        siteName
+        siteName,
+        false
       )
     })
 
@@ -262,7 +265,8 @@ describe(`skip and ts flag`, () => {
       DEFAULT_STARTERS.ts,
       dirName,
       [],
-      dirName
+      dirName,
+      false
     )
   })
   it(`should track TS was selected as language`, async () => {
