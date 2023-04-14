@@ -170,7 +170,8 @@ const install = async (
 const clone = async (
   url: string,
   rootPath: string,
-  branch?: string
+  branch?: string,
+  useTailwind?: boolean
 ): Promise<void> => {
   const branchProps = branch ? [`-b`, branch] : []
   const stop = spin(`Cloning site template`)
@@ -196,6 +197,59 @@ const clone = async (
   await fs.remove(path.join(rootPath, `.git`))
 
   await fs.remove(path.join(rootPath, `LICENSE`))
+
+  if (useTailwind) {
+    // Add tailwind specific files as outlined in their installation guide: https://tailwindcss.com/docs/guides/gatsby
+    const files = [
+      {
+        path: `gatsby-browser.js`,
+        content: `import './src/styles/global.css'`,
+      },
+      {
+        path: `tailwind.config.js`,
+        content: `/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/pages/**/*.{js,jsx,ts,tsx}",
+    "./src/components/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}`,
+      },
+      {
+        path: `postcss.config.js`,
+        content: `module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}`,
+      },
+      {
+        path: `/src/styles/global.css`,
+        content: `@tailwind base;
+@tailwind components;
+@tailwind utilities;`,
+      },
+    ]
+    // Need /src/styles to exist to write global.css
+    await fs.mkdir(path.join(rootPath, `/src/styles`), err => {
+      if (err) {
+        console.error(`Error creating /src/styles`, err)
+      }
+    })
+    // Write files to system
+    files.forEach(async file => {
+      await fs.writeFile(path.join(rootPath, file.path), file.content, err => {
+        if (err) {
+          console.error(`Error writing ${file.path}`, err)
+        }
+      })
+    })
+  }
 }
 
 export async function gitSetup(rootPath: string): Promise<void> {
@@ -211,11 +265,12 @@ export async function initStarter(
   starter: string,
   rootPath: string,
   packages: Array<string>,
-  npmSafeSiteName: string
+  npmSafeSiteName: string,
+  useTailwind: boolean
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
-  await clone(starter, sitePath)
+  await clone(starter, sitePath, undefined, useTailwind)
 
   await setNameInPackage(sitePath, npmSafeSiteName)
 

@@ -203,8 +203,12 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
       )} for styling your site`
     )
     const extraPlugins = styles[answers.styling].plugins || []
-
-    plugins.push(answers.styling, ...extraPlugins)
+    // Tailwind doesn't have a gatsby plugin, but requires the postcss plugin
+    if (answers.styling !== `tailwindcss`) {
+      plugins.push(answers.styling, ...extraPlugins)
+    } else {
+      plugins.push(...extraPlugins)
+    }
     packages.push(
       answers.styling,
       ...(styles[answers.styling].dependencies || []),
@@ -294,7 +298,8 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
     starter,
     answers.project,
     packages.map((plugin: string) => plugin.split(`:`)[0]),
-    npmSafeSiteName
+    npmSafeSiteName,
+    answers.styling == `tailwindcss`
   )
 
   reporter.success(`Created site in ${colors.green(answers.project)}`)

@@ -23,9 +23,11 @@
   },
   "gatsby-plugin-vanilla-extract": {
     "message": "vanilla-extract",
-    "dependencies": [
-      "@vanilla-extract/webpack-plugin",
-      "@vanilla-extract/css"
-    ]
+    "dependencies": ["@vanilla-extract/webpack-plugin", "@vanilla-extract/css"]
+  },
+  "tailwindcss": {
+    "message": "Tailwind CSS",
+    "plugins": ["gatsby-plugin-postcss"],
+    "dependencies": ["postcss", "autoprefixer", "gatsby-plugin-postcss"]
   }
 }
