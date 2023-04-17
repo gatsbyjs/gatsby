@@ -84,7 +84,7 @@ const memoryNodeCountsBySysType = {
 // store only the fields we need to compare to reduce memory usage. if a node is updated we'll use getNode to grab the whole node before updating it
 export function addNodeToExistingNodesCache(node) {
   if (node.internal.type === `ContentfulTag`) {
-    return false
+    return
   }
 
   if (
@@ -120,7 +120,7 @@ export function addNodeToExistingNodesCache(node) {
 
 export function removeNodeFromExistingNodesCache(node) {
   if (node.internal.type === `ContentfulTag`) {
-    return false
+    return
   }
 
   if (
