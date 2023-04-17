@@ -1,0 +1,196 @@
+---
+title: "Publishing"
+---
+
+import { LinkButton } from "gatsby-interface"
+import { MdArrowForward } from "react-icons/md"
+
+## Introduction
+
+It's time for other people to use your source plugin! Thus you'll need to publish your source plugin to [npm](https://www.npmjs.com/).
+
+Once your source plugin is out there and people are using it, you'll also need to think about making changes responsibly or automating some of the maintenance work.
+
+**Important:** You shouldn't publish the results of this tutorial to npm, only follow through with the steps below for your actual source plugin.
+
+By the end of this part of the tutorial, you will be able to:
+
+- Follow the conventions for publishing a Gatsby plugin
+- Publish your plugin to npm
+- Set up your repository for healthy contributions
+
+## Preparing your source plugin
+
+Be sure to go through this checklist before publishing your plugin for the first time:
+
+- Choose a clear name for your source plugin following this naming convention:
+
+    ```
+    gatsby-source-<name>
+    ```
+
+    If you want/need to publish the plugin under a [scope](https://docs.npmjs.com/about-scopes) follow the convention:
+
+    ```
+    @scope/gatsby-source-<name>
+    ```
+- Your `README` should explain to the user in concise steps how to install, use, and configure your plugin (also see [How to write a plugin README](/contributing/docs-contributions/how-to-write-a-plugin-readme/)). The `README` will be the first thing a user sees so make sure that it's accessible to everyone.
+- Set `1.0.0` as your `version` field in your plugin's `package.json`. Afterwards follow [semantic versioning](https://docs.npmjs.com/about-semantic-versioning).
+
+    ```json:title=package.json
+    {
+      "version": "1.0.0",
+    }
+    ```
+- Include a `keywords` field in your plugin's `package.json`, containing `gatsby` and `gatsby-plugin`. This way the plugin can be found through the [plugin library](/plugins/).
+
+    ```json:title=package.json
+    {
+      "keywords": [
+        "gatsby",
+        "gatsby-plugin"
+      ],
+    }
+    ```
+- Include a `peerDependencies` field in your plugin's `package.json`, containing the `gatsby` version range that your plugin is compatible with.
+
+    For example, if your plugin supports Gatsby 5 only (e.g. it uses an API only available in Gatsby 5), use:
+
+    ```json:title=package.json
+    {
+      "peerDependencies": {
+        "gatsby": "^5.0.0"
+      }
+    }
+    ```
+
+    If now Gatsby comes out with a new major version and your plugin didn't use any APIs that needed changes, you could mark your plugin compatible with Gatsby 5 and Gatsby 6 like so:
+
+    ```json:title=package.json
+    {
+      "peerDependencies": {
+        "gatsby": "^5.0.0 || ^6.0.0"
+      }
+    }
+    ```
+- Add a `build` script to your plugin's `package.json`. The `build` script should compile your source code to CommonJS (CJS) into a `dist` folder. If you're authoring the code in TypeScript, also consider generating type definitions. The details of this depend on your [tooling](#tooling).
+
+    This tutorial uses `tsc` so the relevant pieces look something like this:
+
+    ```json:title=package.json
+    {
+      "scripts": {
+        "build": "tsc",
+      }
+    }
+    ```
+
+    ```json:title=tsconfig.json
+    {
+      "include": ["./src/**/*"],
+      "compilerOptions": {
+        "target": "ES6",
+        "lib": ["es2016", "dom"],
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "module": "CommonJS",
+        "outDir": "./dist",
+        "declaration": true
+      }
+    }
+    ```
+
+    Since your compiled information will be in the `dist` folder, you need to also add a `main` and `files` key to the `package.json`.
+
+    ```json:title=package.json
+    {
+      "main": "./dist/gatsby-node.js",
+      "files": [
+        "./dist/*",
+        "gatsby-node.js"
+      ],
+    }
+    ```
+
+    If you've generated TypeScript types, consider [adding a `types` key](https://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html).
+
+- Add a `prepare` script to your plugin's `package.json` that runs before `npm publish`. If your `build` script isn't automatically clearing the `dist` folder before doing a new build, add an additional `clean` script. This is to ensure that inside the `dist` folder no old artifacts are being published (e.g. you're renaming a file and without the `clean` the old file would still be published through `dist`). You could use [del-cli](https://www.npmjs.com/package/del-cli) to achieve this. It would look something like this:
+
+    ```json:title=package.json
+    {
+      "scripts": {
+        "clean": "del-cli dist",
+        "build": "tsc",
+        "prepare": "npm run clean && npm run build"
+      }
+    }
+    ```
+- Bonus points for deploying your example site to a host like [Netlify](https://www.netlify.com/) and showing potential users a preview site using the source plugin. If you're already following the monorepo model from this tutorial you can reuse `site` for this.
+- Follow the other recommendations from npm's [Creating a package.json file](https://docs.npmjs.com/creating-a-package-json-file) documentation, e.g. adding a `description` or `author` field.
+
+Feel free to reference the [finished example repository](https://github.com/gatsbyjs/creating-source-plugin-tutorial) for examples of these steps.
+
+## Publishing to npm
+
+Before you can publish a package to npm, you'll need to [sign up](https://www.npmjs.com/signup) for an account if you haven't already. Also sign in locally through `npm login`.
+
+Consider testing your plugin before publishing it by installing the package in a separate project through `npm link` or `npm install path/to/your-package`.
+
+Once you're sure it's ready, you can run `npm publish` in your terminal. Refer to npm's documentation for information about [publishing unscoped public packages](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages) or [publishing scoped public packages](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages).
+
+During `npm publish` the `prepare` script you added will be run.
+
+## Tooling
+
+Feel free to use the tools you're familiar and productive with. Tools come and go, community preferences change. Here's a limited list of tools we'd recommend:
+
+- For this tutorial you've used the [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html) TypeScript compiler to compile your source code to CommonJS. We can also recommend: [microbundle](https://github.com/developit/microbundle), [Babel](https://babeljs.io/), [Parcel](https://parceljs.org/), [tsup](https://github.com/egoist/tsup).
+- For managing releases, versioning, and changelogs we recommend using [changesets](https://github.com/changesets/changesets). You can automate all tasks through [GitHub Actions](https://github.com/changesets/changesets#integrating-with-ci).
+- Consider using a bot like [Renovate](https://www.mend.io/free-developer-tools/renovate/) or [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file) to keep your dependencies up to date.
+- Run your tests in CI for every PR/every commit (e.g. through GitHub Actions) to ensure that your code always passes your tests.
+
+## Tips
+
+Here are some additional tips for authoring and maintaining a Gatsby source plugin:
+
+- Configure two-factor authentication for npm and your git provider (GitHub, GitLab, etc.). You want to make sure that no malicious actors can compromise your plugin's code. More information: [Configure 2FA for GitHub](https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication), [Configure 2FA for npm](https://docs.npmjs.com/configuring-two-factor-authentication).
+- Add [issue and pull request templates](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates) and [contribution guidelines](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors) to encourage contributions and helpful issues. More information: [Setting up your project for healthy contributions](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions)
+
+## Summary
+
+Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
+
+- What is the naming convention for Gatsby source plugins?
+- Which `package.json` fields must exist?
+- How do you publish a package to npm?
+- How can additional tooling improve your workflow?
+
+### Key takeaways
+
+- There are certain conventions about naming a source plugin and required fields inside `package.json`
+- You need to compile your source plugin's source code to CommonJS.
+- You can make your life easier by offloading maintenance burden to automated tooling.
+
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
+
+### You did it!
+
+Congratulations, you’ve reached the end of the official Gatsby source plugin tutorial! 🥳
+
+Want to know more? The next page includes some additional resources that you can use to continue learning about Gatsby source plugins.
+
+<LinkButton
+  to="/docs/tutorial/creating-a-source-plugin/whats-next/"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to What's Next
+</LinkButton>

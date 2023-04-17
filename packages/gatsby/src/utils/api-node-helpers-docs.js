@@ -320,3 +320,10 @@ module.exports.pathPrefix = true;
  * @type {string}
  */
 module.exports.basePath = true;
+
+/**
+ * Tracer span representing the passed through span from Gatsby to its plugins.
+ * Learn more: [opentracing Span documentation](https://opentracing-javascript.surge.sh/classes/span.html)
+ * @type {Opentracing.Span}
+ */
+module.exports.parentSpan = true;
