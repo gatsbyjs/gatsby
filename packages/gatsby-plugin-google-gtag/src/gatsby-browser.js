@@ -1,12 +1,9 @@
-/**
- * @type {import('gatsby').GatsbyBrowser["onRouteUpdate"]}
- */
-exports.onRouteUpdate = ({ location }, { pluginConfig }) => {
+exports.onRouteUpdate = ({ location }, pluginOptions = {}) => {
   if (process.env.NODE_ENV !== `production` || typeof gtag !== `function`) {
     return null
   }
 
-  const { delayOnRouteUpdate } = pluginConfig
+  const pluginConfig = pluginOptions.pluginConfig || {}
 
   const pathIsExcluded =
     location &&
@@ -22,6 +19,8 @@ exports.onRouteUpdate = ({ location }, { pluginConfig }) => {
       : undefined
     window.gtag(`event`, `page_view`, { page_path: pagePath })
   }
+
+  const { delayOnRouteUpdate = 0 } = pluginConfig
 
   if (`requestAnimationFrame` in window) {
     requestAnimationFrame(() => {
