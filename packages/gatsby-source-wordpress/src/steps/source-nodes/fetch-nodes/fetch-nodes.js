@@ -15,6 +15,7 @@ import {
   setPersistentCache,
 } from "~/utils/cache"
 import { buildTypeName } from "../../create-schema-customization/helpers"
+import { needToTouchNodes } from "../../../utils/gatsby-features"
 
 /**
  * fetchWPGQLContentNodes
@@ -227,7 +228,9 @@ export const fetchAndCreateAllNodes = async () => {
     })
   }
 
-  // save the node id's so we can touch them on the next build
-  // so that we don't have to refetch all nodes
-  await setPersistentCache({ key: CREATED_NODE_IDS, value: createdNodeIds })
+  if (needToTouchNodes) {
+    // save the node id's so we can touch them on the next build
+    // so that we don't have to refetch all nodes
+    await setPersistentCache({ key: CREATED_NODE_IDS, value: createdNodeIds })
+  }
 }

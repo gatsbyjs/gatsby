@@ -5,6 +5,7 @@ import { createNodeWithSideEffects } from "./create-nodes"
 import fetchReferencedMediaItemsAndCreateNodes from "../fetch-nodes/fetch-referenced-media-items"
 import { CREATED_NODE_IDS } from "~/constants"
 import { getPersistentCache, setPersistentCache } from "~/utils/cache"
+import { needToTouchNodes } from "../../../utils/gatsby-features"
 
 const fetchAndCreateNonNodeRootFields = async () => {
   const state = store.getState()
@@ -69,20 +70,22 @@ const fetchAndCreateNonNodeRootFields = async () => {
       referencedMediaItemNodeIds: newMediaItemIds,
     })
 
-    const previouslyCachedNodeIds = await getPersistentCache({
-      key: CREATED_NODE_IDS,
-    })
+    if (needToTouchNodes) {
+      const previouslyCachedNodeIds = await getPersistentCache({
+        key: CREATED_NODE_IDS,
+      })
 
-    const createdNodeIds = [
-      ...new Set([
-        ...(previouslyCachedNodeIds || []),
-        ...referencedMediaItemNodeIdsArray,
-      ]),
-    ]
+      const createdNodeIds = [
+        ...new Set([
+          ...(previouslyCachedNodeIds || []),
+          ...referencedMediaItemNodeIdsArray,
+        ]),
+      ]
 
-    // save the node id's so we can touch them on the next build
-    // so that we don't have to refetch all nodes
-    await setPersistentCache({ key: CREATED_NODE_IDS, value: createdNodeIds })
+      // save the node id's so we can touch them on the next build
+      // so that we don't have to refetch all nodes
+      await setPersistentCache({ key: CREATED_NODE_IDS, value: createdNodeIds })
+    }
 
     store.dispatch.logger.stopActivityTimer({
       typeName: `MediaItems`,

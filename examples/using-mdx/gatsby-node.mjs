@@ -1,13 +1,13 @@
-const path = require("path")
-const readingTime = require(`reading-time`)
-const slugify = require(`@sindresorhus/slugify`)
-const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
-const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
+import path from "path"
+import readingTime from "reading-time"
+import slugify from "@sindresorhus/slugify"
+import { compileMDXWithCustomOptions } from "gatsby-plugin-mdx"
+import remarkHeadingsPlugin from "./remark-headings-plugin.mjs"
 
 /**
  * @type {import('gatsby').GatsbyNode['onCreateNode']}
  */
-exports.onCreateNode = ({ node, actions }) => {
+export const onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `Mdx`) {
     createNodeField({
@@ -27,7 +27,7 @@ exports.onCreateNode = ({ node, actions }) => {
 /**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
  */
-exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema, store }) => {
+export const createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema, store }) => {
   const { createTypes } = actions
 
   const headingsResolver = schema.buildObjectType({
@@ -91,7 +91,7 @@ exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
-exports.createPages = async ({ graphql, actions, reporter }) => {
+export const createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   const result = await graphql(`

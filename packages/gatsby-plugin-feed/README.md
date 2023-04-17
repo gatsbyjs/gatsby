@@ -1,32 +1,40 @@
 # gatsby-plugin-feed
 
-Create an RSS feed (or multiple feeds) for your Gatsby site.
+Create an RSS feed (or multiple feeds) for your Gatsby site. **Please note**: This plugin only generates the `xml` file(s) when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`.
 
-## Install
+## Installation
 
-`npm install gatsby-plugin-feed`
+```shell
+npm install gatsby-plugin-feed
+```
 
-## How to Use
+## Usage
 
-```javascript
-// In your gatsby-config.js
+`gatsby-plugin-feed` uses the [rss][rss] package to generate the RSS feed. We recommend using the [`siteMetadata`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#sitemetadata) information inside your `gatsby-config` to define the `title`, `description`, and `site_url` of the RSS feed. Those keys directly get passed to the [rss feedOptions][feedOptions].
+
+```js:title=gatsby-config.js
 module.exports = {
+  siteMetadata: {
+    title: `Your site title`,
+    description: `Your site desccription`,
+    site_url: `https://your-site-url.com`,
+  }
+}
+```
+
+Afterwards, you should configure `gatsby-plugin-feed` inside your `gatsby-config` like so (this example assumes the site uses [Markdown pages](https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/)):
+
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `Your site title`,
+    description: `Your site desccription`,
+    site_url: `https://your-site-url.com`,
+  },
   plugins: [
     {
       resolve: `gatsby-plugin-feed`,
       options: {
-        query: `
-          {
-            site {
-              siteMetadata {
-                title
-                description
-                siteUrl
-                site_url: siteUrl
-              }
-            }
-          }
-        `,
         feeds: [
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
@@ -48,8 +56,8 @@ module.exports = {
                   nodes {
                     excerpt
                     html
-                    fields { 
-                      slug 
+                    fields {
+                      slug
                     }
                     frontmatter {
                       title
@@ -61,13 +69,6 @@ module.exports = {
             `,
             output: "/rss.xml",
             title: "Your Site's RSS Feed",
-            // optional configuration to insert feed reference in pages:
-            // if `string` is used, it will be used to create RegExp and then test if pathname of
-            // current page satisfied this regular expression;
-            // if not provided or `undefined`, all pages will have feed reference inserted
-            match: "^/blog/",
-            // optional configuration to specify external rss feed, such as feedburner
-            link: "https://feeds.feedburner.com/gatsby/blog",
           },
         ],
       },
@@ -76,16 +77,64 @@ module.exports = {
 }
 ```
 
-Each feed must include `output`, `query`, `title`, and `serialize`. You'll need to write the `serialize` function in order to fit your use case.
+`gatsby-plugin-feed` accepts two top-level plugin options:
 
-`match` is an optional configuration, indicating which pages will have feed reference included. The accepted types of `match` are `string` or `undefined`. By default, when `match` is not configured, all pages will have feed reference inserted. If `string` is provided, it will be used to build a RegExp and then to test whether `pathname` of current page satisfied this regular expression. Only pages that satisfied this rule will have feed reference included.
+- `query` (optional): A GraphQL query to fetch the `title`, `description`, and `site_url`. By default, the plugin queries for `siteMetadata`.
+- `feeds` (required): One or multiple RSS feeds you want to define.
 
-`link` is an optional configuration that will override the default generated rss link from `output`.
+`feeds` itself has these required keys:
 
-All additional options are passed through to the [`rss`][rss] utility. For more info on those additional options, [explore the `itemOptions` section of the `rss` package](https://www.npmjs.com/package/rss#itemoptions).
+- `title`: Title of the RSS feed
+- `output`: Output location of the `xml` file
+- `serialize`: You get access to the GraphQL query inside the top-level `query` key and inside `feeds.query`. You have to return an array of objects containing keys of [rss `itemOptions`][itemOptions]
+- `query`: GraphQL query to get contents for RSS items
 
-Check out an example of [how you could implement](https://www.gatsbyjs.com/docs/adding-an-rss-feed/) to your own site, with a custom `serialize` function, and additional functionality.
+**Need more help?** Check out the documentation [Adding an RSS Feed](https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-an-rss-feed/).
 
-_**Note**: This plugin only generates the `xml` file(s) when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`._
+### Additional options
+
+As mentioned above, `gatsby-plugin-feed` accepts optional additions.
+
+`feeds` has these additional options:
+
+- `match`: Configuration, indicating which pages will have feed reference included. The accepted types of `match` are `string` or `undefined`. By default, when `match` is not configured, all pages will have feed reference inserted. If `string` is provided, it will be used to build a RegExp and then to test whether `pathname` of current page satisfied this regular expression. Only pages that satisfied this rule will have feed reference included.
+- `link`: Configuration that will override the default generated rss link from `output`.
+
+All additional options are passed through to the [`feedOptions` section of the `rss` package][feedOptions]. Thus you could write something like this:
+
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {/* siteMetadata contents */},
+  plugins: [
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        feeds: [
+          {
+            serialize: ({ query: { site, allMarkdownRemark } }) => {
+              /* contents go here */
+            },
+            query: `/* query goes here */`,
+            output: "/rss.xml",
+            title: "Your Site's RSS Feed",
+            // Optional configuration specific for plugin:
+            match: "^/blog/",
+            link: "https://feeds.feedburner.com/gatsby/blog",
+            // Optional configuration passed through to itemOptions
+            custom_namespaces: {
+              media: 'http://search.yahoo.com/mrss/',
+            },
+            language: `en-US`,
+          },
+        ],
+      },
+    },
+  ],
+}
+```
+
+The `serialize` function can return all keys of the [rss `itemOptions`][itemOptions] setup.
 
 [rss]: https://www.npmjs.com/package/rss
+[feedOptions]: https://www.npmjs.com/package/rss#feedoptions
+[itemOptions]: https://www.npmjs.com/package/rss#itemoptions

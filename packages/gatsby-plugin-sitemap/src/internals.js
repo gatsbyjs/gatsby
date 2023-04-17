@@ -161,18 +161,13 @@ export function pageFilter({ allPages, filterPages, excludes }) {
 
   // TODO we should optimize these loops
   const filteredPages = allPages.filter(page => {
-    const defaultFilterMatches = defaultExcludes.some((exclude, i, arr) => {
+    const defaultFilterMatches = defaultExcludes.some(exclude => {
       try {
         const doesMatch = defaultFilterPages(page, exclude, {
           minimatch,
           withoutTrailingSlash,
           resolvePagePath,
         })
-
-        // default excludes can only be found once, so remove them from the arr once excluded
-        if (doesMatch) {
-          arr.splice(i, 1)
-        }
 
         return doesMatch
       } catch {
