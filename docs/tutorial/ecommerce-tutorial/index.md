@@ -18,7 +18,7 @@ Benefits of using Gatsby for e-commerce sites include the following:
 
 ## Prerequisites
 
-- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/docs/tutorial/))
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/docs/tutorial/getting-started/))
 - Stripe account: [register for an account here](https://dashboard.stripe.com/register)
 
 ### How does Gatsby work with Stripe?

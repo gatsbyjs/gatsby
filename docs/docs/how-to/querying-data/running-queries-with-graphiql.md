@@ -70,5 +70,5 @@ The environment variable `ENABLE_GATSBY_REFRESH_ENDPOINT` enables a "Refresh Dat
 
 ## Other resources
 
-- See [Tutorial Part 4: Query for Data with GraphQL](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries) for a more complete example of using GraphiQL
+- See [Tutorial Part 4: Query for Data with GraphQL](/docs/tutorial/getting-started/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries) for a more complete example of using GraphiQL
 - See the [README for GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql)

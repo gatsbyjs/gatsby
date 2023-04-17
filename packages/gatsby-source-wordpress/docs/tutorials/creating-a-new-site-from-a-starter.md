@@ -16,7 +16,7 @@ WPGatsby is also required as it sets up a WP admin event log that Gatsby will us
 
 ## Setting up Gatsby
 
-First you'll need to ensure you have npm, Gatsby, and Nodejs installed on your computer. Follow the [GatsbyJS guide on setting up your development environment](https://www.gatsbyjs.com/docs/tutorial/part-0/).
+First you'll need to ensure you have npm, Gatsby, and Nodejs installed on your computer. Follow the [GatsbyJS guide on setting up your development environment](https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/).
 
 ## Setting up `gatsby-source-wordpress`
 

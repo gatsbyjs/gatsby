@@ -15,7 +15,7 @@ its plugins.
 
 npm is a [command line](/docs/glossary#command-line) tool. You'll need Terminal (Mac, Linux) or Command Prompt (Windows) in order to run its commands. To use one of npm's features, type `npm <command>`. For example, `npm help` displays a list of available features, including `install`, `uninstall`, `update`, and `search`.
 
-npm is installed alongside Node during the default [installation process](/docs/tutorial/part-0/#install-nodejs-for-your-appropriate-operating-system). You don't need to take any additional steps to add it to your environment.
+npm is installed alongside Node during the default [installation process](/docs/tutorial/getting-started/part-0/#install-nodejs-for-your-appropriate-operating-system). You don't need to take any additional steps to add it to your environment.
 
 ### Using npm to install Gatsby
 
@@ -58,4 +58,4 @@ This will update the dependencies list of `package.json` and `package-lock.json`
 - [npm](https://www.npmjs.com/) official website
 - [Node.js](https://nodejs.org/en/) official website
 - [An introduction to the npm package manager](https://nodejs.dev/an-introduction-to-the-npm-package-manager) from Nodejs.dev
-- [Set Up Your Development Environment](/docs/tutorial/part-0/) from the Gatsby docs
+- [Set Up Your Development Environment](/docs/tutorial/getting-started/part-0/) from the Gatsby docs

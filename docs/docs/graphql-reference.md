@@ -9,7 +9,7 @@ These examples will work on the _real_ schema used on [graphql-reference example
 You can run this example locally to experiment and poke around the innards of the site! To get to the GraphiQL editor, go to `localhost:8000/___graphql` (that's three underscores).
 You can also open the [CodeSandbox version](https://codesandbox.io/s/github/gatsbyjs/gatsby/tree/master/examples/graphql-reference) of the example site.
 
-For more background information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/) and [how to use GraphiQL](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries) in any Gatsby site.
+For more background information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/) and [how to use GraphiQL](/docs/tutorial/getting-started/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries) in any Gatsby site.
 
 ## Basic queries
 

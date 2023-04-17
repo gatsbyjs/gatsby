@@ -146,7 +146,7 @@ module.exports = {
 };
 ```
 
-This data was added to your `gatsby-config.js` file automatically when you used the `gatsby new` command in [Part 1](/docs/tutorial/part-1). It also gets pulled into the GraphQL data layer automatically, so you don't need a source plugin for this first section.
+This data was added to your `gatsby-config.js` file automatically when you used the `gatsby new` command in [Part 1](/docs/tutorial/getting-started/part-1). It also gets pulled into the GraphQL data layer automatically, so you don't need a source plugin for this first section.
 
 Since you don't need to set up a source plugin, you can jump straight into GraphiQL to build your GraphQL query:
 
@@ -719,7 +719,7 @@ Now that you have some posts saved to your local filesystem, it's time to pull t
 
 <Announcement>
 
-**Note:** Remember the process for adding a plugin to your site from [Part 3](/docs/tutorial/part-3)? The first step was to **install** the plugin.
+**Note:** Remember the process for adding a plugin to your site from [Part 3](/docs/tutorial/getting-started/part-3)? The first step was to **install** the plugin.
 
 If you've been following along from the beginning, you should already have installed `gatsby-source-filesystem` in Part 3 (because you needed it for adding static images with `gatsby-plugin-image`).
 
@@ -999,7 +999,7 @@ As an example, let's say you queried the `title` from `siteMetadata` in your pag
 export const Head = ({ data }) => <title>{data.site.siteMetadata.title}</title>
 ```
 
-In [Part 6](/docs/tutorial/part-6/#render-post-contents-in-the-blog-post-page-template) you'll learn how to use this pattern, for now keep using the `<Seo />` component.
+In [Part 6](/docs/tutorial/getting-started/part-6/#render-post-contents-in-the-blog-post-page-template) you'll learn how to use this pattern, for now keep using the `<Seo />` component.
   
 </Announcement>
 
@@ -1081,7 +1081,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 In Part 5, you'll add some content to your blog posts using a special format called MDX. You'll also learn about transformer plugins, which you can use to convert data in your data layer from one type to another.
 
 <LinkButton
-  to="/docs/tutorial/part-5/"
+  to="/docs/tutorial/getting-started/part-5/"
   rightIcon={<MdArrowForward />}
   variant="SECONDARY"
 >
