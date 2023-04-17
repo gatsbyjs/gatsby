@@ -192,7 +192,7 @@ export const fetchAndCreateAllNodes = async () => {
 
   //
   // fetch nodes from WPGQL
-  const activity = reporter.activityTimer(formatLogMessage(`fetching nodes`))
+  const activity = reporter.activityTimer(formatLogMessage(`Fetching nodes`))
   activity.start()
 
   store.subscribe(() => {
@@ -207,7 +207,7 @@ export const fetchAndCreateAllNodes = async () => {
     const wpgqlNodesByContentType = await fetchWPGQLContentNodesByContentType()
 
     const createNodesActivity = reporter.activityTimer(
-      formatLogMessage(`creating nodes`)
+      formatLogMessage(`Creating nodes`)
     )
     createNodesActivity.start()
 

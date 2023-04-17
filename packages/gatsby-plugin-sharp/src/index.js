@@ -140,7 +140,7 @@ function createJob(job, { reporter }) {
   // entire closure would keep duplicate job in memory until
   // initial job finish.
   const promise = actions.createJobV2(job).catch(err => {
-    reporter.panic(`error converting image`, err)
+    reporter.panic(`Error converting image`, err)
   })
 
   return promise

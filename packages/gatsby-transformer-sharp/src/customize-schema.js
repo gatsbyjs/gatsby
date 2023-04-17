@@ -620,7 +620,7 @@ const createFields = ({
                   {
                     id: prefixId(CODES.MissingResource),
                     context: {
-                      sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+                      sourceMessage: `Error copying file from ${details.absolutePath} to ${publicPath}`,
                     },
                   },
                   err

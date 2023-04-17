@@ -101,7 +101,7 @@ export const createNodeWithSideEffects =
         createNodesActivity
       ) {
         createNodesActivity.setStatus(
-          `awaiting async side effects - ${totalSideEffectNodes.length} additional nodes fetched`
+          `Awaiting async side effects - ${totalSideEffectNodes.length} additional nodes fetched`
         )
       }
     }

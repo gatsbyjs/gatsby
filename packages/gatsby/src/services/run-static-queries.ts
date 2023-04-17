@@ -22,7 +22,7 @@ export async function runStaticQueries({
 
   const state = store.getState()
   const activity = reporter.createProgress(
-    `run static queries`,
+    `Run static queries`,
     staticQueryIds.length,
     0,
     {

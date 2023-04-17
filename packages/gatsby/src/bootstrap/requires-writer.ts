@@ -350,7 +350,7 @@ exports.head = {\n${components
 
 const debouncedWriteAll = _.debounce(
   async (): Promise<void> => {
-    const activity = reporter.activityTimer(`write out requires`, {
+    const activity = reporter.activityTimer(`Write out requires`, {
       id: `requires-writer`,
     })
     activity.start()

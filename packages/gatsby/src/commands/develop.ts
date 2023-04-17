@@ -194,7 +194,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   // used together
   if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
     reporter.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
+      `For custom ssl --https, --cert-file, and --key-file must be used together`
     )
   }
 

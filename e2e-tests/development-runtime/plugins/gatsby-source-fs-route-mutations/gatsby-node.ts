@@ -49,23 +49,23 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({
   }
 
   if (webhookBody?.setup === `create`) {
-    reporter.verbose(`[gatsby-source-fs-route-mutation] create a new node`)
+    reporter.verbose(`[gatsby-source-fs-route-mutation] Create a new node`)
     addNode({
       id: `fs-route-mutation-test`,
       slug: `new-node`,
       content: `This is node that was just created`,
     })
   } else if (webhookBody?.setup === `update`) {
-    reporter.verbose(`[gatsby-source-fs-route-mutation] update a node`)
+    reporter.verbose(`[gatsby-source-fs-route-mutation] Update a node`)
     addNode({
       id: `fs-route-mutation-test`,
       slug: `updated-node`,
       content: `This is node that had slug and content updated`,
     })
   } else if (webhookBody?.setup === `delete`) {
-    reporter.verbose(`[gatsby-source-fs-route-mutation] delete a node`)
+    reporter.verbose(`[gatsby-source-fs-route-mutation] Delete a node`)
   } else {
-    reporter.verbose(`[gatsby-source-fs-route-mutation] initial setup`)
+    reporter.verbose(`[gatsby-source-fs-route-mutation] Initial setup`)
   }
 
   addNode({

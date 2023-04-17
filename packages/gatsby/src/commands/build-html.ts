@@ -665,7 +665,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
     buildHTMLActivityProgress.end()
   } else {
-    reporter.info(`There are no new or changed html files to build.`)
+    reporter.info(`There are no new or changed HTML files to build.`)
   }
 
   if (
@@ -821,7 +821,7 @@ export async function buildSlices({
       payload: slicesProps,
     })
   } else {
-    reporter.info(`There are no new or changed slice html files to build.`)
+    reporter.info(`There are no new or changed slice HTML files to build.`)
   }
 
   store.dispatch({
@@ -836,7 +836,7 @@ export async function stitchSlicesIntoPagesHTML({
   publicDir: string
   parentSpan?: Span
 }): Promise<void> {
-  const stichSlicesActivity = reporter.activityTimer(`stiching slices`, {
+  const stichSlicesActivity = reporter.activityTimer(`Stiching slices`, {
     parentSpan,
   })
   stichSlicesActivity.start()

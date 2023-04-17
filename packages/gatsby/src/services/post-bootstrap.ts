@@ -19,7 +19,7 @@ export async function postBootstrap({
   activity.end()
 
   reporter.info(reporter.stripIndent`
-    bootstrap finished - ${process.uptime().toFixed(3)}s
+    Bootstrap finished - ${process.uptime().toFixed(3)}s
   `)
   emitter.emit(`BOOTSTRAP_FINISHED`, {})
   store.dispatch(actions.setProgramStatus(`BOOTSTRAP_FINISHED`))
