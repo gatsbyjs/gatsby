@@ -55,6 +55,15 @@ Read the [launch blog post](/blog/announcing-new-source-plugin-tutorial) to lear
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [StephenCleary](https://github.com/StephenCleary): fix(gatsby): Fix argument order for `onPreRouteUpdate` [PR #30339](https://github.com/gatsbyjs/gatsby/pull/30339)
+- [Talaxy009](https://github.com/Talaxy009): fix(gatsby): Validate sub plugins options [PR #37804](https://github.com/gatsbyjs/gatsby/pull/37804)
+- [axe312ger](https://github.com/axe312ger): fix(gatsby): move typing for `enableStatefulSourceNodes` into `Actions` [PR #37933](https://github.com/gatsbyjs/gatsby/pull/37933)
+- [benomatis](https://github.com/benomatis)
+  - chore(docs): Typo in Hosting and Data Source Integrations [PR #37793](https://github.com/gatsbyjs/gatsby/pull/37793)
+  - chore(docs): correct redundant closing brackets in adding-analytics.md [PR #37803](https://github.com/gatsbyjs/gatsby/pull/37803)
+- [geocine](https://github.com/geocine): chore(gatsby-plugin-feed): Update README with clearer instructions [PR #37930](https://github.com/gatsbyjs/gatsby/pull/37930)
+- [jgjgill](https://github.com/jgjgill): chore(gatsby-remark-autolink-headers): Fix typo in README [PR #37812](https://github.com/gatsbyjs/gatsby/pull/37812)
+- [rogermparent](https://github.com/rogermparent): fix(gatsby-plugin-page-creator): Find nested files for knownCollections [PR #37762](https://github.com/gatsbyjs/gatsby/pull/37762)
+- [tmastrom](https://github.com/tmastrom): chore(docs): update broken relay compiler link [PR #37813](https://github.com/gatsbyjs/gatsby/pull/37813)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.9.0-next.0...gatsby@5.9.0
