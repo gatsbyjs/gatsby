@@ -49,6 +49,7 @@ Read the [launch blog post](/blog/announcing-new-source-plugin-tutorial) to lear
   - Make `___NODE` convention warning less noisy, via [PR #37781](https://github.com/gatsbyjs/gatsby/pull/37781)
   - Add new [`enableStatefulSourceNodes`](/docs/reference/config-files/actions/#enableStatefulSourceNodes) action, via [PR #37782](https://github.com/gatsbyjs/gatsby/pull/37782). [Learn more](/docs/node-creation/#opting-out-of-stale-node-deletion).
   - Correct argument order for `onPreRouteUpdate`, via [PR #30339](https://github.com/gatsbyjs/gatsby/pull/30339)
+  - Reduce size of SSR/DSG engine, via [PR 37764](https://github.com/gatsbyjs/gatsby/pull/37764)
 
 ## Contributors
 
