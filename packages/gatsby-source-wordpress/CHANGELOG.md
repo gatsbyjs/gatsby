@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.9.0/packages/gatsby-source-wordpress) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Features
+
+- opt out of stale node checks [#37920](https://github.com/gatsbyjs/gatsby/issues/37920) ([0e9feeb](https://github.com/gatsbyjs/gatsby/commit/0e9feebf11d071fb912ad25649b068eb39b78d8b))
+
+#### Bug Fixes
+
+- update dependency prettier to v2.8.7 [#37834](https://github.com/gatsbyjs/gatsby/issues/37834) ([029ee85](https://github.com/gatsbyjs/gatsby/commit/029ee85e3ea3dd819f07159fcb22b4fb35ebbf86))
+- update dependency node-fetch to ^2.6.9 for gatsby-source-wordpress [#37832](https://github.com/gatsbyjs/gatsby/issues/37832) ([0841c24](https://github.com/gatsbyjs/gatsby/commit/0841c24a4870b602fe52f0f562704e0819a1b6a4))
+- update dependency fs-extra to ^11.1.1 [#37827](https://github.com/gatsbyjs/gatsby/issues/37827) ([3e9a590](https://github.com/gatsbyjs/gatsby/commit/3e9a590fdc0b4cdbc763b6a6e3ca3e983ac8231a))
+
+#### Chores
+
+- Move existing main tutorial to "getting-started" name [#37539](https://github.com/gatsbyjs/gatsby/issues/37539) ([2dbd95d](https://github.com/gatsbyjs/gatsby/commit/2dbd95d20f8a1109bc5e023cf2e9755f4d29209f))
+
 ## [7.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.8.0/packages/gatsby-source-wordpress) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

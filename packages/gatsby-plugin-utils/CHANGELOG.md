@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.9.0/packages/gatsby-plugin-utils) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Features
+
+- make image cdn urls configurable [#37932](https://github.com/gatsbyjs/gatsby/issues/37932) ([792937c](https://github.com/gatsbyjs/gatsby/commit/792937cfa5cb36a57f89704444d96368a56e7a28))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-utils [#37837](https://github.com/gatsbyjs/gatsby/issues/37837) ([518adcd](https://github.com/gatsbyjs/gatsby/commit/518adcd21d9edb886ff171d878c2d23cba2d84fc))
+- update dependency fs-extra to ^11.1.1 [#37827](https://github.com/gatsbyjs/gatsby/issues/37827) ([3e9a590](https://github.com/gatsbyjs/gatsby/commit/3e9a590fdc0b4cdbc763b6a6e3ca3e983ac8231a))
+- update typescript to v5 (major) [#37906](https://github.com/gatsbyjs/gatsby/issues/37906) ([3859ba6](https://github.com/gatsbyjs/gatsby/commit/3859ba6ce629e658525f858a8799b08c34c3eda5))
+
+#### Chores
+
+- update [dev] major dependencies for gatsby-plugin-utils (major) [#37884](https://github.com/gatsbyjs/gatsby/issues/37884) ([0bfacac](https://github.com/gatsbyjs/gatsby/commit/0bfacac61ff06546c364ecd6379e2136c9f76394))
+- update typescript [#37848](https://github.com/gatsbyjs/gatsby/issues/37848) ([9f92796](https://github.com/gatsbyjs/gatsby/commit/9f92796070b0e73fa92089af93de376c9be9021e))
+
 ## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.8.0/packages/gatsby-plugin-utils) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

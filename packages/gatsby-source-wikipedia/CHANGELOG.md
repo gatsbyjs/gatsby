@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@5.9.0/packages/gatsby-source-wikipedia) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.9 for gatsby-source-wikipedia [#37831](https://github.com/gatsbyjs/gatsby/issues/37831) ([bc7f69b](https://github.com/gatsbyjs/gatsby/commit/bc7f69b78c026dde6d5edfa86976d02c83cd1c07))
+
 ## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@5.8.0/packages/gatsby-source-wikipedia) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
