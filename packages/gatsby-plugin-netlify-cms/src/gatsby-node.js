@@ -157,6 +157,7 @@ exports.onCreateWebpackConfig = (
             `MiniCssExtractPlugin`,
             `GatsbyWebpackStatsExtractor`,
             `StaticQueryMapper`,
+            `PartialHydrationPlugin`,
           ].find(
             pluginName =>
               plugin.constructor && plugin.constructor.name === pluginName
