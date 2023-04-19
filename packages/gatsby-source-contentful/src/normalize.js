@@ -787,14 +787,20 @@ export const createNodesForContentType = async ({
     })
 
     entryNodes.forEach((entryNode, index) => {
-      create(entryNode, () => {
-        entryNodes[index] = undefined
-      })
+      // entry nodes may be undefined here if the node was previously already created
+      if (entryNode) {
+        create(entryNode, () => {
+          entryNodes[index] = undefined
+        })
+      }
     })
     childrenNodes.forEach((entryNode, index) => {
-      create(entryNode, () => {
-        childrenNodes[index] = undefined
-      })
+      // entry nodes may be undefined here if the node was previously already created
+      if (entryNode) {
+        create(entryNode, () => {
+          childrenNodes[index] = undefined
+        })
+      }
     })
   })
 
