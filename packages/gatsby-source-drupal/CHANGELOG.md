@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.9.0/packages/gatsby-source-drupal) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-drupal [#37875](https://github.com/gatsbyjs/gatsby/issues/37875) ([04243f2](https://github.com/gatsbyjs/gatsby/commit/04243f239fc8ff437eab3fe68740b1b6147f0499))
+
+#### Chores
+
+- Improve README wording ([68510e1](https://github.com/gatsbyjs/gatsby/commit/68510e191507caabdfd19dfb86c7a595c9fbc0a3))
+
 ## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.8.0/packages/gatsby-source-drupal) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.9.0/packages/gatsby) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Features
+
+- add public action to disable stale node checks [#37782](https://github.com/gatsbyjs/gatsby/issues/37782) ([fd168e0](https://github.com/gatsbyjs/gatsby/commit/fd168e0e78c621fcdf95a7eb486a1339c18a9316))
+
+#### Bug Fixes
+
+- Shadowing with resourceQuery [#37938](https://github.com/gatsbyjs/gatsby/issues/37938) ([dc998d5](https://github.com/gatsbyjs/gatsby/commit/dc998d5e7612973845ec89c6634e03d0c96631f5))
+- Fix argument order for `onPreRouteUpdate` Fix [#30339](https://github.com/gatsbyjs/gatsby/issues/30339) ([1fd967b](https://github.com/gatsbyjs/gatsby/commit/1fd967bd2cc282cac4fcc699f66d681f16ee6987))
+- move typing for `enableStatefulSourceNodes` into `Actions` [#37933](https://github.com/gatsbyjs/gatsby/issues/37933) ([ba2a45f](https://github.com/gatsbyjs/gatsby/commit/ba2a45f526a299aa32a0173a53f062bf3e960a88))
+- update dependency xstate to ^4.37.1 for gatsby-source-filesystem [#37872](https://github.com/gatsbyjs/gatsby/issues/37872) ([579fe1e](https://github.com/gatsbyjs/gatsby/commit/579fe1e2aee8bf382741e7b1b3674eec165bc3f6))
+- update dependency fs-extra to ^11.1.1 [#37827](https://github.com/gatsbyjs/gatsby/issues/37827) ([3e9a590](https://github.com/gatsbyjs/gatsby/commit/3e9a590fdc0b4cdbc763b6a6e3ca3e983ac8231a))
+- update dependency eslint-plugin-react to ^7.32.2 [#37825](https://github.com/gatsbyjs/gatsby/issues/37825) ([4a29cf4](https://github.com/gatsbyjs/gatsby/commit/4a29cf470040ea4d36eed5701c6db96f4d9f56ea))
+- update typescript to v5 (major) [#37906](https://github.com/gatsbyjs/gatsby/issues/37906) ([3859ba6](https://github.com/gatsbyjs/gatsby/commit/3859ba6ce629e658525f858a8799b08c34c3eda5))
+- make `___NODE` convention less noisy [#37781](https://github.com/gatsbyjs/gatsby/issues/37781) ([9536f64](https://github.com/gatsbyjs/gatsby/commit/9536f64dcc220d11139d3e1d65f515f3e7a602c3))
+- Validate sub plugins options [#37804](https://github.com/gatsbyjs/gatsby/issues/37804) ([f013bc3](https://github.com/gatsbyjs/gatsby/commit/f013bc3a74bcb4b92ac49d20a5aedbce1e7a0db7))
+- don't block event loop during inference [#37780](https://github.com/gatsbyjs/gatsby/issues/37780) ([c08048d](https://github.com/gatsbyjs/gatsby/commit/c08048d488c5bd3369bf766e84c4f6a11eac5848))
+
+#### Performance Improvements
+
+- normalize engines static query context [#37764](https://github.com/gatsbyjs/gatsby/issues/37764) ([2f3f372](https://github.com/gatsbyjs/gatsby/commit/2f3f372e92b9faeb606f88f4a5ea848cfbc0cb44))
+
+#### Chores
+
+- Move existing main tutorial to "getting-started" name [#37539](https://github.com/gatsbyjs/gatsby/issues/37539) ([2dbd95d](https://github.com/gatsbyjs/gatsby/commit/2dbd95d20f8a1109bc5e023cf2e9755f4d29209f))
+- New "Creating a Source Plugin" tutorial [#37538](https://github.com/gatsbyjs/gatsby/issues/37538) ([4c4a4f1](https://github.com/gatsbyjs/gatsby/commit/4c4a4f151434acb995f4280521b5f3a2443989dc))
+- update typescript [#37848](https://github.com/gatsbyjs/gatsby/issues/37848) ([9f92796](https://github.com/gatsbyjs/gatsby/commit/9f92796070b0e73fa92089af93de376c9be9021e))
+- update [dev] minor and patch dependencies for gatsby [#37839](https://github.com/gatsbyjs/gatsby/issues/37839) ([fe218d6](https://github.com/gatsbyjs/gatsby/commit/fe218d6cb20fc5f316693e1a600f702cad17f61a))
+
 ### [5.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.8.1/packages/gatsby) (2023-03-29)
 
 #### Bug Fixes

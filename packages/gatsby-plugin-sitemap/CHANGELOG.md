@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.9.0/packages/gatsby-plugin-sitemap) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- remove splice for default filter [#37916](https://github.com/gatsbyjs/gatsby/issues/37916) ([dd47b7c](https://github.com/gatsbyjs/gatsby/commit/dd47b7c09359387f8471faf9ffa469d1242fa5d9))
+
 ## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@6.8.0/packages/gatsby-plugin-sitemap) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

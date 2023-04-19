@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.9.0/packages/gatsby-worker) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^11.1.1 [#37827](https://github.com/gatsbyjs/gatsby/issues/37827) ([3e9a590](https://github.com/gatsbyjs/gatsby/commit/3e9a590fdc0b4cdbc763b6a6e3ca3e983ac8231a))
+- update typescript to v5 (major) [#37906](https://github.com/gatsbyjs/gatsby/issues/37906) ([3859ba6](https://github.com/gatsbyjs/gatsby/commit/3859ba6ce629e658525f858a8799b08c34c3eda5))
+
+#### Chores
+
+- update typescript [#37848](https://github.com/gatsbyjs/gatsby/issues/37848) ([9f92796](https://github.com/gatsbyjs/gatsby/commit/9f92796070b0e73fa92089af93de376c9be9021e))
+- update dependency rimraf to v4 for gatsby-worker [#37901](https://github.com/gatsbyjs/gatsby/issues/37901) ([c06f98c](https://github.com/gatsbyjs/gatsby/commit/c06f98cf5264c0657a76028e030fb27fd8a21854))
+
 ## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.8.0/packages/gatsby-worker) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

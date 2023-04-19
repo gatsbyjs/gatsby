@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@5.9.0/packages/gatsby-plugin-gatsby-cloud) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^11.1.1 [#37827](https://github.com/gatsbyjs/gatsby/issues/37827) ([3e9a590](https://github.com/gatsbyjs/gatsby/commit/3e9a590fdc0b4cdbc763b6a6e3ca3e983ac8231a))
+
+#### Chores
+
+- update [dev] major dependencies for gatsby-plugin-gatsby-cloud (major) [#37882](https://github.com/gatsbyjs/gatsby/issues/37882) ([12778ee](https://github.com/gatsbyjs/gatsby/commit/12778ee1ec878354cdaf4fb25f3e5add97655988))
+- update dependency node-fetch to ^2.6.9 for gatsby-plugin-gatsby-cloud [#37821](https://github.com/gatsbyjs/gatsby/issues/37821) ([f645e9e](https://github.com/gatsbyjs/gatsby/commit/f645e9e3a0f209309e113d180ecb633eec6735bd))
+
 ## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@5.8.0/packages/gatsby-plugin-gatsby-cloud) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)
