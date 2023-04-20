@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.9.1/packages/gatsby-source-contentful) (2023-04-19)
+
+#### Bug Fixes
+
+- don't call `createNode` on `null` [#37958](https://github.com/gatsbyjs/gatsby/issues/37958) [#37960](https://github.com/gatsbyjs/gatsby/issues/37960) ([52ad261](https://github.com/gatsbyjs/gatsby/commit/52ad261d705b4d864e8b64ba410f881f946fc0c6))
+
 ## [8.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.9.0/packages/gatsby-source-contentful) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
