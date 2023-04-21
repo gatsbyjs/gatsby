@@ -1,6 +1,7 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const path = require(`path`)
+const { capitalize } = require(`lodash`)
 const probeImageSize = require(`probe-image-size`)
 
 import { getOptions } from "./plugin-options"
@@ -33,11 +34,14 @@ const getGatsbyImageCdnFields = async ({
     return {}
   }
 
-  const isFile = isFileNode({
-    internal: {
-      type,
+  const isFile = isFileNode(
+    {
+      internal: {
+        type,
+      },
     },
-  })
+    pluginOptions.typePrefix
+  )
 
   if (!isFile) {
     return {}
@@ -154,7 +158,12 @@ export const nodeFromData = async (
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
 
   const langcode = attributes.langcode || `und`
-  const type = datum.type.replace(/-|__|:|\.|\s/g, `_`)
+  const { typePrefix = `` } = pluginOptions
+  const cleanedType = datum.type.replace(/-|__|:|\.|\s/g, `_`).replace(/^_/, ``)
+
+  const type = typePrefix
+    ? `${typePrefix}${capitalize(cleanedType)}`
+    : cleanedType
 
   const gatsbyImageCdnFields = await getGatsbyImageCdnFields({
     node: datum,
@@ -164,13 +173,14 @@ export const nodeFromData = async (
     reporter,
   })
 
-  const versionedId = createNodeIdWithVersion(
-    datum.id,
-    datum.type,
+  const versionedId = createNodeIdWithVersion({
+    id: datum.id,
+    type: datum.type,
     langcode,
-    attributes.drupal_internal__revision_id,
-    entityReferenceRevisions
-  )
+    revisionId: attributes.drupal_internal__revision_id,
+    entityReferenceRevisions,
+    typePrefix,
+  })
 
   const gatsbyId = createNodeId(versionedId)
 
@@ -191,18 +201,29 @@ export const nodeFromData = async (
   }
 }
 
-const isEntityReferenceRevision = (type, entityReferenceRevisions = []) =>
+const isEntityReferenceRevision = (
+  type,
+  entityReferenceRevisions: Array<string> = []
+) =>
   entityReferenceRevisions.findIndex(
     revisionType => type.indexOf(revisionType) === 0
   ) !== -1
 
-export const createNodeIdWithVersion = (
-  id: string,
-  type: string,
-  langcode: string,
-  revisionId: string,
-  entityReferenceRevisions = []
-) => {
+export const createNodeIdWithVersion = ({
+  id,
+  type,
+  langcode,
+  revisionId,
+  entityReferenceRevisions = [],
+  typePrefix,
+}: {
+  id: string
+  type: string
+  langcode: string
+  revisionId: string
+  entityReferenceRevisions: Array<string>
+  typePrefix: string
+}) => {
   const options = getOptions()
 
   // Fallback to default language for entities that don't translate.
@@ -245,13 +266,16 @@ export const createNodeIdWithVersion = (
     ? `${langcodeNormalized}.${id}.${revisionId || 0}`
     : `${langcodeNormalized}.${id}`
 
-  return idVersion
+  return typePrefix ? `${typePrefix}.${idVersion}` : idVersion
 }
 
-export const isFileNode = node => {
-  const type = node?.internal?.type
-  return type === `files` || type === `file__file`
-}
+export const isFileNode = (node, typePrefix) =>
+  [
+    `file__file`,
+    `files`,
+    `${typePrefix}Files`,
+    `${typePrefix}File_file`,
+  ].includes(node?.internal?.type)
 
 const getFileUrl = (node, baseUrl) => {
   let fileUrl = node.url
@@ -269,10 +293,10 @@ const getFileUrl = (node, baseUrl) => {
 
 export const downloadFile = async (
   { node, cache, createNode, createNodeId, getCache },
-  { basicAuth, baseUrl }
+  { basicAuth, baseUrl, typePrefix }: Record<string, any>
 ) => {
   // handle file downloads
-  if (isFileNode(node)) {
+  if (isFileNode(node, typePrefix)) {
     let fileType
 
     if (typeof node.uri === `object`) {
