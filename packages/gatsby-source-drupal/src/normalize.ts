@@ -159,7 +159,7 @@ export const nodeFromData = async (
 
   const langcode = attributes.langcode || `und`
   const { typePrefix = `` } = pluginOptions
-  const cleanedType = datum.type.replace(/-|__|:|\.|\s/g, `_`).replace(/^_/, ``)
+  const cleanedType = datum.type.replace(/-|__|:|\.|\s/g, `_`)
 
   const type = typePrefix
     ? `${typePrefix}${capitalize(cleanedType)}`
