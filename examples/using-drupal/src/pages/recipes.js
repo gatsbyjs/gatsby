@@ -23,11 +23,11 @@ export default Recipes
 
 export const query = graphql`
   query {
-    recipes: allRecipes(limit: 1000) {
+    recipes: allDrupalRecipes(limit: 1000) {
       edges {
         node {
           title
-          gatsbyPath(filePath: "/{Recipes.title}")
+          gatsbyPath(filePath: "/{DrupalRecipes.title}")
         }
       }
     }
