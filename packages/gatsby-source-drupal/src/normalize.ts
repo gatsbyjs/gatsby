@@ -143,6 +143,14 @@ const getGatsbyImageCdnFields = async ({
   return {}
 }
 
+export const generateTypeName = (type: string, typePrefix = ``) => {
+  const prefixed = typePrefix
+    ? `${capitalize(typePrefix)}${capitalize(type)}`
+    : type
+
+  return prefixed.replace(/-|__|:|\.|\s/g, `_`)
+}
+
 export const nodeFromData = async (
   datum,
   createNodeId,
@@ -159,11 +167,8 @@ export const nodeFromData = async (
 
   const langcode = attributes.langcode || `und`
   const { typePrefix = `` } = pluginOptions
-  const cleanedType = datum.type.replace(/-|__|:|\.|\s/g, `_`)
 
-  const type = typePrefix
-    ? `${typePrefix}${capitalize(cleanedType)}`
-    : cleanedType
+  const type = generateTypeName(datum.type, typePrefix)
 
   const gatsbyImageCdnFields = await getGatsbyImageCdnFields({
     node: datum,
@@ -269,13 +274,21 @@ export const createNodeIdWithVersion = ({
   return typePrefix ? `${typePrefix}.${idVersion}` : idVersion
 }
 
-export const isFileNode = (node, typePrefix) =>
-  [
-    `file__file`,
-    `files`,
-    `${typePrefix}Files`,
-    `${typePrefix}File_file`,
-  ].includes(node?.internal?.type)
+const fileNodeTypes = new Map<string, Set<string>>()
+
+export const isFileNode = (node, typePrefix = ``) => {
+  if (!fileNodeTypes.has(typePrefix)) {
+    fileNodeTypes.set(
+      typePrefix,
+      new Set<string>([
+        generateTypeName(`files`, typePrefix),
+        generateTypeName(`file_file`, typePrefix),
+      ])
+    )
+  }
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return fileNodeTypes.get(typePrefix)!.has(node?.internal?.type)
+}
 
 const getFileUrl = (node, baseUrl) => {
   let fileUrl = node.url
@@ -296,38 +309,39 @@ export const downloadFile = async (
   { basicAuth, baseUrl, typePrefix }: Record<string, any>
 ) => {
   // handle file downloads
-  if (isFileNode(node, typePrefix)) {
-    let fileType
+  if (!isFileNode(node, typePrefix)) {
+    return
+  }
+  let fileType
 
-    if (typeof node.uri === `object`) {
-      // get file type from uri prefix ("S3:", "public:", etc.)
-      const uriPrefix = node.uri.value.match(/^\w*:/)
-      fileType = uriPrefix ? uriPrefix[0] : null
-    }
+  if (typeof node.uri === `object`) {
+    // get file type from uri prefix ("S3:", "public:", etc.)
+    const uriPrefix = node.uri.value.match(/^\w*:/)
+    fileType = uriPrefix ? uriPrefix[0] : null
+  }
 
-    const url = getFileUrl(node, baseUrl)
+  const url = getFileUrl(node, baseUrl)
 
-    // If we have basicAuth credentials, add them to the request.
-    const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
-    const auth =
-      typeof basicAuth === `object` && basicAuthFileSystems.includes(fileType)
-        ? {
-            htaccess_user: basicAuth.username,
-            htaccess_pass: basicAuth.password,
-          }
-        : {}
-    const fileNode = await createRemoteFileNode({
-      url: url.href,
-      name: path.parse(decodeURIComponent(url.pathname)).name,
-      cache,
-      createNode,
-      createNodeId,
-      getCache,
-      parentNodeId: node.id,
-      auth,
-    })
-    if (fileNode) {
-      node.localFile___NODE = fileNode.id
-    }
+  // If we have basicAuth credentials, add them to the request.
+  const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
+  const auth =
+    typeof basicAuth === `object` && basicAuthFileSystems.includes(fileType)
+      ? {
+          htaccess_user: basicAuth.username,
+          htaccess_pass: basicAuth.password,
+        }
+      : {}
+  const fileNode = await createRemoteFileNode({
+    url: url.href,
+    name: path.parse(decodeURIComponent(url.pathname)).name,
+    cache,
+    createNode,
+    createNodeId,
+    getCache,
+    parentNodeId: node.id,
+    auth,
+  })
+  if (fileNode) {
+    node.localFile___NODE = fileNode.id
   }
 }
