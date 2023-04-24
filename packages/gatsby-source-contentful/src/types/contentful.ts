@@ -50,10 +50,11 @@ interface IContentfulEntity extends Node {
   metadata: IContentfulMetadata
 }
 
-export type IContentfulEntry = IContentfulEntity
-//  & {
-//   [fieldName: string]: UContentfulField
-// }
+export interface IContentfulEntry extends IContentfulEntity {
+  linkedFrom: {
+    [referenceId: string]: Array<string>
+  }
+}
 
 export interface IContentfulAsset extends IContentfulEntity {
   // TODO: this field type might be defined by Gatsby already?

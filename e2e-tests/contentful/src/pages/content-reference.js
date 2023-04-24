@@ -24,7 +24,7 @@ const ContentReferencePage = ({ data }) => {
   return (
     <Layout>
       <h1>Default</h1>
-      {defaultEntries.map(({ sys: { id }, title, one, many }) => {
+      {defaultEntries.map(({ sys: { id }, title, one, many, linkedFrom }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
@@ -38,8 +38,14 @@ const ContentReferencePage = ({ data }) => {
 
         return (
           <div data-cy-id={`default-${slug}`} key={id}>
-            <h2>{title}</h2>
+            <h2>
+              {title} ({id})
+            </h2>
             {content}
+            <h3>Linked from:</h3>
+            <pre>
+              <code>{JSON.stringify(linkedFrom, null, 2)}</code>
+            </pre>
           </div>
         )
       })}
@@ -106,6 +112,13 @@ export const pageQuery = graphql`
         title
         sys {
           id
+        }
+        linkedFrom {
+          ContentfulContentTypeContentReference {
+            sys {
+              id
+            }
+          }
         }
         one {
           __typename
