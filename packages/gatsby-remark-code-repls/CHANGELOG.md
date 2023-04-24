@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@7.9.0/packages/gatsby-remark-code-repls) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency lz-string to ^1.5.0 for gatsby-remark-code-repls [#37857](https://github.com/gatsbyjs/gatsby/issues/37857) ([52ff154](https://github.com/gatsbyjs/gatsby/commit/52ff1543a6eb56756ff67f3315cb615b9231d4a4))
+
 ## [7.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@7.8.0/packages/gatsby-remark-code-repls) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

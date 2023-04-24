@@ -23,7 +23,7 @@ For smaller teams and projects, use `gatsby build`. The `gatsby build` command i
 npm install -g gatsby-cli
 ```
 
-Installing `gatsby-cli` globally makes Gatsby commands available system-wide. You'll use `gatsby new` to [create a new site](/docs/tutorial/part-0/#create-a-gatsby-site), and `gatsby develop` to start a development server on your local machine.
+Installing `gatsby-cli` globally makes Gatsby commands available system-wide. You'll use `gatsby new` to [create a new site](/docs/tutorial/getting-started/part-0/#create-a-gatsby-site), and `gatsby develop` to start a development server on your local machine.
 
 When you're ready to publish your project, run the `gatsby build` command to create a production-ready version of your site. Once built, you can use an SFTP client, the [rsync](https://en.wikipedia.org/wiki/Rsync) utility, or similar tool to transfer these files to your host.
 

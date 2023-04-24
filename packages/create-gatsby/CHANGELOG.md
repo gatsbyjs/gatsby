@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.9.0/packages/create-gatsby) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^11.1.1 [#37827](https://github.com/gatsbyjs/gatsby/issues/37827) ([3e9a590](https://github.com/gatsbyjs/gatsby/commit/3e9a590fdc0b4cdbc763b6a6e3ca3e983ac8231a))
+- Use correct name in summary message [#37809](https://github.com/gatsbyjs/gatsby/issues/37809) ([4608d51](https://github.com/gatsbyjs/gatsby/commit/4608d51d1a3b0e2734f16fa3914343dd211ad015))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for create-gatsby [#37814](https://github.com/gatsbyjs/gatsby/issues/37814) ([9d822e6](https://github.com/gatsbyjs/gatsby/commit/9d822e61af6f599c4ab186f00737b02999de7d28))
+
 ## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.8.0/packages/create-gatsby) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

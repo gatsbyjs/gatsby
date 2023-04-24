@@ -1,0 +1,268 @@
+---
+title: "Part 7: Advanced Topics"
+---
+
+import { LinkButton } from "gatsby-interface"
+import { MdArrowForward } from "react-icons/md"
+
+## Introduction
+
+Congrats, you've successfully gone through all the step-by-step instructions to build out your source plugin. You can compare what you have with the [finished example repository](https://github.com/gatsbyjs/creating-source-plugin-tutorial).
+
+This part of the tutorial will explain individual advanced topics in a reference style, not tutorial style like the parts before. Or in other words: This living document won't give step-by-step explanations but rather general instructions, tips, and recommendations. Integrating them all into the example repository would go beyond the scope of this guide. Pick and choose what makes sense for your own source plugin, although we highly recommend always adding [test coverage](#testing) to your plugin.
+
+While this document recommends a limited set of tools, feel free to use the tools you're familiar and productive with.
+
+## Testing
+
+From our experience a well tested source plugin is more reliable and easier to maintain. You have greater confidence that new features and bug fixes don't introduce new bugs. It'll also help you understand the code better after coming back to it after a while, especially if not you but a collaborator has written it.
+
+There is no silver bullet in testing and it'll depend on your source plugin what form of test coverage it needs. Generally speaking, a mix of unit and end-to-end tests gives a good foundation for every source plugin.
+
+### Unit testing
+
+Here are some tips for unit testing source plugins:
+
+- We'd recommend using [Jest](https://jestjs.io/) or [Vitest](https://vitest.dev/) as unit testing frameworks.
+  - For detailed instructions on setting up Jest with Gatsby, read the [Unit Testing guide](/docs/how-to/testing/unit-testing/).
+- The most important part of your source plugin is the `sourceNodes` API. You're fetching data there and creating nodes from that data. Both parts can be unit tested.
+  - Don't run unit tests against an API that is online somewhere. Your tests will fail when the API is momentarily offline or the machine itself doesn't have an internet connection. Use HTTP mocking packages like [nock](https://www.npmjs.com/package/nock) to create a placeholder API for your tests.
+  - If you're modifying the incoming data before creating nodes, be sure to test that behavior. In the previous parts of this tutorial you've created utility functions (`nodeBuilder` and `createAssetNode`) as one of their advantages is that you can then test their logic in isolation.
+- Read the [Unit testing an options schema guide](/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/#unit-testing-an-options-schema) for the `pluginOptionsSchema` API.
+
+The [finished example repository](https://github.com/gatsbyjs/creating-source-plugin-tutorial) uses Jest to unit test the `pluginOptionsSchema` and utility functions for `sourceNodes`.
+
+### End-to-End testing
+
+If you want to test your plugin inside a browser and a running Gatsby app, you should use end-to-end testing tools. You could test the Image CDN feature you've added in [Part 6](/docs/tutorial/creating-a-source-plugin/part-6/) or if certain schema customizations are working correctly. It can also give you confidence that your source plugin works during `gatsby build` from start to finish.
+
+Here are some tips for end-to-end testing source plugins:
+
+- We'd recommend using [Cypress](https://www.cypress.io/) or [Playwright](https://playwright.dev/) as end-to-end testing frameworks.
+  - For detailed instructions on setting up Cypress with Gatsby, read the [End-to-End Testing guide](/docs/how-to/testing/end-to-end-testing/).
+- If you have a monorepo with your plugin and an example site (like this tutorial) you should use the example site for your end-to-end tests.
+- When running your end-to-end tests in a CI environment (e.g. tests running on each PR) do test the output of `gatsby build`. So before running the tests, run `gatsby build` and then `gatsby serve`.
+  - Locally you can test against `gatsby develop` to iterate more quickly on the tests.
+
+## Content Sync
+
+Content Sync is a Gatsby Cloud feature for improving the preview experience for content authors. Be sure to read the [Content Sync conceptual guide](https://www.gatsbyjs.com/docs/conceptual/content-sync/) before continuing. To enable this feature in your source plugin you will need to make sure that your data source (or CMS) also works with Content Sync.
+
+### Source plugin
+
+The source plugin needs to create node manifests using the [`unstable_createNodeManifest` action](/docs/reference/config-files/actions/#unstable_createNodeManifest).
+
+1. Create the `customCreateNodeManifest` utility function that will be a wrapper around the `unstable_createNodeManifest` action. It contains the logic for when to call the action and with which arguments.
+
+    ```ts:title=utils.ts
+    export function customCreateNodeManifest({
+      attributes, // Attributes for manifestId (e.g. your source data/CMS data)
+      gatsbyNode, // Gatsby node
+      unstable_createNodeManifest, // Passed through action
+    }) {
+      // This ENV variable is provided automatically on Gatsby Cloud
+      const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
+
+      const shouldCreateNodeManifest = isPreview && !!customNodeFilteringFn(gatsbyNode)
+
+      if (shouldCreateNodeManifest) {
+        // TODO: Call action
+      }
+    }
+    ```
+
+    The `attributes` argument should allow you to create a unique manifest ID later on. `isPreview` exists because the source plugin should only create node manifests for preview content. The `customNodeFilteringFn` function is a placeholder for your custom logic to filter out any items depending on your `gatsbyNode`. You may want to filter out certain types of nodes, for example if your CMS has nodes that will never be previewed like redirect nodes or other types of non-content data.
+
+1. Identify which nodes you'll want to create a node manifest for. These typically are nodes that you can preview, entry nodes, top level nodes, etc. An example of this could be a blog post or an article, any node that can be the "owner" of a page. A good place to call this action is whenever you call `createNode`.
+
+    ```ts:title=gatsby-node.ts
+    import { customCreateNodeManifest } from "./utils"
+
+    export const sourceNodes = async (
+      { actions }
+    ) => {
+      const { unstable_createNodeManifest, createNode } = actions
+
+      // Sourcing data, modifying it, setting up "nodes"
+
+      nodes.forEach(node => {
+        const gatsbyNode = createNode(node)
+
+        // Some conditional
+        const nodeIsEntryNode = true
+
+        if (nodeIsEntryNode) {
+          customCreateNodeManifest({
+            attributes: node,
+            gatsbyNode,
+            unstable_createNodeManifest,
+          })
+        }
+      })
+    }
+    ```
+
+1. `unstable_createNodeManifest` has two required arguments: `manifestId` and `node`. `node` is the Gatsby node you can reuse, `manifestId` needs to be created.
+
+    **Important:** `manifestId` needs to be created with attributes coming from the CMS **only** as the CMS will need to create the exact same manifest, too. You **must not** use Gatsby information for it.
+
+    This `manifestId` must be uniquely tied to a specific revision of specific content. In the example below the `id` of the content and a timestamp is used. This will vary from your data source/CMS.
+
+    ```ts:title=utils.ts
+    export function customCreateNodeManifest({
+      attributes,
+      gatsbyNode,
+      unstable_createNodeManifest,
+    }) {
+      const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
+
+      const shouldCreateNodeManifest = isPreview && !!customNodeFilteringFn(gatsbyNode)
+
+      if (shouldCreateNodeManifest) {
+        // highlight-start
+        const updatedAtUTC = attributes.updatedAt
+        const manifestId = `${attributes.id}-${updatedAtUTC}`
+        // highlight-end
+
+        // highlight-start
+        unstable_createNodeManifest({
+          manifestId,
+          node: gatsbyNode,
+          updatedAtUTC,
+        })
+        // highlight-end
+      }
+    }
+    ```
+
+    `unstable_createNodeManifest` optionally also accepts a third argument called `updatedAtUTC` which should be the time in which the node was last updated. If you don't have that information feel free to leave it out.
+
+### Data source / CMS
+
+The CMS needs to send a preview webhook to Gatsby Cloud when content is changed and open the Content Sync waiting room. The details of the instructions below will differ from CMS to CMS depending on how extensions and their settings are created/stored.
+
+You'll need two pieces of information from Gatsby Cloud:
+
+- Preview webhook URL (format: `https://webhook.gatsbyjs.com/hooks/data_source/<id>`)
+- Content Sync URL (format: `https://gatsbyjs.com/content-sync/<siteId>`)
+
+You can find both URLs on the Gatsby Cloud site settings page (read [Build and Preview Webhooks](/docs/reference/cloud/build-and-preview-webhooks/) to learn more). Both URLs need to be user configurable in the CMS extension.
+
+Here are the other steps to integrate Content Sync into your CMS:
+
+1. Store both URLs inside the CMS extension so that you can reuse them later.
+1. Inside the CMS extension, create a `manifestId` with the same attributes as shown in the [source plugin section](#source-plugin). They must match.
+1. Store a `contentId` inside the extension. The `contentId` should be a unique identifier for the project and stay consistent across all previews. So e.g. storing the project ID is a good option.
+
+    `contentId` will enable so called "eager redirects" which causes the user to be redirected to their site frontend as soon as possible. When a user first previews their content, they'll stay in the Content Sync loading screen until their preview is ready. On subsequent previews of the same piece of content, they'll be redirected as soon as the page loads.
+1. Create a button in your CMS that does the following:
+
+    1. `POST` to the preview webhook URL of Gatsby Cloud
+    1. Open the Content Sync waiting room. You can do this by redirecting to an URL in the shape of:
+
+        ```
+        <contentSyncURL>/<sourcePluginName>/<manifestId>/<contentId>/
+        ```
+
+        As an example:
+
+        ```
+        https://gatsbyjs.com/content-sync/123-456/gatsby-source-contentful/123-2023-03-01/123456/
+        ```
+
+### Tips
+
+Here are some things to keep in mind and some "gotchas" depending on how the CMS acts:
+
+- Inside the CMS, sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend. You will need the _most_ up to date timestamp when opening the Content Sync UI waiting room.
+- Make sure that a preview webhook is being sent to Gatsby Cloud after the content is edited, whether it's before you press the "Open Preview" button or the "Open Preview" is the trigger that sends the webhook.
+- The node manifests get written out in the `public` dir of your gatsby site, so you can check the manifests on your local disk at `/public/__node-manifests/<sourcePluginName>/<manifestId>.json` or you can navigate directly to that piece of content `https://<your-domain>/__node-manifests/<sourcePluginName>/<manifestId>`.
+
+## MIME types
+
+A media type (also known as a Multipurpose Internet Mail Extensions or MIME type) indicates the nature and format of a document, file, or assortment of bytes. Learn more about MIME types on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_Types).
+
+In [Part 2](/docs/tutorial/creating-a-source-plugin/part-2/#createnode) you learned how to use [`createNode`](/docs/reference/config-files/actions/#createNode). Inside the `internal` object that holds the `type` and `contentDigest` you can optionally also pass a `mediaType` key.
+
+The usage for a markdown file looks something like this:
+
+```ts
+createNode({
+  foo: `bar`,
+  id: `some-unique-id`,
+  parent: null,
+  children: [],
+  internal: {
+    type: `TypeName`,
+    // highlight-next-line
+    mediaType: `text/markdown`,
+    contentDigest: `contentDigest`
+  }
+})
+```
+
+Source plugins are responsible for setting the `mediaType` on their nodes (if necessary). By providing this key you tell transformer plugins (see [Creating a Transformer Plugin guide](/docs/how-to/plugins-and-themes/creating-a-transformer-plugin/)) that the node contains raw content that they can transform. Use either [official media types](https://www.iana.org/assignments/media-types/media-types.xhtml) or a made-up one if your data doesn't fit into any existing bucket.
+
+This distinction between Gatsby source plugins and transformer plugins is important as it allows both to be contained and focused on their specific job. Source plugins don't need to worry about transforming their data, transformer plugins don't care where the data is coming from.
+
+For example, the node above with the `text/markdown` MIME type will be transformed by `gatsby-transformer-remark` into further `MarkdownRemark` nodes.
+
+## Tracing
+
+If you want to give your users the ability to see tracing of your source plugin (e.g. in [OpenTelemetry](https://opentelemetry.io/) format) or use the performance tracing yourself to debug bottlenecks, be sure to read the [Performance Tracing guide](/docs/performance-tracing/). The guide has all the information you'd need.
+
+In context of source plugins, the [tracing](/docs/reference/config-files/node-api-helpers/#tracing) and [parentSpan](/docs/reference/config-files/node-api-helpers/#parentSpan) Node API helpers are relevant.
+
+When calling `startSpan` on the root tracer pass the `parentSpan` along, for example:
+
+```ts
+export const sourceNodes = ({ tracing }) => {
+  const fetchSpan = tracing.startSpan(`sourceNodes.fetch`)
+
+  fetchSpan.setTag(`sourceNodes.fetch.type`, `delta`)
+
+  // Do things
+
+  fetchSpan.finish()
+}
+```
+
+## Summary
+
+You've also learned about more advanced topics now, great!
+
+Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
+
+- Which parts should you unit test?
+- What are end-to-end tests good for?
+- What is Content Sync?
+- What happens when a source plugin defines a `mediaType` for its nodes?
+
+### Key takeaways
+
+- A good mixture of unit tests (testing the heart of the source plugin) and end-to-end tests (testing the functionality from start to finish) will give you confidence in shipping changes.
+- Content Sync can improve the preview experience for content editors.
+- MIME types can help Gatsby transformers discover nodes from source plugins.
+- You can use tracing to inspect your source plugin more deeply.
+
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
+
+### What's coming next?
+
+In Part 8 you'll learn how you can publish your source plugin to npm, making it available to everyone.
+
+<LinkButton
+  to="/docs/tutorial/creating-a-source-plugin/part-8/"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to Part 8
+</LinkButton>

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@6.9.0/packages/gatsby-remark-autolink-headers) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency github-slugger to ^1.5.0 for gatsby-remark-autolink-headers [#37854](https://github.com/gatsbyjs/gatsby/issues/37854) ([19062c6](https://github.com/gatsbyjs/gatsby/commit/19062c6e619c1543e18c0496ed56b77679cb6cf6))
+
+#### Chores
+
+- Fix typo in README Fix [#37812](https://github.com/gatsbyjs/gatsby/issues/37812) ([468b4f6](https://github.com/gatsbyjs/gatsby/commit/468b4f691c0cc9cfc4092258874c426bbcdd6093))
+
 ## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@6.8.0/packages/gatsby-remark-autolink-headers) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

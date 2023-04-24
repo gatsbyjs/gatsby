@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@5.9.0/packages/gatsby-transformer-screenshot) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency gatsby-core-utils to ^4.8.0 [#37853](https://github.com/gatsbyjs/gatsby/issues/37853) ([2260f3e](https://github.com/gatsbyjs/gatsby/commit/2260f3e5f63dd92cb28cda921d122d11ffae8546))
+- update dependency fastq to ^1.15.0 for gatsby-transformer-screenshot [#37826](https://github.com/gatsbyjs/gatsby/issues/37826) ([029db94](https://github.com/gatsbyjs/gatsby/commit/029db9420571a5b9832511c8f7c3eae78583d945))
+
+#### Chores
+
+- update dependency aws-sdk to ^2.1346.0 [#37842](https://github.com/gatsbyjs/gatsby/issues/37842) ([caf680e](https://github.com/gatsbyjs/gatsby/commit/caf680e1509dc079b82c2f104b78c3dd37aeb03a))
+
 ## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@5.8.0/packages/gatsby-transformer-screenshot) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

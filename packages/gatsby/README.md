@@ -40,9 +40,9 @@
 </p>
 
 <h2 align="center">
-  <a href="https://www.gatsbyjs.com/docs/">Quickstart</a>
+  <a href="https://www.gatsbyjs.com/docs/quick-start/">Quickstart</a>
   <span> · </span>
-  <a href="https://www.gatsbyjs.com/tutorial/">Tutorial</a>
+  <a href="https://www.gatsbyjs.com/docs/tutorial/getting-started/">Tutorial</a>
   <span> · </span>
   <a href="https://www.gatsbyjs.com/plugins/">Plugins</a>
   <span> · </span>
@@ -112,19 +112,19 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
-At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/tutorial/).
+At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/docs/tutorial/getting-started/).
 
 ## 🎓 Learning Gatsby
 
 Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/docs/tutorial/getting-started/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
 - **To dive straight into code samples head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the “<i>How-to Guides</i>”, “<i>Reference</i>”, and “<i>Conceptual Guides</i>” sections in the sidebar.
 
 We welcome suggestions for improving our docs. See the [“how to contribute”](https://www.gatsbyjs.com/contributing/how-to-contribute/) documentation for more details.
 
-**Start Learning Gatsby: [Follow the Tutorial](https://www.gatsbyjs.com/tutorial/) · [Read the Docs](https://www.gatsbyjs.com/docs/)**
+**Start Learning Gatsby: [Follow the Tutorial](https://www.gatsbyjs.com/docs/tutorial/getting-started/) · [Read the Docs](https://www.gatsbyjs.com/docs/)**
 
 ## 🚢 Release Notes
 

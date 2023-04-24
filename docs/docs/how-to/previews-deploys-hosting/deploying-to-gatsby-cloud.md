@@ -23,5 +23,5 @@ You can [sign up for Gatsby Cloud here](/dashboard/signup/).
 
 ## Additional Resources
 
-- [Tutorial Part 1: Create and Deploy Your First Gatsby Site](/docs/tutorial/part-1/)
+- [Tutorial Part 1: Create and Deploy Your First Gatsby Site](/docs/tutorial/getting-started/part-1/)
 - [Gatsby Cloud contact form](/contact-us/)

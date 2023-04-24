@@ -2,7 +2,7 @@
 title: Gatsby Config API
 ---
 
-The file `gatsby-config.js`/`gatsby-config.ts` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site. You can author the file in JavaScript or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-configts).
+The file `gatsby-config.js`/`gatsby-config.ts` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site. You can author the file in JavaScript (CommonJS or [ES Modules (ESM)](/docs/how-to/custom-configuration/es-modules/) syntax) or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-configts).
 
 If you created a Gatsby site with the `npm init gatsby` command, there should already be a sample configuration file in your site's directory.
 _Note: There are many sample configs which may be helpful to reference in the different [Gatsby Example Websites](https://github.com/gatsbyjs/gatsby/tree/master/examples)._
@@ -39,6 +39,8 @@ module.exports = {
 
 The [TypeScript and Gatsby documentation](/docs/how-to/custom-configuration/typescript/#gatsby-configts) shows how to set up a configuration file in TypeScript.
 
+Read the [ES Modules (ESM) and Gatsby documentation](/docs/how-to/custom-configuration/es-modules/) if you don't want to use CommonJS syntax.
+
 ## Configuration options
 
 Options available to set within `gatsby-config.js` include:
@@ -72,7 +74,7 @@ module.exports = {
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
 
-See a full description and sample usage in [Gatsby Tutorial Part Four](/docs/tutorial/part-4/#data-in-gatsby).
+See a full description and sample usage in [Gatsby Tutorial Part Four](/docs/tutorial/getting-started/part-4/#data-in-gatsby).
 
 ## plugins
 

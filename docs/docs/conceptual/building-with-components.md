@@ -70,7 +70,7 @@ You can programmatically create pages using "page template components". All page
 
 `src/templates/post.jsx` is an example of a page template. It queries GraphQL for markdown data (sourcing from the `posts` directory) and then renders the page using this data.
 
-See [part six](/docs/tutorial/part-6/) of the tutorial for a detailed introduction to programmatically creating pages.
+See [part six](/docs/tutorial/getting-started/part-6/) of the tutorial for a detailed introduction to programmatically creating pages.
 
 Example:
 

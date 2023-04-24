@@ -13,7 +13,7 @@ export interface IContentfulSys {
   type: string
   spaceId: string
   environmentId: string
-  contentType: string
+  contentType?: string
   firstPublishedAt: string
   publishedAt: string
   publishedVersion: number
@@ -57,19 +57,19 @@ export type IContentfulEntry = IContentfulEntity
 
 export interface IContentfulAsset extends IContentfulEntity {
   // TODO: this field type might be defined by Gatsby already?
-  gatsbyImageData: unknown
+  gatsbyImageData?: unknown
   // TODO: this field type might be defined by Gatsby already?
   downloadLocal?: string
-  title?: string
-  description?: string
+  title: string
+  description: string
   contentType: string
   mimeType: string
   filename: string
   url: string
-  size: number
-  width: number
-  height: number
-  fields: { localFile?: string }
+  size?: number
+  width?: number
+  height?: number
+  fields?: { localFile?: string }
 }
 
 // Image API

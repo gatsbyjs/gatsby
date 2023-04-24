@@ -1,7 +1,6 @@
 import type { GatsbyNode, Node } from "gatsby"
 import { hasFeature } from "gatsby-plugin-utils/has-feature"
 import isOnline from "is-online"
-import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
@@ -14,10 +13,16 @@ import {
   createRefId,
   makeId,
 } from "./normalize"
+import {
+  addNodeToExistingNodesCache,
+  getExistingCachedNodes,
+  removeNodeFromExistingNodesCache,
+} from "./backreferences"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
+import { untilNextEventLoopTick } from "./utils"
 import type { IPluginOptions } from "./types/plugin"
-import type { IContentfulAsset, IContentfulEntry } from "./types/contentful"
+import type { IContentfulAsset } from "./types/contentful"
 import type { ContentType } from "./types/contentful-js-sdk"
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
@@ -33,74 +38,54 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
  * or the fallback field or the default field.
  */
 
-let isFirstSourceNodesCallOfCurrentNodeProcess = true
 export const sourceNodes: GatsbyNode["sourceNodes"] =
   async function sourceNodes(args, pluginOptions) {
     const {
       actions,
       getNode,
-      getNodes,
       createNodeId,
       store,
       cache,
       reporter,
       parentSpan,
     } = args
-    const hasStatefulSourceNodes = hasFeature(`stateful-source-nodes`)
-    const needToTouchNodes = !hasStatefulSourceNodes
 
-    const { createNode, touchNode, deleteNode, enableStatefulSourceNodes } =
-      actions
+    const {
+      createNode: originalCreateNode,
+      deleteNode: originalDeleteNode,
+      enableStatefulSourceNodes,
+    } = actions
 
-    const online = await isOnline()
-
-    if (hasStatefulSourceNodes && enableStatefulSourceNodes) {
+    if (hasFeature(`stateful-source-nodes`) && enableStatefulSourceNodes) {
       enableStatefulSourceNodes()
     }
 
-    // Gatsby only checks if a node has been touched on the first sourcing.
-    // As iterating and touching nodes can grow quite expensive on larger sites with
-    // 1000s of nodes, we'll skip doing this on subsequent sources.
-    else if (isFirstSourceNodesCallOfCurrentNodeProcess && needToTouchNodes) {
-      getNodes().forEach(node => {
-        if (node.internal.owner !== `gatsby-source-contentful`) {
-          return
-        }
-        touchNode(node)
-        const assetNode = node as IContentfulAsset
-        if (!assetNode.fields.localFile) {
-          return
-        }
-        const localFileNode = getNode(assetNode.fields.localFile)
-        if (localFileNode) {
-          touchNode(localFileNode)
-        }
-      })
-    }
-
-    isFirstSourceNodesCallOfCurrentNodeProcess = false
-
-    if (
-      !online &&
-      process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
-      process.env.NODE_ENV !== `production`
-    ) {
-      return
-    }
-
     const pluginConfig = createPluginConfig(pluginOptions as IPluginOptions)
-    const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-      `environment`
-    )}`
 
-    const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
-      parentSpan,
-    })
+    // wrap createNode so we can cache them in memory for faster lookups when finding backreferences
+    const createNode = (node: Node): void | Promise<void> => {
+      addNodeToExistingNodesCache(node)
+
+      return originalCreateNode(node)
+    }
+
+    const deleteNode = (node: Node): void | Promise<void> => {
+      removeNodeFromExistingNodesCache(node)
+
+      return originalDeleteNode(node)
+    }
+
+    // Array of all existing Contentful nodes
+    const { existingNodes, memoryNodeCountsBySysType } =
+      await getExistingCachedNodes({
+        actions,
+        getNode,
+      })
 
     // If the user knows they are offline, serve them cached result
     // For prod builds though always fail if we can't get the latest data
     if (
-      !online &&
+      !(await isOnline()) &&
       process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
       process.env.NODE_ENV !== `production`
     ) {
@@ -110,12 +95,19 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       )
 
       return
-    }
-    if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
+    } else if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
       reporter.info(
         `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
       )
     }
+
+    const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+      `environment`
+    )}`
+
+    const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
+      parentSpan,
+    })
 
     fetchActivity.start()
 
@@ -137,6 +129,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       store.getState().status.plugins?.[`gatsby-source-contentful`]?.[
         CACHE_SYNC_TOKEN
       ]
+    const isCachedBuild = !!syncToken
 
     // Actual fetch of data from Contentful
     const {
@@ -193,33 +186,22 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     )
     processingActivity.start()
 
-    // Array of all existing Contentful entry and asset nodes
-    const existingNodes = getNodes().filter(
-      n =>
-        (n.internal.owner === `gatsby-source-contentful` &&
-          n.internal.type.indexOf(`ContentfulContentType`) === 0) ||
-        n.internal.type === `ContentfulAsset`
-    ) as Array<IContentfulEntry>
-
     // Report existing, new and updated nodes
     const nodeCounts = {
       newEntry: 0,
       newAsset: 0,
       updatedEntry: 0,
       updatedAsset: 0,
-      existingEntry: 0,
-      existingAsset: 0,
-      deletedEntry: currentSyncData.deletedEntries.length,
-      deletedAsset: currentSyncData.deletedAssets.length,
+      deletedEntry: currentSyncData?.deletedEntries?.length || 0,
+      deletedAsset: currentSyncData?.deletedAssets?.length || 0,
     }
 
-    existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
-    currentSyncData.entries.forEach(entry =>
+    currentSyncData?.entries?.forEach(entry =>
       entry.sys.revision === 1
         ? nodeCounts.newEntry++
         : nodeCounts.updatedEntry++
     )
-    currentSyncData.assets.forEach(asset =>
+    currentSyncData?.assets?.forEach(asset =>
       asset.sys.revision === 1
         ? nodeCounts.newAsset++
         : nodeCounts.updatedAsset++
@@ -229,12 +211,16 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
     reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
     reporter.info(
-      `Contentful: ${nodeCounts.existingEntry / locales.length} cached entries`
+      `Contentful: ${
+        memoryNodeCountsBySysType.Entry / locales.length
+      } cached entries`
     )
     reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
     reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
     reporter.info(
-      `Contentful: ${nodeCounts.existingAsset / locales.length} cached assets`
+      `Contentful: ${
+        memoryNodeCountsBySysType.Asset / locales.length
+      } cached assets`
     )
     reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
@@ -275,10 +261,12 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
 
     reporter.verbose(`Resolving Contentful references`)
 
-    const newOrUpdatedEntries = new Set()
+    let newOrUpdatedEntries: Set<string> | undefined = new Set<string>()
     entryList.forEach(entries => {
       entries.forEach(entry => {
-        newOrUpdatedEntries.add(createRefId(entry))
+        if (entry) {
+          newOrUpdatedEntries?.add(createRefId(entry))
+        }
       })
     })
 
@@ -329,6 +317,9 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     // Create map of reference fields to properly delete stale references
     const referenceFieldMap = new Map()
     for (const contentTypeItem of contentTypeItems) {
+      if (!contentTypeItem) {
+        continue
+      }
       const referenceFields = contentTypeItem.fields.filter(field => {
         if (field.disabled || field.omitted) {
           return false
@@ -350,20 +341,25 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     // TODO: mirror structure of Contentful GraphQL API, as it prevents field name overlaps
     const reverseReferenceFields = contentTypeItems.map(contentTypeItem =>
       useNameForId
-        ? contentTypeItem.name.toLowerCase()
-        : contentTypeItem.sys.id.toLowerCase()
+        ? contentTypeItem?.name.toLowerCase()
+        : contentTypeItem?.sys.id.toLowerCase()
     )
 
     // Update existing entry nodes that weren't updated but that need reverse links added or removed.
-    const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
-    existingNodes
-      .filter(
-        n =>
-          n.sys.type === `Entry` &&
-          !newOrUpdatedEntries.has(createRefId(n)) &&
-          !deletedEntryGatsbyReferenceIds.has(n.id)
-      )
-      .forEach(n => {
+    let existingNodesThatNeedReverseLinksUpdateInDatastore: Set<Node> =
+      new Set<Node>()
+
+    if (isCachedBuild) {
+      existingNodes.forEach(n => {
+        if (
+          !(
+            n.sys.type === `Entry` &&
+            !newOrUpdatedEntries?.has(`${n.id}___${n.sys.type}`) &&
+            !deletedEntryGatsbyReferenceIds.has(n.id)
+          )
+        ) {
+          return
+        }
         const refId = createRefId(n)
         if (n.sys.id && foreignReferenceMap[refId]) {
           foreignReferenceMap[refId].forEach(foreignReference => {
@@ -426,13 +422,20 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           })
         }
       })
+    }
+
+    // allow node to gc if it needs to
+    // @ts-ignore avoid complex typing as this helps with GC
+    newOrUpdatedEntries = undefined
+    await untilNextEventLoopTick()
 
     // We need to call `createNode` on nodes we modified reverse links on,
     // otherwise changes won't actually persist
     if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
+      let existingNodesLoopCount = 0
       for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
         function addChildrenToList(
-          node,
+          node: Node,
           nodeList: Array<Node> = [node]
         ): Array<Node> {
           for (const childNodeId of node?.children ?? []) {
@@ -453,7 +456,14 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           // We should not mutate original node as Gatsby will still
           // compare against what's in in-memory weak cache, so we
           // clone original node to ensure reference identity is not possible
-          const nodeToUpdate = _.cloneDeep(nodeToUpdateOriginal)
+          const nodeToUpdate = nodeToUpdateOriginal.__memcache
+            ? getNode(nodeToUpdateOriginal.id)
+            : nodeToUpdateOriginal
+
+          if (!nodeToUpdate) {
+            continue
+          }
+
           // We need to remove properties from existing fields
           // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
           // Gatsby automatically will set `.owner` it back
@@ -483,11 +493,52 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
             counter++
           }
 
-          nodeToUpdate.internal.contentDigest = `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`
-          createNode(nodeToUpdate)
+          const newNode = {
+            ...nodeToUpdate,
+            internal: {
+              ...nodeToUpdate.internal,
+              // We need to remove properties from existing fields
+              // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
+              // Gatsby automatically will set `.owner` it back
+              owner: undefined,
+              // We add or modify counter postfix to contentDigest
+              // to make sure Gatsby treat this as data update
+              contentDigest: `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`,
+            },
+            // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
+            // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
+            // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
+            // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
+            // we would also need to restore that field ourselves after re-creating a node)
+            fields: undefined, // plugin adds node field on asset nodes which don't have reverse links
+          }
+
+          // memory cached nodes are mutated during back reference checks
+          // so we need to carry over the changes to the updated node
+          if (node.__memcache) {
+            for (const key of Object.keys(node)) {
+              if (!key.endsWith(`___NODE`)) {
+                continue
+              }
+
+              newNode[key] = node[key]
+            }
+          }
+
+          createNode(newNode)
+
+          if (existingNodesLoopCount++ % 2000 === 0) {
+            // dont block the event loop
+            await untilNextEventLoopTick()
+          }
         }
       }
     }
+
+    // allow node to gc if it needs to
+    // @ts-ignore avoid complex typing
+    existingNodesThatNeedReverseLinksUpdateInDatastore = undefined
+    await untilNextEventLoopTick()
 
     const creationActivity = reporter.activityTimer(
       `Contentful: Create nodes`,
@@ -504,7 +555,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       if (entryList[i].length) {
         reporter.info(
           `Creating ${entryList[i].length} Contentful ${
-            useNameForId ? contentTypeItem.name : contentTypeItem.sys.id
+            useNameForId ? contentTypeItem?.name : contentTypeItem?.sys.id
           } nodes`
         )
       }
@@ -512,21 +563,26 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       // A contentType can hold lots of entries which create nodes
       // We wait until all nodes are created and processed until we handle the next one
       // TODO add batching in gatsby-core
-      await Promise.all(
-        createNodesForContentType({
-          contentTypeItem,
-          entries: entryList[i],
-          resolvable,
-          foreignReferenceMap,
-          defaultLocale,
-          locales,
-          space,
-          useNameForId,
-          pluginConfig,
-          ...actions,
-          ...args,
-        })
-      )
+      await createNodesForContentType({
+        contentTypeItem,
+        entries: entryList[i],
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId,
+        pluginConfig,
+        ...actions,
+        ...args,
+      })
+
+      // allow node to garbage collect these items if it needs to
+      // @ts-ignore avoid complex typing as this helps with GC
+      contentTypeItems[i] = undefined
+      // @ts-ignore avoid complex typing as this helps with GC
+      entryList[i] = undefined
+      await untilNextEventLoopTick()
     }
 
     if (assets.length) {
@@ -537,18 +593,24 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     for (let i = 0; i < assets.length; i++) {
       // We wait for each asset to be process until handling the next one.
       assetNodes.push(
-        ...(await Promise.all(
-          createAssetNodes({
-            assetItem: assets[i],
-            createNode,
-            createNodeId,
-            defaultLocale,
-            locales,
-            space,
-          })
-        ))
+        ...(await createAssetNodes({
+          assetItem: assets[i],
+          createNode,
+          createNodeId,
+          defaultLocale,
+          locales,
+          space,
+        }))
       )
+
+      // @ts-ignore avoid complex typing as this helps with GC
+      assets[i] = undefined
+      if (i % 1000 === 0) {
+        await untilNextEventLoopTick()
+      }
     }
+
+    await untilNextEventLoopTick()
 
     // Create tags entities
     if (tagItems.length) {
@@ -560,6 +622,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
           name: tag.name,
           // TODO: update the structure of tags
           contentful_id: tag.sys.id,
+          parent: null,
+          children: [],
           internal: {
             type: `ContentfulTag`,
             contentDigest: tag.sys.updatedAt,

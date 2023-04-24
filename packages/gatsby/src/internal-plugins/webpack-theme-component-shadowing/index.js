@@ -2,7 +2,7 @@ const path = require(`path`)
 const debug = require(`debug`)(`gatsby:component-shadowing`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
-const { getPathToLayoutComponent } = require(`gatsby-core-utils`)
+const { splitComponentPath } = require(`gatsby-core-utils`)
 
 // A file can be shadowed by a file of the same extension, or a file of a
 // "compatible" file extension; two files extensions are compatible if they both
@@ -22,6 +22,7 @@ const DEFAULT_FILE_EXTENSIONS_CATEGORIES = {
   tsx: `code`,
   cjs: `code`,
   mjs: `code`,
+  mts: `code`,
   coffee: `code`,
 
   // JSON-like data formats
@@ -176,7 +177,13 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // check the user's project and the theme files
-  resolveComponentPath({ theme, component, originalRequestComponent }) {
+  resolveComponentPath({
+    theme,
+    component: originalComponent,
+    originalRequestComponent,
+  }) {
+    const [component, content] = splitComponentPath(originalComponent)
+
     // don't include matching theme in possible shadowing paths
     const themes = this.themes.filter(
       ({ themeName }) => themeName !== theme.themeName
@@ -196,10 +203,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     )
 
     for (const theme of themesArray) {
-      const possibleComponentPath = path.join(
-        theme,
-        getPathToLayoutComponent(component)
-      )
+      const possibleComponentPath = path.join(theme, component)
       debug(`possibleComponentPath`, possibleComponentPath)
 
       let dir
@@ -217,10 +221,16 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         existsDir.includes(shadowFile)
       )
       if (matchingShadowFile) {
-        return path.join(
+        const shadowPath = path.join(
           path.dirname(possibleComponentPath),
           matchingShadowFile
         )
+
+        if (content) {
+          return `${shadowPath}?__contentFilePath=${content}`
+        }
+
+        return shadowPath
       }
     }
     return null

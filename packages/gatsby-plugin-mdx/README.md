@@ -7,8 +7,6 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 <details>
 <summary><strong>Table of contents</strong></summary>
 
-Table of contents
-
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
@@ -37,10 +35,21 @@ npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
 
 ## Usage
 
-After installing `gatsby-plugin-mdx` you can add it to your plugins list in your `gatsby-config.js`. You'll also want to configure `gatsby-source-filesystem` to point at your `src/pages` directory.
+> This README assumes you're using `gatsby@5.3.0` or later. If you're using an older Gatsby version or don't want to use ESM for your Gatsby files, refer to [this older version of the README](https://www.npmjs.com/package/gatsby-plugin-mdx/v/5.8.0).
 
-```js:title=gatsby-config.js
-module.exports = {
+After installing `gatsby-plugin-mdx` you can add it to your plugins list in your `gatsby-config`.
+
+We highly **recommend** using [ES Modules (ESM)](https://www.gatsbyjs.com/docs/how-to/custom-configuration/es-modules/) syntax for your `gatsby-config` file as it'll enable you to use the latest packages from the `unified` ecosystem.
+
+You'll also want to configure `gatsby-source-filesystem` to point at your `src/pages` directory.
+
+```js:title=gatsby-config.mjs
+import { dirname } from "path"
+import { fileURLToPath } from "url"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const config = {
   plugins: [
     `gatsby-plugin-mdx`,
     {
@@ -52,6 +61,8 @@ module.exports = {
     },
   ],
 }
+
+export default config
 ```
 
 By default, this configuration will allow you to automatically create pages with `.mdx` files in `src/pages`.
@@ -61,13 +72,18 @@ If you have MDX files in another location than `src/pages` you'll need to add an
 **Please Note:**
 
 - `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present and configured to process local MDX files in order to generate the resulting Gatsby nodes (`gatsby-source-filesystem` needs to discover all MDX files in order to create MDX nodes and allow the processing for each of them).
-- MDX syntax differs from Markdown as it only supports [CommonMark](https://commonmark.org/) by default. Nonstandard markdown features like [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) can be enabled with plugins (see [`mdxOptions` instructions](#mdxoptions)).
+- MDX syntax differs from Markdown as it only supports [CommonMark](https://commonmark.org/) by default. Nonstandard markdown features like [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) can be enabled with plugins (see [`mdxOptions` instructions](#mdxoptions)). GFM includes features like tables or footnotes.
 - Certain features like HTML syntax doesn't work in MDX. Read the ["What is MDX?" guide](https://mdxjs.com/docs/what-is-mdx/#markdown) to learn more.
 
 To automatically create pages from MDX files outside of `src/pages` you'll need to configure `gatsby-plugin-page-creator` and `gatsby-source-filesystem` to point to this folder of files.
 
-```js:title=gatsby-config.js
-module.exports = {
+```js:title=gatsby-config.mjs
+import { dirname } from "path"
+import { fileURLToPath } from "url"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const config = {
   plugins: [
     `gatsby-plugin-mdx`,
     {
@@ -85,6 +101,8 @@ module.exports = {
     },
   ],
 }
+
+export default config
 ```
 
 Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to/routing/mdx/) for more details.
@@ -106,8 +124,8 @@ using `gatsby-source-filesystem`. To use `.md` or other file extensions, you can
 define an array of file extensions in the `gatsby-plugin-mdx` section of your
 `gatsby-config.js`.
 
-```js:title=gatsby-config.js
-module.exports = {
+```js:title=gatsby-config.mjs
+const config = {
   plugins: [
     {
       resolve: `gatsby-plugin-mdx`,
@@ -117,6 +135,8 @@ module.exports = {
     },
   ],
 }
+
+export default config
 ```
 
 ### `gatsby-remark-*` plugins
@@ -125,8 +145,8 @@ This config option is used for compatibility with a set of plugins many people [
 
 When using these `gatsby-remark-*` plugins, be sure to also install their required peer dependencies. You can find that information in their respective README.
 
-```js:title=gatsby-config.js
-module.exports = {
+```js:title=gatsby-config.mjs
+const config = {
   plugins: [
     {
       resolve: `gatsby-plugin-mdx`,
@@ -143,6 +163,8 @@ module.exports = {
     },
   ],
 }
+
+export default config
 ```
 
 Using a string reference is also supported for `gatsbyRemarkPlugins`.
@@ -157,8 +179,13 @@ These configuration options are directly passed into the MDX compiler.
 
 See all available options in [the official documentation of `@mdx-js/mdx`](https://mdxjs.com/packages/mdx/#compilefile-options).
 
-```js:title=gatsby-config.js
-module.exports = {
+```js:title=gatsby-config.mjs
+import remarkGfm from "remark-gfm"
+import remarkExternalLinks from "remark-external-links"
+import rehypeSlug from "rehype-slug"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+
+const config = {
   plugins: [
     {
       resolve: `gatsby-plugin-mdx`,
@@ -166,61 +193,28 @@ module.exports = {
         mdxOptions: {
           remarkPlugins: [
             // Add GitHub Flavored Markdown (GFM) support
-            require(`remark-gfm`),
+            remarkGfm,
             // To pass options, use a 2-element array with the
             // configuration in an object in the second element
-            [require(`remark-external-links`), { target: false }],
+            [remarkExternalLinks, { target: false }],
           ],
           rehypePlugins: [
             // Generate heading ids for rehype-autolink-headings
-            require(`rehype-slug`),
+            rehypeSlug,
             // To pass options, use a 2-element array with the
             // configuration in an object in the second element
-            [require(`rehype-autolink-headings`), { behavior: `wrap` }],
+            [rehypeAutolinkHeadings, { behavior: `wrap` }],
           ],
         },
       },
     },
   ],
 }
+
+export default config
 ```
 
-> The following note will be removed once Gatsby fully supports ESM
-
-**Please Note:** Most of the remark ecosystem is ESM which means that packages like `remark-gfm` currently don't work out of the box with Gatsby. You have two options until Gatsby fully supports ESM:
-
-1. Use an older version of the `remark-*`/`rehype-*` package that is not ESM. Example: `remark-gfm` needs to be installed like this: `npm install remark-gfm@^1`.
-1. Wrap the plugin with an async function (which doesn't work with every plugin):
-
-   ```js
-   const wrapESMPlugin = name =>
-     function wrapESM(opts) {
-       return async (...args) => {
-         const mod = await import(name)
-         const plugin = mod.default(opts)
-         return plugin(...args)
-       }
-     }
-   ```
-
-   You then can use it like this:
-
-   ```js:title=gatsby-config.js
-   module.exports = {
-     plugins: [
-       {
-         resolve: `gatsby-plugin-mdx`,
-         options: {
-           mdxOptions: {
-             rehypePlugins: [
-               wrapESMPlugin(`rehype-slug`),
-             ],
-           },
-         },
-       },
-     ],
-   }
-   ```
+**Please Note:** Most of the remark/rehype/unified ecosystem is published as ESM which means that you have to use [ES Modules (ESM) and Gatsby](https://www.gatsbyjs.com/docs/how-to/custom-configuration/es-modules/).
 
 ## Imports
 
@@ -276,10 +270,10 @@ Use the [`createNodeField`](https://www.gatsbyjs.com/docs/reference/config-files
    ```
 1. In your `gatsby-node` add a new field:
 
-   ```js:title=gatsby-node.js
-   const readingTime = require(`reading-time`)
+   ```js:title=gatsby-node.mjs
+   import readingTime from "reading-time"
 
-   exports.onCreateNode = ({ node, actions }) => {
+   export const onCreateNode = ({ node, actions }) => {
      const { createNodeField } = actions
      if (node.internal.type === `Mdx`) {
        createNodeField({
@@ -315,16 +309,16 @@ See [timeToRead](#timeToRead). It returns `timeToRead.words`.
 
 This largely comes down to your own preference and how you want to wire things up. This here is one of many possible solutions to this:
 
-1. Install `@sindresorhus/slugify` into your project (v1 as v2 is ESM-only):
+1. Install `@sindresorhus/slugify` into your project:
    ```shell
-   npm install @sindresorhus/slugify@^1
+   npm install @sindresorhus/slugify
    ```
 1. In your `gatsby-node` add a new field:
 
-   ```js:title=gatsby-node.js
-   const slugify = require(`@sindresorhus/slugify`)
+   ```js:title=gatsby-node.mjs
+   import slugify from "@sindresorhus/slugify"
 
-   exports.onCreateNode = ({ node, actions }) => {
+   export const onCreateNode = ({ node, actions }) => {
      const { createNodeField } = actions
      if (node.internal.type === `Mdx`) {
        createNodeField({
@@ -353,42 +347,44 @@ If you don't want to use the `frontmatter.title`, adjust what you input to `slug
 
 1. Install necessary dependencies into your project:
    ```shell
-   npm install mdast-util-to-string@^2 unist-util-visit@^2
+   npm install mdast-util-to-string unist-util-visit
    ```
-1. Create a new file called `remark-headings-plugin.js` at the site root:
+1. Create a new file called `remark-headings-plugin.mjs` at the site root:
 
-   ```js
-   const visit = require(`unist-util-visit`)
-   const toString = require(`mdast-util-to-string`)
+   ```js:title=remark-headings-plugin.mjs
+   import { visit } from "unist-util-visit"
+   import { toString } from "mdast-util-to-string"
 
-   exports.remarkHeadingsPlugin = function remarkHeadingsPlugin() {
-     return async function transformer(tree, file) {
-       let headings = []
+   const transformer = (tree, file) => {
+     let headings = []
 
-       visit(tree, `heading`, heading => {
-         headings.push({
-           value: toString(heading),
-           depth: heading.depth,
-         })
+     visit(tree, `heading`, heading => {
+       headings.push({
+         value: toString(heading),
+         depth: heading.depth,
        })
+     })
 
-       const mdxFile = file
-       if (!mdxFile.data.meta) {
-         mdxFile.data.meta = {}
-       }
-
-       mdxFile.data.meta.headings = headings
+     const mdxFile = file
+     if (!mdxFile.data.meta) {
+       mdxFile.data.meta = {}
      }
+
+     mdxFile.data.meta.headings = headings
    }
+
+   const remarkHeadingsPlugin = () => transformer
+
+   export default remarkHeadingsPlugin
    ```
 
 1. Add a new `headings` field resolver to your `Mdx` nodes through `createSchemaCustomization` API:
 
-   ```js:title=gatsby-node.js
-   const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
-   const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
+   ```js:title=gatsby-node.mjs
+   import { compileMDXWithCustomOptions } from "gatsby-plugin-mdx"
+   import remarkHeadingsPlugin from "./remark-headings-plugin.mjs"
 
-   exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema, store }) => {
+   export const createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema, store }) => {
      const { createTypes } = actions
 
      const headingsResolver = schema.buildObjectType({
@@ -571,8 +567,9 @@ If you used any related plugins like `gatsby-remark-images`, also update them to
 ### New options in `gatsby-config`
 
 - Move your `remarkPlugins` and `rehypePlugins` keys into the new `mdxOptions` config option:
+
   ```diff
-  module.exports = {
+  const config = {
     plugins: [
       {
         resolve: `gatsby-plugin-mdx`,
@@ -587,14 +584,17 @@ If you used any related plugins like `gatsby-remark-images`, also update them to
       },
     ],
   }
+
+  export default config
   ```
+
 - There's a new option called `mdxOptions` which is passed directly to the MDX compiler. See all available options in [the official documentation of `@mdx-js/mdx`](https://mdxjs.com/packages/mdx/#compilefile-options).
 - Only `extensions`, `gatsbyRemarkPlugins`, and `mdxOptions` exist as options now. Every other option got removed, including `defaultLayouts`. See the [layouts guide](#layouts) to learn how to use layouts with `gatsby-plugin-mdx@^4.0.0`.
 - Make sure that any `gatsby-remark-*` plugins are only listed inside the `gatsbyRemarkPlugins` array of `gatsby-plugin-mdx`, not inside the `plugins` array of `gatsby-config` or in any other place.
 
 ### GFM & ESM-only packages
 
-- [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) support was removed from MDX v2. You can re-enable it with [`mdxOptions`](#mdxoptions) (you have to install `remark-gfm@^1`)
+- [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) support was removed from MDX v2. You can re-enable it with [`mdxOptions`](#mdxoptions) (you have to install `remark-gfm`)
 - Most of the remark ecosystem is ESM so just using the latest package version of `remark-*`/`rehype-*` most probably won't work. Check out the workarounds mentioned in [`mdxOptions`](#mdxoptions)
 
 ### Updating `createPage` action in `gatsby-node`
@@ -749,10 +749,10 @@ Here's an example of an updated query (if you re-implemented most features):
 
 Here's an example on how you'd alias your `fields` to keep the shape of the MDX node the same:
 
-```js:title=gatsby-node.js
-const readingTime = require(`reading-time`)
+```js:title=gatsby-node.mjs
+import readingTime from "reading-time"
 
-exports.onCreateNode = ({ node, actions }) => {
+export const onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `Mdx`) {
     createNodeField({
@@ -763,7 +763,7 @@ exports.onCreateNode = ({ node, actions }) => {
   }
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
+export const createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   createTypes(`#graphql

@@ -615,13 +615,38 @@ module.exports = async (
     config.optimization = {
       // TODO fix our partial hydration manifest
       mangleExports: !isPartialHydrationEnabled,
-      splitChunks: {
+      minimize: false,
+    }
+
+    if (stage === `build-html`) {
+      config.optimization.splitChunks = {
+        chunks: `async`,
+        minSize: 20000,
+        minRemainingSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        enforceSizeThreshold: 50000,
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      }
+    } else {
+      config.optimization.splitChunks = {
         cacheGroups: {
           default: false,
           defaultVendors: false,
         },
-      },
-      minimize: false,
+      }
     }
   }
 

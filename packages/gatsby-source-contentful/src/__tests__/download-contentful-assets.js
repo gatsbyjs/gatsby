@@ -83,16 +83,14 @@ describe(`downloadContentfulAssets`, () => {
     const assetNodes = []
     for (const assetItem of fixtures) {
       assetNodes.push(
-        ...(await Promise.all(
-          createAssetNodes({
-            assetItem,
-            createNode,
-            createNodeId,
-            defaultLocale,
-            locales,
-            space,
-          })
-        ))
+        ...(await createAssetNodes({
+          assetItem,
+          createNode,
+          createNodeId,
+          defaultLocale,
+          locales,
+          space,
+        }))
       )
     }
 

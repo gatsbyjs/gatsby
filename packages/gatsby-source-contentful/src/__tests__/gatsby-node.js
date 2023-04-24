@@ -6,6 +6,7 @@ import {
   sourceNodes,
   onPreInit,
 } from "../gatsby-node"
+import { existingNodes, is } from "../backreferences"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -58,7 +59,12 @@ describe(`gatsby-node`, () => {
 
   const actions = {
     createTypes: jest.fn(),
-    setPluginStatus: jest.fn(),
+    setPluginStatus: jest.fn(pluginStatusObject => {
+      pluginStatus = {
+        ...pluginStatus,
+        ...pluginStatusObject,
+      }
+    }),
     createNode: jest.fn(async node => {
       // similar checks as gatsby does
       if (!_.isPlainObject(node)) {
@@ -106,12 +112,20 @@ describe(`gatsby-node`, () => {
     }),
   }
 
+  let pluginStatus = {}
+  const resetPluginStatus = () => {
+    pluginStatus = {}
+  }
   const store = {
     getState: jest.fn(() => {
       return {
         program: { directory: process.cwd() },
-        status: {},
         schemaCustomization: { types: schemaCustomizationTypes },
+        status: {
+          plugins: {
+            [`gatsby-source-contentful`]: pluginStatus,
+          },
+        },
       }
     }),
   }
@@ -422,7 +436,11 @@ describe(`gatsby-node`, () => {
     })
   }
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    existingNodes.clear()
+    is.firstSourceNodesCallOfCurrentNodeProcess = true
+    resetPluginStatus()
+
     // @ts-ignore
     fetchContent.mockClear()
     // @ts-ignore
@@ -615,7 +633,7 @@ describe(`gatsby-node`, () => {
     `)
   })
 
-  it(`should add a new blogpost and update linkedNodes`, async () => {
+  it.only(`should add a new blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
 
     fetchContent

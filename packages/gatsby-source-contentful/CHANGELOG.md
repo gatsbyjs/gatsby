@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.9.1/packages/gatsby-source-contentful) (2023-04-19)
+
+#### Bug Fixes
+
+- don't call `createNode` on `null` [#37958](https://github.com/gatsbyjs/gatsby/issues/37958) [#37960](https://github.com/gatsbyjs/gatsby/issues/37960) ([52ad261](https://github.com/gatsbyjs/gatsby/commit/52ad261d705b4d864e8b64ba410f881f946fc0c6))
+
+## [8.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.9.0/packages/gatsby-source-contentful) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Features
+
+- add public action to disable stale node checks [#37782](https://github.com/gatsbyjs/gatsby/issues/37782) ([fd168e0](https://github.com/gatsbyjs/gatsby/commit/fd168e0e78c621fcdf95a7eb486a1339c18a9316))
+
+#### Bug Fixes
+
+- reduce memory usage [#37910](https://github.com/gatsbyjs/gatsby/issues/37910) [#37808](https://github.com/gatsbyjs/gatsby/issues/37808) [#37806](https://github.com/gatsbyjs/gatsby/issues/37806) [#37804](https://github.com/gatsbyjs/gatsby/issues/37804) ([311b202](https://github.com/gatsbyjs/gatsby/commit/311b202a26161c1060e6730b446da323f47a2771))
+- update minor and patch dependencies for gatsby-source-contentful [#37838](https://github.com/gatsbyjs/gatsby/issues/37838) ([c0599dd](https://github.com/gatsbyjs/gatsby/commit/c0599dd8acc655145318f2312ad24945f457f8d4))
+- update dependency fs-extra to ^11.1.1 [#37827](https://github.com/gatsbyjs/gatsby/issues/37827) ([3e9a590](https://github.com/gatsbyjs/gatsby/commit/3e9a590fdc0b4cdbc763b6a6e3ca3e983ac8231a))
+
 ## [8.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.8.0/packages/gatsby-source-contentful) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

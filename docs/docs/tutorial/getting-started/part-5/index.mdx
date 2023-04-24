@@ -1,0 +1,632 @@
+---
+title: "Part 5: Transform Data to Use MDX"
+---
+
+import { LinkButton } from "gatsby-interface"
+import Collapsible from "@components/collapsible"
+import { MdArrowForward } from "react-icons/md"
+
+## Introduction
+
+In [Part 4](/docs/tutorial/getting-started/part-4/), you used the `gatsby-source-filesystem` source plugin to build a Blog page that lists the names of your blog post files. But you weren't able to actually render the contents of your post files, because `gatsby-source-filesystem` doesn't provide a field for it. To do that, you'll need another type of plugin called a **transformer plugin**.
+
+Sometimes, the format of the data you get from source plugins isn't exactly what you want to use to build your website. For example, the filesystem source plugin lets you query data _about_ files, but it doesn't let you use the data _inside_ the files themselves. To make this possible, Gatsby supports transformer plugins, which take the raw content from source plugins and transform it into something more usable.
+
+In this part of the Tutorial, you'll learn about one particular transformer plugin, `gatsby-plugin-mdx`, which lets you use [MDX](https://mdxjs.com/), a file format that allows Markdown and JSX alongside your text content. (Fun fact: this Tutorial is actually written in MDX!) You'll use MDX to add some content to your blog post files, and then you'll use `gatsby-plugin-mdx` to render the contents of your posts on your Blog page.
+
+<Announcement>
+
+**Note:** Usually, transformer plugin names start with `gatsby-transformer-`. (`gatsby-plugin-mdx` is one exception to this convention.)
+
+To see a list of other transformer plugins, try searching for `gatsby-transformer-` in the [Gatsby Plugin Library](/plugins/).
+
+</Announcement>
+
+By the end of this part of the Tutorial, you will be able to:
+
+- Write an MDX file with Markdown formatting and frontmatter.
+- Use the `gatsby-plugin-mdx` plugin to render the contents of your MDX files on your Blog page.
+- Use the `sort` field to control the order of results in your GraphQL queries.
+
+<Announcement>
+
+**Prefer a video?**
+
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 5. **Please note:** At the time of recording an older version of `gatsby-plugin-mdx` was used and thus the video contents and text contents are different. Please always follow the written instructions. We'll do our best to record a new version in the future, thanks for understanding!
+
+**Note**: Parts of this recording may be slightly outdated, but the concepts are generally applicable. For the most up-to-date information, follow along with the written tutorial.
+
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/k9n9HnRG3Ys?start=554"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+</Announcement>
+
+## A closer look at Gatsby's GraphQL data layer
+
+To understand how `gatsby-plugin-mdx` and other transformer plugins work, you need to know a bit more about how Gatsby's GraphQL data layer works.
+
+Inside the data layer, information is stored in objects called **nodes**. A node is the smallest form unit of data in the data layer. Different source plugins create different types of nodes, each of which have their own properties. For example, `gatsby-source-filesystem` creates File nodes.
+
+A **transformer plugin** converts nodes from one type to another. For example, the `gatsby-plugin-mdx` plugin transforms File nodes that have the `.mdx` extension into MDX nodes, which have a different set of fields that you can query using GraphQL. Transformer plugins let you manipulate the raw data in the nodes created by source plugins, so that you can get it into the structure or format you need.
+
+![The gatsby-source-filesystem plugin pulls data from your local filesystem into Gatsby's GraphQL data layer as File nodes. Then the gatsby-plugin-mdx transformer plugin uses those File nodes to create new MDX nodes. Finally, you can use GraphQL queries to pull data from the MDX nodes into your components.](./data-layer-with-nodes.png)
+
+<Announcement>
+
+**Note:** Even though it's called a transformer plugin, it's not actually _changing_ the original nodes created by the source plugins. Each transformer plugin creates new nodes based on the data from the sourced nodes, but it doesn't actually change the source nodes themselves. So even though `gatsby-plugin-mdx` creates new MDX nodes in the data layer, you can still access the original File nodes created by `gatsby-source-filesystem`.
+
+</Announcement>
+
+In this part of the Tutorial, you'll learn how to use a transformer plugin to create MDX nodes from your File nodes.
+
+## Add some MDX content to your blog posts
+
+In Part 4, you created empty files for your blog posts. Now, it's time to fill them in!
+
+<Collapsible
+  summary={<h3>Using Markdown formatting in MDX</h3>}
+>
+
+MDX files let you format text using Markdown, a markup language that uses a special syntax to add special formatting to your text elements. For example, you can make text appear **strong** by wrapping it in `**double asterisks**`, or you can create a link by using a syntax like `[text to link](url)`.
+
+Once you get used to what all the different symbols mean, Markdown can be easier to read than HTML, which makes it a popular format for written content like blog posts.
+
+<Announcement>
+
+**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks.
+
+</Announcement>
+
+#### Frontmatter
+
+With `gatsby-plugin-mdx`, you can also add **frontmatter** to your MDX files. Frontmatter is additional metadata about your file. It won't be rendered on your page, but it's a way for you to add some extra details about your content. For example, you might store your post title or the date it was published.
+
+To add frontmatter to your post, put it between an opening and closing set of three hyphens (`---`) at the top of your MDX file. Within the opening and closing hyphens, you can create key-value pairs for any kind of data you want to store about your file.
+
+Here's an example:
+
+```mdx
+---
+name: "Fun Facts about Red Pandas"
+datePublished: "2021-07-12"
+author: "#1 Red Panda Fan"
+---
+```
+
+You'll learn more about how to access the frontmatter for your posts later on.
+
+</Collapsible>
+
+Add some Markdown content to each of the `.mdx` files you created in your `/blog` directory in Part 4.
+
+Include frontmatter with fields for the title of each post, the date it was published, and a [slug](https://developer.mozilla.org/en-US/docs/Glossary/Slug). The slug will be used to construct the final URL of each post. Give each post a different date, to make it easier to add sorting later on. After the frontmatter, write some post content using some Markdown syntax.
+
+Here are some example posts that you can use for inspiration:
+
+```mdx:title=blog/my-first-post.mdx
+---
+title: "My First Post"
+date: "2021-07-23"
+slug: "my-first-post"
+---
+
+This is my first blog post! Isn't it *great*?
+
+Some of my **favorite** things are:
+
+* Petting dogs
+* Singing
+* Eating potato-based foods
+```
+
+```mdx:title=blog/another-post.mdx
+---
+title: "Another Post"
+date: "2021-07-24"
+slug: "another-post"
+---
+
+Here's another post! It's even better than the first one!
+```
+
+```mdx:title=blog/yet-another-post.mdx
+---
+title: "Yet Another Post"
+date: "2021-07-25"
+slug: "yet-another-post"
+---
+
+Wow look at all this content. How do they do it?
+```
+
+## Render each post's contents on the Blog page
+
+Now that you have some MDX content inside your blog posts, it's time set up the `gatsby-plugin-mdx` transformer plugin.
+
+<Announcement>
+
+**Quick Refresher:** Remember the process for adding a plugin to your site (from [Part 3](/docs/tutorial/getting-started/part-3/))? See if you can remember the three steps from memory before checking your answer. (Science has shown that the act of trying to [actively recall information](https://www.cultofpedagogy.com/retrieval-practice/) helps you retain it better!)
+
+</Announcement>
+
+The `gatsby-plugin-mdx` plugin provides the `allMdx` and `mdx` fields for your GraphQL queries.
+
+To render your posts on the Blog page, you'll complete a few different steps:
+
+1. Install and configure the `gatsby-plugin-mdx` transformer plugin and its dependencies.
+2. Update the Blog page query to use the `allMdx` field from `gatsby-plugin-mdx` instead of `allFile`.
+3. Render your post's excerpt in your Blog page.
+
+### Task: Install and configure the MDX transformer plugin (and dependencies)
+
+The `gatsby-plugin-mdx` package requires a one additional dependencies to run: `@mdx-js/react` which maps the MDX implementation to React components.
+
+1. In your terminal, run the command below to install `gatsby-plugin-mdx` and its dependencies. (This adds all two packages to the `dependencies` object in your `package.json` file and to your `node_modules` directory.)
+
+   ```shell
+   npm install gatsby-plugin-mdx @mdx-js/react
+   ```
+
+2. Add `gatsby-plugin-mdx` to the `plugins` array in your `gatsby-config.js` file, so that Gatsby knows to use the plugin when building your site.
+   ```js:title=gatsby-config.js
+   module.exports = {
+     siteMetadata: {
+       title: "My Super Cool Blog",
+     },
+     plugins: [
+       "gatsby-plugin-image",
+       "gatsby-plugin-sharp",
+       {
+         resolve: `gatsby-source-filesystem`,
+         options: {
+           name: `blog`,
+           path: `${__dirname}/blog/`,
+         },
+       },
+       "gatsby-plugin-mdx", // highlight-line
+     ],
+   };
+   ```
+
+<Announcement>
+
+**Tip:** There are a variety of [remark](https://remark.js.org/) plugins that you can use to add extra features to your Markdown. You can configure them using the [`gatsbyRemarkPlugins`](/plugins/gatsby-plugin-mdx/#gatsby-remark--plugins) option when you configure `gatsby-plugin-mdx` in your `gatsby-config.js` file.
+
+Here are some popular remark plugins:
+
+- [`gatsby-remark-images`](/plugins/gatsby-remark-images/): Use this if you want to generate responsive images when using the Markdown image syntax (which looks like this: `![alt](image url)`).
+  - To use this plugin, you'll also need `gatsby-plugin-sharp`, which you installed already in Part 3.
+- [`gatsby-remark-prismjs`](/plugins/gatsby-remark-prismjs/): Add syntax highlighting to your code blocks.
+- [`gatsby-remark-autolink-headers`](/plugins/gatsby-remark-autolink-headers/): Automatically create links for all the headers in your Markdown content.
+
+Try searching for `gatsby-remark-` in the [Gatsby Plugin Library](/plugins/) for a full list.
+
+</Announcement>
+
+### Task: Update the Blog page query to use the `allMdx` field instead of `allFile`
+
+The `gatsby-plugin-mdx` plugin makes two new fields available for you to use in your GraphQL queries: `allMdx` and `mdx`. In this part of the Tutorial, you'll use `allMdx` to add the contents of each blog post to your Blog page. (You'll use the `mdx` field later on, in Part 6.)
+
+You can use the `allMdx` field to request data for multiple MDX nodes at once (similar to the way `allFile` worked with File nodes). Open GraphiQL and explore what fields are available on MDX nodes. Try running a few queries to see what kind of information you get back.
+
+<Announcement>
+
+**Quick Refresher:** Remember how to access GraphiQL? See if you can remember the steps before checking for the answer in Part 4. (Check the section called ["Use GraphiQL to explore the data layer and write GraphQL queries"](/docs/tutorial/getting-started/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries)).
+
+</Announcement>
+
+Use GraphiQL to create a new query that gets data about your blog posts using the `allMdx` field instead of the `allFile` field.
+
+1. Under `allMdx`, open the `nodes` dropdown. Inside the `frontmatter` dropdown, you should see fields for all the keys you created in the frontmatter of your MDX files. Select the `title` and `date` fields. You can use the `formatString` argument on the `date` field to change the way your dates are displayed (see Syntax Hint below).
+   ```graphql
+   query MyQuery {
+     allMdx {
+       nodes {
+         frontmatter {
+           date(formatString: "MMMM D, YYYY")
+           title
+         }
+       }
+     }
+   }
+   ```
+
+<Announcement>
+
+**Syntax Hint:** When it comes to using dates in your frontmatter, the `formatString` argument is a helpful tool for changing the way the date is displayed.
+
+Imagine you have a key in your frontmatter with a value that uses a date format like `"YYYY-MM-DD"`. (It doesn't matter what you name the key, as long as the value has the required format.) GraphiQL will automatically detect that your value is a date, and when you select the corresponding frontmatter field in the Explorer pane, GraphiQL will automatically show a few arguments that you can pass to that field. One of those arguments is called `formatString`, which you can pass a [Moment.js formatting token](https://momentjs.com/docs/#/displaying/format/) to change the way the date displays.
+
+For example, if your MDX frontmatter looks like this:
+
+```mdx
+---
+date: "2021-07-23"
+---
+```
+
+...and your GraphQL query looks like this:
+
+```graphql
+query MyQuery {
+  allMdx {
+    nodes {
+      frontmatter {
+        date(formatString: "MMMM D, YYYY")
+      }
+    }
+  }
+}
+```
+
+...then the dates in your response will look like this: `"July 23, 2021"`.
+
+</Announcement>
+
+2. While you're at it, add the `id` field, which is a unique string that Gatsby automatically adds to every node in the data layer. (You'll use this as a React `key` later on, when you iterate over your list of posts.)
+
+   ```graphql
+   query MyQuery {
+     allMdx {
+       nodes {
+         frontmatter {
+           date(formatString: "MMMM D, YYYY")
+           title
+         }
+         id
+       }
+     }
+   }
+   ```
+
+3. Execute your query by clicking the triangle button. Your response object should look something like this:
+
+   ```json
+   {
+     "data": {
+       "allMdx": {
+         "nodes": [
+           {
+             "frontmatter": {
+               "date": "July 25, 2021",
+               "title": "Yet Another Post"
+             },
+             "id": "c4b5ae6d-f3ad-5ea4-ab54-b08a72badea1"
+           },
+           {
+             "frontmatter": {
+               "date": "July 23, 2021",
+               "title": "My First Post"
+             },
+             "id": "11b3a825-30c5-551d-a713-dd748e7d554a"
+           },
+           {
+             "frontmatter": {
+               "date": "July 24, 2021",
+               "title": "Another Post"
+             },
+             "id": "560896e4-0148-59b8-9a2b-bf79bee68fba"
+           }
+         ]
+       }
+     },
+     "extensions": {}
+   }
+   ```
+
+4. You might notice that your posts aren't listed in order. Most blog sites list their posts in reverse-chronological order, so that the newest posts are listed first. You can sort the data nodes in your response by using the `sort` argument on the `allMdx` field.
+
+   - In the Explorer pane, toggle the `sort` dropdown underneath the `allMdx` field.
+   - Under `sort`, check the `frontmatter` argument, and use the dropdown to select `DESC`. This will sort the nodes in descending order, so that the newest posts come first.
+
+   ```graphql
+   query MyQuery {
+     allMdx(sort: { frontmatter: { date: DESC } }) {
+       nodes {
+         frontmatter {
+           date(formatString: "MMMM D, YYYY")
+           title
+         }
+         id
+       }
+     }
+   }
+   ```
+
+5. Run your query again to verify that the posts come back in the correct order. Your response should look something like this:
+
+   ```json
+   {
+     "data": {
+       "allMdx": {
+         "nodes": [
+           {
+             "frontmatter": {
+               "date": "July 25, 2021",
+               "title": "Yet Another Post"
+             },
+             "id": "c4b5ae6d-f3ad-5ea4-ab54-b08a72badea1"
+           },
+           {
+             "frontmatter": {
+               "date": "July 24, 2021",
+               "title": "Another Post"
+             },
+             "id": "560896e4-0148-59b8-9a2b-bf79bee68fba"
+           },
+           {
+             "frontmatter": {
+               "date": "July 23, 2021",
+               "title": "My First Post"
+             },
+             "id": "11b3a825-30c5-551d-a713-dd748e7d554a"
+           }
+         ]
+       }
+     },
+     "extensions": {}
+   }
+   ```
+
+6. The last thing you need to add to your query is a preview of each posts content! To do that, add the `excerpt` field to your query.
+
+   ```graphql
+   query MyQuery {
+     allMdx(sort: { frontmatter: { date: DESC } }) {
+       nodes {
+         frontmatter {
+           date(formatString: "MMMM D, YYYY")
+           title
+         }
+         id
+         excerpt
+       }
+     }
+   }
+   ```
+
+7. When you run your query, the `excerpt` field for each node should look something like the data shown below.
+   ```json
+   "excerpt": "Wow look at all this content. How do they do it?"
+   ```
+
+Now that you have your GraphQL query all set up, it's time to tackle the last piece of the puzzle: rendering your posts in the Blog page.
+
+<Announcement>
+
+**Pro Tip:** When transformer plugins create a new node, they add a `parent` field that references back to the original source node it was created from. For example, when `gatsby-plugin-mdx` creates new MDX nodes, it adds a `parent` field which you can use to access data from the original File node.
+
+Using the `parent` node can come in handy if you want to use data from the transformed nodes along with data from the original source nodes. For example, the query below gives you back the time a file was changed, which you could use to display when a post was last updated.
+
+```graphql
+query MyQuery {
+  allMdx {
+    nodes {
+      parent {
+        ... on File {
+          modifiedTime(formatString: "MMMM D, YYYY")
+        }
+      }
+    }
+  }
+}
+```
+
+</Announcement>
+
+### Task: Render your post's excerpt in your Blog page
+
+Now that your GraphQL query is all set up, it's time to replace the page query in your Blog page component.
+
+1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!) And if you haven't already from completing the [task in Part 4](/docs/tutorial/getting-started/part-4/#task-use-a-page-query-to-pull-the-list-of-post-filenames-into-your-blog-page), you'll need to import the `graphql` tag from the `gatsby` package.
+
+   ```js:title=src/pages/blog.js
+   import * as React from 'react'
+   import { graphql } from 'gatsby'
+   import Layout from '../components/layout'
+   import Seo from '../components/seo'
+
+   const BlogPage = ({ data }) => {
+     return (
+       // ...
+     )
+   }
+
+   // highlight-start
+   export const query = graphql`
+     query {
+       allMdx(sort: { frontmatter: { date: DESC }}) {
+         nodes {
+           frontmatter {
+             date(formatString: "MMMM D, YYYY")
+             title
+           }
+           id
+           excerpt
+         }
+       }
+     }
+   `
+   // highlight-end
+
+   export const Head = () => <Seo title="My Blog Posts" />
+
+   export default BlogPage
+   ```
+
+2. Next, update the JSX for your Blog page to use the data fields of your response. Start by rendering just the title and date for each post.
+
+   - Now that you're rendering more than just a filename, it makes more sense to use the [`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) semantic HTML element instead of a `<ul>` and nested `<li>` elements.
+   - You can also use the `id` field as your unique `key` prop for each post. (React uses the `key` prop to keep track of what elements need to be re-rendered. If you don't include it, you'll get a warning in your browser console. For more on the `key` prop, check out the [React Docs: List and Keys](https://reactjs.org/docs/lists-and-keys.html#keys).)
+
+   ```js:title=src/pages/blog.js
+   // imports
+
+   const BlogPage = ({ data }) => {
+     return (
+       <Layout pageTitle="My Blog Posts">
+         {/* highlight-start */}
+         {
+           data.allMdx.nodes.map((node) => (
+             <article key={node.id}>
+               <h2>{node.frontmatter.title}</h2>
+               <p>Posted: {node.frontmatter.date}</p>
+             </article>
+           ))
+         }
+         {/* highlight-end */}
+       </Layout>
+     )
+   }
+
+   export const query = graphql`
+     query {
+       allMdx(sort: { frontmatter: { date: DESC }}) {
+         nodes {
+           frontmatter {
+             title
+             date(formatString: "MMMM DD, YYYY")
+           }
+           id
+           excerpt
+         }
+       }
+     }
+   `
+
+   export const Head = () => <Seo title="My Blog Posts" />
+
+   export default BlogPage
+   ```
+
+3. Go to `localhost:8000/blog` in your web browser. You should be able to see the titles and dates for each of your posts:
+
+![A screenshot of the Blog page in a web browser. Underneath the page heading, there are three posts listed: "Yet Another Post" (posted July 25, 2021), "Another Post" (posted July 24, 2021), and "My First Post" (posted July 23, 2021).](./blog-page-with-frontmatter.png)
+
+4. The final step in this part of the Tutorial is to render the excerpt of your MDX blog posts. In the JSX for your Blog page render the value of the `excerpt` field:
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../components/layout'
+import Seo from '../components/seo'
+
+const BlogPage = ({ data }) => {
+  return (
+    <Layout pageTitle="My Blog Posts">
+      {
+        data.allMdx.nodes.map((node) => (
+          <article key={node.id}>
+            <h2>{node.frontmatter.title}</h2>
+            <p>Posted: {node.frontmatter.date}</p>
+            {/* highlight-start */}
+            <p>{node.excerpt}</p>
+            {/* highlight-end */}
+          </article>
+        ))
+      }
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query {
+    allMdx(sort: { frontmatter: { date: DESC }}) {
+      nodes {
+        frontmatter {
+          title
+          date(formatString: "MMMM DD, YYYY")
+        }
+        id
+        excerpt
+      }
+    }
+  }
+`
+
+export const Head = () => <Seo title="My Blog Posts" />
+
+export default BlogPage
+```
+
+5. When you refresh your Blog page in the web browser, you should see your post excerpt rendered!
+   ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the excerpt of the blog post are also being rendered.](./blog-page-with-excerpt-posts.png)
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** The excerpt which is returned by the query doesn't contain HTML tags so the unordered list for "My First Post" isn't rendered correctly. But don't worry, you are going to implement a better solution later.
+
+</Announcement>
+
+Nice work! Your site now has a blog page with actual content.
+
+<Announcement>
+
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
+
+## Summary
+
+Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
+
+- What is a transformer plugin? How do transformer plugins affect the data in the data layer?
+- What is MDX? Why is it useful?
+
+<Announcement>
+
+**Ship It!** 🚀
+
+Before you move on, deploy your changes to your live site on Gatsby Cloud so that you can share your progress!
+
+First, run the following commands in a terminal to push your changes to your GitHub repository. (Make sure you're in the top-level directory for your Gatsby site!)
+
+```shell
+git add .
+git commit -m "Finished Gatsby Tutorial Part 5"
+git push
+```
+
+Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/).)
+
+</Announcement>
+
+### Key takeaways
+
+- Data in Gatsby's GraphQL data layer is stored in **nodes**.
+- Each source plugin creates a different type of node with different fields.
+- Transformer plugins create new types of nodes, using data from existing source nodes as a starting point. Transformer plugins don't actually change the original source nodes.
+- `gatsby-plugin-mdx` is a transformer plugin that lets you use MDX in your site. With MDX, you can create text content with Markdown formatting and embedded React components.
+
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the Tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
+
+### What's coming next?
+
+Right now, all your blog posts and their excerpts are being rendered in one long page. It would be better if each post lived on its own page, and then the Blog page could link out to all the different posts.
+
+In Part 6, you'll learn how to use Gatsby's filesystem route API to dynamically create new pages for each of your blog posts.
+
+<LinkButton
+  to="/docs/tutorial/getting-started/part-6/"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to Part 6
+</LinkButton>

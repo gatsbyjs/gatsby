@@ -9,8 +9,7 @@ showTopLevelSignatures: true
 
 The first argument passed to each of [Gatsby’s Node APIs](/docs/reference/config-files/gatsby-node/) is an object containing a set of helpers. Helpers shared by all Gatsby’s Node APIs are documented in [Shared helpers](#apis) section.
 
-```javascript
-// in gatsby-node.js
+```js:title=gatsby-node.js
 exports.createPages = gatsbyNodeHelpers => {
   const { actions, reporter } = gatsbyNodeHelpers
   // use helpers
@@ -19,12 +18,13 @@ exports.createPages = gatsbyNodeHelpers => {
 
 Common convention is to destructure helpers right in argument list:
 
-```javascript
-// in gatsby-node.js
+```js:title=gatsby-node.js
 exports.createPages = ({ actions, reporter }) => {
   // use helpers
 }
 ```
+
+The [Creating a Source Plugin tutorial](/docs/tutorial/creating-a-source-plugin/part-4/) explains some of the [Shared helpers](#apis) in more detail.
 
 ## Note
 

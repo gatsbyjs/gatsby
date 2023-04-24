@@ -78,7 +78,7 @@ const HomePage = () => {
 
 The first part of writing the GraphQL query is including the operation (in this case "`query`") along with a name.
 
-From [using GraphiQL](/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries), you've learned that one of the types that you can query is `site`, which in turn has its own `siteMetadata` field with subfields that correspond to the data provided in `gatsby-config.js`.
+From [using GraphiQL](/docs/tutorial/getting-started/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries), you've learned that one of the types that you can query is `site`, which in turn has its own `siteMetadata` field with subfields that correspond to the data provided in `gatsby-config.js`.
 
 Putting this together, the completed query looks like:
 
