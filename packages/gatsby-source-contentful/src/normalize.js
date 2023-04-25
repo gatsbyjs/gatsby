@@ -472,7 +472,7 @@ export const createNodesForContentType = async ({
     const conflictFields = []
     contentTypeItem.fields.forEach(contentTypeItemField => {
       const fieldName = contentTypeItemField.id
-      if (restrictedNodeFields.includes(fieldName)) {
+      if (fieldName !== `id` && restrictedNodeFields.includes(fieldName)) {
         reporter.verbose(
           `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
         )
