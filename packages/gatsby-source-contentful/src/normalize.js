@@ -420,6 +420,7 @@ export const createNodesForContentType = async ({
   space,
   useNameForId,
   pluginConfig,
+  reporter,
 }) => {
   const { create, createNodesPromise } = makeQueuedCreateNode({
     nodeCount: entries.length,
@@ -472,7 +473,7 @@ export const createNodesForContentType = async ({
     contentTypeItem.fields.forEach(contentTypeItemField => {
       const fieldName = contentTypeItemField.id
       if (restrictedNodeFields.includes(fieldName)) {
-        console.log(
+        reporter.verbose(
           `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
         )
         conflictFields.push(fieldName)

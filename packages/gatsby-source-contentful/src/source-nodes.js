@@ -524,6 +524,7 @@ export async function sourceNodes(
       useNameForId: pluginConfig.get(`useNameForId`),
       pluginConfig,
       unstable_createNodeManifest,
+      reporter,
     })
 
     // allow node to garbage collect these items if it needs to

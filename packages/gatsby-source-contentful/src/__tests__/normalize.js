@@ -34,6 +34,10 @@ const pluginConfig = createPluginConfig({})
 
 const unstable_createNodeManifest = jest.fn()
 
+const reporter = {
+  verbose: console.log,
+}
+
 // Counts the created nodes per node type
 function countCreatedNodeTypesFromMock(mock) {
   const nodeTypeCounts = {}
@@ -224,6 +228,7 @@ describe(`Process contentful data (by name)`, () => {
         useNameForId: true,
         pluginConfig,
         unstable_createNodeManifest,
+        reporter,
       })
     })
 
@@ -451,6 +456,7 @@ describe(`Process contentful data (by id)`, () => {
         useNameForId: false,
         pluginConfig,
         unstable_createNodeManifest,
+        reporter,
       })
     })
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
