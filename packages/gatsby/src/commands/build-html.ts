@@ -836,17 +836,17 @@ export async function stitchSlicesIntoPagesHTML({
   publicDir: string
   parentSpan?: Span
 }): Promise<void> {
-  const stichSlicesActivity = reporter.activityTimer(`stiching slices`, {
+  const stitchSlicesActivity = reporter.activityTimer(`stitching slices`, {
     parentSpan,
   })
-  stichSlicesActivity.start()
+  stitchSlicesActivity.start()
   try {
     const {
       html: { pagesThatNeedToStitchSlices },
       pages,
     } = store.getState()
 
-    const stichQueue = fastq<void, string, void>(async (pagePath, cb) => {
+    const stitchQueue = fastq<void, string, void>(async (pagePath, cb) => {
       await stitchSliceForAPage({ pagePath, publicDir })
       cb(null)
     }, 25)
@@ -858,18 +858,18 @@ export async function stitchSlicesIntoPagesHTML({
       }
 
       if (getPageMode(page) === `SSG`) {
-        stichQueue.push(pagePath)
+        stitchQueue.push(pagePath)
       }
     }
 
-    if (!stichQueue.idle()) {
+    if (!stitchQueue.idle()) {
       await new Promise(resolve => {
-        stichQueue.drain = resolve as () => unknown
+        stitchQueue.drain = resolve as () => unknown
       })
     }
 
     store.dispatch({ type: `SLICES_STITCHED` })
   } finally {
-    stichSlicesActivity.end()
+    stitchSlicesActivity.end()
   }
 }
