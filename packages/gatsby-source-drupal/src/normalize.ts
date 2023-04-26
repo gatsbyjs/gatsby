@@ -282,7 +282,7 @@ export const isFileNode = (node, typePrefix = ``) => {
       typePrefix,
       new Set<string>([
         generateTypeName(`files`, typePrefix),
-        generateTypeName(`file_file`, typePrefix),
+        generateTypeName(`file--file`, typePrefix),
       ])
     )
   }
