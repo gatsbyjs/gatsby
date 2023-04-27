@@ -152,8 +152,6 @@ export async function sourceNodes(
     space,
   } = await fetchContent({ syncToken, pluginConfig, reporter })
 
-  console.log({ currentSyncData })
-
   const contentTypeItems = await cache.get(CACHE_CONTENT_TYPES)
 
   const locales = allLocales.filter(pluginConfig.get(`localeFilter`))
