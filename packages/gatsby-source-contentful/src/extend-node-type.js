@@ -9,7 +9,7 @@ import { makeTypeName } from "./normalize"
 
 export async function setFieldsOnGraphQLNodeType(
   { type, cache },
-  { typePrefix }
+  { typePrefix = `Contentful` } = {}
 ) {
   if (type.name !== makeTypeName(`Asset`, typePrefix)) {
     return {}
