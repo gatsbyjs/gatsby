@@ -289,16 +289,20 @@ export class PartialHydrationPlugin {
       throw new Error(`couldn't find async-requires module`)
     }
 
-    const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/client-components-requires-writer-loader?modules=${clientModules
-      .map(
-        module =>
-          `./` +
-          path.relative(
-            compilation.options.context as string,
-            module.userRequest
+    const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/client-components-requires-writer-loader?${JSON.stringify(
+      {
+        modules: clientModules
+          .map(
+            module =>
+              `./` +
+              path.relative(
+                compilation.options.context as string,
+                module.userRequest
+              )
           )
-      )
-      .join(`,`)}!`
+          .join(`,`),
+      }
+    )}!`
 
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(
       clientSSRLoader,
