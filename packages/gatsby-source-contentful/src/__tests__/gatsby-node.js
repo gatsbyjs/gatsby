@@ -493,9 +493,9 @@ describe(`gatsby-node`, () => {
         console.log(err)
         expect(err.id).toBe(`111005`)
         expect(err.context).toMatchInlineSnapshot(`
-          {
+          Object {
             "sourceMessage": "gatsby-plugin-image is missing from your project.
-          Please install "gatsby-plugin-image".",
+          Please install \\"gatsby-plugin-image\\".",
           }
         `)
       }
@@ -523,9 +523,9 @@ describe(`gatsby-node`, () => {
         console.log(err)
         expect(err.id).toBe(`111005`)
         expect(err.context).toMatchInlineSnapshot(`
-          {
+          Object {
             "sourceMessage": "gatsby-plugin-image is missing from your gatsby-config file.
-          Please add "gatsby-plugin-image" to your plugins array.",
+          Please add \\"gatsby-plugin-image\\" to your plugins array.",
           }
         `)
       }
@@ -553,11 +553,11 @@ describe(`gatsby-node`, () => {
     expect(store.getState).toHaveBeenCalled()
 
     expect(cache.get.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "contentful-content-types-testSpaceId-master",
         ],
-        [
+        Array [
           "contentful-foreign-reference-map-state-testSpaceId-master",
         ],
       ]
@@ -570,7 +570,7 @@ describe(`gatsby-node`, () => {
     })
 
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`
-      [
+      Array [
         "contentful-content-types-testSpaceId-master",
         "contentful-foreign-reference-map-state-testSpaceId-master",
       ]
@@ -579,38 +579,38 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 4 new entries",
         ],
-        [
+        Array [
           "Contentful: 0 updated entries",
         ],
-        [
+        Array [
           "Contentful: 0 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 0 cached entries",
         ],
-        [
+        Array [
           "Contentful: 4 new assets",
         ],
-        [
+        Array [
           "Contentful: 0 updated assets",
         ],
-        [
+        Array [
           "Contentful: 0 cached assets",
         ],
-        [
+        Array [
           "Contentful: 0 deleted assets",
         ],
-        [
+        Array [
           "Creating 1 Contentful Person nodes",
         ],
-        [
+        Array [
           "Creating 3 Contentful Blog Post nodes",
         ],
-        [
+        Array [
           "Creating 4 Contentful asset nodes",
         ],
       ]
@@ -714,35 +714,35 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 1 new entries",
         ],
-        [
+        Array [
           "Contentful: 0 updated entries",
         ],
-        [
+        Array [
           "Contentful: 0 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 4 cached entries",
         ],
-        [
+        Array [
           "Contentful: 1 new assets",
         ],
-        [
+        Array [
           "Contentful: 0 updated assets",
         ],
-        [
+        Array [
           "Contentful: 4 cached assets",
         ],
-        [
+        Array [
           "Contentful: 0 deleted assets",
         ],
-        [
+        Array [
           "Creating 1 Contentful Blog Post nodes",
         ],
-        [
+        Array [
           "Creating 1 Contentful asset nodes",
         ],
       ]
@@ -804,32 +804,32 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 0 new entries",
         ],
-        [
+        Array [
           "Contentful: 1 updated entries",
         ],
-        [
+        Array [
           "Contentful: 0 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 5 cached entries",
         ],
-        [
+        Array [
           "Contentful: 0 new assets",
         ],
-        [
+        Array [
           "Contentful: 0 updated assets",
         ],
-        [
+        Array [
           "Contentful: 5 cached assets",
         ],
-        [
+        Array [
           "Contentful: 0 deleted assets",
         ],
-        [
+        Array [
           "Creating 1 Contentful Blog Post nodes",
         ],
       ]
@@ -957,29 +957,29 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(2)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 0 new entries",
         ],
-        [
+        Array [
           "Contentful: 0 updated entries",
         ],
-        [
+        Array [
           "Contentful: 1 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 5 cached entries",
         ],
-        [
+        Array [
           "Contentful: 0 new assets",
         ],
-        [
+        Array [
           "Contentful: 0 updated assets",
         ],
-        [
+        Array [
           "Contentful: 5 cached assets",
         ],
-        [
+        Array [
           "Contentful: 0 deleted assets",
         ],
       ]
@@ -1043,29 +1043,29 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(2)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 0 new entries",
         ],
-        [
+        Array [
           "Contentful: 0 updated entries",
         ],
-        [
+        Array [
           "Contentful: 0 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 5 cached entries",
         ],
-        [
+        Array [
           "Contentful: 0 new assets",
         ],
-        [
+        Array [
           "Contentful: 0 updated assets",
         ],
-        [
+        Array [
           "Contentful: 5 cached assets",
         ],
-        [
+        Array [
           "Contentful: 1 deleted assets",
         ],
       ]
@@ -1126,35 +1126,35 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 0 new entries",
         ],
-        [
+        Array [
           "Contentful: 3 updated entries",
         ],
-        [
+        Array [
           "Contentful: 0 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 0 cached entries",
         ],
-        [
+        Array [
           "Contentful: 3 new assets",
         ],
-        [
+        Array [
           "Contentful: 0 updated assets",
         ],
-        [
+        Array [
           "Contentful: 0 cached assets",
         ],
-        [
+        Array [
           "Contentful: 0 deleted assets",
         ],
-        [
+        Array [
           "Creating 3 Contentful Type With Text Field nodes",
         ],
-        [
+        Array [
           "Creating 3 Contentful asset nodes",
         ],
       ]
@@ -1192,35 +1192,35 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 0 new entries",
         ],
-        [
+        Array [
           "Contentful: 5 updated entries",
         ],
-        [
+        Array [
           "Contentful: 0 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 0 cached entries",
         ],
-        [
+        Array [
           "Contentful: 3 new assets",
         ],
-        [
+        Array [
           "Contentful: 2 updated assets",
         ],
-        [
+        Array [
           "Contentful: 0 cached assets",
         ],
-        [
+        Array [
           "Contentful: 0 deleted assets",
         ],
-        [
+        Array [
           "Creating 5 Contentful Type With Text Field nodes",
         ],
-        [
+        Array [
           "Creating 5 Contentful asset nodes",
         ],
       ]
@@ -1261,35 +1261,35 @@ describe(`gatsby-node`, () => {
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
+      Array [
+        Array [
           "Contentful: 4 new entries",
         ],
-        [
+        Array [
           "Contentful: 0 updated entries",
         ],
-        [
+        Array [
           "Contentful: 0 deleted entries",
         ],
-        [
+        Array [
           "Contentful: 0 cached entries",
         ],
-        [
+        Array [
           "Contentful: 4 new assets",
         ],
-        [
+        Array [
           "Contentful: 0 updated assets",
         ],
-        [
+        Array [
           "Contentful: 0 cached assets",
         ],
-        [
+        Array [
           "Contentful: 0 deleted assets",
         ],
-        [
+        Array [
           "Creating 3 Contentful Blog Post nodes",
         ],
-        [
+        Array [
           "Creating 4 Contentful asset nodes",
         ],
       ]
