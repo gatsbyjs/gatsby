@@ -23,15 +23,14 @@ import {
   imageCDNState,
 } from "./normalize"
 
-const {
+import {
   handleReferences,
   handleWebhookUpdate,
   createNodeIfItDoesNotExist,
   handleDeletedNode,
   drupalCreateNodeManifest,
   getExtendedFileNodeData,
-} = require(`./utils`)
-
+} from "./utils"
 const imageCdnDocs = `https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
 
 const agent = {
@@ -243,6 +242,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
             createNodeId,
             createContentDigest,
             entityReferenceRevisions,
+            pluginOptions,
           })
           reporter.log(`Deleted node: ${deletedNode.id}`)
         }
@@ -264,6 +264,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
           createContentDigest,
           getNode,
           reporter,
+          pluginOptions,
         })
       }
 
@@ -278,8 +279,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
             getCache,
             getNode,
             reporter,
-            store,
-            languageConfig,
           },
           pluginOptions
         )
@@ -402,6 +401,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 createContentDigest,
                 getNode,
                 reporter,
+                pluginOptions,
               })
             }
           }
@@ -416,6 +416,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 createNodeId,
                 createContentDigest,
                 entityReferenceRevisions,
+                pluginOptions,
               })
             } else {
               // The data could be a single Drupal entity or an array of Drupal
@@ -436,8 +437,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
                     getCache,
                     getNode,
                     reporter,
-                    store,
-                    languageConfig,
                   },
                   pluginOptions
                 )
@@ -773,6 +772,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       createNodeId,
       cache,
       entityReferenceRevisions,
+      pluginOptions,
     })
   }
 
@@ -782,7 +782,9 @@ ${JSON.stringify(webhookBody, null, 4)}`
     reporter.info(`Downloading remote files from Drupal`)
 
     // Download all files (await for each pool to complete to fix concurrency issues)
-    const fileNodes = [...nodes.values()].filter(isFileNode)
+    const fileNodes = [...nodes.values()].filter(node =>
+      isFileNode(node, pluginOptions.typePrefix)
+    )
 
     if (fileNodes.length) {
       const downloadingFilesActivity = reporter.activityTimer(
@@ -795,12 +797,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
           await downloadFile(
             {
               node,
-              store,
               cache,
               createNode,
               createNodeId,
               getCache,
-              reporter,
             },
             pluginOptions
           )
@@ -833,7 +833,6 @@ exports.onCreateDevServer = (
     createNodeId,
     getNode,
     actions,
-    store,
     cache,
     createContentDigest,
     getCache,
@@ -873,7 +872,6 @@ exports.onCreateDevServer = (
             getCache,
             getNode,
             reporter,
-            store,
           },
           pluginOptions
         )
@@ -913,6 +911,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
     imageCDN: Joi.boolean().default(true),
+    typePrefix: Joi.string()
+      .description(`Prefix for Drupal node types`)
+      .default(``),
     fastBuilds: Joi.boolean(),
     entityReferenceRevisions: Joi.array().items(Joi.string()),
     secret: Joi.string().description(

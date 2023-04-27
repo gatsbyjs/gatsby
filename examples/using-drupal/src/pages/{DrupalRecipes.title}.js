@@ -83,8 +83,8 @@ const RecipeTemplate = ({ data }) => (
 export default RecipeTemplate
 
 export const query = graphql`
-  query($id: String!) {
-    recipe: recipes(id: { eq: $id }) {
+  query ($id: String!) {
+    recipe: drupalRecipes(id: { eq: $id }) {
       title
       preparationTime
       difficulty

@@ -220,11 +220,11 @@ export default IndexPage
 
 export const pageQuery = graphql`
   {
-    topRecipe: allRecipes(sort: { createdAt: ASC }, limit: 1) {
+    topRecipe: allDrupalRecipes(sort: { createdAt: ASC }, limit: 1) {
       edges {
         node {
           title
-          gatsbyPath(filePath: "/{Recipes.title}")
+          gatsbyPath(filePath: "/{DrupalRecipes.title}")
           relationships {
             image {
               relationships {
@@ -243,7 +243,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    nextTwoPromotedRecipes: allRecipes(
+    nextTwoPromotedRecipes: allDrupalRecipes(
       sort: { createdAt: ASC }
       limit: 2
       skip: 1
@@ -251,7 +251,7 @@ export const pageQuery = graphql`
       edges {
         node {
           title
-          gatsbyPath(filePath: "/{Recipes.title}")
+          gatsbyPath(filePath: "/{DrupalRecipes.title}")
           relationships {
             category {
               name
@@ -273,7 +273,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    nextFourPromotedRecipes: allRecipes(
+    nextFourPromotedRecipes: allDrupalRecipes(
       sort: { createdAt: ASC }
       limit: 4
       skip: 3
@@ -282,7 +282,7 @@ export const pageQuery = graphql`
         node {
           id
           title
-          gatsbyPath(filePath: "/{Recipes.title}")
+          gatsbyPath(filePath: "/{DrupalRecipes.title}")
           relationships {
             category {
               name
