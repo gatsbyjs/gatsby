@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "types": ["cypress", "@testing-library/cypress", "cypress-axe", "gatsby-cypress"]
+  },
+  "include": ["."]
+}
