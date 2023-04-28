@@ -1,6 +1,6 @@
 describe("Accessibility tests", () => {
   beforeEach(() => {
-      cy.visit("/").get("main")
+      cy.visit("/").waitForRouteChange().get("main")
       cy.injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
@@ -9,6 +9,7 @@ describe("Accessibility tests", () => {
   it("Navigates to page 2 and checks for accessibility violations", () => {
     cy.findByText(/go to page 2/i)
       .click()
+      .waitForRouteChange()
       .checkA11y()
   })
   it("Focuses on the footer link and asserts its attributes", () => {
