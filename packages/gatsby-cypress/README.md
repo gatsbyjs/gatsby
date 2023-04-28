@@ -18,8 +18,20 @@ npm install gatsby-cypress --save-dev
 
 Next, add a new file located at `cypress/support/e2e.ts` and add the Gatsby-specific Cypress commands:
 
-```js:title=cypress/support/e2e.ts
+```ts:title=cypress/support/e2e.ts
 import "gatsby-cypress/commands"
+```
+
+If you're using TypeScript, add its types to Cypress' `tsconfig.json` file:
+
+```json:title=cypress/tsconfig.json
+{
+  "compilerOptions": {
+    // highlight-next-line
+    "types": ["cypress", "gatsby-cypress"]
+  },
+  "include": ["."]
+}
 ```
 
 Once imported, the following additional commands are available:
