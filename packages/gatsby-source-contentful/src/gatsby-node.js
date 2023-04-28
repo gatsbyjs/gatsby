@@ -111,7 +111,6 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         )
         .default(() => () => true),
       typePrefix: Joi.string()
-        .allow(``) // By default, string doesn't allow empty string, so we need to allow it explicitly
         .description(`Prefix for Contentful node types`)
         .default(`Contentful`),
       contentTypeFilter: Joi.func()
