@@ -10,4 +10,9 @@ const NotFoundPage = () => (
 
 export default NotFoundPage
 
-export const Head = () => <title>404: Not found</title>
+export const Head = () => (
+  <>
+    <html lang="en" />
+    <title>404: Not found</title>
+  </>
+)
