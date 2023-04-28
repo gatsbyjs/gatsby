@@ -3,6 +3,7 @@
   "version": "3.10.0-next.1",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",

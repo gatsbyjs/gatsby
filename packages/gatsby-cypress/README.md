@@ -28,8 +28,7 @@ Once imported, the following additional commands are available:
   order to ensure event handlers are properly setup. Example:
 
   ```js
-  // after navigating to another page via a link
-  cy.waitForRouteChange().get(`#element-with-event-handler`).click()
+  cy.visit(`/page-2`).waitForRouteChange()
   ```
 
 - `cy.waitForAPI('api-name')`: Waits for a specific Gatsby API to finish. Example:
