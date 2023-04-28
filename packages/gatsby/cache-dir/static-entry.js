@@ -421,7 +421,9 @@ export default async function staticPage({
     })
 
     // Add page metadata for the current page
-    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";${
+    const windowPageData = `/*<![CDATA[*/window.pagePath=${JSON.stringify(
+      pagePath
+    )};${
       process.env.GATSBY_SLICES
         ? ``
         : `window.___webpackCompilationHash="${webpackCompilationHash}";`
