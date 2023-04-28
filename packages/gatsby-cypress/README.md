@@ -4,7 +4,7 @@ This package provides additional [Cypress](https://cypress.io/) commands for [te
 
 **Please note:** This package is **not** required to use Gatsby and Cypress together. It only exists to add extra commands for convenience.
 
-If you want to find elements (e.g. by test ID or by text/label/etc.), consider using [`cypress-testing-library`](https://github.com/testing-library/cypress-testing-library).
+If you want to find elements (e.g. by test ID or by text/label/etc.), consider using [`@testing-library/cypress`](https://github.com/testing-library/cypress-testing-library).
 
 ## Installation
 
