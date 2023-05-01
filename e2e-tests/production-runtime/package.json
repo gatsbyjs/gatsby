@@ -19,7 +19,7 @@
     "glob": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.60.0",
+    "sass": "^1.62.1",
     "typeface-merriweather": "^1.1.13"
   },
   "keywords": [
