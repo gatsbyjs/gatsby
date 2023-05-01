@@ -29,7 +29,7 @@
     "is-ci": "^3.0.1",
     "prettier": "^2.8.7",
     "start-server-and-test": "^2.0.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "repository": {
     "type": "git",
