@@ -148,7 +148,7 @@ export async function sourceNodes(
     currentSyncData,
     tagItems,
     defaultLocale,
-    locales: allLocales,
+    locales: allLocales = [],
     space,
   } = await fetchContent({ syncToken, pluginConfig, reporter })
 
@@ -179,7 +179,7 @@ export async function sourceNodes(
   }
 
   // Update syncToken
-  const nextSyncToken = currentSyncData.nextSyncToken
+  const nextSyncToken = currentSyncData?.nextSyncToken
 
   actions.setPluginStatus({
     [CACHE_SYNC_TOKEN]: nextSyncToken,

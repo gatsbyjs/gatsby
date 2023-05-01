@@ -291,7 +291,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
           resolveLinks: false,
         }
         const query = syncToken
-          ? { nextSyncToken: syncToken, ...basicSyncConfig }
+          ? { nextSyncToken: syncToken }
           : { initial: true, ...basicSyncConfig }
         currentSyncData = await syncClient.sync(query)
         syncSuccess = true
@@ -333,11 +333,10 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   } finally {
     // Fix output when there was no new data in Contentful
     if (
-      currentSyncData?.entries.length +
-        currentSyncData?.assets.length +
-        currentSyncData?.deletedEntries.length +
-        currentSyncData?.deletedAssets.length ===
-      0
+      !currentSyncData?.entries.length &&
+      !currentSyncData?.assets.length &&
+      !currentSyncData?.deletedEntries.length &&
+      !currentSyncData?.deletedAssets.length
     ) {
       syncProgress.tick()
       syncProgress.total = 1
