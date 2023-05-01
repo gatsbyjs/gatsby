@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@cypress/snapshot": "^2.1.7",
-    "@simonsmith/cypress-image-snapshot": "^6.0.1",
+    "@simonsmith/cypress-image-snapshot": "^6.1.1",
     "@types/simonsmith__cypress-image-snapshot": "npm:@types/cypress-image-snapshot",
     "cross-env": "^7.0.3",
     "cypress": "^12.9.0",
