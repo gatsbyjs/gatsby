@@ -67,7 +67,7 @@ const globalPackageRules = [
   {
     groupName: `sharp`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    matchPackageNames: [`sharp`, `@types/sharp`],
+    matchPackageNames: [`sharp`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
   },
