@@ -25,7 +25,7 @@
     "gatsby-source-filesystem": "next"
   },
   "devDependencies": {
-    "prettier": "2.8.7"
+    "prettier": "2.8.8"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^0.0.0",
