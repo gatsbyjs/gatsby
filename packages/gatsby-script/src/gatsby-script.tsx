@@ -228,7 +228,7 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
 function resolveInlineScript(props: ScriptProps): string {
   const { dangerouslySetInnerHTML, children = `` } = props || {}
   const { __html: dangerousHTML = `` } = dangerouslySetInnerHTML || {}
-  return dangerousHTML || children
+  return (dangerousHTML as string) || children
 }
 
 function resolveAttributes(props: ScriptProps): Record<string, string> {
