@@ -20128,7 +20128,6 @@
       "groupName": "minor and patch dependencies for gatsby-sharp",
       "groupSlug": "gatsby-sharp-prod-minor",
       "matchPackageNames": [
-        "@types/sharp",
         "sharp"
       ],
       "matchUpdateTypes": [
@@ -20174,7 +20173,6 @@
       "groupName": "major dependencies for gatsby-sharp",
       "groupSlug": "gatsby-sharp-prod-major",
       "matchPackageNames": [
-        "@types/sharp",
         "sharp"
       ],
       "matchUpdateTypes": [
