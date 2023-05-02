@@ -40,7 +40,7 @@
     "prettier": "^2.8.8",
     "read-chunk": "^3.2.0",
     "replaceall": "^0.1.6",
-    "semver": "^7.3.8",
+    "semver": "^7.5.0",
     "sharp": "^0.31.3",
     "valid-url": "^1.0.9"
   },
