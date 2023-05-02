@@ -527,7 +527,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
             }
           }
 
-          createNode(newNode)
+          await createNode(newNode)
 
           if (existingNodesLoopCount++ % 2000 === 0) {
             // dont block the event loop
@@ -577,6 +577,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         pluginConfig,
         ...actions,
         ...args,
+        createNode,
       })
 
       // allow node to garbage collect these items if it needs to

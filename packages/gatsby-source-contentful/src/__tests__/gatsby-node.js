@@ -643,7 +643,7 @@ describe(`gatsby-node`, () => {
     `)
   })
 
-  it.only(`should add a new blogpost and update linkedNodes`, async () => {
+  it(`should add a new blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
 
     fetchContent
@@ -1020,7 +1020,7 @@ describe(`gatsby-node`, () => {
       locales
     )
 
-    expect(actions.createNode).toHaveBeenCalledTimes(48)
+    expect(actions.createNode).toHaveBeenCalledTimes(46)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`

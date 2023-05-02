@@ -442,7 +442,9 @@ function contentfulCreateNodeManifest({
   }
 }
 
-interface ICreateNodesForContentTypeArgs extends Actions, SourceNodesArgs {
+interface ICreateNodesForContentTypeArgs
+  extends Omit<Actions, "createNode">,
+    SourceNodesArgs {
   contentTypeItem: ContentType
   entries: Array<
     EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
@@ -454,6 +456,7 @@ interface ICreateNodesForContentTypeArgs extends Actions, SourceNodesArgs {
   space: Space
   useNameForId: boolean
   pluginConfig: IProcessedPluginOptions
+  createNode: (node: Node) => void | Promise<void>
 }
 
 function makeQueuedCreateNode({ nodeCount, createNode }): {
@@ -637,13 +640,19 @@ export const createNodesForContentType = ({
         Object.keys(entryItemFields).forEach(entryItemFieldKey => {
           if (entryItemFields[entryItemFieldKey]) {
             const entryItemFieldValue = entryItemFields[entryItemFieldKey]
-            if (Array.isArray(entryItemFieldValue)) {
-              console.log(
-                `found link field`,
-                entryItemFieldKey,
-                entryItemFieldValue
-              )
-              if (entryItemFieldValue[0]?.sys?.type === `Link`) {
+
+            // TODO:: how expensive is this?
+            const field = contentTypeItem.fields.find(
+              f =>
+                (restrictedNodeFields.includes(f.id)
+                  ? `${conflictFieldPrefix}${f.id}`
+                  : f.id) === entryItemFieldKey
+            )
+            if (
+              field?.type === `Link` ||
+              (field?.type === `Array` && field.items?.type === `Link`)
+            ) {
+              if (Array.isArray(entryItemFieldValue)) {
                 // Check if there are any values in entryItemFieldValue to prevent
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
@@ -656,24 +665,20 @@ export const createNodesForContentType = ({
                       v.sys.linkType || v.sys.type
                     )
                   })
+
                 if (resolvableEntryItemFieldValue.length !== 0) {
                   entryItemFields[entryItemFieldKey] =
                     resolvableEntryItemFieldValue
                 }
-              }
-            } else if (entryItemFieldValue?.sys?.type === `Link`) {
-              console.log(
-                `found array link field`,
-                entryItemFieldKey,
-                entryItemFieldValue
-              )
-              if (resolvable.has(createLinkRefId(entryItemFieldValue))) {
-                entryItemFields[entryItemFieldKey] = mId(
-                  space.sys.id,
-                  entryItemFieldValue.sys.id,
-                  entryItemFieldValue.sys.linkType ||
-                    entryItemFieldValue.sys.type
-                )
+              } else {
+                if (resolvable.has(createLinkRefId(entryItemFieldValue))) {
+                  entryItemFields[entryItemFieldKey] = mId(
+                    space.sys.id,
+                    entryItemFieldValue.sys.id,
+                    entryItemFieldValue.sys.linkType ||
+                      entryItemFieldValue.sys.type
+                  )
+                }
               }
             }
           }
