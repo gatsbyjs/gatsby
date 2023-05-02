@@ -73,7 +73,7 @@
     "prettier": "^2.8.8",
     "start-server-and-test": "^2.0.0",
     "typescript": "^5.0.4",
-    "yargs": "^17.7.1"
+    "yargs": "^17.7.2"
   },
   "repository": {
     "type": "git",
