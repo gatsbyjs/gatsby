@@ -1,7 +1,7 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
 import got, { Method } from "got"
-import webpack from "webpack"
+import webpack, { Compilation } from "webpack"
 import express from "express"
 import compression from "compression"
 import { createHandler as createGraphqlEndpointHandler } from "graphql-http/lib/use/express"
@@ -50,6 +50,7 @@ import { getPageMode } from "./page-mode"
 import { configureTrailingSlash } from "./express-middlewares"
 import type { Express } from "express"
 import { addImageRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
+import { isFileInsideCompilations } from "./webpack/utils/is-file-inside-compilations"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -413,6 +414,19 @@ export async function startServer(
         store.getState().program.directory,
         req.query.moduleId as string
       )
+
+      const compilation: Compilation =
+        res.locals?.webpack?.devMiddleware?.stats?.compilation
+      if (!compilation) {
+        res.json(emptyResponse)
+        return
+      }
+
+      if (!isFileInsideCompilations(absolutePath, compilation)) {
+        res.json(emptyResponse)
+        return
+      }
+
       try {
         sourceContent = fs.readFileSync(absolutePath, `utf-8`)
       } catch (e) {
@@ -540,7 +554,24 @@ export async function startServer(
       return
     }
 
-    const sourceContent = await fs.readFile(filePath, `utf-8`)
+    const absolutePath = path.resolve(
+      store.getState().program.directory,
+      filePath
+    )
+
+    const compilation: Compilation =
+      res.locals?.webpack?.devMiddleware?.stats?.compilation
+    if (!compilation) {
+      res.json(emptyResponse)
+      return
+    }
+
+    if (!isFileInsideCompilations(absolutePath, compilation)) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const sourceContent = await fs.readFile(absolutePath, `utf-8`)
 
     const codeFrame = codeFrameColumns(
       sourceContent,
