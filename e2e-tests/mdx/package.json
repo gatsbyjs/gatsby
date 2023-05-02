@@ -5,7 +5,7 @@
   "dependencies": {
     "@mdx-js/react": "^2.3.0",
     "@sindresorhus/slugify": "^2.2.0",
-    "cypress": "^12.9.0",
+    "cypress": "^12.11.0",
     "fs-extra": "^11.1.1",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
@@ -46,8 +46,8 @@
     "cross-env": "^7.0.3",
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
-    "prettier": "^2.8.7",
+    "prettier": "^2.8.8",
     "start-server-and-test": "^2.0.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   }
 }

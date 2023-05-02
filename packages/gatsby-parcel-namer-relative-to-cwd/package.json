@@ -3,7 +3,7 @@
   "main": "lib/index.js",
   "version": "2.10.0-next.1",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parcel-namer-relative-to-cwd#readme",
-  "description": "Parcel namer that preserve directory structure to stabilize output and keep the hierarchy.",
+  "description": "Parcel namer that preserves directory structures to stabilize output and keep the hierarchy.",
   "author": "Michal Piechowiak <misiek.piechowiak@gmail.com>",
   "repository": {
     "type": "git",
