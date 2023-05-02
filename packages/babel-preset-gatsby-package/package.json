@@ -20,7 +20,7 @@
     "@babel/runtime": "^7.20.13",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-lodash": "^3.3.4",
-    "core-js": "^3.22.3"
+    "core-js": "^3.30.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

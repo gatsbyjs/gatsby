@@ -25,13 +25,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "core-js-compat": "3.9.0"
+    "core-js-compat": "3.30.1"
   },
   "files": [
     "dist/"
   ],
   "devDependencies": {
-    "@jridgewell/trace-mapping": "^0.3.17",
+    "@jridgewell/trace-mapping": "^0.3.18",
     "chokidar-cli": "^3.0.0",
     "codegen.macro": "^4.1.0",
     "core-js": "3.30.1",
