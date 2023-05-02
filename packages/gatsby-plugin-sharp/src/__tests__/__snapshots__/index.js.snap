@@ -23,7 +23,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXtgW5nZmbWfGyNbWi1dWvL1a0bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAV0lEQVR42q2QQQ6AMAgEdxf+/2ZTsFC1XoxzaDZTIARgQEx0RqXvD3gKxuvYQs4OZ2e91m9w1Sak9VguMUus7cj4D8Vou7hQN+0stFywWEc+u9NLHzY8AIWvAJmSdlsXAAAAAElFTkSuQmCC",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXtgW5nZmbXfGyObWi2dWtYfHWvAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAWElEQVR42q2PUQrAMAhDTfT+Zx7VugjrfsbyUcKrhmi2BGtxWxbXh0UB5Bt2FNAbAXm+zh8UvJsArlgMWyMuurz9J2a0c7JEUCcdOSp1760Z+dwuTn5oeAGG4wCb1B+nwgAAAABJRU5ErkJggg==",
   "height": 100,
   "originalName": "test.png",
   "src": "/static/1234/31820/test.png",
@@ -36,7 +36,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fluid 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXtgW5nZmbWfGyNbWi1dWvL1a0bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAV0lEQVR42q2QQQ6AMAgEdxf+/2ZTsFC1XoxzaDZTIARgQEx0RqXvD3gKxuvYQs4OZ2e91m9w1Sak9VguMUus7cj4D8Vou7hQN+0stFywWEc+u9NLHzY8AIWvAJmSdlsXAAAAAElFTkSuQmCC",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXtgW5nZmbXfGyObWi2dWtYfHWvAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAWElEQVR42q2PUQrAMAhDTfT+Zx7VugjrfsbyUcKrhmi2BGtxWxbXh0UB5Bt2FNAbAXm+zh8UvJsArlgMWyMuurz9J2a0c7JEUCcdOSp1760Z+dwuTn5oeAGG4wCb1B+nwgAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/31820/test.png",
   "originalName": "test.png",
