@@ -13,6 +13,7 @@ const defaultOptions = {
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
   enableTags: false,
+  typePrefix: `Contentful`,
 }
 
 const createPluginConfig = pluginOptions => {
