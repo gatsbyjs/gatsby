@@ -105,6 +105,7 @@ const esModules = [
   `trim-lines`,
   `estree-util-to-js`,
   `is-reference`,
+  `github-slugger`,
 ].join(`|`)
 
 /** @type {import('jest').Config} */
