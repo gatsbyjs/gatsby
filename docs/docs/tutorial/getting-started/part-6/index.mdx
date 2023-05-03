@@ -61,7 +61,7 @@ To create a collection route:
 1. Decide what type of node you want to create pages from.
 2. Choose which field on that node to use in the route (the URL) for your pages.
 3. Create a new page component in your `src/pages` directory using the following naming convention: `{nodeType.field}.js`.
-   - Don't forget to include the curly braces (`{}`) in your filenames to indicate the dynamic part of the route!
+   - Remember to include the curly braces (`{}`) in your filenames to indicate the dynamic part of the route!
 
 For example, if you wanted to create a separate page for each `Product` node, and you wanted to use the product's `name` field in the URL, you'd create a new file at `src/pages/{Product.name}.js`. Then Gatsby would create those pages at routes like `/water-bottle/` or `/sweatshirt/` or `/notebook/`.
 
