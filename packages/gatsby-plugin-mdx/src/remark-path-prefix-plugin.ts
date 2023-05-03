@@ -1,4 +1,4 @@
-import type { Node } from "unist-util-visit"
+import type { Node } from "unist"
 import { cachedImport } from "./cache-helpers"
 
 // ensure only one `/` in new url
