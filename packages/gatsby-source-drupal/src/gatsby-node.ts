@@ -21,6 +21,7 @@ import {
   downloadFile,
   isFileNode,
   imageCDNState,
+  generateTypeName,
 } from "./normalize"
 
 import {
@@ -954,7 +955,7 @@ exports.createSchemaCustomization = (
       // this type is merged in with the inferred file__file and files types, adding Image CDN support via the gatsbyImage GraphQL field. The `RemoteFile` interface as well as the polyfill above are what add the gatsbyImage field.
       addRemoteFilePolyfillInterface(
         schema.buildObjectType({
-          name: `file__file`,
+          name: generateTypeName(`file__file`, pluginOptions.typePrefix),
           fields: {},
           interfaces: [`Node`, `RemoteFile`],
         }),
@@ -966,7 +967,7 @@ exports.createSchemaCustomization = (
       ),
       addRemoteFilePolyfillInterface(
         schema.buildObjectType({
-          name: `files`,
+          name: generateTypeName(`files`, pluginOptions.typePrefix),
           fields: {},
           interfaces: [`Node`, `RemoteFile`],
         }),
