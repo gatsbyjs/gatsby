@@ -641,6 +641,30 @@ describe(`gatsby-source-drupal`, () => {
       expect(probeImageSize).toHaveBeenCalled()
     })
 
+    it(`should generate Image CDN node data when mimetype is on "mimetype" field`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+
+      const options = {
+        baseUrl,
+        skipFileDownloads: true,
+      }
+
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+
+      const fileNode = nodes[createNodeId(`und.file-5`)]
+      expect(fileNode).toBeDefined()
+      expect(fileNode.url).toEqual(
+        `http://fixture/sites/default/files/main-image5.png`
+      )
+      expect(fileNode.mimeType).toEqual(`image/png`)
+      expect(fileNode.width).toEqual(100)
+      expect(fileNode.height).toEqual(100)
+      expect(probeImageSize).toHaveBeenCalled()
+    })
+
     it(`should not generate required Image CDN node data when imageCDN option is set to false`, async () => {
       // Reset nodes and test includes relationships.
       Object.keys(nodes).forEach(key => delete nodes[key])
