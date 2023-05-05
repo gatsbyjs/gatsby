@@ -65,6 +65,8 @@ const buildInferenceMetadata = ({ types }) =>
 
       let processingNodes = []
       let dispatchCount = 0
+      let processedNodesCount = 0
+      let dispatchSize = 1000
       function dispatchNodes() {
         return new Promise(res => {
           store.dispatch({
@@ -77,6 +79,26 @@ const buildInferenceMetadata = ({ types }) =>
             },
           })
           setImmediate(() => {
+            processedNodesCount += processingNodes.length
+
+            // decrease dispatch size for large sites to prevent
+            // OOMs during inference
+            if (processedNodesCount >= 1000) {
+              dispatchSize = 500
+            }
+            if (processedNodesCount >= 5000) {
+              dispatchSize = 250
+            }
+            if (processedNodesCount >= 10000) {
+              dispatchSize = 100
+            }
+            if (processedNodesCount >= 100000) {
+              dispatchSize = 50
+            }
+            if (processedNodesCount >= 1000000) {
+              dispatchSize = 25
+            }
+
             // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
             processingNodes = []
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
@@ -90,7 +112,7 @@ const buildInferenceMetadata = ({ types }) =>
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         processingNodes.push(node)
 
-        if (processingNodes.length > 100) {
+        if (processingNodes.length >= dispatchSize) {
           await dispatchNodes()
         }
       }
