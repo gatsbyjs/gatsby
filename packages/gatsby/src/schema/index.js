@@ -90,7 +90,7 @@ const buildInferenceMetadata = ({ types }) =>
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         processingNodes.push(node)
 
-        if (processingNodes.length > 1000) {
+        if (processingNodes.length > 100) {
           await dispatchNodes()
         }
       }
