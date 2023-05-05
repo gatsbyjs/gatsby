@@ -20,6 +20,8 @@ import { PackageJson } from "../.."
 import { IPageDataWithQueryResult } from "../utils/page-data"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { setFilesFromDevelopHtmlCompilation } from "../utils/webpack/utils/is-file-inside-compilations"
+
 type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -209,6 +211,10 @@ const doBuildRenderer = async (
     reporter.panicOnBuild(
       structureWebpackErrors(stage, stats.compilation.errors)
     )
+  }
+
+  if (stage === `develop-html`) {
+    setFilesFromDevelopHtmlCompilation(stats.compilation)
   }
 
   // render-page.js is hard coded in webpack.config
