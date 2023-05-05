@@ -56,6 +56,10 @@ const buildInferenceMetadata = ({ types }) =>
       resolve()
       return
     }
+
+    let processedNodesCount = 0
+    let dispatchSize = 1000
+
     const typeNames = [...types]
     // TODO: use async iterators when we switch to node>=10
     //  or better investigate if we can offload metadata building to worker/Jobs API
@@ -65,8 +69,6 @@ const buildInferenceMetadata = ({ types }) =>
 
       let processingNodes = []
       let dispatchCount = 0
-      let processedNodesCount = 0
-      let dispatchSize = 1000
       function dispatchNodes() {
         return new Promise(res => {
           store.dispatch({
