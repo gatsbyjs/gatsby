@@ -16,7 +16,7 @@
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-stylus": "next",
     "gatsby-source-filesystem": "next",
-    "glob": "^8.1.0",
+    "glob": "^10.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.62.1",
