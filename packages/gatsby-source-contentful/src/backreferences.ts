@@ -1,6 +1,5 @@
 // @ts-check
 import { hasFeature } from "gatsby-plugin-utils/index"
-import { getDataStore } from "gatsby/dist/datastore"
 import { untilNextEventLoopTick } from "./utils"
 import { IContentfulEntry } from "./types/contentful"
 
@@ -29,6 +28,8 @@ export async function getExistingCachedNodes({ actions, getNode }): Promise<{
   memoryNodeCountsBySysType: IMemoryNodesCountsBySysType
 }> {
   const { touchNode } = actions
+
+  const { getDataStore } = await import(`gatsby/dist/datastore`)
 
   const needToTouchNodes =
     !hasFeature(`stateful-source-nodes`) &&
