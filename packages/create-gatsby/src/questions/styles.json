@@ -28,6 +28,25 @@
   "tailwindcss": {
     "message": "Tailwind CSS",
     "plugins": ["gatsby-plugin-postcss"],
-    "dependencies": ["postcss", "autoprefixer", "gatsby-plugin-postcss"]
+    "dependencies": ["postcss", "autoprefixer", "gatsby-plugin-postcss"],
+    "isGatsbyPlugin": false,
+    "files": [
+      {
+        "source": "src/files/tailwindcss/gatsby-browser.js",
+        "targetPath": "gatsby-browser.js"
+      },
+      {
+        "source": "src/files/tailwindcss/global.css",
+        "targetPath": "src/styles/global.css"
+      },
+      {
+        "source": "src/files/tailwindcss/postcss.config.js",
+        "targetPath": "postcss.config.js"
+      },
+      {
+        "source": "src/files/tailwindcss/tailwind.config.js",
+        "targetPath": "tailwind.config.js"
+      }
+    ]
   }
 }

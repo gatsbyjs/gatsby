@@ -4,6 +4,7 @@ import styles from "./questions/styles.json"
 import features from "./questions/features.json"
 import languages from "./questions/languages.json"
 import { initStarter, getPackageManager, gitSetup } from "./init-starter"
+import { writeFiles } from "./write-files"
 import { installPlugins } from "./install-plugins"
 import colors from "ansi-colors"
 import path from "path"
@@ -27,7 +28,10 @@ export const DEFAULT_STARTERS: Record<keyof typeof languages, string> = {
   js: `https://github.com/gatsbyjs/gatsby-starter-minimal.git`,
   ts: `https://github.com/gatsbyjs/gatsby-starter-minimal-ts.git`,
 }
-
+export interface IFile {
+  source: string
+  targetPath: string
+}
 interface IAnswers {
   name: string
   project: string
@@ -58,6 +62,14 @@ interface IPluginEntry {
    * Keys must match plugin names or name:key combinations from the plugins array
    */
   options?: PluginConfigMap
+  /**
+   * Avoid the default behavior tying options to existing gatsby plugins
+   */
+  isGatsbyPlugin?: boolean
+  /**
+   * Additional files to write to filesystem to support plugin
+   */
+  files?: Array<IFile>
 }
 
 export type PluginMap = Record<string, IPluginEntry>
@@ -204,10 +216,10 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
     )
     const extraPlugins = styles[answers.styling].plugins || []
     // Tailwind doesn't have a gatsby plugin, but requires the postcss plugin
-    if (answers.styling !== `tailwindcss`) {
-      plugins.push(answers.styling, ...extraPlugins)
-    } else {
+    if (styles[answers.styling].isGatsbyPlugin === false) {
       plugins.push(...extraPlugins)
+    } else {
+      plugins.push(answers.styling, ...extraPlugins)
     }
     packages.push(
       answers.styling,
@@ -298,13 +310,23 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
     starter,
     answers.project,
     packages.map((plugin: string) => plugin.split(`:`)[0]),
-    npmSafeSiteName,
-    answers.styling == `tailwindcss`
+    npmSafeSiteName
   )
 
   reporter.success(`Created site in ${colors.green(answers.project)}`)
 
   const fullPath = path.resolve(answers.project)
+
+  if (answers.styling && styles[answers.styling].files) {
+    await writeFiles(answers.project, styles[answers.styling].files)
+
+    // write files
+    reporter.success(
+      `Added files for ${styles[answers.styling].message} in ${colors.green(
+        answers.project
+      )}`
+    )
+  }
 
   if (plugins.length) {
     reporter.info(`${maybeUseEmoji(`🔌 `)}Setting-up plugins...`)
