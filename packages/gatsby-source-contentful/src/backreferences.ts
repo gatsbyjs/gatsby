@@ -1,6 +1,6 @@
 // @ts-check
 import { hasFeature } from "gatsby-plugin-utils/index"
-import { getDataStore } from "gatsby/src/datastore"
+import { getDataStore } from "gatsby/dist/datastore"
 import { untilNextEventLoopTick } from "./utils"
 import { IContentfulEntry } from "./types/contentful"
 
