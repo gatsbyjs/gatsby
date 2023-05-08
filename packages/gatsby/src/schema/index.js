@@ -114,7 +114,10 @@ const buildInferenceMetadata = ({ types }) =>
 
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
             setImmediate(() => {
-              if (processedNodesCount > 100000) {
+              if (
+                processedNodesCount > 50000 &&
+                processedNodesCount % 20000 === 0
+              ) {
                 console.info(`[gatsby] forcing garbage collection`)
                 gc()
               }
