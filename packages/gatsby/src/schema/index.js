@@ -105,14 +105,13 @@ const buildInferenceMetadata = ({ types }) =>
             // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
             processingNodes = []
 
-            if (
-              processedNodesCount % 10000 === 0 &&
-              processedNodesCount > 100000
-            ) {
-              gc()
-            }
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
             setImmediate(() => {
+              if (processedNodesCount > 100000) {
+                console.log(`[gatsby] forcing garbage collection`)
+                gc()
+              }
+
               res(null)
             })
           })
