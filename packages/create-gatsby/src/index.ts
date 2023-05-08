@@ -317,7 +317,7 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
 
   const fullPath = path.resolve(answers.project)
 
-  if (answers.styling && styles[answers.styling].files) {
+  if (answers.styling && styles[answers.styling]?.files) {
     await writeFiles(answers.project, styles[answers.styling].files)
 
     // write files
