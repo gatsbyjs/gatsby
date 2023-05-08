@@ -6,8 +6,14 @@ type ChunkGroup = webpack.Compilation["chunkGroups"][0]
 function getHashes(
   chunkGroup: ChunkGroup,
   compilation: webpack.Compilation,
-  hashes: Array<string> = []
+  hashes: Array<string> = [],
+  visitedChunkGroups: Set<ChunkGroup> = new Set()
 ): Array<string> {
+  if (visitedChunkGroups.has(chunkGroup)) {
+    return hashes
+  }
+  visitedChunkGroups.add(chunkGroup)
+
   for (const chunk of chunkGroup.chunks) {
     if (!chunk.hash) {
       throw new Error(
@@ -23,7 +29,7 @@ function getHashes(
     )
 
     if (isNotImportedByAsyncRequires) {
-      getHashes(childChunkGroup, compilation, hashes)
+      getHashes(childChunkGroup, compilation, hashes, visitedChunkGroups)
     }
   }
 

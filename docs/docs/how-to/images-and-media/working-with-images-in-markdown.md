@@ -2,7 +2,7 @@
 title: Working with Images in Markdown & MDX
 ---
 
-When building Gatsby sites composed primarily of [markdown](/docs/how-to/routing/adding-markdown-pages/) or [MDX](/docs/how-to/routing/mdx/), insertion of images can enhance the content. You can add images in multiple ways which will be explained below. If you're new to Gatsby we recommend checking out the [main tutorial](/docs/tutorial/) first. The instructions also assume that you already have an existing Gatsby site running with either markdown or MDX.
+When building Gatsby sites composed primarily of [markdown](/docs/how-to/routing/adding-markdown-pages/) or [MDX](/docs/how-to/routing/mdx/), insertion of images can enhance the content. You can add images in multiple ways which will be explained below. If you're new to Gatsby we recommend checking out the [main tutorial](/docs/tutorial/getting-started/) first. The instructions also assume that you already have an existing Gatsby site running with either markdown or MDX.
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ When building Gatsby sites composed primarily of [markdown](/docs/how-to/routing
 
 In sites like a blog, you may want to include a featured image that appears at the top of a page. One way to do this is to grab the image filename from a frontmatter field and then transform it with `gatsby-plugin-sharp` in a GraphQL query.
 
-If you want to have a very detailed explanation of this, head to [part 7 of the Gatsby tutorial](/docs/tutorial/part-7/). The tutorial uses MDX, the instructions below will use markdown for the most part. It more or less behaves the same though.
+If you want to have a very detailed explanation of this, head to [part 7 of the Gatsby tutorial](/docs/tutorial/getting-started/part-7/). The tutorial uses MDX, the instructions below will use markdown for the most part. It more or less behaves the same though.
 
 To start out, install the necessary plugins for [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 

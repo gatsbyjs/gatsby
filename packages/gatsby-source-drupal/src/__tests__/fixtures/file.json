@@ -49,6 +49,17 @@
           "value" : "private://forth-image.png"
         }
       }
+    },
+    {
+      "type": "file--file",
+      "id": "file-5",
+      "attributes": {
+        "id": 5,
+        "uuid": "file-5",
+        "filename": "main-image5.png",
+        "url": "/sites/default/files/main-image5.png",
+        "mimetype": "image/png"
+      }
     }
   ],
   "links": {}

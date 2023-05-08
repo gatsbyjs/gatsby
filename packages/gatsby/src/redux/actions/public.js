@@ -645,6 +645,10 @@ function getNextNodeCounter() {
  * readable description of what this node represent / its source. It will
  * be displayed when type conflicts are found, making it easier to find
  * and correct type conflicts.
+ * @param {string} node.internal.contentFilePath An optional field. A plugin
+ * can add an absolute path to a content file (e.g. markdown file) here
+ * while creating the node. Example: gatsby-plugin-mdx adds the absolute path
+ * of the `File` node to the `Mdx` node under `internal.contentFilePath`.
  * @returns {Promise} The returned Promise resolves when all cascading
  * `onCreateNode` API calls triggered by `createNode` have finished.
  * @example

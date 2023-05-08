@@ -1,13 +1,13 @@
-const _ = require(`lodash`)
+import _ from "lodash"
 
-const {
+import {
   nodeFromData,
   downloadFile,
   isFileNode,
   createNodeIdWithVersion,
-} = require(`./normalize`)
+} from "./normalize"
 
-const { getOptions } = require(`./plugin-options`)
+import { getOptions } from "./plugin-options"
 
 import { getGatsbyVersion } from "gatsby-core-utils"
 import { lt, prerelease } from "semver"
@@ -20,7 +20,7 @@ function makeRefNodesKey(id) {
   return `refnodes-${id}`
 }
 
-async function handleReferences(
+export async function handleReferences(
   node,
   {
     getNode,
@@ -28,14 +28,15 @@ async function handleReferences(
     createNodeId,
     entityReferenceRevisions = [],
     cache,
+    pluginOptions,
   }
 ) {
   const relationships = node.relationships
   const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
 
-  const backReferencedNodes = []
+  const backReferencedNodes: Array<string> = []
   if (node.drupal_relationships) {
-    const referencedNodes = []
+    const referencedNodes: Array<string> = []
     _.each(node.drupal_relationships, (v, k) => {
       if (!v.data) return
 
@@ -44,13 +45,14 @@ async function handleReferences(
         relationships[nodeFieldName] = _.compact(
           v.data.map(data => {
             const referencedNodeId = createNodeId(
-              createNodeIdWithVersion(
-                data.id,
-                data.type,
-                rootNodeLanguage,
-                data.meta?.target_version,
-                entityReferenceRevisions
-              )
+              createNodeIdWithVersion({
+                id: data.id,
+                type: data.type,
+                langcode: rootNodeLanguage,
+                revisionId: data.meta?.target_version,
+                entityReferenceRevisions,
+                typePrefix: pluginOptions.typePrefix,
+              })
             )
             if (!getNode(referencedNodeId)) {
               return null
@@ -72,13 +74,14 @@ async function handleReferences(
         }
       } else {
         const referencedNodeId = createNodeId(
-          createNodeIdWithVersion(
-            v.data.id,
-            v.data.type,
-            rootNodeLanguage,
-            v.data.meta?.target_revision_id,
-            entityReferenceRevisions
-          )
+          createNodeIdWithVersion({
+            id: v.data.id,
+            type: v.data.type,
+            langcode: rootNodeLanguage,
+            revisionId: v.data.meta?.target_revision_id,
+            entityReferenceRevisions,
+            typePrefix: pluginOptions.typePrefix,
+          })
         )
         if (getNode(referencedNodeId)) {
           relationships[nodeFieldName] = referencedNodeId
@@ -133,9 +136,7 @@ async function handleReferences(
   return backReferencedNodes
 }
 
-exports.handleReferences = handleReferences
-
-const handleDeletedNode = async ({
+export const handleDeletedNode = async ({
   actions,
   node,
   getNode,
@@ -143,16 +144,20 @@ const handleDeletedNode = async ({
   createContentDigest,
   cache,
   entityReferenceRevisions,
+  pluginOptions,
 }) => {
   let deletedNode = getNode(
     createNodeId(
-      createNodeIdWithVersion(
-        node.id,
-        node.type,
-        getOptions().languageConfig ? node.attributes?.langcode : `und`,
-        node.attributes?.drupal_internal__revision_id,
-        entityReferenceRevisions
-      )
+      createNodeIdWithVersion({
+        id: node.id,
+        type: node.type,
+        langcode: getOptions().languageConfig
+          ? node.attributes?.langcode
+          : `und`,
+        revisionId: node.attributes?.drupal_internal__revision_id,
+        entityReferenceRevisions,
+        typePrefix: pluginOptions.typePrefix,
+      })
     )
   )
 
@@ -183,7 +188,9 @@ const handleDeletedNode = async ({
 
         if (referencedNodes?.includes(deletedNode.id)) {
           // Loop over relationships and cleanup references.
-          Object.entries(node.relationships).forEach(([key, value]) => {
+          Object.entries(
+            node.relationships as Record<string, string | Array<string>>
+          ).forEach(([key, value]) => {
             // If a string ref matches, delete it.
             if (_.isString(value) && value === deletedNode.id) {
               delete node.relationships[key]
@@ -191,7 +198,7 @@ const handleDeletedNode = async ({
 
             // If it's an array, filter, then check if the array is empty and then delete
             // if so
-            if (_.isArray(value)) {
+            if (Array.isArray(value)) {
               value = value.filter(v => v !== deletedNode.id)
 
               if (value.length === 0) {
@@ -227,7 +234,7 @@ const handleDeletedNode = async ({
   return deletedNode
 }
 
-async function createNodeIfItDoesNotExist({
+export async function createNodeIfItDoesNotExist({
   nodeToUpdate,
   actions,
   createNodeId,
@@ -249,13 +256,14 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
   const { createNode } = actions
   const newNodeId = createNodeId(
-    createNodeIdWithVersion(
-      nodeToUpdate.id,
-      nodeToUpdate.type,
-      getOptions().languageConfig ? nodeToUpdate.langcode : `und`,
-      nodeToUpdate.meta?.target_version,
-      getOptions().entityReferenceRevisions
-    )
+    createNodeIdWithVersion({
+      id: nodeToUpdate.id,
+      type: nodeToUpdate.type,
+      langcode: getOptions().languageConfig ? nodeToUpdate.langcode : `und`,
+      revisionId: nodeToUpdate.meta?.target_version,
+      entityReferenceRevisions: getOptions().entityReferenceRevisions,
+      typePrefix: pluginOptions.typePrefix,
+    })
   )
 
   const oldNode = getNode(newNodeId)
@@ -275,7 +283,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   }
 }
 
-const handleWebhookUpdate = async (
+export const handleWebhookUpdate = async (
   {
     nodeToUpdate,
     actions,
@@ -285,9 +293,8 @@ const handleWebhookUpdate = async (
     getCache,
     getNode,
     reporter,
-    store,
   },
-  pluginOptions = {}
+  pluginOptions: Record<string, any> = {}
 ) => {
   if (!nodeToUpdate) {
     reporter.warn(
@@ -333,6 +340,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     createNodeId,
     cache,
     entityReferenceRevisions: pluginOptions.entityReferenceRevisions,
+    pluginOptions,
   })
 
   nodesToUpdate.push(...backReferencedNodes)
@@ -383,12 +391,11 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   }
 
   // Download file.
-  const { skipFileDownloads } = pluginOptions
-  if (isFileNode(newNode) && !skipFileDownloads) {
+  const { skipFileDownloads, typePrefix } = pluginOptions
+  if (isFileNode(newNode, typePrefix) && !skipFileDownloads) {
     await downloadFile(
       {
         node: newNode,
-        store,
         cache,
         createNode,
         createNodeId,
@@ -467,14 +474,10 @@ export function drupalCreateNodeManifest({
   }
 }
 
-exports.handleWebhookUpdate = handleWebhookUpdate
-exports.handleDeletedNode = handleDeletedNode
-exports.createNodeIfItDoesNotExist = createNodeIfItDoesNotExist
-
 /**
  * This FN returns a Map with additional file node information that Drupal doesn't return on actual file nodes (namely the width/height of images)
  */
-exports.getExtendedFileNodeData = allData => {
+export const getExtendedFileNodeData = allData => {
   const fileNodesExtendedData = new Map()
 
   for (const contentType of allData) {
@@ -490,7 +493,7 @@ exports.getExtendedFileNodeData = allData => {
       const { relationships } = node
 
       if (relationships) {
-        for (const relationship of Object.values(relationships)) {
+        for (const relationship of Object.values<any>(relationships)) {
           const relationshipNodes = Array.isArray(relationship.data)
             ? relationship.data
             : [relationship.data]

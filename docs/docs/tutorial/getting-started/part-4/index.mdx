@@ -1,0 +1,1089 @@
+---
+title: "Part 4: Query for Data with GraphQL"
+---
+
+import { LinkButton } from "gatsby-interface"
+import Collapsible from "@components/collapsible"
+import { MdArrowForward } from "react-icons/md"
+
+## Introduction
+
+Parts 4 and 5 of this Tutorial are all about data!
+
+So far, you've been writing text and adding images directly in your React components. That's an excellent way to build many websites! But often it's easier to create and maintain data somewhere else - like a folder of Markdown files or a content management system (CMS) - and then pull it into your components as needed. That way, you can make updates to your content without affecting the code for your site.
+
+Conveniently, Gatsby has a powerful feature called the **data layer** that you can use to pull data into your site from anywhere. Want to keep your blog posts in WordPress, your store products in Shopify, and your user data in Airtable? No problem! With Gatsby's data layer, you can combine data from multiple sources, which lets you choose the best platform for each type of data.
+
+<Announcement>
+
+Gatsby's data layer is powered by a technology called **GraphQL**. GraphQL is a query language with a special syntax that lets you ask for the data you need inside a component.
+
+In this Tutorial, we'll teach you all the GraphQL you'll need to know to build your first Gatsby site. Interested in learning more? [How To GraphQL](https://www.howtographql.com/) is a free tutorial that teaches you the fundamentals.
+
+</Announcement>
+
+In this part of the Tutorial, you'll learn about how to add data to Gatsby's data layer and how to pull that data into your React components.
+
+By the end of this part of the Tutorial, you will be able to:
+
+- Use **GraphiQL** to explore the data in the data layer and build your own GraphQL queries.
+- Use the **`useStaticQuery`** hook to pull data into a "building-block" component.
+- Create an reusable `Seo` component for the **Gatsby Head API**.
+- Use the **`gatsby-source-filesystem`** plugin to pull data into your site from your computer's filesystem.
+- Create a **page query** to pull data into a page component.
+
+<Announcement>
+
+**Prefer a video?**
+
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 4. **Please note:** At the time of recording the Gatsby Head API didn't exist yet and thus the video contents and text contents are different. Please always follow the written instructions. We'll do our best to record a new version in the future, thanks for understanding!
+
+**Note**: Parts of this recording may be slightly outdated, but the concepts are generally applicable. For the most up-to-date information, follow along with the written tutorial.
+
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/RnaM4Rt05vY?start=244"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+</Announcement>
+
+## Meet Gatsby's GraphQL data layer
+
+Gatsby has its own [GraphQL](https://graphql.org/) data layer where it keeps all the data for your site. But how does it work under the hood?
+
+First, your data is stored in one or more **sources**. That source might be a folder on your computer's filesystem, a content management system (CMS) like WordPress, or a database. You might even have multiple data sources!
+
+How do you get data from its source into the data layer? By adding a type of plugin to your site called a **source plugin**. Each source plugin is designed to communicate with a specific source. When you build your site, each source plugin pulls data from its particular source and adds it to your site's GraphQL data layer.
+
+<Announcement>
+
+**Tip:** Curious what source plugins are in the [Plugin Library](/plugins/)? You can identify source plugins by their name: they typically start with `gatsby-source-`.
+
+For example, a few popular source plugins are `gatsby-source-filesystem` and `gatsby-source-contentful`.
+
+</Announcement>
+
+How do you get data back out of the data layer? You can write **GraphQL queries** inside of your components to pull out the data you want to use in your site. When you build your site, Gatsby will find all the GraphQL queries in your components, run them, and put the resulting data in your component.
+
+![A diagram showing how data flows into and out of the GraphQL data layer. Source plugins pull data out of a particular data source and into the data layer for your site. GraphQL queries to pull data out of the data layer and into your React components.](./data-layer.png)
+
+## Use GraphiQL to explore the data layer and write GraphQL queries
+
+How do you know what data is in your site's GraphQL data layer? When you start the local development server for your site, Gatsby automatically creates a special endpoint that lets you use an in-browser tool called **GraphiQL**. With GraphiQL, you can explore your site's data and build GraphQL queries.
+
+Follow the steps below to open the GraphiQL interface:
+
+1. Start up your local development server by running `gatsby develop`.
+1. In a web browser, go to `http://localhost:8000/___graphql`. (That's three underscores in the URL.)
+
+![A screenshot of the GraphiQL interface in a web browser. It has three main sections: the left sidebar, the query editor, and the result window.](./graphiql.png)
+
+<Collapsible
+  summary={<h3>A closer look at the GraphiQL interface</h3>}
+>
+
+There are three main sections of the GraphiQL interface:
+
+- **Sidebar:** The left sidebar has icons at the top and bottom. Currently the top section has buttons for: Documentation explorer, history, query explorer, and query extractor. The bottom icons are for refetching the schema, seeing the keyboard shorcuts, and changing settings. Hover over each button and click them to see different panels and modals opened.
+- **Query Editor:** This is the middle section, which you can use to write out a query to test.
+  - You can add fields to your query by checking the boxes for different fields in the Explorer pane. Or, if you'd prefer, you can type the fields directly into the Query Editor. (Pro Tip: You can press `Ctrl + Space` on your keyboard to bring up an autocompletion box that shows what fields are available to you.)
+  - To execute the query in the Query Editor, click the "Execute Query" button (it looks like a "play" triangle button) in the middle of the page.
+- **Result Window:** This is the section on the right, which shows you the result of running the query in the Query Editor.
+
+The _Query Explorer_ will be most important to you as it shows you all the different kinds of data you can request in a GraphQL query:
+
+- You can toggle the dropdowns to expand the different fields and see what kinds of data are available in the data layer.
+- The blue items correspond to the different data fields you can query for.
+- The turquoise items accept additional arguments that you can use to filter down the data returned in the response.
+
+Here's how the opened pane of the GraphiQL Explorer looks like:
+
+![A screenshot showing the opened state of the GraphiQL Explorer](./graphiql-explorer.png)
+
+</Collapsible>
+
+GraphiQL is a helpful tool for testing out your GraphQL queries before you add them to your code. That way, you can make sure your queries always respond with the data you expect.
+
+Try creating and running a few queries by doing the following:
+
+1. Open the GraphiQL Explorer pane by clicking on the button labeled with "Show GraphiQL Explorer" (looks like a folder with a plus icon)
+
+1. Check a few of the blue fields in the Explorer pane. Note how checking the box for a field adds it to the query in the Query Editor.
+
+1. Click the button in the middle of the page (that looks like a "play" button) to execute the query. Look at the data returned in the Result window.
+
+In the next section, you'll learn more about how to use specific fields. For now, take a minute or two to explore the different fields. What kinds of data are already available to you in the data layer?
+
+## Queries in building-block components
+
+Now that you've seen the general process for how data works in your Gatsby site, it's time to try it out yourself.
+
+The process for using GraphQL queries in your components looks slightly different depending on whether it's a page component or a building-block component.
+
+In this first section, you'll start by pulling data into a building-block components. To do that, you'll update your `Layout` component and create an `Seo` component to display the title of your site.
+
+### Task: Use GraphiQL to build the query
+
+Look in your `gatsby-config.js` file. There's already some information there about your site, in the `siteMetadata` object.
+
+```js:title=gatsby-config.js
+module.exports = {
+  // highlight-start
+  siteMetadata: {
+    title: "My First Gatsby Site",
+  },
+  // highlight-end
+  plugins: [
+    // ...
+  ],
+};
+```
+
+This data was added to your `gatsby-config.js` file automatically when you used the `gatsby new` command in [Part 1](/docs/tutorial/getting-started/part-1). It also gets pulled into the GraphQL data layer automatically, so you don't need a source plugin for this first section.
+
+Since you don't need to set up a source plugin, you can jump straight into GraphiQL to build your GraphQL query:
+
+1. In your web browser, go to `localhost:8000/___graphiql` to see the GraphiQL interface.
+2. In the Explorer pane, open the dropdown for the `site` field.
+3. Within the `site` field, open the _second_ dropdown for the `siteMetadata` field (the blue one). This corresponds to the `siteMetadata` object in your `gatsby-config.js` file.
+
+<Announcement>
+
+**Seeing Double?**
+
+You might have noticed that there are two different dropdowns for `siteMetadata` (and for every field under the `site` dropdown).
+
+The first one (the turquoise one with a colon, `siteMetadata:`) is actually an **argument** attached to the `site` field. You can use the turquoise dropdowns to filter which pieces of data from the data layer get returned in the response. (You'll see an example of this later on.)
+
+The second one (the blue one without a colon, `siteMetadata`) is what you'll use more frequently. This one adds the actual `siteMetadata` field to your query, which tells GraphQL to include that field in your response data.
+
+Try toggling each of the dropdowns in the Explorer and see how the query in the Query Editor pane changes. What differences do you notice?
+
+</Announcement>
+
+4. Within `siteMetadata`, check the box next to the `title` field. The query in your query editor should look like this:
+
+```graphql
+query MyQuery {
+  site {
+    siteMetadata {
+      title
+    }
+  }
+}
+```
+
+5. Click the Execute Query button (the "play" triangle in the middle of the page) to run the query. The response in the Result Window should look something like the object below. Notice how the structure of the `data` object in the response matches the structure of the fields in the query.
+
+```json
+{
+  "data": {
+    "site": {
+      "siteMetadata": {
+        "title": "My First Gatsby Site"
+      }
+    }
+  },
+  "extensions": {}
+}
+```
+
+Try changing the value of the `title` property in your `gatsby-config.js` file. When you save the file, your site should rebuild, and when it's finished you can re-run the query in GraphiQL and see your updated data.
+
+### Task: Use `useStaticQuery` to pull the site title into the `Layout` component
+
+Now that you have a GraphQL query that returns the data you're looking for, how do you use that query in your React components?
+
+To pull data into a building-block component, you'll use a pre-defined function from Gatsby called `useStaticQuery`.
+
+<Collapsible
+  summary={<h4>Key Gatsby Concept: Pulling data into building-block components with <code>useStaticQuery</code></h4>}
+>
+
+The Gatsby package has a special pre-defined hook that lets you add GraphQL queries to your building-block components: `useStaticQuery`.
+
+`useStaticQuery` takes one parameter: a templated string of the GraphQL query you want to run. It returns the requested data, which you can store in a variable and then use throughout your component.
+
+Here's a brief outline of the process for adding `useStaticQuery` to pull data into your building-block components:
+
+1. Import the `useStaticQuery` hook and the `graphql` tag from the `gatsby` package.
+   - The `graphql` tag is something called a [tagged template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates). Basically, the `graphql` tag tells Gatsby that the string following it is a GraphQL query, so then Gatsby can parse and run it.
+   ```js
+   import { useStaticQuery, graphql } from "gatsby"
+   ```
+2. Inside your component, call `useStaticQuery` using the `graphql` template tag and your query from GraphiQL. Store the results in a new variable so that you can use it later in your component.
+   ```js
+   const data = useStaticQuery(graphql`
+     // Copy-paste your query from GraphiQL here, and delete the query name "MyQuery"
+   `)
+   ```
+3. Use the data in your component by using the dot operator (`.`) to access the appropriate field off the response.
+
+Here's a small example to show what this process looks like in practice:
+
+```js:title=src/components/header.js
+import * as React from 'react'
+
+// highlight-start
+// Step 1: Import the useStaticQuery hook and graphql tag
+import { useStaticQuery, graphql } from 'gatsby'
+// highlight-end
+
+const Header = () => {
+  // highlight-start
+  /* Step 2: Use the useStaticQuery hook and
+    graphql tag to query for data
+    (The query gets run at build time) */
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+  // highlight-end
+
+  return (
+    <header>
+      {/* highlight-start */}
+      {/* Step 3: Use the data in your component */}
+      <h1>{data.site.siteMetadata.title}</h1>
+      {/* highlight-end */}
+    </header>
+  )
+}
+
+export default Header
+```
+
+<Announcement>
+
+**Note:** You can only call `useStaticQuery` once per file. If you need multiple fields, you can add them all into a single query.
+
+For example, if you need data from both the `site` field and the `siteBuildMetadata` field, you could make the following call to `useStaticQuery`:
+
+```js
+const data = useStaticQuery(graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+    siteBuildMetadata {
+      buildTime
+    }
+  }
+`)
+```
+
+</Announcement>
+
+</Collapsible>
+
+Follow the steps below to use `useStaticQuery` to pull in the site title from your site metadata into your `Layout` component.
+
+1. Import the `useStaticQuery` function and the `graphql` tag from the Gatsby package.
+
+```js:title=src/components/layout.js
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby' // highlight-line
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  return (
+    // ...
+  )
+}
+
+export default Layout
+```
+
+2. Call `useStaticQuery` and pass it the query you created in GraphiQL. Be sure to use the `graphql` tag so Gatsby knows that the string you're passing in is a GraphQL query. Store the return value from `useStaticQuery` in a variable.
+
+<Announcement>
+
+**Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
+
+</Announcement>
+
+```js:title=src/components/layout.js
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  // highlight-start
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+  // highlight-end
+
+  return (
+    // ...
+  )
+}
+
+export default Layout
+```
+
+<Announcement>
+
+**Note:** If you add a line to print out the value of your `data` variable to the console, you'll see that the response has a slightly different structure from what it looked like in GraphiQL's Result Window. Specifically, your `data` variable will only contain the object that matches the `data` field in the Result Window.
+
+So if your GraphiQL Result Window showed this:
+
+```json
+{
+  "data": {
+    "site": {
+      "siteMetadata": {
+        "title": "My First Gatsby Site"
+      }
+    }
+  },
+  "extensions": {}
+}
+```
+
+then your `data` variable will have the following structure:
+
+```js
+{
+  "site": {
+    "siteMetadata": {
+      "title": "My First Gatsby Site"
+    }
+  }
+}
+```
+
+</Announcement>
+
+3. Now that you have a variable with the results of your query, you can render the title of your site in the JSX for your `Layout` component. To access the site title, use the JavaScript dot operator (`.`) to get the value of `data.site.siteMetadata.title`. Add it so it appears in both the browser tab and at the top of your page content.
+
+```js:title=src/components/layout.js
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <div className={container}>
+      {/* highlight-start */}
+      <header>{data.site.siteMetadata.title}</header>
+      {/* highlight-end */}
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
+  )
+}
+
+export default Layout
+```
+
+![A screenshot of the home page in a web browser. The title of the page in the browser tab now says, "Home Page | My First Gatsby Site", and the top of the page has an unstyled paragraph that says, "My First Gatsby Site".](./index-page-with-site-title.png)
+
+4. Now that the site title is showing up on the page, it's time to add some style! Define some styles for the site title below the existing styles in your `layout.module.css` file.
+
+```css:title=src/components/layout.module.css
+/* ... your existing styles */
+
+.site-title {
+  font-size: 3rem;
+  color: gray;
+  font-weight: 700;
+  margin: 3rem 0;
+}
+```
+
+5. Import your new styles into your `Layout` component and apply them to the site title paragraph you added.
+
+```js:title=src/components/layout.js
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText,
+  siteTitle, // highlight-line
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <div className={container}>
+      {/* highlight-next-line */}
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
+  )
+}
+
+export default Layout
+```
+
+When your browser reloads, you should see your new styles applied to your site title.
+
+![A screenshot of the home page in a web browser. Now the site title paragraph is styled to be larger and gray.](./index-page-with-site-title-styled.png)
+
+Congratulations, you've just used GraphQL to pull data into your site! Try changing the site title in your `gatsby-config.js` file and see your site update in the browser.
+
+### Task: Use `useStaticQuery` to create an `Seo` component
+
+Now that you're using the site title in your `Layout` component it's time to also update the `<title>` tag of each page. In the previous steps you used the Gatsby Head API to define the title, e.g. in the Index page:
+
+```js:title=src/pages/index.js
+export const Head = () => <title>Home Page</title>
+```
+
+At the end of this task the title will say `Home Page | My First Gatsby Site` by using an `Seo` component. Follow the steps below to use `useStaticQuery` in an `Seo` component and use this component across your pages.
+
+1. Create a new file called `src/components/seo.js`. Insert the following code to define your `Seo` component. This component accepts one required parameter called `title`, uses `useStaticQuery` to query the site title and then returns a `<title>` tag with the structure shown above.
+
+```js:title=src/components/seo.js
+import * as React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+
+const Seo = ({ title }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <title>{title} | {data.site.siteMetadata.title}</title>
+  )
+}
+
+export default Seo
+```
+
+2. Update the Index page component to use this newly created `Seo` component. You have to import it and then use it inside the `Head` export. Instead of placing the "Home Page" in between the `<title>` tag you're now passing it to the `Seo` component through the `title` prop.
+
+```js:title=src/pages/index.js
+import * as React from 'react'
+import Layout from '../components/layout'
+import { StaticImage } from 'gatsby-plugin-image'
+import Seo from '../components/seo' // highlight-line
+
+const IndexPage = () => {
+  return (
+    <Layout pageTitle="Home Page">
+      <p>I'm making this by following the Gatsby Tutorial.</p>
+      <StaticImage
+        alt="Clifford, a reddish-brown pitbull, dozing in a bean bag chair"
+        src="../images/clifford.jpg"
+      />
+    </Layout>
+  )
+}
+
+// highlight-next-line
+export const Head = () => <Seo title="Home Page" />
+
+export default IndexPage
+```
+
+3. Save the file and you should see `Home Page | My First Gatsby Site` in your browser tab.
+
+4. Update all the other pages where you used the `Head` export in the same way. Import the `Seo` component with the relative path to the file, replace the `<title>` tag in the `Head` export with the `Seo` component, and finally use the `title` prop on `Seo` to give it a name. The About page for example should use this:
+
+```js:title=src/pages/about.js
+// Rest of the component...
+
+export const Head = () => <Seo title="About Me" />
+```
+
+After going through this tutorial, be sure to check out [Adding an SEO Component](/docs/how-to/adding-common-features/adding-seo-component/) for a more detailed explanation.
+
+<Announcement>
+
+**Pro Tip:** `useStaticQuery` lends itself really well when creating small, reusable React components. You can even create custom React hooks, for example:
+
+```js
+import * as React from "react"
+import { graphql, useStaticQuery } from "gatsby"
+
+const useSiteMetadata = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return data.site.siteMetadata
+}
+
+export default useSiteMetadata
+```
+
+</Announcement>
+
+## Queries in page components: Create a blog page with a list of post filenames
+
+So far, your site has a few static landing pages: the Home page and the About page. The next step is to build out the actual blog page!
+
+Eventually, your blog page will link to separate pages for each of your posts. But there's a lot to learn to achieve that, so you'll be working up to that goal over the next few parts of the Tutorial (Parts 4, 5, and 6).
+
+In this part, you'll create a blog page that lists the filenames for your posts.
+
+### Task: Create a new blog page
+
+Start by setting up the skeleton for your new blog page component.
+
+1. Create a new file: `src/pages/blog.js`. Define and export a new page component for your blog page. Use your existing `Layout` component to add some basic structure.
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import Layout from '../components/layout'
+import Seo from '../components/seo'
+
+const BlogPage = () => {
+  return (
+    <Layout pageTitle="My Blog Posts">
+      <p>My cool posts will go in here</p>
+    </Layout>
+  )
+}
+
+export const Head = () => <Seo title="My Blog Posts" />
+
+export default BlogPage
+```
+
+2. Add a link to your new blog page to the navigation bar in your `Layout` component:
+
+```js:title=src/components/layout.js
+// ... import statements
+
+const Layout = ({ pageTitle, children }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <div className={container}>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+          {/* highlight-start */}
+          <li className={navLinkItem}>
+            <Link to="/blog" className={navLinkText}>
+              Blog
+            </Link>
+          </li>
+          {/* highlight-end */}
+        </ul>
+      </nav>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
+  )
+}
+
+export default Layout
+```
+
+3. Now, if you go to `localhost:8000/blog` in your web browser, you should see your new blog page skeleton, and there should be a link to the blog page in your navigation bar.
+
+![A screenshot of the blog page in a web browser.](./blog-page-skeleton.png)
+
+### Task: Create some MDX blog posts
+
+Now that you have a blog page, it's time to create some blog posts! For your site, you'll store each blog post as a separate file inside of a folder in your project.
+
+1. Create a new directory called `blog` at the top level of your project folder.
+
+2. Create three new files in the `blog` directory: one for each post. It doesn't matter what you name them, as long as they end with the `.mdx` extension. (You'll learn more about the powers of MDX in Part 5.) You can leave the files empty for now.
+
+![A screenshot of the VS Code Explorer pane. There's a new top-level directory called "blog", which contains three new files: "another-post.mdx", "my-first-post.mdx", and "yet-another-post.mdx".](./blog-posts-folder-structure.png)
+
+### Task: Use GraphiQL to build the query
+
+Now that you have some posts saved to your local filesystem, it's time to pull those files into the Gatsby data layer. To do that, you'll use a plugin called `gatsby-source-filesystem`.
+
+<Announcement>
+
+**Note:** Remember the process for adding a plugin to your site from [Part 3](/docs/tutorial/getting-started/part-3)? The first step was to **install** the plugin.
+
+If you've been following along from the beginning, you should already have installed `gatsby-source-filesystem` in Part 3 (because you needed it for adding static images with `gatsby-plugin-image`).
+
+Otherwise, you can install the plugin by running the following command from the command line:
+
+```shell
+npm install gatsby-source-filesystem
+```
+
+</Announcement>
+
+1. Configure `gatsby-source-filesystem` in your `gatsby-config.js` file. Since `gatsby-source-filesystem` requires some additional configuration options, you'll use a configuration object instead of a string. The code example below shows how to "source" files from your `blog` directory (in other words, how to add them to the data layer).
+
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: "My First Gatsby Site",
+  },
+  plugins: [
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    // highlight-start
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: `blog`,
+        path: `${__dirname}/blog`,
+      }
+    },
+    // highlight-end
+  ],
+};
+```
+
+<Announcement>
+
+**A closer look at the configuration options:**
+
+When your site builds, `gatsby-source-filesystem` adds all the files in the folder specified by the `path` option to the data layer. ([`__dirname`](https://nodejs.org/docs/latest/api/modules.html#modules_dirname) is a variable from Node.js that stores the absolute path for the directory that contains the file currently being run.)
+
+The `name` option in the configuration object gets set to the `sourceInstanceName` field for each file. This comes in handy when you want to source files from multiple folders. By giving each folder a different `name` option, you can build GraphQL queries that filter down to only a particular folder.
+
+</Announcement>
+
+2. Restart your local development server to make sure it picks up the configuration changes and adds your files to the data layer.
+
+3. You can use the `allFile` field to request data about multiple files at once. In GraphiQL, try exploring the different fields within `allFile` to see what sorts of data you get back. Then build a query using the `allFile` field to get the name of all the files in your blog folder:
+
+```graphql
+query MyQuery {
+  allFile {
+    nodes {
+      name
+    }
+  }
+}
+```
+
+4. Run the query in GraphiQL. Your response in the Result Window should look something like the object below:
+
+```json
+{
+  "data": {
+    "allFile": {
+      "nodes": [
+        {
+          "name": "my-first-post"
+        },
+        {
+          "name": "another-post"
+        },
+        {
+          "name": "yet-another-post"
+        }
+      ]
+    }
+  },
+  "extensions": {}
+}
+```
+
+<Collapsible
+  summary="Seeing more nodes than expected?"
+>
+
+If you're still using a `StaticImage` from an external URL (like `https://some-site/image.jpg`) on your home page, you'll see an extra node for that image show up in your GraphQL response. That's because `StaticImage` uses [`createRemoteFileNode`](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/#createremotefilenode) under the hood which creates a `File` node for each image it downloads. If you're only using images from your filesystem, you won't see the extra node.
+
+To get rid of it, you can update your GraphQL query to filter the File nodes using the `sourceInstanceName` field (which corresponds to the value of the `name` option you set for `gatsby-source-filesystem` in your `gatsby-config.js` file).
+
+```graphql:title=src/pages/blog.js
+query {
+  allFile(filter: {sourceInstanceName: {eq: "blog"}}) {
+    nodes {
+      name
+    }
+  }
+}
+```
+
+`filter` is an **argument** that gets passed into the `allFile` field. Some fields take arguments, which you can use to change the way that nodes get returned in your final GraphQL response.
+
+</Collapsible>
+
+### Task: Use a page query to pull the list of post filenames into your blog page
+
+Now that you've built a GraphQL query that returns a list of your post filenames, it's time to render that data in your blog page!
+
+Using GraphQL queries in page components uses a slightly different syntax from queries in building-block components. In page components, you use **page queries**.
+
+<Collapsible
+  summary={<h4>Key Gatsby Concept: Pulling data into page components with page queries</h4>}
+>
+
+The process for making a query in a page component looks slightly different from `useStaticQuery`:
+
+1. Import the `graphql` tag from the Gatsby package.
+2. Export a variable that stores a templated string with the GraphQL query you want to run.
+   - When your site gets built, Gatsby will run your page query and pass the resulting data into your page component as a prop called `data`.
+   - Your page query needs to be defined outside of your page component. (With `useStaticQuery`, your query was defined inside your component.)
+3. Use the `data` prop in your page component, as needed. You can use the JavaScript dot operator (`.`) to choose fields off of the `data` prop.
+
+Here's a small example to show what this process looks like in practice:
+
+```javascript
+import * as React from "react"
+
+// Step 1: Import the graphql tag
+import { graphql } from "gatsby"
+
+const HomePage = ({ data }) => {
+  return (
+    <p>
+      {/* Step 3: Use the data in your component*/}
+      {data.site.siteMetadata.description}
+    </p>
+  )
+}
+
+// Step 2: Export a page query
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        description
+      }
+    }
+  }
+`
+
+export default HomePage
+```
+
+</Collapsible>
+
+Follow the steps below to add a list of post filenames to your blog page.
+
+1. Import the `graphql` tag from the Gatsby package.
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import { graphql } from 'gatsby' // highlight-line
+import Layout from '../components/layout'
+import Seo from '../components/seo'
+
+const BlogPage = () => {
+  return (
+    <Layout pageTitle="My Blog Posts">
+      <p>My cool posts will go in here</p>
+    </Layout>
+  )
+}
+
+export const Head = () => <Seo title="My Blog Posts" />
+
+export default BlogPage
+```
+
+2. Define and export your page query. Copy over the query you built in GraphiQL.
+
+<Announcement>
+
+**Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
+
+Alternatively, you can give each of your queries a unique name. Query names can be useful for debugging errors that show up in your console when Gatsby executes your queries at build time.
+
+</Announcement>
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../components/layout'
+import Seo from '../components/seo'
+
+const BlogPage = () => {
+  return (
+    <Layout pageTitle="My Blog Posts">
+      <p>My cool posts will go in here</p>
+    </Layout>
+  )
+}
+
+// highlight-start
+export const query = graphql`
+  query {
+    allFile {
+      nodes {
+        name
+      }
+    }
+  }
+`
+// highlight-end
+
+export const Head = () => <Seo title="My Blog Posts" />
+
+export default BlogPage
+```
+
+3. Add in the `data` prop to the function definition. Then replace the placeholder `<p>` element with a list of the filenames for your posts. Use the JavaScript array `.map()` method to iterate over the `nodes` array and render the filename for each post.
+
+<Announcement>
+
+**Syntax Hint:** In JavaScript, arrays have a built-in [`.map()` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), which you can use to iterate over the elements in the array.
+
+`.map()` takes in a function, which it runs on each element in the array. In the code block below, you're using `.map()` to loop over each of the nodes in `data.allFile.nodes` and return a React element that wraps the node's `name` in an `<li>` element.
+
+In React, when you use the `.map()` method to render a list of elements, you should give each element in the list a unique `key` prop. This helps React keep track of what values have changed and need to be rerendered. For more on rendering lists in React, check out the [React Docs: Lists and Keys](https://reactjs.org/docs/lists-and-keys.html).
+
+</Announcement>
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../components/layout'
+import Seo from '../components/seo'
+
+const BlogPage = ({ data }) => { // highlight-line
+  return (
+    <Layout pageTitle="My Blog Posts">
+      {/* highlight-start */}
+      <ul>
+      {
+        data.allFile.nodes.map(node => (
+          <li key={node.name}>
+            {node.name}
+          </li>
+        ))
+      }
+      </ul>
+      {/* highlight-end */}
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query {
+    allFile {
+      nodes {
+        name
+      }
+    }
+  }
+`
+
+export const Head = () => <Seo title="My Blog Posts" />
+
+export default BlogPage
+```
+
+<Announcement>
+
+**Pro Tip:** The Gatsby Head API and its `Head` export also receives the `data` prop. This isn't directly obvious when using the component unless your IDE gives autocompletion or hints. If you're unsure how to use an API, head over to the [reference guides](/docs/reference) for instructions. There you'll find guides like [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
+
+As an example, let's say you queried the `title` from `siteMetadata` in your page query. You'll then be able to access that through the `data` prop in `Head` (as with page component):
+
+```js
+export const Head = ({ data }) => <title>{data.site.siteMetadata.title}</title>
+```
+
+In [Part 6](/docs/tutorial/getting-started/part-6/#render-post-contents-in-the-blog-post-page-template) you'll learn how to use this pattern, for now keep using the `<Seo />` component.
+  
+</Announcement>
+
+4. Now, when you look at your blog page in a web browser, you should see a list with the filenames for each of your posts:
+
+![A screenshot of the blog page in a web browser. Under the heading "My Blog Posts", there's a bulleted list of the post filenames: "another-post", "my-first-post", and "yet-another-post".](./blog-page-with-post-filenames.png)
+
+Good job! You've finished the first step of your new blog page.
+
+You won't be able to render the contents of your posts just yet, since your site doesn't know how to process MDX. You'll fix that in the next part of the Tutorial!
+
+<Announcement>
+
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
+
+## Summary
+
+Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
+
+- How do you get data into the data layer?
+- How can you see what data is in the data layer?
+- How do you get data out of the data layer?
+- What are the differences between a page query and `useStaticQuery`? How would you decide which one to use?
+
+<Announcement>
+
+**Ship It!** 🚀
+
+Before you move on, deploy your changes to your live site on Gatsby Cloud so that you can share your progress!
+
+First, run the following commands in a terminal to push your changes to your GitHub repository. (Make sure you're in the top-level directory for your Gatsby site!)
+
+```shell
+git add .
+git commit -m "Finished Gatsby Tutorial Part 4"
+git push
+```
+
+Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/).)
+
+</Announcement>
+
+### Key takeaways
+
+- Source plugins pull data from their original location into the Gatsby GraphQL data layer.
+- You can use the GraphiQL endpoint (`localhost:8000/___graphql`) to explore the data in the data layer and design GraphQL queries.
+- You can write GraphQL queries to pull data out of the data layer and into your React components.
+  - To pull data into a "building block" component, use the `useStaticQuery` hook.
+  - To pull data into a page component, use a page query.
+- You can use React components inside the Gatsby Head API.
+
+<Collapsible
+  summary={<h2>Key Gatsby Concept: General process for using data in your site</h2>}
+>
+
+1. Add a source plugin to add data into the GraphQL data layer.
+1. Use GraphiQL to design a query that responds with the data you want from the data layer.
+1. Add the query into your component.
+   - Use page queries for page components.
+   - Use `useStaticQuery` for "building block" components.
+1. Use the data from the response in your component.
+
+</Collapsible>
+
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the Tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
+
+### What's coming next?
+
+In Part 5, you'll add some content to your blog posts using a special format called MDX. You'll also learn about transformer plugins, which you can use to convert data in your data layer from one type to another.
+
+<LinkButton
+  to="/docs/tutorial/getting-started/part-5/"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to Part 5
+</LinkButton>

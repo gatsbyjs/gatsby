@@ -19,7 +19,7 @@ To get started creating a new plugin, you can follow these steps:
 gatsby new my-plugin https://github.com/gatsbyjs/gatsby-starter-plugin
 ```
 
-If you already have a Gatsby site, you can use it. Otherwise, you can [create a new Gatsby site](https://www.gatsbyjs.com/tutorial/part-0/#create-a-gatsby-site) to test your plugin.
+If you already have a Gatsby site, you can use it. Otherwise, you can [create a new Gatsby site](https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/#create-a-gatsby-site) to test your plugin.
 
 Your directory structure will look similar to this:
 

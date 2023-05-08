@@ -72,7 +72,7 @@ If you have MDX files in another location than `src/pages` you'll need to add an
 **Please Note:**
 
 - `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present and configured to process local MDX files in order to generate the resulting Gatsby nodes (`gatsby-source-filesystem` needs to discover all MDX files in order to create MDX nodes and allow the processing for each of them).
-- MDX syntax differs from Markdown as it only supports [CommonMark](https://commonmark.org/) by default. Nonstandard markdown features like [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) can be enabled with plugins (see [`mdxOptions` instructions](#mdxoptions)).
+- MDX syntax differs from Markdown as it only supports [CommonMark](https://commonmark.org/) by default. Nonstandard markdown features like [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) can be enabled with plugins (see [`mdxOptions` instructions](#mdxoptions)). GFM includes features like tables or footnotes.
 - Certain features like HTML syntax doesn't work in MDX. Read the ["What is MDX?" guide](https://mdxjs.com/docs/what-is-mdx/#markdown) to learn more.
 
 To automatically create pages from MDX files outside of `src/pages` you'll need to configure `gatsby-plugin-page-creator` and `gatsby-source-filesystem` to point to this folder of files.
@@ -594,7 +594,7 @@ If you used any related plugins like `gatsby-remark-images`, also update them to
 
 ### GFM & ESM-only packages
 
-- [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) support was removed from MDX v2. You can re-enable it with [`mdxOptions`](#mdxoptions) (you have to install `remark-gfm@^1`)
+- [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) support was removed from MDX v2. You can re-enable it with [`mdxOptions`](#mdxoptions) (you have to install `remark-gfm`)
 - Most of the remark ecosystem is ESM so just using the latest package version of `remark-*`/`rehype-*` most probably won't work. Check out the workarounds mentioned in [`mdxOptions`](#mdxoptions)
 
 ### Updating `createPage` action in `gatsby-node`

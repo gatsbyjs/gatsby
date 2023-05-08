@@ -44,6 +44,6 @@ The site is now running at `http://localhost:8000`, you can see the MDX example 
 
 Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/). Here are some places to start:
 
-- **For most developers, it's recommended to start with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, it's recommended to start with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/docs/tutorial/getting-started/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
 - **To dive straight into code samples, head [to the official Gatsby documentation](https://www.gatsbyjs.com/docs/).** In particular, check out [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to/routing/mdx/).

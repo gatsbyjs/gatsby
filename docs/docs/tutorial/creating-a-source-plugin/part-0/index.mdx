@@ -1,0 +1,116 @@
+---
+title: "Part 0: Introduction and Prerequisites"
+---
+
+import { LinkButton } from "gatsby-interface"
+import { MdArrowForward } from "react-icons/md"
+
+## Introduction
+
+Welcome to the "Creating a Gatsby source plugin" tutorial. We're excited you're here!
+
+In this tutorial you'll learn how to create a Gatsby source plugin that follows best practices, uses Gatsby's latest features, and aligns with how the Gatsby team wants you to build source plugins. By following our instructions, your plugin will have great developer experience for you, and great reliability and usability for your users.
+
+Source plugins are an integral part to Gatsby's [GraphQL data layer](/docs/reference/graphql-data-layer/) as they are responsible for bringing data into that layer. They play a key role in hiding complex pieces of software (e.g. fetching and normalizing data from a remote API) behind an easy-to-use plugin. This also means that they have to be reliable, performant, and use best practices behind the scenes.
+
+There is already a wealth of [existing source plugins](/plugins?=gatsby-source) in the Gatsby ecosystem you can use, but there may come a time when you want to create your own source plugin that doesn't already exist. If that sounds like a situation you've found yourself in, this tutorial is for you! Otherwise if you're curious to learn more about how Gatsby's source plugins work, you'll also find useful information here.
+
+<Announcement>
+
+This tutorial is intended to be an **additive guide**. Each part builds up on each other so we recommend you going through it from start to finish. However, if you want to revisit a specific topic each part should have all the necessary information on its own to be informative.
+
+You'll have a functioning source plugin at the end of part 2. The later parts are improving the plugin, adding functionalities, and explaining advanced topics. So while you can already publish what you have after part 2, we highly recommend going through all parts to learn how you can further improve your plugin.
+
+</Announcement>
+
+By the end of this part of the tutorial, you will:
+
+- Identify what background knowledge is assumed throughout the tutorial
+- Describe what a source plugin is and why you would want to create one
+- Install the necessary software
+
+## Background knowledge
+
+This tutorial assumes a basic understanding of Gatsby, [GraphQL](https://graphql.org/), [Node.js](https://nodejs.org/en/), and [TypeScript](https://www.typescriptlang.org/).
+
+<Announcement>
+
+Don't worry, you don't need to be an expert with these! A high-level understanding of the basics should be enough. You'll pick up a lot through the course of the tutorial.
+
+</Announcement>
+
+In terms of Gatsby-related knowledge, you should first complete the [Getting Started Tutorial](/docs/tutorial/getting-started/) since this guide builds on the knowledge established there.
+
+In terms of the other technologies, you should be comfortable writing GraphQL queries, importing/exporting JavaScript modules, and making use of TypeScript types.
+
+## What is a source plugin?
+
+A plugin that adds additional data sources (content and data backends, e.g. content management systems like Contentful, WordPress, Drupal) to Gatsby that can then be queried by your pages and components. You can access these created nodes via Gatsby's universal GraphQL data layer.
+
+At a high-level, a source plugin:
+
+- Sources data from an external API in the best possible way
+- Creates new nodes and establishes relationships between them
+- Customizes your site's GraphQL schema
+- Improves the functionality of your external API by e.g. enabling advanced image manipulations through [Image CDN](/docs/how-to/images-and-media/using-gatsby-plugin-image/#gatsby-cloud-image-cdn)
+
+In terms of code, a source plugin is the same as other plugins in that it must include:
+
+- A `package.json` file with an entrypoint
+- One or more Gatsby API files (usually a [`gatsby-node`](/docs/reference/config-files/gatsby-node/) file)
+
+The difference is that source plugins should care only about sourcing data, while other plugins such as [transformer plugins](/docs/how-to/plugins-and-themes/creating-a-transformer-plugin/) or styling plugins may have other functionality that don't involve sourcing. Separating these concerns makes each plugin more reusable.
+
+## Why create a source plugin?
+
+The most common reason why you might want to create a new source plugin is that it may not exist yet in Gatsby's [plugin library](/plugins/?=gatsby-source).
+
+Source plugins are a powerful concept. In a Gatsby site you can combine many data sources together via source plugins, like commerce data from Shopify, or content from one or more content management systems (like Contentful, WordPress, etc.), all in a single unified graph. Gatsby then leverages this graph to offer exciting features like [incremental builds](/blog/2020-04-22-announcing-incremental-builds/) and [Image CDN](/docs/how-to/images-and-media/using-gatsby-plugin-image/#gatsby-cloud-image-cdn).
+
+Both of these topics will be covered in later parts of this tutorial, so stay tuned!
+
+<Announcement>
+
+**Please note:** If your data is local, e.g. on your filesystem or part of your site's repo then you generally **don't** want to create a new source plugin. Instead, use [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) as it already handles reading and watching files for you. You then can combine it with a [transformer plugin](/docs/how-to/plugins-and-themes/creating-a-transformer-plugin/#what-do-transformer-plugins-do), e.g. [`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark) to transform markdown files.
+
+</Announcement>
+
+## When to create a source plugin?
+
+Gatsby plugins are most often thought of as modules that are published to [npm](https://www.npmjs.com/) so that they can be shared and installed by others, but they can also be [local plugins](/docs/creating-a-local-plugin/) that exist only in a single site.
+
+This same logic applies to source plugins. If you create a source plugin that you think others might make use of and you care to maintain it, please do publish it and [submit to the Gatsby plugin library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/)! However, there is certainly no obligation to publish your plugin. If it serves its purpose for your use case just fine, keep it a local plugin.
+
+The parts at the end of this tutorial will teach you how to go about developing a plugin in a way that makes it easy to publish later.
+
+## Development environment
+
+The development environment is identical to the [Getting Started tutorial](/docs/tutorial/getting-started/), with the addition of [yarn](https://yarnpkg.com/), a package manager like [npm](https://npmjs.com). Refer to the [installation guide](/docs/tutorial/getting-started/part-0/#installation-guide) for setup instructions, as well as the [yarn installation instructions](https://yarnpkg.com/getting-started/install).
+
+This tutorial uses [yarn workspaces](https://yarnpkg.com/features/workspaces) to develop the plugin and its companion example site in a monorepo. After going through this guide feel free to use any monorepo tooling you'd like (e.g. pnpm, NX, Turborepo, etc.) as it's not relevant for the Gatsby plugin itself.
+
+## Summary
+
+Now that you know the basics about Gatsby source plugins and have your computer set up, you're ready for the tutorial!
+
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
+
+### What's coming next?
+
+In Part 1 of the tutorial, you'll set up your project and learn how the project is structured.
+
+<LinkButton
+  to="/docs/tutorial/creating-a-source-plugin/part-1/"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to Part 1
+</LinkButton>

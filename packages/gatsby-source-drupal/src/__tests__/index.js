@@ -249,7 +249,7 @@ describe(`gatsby-source-drupal`, () => {
     // first call without basicAuth (no fileSystem defined)
     // (the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
-      5,
+      6,
       expect.objectContaining({
         url: urls[0],
         auth: {},
@@ -257,7 +257,7 @@ describe(`gatsby-source-drupal`, () => {
     )
     // 2nd call with basicAuth (public: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
-      6,
+      7,
       expect.objectContaining({
         url: urls[1],
         auth: {
@@ -268,7 +268,7 @@ describe(`gatsby-source-drupal`, () => {
     )
     // 3rd call without basicAuth (s3: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
-      7,
+      8,
       expect.objectContaining({
         url: urls[2],
         auth: {},
@@ -276,7 +276,7 @@ describe(`gatsby-source-drupal`, () => {
     )
     // 4th call with basicAuth (private: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
-      8,
+      9,
       expect.objectContaining({
         url: urls[3],
         auth: {
@@ -289,14 +289,14 @@ describe(`gatsby-source-drupal`, () => {
 
   it(`Skips File Downloads on initial build`, async () => {
     const skipFileDownloads = true
-    expect(createRemoteFileNode).toBeCalledTimes(8)
+    expect(createRemoteFileNode).toBeCalledTimes(10)
     await sourceNodes(args, { baseUrl, skipFileDownloads })
-    expect(createRemoteFileNode).toBeCalledTimes(8)
+    expect(createRemoteFileNode).toBeCalledTimes(10)
   })
 
   it(`Skips File Downloads on webhook update`, async () => {
     const skipFileDownloads = true
-    expect(createRemoteFileNode).toBeCalledTimes(8)
+    expect(createRemoteFileNode).toBeCalledTimes(10)
     const nodeToUpdate = require(`./fixtures/webhook-file-update.json`).data
 
     await handleWebhookUpdate(
@@ -310,7 +310,7 @@ describe(`gatsby-source-drupal`, () => {
       }
     )
 
-    expect(createRemoteFileNode).toBeCalledTimes(8)
+    expect(createRemoteFileNode).toBeCalledTimes(10)
   })
 
   describe(`Update webhook`, () => {
@@ -634,6 +634,30 @@ describe(`gatsby-source-drupal`, () => {
       expect(fileNode).toBeDefined()
       expect(fileNode.url).toEqual(
         `http://fixture/sites/default/files/main-image.png`
+      )
+      expect(fileNode.mimeType).toEqual(`image/png`)
+      expect(fileNode.width).toEqual(100)
+      expect(fileNode.height).toEqual(100)
+      expect(probeImageSize).toHaveBeenCalled()
+    })
+
+    it(`should generate Image CDN node data when mimetype is on "mimetype" field`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+
+      const options = {
+        baseUrl,
+        skipFileDownloads: true,
+      }
+
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+
+      const fileNode = nodes[createNodeId(`und.file-5`)]
+      expect(fileNode).toBeDefined()
+      expect(fileNode.url).toEqual(
+        `http://fixture/sites/default/files/main-image5.png`
       )
       expect(fileNode.mimeType).toEqual(`image/png`)
       expect(fileNode.width).toEqual(100)

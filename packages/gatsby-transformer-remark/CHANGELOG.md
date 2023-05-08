@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.9.0/packages/gatsby-transformer-remark) (2023-04-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
+
+#### Bug Fixes
+
+- update dependency sanitize-html to ^2.10.0 for gatsby-transformer-remark [#37866](https://github.com/gatsbyjs/gatsby/issues/37866) ([41ddd4d](https://github.com/gatsbyjs/gatsby/commit/41ddd4dd5bddf8fd20d07a6d6ee107ae6788976b))
+
 ## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.8.0/packages/gatsby-transformer-remark) (2023-03-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.8)

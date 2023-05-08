@@ -107,7 +107,6 @@ Cypress.Commands.add(
       win.___navigate(pathname)
     })
 
-    // @ts-expect-error - gatsby-cypress doesn't have types
     return cy.waitForAPI(`onRouteUpdate`).then(() => subject)
   }
 )

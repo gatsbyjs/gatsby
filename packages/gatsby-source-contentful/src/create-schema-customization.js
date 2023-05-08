@@ -7,6 +7,7 @@ import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
 import { stripIndent } from "common-tags"
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
+import { makeTypeName } from "./normalize"
 
 async function getContentTypesFromContentful({
   cache,
@@ -77,6 +78,9 @@ export async function createSchemaCustomization(
 
   const pluginConfig = createPluginConfig(pluginOptions)
 
+  const typePrefix = pluginConfig.get(`typePrefix`)
+  const useNameForId = pluginConfig.get(`useNameForId`)
+
   let contentTypeItems
   if (process.env.GATSBY_WORKER_ID) {
     const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
@@ -118,7 +122,7 @@ export async function createSchemaCustomization(
   contentfulTypes.push(
     addRemoteFilePolyfillInterface(
       schema.buildObjectType({
-        name: `ContentfulAsset`,
+        name: makeTypeName(`Asset`, typePrefix),
         fields: {
           contentful_id: { type: `String!` },
           id: { type: `ID!` },
@@ -175,14 +179,9 @@ export async function createSchemaCustomization(
   contentTypeItems.forEach(contentTypeItem =>
     contentfulTypes.push(
       schema.buildObjectType({
-        name: _.upperFirst(
-          _.camelCase(
-            `Contentful ${
-              pluginConfig.get(`useNameForId`)
-                ? contentTypeItem.name
-                : contentTypeItem.sys.id
-            }`
-          )
+        name: makeTypeName(
+          useNameForId ? contentTypeItem.name : contentTypeItem.sys.id,
+          typePrefix
         ),
         fields: {
           contentful_id: { type: `String!` },
@@ -197,7 +196,7 @@ export async function createSchemaCustomization(
   if (pluginConfig.get(`enableTags`)) {
     contentfulTypes.push(
       schema.buildObjectType({
-        name: `ContentfulTag`,
+        name: makeTypeName(`Tag`, typePrefix),
         fields: {
           name: { type: `String!` },
           contentful_id: { type: `String!` },

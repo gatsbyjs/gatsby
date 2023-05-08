@@ -1,7 +1,7 @@
 import toHast from "mdast-util-to-hast"
 import { cachedImport } from "./cache-helpers"
 
-import type { Node } from "unist-util-visit"
+import type { Node } from "unist"
 import type { Definition, Literal } from "mdast"
 import type { MdxJsxAttribute, MdxJsxFlowElement } from "mdast-util-mdx"
 

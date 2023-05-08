@@ -10,7 +10,7 @@ For more general information on gtag you can read Google's official documentatio
 
 If you're migrating from analytics.js (gatsby-plugin-google-analytics) you can read about the subtle API differences in more depth at: https://developers.google.com/analytics/devguides/migration/ua/analyticsjs-to-gtagjs.
 
-**Please note:** This plugin only works in production mode! To test your Global Site Tag is installed and firing events correctly run: `gatsby build && gatsby serve.`
+**Please note:** This plugin only works in production mode! To test that your Global Site Tag is installed and firing events correctly run: `gatsby build && gatsby serve.`
 
 ## Install
 
@@ -20,8 +20,9 @@ npm install gatsby-plugin-google-gtag
 
 ## How to use
 
-```js
-// In your gatsby-config.js
+The `trackingIds` option is **required** for this plugin to work correctly.
+
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -58,6 +59,50 @@ module.exports = {
   ],
 }
 ```
+
+### `gtagConfig.anonymize_ip` option
+
+Some countries (such as Germany) require you to use the
+[\_anonymizeIP](https://support.google.com/analytics/answer/2763052) function for
+Google Site Tag. Otherwise you are not allowed to use it. The option adds the
+block of code below:
+
+```js
+function gaOptout() {
+  ;(document.cookie =
+    disableStr + "=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/"),
+    (window[disableStr] = !0)
+}
+
+var gaProperty = "UA-XXXXXXXX-X",
+  disableStr = "ga-disable-" + gaProperty
+document.cookie.indexOf(disableStr + "=true") > -1 && (window[disableStr] = !0)
+```
+
+If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
+you can set a link e.g. in your imprint as follows:
+
+`<a href="javascript:gaOptout();">Deactivate Google Tracking</a>`
+
+### `gtagConfig.optimize_id` option
+
+If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.
+
+### Other `gtagConfig` options
+
+The `gtagConfig` is passed directly to the gtag config command, so you can specify everything it supports, e.g. `gtagConfig.cookie_name`, `gtagConfig.sample_rate`. If you're migrating from the analytics.js plugin, this means that all Create Only Fields should be snake_cased.
+
+### `pluginConfig.respectDNT` option
+
+If you enable this optional option, Google Global Site Tag will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Global Site Tag does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
+
+### `pluginConfig.exclude` option
+
+If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+### `pluginConfig.delayOnRouteUpdate` option
+
+If you need to delay processing pageview events on route update (e.g. to wait for page transitions with [`gatsby-plugin-transition-link`](https://www.gatsbyjs.com/plugins/gatsby-plugin-transition-link/)), then this option adds a delay before generating the pageview event.
 
 ## Custom Events
 
@@ -99,47 +144,3 @@ export default () => (
   </div>
 )
 ```
-
-## The "gtagConfig.anonymize_ip" option
-
-Some countries (such as Germany) require you to use the
-[\_anonymizeIP](https://support.google.com/analytics/answer/2763052) function for
-Google Site Tag. Otherwise you are not allowed to use it. The option adds the
-block of code below:
-
-```js
-function gaOptout() {
-  ;(document.cookie =
-    disableStr + "=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/"),
-    (window[disableStr] = !0)
-}
-
-var gaProperty = "UA-XXXXXXXX-X",
-  disableStr = "ga-disable-" + gaProperty
-document.cookie.indexOf(disableStr + "=true") > -1 && (window[disableStr] = !0)
-```
-
-If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
-you can set a link e.g. in your imprint as follows:
-
-`<a href="javascript:gaOptout();">Deactivate Google Tracking</a>`
-
-## The "gtagConfig.optimize_id" option
-
-If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.
-
-## Other "gtagConfig" options
-
-The `gtagConfig` is passed directly to the gtag config command, so you can specify everything it supports, e.g. `gtagConfig.cookie_name`, `gtagConfig.sample_rate`. If you're migrating from the analytics.js plugin, this means that all Create Only Fields should be snake_cased.
-
-## The "pluginConfig.respectDNT" option
-
-If you enable this optional option, Google Global Site Tag will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Global Site Tag does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
-
-## The "pluginConfig.exclude" option
-
-If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
-
-## The "pluginConfig.delayOnRouteUpdate" option
-
-If you need to delay processing pageview events on route update (e.g. to wait for page transitions with [`gatsby-plugin-transition-link`](https://www.gatsbyjs.com/plugins/gatsby-plugin-transition-link/)), then this option adds a delay before generating the pageview event.

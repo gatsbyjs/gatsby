@@ -6,6 +6,7 @@ import {
   sourceNodes,
   onPreInit,
 } from "../gatsby-node"
+import { existingNodes, is, memoryNodeCounts } from "../backreferences"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -59,7 +60,12 @@ describe(`gatsby-node`, () => {
 
   const actions = {
     createTypes: jest.fn(),
-    setPluginStatus: jest.fn(),
+    setPluginStatus: jest.fn(pluginStatusObject => {
+      pluginStatus = {
+        ...pluginStatus,
+        ...pluginStatusObject,
+      }
+    }),
     createNode: jest.fn(async node => {
       // similar checks as gatsby does
       if (!_.isPlainObject(node)) {
@@ -99,9 +105,20 @@ describe(`gatsby-node`, () => {
     }),
     buildInterfaceType: jest.fn(),
   }
+  let pluginStatus = {}
+  const resetPluginStatus = () => {
+    pluginStatus = {}
+  }
   const store = {
     getState: jest.fn(() => {
-      return { program: { directory: process.cwd() }, status: {} }
+      return {
+        program: { directory: process.cwd() },
+        status: {
+          plugins: {
+            [`gatsby-source-contentful`]: pluginStatus,
+          },
+        },
+      }
     }),
   }
   const cache = createMockCache()
@@ -404,7 +421,11 @@ describe(`gatsby-node`, () => {
     })
   }
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    existingNodes.clear()
+    is.firstSourceNodesCallOfCurrentNodeProcess = true
+    resetPluginStatus()
+
     // @ts-ignore
     fetchContent.mockClear()
     // @ts-ignore
@@ -594,6 +615,51 @@ describe(`gatsby-node`, () => {
         ],
       ]
     `)
+  })
+
+  it(`should create nodes with custom prefix`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+    schema.buildObjectType.mockClear()
+    // @ts-ignore
+    await simulateGatsbyBuild({
+      typePrefix: `CustomPrefix`,
+    })
+
+    expect(schema.buildObjectType).toHaveBeenCalledTimes(3)
+    expect(schema.buildObjectType).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `CustomPrefixPerson`,
+      })
+    )
+    expect(schema.buildObjectType).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `CustomPrefixBlogPost`,
+      })
+    )
+    expect(schema.buildObjectType).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `CustomPrefixAsset`,
+      })
+    )
+
+    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `ContentfulPerson`,
+      })
+    )
+
+    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `ContentfulBlogPost`,
+      })
+    )
+
+    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `ContentfulAsset`,
+      })
+    )
   })
 
   it(`should add a new blogpost and update linkedNodes`, async () => {

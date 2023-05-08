@@ -10,6 +10,11 @@ jest.mock(`@apollo/client`, () => {
     createHttpLink: jest.fn(),
   }
 })
+jest.mock(`@graphql-tools/links`, () => {
+  return {
+    linkToExecutor: jest.fn(),
+  }
+})
 const { createHttpLink } = require(`@apollo/client`)
 const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
 jest.mock(`gatsby/graphql`, () => {
