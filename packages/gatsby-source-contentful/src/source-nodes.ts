@@ -63,7 +63,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     const pluginConfig = createPluginConfig(pluginOptions as IPluginOptions)
 
     // wrap createNode so we can cache them in memory for faster lookups when finding backreferences
-    const createNode = (node: Node): void | Promise<void> => {
+    const createNode = (node): void | Promise<void> => {
       addNodeToExistingNodesCache(node)
 
       return originalCreateNode(node)
