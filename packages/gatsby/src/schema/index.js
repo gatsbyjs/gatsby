@@ -84,6 +84,8 @@ const buildInferenceMetadata = ({ types }) =>
           setImmediate(() => {
             processedNodesCount += processingNodes.length
 
+            const initialDispatchSize = dispatchSize
+
             // decrease dispatch size for large sites to prevent
             // OOMs during inference
             if (processedNodesCount >= 1000) {
@@ -102,13 +104,18 @@ const buildInferenceMetadata = ({ types }) =>
               dispatchSize = 25
             }
 
+            if (initialDispatchSize !== dispatchSize) {
+              console.info(
+                `[gatsby] Decreasing inference dispatch size from ${initialDispatchSize} to ${dispatchSize} for large site. Processed ${processedNodesCount} nodes.`
+              )
+            }
             // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
             processingNodes = []
 
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
             setImmediate(() => {
               if (processedNodesCount > 100000) {
-                console.log(`[gatsby] forcing garbage collection`)
+                console.info(`[gatsby] forcing garbage collection`)
                 gc()
               }
 
