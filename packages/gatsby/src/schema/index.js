@@ -9,6 +9,7 @@ const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 const { shouldPrintEngineSnapshot } = require(`../utils/engines-helpers`)
+const gc = require(`expose-gc/function`)
 
 const getAllTypeDefinitions = () => {
   const {
@@ -103,6 +104,13 @@ const buildInferenceMetadata = ({ types }) =>
 
             // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
             processingNodes = []
+
+            if (
+              processedNodesCount % 10000 === 0 &&
+              processedNodesCount > 100000
+            ) {
+              gc()
+            }
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
             setImmediate(() => {
               res(null)
