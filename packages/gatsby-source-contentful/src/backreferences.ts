@@ -1,6 +1,6 @@
 // @ts-check
 import { hasFeature } from "gatsby-plugin-utils/index"
-import { getDataStore } from "gatsby/dist/datastore"
+import { getDataStore } from "gatsby/src/datastore"
 import { untilNextEventLoopTick } from "./utils"
 import { IContentfulEntry } from "./types/contentful"
 
@@ -126,7 +126,7 @@ export function addNodeToExistingNodesCache(node: IContentfulEntry): void {
   existingNodes.set(node.id, cacheNode as unknown as IContentfulEntry)
 }
 
-export function removeNodeFromExistingNodesCache(node): void {
+export function removeNodeFromExistingNodesCache(node: IContentfulEntry): void {
   if (node.internal.type === `ContentfulTag`) {
     return
   }

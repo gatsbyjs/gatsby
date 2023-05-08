@@ -69,7 +69,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       return originalCreateNode(node)
     }
 
-    const deleteNode = (node: Node): void | Promise<void> => {
+    const deleteNode = (node): void | Promise<void> => {
       removeNodeFromExistingNodesCache(node)
 
       return originalDeleteNode(node)
