@@ -30,12 +30,11 @@ function writeFile(sourceFile: string, filepath: string): void {
 export async function writeFiles(
   rootPath: string,
   files: Array<IFile> | undefined
-): Promise<string> {
+): Promise<void> {
   const parentDir = path.join(__dirname, `..`)
   files?.forEach(({ source, targetPath }) => {
     const fullPath = path.join(rootPath, targetPath)
     const sourcePath = path.resolve(parentDir, source)
     writeFile(sourcePath, fullPath)
   })
-  return rootPath
 }
