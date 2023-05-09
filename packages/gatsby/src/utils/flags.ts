@@ -137,9 +137,11 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => {
       const v18Constraint = {
         react: `>=18.0.0`,
+        "react-server-dom-webpack": `>=18.0.0`,
       }
       const v0Constraint = {
         react: `^0.0.0`,
+        "react-server-dom-webpack": `^0.0.0`,
       }
 
       return (
