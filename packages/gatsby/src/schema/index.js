@@ -60,6 +60,7 @@ const buildInferenceMetadata = ({ types }) =>
 
     let processedNodesCount = 0
     let dispatchSize = 1000
+    let forceGcCount = 0
 
     const typeNames = [...types]
     // TODO: use async iterators when we switch to node>=10
@@ -115,10 +116,22 @@ const buildInferenceMetadata = ({ types }) =>
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
             setImmediate(() => {
               if (
-                processedNodesCount > 50000 &&
-                processedNodesCount % 20000 === 0
+                // but also for really large sites, force GC
+                (processedNodesCount > 100_000 &&
+                  processedNodesCount < 1_000_000 &&
+                  processedNodesCount % 1000 === 0) ||
+                processedNodesCount > 1_000_000
               ) {
-                console.info(`[gatsby] forcing garbage collection`)
+                if (
+                  forceGcCount === 0 ||
+                  (forceGcCount % 50 === 0 && forceGcCount < 1000) ||
+                  forceGcCount % 500 === 0
+                ) {
+                  console.info(
+                    `[gatsby] forcing garbage collection (previously forced ${forceGcCount} times)`
+                  )
+                }
+                forceGcCount++
                 gc()
               }
 
@@ -144,6 +157,9 @@ const buildInferenceMetadata = ({ types }) =>
         // dont block the event loop
         setImmediate(() => processNextType())
       } else {
+        console.info(
+          `[gatsby] Finished building inference metadata. Forced garbage collection ${forceGcCount} times.`
+        )
         resolve()
       }
     }
