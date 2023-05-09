@@ -4,7 +4,7 @@ import styles from "./questions/styles.json"
 import features from "./questions/features.json"
 import languages from "./questions/languages.json"
 import { initStarter, getPackageManager, gitSetup } from "./init-starter"
-import { writeFiles } from "./write-files"
+import { writeFiles, IFile } from "./write-files"
 import { installPlugins } from "./install-plugins"
 import colors from "ansi-colors"
 import path from "path"
@@ -27,10 +27,6 @@ import { parseArgs } from "./utils/parse-args"
 export const DEFAULT_STARTERS: Record<keyof typeof languages, string> = {
   js: `https://github.com/gatsbyjs/gatsby-starter-minimal.git`,
   ts: `https://github.com/gatsbyjs/gatsby-starter-minimal-ts.git`,
-}
-export interface IFile {
-  source: string
-  targetPath: string
 }
 interface IAnswers {
   name: string
@@ -63,11 +59,11 @@ interface IPluginEntry {
    */
   options?: PluginConfigMap
   /**
-   * Avoid the default behavior tying options to existing gatsby plugins
+   * If the item is not a valid Gatsby plugin, set this to `false`
    */
   isGatsbyPlugin?: boolean
   /**
-   * Additional files to write to filesystem to support plugin
+   * Additional files that should be written to the filesystem
    */
   files?: Array<IFile>
 }
@@ -215,8 +211,8 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
       )} for styling your site`
     )
     const extraPlugins = styles[answers.styling].plugins || []
-    // Tailwind doesn't have a gatsby plugin, but requires the postcss plugin
-    if (styles[answers.styling].isGatsbyPlugin === false) {
+    // If the key is not a valid Gatsby plugin, don't add it to the plugins array
+    if (styles[answers.styling]?.isGatsbyPlugin === false) {
       plugins.push(...extraPlugins)
     } else {
       plugins.push(answers.styling, ...extraPlugins)
@@ -317,21 +313,16 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
 
   const fullPath = path.resolve(answers.project)
 
-  if (answers.styling && styles[answers.styling]?.files) {
-    await writeFiles(answers.project, styles[answers.styling].files)
-
-    // write files
-    reporter.success(
-      `Added files for ${styles[answers.styling].message} in ${colors.green(
-        answers.project
-      )}`
-    )
-  }
-
   if (plugins.length) {
     reporter.info(`${maybeUseEmoji(`🔌 `)}Setting-up plugins...`)
     await installPlugins(plugins, pluginConfig, fullPath, [])
   }
+
+  if (answers.styling && styles[answers.styling]?.files) {
+    reporter.info(`${maybeUseEmoji(`🎨 `)}Adding necessary styling files...`)
+    await writeFiles(answers.project, styles[answers.styling].files)
+  }
+
   await setSiteMetadata(fullPath, `title`, siteName)
 
   await gitSetup(answers.project)

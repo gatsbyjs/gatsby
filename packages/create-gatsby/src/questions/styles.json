@@ -32,19 +32,19 @@
     "isGatsbyPlugin": false,
     "files": [
       {
-        "source": "src/files/tailwindcss/gatsby-browser.js",
+        "source": "stubs/tailwindcss/gatsby-browser.js",
         "targetPath": "gatsby-browser.js"
       },
       {
-        "source": "src/files/tailwindcss/global.css",
+        "source": "stubs/tailwindcss/global.css",
         "targetPath": "src/styles/global.css"
       },
       {
-        "source": "src/files/tailwindcss/postcss.config.js",
+        "source": "stubs/tailwindcss/postcss.config.js",
         "targetPath": "postcss.config.js"
       },
       {
-        "source": "src/files/tailwindcss/tailwind.config.js",
+        "source": "stubs/tailwindcss/tailwind.config.js",
         "targetPath": "tailwind.config.js"
       }
     ]

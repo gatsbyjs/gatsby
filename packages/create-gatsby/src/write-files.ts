@@ -1,40 +1,37 @@
-import fs from "fs-extra"
+import * as fs from "fs-extra"
 import path from "path"
-import { IFile } from "."
-function createDirectories(filepath: string): string {
-  // Split the filepath into directories and filename
-  const dirs = filepath.split(path.sep)
-  const filename = dirs.pop() || ``
-  let dirPath = ``
 
-  // Create each directory in the filepath if it does not exist
-  for (const dir of dirs) {
-    dirPath = path.join(dirPath, dir)
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath)
-    }
-  }
-
-  // Return the full filepath with the filename
-  return path.join(dirPath, filename)
+export interface IFile {
+  source: string
+  targetPath: string
 }
 
-function writeFile(sourceFile: string, filepath: string): void {
-  const data = fs.readFileSync(sourceFile)
-  // Create the directories if they do not exist
-  const fullpath = createDirectories(filepath)
-  // Write the file
-  fs.writeFileSync(fullpath, data)
+async function writeFile({ source, targetPath }: IFile): Promise<void> {
+  // Read the stub
+  const stubData = await fs.readFile(source)
+  // Write stub to targetPath
+  await fs.outputFile(targetPath, stubData)
 }
 
 export async function writeFiles(
   rootPath: string,
   files: Array<IFile> | undefined
 ): Promise<void> {
-  const parentDir = path.join(__dirname, `..`)
-  files?.forEach(({ source, targetPath }) => {
-    const fullPath = path.join(rootPath, targetPath)
-    const sourcePath = path.resolve(parentDir, source)
-    writeFile(sourcePath, fullPath)
-  })
+  if (!files) {
+    return
+  }
+
+  // Necessary to grab files from the stub/ dir
+  const createGatsbyRoot = path.join(__dirname, `..`)
+  // Creating files in parallel
+  const results = []
+
+  for (const file of files) {
+    const source = path.resolve(createGatsbyRoot, file.source)
+    const targetPath = path.resolve(rootPath, file.targetPath)
+
+    results.push(writeFile({ source, targetPath }))
+  }
+
+  await Promise.all(results)
 }
