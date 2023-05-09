@@ -16,8 +16,8 @@ function createNamedReference(
   normalizedModuleKey: string
 ): string {
   return `export const ${name} = {
-    $$typeof: Symbol.for('react.module.reference'),
-    filepath: '${normalizedModuleKey}',
+    $$typeof: Symbol.for('react.client.reference'),
+    $$id: '${normalizedModuleKey}',
     name: '${name}'
   }`
 }
@@ -27,8 +27,8 @@ function createDefaultReference(
   normalizedModuleKey: string
 ): string {
   return `export default {
-    $$typeof: Symbol.for('react.module.reference'),
-    filepath: '${normalizedModuleKey}',
+    $$typeof: Symbol.for('react.client.reference'),
+    $$id: '${normalizedModuleKey}',
     name: '${name}'
   }`
 }
