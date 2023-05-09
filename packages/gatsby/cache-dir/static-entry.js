@@ -542,7 +542,7 @@ export function getPageChunk({ componentChunkName }) {
   return asyncRequires.components[componentChunkName]()
 }
 
-export { renderToPipeableStream } from "react-server-dom-webpack/writer.node.server"
+export { renderToPipeableStream } from "react-server-dom-webpack/server.node"
 export { StaticQueryContext, React }
 
 export async function renderSlice({ slice, staticQueryContext, props = {} }) {
