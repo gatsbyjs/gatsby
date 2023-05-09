@@ -92,8 +92,7 @@ const toPageResources = (pageData, component = null, head) => {
 function waitForResponse(response) {
   return new Promise(resolve => {
     try {
-      const result = response.readRoot()
-      resolve(result)
+      resolve(response)
     } catch (err) {
       if (
         Object.hasOwnProperty.call(err, `_response`) &&
@@ -510,9 +509,7 @@ export class BaseLoader {
                   cancel() {},
                 })
 
-                return waitForResponse(
-                  createFromReadableStream(readableStream)
-                ).then(result => {
+                return createFromReadableStream(readableStream).then(result => {
                   pageResources.partialHydration = result
 
                   return pageResources
