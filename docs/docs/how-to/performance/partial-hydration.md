@@ -13,9 +13,9 @@ We highly recommend reading the [Partial Hydration conceptual guide](/docs/conce
 ## Prerequisites
 
 - A Gatsby project set up with `gatsby@5.0.0` or later. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
-- `react@experimental` and `react-dom@experimental` installed. You can install it like this:
+- The `canary` versions of certain packages installed:
   ```shell
-  npm install --save-exact react@experimental react-dom@experimental --legacy-peer-deps
+  npm install --save-exact react@canary react-dom@canary react-server-dom-webpack@canary
   ```
 - Enable the `PARTIAL_HYDRATION` flag in `gatsby-config`:
   ```js:title=gatsby-config.js
@@ -169,7 +169,7 @@ const Page = () => (
 
 Please note these current limitations:
 
-- You have to use React's experimental release which we **don't** recommend using in production
+- You have to use React's canary release which we **don't** recommend using in production
 - A lot of packages in the React ecosystem are not ready for React server components (e.g. CSS-in-JS solutions)
 - Partial Hydration only works during `gatsby build` & `gatsby serve`, and not `gatsby develop`
 
