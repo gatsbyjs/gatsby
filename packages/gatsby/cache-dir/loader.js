@@ -509,7 +509,9 @@ export class BaseLoader {
                   cancel() {},
                 })
 
-                return createFromReadableStream(readableStream).then(result => {
+                return waitForResponse(
+                  createFromReadableStream(readableStream)
+                ).then(result => {
                   pageResources.partialHydration = result
 
                   return pageResources
