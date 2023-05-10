@@ -13,7 +13,8 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
   "files": [
     "lib/index.js",
-    "cli.js"
+    "cli.js",
+    "stubs/"
   ],
   "devDependencies": {
     "@ascorbic/worker-threads-shim": "^1.0.0",
