@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.9.1/packages/gatsby) (2023-05-09)
+
+#### Bug Fixes
+
+- handle cyclic chunkgroup children [#38052](https://github.com/gatsbyjs/gatsby/issues/38052) [#38061](https://github.com/gatsbyjs/gatsby/issues/38061) ([fb30dc0](https://github.com/gatsbyjs/gatsby/commit/fb30dc03ce34a47d7b1d8f1e7aead97c5a5e3b08))
+- don't serve codeframes for files outside of compilation [#38059](https://github.com/gatsbyjs/gatsby/issues/38059) [#38062](https://github.com/gatsbyjs/gatsby/issues/38062) ([ae5a654](https://github.com/gatsbyjs/gatsby/commit/ae5a654eb346b2e7a9d341b809b2f82d34c0f17c))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.9.0/packages/gatsby) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
