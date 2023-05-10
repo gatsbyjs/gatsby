@@ -5,6 +5,7 @@ import Bluebird from "bluebird"
 import * as path from "path"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
+import * as React from "react"
 
 import {
   readWebpackStats,
@@ -30,6 +31,8 @@ import { ensureFileContent } from "../../ensure-file-content"
 const { join } = path.posix
 
 type IUnsafeBuiltinUsage = Array<string> | undefined
+
+type ReactType = typeof React
 
 declare global {
   namespace NodeJS {
@@ -503,6 +506,29 @@ export const renderHTMLDev = async ({
   )
 }
 
+interface IPageRendererExports {
+  React: ReactType
+  StaticQueryContext: React.Context<any>
+  renderToPipeableStream:
+    | ((
+        a: any,
+        b: any,
+        d: any
+      ) => {
+        pipe: (f: any) => any
+        abort: (f: any) => void
+      })
+    | ((
+        model: any,
+        webpackMap: any,
+        options: any
+      ) => {
+        pipe: (destination: any) => any
+        abort: (reason: any) => void
+      })
+  getPageChunk: (a: any) => Promise<any>
+}
+
 export async function renderPartialHydrationProd({
   paths,
   envVars,
@@ -572,7 +598,7 @@ export async function renderPartialHydrationProd({
       StaticQueryContext,
       renderToPipeableStream,
       React,
-    } = require(pageRenderer)
+    }: IPageRendererExports = require(pageRenderer)
     const chunk = await getPageChunk({
       componentChunkName: pageData.componentChunkName,
     })

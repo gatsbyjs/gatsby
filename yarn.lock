@@ -19954,6 +19954,15 @@ react-remove-scroll@^2.4.3:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
+react-server-dom-webpack@18.3.0-canary-7cd98ef2b-20230509:
+  version "18.3.0-canary-7cd98ef2b-20230509"
+  resolved "https://registry.yarnpkg.com/react-server-dom-webpack/-/react-server-dom-webpack-18.3.0-canary-7cd98ef2b-20230509.tgz#ceca6ea7a9c667e91f240f16deb5f07bb46bf061"
+  integrity sha512-HxqiTyEKFIIFI/esfWJqY/gY6NKhJp82Jb4JoDB7unt0QY+UpB4uVURYWiqv2KuUGawKXBVlIJRprLxtzUR8fw==
+  dependencies:
+    acorn-loose "^8.3.0"
+    loose-envify "^1.1.0"
+    neo-async "^2.6.1"
+
 react-style-singleton@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.1.tgz#f99e420492b2d8f34d38308ff660b60d0b1205b4"

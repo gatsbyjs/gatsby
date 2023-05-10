@@ -197,6 +197,7 @@
     "documentation": "^13.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-server-dom-webpack": "18.3.0-canary-7cd98ef2b-20230509",
     "rimraf": "^3.0.2",
     "typescript": "^5.0.3",
     "xhr-mock": "^2.5.1",
