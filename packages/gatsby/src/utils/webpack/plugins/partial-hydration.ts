@@ -1,6 +1,5 @@
 import * as path from "path"
 import fs from "fs-extra"
-import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 import webpack, {
   Module,
   NormalModule,
@@ -10,11 +9,22 @@ import webpack, {
   AsyncDependenciesBlock,
 } from "webpack"
 import type Reporter from "gatsby-cli/lib/reporter"
+import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 
-interface IModuleExport {
+interface IClientManifest {
+  [key: string]: IClientReferenceMetadata
+}
+
+interface IClientReferenceMetadata {
   id: string
   chunks: Array<string>
   name: string
+  async: boolean
+}
+
+interface IClientModuleExport {
+  originalExport: string
+  resolvedExport: string
 }
 
 interface IDirective {
@@ -22,6 +32,53 @@ interface IDirective {
 }
 
 export const PARTIAL_HYDRATION_CHUNK_REASON = `PartialHydration client module`
+
+export const createModuleKeyEntries = ({
+  json,
+  moduleKey,
+  id,
+  chunkIds,
+  exports,
+}: {
+  json: IClientManifest
+  moduleKey: string
+  id: string
+  chunkIds: Array<string>
+  exports: Array<IClientModuleExport>
+}): IClientManifest => {
+  const defaultName = moduleKey
+  const defaultNameWithHash = `${moduleKey}#`
+
+  const defaultEntries: Record<string, IClientReferenceMetadata> = {
+    [defaultName]: {
+      id,
+      name: `*`,
+      chunks: chunkIds,
+      async: false,
+    },
+    [defaultNameWithHash]: {
+      id,
+      name: ``,
+      chunks: chunkIds,
+      async: false,
+    },
+  }
+
+  const namedEntries: Record<string, IClientReferenceMetadata> = {}
+
+  for (const e of exports) {
+    const name = `${moduleKey}#${e.originalExport}`
+
+    namedEntries[name] = {
+      id,
+      name: e.resolvedExport,
+      chunks: chunkIds,
+      async: false,
+    }
+  }
+
+  return Object.assign(json, defaultEntries, namedEntries)
+}
 
 /**
  * inspiration and code mostly comes from https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js
@@ -43,29 +100,20 @@ export class PartialHydrationPlugin {
   _generateManifest(
     compilation: Compilation,
     rootContext: string
-  ): Record<string, Record<string, IModuleExport>> {
+  ): IClientManifest {
     const moduleGraph = compilation.moduleGraph
     const chunkGraph = compilation.chunkGraph
 
-    const json: Record<string, Record<string, IModuleExport>> = {}
+    let json: IClientManifest = {}
     const mapOriginalModuleToPotentiallyConcatanetedModule = new Map()
-    // @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L220-L252
+
     const recordModule = (
       id: string,
       module: Module | NormalModule,
-      exports: Array<{ originalExport: string; resolvedExport: string }>,
+      exports: Array<IClientModuleExport>,
       chunkIds: Array<string>
     ): void => {
-      const normalModule: NormalModule = module as NormalModule
-
-      const moduleExports: Record<string, IModuleExport> = {}
-      exports.forEach(({ originalExport, resolvedExport }) => {
-        moduleExports[originalExport] = {
-          id: id,
-          chunks: chunkIds,
-          name: resolvedExport,
-        }
-      })
+      const normalModule = module as NormalModule
 
       // @ts-ignore
       if (normalModule.modules) {
@@ -78,7 +126,13 @@ export class PartialHydrationPlugin {
             )
 
             if (normalizedModuleKey !== undefined) {
-              json[normalizedModuleKey] = moduleExports
+              json = createModuleKeyEntries({
+                json,
+                moduleKey: normalizedModuleKey,
+                id,
+                chunkIds,
+                exports,
+              })
             }
           }
         })
@@ -90,7 +144,13 @@ export class PartialHydrationPlugin {
           )
 
           if (normalizedModuleKey !== undefined) {
-            json[normalizedModuleKey] = moduleExports
+            json = createModuleKeyEntries({
+              json,
+              moduleKey: normalizedModuleKey,
+              id,
+              chunkIds,
+              exports,
+            })
           }
         }
       }
@@ -98,13 +158,7 @@ export class PartialHydrationPlugin {
 
     const ClientModulesToRecord: Map<
       webpack.Module,
-      Map<
-        webpack.Module,
-        Array<{
-          originalExport: string
-          resolvedExport: string
-        }>
-      >
+      Map<webpack.Module, Array<IClientModuleExport>>
     > = new Map()
 
     function recordModuleExports(module): any {
