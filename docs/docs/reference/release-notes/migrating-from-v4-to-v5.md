@@ -166,7 +166,7 @@ Before:
 
 After:
 
-```jsx
+```graphql
 {
   allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
     nodes {
