@@ -161,7 +161,7 @@ Using the ID is a much more stable property to work with as it will change less 
 
 If you are confident your content types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
 
-**`pageLimit`** [number][optional] [default: `100`]
+**`pageLimit`** [number][optional] [default: `1000`]
 
 Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
 
