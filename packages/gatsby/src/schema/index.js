@@ -58,9 +58,10 @@ const buildInferenceMetadata = ({ types }) =>
       return
     }
 
+    let nodesSeenCount = 0
     let processedNodesCount = 0
     let dispatchSize = 1000
-    let forceGcCount = 0
+    const forceGcCount = 0
 
     const typeNames = [...types]
     // TODO: use async iterators when we switch to node>=10
@@ -115,16 +116,6 @@ const buildInferenceMetadata = ({ types }) =>
 
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
             setImmediate(() => {
-              if (
-                processedNodesCount > 100000 &&
-                processedNodesCount % 10000 === 0
-              ) {
-                if (forceGcCount++ === 0) {
-                  console.info(`[gatsby] forcing garbage collection`)
-                }
-                gc()
-              }
-
               res(null)
             })
           })
@@ -133,6 +124,11 @@ const buildInferenceMetadata = ({ types }) =>
 
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         processingNodes.push(node)
+
+        if (nodesSeenCount++ > 100000 && processedNodesCount % 10000 === 0) {
+          console.info(`[gatsby] forcing garbage collection #${forceGcCount}`)
+          gc()
+        }
 
         if (processingNodes.length >= dispatchSize) {
           await dispatchNodes()
