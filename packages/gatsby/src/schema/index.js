@@ -9,6 +9,7 @@ const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 const { shouldPrintEngineSnapshot } = require(`../utils/engines-helpers`)
+const { chunkStepper } = require(`../utils/chunk-stepper`)
 const gc = require(`expose-gc/function`)
 
 const getAllTypeDefinitions = () => {
@@ -58,15 +59,43 @@ const buildInferenceMetadata = ({ types }) =>
       return
     }
 
-    let nodesSeenCount = 0
-    let processedNodesCount = 0
-    let dispatchSize = 1000
     let forceGcCount = 0
 
+    const stepper = chunkStepper(() => {
+      console.info(`[gatsby] forcing garbage collection #${forceGcCount++}`)
+      gc()
+    }, [
+      {
+        every: 0, // dont force gc until after 500,000 nodes
+        until: 500_000,
+      },
+      {
+        every: 100_000,
+        until: 2_000_000,
+      },
+      {
+        every: 50_000,
+        until: 3_000_000,
+      },
+      {
+        every: 20_000,
+        until: 4_000_000,
+      },
+      {
+        every: 10_000,
+        until: 5_000_000,
+      },
+      {
+        every: 1_000,
+        until: Infinity,
+      },
+    ])
+
+    let processedNodesCount = 0
+    let dispatchSize = 1000
+
     const typeNames = [...types]
-    // TODO: use async iterators when we switch to node>=10
-    //  or better investigate if we can offload metadata building to worker/Jobs API
-    //  and then feed the result into redux?
+
     const processNextType = async () => {
       const typeName = typeNames.pop()
 
@@ -83,41 +112,38 @@ const buildInferenceMetadata = ({ types }) =>
               nodes: processingNodes,
             },
           })
+
+          processedNodesCount += processingNodes.length
+
+          const initialDispatchSize = dispatchSize
+
+          // decrease dispatch size for large sites to prevent
+          // OOMs during inference
+          if (processedNodesCount >= 10_000) {
+            dispatchSize = 500
+          }
+          if (processedNodesCount >= 100_000) {
+            dispatchSize = 250
+          }
+          if (processedNodesCount >= 1_000_000) {
+            dispatchSize = 100
+          }
+          if (processedNodesCount >= 2_000_000) {
+            dispatchSize = 25
+          }
+
+          if (initialDispatchSize !== dispatchSize) {
+            console.info(
+              `[gatsby] Decreasing inference dispatch size from ${initialDispatchSize} to ${dispatchSize} for large site. Processed ${processedNodesCount} nodes.`
+            )
+          }
+
+          // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
+          processingNodes = []
+
+          // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
           setImmediate(() => {
-            processedNodesCount += processingNodes.length
-
-            const initialDispatchSize = dispatchSize
-
-            // decrease dispatch size for large sites to prevent
-            // OOMs during inference
-            if (processedNodesCount >= 1000) {
-              dispatchSize = 500
-            }
-            if (processedNodesCount >= 5000) {
-              dispatchSize = 250
-            }
-            if (processedNodesCount >= 10000) {
-              dispatchSize = 100
-            }
-            if (processedNodesCount >= 100000) {
-              dispatchSize = 50
-            }
-            if (processedNodesCount >= 1000000) {
-              dispatchSize = 25
-            }
-
-            if (initialDispatchSize !== dispatchSize) {
-              console.info(
-                `[gatsby] Decreasing inference dispatch size from ${initialDispatchSize} to ${dispatchSize} for large site. Processed ${processedNodesCount} nodes.`
-              )
-            }
-            // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
-            processingNodes = []
-
-            // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
-            setImmediate(() => {
-              res(null)
-            })
+            res(null)
           })
         })
       }
@@ -125,10 +151,8 @@ const buildInferenceMetadata = ({ types }) =>
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         processingNodes.push(node)
 
-        if (nodesSeenCount++ > 100000 && nodesSeenCount % 10000 === 0) {
-          console.info(`[gatsby] forcing garbage collection #${forceGcCount++}`)
-          gc()
-        }
+        // run gc more and more frequently every X number of times tick is called
+        stepper.tick()
 
         if (processingNodes.length >= dispatchSize) {
           await dispatchNodes()
@@ -183,6 +207,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
 
   const fieldExtensions = getAllFieldExtensions()
   const schemaComposer = createSchemaComposer({ fieldExtensions })
+  gc()
   const schema = await buildSchema({
     schemaComposer,
     types: getAllTypeDefinitions(),
@@ -195,6 +220,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     inferenceMetadata,
     parentSpan,
   })
+  gc()
 
   typeConflictReporter.printConflicts()
 
