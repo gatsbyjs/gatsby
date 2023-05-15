@@ -61,7 +61,7 @@ const buildInferenceMetadata = ({ types }) =>
     let nodesSeenCount = 0
     let processedNodesCount = 0
     let dispatchSize = 1000
-    const forceGcCount = 0
+    let forceGcCount = 0
 
     const typeNames = [...types]
     // TODO: use async iterators when we switch to node>=10
