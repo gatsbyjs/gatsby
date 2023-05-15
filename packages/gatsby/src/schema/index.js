@@ -125,8 +125,8 @@ const buildInferenceMetadata = ({ types }) =>
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         processingNodes.push(node)
 
-        if (nodesSeenCount++ > 100000 && processedNodesCount % 10000 === 0) {
-          console.info(`[gatsby] forcing garbage collection #${forceGcCount}`)
+        if (nodesSeenCount++ > 100000 && nodesSeenCount % 10000 === 0) {
+          console.info(`[gatsby] forcing garbage collection #${forceGcCount++}`)
           gc()
         }
 
