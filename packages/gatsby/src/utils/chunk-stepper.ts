@@ -19,21 +19,18 @@ export function chunkStepper(
   let counter = 0
 
   const tick = (): any => {
-    if (counter++ >= currentValues.until) {
+    if (currentValues && counter++ >= currentValues.until) {
       currentValues = config[config.indexOf(currentValues) + 1]
-      console.log(`changing values to until ${currentValues?.until} every ${currentValues?.every}`)
-    }
-
-    if (!currentValues) {
-      // we've reached the end of the config
-      return
+      console.log(
+        `changing values to until ${currentValues?.until} every ${currentValues?.every}`
+      )
     }
 
     if (currentValues?.every && counter % currentValues.every === 0) {
       return runFn(counter)
     }
 
-    return
+    return undefined
   }
 
   return { tick }
