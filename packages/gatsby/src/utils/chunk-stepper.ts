@@ -17,7 +17,7 @@ export function chunkStepper(
   let currentValues = config[0]
   let counter = 0
 
-  const tick = (fn: (count: number) => void) => {
+  const tick = () => {
     if (!currentValues) {
       // we've reached the end of the config
       return
@@ -31,7 +31,7 @@ export function chunkStepper(
       typeof currentValues.every === `number` &&
       counter % currentValues.every !== 0
     ) {
-      return fn(counter)
+      return runFn(counter)
     }
   }
 
