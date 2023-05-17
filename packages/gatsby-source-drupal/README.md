@@ -486,6 +486,37 @@ module.exports = {
 
 Some entities are not translatable like Drupal files and will return null result when language code from parent entity doesn't match up. These items can be specified as nonTranslatableEntities and receive the defaultLanguage as fallback.
 
+## Type prefix
+
+By default, types are created with names that match the types in Drupal. However you can use the `typePrefix` option to add a prefix to all types. This is useful if you have multiple Drupal sources and want to differentiate between them, or if you have Drupal types that conflict with other types in your site.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        typePrefix: `Drupal`,
+      },
+    },
+  ],
+}
+```
+
+You would then query for `allDrupalArticle` instead of `allArticle`.
+
+```graphql
+{
+  allDrupalArticle {
+    nodes {
+      title
+    }
+  }
+}
+```
+
 ## Gatsby Preview (experimental)
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby

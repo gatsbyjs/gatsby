@@ -10,6 +10,7 @@ export interface IPluginOptions extends Partial<PluginOptions> {
   contentTypeFilter?: () => boolean
   pageLimit?: number
   useNameForId?: boolean
+  contentTypePrefix: string
 }
 
 export interface IProcessedPluginOptions {

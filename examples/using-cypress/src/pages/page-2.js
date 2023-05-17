@@ -12,4 +12,9 @@ const SecondPage = () => (
 
 export default SecondPage
 
-export const Head = () => <title>Page two</title>
+export const Head = () => (
+  <>
+    <html lang="en" />
+    <title>Page Two</title>
+  </>
+)

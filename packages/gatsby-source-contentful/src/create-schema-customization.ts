@@ -113,12 +113,12 @@ const ContentfulDataTypes: Map<
 ])
 
 const unionsNameSet = new Set()
-
 const getLinkFieldType = (
   linkType: string | undefined,
   field: ContentTypeField,
   schema: NodePluginSchema,
-  createTypes: CreateTypes
+  createTypes: CreateTypes,
+  contentTypePrefix: string
 ): IContentfulGraphQLField => {
   // Check for validations
   const validations =
@@ -137,7 +137,7 @@ const getLinkFieldType = (
 
       // Full type names for union members, shorter variant for the union type name
       const translatedTypeNames = contentTypes.map(typeName =>
-        makeTypeName(typeName)
+        makeTypeName(typeName, contentTypePrefix)
       )
       const shortTypeNames = contentTypes.map(typeName =>
         makeTypeName(typeName, ``)
@@ -192,12 +192,12 @@ const getLinkFieldType = (
     },
   }
 }
-
 // Translate Contentful field types to GraphQL field types
 const translateFieldType = (
   field: ContentTypeField | FieldItem,
   schema: NodePluginSchema,
-  createTypes: CreateTypes
+  createTypes: CreateTypes,
+  contentTypePrefix: string
 ): GraphQLFieldConfig<unknown, unknown> => {
   let fieldType
   if (field.type === `Array`) {
@@ -213,8 +213,19 @@ const translateFieldType = (
     // Arrays of Contentful Links or primitive types
     const fieldData =
       field.items?.type === `Link`
-        ? getLinkFieldType(field.items.linkType, field, schema, createTypes)
-        : translateFieldType(field.items, schema, createTypes)
+        ? getLinkFieldType(
+            field.items.linkType,
+            field,
+            schema,
+            createTypes,
+            contentTypePrefix
+          )
+        : translateFieldType(
+            field.items,
+            schema,
+            createTypes,
+            contentTypePrefix
+          )
 
     fieldType = { ...fieldData, type: `[${fieldData.type}]` }
   } else if (field.type === `Link`) {
@@ -223,7 +234,8 @@ const translateFieldType = (
       field.linkType,
       field as ContentTypeField,
       schema,
-      createTypes
+      createTypes,
+      contentTypePrefix
     )
   } else {
     // Primitive field types
@@ -289,6 +301,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     const pluginConfig = createPluginConfig(pluginOptions as IPluginOptions)
 
+    const contentTypePrefix = pluginConfig.get(`contentTypePrefix`)
     const useNameForId = pluginConfig.get(`useNameForId`)
 
     let contentTypeItems: Array<ContentType>
@@ -406,9 +419,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     contentTypeItems.forEach(contentType => {
       let contentTypeItemId
       if (useNameForId) {
-        contentTypeItemId = makeTypeName(contentType.name)
+        contentTypeItemId = makeTypeName(contentType.name, contentTypePrefix)
       } else {
-        contentTypeItemId = makeTypeName(contentType.sys.id)
+        contentTypeItemId = makeTypeName(contentType.sys.id, contentTypePrefix)
       }
 
       if (
@@ -666,7 +679,12 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
               `Unfortunately the field name ${field.id} is reserved. ${contentTypeItem.name}@${contentTypeItem.sys.id}`
             )
           }
-          fields[field.id] = translateFieldType(field, schema, createTypes)
+          fields[field.id] = translateFieldType(
+            field,
+            schema,
+            createTypes,
+            contentTypePrefix
+          )
         })
 
         const type = useNameForId
@@ -675,7 +693,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
         createTypes(
           schema.buildObjectType({
-            name: makeTypeName(type),
+            name: makeTypeName(type, contentTypePrefix),
             fields: {
               id: { type: `ID!` },
               sys: { type: `ContentfulSys!` },

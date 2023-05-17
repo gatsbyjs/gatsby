@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@3.10.0/packages/gatsby-cypress) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- Add TS types & improve README [#37984](https://github.com/gatsbyjs/gatsby/issues/37984) ([3b31e35](https://github.com/gatsbyjs/gatsby/commit/3b31e35a69f54f1814c92ebc9a49326fa52d4556))
+
 ## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@3.9.0/packages/gatsby-cypress) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

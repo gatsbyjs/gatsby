@@ -352,8 +352,8 @@ schema.buildObjectType({
 }),
 ```
 
-> Type Builders also exist for Input, Interface and Union types:
-> `buildInputType`, `buildInterfaceType`, and `buildUnionType`.
+> Type Builders also exist for Input, Interface Union, Enum and Scalar types:
+> `buildInputObjectType`, `buildInterfaceType`, `buildUnionType`, `buildEnumType` and `buildScalarType`.
 > Note that the `createTypes` action also accepts `graphql-js` types directly,
 > but usually either SDL or Type Builders are the better alternatives.
 

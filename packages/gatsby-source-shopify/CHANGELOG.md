@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.10.0/packages/gatsby-source-shopify) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency sharp to ^0.32.1 [#38024](https://github.com/gatsbyjs/gatsby/issues/38024) ([d7cccfe](https://github.com/gatsbyjs/gatsby/commit/d7cccfeac7dbb0f130f87d809879284319d7830d))
+- update dependency prettier to v2.8.8 [#38003](https://github.com/gatsbyjs/gatsby/issues/38003) ([c780049](https://github.com/gatsbyjs/gatsby/commit/c780049bc78aecf9dfb36f03db3ec81a7feff813))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-source-shopify [#38007](https://github.com/gatsbyjs/gatsby/issues/38007) ([86052c4](https://github.com/gatsbyjs/gatsby/commit/86052c45ed7533668bc469b45bce0b1912f322cc))
+
 ## [8.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.9.0/packages/gatsby-source-shopify) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

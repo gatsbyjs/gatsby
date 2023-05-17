@@ -9,6 +9,7 @@ import {
 import { existingNodes, is } from "../backreferences"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId, makeTypeName } from "../normalize"
+import { defaultOptions } from "../plugin-options"
 
 import startersBlogFixture from "../__fixtures__/starter-blog-data"
 import richTextFixture from "../__fixtures__/rich-text-data"
@@ -25,7 +26,10 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-const defaultPluginOptions = { spaceId: `testSpaceId` }
+const defaultPluginOptions = {
+  ...defaultOptions,
+  spaceId: `testSpaceId`,
+}
 
 // @ts-ignore
 fetchContentTypes.mockImplementation(() =>
@@ -641,6 +645,42 @@ describe(`gatsby-node`, () => {
         ],
       ]
     `)
+  })
+
+  it(`should create nodes with custom prefix`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+    schema.buildObjectType.mockClear()
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      // @ts-ignore
+      contentTypePrefix: `CustomPrefix`,
+    })
+
+    expect(schema.buildObjectType).toHaveBeenCalledTimes(14)
+    expect(schema.buildObjectType).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `CustomPrefixPerson`,
+      })
+    )
+    expect(schema.buildObjectType).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `CustomPrefixBlogPost`,
+      })
+    )
+
+    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `ContentfulPerson`,
+      })
+    )
+
+    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: `ContentfulBlogPost`,
+      })
+    )
   })
 
   it(`should add a new blogpost and update linkedNodes`, async () => {

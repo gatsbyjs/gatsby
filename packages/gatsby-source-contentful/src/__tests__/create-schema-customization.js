@@ -1,6 +1,7 @@
 // @ts-check
 import { createSchemaCustomization } from "../create-schema-customization"
 import { contentTypes } from "../__fixtures__/content-types"
+import { defaultOptions } from "../plugin-options"
 
 const createMockCache = () => {
   return {
@@ -37,7 +38,7 @@ describe(`create-schema-customization`, () => {
   it(`builds schema based on Contentful Content Model`, async () => {
     await createSchemaCustomization(
       { schema, actions, reporter, cache },
-      { spaceId: `testSpaceId` }
+      { ...defaultOptions, spaceId: `testSpaceId` }
     )
 
     expect(schema.buildObjectType).toHaveBeenCalled()

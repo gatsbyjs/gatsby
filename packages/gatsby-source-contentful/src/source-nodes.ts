@@ -136,7 +136,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       currentSyncData,
       tagItems,
       defaultLocale,
-      locales: allLocales,
+      locales: allLocales = [],
       space,
     } = await fetchContent({ syncToken, pluginConfig, reporter })
 
@@ -169,7 +169,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     }
 
     // Update syncToken
-    const nextSyncToken = currentSyncData.nextSyncToken
+    const nextSyncToken = currentSyncData?.nextSyncToken
 
     actions.setPluginStatus({
       [CACHE_SYNC_TOKEN]: nextSyncToken,
@@ -245,6 +245,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       CACHE_FOREIGN_REFERENCE_MAP_STATE
     )
     const useNameForId = pluginConfig.get(`useNameForId`)
+    const contentTypePrefix = pluginConfig.get(`contentTypePrefix`)
 
     const foreignReferenceMapState = buildForeignReferenceMap({
       contentTypeItems,
@@ -253,6 +254,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       defaultLocale,
       space,
       useNameForId,
+      contentTypePrefix,
       previousForeignReferenceMapState,
       deletedEntries: currentSyncData?.deletedEntries,
       createNodeId,

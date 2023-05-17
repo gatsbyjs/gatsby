@@ -13,6 +13,7 @@ const defaultOptions: Omit<IPluginOptions, "spaceId" | "accessToken"> = {
   contentTypeFilter: () => true,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
+  contentTypePrefix: `ContentfulContentType`,
 }
 
 /**
