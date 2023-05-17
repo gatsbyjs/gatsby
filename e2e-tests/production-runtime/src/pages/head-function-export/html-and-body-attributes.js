@@ -11,7 +11,7 @@ export default function HeadFunctionHtmlAndBodyAttributes() {
 function Indirection({ children }) {
   return (
     <>
-      <html lang="fr" style={{ accentColor: 'rebeccapurple' }} />
+      <html lang="fr" style={{ accentColor: 'rgb(102, 51, 153)' }} />
       <body className="foo" />
       {children}
     </>
@@ -22,7 +22,7 @@ export function Head() {
   return (
     <Indirection>
       <html data-foo="bar" style={{ border: 'none' }} />
-      <body data-foo="baz" style={{ accentColor: 'rebeccapurple', border: 'none' }} />
+      <body data-foo="baz" style={{ accentColor: 'rgb(102, 51, 153)', border: 'none' }} />
     </Indirection>
   )
 }
