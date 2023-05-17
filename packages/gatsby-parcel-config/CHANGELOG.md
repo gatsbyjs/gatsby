@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@1.10.0/packages/gatsby-parcel-config) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+**Note:** Version bump only for package gatsby-parcel-config
+
 ## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@1.9.0/packages/gatsby-parcel-config) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.10.0/packages/gatsby) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Features
+
+- apply default webpack split chunking config to html gen bundle [#37961](https://github.com/gatsbyjs/gatsby/issues/37961) ([a623949](https://github.com/gatsbyjs/gatsby/commit/a623949c969344aff527487e58a7a2d88b79b2c8))
+
+#### Bug Fixes
+
+- don't serve codeframes for files outside of compilation [#38059](https://github.com/gatsbyjs/gatsby/issues/38059) ([ed5855e](https://github.com/gatsbyjs/gatsby/commit/ed5855e511ce00c765525c687f36d1be177c22f2))
+- handle cyclic chunkgroup children [#38052](https://github.com/gatsbyjs/gatsby/issues/38052) ([272dacd](https://github.com/gatsbyjs/gatsby/commit/272dacdbc5e334e6d7c8e918cfffac6f6d556577))
+- update minor and patch dependencies for gatsby [#38005](https://github.com/gatsbyjs/gatsby/issues/38005) ([a83ed19](https://github.com/gatsbyjs/gatsby/commit/a83ed192f42e91781304dc4e77a72ffd27514533))
+- update dependency sharp to ^0.32.1 [#38024](https://github.com/gatsbyjs/gatsby/issues/38024) ([d7cccfe](https://github.com/gatsbyjs/gatsby/commit/d7cccfeac7dbb0f130f87d809879284319d7830d))
+- update dependency semver to ^7.5.0 [#38023](https://github.com/gatsbyjs/gatsby/issues/38023) ([2564f6b](https://github.com/gatsbyjs/gatsby/commit/2564f6b247b622b51522ff1f91fe2a9ef34fa571))
+- update dependency core-js to ^3.30.1 [#38017](https://github.com/gatsbyjs/gatsby/issues/38017) ([3d10f90](https://github.com/gatsbyjs/gatsby/commit/3d10f9035e8bfeedfab8a4a400c687e29d0f9a03))
+- encode window.pagePath to get valid JS code [#36349](https://github.com/gatsbyjs/gatsby/issues/36349) ([6feee5d](https://github.com/gatsbyjs/gatsby/commit/6feee5d6bb752f458f01d968798dad18e5b43d30))
+- avoid plus2space conversion using json encoded options [#37980](https://github.com/gatsbyjs/gatsby/issues/37980) ([2d2e8ad](https://github.com/gatsbyjs/gatsby/commit/2d2e8adee3f627dbce8aa816f4021bc39c1acc90))
+- Correct `stitching slices` build activity name [#37975](https://github.com/gatsbyjs/gatsby/issues/37975) ([b116f7e](https://github.com/gatsbyjs/gatsby/commit/b116f7e423462e570a909253e9d8882e001d6d61))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby [#37992](https://github.com/gatsbyjs/gatsby/issues/37992) ([f284749](https://github.com/gatsbyjs/gatsby/commit/f28474973ac1d82ecd5e3a6c513cd77412a08271))
+
 ### [5.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.9.1/packages/gatsby) (2023-05-09)
 
 #### Bug Fixes

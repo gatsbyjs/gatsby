@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.10.0/packages/gatsby-source-contentful) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Features
+
+- add support for setting type prefix fix [#37981](https://github.com/gatsbyjs/gatsby/issues/37981) ([8c9b0d4](https://github.com/gatsbyjs/gatsby/commit/8c9b0d4c9d73dd0ac86a877416a313e8e2ba84ea))
+
+#### Bug Fixes
+
+- update dependency semver to ^7.5.0 [#38023](https://github.com/gatsbyjs/gatsby/issues/38023) ([2564f6b](https://github.com/gatsbyjs/gatsby/commit/2564f6b247b622b51522ff1f91fe2a9ef34fa571))
+- don't call `createNode` on `null` [#37958](https://github.com/gatsbyjs/gatsby/issues/37958) ([da9a8f5](https://github.com/gatsbyjs/gatsby/commit/da9a8f52e37c1e995198e19dafa1542d20807cca))
+
+#### Chores
+
+- Fix docs pageLimit default value Fix [#38082](https://github.com/gatsbyjs/gatsby/issues/38082) ([89a3232](https://github.com/gatsbyjs/gatsby/commit/89a3232efdf2b69a67ad746294ab750c631f6afd))
+- update dependency nock to ^13.3.1 for gatsby-source-contentful [#37997](https://github.com/gatsbyjs/gatsby/issues/37997) ([203b661](https://github.com/gatsbyjs/gatsby/commit/203b661ca919cbe12f19f4640c285f5727c067a2))
+
 ### [8.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.9.1/packages/gatsby-source-contentful) (2023-04-19)
 
 #### Bug Fixes

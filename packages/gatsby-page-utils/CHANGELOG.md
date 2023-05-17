@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.10.0/packages/gatsby-page-utils) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Chores
+
+- update dependency rimraf to v5 for gatsby-page-utils [#38039](https://github.com/gatsbyjs/gatsby/issues/38039) ([ccecd9d](https://github.com/gatsbyjs/gatsby/commit/ccecd9ddfadeb75e30ad95c42096aedac19fe7d8))
+
 ## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.9.0/packages/gatsby-page-utils) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

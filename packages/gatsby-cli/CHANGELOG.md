@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.10.0/packages/gatsby-cli) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-cli [#38006](https://github.com/gatsbyjs/gatsby/issues/38006) ([54f785c](https://github.com/gatsbyjs/gatsby/commit/54f785c29f58e7cf0fc508fad18c563e2f8f41fc))
+- update dependency semver to ^7.5.0 [#38023](https://github.com/gatsbyjs/gatsby/issues/38023) ([2564f6b](https://github.com/gatsbyjs/gatsby/commit/2564f6b247b622b51522ff1f91fe2a9ef34fa571))
+
+#### Chores
+
+- update gatsby monorepo [#38014](https://github.com/gatsbyjs/gatsby/issues/38014) ([ee0797c](https://github.com/gatsbyjs/gatsby/commit/ee0797cbfcaafd392f1e9c551c4f294b2d068e68))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.9.0/packages/gatsby-cli) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

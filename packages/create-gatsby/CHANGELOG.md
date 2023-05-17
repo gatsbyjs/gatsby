@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.10.0/packages/create-gatsby) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Features
+
+- Add Tailwind as a styling choice [#37944](https://github.com/gatsbyjs/gatsby/issues/37944) ([cbc0b35](https://github.com/gatsbyjs/gatsby/commit/cbc0b359f14f345e8d89b9d18863d52fa45ca951))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for create-gatsby [#37991](https://github.com/gatsbyjs/gatsby/issues/37991) ([a356169](https://github.com/gatsbyjs/gatsby/commit/a35616924f909559c760420330787a6b7b97f34e))
+
 ## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.9.0/packages/create-gatsby) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
