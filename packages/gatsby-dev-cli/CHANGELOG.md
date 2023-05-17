@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.10.0/packages/gatsby-dev-cli) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency verdaccio to ^5.24.1 for gatsby-dev-cli [#38026](https://github.com/gatsbyjs/gatsby/issues/38026) ([49578cb](https://github.com/gatsbyjs/gatsby/commit/49578cbb2b3caf9dcc15442ebbe6ad2a061a08e1))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.9.0/packages/gatsby-dev-cli) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

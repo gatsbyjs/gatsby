@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@7.10.0/packages/gatsby-plugin-netlify-cms) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency html-webpack-plugin to ^5.5.1 for gatsby-plugin-netlify-cms [#38001](https://github.com/gatsbyjs/gatsby/issues/38001) ([0250edc](https://github.com/gatsbyjs/gatsby/commit/0250edc3cb21ab20ddb6e2f454f656f05f39dd3f))
+- ignore PartialHydrationPlugin [#37962](https://github.com/gatsbyjs/gatsby/issues/37962) ([a13d1cd](https://github.com/gatsbyjs/gatsby/commit/a13d1cdfa119ab12b62246edfafcb99e13890c72))
+
 ## [7.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@7.9.0/packages/gatsby-plugin-netlify-cms) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

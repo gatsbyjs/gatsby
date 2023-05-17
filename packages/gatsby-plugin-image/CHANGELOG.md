@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.10.0/packages/gatsby-plugin-image) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency semver to ^7.5.0 [#38023](https://github.com/gatsbyjs/gatsby/issues/38023) ([2564f6b](https://github.com/gatsbyjs/gatsby/commit/2564f6b247b622b51522ff1f91fe2a9ef34fa571))
+
 ## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@3.9.0/packages/gatsby-plugin-image) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

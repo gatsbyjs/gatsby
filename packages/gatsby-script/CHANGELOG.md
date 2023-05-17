@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.10.0/packages/gatsby-script) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Chores
+
+- update gatsby monorepo [#38014](https://github.com/gatsbyjs/gatsby/issues/38014) ([ee0797c](https://github.com/gatsbyjs/gatsby/commit/ee0797cbfcaafd392f1e9c551c4f294b2d068e68))
+
 ## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.9.0/packages/gatsby-script) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

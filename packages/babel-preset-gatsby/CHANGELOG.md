@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@3.10.0/packages/babel-preset-gatsby) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency core-js-compat to v3.30.1 [#38018](https://github.com/gatsbyjs/gatsby/issues/38018) ([014da98](https://github.com/gatsbyjs/gatsby/commit/014da98a7ba97d5bdf3bb1a0f034e9cad728da21))
+
 ## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@3.9.0/packages/babel-preset-gatsby) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

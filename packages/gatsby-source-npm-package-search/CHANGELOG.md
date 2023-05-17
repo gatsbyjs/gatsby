@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@5.10.0/packages/gatsby-source-npm-package-search) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency algoliasearch to ^4.17.0 for gatsby-source-npm-package-search [#38016](https://github.com/gatsbyjs/gatsby/issues/38016) ([fdc3d91](https://github.com/gatsbyjs/gatsby/commit/fdc3d918712fa119a6c155af0a8956285e0f5e83))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@5.9.0/packages/gatsby-source-npm-package-search) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)
