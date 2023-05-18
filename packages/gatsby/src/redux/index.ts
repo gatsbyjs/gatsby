@@ -12,9 +12,41 @@ import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
-import * as reducers from "./reducers"
+import * as rawReducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
+
+const persistedReduxKeys = [
+  `nodes`,
+  `typeOwners`,
+  `statefulSourcePlugins`,
+  `status`,
+  `components`,
+  `jobsV2`,
+  `staticQueriesByTemplate`,
+  `webpackCompilationHash`,
+  `pageDataStats`,
+  `pages`,
+  `staticQueriesByTemplate`,
+  `pendingPageDataWrites`,
+  `queries`,
+  `html`,
+  `slices`,
+  `slicesByTemplate`,
+]
+
+const reducers = persistedReduxKeys.reduce((acc, key) => {
+  const rawReducer = rawReducers[key]
+  acc[key] = function (state, action): any {
+    if (action.type === `RESTORE_CACHE`) {
+      return action.payload[key]
+    } else {
+      return rawReducer(state, action)
+    }
+  }
+
+  return acc
+}, rawReducers)
 
 // Create event emitter for actions
 export const emitter = mett()
@@ -108,24 +140,9 @@ export const saveState = (): void => {
 
   const state = store.getState()
 
-  return writeToCache({
-    nodes: state.nodes,
-    typeOwners: state.typeOwners,
-    statefulSourcePlugins: state.statefulSourcePlugins,
-    status: state.status,
-    components: state.components,
-    jobsV2: state.jobsV2,
-    staticQueryComponents: state.staticQueryComponents,
-    webpackCompilationHash: state.webpackCompilationHash,
-    pageDataStats: state.pageDataStats,
-    pages: state.pages,
-    pendingPageDataWrites: state.pendingPageDataWrites,
-    staticQueriesByTemplate: state.staticQueriesByTemplate,
-    queries: state.queries,
-    html: state.html,
-    slices: state.slices,
-    slicesByTemplate: state.slicesByTemplate,
-  })
+  const sliceOfStateToPersist = _.pick(state, persistedReduxKeys)
+
+  return writeToCache(sliceOfStateToPersist)
 }
 
 export const savePartialStateToDisk = (

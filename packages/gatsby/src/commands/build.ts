@@ -71,6 +71,7 @@ import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
 import { getSSRChunkHashes } from "../utils/webpack/get-ssr-chunk-hashes"
 import { writeTypeScriptTypes } from "../utils/graphql-typegen/ts-codegen"
+import { initAdapterManager } from "../utils/adapter/manager"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -113,6 +114,9 @@ module.exports = async function build(
         program.openTracingConfigFile
     )
   }
+
+  const adapterManager = initAdapterManager()
+  await adapterManager.restoreCache()
 
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
@@ -695,6 +699,8 @@ module.exports = async function build(
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
   }
+
+  await adapterManager.storeCache()
 
   showExperimentNotices()
 
