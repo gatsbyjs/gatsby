@@ -7,7 +7,7 @@ interface IBaseRoute {
    *  - static: `/about/`
    *  - dynamic:
    *    - parameterized: `/blog/:slug/`
-   *    - catch-all / wildcard: `/app/*`
+   *    - catch-all / wildcard: `/app/*` (we also have named wildcards like `/app/*foo` - but this is just how path param props are named inside page template props and shouldn't need to be exposed for platform itself)
    */
   path: string
 }
