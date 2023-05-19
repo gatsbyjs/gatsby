@@ -1,16 +1,25 @@
-import type { IAdapterCtor } from "./types"
+import type { AdapterInit } from "./types"
 
-const createAdapter: IAdapterCtor = ({ reporter }) => {
+const createDemoAdapter: AdapterInit = ({ reporter }) => {
+  reporter.info(`[dev-adapter] createAdapter()`)
+
   return {
+    name: `gatsby-adapter-demo`,
     cache: {
       restore(directories): void {
-        reporter.info(`[dev-adapter] cache.restore()`)
+        console.log(`[dev-adapter] cache.restore()`, directories)
       },
       store(directories): void {
-        reporter.info(`[dev-adapter] cache.store()`)
+        console.log(`[dev-adapter] cache.store()`, directories)
       },
+    },
+    adapt({ routesManifest, functionsManifest }): void {
+      console.log(`[dev-adapter] cache.adapt()`, {
+        routesManifest,
+        functionsManifest,
+      })
     },
   }
 }
 
-export default createAdapter
+export default createDemoAdapter

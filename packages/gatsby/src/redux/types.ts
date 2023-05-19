@@ -86,6 +86,8 @@ export interface IGatsbyFunction {
   matchPath: string | undefined
   /** The plugin that owns this function route **/
   pluginName: string
+  /** Function identifier used to match functions usage in routes manifest */
+  functionId: string
 }
 
 export interface IGraphQLTypegenOptions {
