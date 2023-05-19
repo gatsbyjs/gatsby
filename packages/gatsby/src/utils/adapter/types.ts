@@ -67,6 +67,7 @@ export interface IAdapter {
   cache?: {
     /**
      * Hook to restore .cache and public directories from previous builds. Executed very early on in the build process.
+     * If `false` is returned gatsby will skip trying to rehydrate state from fs.
      */
     restore: (
       directories: Array<string>
