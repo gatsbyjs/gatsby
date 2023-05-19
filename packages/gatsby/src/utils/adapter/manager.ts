@@ -153,7 +153,7 @@ function getRoutesManifest(): RoutesManifest {
       path: redirect.fromPath,
       type: `redirect`,
       toPath: redirect.toPath,
-      status: redirect.statusCode,
+      status: redirect.statusCode ?? redirect.isPermanent ? 301 : 302,
       ignoreCase: redirect.ignoreCase,
     })
   }

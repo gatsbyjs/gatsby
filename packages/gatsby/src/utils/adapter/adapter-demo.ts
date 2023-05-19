@@ -14,10 +14,16 @@ const createDemoAdapter: AdapterInit = ({ reporter }) => {
       },
     },
     adapt({ routesManifest, functionsManifest }): void {
-      console.log(`[dev-adapter] cache.adapt()`, {
-        routesManifest,
-        functionsManifest,
-      })
+      console.log(
+        `[dev-adapter] adapt()`,
+        require(`util`).inspect(
+          {
+            routesManifest,
+            functionsManifest,
+          },
+          { depth: Infinity, colors: true }
+        )
+      )
     },
   }
 }
