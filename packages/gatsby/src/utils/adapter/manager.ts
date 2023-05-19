@@ -106,12 +106,22 @@ const STATIC_JS_CHUNK_HEADERS = [
   `x-frame-options: DENY`,
 ]
 
+function maybeDropNamedPartOfWildcard(
+  path: string | undefined
+): string | undefined {
+  if (!path) {
+    return path
+  }
+
+  return path.replace(/\*.+$/, `*`)
+}
+
 function getRoutesManifest(): RoutesManifest {
   const routes = [] as RoutesManifest
 
   // routes - pages - static (SSG) or lambda (DSG/SSR)
   for (const page of store.getState().pages.values()) {
-    const routePath = page.matchPath ?? page.path
+    const routePath = maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
     const htmlPath = generateHtmlPath(`public`, page.path)
     const pageDataPath = generatePageDataPath(`public`, page.path)
 
@@ -161,7 +171,10 @@ function getRoutesManifest(): RoutesManifest {
   // function routes
   for (const functionInfo of store.getState().functions.values()) {
     routes.push({
-      path: `/api/${functionInfo.matchPath ?? functionInfo.functionRoute}`,
+      path: `/api/${
+        maybeDropNamedPartOfWildcard(functionInfo.matchPath) ??
+        functionInfo.functionRoute
+      }`,
       type: `lambda`,
       functionId: functionInfo.functionId,
     })
