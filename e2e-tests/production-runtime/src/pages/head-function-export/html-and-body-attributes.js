@@ -21,8 +21,8 @@ function Indirection({ children }) {
 export function Head() {
   return (
     <Indirection>
-      <html data-foo="bar" style={{ border: 'none' }} />
-      <body data-foo="baz" style={{ accentColor: 'rgb(102, 51, 153)', border: 'none' }} />
+      <html data-foo="bar" style={{ border: '0px none rgba(0, 0, 0, 0.8)' }} />
+      <body data-foo="baz" style={{ accentColor: 'rgb(102, 51, 153)', border: '0px none rgba(0, 0, 0, 0.8)' }} />
     </Indirection>
   )
 }
