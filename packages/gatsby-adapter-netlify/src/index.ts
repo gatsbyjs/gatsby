@@ -2,6 +2,9 @@
 // for now we can just reference types we have in monorepo
 import type { AdapterInit } from "gatsby/src/utils/adapter/types"
 
+// just for debugging
+import { inspect } from "util"
+
 const createNetlifyAdapter: AdapterInit = ({ reporter }) => {
   reporter.info(`[gatsby-adapter-netlify] createAdapter()`)
 
@@ -18,7 +21,7 @@ const createNetlifyAdapter: AdapterInit = ({ reporter }) => {
     adapt({ routesManifest, functionsManifest }): void {
       console.log(
         `[gatsby-adapter-netlify] adapt()`,
-        require(`util`).inspect(
+        inspect(
           {
             routesManifest,
             functionsManifest,
