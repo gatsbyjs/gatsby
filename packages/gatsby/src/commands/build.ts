@@ -115,7 +115,7 @@ module.exports = async function build(
     )
   }
 
-  const adapterManager = initAdapterManager()
+  const adapterManager = await initAdapterManager()
   await adapterManager.restoreCache()
 
   const buildActivity = report.phantomActivity(`build`)

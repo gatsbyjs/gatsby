@@ -18,11 +18,11 @@ interface IAdapterManager {
   adapt: () => Promise<void>
 }
 
-export function initAdapterManager(): IAdapterManager {
+export async function initAdapterManager(): Promise<IAdapterManager> {
   // TODO: figure out adapter to use (and potentially install) based on environent
   // for now, just hardcode work-in-progress Netlify adapter to work out details of Adapter API
   const adapterFn = preferDefault(
-    require(`gatsby-adapter-netlify`)
+    await import(`gatsby-adapter-netlify`)
   ) as AdapterInit
 
   const adapter = adapterFn({ reporter })
