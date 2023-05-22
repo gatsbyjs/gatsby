@@ -20,8 +20,10 @@ interface IAdapterManager {
 
 export function initAdapterManager(): IAdapterManager {
   // TODO: figure out adapter to use (and potentially install) based on environent
-  // for now, just use the demo adapter to work out details of Adapter API
-  const adapterFn = preferDefault(require(`./adapter-demo`)) as AdapterInit
+  // for now, just hardcode work-in-progress Netlify adapter to work out details of Adapter API
+  const adapterFn = preferDefault(
+    require(`gatsby-adapter-netlify`)
+  ) as AdapterInit
 
   const adapter = adapterFn({ reporter })
 
@@ -98,13 +100,14 @@ const STATIC_PAGE_HEADERS = [
   `x-frame-options: DENY`,
 ]
 
-const STATIC_JS_CHUNK_HEADERS = [
-  `cache-control: public, max-age=31536000, immutable`,
-  `x-xss-protection: 1; mode=block`,
-  `x-content-type-options: nosniff`,
-  `referrer-policy: same-origin`,
-  `x-frame-options: DENY`,
-]
+// TODO: gather assets that need JS chunk headers
+// const STATIC_JS_CHUNK_HEADERS = [
+//   `cache-control: public, max-age=31536000, immutable`,
+//   `x-xss-protection: 1; mode=block`,
+//   `x-content-type-options: nosniff`,
+//   `referrer-policy: same-origin`,
+//   `x-frame-options: DENY`,
+// ]
 
 function maybeDropNamedPartOfWildcard(
   path: string | undefined
@@ -121,34 +124,37 @@ function getRoutesManifest(): RoutesManifest {
 
   // routes - pages - static (SSG) or lambda (DSG/SSR)
   for (const page of store.getState().pages.values()) {
-    const routePath = maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
-    const htmlPath = generateHtmlPath(`public`, page.path)
-    const pageDataPath = generatePageDataPath(`public`, page.path)
+    const htmlRoutePath =
+      maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
+    const pageDataRoutePath = generatePageDataPath(`public`, htmlRoutePath)
 
     if (getPageMode(page) === `SSG`) {
+      const htmlFilePath = generateHtmlPath(`public`, page.path)
+      const pageDataFilePath = generatePageDataPath(`public`, htmlFilePath)
+
       routes.push({
-        path: routePath,
+        path: htmlRoutePath,
         type: `static`,
-        filePath: htmlPath,
+        filePath: htmlFilePath,
         headers: STATIC_PAGE_HEADERS,
       })
 
       routes.push({
-        path: pageDataPath,
+        path: pageDataRoutePath,
         type: `static`,
-        filePath: pageDataPath,
+        filePath: pageDataFilePath,
         headers: STATIC_PAGE_HEADERS,
       })
     } else {
       // TODO: generate lambda function for SSR/DSG
       // TODO: figure out caching behavior metadata - maybe take a look at https://vercel.com/docs/build-output-api/v3/primitives#prerender-functions for inspiration
       // routes.push({
-      //   path: routePath,
+      //   path: htmlRoutePath,
       //   type: `lambda`,
       //   functionId: `ssr-engine`,
       // })
       // routes.push({
-      //   path: pageDataPath,
+      //   path: pageDataRoutePath,
       //   type: `lambda`,
       //   functionId: `ssr-engine`,
       // })

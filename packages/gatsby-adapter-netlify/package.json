@@ -1,0 +1,44 @@
+{
+  "name": "gatsby-adapter-netlify",
+  "version": "0.0.0",
+  "description": "Gatsby adapter for Netlify",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-adapter-netlify"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.20.13"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "babel-preset-gatsby-package": "^3.10.0-next.2",
+    "cross-env": "^7.0.3",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.3"
+  },
+  "files": [
+    "dist/"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
