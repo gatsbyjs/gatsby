@@ -389,6 +389,8 @@ Now you need to tell `gatsby-plugin-mdx` to use your `PageTemplate` component as
 
 From an absolute path to your component (e.g. `/absolute/path/to/layout-component.js`) to a path that contains a query parameter `__contentFilePath` (e.g. `/absolute/path/to/layout-component.js?__contentFilePath=/absolute/path/to/content.mdx`).
 
+Your layout template cannot be written in Typescript, and some modern Javascript syntax is not supported (e.g., `||=` or `&&=`). If any layout files use unsupported Javascript syntax, you will encounter an invalid AST error at build-time.
+
 Change your `gatsby-node.js` as following:
 
 ```diff
