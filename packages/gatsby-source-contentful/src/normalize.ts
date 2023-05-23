@@ -11,6 +11,7 @@ import type {
   IContentfulEntry,
   IContentfulLink,
   ILocalizedField,
+  IEntryWithAllLocalesAndWithoutLinkResolution,
 } from "./types/contentful"
 import type {
   SyncCollection,
@@ -20,10 +21,12 @@ import type {
   Locale,
   LocaleCode,
   AssetFile,
-  EntryWithAllLocalesAndWithoutLinkResolution,
-} from "./types/contentful-js-sdk"
+  FieldsType,
+  EntrySkeletonType,
+  DeletedEntry,
+  EntitySys,
+} from "contentful"
 import type { IProcessedPluginOptions } from "./types/plugin"
-import type { FieldsType } from "./types/contentful-js-sdk/query/util"
 
 export const makeTypeName = (
   type: string,
@@ -113,7 +116,7 @@ const makeMakeId =
 // TODO: space id is actually not factored in here!
 export const createRefId = (
   node:
-    | EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
+    | IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
     | IContentfulEntry
     | Asset
 ): string => `${node.sys.id}___${node.sys.type}`
@@ -126,14 +129,17 @@ export const buildEntryList = ({
   currentSyncData,
 }: {
   contentTypeItems: Array<ContentType>
-  currentSyncData: SyncCollection
+  currentSyncData: SyncCollection<
+    EntrySkeletonType,
+    "WITH_ALL_LOCALES" | "WITHOUT_LINK_RESOLUTION"
+  >
 }): Array<
-  Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+  Array<IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
 > => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map: Map<
     string,
-    Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+    Array<IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
   > = new Map(contentTypeItems.map(contentType => [contentType.sys.id, []]))
   // Now fill the buckets. Ignore entries for which there exists no bucket. (This happens when filterContentType is used)
   currentSyncData.entries.map(entry => {
@@ -152,7 +158,7 @@ export const buildResolvableSet = ({
   assets = [],
 }: {
   entryList: Array<
-    Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+    Array<IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
   >
   existingNodes: Map<string, IContentfulEntry>
   assets: Array<Asset>
@@ -193,7 +199,7 @@ interface IForeignReferenceMapState {
 
 function cleanupReferencesFromEntry(
   foreignReferenceMapState: IForeignReferenceMapState,
-  entry: EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
+  entry: { sys: EntitySys }
 ): void {
   const { links, backLinks } = foreignReferenceMapState
   const entryId = entry.sys.id
@@ -229,7 +235,7 @@ export const buildForeignReferenceMap = ({
 }: {
   contentTypeItems: Array<ContentType>
   entryList: Array<
-    Array<EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
+    Array<IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
   >
   resolvable: Set<string>
   defaultLocale: string
@@ -237,9 +243,7 @@ export const buildForeignReferenceMap = ({
   useNameForId: boolean
   contentTypePrefix: string
   previousForeignReferenceMapState?: IForeignReferenceMapState
-  deletedEntries: Array<
-    EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
-  >
+  deletedEntries: Array<DeletedEntry>
   createNodeId
 }): IForeignReferenceMapState => {
   const foreignReferenceMapState: IForeignReferenceMapState =
@@ -389,7 +393,7 @@ function contentfulCreateNodeManifest({
   unstable_createNodeManifest,
 }: {
   pluginConfig: IProcessedPluginOptions
-  entryItem: EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
+  entryItem: IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
   entryNode: IContentfulEntry
   space: Space
   unstable_createNodeManifest: SourceNodesArgs["unstable_createNodeManifest"]
@@ -452,7 +456,7 @@ interface ICreateNodesForContentTypeArgs
     SourceNodesArgs {
   contentTypeItem: ContentType
   entries: Array<
-    EntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
+    IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
   >
   resolvable: Set<string>
   foreignReferenceMap: IForeignReferenceMap

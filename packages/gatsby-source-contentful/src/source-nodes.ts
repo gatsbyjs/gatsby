@@ -18,12 +18,12 @@ import {
   getExistingCachedNodes,
   removeNodeFromExistingNodesCache,
 } from "./backreferences"
+import type { ContentType } from "contentful"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
 import { untilNextEventLoopTick } from "./utils"
 import type { IPluginOptions } from "./types/plugin"
 import type { IContentfulAsset } from "./types/contentful"
-import type { ContentType } from "./types/contentful-js-sdk"
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 

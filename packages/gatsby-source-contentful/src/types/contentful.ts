@@ -1,5 +1,13 @@
 import { Node } from "gatsby"
 import { ImageFormat } from "gatsby-plugin-image"
+import {
+  FieldsType,
+  LocaleCode,
+  EntrySys,
+  Metadata,
+  EntryLink,
+  EntryFields,
+} from "contentful"
 
 // Generic Types
 export interface IContentfulContentType {
@@ -24,12 +32,6 @@ export interface ILocalizedField {
   [locale: string]: unknown
 }
 
-// export interface IContentfulTag {
-//   name: string
-//   contentful_id: string
-//   id: string
-// }
-
 interface IContentfulMetadata {
   tags: Array<string>
 }
@@ -41,8 +43,6 @@ interface IContentfulLinkSys {
 export interface IContentfulLink {
   sys: IContentfulLinkSys
 }
-
-// type UContentfulField = string | boolean | Array<string>
 
 interface IContentfulEntity extends Node {
   id: string
@@ -126,4 +126,21 @@ export interface IContentfulImageAPIUrlBuilderOptions {
   jpegProgressive?: number
   cropFocus?: contentfulCropFocus
   cornerRadius?: number | "max"
+}
+
+export interface IEntryWithAllLocalesAndWithoutLinkResolution<
+  Fields extends FieldsType,
+  Locales extends LocaleCode
+> {
+  sys: EntrySys
+  metadata: Metadata
+  fields: {
+    [FieldName in keyof Fields]: {
+      [LocaleName in Locales]?: Fields[FieldName] extends EntryFields.Link<any>
+        ? EntryLink
+        : Fields[FieldName] extends Array<EntryFields.Link<any>>
+        ? Array<EntryLink>
+        : Fields[FieldName]
+    }
+  }
 }

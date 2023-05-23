@@ -47,6 +47,9 @@ const mockClient = {
   }),
 }
 
+mockClient.withAllLocales = mockClient
+mockClient.withoutLinkResolution = mockClient
+
 jest.mock(`contentful`, () => {
   return {
     createClient: jest.fn(() => mockClient),
@@ -169,7 +172,6 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
     limit: 1000,
-    order: `sys.createdAt`,
     skip: 0,
   })
 })
@@ -187,7 +189,6 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
     limit: 50,
-    order: `sys.createdAt`,
     skip: 0,
   })
 })
@@ -207,7 +208,6 @@ describe(`Tags feature`, () => {
     expect(reporter.panic).not.toBeCalled()
     expect(mockClient.getTags).toHaveBeenCalledWith({
       limit: 50,
-      order: `sys.createdAt`,
       skip: 0,
     })
   })

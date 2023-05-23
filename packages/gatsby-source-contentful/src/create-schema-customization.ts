@@ -21,11 +21,7 @@ import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { makeTypeName } from "./normalize"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
 import type { IPluginOptions } from "./types/plugin"
-import type {
-  ContentType,
-  ContentTypeField,
-  FieldItem,
-} from "./types/contentful-js-sdk/content-type"
+import type { ContentType, ContentTypeField, FieldItem } from "contentful"
 
 import type {
   IContentfulAsset,

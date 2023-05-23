@@ -85,7 +85,7 @@ describe(`fetch-backoff`, () => {
       .reply(200, { items: [] })
       // Tags
       .get(
-        `/spaces/${options.spaceId}/environments/master/tags?skip=0&limit=1000&order=sys.createdAt`
+        `/spaces/${options.spaceId}/environments/master/tags?skip=0&limit=1000`
       )
       .reply(200, { items: [] })
 
@@ -128,7 +128,7 @@ describe(`fetch-backoff`, () => {
       .reply(200, { items: [] })
       // Tags
       .get(
-        `/spaces/${options.spaceId}/environments/master/tags?skip=0&limit=1000&order=sys.createdAt`
+        `/spaces/${options.spaceId}/environments/master/tags?skip=0&limit=1000`
       )
       .reply(200, { items: [] })
 

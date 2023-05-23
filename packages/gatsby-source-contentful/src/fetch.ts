@@ -12,12 +12,13 @@ import { formatPluginOptionsForCLI } from "./plugin-options"
 import { CODES } from "./report"
 import type {
   ContentType,
-  EntryCollection,
   Locale,
   Space,
   SyncCollection,
   Tag,
-} from "./types/contentful-js-sdk"
+  EntrySkeletonType,
+  ContentfulCollection,
+} from "contentful"
 import type { IProcessedPluginOptions } from "./types/plugin"
 
 /**
@@ -253,7 +254,10 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 }
 
 interface IFetchResult {
-  currentSyncData: SyncCollection
+  currentSyncData: SyncCollection<
+    EntrySkeletonType,
+    "WITH_ALL_LOCALES" | "WITHOUT_LINK_RESOLUTION"
+  >
   tagItems: Array<Tag>
   defaultLocale: string
   locales: Array<Locale>
@@ -280,7 +284,8 @@ export async function fetchContent({
     pluginConfig,
     reporter,
   })
-  const client = createClient(contentfulClientOptions)
+  const client = createClient(contentfulClientOptions).withAllLocales
+    .withoutLinkResolution
 
   // The sync API puts the locale in all fields in this format { fieldName:
   // {'locale': value} } so we need to get the space and its default local.
@@ -320,21 +325,26 @@ export async function fetchContent({
   })
   const syncClient = createClient(contentfulSyncClientOptions)
 
-  let currentSyncData: SyncCollection | undefined
+  let currentSyncData:
+    | SyncCollection<
+        EntrySkeletonType,
+        "WITH_ALL_LOCALES" | "WITHOUT_LINK_RESOLUTION"
+      >
+    | undefined
   let currentPageLimit = pageLimit
   let lastCurrentPageLimit = 0
   let syncSuccess = false
   try {
     while (!syncSuccess) {
       try {
-        const basicSyncConfig = {
-          limit: currentPageLimit,
-          resolveLinks: false,
-        }
         const query = syncToken
           ? { nextSyncToken: syncToken }
-          : { initial: true, ...basicSyncConfig }
-        currentSyncData = (await syncClient.sync(query)) as SyncCollection
+          : { initial: true as const, limit: currentPageLimit }
+
+        currentSyncData = (await syncClient.sync(query)) as SyncCollection<
+          EntrySkeletonType,
+          "WITH_ALL_LOCALES" | "WITHOUT_LINK_RESOLUTION"
+        >
         syncSuccess = true
       } catch (e) {
         // Back off page limit if responses content length exceeds Contentfuls limits.
@@ -437,7 +447,8 @@ export async function fetchContentTypes({
     pluginConfig,
     reporter,
   })
-  const client = createClient(contentfulClientOptions)
+  const client = createClient(contentfulClientOptions).withAllLocales
+    .withoutLinkResolution
   const pageLimit = pluginConfig.get(`pageLimit`) || 100
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
     `environment`
@@ -484,13 +495,13 @@ export async function fetchContentTypes({
  * concatenate the new responses to the original one.
  */
 function pagedGet<T>(
-  client: ContentfulClientApi,
-  method: keyof ContentfulClientApi,
+  client: ContentfulClientApi<"WITH_ALL_LOCALES" | "WITHOUT_LINK_RESOLUTION">,
+  method: "getContentTypes" | "getTags",
   pageLimit: number,
   query = {},
   skip = 0,
-  aggregatedResponse?: EntryCollection<T>
-): Promise<EntryCollection<T> | ContentTypeCollection | undefined> {
+  aggregatedResponse?: ContentfulCollection<T>
+): Promise<ContentfulCollection<T> | ContentTypeCollection | undefined> {
   if (!client[method]) {
     throw new Error(`Contentful Client does not support the method ${method}`)
   }
@@ -499,7 +510,6 @@ function pagedGet<T>(
     ...query,
     skip: skip,
     limit: pageLimit,
-    order: `sys.createdAt`,
   }).then(response => {
     if (!aggregatedResponse) {
       aggregatedResponse = response
