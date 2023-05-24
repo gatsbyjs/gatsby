@@ -100,6 +100,13 @@ const STATIC_PAGE_HEADERS = [
   `x-frame-options: DENY`,
 ]
 
+const REDIRECT_HEADERS = [
+  `x-xss-protection: 1; mode=block`,
+  `x-content-type-options: nosniff`,
+  `referrer-policy: same-origin`,
+  `x-frame-options: DENY`,
+]
+
 // TODO: gather assets that need JS chunk headers
 // const STATIC_JS_CHUNK_HEADERS = [
 //   `cache-control: public, max-age=31536000, immutable`,
@@ -171,6 +178,7 @@ function getRoutesManifest(): RoutesManifest {
       toPath: redirect.toPath,
       status: redirect.statusCode ?? (redirect.isPermanent ? 301 : 302),
       ignoreCase: redirect.ignoreCase,
+      headers: REDIRECT_HEADERS,
     })
   }
 
