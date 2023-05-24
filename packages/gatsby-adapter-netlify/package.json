@@ -5,7 +5,8 @@
   "main": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.mjs"
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\" --out-file-extension .mjs",

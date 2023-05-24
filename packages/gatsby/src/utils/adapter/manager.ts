@@ -9,23 +9,34 @@ import {
 } from "./types"
 import { preferDefault } from "../../bootstrap/prefer-default"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
+import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
 import { getPageMode } from "../page-mode"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
+import { satisfies } from "semver"
 
 interface IAdapterManager {
-  restoreCache: () => Promise<void>
-  storeCache: () => Promise<void>
-  adapt: () => Promise<void>
+  restoreCache: () => Promise<void> | void
+  storeCache: () => Promise<void> | void
+  adapt: () => Promise<void> | void
+}
+
+function noOpAdapterManager(): IAdapterManager {
+  return {
+    restoreCache: (): void => {},
+    storeCache: (): void => {},
+    adapt: (): void => {},
+  }
 }
 
 export async function initAdapterManager(): Promise<IAdapterManager> {
-  // TODO: figure out adapter to use (and potentially install) based on environent
-  // for now, just hardcode work-in-progress Netlify adapter to work out details of Adapter API
-  const adapterFn = preferDefault(
-    await import(`gatsby-adapter-netlify`)
-  ) as AdapterInit
+  const adapterInit = await getAdapterInit()
 
-  const adapter = adapterFn({ reporter })
+  if (!adapterInit) {
+    // if we don't have adapter - use no-op adapter manager
+    return noOpAdapterManager()
+  }
+
+  const adapter = adapterInit({ reporter })
 
   reporter.info(`[dev-adapter-manager] using an adapter named ${adapter.name}`)
 
@@ -214,4 +225,65 @@ function getFunctionsManifest(): FunctionsManifest {
   }
 
   return functions
+}
+
+async function getAdapterInit(): Promise<AdapterInit | undefined> {
+  // TODO: figure out adapter to use (and potentially install) based on environent
+  // for now, just hardcode work-in-progress Netlify adapter to work out details of Adapter API
+
+  // 1. figure out which adapter (and its version) to use
+
+  // this is just random npm package to test autoinstallation soon
+  // const adapterToUse = {
+  //   packageName: `ascii-cats`,
+  //   version: `^1.1.1`,
+  // }
+
+  const adapterToUse = {
+    packageName: `gatsby-adapter-netlify`,
+    version: `*`,
+  }
+
+  if (!adapterToUse) {
+    reporter.info(
+      `[dev-adapter-manager] using no-op adapter, because nothing was discovered`
+    )
+    return undefined
+  }
+
+  // 2. check siteDir
+  // try to resolve from siteDir
+  try {
+    const siteRequire = createRequireFromPath(`${process.cwd()}/:internal:`)
+    const adapterPackageJson = siteRequire(
+      `${adapterToUse.packageName}/package.json`
+    )
+
+    if (
+      satisfies(adapterPackageJson.version, adapterToUse.version, {
+        includePrerelease: true,
+      })
+    ) {
+      // console.log(`SATISFIED`, adapterPackageJson.version, adapterToUse.version)
+      return preferDefault(
+        await import(siteRequire.resolve(adapterToUse.packageName))
+      ) as AdapterInit
+    }
+    // else {
+    //   console.log(
+    //     `NOT SATISFIED`,
+    //     adapterPackageJson.version,
+    //     adapterToUse.version
+    //   )
+    // }
+  } catch (e) {
+    // no-op
+  }
+
+  // 3. check .cache/adapters
+  // const gatsbyManagedAdaptersLocation = `.cache/adapters`
+
+  // 4. install to .cache/adapters if still not available
+
+  return undefined
 }
