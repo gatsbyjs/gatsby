@@ -8,7 +8,9 @@ module.exports = runApisInSteps({
     steps.setErrorMap,
     steps.tempPreventMultipleInstances,
     steps.setRequestHeaders,
+    steps.hideAuthPluginOptions,
   ],
+  onPreBootstrap: [steps.restoreAuthPluginOptions],
 
   pluginOptionsSchema: steps.pluginOptionsSchema,
 
