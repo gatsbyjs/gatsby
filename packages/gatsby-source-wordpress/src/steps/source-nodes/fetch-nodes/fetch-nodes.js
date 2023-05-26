@@ -23,7 +23,7 @@ import { needToTouchNodes } from "../../../utils/gatsby-features"
  * fetches and paginates remote nodes by post type while reporting progress
  */
 export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
-  const { pluginOptions, helpers } = store.getState().gatsbyApi
+  const { pluginOptions, helpers } = store().getState().gatsbyApi
   const { reporter } = helpers
   const {
     url,
@@ -34,7 +34,7 @@ export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
 
   const typeName = typeInfo.nodesTypeName
 
-  store.dispatch.logger.createActivityTimer({
+  store().dispatch.logger.createActivityTimer({
     typeName,
     pluginOptions,
     reporter,
@@ -58,7 +58,7 @@ export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
     allNodesOfContentType = [...allNodesOfContentType, ...contentNodes]
   }
 
-  store.dispatch.logger.stopActivityTimer({ typeName })
+  store().dispatch.logger.stopActivityTimer({ typeName })
 
   if (allNodesOfContentType && allNodesOfContentType.length) {
     return {
@@ -80,7 +80,7 @@ export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
  * @returns {Array} Type info & GQL query strings
  */
 export const getContentTypeQueryInfos = () => {
-  const { nodeQueries } = store.getState().remoteSchema
+  const { nodeQueries } = store().getState().remoteSchema
   const queryInfos = Object.values(nodeQueries).filter(
     ({ settings }) => !settings.exclude
   )
@@ -94,7 +94,7 @@ export const getGatsbyNodeTypeNames = () => {
     return cachedGatsbyNodeTypeNames
   }
 
-  const { typeMap } = store.getState().remoteSchema
+  const { typeMap } = store().getState().remoteSchema
 
   const queryableTypenames = getContentTypeQueryInfos().map(
     query => query.typeInfo.nodesTypeName
@@ -196,7 +196,7 @@ export const fetchAndCreateAllNodes = async () => {
   activity.start()
 
   store.subscribe(() => {
-    activity.setStatus(`${store.getState().logger.entityCount} total`)
+    activity.setStatus(`${store().getState().logger.entityCount} total`)
   })
 
   let createdNodeIds

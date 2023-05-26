@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "@rematch/core": "^1.4.0",
-    "@rematch/immer": "^1.2.0",
+    "@rematch/core": "^2.2.0",
+    "@rematch/immer": "^2.1.3",
     "async-retry": "^1.3.3",
     "atob": "^2.1.2",
     "axios": "^0.21.1",

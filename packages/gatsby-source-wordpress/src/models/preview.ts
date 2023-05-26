@@ -1,4 +1,8 @@
 // `node` here is a Gatsby node
+
+import { createModel } from "@rematch/core"
+import { IRootModel } from "."
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OnPageCreatedCallback = (node: any) => Promise<void>
 
@@ -48,20 +52,22 @@ export interface IPreviewReducers {
   ) => IPreviewState
 }
 
-export interface IPreviewStore {
-  state: IPreviewState
-  reducers: IPreviewReducers
-}
-
-const previewStore: IPreviewStore = {
+const previewStore = createModel<IRootModel>()({
   state: {
     nodePageCreatedCallbacks: {},
     nodeIdsToCreatedPages: {},
     pagePathToNodeDependencyId: {},
-  },
+  } as IPreviewState,
 
   reducers: {
-    unSubscribeToPagesCreatedFromNodeById(state, { nodeId }) {
+    unSubscribeToPagesCreatedFromNodeById(
+      state,
+      {
+        nodeId,
+      }: {
+        nodeId: string
+      }
+    ) {
       if (state.nodePageCreatedCallbacks?.[nodeId]) {
         delete state.nodePageCreatedCallbacks[nodeId]
       }
@@ -69,7 +75,17 @@ const previewStore: IPreviewStore = {
       return state
     },
 
-    subscribeToPagesCreatedFromNodeById(state, { nodeId, sendPreviewStatus }) {
+    subscribeToPagesCreatedFromNodeById(
+      state,
+      {
+        nodeId,
+        sendPreviewStatus,
+      }: {
+        nodeId: string
+        sendPreviewStatus: OnPageCreatedCallback
+        modified: string
+      }
+    ) {
       // save the callback for this nodeId
       // when a page is created from a node that has this id,
       // the callback will be invoked
@@ -84,7 +100,16 @@ const previewStore: IPreviewStore = {
       return state
     },
 
-    saveNodePageState(state, { page, nodeId }) {
+    saveNodePageState(
+      state,
+      {
+        page,
+        nodeId,
+      }: {
+        nodeId: string
+        page: IStoredPage
+      }
+    ) {
       state.nodeIdsToCreatedPages[nodeId] = {
         page,
       }
@@ -95,7 +120,10 @@ const previewStore: IPreviewStore = {
 
       return state
     },
-  } as IPreviewReducers,
-}
+  },
+  effects: () => {
+    return {}
+  },
+})
 
 export default previewStore

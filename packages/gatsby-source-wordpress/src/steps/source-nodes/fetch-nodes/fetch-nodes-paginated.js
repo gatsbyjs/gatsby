@@ -136,7 +136,7 @@ const paginatedWpNodeFetch = async ({
 
     // MediaItem type is incremented in createMediaItemNode
     if (nodeTypeName !== `MediaItem`) {
-      store.dispatch.logger.incrementActivityTimer({
+      store().dispatch.logger.incrementActivityTimer({
         typeName: nodeTypeName,
         by: nodes.length,
       })

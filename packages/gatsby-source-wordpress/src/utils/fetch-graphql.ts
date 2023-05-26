@@ -264,7 +264,7 @@ const slackChannelSupportMessage = `If you're still having issues, please visit 
 
 const getLowerRequestConcurrencyOptionMessage = (): string => {
   const { requestConcurrency, previewRequestConcurrency, perPage } =
-    store.getState().gatsbyApi.pluginOptions.schema
+    store().getState().gatsbyApi.pluginOptions.schema
 
   return `Try reducing the ${bold(
     `requestConcurrency`
@@ -694,7 +694,7 @@ const fetchGraphql = async ({
   isFirstRequest = false,
   forceReportCriticalErrors = false,
 }: IFetchGraphQLInput): Promise<IGraphQLDataResponse> => {
-  const { helpers, pluginOptions } = store.getState().gatsbyApi
+  const { helpers, pluginOptions } = store().getState().gatsbyApi
   const limit = pluginOptions?.schema?.requestConcurrency
 
   const { url: pluginOptionsUrl } = pluginOptions

@@ -8,7 +8,7 @@ export const logPostBuildWarnings: Step = async (): Promise<void> => {
     gatsbyApi: {
       helpers: { reporter },
     },
-  } = store.getState()
+  } = store().getState()
 
   const helpUrl = `https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/debugging-and-troubleshooting.md#media-file-download-skipped`
 

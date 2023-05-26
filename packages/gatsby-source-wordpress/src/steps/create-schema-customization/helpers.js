@@ -37,7 +37,7 @@ const isWpgqlOneThirteenZeroPlus = () => {
     return ceIntCache
   }
 
-  const { typeMap } = store.getState().remoteSchema
+  const { typeMap } = store().getState().remoteSchema
 
   const connectionInterface = !!typeMap.get(`Connection`)
   const edgeInterface = !!typeMap.get(`Edge`)
@@ -124,7 +124,7 @@ export const findNamedTypeName = type => {
 }
 
 export const fieldOfTypeWasFetched = type => {
-  const { fetchedTypes } = store.getState().remoteSchema
+  const { fetchedTypes } = store().getState().remoteSchema
   const typeName = findNamedTypeName(type)
   const typeWasFetched = !!fetchedTypes.get(typeName)
 
@@ -138,7 +138,7 @@ export const getTypesThatImplementInterfaceType = type => {
     return implementingTypeCache.get(type.name)
   }
 
-  const state = store.getState()
+  const state = store().getState()
   const { typeMap } = state.remoteSchema
 
   const allTypes = typeMap.values()
@@ -209,7 +209,7 @@ export const getTypeSettingsByType = type => {
   }
 
   // the plugin options object containing every type setting
-  const allTypeSettings = store.getState().gatsbyApi.pluginOptions.type
+  const allTypeSettings = store().getState().gatsbyApi.pluginOptions.type
 
   const typeSettings = cloneDeep(allTypeSettings[typeName] || {})
 
@@ -343,7 +343,7 @@ export async function diffBuiltTypeDefs(typeDefs) {
     return
   }
 
-  const state = store.getState()
+  const state = store().getState()
 
   const {
     gatsbyApi: {

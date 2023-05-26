@@ -8,7 +8,7 @@ const formatLogMessage = (
   let verbose = false
 
   if (typeof useVerboseStyle === `undefined`) {
-    verbose = store.getState().gatsbyApi.pluginOptions.verbose
+    verbose = store().getState().gatsbyApi.pluginOptions.verbose
   }
 
   let message

@@ -3,7 +3,7 @@ import { camelCase } from "lodash"
 import { findNamedTypeName } from "../create-schema-customization/helpers"
 
 export const getTypeInfoBySingleName = singleName => {
-  const { typeMap } = store.getState().remoteSchema
+  const { typeMap } = store().getState().remoteSchema
 
   const rootField = typeMap
     .get(`RootQuery`)
@@ -17,7 +17,7 @@ export const getTypeInfoBySingleName = singleName => {
 }
 
 export const getQueryInfoBySingleFieldName = singleName => {
-  const { nodeQueries } = store.getState().remoteSchema
+  const { nodeQueries } = store().getState().remoteSchema
   const queryInfo = Object.values(nodeQueries).find(
     q =>
       q.typeInfo.singularName === singleName ||
@@ -28,7 +28,7 @@ export const getQueryInfoBySingleFieldName = singleName => {
 }
 
 export const getQueryInfoByTypeName = typeName => {
-  const { nodeQueries } = store.getState().remoteSchema
+  const { nodeQueries } = store().getState().remoteSchema
 
   const queryInfo = Object.values(nodeQueries).find(
     q => q.typeInfo.nodesTypeName === typeName

@@ -12,7 +12,7 @@ import { getPersistentCache } from "~/utils/cache"
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
 
-  const state = store.getState()
+  const state = store().getState()
   const { introspectionData, fieldBlacklist, typeMap } = state.remoteSchema
   const { pluginOptions } = state.gatsbyApi
 
@@ -23,7 +23,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   if (cachedFetchedTypes) {
     const restoredFetchedTypesMap = new Map(cachedFetchedTypes)
 
-    store.dispatch.remoteSchema.setState({
+    store().dispatch.remoteSchema.setState({
       fetchedTypes: restoredFetchedTypesMap,
     })
   }
@@ -42,7 +42,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
         !typeIsExcluded({ pluginOptions, typeName })
       ) {
         const lazyType = typeMap.get(typeName)
-        store.dispatch.remoteSchema.addFetchedType(lazyType)
+        store().dispatch.remoteSchema.addFetchedType(lazyType)
       }
 
       if (typeSettings.nodeInterface) {
@@ -92,7 +92,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
 
           nodeInterfaceTypes.push(findNamedTypeName(nodeListField.type))
 
-          store.dispatch.remoteSchema.addFetchedType(nodeListField.type)
+          store().dispatch.remoteSchema.addFetchedType(nodeListField.type)
 
           const nodeListFieldType = typeMap.get(
             findNamedTypeName(nodeListField.type)
@@ -105,7 +105,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
                 pluginOptions,
               })
             ) {
-              store.dispatch.remoteSchema.addFetchedType(innerField.type)
+              store().dispatch.remoteSchema.addFetchedType(innerField.type)
             }
           }
 
@@ -132,7 +132,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
                 })
               ) {
                 nodeInterfacePossibleTypeNames.push(type.name)
-                store.dispatch.remoteSchema.addFetchedType(type)
+                store().dispatch.remoteSchema.addFetchedType(type)
               }
             }
 
@@ -152,7 +152,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
           continue
         }
 
-        store.dispatch.remoteSchema.addFetchedType(nodeField.type)
+        store().dispatch.remoteSchema.addFetchedType(nodeField.type)
 
         nodeListRootFields.push(field)
         continue
@@ -182,7 +182,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
 
     // we don't need to mark types as fetched if they're supported SCALAR types
     if (!typeIsABuiltInScalar(field.type)) {
-      store.dispatch.remoteSchema.addFetchedType(field.type)
+      store().dispatch.remoteSchema.addFetchedType(field.type)
     }
 
     nonNodeRootFields.push(field)
@@ -215,7 +215,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       continue
     }
 
-    store.dispatch.remoteSchema.addFetchedType(interfaceType)
+    store().dispatch.remoteSchema.addFetchedType(interfaceType)
 
     if (interfaceType.fields) {
       for (const interfaceField of interfaceType.fields) {
@@ -226,7 +226,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
             pluginOptions,
           })
         ) {
-          store.dispatch.remoteSchema.addFetchedType(interfaceField.type)
+          store().dispatch.remoteSchema.addFetchedType(interfaceField.type)
         }
       }
     }
@@ -249,7 +249,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
     typeNames: nodeListTypeNames,
   }
 
-  store.dispatch.remoteSchema.setState({
+  store().dispatch.remoteSchema.setState({
     gatsbyNodesInfo,
     ingestibles: {
       nodeListRootFields,

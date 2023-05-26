@@ -182,7 +182,7 @@ export const fieldTransformers = [
 
       const {
         remoteSchema: { typeMap },
-      } = store.getState()
+      } = store().getState()
 
       return (
         // this is a list of Gatsby nodes

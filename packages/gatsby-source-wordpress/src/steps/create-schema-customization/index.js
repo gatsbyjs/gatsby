@@ -13,7 +13,7 @@ import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-rem
  * createSchemaCustomization
  */
 const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
-  const state = store.getState()
+  const state = store().getState()
 
   const {
     gatsbyApi: { pluginOptions },

@@ -308,7 +308,7 @@ const ensurePluginRequirementsAreMet = async (
       },
     },
     remoteSchema: { schemaWasChanged },
-  } = store.getState()
+  } = store().getState()
 
   // if we don't have a cached remote schema MD5, this is a cold build
   const isFirstBuild = !(await getPersistentCache({ key: MD5_CACHE_KEY }))

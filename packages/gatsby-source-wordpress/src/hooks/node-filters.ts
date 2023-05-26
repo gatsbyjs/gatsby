@@ -34,7 +34,7 @@ export const applyNodeFilter = async ({
   }
 
   const nodeFilters: Array<INodeFilter> =
-    store.getState().wpHooks.nodeFilters?.[name]
+    store().getState().wpHooks.nodeFilters?.[name]
 
   if (!nodeFilters || !nodeFilters.length) {
     return data
@@ -57,5 +57,10 @@ export const applyNodeFilter = async ({
  * @param {function} filter The function to run when applying this filter
  * @param {integer} priority The priority for this filter to run in. lower means earlier execution
  */
-export const addNodeFilter = ({ name, filter, priority }: INodeFilter): void =>
-  store.dispatch.wpHooks.addNodeFilter({ name, filter, priority })
+export const addNodeFilter = ({
+  name,
+  filter,
+  priority,
+}: INodeFilter): void => {
+  store().dispatch.wpHooks.addNodeFilter({ name, filter, priority })
+}

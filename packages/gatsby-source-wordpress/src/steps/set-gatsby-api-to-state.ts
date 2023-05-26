@@ -23,13 +23,13 @@ const setGatsbyApiToState = (
   //
   // add the plugin options and Gatsby API helpers to our store
   // to access them more easily
-  store.dispatch.gatsbyApi.setState({
+  store().dispatch.gatsbyApi.setState({
     helpers,
     pluginOptions: filteredPluginOptions,
   })
 
   if (!hasDisplayedPreviewPresetMessage) {
-    const { activePluginOptionsPresets, helpers } = store.getState().gatsbyApi
+    const { activePluginOptionsPresets, helpers } = store().getState().gatsbyApi
 
     if (activePluginOptionsPresets?.length) {
       const previewOptimizationPreset = activePluginOptionsPresets.find(

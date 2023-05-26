@@ -1,6 +1,8 @@
 import { Reporter } from "gatsby/reporter"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { IPluginOptions } from "./gatsby-api"
+import { createModel } from "@rematch/core"
+import { IRootModel } from "."
 
 type ITimerReporter = ReturnType<Reporter["activityTimer"]>
 
@@ -12,7 +14,7 @@ export interface ILoggerState {
   }
 }
 
-const logger = {
+const logger = createModel<IRootModel>()({
   state: {
     entityCount: 0,
     typeCount: {},
@@ -85,6 +87,10 @@ const logger = {
       return state
     },
   },
-}
+
+  effects: () => {
+    return {}
+  },
+})
 
 export default logger

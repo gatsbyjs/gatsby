@@ -165,7 +165,7 @@ export const createSingleNode = async ({
   data,
   cachedNodeIds,
 }) => {
-  const state = store.getState()
+  const state = store().getState()
   const { helpers, pluginOptions } = state.gatsbyApi
   const { wpUrl } = state.remoteSchema
 
@@ -291,7 +291,7 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
 
   const cachedNodeIds = await getPersistentCache({ key: CREATED_NODE_IDS })
 
-  const state = store.getState()
+  const state = store().getState()
   const {
     gatsbyApi: {
       pluginOptions: { verbose },

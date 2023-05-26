@@ -27,7 +27,7 @@ export const onCreatepageSavePreviewNodeIdToPageDependency = (
     page.context && page.context.id && getNode(page.context.id)
 
   if (nodeThatCreatedThisPage) {
-    store.dispatch.previewStore.saveNodePageState({
+    store().dispatch.previewStore.saveNodePageState({
       nodeId: nodeThatCreatedThisPage.id,
       page: {
         path: page.path,
@@ -52,7 +52,7 @@ export const onCreatePageRespondToPreviewStatusQuery = async (
   }
 
   const { nodePageCreatedCallbacks, pagePathToNodeDependencyId } =
-    store.getState().previewStore
+    store().getState().previewStore
 
   const { page, getNode } = helpers
 
@@ -81,7 +81,7 @@ export const onCreatePageRespondToPreviewStatusQuery = async (
     return
   }
 
-  store.dispatch.previewStore.unSubscribeToPagesCreatedFromNodeById({
+  store().dispatch.previewStore.unSubscribeToPagesCreatedFromNodeById({
     nodeId: nodeIdThatCreatedThisPage,
   })
 

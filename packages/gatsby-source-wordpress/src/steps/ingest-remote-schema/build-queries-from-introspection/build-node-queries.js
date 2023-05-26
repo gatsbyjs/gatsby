@@ -18,7 +18,7 @@ const buildNodeQueries = async () => {
 
   let nodeQueries = await getPersistentCache({ key: QUERY_CACHE_KEY })
 
-  const { schemaWasChanged } = store.getState().remoteSchema
+  const { schemaWasChanged } = store().getState().remoteSchema
 
   if (schemaWasChanged || !nodeQueries) {
     // regenerate queries from introspection
@@ -28,7 +28,7 @@ const buildNodeQueries = async () => {
     await setPersistentCache({ key: QUERY_CACHE_KEY, value: nodeQueries })
   }
   // set the queries in our redux store to use later
-  store.dispatch.remoteSchema.setState({
+  store().dispatch.remoteSchema.setState({
     nodeQueries,
   })
 

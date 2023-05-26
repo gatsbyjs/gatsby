@@ -17,7 +17,7 @@ import {
 } from "~/utils/cache"
 
 const checkIfSchemaHasChanged = async ({ traceId }) => {
-  const state = store.getState()
+  const state = store().getState()
 
   const { helpers, pluginOptions } = state.gatsbyApi
 
@@ -158,7 +158,7 @@ Please consider addressing this issue by changing your WordPress settings or plu
 
   // record wether the schema changed so other logic can beware
   // as well as the wpUrl because we need this sometimes :p
-  store.dispatch.remoteSchema.setState({
+  store().dispatch.remoteSchema.setState({
     schemaWasChanged,
     wpUrl,
     foundUsableHardCachedData,

@@ -111,7 +111,7 @@ export const buildSelectionSet = (
 
   const {
     remoteSchema: { typeMap },
-  } = store.getState()
+  } = store().getState()
 
   const buildFieldSelectionSet = field => {
     if (typeof field === `string`) {

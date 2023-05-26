@@ -96,7 +96,7 @@ export const transformFields = ({
 
   const gatsbyNodeTypes = getGatsbyNodeTypeNames()
 
-  const { fieldAliases, fieldBlacklist } = store.getState().remoteSchema
+  const { fieldAliases, fieldBlacklist } = store().getState().remoteSchema
 
   const parentTypeSettings = getTypeSettingsByType(parentType)
 
@@ -130,7 +130,7 @@ export const transformFields = ({
       return fieldsObject
     }
 
-    const { typeMap } = store.getState().remoteSchema
+    const { typeMap } = store().getState().remoteSchema
 
     const type = typeMap.get(findNamedTypeName(field.type))
 

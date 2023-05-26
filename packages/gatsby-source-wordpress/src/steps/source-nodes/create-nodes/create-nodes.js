@@ -115,7 +115,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
   wpgqlNodesByContentType,
   createNodesActivity,
 }) => {
-  const state = store.getState()
+  const state = store().getState()
   const { helpers, pluginOptions } = state.gatsbyApi
 
   const { reporter } = helpers
@@ -126,7 +126,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
   // gatsby-image supports these file types
   // const imgSrcRemoteFileRegex = /<img.*?src=\\"(.*?jpeg|jpg|png|webp|tif|tiff$)\\"[^>]+>/gim
 
-  store.dispatch.logger.createActivityTimer({
+  store().dispatch.logger.createActivityTimer({
     typeName: `MediaItem`,
     pluginOptions,
     reporter,
@@ -170,14 +170,14 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
       referencedMediaItemNodeIds: referencedMediaItemNodeIdsArray,
     })
 
-    store.dispatch.logger.stopActivityTimer({
+    store().dispatch.logger.stopActivityTimer({
       typeName: `MediaItem`,
     })
 
     return [...createdNodeIds, ...referencedMediaItemNodeIdsArray]
   }
 
-  store.dispatch.logger.stopActivityTimer({
+  store().dispatch.logger.stopActivityTimer({
     typeName: `MediaItem`,
   })
 

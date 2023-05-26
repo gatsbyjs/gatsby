@@ -23,7 +23,7 @@ const persistPreviouslyCachedImages: Step = async (): Promise<void> => {
   })
 
   if (imageNodeMetaByUrl) {
-    store.dispatch.imageNodes.setState({
+    store().dispatch.imageNodes.setState({
       nodeMetaByUrl: imageNodeMetaByUrl,
     })
   }

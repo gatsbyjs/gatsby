@@ -126,7 +126,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         },
       },
     },
-  } = store.getState()
+  } = store().getState()
 
   const {
     fieldBlacklist,

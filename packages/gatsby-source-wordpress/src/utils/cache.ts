@@ -122,7 +122,7 @@ export const shouldHardCacheData = (): boolean => {
     pluginOptions: {
       develop: { hardCacheData },
     },
-  } = store.getState().gatsbyApi
+  } = store().getState().gatsbyApi
 
   return hardCacheData
 }
@@ -351,19 +351,19 @@ export const restoreHardCachedNodes = async ({
   )
 
   Object.entries(loggerTypeCounts).forEach(([typeName, count]) => {
-    store.dispatch.logger.createActivityTimer({
+    store().dispatch.logger.createActivityTimer({
       typeName,
       pluginOptions,
       reporter,
     })
 
-    store.dispatch.logger.incrementActivityTimer({
+    store().dispatch.logger.incrementActivityTimer({
       typeName,
       by: count,
       action: `restored`,
     })
 
-    store.dispatch.logger.stopActivityTimer({
+    store().dispatch.logger.stopActivityTimer({
       typeName,
       action: `restored`,
     })

@@ -26,7 +26,7 @@ export const transformInlineFragments = ({
   buildingFragment = false,
   ancestorTypeNames: parentAncestorTypeNames = [],
 }) => {
-  const state = store.getState()
+  const state = store().getState()
 
   if (!typeMap) {
     typeMap = state.remoteSchema.typeMap
@@ -76,7 +76,7 @@ export const transformInlineFragments = ({
       possibleType.type = { ...type }
 
       // save this type so we can use it in schema customization
-      store.dispatch.remoteSchema.addFetchedType(type)
+      store().dispatch.remoteSchema.addFetchedType(type)
 
       const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(
         possibleType.name
@@ -566,7 +566,7 @@ const transformFields = ({
 
       if (transformedField) {
         // save this type so we know to use it in schema customization
-        store.dispatch.remoteSchema.addFetchedType(field.type)
+        store().dispatch.remoteSchema.addFetchedType(field.type)
       }
 
       const typeName = findNamedTypeName(field.type)
@@ -664,7 +664,7 @@ const recursivelyTransformFields = ({
   const {
     gatsbyApi: { pluginOptions },
     remoteSchema: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
-  } = store.getState()
+  } = store().getState()
 
   const {
     schema: { queryDepth, circularQueryLimit },

@@ -8,7 +8,7 @@ const buildNonNodeQueries = async () => {
     remoteSchema: {
       ingestibles: { nonNodeRootFields },
     },
-  } = store.getState()
+  } = store().getState()
 
   const fragments = {}
 
@@ -36,7 +36,7 @@ const buildNonNodeQueries = async () => {
       ${builtFragments}
   `
 
-  store.dispatch.remoteSchema.setState({ nonNodeQuery })
+  store().dispatch.remoteSchema.setState({ nonNodeQuery })
 }
 
 export { buildNonNodeQueries }

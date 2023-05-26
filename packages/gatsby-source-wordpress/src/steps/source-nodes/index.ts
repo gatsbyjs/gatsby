@@ -35,11 +35,9 @@ const sourceNodes: Step = async helpers => {
       ? webhookBody.since
       : await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  const { schemaWasChanged, foundUsableHardCachedData } =
-    store.getState().remoteSchema
+  const { schemaWasChanged } = store().getState().remoteSchema
 
   const fetchEverything =
-    foundUsableHardCachedData ||
     !lastCompletedSourceTime ||
     refetchAll ||
     // don't refetch everything in development
@@ -67,7 +65,7 @@ const sourceNodes: Step = async helpers => {
   allowFileDownloaderProgressBarToClear()
   await helpers.cache.set(LAST_COMPLETED_SOURCE_TIME, now)
 
-  const { dispatch } = store
+  const { dispatch } = store()
   dispatch.remoteSchema.setSchemaWasChanged(false)
   dispatch.develop.resumeRefreshPolling()
 }

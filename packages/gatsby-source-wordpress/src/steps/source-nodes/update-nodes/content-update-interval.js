@@ -13,7 +13,7 @@ const checkForNodeUpdates = async ({ cache, emitter }) => {
   // pause polling until we know wether or not there are new actions
   // if there aren't any we will unpause below, if there are some we will unpause
   // at the end of sourceNodes (triggered by WEBHOOK_RECEIVED below)
-  store.dispatch.develop.pauseRefreshPolling()
+  store().dispatch.develop.pauseRefreshPolling()
 
   // get the last sourced time
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
@@ -45,7 +45,7 @@ const checkForNodeUpdates = async ({ cache, emitter }) => {
   } else {
     // set new last completed source time and move on
     await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
-    store.dispatch.develop.resumeRefreshPolling()
+    store().dispatch.develop.resumeRefreshPolling()
   }
 }
 
@@ -55,7 +55,7 @@ const refetcher = async (
   { reconnectionActivity = null, retryCount = 1 } = {}
 ) => {
   try {
-    const { refreshPollingIsPaused } = store.getState().develop
+    const { refreshPollingIsPaused } = store().getState().develop
 
     if (!refreshPollingIsPaused) {
       await checkForNodeUpdates(helpers)
@@ -129,7 +129,7 @@ const startPollingForContentUpdates = helpers => {
 
   startedPolling = true
 
-  const { verbose, develop } = store.getState().gatsbyApi.pluginOptions
+  const { verbose, develop } = store().getState().gatsbyApi.pluginOptions
 
   const msRefetchInterval = develop.nodeUpdateInterval
 

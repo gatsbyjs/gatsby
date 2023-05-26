@@ -8,7 +8,7 @@ import { getPersistentCache, setPersistentCache } from "~/utils/cache"
 import { needToTouchNodes } from "../../../utils/gatsby-features"
 
 const fetchAndCreateNonNodeRootFields = async () => {
-  const state = store.getState()
+  const state = store().getState()
 
   const {
     remoteSchema: { nonNodeQuery },
@@ -60,7 +60,7 @@ const fetchAndCreateNonNodeRootFields = async () => {
    * upfront here
    */
   if (!pluginOptions.type.MediaItem.lazyNodes && newMediaItemIds.length) {
-    store.dispatch.logger.createActivityTimer({
+    store().dispatch.logger.createActivityTimer({
       typeName: `MediaItems`,
       pluginOptions,
       reporter,
@@ -87,7 +87,7 @@ const fetchAndCreateNonNodeRootFields = async () => {
       await setPersistentCache({ key: CREATED_NODE_IDS, value: createdNodeIds })
     }
 
-    store.dispatch.logger.stopActivityTimer({
+    store().dispatch.logger.stopActivityTimer({
       typeName: `MediaItems`,
     })
   }

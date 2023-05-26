@@ -8,7 +8,7 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
     return
   }
 
-  const { remoteSchema } = store.getState()
+  const { remoteSchema } = store().getState()
 
   // the queries only change when the remote schema changes
   // no need to write them to disk in that case

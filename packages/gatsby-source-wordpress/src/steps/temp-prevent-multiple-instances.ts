@@ -15,11 +15,10 @@ export function tempPreventMultipleInstances({
   reporter: Reporter
 }): void {
   if (isWpSourcePluginInstalled) {
-    reporter.panic(
-      formatLogMessage(
-        `Multiple instances of this plugin aren't currently supported yet.`,
-        { useVerboseStyle: true }
-      )
+    reporter.warn(
+      formatLogMessage(`Multiple instances of this plugin may go all weird.`, {
+        useVerboseStyle: true,
+      })
     )
   } else {
     isWpSourcePluginInstalled = true
