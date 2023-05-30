@@ -43,7 +43,7 @@ interface IRedirectRoute extends IBaseRoute {
   [key: string]: unknown
 }
 
-type Route = IStaticRoute | ILambdaRoute | IRedirectRoute
+export type Route = IStaticRoute | ILambdaRoute | IRedirectRoute
 
 export type RoutesManifest = Array<Route>
 

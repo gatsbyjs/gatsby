@@ -6,6 +6,7 @@ import {
   IAdaptContext,
   AdapterInit,
   RoutesManifest,
+  Route,
 } from "./types"
 import { preferDefault } from "../../bootstrap/prefer-default"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
@@ -14,6 +15,7 @@ import { getPageMode } from "../page-mode"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { satisfies } from "semver"
 import { sync as globSync } from "glob"
+import { getStaticQueryPath } from "../static-query-utils"
 
 interface IAdapterManager {
   restoreCache: () => Promise<void> | void
@@ -150,6 +152,8 @@ export function setWebpackAssets(assets: Set<string>): void {
 }
 
 function getRoutesManifest(): RoutesManifest {
+  // TODO: have routes list sorted by specifity so more specific ones are before less specific ones (/static should be before /:param and that should be before /*),
+  // so routing can just handle first match
   const routes = [] as RoutesManifest
 
   const fileAssets = new Set(
@@ -160,12 +164,31 @@ function getRoutesManifest(): RoutesManifest {
     })
   )
 
-  function removeFromAssets(path: string): void {
-    if (fileAssets.has(path)) {
-      fileAssets.delete(path)
+  function addSortedRoute(route: Route): void {
+    if (!route.path.startsWith(`/`)) {
+      route.path = `/${route.path}`
+    }
+    // TODO: calculate specifity of route's path and insert route in correct place
+    routes.push(route)
+  }
+
+  function addStaticRoute(
+    path: string,
+    pathToFilInPublicDir: string,
+    headers: Array<string>
+  ): void {
+    addSortedRoute({
+      path,
+      type: `static`,
+      filePath: posix.join(`public`, pathToFilInPublicDir),
+      headers,
+    })
+
+    if (fileAssets.has(pathToFilInPublicDir)) {
+      fileAssets.delete(pathToFilInPublicDir)
     } else {
       reporter.warn(
-        `[dev-adapter-manager] tried to remove "${path}" from assets but it wasn't there`
+        `[dev-adapter-manager] tried to remove "${pathToFilInPublicDir}" from assets but it wasn't there`
       )
     }
   }
@@ -180,23 +203,8 @@ function getRoutesManifest(): RoutesManifest {
       const htmlFilePath = generateHtmlPath(``, page.path)
       const pageDataFilePath = generatePageDataPath(``, page.path)
 
-      routes.push({
-        path: htmlRoutePath,
-        type: `static`,
-        filePath: posix.join(`public`, htmlFilePath),
-        headers: STATIC_PAGE_HEADERS,
-      })
-
-      removeFromAssets(htmlFilePath)
-
-      routes.push({
-        path: pageDataRoutePath,
-        type: `static`,
-        filePath: posix.join(`public`, pageDataFilePath),
-        headers: STATIC_PAGE_HEADERS,
-      })
-
-      removeFromAssets(pageDataFilePath)
+      addStaticRoute(htmlRoutePath, htmlFilePath, STATIC_PAGE_HEADERS)
+      addStaticRoute(pageDataRoutePath, pageDataFilePath, STATIC_PAGE_HEADERS)
     } else {
       // TODO: generate lambda function for SSR/DSG
       // TODO: figure out caching behavior metadata - maybe take a look at https://vercel.com/docs/build-output-api/v3/primitives#prerender-functions for inspiration
@@ -213,28 +221,38 @@ function getRoutesManifest(): RoutesManifest {
     }
   }
 
+  // static query json assets
+  for (const staticQueryComponent of store
+    .getState()
+    .staticQueryComponents.values()) {
+    const staticQueryResultPath = getStaticQueryPath(staticQueryComponent.hash)
+    addStaticRoute(
+      staticQueryResultPath,
+      staticQueryResultPath,
+      STATIC_PAGE_HEADERS
+    )
+  }
+
+  // app-data.json
+  {
+    const appDataFilePath = posix.join(`page-data`, `app-data.json`)
+    addStaticRoute(appDataFilePath, appDataFilePath, STATIC_PAGE_HEADERS)
+  }
+
   // webpack assets
   if (!webpackAssets) {
     throw new Error(`[dev-adapter-manager] webpackAssets is not defined`)
   }
 
   for (const asset of webpackAssets) {
-    routes.push({
-      path: asset,
-      type: `static`,
-      filePath: posix.join(`public`, asset),
-      headers: WEBPACK_ASSET_HEADERS,
-    })
-    removeFromAssets(asset)
+    addStaticRoute(asset, asset, WEBPACK_ASSET_HEADERS)
   }
 
   // TODO: slices
 
-  // TODO: static query json assets
-
   // redirect routes
   for (const redirect of store.getState().redirects.values()) {
-    routes.push({
+    addSortedRoute({
       path: redirect.fromPath,
       type: `redirect`,
       toPath: redirect.toPath,
@@ -246,7 +264,7 @@ function getRoutesManifest(): RoutesManifest {
 
   // function routes
   for (const functionInfo of store.getState().functions.values()) {
-    routes.push({
+    addSortedRoute({
       path: `/api/${
         maybeDropNamedPartOfWildcard(functionInfo.matchPath) ??
         functionInfo.functionRoute
@@ -262,12 +280,7 @@ function getRoutesManifest(): RoutesManifest {
   )
 
   for (const fileAsset of fileAssets) {
-    routes.push({
-      type: `static`,
-      path: fileAsset,
-      filePath: posix.join(`public`, fileAsset),
-      headers: ASSET_HEADERS,
-    })
+    addStaticRoute(fileAsset, fileAsset, ASSET_HEADERS)
   }
 
   return routes
