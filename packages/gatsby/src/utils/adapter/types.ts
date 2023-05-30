@@ -64,6 +64,9 @@ export interface IAdaptContext {
   functionsManifest: FunctionsManifest
 }
 export interface IAdapter {
+  /**
+   * Unique name of the adapter. Used to identify adapter in manifest.
+   */
   name: string
   cache?: {
     /**
@@ -84,7 +87,7 @@ export interface IAdapter {
    *  - headers for static assets
    *  - redirects and rewrites (both user defined ones as well as anything needed for lambda execution)
    *  - wrap lambda functions with platform specific code if needed (produced ones will be express-like route handlers)
-   *  - possibly upload static assets to CDN (unless platform is configured to just deploy "public" dir, in which case this will be skipped - we won't be doing that for Netlify)
+   *  - possibly upload static assets to CDN (unless platform is configured to just deploy "public" dir, in which case this will be skipped)
    */
   adapt: (context: IAdaptContext) => Promise<void> | void
   // TODO: should we have "private storage" handling defining a way to "upload" and "download those private assets?
@@ -97,3 +100,39 @@ export interface IAdapterInitArgs {
 }
 
 export type AdapterInit = (initArgs: IAdapterInitArgs) => IAdapter
+
+export interface IAdapterManager {
+  restoreCache: () => Promise<void> | void
+  storeCache: () => Promise<void> | void
+  adapt: () => Promise<void> | void
+}
+
+export interface IAdapterManifestEntry {
+  /**
+   * Name of the adapter
+   */
+  name: string
+  /**
+   * Test function to determine if adapter should be used
+   */
+  test: () => boolean
+  /**
+   * npm module name of the adapter
+   */
+  module: string
+  /**
+   * List of version pairs that are supported by the adapter.
+   * This allows to have multiple versions of the adapter for different versions of Gatsby.
+   * This is useful for when APIs change or bugs are fixed that require different implementations.
+   */
+  versions: Array<{
+    /**
+     * Version of the `gatsby` package. This is a semver range.
+     */
+    gatsbyVersion: string
+    /**
+     * Version of the adapter. This is a semver range.
+     */
+    moduleVersion: string
+  }>
+}

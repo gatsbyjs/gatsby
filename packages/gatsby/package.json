@@ -213,6 +213,7 @@
     "node": ">=18.0.0"
   },
   "files": [
+    "adapters.js",
     "apis.json",
     "ipc.json",
     "cache-dir/",

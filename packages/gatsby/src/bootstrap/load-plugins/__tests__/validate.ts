@@ -18,7 +18,7 @@ import {
   ExportType,
   IEntry,
 } from "../validate"
-import { getLatestAPIs } from "../../../utils/get-latest-apis"
+import { getLatestAPIs } from "../../../utils/get-latest-gatsby-files"
 import { resolveModuleExports } from "../../resolve-module-exports"
 
 beforeEach(() => {
