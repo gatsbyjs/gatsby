@@ -389,7 +389,13 @@ Now you need to tell `gatsby-plugin-mdx` to use your `PageTemplate` component as
 
 From an absolute path to your component (e.g. `/absolute/path/to/layout-component.js`) to a path that contains a query parameter `__contentFilePath` (e.g. `/absolute/path/to/layout-component.js?__contentFilePath=/absolute/path/to/content.mdx`).
 
-Your layout template cannot be written in TypeScript, and some modern Javascript syntax is not supported (e.g., `||=` or `&&=`). If any layout files use unsupported Javascript syntax, you will encounter an invalid AST error at build-time.
+<Announcement>
+
+**Please note:** While you can create your layout templates as [TypeScript files](/docs/how-to/custom-configuration/typescript/) (e.g. `post.tsx`) you can't actually use most TypeScript syntax. This is because the underlying [acorn](https://github.com/acornjs/acorn/tree/master/acorn/) parser only understands modern JS and JSX syntax.
+
+However, you can import your TypeScript types from another file instead. In most cases this should then work — if you're still encountering an "Unexpected token" error, try removing TypeScript syntax piece by piece to see why it breaks.
+
+</Announcement>
 
 Change your `gatsby-node.js` as following:
 
