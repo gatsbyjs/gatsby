@@ -1,6 +1,6 @@
 {
   "name": "gatsby-adapter-netlify",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Gatsby adapter for Netlify",
   "main": "dist/index.mjs",
   "types": "dist/index.d.ts",

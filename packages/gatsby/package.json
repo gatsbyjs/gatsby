@@ -90,7 +90,7 @@
     "find-cache-dir": "^3.3.2",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^11.1.1",
-    "gatsby-adapter-netlify": "0.0.0",
+    "gatsby-adapter-netlify": "^1.0.0",
     "gatsby-cli": "^5.10.0-next.2",
     "gatsby-core-utils": "^4.10.0-next.2",
     "gatsby-graphiql-explorer": "^3.10.0-next.2",
