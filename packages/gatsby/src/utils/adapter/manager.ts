@@ -13,6 +13,7 @@ import { createRequireFromPath } from "gatsby-core-utils/create-require-from-pat
 import { getPageMode } from "../page-mode"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { satisfies } from "semver"
+import { sync as globSync } from "glob"
 
 interface IAdapterManager {
   restoreCache: () => Promise<void> | void
@@ -118,14 +119,20 @@ const REDIRECT_HEADERS = [
   `x-frame-options: DENY`,
 ]
 
-// TODO: gather assets that need JS chunk headers
-// const STATIC_JS_CHUNK_HEADERS = [
-//   `cache-control: public, max-age=31536000, immutable`,
-//   `x-xss-protection: 1; mode=block`,
-//   `x-content-type-options: nosniff`,
-//   `referrer-policy: same-origin`,
-//   `x-frame-options: DENY`,
-// ]
+const ASSET_HEADERS = [
+  `x-xss-protection: 1; mode=block`,
+  `x-content-type-options: nosniff`,
+  `referrer-policy: same-origin`,
+  `x-frame-options: DENY`,
+]
+
+const WEBPACK_ASSET_HEADERS = [
+  `cache-control: public, max-age=31536000, immutable`,
+  `x-xss-protection: 1; mode=block`,
+  `x-content-type-options: nosniff`,
+  `referrer-policy: same-origin`,
+  `x-frame-options: DENY`,
+]
 
 function maybeDropNamedPartOfWildcard(
   path: string | undefined
@@ -137,32 +144,59 @@ function maybeDropNamedPartOfWildcard(
   return path.replace(/\*.+$/, `*`)
 }
 
+let webpackAssets: Set<string> | undefined
+export function setWebpackAssets(assets: Set<string>): void {
+  webpackAssets = assets
+}
+
 function getRoutesManifest(): RoutesManifest {
   const routes = [] as RoutesManifest
+
+  const fileAssets = new Set(
+    globSync(`**/**`, {
+      cwd: posix.join(process.cwd(), `public`),
+      nodir: true,
+      dot: true,
+    })
+  )
+
+  function removeFromAssets(path: string): void {
+    if (fileAssets.has(path)) {
+      fileAssets.delete(path)
+    } else {
+      reporter.warn(
+        `[dev-adapter-manager] tried to remove "${path}" from assets but it wasn't there`
+      )
+    }
+  }
 
   // routes - pages - static (SSG) or lambda (DSG/SSR)
   for (const page of store.getState().pages.values()) {
     const htmlRoutePath =
       maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
-    const pageDataRoutePath = generatePageDataPath(`public`, htmlRoutePath)
+    const pageDataRoutePath = generatePageDataPath(``, htmlRoutePath)
 
     if (getPageMode(page) === `SSG`) {
-      const htmlFilePath = generateHtmlPath(`public`, page.path)
-      const pageDataFilePath = generatePageDataPath(`public`, htmlFilePath)
+      const htmlFilePath = generateHtmlPath(``, page.path)
+      const pageDataFilePath = generatePageDataPath(``, page.path)
 
       routes.push({
         path: htmlRoutePath,
         type: `static`,
-        filePath: htmlFilePath,
+        filePath: posix.join(`public`, htmlFilePath),
         headers: STATIC_PAGE_HEADERS,
       })
+
+      removeFromAssets(htmlFilePath)
 
       routes.push({
         path: pageDataRoutePath,
         type: `static`,
-        filePath: pageDataFilePath,
+        filePath: posix.join(`public`, pageDataFilePath),
         headers: STATIC_PAGE_HEADERS,
       })
+
+      removeFromAssets(pageDataFilePath)
     } else {
       // TODO: generate lambda function for SSR/DSG
       // TODO: figure out caching behavior metadata - maybe take a look at https://vercel.com/docs/build-output-api/v3/primitives#prerender-functions for inspiration
@@ -179,7 +213,24 @@ function getRoutesManifest(): RoutesManifest {
     }
   }
 
-  // TODO: static asset routes - bundles
+  // webpack assets
+  if (!webpackAssets) {
+    throw new Error(`[dev-adapter-manager] webpackAssets is not defined`)
+  }
+
+  for (const asset of webpackAssets) {
+    routes.push({
+      path: asset,
+      type: `static`,
+      filePath: posix.join(`public`, asset),
+      headers: WEBPACK_ASSET_HEADERS,
+    })
+    removeFromAssets(asset)
+  }
+
+  // TODO: slices
+
+  // TODO: static query json assets
 
   // redirect routes
   for (const redirect of store.getState().redirects.values()) {
@@ -205,7 +256,19 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
-  // TODO: figure out any random files copied to public (e.g. static folder)
+  console.log(
+    `[dev-adapter-manager] unmanaged (or not yet handled) assets`,
+    fileAssets
+  )
+
+  for (const fileAsset of fileAssets) {
+    routes.push({
+      type: `static`,
+      path: fileAsset,
+      filePath: posix.join(`public`, fileAsset),
+      headers: ASSET_HEADERS,
+    })
+  }
 
   return routes
 }
