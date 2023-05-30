@@ -10,7 +10,6 @@ title: Deploying to Flightcontrol
 - [A Flightcontrol Account](https://app.flightcontrol.dev/signup?ref=gatsby)
 - [A GitHub account](https://github.com/signup)
 - [An AWS Account](https://portal.aws.amazon.com/)
-- Ensure you have the latest LTS version of Node installed (>= 18) by executing node --version
 
 ## Instructions
 
@@ -49,7 +48,7 @@ gatsby serve --port 3000 -H 0.0.0.0
 
 Create a flightcontrol.json file in your Gatsby Project
 
-Set configuration for the project in the Flightcontrol.json file
+Set configuration for the project in the flightcontrol.json file
 
 Below is an example of a `flightcontrol.json` configuration file for a [Gatsby.js](https://www.gatsbyjs.com/) project.
 
