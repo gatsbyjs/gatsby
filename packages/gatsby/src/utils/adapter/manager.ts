@@ -33,7 +33,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
   const adapter = adapterInit({ reporter })
 
-  reporter.info(`[dev-adapter-manager] using an adapter named ${adapter.name}`)
+  reporter.info(`Using ${adapter.name} adapter`)
 
   const directoriesToCache = [`.cache`, `public`]
   return {

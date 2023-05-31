@@ -1,8 +1,11 @@
 import reporter from "gatsby-cli/lib/reporter"
+import _ from "lodash"
 import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
 import { join } from "path"
 import { emptyDir, ensureDir, outputJson } from "fs-extra"
 import execa, { Options as ExecaOptions } from "execa"
+import { version as gatsbyVersion } from "gatsby/package.json"
+import { satisfies } from "semver"
 import {
   AdapterInit,
 } from "./types"
@@ -14,7 +17,7 @@ const getAdaptersCacheDir = (): string => join(process.cwd(), `.cache/adapters`)
 export async function getAdapterInit(): Promise<AdapterInit | undefined> {
   const latestAdapters = await getLatestAdapters()
 
-  // Find the correct adapter and its details (e.g. version)
+  // 0. Find the correct adapter and its details (e.g. version)
   const adapterToUse = latestAdapters.find((candidate) => candidate.test())
 
   if (!adapterToUse) {
@@ -26,16 +29,43 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
 
   // TODO: Add handling to allow for an env var to force a specific adapter to be used
 
-  // Check if the user has manually installed the adapter and try to resolve it from there
+  // 1. Check if the user has manually installed the adapter and try to resolve it from there
   try {
     const siteRequire = createRequireFromPath(`${process.cwd()}/:internal:`)
-    /*
     const adapterPackageJson = siteRequire(
       `${adapterToUse.module}/package.json`
     )
-    */
+    const adapterGatsbyPeerDependency = _.get(adapterPackageJson, `peerDependencies.gatsby`)
+    const moduleVersion = adapterPackageJson?.version
 
-    // TODO: Add handling for checking if installed version is compatible with current Gatsby version
+    // Check if the peerDependency of the adapter is compatible with the current Gatsby version
+    if (
+      adapterGatsbyPeerDependency &&
+      !satisfies(gatsbyVersion, adapterGatsbyPeerDependency, {
+        includePrerelease: true,
+      })
+    ) {
+      reporter.warn(
+        `The ${adapterToUse.name} adapter is not compatible with your current Gatsby version ${gatsbyVersion} - It requires gatsby@${adapterGatsbyPeerDependency}`
+      )
+      return undefined
+    }
+
+    // Cross-check the adapter version with the version manifest and see if the adapter version is correct for the current Gatsby version
+    const versionForCurrentGatsbyVersion = adapterToUse.versions.find((entry) => satisfies(gatsbyVersion, entry.gatsbyVersion, { includePrerelease: true }))
+    const isAdapterCompatible = versionForCurrentGatsbyVersion && satisfies(moduleVersion, versionForCurrentGatsbyVersion.moduleVersion)
+
+    if (!versionForCurrentGatsbyVersion) {
+      reporter.warn(`The ${adapterToUse.name} adapter is not compatible with your current Gatsby version ${gatsbyVersion}.`)
+
+      return undefined
+    }
+
+    if (!isAdapterCompatible) {
+      reporter.warn(`${adapterToUse.module}@${moduleVersion} is not compatible with your current Gatsby version ${gatsbyVersion} - Install ${adapterToUse.module}@${versionForCurrentGatsbyVersion.moduleVersion} or later.`)
+
+      return undefined
+    }
     
     const required = siteRequire.resolve(adapterToUse.module)
     
@@ -50,7 +80,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     // no-op
   }
 
-  // Check if a previous run has installed the correct adapter into .cache/adapters already and try to resolve it from there
+  // 2. Check if a previous run has installed the correct adapter into .cache/adapters already and try to resolve it from there
   try {
     const adaptersRequire = createRequireFromPath(`${getAdaptersCacheDir()}/:internal:`)
     const required = adaptersRequire.resolve(adapterToUse.module)
@@ -64,8 +94,8 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     // no-op
   }
 
-  const installTimer = reporter.activityTimer(`Installing adapter ${adapterToUse.module}`)
-  // If both a manually installed version and a cached version are not found, install the adapter into .cache/adapters
+  const installTimer = reporter.activityTimer(`Installing ${adapterToUse.name} adapter`)
+  // 3. If both a manually installed version and a cached version are not found, install the adapter into .cache/adapters
   try {
     installTimer.start()
     await createAdaptersCacheDir()
@@ -107,7 +137,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     }
   } catch (e) {
     installTimer.end()
-    console.log({ e })
+
     reporter.warn(`Could not install adapter ${adapterToUse.module}. Please install it yourself by adding it to your package.json's devDependencies and try building your project again.`)
   }
 
