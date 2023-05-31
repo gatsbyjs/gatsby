@@ -63,7 +63,7 @@
     "cross-env": "^7.0.3",
     "msw": "^1.2.1",
     "rimraf": "^5.0.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
