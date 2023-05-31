@@ -21,15 +21,17 @@ interface IStaticRoute extends IBaseRoute {
   headers: Array<string>
 }
 
-interface ILambdaRoute extends IBaseRoute {
+export interface ILambdaRoute extends IBaseRoute {
   type: `lambda`
   /**
    * Identifier of the function. Definition of that function is in function manifest.
    * Definition of function is not left directly here as some lambdas will be shared for multiple routes - such as DSG/SSR engine.
    */
   functionId: string
-  // TODO: caching behavior - DSG wants to cache result indefinitely (for current build). On Netlify - use OBD for DSG
-  // maybe take inspiration from https://vercel.com/docs/build-output-api/v3/primitives#prerender-configuration-file
+  /**
+   * If `cache` is true, response of lambda should be cached for current deployed and served on subsequent requests for this route.
+   */
+  cache?: true
 }
 
 interface IRedirectRoute extends IBaseRoute {

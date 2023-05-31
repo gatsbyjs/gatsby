@@ -10,11 +10,13 @@ import {
   RoutesManifest,
   Route,
   IAdapterManager,
+  ILambdaRoute,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
 import { getStaticQueryPath } from "../static-query-utils"
 import { getAdapterInit } from "./init"
+import { shouldGenerateEngines } from "../engines-helpers"
 
 function noOpAdapterManager(): IAdapterManager {
   return {
@@ -197,25 +199,33 @@ function getRoutesManifest(): RoutesManifest {
       maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
     const pageDataRoutePath = generatePageDataPath(``, htmlRoutePath)
 
-    if (getPageMode(page) === `SSG`) {
+    const pageMode = getPageMode(page)
+
+    if (pageMode === `SSG`) {
       const htmlFilePath = generateHtmlPath(``, page.path)
       const pageDataFilePath = generatePageDataPath(``, page.path)
 
       addStaticRoute(htmlRoutePath, htmlFilePath, STATIC_PAGE_HEADERS)
       addStaticRoute(pageDataRoutePath, pageDataFilePath, STATIC_PAGE_HEADERS)
     } else {
-      // TODO: generate lambda function for SSR/DSG
-      // TODO: figure out caching behavior metadata - maybe take a look at https://vercel.com/docs/build-output-api/v3/primitives#prerender-functions for inspiration
-      // routes.push({
-      //   path: htmlRoutePath,
-      //   type: `lambda`,
-      //   functionId: `ssr-engine`,
-      // })
-      // routes.push({
-      //   path: pageDataRoutePath,
-      //   type: `lambda`,
-      //   functionId: `ssr-engine`,
-      // })
+      const commonFields: Omit<ILambdaRoute, "path"> = {
+        type: `lambda`,
+        functionId: `ssr-engine`,
+      }
+
+      if (pageMode === `DSG`) {
+        commonFields.cache = true
+      }
+
+      addSortedRoute({
+        path: htmlRoutePath,
+        ...commonFields,
+      })
+
+      addSortedRoute({
+        path: pageDataRoutePath,
+        ...commonFields,
+      })
     }
   }
 
@@ -295,6 +305,13 @@ function getFunctionsManifest(): FunctionsManifest {
         `functions`,
         functionInfo.relativeCompiledFilePath
       ),
+    })
+  }
+
+  if (shouldGenerateEngines()) {
+    functions.push({
+      functionId: `ssr-engine`,
+      pathToCompiledFunction: posix.join(`.cache`, `page-ssr`, `lambda.js`),
     })
   }
 

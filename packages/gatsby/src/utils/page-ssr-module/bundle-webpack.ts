@@ -217,6 +217,11 @@ export async function createPageSSRBundle({
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
+  await fs.copyFile(
+    path.join(__dirname, `lambda.js`),
+    path.join(outputDir, `lambda.js`)
+  )
+
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       compiler.close(closeErr => {
