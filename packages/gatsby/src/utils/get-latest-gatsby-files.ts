@@ -1,7 +1,8 @@
 import path from "path"
-import fs from "fs-extra"
+import * as fs from "fs-extra"
 import axios from "axios"
 import { IAdapterManifestEntry } from "./adapter/types"
+import { preferDefault } from "../bootstrap/prefer-default"
 
 const ROOT = path.join(__dirname, `..`, `..`)
 const UNPKG_ROOT = `https://unpkg.com/gatsby/`
@@ -26,6 +27,10 @@ const _getFile = async <T>({
   fileName,
   outputFileName,
   defaultReturn,
+}: {
+  fileName: string
+  outputFileName: string
+  defaultReturn: T
 }): Promise<T> => {
   try {
     const { data } = await axios.get(`${UNPKG_ROOT}${fileName}`, {
@@ -39,8 +44,19 @@ const _getFile = async <T>({
     if (await fs.pathExists(outputFileName)) {
       return fs.readJSON(outputFileName)
     }
-    // possible offline/network issue
-    return fs.readJSON(path.join(ROOT, fileName)).catch(() => defaultReturn)
+
+    if (fileName.endsWith(`.json`)) {
+      return fs.readJSON(path.join(ROOT, fileName)).catch(() => defaultReturn)
+    } else {
+      try {
+        const importedFile = await import(path.join(ROOT, fileName))
+        const adapters = preferDefault(importedFile)
+        return adapters
+      } catch (e) {
+        // no-op
+        return defaultReturn
+      }
+    }
   }
 }
 
