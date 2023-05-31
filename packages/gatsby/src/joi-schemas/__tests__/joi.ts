@@ -265,6 +265,61 @@ describe(`gatsby config`, () => {
       })
     )
   })
+
+  it(`lets you create custom HTTP headers for a path`, () => {
+    const config = {
+      headers: [
+        {
+          source: `*`,
+          headers: [
+            {
+              key: `x-custom-header`,
+              value: `some value`,
+            },
+          ],
+        },
+      ],
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value?.headers).toEqual(config.headers)
+  })
+
+  it(`throws on incorrect headers definitions`, () => {
+    const configOne = {
+      headers: {
+        source: `*`,
+        headers: [
+          {
+            key: `x-custom-header`,
+            value: `some value`,
+          },
+        ],
+      },
+    }
+
+    const resultOne = gatsbyConfigSchema.validate(configOne)
+    expect(resultOne.error).toMatchInlineSnapshot(
+      `[ValidationError: "headers" must be an array]`
+    )
+
+    const configTwo = {
+      headers: [
+        {
+          source: `*`,
+          headers: {
+            key: `x-custom-header`,
+            value: `some value`,
+          },
+        },
+      ],
+    }
+
+    const resultTwo = gatsbyConfigSchema.validate(configTwo)
+    expect(resultTwo.error).toMatchInlineSnapshot(
+      `[ValidationError: "headers[0].headers" must be an array]`
+    )
+  })
 })
 
 describe(`node schema`, () => {

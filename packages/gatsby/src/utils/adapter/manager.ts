@@ -3,6 +3,7 @@ import { generateHtmlPath } from "gatsby-core-utils/page-html"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { posix } from "path"
 import { sync as globSync } from "glob"
+import telemetry from "gatsby-telemetry"
 import {
   FunctionsManifest,
   IAdaptContext,
@@ -34,6 +35,8 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   const adapter = adapterInit({ reporter })
 
   reporter.info(`Using ${adapter.name} adapter`)
+
+  telemetry.trackFeatureIsUsed(`adapter:${adapter.name}`)
 
   const directoriesToCache = [`.cache`, `public`]
   return {
@@ -73,6 +76,9 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       if (!adapter.adapt) {
         return
       }
+
+      const { headers } = store.getState().config
+      console.log({ headers })
 
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined

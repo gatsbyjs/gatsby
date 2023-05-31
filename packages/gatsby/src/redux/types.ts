@@ -96,6 +96,14 @@ export interface IGraphQLTypegenOptions {
   generateOnBuild: boolean
 }
 
+export type Header = {
+  source: string
+  headers: Array<{
+    key: string
+    value: string
+  }>
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
     // This is the name of the plugin like `gatsby-plugin-manifest`
@@ -124,6 +132,7 @@ export interface IGatsbyConfig {
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
   graphqlTypegen?: IGraphQLTypegenOptions
+  headers?: Array<Header>
 }
 
 export interface IGatsbyNode {

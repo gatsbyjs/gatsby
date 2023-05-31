@@ -14,6 +14,7 @@ export const KNOWN_CONFIG_KEYS = [
   `jsxImportSource`,
   `trailingSlash`,
   `graphqlTypegen`,
+  `headers`,
 ]
 
 export function didYouMean(

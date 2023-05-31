@@ -318,6 +318,20 @@ type Proxy = {
   url: string
 }
 
+type Header = {
+  /**
+   * The path to match requests against.
+   */
+  source: string
+  /**
+   * Your custom response headers.
+   */
+  headers: Array<{
+    key: string
+    value: string
+  }>
+}
+
 /**
  * Gatsby configuration API.
  *
@@ -355,6 +369,10 @@ export interface GatsbyConfig {
   partytownProxiedURLs?: Array<string>
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
   developMiddleware?(app: any): void
+  /**
+   * You can set custom HTTP headers for incoming requests
+   */
+  headers?: Array<Header>
 }
 
 /**
