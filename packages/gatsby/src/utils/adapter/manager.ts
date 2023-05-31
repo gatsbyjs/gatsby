@@ -1,27 +1,26 @@
-import { store, readState } from "../../redux"
 import reporter from "gatsby-cli/lib/reporter"
-import { posix } from "path"
+import { generateHtmlPath } from "gatsby-core-utils/page-html"
+import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
+import { generatePageDataPath } from "gatsby-core-utils/page-data"
+import { join, posix } from "path"
+import { emptyDir, ensureDir, outputJson } from "fs-extra"
+import execa, { Options as ExecaOptions } from "execa"
+import { sync as globSync } from "glob"
 import {
   FunctionsManifest,
   IAdaptContext,
   AdapterInit,
   RoutesManifest,
   Route,
+  IAdapterManager,
 } from "./types"
+import { store, readState } from "../../redux"
 import { preferDefault } from "../../bootstrap/prefer-default"
-import { generateHtmlPath } from "gatsby-core-utils/page-html"
-import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
 import { getPageMode } from "../page-mode"
-import { generatePageDataPath } from "gatsby-core-utils/page-data"
-import { satisfies } from "semver"
-import { sync as globSync } from "glob"
+import { getLatestAdapters } from "../get-latest-gatsby-files"
 import { getStaticQueryPath } from "../static-query-utils"
 
-interface IAdapterManager {
-  restoreCache: () => Promise<void> | void
-  storeCache: () => Promise<void> | void
-  adapt: () => Promise<void> | void
-}
+const getAdaptersCacheDir = (): string => join(process.cwd(), `.cache/adapters`)
 
 function noOpAdapterManager(): IAdapterManager {
   return {
@@ -34,8 +33,8 @@ function noOpAdapterManager(): IAdapterManager {
 export async function initAdapterManager(): Promise<IAdapterManager> {
   const adapterInit = await getAdapterInit()
 
+  // If we don't have adapter, use no-op adapter manager
   if (!adapterInit) {
-    // if we don't have adapter - use no-op adapter manager
     return noOpAdapterManager()
   }
 
@@ -304,62 +303,119 @@ function getFunctionsManifest(): FunctionsManifest {
 }
 
 async function getAdapterInit(): Promise<AdapterInit | undefined> {
-  // TODO: figure out adapter to use (and potentially install) based on environent
-  // for now, just hardcode work-in-progress Netlify adapter to work out details of Adapter API
+  const latestAdapters = await getLatestAdapters()
 
-  // 1. figure out which adapter (and its version) to use
-
-  // this is just random npm package to test autoinstallation soon
-  // const adapterToUse = {
-  //   packageName: `ascii-cats`,
-  //   version: `^1.1.1`,
-  // }
-
-  const adapterToUse = {
-    packageName: `gatsby-adapter-netlify`,
-    version: `*`,
-  }
+  // Find the correct adapter and its details (e.g. version)
+  const adapterToUse = latestAdapters.find((candidate) => candidate.test())
 
   if (!adapterToUse) {
-    reporter.info(
-      `[dev-adapter-manager] using no-op adapter, because nothing was discovered`
+    reporter.verbose(
+      `No adapter was found for the current environment. Skipping adapter initialization.`
     )
     return undefined
   }
 
-  // 2. check siteDir
-  // try to resolve from siteDir
+  // TODO: Add handling to allow for an env var to force a specific adapter to be used
+
+  // Check if the user has manually installed the adapter and try to resolve it from there
   try {
     const siteRequire = createRequireFromPath(`${process.cwd()}/:internal:`)
+    /*
     const adapterPackageJson = siteRequire(
-      `${adapterToUse.packageName}/package.json`
+      `${adapterToUse.module}/package.json`
     )
+    */
 
-    if (
-      satisfies(adapterPackageJson.version, adapterToUse.version, {
-        includePrerelease: true,
-      })
-    ) {
-      // console.log(`SATISFIED`, adapterPackageJson.version, adapterToUse.version)
+    // TODO: Add handling for checking if installed version is compatible with current Gatsby version
+    
+    const required = siteRequire.resolve(adapterToUse.module)
+    
+    if (required) {
+      reporter.verbose(`Reusing existing adapter ${adapterToUse.module} inside node_modules`)
+
       return preferDefault(
-        await import(siteRequire.resolve(adapterToUse.packageName))
+        await import(required)
       ) as AdapterInit
     }
-    // else {
-    //   console.log(
-    //     `NOT SATISFIED`,
-    //     adapterPackageJson.version,
-    //     adapterToUse.version
-    //   )
-    // }
   } catch (e) {
     // no-op
   }
 
-  // 3. check .cache/adapters
-  // const gatsbyManagedAdaptersLocation = `.cache/adapters`
+  // Check if a previous run has installed the correct adapter into .cache/adapters already and try to resolve it from there
+  try {
+    const adaptersRequire = createRequireFromPath(`${getAdaptersCacheDir()}/:internal:`)
+    const required = adaptersRequire.resolve(adapterToUse.module)
 
-  // 4. install to .cache/adapters if still not available
+    if (required) {
+      reporter.verbose(`Reusing existing adapter ${adapterToUse.module} inside .cache/adapters`)
+
+      return preferDefault(await import(required)) as AdapterInit
+    }
+  } catch (e) {
+    // no-op
+  }
+
+  const installTimer = reporter.activityTimer(`Installing adapter ${adapterToUse.module}`)
+  // If both a manually installed version and a cached version are not found, install the adapter into .cache/adapters
+  try {
+    installTimer.start()
+    await createAdaptersCacheDir()
+
+    const options: ExecaOptions = {
+      stderr: `inherit`,
+      cwd: getAdaptersCacheDir(),
+    }
+
+    const npmAdditionalCliArgs = [
+      `--no-progress`,
+      `--no-audit`,
+      `--no-fund`,
+      `--loglevel`,
+      `error`,
+      `--color`,
+      `always`,
+      `--legacy-peer-deps`,
+      `--save-exact`
+    ]
+
+    await execa(
+      `npm`,
+      [`install`, ...npmAdditionalCliArgs, adapterToUse.module],
+      options
+    )
+
+    installTimer.end()
+
+    reporter.info(`If you plan on staying on this deployment platform, consider installing ${adapterToUse.module} as a devDependency in your project. This will give you faster and more robust installs.`)
+
+    const adaptersRequire = createRequireFromPath(`${getAdaptersCacheDir()}/:internal:`)
+    const required = adaptersRequire.resolve(adapterToUse.module)
+
+    if (required) {
+      reporter.verbose(`Using installed adapter ${adapterToUse.module} inside .cache/adapters`)
+
+      return preferDefault(await import(required)) as AdapterInit
+    }
+  } catch (e) {
+    installTimer.end()
+    reporter.warn(`Could not install adapter ${adapterToUse.module}. Please install it yourself by adding it to your package.json's devDependencies and try building your project again.`)
+  }
 
   return undefined
+}
+
+const createAdaptersCacheDir = async (): Promise<void> => {
+  await ensureDir(getAdaptersCacheDir())
+  await emptyDir(getAdaptersCacheDir())
+
+  const packageJsonPath = join(getAdaptersCacheDir(), `package.json`)
+  
+  await outputJson(packageJsonPath, {
+    name: `gatsby-adapters`,
+    description: `This directory contains adapters that have been automatically installed by Gatsby.`,
+    version: `1.0.0`,
+    private: true,
+    author: `Gatsby`,
+    license: `MIT`,
+  })
 }

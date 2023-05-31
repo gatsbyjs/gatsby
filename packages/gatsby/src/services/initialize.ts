@@ -432,6 +432,7 @@ export async function initialize({
         `!.cache/compiled`,
         // Add webpack
         `!.cache/webpack`,
+        `!.cache/adapters`
       ]
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
