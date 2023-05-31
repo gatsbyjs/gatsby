@@ -15,7 +15,9 @@
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
   },
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-adapter"
   ],
   "author": "",
   "license": "MIT",

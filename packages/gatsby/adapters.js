@@ -7,15 +7,15 @@
  * 
  * @type {import("./src/utils/adapter/types").IAdapterManifestEntry}
  */
-export const adaptersManifest = [
+const adaptersManifest = [
   {
-    name: `TESTING`,
-    module: `ascii-cats`,
+    name: `gatsby-adapter-testing`,
+    module: `@lekoarts/gatsby-adapter-testing`,
     test: () => true,
     versions: [
       {
         gatsbyVersion: `^5.0.0`,
-        moduleVersion: `^1.1.1`
+        moduleVersion: `^1.0.0`
       }
     ]
   },
@@ -31,3 +31,5 @@ export const adaptersManifest = [
     ]
   },
 ]
+
+module.exports = adaptersManifest
