@@ -3,7 +3,7 @@ const Queue = require(`fastq`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const LAMBDA_CONCURRENCY_LIMIT = 50
-const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDE
+const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 
 const screenshotQueue = Queue.promise(worker, LAMBDA_CONCURRENCY_LIMIT)
 
