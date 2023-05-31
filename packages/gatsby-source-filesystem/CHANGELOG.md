@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.10.0/packages/gatsby-source-filesystem) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency xstate to ^4.37.2 for gatsby-source-filesystem [#38004](https://github.com/gatsbyjs/gatsby/issues/38004) ([f192268](https://github.com/gatsbyjs/gatsby/commit/f192268ac03480ec54ab9c715fadf7015f4c32d7))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@5.9.0/packages/gatsby-source-filesystem) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

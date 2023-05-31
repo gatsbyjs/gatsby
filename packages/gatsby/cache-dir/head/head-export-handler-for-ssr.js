@@ -11,6 +11,7 @@ const {
 const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
+const styleToOjbect = require(`style-to-object`)
 import { apiRunner } from "../api-runner-ssr"
 
 export function applyHtmlAndBodyAttributesSSR(
@@ -44,9 +45,19 @@ export function getValidHeadNodesAndAttributesSSR(
 
     if (isValidNodeName(rawTagName)) {
       if (rawTagName === `html` || rawTagName === `body`) {
+        const { style, ...nonStyleAttributes } = node.attributes
+
         htmlAndBodyAttributes[rawTagName] = {
           ...htmlAndBodyAttributes[rawTagName],
-          ...node.attributes,
+          ...nonStyleAttributes,
+        }
+
+        // Unfortunately renderToString converts inline styles to a string, so we have to convert them back to an object
+        if (style) {
+          htmlAndBodyAttributes[rawTagName].style = {
+            ...htmlAndBodyAttributes[rawTagName]?.style,
+            ...styleToOjbect(style),
+          }
         }
       } else {
         let element

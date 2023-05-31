@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.10.0/packages/gatsby-worker) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Chores
+
+- update dependency rimraf to v5 for gatsby-worker [#38042](https://github.com/gatsbyjs/gatsby/issues/38042) ([9d90399](https://github.com/gatsbyjs/gatsby/commit/9d90399730e0fb0a4953f9ffdbd0ec264038af21))
+
 ## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@2.9.0/packages/gatsby-worker) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

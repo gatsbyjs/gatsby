@@ -26,6 +26,7 @@ import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
 import { getPageMode } from "../utils/page-mode"
 import { extractUndefinedGlobal } from "../utils/extract-undefined-global"
 import { modifyPageDataForErrorMessage } from "../utils/page-data"
+import { setFilesFromDevelopHtmlCompilation } from "../utils/webpack/utils/is-file-inside-compilations"
 
 type IActivity = any // TODO
 
@@ -216,6 +217,10 @@ const doBuildRenderer = async (
     reporter.panicOnBuild(
       structureWebpackErrors(stage, stats.compilation.errors)
     )
+  }
+
+  if (stage === `develop-html`) {
+    setFilesFromDevelopHtmlCompilation(stats.compilation)
   }
 
   // render-page.js is hard coded in webpack.config

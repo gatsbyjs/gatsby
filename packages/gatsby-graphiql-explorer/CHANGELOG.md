@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@3.10.0/packages/gatsby-graphiql-explorer) (2023-05-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
+
+#### Bug Fixes
+
+- update dependency core-js to ^3.30.1 [#38017](https://github.com/gatsbyjs/gatsby/issues/38017) ([3d10f90](https://github.com/gatsbyjs/gatsby/commit/3d10f9035e8bfeedfab8a4a400c687e29d0f9a03))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-graphiql-explorer [#37993](https://github.com/gatsbyjs/gatsby/issues/37993) ([cf17a32](https://github.com/gatsbyjs/gatsby/commit/cf17a32659610be281f046fc3562d329fdeaa503))
+
 ## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@3.9.0/packages/gatsby-graphiql-explorer) (2023-04-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.9)

@@ -47,7 +47,7 @@ const getGatsbyImageCdnFields = async ({
     return {}
   }
 
-  const mimeType = node.attributes.filemime
+  const mimeType = node.attributes.filemime || node.attributes.mimetype
   const { filename } = node.attributes
 
   if (!mimeType || !filename) {

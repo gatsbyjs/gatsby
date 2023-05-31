@@ -18,7 +18,7 @@ There are two stages to providing search functionality: indexing your pages and 
 
 The [Gatsby Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia) handles the indexing. It sends your pages to Algolia for indexing every time you run `gatsby build`. You use GraphQL to customize which pages and what information to index.
 
-To build the user interface for searching, this guide will use [React InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react/), which is a library provided by Algolia with ready-made React components. This is the quickest way to get up and running, but you could also build your own custom user interface.
+To build the user interface for searching, this guide will use [React InstantSearch Hooks](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react-hooks/), which is a library provided by Algolia with ready-made React components. This is the quickest way to get up and running, but you could also build your own custom user interface.
 
 > Note: If you want to build a search for technical documentation, Algolia provides a product called [DocSearch](https://docsearch.algolia.com/) that simplifies the process further and eliminates the need for manual indexing. This is the preferred approach for documentation sites.
 
@@ -189,7 +189,7 @@ Now that there is data in the index, it is time to build the user interface for 
 
 The guide will use the following frameworks:
 
-- [React InstantSearch](https://community.algolia.com/react-instantsearch), a component library provided by Algolia for easily building search interfaces.
+- [React InstantSearch Hooks](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/react-hooks/), a component library provided by Algolia for easily building search interfaces.
 - [Algolia Search](https://www.npmjs.com/package/algoliasearch) provides the API client for calling Algolia.
 - [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/plugins/gatsby-plugin-styled-components/).
 - [Styled Icons](https://styled-icons.js.org/) provides the magnifying glass icon for the search bar.
@@ -199,7 +199,7 @@ Styled Components can also be replaced by any other CSS solution you prefer.
 Install these frameworks by running the following command:
 
 ```shell
-npm install react-instantsearch-dom algoliasearch styled-components gatsby-plugin-styled-components @styled-icons/fa-solid
+npm install react-instantsearch-hooks-web algoliasearch styled-components gatsby-plugin-styled-components @styled-icons/fa-solid
 ```
 
 Add the `gatsby-plugin-styled-components` to your `gatsby-config`:
@@ -218,63 +218,70 @@ The first step is to create the input field where the user enters the search que
 
 ```jsx:title=src/components/search/search-box.js
 import React from "react"
-import { connectSearchBox } from "react-instantsearch-dom"
+import { useSearchBox } from "react-instantsearch-hooks-web"
 import { Search as SearchIcon } from "@styled-icons/fa-solid"
 
-export default connectSearchBox(
-  ({ refine, currentRefinement, className, onFocus }) => (
+const SearchBox = ({ className, onFocus, onChange }) => {
+  const { query, refine } = useSearchBox()
+
+  return (
     <form className={className}>
       <input
         className="SearchInput"
         type="text"
         placeholder="Search"
         aria-label="Search"
-        onChange={e => refine(e.target.value)}
-        value={currentRefinement}
+        onChange={e => {
+          refine(e.target.value)
+          onChange(e.target.value)
+        }}
+        value={query}
         onFocus={onFocus}
       />
       <SearchIcon className="SearchIcon" />
     </form>
   )
-)
+}
+
+export default SearchBox
 ```
 
-The component consists of an HTML form containing an input field and the magnifying glass icon. Most of the work is done by Algolia's [`connectSearchBox`](https://community.algolia.com/react-instantsearch/connectors/connectSearchBox.html) function. It exposes the current search string as `currentRefinement` and a function for changing it called `refine`.
+The component consists of an HTML form containing an input field and the magnifying glass icon. Most of the work is done by Algolia's [`useSearchBox`](https://www.algolia.com/doc/api-reference/widgets/search-box/react-hooks/#hook) React hook. It exposes the current search string as `query` and a function for changing it called `refine`.
 
 ### Displaying search results
 
 That's all there is to entering the search query. Next, build a component for displaying search results:
 
 ```jsx:title=src/components/search/search-result.js
+import React from "react"
 import { Link } from "gatsby"
-import { default as React } from "react"
 import {
-  connectStateResults,
   Highlight,
   Hits,
   Index,
   Snippet,
   PoweredBy,
-} from "react-instantsearch-dom"
+  useStats,
+} from "react-instantsearch-hooks-web"
 
-const HitCount = connectStateResults(({ searchResults }) => {
-  const hitCount = searchResults && searchResults.nbHits
+const HitCount = () => {
+  const { nbHits } = useStats()
 
-  return hitCount > 0 ? (
+  return nbHits > 0 ? (
     <div className="HitCount">
-      {hitCount} result{hitCount !== 1 ? `s` : ``}
+      {nbHits} result{nbHits !== 1 ? "s" : ""}
     </div>
   ) : null
-})
+}
 
 const PageHit = ({ hit }) => (
   <div>
     <Link to={hit.slug}>
       <h4>
-        <Highlight attribute="title" hit={hit} tagName="mark" />
+        <Highlight attribute="title" hit={hit} />
       </h4>
     </Link>
-    <Snippet attribute="excerpt" hit={hit} tagName="mark" />
+    <Snippet attribute="excerpt" hit={hit} />
   </div>
 )
 
@@ -297,11 +304,11 @@ const SearchResult = ({ indices, className }) => (
 export default SearchResult
 ```
 
-Since Algolia supports multiple indices, the `SearchResult` iterates over all indices and displays hits for each of them using the `HitsInIndex` component. It, in turn, relies heavily on the [`Hits` component](https://www.algolia.com/doc/api-reference/widgets/hits/react/) from the InstantSearch library.
+Since Algolia supports multiple indices, the `SearchResult` iterates over all indices and displays hits for each of them using the `HitsInIndex` component. It, in turn, relies heavily on the [`Hits` component](https://www.algolia.com/doc/api-reference/widgets/hits/react-hooks/) from the InstantSearch library.
 
 The `PageHit` component is responsible for displaying a single page ("hit") in a search result.
 
-[`connectStateResults`](https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html) wraps components to provide them with details about the current search such as the query, the number of results and timing statistics.
+[`useStats()`](https://www.algolia.com/doc/api-reference/widgets/stats/react-hooks/) provides details about the current search such as the query, the number of results and timing statistics.
 
 If you're using Algolia's free tier, they ask you to acknowledge the use of their technology by including the string "Powered by Algolia", which is what `PoweredBy` does.
 
@@ -312,9 +319,9 @@ If you're using Algolia's free tier, they ask you to acknowledge the use of thei
 You now need to hook up the two components to each other and perform the actual search:
 
 ```jsx:title=src/components/search/index.js
+import React, { createRef, useState, useMemo } from "react"
 import algoliasearch from "algoliasearch/lite"
-import { createRef, default as React, useState, useMemo } from "react"
-import { InstantSearch } from "react-instantsearch-dom"
+import { InstantSearch } from "react-instantsearch-hooks-web"
 import { ThemeProvider } from "styled-components"
 import StyledSearchBox from "./styled-search-box"
 import StyledSearchResult from "./styled-search-result"
@@ -345,12 +352,12 @@ export default function Search({ indices }) {
   return (
     <ThemeProvider theme={theme}>
       <StyledSearchRoot ref={rootRef}>
-        <InstantSearch
-          searchClient={searchClient}
-          indexName={indices[0].name}
-          onSearchStateChange={({ query }) => setQuery(query)}
-        >
-          <StyledSearchBox onFocus={() => setFocus(true)} hasFocus={hasFocus} />
+        <InstantSearch searchClient={searchClient} indexName={indices[0].name}>
+          <StyledSearchBox
+            onChange={query => setQuery(query)}
+            onFocus={() => setFocus(true)}
+            hasFocus={hasFocus}
+          />
           <StyledSearchResult
             show={query && query.length > 0 && hasFocus}
             indices={indices}
@@ -370,7 +377,7 @@ The `searchClient` variable is [memoized](https://reactjs.org/docs/hooks-referen
 
 `StyledSearchRoot` is the root of the whole component. The React hook `useClickOutside` provides a callback if the user clicks anywhere else on the page, in which case it should close.
 
-`InstantSearch` from [`react-instantsearch-dom`](https://community.algolia.com/react-instantsearch) wraps the search box and search results to orchestrate the search.
+`InstantSearch` from [`react-instantsearch-hooks-web`](https://www.algolia.com/doc/api-reference/widgets/instantsearch/react-hooks/) wraps the search box and search results to orchestrate the search.
 
 ### Supporting files
 
@@ -381,7 +388,7 @@ import { useEffect } from "react"
 
 const events = [`mousedown`, `touchstart`]
 
-export default (ref, onClickOutside) => {
+const useClickOutside = (ref, onClickOutside) => {
   const isOutside = element => !ref.current || !ref.current.contains(element)
 
   const onClick = event => {
@@ -400,6 +407,8 @@ export default (ref, onClickOutside) => {
     }
   })
 }
+
+export default useClickOutside
 ```
 
 And finally, you should also add some CSS. The `Styled` components wrap the components you wrote earlier to add styling to them. If you wish to use a different CSS framework, you can skip these. In that case, replace `StyledSearchBox` with `SearchBox`, `StyledSearchResult` with `SearchResult` and `StyledSearchRoot` with `<div>` in `index.js`.
@@ -459,6 +468,7 @@ export default styled(SearchBox)`
     margin: 0.3em;
     color: ${({ theme }) => theme.foreground};
     pointer-events: none;
+    z-index: 1;
   }
 `
 ```
@@ -498,7 +508,7 @@ export default styled(SearchResult)`
   }
 
   .Hits {
-    ul {
+    ol {
       list-style: none;
       margin-left: 0;
     }
@@ -510,6 +520,7 @@ export default styled(SearchResult)`
         color: ${({ theme }) => theme.foreground};
 
         h4 {
+          margin-top: 0;
           margin-bottom: 0.2em;
         }
       }
@@ -522,7 +533,7 @@ export default styled(SearchResult)`
     font-size: 80%;
 
     svg {
-      width: 70px;
+      width: 130px;
     }
   }
 `
@@ -537,7 +548,6 @@ The search widget is now ready for use. It needs to be placed somewhere in your 
 ```jsx:title=src/components/layout.js
 import React from "react"
 import { Link } from "gatsby"
-import { rhythm, scale } from "../utils/typography"
 // highlight-start
 import Search from "./search"
 
@@ -548,15 +558,8 @@ const Layout = ({ location, title, children }) => {
   // ...
 
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(24),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>
+    <div className="global-wrapper" data-is-root-path={isRootPath}>
+      <header className="global-header">
         // highlight-next-line
         <Search indices={searchIndices} />
         {header}
@@ -584,7 +587,7 @@ Running `gatsby develop` should now give you a working search that looks somethi
 
 ![Search widget displaying search results](./images/algolia-final-search.png)
 
-You can also play around with it at [https://janosh.io/blog](https://janosh.io/blog).
+You can also play around with it at [https://gatsby-react-instantsearch-hooks.netlify.app](https://gatsby-react-instantsearch-hooks.netlify.app).
 
 ## Deploying to Netlify
 

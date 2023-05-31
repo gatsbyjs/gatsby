@@ -9,8 +9,14 @@ exports[pluginInitApiName] = runApiSteps(
     steps.setErrorMap,
     steps.tempPreventMultipleInstances,
     steps.setRequestHeaders,
+    steps.hideAuthPluginOptions,
   ],
   pluginInitApiName
+)
+
+exports.onPreBootstrap = runApiSteps(
+  [steps.restoreAuthPluginOptions],
+  `onPreBootstrap`
 )
 
 exports.pluginOptionsSchema = steps.pluginOptionsSchema
