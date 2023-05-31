@@ -27,7 +27,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     return undefined
   }
 
-  // TODO: Add handling to allow for an env var to force a specific adapter to be used
+  // TODO: Add a way for someone to use an unpublished adapter (e.g. local developing)
 
   // 1. Check if the user has manually installed the adapter and try to resolve it from there
   try {
