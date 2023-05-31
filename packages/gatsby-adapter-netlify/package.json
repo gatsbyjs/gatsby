@@ -36,6 +36,9 @@
     "rimraf": "^5.0.0",
     "typescript": "^5.0.3"
   },
+  "peerDependencies": {
+    "gatsby": "^5.10.0-next"
+  },
   "files": [
     "dist/"
   ],
