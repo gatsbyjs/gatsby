@@ -19,7 +19,8 @@
     "gatsby-plugin",
     "gatsby-adapter"
   ],
-  "author": "",
+  "author": "pieh",
+  "contributors": ["LekoArts"],
   "license": "MIT",
   "repository": {
     "type": "git",

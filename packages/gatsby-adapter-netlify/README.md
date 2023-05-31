@@ -1,3 +1,13 @@
-# `gatsby-adapter-netlify`
+# gatsby-adapter-netlify
 
-TODO: fill this out
+TODO: Description
+
+## Installation
+
+```shell
+npm install gatsby-adapter-netlify
+```
+
+## Usage
+
+TODO

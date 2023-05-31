@@ -1,6 +1,4 @@
-// TODO: make those types publicly exported from gatsby (?)
-// for now we can just reference types we have in monorepo
-import type { AdapterInit } from "gatsby/src/utils/adapter/types"
+import type { AdapterInit } from "gatsby"
 
 // just for debugging
 import { inspect } from "util"

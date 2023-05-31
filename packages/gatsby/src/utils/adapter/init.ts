@@ -157,7 +157,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     installTimer.end()
 
     reporter.info(
-      `If you plan on staying on this deployment platform, consider installing ${adapterToUse.module} as a devDependency in your project. This will give you faster and more robust installs.`
+      `If you plan on staying on this deployment platform, consider installing ${adapterToUse.module} as a dependency in your project. This will give you faster and more robust installs.`
     )
 
     const adaptersRequire = createRequireFromPath(
@@ -176,7 +176,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     installTimer.end()
 
     reporter.warn(
-      `Could not install adapter ${adapterToUse.module}. Please install it yourself by adding it to your package.json's devDependencies and try building your project again.`
+      `Could not install adapter ${adapterToUse.module}. Please install it yourself by adding it to your package.json's dependencies and try building your project again.`
     )
   }
 

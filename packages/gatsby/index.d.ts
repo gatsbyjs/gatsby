@@ -33,6 +33,8 @@ export {
 
 export * from "gatsby-script"
 
+export { AdapterInit } from "gatsby/dist/utils/adapter/types"
+
 export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>
   onScroll(): void
