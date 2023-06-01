@@ -30,7 +30,7 @@
     "@mdx-js/mdx": "^2.3.0",
     "acorn": "^8.8.2",
     "acorn-jsx": "^5.3.2",
-    "astring": "^1.8.4",
+    "astring": "^1.8.5",
     "deepmerge": "^4.3.1",
     "estree-util-build-jsx": "^2.2.2",
     "fs-extra": "^11.1.1",
@@ -58,7 +58,7 @@
     "del-cli": "^5.0.0",
     "opentracing": "^0.14.7",
     "typescript": "^5.0.4",
-    "webpack": "^5.81.0"
+    "webpack": "^5.85.0"
   },
   "jest": {
     "testEnvironment": "node"

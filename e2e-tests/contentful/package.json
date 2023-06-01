@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@contentful/rich-text-types": "^16.0.3",
+    "@contentful/rich-text-types": "^16.2.0",
     "gatsby": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-sharp": "next",
@@ -22,7 +22,7 @@
     "@simonsmith/cypress-image-snapshot": "^6.1.1",
     "@types/simonsmith__cypress-image-snapshot": "npm:@types/cypress-image-snapshot",
     "cross-env": "^7.0.3",
-    "cypress": "^12.11.0",
+    "cypress": "^12.13.0",
     "gatsby-cypress": "next",
     "prettier": "^2.8.8",
     "srcset": "^5.0.0",

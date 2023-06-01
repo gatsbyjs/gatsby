@@ -17,7 +17,7 @@
     "gatsby-plugin-utils": "^4.11.0-next.0",
     "lodash": "^4.17.21",
     "probe-image-size": "^7.2.3",
-    "semver": "^7.5.0",
+    "semver": "^7.5.1",
     "sharp": "^0.32.1"
   },
   "devDependencies": {

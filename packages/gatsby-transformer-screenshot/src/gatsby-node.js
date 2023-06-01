@@ -2,7 +2,6 @@ const axios = require(`axios`)
 const Queue = require(`fastq`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
 const LAMBDA_CONCURRENCY_LIMIT = 50
 const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 
@@ -22,7 +21,6 @@ async function worker(input) {
 
 exports.onPreBootstrap = (
   {
-    store,
     cache,
     actions,
     createNodeId,
@@ -30,7 +28,6 @@ exports.onPreBootstrap = (
     getNode,
     getNodesByType,
     createContentDigest,
-    reporter,
   },
   pluginOptions
 ) => {
@@ -55,14 +52,13 @@ exports.onPreBootstrap = (
       screenshotQueue.push({
         url: n.url,
         parent: n.parent,
-        store,
         cache,
         createNode,
         createNodeId,
         getCache,
         parentNodeId: n.id,
         createContentDigest,
-        reporter,
+        pluginOptions,
       })
     } else {
       // Screenshot hasn't yet expired, touch the image node
@@ -93,15 +89,10 @@ function shouldOnCreateNode({ node }, pluginOptions) {
 
 exports.shouldOnCreateNode = shouldOnCreateNode
 
-exports.onCreateNode = async ({
-  node,
-  actions,
-  store,
-  cache,
-  createNodeId,
-  createContentDigest,
-  getCache,
-}) => {
+exports.onCreateNode = async (
+  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
+  pluginOptions
+) => {
   const { createNode, createParentChildLink } = actions
 
   try {
@@ -115,6 +106,7 @@ exports.onCreateNode = async ({
       getCache,
       createContentDigest,
       parentNodeId: node.id,
+      pluginOptions,
     })
 
     createParentChildLink({
@@ -129,14 +121,13 @@ exports.onCreateNode = async ({
 const createScreenshotNode = async ({
   url,
   parent,
-  store,
   cache,
   createNode,
   createNodeId,
   getCache,
   parentNodeId,
   createContentDigest,
-  reporter,
+  pluginOptions,
 }) => {
   try {
     let fileNode
@@ -149,7 +140,10 @@ const createScreenshotNode = async ({
       })
       expires = new Date(2999, 1, 1).getTime()
     } else {
-      const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
+      const screenshotResponse = await axios.post(
+        pluginOptions.screenshotEndpoint,
+        { url }
+      )
 
       fileNode = await createRemoteFileNode({
         url: screenshotResponse.data.url,
