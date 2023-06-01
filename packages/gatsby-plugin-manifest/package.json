@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.20.13",
     "gatsby-core-utils": "^4.11.0-next.0",
     "gatsby-plugin-utils": "^4.11.0-next.0",
-    "semver": "^7.5.0",
+    "semver": "^7.5.1",
     "sharp": "^0.32.1"
   },
   "devDependencies": {
