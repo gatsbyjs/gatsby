@@ -14692,10 +14692,10 @@ json-buffer@3.0.1:
   resolved "https://registry.yarnpkg.com/json-buffer/-/json-buffer-3.0.1.tgz#9338802a30d3b6605fbe0613e094008ca8c05a13"
   integrity sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==
 
-json-diff@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/json-diff/-/json-diff-1.0.3.tgz#67c7ac4e084ca518974fdbb6fe08ce271f4fe2f4"
-  integrity sha512-W0yk/xzjz7bag9v9eS4qthvPG4O07uxNeXwirhvcOqmX4w8HLtB/Pw76o5Z7Pblwvf4vpCi4+iHOlHDnmav/rA==
+json-diff@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/json-diff/-/json-diff-1.0.6.tgz#63690f695469b6437efaed5bb3d51f011f7cac28"
+  integrity sha512-tcFIPRdlc35YkYdGxcamJjllUhXWv4n2rK9oJ2RsAzV4FBkuV4ojKEDgcZ+kpKxDmJKv+PFK65+1tVVOnSeEqA==
   dependencies:
     "@ewoudenberg/difflib" "0.1.0"
     colors "^1.4.0"
