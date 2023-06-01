@@ -301,7 +301,7 @@ export async function sourceNodes(
       deleteNode(node)
     })
   }
-
+  // Arbitrary comment for testing
   if (deletedEntries.length || deletedAssets.length) {
     const deletionActivity = reporter.activityTimer(
       `Contentful: Deleting nodes and assets`,
