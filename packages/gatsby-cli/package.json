@@ -37,7 +37,7 @@
     "is-valid-path": "^0.1.1",
     "joi": "^17.9.2",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.9",
+    "node-fetch": "^2.6.11",
     "opentracing": "^0.14.7",
     "pretty-error": "^2.1.2",
     "progress": "^2.0.3",
