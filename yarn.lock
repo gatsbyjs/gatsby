@@ -113,15 +113,15 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
-"@apollo/client@^3.7.13":
-  version "3.7.13"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.13.tgz#2cd3508d8030f7cb0c3d357dc3f57b5cf8390c66"
-  integrity sha512-wi63WnO2mhb6uHGB/8x1qIOL4ZtZocrxdHS0VBQ9KwBDkwoP/TdVVgZ29J2WkiAPmJ0SK07ju4R2AjHor1gPxQ==
+"@apollo/client@^3.7.15":
+  version "3.7.15"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.15.tgz#59dbeb5d64479f8ce0af321d8c0bf6df1d873e2d"
+  integrity sha512-pLScjo4GAQRWKWyEg2J3FlQr9fbUAuADT0EI2+JlLf2BjaU9I7WUaZVD9w+0qNPE8BZqs53MRQq0OCm1QCW+eg==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/context" "^0.7.0"
     "@wry/equality" "^0.5.0"
-    "@wry/trie" "^0.3.0"
+    "@wry/trie" "^0.4.0"
     graphql-tag "^2.12.6"
     hoist-non-react-statics "^3.3.2"
     optimism "^0.16.2"
@@ -275,16 +275,7 @@
     json5 "^2.2.2"
     semver "^6.3.0"
 
-"@babel/eslint-parser@^7.19.1":
-  version "7.19.1"
-  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.19.1.tgz#4f68f6b0825489e00a24b41b6a1ae35414ecd2f4"
-  integrity sha512-AqNf2QWt1rtu2/1rLswy6CDP7H9Oh3mMhk177Y67Rg8d7RD9WfOLLv8CGn6tisFvS2htm86yIe1yLF6I1UDaGQ==
-  dependencies:
-    "@nicolo-ribaudo/eslint-scope-5-internals" "5.1.1-v1"
-    eslint-visitor-keys "^2.1.0"
-    semver "^6.3.0"
-
-"@babel/eslint-parser@^7.21.8":
+"@babel/eslint-parser@^7.19.1", "@babel/eslint-parser@^7.21.8":
   version "7.21.8"
   resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.21.8.tgz#59fb6fc4f3b017ab86987c076226ceef7b2b2ef2"
   integrity sha512-HLhI+2q+BP3sf78mFUZNCGc10KEmoUqtUT1OCdMZsN+qr4qFeLUod62/zAnF3jNQstwyasDkZnVXwfK2Bml7MQ==
@@ -5343,6 +5334,13 @@
   dependencies:
     tslib "^2.1.0"
 
+"@wry/trie@^0.4.0":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@wry/trie/-/trie-0.4.3.tgz#077d52c22365871bf3ffcbab8e95cb8bc5689af4"
+  integrity sha512-I6bHwH0fSf6RqQcnnXLJKhkSXG45MFral3GxPaY4uAl0LYDZM+YDVDAiU9bYwjTuysy1S0IeecWtmq1SZA3M1w==
+  dependencies:
+    tslib "^2.3.0"
+
 "@xmldom/xmldom@^0.7.5":
   version "0.7.10"
   resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.7.10.tgz#b1f4a7dc63ac35b2750847644d5dacf5b4ead12f"
@@ -10337,12 +10335,7 @@ eslint-visitor-keys@^2.0.0, eslint-visitor-keys@^2.1.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.1.0.tgz#f65328259305927392c938ed44eb0a5c9b2bd303"
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
-eslint-visitor-keys@^3.3.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.4.0.tgz#c7f0f956124ce677047ddbc192a68f999454dedc"
-  integrity sha512-HPpKPUBQcAsZOsHAFwTtIKcYlCje62XB7SEAcxjtmW6TD1WVpkS6i6/hOVtTZIl4zGj/mBqpFVGvaDneik+VoQ==
-
-eslint-visitor-keys@^3.4.1:
+eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.4.1.tgz#c22c48f48942d08ca824cc526211ae400478a994"
   integrity sha512-pZnmmLwYzf+kWaM/Qgrvpen51upAktaaiI01nsJD/Yr3lMOdNtq0cxkrrg16w64VtisN6okbs7Q8AfGqj4c9fA==
@@ -17319,10 +17312,10 @@ node-fetch@2.6.7, node-fetch@cjs:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.5, node-fetch@^2.6.7, node-fetch@^2.6.9:
-  version "2.6.9"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.9.tgz#7c7f744b5cc6eb5fd404e0c7a9fec630a55657e6"
-  integrity sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==
+node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.11, node-fetch@^2.6.5, node-fetch@^2.6.7, node-fetch@^2.6.9:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.11.tgz#cde7fc71deef3131ef80a738919f999e6edfff25"
+  integrity sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==
   dependencies:
     whatwg-url "^5.0.0"
 
