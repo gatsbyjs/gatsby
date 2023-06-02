@@ -227,11 +227,15 @@ function getRoutesManifest(): RoutesManifest {
     routes.push(route)
   }
 
-  function addStaticRoute(
-    path: string,
-    pathToFilInPublicDir: string,
+  function addStaticRoute({
+    path,
+    pathToFilInPublicDir,
+    headers,
+  }: {
+    path: string
+    pathToFilInPublicDir: string
     headers: IHeader["headers"]
-  ): void {
+  }): void {
     addSortedRoute({
       path,
       type: `static`,
@@ -260,8 +264,16 @@ function getRoutesManifest(): RoutesManifest {
       const htmlFilePath = generateHtmlPath(``, page.path)
       const pageDataFilePath = generatePageDataPath(``, page.path)
 
-      addStaticRoute(htmlRoutePath, htmlFilePath, STATIC_PAGE_HEADERS)
-      addStaticRoute(pageDataRoutePath, pageDataFilePath, STATIC_PAGE_HEADERS)
+      addStaticRoute({
+        path: htmlRoutePath,
+        pathToFilInPublicDir: htmlFilePath,
+        headers: STATIC_PAGE_HEADERS,
+      })
+      addStaticRoute({
+        path: pageDataRoutePath,
+        pathToFilInPublicDir: pageDataFilePath,
+        headers: STATIC_PAGE_HEADERS,
+      })
     } else {
       const commonFields: Omit<ILambdaRoute, "path"> = {
         type: `lambda`,
@@ -289,17 +301,21 @@ function getRoutesManifest(): RoutesManifest {
     .getState()
     .staticQueryComponents.values()) {
     const staticQueryResultPath = getStaticQueryPath(staticQueryComponent.hash)
-    addStaticRoute(
-      staticQueryResultPath,
-      staticQueryResultPath,
-      STATIC_PAGE_HEADERS
-    )
+    addStaticRoute({
+      path: staticQueryResultPath,
+      pathToFilInPublicDir: staticQueryResultPath,
+      headers: STATIC_PAGE_HEADERS,
+    })
   }
 
   // app-data.json
   {
     const appDataFilePath = posix.join(`page-data`, `app-data.json`)
-    addStaticRoute(appDataFilePath, appDataFilePath, STATIC_PAGE_HEADERS)
+    addStaticRoute({
+      path: appDataFilePath,
+      pathToFilInPublicDir: appDataFilePath,
+      headers: STATIC_PAGE_HEADERS,
+    })
   }
 
   // webpack assets
@@ -308,7 +324,11 @@ function getRoutesManifest(): RoutesManifest {
   }
 
   for (const asset of webpackAssets) {
-    addStaticRoute(asset, asset, WEBPACK_ASSET_HEADERS)
+    addStaticRoute({
+      path: asset,
+      pathToFilInPublicDir: asset,
+      headers: WEBPACK_ASSET_HEADERS,
+    })
   }
 
   // TODO: slices
@@ -343,7 +363,11 @@ function getRoutesManifest(): RoutesManifest {
   )
 
   for (const fileAsset of fileAssets) {
-    addStaticRoute(fileAsset, fileAsset, ASSET_HEADERS)
+    addStaticRoute({
+      path: fileAsset,
+      pathToFilInPublicDir: fileAsset,
+      headers: ASSET_HEADERS,
+    })
   }
 
   return routes
