@@ -17,6 +17,12 @@ import { getPageMode } from "../page-mode"
 import { getStaticQueryPath } from "../static-query-utils"
 import { getAdapterInit } from "./init"
 import { shouldGenerateEngines } from "../engines-helpers"
+import {
+  ASSET_HEADERS,
+  REDIRECT_HEADERS,
+  STATIC_PAGE_HEADERS,
+  WEBPACK_ASSET_HEADERS,
+} from "./constants"
 import type { IHeader } from "../../redux/types"
 
 function noOpAdapterManager(): IAdapterManager {
@@ -80,9 +86,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         return
       }
 
-      const { headers } = store.getState().config
-      console.log({ headers })
-
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined
       const adaptContext: IAdaptContext = {
@@ -107,90 +110,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   }
 }
 
-const STATIC_PAGE_HEADERS: IHeader["headers"] = [
-  {
-    key: `cache-control`,
-    value: `public, max-age=0, must-revalidate`,
-  },
-  {
-    key: `x-xss-protection`,
-    value: `1; mode=block`,
-  },
-  {
-    key: `x-content-type-options`,
-    value: `nosniff`,
-  },
-  {
-    key: `referrer-policy`,
-    value: `same-origin`,
-  },
-  {
-    key: `x-frame-options`,
-    value: `DENY`,
-  },
-]
-
-const REDIRECT_HEADERS: IHeader["headers"] = [
-  {
-    key: `x-xss-protection`,
-    value: `1; mode=block`,
-  },
-  {
-    key: `x-content-type-options`,
-    value: `nosniff`,
-  },
-  {
-    key: `referrer-policy`,
-    value: `same-origin`,
-  },
-  {
-    key: `x-frame-options`,
-    value: `DENY`,
-  },
-]
-
-const ASSET_HEADERS: IHeader["headers"] = [
-  {
-    key: `x-xss-protection`,
-    value: `1; mode=block`,
-  },
-  {
-    key: `x-content-type-options`,
-    value: `nosniff`,
-  },
-  {
-    key: `referrer-policy`,
-    value: `same-origin`,
-  },
-  {
-    key: `x-frame-options`,
-    value: `DENY`,
-  },
-]
-
-const WEBPACK_ASSET_HEADERS: IHeader["headers"] = [
-  {
-    key: `cache-control`,
-    value: `public, max-age=31536000, immutable`,
-  },
-  {
-    key: `x-xss-protection`,
-    value: `1; mode=block`,
-  },
-  {
-    key: `x-content-type-options`,
-    value: `nosniff`,
-  },
-  {
-    key: `referrer-policy`,
-    value: `same-origin`,
-  },
-  {
-    key: `x-frame-options`,
-    value: `DENY`,
-  },
-]
-
 function maybeDropNamedPartOfWildcard(
   path: string | undefined
 ): string | undefined {
@@ -210,6 +129,7 @@ function getRoutesManifest(): RoutesManifest {
   // TODO: have routes list sorted by specifity so more specific ones are before less specific ones (/static should be before /:param and that should be before /*),
   // so routing can just handle first match
   const routes = [] as RoutesManifest
+  // const match = matcher()
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -223,7 +143,10 @@ function getRoutesManifest(): RoutesManifest {
     if (!route.path.startsWith(`/`)) {
       route.path = `/${route.path}`
     }
-    // TODO: calculate specifity of route's path and insert route in correct place
+
+    // if (!route.type === 'lambda') route.headers = match(route.path, route.headers)
+
+    // match()
     routes.push(route)
   }
 
