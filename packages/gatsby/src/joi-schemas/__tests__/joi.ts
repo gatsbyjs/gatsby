@@ -266,6 +266,13 @@ describe(`gatsby config`, () => {
     )
   })
 
+  it(`returns empty array when headers are not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value?.headers).toEqual([])
+  })
+
   it(`lets you create custom HTTP headers for a path`, () => {
     const config = {
       headers: [

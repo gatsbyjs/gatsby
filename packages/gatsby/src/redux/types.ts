@@ -132,7 +132,7 @@ export interface IGatsbyConfig {
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
   graphqlTypegen?: IGraphQLTypegenOptions
-  headers?: Array<IHeader>
+  headers: Array<IHeader>
 }
 
 export interface IGatsbyNode {
