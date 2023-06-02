@@ -1,4 +1,5 @@
 import type reporter from "gatsby-cli/lib/reporter"
+import type { IHeader } from "../../redux/types"
 
 interface IBaseRoute {
   /**
@@ -18,7 +19,7 @@ interface IStaticRoute extends IBaseRoute {
    * Location of the file that should be served for this route.
    */
   filePath: string
-  headers: Array<string>
+  headers: IHeader["headers"]
 }
 
 export interface ILambdaRoute extends IBaseRoute {
@@ -39,7 +40,7 @@ interface IRedirectRoute extends IBaseRoute {
   toPath: string
   status: number // narrow down types to cocnrete status code that are acceptible here
   ignoreCase: boolean // this is not supported by Netlify, but is supported by Gatsby ...
-  headers: Array<string>
+  headers: IHeader["headers"]
   // TODO: createRedirect does accept any random props that might be specific to platform, so this route should have those as well
   // maybe they should be just dumped as-is? or maybe it will be better to have a separate field for them? For now dumping things as-is
   [key: string]: unknown

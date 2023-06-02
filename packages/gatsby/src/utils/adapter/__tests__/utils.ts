@@ -1,7 +1,7 @@
-import type { Header } from "../../../redux/types"
+import type { IHeader } from "../../../redux/types"
 import { splitInDynamicAndStaticBuckets } from "../utils"
 
-const DEFAULTS: Header["headers"] = [
+const DEFAULTS: IHeader["headers"] = [
   {
     key: `cache-control`,
     value: `public, max-age=0, must-revalidate`,
@@ -12,7 +12,7 @@ const DEFAULTS: Header["headers"] = [
   },
 ]
 
-const dynamicHeader: Header = {
+const dynamicHeader: IHeader = {
   source: `*`,
   headers: [
     {
@@ -26,7 +26,7 @@ const dynamicHeader: Header = {
   ],
 }
 
-const staticHeader: Header = {
+const staticHeader: IHeader = {
   source: `/some-path/`,
   headers: [
     {
@@ -36,7 +36,7 @@ const staticHeader: Header = {
   ],
 }
 
-const HEADERS_MINIMAL = [dynamicHeader, staticHeader] satisfies Header[]
+const HEADERS_MINIMAL: Array<IHeader> = [dynamicHeader, staticHeader]
 
 describe(`splitInStaticAndDynamicBuckets`, () => {
   it(`works with minimal data`, () => {
@@ -65,7 +65,7 @@ describe(`splitInStaticAndDynamicBuckets`, () => {
             value: `d`,
           },
         ],
-      }
+      },
     ]
     const output = splitInDynamicAndStaticBuckets([...dynamic, staticHeader])
 

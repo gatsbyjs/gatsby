@@ -17,6 +17,7 @@ import { getPageMode } from "../page-mode"
 import { getStaticQueryPath } from "../static-query-utils"
 import { getAdapterInit } from "./init"
 import { shouldGenerateEngines } from "../engines-helpers"
+import type { IHeader } from "../../redux/types"
 
 function noOpAdapterManager(): IAdapterManager {
   return {
@@ -106,34 +107,88 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   }
 }
 
-const STATIC_PAGE_HEADERS = [
-  `cache-control: public, max-age=0, must-revalidate`,
-  `x-xss-protection: 1; mode=block`,
-  `x-content-type-options: nosniff`,
-  `referrer-policy: same-origin`,
-  `x-frame-options: DENY`,
+const STATIC_PAGE_HEADERS: IHeader["headers"] = [
+  {
+    key: `cache-control`,
+    value: `public, max-age=0, must-revalidate`,
+  },
+  {
+    key: `x-xss-protection`,
+    value: `1; mode=block`,
+  },
+  {
+    key: `x-content-type-options`,
+    value: `nosniff`,
+  },
+  {
+    key: `referrer-policy`,
+    value: `same-origin`,
+  },
+  {
+    key: `x-frame-options`,
+    value: `DENY`,
+  },
 ]
 
-const REDIRECT_HEADERS = [
-  `x-xss-protection: 1; mode=block`,
-  `x-content-type-options: nosniff`,
-  `referrer-policy: same-origin`,
-  `x-frame-options: DENY`,
+const REDIRECT_HEADERS: IHeader["headers"] = [
+  {
+    key: `x-xss-protection`,
+    value: `1; mode=block`,
+  },
+  {
+    key: `x-content-type-options`,
+    value: `nosniff`,
+  },
+  {
+    key: `referrer-policy`,
+    value: `same-origin`,
+  },
+  {
+    key: `x-frame-options`,
+    value: `DENY`,
+  },
 ]
 
-const ASSET_HEADERS = [
-  `x-xss-protection: 1; mode=block`,
-  `x-content-type-options: nosniff`,
-  `referrer-policy: same-origin`,
-  `x-frame-options: DENY`,
+const ASSET_HEADERS: IHeader["headers"] = [
+  {
+    key: `x-xss-protection`,
+    value: `1; mode=block`,
+  },
+  {
+    key: `x-content-type-options`,
+    value: `nosniff`,
+  },
+  {
+    key: `referrer-policy`,
+    value: `same-origin`,
+  },
+  {
+    key: `x-frame-options`,
+    value: `DENY`,
+  },
 ]
 
-const WEBPACK_ASSET_HEADERS = [
-  `cache-control: public, max-age=31536000, immutable`,
-  `x-xss-protection: 1; mode=block`,
-  `x-content-type-options: nosniff`,
-  `referrer-policy: same-origin`,
-  `x-frame-options: DENY`,
+const WEBPACK_ASSET_HEADERS: IHeader["headers"] = [
+  {
+    key: `cache-control`,
+    value: `public, max-age=31536000, immutable`,
+  },
+  {
+    key: `x-xss-protection`,
+    value: `1; mode=block`,
+  },
+  {
+    key: `x-content-type-options`,
+    value: `nosniff`,
+  },
+  {
+    key: `referrer-policy`,
+    value: `same-origin`,
+  },
+  {
+    key: `x-frame-options`,
+    value: `DENY`,
+  },
 ]
 
 function maybeDropNamedPartOfWildcard(
@@ -175,7 +230,7 @@ function getRoutesManifest(): RoutesManifest {
   function addStaticRoute(
     path: string,
     pathToFilInPublicDir: string,
-    headers: Array<string>
+    headers: IHeader["headers"]
   ): void {
     addSortedRoute({
       path,

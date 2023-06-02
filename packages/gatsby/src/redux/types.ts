@@ -96,7 +96,7 @@ export interface IGraphQLTypegenOptions {
   generateOnBuild: boolean
 }
 
-export type Header = {
+export interface IHeader {
   source: string
   headers: Array<{
     key: string
@@ -132,7 +132,7 @@ export interface IGatsbyConfig {
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
   graphqlTypegen?: IGraphQLTypegenOptions
-  headers?: Array<Header>
+  headers?: Array<IHeader>
 }
 
 export interface IGatsbyNode {
