@@ -13,3 +13,4 @@ The following services support Gatsby to varying degrees. Not all advances featu
 - [Render](https://render.com/docs/deploy-gatsby)
 - [Surge](https://surge.sh/help/getting-started-with-surge)
 - [tiiny.host](https://tiiny.host/)
+- [Flightcontrol](https://www.flightcontrol.dev/docs/reference/examples/gatsby?ref=docs-gatsby)
