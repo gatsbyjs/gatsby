@@ -41,8 +41,6 @@ interface IRedirectRoute extends IBaseRoute {
   status: number // narrow down types to cocnrete status code that are acceptible here
   ignoreCase: boolean // this is not supported by Netlify, but is supported by Gatsby ...
   headers: IHeader["headers"]
-  // TODO: createRedirect does accept any random props that might be specific to platform, so this route should have those as well
-  // maybe they should be just dumped as-is? or maybe it will be better to have a separate field for them? For now dumping things as-is
   [key: string]: unknown
 }
 
