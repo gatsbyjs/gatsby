@@ -13,6 +13,9 @@ import {
 import { getPageMode } from "../utils/page-mode"
 import { devSSRWillInvalidate } from "../commands/build-html"
 
+const hasContentFilePath = (componentPath: string): boolean =>
+  componentPath.includes(`?__contentFilePath=`)
+
 interface IGatsbyPageComponent {
   componentPath: string
   componentChunkName: string
@@ -37,8 +40,6 @@ const ROOT_POINTS = 1
 const isRootSegment = (segment: string): boolean => segment === ``
 const isDynamic = (segment: string): boolean => paramRe.test(segment)
 const isSplat = (segment: string): boolean => segment === `*`
-const hasContentFilePath = (componentPath: string): boolean =>
-  componentPath.includes(`?__contentFilePath=`)
 
 const segmentize = (uri: string): Array<string> =>
   uri
@@ -46,7 +47,7 @@ const segmentize = (uri: string): Array<string> =>
     .replace(/(^\/+|\/+$)/g, ``)
     .split(`/`)
 
-const rankRoute = (path: string): number =>
+export const rankRoute = (path: string): number =>
   segmentize(path).reduce((score, segment) => {
     score += SEGMENT_POINTS
     if (isRootSegment(segment)) score += ROOT_POINTS
