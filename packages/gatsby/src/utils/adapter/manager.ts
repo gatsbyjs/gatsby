@@ -377,20 +377,35 @@ function getFunctionsManifest(): FunctionsManifest {
   const functions = [] as FunctionsManifest
 
   for (const functionInfo of store.getState().functions.values()) {
+    const pathToEntryPoint = posix.join(
+      `.cache`,
+      `functions`,
+      functionInfo.relativeCompiledFilePath
+    )
     functions.push({
       functionId: functionInfo.functionId,
-      pathToCompiledFunction: posix.join(
-        `.cache`,
-        `functions`,
-        functionInfo.relativeCompiledFilePath
-      ),
+      pathToEntryPoint,
+      requiredFiles: [pathToEntryPoint],
     })
   }
 
   if (shouldGenerateEngines()) {
+    function getFilesFrom(dir: string): Array<string> {
+      return globSync(`**/**`, {
+        cwd: posix.join(process.cwd(), dir),
+        nodir: true,
+        dot: true,
+      }).map(file => posix.join(dir, file))
+    }
+
     functions.push({
       functionId: `ssr-engine`,
-      pathToCompiledFunction: posix.join(`.cache`, `page-ssr`, `lambda.js`),
+      pathToEntryPoint: posix.join(`.cache`, `page-ssr`, `lambda.js`),
+      requiredFiles: [
+        ...getFilesFrom(posix.join(`.cache`, `data`, `datastore`)),
+        ...getFilesFrom(posix.join(`.cache`, `page-ssr`)),
+        ...getFilesFrom(posix.join(`.cache`, `query-engine`)),
+      ],
     })
   }
 

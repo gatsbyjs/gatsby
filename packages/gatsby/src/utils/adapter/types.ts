@@ -56,8 +56,11 @@ export type FunctionsManifest = Array<{
   /**
    * Path to function entrypoint that will be used to create lambda.
    */
-  pathToCompiledFunction: string
-  // TODO: auxiliaryFilesAndDirecotries: Array<string> - files and directories that should be copied to the function directory - do we need to figure out if platform supports bundling auxilary files to decide how to bundle ssr-engine lambda (wether datastore is bundled in function or deployed to CDN)
+  pathToEntryPoint: string
+  /**
+   * List of all required files that this function needs to run
+   */
+  requiredFiles: Array<string>
 }>
 
 export interface IAdaptContext {
