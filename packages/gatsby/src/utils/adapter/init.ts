@@ -71,7 +71,9 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     )
     const isAdapterCompatible =
       versionForCurrentGatsbyVersion &&
-      satisfies(moduleVersion, versionForCurrentGatsbyVersion.moduleVersion)
+      satisfies(moduleVersion, versionForCurrentGatsbyVersion.moduleVersion, {
+        includePrerelease: true,
+      })
 
     if (!versionForCurrentGatsbyVersion) {
       reporter.warn(

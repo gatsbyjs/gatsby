@@ -8,21 +8,21 @@
  * @type {import("./src/utils/adapter/types").IAdapterManifestEntry}
  */
 const adaptersManifest = [
-  {
-    name: `gatsby-adapter-testing`,
-    module: `@lekoarts/gatsby-adapter-testing`,
-    test: () => true,
+    {
+    name: `Netlify`,
+    module: `gatsby-adapter-netlify`,
+    test: () => !!process.env.NETLIFY,
     versions: [
       {
         gatsbyVersion: `^5.0.0`,
-        moduleVersion: `^1.0.0`
+        moduleVersion: `*`
       }
     ]
   },
   {
-    name: `Netlify`,
-    module: `gatsby-adapter-netlify`,
-    test: () => !!process.env.NETLIFY,
+    name: `gatsby-adapter-testing`,
+    module: `@lekoarts/gatsby-adapter-testing`,
+    test: () => true,
     versions: [
       {
         gatsbyVersion: `^5.0.0`,
