@@ -1,7 +1,7 @@
 import type { Header } from "../../../redux/types"
-import { splitInStaticAndDynamicBuckets } from "../utils"
+import { splitInDynamicAndStaticBuckets } from "../utils"
 
-const DEFAULTS = [
+const DEFAULTS: Header["headers"] = [
   {
     key: `cache-control`,
     value: `public, max-age=0, must-revalidate`,
@@ -10,9 +10,9 @@ const DEFAULTS = [
     key: `x-xss-protection`,
     value: `1; mode=block`,
   },
-] satisfies Header["headers"]
+]
 
-const dynamicHeader = {
+const dynamicHeader: Header = {
   source: `*`,
   headers: [
     {
@@ -26,7 +26,7 @@ const dynamicHeader = {
   ],
 }
 
-const staticHeader = {
+const staticHeader: Header = {
   source: `/some-path/`,
   headers: [
     {
@@ -40,7 +40,7 @@ const HEADERS_MINIMAL = [dynamicHeader, staticHeader] satisfies Header[]
 
 describe(`splitInStaticAndDynamicBuckets`, () => {
   it(`works with minimal data`, () => {
-    const output = splitInStaticAndDynamicBuckets(HEADERS_MINIMAL)
+    const output = splitInDynamicAndStaticBuckets(HEADERS_MINIMAL)
 
     expect(output.dynamicHeaders).toEqual([dynamicHeader])
     expect(output.staticHeaders).toEqual([staticHeader])
@@ -67,7 +67,7 @@ describe(`splitInStaticAndDynamicBuckets`, () => {
         ],
       }
     ]
-    const output = splitInStaticAndDynamicBuckets([...dynamic, staticHeader])
+    const output = splitInDynamicAndStaticBuckets([...dynamic, staticHeader])
 
     expect(output.dynamicHeaders).toEqual([...dynamic])
     expect(output.staticHeaders).toEqual([staticHeader])
