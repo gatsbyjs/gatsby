@@ -15,6 +15,7 @@ export const KNOWN_CONFIG_KEYS = [
   `trailingSlash`,
   `graphqlTypegen`,
   `headers`,
+  `adapter`,
 ]
 
 export function didYouMean(

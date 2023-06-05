@@ -29,9 +29,8 @@ const createAdaptersCacheDir = async (): Promise<void> => {
 }
 
 export async function getAdapterInit(): Promise<AdapterInit | undefined> {
+  // 1. Find the correct adapter and its details (e.g. version)
   const latestAdapters = await getLatestAdapters()
-
-  // 0. Find the correct adapter and its details (e.g. version)
   const adapterToUse = latestAdapters.find(candidate => candidate.test())
 
   if (!adapterToUse) {
@@ -41,9 +40,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     return undefined
   }
 
-  // TODO: Add a way for someone to use an unpublished adapter (e.g. local developing)
-
-  // 1. Check if the user has manually installed the adapter and try to resolve it from there
+  // 2. Check if the user has manually installed the adapter and try to resolve it from there
   try {
     const siteRequire = createRequireFromPath(`${process.cwd()}/:internal:`)
     const adapterPackageJson = siteRequire(
@@ -105,7 +102,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     // no-op
   }
 
-  // 2. Check if a previous run has installed the correct adapter into .cache/adapters already and try to resolve it from there
+  // 3. Check if a previous run has installed the correct adapter into .cache/adapters already and try to resolve it from there
   try {
     const adaptersRequire = createRequireFromPath(
       `${getAdaptersCacheDir()}/:internal:`
@@ -126,7 +123,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
   const installTimer = reporter.activityTimer(
     `Installing ${adapterToUse.name} adapter`
   )
-  // 3. If both a manually installed version and a cached version are not found, install the adapter into .cache/adapters
+  // 4. If both a manually installed version and a cached version are not found, install the adapter into .cache/adapters
   try {
     installTimer.start()
     await createAdaptersCacheDir()

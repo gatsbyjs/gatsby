@@ -16,6 +16,7 @@ import {
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
+import { AdapterInit, IAdapter } from "gatsby/dist/utils/adapter/types"
 
 export type AvailableFeatures =
   | "image-cdn"
@@ -33,7 +34,7 @@ export {
 
 export * from "gatsby-script"
 
-export { AdapterInit } from "gatsby/dist/utils/adapter/types"
+export { AdapterInit, IAdapter }
 
 export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>
@@ -373,8 +374,13 @@ export interface GatsbyConfig {
   developMiddleware?(app: any): void
   /**
    * You can set custom HTTP headers for incoming requests
+   * TODO
    */
   headers?: Array<Header>
+  /**
+   * TODO
+   */
+  adapter?: IAdapter
 }
 
 /**

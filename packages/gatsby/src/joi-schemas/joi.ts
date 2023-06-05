@@ -103,6 +103,18 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           .unknown(false)
       )
       .default([]),
+    adapter: Joi.object()
+      .keys({
+        name: Joi.string().required(),
+        cache: Joi.object()
+          .keys({
+            restore: Joi.func(),
+            store: Joi.func(),
+          })
+          .unknown(false),
+        adapt: Joi.func().required(),
+      })
+      .unknown(false),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(

@@ -11,6 +11,7 @@ import {
   Route,
   IAdapterManager,
   ILambdaRoute,
+  IAdapter,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
@@ -36,14 +37,28 @@ function noOpAdapterManager(): IAdapterManager {
 }
 
 export async function initAdapterManager(): Promise<IAdapterManager> {
-  const adapterInit = await getAdapterInit()
+  let adapter: IAdapter
 
-  // If we don't have adapter, use no-op adapter manager
-  if (!adapterInit) {
-    return noOpAdapterManager()
+  const config = store.getState().config
+  const { adapter: adapterFromGatsbyConfig } = config
+
+  // If the user specified an adapter inside their gatsby-config, use that instead of trying to figure out an adapter for the current environment
+  if (adapterFromGatsbyConfig) {
+    adapter = adapterFromGatsbyConfig
+
+    reporter.verbose(`Using adapter ${adapter.name} from gatsby-config`)
+  } else {
+    const adapterInit = await getAdapterInit()
+
+    // If we don't have adapter, use no-op adapter manager
+    if (!adapterInit) {
+      telemetry.trackFeatureIsUsed(`adapter:no-op`)
+
+      return noOpAdapterManager()
+    }
+
+    adapter = adapterInit()
   }
-
-  const adapter = adapterInit()
 
   reporter.info(`Using ${adapter.name} adapter`)
 

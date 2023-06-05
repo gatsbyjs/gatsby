@@ -1,4 +1,5 @@
 import type { TrailingSlash } from "gatsby-page-utils"
+import type { Express } from "express"
 import { IProgram, Stage } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import {
@@ -14,6 +15,7 @@ import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 import { Span } from "opentracing"
 import { ICollectedSlices } from "../utils/babel/find-slices"
+import type { IAdapter } from "../utils/adapter/types"
 
 type SystemPath = string
 type Identifier = string
@@ -124,7 +126,7 @@ export interface IGatsbyConfig {
   }
   // @deprecated
   polyfill?: boolean
-  developMiddleware?: any
+  developMiddleware?: (app: Express) => void
   proxy?: any
   partytownProxiedURLs?: Array<string>
   pathPrefix?: string
@@ -135,6 +137,7 @@ export interface IGatsbyConfig {
   trailingSlash?: TrailingSlash
   graphqlTypegen?: IGraphQLTypegenOptions
   headers?: Array<IHeader>
+  adapter?: IAdapter
 }
 
 export interface IGatsbyNode {
