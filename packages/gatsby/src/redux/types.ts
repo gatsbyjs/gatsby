@@ -104,6 +104,7 @@ export interface IHeader {
   }>
 }
 
+// TODO: The keys of IGatsbyConfig are all optional so that in reducers like reducers/config.ts the default state for the config can be an empty object. This isn't ideal because some of those options are actually always defined because Joi validation sets defaults. Somehow fix this :D
 export interface IGatsbyConfig {
   plugins?: Array<{
     // This is the name of the plugin like `gatsby-plugin-manifest`
@@ -132,7 +133,7 @@ export interface IGatsbyConfig {
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
   graphqlTypegen?: IGraphQLTypegenOptions
-  headers: Array<IHeader>
+  headers?: Array<IHeader>
 }
 
 export interface IGatsbyNode {
