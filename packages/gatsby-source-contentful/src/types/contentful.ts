@@ -1,5 +1,5 @@
 import { Node } from "gatsby"
-import { ImageFormat } from "gatsby-plugin-image"
+import { IGatsbyImageData, ImageFormat } from "gatsby-plugin-image"
 import {
   FieldsType,
   LocaleCode,
@@ -57,10 +57,12 @@ export interface IContentfulEntry extends IContentfulEntity {
 }
 
 export interface IContentfulAsset extends IContentfulEntity {
-  // TODO: this field type might be defined by Gatsby already?
-  gatsbyImageData?: unknown
-  // TODO: this field type might be defined by Gatsby already?
-  downloadLocal?: string
+  gatsbyImageData?: IGatsbyImageData
+  localFile?: {
+    excludeByMimeTypes?: Array<string>
+    maxFileSizeBytes?: number
+    requestConcurrency?: number
+  }
   title: string
   description: string
   contentType: string
