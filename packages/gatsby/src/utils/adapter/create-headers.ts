@@ -1,8 +1,16 @@
 import { match } from "@gatsbyjs/reach-router"
 import type { IHeader } from "../../redux/types"
 import { store } from "../../redux"
+import { rankRoute } from "../../bootstrap/requires-writer"
 
 type Headers = IHeader["headers"]
+interface IHeaderWithScore extends IHeader {
+  score: number
+}
+
+// We don't care if the path has a trailing slash or not, but to be able to compare stuff we need to normalize it
+const normalizePath = (input: string): string =>
+  input.endsWith(`/`) ? input : `${input}/`
 
 export const createHeadersMatcher = (): ((
   path: string,
@@ -14,21 +22,34 @@ export const createHeadersMatcher = (): ((
   // - dynamicHeaders: Headers with dynamic paths (e.g. /* or /:tests)
   // - staticHeaders: Headers with fully static paths (e.g. /static/)
   // Also add a score using the rankRoute function to each header
-  const dynamicHeaders: Array<IHeader> = []
-  const staticHeaders: Array<IHeader> = []
+  let dynamicHeaders: Array<IHeaderWithScore> = []
+  const staticHeaders: Map<string, IHeader> = new Map()
 
   // If no custom headers are defined by the user in the gatsby-config, we can return only the default headers
-  if (!headers) {
+  if (!headers || headers.length === 0) {
     return (_path: string, defaultHeaders: Headers) => defaultHeaders
   }
 
   for (const header of headers) {
     if (header.source.includes(`:`) || header.source.includes(`*`)) {
-      dynamicHeaders.push(header)
+      // rankRoute is the internal function that also "match" uses
+      const score = rankRoute(header.source)
+
+      dynamicHeaders.push({ ...header, score })
     } else {
-      staticHeaders.push(header)
+      staticHeaders.set(normalizePath(header.source), header)
     }
   }
+
+  // Sort the dynamic headers by score, moving the ones with the highest specificity to the end of the array
+  // If the score is the same, do a lexigraphic comparison of the source
+  dynamicHeaders = dynamicHeaders.sort((a, b) => {
+    const order = a.score - b.score
+    if (order !== 0) {
+      return order
+    }
+    return a.source.localeCompare(b.source)
+  })
 
   return (path: string, defaultHeaders: Headers): Headers => {
     // Create a map of headers for the given path
@@ -49,7 +70,7 @@ export const createHeadersMatcher = (): ((
       }
     }
 
-    const staticEntry = staticHeaders.find(s => s.source === path)
+    const staticEntry = staticHeaders.get(normalizePath(path))
 
     // 3. Add static headers that match the current path
     if (staticEntry) {
