@@ -71,7 +71,6 @@ import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
 import { getSSRChunkHashes } from "../utils/webpack/get-ssr-chunk-hashes"
 import { writeTypeScriptTypes } from "../utils/graphql-typegen/ts-codegen"
-import { initAdapterManager } from "../utils/adapter/manager"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -115,9 +114,6 @@ module.exports = async function build(
     )
   }
 
-  const adapterManager = await initAdapterManager()
-  await adapterManager.restoreCache()
-
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -138,10 +134,11 @@ module.exports = async function build(
     })
   }
 
-  const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
-    program,
-    parentSpan: buildSpan,
-  })
+  const { gatsbyNodeGraphQLFunction, workerPool, adapterManager } =
+    await bootstrap({
+      program,
+      parentSpan: buildSpan,
+    })
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
