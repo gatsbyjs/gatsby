@@ -27,7 +27,7 @@ function getPathInfo(req: GatsbyFunctionRequest):
     }
   | undefined {
   // @ts-ignore GatsbyFunctionRequest.path is not in types ... there is no property in types that can be used to get a path currently
-  const matches = req.path.matchAll(/^\/?page-data\/(.+)\/page-data.json$/gm)
+  const matches = req.url.matchAll(/^\/?page-data\/(.+)\/page-data.json$/gm)
   for (const [, requestedPagePath] of matches) {
     return {
       isPageData: true,
@@ -39,7 +39,7 @@ function getPathInfo(req: GatsbyFunctionRequest):
   return {
     isPageData: false,
     // @ts-ignore GatsbyFunctionRequest.path is not in types ... there is no property in types that can be used to get a path currently
-    pagePath: req.path,
+    pagePath: req.url,
   }
 }
 
@@ -70,7 +70,6 @@ async function engineHandler(
 ): Promise<void> {
   try {
     const pathInfo = getPathInfo(req)
-    console.log(`hello`, pathInfo)
     if (!pathInfo) {
       res.status(404).send(`Not found`)
       return
