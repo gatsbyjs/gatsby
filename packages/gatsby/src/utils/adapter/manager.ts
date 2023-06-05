@@ -43,7 +43,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
     return noOpAdapterManager()
   }
 
-  const adapter = adapterInit({ reporter })
+  const adapter = adapterInit()
 
   reporter.info(`Using ${adapter.name} adapter`)
 
@@ -57,7 +57,10 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         return
       }
 
-      const result = await adapter.cache.restore(directoriesToCache)
+      const result = await adapter.cache.restore({
+        directories: directoriesToCache,
+        reporter,
+      })
       if (result === false) {
         // if adapter reports `false`, we can skip trying to re-hydrate state
         return
@@ -80,7 +83,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         return
       }
 
-      await adapter.cache.store(directoriesToCache)
+      await adapter.cache.store({ directories: directoriesToCache, reporter })
     },
     adapt: async (): Promise<void> => {
       reporter.info(`[dev-adapter-manager] adapt()`)
@@ -105,6 +108,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
           return _functionsManifest
         },
+        reporter,
       }
 
       await adapter.adapt(adaptContext)

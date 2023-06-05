@@ -3,20 +3,23 @@ import type { AdapterInit } from "gatsby"
 // just for debugging
 import { inspect } from "util"
 
-const createNetlifyAdapter: AdapterInit = ({ reporter }) => {
-  reporter.info(`[gatsby-adapter-netlify] createAdapter()`)
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface INetlifyAdapterOptions {}
 
+const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = () => {
   return {
     name: `gatsby-adapter-netlify`,
     cache: {
-      restore(directories): void {
-        console.log(`[gatsby-adapter-netlify] cache.restore()`, directories)
+      restore({ directories, reporter }): void {
+        reporter.info(`[gatsby-adapter-netlify] cache.restore() ${directories}`)
       },
-      store(directories): void {
-        console.log(`[gatsby-adapter-netlify] cache.store()`, directories)
+      store({ directories, reporter }): void {
+        reporter.info(`[gatsby-adapter-netlify] cache.store() ${directories}`)
       },
     },
-    adapt({ routesManifest, functionsManifest }): void {
+    adapt({ routesManifest, functionsManifest, reporter }): void {
+      reporter.info(`[gatsby-adapter-netlify] adapt()`)
+
       console.log(
         `[gatsby-adapter-netlify] adapt()`,
         inspect(

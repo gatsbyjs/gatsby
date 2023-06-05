@@ -63,10 +63,23 @@ export type FunctionsManifest = Array<{
   requiredFiles: Array<string>
 }>
 
-export interface IAdaptContext {
+interface IDefaultContext {
+  /**
+   * Reporter instance that can be used to log messages to terminal.
+   * Read its [API documentation](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter)
+   */
+  reporter: typeof reporter
+}
+
+export interface IAdaptContext extends IDefaultContext {
   routesManifest: RoutesManifest
   functionsManifest: FunctionsManifest
 }
+
+export interface ICacheContext extends IDefaultContext {
+  directories: Array<string>
+}
+
 export interface IAdapter {
   /**
    * Unique name of the adapter. Used to identify adapter in manifest.
@@ -78,12 +91,12 @@ export interface IAdapter {
      * If `false` is returned gatsby will skip trying to rehydrate state from fs.
      */
     restore: (
-      directories: Array<string>
+      context: ICacheContext
     ) => Promise<boolean | void> | boolean | void
     /**
      * Hook to store .cache and public directories from previous builds. Executed as one of last steps in build process.
      */
-    store: (directories: Array<string>) => Promise<void> | void
+    store: (context: ICacheContext) => Promise<void> | void
   }
   /**
    * Hook to prepare platform specific deployment of the build. Executed as one of last steps in build process.
@@ -99,11 +112,9 @@ export interface IAdapter {
   // current limitation in Netlify's implementation of DSG/SSR ( https://github.com/netlify/netlify-plugin-gatsby#caveats )
 }
 
-export interface IAdapterInitArgs {
-  reporter: typeof reporter
-}
-
-export type AdapterInit = (initArgs: IAdapterInitArgs) => IAdapter
+export type AdapterInit<T = Record<string, unknown>> = (
+  adapterOptions?: T
+) => IAdapter
 
 export interface IAdapterManager {
   restoreCache: () => Promise<void> | void
