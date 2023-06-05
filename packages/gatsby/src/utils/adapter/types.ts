@@ -48,7 +48,7 @@ export type Route = IStaticRoute | ILambdaRoute | IRedirectRoute
 
 export type RoutesManifest = Array<Route>
 
-export type FunctionsManifest = Array<{
+export interface IFunctionDefinition {
   /**
    * Identifier of the function. Referenced in routes manifest in lambda routes.
    */
@@ -61,7 +61,9 @@ export type FunctionsManifest = Array<{
    * List of all required files that this function needs to run
    */
   requiredFiles: Array<string>
-}>
+}
+
+export type FunctionsManifest = Array<IFunctionDefinition>
 
 interface IDefaultContext {
   /**
