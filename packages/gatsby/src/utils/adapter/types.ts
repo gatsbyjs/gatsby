@@ -38,7 +38,7 @@ export interface ILambdaRoute extends IBaseRoute {
 interface IRedirectRoute extends IBaseRoute {
   type: `redirect`
   toPath: string
-  status: number // narrow down types to cocnrete status code that are acceptible here
+  status: number // TODO: narrow down types to concrete status code that are acceptable here
   ignoreCase: boolean // this is not supported by Netlify, but is supported by Gatsby ...
   headers: IHeader["headers"]
   [key: string]: unknown
