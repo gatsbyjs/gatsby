@@ -23,6 +23,7 @@ import {
   STATIC_PAGE_HEADERS,
   WEBPACK_ASSET_HEADERS,
 } from "./constants"
+import { createHeadersMatcher } from "./create-headers"
 import type { IHeader } from "../../redux/types"
 
 function noOpAdapterManager(): IAdapterManager {
@@ -129,7 +130,7 @@ function getRoutesManifest(): RoutesManifest {
   // TODO: have routes list sorted by specifity so more specific ones are before less specific ones (/static should be before /:param and that should be before /*),
   // so routing can just handle first match
   const routes = [] as RoutesManifest
-  // const match = matcher()
+  const createHeaders = createHeadersMatcher()
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -144,9 +145,10 @@ function getRoutesManifest(): RoutesManifest {
       route.path = `/${route.path}`
     }
 
-    // if (!route.type === 'lambda') route.headers = match(route.path, route.headers)
+    if (route.type !== `lambda`) {
+      route.headers = createHeaders(route.path, route.headers)
+    }
 
-    // match()
     routes.push(route)
   }
 
