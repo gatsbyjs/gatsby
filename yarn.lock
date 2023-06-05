@@ -1404,12 +1404,12 @@
   resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.5.tgz#f501e3db37a5ac659f21ba0c2e61b278e58b64b9"
   integrity sha512-Zbr2Eo0AQ4yzmQr/36/h+6LKjmdVBB3Q5cGzO6rtlIKB/IOpbQVUZW+XAnhpJmJr9sIF97OZjgbhG9k7Sjn4yw==
 
-"@contentful/rich-text-links@^15.15.1":
-  version "15.15.1"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-links/-/rich-text-links-15.15.1.tgz#c28825cb3aa77b75a07cfee225a987f2e384d9ba"
-  integrity sha512-s9DqKy7eoOXXDzaeA3NeOjD62TlBbtD1TqmQPHjpEHVJLBjulI/NJzTL9j2fELmbCVSZJxXh45c8FQQ3Y1IrbQ==
+"@contentful/rich-text-links@^16.1.1":
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-links/-/rich-text-links-16.1.1.tgz#d4fe5d77d0fc7c7b8a1185613910c11b6a1400ff"
+  integrity sha512-WSxtDeq1maWGSGJ5f8psRdERmXzvIhJn7jQB+H1QIfP7C50dh/67CV6ABSB2GdfcXQxVX21f4KptS+5IpBetUA==
   dependencies:
-    "@contentful/rich-text-types" "^15.15.1"
+    "@contentful/rich-text-types" "^16.2.0"
 
 "@contentful/rich-text-react-renderer@^15.16.5":
   version "15.16.5"
@@ -1417,11 +1417,6 @@
   integrity sha512-VYWs0zA0yYf1d7Q+w18xHt5nK6Gme0X8wj9Hi0oSi8ZDtGPaluE77eOOdTtq7keawfts/O3/kyFLV18vnBVbSA==
   dependencies:
     "@contentful/rich-text-types" "^16.2.0"
-
-"@contentful/rich-text-types@^15.15.1":
-  version "15.15.1"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-15.15.1.tgz#96835cf0d0eba9e54f92ee43a4a1ce2a74014b53"
-  integrity sha512-oheW0vkxWDuKBIIXDeJfZaRYo+NzKbC4gETMhH+MGJd4nfL9cqrOvtRxZBgnhICN4vDpH4my/zUIZGKcFqGSjQ==
 
 "@contentful/rich-text-types@^16.0.2", "@contentful/rich-text-types@^16.2.0":
   version "16.2.0"
@@ -7991,10 +7986,10 @@ contentful-sdk-core@^7.0.2:
     p-throttle "^4.1.1"
     qs "^6.9.4"
 
-contentful@^10.2.1:
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-10.2.1.tgz#b48fe6ee28ffa7bd28026e45d69d12f8856dba26"
-  integrity sha512-mo2tWKaoirRwiqECoJyi6Zt/IVr/wG4ECRCJBdGaOoxIM2Al+9Y0GAGRg4M1jF+EBYsTQPKUq5KCI1snVkIKBA==
+contentful@^10.2.3:
+  version "10.2.3"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-10.2.3.tgz#b29ef8a71f75eb19ff66fa98e74dcf2400b86daf"
+  integrity sha512-1GqJYwuQBl744ssyadZjeHrQAKBlOG3dxhcYBxfPi4iMzfGjMh+WiN0WeH0yIunKfOn5aIxEeYxZ6yexbP08zA==
   dependencies:
     "@contentful/rich-text-types" "^16.0.2"
     axios "^0.26.1"
@@ -23426,7 +23421,7 @@ typedarray@^0.0.6, typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^4.1.3, typescript@^4.9.4:
+typescript@^4.1.3:
   version "4.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
