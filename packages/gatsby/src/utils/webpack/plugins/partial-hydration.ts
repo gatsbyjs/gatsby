@@ -83,7 +83,7 @@ export class PartialHydrationPlugin {
           }
         })
       } else {
-        if (normalModule.buildInfo.rsc) {
+        if (normalModule.buildInfo?.rsc) {
           const normalizedModuleKey = createNormalizedModuleKey(
             normalModule.resource,
             rootContext
@@ -144,7 +144,7 @@ export class PartialHydrationPlugin {
         const chunkModules =
           compilation.chunkGraph.getChunkModulesIterable(chunk)
         for (const mod of chunkModules) {
-          if (mod.buildInfo.rsc) {
+          if (mod.buildInfo?.rsc) {
             mapOriginalModuleToPotentiallyConcatanetedModule.set(mod, mod)
             newClientModules.add(mod)
           }
@@ -219,7 +219,7 @@ export class PartialHydrationPlugin {
         return
       }
       visited.add(module)
-      if (module.buildInfo.rsc) {
+      if (module.buildInfo?.rsc) {
         return
       }
 
@@ -240,7 +240,7 @@ export class PartialHydrationPlugin {
     let asyncRequires: NormalModule | null = null
     for (const module of compilation.modules) {
       if (module instanceof NormalModule) {
-        if (module.buildInfo.rsc) {
+        if (module.buildInfo?.rsc) {
           clientModules.push(module)
         } else if (module.request.endsWith(`export=default`)) {
           const incomingConnections =
@@ -403,7 +403,7 @@ export class PartialHydrationPlugin {
             if (hasClientExportDirective) {
               // this metadata will be preserved on warm builds, so we don't need to force parse modules
               // each time, as webpack will manage going through parsing of module is invalidated
-              module.buildInfo.rsc = true
+              module.buildInfo!.rsc = true
             }
           })
         }

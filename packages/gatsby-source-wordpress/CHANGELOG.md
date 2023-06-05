@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.10.1/packages/gatsby-source-wordpress) (2023-05-25)
+
+#### Bug Fixes
+
+- allow using engines when using wordpress auth [#38103](https://github.com/gatsbyjs/gatsby/issues/38103) [#38109](https://github.com/gatsbyjs/gatsby/issues/38109) ([0e1ec3a](https://github.com/gatsbyjs/gatsby/commit/0e1ec3a22763861ac4f1cdff99a4e0ab2fb90539))
+
 ## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.10.0/packages/gatsby-source-wordpress) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)

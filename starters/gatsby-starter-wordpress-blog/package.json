@@ -8,16 +8,16 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@fontsource/merriweather": "^4.5.14",
-    "@fontsource/montserrat": "^4.5.14",
-    "@wordpress/block-library": "^8.9.0",
+    "@fontsource/merriweather": "^5.0.2",
+    "@fontsource-variable/montserrat": "^5.0.3",
+    "@wordpress/block-library": "^8.11.0",
     "gatsby": "^5.10.0",
     "gatsby-plugin-image": "^3.10.0",
     "gatsby-plugin-manifest": "^5.10.0",
     "gatsby-plugin-sharp": "^5.10.0",
-    "gatsby-source-wordpress": "^7.10.0",
+    "gatsby-source-wordpress": "^7.10.1",
     "gatsby-transformer-sharp": "^5.10.0",
-    "html-react-parser": "^3.0.16",
+    "html-react-parser": "^4.0.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

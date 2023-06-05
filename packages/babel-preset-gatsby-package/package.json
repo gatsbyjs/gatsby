@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "3.11.0-next.0",
+  "version": "3.11.0-next.1",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -20,14 +20,14 @@
     "@babel/runtime": "^7.20.13",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-lodash": "^3.3.4",
-    "core-js": "^3.30.1"
+    "core-js": "^3.30.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
     "@babel/helper-plugin-test-runner": "7.18.6",
     "@babel/plugin-transform-modules-commonjs": "^7.20.11",
-    "@types/babel__core": "^7.20.0",
+    "@types/babel__core": "^7.20.1",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {

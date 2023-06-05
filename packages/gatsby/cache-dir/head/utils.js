@@ -125,12 +125,27 @@ export function getValidHeadNodesAndAttributes(
     if (!isElementType(node)) continue
 
     if (isValidNodeName(nodeName)) {
-      // <html> and <body> tags are treated differently, in that we don't  render them, we only  extract the attributes and apply them separetely
+      // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separetely
       if (nodeName === `html` || nodeName === `body`) {
         for (const attribute of node.attributes) {
+          const isStyleAttribute = attribute.name === `style`
+
+          // Merge attributes for same nodeName from previous loop iteration
           htmlAndBodyAttributes[nodeName] = {
             ...htmlAndBodyAttributes[nodeName],
-            [attribute.name]: attribute.value,
+          }
+
+          if (!isStyleAttribute) {
+            htmlAndBodyAttributes[nodeName][attribute.name] = attribute.value
+          }
+
+          // If there is already a style attribute, we need to merge them as otherwise the last one will "win"
+          if (isStyleAttribute) {
+            htmlAndBodyAttributes[nodeName].style = `${
+              htmlAndBodyAttributes[nodeName]?.style
+                ? htmlAndBodyAttributes[nodeName].style
+                : ``
+            }${attribute.value} `
           }
         }
       } else {

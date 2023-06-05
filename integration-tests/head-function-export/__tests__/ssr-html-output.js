@@ -115,6 +115,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
       {
         "data-foo": "bar",
         "lang": "fr",
+        "style": "color:black;background:white",
       }
     `)
 
@@ -122,6 +123,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
       {
         "class": "foo",
         "data-foo": "baz",
+        "style": "color:black;background:white",
       }
     `)
   })

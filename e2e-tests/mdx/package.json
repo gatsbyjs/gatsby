@@ -3,14 +3,15 @@
   "description": "Gatsby MDX tester",
   "version": "1.0.0",
   "dependencies": {
+    "@emotion/react": "^11.11.0",
     "@mdx-js/react": "^2.3.0",
-    "@sindresorhus/slugify": "^2.2.0",
-    "cypress": "^12.11.0",
+    "@sindresorhus/slugify": "^2.2.1",
+    "cypress": "^12.13.0",
     "fs-extra": "^11.1.1",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
-    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.30",
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.31",
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
@@ -18,7 +19,7 @@
     "react-dom": "^18.2.0",
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
-    "theme-ui": "^0.3.1"
+    "theme-ui": "^0.15.7"
   },
   "keywords": [
     "gatsby"
