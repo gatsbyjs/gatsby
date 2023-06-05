@@ -20,7 +20,9 @@
     "gatsby-adapter"
   ],
   "author": "pieh",
-  "contributors": ["LekoArts"],
+  "contributors": [
+    "LekoArts"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,7 +31,10 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify#readme",
   "dependencies": {
-    "@babel/runtime": "^7.20.13"
+    "@babel/runtime": "^7.20.13",
+    "@netlify/functions": "^1.6.0",
+    "@netlify/cache-utils": "^5.1.5",
+    "fs-extra": "^11.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
