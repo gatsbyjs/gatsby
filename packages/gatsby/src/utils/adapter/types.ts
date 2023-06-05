@@ -1,5 +1,5 @@
 import type reporter from "gatsby-cli/lib/reporter"
-import type { IHeader } from "../../redux/types"
+import type { IHeader, HttpStatusCode } from "../../redux/types"
 
 interface IBaseRoute {
   /**
@@ -38,7 +38,7 @@ export interface ILambdaRoute extends IBaseRoute {
 interface IRedirectRoute extends IBaseRoute {
   type: `redirect`
   toPath: string
-  status: number // TODO: narrow down types to concrete status code that are acceptable here
+  status: HttpStatusCode
   ignoreCase: boolean // this is not supported by Netlify, but is supported by Gatsby ...
   headers: IHeader["headers"]
   [key: string]: unknown

@@ -24,6 +24,7 @@ import {
   WEBPACK_ASSET_HEADERS,
 } from "./constants"
 import { createHeadersMatcher } from "./create-headers"
+import { HTTP_STATUS_CODE } from "../../redux/types"
 import type { IHeader } from "../../redux/types"
 
 function noOpAdapterManager(): IAdapterManager {
@@ -264,7 +265,11 @@ function getRoutesManifest(): RoutesManifest {
       path: redirect.fromPath,
       type: `redirect`,
       toPath: redirect.toPath,
-      status: redirect.statusCode ?? (redirect.isPermanent ? 301 : 302),
+      status:
+        redirect.statusCode ??
+        (redirect.isPermanent
+          ? HTTP_STATUS_CODE.MOVED_PERMANENTLY_301
+          : HTTP_STATUS_CODE.FOUND_302),
       ignoreCase: redirect.ignoreCase,
       headers: REDIRECT_HEADERS,
     })
