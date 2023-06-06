@@ -3,17 +3,26 @@ import type { IFunctionDefinition } from "gatsby/src/utils/adapter/types"
 import fs from "fs-extra"
 import * as path from "path"
 
-export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
+async function prepareFunction(
+  fun: IFunctionDefinition,
+  odbfunctionName?: string
+): Promise<void> {
+  let functionId = fun.functionId
+  let isODB = false
+
+  if (odbfunctionName) {
+    functionId = odbfunctionName
+    isODB = true
+  }
+
   const internalFunctionsDir = path.join(
     process.cwd(),
     `.netlify`,
     `functions-internal`,
-    fun.functionId
+    functionId
   )
 
   await fs.ensureDir(internalFunctionsDir)
-
-  console.log(`hello`)
 
   const functionManifest: any = {
     config: {
@@ -30,7 +39,7 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   }
 
   await fs.writeJSON(
-    path.join(internalFunctionsDir, `${fun.functionId}.json`),
+    path.join(internalFunctionsDir, `${functionId}.json`),
     functionManifest
   )
 
@@ -39,6 +48,7 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
     const http = require("http")
     const { Buffer } = require("buffer")
     const cookie = require("cookie")
+    ${isODB ? `const { builder } = require("@netlify/functions")` : ``}
 
     const preferDefault = m => (m && m.default) || m
 
@@ -211,9 +221,7 @@ const createResponseObject = ({ onResEnd }) => {
     return res;
 };
 
-    exports.handler = async (event, context) => {
-      console.log({ functionHandler })
-
+    const handler = async (event, context) => {
       const req = createRequestObject({ event, context })
 
       return new Promise(async resolve => {
@@ -226,10 +234,22 @@ const createResponseObject = ({ onResEnd }) => {
         }
       })
     }
-  `
+
+    exports.handler = ${isODB ? `builder(handler)` : `handler`}
+    `
 
   await fs.writeFile(
-    path.join(internalFunctionsDir, `${fun.functionId}.js`),
+    path.join(internalFunctionsDir, `${functionId}.js`),
     handlerSource
   )
+}
+
+export async function prepareFunctionVariants(
+  fun: IFunctionDefinition,
+  odbfunctionName?: string
+): Promise<void> {
+  await prepareFunction(fun)
+  if (odbfunctionName) {
+    await prepareFunction(fun, odbfunctionName)
+  }
 }
