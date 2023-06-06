@@ -30,6 +30,7 @@ export async function handleRoutesManifest(
   const lambdasThatUseCaching = new Map<string, string>()
 
   let _redirects = ``
+  let _headers = ``
   for (const route of routesManifest) {
     const fromPath = route.path.replace(/\*.*/, `*`)
 
@@ -103,11 +104,17 @@ export async function handleRoutesManifest(
           ``
         )}  200\n`
       }
+
+      _headers += `${fromPath}\n${route.headers.reduce((acc, curr) => {
+        acc += `  ${curr.key}: ${curr.value}\n`
+        return acc
+      }, ``)}`
     }
   }
 
-  // TODO: add markers around generated redirects so we can update them and merge with user provided ones
+  // TODO: add markers around generated redirects and headers so we can update them and merge with user provided ones
   await fs.outputFile(`public/_redirects`, _redirects)
+  await fs.outputFile(`public/_headers`, _headers)
 
   return {
     lambdasThatUseCaching,
