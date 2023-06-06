@@ -86,6 +86,7 @@ const optionsProcessors: Array<IOptionsProcessor> = [
       helpers,
       userPluginOptions,
     }: IProcessorOptions): IPluginOptions => {
+      // This is the Gatsby store, so we don't access it as getStore()
       const gatsbyStore = helpers.store.getState()
       const typeSettings = Object.entries(userPluginOptions.type)
 

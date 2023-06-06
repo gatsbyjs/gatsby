@@ -1,6 +1,6 @@
 import { fieldTransformers } from "./field-transformers"
 import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
-import store from "~/store"
+import { getStore } from "~/store"
 
 import {
   fieldOfTypeWasFetched,
@@ -96,7 +96,7 @@ export const transformFields = ({
 
   const gatsbyNodeTypes = getGatsbyNodeTypeNames()
 
-  const { fieldAliases, fieldBlacklist } = store().getState().remoteSchema
+  const { fieldAliases, fieldBlacklist } = getStore().getState().remoteSchema
 
   const parentTypeSettings = getTypeSettingsByType(parentType)
 
@@ -130,7 +130,7 @@ export const transformFields = ({
       return fieldsObject
     }
 
-    const { typeMap } = store().getState().remoteSchema
+    const { typeMap } = getStore().getState().remoteSchema
 
     const type = typeMap.get(findNamedTypeName(field.type))
 

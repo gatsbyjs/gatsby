@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import { transformFields } from "./transform-fields"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import {
@@ -48,7 +48,7 @@ const unionType = typeBuilderApi => {
 const interfaceType = typeBuilderApi => {
   const { type, schema } = typeBuilderApi
 
-  const state = store().getState()
+  const state = getStore().getState()
   const { ingestibles } = state.remoteSchema
   const { nodeInterfaceTypes } = ingestibles
 

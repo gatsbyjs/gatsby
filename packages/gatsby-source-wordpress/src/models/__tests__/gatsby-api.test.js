@@ -1,7 +1,7 @@
-import store from "../../../dist/store"
+import { getStore } from "../../../dist/store"
 
 test(`Plugin options presets merge preset data into default and user data`, () => {
-  store().dispatch.gatsbyApi.setState({
+  getStore().dispatch.gatsbyApi.setState({
     pluginOptions: {
       url: `test.com`,
       type: {
@@ -33,7 +33,7 @@ test(`Plugin options presets merge preset data into default and user data`, () =
     helpers: null,
   })
 
-  const { pluginOptions } = store().getState().gatsbyApi
+  const { pluginOptions } = getStore().getState().gatsbyApi
 
   // our top level options override preset options
   expect(pluginOptions.type.ExistingType.limit).toBe(3)

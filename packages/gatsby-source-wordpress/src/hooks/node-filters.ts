@@ -1,5 +1,5 @@
 import { IJSON } from "../utils/fetch-graphql"
-import store from "~/store"
+import { getStore } from "~/store"
 
 interface INodeFilterInput {
   name: string
@@ -34,7 +34,7 @@ export const applyNodeFilter = async ({
   }
 
   const nodeFilters: Array<INodeFilter> =
-    store().getState().wpHooks.nodeFilters?.[name]
+    getStore().getState().wpHooks.nodeFilters?.[name]
 
   if (!nodeFilters || !nodeFilters.length) {
     return data
@@ -62,5 +62,5 @@ export const addNodeFilter = ({
   filter,
   priority,
 }: INodeFilter): void => {
-  store().dispatch.wpHooks.addNodeFilter({ name, filter, priority })
+  getStore().dispatch.wpHooks.addNodeFilter({ name, filter, priority })
 }

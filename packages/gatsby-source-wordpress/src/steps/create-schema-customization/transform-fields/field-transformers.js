@@ -6,7 +6,7 @@ import {
 } from "./transform-object"
 import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
 import { typeIsABuiltInScalar } from "~/steps/create-schema-customization/helpers"
-import store from "~/store"
+import { getStore } from "~/store"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 
@@ -45,7 +45,7 @@ export const fieldTransformers = [
   {
     description: `Lists of Gatsby node interfaces`,
     test: field => {
-      const implementsNodeInterface = store
+      const implementsNodeInterface = getStore()
         .getState()
         .remoteSchema.typeMap.get(findNamedTypeName(field.type))
         ?.interfaces?.some(i => i.name === `Node`)
@@ -149,7 +149,7 @@ export const fieldTransformers = [
         // if this is an interface
         field.type.kind === `INTERFACE` &&
         // and every possible type is a future gatsby node
-        store
+        getStore()
           .getState()
           // get the full type for this interface
           .remoteSchema.typeMap.get(findNamedTypeName(field.type))
@@ -182,7 +182,7 @@ export const fieldTransformers = [
 
       const {
         remoteSchema: { typeMap },
-      } = store().getState()
+      } = getStore().getState()
 
       return (
         // this is a list of Gatsby nodes

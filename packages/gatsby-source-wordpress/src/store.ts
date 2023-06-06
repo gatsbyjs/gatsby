@@ -1,5 +1,6 @@
 import { RematchStore, init } from "@rematch/core"
 import immerPlugin from "@rematch/immer"
+import { enableMapSet } from "immer"
 import models, { IRootModel } from "./models"
 
 import { AsyncLocalStorage } from "async_hooks"
@@ -12,7 +13,12 @@ export interface IGatsbyApiHook {
 
 export type Store = RematchStore<IRootModel, Record<string, never>>
 
-export const asyncLocalStorage = new AsyncLocalStorage<Store>()
+export interface IStoreData {
+  store: Store
+  key: string
+}
+
+export const asyncLocalStorage = new AsyncLocalStorage<IStoreData>()
 
 const STORE_MAP = new Map<string, Store>()
 
@@ -21,9 +27,10 @@ const STORE_MAP = new Map<string, Store>()
  */
 
 export const wrapApiHook =
-  (hook: IGatsbyApiHook): IGatsbyApiHook =>
+  (hook: IGatsbyApiHook, apiName: string): IGatsbyApiHook =>
   async (helpers, pluginOptions) => {
     const typePrefix = pluginOptions.schema?.typePrefix ?? ``
+    console.log(apiName, typePrefix)
     if (!STORE_MAP.has(typePrefix)) {
       STORE_MAP.set(
         typePrefix,
@@ -36,11 +43,29 @@ export const wrapApiHook =
 
     const store = STORE_MAP.get(typePrefix)
 
-    return asyncLocalStorage.run(store, async () =>
+    return asyncLocalStorage.run({ store, key: typePrefix }, async () =>
       hook(helpers, pluginOptions)
     )
   }
 
-const store = (): Store => asyncLocalStorage.getStore()
+enableMapSet()
 
-export default store
+export const getStore = (): Store => {
+  const alsStore = asyncLocalStorage.getStore()
+  if (!alsStore) {
+    console.log(STORE_MAP.keys())
+    throw new Error(`Store not found`)
+  }
+  return alsStore.store
+}
+
+export const snapshotContext = (): (() => void) => {
+  const alsStore = asyncLocalStorage.getStore()
+  return (): void => asyncLocalStorage.enterWith(alsStore)
+}
+
+export const getPluginKey = (): string => asyncLocalStorage.getStore().key
+
+export const withPluginKey = (str: string): string => `${getPluginKey()}-${str}`
+
+export default getStore

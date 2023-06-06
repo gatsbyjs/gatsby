@@ -1,7 +1,7 @@
 import chalk from "chalk"
 
 import { formatLogMessage } from "~/utils/format-log-message"
-import store from "~/store"
+import { getStore } from "~/store"
 import {
   getTypeSettingsByType,
   buildTypeName,
@@ -56,7 +56,7 @@ const wpActionDELETE = async ({ helpers, wpAction }) => {
           fetchGraphql,
           typeSettings,
           buildTypeName,
-          wpStore: store,
+          wpStore: getStore(),
         })) || {}
 
       if (needToTouchNodes && additionalNodeIds && additionalNodeIds.length) {

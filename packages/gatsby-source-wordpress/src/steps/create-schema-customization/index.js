@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 
 import { diffBuiltTypeDefs, fieldOfTypeWasFetched } from "./helpers"
 
@@ -13,7 +13,7 @@ import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-rem
  * createSchemaCustomization
  */
 const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
-  const state = store().getState()
+  const state = getStore().getState()
 
   const {
     gatsbyApi: { pluginOptions },
@@ -38,7 +38,7 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
     fieldBlacklist,
     pluginOptions,
   }
-
+  console.log(remoteSchema.introspectionData)
   // create Gatsby node types
   remoteSchema.introspectionData.__schema.types.forEach(type => {
     if (
