@@ -17,7 +17,9 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
 
   const functionManifest: any = {
     config: {
-      includedFiles: fun.requiredFiles,
+      includedFiles: fun.requiredFiles.map(file =>
+        file.replace(/\[/g, `*`).replace(/]/g, `*`)
+      ),
       externalNodeModules: [`msgpackr-extract`, `babel-runtime`],
     },
     version: 1,
