@@ -278,7 +278,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         singleFieldName,
         singleNodeRootFieldInfo,
         settings,
-        store,
+        store: getStore(),
         fieldVariables,
         remoteSchema,
         transformedFields,
