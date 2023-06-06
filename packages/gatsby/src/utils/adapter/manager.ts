@@ -27,6 +27,7 @@ import {
 import { createHeadersMatcher } from "./create-headers"
 import { HTTP_STATUS_CODE } from "../../redux/types"
 import type { IHeader } from "../../redux/types"
+import { rankRoute } from "../../bootstrap/requires-writer"
 
 function noOpAdapterManager(): IAdapterManager {
   return {
@@ -146,10 +147,10 @@ export function setWebpackAssets(assets: Set<string>): void {
   webpackAssets = assets
 }
 
+type RouteWithScore = { score: number } & Route
+
 function getRoutesManifest(): RoutesManifest {
-  // TODO: have routes list sorted by specifity so more specific ones are before less specific ones (/static should be before /:param and that should be before /*),
-  // so routing can just handle first match
-  const routes = [] as RoutesManifest
+  const routes: Array<RouteWithScore> = []
   const createHeaders = createHeadersMatcher()
 
   const fileAssets = new Set(
@@ -160,7 +161,8 @@ function getRoutesManifest(): RoutesManifest {
     })
   )
 
-  function addSortedRoute(route: Route): void {
+  // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
+  function addRoute(route: Route): void {
     if (!route.path.startsWith(`/`)) {
       route.path = `/${route.path}`
     }
@@ -169,7 +171,9 @@ function getRoutesManifest(): RoutesManifest {
       route.headers = createHeaders(route.path, route.headers)
     }
 
-    routes.push(route)
+    ;(route as RouteWithScore).score = rankRoute(route.path)
+
+    routes.push(route as RouteWithScore)
   }
 
   function addStaticRoute({
@@ -181,7 +185,7 @@ function getRoutesManifest(): RoutesManifest {
     pathToFilInPublicDir: string
     headers: IHeader["headers"]
   }): void {
-    addSortedRoute({
+    addRoute({
       path,
       type: `static`,
       filePath: posix.join(`public`, pathToFilInPublicDir),
@@ -229,12 +233,12 @@ function getRoutesManifest(): RoutesManifest {
         commonFields.cache = true
       }
 
-      addSortedRoute({
+      addRoute({
         path: htmlRoutePath,
         ...commonFields,
       })
 
-      addSortedRoute({
+      addRoute({
         path: pageDataRoutePath,
         ...commonFields,
       })
@@ -280,7 +284,7 @@ function getRoutesManifest(): RoutesManifest {
 
   // redirect routes
   for (const redirect of store.getState().redirects.values()) {
-    addSortedRoute({
+    addRoute({
       path: redirect.fromPath,
       type: `redirect`,
       toPath: redirect.toPath,
@@ -296,7 +300,7 @@ function getRoutesManifest(): RoutesManifest {
 
   // function routes
   for (const functionInfo of store.getState().functions.values()) {
-    addSortedRoute({
+    addRoute({
       path: `/api/${
         maybeDropNamedPartOfWildcard(functionInfo.matchPath) ??
         functionInfo.functionRoute
@@ -319,7 +323,24 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
-  return routes
+  return (
+    routes
+      .sort((a, b) => {
+        // The higher the score, the higher the specificity of our path
+        const order = b.score - a.score
+        if (order !== 0) {
+          return order
+        }
+
+        // if specificity is the same we do lexigraphic comparison of path to ensure
+        // deterministic order regardless of order pages where created
+        return a.path.localeCompare(b.path)
+      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .map(({ score, ...rest }): Route => {
+        return { ...rest }
+      })
+  )
 }
 
 function getFunctionsManifest(): FunctionsManifest {
