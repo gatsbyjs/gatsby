@@ -53,7 +53,6 @@ enableMapSet()
 export const getStore = (): Store => {
   const alsStore = asyncLocalStorage.getStore()
   if (!alsStore) {
-    console.log(STORE_MAP.keys())
     throw new Error(`Store not found`)
   }
   return alsStore.store

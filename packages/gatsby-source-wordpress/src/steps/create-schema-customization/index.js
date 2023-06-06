@@ -38,7 +38,7 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
     fieldBlacklist,
     pluginOptions,
   }
-  console.log(remoteSchema.introspectionData)
+
   // create Gatsby node types
   remoteSchema.introspectionData.__schema.types.forEach(type => {
     if (

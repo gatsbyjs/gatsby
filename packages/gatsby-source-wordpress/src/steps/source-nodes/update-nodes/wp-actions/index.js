@@ -7,7 +7,7 @@ import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nod
 import fetchAndCreateNonNodeRootFields from "~/steps/source-nodes/create-nodes/fetch-and-create-non-node-root-fields"
 import { setHardCachedNodes } from "~/utils/cache"
 import { sourceNodes } from "~/steps/source-nodes"
-import { withPluginKey } from "../../../../../dist/store"
+import { withPluginKey } from "~/store"
 
 /**
  * getWpActions
