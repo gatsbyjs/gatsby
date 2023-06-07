@@ -10,6 +10,11 @@ import {
 } from "../helpers"
 
 import { buildDefaultResolver } from "./default-resolver"
+import { GraphQLScalarType } from "graphql"
+
+/**
+ * @param {import("graphql").GraphQLField} field
+ */
 
 const handleCustomScalars = field => {
   const fieldTypeIsACustomScalar =
@@ -18,7 +23,12 @@ const handleCustomScalars = field => {
   if (fieldTypeIsACustomScalar) {
     // if this field is an unsupported custom scalar,
     // type it as JSON
-    field.type.name = `JSON`
+    return {
+      ...field,
+      type: new GraphQLScalarType({
+        name: `JSON`,
+      }),
+    }
   }
 
   const fieldTypeOfTypeIsACustomScalar =
@@ -29,7 +39,9 @@ const handleCustomScalars = field => {
   if (fieldTypeOfTypeIsACustomScalar) {
     // if this field is an unsupported custom scalar,
     // type it as JSON
-    field.type.ofType.name = `JSON`
+    field.type.ofType = new GraphQLScalarType({
+      name: `JSON`,
+    })
   }
 
   return field

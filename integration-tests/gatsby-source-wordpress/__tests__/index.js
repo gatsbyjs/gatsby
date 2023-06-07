@@ -21,6 +21,7 @@ const {
 const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { withGlobalStore } = require("../test-fns/test-utils/store")
 
 jest.setTimeout(100000)
 
@@ -66,22 +67,24 @@ const isWarmCache = process.env.WARM_CACHE
 const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
-  beforeAll(done => {
-    ;(async () => {
-      console.log(`Waiting for WPGraphQL to be ready...`)
-      await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
-      console.log(`WPGraphQL is ready`)
-      console.log(`Waiting for plugins to be ready...`)
-      await pluginsAreReady()
-      console.log(`Plugins are ready`)
+  beforeAll(
+    withGlobalStore(done => {
+      ;(async () => {
+        console.log(`Waiting for WPGraphQL to be ready...`)
+        await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
+        console.log(`WPGraphQL is ready`)
+        console.log(`Waiting for plugins to be ready...`)
+        await pluginsAreReady()
+        console.log(`Plugins are ready`)
 
-      if (isWarmCache) {
-        done()
-      } else {
-        gatsbyCleanBeforeAll(done)
-      }
-    })()
-  })
+        if (isWarmCache) {
+          done()
+        } else {
+          gatsbyCleanBeforeAll(done)
+        }
+      })()
+    })
+  )
 
   testOnColdCacheOnly(`Default options build succeeded`, async () => {
     const gatsbyProcess = spawnGatsbyProcess(`build`, {
