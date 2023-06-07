@@ -22,23 +22,23 @@ export const asyncLocalStorage = new AsyncLocalStorage<IStoreData>()
 
 const STORE_MAP = new Map<string, Store>()
 
+export const createStore = (): Store =>
+  init({
+    models,
+    plugins: [immerPlugin<IRootModel>()],
+  })
+
 /**
  * Wraps the API hook with the async local storage context
  */
 
 export const wrapApiHook =
-  (hook: IGatsbyApiHook, apiName: string): IGatsbyApiHook =>
+  (hook: IGatsbyApiHook): IGatsbyApiHook =>
   async (helpers, pluginOptions) => {
     const typePrefix = pluginOptions.schema?.typePrefix ?? ``
-    console.log(apiName, typePrefix)
+
     if (!STORE_MAP.has(typePrefix)) {
-      STORE_MAP.set(
-        typePrefix,
-        init({
-          models,
-          plugins: [immerPlugin<IRootModel>()],
-        })
-      )
+      STORE_MAP.set(typePrefix, createStore())
     }
 
     const store = STORE_MAP.get(typePrefix)

@@ -9,6 +9,13 @@ import {
   searchAndReplaceNodeStrings,
 } from "../dist/steps/source-nodes/create-nodes/process-node"
 
+import { createStore, asyncLocalStorage } from "../dist/store"
+
+asyncLocalStorage.enterWith({
+  store: createStore(),
+  key: `test`,
+})
+
 const wpUrl = `wp.fakesite.com`
 
 test(`HTML image transformation regex matches images`, async () => {

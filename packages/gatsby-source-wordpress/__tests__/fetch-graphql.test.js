@@ -1,6 +1,6 @@
 import chalk from "chalk"
 import fetchGraphQL, { moduleHelpers } from "../dist/utils/fetch-graphql"
-import store from "../dist/store"
+import { getStore, createStore, asyncLocalStorage } from "../dist/store"
 
 jest.mock(`async-retry`, () => {
   return {
@@ -20,6 +20,10 @@ describe(`fetchGraphQL helper`, () => {
   const panicMessages = []
 
   beforeAll(() => {
+    asyncLocalStorage.enterWith({
+      store: createStore(),
+      key: `test`,
+    })
     const sharedError = `Request failed with status code`
     try {
       mock = jest.spyOn(moduleHelpers, `getHttp`).mockImplementation(() => {
@@ -54,7 +58,7 @@ describe(`fetchGraphQL helper`, () => {
       },
     }
 
-    store.dispatch.gatsbyApi.setState({
+    getStore().dispatch.gatsbyApi.setState({
       helpers: {
         reporter: fakeReporter,
       },

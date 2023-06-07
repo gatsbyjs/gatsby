@@ -114,8 +114,7 @@ const runApiSteps = (steps: Array<Step>, apiName: string): IGatsbyApiHook =>
     async (
       helpers: GatsbyNodeApiHelpers,
       pluginOptions: IPluginOptions
-    ): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName),
-    apiName
+    ): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName)
   )
 
 export { runSteps, runApiSteps, findApiName }

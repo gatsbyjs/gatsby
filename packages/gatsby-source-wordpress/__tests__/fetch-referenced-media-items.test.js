@@ -3,7 +3,7 @@ jest.mock(`../dist/utils/fetch-graphql`, () => jest.fn())
 import fetchGraphql from "../dist/utils/fetch-graphql"
 import { fetchMediaItemsBySourceUrl, fetchMediaItemsById } from "../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items"
 import { createContentDigest } from "gatsby-core-utils"
-import store from "../dist/store"
+import { getStore, createStore, asyncLocalStorage } from "../dist/store"
 
 const fakeReporter = {
   panic: msg => {
@@ -20,7 +20,11 @@ const btoa = (input) => Buffer.from(input).toString(`base64`)
 
 describe(`fetch-referenced-media-items`, () => {
   beforeAll(() => {
-    store.dispatch.gatsbyApi.setState({
+    asyncLocalStorage.enterWith({
+      store: createStore(),
+      key: `test`,
+    })
+    getStore().dispatch.gatsbyApi.setState({
       pluginOptions: {
         schema: {
           perPage: 2,
@@ -101,7 +105,7 @@ const createApi = () => {
 
 
     it(`should properly download a single page if there is only 1`, async () => {
-      store.dispatch.gatsbyApi.setState({
+      getStore().dispatch.gatsbyApi.setState({
         pluginOptions: {
           schema: {
             perPage: 5,
@@ -174,7 +178,7 @@ const createApi = () => {
               localFile: {
                 id: 3,
               }})
-      store.dispatch.gatsbyApi.setState({
+      getStore().dispatch.gatsbyApi.setState({
         pluginOptions: {
           schema: {
             perPage: 2,
@@ -232,7 +236,7 @@ const createApi = () => {
     })
 
 
-    xit(`should properly download a single page of ids if there is only 1`, async () => {
+    it(`should properly download a single page of ids if there is only 1`, async () => {
       getNodeMock
       .mockReturnValueOnce(undefined)
       .mockReturnValueOnce(undefined)
@@ -245,7 +249,7 @@ const createApi = () => {
             id: 1,
           }})
 
-      store.dispatch.gatsbyApi.setState({
+      getStore().dispatch.gatsbyApi.setState({
         pluginOptions: {
           schema: {
             perPage: 5,

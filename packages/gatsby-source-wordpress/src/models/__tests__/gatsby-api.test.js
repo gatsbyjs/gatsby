@@ -1,6 +1,10 @@
-import { getStore } from "../../../dist/store"
+import { getStore, createStore, asyncLocalStorage } from "../../../dist/store"
 
 test(`Plugin options presets merge preset data into default and user data`, () => {
+  asyncLocalStorage.enterWith({
+    store: createStore(),
+    key: `test`,
+  })
   getStore().dispatch.gatsbyApi.setState({
     pluginOptions: {
       url: `test.com`,
