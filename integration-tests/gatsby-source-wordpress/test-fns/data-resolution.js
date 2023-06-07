@@ -2,9 +2,7 @@
  * @jest-environment node
  */
 
-const {
-  default: fetchGraphql,
-} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { fetchGraphql } = require("./test-utils/graphql")
 const { URL } = require("url")
 
 const gatsbyConfig = require("../gatsby-config")
