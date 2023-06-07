@@ -18,12 +18,17 @@ const getNodeMock = jest.fn()
 
 const btoa = (input) => Buffer.from(input).toString(`base64`)
 
+const store = {store: createStore(), key: `test`}
+
+const runWithGlobalStore = async (fn) => {
+  asyncLocalStorage.run(store, fn)
+}
+
+const withGlobalStore = (fn) => () => {
+     runWithGlobalStore(fn)
+  }
 describe(`fetch-referenced-media-items`, () => {
-  beforeAll(() => {
-    asyncLocalStorage.enterWith({
-      store: createStore(),
-      key: `test`,
-    })
+  beforeAll(withGlobalStore(() => {
     getStore().dispatch.gatsbyApi.setState({
       pluginOptions: {
         schema: {
@@ -31,7 +36,7 @@ describe(`fetch-referenced-media-items`, () => {
         },
       },
     })
-  })
+  }))
 
   afterEach(() => {
     jest.resetAllMocks()
@@ -58,7 +63,7 @@ const createApi = () => {
   }
 }
 
-    it(`should properly download multiple pages`, async () => {
+    it(`should properly download multiple pages`, withGlobalStore(async () => {
       fetchGraphql
         .mockResolvedValueOnce({
           data: {
@@ -101,10 +106,10 @@ const createApi = () => {
         helpers: createApi(),
       })
       expect(result).toHaveLength(2)
-    })
+    }))
 
 
-    it(`should properly download a single page if there is only 1`, async () => {
+    it(`should properly download a single page if there is only 1`, withGlobalStore(async () => {
       getStore().dispatch.gatsbyApi.setState({
         pluginOptions: {
           schema: {
@@ -137,7 +142,7 @@ const createApi = () => {
         helpers: createApi(),
       })
       expect(result).toHaveLength(2)
-    })
+    }))
   })
 
 
@@ -156,7 +161,7 @@ const createApi = () => {
       }
     }
 
-    it(`should properly download multiple pages of ids`, async () => {
+    it(`should properly download multiple pages of ids`, withGlobalStore(async () => {
       getNodeMock
       .mockReturnValueOnce(undefined)
       .mockReturnValueOnce(undefined)
@@ -233,10 +238,10 @@ const createApi = () => {
         helpers: createApi(),
       })
       expect(result).toHaveLength(4)
-    })
+    }))
 
 
-    it(`should properly download a single page of ids if there is only 1`, async () => {
+    it(`should properly download a single page of ids if there is only 1`, withGlobalStore(async () => {
       getNodeMock
       .mockReturnValueOnce(undefined)
       .mockReturnValueOnce(undefined)
@@ -289,6 +294,6 @@ const createApi = () => {
         helpers: createApi(),
       })
       expect(result).toHaveLength(2)
-    })
+    }))
   })
 })
