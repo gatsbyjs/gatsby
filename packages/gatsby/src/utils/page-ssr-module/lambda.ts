@@ -1,7 +1,79 @@
-import { GatsbyFunctionResponse, GatsbyFunctionRequest } from "gatsby"
+import type { GatsbyFunctionResponse, GatsbyFunctionRequest } from "gatsby"
 import * as path from "path"
-import { IGatsbyPage } from "../../internal"
-import { ISSRData } from "./entry"
+import * as fs from "fs-extra"
+import { tmpdir } from "os"
+import type { IGatsbyPage } from "../../internal"
+import type { ISSRData } from "./entry"
+import { link } from "linkfs"
+
+function setupFsWrapper(): string {
+  // setup global._fsWrapper
+  try {
+    fs.accessSync(__filename, fs.constants.W_OK)
+    // TODO: this seems funky - not sure if this is correct way to handle this, so just marking TODO to revisit this
+    return path.join(__dirname, `..`, `data`, `datastore`)
+  } catch (e) {
+    // we are in a read-only filesystem, so we need to use a temp dir
+
+    const TEMP_CACHE_DIR = path.join(tmpdir(), `gatsby`, `.cache`)
+
+    // TODO: don't hardcode this
+    const cacheDir = `/var/task/.cache`
+
+    // we need to rewrite fs
+    const rewrites = [
+      [path.join(cacheDir, `caches`), path.join(TEMP_CACHE_DIR, `caches`)],
+      [
+        path.join(cacheDir, `caches-lmdb`),
+        path.join(TEMP_CACHE_DIR, `caches-lmdb`),
+      ],
+      [path.join(cacheDir, `data`), path.join(TEMP_CACHE_DIR, `data`)],
+    ]
+
+    console.log(`Preparing Gatsby filesystem`, {
+      from: cacheDir,
+      to: TEMP_CACHE_DIR,
+      rewrites,
+    })
+    // Alias the cache dir paths to the temp dir
+    const lfs = link(fs, rewrites) as typeof import("fs")
+
+    // linkfs doesn't pass across the `native` prop, which graceful-fs needs
+    for (const key in lfs) {
+      if (Object.hasOwnProperty.call(fs[key], `native`)) {
+        lfs[key].native = fs[key].native
+      }
+    }
+
+    const dbPath = path.join(TEMP_CACHE_DIR, `data`, `datastore`)
+
+    // 'promises' is not initially linked within the 'linkfs'
+    // package, and is needed by underlying Gatsby code (the
+    // @graphql-tools/code-file-loader)
+    lfs.promises = link(fs.promises, rewrites)
+
+    // Gatsby uses this instead of fs if present
+    // eslint-disable-next-line no-underscore-dangle
+    global._fsWrapper = lfs
+
+    const dir = `data`
+    if (
+      !process.env.NETLIFY_LOCAL &&
+      fs.existsSync(path.join(TEMP_CACHE_DIR, dir))
+    ) {
+      console.log(`directory already exists`)
+      return dbPath
+    }
+    console.log(`Start copying ${dir}`)
+
+    fs.copySync(path.join(cacheDir, dir), path.join(TEMP_CACHE_DIR, dir))
+    console.log(`End copying ${dir}`)
+
+    return dbPath
+  }
+}
+
+const dbPath = setupFsWrapper()
 
 // using require instead of import here for now because of type hell + import path doesn't exist in current context
 // as this file will be copied elsewhere
@@ -13,7 +85,7 @@ const { getData, renderPageData, renderHTML } =
   require(`./index`) as typeof import("./entry")
 
 const graphqlEngine = new GraphQLEngine({
-  dbPath: path.join(__dirname, `..`, `data`, `datastore`),
+  dbPath,
 })
 
 function reverseFixedPagePath(pageDataRequestPath: string): string {

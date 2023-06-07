@@ -1,7 +1,7 @@
 import type { AdapterInit } from "gatsby/src/utils/adapter/types"
 
 // just for debugging
-import { inspect } from "util"
+// import { inspect } from "util"
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface INetlifyAdapterOptions {}
@@ -25,16 +25,17 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = () => {
       },
     },
     async adapt({ routesManifest, functionsManifest }): Promise<void> {
-      console.log(
-        `[gatsby-adapter-netlify] adapt()`,
-        inspect(
-          {
-            routesManifest,
-            functionsManifest,
-          },
-          { depth: Infinity, colors: true }
-        )
-      )
+      // this is noisy, so for now commented out to easily restore if some routes/functions debugging is needed
+      // console.log(
+      //   `[gatsby-adapter-netlify] adapt()`,
+      //   inspect(
+      //     {
+      //       routesManifest,
+      //       functionsManifest,
+      //     },
+      //     { depth: Infinity, colors: true }
+      //   )
+      // )
 
       const { lambdasThatUseCaching } = await handleRoutesManifest(
         routesManifest
