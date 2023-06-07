@@ -81,7 +81,6 @@ export async function createGraphqlEngineBundle(
     // those are required in some runtime paths, but we don't need them
     externals: [
       `cbor-x`, // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it
-      `babel-runtime/helpers/asyncToGenerator`, // undeclared dep of yurnalist (but used in code path we don't use)
       `electron`, // :shrug: `got` seems to have electron specific code path
       mod.builtinModules.reduce((acc, builtinModule) => {
         if (builtinModule === `fs`) {
@@ -99,6 +98,18 @@ export async function createGraphqlEngineBundle(
       rules: [
         {
           oneOf: [
+            {
+              // specific set of loaders for sharp
+              test: /node_modules[/\\]sharp[/\\].*\.[cm]?js$/,
+              // it is recommended for Node builds to turn off AMD support
+              parser: { amd: false },
+              use: [
+                assetRelocatorUseEntry,
+                {
+                  loader: require.resolve(`./sharp-bundling-patch`),
+                },
+              ],
+            },
             {
               // specific set of loaders for LMBD - our custom patch to massage lmdb to work with relocator -> relocator
               test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,
@@ -189,6 +200,8 @@ export async function createGraphqlEngineBundle(
         "graphql-import-node$": require.resolve(`./shims/no-op-module`),
         "graphql-import-node/register$":
           require.resolve(`./shims/no-op-module`),
+        "babel-runtime/helpers/asyncToGenerator":
+          require.resolve(`./shims/no-op-module`), // undeclared dep of yurnalist (but used in code path we don't use)
       },
     },
     plugins: [

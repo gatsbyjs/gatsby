@@ -29,13 +29,9 @@ async function prepareFunction(
       includedFiles: fun.requiredFiles.map(file =>
         file.replace(/\[/g, `*`).replace(/]/g, `*`)
       ),
-      externalNodeModules: [`msgpackr-extract`, `babel-runtime`],
+      externalNodeModules: [`msgpackr-extract`],
     },
     version: 1,
-  }
-
-  if (fun.functionId === `ssr-engine`) {
-    functionManifest.config.nodeBundler = `none`
   }
 
   await fs.writeJSON(
