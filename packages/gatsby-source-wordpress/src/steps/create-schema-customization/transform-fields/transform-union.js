@@ -1,9 +1,9 @@
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 import { introspectionFieldTypeToSDL } from "../helpers"
 
-export const transformUnion = ({ field, fieldName }) => {
+export const transformUnion = ({ field, fieldName, prefix }) => {
   return {
-    type: buildTypeName(field.type.name),
+    type: buildTypeName(field.type.name, prefix),
     resolve: (source, _, context) => {
       const resolvedField =
         source[fieldName] ||
@@ -25,7 +25,7 @@ export const transformUnion = ({ field, fieldName }) => {
   }
 }
 
-export const transformListOfUnions = ({ field, fieldName }) => {
+export const transformListOfUnions = ({ field, fieldName, prefix }) => {
   const typeSDLString = introspectionFieldTypeToSDL(field.type)
 
   return {
@@ -46,7 +46,7 @@ export const transformListOfUnions = ({ field, fieldName }) => {
         const node = item?.id
           ? context.nodeModel.getNodeById({
               id: item.id,
-              type: buildTypeName(item.__typename),
+              type: buildTypeName(item.__typename, prefix),
             })
           : null
 

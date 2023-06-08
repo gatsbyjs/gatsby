@@ -53,7 +53,10 @@ export const createNodeWithSideEffects =
       node = processedNode
     }
 
-    const builtTypename = buildTypeName(node.__typename)
+    const builtTypename = buildTypeName(
+      node.__typename,
+      pluginOptions.schema.typePrefix
+    )
 
     let remoteNode = {
       ...node,

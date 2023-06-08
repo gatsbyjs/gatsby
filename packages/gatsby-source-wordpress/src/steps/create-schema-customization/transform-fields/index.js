@@ -1,4 +1,4 @@
-import { fieldTransformers } from "./field-transformers"
+import { getFieldTransformers } from "./field-transformers"
 import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
 import { getStore } from "~/store"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
@@ -11,7 +11,13 @@ import {
 } from "../helpers"
 
 import { buildDefaultResolver } from "./default-resolver"
-import { GraphQLScalarType } from "graphql"
+import {
+  GraphQLScalarType,
+  GraphQLList,
+  GraphQLNonNull,
+  isListType,
+  isNonNullType,
+} from "graphql"
 
 /**
  * @param {import("graphql").GraphQLField} field
@@ -40,9 +46,28 @@ const handleCustomScalars = field => {
   if (fieldTypeOfTypeIsACustomScalar) {
     // if this field is an unsupported custom scalar,
     // type it as JSON
-    field.type.ofType = new GraphQLScalarType({
-      name: `JSON`,
-    })
+
+    if (isListType(field.type)) {
+      return {
+        ...field,
+        type: new GraphQLList(
+          new GraphQLScalarType({
+            name: `JSON`,
+          })
+        ),
+      }
+    }
+
+    if (isNonNullType(field.type)) {
+      return {
+        ...field,
+        type: new GraphQLNonNull(
+          new GraphQLScalarType({
+            name: `JSON`,
+          })
+        ),
+      }
+    }
   }
 
   return field
@@ -173,7 +198,7 @@ export const transformFields = ({
 
     const { transform, description } =
       peek === false
-        ? fieldTransformers.find(({ test }) => test(field)) || {}
+        ? getFieldTransformers().find(({ test }) => test(field)) || {}
         : {}
 
     if (transform && typeof transform === `function` && peek === false) {
