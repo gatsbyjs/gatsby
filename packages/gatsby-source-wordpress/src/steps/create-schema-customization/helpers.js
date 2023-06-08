@@ -52,14 +52,14 @@ const isWpgqlOneThirteenZeroPlus = () => {
 /**
  * This function namespaces typenames with a prefix
  */
-export const buildTypeName = name => {
+export const buildTypeName = (name, prefix) => {
   if (!name || typeof name !== `string`) {
     return null
   }
 
-  const {
-    schema: { typePrefix: prefix },
-  } = getPluginOptions()
+  if (!prefix) {
+    prefix = getPluginOptions().schema.typePrefix
+  }
 
   // this is for our namespace type on the root { wp { ...fields } }
   if (name === prefix) {

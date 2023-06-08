@@ -1,5 +1,5 @@
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
-import { findNamedTypeName, introspectionFieldTypeToSDL } from "../helpers"
+import { introspectionFieldTypeToSDL } from "../helpers"
 
 export const transformUnion = ({ field, fieldName }) => {
   return {

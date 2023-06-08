@@ -1,6 +1,7 @@
 import { fieldTransformers } from "./field-transformers"
 import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
 import { getStore } from "~/store"
+import { getPluginOptions } from "~/utils/get-gatsby-api"
 
 import {
   fieldOfTypeWasFetched,
@@ -182,6 +183,7 @@ export const transformFields = ({
         fieldName,
         gatsbyNodeTypes,
         description,
+        pluginOptions: getPluginOptions(),
       }
 
       let transformedField = transform(transformerApi)
