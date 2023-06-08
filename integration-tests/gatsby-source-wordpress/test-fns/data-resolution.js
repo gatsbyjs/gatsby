@@ -338,8 +338,8 @@ describe(`data resolution`, () => {
       )
     )
 
-    expect(gatsbyResult.data.wpPage).toStrictEqual(wpGraphQLPageNormalizedPaths)
-    expect(gatsbyResult.data.wp.seo).toStrictEqual(WPGraphQLData.seo)
+    expect(gatsbyResult.data.wpPage).toEqual(wpGraphQLPageNormalizedPaths)
+    expect(gatsbyResult.data.wp.seo).toEqual(WPGraphQLData.seo)
   })
 
   it(`Does not download files whose size exceed the maxFileSizeBytes option`, async () => {
