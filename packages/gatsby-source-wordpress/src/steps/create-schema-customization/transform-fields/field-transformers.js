@@ -11,7 +11,8 @@ import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 
 export const getFieldTransformers = () => {
-  const prefix = getPluginOptions().schema.typePrefix
+  const pluginOptions = getPluginOptions()
+  const prefix = pluginOptions.schema.typePrefix
   return [
     {
       description: `NON_NULL Scalar`,
@@ -59,7 +60,7 @@ export const getFieldTransformers = () => {
         return isAListOfGatsbyNodeInterfaces
       },
 
-      transform: args => transformListOfGatsbyNodes({ ...args, prefix }),
+      transform: args => transformListOfGatsbyNodes({ ...args, pluginOptions }),
     },
 
     {
@@ -174,7 +175,7 @@ export const getFieldTransformers = () => {
         )
       },
 
-      transform: args => transformGatsbyNodeObject({ ...args, prefix }),
+      transform: args => transformGatsbyNodeObject({ ...args, pluginOptions }),
     },
 
     {
@@ -202,7 +203,7 @@ export const getFieldTransformers = () => {
         )
       },
 
-      transform: args => transformListOfGatsbyNodes({ ...args, prefix }),
+      transform: args => transformListOfGatsbyNodes({ ...args, pluginOptions }),
     },
 
     {
@@ -227,7 +228,7 @@ export const getFieldTransformers = () => {
       test: field =>
         field.type.kind === `LIST` && field.type.ofType.kind === `UNION`,
 
-      transform: args => transformListOfUnions({ ...args, prefix }),
+      transform: args => transformListOfUnions({ ...args, pluginOptions }),
     },
 
     {
@@ -256,7 +257,7 @@ export const getFieldTransformers = () => {
     {
       description: `Union type`,
       test: field => field.type.kind === `UNION`,
-      transform: args => transformUnion({ ...args, prefix }),
+      transform: args => transformUnion({ ...args, pluginOptions }),
     },
 
     {

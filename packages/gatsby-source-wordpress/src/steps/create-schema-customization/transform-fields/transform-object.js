@@ -6,7 +6,12 @@ import { inPreviewMode } from "~/steps/preview/index"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 import { findNamedTypeName, introspectionFieldTypeToSDL } from "../helpers"
 
-export const transformListOfGatsbyNodes = ({ field, fieldName, prefix }) => {
+export const transformListOfGatsbyNodes = ({
+  field,
+  fieldName,
+  pluginOptions,
+}) => {
+  const prefix = pluginOptions.schema.typePrefix
   const typeSDLString = introspectionFieldTypeToSDL(field.type)
   const typeName = buildTypeName(findNamedTypeName(field.type), prefix)
 
@@ -36,8 +41,9 @@ export const transformListOfGatsbyNodes = ({ field, fieldName, prefix }) => {
 }
 
 export const buildGatsbyNodeObjectResolver =
-  ({ field, fieldName, prefix }) =>
+  ({ field, fieldName, pluginOptions }) =>
   async (source, _args, context) => {
+    const prefix = pluginOptions.schema.typePrefix
     const typeName = buildTypeName(field.type.name, prefix)
     const nodeField = source[fieldName]
 
@@ -105,8 +111,11 @@ export const buildGatsbyNodeObjectResolver =
   }
 
 export const transformGatsbyNodeObject = transformerApi => {
-  const { field, prefix } = transformerApi
-  const typeName = buildTypeName(field.type.name, prefix)
+  const { field, pluginOptions } = transformerApi
+  const typeName = buildTypeName(
+    field.type.name,
+    pluginOptions.schema.typePrefix
+  )
 
   return {
     type: typeName,
