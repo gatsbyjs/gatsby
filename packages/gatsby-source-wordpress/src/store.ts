@@ -2,6 +2,7 @@ import { init } from "@rematch/core"
 import immerPlugin from "@rematch/immer"
 import models from "./models"
 
+// just running tests
 // import type { RematchStore } from "@rematch/core"
 // @todo any used to be RematchStore<typeof models> but this isn't exactly right..
 // need to revisit this later. newer versions of rematch sorted TS out but
