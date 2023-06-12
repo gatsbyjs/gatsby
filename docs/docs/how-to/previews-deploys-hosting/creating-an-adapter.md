@@ -1,65 +1,125 @@
 ---
 title: Creating an Adapter
+examples:
+  - label: gatsby-adapter-netlify
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify"
 ---
+
+import Collapsible from "@components/collapsible"
 
 ## Introduction
 
-The introductory paragraph should be a 2-3 sentence explanation of the
-main topic and answer the following questions:
+If an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) for your preferred deployment platform doesn't exist yet, you can build your own. While the specifics of the adapter depend on the deployment platform and its requirements, the initial setup is the same for every adapter.
 
-What is the purpose of this guide? What will readers have achieved by
-following the steps in this guide?
+By the end of this guide you should be able to create, use, and publish an adapter.
 
-Why is this process worth doing? How will it help readers improve their
-Gatsby site?
+## Authoring
 
-## Prerequisites
+An adapter's entrypoint has to have the following API:
 
-If applicable, list any prerequisites to reading and understanding your
-article.
+```js
+/**
+ * @type {import("gatsby").AdapterInit}
+ */
+const createAdapterFoo = adapterOptions => {
+  return {
+    name: `gatsby-adapter-foo`,
+    cache: {
+      restore({ directories, reporter }) {
+        // Cache restore implementation
+      },
+      store({ directories, reporter }) {
+        // Cache store implementation
+      },
+    },
+    adapt({ routesManifest, functionsManifest, reporter }) {
+      // Adapt implementation
+    },
+  }
+}
 
-Does the reader need to read another document first, install a particular
-plugin, or already know a certain skill? List those things here.
+module.exports = createAdapterFoo
+```
 
-## Directions
+<Collapsible
+  summary={<em>TypeScript version</em>}
+>
 
-This section should be a step-by-step list of instructions for how readers
-can achieve the goal.
+Gatsby makes a `AdapterInit` type available which you can use to author your adapter. It also accepts a generic for the adapter options:
 
-1. Do the first thing.
-2. Do the next thing.
+```ts
+import type { AdapterInit } from "gatsby"
 
-Use code blocks to show exactly what readers should type. The
-Gatsby Style Guide includes tips for best practices when using code
-blocks:
-https://www.gatsbyjs.com/contributing/gatsby-style-guide/#format-code-blocks-inline-code-and-images
+type AdapterOptions = {
+  foo: boolean
+}
 
-If it's a particularly long list of directions, you can split the steps into
-sections. Use subheadings to label each chunk. For example:
+const createAdapterFoo: AdapterInit<AdapterOptions> = ({ foo }) => {
+  return {
+    name: `gatsby-adapter-foo`,
+    cache: {
+      restore({ directories, reporter }) {
+        // Cache restore implementation
+      },
+      store({ directories, reporter }) {
+        // Cache store implementation
+      },
+    },
+    adapt({ routesManifest, functionsManifest, reporter }) {
+      // Adapt implementation
+    },
+  }
+}
 
-### Step 1: Do the first thing.
+export default createAdapterFoo
+```
 
-1. The first step of the first thing.
-1. The second step of the first thing.
+You can find all TypeScript types [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/types.ts).
 
-### Step 2: Do some other thing.
+</Collapsible>
 
-1. The first step of some other thing.
-1. The second step of some other thing.
+The adapter has to export a function as a default export with these object keys:
 
-## Additional Resources
+- `name`: Unique name of the adapter. Please follow the naming convention `gatsby-adapter-name` or `@scope/gatsby-adapter-name` as it'll make it easier for folks to discover your adapter.
+- `cache` (Optional): Both handlers receive `directories` which are the directories that should be cached/restored for a build.
+  - `restore`: Hook to restore `directories` from previous builds. This is executed very early on in the build process. If `false` is returned Gatsby will skip its cache restoration.
+  - `store`: Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
+- [`adapt`](#adapt): Hook to take Gatsby's output and preparing it for deployment on the adapter's platform. Executed as one of the last steps in the build process.
 
-Include other resources you think readers would benefit from or next steps
-they might want to take after reading your How-To Guide. You can also
-mention any resources that helped you write the article (blog posts, outside
-tutorials, etc.).
+If your adapter accepts custom options, consider setting default values (if reasonable). This will make it easier to use your adapter.
 
-Best-case scenario, these should be high-quality, evergreen
-(not quickly outdated) resources.
+`cache.restore`, `cache.store`, and `adapt` receive the [`reporter` instance](/docs/reference/config-files/node-api-helpers/#reporter) you’re used to, so you can output structured logs to the user’s terminal. **However**, please don’t overdo it and keep the output to a minimum. The user will already get information what adapter is used and can debug things further by running in `verbose` mode. In most cases no additional logs are necessary.
 
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
+### adapt
+
+The `adapt` hook takes Gatsby's output and prepares it for deployment on the adapter's platform. It receives the following inputs:
+
+- `routesManifest`: Array of objects with three different types: `static`, `function`, and `redirect`. Each objects contains all necessary information to deploy and apply these routes. `static` routes will have default `headers` applied which users can extend/overwrite with the [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) option inside `gatsby-config`.
+- `functionsManifest`: Array of objects to give the adapter each function entrypoint and its required files.
+
+You can find the TypeScript types for these inputs on [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/types.ts) to learn more.
+
+The `adapt` hook should do the following things:
+
+- Apply HTTP headers to assets
+- Apply redirects and rewrites. The adapter should can also create its own redirects/rewrites if necessary (e.g. mapping serverless functions to internal URLs).
+- Wrap serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express-like](https://expressjs.com/) handlers.
+- Possibly upload assets to CDN
+
+## Testing locally
+
+1. Copy adapter or create adapter file locally
+1. Import in gatsby-config
+1. Configure adapter option
+1. Profit
+
+## Publishing
+
+TODO
+
+## Additional resources
+
+- [gatsby-adapter-netlify source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify)
+- [Adapters](/docs/how-to/previews-deploys-hosting/adapters/)
+- [Zero-Configuration Deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/)
+- [Gatsby Adapters RFC](#TODO)

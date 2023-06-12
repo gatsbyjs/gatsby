@@ -10,7 +10,7 @@ Gatsby has different [rendering options](/docs/conceptual/rendering-options/) an
 
 ## Prerequisites
 
-- A Gatsby project set up with `gatsby@5.X.0` or later.
+- A Gatsby project set up with `gatsby@5.X.0` or later. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
 
 ## Finding adapters
 
@@ -44,7 +44,7 @@ module.exports = {
 }
 ```
 
-## Additional Resources
+## Additional resources
 
 - [Zero-Configuration Deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/)
 - [Creating an Adapter](/docs/how-to/previews-deploys-hosting/creating-an-adapter/)

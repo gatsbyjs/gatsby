@@ -232,7 +232,7 @@ By default, `graphqlTypegen` is only run during `gatsby develop`. Set this optio
 
 You can set an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) or configure the [zero-configuration deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) through the `adapter` setting.
 
-```javascript:title=gatsby-config.js
+```js:title=gatsby-config.js
 const adapter = require("gatsby-adapter-foo")
 
 module.exports = {
@@ -250,7 +250,7 @@ Read the [adapters guide](/docs/how-to/previews-deploys-hosting/adapters/) to le
 
 You can set custom HTTP headers on the response of a given path.
 
-```javascript:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   headers: [
     {

@@ -15,7 +15,7 @@ Gatsby site?
 
 ## Prerequisites
 
-- A Gatsby project set up with `gatsby@5.X.0` or later.
+- A Gatsby project set up with `gatsby@5.X.0` or later. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
 
 ## Directions
 
@@ -43,7 +43,7 @@ sections. Use subheadings to label each chunk. For example:
 1. The first step of some other thing.
 1. The second step of some other thing.
 
-## Additional Resources
+## Additional resources
 
 Include other resources you think readers would benefit from or next steps
 they might want to take after reading your How-To Guide. You can also
