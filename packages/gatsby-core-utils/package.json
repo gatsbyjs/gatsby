@@ -48,7 +48,7 @@
     "build:cjs": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
     "build:mjs": "cross-env BABEL_ENV=modern babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\" --out-file-extension .mjs",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "prepare": "cross-env NODE_ENV=production npm-run-all --npm-path npm -s build typegen",
     "watch": "npm-run-all --npm-path npm -p watch:*",
     "watch:cjs": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
     "watch:mjs": "cross-env BABEL_ENV=modern babel -w src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\" --out-file-extension .mjs",
