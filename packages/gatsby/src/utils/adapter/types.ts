@@ -19,46 +19,64 @@ interface IStaticRoute extends IBaseRoute {
    * Location of the file that should be served for this route.
    */
   filePath: string
+  /**
+   * HTTP headers that should be set for this route.
+   * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/headers/
+   */
   headers: IHeader["headers"]
 }
 
-export interface ILambdaRoute extends IBaseRoute {
-  type: `lambda`
+export interface IFunctionRoute extends IBaseRoute {
+  type: `function`
   /**
-   * Identifier of the function. Definition of that function is in function manifest.
-   * Definition of function is not left directly here as some lambdas will be shared for multiple routes - such as DSG/SSR engine.
+   * Unique identifier of this function. Corresponds to the `functionId` inside the `functionsManifest`.
+   * Some functions will be shared for multiple routes, e.g. SSR or DSG functions.
    */
   functionId: string
   /**
-   * If `cache` is true, response of lambda should be cached for current deployed and served on subsequent requests for this route.
+   * If `cache` is true, response of function should be cached for current deployment and served on subsequent requests for this route.
    */
   cache?: true
 }
 
+/**
+ * Redirects are being created through the `createRedirect` action.
+ * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect
+ */
 interface IRedirectRoute extends IBaseRoute {
   type: `redirect`
+  /**
+   * The redirect should happen from `path` to `toPath`.
+   */
   toPath: string
+  /**
+   * HTTP status code that should be used for this redirect.
+   */
   status: HttpStatusCode
-  ignoreCase: boolean // this is not supported by Netlify, but is supported by Gatsby ...
+  ignoreCase?: boolean
+  /**
+   * HTTP headers that should be used for this redirect.
+   * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/headers/
+   */
   headers: IHeader["headers"]
   [key: string]: unknown
 }
 
-export type Route = IStaticRoute | ILambdaRoute | IRedirectRoute
+export type Route = IStaticRoute | IFunctionRoute | IRedirectRoute
 
 export type RoutesManifest = Array<Route>
 
 export interface IFunctionDefinition {
   /**
-   * Identifier of the function. Referenced in routes manifest in lambda routes.
+   * Unique identifier of this function. Corresponds to the `functionId` inside the `routesManifest`.
    */
   functionId: string
   /**
-   * Path to function entrypoint that will be used to create lambda.
+   * Path to function entrypoint that will be used to create function.
    */
   pathToEntryPoint: string
   /**
-   * List of all required files that this function needs to run
+   * List of all required files that this function needs to run.
    */
   requiredFiles: Array<string>
 }
@@ -68,7 +86,7 @@ export type FunctionsManifest = Array<IFunctionDefinition>
 interface IDefaultContext {
   /**
    * Reporter instance that can be used to log messages to terminal.
-   * Read its [API documentation](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter)
+   * @see https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter
    */
   reporter: typeof reporter
 }
@@ -89,24 +107,26 @@ export interface IAdapter {
   name: string
   cache?: {
     /**
-     * Hook to restore .cache and public directories from previous builds. Executed very early on in the build process.
-     * If `false` is returned gatsby will skip trying to rehydrate state from fs.
+     * Hook to restore `directories` from previous builds. This is executed very early on in the build process. If `false` is returned Gatsby will skip its cache restoration.
      */
     restore: (
       context: ICacheContext
     ) => Promise<boolean | void> | boolean | void
     /**
-     * Hook to store .cache and public directories from previous builds. Executed as one of last steps in build process.
+     * Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
      */
     store: (context: ICacheContext) => Promise<void> | void
   }
   /**
-   * Hook to prepare platform specific deployment of the build. Executed as one of last steps in build process.
-   * Routes and Functions manifests are being passed in as arguments and implementation should configure:
-   *  - headers for static assets
-   *  - redirects and rewrites (both user defined ones as well as anything needed for lambda execution)
-   *  - wrap lambda functions with platform specific code if needed (produced ones will be express-like route handlers)
-   *  - possibly upload static assets to CDN (unless platform is configured to just deploy "public" dir, in which case this will be skipped)
+   * Hook to take Gatsby’s output and preparing it for deployment on the adapter’s platform. Executed as one of the last steps in the build process.
+   *
+   * The `adapt` hook should do the following things:
+   * - Apply HTTP headers to assets
+   * - Apply redirects and rewrites. The adapter should can also create its own redirects/rewrites if necessary (e.g. mapping serverless functions to internal URLs).
+   * - Wrap serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express-like](https://expressjs.com/) handlers.
+   * - Possibly upload assets to CDN
+   *
+   * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
    */
   adapt: (context: IAdaptContext) => Promise<void> | void
   // TODO: should we have "private storage" handling defining a way to "upload" and "download those private assets?
@@ -114,6 +134,10 @@ export interface IAdapter {
   // current limitation in Netlify's implementation of DSG/SSR ( https://github.com/netlify/netlify-plugin-gatsby#caveats )
 }
 
+/**
+ * Adapter initialization function that returns an instance of the adapter.
+ * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
+ */
 export type AdapterInit<T = Record<string, unknown>> = (
   adapterOptions?: T
 ) => IAdapter

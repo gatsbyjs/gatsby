@@ -10,7 +10,7 @@ import {
   RoutesManifest,
   Route,
   IAdapterManager,
-  ILambdaRoute,
+  IFunctionRoute,
   IAdapter,
 } from "./types"
 import { store, readState } from "../../redux"
@@ -167,7 +167,7 @@ function getRoutesManifest(): RoutesManifest {
       route.path = `/${route.path}`
     }
 
-    if (route.type !== `lambda`) {
+    if (route.type !== `function`) {
       route.headers = createHeaders(route.path, route.headers)
     }
 
@@ -224,8 +224,8 @@ function getRoutesManifest(): RoutesManifest {
         headers: STATIC_PAGE_HEADERS,
       })
     } else {
-      const commonFields: Omit<ILambdaRoute, "path"> = {
-        type: `lambda`,
+      const commonFields: Omit<IFunctionRoute, "path"> = {
+        type: `function`,
         functionId: `ssr-engine`,
       }
 
@@ -305,7 +305,7 @@ function getRoutesManifest(): RoutesManifest {
         maybeDropNamedPartOfWildcard(functionInfo.matchPath) ??
         functionInfo.functionRoute
       }`,
-      type: `lambda`,
+      type: `function`,
       functionId: functionInfo.functionId,
     })
   }
