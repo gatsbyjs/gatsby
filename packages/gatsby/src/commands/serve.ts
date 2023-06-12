@@ -172,14 +172,15 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   if (functions) {
-    app.use(
-      `/api/*`,
-      ...functionMiddlewares({
-        getFunctions(): Array<IGatsbyFunction> {
-          return functions
-        },
-      })
-    )
+    const functionMiddlewaresInstances = functionMiddlewares({
+      getFunctions(): Array<IGatsbyFunction> {
+        return functions
+      },
+    })
+
+    router.use(`/api/*`, ...functionMiddlewaresInstances)
+    // TODO(v6) remove handler from app and only keep it on router (router is setup on pathPrefix, while app is always root)
+    app.use(`/api/*`, ...functionMiddlewaresInstances)
   }
 
   // Handle SSR & DSG Pages
