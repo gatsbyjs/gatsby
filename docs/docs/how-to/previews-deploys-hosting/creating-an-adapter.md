@@ -108,6 +108,8 @@ The `adapt` hook should do the following things:
 
 ## Testing locally
 
+If you want to test your adapter locally, you can use [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link), [yarn link](https://yarnpkg.com/cli/link), or equivalent in other package managers.
+
 1. Copy adapter or create adapter file locally
 1. Import in gatsby-config
 1. Configure adapter option
