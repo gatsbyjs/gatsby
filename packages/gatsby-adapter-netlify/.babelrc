@@ -3,7 +3,7 @@
     [
       "babel-preset-gatsby-package",
       {
-        "esm": true
+        "keepDynamicImports": ["./src/index.ts"]
       }
     ]
   ]

@@ -6,12 +6,8 @@ import type { AdapterInit } from "gatsby/src/utils/adapter/types"
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface INetlifyAdapterOptions {}
 
-// @ts-ignore sigh, we compile to mjs, but it doesn't exist in source code, skipping extension result in error at runtime when
-// loading this module because we need to supply mjs extension to actually load it. Adding extension makes typescript unhappy
-// TODO: adjust build to convert import paths so typescript is happy and runtime actually works
-import { prepareFunctionVariants } from "./lambda-handler.mjs"
-// @ts-ignore same as above
-import { handleRoutesManifest } from "./route-handler.mjs"
+import { prepareFunctionVariants } from "./lambda-handler"
+import { handleRoutesManifest } from "./route-handler"
 
 interface INetlifyCacheUtils {
   restore: (paths: Array<string>) => Promise<boolean>

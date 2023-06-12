@@ -98,9 +98,11 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
         `Reusing existing adapter ${adapterToUse.module} inside node_modules`
       )
 
-      return preferDefault(await import(required)) as AdapterInit
+      // TODO: double preferDefault is most ceirtainly wrong - figure it out
+      return preferDefault(preferDefault(await import(required))) as AdapterInit
     }
   } catch (e) {
+    console.error(e)
     // no-op
   }
 
@@ -116,7 +118,8 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
         `Reusing existing adapter ${adapterToUse.module} inside .cache/adapters`
       )
 
-      return preferDefault(await import(required)) as AdapterInit
+      // TODO: double preferDefault is most ceirtainly wrong - figure it out
+      return preferDefault(preferDefault(await import(required))) as AdapterInit
     }
   } catch (e) {
     // no-op
@@ -169,7 +172,8 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
         `Using installed adapter ${adapterToUse.module} inside .cache/adapters`
       )
 
-      return preferDefault(await import(required)) as AdapterInit
+      // TODO: double preferDefault is most ceirtainly wrong - figure it out
+      return preferDefault(preferDefault(await import(required))) as AdapterInit
     }
   } catch (e) {
     installTimer.end()

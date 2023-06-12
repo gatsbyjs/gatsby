@@ -2,16 +2,16 @@
   "name": "gatsby-adapter-netlify",
   "version": "1.0.0",
   "description": "Gatsby adapter for Netlify",
-  "main": "dist/index.mjs",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\" --out-file-extension .mjs",
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
     "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\" --out-file-extension .mjs",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
   },
   "keywords": [
