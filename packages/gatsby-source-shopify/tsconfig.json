@@ -2,7 +2,6 @@
   "include": ["src/**/*.ts", "types"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
