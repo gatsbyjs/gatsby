@@ -148,6 +148,10 @@ export interface IAdapterManager {
   adapt: () => Promise<void> | void
 }
 
+/**
+ * Types for gatsby/adapters.js
+ * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/
+ */
 export interface IAdapterManifestEntry {
   /**
    * Name of the adapter

@@ -6,6 +6,7 @@
  * If you want to create an adapter, please see: TODO
  * 
  * @type {import("./src/utils/adapter/types").IAdapterManifestEntry}
+ * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/
  */
 const adaptersManifest = [
     {

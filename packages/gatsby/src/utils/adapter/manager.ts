@@ -4,7 +4,7 @@ import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { posix } from "path"
 import { sync as globSync } from "glob"
 import telemetry from "gatsby-telemetry"
-import {
+import type {
   FunctionsManifest,
   IAdaptContext,
   RoutesManifest,

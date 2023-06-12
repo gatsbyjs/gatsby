@@ -6,7 +6,7 @@ import { emptyDir, ensureDir, outputJson } from "fs-extra"
 import execa, { Options as ExecaOptions } from "execa"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import { satisfies } from "semver"
-import { AdapterInit } from "./types"
+import type { AdapterInit } from "./types"
 import { preferDefault } from "../../bootstrap/prefer-default"
 import { getLatestAdapters } from "../get-latest-gatsby-files"
 
