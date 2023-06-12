@@ -34,7 +34,7 @@ export async function handleRoutesManifest(
   for (const route of routesManifest) {
     const fromPath = route.path.replace(/\*.*/, `*`)
 
-    if (route.type === `lambda`) {
+    if (route.type === `function`) {
       let functionName = route.functionId
       if (route.cache) {
         functionName = `${route.functionId}-odb`
