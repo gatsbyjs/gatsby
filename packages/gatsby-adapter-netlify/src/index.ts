@@ -13,15 +13,46 @@ import { prepareFunctionVariants } from "./lambda-handler.mjs"
 // @ts-ignore same as above
 import { handleRoutesManifest } from "./route-handler.mjs"
 
+interface INetlifyCacheUtils {
+  restore: (paths: Array<string>) => Promise<boolean>
+  save: (paths: Array<string>) => Promise<boolean>
+}
+
+async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
+  if (process.env.NETLIFY) {
+    const CACHE_DIR = `/opt/build/cache`
+    return (await import(`@netlify/cache-utils`)).bindOpts({
+      cacheDir: CACHE_DIR,
+    })
+  }
+  return undefined
+}
+
 const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = () => {
   return {
     name: `gatsby-adapter-netlify`,
     cache: {
-      restore({ directories, reporter }): void {
+      async restore({ directories, reporter }): Promise<boolean> {
         reporter.info(`[gatsby-adapter-netlify] cache.restore() ${directories}`)
+        const utils = await getCacheUtils()
+        if (utils) {
+          reporter.info(
+            `[gatsby-adapter-netlify] using @netlify/cache-utils restore`
+          )
+          return await utils.restore(directories)
+        }
+
+        return false
       },
-      store({ directories, reporter }): void {
+      async store({ directories, reporter }): Promise<void> {
         reporter.info(`[gatsby-adapter-netlify] cache.store() ${directories}`)
+        const utils = await getCacheUtils()
+        if (utils) {
+          reporter.info(
+            `[gatsby-adapter-netlify] using @netlify/cache-utils save`
+          )
+          await utils.save(directories)
+        }
       },
     },
     async adapt({ routesManifest, functionsManifest }): Promise<void> {
