@@ -271,7 +271,13 @@ const createWebpackConfig = async ({
       parsedFile.name
     )
 
-    entries[compiledNameWithoutExtension] = functionObj.originalAbsoluteFilePath
+    let entryToTheFunction = functionObj.originalAbsoluteFilePath
+    // if function has dynamic path, we inject it with webpack loader via query param
+    // see match-path-webpack-loader.ts for more info
+    if (functionObj.matchPath) {
+      entryToTheFunction += `?matchPath=` + functionObj.matchPath
+    }
+    entries[compiledNameWithoutExtension] = entryToTheFunction
   })
 
   activeEntries = entries
@@ -318,6 +324,13 @@ const createWebpackConfig = async ({
         // Webpack expects extensions when importing ESM modules as that's what the spec describes.
         // Not all libraries have adapted so we don't enforce its behaviour
         // @see https://github.com/webpack/webpack/issues/11467
+        {
+          test: /\.[tj]sx?$/,
+          resourceQuery: /matchPath/,
+          use: {
+            loader: require.resolve(`./match-path-webpack-loader`),
+          },
+        },
         {
           test: /\.mjs$/i,
           resolve: {
