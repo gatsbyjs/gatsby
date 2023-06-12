@@ -205,6 +205,11 @@ const createWebpackConfig = async ({
     JSON.stringify(knownFunctions, null, 4)
   )
 
+  const {
+    config: { pathPrefix },
+    program,
+  } = store.getState()
+
   // Load environment variables from process.env.* and .env.* files.
   // Logic is shared with webpack.config.js
 
@@ -373,7 +378,12 @@ const createWebpackConfig = async ({
       ],
     },
     plugins: [
-      new webpack.DefinePlugin(processEnvVars),
+      new webpack.DefinePlugin({
+        PREFIX_TO_STRIP: JSON.stringify(
+          program.prefixPaths ? pathPrefix?.replace(/(^\/+|\/+$)/g, ``) : ``
+        ),
+        ...processEnvVars,
+      }),
       new webpack.IgnorePlugin({
         checkResource(resource): boolean {
           if (resource === `lmdb`) {

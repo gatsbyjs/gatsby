@@ -14,11 +14,13 @@ const MatchPathLoader: LoaderDefinition = async function () {
   const { match: reachMatch } = require('@gatsbyjs/reach-router');
 
   module.exports = function(req, res) {
-    // TODO: strip path prefix
-    const functionPath = req.originalUrl.replace('/api/', '');
-    
+    let functionPath = req.originalUrl
+
+    functionPath = functionPath.replace(new RegExp('^/*' + PREFIX_TO_STRIP), '')
+    functionPath = functionPath.replace(new RegExp('^/*api/?'), '')
+
     const matchResult = reachMatch(matchPath, functionPath)
-    if (matchResult) { 
+    if (matchResult) {
       req.params = matchResult.params
       if (req.params['*']) {
         // Backwards compatability for v3
