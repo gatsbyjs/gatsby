@@ -1,61 +1,211 @@
 ---
 title: HTTP Headers
+tableOfContentsDepth: 2
 ---
 
 ## Introduction
 
-The introductory paragraph should be a 2-3 sentence explanation of the
-main topic and answer the following questions:
+You can set custom [HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) on the response of a given path. This allows you to, e.g. modify the caching behavior or configure access control. You can apply HTTP headers to static routes and redirects.
 
-What is the purpose of this guide? What will readers have achieved by
-following the steps in this guide?
+This feature was added in `gatsby@5.X.0`.
 
-Why is this process worth doing? How will it help readers improve their
-Gatsby site?
+## Usage
 
-## Prerequisites
+Use the `headers` config option inside `gatsby-config`:
 
-- A Gatsby project set up with `gatsby@5.X.0` or later. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
+```js:title=gatsby-config.js
+module.exports = {
+  headers: [
+    {
+      source: `/slug`,
+      headers: [
+        {
+          key: `x-custom-header`,
+          value: `Hello World`,
+        }
+      ]
+    }
+  ]
+}
+```
 
-## Directions
+The `headers` option accepts an array of objects in the following shape:
 
-This section should be a step-by-step list of instructions for how readers
-can achieve the goal.
+- `source`: A request path pattern. See [path matching](#path-matching) for more details on its syntax. The paths `/slug` and `/slug/` are equivalent since [trailing slashes](/docs/reference/config-files/gatsby-config/#trailingslash) are getting normalized (or in other words: You don't need to worry about setting correct trailing slashes).
+- `headers`: An array of objects in the following shape:
+  - `key`: The case-insensitive name of the header
+  - `value`: The value of the header
 
-1. Do the first thing.
-2. Do the next thing.
+## Overriding behavior
 
-Use code blocks to show exactly what readers should type. The
-Gatsby Style Guide includes tips for best practices when using code
-blocks:
-https://www.gatsbyjs.com/contributing/gatsby-style-guide/#format-code-blocks-inline-code-and-images
+The order in which you insert values into `headers` doesn't matter as Gatsby determines the specificity of each `source` path. If two headers match the same path (through `source`) and set the same header `key`, the entry with the higher specificity will override the other. Otherwise entries will be merged together.
 
-If it's a particularly long list of directions, you can split the steps into
-sections. Use subheadings to label each chunk. For example:
+Generally speaking, the headers get created in this order (e.g. static entries can override the other two):
 
-### Step 1: Do the first thing.
+1. Default headers (see [defaults](#defaults))
+1. Entries with path matching on `source` (see [path matching](#path-matching))
+1. Entries with static `source` path
 
-1. The first step of the first thing.
-1. The second step of the first thing.
+### Examples
 
-### Step 2: Do some other thing.
+As this can still be a bit confusing, here are some examples. The `input` will represent what you can pass to the `headers` config option, `output` will be what is produced for the given matched path.
 
-1. The first step of some other thing.
-1. The second step of some other thing.
+#### Non-overlapping keys
+
+```js
+const input = [
+  {
+    source: `*`,
+    headers: [
+      {
+        key: `x-another-custom-header`,
+        value: `win`,
+      },
+    ],
+  },
+  {
+    source: `/some-path/`,
+    headers: [
+      {
+        key: `x-custom-header`,
+        value: `win`,
+      },
+    ],
+  },
+]
+
+// => Match for path "/some-path/"
+
+const output = [
+  { key: `x-another-custom-header`, value: `win` },
+  { key: `x-custom-header`, value: `win` },
+]
+```
+
+#### Overlapping keys
+
+This example also shows that static entries will override ones with path matching.
+
+```js
+const input = [
+  {
+    source: `/some-path/`,
+    headers: [
+      {
+        key: `x-custom-header`,
+        value: `win`,
+      },
+    ],
+  },
+  {
+    source: `*`,
+    headers: [
+      {
+        key: `x-custom-header`,
+        value: `lose`,
+      },
+    ],
+  },
+]
+
+// => Match for path "/some-path/"
+
+const output = [{ key: `x-custom-header`, value: `win` }]
+```
+
+#### Specificity
+
+Gatsby internally adds scores (higher the score, higher the specificity) to each path matching entry and sorts it by that score — the entry with the highest specificity will override other matching entries. In this example, `/some-path/:slug` overrides the rest because it's more specific than `*` and `/some-path/*`.
+
+```js
+const input = [
+  {
+    source: `*`,
+    headers: [
+      {
+        key: `x-custom-header`,
+        value: `lose-1`,
+      },
+    ],
+  },
+  {
+    source: `/some-path/*`,
+    headers: [
+      {
+        key: `x-custom-header`,
+        value: `lose-2`,
+      },
+    ],
+  },
+  {
+    source: `/some-path/:slug`,
+    headers: [
+      {
+        key: `x-custom-header`,
+        value: `win`,
+      },
+    ],
+  },
+]
+
+// => Match for path "/some-path/foo"
+
+const output = [{ key: `x-custom-header`, value: `win` }]
+```
+
+## Path matching
+
+As you've already seen in the previous paragraphs, you can not only define static `source` paths like `/some-path/` but also ones with path matching. This allows you to target more than one path, opening up more flexibility. You can currently use two path matchers:
+
+- Dynamic: Matching a path segment (no nested paths)
+- Wildcard: Matching every path segment after its definition
+
+### Dynamic path
+
+You can use `:` to declare a dynamic path, making `/some-path/:slug` match e.g. `/some-path/foo` and `/some-path/bar`.
+
+```js:title=gatsby-config.js
+module.exports = {
+  headers: [
+    {
+      source: `/some-path/:slug`,
+      headers: [
+        {
+          key: `x-custom-header`,
+          value: `Hello World`,
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Wildcard path
+
+You can use `*` to declare a wildcard path, making `/some-path/*` match e.g. `/some-path/foo` and `/some-path/foo/bar`.
+
+```js:title=gatsby-config.js
+module.exports = {
+  headers: [
+    {
+      source: `/some-path/*`,
+      headers: [
+        {
+          key: `x-custom-header`,
+          value: `Hello World`,
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Defaults
+
+By default, Gatsby applies HTTP caching headers to its assets following the guide [Caching Static Sites](/docs/how-to/previews-deploys-hosting/caching/). You can find the specific values [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/constants.ts).
+
+You can use the `headers` option to override these defaults.
 
 ## Additional resources
 
-Include other resources you think readers would benefit from or next steps
-they might want to take after reading your How-To Guide. You can also
-mention any resources that helped you write the article (blog posts, outside
-tutorials, etc.).
-
-Best-case scenario, these should be high-quality, evergreen
-(not quickly outdated) resources.
-
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
+- [HTTP Headers MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
