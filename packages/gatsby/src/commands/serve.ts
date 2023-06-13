@@ -224,7 +224,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               spanContext,
             })
             const results = await renderPageData({ data, spanContext })
-            if (page.mode === `SSR` && data.serverDataHeaders) {
+            if (data.serverDataHeaders) {
               for (const [name, value] of Object.entries(
                 data.serverDataHeaders
               )) {
@@ -274,7 +274,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               spanContext,
             })
             const results = await renderHTML({ data, spanContext })
-            if (page.mode === `SSR` && data.serverDataHeaders) {
+            if (data.serverDataHeaders) {
               for (const [name, value] of Object.entries(
                 data.serverDataHeaders
               )) {

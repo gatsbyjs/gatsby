@@ -5,7 +5,12 @@ import "../engines-fs-provider"
 // just types - those should not be bundled
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
-import type { IGatsbyPage, IGatsbySlice, IGatsbyState } from "../../redux/types"
+import type {
+  IGatsbyPage,
+  IGatsbySlice,
+  IGatsbyState,
+  IHeader,
+} from "../../redux/types"
 import { IGraphQLTelemetryRecord } from "../../schema/type-definitions"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
 import type { IPageDataWithQueryResult, ISliceData } from "../page-data"
@@ -26,6 +31,9 @@ import reporter from "gatsby-cli/lib/reporter"
 import { initTracer } from "../tracer"
 import { getCodeFrame } from "../../query/graphql-errors-codeframe"
 import { ICollectedSlice } from "../babel/find-slices"
+import { createHeadersMatcher } from "../adapter/create-headers"
+import { STATIC_PAGE_HEADERS } from "../adapter/constants"
+import { getRoutePathFromPage } from "../adapter/get-route-path"
 
 export interface ITemplateDetails {
   query: string
@@ -37,6 +45,10 @@ export interface ISSRData {
   page: IGatsbyPage
   templateDetails: ITemplateDetails
   potentialPagePath: string
+  /**
+   * This is no longer really just serverDataHeaders, as we add headers
+   * from user defined in gatsby-config
+   */
   serverDataHeaders?: Record<string, string>
   serverDataStatus?: number
   searchString: string
@@ -46,6 +58,7 @@ export interface ISSRData {
 // with DefinePlugin
 declare global {
   const INLINED_TEMPLATE_TO_DETAILS: Record<string, ITemplateDetails>
+  const INLINED_HEADERS_CONFIG: Array<IHeader> | undefined
   const WEBPACK_COMPILATION_HASH: string
   const GATSBY_SLICES_SCRIPT: string
 }
@@ -57,6 +70,8 @@ const tracerReadyPromise = initTracer(
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
   | undefined
+
+const createHeaders = createHeadersMatcher(INLINED_HEADERS_CONFIG)
 
 export async function getData({
   pathName,
@@ -210,6 +225,27 @@ export async function getData({
     }
     results.pageContext = page.context
 
+    const serverDataHeaders = {}
+
+    // get headers from defaults and config
+    const headersFromConfig = createHeaders(
+      getRoutePathFromPage(page),
+      STATIC_PAGE_HEADERS
+    )
+    // convert headers array to object
+    for (const header of headersFromConfig) {
+      serverDataHeaders[header.key] = header.value
+    }
+
+    if (serverData?.headers) {
+      // add headers from getServerData to object (which will overwrite headers from config if overlapping)
+      for (const [headerKey, headerValue] of Object.entries(
+        serverData.headers
+      )) {
+        serverDataHeaders[headerKey] = headerValue
+      }
+    }
+
     let searchString = ``
 
     if (req?.query) {
@@ -230,7 +266,7 @@ export async function getData({
       page,
       templateDetails,
       potentialPagePath,
-      serverDataHeaders: serverData?.headers,
+      serverDataHeaders,
       serverDataStatus: serverData?.status,
       searchString,
     }

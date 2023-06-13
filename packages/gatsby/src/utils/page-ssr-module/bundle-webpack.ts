@@ -187,6 +187,7 @@ export async function createPageSSRBundle({
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
+        INLINED_HEADERS_CONFIG: JSON.stringify(state.config.headers),
         WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
         GATSBY_SLICES: JSON.stringify(slicesStateObject),
         GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),

@@ -1,27 +1,4 @@
-import { store } from "../../../redux"
 import { createHeadersMatcher } from "../create-headers"
-import type { IHeader } from "../../../redux/types"
-
-jest.mock(`../../../redux`, () => {
-  return {
-    emitter: {
-      on: jest.fn(),
-    },
-    store: {
-      getState: jest.fn(),
-    },
-  }
-})
-
-function mockHeaders(headers: Array<IHeader>): void {
-  ;(store.getState as jest.Mock).mockImplementation(() => {
-    return {
-      config: {
-        headers,
-      },
-    }
-  })
-}
 
 describe(`createHeadersMatcher`, () => {
   beforeEach(() => {
@@ -29,13 +6,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`returns default headers if no custom headers are defined`, () => {
-    ;(store.getState as jest.Mock).mockImplementation(() => {
-      return {
-        config: {},
-      }
-    })
-
-    const matcher = createHeadersMatcher()
+    const matcher = createHeadersMatcher(undefined)
 
     const defaults = [
       {
@@ -50,15 +21,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`returns default headers if an empty array as headers is defined`, () => {
-    ;(store.getState as jest.Mock).mockImplementation(() => {
-      return {
-        config: {
-          headers: [],
-        },
-      }
-    })
-
-    const matcher = createHeadersMatcher()
+    const matcher = createHeadersMatcher([])
 
     const defaults = [
       {
@@ -73,7 +36,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`gracefully handles trailing slash inconsistencies`, () => {
-    mockHeaders([
+    const matcher = createHeadersMatcher([
       {
         source: `/some-path`,
         headers: [
@@ -93,7 +56,6 @@ describe(`createHeadersMatcher`, () => {
         ],
       },
     ])
-    const matcher = createHeadersMatcher()
 
     const defaults = []
 
@@ -105,7 +67,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`combines with non-overlapping keys`, () => {
-    mockHeaders([
+    const matcher = createHeadersMatcher([
       {
         source: `*`,
         headers: [
@@ -125,7 +87,6 @@ describe(`createHeadersMatcher`, () => {
         ],
       },
     ])
-    const matcher = createHeadersMatcher()
 
     const defaults = [
       {
@@ -144,7 +105,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`combines with overlapping keys`, () => {
-    mockHeaders([
+    const matcher = createHeadersMatcher([
       {
         source: `*`,
         headers: [
@@ -164,7 +125,6 @@ describe(`createHeadersMatcher`, () => {
         ],
       },
     ])
-    const matcher = createHeadersMatcher()
 
     const defaults = [
       {
@@ -179,7 +139,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`combines with overlapping & non-overlapping keys`, () => {
-    mockHeaders([
+    const matcher = createHeadersMatcher([
       {
         source: `*`,
         headers: [
@@ -207,7 +167,6 @@ describe(`createHeadersMatcher`, () => {
         ],
       },
     ])
-    const matcher = createHeadersMatcher()
 
     const defaults = [
       {
@@ -243,7 +202,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`static wins over dynamic`, () => {
-    mockHeaders([
+    const matcher = createHeadersMatcher([
       {
         source: `*`,
         headers: [
@@ -281,7 +240,6 @@ describe(`createHeadersMatcher`, () => {
         ],
       },
     ])
-    const matcher = createHeadersMatcher()
 
     const defaults = []
 
@@ -296,7 +254,7 @@ describe(`createHeadersMatcher`, () => {
   })
 
   it(`dynamic entries have correct specificity`, () => {
-    mockHeaders([
+    const matcher = createHeadersMatcher([
       {
         source: `*`,
         headers: [
@@ -325,7 +283,6 @@ describe(`createHeadersMatcher`, () => {
         ],
       },
     ])
-    const matcher = createHeadersMatcher()
 
     const defaults = []
 

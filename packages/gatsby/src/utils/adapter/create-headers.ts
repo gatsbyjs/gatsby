@@ -1,7 +1,6 @@
 import { match } from "@gatsbyjs/reach-router"
 import type { IHeader } from "../../redux/types"
-import { store } from "../../redux"
-import { rankRoute } from "../../bootstrap/requires-writer"
+import { rankRoute } from "../rank-route"
 
 type Headers = IHeader["headers"]
 interface IHeaderWithScore extends IHeader {
@@ -12,12 +11,9 @@ interface IHeaderWithScore extends IHeader {
 const normalizePath = (input: string): string =>
   input.endsWith(`/`) ? input : `${input}/`
 
-export const createHeadersMatcher = (): ((
-  path: string,
-  defaultHeaders: Headers
-) => Headers) => {
-  const { headers } = store.getState().config
-
+export const createHeadersMatcher = (
+  headers: Array<IHeader> | undefined
+): ((path: string, defaultHeaders: Headers) => Headers) => {
   // Split the incoming user headers into two buckets:
   // - dynamicHeaders: Headers with dynamic paths (e.g. /* or /:tests)
   // - staticHeaders: Headers with fully static paths (e.g. /static/)

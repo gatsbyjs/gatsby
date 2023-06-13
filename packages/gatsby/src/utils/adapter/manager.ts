@@ -27,7 +27,11 @@ import {
 import { createHeadersMatcher } from "./create-headers"
 import { HTTP_STATUS_CODE } from "../../redux/types"
 import type { IHeader } from "../../redux/types"
-import { rankRoute } from "../../bootstrap/requires-writer"
+import { rankRoute } from "../rank-route"
+import {
+  getRoutePathFromFunction,
+  getRoutePathFromPage,
+} from "./get-route-path"
 
 function noOpAdapterManager(): IAdapterManager {
   return {
@@ -132,16 +136,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   }
 }
 
-function maybeDropNamedPartOfWildcard(
-  path: string | undefined
-): string | undefined {
-  if (!path) {
-    return path
-  }
-
-  return path.replace(/\*.+$/, `*`)
-}
-
 let webpackAssets: Set<string> | undefined
 export function setWebpackAssets(assets: Set<string>): void {
   webpackAssets = assets
@@ -151,7 +145,7 @@ type RouteWithScore = { score: number } & Route
 
 function getRoutesManifest(): RoutesManifest {
   const routes: Array<RouteWithScore> = []
-  const createHeaders = createHeadersMatcher()
+  const createHeaders = createHeadersMatcher(store.getState().config.headers)
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -203,8 +197,7 @@ function getRoutesManifest(): RoutesManifest {
 
   // routes - pages - static (SSG) or lambda (DSG/SSR)
   for (const page of store.getState().pages.values()) {
-    const htmlRoutePath =
-      maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
+    const htmlRoutePath = getRoutePathFromPage(page)
     const pageDataRoutePath = generatePageDataPath(``, htmlRoutePath)
 
     const pageMode = getPageMode(page)
@@ -301,10 +294,7 @@ function getRoutesManifest(): RoutesManifest {
   // function routes
   for (const functionInfo of store.getState().functions.values()) {
     addRoute({
-      path: `/api/${
-        maybeDropNamedPartOfWildcard(functionInfo.matchPath) ??
-        functionInfo.functionRoute
-      }`,
+      path: `/api/${getRoutePathFromFunction(functionInfo)}`,
       type: `function`,
       functionId: functionInfo.functionId,
     })
