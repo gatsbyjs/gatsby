@@ -12,7 +12,7 @@ const adaptersManifest = [
     {
     name: `Netlify`,
     module: `gatsby-adapter-netlify`,
-    test: () => !!process.env.NETLIFY,
+    test: () => !!process.env.NETLIFY || !!process.env.NETLIFY_LOCAL,
     versions: [
       {
         gatsbyVersion: `^5.0.0`,
