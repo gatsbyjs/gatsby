@@ -1,5 +1,7 @@
 import type { IFunctionDefinition } from "gatsby/src/utils/adapter/types"
 
+import packageJson from "gatsby-adapter-netlify/package.json"
+
 import fs from "fs-extra"
 import * as path from "path"
 
@@ -48,6 +50,7 @@ async function prepareFunction(
 
   const functionManifest: INetlifyFunctionManifest = {
     config: {
+      generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
       includedFiles: fun.requiredFiles.map(file =>
         file.replace(/\[/g, `*`).replace(/]/g, `*`)
       ),
