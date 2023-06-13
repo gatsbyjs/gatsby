@@ -41,6 +41,11 @@ function noOpAdapterManager(): IAdapterManager {
   }
 }
 
+let usingAdapter = false
+export function isUsingAdapter(): boolean {
+  return usingAdapter
+}
+
 export async function initAdapterManager(): Promise<IAdapterManager> {
   let adapter: IAdapter
 
@@ -59,11 +64,14 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
     if (!adapterInit) {
       telemetry.trackFeatureIsUsed(`adapter:no-op`)
 
+      usingAdapter = false
       return noOpAdapterManager()
     }
 
     adapter = adapterInit()
   }
+
+  usingAdapter = true
 
   reporter.info(`Using ${adapter.name} adapter`)
 

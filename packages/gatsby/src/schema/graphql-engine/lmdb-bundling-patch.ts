@@ -26,11 +26,8 @@ const { createRequire } = require(`module`)
 export default function (this: any, source: string): string {
   let lmdbBinaryLocation: string | undefined
 
-  // TODO: streamline using alternative binary - this should be automatically figured out
-  // and not provided by user/site
-  if (process.env.GATSBY_FORCE_LMDB_BINARY_LOCATION) {
-    lmdbBinaryLocation = process.env.GATSBY_FORCE_LMDB_BINARY_LOCATION
-  }
+  // use loader option if provided
+  lmdbBinaryLocation = this.getOptions()?.forcedBinaryLocation
 
   if (!lmdbBinaryLocation) {
     try {
