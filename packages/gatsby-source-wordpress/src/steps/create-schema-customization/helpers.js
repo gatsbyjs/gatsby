@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore, withPluginKey } from "~/store"
 import { typeDefinitionFilters } from "./type-filters"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { cloneDeep, merge } from "lodash"
@@ -37,7 +37,7 @@ const isWpgqlOneThirteenZeroPlus = () => {
     return ceIntCache
   }
 
-  const { typeMap } = store.getState().remoteSchema
+  const { typeMap } = getStore().getState().remoteSchema
 
   const connectionInterface = !!typeMap.get(`Connection`)
   const edgeInterface = !!typeMap.get(`Edge`)
@@ -52,14 +52,14 @@ const isWpgqlOneThirteenZeroPlus = () => {
 /**
  * This function namespaces typenames with a prefix
  */
-export const buildTypeName = name => {
+export const buildTypeName = (name, prefix) => {
   if (!name || typeof name !== `string`) {
     return null
   }
 
-  const {
-    schema: { typePrefix: prefix },
-  } = getPluginOptions()
+  if (!prefix) {
+    prefix = getPluginOptions().schema.typePrefix
+  }
 
   // this is for our namespace type on the root { wp { ...fields } }
   if (name === prefix) {
@@ -124,7 +124,7 @@ export const findNamedTypeName = type => {
 }
 
 export const fieldOfTypeWasFetched = type => {
-  const { fetchedTypes } = store.getState().remoteSchema
+  const { fetchedTypes } = getStore().getState().remoteSchema
   const typeName = findNamedTypeName(type)
   const typeWasFetched = !!fetchedTypes.get(typeName)
 
@@ -138,7 +138,7 @@ export const getTypesThatImplementInterfaceType = type => {
     return implementingTypeCache.get(type.name)
   }
 
-  const state = store.getState()
+  const state = getStore().getState()
   const { typeMap } = state.remoteSchema
 
   const allTypes = typeMap.values()
@@ -209,7 +209,7 @@ export const getTypeSettingsByType = type => {
   }
 
   // the plugin options object containing every type setting
-  const allTypeSettings = store.getState().gatsbyApi.pluginOptions.type
+  const allTypeSettings = getStore().getState().gatsbyApi.pluginOptions.type
 
   const typeSettings = cloneDeep(allTypeSettings[typeName] || {})
 
@@ -343,7 +343,7 @@ export async function diffBuiltTypeDefs(typeDefs) {
     return
   }
 
-  const state = store.getState()
+  const state = getStore().getState()
 
   const {
     gatsbyApi: {
@@ -352,7 +352,9 @@ export async function diffBuiltTypeDefs(typeDefs) {
     remoteSchema,
   } = state
 
-  const previousTypeDefinitions = await cache.get(`previousTypeDefinitions`)
+  const previousTypeDefsKey = withPluginKey(`previousTypeDefinitions`)
+
+  const previousTypeDefinitions = await cache.get(previousTypeDefsKey)
   const typeDefString = JSON.stringify(typeDefs)
   const typeNames = typeDefs.map(typeDef => typeDef.config.name)
 
@@ -361,7 +363,7 @@ export async function diffBuiltTypeDefs(typeDefs) {
     previousTypeDefinitions?.schemaHash !== remoteSchema.schemaHash
 
   if (remoteSchemaChanged) {
-    await cache.set(`previousTypeDefinitions`, {
+    await cache.set(previousTypeDefsKey, {
       schemaHash: remoteSchema.schemaHash,
       typeDefString,
       typeNames,

@@ -18,9 +18,7 @@ const {
   resetSchema,
 } = require(`../test-fns/test-utils/increment-remote-data`)
 
-const {
-  default: fetchGraphql,
-} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { fetchGraphql } = require("../test-fns/test-utils/graphql")
 
 jest.setTimeout(100000)
 

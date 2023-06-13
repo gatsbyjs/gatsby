@@ -1,6 +1,4 @@
-const {
-  default: fetchGraphql,
-} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { fetchGraphql } = require("./test-utils/graphql")
 
 describe(`filtered type definitions`, () => {
   test(`Date field resolver is working`, async () => {

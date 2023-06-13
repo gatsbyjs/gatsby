@@ -7,6 +7,7 @@ import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nod
 import fetchAndCreateNonNodeRootFields from "~/steps/source-nodes/create-nodes/fetch-and-create-non-node-root-fields"
 import { setHardCachedNodes } from "~/utils/cache"
 import { sourceNodes } from "~/steps/source-nodes"
+import { withPluginKey } from "~/store"
 
 /**
  * getWpActions
@@ -39,7 +40,7 @@ export const getWpActions = async ({
     return []
   }
 
-  await helpers.cache.set(LAST_COMPLETED_SOURCE_TIME, sourceTime)
+  await helpers.cache.set(withPluginKey(LAST_COMPLETED_SOURCE_TIME), sourceTime)
 
   return actionMonitorActions
 }

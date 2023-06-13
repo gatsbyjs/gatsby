@@ -1,9 +1,7 @@
-import { runApiSteps, findApiName } from "./utils/run-steps"
+import { runApiSteps } from "./utils/run-steps"
 import * as steps from "./steps"
 
-const pluginInitApiName = findApiName(`onPluginInit`)
-
-exports[pluginInitApiName] = runApiSteps(
+exports.onPluginInit = runApiSteps(
   [
     steps.setGatsbyApiToState,
     steps.setErrorMap,
@@ -11,7 +9,7 @@ exports[pluginInitApiName] = runApiSteps(
     steps.setRequestHeaders,
     steps.hideAuthPluginOptions,
   ],
-  pluginInitApiName
+  `onPluginInit`
 )
 
 exports.onPreBootstrap = runApiSteps(

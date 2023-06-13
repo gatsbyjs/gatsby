@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import generateNodeQueriesFromIngestibleFields from "./generate-queries-from-ingestable-types"
 import { getPersistentCache, setPersistentCache } from "~/utils/cache"
@@ -18,7 +18,7 @@ const buildNodeQueries = async () => {
 
   let nodeQueries = await getPersistentCache({ key: QUERY_CACHE_KEY })
 
-  const { schemaWasChanged } = store.getState().remoteSchema
+  const { schemaWasChanged } = getStore().getState().remoteSchema
 
   if (schemaWasChanged || !nodeQueries) {
     // regenerate queries from introspection
@@ -28,7 +28,7 @@ const buildNodeQueries = async () => {
     await setPersistentCache({ key: QUERY_CACHE_KEY, value: nodeQueries })
   }
   // set the queries in our redux store to use later
-  store.dispatch.remoteSchema.setState({
+  getStore().dispatch.remoteSchema.setState({
     nodeQueries,
   })
 

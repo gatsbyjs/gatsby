@@ -1,5 +1,5 @@
 import { Step } from "./../utils/run-steps"
-import store from "~/store"
+import { getStore } from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { getPersistentCache } from "~/utils/cache"
 import { needToTouchNodes } from "~/utils/gatsby-features"
@@ -23,7 +23,7 @@ const persistPreviouslyCachedImages: Step = async (): Promise<void> => {
   })
 
   if (imageNodeMetaByUrl) {
-    store.dispatch.imageNodes.setState({
+    getStore().dispatch.imageNodes.setState({
       nodeMetaByUrl: imageNodeMetaByUrl,
     })
   }

@@ -1,6 +1,4 @@
-const {
-  default: fetchGraphql,
-} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { fetchGraphql } = require("./test-utils/graphql")
 
 const isWarmCache = process.env.WARM_CACHE
 const testOnWarmCacheOnly = isWarmCache ? test : test.skip

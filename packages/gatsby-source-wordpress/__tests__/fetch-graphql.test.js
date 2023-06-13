@@ -1,6 +1,10 @@
 import chalk from "chalk"
 import fetchGraphQL, { moduleHelpers } from "../dist/utils/fetch-graphql"
-import store from "../dist/store"
+import { getStore, createStore, asyncLocalStorage } from "../dist/store"
+
+const store = {store: createStore(), key: `test`}
+
+const withGlobalStore = (fn) => () =>  asyncLocalStorage.run(store, fn)
 
 jest.mock(`async-retry`, () => {
   return {
@@ -19,7 +23,8 @@ describe(`fetchGraphQL helper`, () => {
   let mock
   const panicMessages = []
 
-  beforeAll(() => {
+  beforeAll(withGlobalStore(() => {
+
     const sharedError = `Request failed with status code`
     try {
       mock = jest.spyOn(moduleHelpers, `getHttp`).mockImplementation(() => {
@@ -54,14 +59,14 @@ describe(`fetchGraphQL helper`, () => {
       },
     }
 
-    store.dispatch.gatsbyApi.setState({
+    getStore().dispatch.gatsbyApi.setState({
       helpers: {
         reporter: fakeReporter,
       },
     })
-  })
+  }))
 
-  test(`handles 500 errors`, async () => {
+  test(`handles 500 errors`, withGlobalStore(async () => {
     await fetchGraphQL({
       query: 500,
       url: `fake url`,
@@ -70,9 +75,9 @@ describe(`fetchGraphQL helper`, () => {
     expect(
       panicMessages[0]
     ).toInclude(`Your WordPress server is either overloaded or encountered a PHP error.`)
-  })
+  }))
 
-  test(`handles 502, 503, and 504 errors`, async () => {
+  test(`handles 502, 503, and 504 errors`, withGlobalStore(async () => {
     const errorMessage = `Your WordPress server at ${chalk.bold(
       `fake url`
     )} appears to be overloaded.`
@@ -94,9 +99,9 @@ describe(`fetchGraphQL helper`, () => {
       url: `fake url`,
     })
     expect(panicMessages[3]).toInclude(errorMessage)
-  })
+  }))
 
-  test(`errors when WPGraphQL is not active`, async () => {
+  test(`errors when WPGraphQL is not active`, withGlobalStore(async () => {
     await fetchGraphQL({
       query: `wpgraphql-deactivated`,
       url: `fake url`,
@@ -105,9 +110,9 @@ describe(`fetchGraphQL helper`, () => {
     expect(
       panicMessages[4]
     ).toInclude(`Unable to connect to WPGraphQL.`)
-  })
+  }))
 
-  afterAll(() => {
+  afterAll(withGlobalStore(() => {
     mock.mockRestore()
-  })
+  }))
 })

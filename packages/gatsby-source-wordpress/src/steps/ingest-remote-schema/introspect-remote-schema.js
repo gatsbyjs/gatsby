@@ -1,7 +1,7 @@
 import chalk from "chalk"
 import * as diff from "diff"
 import { uniqBy } from "lodash"
-import store from "~/store"
+import { getStore } from "~/store"
 import { setPersistentCache, getPersistentCache } from "~/utils/cache"
 import fetchGraphql from "~/utils/fetch-graphql"
 import { introspectionQuery } from "~/utils/graphql-queries"
@@ -10,7 +10,7 @@ import { introspectionQuery } from "~/utils/graphql-queries"
  * Builds the cache key for retrieving cached introspection data
  */
 const getCachedRemoteIntrospectionDataCacheKey = () => {
-  const state = store.getState()
+  const state = getStore().getState()
   const { pluginOptions } = state.gatsbyApi
 
   const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-data`
@@ -51,7 +51,7 @@ export const remoteSchemaSupportsFieldNameOnTypeName = async ({
 }
 
 const introspectAndStoreRemoteSchema = async () => {
-  const state = store.getState()
+  const state = getStore().getState()
   const { pluginOptions } = state.gatsbyApi
   const { schemaWasChanged } = state.remoteSchema
 
@@ -130,7 +130,7 @@ const introspectAndStoreRemoteSchema = async () => {
     introspectionData.__schema.types.map(type => [type.name, type])
   )
 
-  store.dispatch.remoteSchema.setState({ introspectionData, typeMap })
+  getStore().dispatch.remoteSchema.setState({ introspectionData, typeMap })
 }
 
 export { introspectAndStoreRemoteSchema }

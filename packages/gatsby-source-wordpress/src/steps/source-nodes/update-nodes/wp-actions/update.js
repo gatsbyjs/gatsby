@@ -1,5 +1,5 @@
 import fetchGraphql from "~/utils/fetch-graphql"
-import store from "~/store"
+import { getStore } from "~/store"
 import { formatLogMessage } from "~/utils/format-log-message"
 import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
@@ -165,7 +165,7 @@ export const createSingleNode = async ({
   data,
   cachedNodeIds,
 }) => {
-  const state = store.getState()
+  const state = getStore().getState()
   const { helpers, pluginOptions } = state.gatsbyApi
   const { wpUrl } = state.remoteSchema
 
@@ -236,7 +236,7 @@ export const createSingleNode = async ({
       typeSettings,
       buildTypeName,
       type: typeInfo.nodesTypeName,
-      wpStore: store,
+      wpStore: getStore(),
     })) || {}
 
     additionalNodeIds = [
@@ -291,7 +291,7 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
 
   const cachedNodeIds = await getPersistentCache({ key: CREATED_NODE_IDS })
 
-  const state = store.getState()
+  const state = getStore().getState()
   const {
     gatsbyApi: {
       pluginOptions: { verbose },

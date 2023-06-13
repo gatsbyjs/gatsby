@@ -4,7 +4,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import { CREATED_NODE_IDS } from "~/constants"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
-import store from "~/store"
+import { getStore } from "~/store"
 import { getGatsbyApi, getPluginOptions } from "~/utils/get-gatsby-api"
 import chunk from "lodash/chunk"
 
@@ -23,7 +23,7 @@ import { needToTouchNodes } from "../../../utils/gatsby-features"
  * fetches and paginates remote nodes by post type while reporting progress
  */
 export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
-  const { pluginOptions, helpers } = store.getState().gatsbyApi
+  const { pluginOptions, helpers } = getStore().getState().gatsbyApi
   const { reporter } = helpers
   const {
     url,
@@ -34,7 +34,7 @@ export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
 
   const typeName = typeInfo.nodesTypeName
 
-  store.dispatch.logger.createActivityTimer({
+  getStore().dispatch.logger.createActivityTimer({
     typeName,
     pluginOptions,
     reporter,
@@ -58,7 +58,7 @@ export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
     allNodesOfContentType = [...allNodesOfContentType, ...contentNodes]
   }
 
-  store.dispatch.logger.stopActivityTimer({ typeName })
+  getStore().dispatch.logger.stopActivityTimer({ typeName })
 
   if (allNodesOfContentType && allNodesOfContentType.length) {
     return {
@@ -80,7 +80,7 @@ export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
  * @returns {Array} Type info & GQL query strings
  */
 export const getContentTypeQueryInfos = () => {
-  const { nodeQueries } = store.getState().remoteSchema
+  const { nodeQueries } = getStore().getState().remoteSchema
   const queryInfos = Object.values(nodeQueries).filter(
     ({ settings }) => !settings.exclude
   )
@@ -94,7 +94,7 @@ export const getGatsbyNodeTypeNames = () => {
     return cachedGatsbyNodeTypeNames
   }
 
-  const { typeMap } = store.getState().remoteSchema
+  const { typeMap } = getStore().getState().remoteSchema
 
   const queryableTypenames = getContentTypeQueryInfos().map(
     query => query.typeInfo.nodesTypeName
@@ -195,8 +195,8 @@ export const fetchAndCreateAllNodes = async () => {
   const activity = reporter.activityTimer(formatLogMessage(`fetching nodes`))
   activity.start()
 
-  store.subscribe(() => {
-    activity.setStatus(`${store.getState().logger.entityCount} total`)
+  getStore().subscribe(() => {
+    activity.setStatus(`${getStore().getState().logger.entityCount} total`)
   })
 
   let createdNodeIds
