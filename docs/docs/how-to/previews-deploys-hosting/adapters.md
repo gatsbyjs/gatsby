@@ -8,9 +8,7 @@ Adapters are responsible for taking the production output from Gatsby and turnin
 
 Gatsby has different [rendering options](/docs/conceptual/rendering-options/) and features like DSG and SSR require more setup than classic SSG. Users can also set [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) or create [redirects](/docs/reference/config-files/actions/#createRedirect). Gatsby passes all the required information during the build to its adapters so that they can _adapt_ these outputs for deployment.
 
-## Prerequisites
-
-- A Gatsby project set up with `gatsby@5.X.0` or later. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
+This feature was added in `gatsby@5.X.0`.
 
 ## Finding adapters
 
@@ -18,7 +16,7 @@ You can use these official adapters:
 
 - [gatsby-adapter-netlify](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify) for [Netlify](https://www.netlify.com/)
 
-You can [search npm for `gatsby-adapter`](https://www.npmjs.com/search?q=gatsby-adapter-) to find additional community adapters.
+You can [search npm for `gatsby-adapter`](https://www.npmjs.com/search?q=gatsby-adapter-) to find additional community adapters. Didn't find an adapter for your platform? Consider [creating an adapter](/docs/how-to/previews-deploys-hosting/creating-an-adapter/).
 
 ## Using adapters
 
