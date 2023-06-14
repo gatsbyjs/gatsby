@@ -72,15 +72,14 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   }
 
   usingAdapter = true
-
   reporter.info(`Using ${adapter.name} adapter`)
-
   telemetry.trackFeatureIsUsed(`adapter:${adapter.name}`)
 
   const directoriesToCache = [`.cache`, `public`]
   return {
     restoreCache: async (): Promise<void> => {
-      reporter.info(`[dev-adapter-manager] restoreCache()`)
+      // TODO: Remove before final merge
+      reporter.info(`[Adapters] restoreCache()`)
       if (!adapter.cache) {
         return
       }
@@ -106,7 +105,8 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       }
     },
     storeCache: async (): Promise<void> => {
-      reporter.info(`[dev-adapter-manager] storeCache()`)
+      // TODO: Remove before final merge
+      reporter.info(`[Adapters] storeCache()`)
       if (!adapter.cache) {
         return
       }
@@ -114,7 +114,8 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       await adapter.cache.store({ directories: directoriesToCache, reporter })
     },
     adapt: async (): Promise<void> => {
-      reporter.info(`[dev-adapter-manager] adapt()`)
+      // TODO: Remove before final merge
+      reporter.info(`[Adapters] adapt()`)
       if (!adapter.adapt) {
         return
       }
@@ -153,7 +154,8 @@ type RouteWithScore = { score: number } & Route
 
 function getRoutesManifest(): RoutesManifest {
   const routes: Array<RouteWithScore> = []
-  const createHeaders = createHeadersMatcher(store.getState().config.headers)
+  const state = store.getState()
+  const createHeaders = createHeadersMatcher(state.config.headers)
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -180,31 +182,31 @@ function getRoutesManifest(): RoutesManifest {
 
   function addStaticRoute({
     path,
-    pathToFilInPublicDir,
+    pathToFillInPublicDir,
     headers,
   }: {
     path: string
-    pathToFilInPublicDir: string
+    pathToFillInPublicDir: string
     headers: IHeader["headers"]
   }): void {
     addRoute({
       path,
       type: `static`,
-      filePath: posix.join(`public`, pathToFilInPublicDir),
+      filePath: posix.join(`public`, pathToFillInPublicDir),
       headers,
     })
 
-    if (fileAssets.has(pathToFilInPublicDir)) {
-      fileAssets.delete(pathToFilInPublicDir)
+    if (fileAssets.has(pathToFillInPublicDir)) {
+      fileAssets.delete(pathToFillInPublicDir)
     } else {
       reporter.warn(
-        `[dev-adapter-manager] tried to remove "${pathToFilInPublicDir}" from assets but it wasn't there`
+        `[Adapters] Tried to remove "${pathToFillInPublicDir}" from assets but it wasn't there`
       )
     }
   }
 
-  // routes - pages - static (SSG) or lambda (DSG/SSR)
-  for (const page of store.getState().pages.values()) {
+  // routes - pages - static (SSG) or function (DSG/SSR)
+  for (const page of state.pages.values()) {
     const htmlRoutePath = getRoutePathFromPage(page)
     const pageDataRoutePath = generatePageDataPath(``, htmlRoutePath)
 
@@ -216,12 +218,12 @@ function getRoutesManifest(): RoutesManifest {
 
       addStaticRoute({
         path: htmlRoutePath,
-        pathToFilInPublicDir: htmlFilePath,
+        pathToFillInPublicDir: htmlFilePath,
         headers: STATIC_PAGE_HEADERS,
       })
       addStaticRoute({
         path: pageDataRoutePath,
-        pathToFilInPublicDir: pageDataFilePath,
+        pathToFillInPublicDir: pageDataFilePath,
         headers: STATIC_PAGE_HEADERS,
       })
     } else {
@@ -247,13 +249,11 @@ function getRoutesManifest(): RoutesManifest {
   }
 
   // static query json assets
-  for (const staticQueryComponent of store
-    .getState()
-    .staticQueryComponents.values()) {
+  for (const staticQueryComponent of state.staticQueryComponents.values()) {
     const staticQueryResultPath = getStaticQueryPath(staticQueryComponent.hash)
     addStaticRoute({
       path: staticQueryResultPath,
-      pathToFilInPublicDir: staticQueryResultPath,
+      pathToFillInPublicDir: staticQueryResultPath,
       headers: STATIC_PAGE_HEADERS,
     })
   }
@@ -263,20 +263,21 @@ function getRoutesManifest(): RoutesManifest {
     const appDataFilePath = posix.join(`page-data`, `app-data.json`)
     addStaticRoute({
       path: appDataFilePath,
-      pathToFilInPublicDir: appDataFilePath,
+      pathToFillInPublicDir: appDataFilePath,
       headers: STATIC_PAGE_HEADERS,
     })
   }
 
   // webpack assets
   if (!webpackAssets) {
-    throw new Error(`[dev-adapter-manager] webpackAssets is not defined`)
+    // TODO: Make this a structured error
+    throw new Error(`[Adapters] webpackAssets is not defined`)
   }
 
   for (const asset of webpackAssets) {
     addStaticRoute({
       path: asset,
-      pathToFilInPublicDir: asset,
+      pathToFillInPublicDir: asset,
       headers: WEBPACK_ASSET_HEADERS,
     })
   }
@@ -284,7 +285,7 @@ function getRoutesManifest(): RoutesManifest {
   // TODO: slices
 
   // redirect routes
-  for (const redirect of store.getState().redirects.values()) {
+  for (const redirect of state.redirects.values()) {
     addRoute({
       path: redirect.fromPath,
       type: `redirect`,
@@ -300,7 +301,7 @@ function getRoutesManifest(): RoutesManifest {
   }
 
   // function routes
-  for (const functionInfo of store.getState().functions.values()) {
+  for (const functionInfo of state.functions.values()) {
     addRoute({
       path: `/api/${getRoutePathFromFunction(functionInfo)}`,
       type: `function`,
@@ -308,15 +309,13 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
-  console.log(
-    `[dev-adapter-manager] unmanaged (or not yet handled) assets`,
-    fileAssets
-  )
+  // TODO: Remove before final merge
+  console.log(`[Adapters] unmanaged (or not yet handled) assets`, fileAssets)
 
   for (const fileAsset of fileAssets) {
     addStaticRoute({
       path: fileAsset,
-      pathToFilInPublicDir: fileAsset,
+      pathToFillInPublicDir: fileAsset,
       headers: ASSET_HEADERS,
     })
   }
@@ -334,6 +333,7 @@ function getRoutesManifest(): RoutesManifest {
         // deterministic order regardless of order pages where created
         return a.path.localeCompare(b.path)
       })
+      // The score should be internal only, so we remove it from the final manifest
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .map(({ score, ...rest }): Route => {
         return { ...rest }
