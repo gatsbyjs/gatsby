@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1beta1
+kind: Component
+metadata:
+  name: gatsby
+  namespace: economist-impact
+  annotations:
+    github.com/project-slug: signal-noise/gatsby
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  lifecycle: production
+  owner: group:economist-impact/signal-noise
