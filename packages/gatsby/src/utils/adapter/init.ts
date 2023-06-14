@@ -102,7 +102,6 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
       return preferDefault(preferDefault(await import(required))) as AdapterInit
     }
   } catch (e) {
-    console.error(e)
     // no-op
   }
 
