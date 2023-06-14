@@ -23,7 +23,7 @@ const persistedReduxKeys = [
   `status`,
   `components`,
   `jobsV2`,
-  `staticQueriesByTemplate`,
+  `staticQueryComponents`,
   `webpackCompilationHash`,
   `pageDataStats`,
   `pages`,
