@@ -26,16 +26,23 @@ const { createRequire } = require(`module`)
 export default function (this: any, source: string): string {
   let lmdbBinaryLocation: string | undefined
 
-  // use loader option if provided
-  lmdbBinaryLocation = this.getOptions()?.forcedBinaryLocation
+  try {
+    const lmdbRoot =
+      this?._module.resourceResolveData?.descriptionFileRoot ||
+      path.dirname(this.resourcePath).replace(`/dist`, ``)
 
-  if (!lmdbBinaryLocation) {
-    try {
-      const lmdbRoot =
-        this?._module.resourceResolveData?.descriptionFileRoot ||
-        path.dirname(this.resourcePath).replace(`/dist`, ``)
+    const lmdbRequire = createRequire(this.resourcePath)
+    const forcedBinaryModule = this.getOptions()?.forcedBinaryModule
+    let absoluteModulePath
+    if (forcedBinaryModule) {
+      try {
+        absoluteModulePath = lmdbRequire.resolve(forcedBinaryModule)
+      } catch (e) {
+        // no-op
+      }
+    }
 
-      const lmdbRequire = createRequire(this.resourcePath)
+    if (!absoluteModulePath) {
       let nodeGypBuild
       try {
         nodeGypBuild = lmdbRequire(`node-gyp-build-optional-packages`)
@@ -49,17 +56,20 @@ export default function (this: any, source: string): string {
         // let's try falling back to upstream package - if that doesn't work, we will fail compilation
         nodeGypBuild = lmdbRequire(`node-gyp-build`)
       }
-
-      lmdbBinaryLocation = slash(
-        path.relative(
-          path.dirname(this.resourcePath),
-          nodeGypBuild.path(lmdbRoot)
-        )
-      )
-    } catch (e) {
-      return source
+      absoluteModulePath = nodeGypBuild.path(lmdbRoot)
     }
+
+    lmdbBinaryLocation = slash(
+      path.relative(path.dirname(this.resourcePath), absoluteModulePath)
+    )
+  } catch (e) {
+    return source
   }
+
+  if (!lmdbBinaryLocation) {
+    return source
+  }
+
   return source
     .replace(
       `require$1('node-gyp-build-optional-packages')(dirName)`,

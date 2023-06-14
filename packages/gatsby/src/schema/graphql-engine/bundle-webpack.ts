@@ -121,8 +121,8 @@ export async function createGraphqlEngineBundle(
                 {
                   loader: require.resolve(`./lmdb-bundling-patch`),
                   options: {
-                    forcedBinaryLocation: isUsingAdapter()
-                      ? `../../@lmdb/lmdb-${process.platform}-${process.arch}/node.abi83.glibc.node`
+                    forcedBinaryModule: isUsingAdapter()
+                      ? `@lmdb/lmdb-${process.platform}-${process.arch}/node.abi83.glibc.node`
                       : undefined,
                   },
                 },
