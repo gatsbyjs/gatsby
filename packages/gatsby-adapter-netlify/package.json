@@ -1,6 +1,6 @@
 {
   "name": "gatsby-adapter-netlify",
-  "version": "1.0.0",
+  "version": "1.0.0-next.0",
   "description": "Gatsby adapter for Netlify",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -46,7 +46,7 @@
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
-    "gatsby": "^5.11.0-next"
+    "gatsby": "^5.11.0-alpha"
   },
   "files": [
     "dist/"
