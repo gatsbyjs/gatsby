@@ -19,18 +19,7 @@ const adaptersManifest = [
         moduleVersion: `*`
       }
     ]
-  },
-  {
-    name: `gatsby-adapter-testing`,
-    module: `@lekoarts/gatsby-adapter-testing`,
-    test: () => true,
-    versions: [
-      {
-        gatsbyVersion: `^5.0.0`,
-        moduleVersion: `^1.0.0`
-      }
-    ]
-  },
+  }
 ]
 
 module.exports = adaptersManifest
