@@ -1,0 +1,10 @@
+node_modules/
+.cache/
+public
+
+# Local Netlify folder
+.netlify
+
+# Cypress output
+cypress/videos/
+cypress/screenshots/

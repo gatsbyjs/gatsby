@@ -444,6 +444,15 @@ jobs:
       - store_test_results:
           path: e2e-tests/trailing-slash/cypress/results
 
+  e2e_tests_adapters:
+    <<: *e2e-executor
+    steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
+      - e2e-test:
+          test_path: e2e-tests/adapters
+      - store_test_results:
+          path: e2e-tests/adapters/cypress/results
+
   starters_validate:
     executor: node
     steps:
@@ -593,6 +602,8 @@ workflows:
       - e2e_tests_mdx:
           <<: *e2e-test-workflow
       - e2e_tests_trailing-slash:
+          <<: *e2e-test-workflow
+      - e2e_tests_adapters:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow

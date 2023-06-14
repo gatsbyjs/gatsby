@@ -1,0 +1,34 @@
+{
+  "name": "adapters",
+  "version": "1.0.0",
+  "private": true,
+  "description": "E2E test site for testing official adapters",
+  "author": "LekoArts",
+  "scripts": {
+    "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
+    "build:debug": "cross-env USE_DEBUG_ADAPTER=y CYPRESS_SUPPORT=y npm run build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "cy:open": "cypress open --browser chrome --e2e",
+    "ssat:debug": "start-server-and-test serve http://localhost:9000 cy:open",
+    "test:template": "cross-env-shell CYPRESS_GROUP_NAME=$ADAPTER node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file \"cypress/configs/$ADAPTER.ts\"",
+    "ssat:template": "cross-env-shell ADAPTER=$ADAPTER start-server-and-test",
+    "test:debug": "npm-run-all -s build:debug ssat:debug",
+    "test:netlify": "start-server-and-test 'BROWSER=none ntl serve --port 8888' http://localhost:8888 'cross-env ADAPTER=netlify npm run test:template'",
+    "test": "npm-run-all -c -s test:netlify"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "cypress": "^12.14.0",
+    "netlify-cli": "^15.5.1",
+    "npm-run-all": "^4.1.5",
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.1.3"
+  }
+}
