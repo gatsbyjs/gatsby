@@ -1,4 +1,4 @@
-import { IGatsbyFunction, IGatsbyPage } from "../../internal"
+import type { IGatsbyFunction, IGatsbyPage } from "../../redux/types"
 
 function maybeDropNamedPartOfWildcard(
   path: string | undefined
@@ -7,6 +7,7 @@ function maybeDropNamedPartOfWildcard(
     return path
   }
 
+  // Replaces `/foo/*bar` with `/foo/*`
   return path.replace(/\*.+$/, `*`)
 }
 
