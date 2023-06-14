@@ -27,7 +27,7 @@ export async function bootstrap(
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
   workerPool: GatsbyWorkerPool
-  adapterManager: IAdapterManager
+  adapterManager?: IAdapterManager
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }

@@ -697,8 +697,10 @@ module.exports = async function build(
     report.info(`.cache/deletedPages.txt created`)
   }
 
-  await adapterManager.adapt()
-  await adapterManager.storeCache()
+  if (adapterManager) {
+    await adapterManager.adapt()
+    await adapterManager.storeCache()
+  }
 
   showExperimentNotices()
 

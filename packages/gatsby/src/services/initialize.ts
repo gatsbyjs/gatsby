@@ -83,7 +83,7 @@ export async function initialize({
   store: Store<IGatsbyState, AnyAction>
   workerPool: WorkerPool.GatsbyWorkerPool
   webhookBody?: WebhookBody
-  adapterManager: IAdapterManager
+  adapterManager?: IAdapterManager
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -187,8 +187,13 @@ export async function initialize({
   })
   activity.end()
 
-  const adapterManager = await initAdapterManager()
-  await adapterManager.restoreCache()
+  let adapterManager: IAdapterManager | undefined = undefined
+
+  // Only initialize adapters during "gatsby build"
+  if (process.env.gatsby_executing_command === `build`) {
+    adapterManager = await initAdapterManager()
+    await adapterManager.restoreCache()
+  }
 
   // Load plugins
   activity = reporter.activityTimer(`load plugins`, {
