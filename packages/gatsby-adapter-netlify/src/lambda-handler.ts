@@ -68,8 +68,12 @@ async function prepareFunction(
 const Stream = require("stream")
 const http = require("http")
 const { Buffer } = require("buffer")
-const cookie = require("cookie")
-${isODB ? `const { builder } = require("@netlify/functions")` : ``}
+const cookie = require("${require.resolve(`cookie`)}")
+${
+  isODB
+    ? `const { builder } = require("${require.resolve(`@netlify/functions`)}")`
+    : ``
+}
 
 const preferDefault = m => (m && m.default) || m
 
