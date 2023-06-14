@@ -16,7 +16,6 @@ import {
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
-import { AdapterInit, IAdapter } from "gatsby/dist/utils/adapter/types"
 
 export type AvailableFeatures =
   | "image-cdn"
@@ -34,7 +33,16 @@ export {
 
 export * from "gatsby-script"
 
-export { AdapterInit, IAdapter }
+export {
+  AdapterInit,
+  IAdapter,
+  IStaticRoute,
+  IFunctionRoute,
+  IRedirectRoute,
+  IFunctionDefinition,
+  RoutesManifest,
+  FunctionsManifest,
+} from "./dist/utils/adapter/types"
 
 export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>

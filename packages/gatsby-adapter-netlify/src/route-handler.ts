@@ -1,4 +1,4 @@
-import type { RoutesManifest } from "gatsby/src/utils/adapter/types"
+import type { RoutesManifest } from "gatsby"
 
 import fs from "fs-extra"
 
@@ -26,7 +26,6 @@ export async function handleRoutesManifest(
 ): Promise<{
   lambdasThatUseCaching: Map<string, string>
 }> {
-  console.log(`hello from handleRoutesManifest()`)
   const lambdasThatUseCaching = new Map<string, string>()
 
   let _redirects = ``

@@ -13,7 +13,7 @@ interface IBaseRoute {
   path: string
 }
 
-interface IStaticRoute extends IBaseRoute {
+export interface IStaticRoute extends IBaseRoute {
   type: `static`
   /**
    * Location of the file that should be served for this route.
@@ -43,7 +43,7 @@ export interface IFunctionRoute extends IBaseRoute {
  * Redirects are being created through the `createRedirect` action.
  * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect
  */
-interface IRedirectRoute extends IBaseRoute {
+export interface IRedirectRoute extends IBaseRoute {
   type: `redirect`
   /**
    * The redirect should happen from `path` to `toPath`.

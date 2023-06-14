@@ -1,4 +1,4 @@
-import type { IFunctionDefinition } from "gatsby/src/utils/adapter/types"
+import type { IFunctionDefinition } from "gatsby"
 
 import packageJson from "gatsby-adapter-netlify/package.json"
 
