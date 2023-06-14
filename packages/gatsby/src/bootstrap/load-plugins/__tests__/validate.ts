@@ -6,7 +6,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 jest.mock(`../../resolve-module-exports`)
-jest.mock(`../../../utils/get-latest-apis`)
+jest.mock(`../../../utils/get-latest-gatsby-files`)
 
 import reporter from "gatsby-cli/lib/reporter"
 import {
