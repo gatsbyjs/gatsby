@@ -16,6 +16,22 @@ const routes = [
     text: "DSG",
     url: "/routes/dsg",
   },
+  {
+    text: "Sub-Router",
+    url: "/routes/sub-router",
+  },
+  {
+    text: "Client-Only Params",
+    url: "/routes/client-only/dune",
+  },
+  {
+    text: "Client-Only Wildcard",
+    url: "/routes/client-only/wildcard/atreides/harkonnen",
+  },
+  {
+    text: "Client-Only Named Wildcard",
+    url: "/routes/client-only/named-wildcard/corinno/fenring",
+  }
 ]
 
 const functions = [
@@ -72,7 +88,7 @@ export default IndexPage
 export const Head = () => (
   <>
     <title>Adapters E2E</title>
-    <style>{`@keyframes float { 50% { transform: translateY(30px) } }`}</style>
+    <style>{`@keyframes float { 50% { transform: translateY(24px) } }`}</style>
   </>
 )
 
@@ -83,10 +99,10 @@ const titleStyles = {
 }
 
 const astroWrapper = {
-  transform: "rotate(-20deg)",
+  transform: "rotate(-18deg)",
   position: "absolute",
-  top: "1.25rem",
-  right: "1.25rem"
+  top: "1.5rem",
+  right: "1.75rem"
 }
 
 const astro = {

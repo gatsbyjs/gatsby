@@ -5,7 +5,6 @@ const DSG = () => {
   return (
     <Layout>
       <h1>DSG</h1>
-      <p>Hello World!</p>
     </Layout>
   )
 }
