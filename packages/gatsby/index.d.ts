@@ -381,12 +381,13 @@ export interface GatsbyConfig {
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
   developMiddleware?(app: any): void
   /**
-   * You can set custom HTTP headers for incoming requests
-   * TODO
+   * You can set custom HTTP headers on the response of a given path. This allows you to, e.g. modify the caching behavior or configure access control. You can apply HTTP headers to static routes and redirects.
+   * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/headers/
    */
   headers?: Array<Header>
   /**
-   * TODO
+   * Adapters are responsible for taking the production output from Gatsby and turning it into something your deployment platform understands. They make it easier to build and deploy Gatsby on any deployment platform.
+   * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/adapters/
    */
   adapter?: IAdapter
 }
