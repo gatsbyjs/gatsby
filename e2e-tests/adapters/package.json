@@ -19,7 +19,8 @@
     "test": "npm-run-all -c -s test:netlify"
   },
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "5.12.0-next.0",
+    "gatsby-adapter-netlify": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
