@@ -95,7 +95,9 @@ In case you missed it, we also enabled [typePrefix support for `gatsby-source-co
 ## Notable bugfixes & improvements
 
 - We merged 50 [renovate](https://www.mend.io/free-developer-tools/renovate/) PRs to update dependencies across various packages. If you're curious about the changes, you can use [this GitHub search](https://github.com/gatsbyjs/gatsby/pulls?q=is%3Apr+sort%3Aupdated-desc+author%3Aapp%2Frenovate+merged%3A2023-05-16..2023-06-15).
-- `gatsby`: Support `style` attribute on `html` & `body`, via [PR #38098](https://github.com/gatsbyjs/gatsby/pull/38098)
+- `gatsby`
+  - Support `style` attribute on `html` & `body`, via [PR #38098](https://github.com/gatsbyjs/gatsby/pull/38098)
+  - Fix regression in type ownership, via [PR #38235](https://github.com/gatsbyjs/gatsby/pull/38235)
 - `gatsby-plugin-mdx`: Allow modern JS syntax in MDX layout components, via [PR #38126](https://github.com/gatsbyjs/gatsby/pull/38126)
 - `gatsby-source-wordpress`: Allow using SSR/DSG when using `options.auth`, via [PR #38103](https://github.com/gatsbyjs/gatsby/pull/38103)
 - `gatsby-transformer-screenshot`: Add `screenshotEndpoint` option, via [PR #38136](https://github.com/gatsbyjs/gatsby/pull/38136)
