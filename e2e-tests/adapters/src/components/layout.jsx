@@ -18,7 +18,7 @@ export default Layout
 
 const pageStyles = {
   color: "#232129",
-  padding: 96,
+  padding: 72,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
 

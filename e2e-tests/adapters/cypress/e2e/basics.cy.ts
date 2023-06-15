@@ -1,0 +1,29 @@
+describe('Basics', () => {
+  beforeEach(() => {
+    cy.visit('/').waitForRouteChange()
+  })
+
+  it('should display index page', () => {
+    cy.get('h1').should('contain', 'Adapters')
+    cy.title().should('eq', 'Adapters E2E')
+  })
+  // If this test fails, run "gatsby build" and retry
+  it('should serve assets from "static" folder', () => {
+    cy.intercept("/gatsby-icon.png").as("static-folder-image")
+
+    cy.wait("@static-folder-image").should(req => {
+      expect(req.response.statusCode).to.be.gte(200).and.lt(400)
+    })
+
+    cy.get('[alt="Gatsby Monogram Logo"]').should('be.visible')
+  })
+  it('should serve assets imported through webpack', () => {
+    cy.intercept("/static/astro-**.png").as("img-import")
+
+    cy.wait("@img-import").should(req => {
+      expect(req.response.statusCode).to.be.gte(200).and.lt(400)
+    })
+
+    cy.get('[alt="Gatsby Astronaut"]').should('be.visible')
+  })
+})

@@ -14,8 +14,10 @@ if (shouldUseDebugAdapter) {
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `adapters`,
+    title: "adapters",
+    siteDescription: "E2E tests for Gatsby adapters",
   },
+  trailingSlash: "never",
   plugins: [],
   ...configOverrides,
 }

@@ -1,8 +1,9 @@
 import * as React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout"
+import gatsbyAstronaut from "../images/astro.png"
 
-const links = [
+const routes = [
   {
     text: "Static",
     url: "/routes/static",
@@ -17,16 +18,48 @@ const links = [
   },
 ]
 
+const functions = [
+  {
+    text: "Functions (Static)",
+    url: "/api/static",
+  },
+  {
+    text: "Functions (Param)",
+    url: "/api/param/dune",
+  },
+  {
+    text: "Functions (Wildcard)",
+    url: "/api/wildcard/atreides/harkonnen",
+  },
+  {
+    text: "Functions (Named Wildcard)",
+    url: "/api/named-wildcard/corinno/fenring",
+  },
+]
+
 const IndexPage = () => {
   return (
     <Layout hideBackToHome>
-      <h1>Adapters</h1>
+      <div style={astroWrapper}>
+        <img src={gatsbyAstronaut} alt="Gatsby Astronaut" style={astro} />
+      </div>
+      <div style={titleStyles}>
+        <img src="/gatsby-icon.png" alt="Gatsby Monogram Logo" style={{ maxHeight: '40px', marginRight: '1rem' }} />
+        <h1>Adapters</h1>
+      </div>
       <ul style={listStyles}>
-        {links.map(link => (
+        {routes.map(link => (
           <li key={link.url} style={{ ...listItemStyles }}>
             <Link style={linkStyle} to={link.url}>
               {link.text}
             </Link>
+          </li>
+        ))}
+        {functions.map(link => (
+          <li key={link.url} style={{ ...listItemStyles }}>
+            <a style={linkStyle} href={link.url}>
+              {link.text}
+            </a>
           </li>
         ))}
       </ul>
@@ -36,11 +69,36 @@ const IndexPage = () => {
 
 export default IndexPage
 
-export const Head = () => <title>Home</title>
+export const Head = () => (
+  <>
+    <title>Adapters E2E</title>
+    <style>{`@keyframes float { 50% { transform: translateY(30px) } }`}</style>
+  </>
+)
+
+const titleStyles = {
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "row",
+}
+
+const astroWrapper = {
+  transform: "rotate(-20deg)",
+  position: "absolute",
+  top: "1.25rem",
+  right: "1.25rem"
+}
+
+const astro = {
+  maxHeight: "128px",
+  animationName: "float",
+  animationDuration: "5s",
+  animationIterationCount: "infinite",
+}
 
 const listStyles = {
   marginTop: 30,
-  marginBottom: 96,
+  marginBottom: 72,
   paddingLeft: 0,
 }
 
@@ -48,7 +106,7 @@ const listItemStyles = {
   fontWeight: 300,
   fontSize: 24,
   maxWidth: 560,
-  marginBottom: 16,
+  marginBottom: 8,
 }
 
 const linkStyle = {

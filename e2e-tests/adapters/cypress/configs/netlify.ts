@@ -5,5 +5,7 @@ export default defineConfig({
     baseUrl: `http://localhost:8888`,
     projectId: `4enh4m`,
     videoUploadOnPasses: false,
+    experimentalRunAllSpecs: true,
+    retries: 2,
   },
 })
