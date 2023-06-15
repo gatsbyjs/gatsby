@@ -2,9 +2,7 @@
  * @jest-environment node
  */
 
-const {
-  default: fetchGraphql,
-} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { fetchGraphql } = require("./test-utils/graphql")
 const { authedWPGQLRequest } = require("./test-utils/authed-wpgql-request")
 
 const sortBy = require("lodash/sortBy")

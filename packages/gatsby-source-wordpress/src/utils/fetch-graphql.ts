@@ -9,7 +9,7 @@ import rateLimit, { RateLimitedAxiosInstance } from "axios-rate-limit"
 import { bold } from "chalk"
 import retry from "async-retry"
 import { formatLogMessage } from "./format-log-message"
-import store from "~/store"
+import { getStore } from "~/store"
 import { getPluginOptions } from "./get-gatsby-api"
 import urlUtil from "url"
 import { CODES } from "./report"
@@ -264,7 +264,7 @@ const slackChannelSupportMessage = `If you're still having issues, please visit 
 
 const getLowerRequestConcurrencyOptionMessage = (): string => {
   const { requestConcurrency, previewRequestConcurrency, perPage } =
-    store.getState().gatsbyApi.pluginOptions.schema
+    getStore().getState().gatsbyApi.pluginOptions.schema
 
   return `Try reducing the ${bold(
     `requestConcurrency`
@@ -694,7 +694,7 @@ const fetchGraphql = async ({
   isFirstRequest = false,
   forceReportCriticalErrors = false,
 }: IFetchGraphQLInput): Promise<IGraphQLDataResponse> => {
-  const { helpers, pluginOptions } = store.getState().gatsbyApi
+  const { helpers, pluginOptions } = getStore().getState().gatsbyApi
   const limit = pluginOptions?.schema?.requestConcurrency
 
   const { url: pluginOptionsUrl } = pluginOptions

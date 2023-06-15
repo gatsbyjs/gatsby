@@ -1,5 +1,5 @@
 import fetchGraphql from "~/utils/fetch-graphql"
-import store from "~/store"
+import { getStore } from "~/store"
 import { formatLogMessage } from "../../../utils/format-log-message"
 
 export const normalizeNode = ({ node, nodeTypeName }) => {
@@ -136,7 +136,7 @@ const paginatedWpNodeFetch = async ({
 
     // MediaItem type is incremented in createMediaItemNode
     if (nodeTypeName !== `MediaItem`) {
-      store.dispatch.logger.incrementActivityTimer({
+      getStore().dispatch.logger.incrementActivityTimer({
         typeName: nodeTypeName,
         by: nodes.length,
       })

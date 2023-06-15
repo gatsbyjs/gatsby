@@ -90,7 +90,20 @@ describe(`Job v2 actions/reducer`, () => {
       inputPaths: [],
     })
     expect(jobsManager.removeInProgressJob).toHaveBeenCalledTimes(1)
-    expect(jobsManager.enqueueJob).toMatchSnapshot()
+    expect(jobsManager.enqueueJob).toHaveBeenCalledWith({
+      args: {},
+      contentDigest: `aa9932d515707737e953173cd9c77306`,
+      id: `1234`,
+      inputPaths: [],
+      name: `TEST_JOB`,
+      outputDir: `/public/static`,
+      plugin: {
+        isLocal: false,
+        name: `test-plugin`,
+        resolve: `/node_modules/test-plugin`,
+        version: `1.0.0`,
+      },
+    })
   })
 
   it(`should return the result when job already ran`, async () => {

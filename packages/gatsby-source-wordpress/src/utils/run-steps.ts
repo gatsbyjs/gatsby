@@ -3,6 +3,7 @@ import { IPluginOptions } from "~/models/gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { invokeAndCleanupLeftoverPreviewCallbacks } from "../steps/preview/cleanup"
 import { CODES } from "./report"
+import { IGatsbyApiHook, wrapApiHook } from "~/store"
 
 export type Step = (
   helpers?: GatsbyNodeApiHelpers,
@@ -108,12 +109,12 @@ const findApiName = (initialApiNameString: string): string => {
   )
 }
 
-const runApiSteps =
-  (steps: Array<Step>, apiName: string) =>
-  async (
-    helpers: GatsbyNodeApiHelpers,
-    pluginOptions: IPluginOptions
-  ): Promise<void> =>
-    runSteps(steps, helpers, pluginOptions, apiName)
+const runApiSteps = (steps: Array<Step>, apiName: string): IGatsbyApiHook =>
+  wrapApiHook(
+    async (
+      helpers: GatsbyNodeApiHelpers,
+      pluginOptions: IPluginOptions
+    ): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName)
+  )
 
 export { runSteps, runApiSteps, findApiName }

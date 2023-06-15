@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import recursivelyTransformFields from "~/steps/ingest-remote-schema/build-queries-from-introspection/recursively-transform-fields"
 import { buildSelectionSet } from "~/steps/ingest-remote-schema/build-queries-from-introspection/build-query-on-field-name"
 import { generateReusableFragments } from "./build-queries-from-introspection/build-query-on-field-name"
@@ -8,7 +8,7 @@ const buildNonNodeQueries = async () => {
     remoteSchema: {
       ingestibles: { nonNodeRootFields },
     },
-  } = store.getState()
+  } = getStore().getState()
 
   const fragments = {}
 
@@ -36,7 +36,7 @@ const buildNonNodeQueries = async () => {
       ${builtFragments}
   `
 
-  store.dispatch.remoteSchema.setState({ nonNodeQuery })
+  getStore().dispatch.remoteSchema.setState({ nonNodeQuery })
 }
 
 export { buildNonNodeQueries }

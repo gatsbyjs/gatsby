@@ -1,6 +1,6 @@
 import { inPreviewMode, PreviewStatusUnion } from "."
 import { OnPageCreatedCallback } from "~/models/preview"
-import store from "~/store"
+import { getStore } from "~/store"
 import { NodePluginArgs } from "gatsby"
 
 /**
@@ -46,7 +46,7 @@ export const invokeAndCleanupLeftoverPreviewCallbacks = async ({
   context?: string
   error?: Error
 }): Promise<void> => {
-  const state = store.getState()
+  const state = getStore().getState()
 
   const { getNode } = state.gatsbyApi.helpers
 
@@ -62,7 +62,7 @@ export const invokeAndCleanupLeftoverPreviewCallbacks = async ({
     )
 
     // after processing our callbacks, we need to remove them all so they don't get called again in the future
-    store.dispatch.previewStore.clearPreviewCallbacks()
+    getStore().dispatch.previewStore.clearPreviewCallbacks()
   }
 }
 

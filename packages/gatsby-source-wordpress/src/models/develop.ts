@@ -1,19 +1,8 @@
+import { createModel } from "@rematch/core"
 import { inPreviewMode } from "~/steps/preview"
-export interface IDevelopState {
-  refreshPollingIsPaused: boolean
-}
+import { IRootModel } from "."
 
-export interface IDevelopReducers {
-  pauseRefreshPolling: (state: IDevelopState) => IDevelopState
-  resumeRefreshPolling: (state: IDevelopState) => IDevelopState
-}
-
-interface IPreviewStore {
-  state: IDevelopState
-  reducers: IDevelopReducers
-}
-
-const developStore: IPreviewStore = {
+const developStore = createModel<IRootModel>()({
   state: {
     refreshPollingIsPaused: false,
   },
@@ -33,7 +22,10 @@ const developStore: IPreviewStore = {
 
       return state
     },
-  } as IDevelopReducers,
-}
+  },
+  effects: () => {
+    return {}
+  },
+})
 
 export default developStore

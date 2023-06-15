@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import { findNamedTypeName } from "~/steps/create-schema-customization/helpers"
 
 const buildReusableFragments = ({ fragments }) =>
@@ -111,7 +111,7 @@ export const buildSelectionSet = (
 
   const {
     remoteSchema: { typeMap },
-  } = store.getState()
+  } = getStore().getState()
 
   const buildFieldSelectionSet = field => {
     if (typeof field === `string`) {

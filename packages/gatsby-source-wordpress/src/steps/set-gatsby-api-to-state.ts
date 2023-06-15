@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import { processAndValidatePluginOptions } from "./process-and-validate-plugin-options"
 import { formatLogMessage } from "../utils/format-log-message"
 import { IPluginOptions } from "~/models/gatsby-api"
@@ -23,13 +23,14 @@ const setGatsbyApiToState = (
   //
   // add the plugin options and Gatsby API helpers to our store
   // to access them more easily
-  store.dispatch.gatsbyApi.setState({
+  getStore().dispatch.gatsbyApi.setState({
     helpers,
     pluginOptions: filteredPluginOptions,
   })
 
   if (!hasDisplayedPreviewPresetMessage) {
-    const { activePluginOptionsPresets, helpers } = store.getState().gatsbyApi
+    const { activePluginOptionsPresets, helpers } =
+      getStore().getState().gatsbyApi
 
     if (activePluginOptionsPresets?.length) {
       const previewOptimizationPreset = activePluginOptionsPresets.find(
