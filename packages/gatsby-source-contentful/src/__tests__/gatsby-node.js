@@ -138,6 +138,7 @@ describe(`gatsby-node`, () => {
   const getCache = jest.fn(() => cache)
   const reporter = {
     info: jest.fn(),
+    warn: jest.fn(),
     verbose: jest.fn(),
     panic: jest.fn(),
     activityTimer: () => {
