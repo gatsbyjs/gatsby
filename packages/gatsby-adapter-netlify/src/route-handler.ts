@@ -1,5 +1,6 @@
 import type { RoutesManifest } from "gatsby"
 
+import { EOL } from "os"
 import fs from "fs-extra"
 
 const NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST = new Set([
@@ -19,6 +20,31 @@ const toNetlifyPath = (fromPath: string, toPath: string): Array<string> => {
   const netlifyToPath = toPath.replace(/\*/, `:splat`)
 
   return [netlifyFromPath, netlifyToPath]
+}
+const MARKER_START = `# gatsby-adapter-netlify start`
+const MARKER_END = `# gatsby-adapter-netlify end`
+
+async function injectEntries(fileName: string, content: string): Promise<void> {
+  await fs.ensureFile(fileName)
+
+  const data = await fs.readFile(fileName, `utf8`)
+  const [initial = ``, rest = ``] = data.split(MARKER_START)
+  const [, final = ``] = rest.split(MARKER_END)
+  const out = [
+    initial === EOL ? `` : initial,
+    initial.endsWith(EOL) ? `` : EOL,
+    MARKER_START,
+    EOL,
+    content,
+    EOL,
+    MARKER_END,
+    final.startsWith(EOL) ? `` : EOL,
+    final === EOL ? `` : final,
+  ]
+    .filter(Boolean)
+    .join(``)
+
+  await fs.outputFile(fileName, out)
 }
 
 export async function handleRoutesManifest(
@@ -111,9 +137,8 @@ export async function handleRoutesManifest(
     }
   }
 
-  // TODO: add markers around generated redirects and headers so we can update them and merge with user provided ones
-  await fs.outputFile(`public/_redirects`, _redirects)
-  await fs.outputFile(`public/_headers`, _headers)
+  await injectEntries(`public/_redirects`, _redirects)
+  await injectEntries(`public/_headers`, _headers)
 
   return {
     lambdasThatUseCaching,
