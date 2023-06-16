@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.11.0/packages/gatsby-source-wordpress) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Features
+
+- support multiple instances of plugin [#38119](https://github.com/gatsbyjs/gatsby/issues/38119) ([77e4e19](https://github.com/gatsbyjs/gatsby/commit/77e4e195237ec7e555c067bdb002d84a6c3a28a0))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-wordpress [#38164](https://github.com/gatsbyjs/gatsby/issues/38164) ([26d50fe](https://github.com/gatsbyjs/gatsby/commit/26d50feae8b798ba6a655a34f713c91a14b803fd))
+- allow using engines when using wordpress auth [#38103](https://github.com/gatsbyjs/gatsby/issues/38103) ([7adb331](https://github.com/gatsbyjs/gatsby/commit/7adb331a113cb8541124fd15e2943ccd580b6399))
+
+#### Chores
+
+- remove warning about multiple plugin instances [#38241](https://github.com/gatsbyjs/gatsby/issues/38241) [#38242](https://github.com/gatsbyjs/gatsby/issues/38242) ([af202af](https://github.com/gatsbyjs/gatsby/commit/af202af7d79471fc831309edef12af109cadd8f4))
+- update semver [#38171](https://github.com/gatsbyjs/gatsby/issues/38171) ([208cdef](https://github.com/gatsbyjs/gatsby/commit/208cdef13f6488251ba1810a57a1e28c38635631))
+
 ### [7.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.10.1/packages/gatsby-source-wordpress) (2023-05-25)
 
 #### Bug Fixes

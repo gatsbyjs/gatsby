@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.11.0/packages/gatsby-source-shopify) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.11 for gatsby-source-shopify [#38157](https://github.com/gatsbyjs/gatsby/issues/38157) ([4cd7cd2](https://github.com/gatsbyjs/gatsby/commit/4cd7cd23301b6e8d6d14b4b9e0b4478a5e30d7fa))
+- update typescript [#38133](https://github.com/gatsbyjs/gatsby/issues/38133) ([aa7a078](https://github.com/gatsbyjs/gatsby/commit/aa7a078383ca5a549743be3269e9bde44655a185))
+
+#### Chores
+
+- Various `yarn bootstrap` fixes fixes [#38223](https://github.com/gatsbyjs/gatsby/issues/38223) ([df12265](https://github.com/gatsbyjs/gatsby/commit/df1226576b911be0f962c149c0bcbad279d9f806))
+- update [dev] minor and patch dependencies for gatsby-source-shopify [#38140](https://github.com/gatsbyjs/gatsby/issues/38140) ([a847e1c](https://github.com/gatsbyjs/gatsby/commit/a847e1ce47e536d6f0c0b9dd75ac092dbabf3440))
+
 ## [8.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.10.0/packages/gatsby-source-shopify) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
