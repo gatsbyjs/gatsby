@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-feed@5.11.0/packages/gatsby-plugin-feed) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Chores
+
+- depend on `joi` instead of `@hapi/joi` [#38205](https://github.com/gatsbyjs/gatsby/issues/38205) ([52a0023](https://github.com/gatsbyjs/gatsby/commit/52a00232fe2c832a32d192595d506bce91944e07))
+
 ## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-feed@5.10.0/packages/gatsby-plugin-feed) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
