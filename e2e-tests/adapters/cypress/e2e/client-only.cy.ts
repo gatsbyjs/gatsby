@@ -1,3 +1,9 @@
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('Minified React error')) {
+    return false
+  }
+})
+
 describe('Sub-Router', () => {
   const routes = [
     {
@@ -30,15 +36,10 @@ describe('Sub-Router', () => {
       marker: `static-sibling`,
       label: `Static route that is a sibling to client only path`,
     },
-  ]
+  ] as const
 
   routes.forEach(({ path, marker, label }) => {
     it(label, () => {
-      cy.on('uncaught:exception', (err, runnable) => {
-        if (err.message.includes('Minified React error')) {
-          return false
-        }
-      })
       cy.visit(path).waitForRouteChange()
       cy.get(`[data-testid="dom-marker"]`).contains(marker)
 
@@ -51,5 +52,38 @@ describe('Sub-Router', () => {
 })
 
 describe('Paths', () => {
-  // TODO
+  const routes = [
+    {
+      name: 'client-only',
+      param: 'dune',
+    },
+    {
+      name: 'client-only/wildcard',
+      param: 'atreides/harkonnen',
+    },
+    {
+      name: 'client-only/named-wildcard',
+      param: 'corinno/fenring',
+    },
+  ] as const
+
+  for (const route of routes) {
+    it(`should return "${route.name}" result`, () => {
+      cy.visit(`/routes/${route.name}${route.param ? `/${route.param}` : ''}`).waitForRouteChange()
+      cy.get("[data-testid=title]").should("contain", route.name)
+      cy.get("[data-testid=params]").should("contain", route.param)
+    })
+  }
+})
+
+describe('Prioritize', () => {
+  it('should prioritize static page over matchPath page with wildcard', () => {
+    cy.visit('/routes/client-only/prioritize').waitForRouteChange()
+    cy.get("[data-testid=title]").should("contain", "client-only/prioritize static")
+  })
+  it('should return result for wildcard on nested prioritized path', () => {
+    cy.visit('/routes/client-only/prioritize/nested').waitForRouteChange()
+    cy.get("[data-testid=title]").should("contain", "client-only/prioritize matchpath")
+    cy.get("[data-testid=params]").should("contain", "nested")
+  })
 })
