@@ -94,27 +94,6 @@ const GatsbyPluginImagePage = ({ data }) => {
         ))}
       </Grid>
 
-      <h2>
-        gatsby-plugin-image: Traced SVG Placeholder (fallback to DOMINANT_COLOR)
-      </h2>
-      <Grid data-cy="traced">
-        {data.default.nodes.map(node => (
-          <div key={node.title}>
-            <p>
-              <strong>
-                {node.title} ({node.filename.split(".").pop()})
-              </strong>
-            </p>
-            {node.description && <p>{node.description}</p>}
-            {node.traced ? (
-              <GatsbyImage image={node.traced} alt={node.title} />
-            ) : (
-              <SvgImage src={node.url} alt={node.title} />
-            )}
-          </div>
-        ))}
-      </Grid>
-
       <h2>gatsby-plugin-image: Blurred Placeholder</h2>
       <Grid data-cy="blurred">
         {data.default.nodes.map(node => (
@@ -260,11 +239,6 @@ export const pageQuery = graphql`
           width: 200
           layout: FIXED
           placeholder: DOMINANT_COLOR
-        )
-        traced: gatsbyImageData(
-          width: 200
-          layout: FIXED
-          placeholder: TRACED_SVG
         )
         blurred: gatsbyImageData(
           width: 200

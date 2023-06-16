@@ -1,5 +1,5 @@
 module.exports = {
-  "__version": "12.9.0",
+  "__version": "12.14.0",
   "content-reference": {
     "content-reference-many-2nd-level-loop": {
       "1": "<div data-cy-id=\"default-content-reference-many-2nd-level-loop\">\n  <h2>Content Reference: Many (2nd level loop)\n    <!-- --> (\n    <!-- -->4R29nQaAkgJFB5pkruYW9i\n    <!-- -->)</h2>\n  <p data-cy-id=\"integer\">[ContentfulContentTypeNumber]\n    <!-- -->42</p>\n  <p data-cy-id=\"text\">[ContentfulContentTypeText]\n    <!-- -->The quick brown fox jumps over the lazy dog.</p>\n  <p data-cy-id=\"reference\">[ContentfulContentTypeContentReference]\n    <!-- -->Content Reference: One (Loop A -&gt; B)\n    <!-- -->: [\n    <!-- -->Content Reference: One (Loop B -&gt; A)\n    <!-- -->]</p>\n  <h3>Linked from:</h3>\n  <pre><code>{\n  \"ContentfulContentTypeContentReference\": null\n}</code></pre>\n</div>"
