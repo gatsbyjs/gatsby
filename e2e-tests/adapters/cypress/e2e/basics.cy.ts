@@ -1,5 +1,8 @@
 describe('Basics', () => {
   beforeEach(() => {
+    cy.intercept("/gatsby-icon.png").as("static-folder-image")
+    cy.intercept("/static/astro-**.png").as("img-import")
+
     cy.visit('/').waitForRouteChange()
   })
 
@@ -9,8 +12,6 @@ describe('Basics', () => {
   })
   // If this test fails, run "gatsby build" and retry
   it('should serve assets from "static" folder', () => {
-    cy.intercept("/gatsby-icon.png").as("static-folder-image")
-
     cy.wait("@static-folder-image").should(req => {
       expect(req.response.statusCode).to.be.gte(200).and.lt(400)
     })
@@ -18,12 +19,24 @@ describe('Basics', () => {
     cy.get('[alt="Gatsby Monogram Logo"]').should('be.visible')
   })
   it('should serve assets imported through webpack', () => {
-    cy.intercept("/static/astro-**.png").as("img-import")
-
     cy.wait("@img-import").should(req => {
       expect(req.response.statusCode).to.be.gte(200).and.lt(400)
     })
 
     cy.get('[alt="Gatsby Astronaut"]').should('be.visible')
+  })
+  it(`should show custom 404 page on invalid URL`, () => {
+    cy.visit(`/non-existent-page`, {
+      failOnStatusCode: false,
+    })
+
+    cy.get('h1').should('contain', 'Page not found')
+  })
+  it('should apply CSS', () => {
+    cy.get(`h1`).should(
+      `have.css`,
+      `color`,
+      `rgb(21, 21, 22)`
+    )
   })
 })

@@ -2,6 +2,7 @@ import * as React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout"
 import gatsbyAstronaut from "../images/astro.png"
+import "./index.css"
 
 const routes = [
   {
@@ -56,24 +57,24 @@ const functions = [
 const IndexPage = () => {
   return (
     <Layout hideBackToHome>
-      <div style={astroWrapper}>
-        <img src={gatsbyAstronaut} alt="Gatsby Astronaut" style={astro} />
+      <div className="astroWrapper">
+        <img src={gatsbyAstronaut} alt="Gatsby Astronaut" className="astro" />
       </div>
-      <div style={titleStyles}>
+      <div className="titleStyles">
         <img src="/gatsby-icon.png" alt="Gatsby Monogram Logo" style={{ maxHeight: '40px', marginRight: '1rem' }} />
         <h1>Adapters</h1>
       </div>
-      <ul style={listStyles}>
+      <ul className="listStyles">
         {routes.map(link => (
-          <li key={link.url} style={{ ...listItemStyles }}>
-            <Link style={linkStyle} to={link.url}>
+          <li key={link.url} className="listItemStyles">
+            <Link className="linkStyle" to={link.url}>
               {link.text}
             </Link>
           </li>
         ))}
         {functions.map(link => (
-          <li key={link.url} style={{ ...listItemStyles }}>
-            <a style={linkStyle} href={link.url}>
+          <li key={link.url} className="listItemStyles">
+            <a className="linkStyle" href={link.url}>
               {link.text}
             </a>
           </li>
@@ -85,50 +86,4 @@ const IndexPage = () => {
 
 export default IndexPage
 
-export const Head = () => (
-  <>
-    <title>Adapters E2E</title>
-    <style>{`@keyframes float { 50% { transform: translateY(24px) } }`}</style>
-  </>
-)
-
-const titleStyles = {
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "row",
-}
-
-const astroWrapper = {
-  transform: "rotate(-18deg)",
-  position: "absolute",
-  top: "1.5rem",
-  right: "1.75rem"
-}
-
-const astro = {
-  maxHeight: "128px",
-  animationName: "float",
-  animationDuration: "5s",
-  animationIterationCount: "infinite",
-}
-
-const listStyles = {
-  marginTop: 30,
-  marginBottom: 72,
-  paddingLeft: 0,
-}
-
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 8,
-}
-
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-  textDecoration: "none",
-}
+export const Head = () => <title>Adapters E2E</title>
