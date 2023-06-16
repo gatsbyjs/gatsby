@@ -242,7 +242,7 @@ const translateFieldType = (
     fieldType = primitiveType(field)
   }
 
-  // TODO: what do we do when preview is enabled? Emptry required fields are valid for Contentfuls CP-API
+  // To support Contentful's CPA (Content Preview API), we have to allow empty required fields.
   // if (field.required) {
   //   fieldType.type = `${fieldType.type}!`
   // }

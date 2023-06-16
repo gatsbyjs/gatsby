@@ -535,6 +535,7 @@ export const createNodesForContentType = ({
   space,
   useNameForId,
   pluginConfig,
+  reporter,
 }: ICreateNodesForContentTypeArgs): Promise<unknown> => {
   const { create, createNodesPromise } = makeQueuedCreateNode({
     nodeCount: entries.length,
@@ -604,6 +605,25 @@ export const createNodesForContentType = ({
 
     const childrenNodes: Array<Node | IContentfulEntry | undefined> = []
 
+    const warnForUnresolvableLink = (
+      entryItem: IEntryWithAllLocalesAndWithoutLinkResolution<
+        FieldsType,
+        string
+      >,
+      fieldName: string,
+      fieldValue: unknown
+    ): void => {
+      reporter.warn(
+        `Unable to find linked content in ${entryItem.sys.id}!\nContent Type: ${
+          contentTypeItem.name
+        }, Field: ${fieldName}, Locale: ${locale.code}\n${JSON.stringify(
+          fieldValue,
+          null,
+          2
+        )}`
+      )
+    }
+
     // First create nodes for each of the entries of that content type
     const entryNodes: Array<IContentfulEntry | undefined | null> = entries.map(
       entryItem => {
@@ -666,7 +686,13 @@ export const createNodesForContentType = ({
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
                 const resolvableEntryItemFieldValue = entryItemFieldValue
-                  .filter(v => resolvable.has(createLinkRefId(v)))
+                  .filter(v => {
+                    const isResolvable = resolvable.has(createLinkRefId(v))
+                    if (!isResolvable) {
+                      warnForUnresolvableLink(entryItem, entryItemFieldKey, v)
+                    }
+                    return isResolvable
+                  })
                   .map(function (v) {
                     return mId(
                       space.sys.id,
@@ -675,10 +701,8 @@ export const createNodesForContentType = ({
                     )
                   })
 
-                if (resolvableEntryItemFieldValue.length !== 0) {
-                  entryItemFields[entryItemFieldKey] =
-                    resolvableEntryItemFieldValue
-                }
+                entryItemFields[entryItemFieldKey] =
+                  resolvableEntryItemFieldValue
               } else {
                 if (resolvable.has(createLinkRefId(entryItemFieldValue))) {
                   entryItemFields[entryItemFieldKey] = mId(
@@ -686,6 +710,13 @@ export const createNodesForContentType = ({
                     entryItemFieldValue.sys.id,
                     entryItemFieldValue.sys.linkType ||
                       entryItemFieldValue.sys.type
+                  )
+                } else {
+                  entryItemFields[entryItemFieldKey] = null
+                  warnForUnresolvableLink(
+                    entryItem,
+                    entryItemFieldKey,
+                    entryItemFieldValue
                   )
                 }
               }
