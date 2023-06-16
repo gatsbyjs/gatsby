@@ -1,5 +1,5 @@
 import fs from "fs-extra"
-import store from "~/store"
+import { getStore } from "~/store"
 import prettier from "prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
 
@@ -8,7 +8,7 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
     return
   }
 
-  const { remoteSchema } = store.getState()
+  const { remoteSchema } = getStore().getState()
 
   // the queries only change when the remote schema changes
   // no need to write them to disk in that case

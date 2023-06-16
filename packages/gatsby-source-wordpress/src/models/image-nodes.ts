@@ -1,6 +1,8 @@
+import { createModel } from "@rematch/core"
 import { stripImageSizesFromUrl } from "~/steps/source-nodes/fetch-nodes/fetch-referenced-media-items"
+import { IRootModel } from "."
 
-const imageNodes = {
+const imageNodes = createModel<IRootModel>()({
   state: {
     nodeMetaByUrl: {},
   },
@@ -29,6 +31,9 @@ const imageNodes = {
       return state
     },
   },
-}
+  effects: () => {
+    return {}
+  },
+})
 
 export default imageNodes

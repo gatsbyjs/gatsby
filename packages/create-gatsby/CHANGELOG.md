@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.11.0/packages/create-gatsby) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Chores
+
+- update [dev] minor and patch dependencies for create-gatsby [#38137](https://github.com/gatsbyjs/gatsby/issues/38137) ([66fa91f](https://github.com/gatsbyjs/gatsby/commit/66fa91f2e5a3791de3397b1909180660559ffba4))
+
 ## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.10.0/packages/create-gatsby) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)

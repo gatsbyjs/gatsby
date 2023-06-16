@@ -1,5 +1,5 @@
 import { formatLogMessage } from "~/utils/format-log-message"
-import store from "~/store"
+import { getStore, withPluginKey, snapshotContext } from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { contentPollingQuery } from "../../../utils/graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
@@ -13,10 +13,12 @@ const checkForNodeUpdates = async ({ cache, emitter }) => {
   // pause polling until we know wether or not there are new actions
   // if there aren't any we will unpause below, if there are some we will unpause
   // at the end of sourceNodes (triggered by WEBHOOK_RECEIVED below)
-  store.dispatch.develop.pauseRefreshPolling()
+  getStore().dispatch.develop.pauseRefreshPolling()
 
   // get the last sourced time
-  const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
+  const lastCompletedSourceTime = await cache.get(
+    withPluginKey(LAST_COMPLETED_SOURCE_TIME)
+  )
   const since = lastCompletedSourceTime - 500
 
   // make a graphql request for any actions that have happened since
@@ -44,8 +46,8 @@ const checkForNodeUpdates = async ({ cache, emitter }) => {
     })
   } else {
     // set new last completed source time and move on
-    await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
-    store.dispatch.develop.resumeRefreshPolling()
+    await cache.set(withPluginKey(LAST_COMPLETED_SOURCE_TIME), Date.now())
+    getStore().dispatch.develop.resumeRefreshPolling()
   }
 }
 
@@ -55,7 +57,7 @@ const refetcher = async (
   { reconnectionActivity = null, retryCount = 1 } = {}
 ) => {
   try {
-    const { refreshPollingIsPaused } = store.getState().develop
+    const { refreshPollingIsPaused } = getStore().getState().develop
 
     if (!refreshPollingIsPaused) {
       await checkForNodeUpdates(helpers)
@@ -129,8 +131,8 @@ const startPollingForContentUpdates = helpers => {
 
   startedPolling = true
 
-  const { verbose, develop } = store.getState().gatsbyApi.pluginOptions
-
+  const { verbose, develop } = getStore().getState().gatsbyApi.pluginOptions
+  const restoreContext = snapshotContext()
   const msRefetchInterval = develop.nodeUpdateInterval
 
   helpers.emitter.on(`COMPILATION_DONE`, () => {
@@ -146,6 +148,8 @@ const startPollingForContentUpdates = helpers => {
       // wait a second so that terminal output is more smooth
       setTimeout(() => {
         if (verbose) {
+          // I'm not sure why, but we're losing the ALS context here so we need to restore it manually
+          restoreContext()
           helpers.reporter.log(``)
           helpers.reporter.info(
             formatLogMessage`Watching for WordPress changes`

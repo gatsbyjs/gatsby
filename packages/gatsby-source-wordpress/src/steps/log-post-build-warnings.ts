@@ -1,5 +1,5 @@
 import { Step } from "./../utils/run-steps"
-import store from "~/store"
+import { getStore } from "~/store"
 import { formatLogMessage } from "~/utils/format-log-message"
 
 export const logPostBuildWarnings: Step = async (): Promise<void> => {
@@ -8,7 +8,7 @@ export const logPostBuildWarnings: Step = async (): Promise<void> => {
     gatsbyApi: {
       helpers: { reporter },
     },
-  } = store.getState()
+  } = getStore().getState()
 
   const helpUrl = `https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/debugging-and-troubleshooting.md#media-file-download-skipped`
 

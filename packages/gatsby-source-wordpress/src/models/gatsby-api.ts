@@ -5,6 +5,8 @@ import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/me
 import { cloneDeep } from "lodash"
 import { inPreviewMode } from "~/steps/preview"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { createModel } from "@rematch/core"
+import { IRootModel } from "."
 
 export interface IPluginOptionsPreset {
   presetName: string
@@ -316,7 +318,7 @@ export interface IGatsbyApiState {
   activePluginOptionsPresets?: Array<IPluginOptionsPreset>
 }
 
-const gatsbyApi = {
+const gatsbyApi = createModel<IRootModel>()({
   state: {
     helpers: {},
     pluginOptions: defaultPluginOptions,
@@ -359,6 +361,9 @@ const gatsbyApi = {
       return state
     },
   },
-}
+  effects: () => {
+    return {}
+  },
+})
 
 export default gatsbyApi

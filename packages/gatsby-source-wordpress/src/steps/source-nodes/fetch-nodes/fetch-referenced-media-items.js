@@ -1,5 +1,5 @@
 import chunk from "lodash/chunk"
-import store from "~/store"
+import { getStore } from "~/store"
 import atob from "atob"
 import filesize from "filesize"
 import PQueue from "p-queue"
@@ -148,7 +148,7 @@ export const createMediaItemNode = async ({
     return existingNode
   }
 
-  store.dispatch.logger.incrementActivityTimer({
+  getStore().dispatch.logger.incrementActivityTimer({
     typeName: `MediaItem`,
     by: 1,
   })
@@ -442,7 +442,7 @@ export const fetchMediaItemsBySourceUrl = async ({
             }
 
             // this is how we're caching nodes we've previously fetched.
-            store.dispatch.imageNodes.pushNodeMeta({
+            getStore().dispatch.imageNodes.pushNodeMeta({
               id: node.localFile.id,
               sourceUrl: sourceUrls[index],
               modifiedGmt: node.modifiedGmt,
@@ -562,7 +562,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   referencedMediaItemNodeIds,
   mediaItemUrls,
 }) {
-  const state = store.getState()
+  const state = getStore().getState()
   const queryInfo = state.remoteSchema.nodeQueries.mediaItems
   const { helpers, pluginOptions } = state.gatsbyApi
 

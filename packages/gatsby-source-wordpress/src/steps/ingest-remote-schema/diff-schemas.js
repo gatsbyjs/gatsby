@@ -1,6 +1,6 @@
 import url from "url"
 import fetchGraphql from "~/utils/fetch-graphql"
-import store from "~/store"
+import { getStore, withPluginKey } from "~/store"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { LAST_COMPLETED_SOURCE_TIME, MD5_CACHE_KEY } from "~/constants"
 
@@ -17,12 +17,12 @@ import {
 } from "~/utils/cache"
 
 const checkIfSchemaHasChanged = async ({ traceId }) => {
-  const state = store.getState()
+  const state = getStore().getState()
 
   const { helpers, pluginOptions } = state.gatsbyApi
 
   const lastCompletedSourceTime = await helpers.cache.get(
-    LAST_COMPLETED_SOURCE_TIME
+    withPluginKey(LAST_COMPLETED_SOURCE_TIME)
   )
 
   const activity = helpers.reporter.activityTimer(
@@ -68,7 +68,7 @@ Please consider addressing this issue by changing your WordPress settings or plu
     )
   }
 
-  let cachedSchemaMd5 = await helpers.cache.get(MD5_CACHE_KEY)
+  let cachedSchemaMd5 = await helpers.cache.get(withPluginKey(MD5_CACHE_KEY))
 
   let foundUsableHardCachedData
 
@@ -158,7 +158,7 @@ Please consider addressing this issue by changing your WordPress settings or plu
 
   // record wether the schema changed so other logic can beware
   // as well as the wpUrl because we need this sometimes :p
-  store.dispatch.remoteSchema.setState({
+  getStore().dispatch.remoteSchema.setState({
     schemaWasChanged,
     wpUrl,
     foundUsableHardCachedData,

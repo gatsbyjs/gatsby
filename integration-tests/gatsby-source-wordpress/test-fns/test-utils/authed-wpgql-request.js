@@ -1,6 +1,4 @@
-const {
-  default: fetchGraphql,
-} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { fetchGraphql } = require("./graphql")
 
 exports.authedWPGQLRequest = async (query, { variables } = {}) => {
   if (!process.env.WPGRAPHQL_URL) {

@@ -1,7 +1,7 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import { setPersistentCache } from "~/utils/cache"
 export const cacheFetchedTypes = async () => {
-  const state = store.getState()
+  const state = getStore().getState()
   const { fetchedTypes } = state.remoteSchema
 
   await setPersistentCache({

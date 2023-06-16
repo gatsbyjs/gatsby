@@ -3,13 +3,17 @@ import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-a
 import { getQueryInfoByTypeName } from "~/steps/source-nodes/helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { inPreviewMode } from "~/steps/preview/index"
-import { getPluginOptions } from "../../../utils/get-gatsby-api"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 import { findNamedTypeName, introspectionFieldTypeToSDL } from "../helpers"
 
-export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
+export const transformListOfGatsbyNodes = ({
+  field,
+  fieldName,
+  pluginOptions,
+}) => {
+  const prefix = pluginOptions.schema.typePrefix
   const typeSDLString = introspectionFieldTypeToSDL(field.type)
-  const typeName = buildTypeName(findNamedTypeName(field.type))
+  const typeName = buildTypeName(findNamedTypeName(field.type), prefix)
 
   return {
     type: typeSDLString,
@@ -37,9 +41,10 @@ export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
 }
 
 export const buildGatsbyNodeObjectResolver =
-  ({ field, fieldName }) =>
+  ({ field, fieldName, pluginOptions }) =>
   async (source, _args, context) => {
-    const typeName = buildTypeName(field.type.name)
+    const prefix = pluginOptions.schema.typePrefix
+    const typeName = buildTypeName(field.type.name, prefix)
     const nodeField = source[fieldName]
 
     if (!nodeField || (nodeField && !nodeField.id)) {
@@ -51,15 +56,11 @@ export const buildGatsbyNodeObjectResolver =
       type: typeName,
     })
 
-    const {
-      schema: { typePrefix: prefix },
-    } = getPluginOptions()
-
     if (
       existingNode?.__typename &&
       !existingNode.__typename.startsWith(prefix)
     ) {
-      existingNode.__typename = buildTypeName(existingNode.__typename)
+      existingNode.__typename = buildTypeName(existingNode.__typename, prefix)
     }
 
     if (existingNode) {
@@ -110,8 +111,11 @@ export const buildGatsbyNodeObjectResolver =
   }
 
 export const transformGatsbyNodeObject = transformerApi => {
-  const { field } = transformerApi
-  const typeName = buildTypeName(field.type.name)
+  const { field, pluginOptions } = transformerApi
+  const typeName = buildTypeName(
+    field.type.name,
+    pluginOptions.schema.typePrefix
+  )
 
   return {
     type: typeName,

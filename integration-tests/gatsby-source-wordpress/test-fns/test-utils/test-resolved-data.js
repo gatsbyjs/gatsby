@@ -1,6 +1,4 @@
-const {
-  default: fetchGraphql,
-} = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { fetchGraphql } = require("./graphql")
 const { authedWPGQLRequest } = require("./authed-wpgql-request")
 
 const normalizeResponse = data =>

@@ -1,5 +1,5 @@
 import chalk from "chalk"
-import store from "~/store"
+import { getStore } from "~/store"
 
 const formatLogMessage = (
   input: string | Array<string>,
@@ -8,7 +8,7 @@ const formatLogMessage = (
   let verbose = false
 
   if (typeof useVerboseStyle === `undefined`) {
-    verbose = store.getState().gatsbyApi.pluginOptions.verbose
+    verbose = getStore().getState().gatsbyApi.pluginOptions.verbose
   }
 
   let message

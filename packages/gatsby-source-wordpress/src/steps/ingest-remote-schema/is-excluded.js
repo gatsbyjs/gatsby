@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import {
   findNamedTypeName,
   getTypeSettingsByType,
@@ -46,7 +46,7 @@ const fieldIsExcludedOnAll = ({ pluginOptions, field }) => {
 }
 
 const fieldIsExcludedOnParentType = ({ field, parentType }) => {
-  const state = store.getState()
+  const state = getStore().getState()
   const { typeMap } = state.remoteSchema
 
   const fullType = typeMap.get(findNamedTypeName(parentType))
