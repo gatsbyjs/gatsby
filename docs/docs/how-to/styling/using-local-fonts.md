@@ -13,7 +13,7 @@ This guide covers how to add local fonts to your Gatsby site.
 
 ### Place the font files into your project
 
-When you downloaded your font file(s), e.g. from [Inter](https://rsms.me/inter/) you fill most likely have a bunch of different files available (this can differ a lot between fonts). You'll want to use the "Web" versions or [Variable Fonts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide) versions of your font. They are optimized for the usage on the web.
+When you downloaded your font file(s), e.g. from [Inter](https://rsms.me/inter/) you will most likely have a bunch of different files available (this can differ a lot between fonts). You'll want to use the "Web" versions or [Variable Fonts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide) versions of your font. They are optimized for the usage on the web.
 
 Furthermore, in this next step you should only choose the font styles and weights you absolutely must, as it's benefitial for performance to limit the number of fonts.
 
@@ -23,7 +23,7 @@ The `static` folder (see the [Using the Static Folder](/docs/how-to/images-and-m
 
 ### Preload your fonts
 
-For the best performance possible it's recommended to [preload](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) your font files. Add a `gatsby-ssr.js` if not existent yet and add the following:
+For the best performance possible it's recommended to [preload](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) your font files. Create a `gatsby-ssr.js` file in the root of the project (if not already there), and add the following:
 
 ```js:title=gatsby-ssr.js
 import * as React from "react"
