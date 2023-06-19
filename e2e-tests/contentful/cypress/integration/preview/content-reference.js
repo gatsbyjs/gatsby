@@ -1,4 +1,4 @@
-describe(`content-reference`, () => {
+describe(`prewview-content-reference`, () => {
   beforeEach(() => {
     cy.visit("/content-reference").waitForRouteChange()
   })
@@ -38,6 +38,12 @@ describe(`content-reference`, () => {
   it(`content-reference-one-self-reference`, () => {
     cy.get(
       '[data-cy-id="default-content-reference-one-self-reference"]'
+    ).snapshot()
+  })
+  // Most relevant preview api test (the others are still good to test!)
+  it(`content-reference-preview-api-test`, () => {
+    cy.get(
+      '[data-cy-id="default-preview-api-test-unpublished-and-linking-to-non-existing-entry"]'
     ).snapshot()
   })
 })
