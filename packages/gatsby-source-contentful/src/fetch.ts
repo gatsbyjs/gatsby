@@ -64,6 +64,15 @@ const createContentfulErrorMessage = (e: any): string => {
     return axiosErrorMessage.filter(Boolean).join(` `)
   }
 
+  interface IContentfulAPIError {
+    status?: number
+    statusText?: string
+    requestId?: string
+    message: string
+    details: Record<string, unknown>
+    request?: Record<string, unknown>
+  }
+
   // If it is not an axios error, we assume that we got a Contentful SDK error and try to parse it
   const errorMessage = [e.name]
   const errorDetails: Array<string> = []
@@ -82,7 +91,7 @@ const createContentfulErrorMessage = (e: any): string => {
      *    !request?: Record<string, unknown>
      *  }
      */
-    const errorData = JSON.parse(e.message)
+    const errorData: IContentfulAPIError = JSON.parse(e.message)
     errorMessage.push(errorData.status && String(errorData.status))
     errorMessage.push(errorData.statusText)
     errorMessage.push(errorData.message)
