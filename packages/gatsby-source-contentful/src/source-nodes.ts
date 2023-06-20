@@ -238,6 +238,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       existingNodes,
       entryList,
       assets,
+      spaceId: space.sys.id,
     })
 
     // Build foreign reference map before starting to insert any nodes
@@ -268,7 +269,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     entryList.forEach(entries => {
       entries.forEach(entry => {
         if (entry) {
-          newOrUpdatedEntries?.add(createRefId(entry))
+          newOrUpdatedEntries?.add(createRefId(entry, space.sys.id))
         }
       })
     })
@@ -380,7 +381,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         ) {
           return
         }
-        const refId = createRefId(n)
+        const refId = createRefId(n, space.sys.id)
         if (n.sys.id && foreignReferenceMap[refId]) {
           foreignReferenceMap[refId].forEach(foreignReference => {
             const { name, id, type, spaceId } = foreignReference

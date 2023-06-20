@@ -118,11 +118,14 @@ export const createRefId = (
   node:
     | IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
     | IContentfulEntry
-    | Asset
-): string => `${node.sys.id}___${node.sys.type}`
+    | Asset,
+  spaceId: string
+): string => `${spaceId}___${node.sys.id}___${node.sys.type}`
 
-export const createLinkRefId = (link: IContentfulLink): string =>
-  `${link.sys.id}___${link.sys.linkType}`
+export const createLinkRefId = (
+  link: IContentfulLink,
+  spaceId: string
+): string => `${spaceId}___${link.sys.id}___${link.sys.linkType}`
 
 export const buildEntryList = ({
   contentTypeItems,
@@ -156,27 +159,29 @@ export const buildResolvableSet = ({
   entryList,
   existingNodes = new Map<string, IContentfulEntry>(),
   assets = [],
+  spaceId,
 }: {
   entryList: Array<
     Array<IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>>
   >
   existingNodes: Map<string, IContentfulEntry>
   assets: Array<Asset>
+  spaceId: string
 }): Set<string> => {
   const resolvable: Set<string> = new Set()
   existingNodes.forEach(node => {
     if (node.internal.owner === `gatsby-source-contentful` && node?.sys?.id) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(createRefId(node))
+      resolvable.add(createRefId(node, spaceId))
     }
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry => resolvable.add(createRefId(entry)))
+    entries.forEach(entry => resolvable.add(createRefId(entry, spaceId)))
   })
 
-  assets.forEach(assetItem => resolvable.add(createRefId(assetItem)))
+  assets.forEach(assetItem => resolvable.add(createRefId(assetItem, spaceId)))
 
   return resolvable
 }
@@ -292,7 +297,7 @@ export const buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
-                const key = createLinkRefId(v)
+                const key = createLinkRefId(v, space.sys.id)
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
                   return
@@ -319,7 +324,7 @@ export const buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = createLinkRefId(entryItemFieldValue)
+            const key = createLinkRefId(entryItemFieldValue, space.sys.id)
             // Don't create link to an unresolvable field.
             if (!resolvable.has(key)) {
               return
@@ -687,7 +692,9 @@ export const createNodesForContentType = ({
                 // is empty due to links to missing entities
                 const resolvableEntryItemFieldValue = entryItemFieldValue
                   .filter(v => {
-                    const isResolvable = resolvable.has(createLinkRefId(v))
+                    const isResolvable = resolvable.has(
+                      createLinkRefId(v, space.sys.id)
+                    )
                     if (!isResolvable) {
                       warnForUnresolvableLink(entryItem, entryItemFieldKey, v)
                     }
@@ -704,7 +711,11 @@ export const createNodesForContentType = ({
                 entryItemFields[entryItemFieldKey] =
                   resolvableEntryItemFieldValue
               } else {
-                if (resolvable.has(createLinkRefId(entryItemFieldValue))) {
+                if (
+                  resolvable.has(
+                    createLinkRefId(entryItemFieldValue, space.sys.id)
+                  )
+                ) {
                   entryItemFields[entryItemFieldKey] = mId(
                     space.sys.id,
                     entryItemFieldValue.sys.id,
@@ -725,7 +736,8 @@ export const createNodesForContentType = ({
         })
 
         // Add reverse linkages if there are any for this node
-        const foreignReferences = foreignReferenceMap[createRefId(entryItem)]
+        const foreignReferences =
+          foreignReferenceMap[createRefId(entryItem, space.sys.id)]
         const linkedFromFields = {}
         if (foreignReferences) {
           foreignReferences.forEach(foreignReference => {

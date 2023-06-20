@@ -78,12 +78,15 @@ describe(`generic`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const allNodes = [...currentSyncData.entries, ...currentSyncData.assets]
 
     allNodes.forEach(node =>
-      expect(resolvable).toContain(`${node.sys.id}___${node.sys.type}`)
+      expect(resolvable).toContain(
+        `${space.sys.id}___${node.sys.id}___${node.sys.type}`
+      )
     )
   })
   it(`builds foreignReferenceMap`, () => {
@@ -95,6 +98,7 @@ describe(`generic`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMapState = buildForeignReferenceMap({
@@ -110,20 +114,20 @@ describe(`generic`, () => {
     })
     const referenceKeys = Object.keys(foreignReferenceMapState.backLinks)
     const expectedReferenceKeys = [
-      `2Y8LhXLnYAYqKCGEWG4EKI___Asset`,
-      `3wtvPBbBjiMKqKKga8I2Cu___Asset`,
-      `4LgMotpNF6W20YKmuemW0a___Entry`,
-      `4zj1ZOfHgQ8oqgaSKm4Qo2___Asset`,
-      `6m5AJ9vMPKc8OUoQeoCS4o___Asset`,
-      `6t4HKjytPi0mYgs240wkG___Asset`,
-      `7LAnCobuuWYSqks6wAwY2a___Entry`,
-      `10TkaLheGeQG6qQGqWYqUI___Asset`,
-      `24DPGBDeGEaYy8ms4Y8QMQ___Entry`,
-      `651CQ8rLoIYCeY6G0QG22q___Entry`,
-      `JrePkDVYomE8AwcuCUyMi___Entry`,
-      `KTRF62Q4gg60q6WCsWKw8___Asset`,
-      `wtrHxeu3zEoEce2MokCSi___Asset`,
-      `Xc0ny7GWsMEMCeASWO2um___Asset`,
+      `rocybtov1ozk___2Y8LhXLnYAYqKCGEWG4EKI___Asset`,
+      `rocybtov1ozk___3wtvPBbBjiMKqKKga8I2Cu___Asset`,
+      `rocybtov1ozk___4LgMotpNF6W20YKmuemW0a___Entry`,
+      `rocybtov1ozk___4zj1ZOfHgQ8oqgaSKm4Qo2___Asset`,
+      `rocybtov1ozk___6m5AJ9vMPKc8OUoQeoCS4o___Asset`,
+      `rocybtov1ozk___6t4HKjytPi0mYgs240wkG___Asset`,
+      `rocybtov1ozk___7LAnCobuuWYSqks6wAwY2a___Entry`,
+      `rocybtov1ozk___10TkaLheGeQG6qQGqWYqUI___Asset`,
+      `rocybtov1ozk___24DPGBDeGEaYy8ms4Y8QMQ___Entry`,
+      `rocybtov1ozk___651CQ8rLoIYCeY6G0QG22q___Entry`,
+      `rocybtov1ozk___JrePkDVYomE8AwcuCUyMi___Entry`,
+      `rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset`,
+      `rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset`,
+      `rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset`,
     ]
     expect(referenceKeys).toHaveLength(expectedReferenceKeys.length)
     expect(referenceKeys).toEqual(expect.arrayContaining(expectedReferenceKeys))
@@ -132,10 +136,10 @@ describe(`generic`, () => {
       expect(resolvable).toContain(referenceId)
 
       let expectedLength = 1
-      if (referenceId === `651CQ8rLoIYCeY6G0QG22q___Entry`) {
+      if (referenceId === `rocybtov1ozk___651CQ8rLoIYCeY6G0QG22q___Entry`) {
         expectedLength = 2
       }
-      if (referenceId === `7LAnCobuuWYSqks6wAwY2a___Entry`) {
+      if (referenceId === `rocybtov1ozk___7LAnCobuuWYSqks6wAwY2a___Entry`) {
         expectedLength = 3
       }
       expect(foreignReferenceMapState.backLinks[referenceId]).toHaveLength(
@@ -155,6 +159,7 @@ describe(`Process contentful data (by name)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMapState = buildForeignReferenceMap({
@@ -170,13 +175,15 @@ describe(`Process contentful data (by name)`, () => {
     })
 
     expect(
-      foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
-        .name
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___24DPGBDeGEaYy8ms4Y8QMQ___Entry`
+      ][0].name
     ).toBe(`ContentfulContentTypeProduct`)
 
     expect(
-      foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
-        .name
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___2Y8LhXLnYAYqKCGEWG4EKI___Asset`
+      ][0].name
     ).toBe(`ContentfulContentTypeBrand`)
   })
 
@@ -189,6 +196,7 @@ describe(`Process contentful data (by name)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
@@ -279,6 +287,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
@@ -365,6 +374,7 @@ describe(`Process contentful data (by id)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
     const foreignReferenceMapState = buildForeignReferenceMap({
       contentTypeItems,
@@ -379,13 +389,15 @@ describe(`Process contentful data (by id)`, () => {
     })
 
     expect(
-      foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
-        .name
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___24DPGBDeGEaYy8ms4Y8QMQ___Entry`
+      ][0].name
     ).toBe(`ContentfulContentType2PqfXuJwE8QSyKuM0U6W8M`)
 
     expect(
-      foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
-        .name
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___2Y8LhXLnYAYqKCGEWG4EKI___Asset`
+      ][0].name
     ).toBe(`ContentfulContentTypeSFzTZbSuM8CoEwygeUYes`)
   })
 
@@ -397,6 +409,7 @@ describe(`Process contentful data (by id)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
     const foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
