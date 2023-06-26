@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.11.0/packages/gatsby-core-utils) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Bug Fixes
+
+- update typescript [#38133](https://github.com/gatsbyjs/gatsby/issues/38133) ([aa7a078](https://github.com/gatsbyjs/gatsby/commit/aa7a078383ca5a549743be3269e9bde44655a185))
+
+#### Chores
+
+- Various `yarn bootstrap` fixes fixes [#38223](https://github.com/gatsbyjs/gatsby/issues/38223) ([df12265](https://github.com/gatsbyjs/gatsby/commit/df1226576b911be0f962c149c0bcbad279d9f806))
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.10.0/packages/gatsby-core-utils) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)

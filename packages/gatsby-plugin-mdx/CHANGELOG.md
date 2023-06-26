@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.11.0/packages/gatsby-plugin-mdx) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby [#38161](https://github.com/gatsbyjs/gatsby/issues/38161) ([9e27a90](https://github.com/gatsbyjs/gatsby/commit/9e27a906d2e2c58aebf5142e70115cfda6cab818))
+- update dependency astring to ^1.8.5 for gatsby-plugin-mdx [#38150](https://github.com/gatsbyjs/gatsby/issues/38150) ([f0ee58f](https://github.com/gatsbyjs/gatsby/commit/f0ee58f5a6a41842f86bb283df7e40f0c21b302e))
+- update typescript [#38133](https://github.com/gatsbyjs/gatsby/issues/38133) ([aa7a078](https://github.com/gatsbyjs/gatsby/commit/aa7a078383ca5a549743be3269e9bde44655a185))
+- Use `latest` for acorn's `ecmaVersion` [#38126](https://github.com/gatsbyjs/gatsby/issues/38126) ([5020b74](https://github.com/gatsbyjs/gatsby/commit/5020b7450fba1ac565c2a7eee300706e00b5ea83))
+
 ## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.10.0/packages/gatsby-plugin-mdx) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)

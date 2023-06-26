@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@7.11.0/packages/gatsby-plugin-preact) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Chores
+
+- update dependency preact to ^10.15.1 for gatsby-plugin-preact [#38169](https://github.com/gatsbyjs/gatsby/issues/38169) ([9bfa51f](https://github.com/gatsbyjs/gatsby/commit/9bfa51fce541cd3b12a60ec71a8b4f0358fb2ad1))
+
 ## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@7.10.0/packages/gatsby-plugin-preact) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)

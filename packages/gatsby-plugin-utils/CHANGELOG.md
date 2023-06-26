@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.11.0/packages/gatsby-plugin-utils) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Bug Fixes
+
+- update typescript [#38133](https://github.com/gatsbyjs/gatsby/issues/38133) ([aa7a078](https://github.com/gatsbyjs/gatsby/commit/aa7a078383ca5a549743be3269e9bde44655a185))
+
+#### Chores
+
+- update dependency rimraf to ^5.0.1 for gatsby-plugin-utils [#38144](https://github.com/gatsbyjs/gatsby/issues/38144) ([10b2ef7](https://github.com/gatsbyjs/gatsby/commit/10b2ef7988cb52e64e875e5bf0f9e2ed6c50f265))
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.10.0/packages/gatsby-plugin-utils) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)
