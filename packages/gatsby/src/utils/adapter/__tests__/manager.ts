@@ -26,7 +26,7 @@ jest.mock(`../../engines-helpers`, () => {
 
 function mockStoreState(
   state: IGatsbyState,
-  additionalState: IGatsbyState = {} as IGatsbyState
+  additionalState: Partial<IGatsbyState> = {}
 ): void {
   const mergedState = { ...state, ...additionalState }
   ;(store.getState as jest.Mock).mockReturnValue(mergedState)
@@ -52,6 +52,44 @@ describe(`getRoutesManifest`, () => {
     const routesManifest = getRoutesManifest()
 
     expect(routesManifest).toMatchSnapshot()
+  })
+
+  it(`should respect "never" trailingSlash config option`, () => {
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config, trailingSlash: `never` },
+    })
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`]))
+
+    const routesManifest = getRoutesManifest()
+
+    expect(routesManifest).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: `/` }),
+        expect.objectContaining({ path: `/ssr` }),
+        expect.objectContaining({ path: `/dsg` }),
+        expect.objectContaining({ path: `/api/static` }),
+      ])
+    )
+  })
+
+  it(`should respect "always" trailingSlash config option`, () => {
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config, trailingSlash: `always` },
+    })
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`]))
+
+    const routesManifest = getRoutesManifest()
+
+    expect(routesManifest).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: `/` }),
+        expect.objectContaining({ path: `/ssr/` }),
+        expect.objectContaining({ path: `/dsg/` }),
+        expect.objectContaining({ path: `/api/static/` }),
+      ])
+    )
   })
 })
 
