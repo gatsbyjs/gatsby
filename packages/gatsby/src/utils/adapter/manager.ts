@@ -1,4 +1,5 @@
 import reporter from "gatsby-cli/lib/reporter"
+import { applyTrailingSlashOption, TrailingSlash } from "gatsby-page-utils"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { posix } from "path"
@@ -50,7 +51,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   let adapter: IAdapter
 
   const config = store.getState().config
-  const { adapter: adapterFromGatsbyConfig } = config
+  const { adapter: adapterFromGatsbyConfig, trailingSlash, pathPrefix } = config
 
   // If the user specified an adapter inside their gatsby-config, use that instead of trying to figure out an adapter for the current environment
   if (adapterFromGatsbyConfig) {
@@ -138,6 +139,9 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           return _functionsManifest
         },
         reporter,
+        // Our internal Gatsby config allows this to be undefined but for the adapter we should always pass through the default values and correctly show this in the TypeScript types
+        trailingSlash: trailingSlash as TrailingSlash,
+        pathPrefix: pathPrefix as string,
       }
 
       await adapter.adapt(adaptContext)
@@ -169,6 +173,14 @@ function getRoutesManifest(): RoutesManifest {
   function addRoute(route: Route): void {
     if (!route.path.startsWith(`/`)) {
       route.path = `/${route.path}`
+    }
+
+    // Apply trailing slash behavior unless it's a redirect. Redirects should always be exact matches
+    if (route.type !== `redirect`) {
+      route.path = applyTrailingSlashOption(
+        route.path,
+        state.config.trailingSlash
+      )
     }
 
     if (route.type !== `function`) {

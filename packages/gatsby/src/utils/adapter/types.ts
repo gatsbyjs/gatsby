@@ -1,4 +1,5 @@
 import type reporter from "gatsby-cli/lib/reporter"
+import type { TrailingSlash } from "gatsby-page-utils"
 import type { IHeader, HttpStatusCode } from "../../redux/types"
 
 interface IBaseRoute {
@@ -94,6 +95,16 @@ interface IDefaultContext {
 export interface IAdaptContext extends IDefaultContext {
   routesManifest: RoutesManifest
   functionsManifest: FunctionsManifest
+  /**
+   * Default: ""
+   * @see https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/
+   */
+  pathPrefix: string
+  /**
+   * Default: "always"
+   * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash
+   */
+  trailingSlash: TrailingSlash
 }
 
 export interface ICacheContext extends IDefaultContext {
@@ -124,6 +135,7 @@ export interface IAdapter {
    * - Apply HTTP headers to assets
    * - Apply redirects and rewrites. The adapter should can also create its own redirects/rewrites if necessary (e.g. mapping serverless functions to internal URLs).
    * - Wrap serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express-like](https://expressjs.com/) handlers.
+   * - Apply trailing slash behavior and path prefix to URLs
    * - Possibly upload assets to CDN
    *
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
