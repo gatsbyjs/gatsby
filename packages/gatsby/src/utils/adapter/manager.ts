@@ -391,3 +391,5 @@ function getFunctionsManifest(): FunctionsManifest {
 
   return functions
 }
+
+export { getRoutesManifest, getFunctionsManifest }
