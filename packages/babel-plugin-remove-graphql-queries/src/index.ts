@@ -303,6 +303,7 @@ export default function ({ types: t }): PluginObj {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
               (process.env.NODE_ENV === `test` ||
+                // When Storybook is running, we need to process the queries
                 process.env.npm_lifecycle_script?.includes(`storybook`) ||
                 state.opts.stage === `develop-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
