@@ -75,6 +75,8 @@ export const prepareOptions = (
     babel.createConfigItem(
       [
         resolve(`babel-plugin-remove-graphql-queries`),
+        // packages/babel-plugin-remove-graphql-queries/src/index.ts sets a default value for staticQueryDir
+        // They should be identical
         { stage, staticQueryDir: `page-data/sq/d` },
       ],
       {
