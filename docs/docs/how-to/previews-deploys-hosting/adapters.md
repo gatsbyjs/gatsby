@@ -10,6 +10,15 @@ Gatsby has different [rendering options](/docs/conceptual/rendering-options/) an
 
 This feature was added in `gatsby@5.X.0`.
 
+Gatsby has different [rendering options](/docs/conceptual/rendering-options/) and features like Deferred Static Generation (DSG) and Server-Side rendering (SSR) require more setup than classic static site generation (SSG). Users can also set [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) or create [redirects](/docs/reference/config-files/actions/#createRedirect). 
+
+Gatsby passes all the required information during the build to adapters to prepare these outputs for deployment on a specific platform. Here are some of the actions an adapter automatically takes:
+
+- Applies HTTP headers to assets
+- Applies redirects and rewrites. The adapter can also create its own redirects or rewrites if necessary, for example to map serverless functions to internal URLs.
+- Wraps serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express](https://expressjs.com/)-like handlers.
+- Possibly uploads assets to CDN
+
 ## Finding adapters
 
 You can use these official adapters:
