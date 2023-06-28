@@ -5,7 +5,7 @@ tableOfContentsDepth: 2
 
 ## Introduction
 
-You can set custom [HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) on the response of a given path. This allows you to, e.g. modify the caching behavior or configure access control. You can apply HTTP headers to static routes and redirects.
+You can set custom [HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) on the response of a given path. This allows you to modify the caching behavior or configure access control. You can apply HTTP headers to static routes and redirects.
 
 This feature was added in `gatsby@5.X.0`.
 
@@ -31,7 +31,7 @@ module.exports = {
 
 The `headers` option accepts an array of objects in the following shape:
 
-- `source`: A request path pattern. See [path matching](#path-matching) for more details on its syntax. The paths `/slug` and `/slug/` are equivalent since [trailing slashes](/docs/reference/config-files/gatsby-config/#trailingslash) are getting normalized (or in other words: You don't need to worry about setting correct trailing slashes).
+- `source`: A request path pattern. See [path matching](#path-matching) for more details on its syntax. The paths `/slug` and `/slug/` are equivalent since Gatsby normalizes [trailing slashes](/docs/reference/config-files/gatsby-config/#trailingslash).
 - `headers`: An array of objects in the following shape:
   - `key`: The case-insensitive name of the header
   - `value`: The value of the header
@@ -40,15 +40,15 @@ The `headers` option accepts an array of objects in the following shape:
 
 The order in which you insert values into `headers` doesn't matter as Gatsby determines the specificity of each `source` path. If two headers match the same path (through `source`) and set the same header `key`, the entry with the higher specificity will override the other. Otherwise entries will be merged together.
 
-Generally speaking, the headers get created in this order (e.g. static entries can override the other two):
+Generally speaking, the headers get created in this order. Note that static entries can override the first two:
 
-1. Default headers (see [defaults](#defaults))
-1. Entries with path matching on `source` (see [path matching](#path-matching))
-1. Entries with static `source` path
+1. [Default](#defaults) headers
+1. Entries with [path matching](#path-matching) on `source`
+1. Entries with a static `source` path
 
 ### Examples
 
-As this can still be a bit confusing, here are some examples. The `input` will represent what you can pass to the `headers` config option, `output` will be what is produced for the given matched path.
+To help illustrate how header overrides work, here are some examples. The `input` represents what you can pass to the `headers` config option and the `output` is what Gatsby produces for the given matched path.
 
 #### Non-overlapping keys
 
@@ -115,7 +115,7 @@ const output = [{ key: `x-custom-header`, value: `win` }]
 
 #### Specificity
 
-Gatsby internally adds scores (higher the score, higher the specificity) to each path matching entry and sorts it by that score — the entry with the highest specificity will override other matching entries. In this example, `/some-path/:slug` overrides the rest because it's more specific than `*` and `/some-path/*`.
+Gatsby internally adds scores to each path matching entry and sorts the entries by that score — the entry with the highest specificity will override other matching entries. In the following example, `/some-path/:slug` overrides the rest because it's more specific than `*` and `/some-path/*`.
 
 ```js
 const input = [
@@ -155,14 +155,14 @@ const output = [{ key: `x-custom-header`, value: `win` }]
 
 ## Path matching
 
-As you've already seen in the previous paragraphs, you can not only define static `source` paths like `/some-path/` but also ones with path matching. This allows you to target more than one path, opening up more flexibility. You can currently use two path matchers:
+As outlined in the previous paragraphs, you can not only define static `source` paths like `/some-path/` but also ones with path matching. This allows you to target more than one path, opening up more flexibility. You can currently use two path matchers:
 
-- Dynamic: Matching a path segment (no nested paths)
-- Wildcard: Matching every path segment after its definition
+- Dynamic: Matches a path segment (no nested paths)
+- Wildcard: Matches every path segment after its definition
 
 ### Dynamic path
 
-You can use `:` to declare a dynamic path, making `/some-path/:slug` match e.g. `/some-path/foo` and `/some-path/bar`.
+You can use a colon (`:`) to declare a dynamic path. For example, `/some-path/:slug` will match `/some-path/foo` and `/some-path/bar`.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -182,7 +182,7 @@ module.exports = {
 
 ### Wildcard path
 
-You can use `*` to declare a wildcard path, making `/some-path/*` match e.g. `/some-path/foo` and `/some-path/foo/bar`.
+You can use an asterisk (`*`) to declare a wildcard path. For example, `/some-path/*` will match `/some-path/foo` and `/some-path/foo/bar`.
 
 ```js:title=gatsby-config.js
 module.exports = {

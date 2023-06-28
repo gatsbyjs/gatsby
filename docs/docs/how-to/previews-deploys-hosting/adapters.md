@@ -4,9 +4,9 @@ title: Adapters
 
 ## Introduction
 
-Adapters are responsible for taking the production output from Gatsby and turning it into something your deployment platform understands. They make it easier to build and deploy Gatsby on any deployment platform.
+Adapters are responsible for taking the production output from Gatsby and turning it into something your deployment platform understands. They make it easier to build and deploy Gatsby sites on any deployment platform.
 
-Gatsby has different [rendering options](/docs/conceptual/rendering-options/) and features like DSG and SSR require more setup than classic SSG. Users can also set [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) or create [redirects](/docs/reference/config-files/actions/#createRedirect). Gatsby passes all the required information during the build to its adapters so that they can _adapt_ these outputs for deployment.
+Gatsby has different [rendering options](/docs/conceptual/rendering-options/) and features like Deferred Static Generation (DSG) and Server-Side Rendering (SSR) require more setup than classic Static Site Generation (SSG). Users can also set [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) or create [redirects](/docs/reference/config-files/actions/#createRedirect). Gatsby passes all the required information during the build to its adapters so that they can prepare these outputs for deployment.
 
 This feature was added in `gatsby@5.X.0`.
 
@@ -16,7 +16,9 @@ You can use these official adapters:
 
 - [gatsby-adapter-netlify](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify) for [Netlify](https://www.netlify.com/)
 
-You can [search npm for `gatsby-adapter`](https://www.npmjs.com/search?q=gatsby-adapter-) to find additional community adapters. Didn't find an adapter for your platform? Consider [creating an adapter](/docs/how-to/previews-deploys-hosting/creating-an-adapter/).
+To find additional community adapters, [search npm for `gatsby-adapter`](https://www.npmjs.com/search?q=gatsby-adapter-). 
+
+Can't find an adapter for your platform? Consider [creating an adapter](/docs/how-to/previews-deploys-hosting/creating-an-adapter/) yourself.
 
 ## Using adapters
 
@@ -30,7 +32,7 @@ module.exports = {
 }
 ```
 
-If your adapter is accepting custom options, you can set them like so:
+If the adapter accepts custom options, you can set them like this:
 
 ```js:title=gatsby-config.js
 const adapter = require("gatsby-adapter-foo")

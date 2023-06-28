@@ -230,7 +230,7 @@ By default, `graphqlTypegen` is only run during `gatsby develop`. Set this optio
 
 > Support added in `gatsby@5.X.0`
 
-You can set an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) or configure the [zero-configuration deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) through the `adapter` setting.
+You can set an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) or configure [zero-configuration deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) through the `adapter` setting.
 
 ```js:title=gatsby-config.js
 const adapter = require("gatsby-adapter-foo")
@@ -266,7 +266,7 @@ module.exports = {
 }
 ```
 
-Read the [HTTP headers guide](/docs/how-to/previews-deploys-hosting/headers/) to learn more about its syntax, options, and behaviors.
+Read the [HTTP headers guide](/docs/how-to/previews-deploys-hosting/headers/) to learn more about header syntax, options, and behaviors.
 
 ## polyfill
 

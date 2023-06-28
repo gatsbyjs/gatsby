@@ -17,7 +17,7 @@ The adapters feature was added in `gatsby@5.X.0`.
 
 ## Authoring
 
-An adapter's entrypoint has to have the following API:
+An adapter's entry point should have the following API:
 
 ```js
 /**
@@ -47,7 +47,7 @@ module.exports = createAdapterFoo
   summary={<em>TypeScript version</em>}
 >
 
-Gatsby makes a `AdapterInit` type available which you can use to author your adapter. It also accepts a generic for the adapter options:
+Gatsby makes a `AdapterInit` type available that you can use to author your adapter. It also accepts a generic for the adapter options:
 
 ```ts
 import type { AdapterInit } from "gatsby"
@@ -80,32 +80,32 @@ You can find all TypeScript types [on GitHub](https://github.com/gatsbyjs/gatsby
 
 </Collapsible>
 
-The adapter has to export a function as a default export with these object keys:
+The adapter should export a function as a default export with these object keys:
 
-- `name`: Unique name of the adapter. Please follow the naming convention `gatsby-adapter-name` or `@scope/gatsby-adapter-name` as it'll make it easier for folks to discover your adapter.
+- `name`: Unique name of the adapter. Please follow the naming convention `gatsby-adapter-<name>` or `@scope/gatsby-adapter-<name>` to make it easier for people to discover your adapter.
 - `cache` (Optional): Both handlers receive `directories` which are the directories that should be cached/restored for a build.
-  - `restore`: Hook to restore `directories` from previous builds. This is executed very early on in the build process. If `false` is returned Gatsby will skip its cache restoration.
+  - `restore`: Hook to restore `directories` from previous builds. Executed very early on in the build process. If the hook returns `false`, Gatsby will skip cache restoration.
   - `store`: Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
-- [`adapt`](#adapt): Hook to take Gatsby's output and prepare it for deployment on the adapter's platform. Executed as one of the last steps in the build process.
+- [`adapt`](#adapt): Hook to take Gatsby's output and prepare it for deployment on the adapter's platform. Executed as one of the last steps in the build process. Details on the inputs are [documented below](#adapt).
 
-If your adapter accepts custom options, consider setting default values (if reasonable). This will make it easier to use your adapter.
+If your adapter accepts custom options, consider setting default values to make the adapter easier to use.
 
-`cache.restore`, `cache.store`, and `adapt` receive the [`reporter` instance](/docs/reference/config-files/node-api-helpers/#reporter), so you can output structured logs to the user’s terminal. **However**, please don’t overdo it and keep the output to a minimum. The user will already get information what adapter is used and can debug things further by running the CLI with the `--verbose` flag.
+`cache.restore`, `cache.store`, and `adapt` receive the [`reporter` instance](/docs/reference/config-files/node-api-helpers/#reporter), so you can output structured logs to the user’s terminal. **However**, please don’t overdo it and keep the output to a minimum. If a user requires more details, they can always use the CLI with the `--verbose` flag to get information about the adapter and logs for debugging.
 
 ### adapt
 
 The `adapt` hook takes Gatsby's output and prepares it for deployment on the adapter's platform. It receives the following inputs:
 
-- `routesManifest`: Array of objects with three different types: `static`, `function`, and `redirect`. Each objects contains all necessary information to deploy and apply these routes. `static` routes will have default `headers` applied which users can extend/overwrite with the [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) option inside `gatsby-config`.
-- `functionsManifest`: Array of objects to give the adapter each function entrypoint and its required files.
+- `routesManifest`: Array of objects with three different types: `static`, `function`, and `redirect`. Each object contains all necessary information to deploy and apply these routes. `static` routes will have default `headers` applied, which users can extend or overwrite with the [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) option inside `gatsby-config`.
+- `functionsManifest`: Array of objects containing each function's entry point and required files.
 
-You can find the TypeScript types for these inputs on [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/types.ts) to learn more.
+You can find the TypeScript types for these inputs on [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/types.ts).
 
 The `adapt` hook should do the following things:
 
 - Apply HTTP headers to assets
-- Apply redirects and rewrites. The adapter should can also create its own redirects/rewrites if necessary (e.g. mapping serverless functions to internal URLs).
-- Wrap serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express-like](https://expressjs.com/) handlers.
+- Apply redirects and rewrites. The adapter can also create its own redirects and rewrites, if necessary (e.g. mapping serverless functions to internal URLs).
+- Wrap serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express](https://expressjs.com/)-like handlers.
 - Possibly upload assets to CDN
 
 ## Testing locally
@@ -121,7 +121,7 @@ module.exports = {
 }
 ```
 
-If you want to quickly prototype an adapter, you could also author your file(s) directly in an example project (before moving them to their own repository). Here's how:
+If you want to quickly prototype an adapter, you can also author your file(s) directly in an example project (before moving them to their own repository). Here's how:
 
 1. Create an adapter file called `gatsby-adapter-foo.js` at the root of your project:
 
@@ -150,15 +150,15 @@ If you want to quickly prototype an adapter, you could also author your file(s) 
    }
    ```
 
-1. If it's all working, don't forget to [publish](#publishing) your adapter so that the community can benefit from it.
+1. Once it works, don't forget to [publish](#publishing) your adapter so that the community can benefit from it.
 
 ## Publishing
 
-You'll need to publish your adapter to [npm](https://www.npmjs.com/) so that others can use it. If you have never published anything to npm, consider following their [guides](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+You'll need to publish your adapter to [npm](https://www.npmjs.com/) so that others can use it. If this is your first time publishing to npm, consider following their [guides](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
 
-Once your adapter is out there and people are using it, you’ll also need to think about making changes responsibly (following [semver](https://docs.npmjs.com/about-semantic-versioning)) or automating some of the maintenance work.
+Before you publish, keep in mind that once people start using your adapter, you'll need to make changes responsibly (following [semver](https://docs.npmjs.com/about-semantic-versioning)) and potentially automate some of the maintenance work.
 
-Be sure to go through this checklist before publishing your plugin for the first time:
+We recommend that you follow this checklist before you publish your adapter for the first time:
 
 - Choose a clear name for your adapter following this naming convention:
 
@@ -166,14 +166,14 @@ Be sure to go through this checklist before publishing your plugin for the first
   gatsby-adapter-<name>
   ```
 
-  If you want/need to publish the adapter under a [scope](https://docs.npmjs.com/about-scopes) follow the convention:
+  To publish the adapter under a [scope](https://docs.npmjs.com/about-scopes), follow this naming convention:
 
   ```
   @scope/gatsby-adapter-<name>
   ```
 
-- Your `README` should explain to the user in concise steps how to install, use, and configure your adapter (also see [How to write a plugin README](/contributing/docs-contributions/how-to-write-a-plugin-readme/)). The `README` will be the first thing a user sees so make sure that it's accessible to everyone.
-- Set `1.0.0` as your `version` field in your adapter's `package.json`. Afterwards follow [semantic versioning](https://docs.npmjs.com/about-semantic-versioning).
+- Your `README` should explain to the user in concise steps how to install, use, and configure your adapter (also see [How to write a plugin README](/contributing/docs-contributions/how-to-write-a-plugin-readme/)). The `README` will be the first thing a user reviews so make sure that it's accessible to everyone.
+- Set `1.0.0` as the `version` field in your adapter's `package.json`. For future releases, follow [semantic versioning](https://docs.npmjs.com/about-semantic-versioning).
 
   ```json:title=package.json
   {
@@ -205,7 +205,7 @@ Be sure to go through this checklist before publishing your plugin for the first
   }
   ```
 
-  If now Gatsby comes out with a new major version and your adapter didn't use any APIs that needed changes, you could mark your adapter compatible with Gatsby 5 and Gatsby 6 like so:
+  If Gatsby releases a new major version and your adapter doesn't require the new changes, you can mark your adapter as compatible with specific versions. For example, to mark your adapter as compatible with Gatsby 5 and Gatsby 6:
 
   ```json:title=package.json
   {
@@ -240,7 +240,7 @@ Be sure to go through this checklist before publishing your plugin for the first
 
   If you've generated TypeScript types, consider [adding a `types` key](https://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html).
 
-- Add a `prepare` script to your adapter's `package.json` that runs before `npm publish`. If your `build` script isn't automatically clearing the `dist` folder before doing a new build, add an additional `clean` script. This is to ensure that inside the `dist` folder no old artifacts are being published (e.g. you're renaming a file and without the `clean` the old file would still be published through `dist`). You could use [del-cli](https://www.npmjs.com/package/del-cli) to achieve this. It would look something like this:
+- Add a `prepare` script to your adapter's `package.json` that runs before `npm publish`. If the `build` script doesn't automatically clear the `dist` folder before a new build, add an additional `clean` script. This ensures that old artifacts aren't accidentally published. For example, if you rename a file and don't run `clean`, the old file will still be published through `dist`. You could use [del-cli](https://www.npmjs.com/package/del-cli) to achieve this. It would look something like this:
 
   ```json:title=package.json
   {
