@@ -96,12 +96,10 @@ export interface IAdaptContext extends IDefaultContext {
   routesManifest: RoutesManifest
   functionsManifest: FunctionsManifest
   /**
-   * Default: ""
-   * @see https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/
+   * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#pathprefix
    */
   pathPrefix: string
   /**
-   * Default: "always"
    * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash
    */
   trailingSlash: TrailingSlash
