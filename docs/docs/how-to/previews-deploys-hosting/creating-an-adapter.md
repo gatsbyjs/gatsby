@@ -83,7 +83,7 @@ You can find all TypeScript types [on GitHub](https://github.com/gatsbyjs/gatsby
 The adapter should export a function as a default export with these object keys:
 
 - `name`: Unique name of the adapter. Please follow the naming convention `gatsby-adapter-<name>` or `@scope/gatsby-adapter-<name>` to make it easier for people to discover your adapter.
-- `cache` (Optional): Both handlers receive `directories` which are the directories that should be cached/restored for a build.
+- `cache` (Optional): Both handlers receive `directories` which are the directories that should be cached/restored for a build and the [`reporter` instance](/docs/reference/config-files/node-api-helpers/#reporter).
   - `restore`: Hook to restore `directories` from previous builds. Executed very early on in the build process. If the hook returns `false`, Gatsby will skip cache restoration.
   - `store`: Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
 - [`adapt`](#adapt): Hook to take Gatsby's output and prepare it for deployment on the adapter's platform. Executed as one of the last steps in the build process. Details on the inputs are [documented below](#adapt).
@@ -259,4 +259,4 @@ We recommend that you follow this checklist before you publish your adapter for 
 - [gatsby-adapter-netlify source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify)
 - [Adapters](/docs/how-to/previews-deploys-hosting/adapters/)
 - [Zero-Configuration Deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/)
-- [Gatsby Adapters RFC](#TODO)
+- [Gatsby Adapters RFC](https://github.com/gatsbyjs/gatsby/discussions/38231)

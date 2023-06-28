@@ -62,11 +62,13 @@ The only exception to this is the file `/sw.js`, which needs to be revalidated u
 cache-control: public, max-age=0, must-revalidate
 ```
 
-## Setting up caching on different hosts
+## Setting up caching on different deployment platforms
 
-How you set up your caching depends on how you host your site. We encourage people to create [Gatsby Adapters](/docs/how-to/previews-deploys-hosting/adapters/) per host to automate the creation of caching headers. Gatsby automatically applies the caching headers mentioned above and passes them to adapters. The adapter will only need to apply them.
+How you set up your caching depends on how you host your site. We encourage you to use a [Gatsby adapter](/docs/how-to/previews-deploys-hosting/adapters/) for your deployment platform (if available) to automate the creation and application of the caching headers mentioned above.
 
-If an adapter doesn’t exist for your deployment platform, you can also search for plugins like:
+If an adapter doesn’t exist for your deployment platform yet, consider [creating an adapter](/docs/how-to/previews-deploys-hosting/creating-an-adapter/).
+
+Since Gatsby adapters were introduced in later Gatsby releases, you could also look out for plugins like:
 
 - [gatsby-plugin-s3](/plugins/gatsby-plugin-s3/)
 - [gatsby-plugin-fastify](/plugins/gatsby-plugin-fastify/)

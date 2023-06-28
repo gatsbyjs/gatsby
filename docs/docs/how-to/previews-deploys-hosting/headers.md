@@ -38,7 +38,11 @@ The `headers` option accepts an array of objects in the following shape:
 
 ## Overriding behavior
 
-The order in which you insert values into `headers` doesn't matter as Gatsby determines the specificity of each `source` path. If two headers match the same path (through `source`) and set the same header `key`, the entry with the higher specificity will override the other. Otherwise entries will be merged together.
+The order in which you insert values into `headers` doesn't matter because Gatsby determines the specificity of each `source` path.
+
+If two headers match the same path and set the same header `key`, the entry with the more specific `source` path will override the other. Examples of the overriding behavior are included [below](#examples).
+
+Once entries with matching paths are handled, all header entries are merged together into one array of headers.
 
 Generally speaking, the headers get created in this order. Note that static entries can override the first two:
 
