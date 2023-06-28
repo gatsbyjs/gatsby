@@ -1,5 +1,6 @@
 import type { GatsbyConfig } from "gatsby"
 import debugAdapter from "./debug-adapter"
+import { siteDescription, title } from "./constants"
 
 const shouldUseDebugAdapter = process.env.USE_DEBUG_ADAPTER ?? false
 
@@ -14,8 +15,8 @@ if (shouldUseDebugAdapter) {
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: "adapters",
-    siteDescription: "E2E tests for Gatsby adapters",
+    title,
+    siteDescription,
   },
   trailingSlash: "never",
   plugins: [],

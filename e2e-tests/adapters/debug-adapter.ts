@@ -15,13 +15,17 @@ const createTestingAdapter: AdapterInit = (adapterOptions) => {
     adapt({
       routesManifest,
       functionsManifest,
+      pathPrefix,
+      trailingSlash,
       reporter,
     }) {
       reporter.info(`[gatsby-adapter-debug] adapt()`)
 
       console.log(`[gatsby-adapter-debug] adapt()`, inspect({
         routesManifest,
-        functionsManifest
+        functionsManifest,
+        pathPrefix,
+        trailingSlash,
       }, {
         depth: Infinity,
         colors: true

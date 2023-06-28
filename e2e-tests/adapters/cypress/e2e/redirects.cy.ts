@@ -10,7 +10,7 @@ describe("Redirects", () => {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.get(`h1`).should(`contain`, `Hit`)
+    cy.get(`h1`).should(`have.text`, `Hit`)
     cy.url().should(`equal`, `${window.location.origin}/routes/redirect/hit`)
   })
   it("should respect that pages take precedence over redirects", () => {
@@ -18,7 +18,7 @@ describe("Redirects", () => {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.get(`h1`).should(`contain`, `Existing`)
+    cy.get(`h1`).should(`have.text`, `Existing`)
     cy.url().should(`equal`, `${window.location.origin}/routes/redirect/existing`)
   })
   it("should support hash parameter on direct visit", () => {

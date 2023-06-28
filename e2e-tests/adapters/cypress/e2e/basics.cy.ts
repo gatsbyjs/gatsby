@@ -1,3 +1,5 @@
+import { title } from "../../constants"
+
 describe('Basics', () => {
   beforeEach(() => {
     cy.intercept("/gatsby-icon.png").as("static-folder-image")
@@ -7,7 +9,7 @@ describe('Basics', () => {
   })
 
   it('should display index page', () => {
-    cy.get('h1').should('contain', 'Adapters')
+    cy.get('h1').should('have.text', title)
     cy.title().should('eq', 'Adapters E2E')
   })
   // If this test fails, run "gatsby build" and retry
@@ -30,7 +32,7 @@ describe('Basics', () => {
       failOnStatusCode: false,
     })
 
-    cy.get('h1').should('contain', 'Page not found')
+    cy.get('h1').should('have.text', 'Page not found')
   })
   it('should apply CSS', () => {
     cy.get(`h1`).should(

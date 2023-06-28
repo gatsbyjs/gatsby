@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, Slice } from "gatsby"
 
 const Layout = ({ children, hideBackToHome = false }) => (
   <>
@@ -11,6 +11,7 @@ const Layout = ({ children, hideBackToHome = false }) => (
     <main style={pageStyles}>
       {children}
     </main>
+    <Slice alias="footer" />
   </>
 )
 

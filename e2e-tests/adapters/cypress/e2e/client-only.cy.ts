@@ -70,8 +70,8 @@ describe('Paths', () => {
   for (const route of routes) {
     it(`should return "${route.name}" result`, () => {
       cy.visit(`/routes/${route.name}${route.param ? `/${route.param}` : ''}`).waitForRouteChange()
-      cy.get("[data-testid=title]").should("contain", route.name)
-      cy.get("[data-testid=params]").should("contain", route.param)
+      cy.get("[data-testid=title]").should("have.text", route.name)
+      cy.get("[data-testid=params]").should("have.text", route.param)
     })
   }
 })
@@ -79,11 +79,11 @@ describe('Paths', () => {
 describe('Prioritize', () => {
   it('should prioritize static page over matchPath page with wildcard', () => {
     cy.visit('/routes/client-only/prioritize').waitForRouteChange()
-    cy.get("[data-testid=title]").should("contain", "client-only/prioritize static")
+    cy.get("[data-testid=title]").should("have.text", "client-only/prioritize static")
   })
   it('should return result for wildcard on nested prioritized path', () => {
     cy.visit('/routes/client-only/prioritize/nested').waitForRouteChange()
-    cy.get("[data-testid=title]").should("contain", "client-only/prioritize matchpath")
-    cy.get("[data-testid=params]").should("contain", "nested")
+    cy.get("[data-testid=title]").should("have.text", "client-only/prioritize matchpath")
+    cy.get("[data-testid=params]").should("have.text", "nested")
   })
 })
