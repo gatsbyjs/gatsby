@@ -34,7 +34,13 @@ const createAdapterFoo = adapterOptions => {
         // Cache store implementation
       },
     },
-    adapt({ routesManifest, functionsManifest, reporter }) {
+    adapt({
+      routesManifest,
+      functionsManifest,
+      pathPrefix,
+      trailingSlash,
+      reporter,
+    }) {
       // Adapt implementation
     },
   }
@@ -67,7 +73,13 @@ const createAdapterFoo: AdapterInit<AdapterOptions> = ({ foo }) => {
         // Cache store implementation
       },
     },
-    adapt({ routesManifest, functionsManifest, reporter }) {
+    adapt({
+      routesManifest,
+      functionsManifest,
+      pathPrefix,
+      trailingSlash,
+      reporter,
+    }) {
       // Adapt implementation
     },
   }
@@ -96,8 +108,10 @@ If your adapter accepts custom options, consider setting default values to make 
 
 The `adapt` hook takes Gatsby's output and prepares it for deployment on the adapter's platform. It receives the following inputs:
 
-- `routesManifest`: Array of objects with three different types: `static`, `function`, and `redirect`. Each object contains all necessary information to deploy and apply these routes. `static` routes will have default `headers` applied, which users can extend or overwrite with the [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) option inside `gatsby-config`.
+- `routesManifest`: Array of objects with three different types: `static`, `function`, and `redirect`. Each object contains all necessary information to deploy and apply these routes. `static` routes will have default `headers` applied, which users can extend or overwrite with the [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) option inside `gatsby-config`. Routes will also have the [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) option applied to their paths.
 - `functionsManifest`: Array of objects containing each function's entry point and required files.
+- `pathPrefix`: Value of the [`pathPrefix`](/docs/reference/config-files/gatsby-config/#pathprefix) option inside `gatsby-config`
+- `trailingSlash`: Value of the [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) option inside `gatsby-config`
 
 You can find the TypeScript types for these inputs on [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/types.ts).
 
@@ -106,6 +120,7 @@ The `adapt` hook should do the following things:
 - Apply HTTP headers to assets
 - Apply redirects and rewrites. The adapter can also create its own redirects and rewrites, if necessary (e.g. mapping serverless functions to internal URLs).
 - Wrap serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express](https://expressjs.com/)-like handlers.
+- Apply trailing slash behavior and path prefix to URLs
 - Possibly upload assets to CDN
 
 ## Testing locally
@@ -130,7 +145,13 @@ If you want to quickly prototype an adapter, you can also author your file(s) di
      return {
        name: `gatsby-adapter-foo`,
        // cache hooks...
-       adapt({ routesManifest, functionsManifest, reporter }) {
+       adapt({
+        routesManifest,
+        functionsManifest,
+        pathPrefix,
+        trailingSlash,
+        reporter
+       }) {
          // Adapt implementation
          reporter.info('gatsby-adapter-foo is working')
        },

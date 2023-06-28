@@ -161,7 +161,7 @@ module.exports = {
 
 ## pathPrefix
 
-It's common for sites to be hosted somewhere other than the root of their domain. Say you have a Gatsby site at `example.com/blog/`. In this case, you would need a prefix (`/blog`) added to all paths on the site.
+It's common for sites to be hosted somewhere other than the root of their domain. Say you have a Gatsby site at `example.com/blog`. In this case, you would need a prefix (`/blog`) added to all paths on the site. The default setting for this option is `""`.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
