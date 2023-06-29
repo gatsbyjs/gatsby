@@ -342,7 +342,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       }
     }
 
-    // TODO: mirror structure of Contentful GraphQL API, as it prevents field name overlaps
     const reverseReferenceFields = contentTypeItems.map(contentTypeItem =>
       useNameForId
         ? contentTypeItem?.name.toLowerCase()
