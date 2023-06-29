@@ -1,6 +1,7 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { applyTrailingSlashOption, TrailingSlash } from "gatsby-page-utils"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
+import { slash } from "gatsby-core-utils/path"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { posix } from "path"
 import { sync as globSync } from "glob"
@@ -211,7 +212,7 @@ function getRoutesManifest(): RoutesManifest {
       cwd: posix.join(process.cwd(), `public`),
       nodir: true,
       dot: true,
-    })
+    }).map(filePath => slash(filePath))
   )
 
   // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
