@@ -678,7 +678,6 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         fields: {
           raw: `String!`,
         },
-        // TODO: do we need a node interface here?
         interfaces: [`Node`],
         extensions: {
           dontInfer: {},
