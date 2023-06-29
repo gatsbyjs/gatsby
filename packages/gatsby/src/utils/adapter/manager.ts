@@ -270,14 +270,14 @@ function getRoutesManifest(): RoutesManifest {
 
   // routes - pages - static (SSG) or function (DSG/SSR)
   for (const page of state.pages.values()) {
-    const htmlRoutePath = getRoutePathFromPage(page)
-    const pageDataRoutePath = generatePageDataPath(``, htmlRoutePath)
+    const htmlRoutePath = slash(getRoutePathFromPage(page))
+    const pageDataRoutePath = slash(generatePageDataPath(``, htmlRoutePath))
 
     const pageMode = getPageMode(page)
 
     if (pageMode === `SSG`) {
-      const htmlFilePath = generateHtmlPath(``, page.path)
-      const pageDataFilePath = generatePageDataPath(``, page.path)
+      const htmlFilePath = slash(generateHtmlPath(``, page.path))
+      const pageDataFilePath = slash(generatePageDataPath(``, page.path))
 
       addStaticRoute({
         path: htmlRoutePath,
