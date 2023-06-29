@@ -166,7 +166,7 @@ export interface IAdapter {
    * Hook to pass information from the adapter to Gatsby. You must return an object with a predefined shape.
    * Gatsby uses this information to adjust its build process. The information can be e.g. things that are only known once the project is deployed.
    *
-   * This hook is considered to be an advanced features of adapters and it is not required to implement it.
+   * This hook can enable advanced feature of adapters and it is not required to implement it.
    *
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
    */
