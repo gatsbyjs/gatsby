@@ -70,20 +70,30 @@ async function prepareFunction(
     functionManifest
   )
 
+  function getRelativePathToModule(modulePath: string): string {
+    const absolutePath = require.resolve(modulePath)
+
+    return `./` + path.relative(internalFunctionsDir, absolutePath)
+  }
+
   const handlerSource = /* javascript */ `
 const Stream = require("stream")
 const http = require("http")
 const { Buffer } = require("buffer")
-const cookie = require("${require.resolve(`cookie`)}")
+const cookie = require("${getRelativePathToModule(`cookie`)}")
 ${
   isODB
-    ? `const { builder } = require("${require.resolve(`@netlify/functions`)}")`
+    ? `const { builder } = require("${getRelativePathToModule(
+        `@netlify/functions`
+      )}")`
     : ``
 }
 
 const preferDefault = m => (m && m.default) || m
 
-const functionModule = require("./../../../${fun.pathToEntryPoint}")
+const functionModule = require("${getRelativePathToModule(
+    path.join(process.cwd(), fun.pathToEntryPoint)
+  )}")
 
 const functionHandler = preferDefault(functionModule)
 
