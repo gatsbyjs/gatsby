@@ -26,6 +26,7 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
+/** @type {import("gatsby-plugin-utils/types").IPluginInfoOptions} */
 const defaultPluginOptions = {
   ...defaultOptions,
   spaceId: `testSpaceId`,
@@ -284,7 +285,7 @@ describe(`gatsby-node`, () => {
               break
             }
             case `Text`: {
-              const linkId = createNodeId(`${nodeId}${field}TextNode`)
+              const linkId = createNodeId(`${nodeId}${field}MarkdownNode`)
               matchedObject[field] = linkId
               break
             }
@@ -1112,6 +1113,47 @@ describe(`gatsby-node`, () => {
     homeNodes.forEach(homeNode => {
       expect(homeNode.content).toMatchSnapshot()
     })
+  })
+
+  it(`should ignore markdown conversion when disabled in config`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+    schema.buildObjectType.mockClear()
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      enableMarkdownDetection: false,
+    })
+    expect(actions.createNode).toHaveBeenCalledTimes(18)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+
+    expect(
+      actions.createNode.mock.calls.filter(
+        call => call[0].internal.type == `ContentfulMarkdown`
+      )
+    ).toHaveLength(0)
+  })
+
+  it(`should be able to create markdown nodes from a predefined list in config`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+    schema.buildObjectType.mockClear()
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      enableMarkdownDetection: false,
+      markdownFields: [[`blogPost`, [`body`]]],
+    })
+    expect(actions.createNode).toHaveBeenCalledTimes(24)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+
+    expect(
+      actions.createNode.mock.calls.filter(
+        call => call[0].internal.type == `ContentfulMarkdown`
+      )
+    ).toHaveLength(6)
   })
 
   it(`is able to render unpublished fields in Delivery API`, async () => {

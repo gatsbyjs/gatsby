@@ -26,7 +26,11 @@ import type {
   DeletedEntry,
   EntitySys,
 } from "contentful"
-import type { IProcessedPluginOptions } from "./types/plugin"
+import type {
+  IProcessedPluginOptions,
+  MarkdownFieldDefinition,
+} from "./types/plugin"
+import { detectMarkdownField } from "./utils"
 
 export const makeTypeName = (
   type: string,
@@ -354,19 +358,19 @@ export const buildForeignReferenceMap = ({
   return foreignReferenceMapState
 }
 
-function prepareTextNode(
+function prepareMarkdownNode(
   id: string,
   node: IContentfulEntry,
   _key: string,
   text: unknown
 ): Node {
   const str = _.isString(text) ? text : ``
-  const textNode: Node = {
+  const markdownNode: Node = {
     id,
     parent: node.id,
     raw: str,
     internal: {
-      type: `ContentfulText`,
+      type: `ContentfulMarkdown`,
       mediaType: `text/markdown`,
       content: str,
       // entryItem.sys.publishedAt is source of truth from contentful
@@ -375,7 +379,7 @@ function prepareTextNode(
     children: [],
   }
 
-  return textNode
+  return markdownNode
 }
 
 let numberOfContentSyncDebugLogs = 0
@@ -546,6 +550,13 @@ export const createNodesForContentType = ({
     nodeCount: entries.length,
     createNode,
   })
+
+  const enableMarkdownDetection: boolean = pluginConfig.get(
+    `enableMarkdownDetection`
+  )
+  const markdownFields: MarkdownFieldDefinition = new Map(
+    pluginConfig.get(`markdownFields`)
+  )
 
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -820,26 +831,35 @@ export const createNodesForContentType = ({
                 : f.id) === entryItemFieldKey
           )
           if (field?.type === `Text`) {
-            const textNodeId = createNodeId(
-              `${entryNodeId}${entryItemFieldKey}TextNode`
+            const fieldType = detectMarkdownField(
+              field,
+              contentTypeItem,
+              enableMarkdownDetection,
+              markdownFields
             )
 
-            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-            // of an entry did not change, then we can trust that none of its children were changed either.
-            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
-            const existingNode = getNode(textNodeId)
-            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
-              const textNode = prepareTextNode(
-                textNodeId,
-                entryNode,
-                entryItemFieldKey,
-                entryItemFields[entryItemFieldKey]
+            if (fieldType == `Markdown`) {
+              const textNodeId = createNodeId(
+                `${entryNodeId}${entryItemFieldKey}${fieldType}Node`
               )
 
-              childrenNodes.push(textNode)
-            }
+              // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+              // of an entry did not change, then we can trust that none of its children were changed either.
+              // (That's why child nodes use the updatedAt of the parent node as their digest, too)
+              const existingNode = getNode(textNodeId)
+              if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
+                const textNode = prepareMarkdownNode(
+                  textNodeId,
+                  entryNode,
+                  entryItemFieldKey,
+                  entryItemFields[entryItemFieldKey]
+                )
 
-            entryItemFields[entryItemFieldKey] = textNodeId
+                childrenNodes.push(textNode)
+              }
+
+              entryItemFields[entryItemFieldKey] = textNodeId
+            }
           }
         })
 

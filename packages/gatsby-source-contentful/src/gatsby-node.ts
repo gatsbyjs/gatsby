@@ -125,6 +125,20 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 For example, to exclude content types starting with "page" \`contentTypeFilter: contentType => !contentType.sys.id.startsWith('page')\``
         )
         .default(() => (): boolean => true),
+      enableMarkdownDetection: Joi.boolean()
+        .description(
+          `Assumes that every long text field in Contentful is a markdown field. Can be a performance bottle-neck on big projects. Requires gatsby-transformer-remark.`
+        )
+        .default(true),
+      markdownFields: Joi.array()
+        .description(
+          `List of text fields that contain markdown content. Needs gatsby-transformer-remark.`
+        )
+        .default([])
+        .example([
+          [`product`, [`description`, `summary`]],
+          [`otherContentTypeId`, [`someMarkdownFieldId`]],
+        ]),
       pageLimit: Joi.number()
         .integer()
         .description(

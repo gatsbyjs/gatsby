@@ -387,7 +387,7 @@ Ignored if layout = FLUID.",
       "interfaces": Array [
         "Node",
       ],
-      "name": "ContentfulText",
+      "name": "ContentfulMarkdown",
     },
   ],
   Array [
@@ -447,7 +447,7 @@ Ignored if layout = FLUID.",
               "from": "longLocalized",
             },
           },
-          "type": "ContentfulText",
+          "type": "ContentfulMarkdown",
         },
         "longMarkdown": Object {
           "extensions": Object {
@@ -456,7 +456,7 @@ Ignored if layout = FLUID.",
               "from": "longMarkdown",
             },
           },
-          "type": "ContentfulText",
+          "type": "ContentfulMarkdown",
         },
         "longPlain": Object {
           "extensions": Object {
@@ -465,7 +465,7 @@ Ignored if layout = FLUID.",
               "from": "longPlain",
             },
           },
-          "type": "ContentfulText",
+          "type": "ContentfulMarkdown",
         },
         "metadata": Object {
           "type": "ContentfulMetadata!",

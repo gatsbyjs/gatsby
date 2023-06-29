@@ -236,8 +236,8 @@ describe(`Process contentful data (by name)`, () => {
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
         ContentfulContentType: contentTypeItems.length,
-        // Generated child entities
-        ContentfulText: 38,
+        // Generated markdown child entities
+        ContentfulMarkdown: 38,
         // 3 Brand Contentful entries
         ContentfulContentTypeBrand: 6,
         // 2 Category Contentful entries
@@ -343,8 +343,8 @@ describe(`Process existing mutated nodes in warm build`, () => {
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
         ContentfulContentType: contentTypeItems.length,
-        // Child entities
-        ContentfulText: 38,
+        // Markdown child entities
+        ContentfulMarkdown: 38,
         // 3 Brand Contentful entries
         ContentfulContentTypeBrand: 6,
         // 2 Category Contentful entries

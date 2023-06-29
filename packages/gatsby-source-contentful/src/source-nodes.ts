@@ -245,8 +245,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
     const previousForeignReferenceMapState = await cache.get(
       CACHE_FOREIGN_REFERENCE_MAP_STATE
     )
-    const useNameForId = pluginConfig.get(`useNameForId`)
-    const contentTypePrefix = pluginConfig.get(`contentTypePrefix`)
+    const useNameForId: boolean = pluginConfig.get(`useNameForId`)
+    const contentTypePrefix: string = pluginConfig.get(`contentTypePrefix`)
 
     const foreignReferenceMapState = buildForeignReferenceMap({
       contentTypeItems,

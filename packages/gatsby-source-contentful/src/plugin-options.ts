@@ -14,6 +14,8 @@ const defaultOptions: Omit<IPluginOptions, "spaceId" | "accessToken"> = {
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
   contentTypePrefix: `ContentfulContentType`,
+  enableMarkdownDetection: true,
+  markdownFields: [],
 }
 
 /**
@@ -32,7 +34,7 @@ const maskText = (input: string): string => {
 }
 
 const createPluginConfig = (
-  pluginOptions: IPluginOptions
+  pluginOptions: Partial<IPluginOptions>
 ): IProcessedPluginOptions => {
   const conf = { ...defaultOptions, ...pluginOptions }
 

@@ -20,7 +20,7 @@ import { CODES } from "./report"
 import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { makeTypeName } from "./normalize"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
-import type { IPluginOptions } from "./types/plugin"
+import type { IPluginOptions, MarkdownFieldDefinition } from "./types/plugin"
 import type { ContentType, ContentTypeField, FieldItem } from "contentful"
 
 import type {
@@ -28,6 +28,7 @@ import type {
   IContentfulEntry,
   IContentfulImageAPITransformerOptions,
 } from "./types/contentful"
+import { detectMarkdownField } from "./utils"
 
 type CreateTypes = CreateSchemaCustomizationArgs["actions"]["createTypes"]
 
@@ -50,9 +51,15 @@ const ContentfulDataTypes: Map<
   ],
   [
     `Text`,
+    (): IContentfulGraphQLField => {
+      return { type: GraphQLString }
+    },
+  ],
+  [
+    `Markdown`,
     (field): IContentfulGraphQLField => {
       return {
-        type: `ContentfulText`,
+        type: `ContentfulMarkdown`,
         extensions: {
           link: { by: `id`, from: field.id },
         },
@@ -191,9 +198,12 @@ const getLinkFieldType = (
 // Translate Contentful field types to GraphQL field types
 const translateFieldType = (
   field: ContentTypeField | FieldItem,
+  contentTypeItem: ContentType,
   schema: NodePluginSchema,
   createTypes: CreateTypes,
-  contentTypePrefix: string
+  contentTypePrefix: string,
+  enableMarkdownDetection: boolean,
+  markdownFields: MarkdownFieldDefinition
 ): GraphQLFieldConfig<unknown, unknown> => {
   let fieldType
   if (field.type === `Array`) {
@@ -218,9 +228,12 @@ const translateFieldType = (
           )
         : translateFieldType(
             field.items,
+            contentTypeItem,
             schema,
             createTypes,
-            contentTypePrefix
+            contentTypePrefix,
+            enableMarkdownDetection,
+            markdownFields
           )
 
     fieldType = { ...fieldData, type: `[${fieldData.type}]` }
@@ -234,8 +247,16 @@ const translateFieldType = (
       contentTypePrefix
     )
   } else {
+    // Detect markdown in text fields
+    const typeName = detectMarkdownField(
+      field as ContentTypeField,
+      contentTypeItem,
+      enableMarkdownDetection,
+      markdownFields
+    )
+
     // Primitive field types
-    const primitiveType = ContentfulDataTypes.get(field.type)
+    const primitiveType = ContentfulDataTypes.get(typeName)
     if (!primitiveType) {
       throw new Error(`Contentful field type ${field.type} is not supported.`)
     }
@@ -299,6 +320,12 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
     const contentTypePrefix = pluginConfig.get(`contentTypePrefix`)
     const useNameForId = pluginConfig.get(`useNameForId`)
+    const enableMarkdownDetection: boolean = pluginConfig.get(
+      `enableMarkdownDetection`
+    )
+    const markdownFields: MarkdownFieldDefinition = new Map(
+      pluginConfig.get(`markdownFields`)
+    )
 
     let contentTypeItems: Array<ContentType>
     if (process.env.GATSBY_WORKER_ID) {
@@ -644,11 +671,10 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       })
     )
 
-    // Text
-    // TODO: Is there a way to have this as string and let transformer-remark replace it with an object?
+    // Text (Markdown, as text is a pure string)
     createTypes(
       schema.buildObjectType({
-        name: `ContentfulText`,
+        name: `ContentfulMarkdown`,
         fields: {
           raw: `String!`,
         },
@@ -677,9 +703,12 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           }
           fields[field.id] = translateFieldType(
             field,
+            contentTypeItem,
             schema,
             createTypes,
-            contentTypePrefix
+            contentTypePrefix,
+            enableMarkdownDetection,
+            markdownFields
           )
         })
 
