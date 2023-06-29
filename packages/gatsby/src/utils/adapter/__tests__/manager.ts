@@ -114,6 +114,8 @@ describe(`getFunctionsManifest`, () => {
           "functionId": "ssr-engine",
           "pathToEntryPoint": ".cache/page-ssr/lambda.js",
           "requiredFiles": Array [
+            "public/404.html",
+            "public/500.html",
             ".cache/data/datastore/data.mdb",
             ".cache/page-ssr/lambda.js",
             ".cache/query-engine/index.js",
