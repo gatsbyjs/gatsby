@@ -110,14 +110,27 @@ export interface ICacheContext extends IDefaultContext {
 }
 
 export interface IAdapterConfig {
+  /**
+   * URL representing the unique URL for an individual deploy
+   */
   deployURL?: string
+  /**
+   * If `true`, Gatsby will not include the LMDB datastore in the serverless functions used for SSR/DSG.
+   * Instead, it will try to download the datastore from the given `deployURL`.
+   */
   excludeDatastoreFromEngineFunction?: boolean
 }
 
-export interface IAdapterFinalConfig {
-  deployURL?: string
-  excludeDatastoreFromEngineFunction: boolean
-}
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+
+/**
+ * This is the internal version of "IAdapterConfig" to enforce that certain keys must be present.
+ * Authors of adapters will only see "IAdapterConfig".
+ */
+export type IAdapterFinalConfig = WithRequired<
+  IAdapterConfig,
+  "excludeDatastoreFromEngineFunction"
+>
 
 export interface IAdapter {
   /**
@@ -149,14 +162,17 @@ export interface IAdapter {
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
    */
   adapt: (context: IAdaptContext) => Promise<void> | void
-
-  // TODO: should we have "private storage" handling defining a way to "upload" and "download those private assets?
-  // this could be used for lmdb datastore in case it's not being bundled with ssr-engine function as well as File nodes to handle
-  // current limitation in Netlify's implementation of DSG/SSR ( https://github.com/netlify/netlify-plugin-gatsby#caveats )
+  /**
+   * Hook to pass information from the adapter to Gatsby. You must return an object with a predefined shape.
+   * Gatsby uses this information to adjust its build process. The information can be e.g. things that are only known once the project is deployed.
+   *
+   * This hook is considered to be an advanced features of adapters and it is not required to implement it.
+   *
+   * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
+   */
   config?: (
     context: IDefaultContext
   ) => Promise<IAdapterConfig> | IAdapterConfig
-  // getDeployURL?: () => Promise<string | undefined> | string | undefined
 }
 
 /**
