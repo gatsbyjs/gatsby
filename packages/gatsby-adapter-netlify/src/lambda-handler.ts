@@ -48,12 +48,18 @@ async function prepareFunction(
 
   await fs.ensureDir(internalFunctionsDir)
 
+  const requiredFilesNormalized = fun.requiredFiles.map(file =>
+    file.replace(/\[/g, `*`).replace(/]/g, `*`)
+  )
+
   const functionManifest: INetlifyFunctionManifest = {
     config: {
       generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
-      includedFiles: fun.requiredFiles.map(file =>
-        file.replace(/\[/g, `*`).replace(/]/g, `*`)
-      ),
+      includedFiles: [
+        `public/404.html`,
+        `public/500.html`,
+        ...requiredFilesNormalized,
+      ],
       externalNodeModules: [`msgpackr-extract`],
     },
     version: 1,

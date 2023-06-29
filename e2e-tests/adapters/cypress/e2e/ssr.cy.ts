@@ -26,8 +26,7 @@ describe("Server Side Rendering (SSR)", () => {
     cy.get(`[data-testid="params"]`).contains(`{"param":"foo"}`)
   })
 
-  // TODO: Implement 400 & 500 handling
-  it.skip(`should display custom 500 page`, () => {
+  it(`should display custom 500 page`, () => {
     const errorPath = `/routes/ssr/error-path`
 
     cy.visit(errorPath, { failOnStatusCode: false }).waitForRouteChange()

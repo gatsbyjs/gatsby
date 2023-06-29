@@ -208,6 +208,22 @@ function setStatusAndHeaders({
   }
 }
 
+function getErrorBody(statusCode: number): string {
+  let body = `<html><body><h1>${statusCode}</h1><p>${
+    statusCode === 404 ? `Not found` : `Internal Server Error`
+  }</p></body></html>`
+
+  if (statusCode === 404 || statusCode === 500) {
+    const filename = path.join(process.cwd(), `public`, `${statusCode}.html`)
+
+    if (fs.existsSync(filename)) {
+      body = fs.readFileSync(filename, `utf8`)
+    }
+  }
+
+  return body
+}
+
 async function engineHandler(
   req: GatsbyFunctionRequest,
   res: GatsbyFunctionResponse
@@ -216,7 +232,7 @@ async function engineHandler(
     const graphqlEngine = await engineReadyPromise
     const pathInfo = getPathInfo(req)
     if (!pathInfo) {
-      res.status(404).send(`Not found`)
+      res.status(404).send(getErrorBody(404))
       return
     }
 
@@ -224,7 +240,7 @@ async function engineHandler(
 
     const page = graphqlEngine.findPageByPath(pagePath)
     if (!page) {
-      res.status(404).send(`Not found`)
+      res.status(404).send(getErrorBody(404))
       return
     }
 
@@ -247,7 +263,7 @@ async function engineHandler(
     }
   } catch (e) {
     console.error(`Engine failed to handle request`, e)
-    res.status(500).send(`Internal server error.`)
+    res.status(500).send(getErrorBody(500))
   }
 }
 
