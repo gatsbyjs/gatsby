@@ -433,6 +433,8 @@ function getFunctionsManifest(): FunctionsManifest {
       functionId: `ssr-engine`,
       pathToEntryPoint: posix.join(`.cache`, `page-ssr`, `lambda.js`),
       requiredFiles: [
+        `public/404.html`,
+        `public/500.html`,
         ...(shouldBundleDatastore()
           ? getFilesFrom(posix.join(`.cache`, `data`, `datastore`))
           : []),
