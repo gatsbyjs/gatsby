@@ -63,35 +63,39 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         )
       }
     },
-    config: (): IAdapterGatsbyConfig => {
-      // if (process.env.DEPLOY_URL && process.env.NETLIFY) {
-      // TODO: use env var as additional toggle on top on adapter options to ease migration from netlify plugins
+    config: ({ reporter }): IAdapterGatsbyConfig => {
+      // excludeDatastoreFromEngineFunction can be enabled either via options or via env var (to preserve handling of env var that existed in Netlify build plugin).
+      let excludeDatastoreFromEngineFunction =
+        options?.excludeDatastoreFromEngineFunction
 
-      let deployURL = process.env.NETLIFY_LOCAL
+      if (
+        typeof excludeDatastoreFromEngineFunction === `undefined` &&
+        typeof process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE !== `undefined`
+      ) {
+        excludeDatastoreFromEngineFunction =
+          process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE === `true` ||
+          process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE === `1`
+      }
+
+      if (typeof excludeDatastoreFromEngineFunction === `undefined`) {
+        excludeDatastoreFromEngineFunction = false
+      }
+
+      const deployURL = process.env.NETLIFY_LOCAL
         ? `http://localhost:8888`
         : process.env.DEPLOY_URL
 
-      if (!deployURL) {
-        // for dev purposes - remove later
-        deployURL = `http://localhost:9000`
+      if (excludeDatastoreFromEngineFunction && !deployURL) {
+        reporter.warn(
+          `[gatsby-adapter-netlify] excludeDatastoreFromEngineFunction is set to true but no DEPLOY_URL is set. Disabling excludeDatastoreFromEngineFunction.`
+        )
+        excludeDatastoreFromEngineFunction = false
       }
 
       return {
-        excludeDatastoreFromEngineFunction:
-          options?.excludeDatastoreFromEngineFunction ?? false,
+        excludeDatastoreFromEngineFunction,
         deployURL,
       }
-      // }
-
-      // if (options?.excludeDatastoreFromEngineFunction) {
-      //   reporter.warn(
-      //     `[gatsby-adapter-netlify] excludeDatastoreFromEngineFunction is set to true but no DEPLOY_URL is set (running netlify command locally). Disabling excludeDatastoreFromEngineFunction.`
-      //   )
-      // }
-
-      // return {
-      //   excludeDatastoreFromEngineFunction: false,
-      // }
     },
   }
 }
