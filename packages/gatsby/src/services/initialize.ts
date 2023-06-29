@@ -292,7 +292,7 @@ export async function initialize({
     activity.start()
     const files = await glob(
       [
-        `public/**/*.{html,css}`,
+        `public/**/*.{html,css,mdb}`,
         `!public/page-data/**/*`,
         `!public/static`,
         `!public/static/**/*.{html,css}`,

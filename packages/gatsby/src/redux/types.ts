@@ -324,6 +324,7 @@ export interface IGatsbyState {
     plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
     LAST_NODE_COUNTER: number
+    cdnObfuscatedPrefix: string
   }
   queries: {
     byNode: Map<Identifier, Set<Identifier>>
@@ -448,6 +449,7 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IInitAction
   | IAddChildNodeToParentNodeAction
   | IAddFieldToNodeAction
   | IAddThirdPartySchema
@@ -536,6 +538,10 @@ export type ActionsUnion =
   | IProcessGatsbyImageSourceUrlAction
   | IClearGatsbyImageSourceUrlAction
   | ISetAdapterAction
+
+export interface IInitAction {
+  type: `INIT`
+}
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`

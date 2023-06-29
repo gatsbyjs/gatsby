@@ -6,7 +6,7 @@ import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { posix } from "path"
 import { sync as globSync } from "glob"
 import telemetry from "gatsby-telemetry"
-import { copy } from "fs-extra"
+import { copy, pathExists, unlink } from "fs-extra"
 import type {
   FunctionsManifest,
   IAdaptContext,
@@ -126,11 +126,16 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         return
       }
 
-      // handle lmdb stuff
+      // handle lmdb file
+      const mdbInPublicPath = `public/${LmdbOnCdnPath}`
       if (!shouldBundleDatastore()) {
         const mdbPath = getDefaultDbPath() + `/data.mdb`
-        reporter.info(`[Adapters] Skipping datastore bundling`)
-        copy(mdbPath, `public/${LmdbOnCdnPath}`)
+        copy(mdbPath, mdbInPublicPath)
+      } else {
+        // ensure public dir doesn't have lmdb file
+        if (await pathExists(mdbInPublicPath)) {
+          await unlink(mdbInPublicPath)
+        }
       }
 
       let _routesManifest: RoutesManifest | undefined = undefined

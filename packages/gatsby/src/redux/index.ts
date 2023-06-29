@@ -107,12 +107,21 @@ export type GatsbyReduxStore = Store<IGatsbyState> & {
   dispatch: ThunkDispatch<IGatsbyState, any, ActionsUnion> & IMultiDispatch
 }
 
-export const configureStore = (initialState: IGatsbyState): GatsbyReduxStore =>
-  createStore(
+export const configureStore = (
+  initialState: IGatsbyState
+): GatsbyReduxStore => {
+  const store = createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,
     applyMiddleware(thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>, multi)
   )
+
+  store.dispatch({
+    type: `INIT`,
+  })
+
+  return store
+}
 
 export const store: GatsbyReduxStore = configureStore(
   process.env.GATSBY_WORKER_POOL_WORKER ? ({} as IGatsbyState) : readState()
