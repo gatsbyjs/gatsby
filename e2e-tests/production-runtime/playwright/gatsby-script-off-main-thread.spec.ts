@@ -27,7 +27,7 @@ test.describe(`off-main-thread scripts`, () => {
 
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}: success`) // Dangerously set inline scripts loaded
-    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded
+    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown`) // Scripts with sources loaded
   })
 
   // This behavior is broken upstream in Partytown, see https://github.com/BuilderIO/partytown/issues/74
@@ -48,7 +48,7 @@ test.describe(`off-main-thread scripts`, () => {
 
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}: success`) // Dangerously set inline scripts loaded
-    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded, use `type` attr Partytown mutates on success as proxy
+    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown`) // Scripts with sources loaded, use `type` attr Partytown mutates on success as proxy
   })
 
   // This behavior is broken upstream in Partytown, see https://github.com/BuilderIO/partytown/issues/74
