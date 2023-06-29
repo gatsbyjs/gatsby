@@ -109,12 +109,12 @@ export interface ICacheContext extends IDefaultContext {
   directories: Array<string>
 }
 
-export interface IAdapterGatsbyConfig {
+export interface IAdapterConfig {
   deployURL?: string
   excludeDatastoreFromEngineFunction?: boolean
 }
 
-export interface IAdapterFinalGatsbyConfig {
+export interface IAdapterFinalConfig {
   deployURL?: string
   excludeDatastoreFromEngineFunction: boolean
 }
@@ -155,7 +155,7 @@ export interface IAdapter {
   // current limitation in Netlify's implementation of DSG/SSR ( https://github.com/netlify/netlify-plugin-gatsby#caveats )
   config?: (
     context: IDefaultContext
-  ) => Promise<IAdapterGatsbyConfig> | IAdapterGatsbyConfig
+  ) => Promise<IAdapterConfig> | IAdapterConfig
   // getDeployURL?: () => Promise<string | undefined> | string | undefined
 }
 
@@ -171,7 +171,7 @@ export interface IAdapterManager {
   restoreCache: () => Promise<void> | void
   storeCache: () => Promise<void> | void
   adapt: () => Promise<void> | void
-  config: () => Promise<IAdapterFinalGatsbyConfig>
+  config: () => Promise<IAdapterFinalConfig>
 }
 /**
  * Types for gatsby/adapters.js

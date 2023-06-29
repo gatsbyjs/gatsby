@@ -15,8 +15,8 @@ import type {
   IAdapterManager,
   IFunctionRoute,
   IAdapter,
-  IAdapterFinalGatsbyConfig,
-  IAdapterGatsbyConfig,
+  IAdapterFinalConfig,
+  IAdapterConfig,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
@@ -158,8 +158,8 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
       await adapter.adapt(adaptContext)
     },
-    config: async (): Promise<IAdapterFinalGatsbyConfig> => {
-      let configFromAdapter: undefined | IAdapterGatsbyConfig = undefined
+    config: async (): Promise<IAdapterFinalConfig> => {
+      let configFromAdapter: undefined | IAdapterConfig = undefined
       if (adapter.config) {
         configFromAdapter = await adapter.config({ reporter })
 

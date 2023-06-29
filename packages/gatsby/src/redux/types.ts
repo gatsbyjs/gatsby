@@ -17,7 +17,7 @@ import { Span } from "opentracing"
 import { ICollectedSlices } from "../utils/babel/find-slices"
 import type {
   IAdapter,
-  IAdapterFinalGatsbyConfig,
+  IAdapterFinalConfig,
   IAdapterManager,
 } from "../utils/adapter/types"
 
@@ -422,7 +422,7 @@ export interface IGatsbyState {
   adapter: {
     instance?: IAdapter
     manager: IAdapterManager
-    config: IAdapterFinalGatsbyConfig
+    config: IAdapterFinalConfig
   }
 }
 
@@ -1199,7 +1199,7 @@ export interface ISetAdapterAction {
   payload: {
     instance?: IAdapter
     manager: IAdapterManager
-    config: IAdapterFinalGatsbyConfig
+    config: IAdapterFinalConfig
   }
 }
 
