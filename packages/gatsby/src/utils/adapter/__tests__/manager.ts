@@ -21,6 +21,7 @@ jest.mock(`../../../redux`, () => {
 jest.mock(`../../engines-helpers`, () => {
   return {
     shouldGenerateEngines: jest.fn().mockReturnValue(true),
+    shouldBundleDatastore: jest.fn().mockReturnValue(true),
   }
 })
 
