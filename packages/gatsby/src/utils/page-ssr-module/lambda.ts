@@ -64,18 +64,20 @@ function setupFsWrapper(): string {
     // eslint-disable-next-line no-underscore-dangle
     global._fsWrapper = lfs
 
-    const dir = `data`
-    if (
-      !process.env.NETLIFY_LOCAL &&
-      fs.existsSync(path.join(TEMP_CACHE_DIR, dir))
-    ) {
-      console.log(`directory already exists`)
-      return dbPath
-    }
-    console.log(`Start copying ${dir}`)
+    if (!cdnDatastore) {
+      const dir = `data`
+      if (
+        !process.env.NETLIFY_LOCAL &&
+        fs.existsSync(path.join(TEMP_CACHE_DIR, dir))
+      ) {
+        console.log(`directory already exists`)
+        return dbPath
+      }
+      console.log(`Start copying ${dir}`)
 
-    fs.copySync(path.join(cacheDir, dir), path.join(TEMP_CACHE_DIR, dir))
-    console.log(`End copying ${dir}`)
+      fs.copySync(path.join(cacheDir, dir), path.join(TEMP_CACHE_DIR, dir))
+      console.log(`End copying ${dir}`)
+    }
 
     return dbPath
   }
