@@ -109,6 +109,16 @@ export interface ICacheContext extends IDefaultContext {
   directories: Array<string>
 }
 
+export interface IAdapterGatsbyConfig {
+  deployURL?: string
+  excludeDatastoreFromEngineFunction?: boolean
+}
+
+export interface IAdapterFinalGatsbyConfig {
+  deployURL?: string
+  excludeDatastoreFromEngineFunction: boolean
+}
+
 export interface IAdapter {
   /**
    * Unique name of the adapter. Used to identify adapter in manifest.
@@ -139,9 +149,14 @@ export interface IAdapter {
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
    */
   adapt: (context: IAdaptContext) => Promise<void> | void
+
   // TODO: should we have "private storage" handling defining a way to "upload" and "download those private assets?
-  // this could be used for lmdb datastore in case it's not being bundled with ssr-engine lambda as well as File nodes to handle
+  // this could be used for lmdb datastore in case it's not being bundled with ssr-engine function as well as File nodes to handle
   // current limitation in Netlify's implementation of DSG/SSR ( https://github.com/netlify/netlify-plugin-gatsby#caveats )
+  config?: (
+    context: IDefaultContext
+  ) => Promise<IAdapterGatsbyConfig> | IAdapterGatsbyConfig
+  // getDeployURL?: () => Promise<string | undefined> | string | undefined
 }
 
 /**
@@ -156,8 +171,8 @@ export interface IAdapterManager {
   restoreCache: () => Promise<void> | void
   storeCache: () => Promise<void> | void
   adapt: () => Promise<void> | void
+  config: () => Promise<IAdapterFinalGatsbyConfig>
 }
-
 /**
  * Types for gatsby/adapters.js
  * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/

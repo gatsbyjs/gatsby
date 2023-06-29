@@ -15,7 +15,11 @@ import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 import { Span } from "opentracing"
 import { ICollectedSlices } from "../utils/babel/find-slices"
-import type { IAdapter } from "../utils/adapter/types"
+import type {
+  IAdapter,
+  IAdapterFinalGatsbyConfig,
+  IAdapterManager,
+} from "../utils/adapter/types"
 
 type SystemPath = string
 type Identifier = string
@@ -415,6 +419,11 @@ export interface IGatsbyState {
   slices: Map<string, IGatsbySlice>
   componentsUsingSlices: Map<string, ICollectedSlices>
   slicesByTemplate: Map<SystemPath, ICollectedSlices>
+  adapter: {
+    instance?: IAdapter
+    manager: IAdapterManager
+    config: IAdapterFinalGatsbyConfig
+  }
 }
 
 export type GatsbyStateKeys = keyof IGatsbyState
@@ -526,6 +535,7 @@ export type ActionsUnion =
   | ISlicesScriptsRegenerated
   | IProcessGatsbyImageSourceUrlAction
   | IClearGatsbyImageSourceUrlAction
+  | ISetAdapterAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -1182,6 +1192,15 @@ export interface IProcessGatsbyImageSourceUrlAction {
 
 export interface IClearGatsbyImageSourceUrlAction {
   type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`
+}
+
+export interface ISetAdapterAction {
+  type: `SET_ADAPTER`
+  payload: {
+    instance?: IAdapter
+    manager: IAdapterManager
+    config: IAdapterFinalGatsbyConfig
+  }
 }
 
 export interface ITelemetry {

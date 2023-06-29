@@ -5,6 +5,7 @@ import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { posix } from "path"
 import { sync as globSync } from "glob"
 import telemetry from "gatsby-telemetry"
+import { copy } from "fs-extra"
 import type {
   FunctionsManifest,
   IAdaptContext,
@@ -13,12 +14,18 @@ import type {
   IAdapterManager,
   IFunctionRoute,
   IAdapter,
+  IAdapterFinalGatsbyConfig,
+  IAdapterGatsbyConfig,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
 import { getStaticQueryPath } from "../static-query-utils"
 import { getAdapterInit } from "./init"
-import { shouldGenerateEngines } from "../engines-helpers"
+import {
+  LmdbOnCdnPath,
+  shouldBundleDatastore,
+  shouldGenerateEngines,
+} from "../engines-helpers"
 import {
   ASSET_HEADERS,
   REDIRECT_HEADERS,
@@ -33,19 +40,8 @@ import {
   getRoutePathFromFunction,
   getRoutePathFromPage,
 } from "./get-route-path"
-
-function noOpAdapterManager(): IAdapterManager {
-  return {
-    restoreCache: (): void => {},
-    storeCache: (): void => {},
-    adapt: (): void => {},
-  }
-}
-
-let usingAdapter = false
-export function isUsingAdapter(): boolean {
-  return usingAdapter
-}
+import { noOpAdapterManager } from "./no-op-manager"
+import { getDefaultDbPath } from "../../datastore/lmdb/lmdb-datastore"
 
 export async function initAdapterManager(): Promise<IAdapterManager> {
   let adapter: IAdapter
@@ -65,19 +61,27 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
     if (!adapterInit) {
       telemetry.trackFeatureIsUsed(`adapter:no-op`)
 
-      usingAdapter = false
-      return noOpAdapterManager()
+      const manager = noOpAdapterManager()
+      const configFromAdapter = await manager.config()
+
+      store.dispatch({
+        type: `SET_ADAPTER`,
+        payload: {
+          manager,
+          config: configFromAdapter,
+        },
+      })
+      return manager
     }
 
     adapter = adapterInit()
   }
 
-  usingAdapter = true
   reporter.info(`Using ${adapter.name} adapter`)
   telemetry.trackFeatureIsUsed(`adapter:${adapter.name}`)
 
   const directoriesToCache = [`.cache`, `public`]
-  return {
+  const manager: IAdapterManager = {
     restoreCache: async (): Promise<void> => {
       // TODO: Remove before final merge
       reporter.info(`[Adapters] restoreCache()`)
@@ -121,6 +125,13 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         return
       }
 
+      // handle lmdb stuff
+      if (!shouldBundleDatastore()) {
+        const mdbPath = getDefaultDbPath() + `/data.mdb`
+        reporter.info(`[Adapters] Skipping datastore bundling`)
+        copy(mdbPath, `public/${LmdbOnCdnPath}`)
+      }
+
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined
       const adaptContext: IAdaptContext = {
@@ -146,7 +157,41 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
       await adapter.adapt(adaptContext)
     },
+    config: async (): Promise<IAdapterFinalGatsbyConfig> => {
+      let configFromAdapter: undefined | IAdapterGatsbyConfig = undefined
+      if (adapter.config) {
+        configFromAdapter = await adapter.config({ reporter })
+
+        if (
+          configFromAdapter?.excludeDatastoreFromEngineFunction &&
+          !configFromAdapter?.deployURL
+        ) {
+          throw new Error(
+            `Can't exclude datastore from engine function without adapter providing deployURL`
+          )
+        }
+      }
+
+      return {
+        excludeDatastoreFromEngineFunction:
+          configFromAdapter?.excludeDatastoreFromEngineFunction ?? false,
+        deployURL: configFromAdapter?.deployURL,
+      }
+    },
   }
+
+  const configFromAdapter = await manager.config()
+
+  store.dispatch({
+    type: `SET_ADAPTER`,
+    payload: {
+      manager,
+      instance: adapter,
+      config: configFromAdapter,
+    },
+  })
+
+  return manager
 }
 
 let webpackAssets: Set<string> | undefined
@@ -382,7 +427,9 @@ function getFunctionsManifest(): FunctionsManifest {
       functionId: `ssr-engine`,
       pathToEntryPoint: posix.join(`.cache`, `page-ssr`, `lambda.js`),
       requiredFiles: [
-        ...getFilesFrom(posix.join(`.cache`, `data`, `datastore`)),
+        ...(shouldBundleDatastore()
+          ? getFilesFrom(posix.join(`.cache`, `data`, `datastore`))
+          : []),
         ...getFilesFrom(posix.join(`.cache`, `page-ssr`)),
         ...getFilesFrom(posix.join(`.cache`, `query-engine`)),
       ],

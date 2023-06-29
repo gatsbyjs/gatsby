@@ -12,6 +12,7 @@ import {
 } from "../client-assets-for-template"
 import { IGatsbyState } from "../../redux/types"
 import { store } from "../../redux"
+import { LmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
 
 type Reporter = typeof reporter
 
@@ -218,10 +219,19 @@ export async function createPageSSRBundle({
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
-  await fs.copyFile(
+  let functionCode = await fs.readFile(
     path.join(__dirname, `lambda.js`),
-    path.join(outputDir, `lambda.js`)
+    `utf-8`
   )
+
+  functionCode = functionCode.replace(
+    `%CDN_DATASTORE_PATH%`,
+    shouldBundleDatastore()
+      ? ``
+      : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
+  )
+
+  await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {

@@ -1,4 +1,5 @@
-import { emitter } from "../redux"
+import { uuid } from "gatsby-core-utils/index"
+import { emitter, store } from "../redux"
 import { ICreatePageAction, ISetComponentFeatures } from "../redux/types"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
 
@@ -23,3 +24,15 @@ emitter.on(`SET_COMPONENT_FEATURES`, (action: ISetComponentFeatures) => {
     shouldSendTelemetryForHeadAPI = false
   }
 })
+
+export function shouldBundleDatastore(): boolean {
+  return !store.getState().adapter.config.excludeDatastoreFromEngineFunction
+}
+
+// TODO: we should preserve randomized from previous builds to not keep accumulating different versions of datastore in public dir
+const randomized = uuid.v4()
+function getCDNObfuscatedPath(path: string): string {
+  return `${randomized}-${path}`
+}
+
+export const LmdbOnCdnPath = getCDNObfuscatedPath(`data.mdb`)

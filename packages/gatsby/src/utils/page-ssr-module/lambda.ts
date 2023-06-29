@@ -1,10 +1,18 @@
 import type { GatsbyFunctionResponse, GatsbyFunctionRequest } from "gatsby"
 import * as path from "path"
 import * as fs from "fs-extra"
+import { get as httpsGet } from "https"
+import { get as httpGet, IncomingMessage, ClientRequest } from "http"
 import { tmpdir } from "os"
+import { pipeline } from "stream"
+import { URL } from "url"
+import { promisify } from "util"
+
 import type { IGatsbyPage } from "../../internal"
 import type { ISSRData } from "./entry"
 import { link } from "linkfs"
+
+const cdnDatastore = `%CDN_DATASTORE_PATH%`
 
 function setupFsWrapper(): string {
   // setup global._fsWrapper
@@ -78,15 +86,79 @@ const dbPath = setupFsWrapper()
 // using require instead of import here for now because of type hell + import path doesn't exist in current context
 // as this file will be copied elsewhere
 
+type GraphQLEngineType =
+  import("../../schema/graphql-engine/entry").GraphQLEngine
+
 const { GraphQLEngine } =
   require(`../query-engine`) as typeof import("../../schema/graphql-engine/entry")
 
 const { getData, renderPageData, renderHTML } =
   require(`./index`) as typeof import("./entry")
 
-const graphqlEngine = new GraphQLEngine({
-  dbPath,
-})
+const streamPipeline = promisify(pipeline)
+
+function get(
+  url: string,
+  callback?: (res: IncomingMessage) => void
+): ClientRequest {
+  return new URL(url).protocol === `https:`
+    ? httpsGet(url, callback)
+    : httpGet(url, callback)
+}
+
+async function getEngine(): Promise<GraphQLEngineType> {
+  if (cdnDatastore) {
+    // if this variable is set we need to download the datastore from the CDN
+    const downloadPath = dbPath + `/data.mdb`
+    console.log(
+      `Downloading datastore from CDN (${cdnDatastore} -> ${downloadPath})`
+    )
+
+    await fs.ensureDir(dbPath)
+    await new Promise((resolve, reject) => {
+      const req = get(cdnDatastore, response => {
+        if (
+          !response.statusCode ||
+          response.statusCode < 200 ||
+          response.statusCode > 299
+        ) {
+          reject(
+            new Error(
+              `Failed to download ${cdnDatastore}: ${response.statusCode} ${
+                response.statusMessage || ``
+              }`
+            )
+          )
+          return
+        }
+
+        const fileStream = fs.createWriteStream(downloadPath)
+        streamPipeline(response, fileStream)
+          .then(resolve)
+          .catch(error => {
+            console.log(`Error downloading ${cdnDatastore}`, error)
+            reject(error)
+          })
+      })
+
+      req.on(`error`, error => {
+        console.log(`Error downloading ${cdnDatastore}`, error)
+        reject(error)
+      })
+    })
+  }
+  console.log(`Downloaded datastore from CDN`)
+
+  const graphqlEngine = new GraphQLEngine({
+    dbPath,
+  })
+
+  await graphqlEngine.ready
+
+  return graphqlEngine
+}
+
+const engineReadyPromise = getEngine()
 
 function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
@@ -141,6 +213,7 @@ async function engineHandler(
   res: GatsbyFunctionResponse
 ): Promise<void> {
   try {
+    const graphqlEngine = await engineReadyPromise
     const pathInfo = getPathInfo(req)
     if (!pathInfo) {
       res.status(404).send(`Not found`)

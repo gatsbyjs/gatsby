@@ -1,7 +1,9 @@
-import type { AdapterInit } from "gatsby"
+import type { AdapterInit, IAdapterGatsbyConfig } from "gatsby"
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface INetlifyAdapterOptions {}
+interface INetlifyAdapterOptions {
+  excludeDatastoreFromEngineFunction?: boolean
+}
 
 import { prepareFunctionVariants } from "./lambda-handler"
 import { handleRoutesManifest } from "./route-handler"
@@ -21,7 +23,7 @@ async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
   return undefined
 }
 
-const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = () => {
+const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
   return {
     name: `gatsby-adapter-netlify`,
     cache: {
@@ -60,6 +62,36 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = () => {
           lambdasThatUseCaching.get(fun.functionId)
         )
       }
+    },
+    config: (): IAdapterGatsbyConfig => {
+      // if (process.env.DEPLOY_URL && process.env.NETLIFY) {
+      // TODO: use env var as additional toggle on top on adapter options to ease migration from netlify plugins
+
+      let deployURL = process.env.NETLIFY_LOCAL
+        ? `http://localhost:8888`
+        : process.env.DEPLOY_URL
+
+      if (!deployURL) {
+        // for dev purposes - remove later
+        deployURL = `http://localhost:9000`
+      }
+
+      return {
+        excludeDatastoreFromEngineFunction:
+          options?.excludeDatastoreFromEngineFunction ?? false,
+        deployURL,
+      }
+      // }
+
+      // if (options?.excludeDatastoreFromEngineFunction) {
+      //   reporter.warn(
+      //     `[gatsby-adapter-netlify] excludeDatastoreFromEngineFunction is set to true but no DEPLOY_URL is set (running netlify command locally). Disabling excludeDatastoreFromEngineFunction.`
+      //   )
+      // }
+
+      // return {
+      //   excludeDatastoreFromEngineFunction: false,
+      // }
     },
   }
 }

@@ -113,6 +113,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           })
           .unknown(false),
         adapt: Joi.func().required(),
+        config: Joi.func(),
       })
       .unknown(false),
   })

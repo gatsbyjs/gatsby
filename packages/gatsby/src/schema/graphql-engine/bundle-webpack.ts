@@ -11,7 +11,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { schemaCustomizationAPIs } from "./print-plugins"
 import type { GatsbyNodeAPI } from "../../redux/types"
 import * as nodeApis from "../../utils/api-node-docs"
-import { isUsingAdapter } from "../../utils/adapter/manager"
+import { store } from "../../redux"
 
 type Reporter = typeof reporter
 
@@ -121,7 +121,7 @@ export async function createGraphqlEngineBundle(
                 {
                   loader: require.resolve(`./lmdb-bundling-patch`),
                   options: {
-                    forcedBinaryModule: isUsingAdapter()
+                    forcedBinaryModule: store.getState().adapter.instance
                       ? `@lmdb/lmdb-${process.platform}-${process.arch}/node.abi83.glibc.node`
                       : undefined,
                   },
