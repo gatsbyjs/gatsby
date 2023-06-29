@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { uuid } from "gatsby-core-utils/index"
+import { uuid } from "gatsby-core-utils"
 import { ActionsUnion, IGatsbyState } from "../types"
 
 const defaultState: IGatsbyState["status"] = {
