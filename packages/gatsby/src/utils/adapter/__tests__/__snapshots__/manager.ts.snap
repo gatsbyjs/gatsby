@@ -30,6 +30,33 @@ Array [
     "type": "static",
   },
   Object {
+    "filePath": "public/_gatsby/slices/_gatsby-scripts-1.html",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/_gatsby/slices/_gatsby-scripts-1.html",
+    "type": "static",
+  },
+  Object {
     "cache": true,
     "functionId": "ssr-engine",
     "path": "/page-data/dsg/page-data.json",
@@ -127,6 +154,33 @@ Array [
     "type": "static",
   },
   Object {
+    "filePath": "public/chunk-map.json",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/chunk-map.json",
+    "type": "static",
+  },
+  Object {
     "cache": true,
     "functionId": "ssr-engine",
     "path": "/dsg/",
@@ -165,6 +219,10 @@ Array [
   Object {
     "filePath": "public/webpack.stats.json",
     "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
       Object {
         "key": "x-xss-protection",
         "value": "1; mode=block",

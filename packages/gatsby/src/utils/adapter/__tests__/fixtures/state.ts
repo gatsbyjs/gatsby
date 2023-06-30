@@ -121,6 +121,23 @@ components.set('/x/src/pages/ssr.tsx', {
   Head: false
 })
 
+const slices: IGatsbyState["slices"] = new Map()
+
+const html: IGatsbyState["html"] = {
+  trackedHtmlFiles: new Map(),
+  browserCompilationHash: ``,
+  ssrCompilationHash: ``,
+  trackedStaticQueryResults: new Map(),
+  unsafeBuiltinWasUsedInSSR: false,
+  templateCompilationHashes: {},
+  slicesProps: {
+    bySliceId: new Map(),
+    byPagePath: new Map(),
+    bySliceName: new Map(),
+  },
+  pagesThatNeedToStitchSlices: new Set()
+}
+
 export const state = {
   pages,
   staticQueryComponents,
@@ -129,5 +146,7 @@ export const state = {
   config: {
     headers: [],
   },
+  slices,
+  html,
   components,
 } as unknown as IGatsbyState
