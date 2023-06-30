@@ -73,11 +73,15 @@ export interface IFunctionDefinition {
    */
   functionId: string
   /**
-   * Path to function entrypoint that will be used to create function.
+   * Unique name of this function. Use this as a display name for the function.
+   */
+  name: string
+  /**
+   * Path to function entrypoint that will be used to create function
    */
   pathToEntryPoint: string
   /**
-   * List of all required files that this function needs to run.
+   * List of all required files that this function needs to run
    */
   requiredFiles: Array<string>
 }
@@ -86,7 +90,7 @@ export type FunctionsManifest = Array<IFunctionDefinition>
 
 interface IDefaultContext {
   /**
-   * Reporter instance that can be used to log messages to terminal.
+   * Reporter instance that can be used to log messages to terminal
    * @see https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter
    */
   reporter: typeof reporter

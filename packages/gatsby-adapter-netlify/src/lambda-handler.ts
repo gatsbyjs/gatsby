@@ -46,8 +46,16 @@ async function prepareFunction(
 
   await fs.ensureDir(internalFunctionsDir)
 
+  // This is a temporary hacky approach, eventually it should be just `fun.name`
+  const displayName = isODB
+    ? `DSG`
+    : fun.name === `SSR & DSG`
+    ? `SSR`
+    : fun.name
+
   const functionManifest: INetlifyFunctionManifest = {
     config: {
+      name: displayName,
       generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
       includedFiles: fun.requiredFiles.map(file =>
         file.replace(/\[/g, `*`).replace(/]/g, `*`)

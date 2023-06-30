@@ -481,8 +481,14 @@ function getFunctionsManifest(): FunctionsManifest {
       `functions`,
       functionInfo.relativeCompiledFilePath
     )
+    const relativePathWithoutFileExtension = posix.join(
+      posix.parse(functionInfo.originalRelativeFilePath).dir,
+      posix.parse(functionInfo.originalRelativeFilePath).name
+    )
+
     functions.push({
       functionId: functionInfo.functionId,
+      name: `/api/${relativePathWithoutFileExtension}`,
       pathToEntryPoint,
       requiredFiles: [pathToEntryPoint],
     })
@@ -500,6 +506,7 @@ function getFunctionsManifest(): FunctionsManifest {
     functions.push({
       functionId: `ssr-engine`,
       pathToEntryPoint: posix.join(`.cache`, `page-ssr`, `lambda.js`),
+      name: `SSR & DSG`,
       requiredFiles: [
         `public/404.html`,
         `public/500.html`,
