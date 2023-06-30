@@ -105,6 +105,7 @@ describe(`getFunctionsManifest`, () => {
       Array [
         Object {
           "functionId": "static-index-js",
+          "name": "/api/static/index",
           "pathToEntryPoint": ".cache/functions/static/index.js",
           "requiredFiles": Array [
             ".cache/functions/static/index.js",
@@ -112,6 +113,7 @@ describe(`getFunctionsManifest`, () => {
         },
         Object {
           "functionId": "ssr-engine",
+          "name": "SSR & DSG",
           "pathToEntryPoint": ".cache/page-ssr/lambda.js",
           "requiredFiles": Array [
             "public/404.html",
