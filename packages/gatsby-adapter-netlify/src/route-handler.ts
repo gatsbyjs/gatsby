@@ -1,5 +1,4 @@
 import type { RoutesManifest } from "gatsby"
-
 import { EOL } from "os"
 import fs from "fs-extra"
 

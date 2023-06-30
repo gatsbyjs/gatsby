@@ -1,16 +1,14 @@
-import type { AdapterInit, IAdapterGatsbyConfig } from "gatsby"
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface INetlifyAdapterOptions {
-  excludeDatastoreFromEngineFunction?: boolean
-}
-
+import type { AdapterInit, IAdapterConfig } from "gatsby"
 import { prepareFunctionVariants } from "./lambda-handler"
 import { handleRoutesManifest } from "./route-handler"
 
 interface INetlifyCacheUtils {
   restore: (paths: Array<string>) => Promise<boolean>
   save: (paths: Array<string>) => Promise<boolean>
+}
+
+interface INetlifyAdapterOptions {
+  excludeDatastoreFromEngineFunction?: boolean
 }
 
 async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
@@ -28,7 +26,6 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
     name: `gatsby-adapter-netlify`,
     cache: {
       async restore({ directories, reporter }): Promise<boolean> {
-        reporter.info(`[gatsby-adapter-netlify] cache.restore() ${directories}`)
         const utils = await getCacheUtils()
         if (utils) {
           reporter.info(
@@ -40,7 +37,6 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         return false
       },
       async store({ directories, reporter }): Promise<void> {
-        reporter.info(`[gatsby-adapter-netlify] cache.store() ${directories}`)
         const utils = await getCacheUtils()
         if (utils) {
           reporter.info(
@@ -63,7 +59,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         )
       }
     },
-    config: ({ reporter }): IAdapterGatsbyConfig => {
+    config: ({ reporter }): IAdapterConfig => {
       // excludeDatastoreFromEngineFunction can be enabled either via options or via env var (to preserve handling of env var that existed in Netlify build plugin).
       let excludeDatastoreFromEngineFunction =
         options?.excludeDatastoreFromEngineFunction

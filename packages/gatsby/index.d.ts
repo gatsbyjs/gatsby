@@ -42,7 +42,7 @@ export {
   IFunctionDefinition,
   RoutesManifest,
   FunctionsManifest,
-  IAdapterGatsbyConfig,
+  IAdapterConfig,
 } from "./dist/utils/adapter/types"
 
 export const useScrollRestoration: (key: string) => {
