@@ -345,7 +345,40 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
-  // TODO: slices
+  for (const slice of state.slices.values()) {
+    const sliceDataPath = posix.join(`slice-data`, `${slice.name}.json`)
+
+    addStaticRoute({
+      path: sliceDataPath,
+      pathToFillInPublicDir: sliceDataPath,
+      headers: STATIC_PAGE_HEADERS,
+    })
+  }
+
+  function addSliceHtmlRoute(name: string, hasChildren: boolean): void {
+    const sliceHtml1Path = posix.join(`_gatsby`, `slices`, `${name}-1.html`)
+    addStaticRoute({
+      path: sliceHtml1Path,
+      pathToFillInPublicDir: sliceHtml1Path,
+      headers: STATIC_PAGE_HEADERS,
+    })
+    if (hasChildren) {
+      const sliceHtml2Path = posix.join(`_gatsby`, `slices`, `${name}-2.html`)
+      addStaticRoute({
+        path: sliceHtml2Path,
+        pathToFillInPublicDir: sliceHtml2Path,
+        headers: STATIC_PAGE_HEADERS,
+      })
+    }
+  }
+
+  addSliceHtmlRoute(`_gatsby-scripts`, false)
+  for (const [
+    name,
+    { hasChildren },
+  ] of state.html.slicesProps.bySliceId.entries()) {
+    addSliceHtmlRoute(name, hasChildren)
+  }
 
   // redirect routes
   for (const redirect of state.redirects.values()) {
