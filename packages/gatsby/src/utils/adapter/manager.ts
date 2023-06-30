@@ -345,6 +345,26 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
+  // chunk-map.json
+  {
+    const chunkMapFilePath = posix.join(`chunk-map.json`)
+    addStaticRoute({
+      path: chunkMapFilePath,
+      pathToFillInPublicDir: chunkMapFilePath,
+      headers: STATIC_PAGE_HEADERS,
+    })
+  }
+
+  // webpack.stats.json
+  {
+    const webpackStatsFilePath = posix.join(`webpack.stats.json`)
+    addStaticRoute({
+      path: webpackStatsFilePath,
+      pathToFillInPublicDir: webpackStatsFilePath,
+      headers: STATIC_PAGE_HEADERS,
+    })
+  }
+
   for (const slice of state.slices.values()) {
     const sliceDataPath = posix.join(`slice-data`, `${slice.name}.json`)
 
