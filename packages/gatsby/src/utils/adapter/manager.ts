@@ -373,15 +373,30 @@ function getRoutesManifest(): RoutesManifest {
   }
 
   // TODO: Remove before final merge
-  console.log(`[Adapters] unmanaged (or not yet handled) assets`, fileAssets)
+  const notYetHandled = new Set<string>()
 
   for (const fileAsset of fileAssets) {
+    // try to classify remaining assets
+    let headers: IHeader["headers"] | undefined = undefined
+
+    if (fileAsset.startsWith(`~partytown`)) {
+      // no hashes, must revalidate
+      headers = STATIC_PAGE_HEADERS
+    }
+
+    if (!headers) {
+      headers = ASSET_HEADERS
+      notYetHandled.add(fileAsset)
+    }
+
     addStaticRoute({
       path: fileAsset,
       pathToFillInPublicDir: fileAsset,
-      headers: ASSET_HEADERS,
+      headers,
     })
   }
+
+  console.log(`[Adapters] unmanaged (or not yet handled) assets`, notYetHandled)
 
   return (
     routes
