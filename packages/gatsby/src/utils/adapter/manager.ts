@@ -83,8 +83,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   const directoriesToCache = [`.cache`, `public`]
   const manager: IAdapterManager = {
     restoreCache: async (): Promise<void> => {
-      // TODO: Remove before final merge
-      reporter.info(`[Adapters] restoreCache()`)
       if (!adapter.cache) {
         return
       }
@@ -110,8 +108,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       }
     },
     storeCache: async (): Promise<void> => {
-      // TODO: Remove before final merge
-      reporter.info(`[Adapters] storeCache()`)
       if (!adapter.cache) {
         return
       }
@@ -119,8 +115,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       await adapter.cache.store({ directories: directoriesToCache, reporter })
     },
     adapt: async (): Promise<void> => {
-      // TODO: Remove before final merge
-      reporter.info(`[Adapters] adapt()`)
       if (!adapter.adapt) {
         return
       }
@@ -262,7 +256,7 @@ function getRoutesManifest(): RoutesManifest {
       fileAssets.delete(pathToFillInPublicDir)
     } else {
       reporter.warn(
-        `[Adapters] Tried to remove "${pathToFillInPublicDir}" from assets but it wasn't there`
+        `[Adapters] Tried to remove "${pathToFillInPublicDir}" from fileAssets but it wasn't there`
       )
     }
   }
@@ -332,8 +326,10 @@ function getRoutesManifest(): RoutesManifest {
 
   // webpack assets
   if (!webpackAssets) {
-    // TODO: Make this a structured error
-    throw new Error(`[Adapters] webpackAssets is not defined`)
+    reporter.panic({
+      id: `12200`,
+      context: {},
+    })
   }
 
   for (const asset of webpackAssets) {

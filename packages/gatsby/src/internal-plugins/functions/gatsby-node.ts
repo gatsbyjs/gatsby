@@ -183,7 +183,6 @@ const createWebpackConfig = async ({
           relativeCompiledFilePath: compiledFunctionName,
           absoluteCompiledFilePath: compiledPath,
           matchPath: getMatchPath(finalName),
-          // TODO: maybe figure out better functionId
           functionId: _.kebabCase(compiledFunctionName),
         })
       })

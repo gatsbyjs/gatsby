@@ -23,8 +23,7 @@ const MatchPathLoader: LoaderDefinition = async function () {
     if (matchResult) {
       req.params = matchResult.params
       if (req.params['*']) {
-        // Backwards compatability for v3
-        // TODO remove in v5
+        // TODO(v6): Remove this backwards compatability for v3
         req.params['0'] = req.params['*']
       }
     }
