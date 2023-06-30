@@ -424,9 +424,6 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
-  // TODO: Remove before final merge
-  const notYetHandled = new Set<string>()
-
   for (const fileAsset of fileAssets) {
     // try to classify remaining assets
     let headers: IHeader["headers"] | undefined = undefined
@@ -443,7 +440,6 @@ function getRoutesManifest(): RoutesManifest {
 
     if (!headers) {
       headers = BASE_HEADERS
-      notYetHandled.add(fileAsset)
     }
 
     addStaticRoute({
@@ -452,8 +448,6 @@ function getRoutesManifest(): RoutesManifest {
       headers,
     })
   }
-
-  console.log(`[Adapters] unmanaged (or not yet handled) assets`, notYetHandled)
 
   return (
     routes
