@@ -22,6 +22,7 @@ export type AvailableFeatures =
   | "graphql-typegen"
   | "content-file-path"
   | "stateful-source-nodes"
+  | "adapters"
 
 export {
   Link,
