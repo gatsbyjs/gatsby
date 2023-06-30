@@ -32,7 +32,7 @@ import { initTracer } from "../tracer"
 import { getCodeFrame } from "../../query/graphql-errors-codeframe"
 import { ICollectedSlice } from "../babel/find-slices"
 import { createHeadersMatcher } from "../adapter/create-headers"
-import { STATIC_PAGE_HEADERS } from "../adapter/constants"
+import { MUST_REVALIDATE_HEADERS } from "../adapter/constants"
 import { getRoutePathFromPage } from "../adapter/get-route-path"
 
 export interface ITemplateDetails {
@@ -230,7 +230,7 @@ export async function getData({
     // get headers from defaults and config
     const headersFromConfig = createHeaders(
       getRoutePathFromPage(page),
-      STATIC_PAGE_HEADERS
+      MUST_REVALIDATE_HEADERS
     )
     // convert headers array to object
     for (const header of headersFromConfig) {

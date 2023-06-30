@@ -28,10 +28,9 @@ import {
   shouldGenerateEngines,
 } from "../engines-helpers"
 import {
-  ASSET_HEADERS,
-  REDIRECT_HEADERS,
-  STATIC_PAGE_HEADERS,
-  WEBPACK_ASSET_HEADERS,
+  BASE_HEADERS,
+  MUST_REVALIDATE_HEADERS,
+  PERMAMENT_CACHING_HEADERS,
 } from "./constants"
 import { createHeadersMatcher } from "./create-headers"
 import { HTTP_STATUS_CODE } from "../../redux/types"
@@ -282,12 +281,12 @@ function getRoutesManifest(): RoutesManifest {
       addStaticRoute({
         path: htmlRoutePath,
         pathToFillInPublicDir: htmlFilePath,
-        headers: STATIC_PAGE_HEADERS,
+        headers: MUST_REVALIDATE_HEADERS,
       })
       addStaticRoute({
         path: pageDataRoutePath,
         pathToFillInPublicDir: pageDataFilePath,
-        headers: STATIC_PAGE_HEADERS,
+        headers: MUST_REVALIDATE_HEADERS,
       })
     } else {
       const commonFields: Omit<IFunctionRoute, "path"> = {
@@ -317,7 +316,7 @@ function getRoutesManifest(): RoutesManifest {
     addStaticRoute({
       path: staticQueryResultPath,
       pathToFillInPublicDir: staticQueryResultPath,
-      headers: STATIC_PAGE_HEADERS,
+      headers: MUST_REVALIDATE_HEADERS,
     })
   }
 
@@ -327,7 +326,7 @@ function getRoutesManifest(): RoutesManifest {
     addStaticRoute({
       path: appDataFilePath,
       pathToFillInPublicDir: appDataFilePath,
-      headers: STATIC_PAGE_HEADERS,
+      headers: MUST_REVALIDATE_HEADERS,
     })
   }
 
@@ -341,7 +340,7 @@ function getRoutesManifest(): RoutesManifest {
     addStaticRoute({
       path: asset,
       pathToFillInPublicDir: asset,
-      headers: WEBPACK_ASSET_HEADERS,
+      headers: PERMAMENT_CACHING_HEADERS,
     })
   }
 
@@ -351,7 +350,7 @@ function getRoutesManifest(): RoutesManifest {
     addStaticRoute({
       path: chunkMapFilePath,
       pathToFillInPublicDir: chunkMapFilePath,
-      headers: STATIC_PAGE_HEADERS,
+      headers: MUST_REVALIDATE_HEADERS,
     })
   }
 
@@ -361,7 +360,7 @@ function getRoutesManifest(): RoutesManifest {
     addStaticRoute({
       path: webpackStatsFilePath,
       pathToFillInPublicDir: webpackStatsFilePath,
-      headers: STATIC_PAGE_HEADERS,
+      headers: MUST_REVALIDATE_HEADERS,
     })
   }
 
@@ -371,7 +370,7 @@ function getRoutesManifest(): RoutesManifest {
     addStaticRoute({
       path: sliceDataPath,
       pathToFillInPublicDir: sliceDataPath,
-      headers: STATIC_PAGE_HEADERS,
+      headers: MUST_REVALIDATE_HEADERS,
     })
   }
 
@@ -380,14 +379,14 @@ function getRoutesManifest(): RoutesManifest {
     addStaticRoute({
       path: sliceHtml1Path,
       pathToFillInPublicDir: sliceHtml1Path,
-      headers: STATIC_PAGE_HEADERS,
+      headers: MUST_REVALIDATE_HEADERS,
     })
     if (hasChildren) {
       const sliceHtml2Path = posix.join(`_gatsby`, `slices`, `${name}-2.html`)
       addStaticRoute({
         path: sliceHtml2Path,
         pathToFillInPublicDir: sliceHtml2Path,
-        headers: STATIC_PAGE_HEADERS,
+        headers: MUST_REVALIDATE_HEADERS,
       })
     }
   }
@@ -412,7 +411,7 @@ function getRoutesManifest(): RoutesManifest {
           ? HTTP_STATUS_CODE.MOVED_PERMANENTLY_301
           : HTTP_STATUS_CODE.FOUND_302),
       ignoreCase: redirect.ignoreCase,
-      headers: REDIRECT_HEADERS,
+      headers: BASE_HEADERS,
     })
   }
 
@@ -434,11 +433,12 @@ function getRoutesManifest(): RoutesManifest {
 
     if (fileAsset.startsWith(`~partytown`)) {
       // no hashes, must revalidate
+      headers = MUST_REVALIDATE_HEADERS
       headers = STATIC_PAGE_HEADERS
     }
 
     if (!headers) {
-      headers = ASSET_HEADERS
+      headers = BASE_HEADERS
       notYetHandled.add(fileAsset)
     }
 
