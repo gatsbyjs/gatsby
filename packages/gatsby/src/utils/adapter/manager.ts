@@ -434,7 +434,11 @@ function getRoutesManifest(): RoutesManifest {
     if (fileAsset.startsWith(`~partytown`)) {
       // no hashes, must revalidate
       headers = MUST_REVALIDATE_HEADERS
-      headers = STATIC_PAGE_HEADERS
+    } else if (
+      fileAsset.startsWith(`_gatsby/image`) ||
+      fileAsset.startsWith(`_gatsby/file`)
+    ) {
+      headers = PERMAMENT_CACHING_HEADERS
     }
 
     if (!headers) {
