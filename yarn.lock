@@ -13037,15 +13037,10 @@ imageinfo@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/imageinfo/-/imageinfo-1.0.4.tgz#1dd2456ecb96fc395f0aa1179c467dfb3d5d7a2a"
 
-immer@^9.0.0:
+immer@^9.0.0, immer@^9.0.7:
   version "9.0.21"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.21.tgz#1e025ea31a40f24fb064f1fef23e931496330176"
   integrity sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==
-
-immer@^9.0.7:
-  version "9.0.12"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.12.tgz#2d33ddf3ee1d247deab9d707ca472c8c942a0f20"
-  integrity sha512-lk7UNmSbAukB5B6dh9fnh5D0bJTOFKxVg2cyJWTYrWRfhLrLMBquONcUs3aFq507hNoIZEDDh8lb8UtOizSMhA==
 
 immutable@~3.7.6:
   version "3.7.6"
@@ -15428,7 +15423,7 @@ lodash.isstring@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
 
-lodash.iteratee@^4.5.0:
+lodash.iteratee@^4.5.0, lodash.iteratee@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.iteratee/-/lodash.iteratee-4.7.0.tgz#be4177db289a8ccc3c0990f1db26b5b22fc1554c"
 
@@ -23663,6 +23658,14 @@ unist-util-find@1.0.2:
     lodash.iteratee "^4.5.0"
     unist-util-visit "^1.1.0"
 
+unist-util-find@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/unist-util-find/-/unist-util-find-1.0.3.tgz#9bae47067d130e58011924b9d5c0d7bbddbf8388"
+  integrity sha512-/EU5aTJJfldLGm0A4hUV4FTShJalFbeKIdUlJi6aoz+YchHpYA1XKGOU0OtUkIjsl8i6bekB3LG1HMVeMbIAdQ==
+  dependencies:
+    lodash.iteratee "^4.7.0"
+    unist-util-visit "^4.1.0"
+
 unist-util-generated@^1.0.0:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/unist-util-generated/-/unist-util-generated-1.1.5.tgz#1e903e68467931ebfaea386dae9ea253628acd42"
@@ -23812,7 +23815,7 @@ unist-util-visit@^2.0.0, unist-util-visit@^2.0.3:
     unist-util-is "^4.0.0"
     unist-util-visit-parents "^3.0.0"
 
-unist-util-visit@^4.0.0, unist-util-visit@^4.1.2:
+unist-util-visit@^4.0.0, unist-util-visit@^4.1.0, unist-util-visit@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/unist-util-visit/-/unist-util-visit-4.1.2.tgz#125a42d1eb876283715a3cb5cceaa531828c72e2"
   integrity sha512-MSd8OUGISqHdVvfY9TPhyK2VdUrPgxkUtWSuMHF6XAAFuL4LokseigBnZtPnJMu+FbynTkFNnFlyjxpVKujMRg==
