@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.20.13",
     "lodash.camelcase": "^4.3.0",
     "lodash.isstring": "^4.0.1",
-    "mongodb": "^3.7.3",
+    "mongodb": "^3.7.4",
     "query-string": "^6.14.1"
   },
   "devDependencies": {
