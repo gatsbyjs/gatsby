@@ -42,13 +42,13 @@
     "@graphiql/plugin-explorer": "^0.1.20",
     "@graphiql/react": "^0.17.6",
     "@graphiql/toolkit": "^0.8.4",
-    "babel-loader": "^8.3.0",
+    "babel-loader": "^9.1.2",
     "babel-preset-gatsby-package": "^3.12.0-next.0",
     "core-js": "^3.30.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
     "del-cli": "^5.0.0",
-    "graphiql": "^2.4.7",
+    "graphiql": "^3.0.0",
     "html-webpack-plugin": "^5.5.1",
     "npm-run-all": "4.1.5",
     "react": "^18.2.0",
@@ -56,7 +56,7 @@
     "regenerator-runtime": "^0.13.11",
     "style-loader": "^3.3.3",
     "webpack": "^5.85.0",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^5.1.4"
   },
   "engines": {
     "node": ">=18.0.0"
