@@ -132,7 +132,7 @@ The `adapt` hook should do the following things:
 - Apply trailing slash behavior and path prefix to URLs
 - Possibly upload assets to CDN
 
-## Testing locally
+## Running locally
 
 If you want to test your adapter locally, you can use [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link), [yarn link](https://yarnpkg.com/cli/link), or equivalent in other package managers. You'd use your adapter like so:
 
@@ -181,6 +181,12 @@ If you want to quickly prototype an adapter, you can also author your file(s) di
    ```
 
 1. Once it works, don't forget to [publish](#publishing) your adapter so that the community can benefit from it.
+
+## Testing
+
+You should test your adapter code to improve code quality and reliablity. We recommend using [Jest](https://jestjs.io/) or [Vitest](https://vitest.dev/) for unit testing and [Cypress](https://www.cypress.io/) or [Playwright](https://playwright.dev/) for end-to-end testing.
+
+You can copy Gatsby's complete [adapter end-to-end testing suite](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests/adapters) and use it for your own adapter.
 
 ## Publishing
 
