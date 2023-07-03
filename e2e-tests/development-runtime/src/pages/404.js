@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql, Link, Slice } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -64,6 +64,7 @@ const NotFoundPage = ({ data }) => (
         Go to page B
       </Link>
     </fieldset>
+    <Slice alias="mappedslice" />
   </Layout>
 )
 export const Head = () => <Seo title="404: Not found" />

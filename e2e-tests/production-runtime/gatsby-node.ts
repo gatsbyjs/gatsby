@@ -137,6 +137,11 @@ export const createPages: GatsbyNode["createPages"] = ({
     },
   })
 
+  createSlice({
+    id: `mappedslice-fakeid`,
+    component: path.resolve(`./src/components/mapped-slice.js`),
+  })
+
   slicesData.allRecipeAuthors.forEach(({ id, name }) => {
     createSlice({
       id: `author-${id}`,
@@ -322,5 +327,12 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = ({ page, actions }) => {
         },
       })
       break
+    case `/404/`: {
+      actions.createPage({
+        ...page,
+        slices: { mappedslice: "mappedslice-fakeid" },
+      })
+      break
+    }
   }
 }
