@@ -21,7 +21,7 @@
     "@lukeed/uuid": "^2.0.1",
     "@types/configstore": "^4.0.0",
     "@types/fs-extra": "^9.0.13",
-    "@types/node": "^14.18.48",
+    "@types/node": "^14.18.52",
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.2",
     "enquirer": "^2.3.6",
