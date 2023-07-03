@@ -449,11 +449,16 @@ export class PartialHydrationPlugin {
             }
           }
 
-          for (const cssModule of modulesToInsertIntoApp.sort(
-            (a, b) =>
-              compilation.moduleGraph.getPostOrderIndex(a) -
-              compilation.moduleGraph.getPostOrderIndex(b)
-          )) {
+          for (const cssModule of modulesToInsertIntoApp.sort((a, b) => {
+            const _a = compilation.moduleGraph.getPostOrderIndex(a)
+            const _b = compilation.moduleGraph.getPostOrderIndex(b)
+
+            if (!_a || !_b) {
+              return 0
+            } else {
+              return _a - _b
+            }
+          })) {
             compilation.chunkGraph.connectChunkAndModule(appChunk, cssModule)
 
             for (const group of appChunk.groupsIterable) {
