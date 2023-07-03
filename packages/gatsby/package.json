@@ -150,7 +150,7 @@
     "redux": "4.2.1",
     "redux-thunk": "^2.4.2",
     "resolve-from": "^5.0.0",
-    "semver": "^7.5.1",
+    "semver": "^7.5.3",
     "shallow-compare": "^1.2.2",
     "signal-exit": "^3.0.7",
     "slugify": "^1.6.6",
