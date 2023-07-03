@@ -146,7 +146,7 @@
     "raw-loader": "^4.0.2",
     "react-dev-utils": "^12.0.1",
     "react-refresh": "^0.14.0",
-    "react-server-dom-webpack": "0.0.1",
+    "react-server-dom-webpack": "0.0.0-experimental-c8b778b7f-20220825",
     "redux": "4.2.1",
     "redux-thunk": "^2.4.2",
     "resolve-from": "^5.0.0",
