@@ -228,7 +228,7 @@ By default, `graphqlTypegen` is only run during `gatsby develop`. Set this optio
 
 ## adapter
 
-> Support added in `gatsby@5.X.0`
+> Support added in `gatsby@5.12.0`
 
 You can set an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) or configure [zero-configuration deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) through the `adapter` setting.
 
@@ -246,7 +246,7 @@ Read the [adapters guide](/docs/how-to/previews-deploys-hosting/adapters/) to le
 
 ## headers
 
-> Support added in `gatsby@5.X.0`
+> Support added in `gatsby@5.12.0`
 
 You can set custom HTTP headers on the response of a given path.
 

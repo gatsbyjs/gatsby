@@ -16,7 +16,7 @@ Gatsby passes all the required information during the build to adapters to prepa
 - Apply trailing slash behavior and path prefix to URLs
 - Possibly uploads assets to CDN
 
-This feature was added in `gatsby@5.X.0`.
+This feature was added in `gatsby@5.12.0`.
 
 ## Finding adapters
 

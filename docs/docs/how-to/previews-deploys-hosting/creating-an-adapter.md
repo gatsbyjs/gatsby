@@ -13,7 +13,7 @@ If an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) for your prefer
 
 By the end of this guide you should be able to create and publish an adapter.
 
-The adapters feature was added in `gatsby@5.X.0`.
+The adapters feature was added in `gatsby@5.12.0`.
 
 ## Authoring
 

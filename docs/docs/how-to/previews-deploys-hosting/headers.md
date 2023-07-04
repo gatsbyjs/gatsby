@@ -7,7 +7,7 @@ tableOfContentsDepth: 2
 
 You can set custom [HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) on the response of a given path. This allows you to modify the caching behavior or configure access control. You can apply HTTP headers to static routes and redirects.
 
-This feature was added in `gatsby@5.X.0`.
+This feature was added in `gatsby@5.12.0`.
 
 ## Usage
 

@@ -6,7 +6,7 @@ title: Zero-Configuration Deployments
 
 Zero-configuration deployments are powered by [adapters](/docs/how-to/previews-deploys-hosting/adapters/). If you use one of the [supported deployment platforms](#supported-deployment-platforms), Gatsby automatically installs and uses the correct adapter when you deploy your project.
 
-This feature was added in `gatsby@5.X.0`.
+This feature was added in `gatsby@5.12.0`.
 
 ## Supported deployment platforms
 
