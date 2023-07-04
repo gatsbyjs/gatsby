@@ -43,6 +43,72 @@ import {
 import { noOpAdapterManager } from "./no-op-manager"
 import { getDefaultDbPath } from "../../datastore/lmdb/lmdb-datastore"
 
+async function setAdapter({
+  instance,
+  manager,
+}: {
+  instance?: IAdapter
+  manager: IAdapterManager
+}): Promise<void> {
+  const configFromAdapter = await manager.config()
+
+  store.dispatch({
+    type: `SET_ADAPTER`,
+    payload: {
+      manager,
+      instance,
+      config: configFromAdapter,
+    },
+  })
+
+  if (instance) {
+    // if adapter reports that it doesn't support certain features, we need to fail the build
+    // to avoid broken deploys
+
+    const incompatibleFeatures: Array<string> = []
+
+    // pathPrefix support
+    if (
+      configFromAdapter?.supports?.pathPrefix === false &&
+      store.getState().program.prefixPaths &&
+      store.getState().config.pathPrefix
+    ) {
+      incompatibleFeatures.push(
+        `pathPrefix is not supported. Please remove the pathPrefix option from your gatsby-config.js, don't use "--prefix-paths" CLI toggle or PREFIX_PATHS environment variable.`
+      )
+    }
+
+    // trailingSlash support
+    if (configFromAdapter?.supports?.trailingSlash) {
+      const { trailingSlash } = store.getState().config
+
+      if (
+        !configFromAdapter.supports.trailingSlash.includes(
+          trailingSlash ?? `always`
+        )
+      ) {
+        incompatibleFeatures.push(
+          `trailingSlash option "${trailingSlash}". Supported option${
+            configFromAdapter.supports.trailingSlash.length > 1 ? `s` : ``
+          }: ${configFromAdapter.supports.trailingSlash
+            .map(option => `"${option}"`)
+            .join(`, `)}`
+        )
+      }
+    }
+
+    if (incompatibleFeatures.length > 0) {
+      reporter.panic({
+        id: `12201`,
+        context: {
+          adapterName: instance.name,
+          incompatibleFeatures,
+        },
+      })
+    }
+  }
+}
+
 export async function initAdapterManager(): Promise<IAdapterManager> {
   let adapter: IAdapter
 
@@ -62,15 +128,9 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       telemetry.trackFeatureIsUsed(`adapter:no-op`)
 
       const manager = noOpAdapterManager()
-      const configFromAdapter = await manager.config()
 
-      store.dispatch({
-        type: `SET_ADAPTER`,
-        payload: {
-          manager,
-          config: configFromAdapter,
-        },
-      })
+      await setAdapter({ manager })
+
       return manager
     }
 
@@ -175,20 +235,12 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         excludeDatastoreFromEngineFunction:
           configFromAdapter?.excludeDatastoreFromEngineFunction ?? false,
         deployURL: configFromAdapter?.deployURL,
+        supports: configFromAdapter?.supports,
       }
     },
   }
 
-  const configFromAdapter = await manager.config()
-
-  store.dispatch({
-    type: `SET_ADAPTER`,
-    payload: {
-      manager,
-      instance: adapter,
-      config: configFromAdapter,
-    },
-  })
+  await setAdapter({ manager, instance: adapter })
 
   return manager
 }

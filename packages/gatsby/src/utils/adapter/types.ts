@@ -123,6 +123,19 @@ export interface IAdapterConfig {
    * Instead, it will try to download the datastore from the given `deployURL`.
    */
   excludeDatastoreFromEngineFunction?: boolean
+  /**
+   * Adapters can optionally describe which features they support to prevent potentially faulty deployments.
+   */
+  supports?: {
+    /**
+     * If `false`, Gatsby will fail the build if user tries to use pathPrefix.
+     */
+    pathPrefix?: boolean
+    /**
+     * Provide array of supported traling slash options ("always", "never", "ignore").
+     */
+    trailingSlash?: Array<TrailingSlash>
+  }
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }

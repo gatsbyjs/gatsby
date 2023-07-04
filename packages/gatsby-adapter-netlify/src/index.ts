@@ -91,6 +91,10 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       return {
         excludeDatastoreFromEngineFunction,
         deployURL,
+        supports: {
+          pathPrefix: false,
+          trailingSlash: [`always`],
+        },
       }
     },
   }
