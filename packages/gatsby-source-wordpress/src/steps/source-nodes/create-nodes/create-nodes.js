@@ -1,7 +1,7 @@
 import PQueue from "p-queue"
 import fetchReferencedMediaItemsAndCreateNodes from "../fetch-nodes/fetch-referenced-media-items"
 import urlToPath from "~/utils/url-to-path"
-import store from "~/store"
+import { getStore } from "~/store"
 import fetchGraphql from "~/utils/fetch-graphql"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
@@ -53,7 +53,10 @@ export const createNodeWithSideEffects =
       node = processedNode
     }
 
-    const builtTypename = buildTypeName(node.__typename)
+    const builtTypename = buildTypeName(
+      node.__typename,
+      pluginOptions.schema.typePrefix
+    )
 
     let remoteNode = {
       ...node,
@@ -81,7 +84,7 @@ export const createNodeWithSideEffects =
           fetchGraphql,
           typeSettings,
           buildTypeName,
-          wpStore: store,
+          wpStore: getStore(),
         })) || {}
 
       if (changedRemoteNode) {
@@ -115,7 +118,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
   wpgqlNodesByContentType,
   createNodesActivity,
 }) => {
-  const state = store.getState()
+  const state = getStore().getState()
   const { helpers, pluginOptions } = state.gatsbyApi
 
   const { reporter } = helpers
@@ -126,7 +129,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
   // gatsby-image supports these file types
   // const imgSrcRemoteFileRegex = /<img.*?src=\\"(.*?jpeg|jpg|png|webp|tif|tiff$)\\"[^>]+>/gim
 
-  store.dispatch.logger.createActivityTimer({
+  getStore().dispatch.logger.createActivityTimer({
     typeName: `MediaItem`,
     pluginOptions,
     reporter,
@@ -170,14 +173,14 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
       referencedMediaItemNodeIds: referencedMediaItemNodeIdsArray,
     })
 
-    store.dispatch.logger.stopActivityTimer({
+    getStore().dispatch.logger.stopActivityTimer({
       typeName: `MediaItem`,
     })
 
     return [...createdNodeIds, ...referencedMediaItemNodeIdsArray]
   }
 
-  store.dispatch.logger.stopActivityTimer({
+  getStore().dispatch.logger.stopActivityTimer({
     typeName: `MediaItem`,
   })
 

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.11.0/packages/gatsby) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+#### Features
+
+- support multiple instances of plugin [#38119](https://github.com/gatsbyjs/gatsby/issues/38119) ([77e4e19](https://github.com/gatsbyjs/gatsby/commit/77e4e195237ec7e555c067bdb002d84a6c3a28a0))
+
+#### Bug Fixes
+
+- allow touching nodes owned by another plugin [#38235](https://github.com/gatsbyjs/gatsby/issues/38235) [#38238](https://github.com/gatsbyjs/gatsby/issues/38238) ([5089f0d](https://github.com/gatsbyjs/gatsby/commit/5089f0d78eb24418e37611f7b1c389637293cbb4))
+- update minor and patch dependencies for gatsby [#38161](https://github.com/gatsbyjs/gatsby/issues/38161) ([9e27a90](https://github.com/gatsbyjs/gatsby/commit/9e27a906d2e2c58aebf5142e70115cfda6cab818))
+- update dependency core-js to ^3.30.2 [#38151](https://github.com/gatsbyjs/gatsby/issues/38151) ([aefdc09](https://github.com/gatsbyjs/gatsby/commit/aefdc09e94f0a3c257519be133a260258241740d))
+- update typescript to ^5.59.8 [#38165](https://github.com/gatsbyjs/gatsby/issues/38165) ([a000be4](https://github.com/gatsbyjs/gatsby/commit/a000be498d3b31d42a620dae8724a46ab640c742))
+- update typescript [#38133](https://github.com/gatsbyjs/gatsby/issues/38133) ([aa7a078](https://github.com/gatsbyjs/gatsby/commit/aa7a078383ca5a549743be3269e9bde44655a185))
+- Support inline styles on html/body for Head API [#38098](https://github.com/gatsbyjs/gatsby/issues/38098) ([ccbbda5](https://github.com/gatsbyjs/gatsby/commit/ccbbda5c6ae4cc9dfcbbf07891e9c74461c6ed55))
+
+#### Chores
+
+- update semver [#38171](https://github.com/gatsbyjs/gatsby/issues/38171) ([208cdef](https://github.com/gatsbyjs/gatsby/commit/208cdef13f6488251ba1810a57a1e28c38635631))
+- update [dev] minor and patch dependencies for gatsby [#38132](https://github.com/gatsbyjs/gatsby/issues/38132) ([bdea707](https://github.com/gatsbyjs/gatsby/commit/bdea707c7d804718c39503d8727e529de4a1599c))
+
 ## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.10.0/packages/gatsby) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)

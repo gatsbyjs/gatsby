@@ -22,4 +22,12 @@ describe("Slice passed via createPage", () => {
         .should(`contain`, allRecipeAuthors.find(author => recipe.authorId === author.id).name)
     })
   })
+
+  it(`404 pages with slices mapping have correct content`, () => {
+    cy.visit(`/doesnt-exist`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.getTestElement(`mapped-slice`).should("have.text", "My mapped Slice")
+  })
 })

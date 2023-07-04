@@ -2,7 +2,7 @@
 import regeneratorRuntime from "regenerator-runtime"
 
 import * as React from "react"
-import ReactDOM from "react-dom"
+import { createRoot } from "react-dom/client"
 import { GraphiQL } from "graphiql"
 import { getIntrospectionQuery } from "graphql"
 import { useExplorerPlugin } from "@graphiql/plugin-explorer"
@@ -179,12 +179,12 @@ const App = ({ initialExternalFragments }) => {
   )
 }
 
+const container = document.getElementById(`root`)
+const root = createRoot(container)
+
 // crude way to fetch fragments on boot time
 // it won't hot reload fragments (refresh required)
 // but good enough for initial integration
 fetchFragments().then(initialExternalFragments => {
-  ReactDOM.render(
-    <App initialExternalFragments={initialExternalFragments} />,
-    document.getElementById(`root`)
-  )
+  root.render(<App initialExternalFragments={initialExternalFragments} />)
 })

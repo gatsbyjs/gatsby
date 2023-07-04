@@ -8,7 +8,7 @@ import fetchGraphql from "~/utils/fetch-graphql"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { getPersistentCache } from "~/utils/cache"
 
-import store from "~/store"
+import { getStore } from "~/store"
 import { MD5_CACHE_KEY } from "~/constants"
 
 import {
@@ -308,7 +308,7 @@ const ensurePluginRequirementsAreMet = async (
       },
     },
     remoteSchema: { schemaWasChanged },
-  } = store.getState()
+  } = getStore().getState()
 
   // if we don't have a cached remote schema MD5, this is a cold build
   const isFirstBuild = !(await getPersistentCache({ key: MD5_CACHE_KEY }))

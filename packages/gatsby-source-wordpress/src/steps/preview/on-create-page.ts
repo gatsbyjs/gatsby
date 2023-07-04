@@ -1,5 +1,5 @@
 import { formatLogMessage } from "~/utils/format-log-message"
-import store from "~/store"
+import { getStore } from "~/store"
 import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
 import { inPreviewMode } from "."
 
@@ -27,7 +27,7 @@ export const onCreatepageSavePreviewNodeIdToPageDependency = (
     page.context && page.context.id && getNode(page.context.id)
 
   if (nodeThatCreatedThisPage) {
-    store.dispatch.previewStore.saveNodePageState({
+    getStore().dispatch.previewStore.saveNodePageState({
       nodeId: nodeThatCreatedThisPage.id,
       page: {
         path: page.path,
@@ -52,7 +52,7 @@ export const onCreatePageRespondToPreviewStatusQuery = async (
   }
 
   const { nodePageCreatedCallbacks, pagePathToNodeDependencyId } =
-    store.getState().previewStore
+    getStore().getState().previewStore
 
   const { page, getNode } = helpers
 
@@ -81,7 +81,7 @@ export const onCreatePageRespondToPreviewStatusQuery = async (
     return
   }
 
-  store.dispatch.previewStore.unSubscribeToPagesCreatedFromNodeById({
+  getStore().dispatch.previewStore.unSubscribeToPagesCreatedFromNodeById({
     nodeId: nodeIdThatCreatedThisPage,
   })
 

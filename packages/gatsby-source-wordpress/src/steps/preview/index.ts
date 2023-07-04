@@ -12,7 +12,7 @@ import { remoteSchemaSupportsFieldNameOnTypeName } from "~/steps/ingest-remote-s
 import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
 import fetchGraphql from "~/utils/fetch-graphql"
 
-import store from "~/store"
+import { getStore } from "~/store"
 
 import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-actions/update"
 import { formatLogMessage } from "~/utils/format-log-message"
@@ -31,7 +31,7 @@ const inPreviewRunner =
   !!process.env.IS_GATSBY_PREVIEW
 
 // this is a function simply because many places in the code expect it to be.
-// it used to call store.getState() and check for some state to determine preview mode
+// it used to call getStore().getState() and check for some state to determine preview mode
 export const inPreviewMode = (): boolean => inDevelopPreview || inPreviewRunner
 
 export type PreviewStatusUnion =
@@ -65,7 +65,7 @@ let previewQueue: PQueue
 const getPreviewQueue = (): PQueue => {
   if (!previewQueue) {
     const { previewRequestConcurrency } =
-      store.getState().gatsbyApi.pluginOptions.schema
+      getStore().getState().gatsbyApi.pluginOptions.schema
 
     previewQueue = new PQueue({
       concurrency: previewRequestConcurrency,
@@ -84,7 +84,7 @@ const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
   }
 
   const existingCallbacks =
-    store.getState().previewStore.nodePageCreatedCallbacks
+    getStore().getState().previewStore.nodePageCreatedCallbacks
 
   const alreadyProcessingThisPreview = !!existingCallbacks?.[id]
 
@@ -274,7 +274,7 @@ export const sourcePreview = async ({
 
   // this callback will be invoked when the page is created/updated for this node
   // then it'll send a mutation to WPGraphQL so that WP knows the preview is ready
-  store.dispatch.previewStore.subscribeToPagesCreatedFromNodeById({
+  getStore().dispatch.previewStore.subscribeToPagesCreatedFromNodeById({
     nodeId: previewData.id,
     modified: previewData.modified,
     sendPreviewStatus,

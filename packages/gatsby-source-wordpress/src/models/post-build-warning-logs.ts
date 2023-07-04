@@ -1,3 +1,6 @@
+import { createModel } from "@rematch/core"
+import { IRootModel } from "."
+
 export enum StateKey {
   mimeTypeExcluded = `mimeTypeExcluded`,
   maxFileSizeBytesExceeded = `maxFileSizeBytesExceeded`,
@@ -16,7 +19,7 @@ const incrementReducerCreator =
     return state
   }
 
-const postBuildWarningCounts = {
+const postBuildWarningCounts = createModel<IRootModel>()({
   state: {
     mimeTypeExcluded: 0,
     maxFileSizeBytesExceeded: 0,
@@ -29,6 +32,8 @@ const postBuildWarningCounts = {
       StateKey.maxFileSizeBytesExceeded
     ),
   },
-}
-
+  effects: () => {
+    return {}
+  },
+})
 export default postBuildWarningCounts

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-custom-blocks@5.11.1/packages/gatsby-remark-custom-blocks) (2023-06-26)
+
+#### Bug Fixes
+
+- Pin broken `unist-util-find` dep [#38261](https://github.com/gatsbyjs/gatsby/issues/38261) [#38262](https://github.com/gatsbyjs/gatsby/issues/38262) ([7d0c3b1](https://github.com/gatsbyjs/gatsby/commit/7d0c3b12ce41b4ff2cc0aca20d73f4566e6857c7))
+
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-custom-blocks@5.11.0/packages/gatsby-remark-custom-blocks) (2023-06-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
 ## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-custom-blocks@5.10.0/packages/gatsby-remark-custom-blocks) (2023-05-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.10)

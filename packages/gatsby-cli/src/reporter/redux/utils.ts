@@ -45,7 +45,7 @@ export const getGlobalStatus = (
       return generatedStatus
     },
     ActivityStatuses.Success
-  )
+  ) as ActivityStatuses
 }
 
 export const getActivity = (id: string): IActivity | null =>

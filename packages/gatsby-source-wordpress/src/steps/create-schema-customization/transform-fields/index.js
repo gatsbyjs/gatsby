@@ -1,6 +1,7 @@
-import { fieldTransformers } from "./field-transformers"
+import { getFieldTransformers } from "./field-transformers"
 import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
-import store from "~/store"
+import { getStore } from "~/store"
+import { getPluginOptions } from "~/utils/get-gatsby-api"
 
 import {
   fieldOfTypeWasFetched,
@@ -11,6 +12,10 @@ import {
 
 import { buildDefaultResolver } from "./default-resolver"
 
+/**
+ * @param {import("graphql").GraphQLField} field
+ */
+
 const handleCustomScalars = field => {
   const fieldTypeIsACustomScalar =
     field.type.kind === `SCALAR` && !typeIsASupportedScalar(field.type)
@@ -18,18 +23,31 @@ const handleCustomScalars = field => {
   if (fieldTypeIsACustomScalar) {
     // if this field is an unsupported custom scalar,
     // type it as JSON
-    field.type.name = `JSON`
+    return {
+      ...field,
+      type: {
+        ...field.type,
+        name: `JSON`,
+      },
+    }
   }
 
   const fieldTypeOfTypeIsACustomScalar =
-    field.type.ofType &&
-    field.type.ofType.kind === `SCALAR` &&
-    !typeIsASupportedScalar(field.type)
+    field.type.ofType?.kind === `SCALAR` && !typeIsASupportedScalar(field.type)
 
   if (fieldTypeOfTypeIsACustomScalar) {
     // if this field is an unsupported custom scalar,
     // type it as JSON
-    field.type.ofType.name = `JSON`
+    return {
+      ...field,
+      type: {
+        ...field.type,
+        ofType: {
+          ...field.type.ofType,
+          name: `JSON`,
+        },
+      },
+    }
   }
 
   return field
@@ -96,7 +114,7 @@ export const transformFields = ({
 
   const gatsbyNodeTypes = getGatsbyNodeTypeNames()
 
-  const { fieldAliases, fieldBlacklist } = store.getState().remoteSchema
+  const { fieldAliases, fieldBlacklist } = getStore().getState().remoteSchema
 
   const parentTypeSettings = getTypeSettingsByType(parentType)
 
@@ -130,7 +148,7 @@ export const transformFields = ({
       return fieldsObject
     }
 
-    const { typeMap } = store.getState().remoteSchema
+    const { typeMap } = getStore().getState().remoteSchema
 
     const type = typeMap.get(findNamedTypeName(field.type))
 
@@ -160,7 +178,7 @@ export const transformFields = ({
 
     const { transform, description } =
       peek === false
-        ? fieldTransformers.find(({ test }) => test(field)) || {}
+        ? getFieldTransformers().find(({ test }) => test(field)) || {}
         : {}
 
     if (transform && typeof transform === `function` && peek === false) {
@@ -170,6 +188,7 @@ export const transformFields = ({
         fieldName,
         gatsbyNodeTypes,
         description,
+        pluginOptions: getPluginOptions(),
       }
 
       let transformedField = transform(transformerApi)

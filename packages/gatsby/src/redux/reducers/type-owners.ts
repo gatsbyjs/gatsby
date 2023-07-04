@@ -103,9 +103,6 @@ export const typeOwnersReducer = (
 
       return typeOwners
     }
-    case `TOUCH_NODE`: {
-      return setTypeOwner(action.typeName, action.plugin, typeOwners)
-    }
     case `CREATE_NODE`: {
       const { plugin, oldNode, payload: node } = action
       const { owner, type } = node.internal

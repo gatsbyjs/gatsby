@@ -4,6 +4,7 @@ const webpack = require(`webpack`)
 
 const mode = `production`
 
+/** @type { import('webpack').Configuration } */
 module.exports = {
   entry: path.join(__dirname, `app.jsx`),
   mode,

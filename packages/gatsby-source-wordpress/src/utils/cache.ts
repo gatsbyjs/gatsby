@@ -5,7 +5,7 @@ import fsStore from "cache-manager-fs-hash"
 import path from "path"
 import rimraf from "rimraf"
 
-import store from "~/store"
+import { getStore, withPluginKey } from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 
 import fetchGraphql from "~/utils/fetch-graphql"
@@ -122,7 +122,7 @@ export const shouldHardCacheData = (): boolean => {
     pluginOptions: {
       develop: { hardCacheData },
     },
-  } = store.getState().gatsbyApi
+  } = getStore().getState().gatsbyApi
 
   return hardCacheData
 }
@@ -138,7 +138,7 @@ export const setHardCachedData = async ({
     return
   }
 
-  const hardCache = getCacheInstance(`wordpress-data`)
+  const hardCache = getCacheInstance(withPluginKey(`wordpress-data`))
 
   await hardCache.set(key, value)
 }
@@ -152,7 +152,7 @@ export const getHardCachedData = async <T = Node>({
     return null
   }
 
-  const hardCache = getCacheInstance(`wordpress-data`)
+  const hardCache = getCacheInstance(withPluginKey(`wordpress-data`))
 
   const data = await hardCache.get(key)
 
@@ -240,7 +240,7 @@ export const setPersistentCache = async ({
 
   await Promise.all([
     // set Gatsby cache
-    helpers.cache.set(key, value),
+    helpers.cache.set(withPluginKey(key), value),
     // and hard cache
     setHardCachedData({ key, value }),
   ])
@@ -253,7 +253,7 @@ export const getPersistentCache = async ({
 }): Promise<unknown> => {
   const { helpers } = getGatsbyApi()
 
-  const cachedData = await helpers.cache.get(key)
+  const cachedData = await helpers.cache.get(withPluginKey(key))
 
   if (cachedData) {
     return cachedData
@@ -334,7 +334,7 @@ export const restoreHardCachedNodes = async ({
             typeSettings,
             buildTypeName,
             type: node.type,
-            wpStore: store,
+            wpStore: getStore(),
           })) || {}
 
         if (receivedRemoteNode) {
@@ -351,19 +351,19 @@ export const restoreHardCachedNodes = async ({
   )
 
   Object.entries(loggerTypeCounts).forEach(([typeName, count]) => {
-    store.dispatch.logger.createActivityTimer({
+    getStore().dispatch.logger.createActivityTimer({
       typeName,
       pluginOptions,
       reporter,
     })
 
-    store.dispatch.logger.incrementActivityTimer({
+    getStore().dispatch.logger.incrementActivityTimer({
       typeName,
       by: count,
       action: `restored`,
     })
 
-    store.dispatch.logger.stopActivityTimer({
+    getStore().dispatch.logger.stopActivityTimer({
       typeName,
       action: `restored`,
     })

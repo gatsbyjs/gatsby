@@ -9,7 +9,7 @@ import { createFileNodeFromBuffer } from "gatsby-source-filesystem"
 
 import createRemoteFileNode from "./create-remote-file-node/index"
 
-import store from "~/store"
+import { getStore } from "~/store"
 
 import urlToPath from "~/utils/url-to-path"
 import { formatLogMessage } from "~/utils/format-log-message"
@@ -17,13 +17,13 @@ import { stripImageSizesFromUrl } from "~/steps/source-nodes/fetch-nodes/fetch-r
 import { ensureSrcHasHostname } from "./process-node"
 
 export const getFileNodeMetaBySourceUrl = sourceUrl => {
-  const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl
+  const fileNodesMetaByUrls = getStore().getState().imageNodes.nodeMetaByUrl
 
   return fileNodesMetaByUrls[stripImageSizesFromUrl(sourceUrl)]
 }
 
 export const getMediaItemEditLink = node => {
-  const { helpers, pluginOptions } = store.getState().gatsbyApi
+  const { helpers, pluginOptions } = getStore().getState().gatsbyApi
 
   const { protocol, hostname } = url.parse(node?.link || pluginOptions.url)
   const baseUrl = `${protocol}//${hostname}`
@@ -64,7 +64,7 @@ export const errorPanicker = ({
   const errorString =
     typeof error === `string` ? error : error && error.toString()
 
-  const { pluginOptions } = store.getState().gatsbyApi
+  const { pluginOptions } = getStore().getState().gatsbyApi
   const allow404ImagesInProduction = pluginOptions.production.allow404Images
   const allow401ImagesInProduction = pluginOptions.production.allow401Images
   const errorCodeIs404 = errorString.includes(`Response code 404`)
@@ -201,7 +201,7 @@ export const createLocalFileNode = async ({
   parentName,
   skipExistingNode = false,
 }) => {
-  const state = store.getState()
+  const state = getStore().getState()
   const { helpers, pluginOptions } = state.gatsbyApi
 
   const existingNode = !skipExistingNode
@@ -238,13 +238,13 @@ export const createLocalFileNode = async ({
 
   // if this file is larger than maxFileSizeBytes, don't fetch the remote file
   if (fileSize > maxFileSizeBytes) {
-    store.dispatch.postBuildWarningCounts.incrementMaxFileSizeBytesExceeded()
+    getStore().dispatch.postBuildWarningCounts.incrementMaxFileSizeBytesExceeded()
     return null
   }
 
   // if this type of file is excluded, don't fetch the remote file
   if (excludeByMimeTypes.includes(mimeType)) {
-    store.dispatch.postBuildWarningCounts.incrementMimeTypeExceeded()
+    getStore().dispatch.postBuildWarningCounts.incrementMimeTypeExceeded()
     return null
   }
 
@@ -351,7 +351,7 @@ export const createLocalFileNode = async ({
   // push it's id and url to our store for caching,
   // so we can touch this node next time
   // and so we can easily access the id by source url later
-  store.dispatch.imageNodes.pushNodeMeta({
+  getStore().dispatch.imageNodes.pushNodeMeta({
     id: remoteFileNode.id,
     sourceUrl: mediaItemUrl,
     modifiedGmt,

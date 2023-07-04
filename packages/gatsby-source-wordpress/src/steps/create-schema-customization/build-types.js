@@ -1,4 +1,4 @@
-import store from "~/store"
+import { getStore } from "~/store"
 import { transformFields } from "./transform-fields"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import {
@@ -9,6 +9,7 @@ import {
 
 const unionType = typeBuilderApi => {
   const { schema, type, pluginOptions } = typeBuilderApi
+  const prefix = pluginOptions.schema.typePrefix
 
   const types = type.possibleTypes
     .filter(
@@ -18,18 +19,18 @@ const unionType = typeBuilderApi => {
           typeName: possibleType.name,
         })
     )
-    .map(possibleType => buildTypeName(possibleType.name))
+    .map(possibleType => buildTypeName(possibleType.name, prefix))
 
   if (!types || !types.length) {
     return false
   }
 
   let unionType = {
-    name: buildTypeName(type.name),
+    name: buildTypeName(type.name, prefix),
     types,
     resolveType: node => {
       if (node.__typename) {
-        return buildTypeName(node.__typename)
+        return buildTypeName(node.__typename, prefix)
       }
 
       return null
@@ -46,9 +47,10 @@ const unionType = typeBuilderApi => {
 }
 
 const interfaceType = typeBuilderApi => {
-  const { type, schema } = typeBuilderApi
+  const { type, schema, pluginOptions } = typeBuilderApi
+  const prefix = pluginOptions.schema.typePrefix
 
-  const state = store.getState()
+  const state = getStore().getState()
   const { ingestibles } = state.remoteSchema
   const { nodeInterfaceTypes } = ingestibles
 
@@ -65,7 +67,7 @@ const interfaceType = typeBuilderApi => {
   }
 
   let typeDef = {
-    name: buildTypeName(type.name),
+    name: buildTypeName(type.name, prefix),
     fields: transformedFields,
     extensions: { infer: false },
   }
@@ -73,7 +75,7 @@ const interfaceType = typeBuilderApi => {
   // this is a regular interface type, not a node interface type so we need to resolve the type name
   if (!nodeInterfaceTypes.includes(type.name)) {
     typeDef.resolveType = node =>
-      node?.__typename ? buildTypeName(node.__typename) : null
+      node?.__typename ? buildTypeName(node.__typename, prefix) : null
   }
 
   typeDef = filterTypeDefinition(typeDef, typeBuilderApi, `INTERFACE`)
@@ -82,8 +84,16 @@ const interfaceType = typeBuilderApi => {
 }
 
 const objectType = typeBuilderApi => {
-  const { type, gatsbyNodeTypes, fieldAliases, fieldBlacklist, schema } =
-    typeBuilderApi
+  const {
+    type,
+    gatsbyNodeTypes,
+    fieldAliases,
+    fieldBlacklist,
+    schema,
+    pluginOptions,
+  } = typeBuilderApi
+
+  const prefix = pluginOptions.schema.typePrefix
 
   const transformedFields = transformFields({
     fields: type.fields,
@@ -102,7 +112,7 @@ const objectType = typeBuilderApi => {
   }
 
   let objectType = {
-    name: buildTypeName(type.name),
+    name: buildTypeName(type.name, prefix),
     fields: transformedFields,
     description: type.description,
     extensions: {
@@ -120,9 +130,9 @@ const objectType = typeBuilderApi => {
   return schema.buildObjectType(objectType)
 }
 
-const enumType = ({ schema, type }) =>
+const enumType = ({ schema, type, pluginOptions }) =>
   schema.buildEnumType({
-    name: buildTypeName(type.name),
+    name: buildTypeName(type.name, pluginOptions.schema.typePrefix),
     values: type.enumValues.reduce((accumulator, { name }) => {
       accumulator[name] = { name }
 
