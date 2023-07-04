@@ -1,3 +1,5 @@
+const isEqual = require(`lodash/isEqual`)
+
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
@@ -15,21 +17,22 @@ emitter.on(`CREATE_PAGE`, action => {
 
     const originalPage = originalStatusPageByStatus[status]
 
-    if (!originalPage) {
-      const storedPage = {
-        path: action.payload.path,
-        component: action.payload.component,
-        context: action.payload.context,
-        status,
-      }
+    const pageToStore = {
+      path: action.payload.path,
+      component: action.payload.component,
+      context: action.payload.context,
+      slices: action.payload.slices,
+      status,
+    }
 
-      originalStatusPageByStatus[status] = storedPage
-      originalStatusPageByPath[action.payload.path] = storedPage
+    if (!originalPage || !isEqual(originalPage, pageToStore)) {
+      originalStatusPageByStatus[status] = pageToStore
+      originalStatusPageByPath[action.payload.path] = pageToStore
 
       store.dispatch(
         actions.createPage(
           {
-            ...storedPage,
+            ...pageToStore,
             path: `/${status}.html`,
           },
           action.plugin,

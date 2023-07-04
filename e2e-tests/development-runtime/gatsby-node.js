@@ -216,6 +216,11 @@ exports.createPages = async function createPages({
     },
   })
 
+  createSlice({
+    id: `mappedslice-fakeid`,
+    component: require.resolve(`./src/components/mapped-slice.js`),
+  })
+
   slicesData.allRecipeAuthors.forEach(({ id, name }) => {
     createSlice({
       id: `author-${id}`,
@@ -341,6 +346,13 @@ exports.onCreatePage = async ({ page, actions }) => {
         path: page.path.replace(/\/$/, ``),
       })
     }
+  }
+
+  if (page.path === `/404/`) {
+    createPage({
+      ...page,
+      slices: { mappedslice: "mappedslice-fakeid" },
+    })
   }
 }
 
