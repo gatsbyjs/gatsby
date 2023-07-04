@@ -46,7 +46,7 @@
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
-    "gatsby": "^5.11.0-alpha"
+    "gatsby": "^5.10.0-alpha"
   },
   "files": [
     "dist/"
