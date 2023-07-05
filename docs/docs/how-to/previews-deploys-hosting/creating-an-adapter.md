@@ -44,7 +44,9 @@ const createAdapterFoo = adapterOptions => {
       // Adapt implementation
     },
     config({ reporter }) {
-      // Information passed back to Gatsby
+      return {
+        // Information passed back to Gatsby
+      }
     },
   }
 }
@@ -86,7 +88,9 @@ const createAdapterFoo: AdapterInit<AdapterOptions> = ({ foo }) => {
       // Adapt implementation
     },
     config({ reporter }) {
-      // Information passed back to Gatsby
+      return {
+        // Information passed back to Gatsby
+      }
     },
   }
 }
@@ -105,9 +109,7 @@ The adapter should export a function as a default export with these object keys:
   - `restore`: Hook to restore `directories` from previous builds. Executed very early on in the build process. If the hook returns `false`, Gatsby will skip cache restoration.
   - `store`: Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
 - [`adapt`](#adapt): Hook to take Gatsby's output and prepare it for deployment on the adapter's platform. Executed as one of the last steps in the build process. Details on the inputs are [documented below](#adapt).
-- `config` (Optional): Hook to pass information from the adapter to Gatsby so it can adjust its build process. This hook can enable advanced features of adapters to e.g. workaround platform limitations. The adapter has to return an object with the following keys:
-  - `deployURL` (Optional): URL representing the unique URL for an individual deploy
-  - `excludeDatastoreFromEngineFunction` (Optional): If `true`, Gatsby will not include the LMDB datastore in the serverless functions used for SSR/DSG. Instead, it will place the LMDB datastore into the `public` folder and later try to download the datastore from the given `deployURL`.
+- [`config`](#config) (Optional): Hook to pass information from the adapter to Gatsby so it can adjust its build process. Details on the required output is [documented below](#adapt).
 
 If your adapter accepts custom options, consider setting default values to make the adapter easier to use.
 
@@ -131,6 +133,18 @@ The `adapt` hook should do the following things:
 - Wrap serverless functions coming from Gatsby with platform-specific code (if necessary). Gatsby will produce [Express](https://expressjs.com/)-like handlers.
 - Apply trailing slash behavior and path prefix to URLs
 - Possibly upload assets to CDN
+
+### config
+
+The `config` hook is useful for passing information from an adapter back to Gatsby. This optional hook can enable advanced features of adapters to e.g. workaround platform limitations. It can also warn users against using features that an adapter doesn's currently support and would cause faulty deployments.
+
+The `config` hook has to return an object with the following keys:
+
+- `deployURL` (Optional): URL representing the unique URL for an individual deploy
+- `excludeDatastoreFromEngineFunction` (Optional): If `true`, Gatsby will not include the LMDB datastore in the serverless functions used for SSR/DSG. Instead, it will place the LMDB datastore into the `public` folder and later try to download the datastore from the given `deployURL`.
+- `supports` (Optional): Describe which features an adapters supports
+  - `pathPrefix` (Optional): If `false`, Gatsby will fail the build if user tries to use pathPrefix
+  - `trailingSlash` (Optional): Provide an array of supported [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) options, e.g. `['always']`
 
 ## Running locally
 
