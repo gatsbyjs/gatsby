@@ -1,30 +1,49 @@
+import { assertPageVisits } from "../utils/assert-page-visits"
+import { applyTrailingSlashOption } from "../../utils"
+
 Cypress.on("uncaught:exception", (err) => {
   if (err.message.includes("Minified React error")) {
     return false
   }
 })
 
+const TRAILING_SLASH = Cypress.env(`TRAILING_SLASH`) || `never`
+
 describe("trailingSlash", () => {
-  it("should work when using Gatsby Link (without slash)", () => {
-    cy.visit('/').waitForRouteChange()
+  describe(TRAILING_SLASH, () => {
+    it("should work when using Gatsby Link (without slash)", () => {
+      cy.visit('/').waitForRouteChange()
 
-    cy.get(`[data-testid="static-without-slash"]`).click().waitForRouteChange()
-    cy.url().should(`equal`, `${window.location.origin}/routes/static`)
-  })
-  it("should work when using Gatsby Link (with slash)", () => {
-    cy.visit('/').waitForRouteChange()
+      cy.get(`[data-testid="static-without-slash"]`).click().waitForRouteChange().assertRoute(applyTrailingSlashOption(`/routes/static`, TRAILING_SLASH))
+    })
+    it("should work when using Gatsby Link (with slash)", () => {
+      cy.visit('/').waitForRouteChange()
 
-    cy.get(`[data-testid="static-with-slash"]`).click().waitForRouteChange()
-    cy.url().should(`equal`, `${window.location.origin}/routes/static`)
-  })
-  it("should work on direct visit (without slash)", () => {
-    cy.visit(`/routes/static`).waitForRouteChange()
+      cy.get(`[data-testid="static-with-slash"]`).click().waitForRouteChange().assertRoute(applyTrailingSlashOption(`/routes/static`, TRAILING_SLASH))
+    })
+    it("should work on direct visit (with other setting)", () => {
+      const destination = applyTrailingSlashOption("/routes/static", TRAILING_SLASH)
+      const inverse = TRAILING_SLASH === `always` ? "/routes/static" : "/routes/static/"
 
-    cy.url().should(`equal`, `${window.location.origin}/routes/static`)
-  })
-  it("should work on direct visit (with slash)", () => {
-    cy.visit(`/routes/static/`).waitForRouteChange()
+      assertPageVisits([
+        {
+          path: destination,
+          status: 200,
+        },
+        { path: inverse, status: 301, destinationPath: destination }
+      ])
 
-    cy.url().should(`equal`, `${window.location.origin}/routes/static`)
+      cy.visit(inverse).waitForRouteChange().assertRoute(applyTrailingSlashOption(`/routes/static`, TRAILING_SLASH))
+    })
+    it("should work on direct visit (with current setting)", () => {
+      assertPageVisits([
+        {
+          path: applyTrailingSlashOption("/routes/static", TRAILING_SLASH),
+          status: 200,
+        },
+      ])
+
+      cy.visit(applyTrailingSlashOption("/routes/static", TRAILING_SLASH)).waitForRouteChange().assertRoute(applyTrailingSlashOption(`/routes/static`, TRAILING_SLASH))
+    })
   })
 })

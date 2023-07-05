@@ -1,14 +1,17 @@
 import * as path from "path"
-import type { GatsbyNode } from "gatsby"
+import type { GatsbyNode, GatsbyConfig } from "gatsby"
+import { applyTrailingSlashOption } from "./utils"
+
+const TRAILING_SLASH = (process.env.TRAILING_SLASH || `never`) as GatsbyConfig["trailingSlash"]
 
 export const createPages: GatsbyNode["createPages"] = ({ actions: { createRedirect, createSlice } }) => {
   createRedirect({
-    fromPath: "/redirect",
-    toPath: "/routes/redirect/hit"
+    fromPath: applyTrailingSlashOption("/redirect", TRAILING_SLASH),
+    toPath: applyTrailingSlashOption("/routes/redirect/hit", TRAILING_SLASH),
   })
   createRedirect({
-    fromPath: "/routes/redirect/existing",
-    toPath: "/routes/redirect/hit"
+    fromPath: applyTrailingSlashOption("/routes/redirect/existing", TRAILING_SLASH),
+    toPath: applyTrailingSlashOption("/routes/redirect/hit", TRAILING_SLASH),
   })
 
   createSlice({

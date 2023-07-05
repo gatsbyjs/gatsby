@@ -3,6 +3,7 @@ import debugAdapter from "./debug-adapter"
 import { siteDescription, title } from "./constants"
 
 const shouldUseDebugAdapter = process.env.USE_DEBUG_ADAPTER ?? false
+const trailingSlash = (process.env.TRAILING_SLASH || `never`) as GatsbyConfig["trailingSlash"]
 
 let configOverrides: GatsbyConfig = {}
 
@@ -18,7 +19,7 @@ const config: GatsbyConfig = {
     title,
     siteDescription,
   },
-  trailingSlash: "never",
+  trailingSlash,
   plugins: [],
   ...configOverrides,
 }
