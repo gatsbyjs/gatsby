@@ -303,6 +303,8 @@ export default function ({ types: t }): PluginObj {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
               (process.env.NODE_ENV === `test` ||
+                // When Storybook is running, we need to process the queries
+                process.env.npm_lifecycle_script?.includes(`storybook`) ||
                 state.opts.stage === `develop-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`, ``) &&
@@ -310,7 +312,8 @@ export default function ({ types: t }): PluginObj {
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
-              const staticQueryDir = state.opts.staticQueryDir || `static/d`
+              const staticQueryDir =
+                state.opts.staticQueryDir || `page-data/sq/d`
               const shortResultPath = `public/${staticQueryDir}/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
               // Add query
