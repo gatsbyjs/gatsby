@@ -74,7 +74,7 @@ async function setAdapter({
       store.getState().config.pathPrefix
     ) {
       incompatibleFeatures.push(
-        `pathPrefix is not supported. Please remove the pathPrefix option from your gatsby-config.js, don't use "--prefix-paths" CLI toggle or PREFIX_PATHS environment variable.`
+        `pathPrefix is not supported. Please remove the pathPrefix option from your gatsby-config, don't use "--prefix-paths" CLI toggle or PREFIX_PATHS environment variable.`
       )
     }
 

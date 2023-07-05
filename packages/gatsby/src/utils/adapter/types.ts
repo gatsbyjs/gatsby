@@ -124,7 +124,7 @@ export interface IAdapterConfig {
    */
   excludeDatastoreFromEngineFunction?: boolean
   /**
-   * Adapters can optionally describe which features they support to prevent potentially faulty deployments.
+   * Adapters can optionally describe which features they support to prevent potentially faulty deployments
    */
   supports?: {
     /**
@@ -132,7 +132,8 @@ export interface IAdapterConfig {
      */
     pathPrefix?: boolean
     /**
-     * Provide array of supported traling slash options ("always", "never", "ignore").
+     * Provide array of supported traling slash options
+     * @example [`always`]
      */
     trailingSlash?: Array<TrailingSlash>
   }

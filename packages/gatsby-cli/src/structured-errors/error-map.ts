@@ -921,7 +921,7 @@ const errors: Record<string, IErrorMapEntry> = {
   // Gatsby Adapters
   "12200": {
     text: (): string =>
-      `[Adapters] Tried to create routes for webpack assets but failed. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/bug-report for more help.`,
+      `Tried to create adapter routes for webpack assets but failed. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/bug-report for more help.`,
     level: Level.ERROR,
     type: Type.ADAPTER,
     category: ErrorCategory.SYSTEM,
