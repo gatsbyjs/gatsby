@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * List of adapters that should be automatically installed if not present already.
  * The first item which test function returns `true` will be used.
@@ -5,7 +7,7 @@
  * If you're the author of an adapter and want to add it to this list, please open a PR!
  * If you want to create an adapter, please see: http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
  * 
- * @type {import("./src/utils/adapter/types").IAdapterManifestEntry}
+ * @type {Array<import("./src/utils/adapter/types").IAdapterManifestEntry>}
  * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/
  */
 const adaptersManifest = [
@@ -16,9 +18,9 @@ const adaptersManifest = [
     versions: [
       {
         gatsbyVersion: `^5.0.0`,
-        moduleVersion: `^1.0.0-alpha`
+        moduleVersion: `^1.0.0-alpha`,
       }
-    ]
+    ],
   }
 ]
 
