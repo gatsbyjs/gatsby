@@ -95,6 +95,10 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           pathPrefix: false,
           trailingSlash: [`always`],
         },
+        pluginsToDisable: [
+          `gatsby-plugin-netlify-cache`,
+          `gatsby-plugin-netlify`,
+        ],
       }
     },
   }
