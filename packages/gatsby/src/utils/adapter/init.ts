@@ -40,6 +40,17 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     return undefined
   }
 
+  const versionForCurrentGatsbyVersion = adapterToUse.versions.find(entry =>
+    satisfies(gatsbyVersion, entry.gatsbyVersion, { includePrerelease: true })
+  )
+
+  if (!versionForCurrentGatsbyVersion) {
+    reporter.verbose(
+      `The ${adapterToUse.name} adapter is not compatible with your current Gatsby version ${gatsbyVersion}.`
+    )
+    return undefined
+  }
+
   // 2. Check if the user has manually installed the adapter and try to resolve it from there
   try {
     const siteRequire = createRequireFromPath(`${process.cwd()}/:internal:`)
@@ -66,22 +77,13 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
     }
 
     // Cross-check the adapter version with the version manifest and see if the adapter version is correct for the current Gatsby version
-    const versionForCurrentGatsbyVersion = adapterToUse.versions.find(entry =>
-      satisfies(gatsbyVersion, entry.gatsbyVersion, { includePrerelease: true })
-    )
-    const isAdapterCompatible =
-      versionForCurrentGatsbyVersion &&
-      satisfies(moduleVersion, versionForCurrentGatsbyVersion.moduleVersion, {
+    const isAdapterCompatible = satisfies(
+      moduleVersion,
+      versionForCurrentGatsbyVersion.moduleVersion,
+      {
         includePrerelease: true,
-      })
-
-    if (!versionForCurrentGatsbyVersion) {
-      reporter.warn(
-        `The ${adapterToUse.name} adapter is not compatible with your current Gatsby version ${gatsbyVersion}.`
-      )
-
-      return undefined
-    }
+      }
+    )
 
     if (!isAdapterCompatible) {
       reporter.warn(
@@ -151,7 +153,11 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
 
     await execa(
       `npm`,
-      [`install`, ...npmAdditionalCliArgs, adapterToUse.module],
+      [
+        `install`,
+        ...npmAdditionalCliArgs,
+        `${adapterToUse.module}@${versionForCurrentGatsbyVersion.moduleVersion}`,
+      ],
       options
     )
 
