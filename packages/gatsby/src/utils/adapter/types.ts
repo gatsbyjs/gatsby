@@ -137,6 +137,12 @@ export interface IAdapterConfig {
      */
     trailingSlash?: Array<TrailingSlash>
   }
+  /**
+   * List of plugins that should be disabled when using this adapter. Purpose of this is to disable
+   * any potential plugins that serve similar role as adapter that would cause conflicts when both
+   * plugin and adapter is used at the same time.
+   */
+  pluginsToDisable?: Array<string>
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
@@ -147,7 +153,7 @@ type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
  */
 export type IAdapterFinalConfig = WithRequired<
   IAdapterConfig,
-  "excludeDatastoreFromEngineFunction"
+  "excludeDatastoreFromEngineFunction" | "pluginsToDisable"
 >
 
 export interface IAdapter {

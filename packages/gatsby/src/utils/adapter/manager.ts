@@ -106,6 +106,16 @@ async function setAdapter({
         },
       })
     }
+
+    if (configFromAdapter.pluginsToDisable.length > 0) {
+      store.dispatch({
+        type: `DISABLE_PLUGINS_BY_NAME`,
+        payload: {
+          pluginsToDisable: configFromAdapter.pluginsToDisable,
+          reason: `Not compatible with the "${instance.name}" adapter. Please remove it from your gatsby-config.`,
+        },
+      })
+    }
   }
 }
 
@@ -236,6 +246,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           configFromAdapter?.excludeDatastoreFromEngineFunction ?? false,
         deployURL: configFromAdapter?.deployURL,
         supports: configFromAdapter?.supports,
+        pluginsToDisable: configFromAdapter?.pluginsToDisable ?? [],
       }
     },
   }

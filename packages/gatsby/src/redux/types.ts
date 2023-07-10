@@ -538,6 +538,7 @@ export type ActionsUnion =
   | IProcessGatsbyImageSourceUrlAction
   | IClearGatsbyImageSourceUrlAction
   | ISetAdapterAction
+  | IDisablePluginsByNameAction
 
 export interface IInitAction {
   type: `INIT`
@@ -1206,6 +1207,14 @@ export interface ISetAdapterAction {
     instance?: IAdapter
     manager: IAdapterManager
     config: IAdapterFinalConfig
+  }
+}
+
+export interface IDisablePluginsByNameAction {
+  type: `DISABLE_PLUGINS_BY_NAME`
+  payload: {
+    pluginsToDisable: Array<string>
+    reason: string
   }
 }
 
