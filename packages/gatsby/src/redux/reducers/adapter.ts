@@ -7,6 +7,7 @@ export const adapterReducer = (
     manager: noOpAdapterManager(),
     config: {
       excludeDatastoreFromEngineFunction: false,
+      pluginsToDisable: [],
     },
   },
   action: ActionsUnion

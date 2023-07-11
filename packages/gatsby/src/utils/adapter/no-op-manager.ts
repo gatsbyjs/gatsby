@@ -8,6 +8,7 @@ export function noOpAdapterManager(): IAdapterManager {
     config: async (): Promise<IAdapterFinalConfig> => {
       return {
         excludeDatastoreFromEngineFunction: false,
+        pluginsToDisable: [],
       }
     },
   }
