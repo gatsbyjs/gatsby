@@ -127,7 +127,7 @@ export async function getAdapterInit(): Promise<AdapterInit | undefined> {
   }
 
   const installTimer = reporter.activityTimer(
-    `Installing ${adapterToUse.name} adapter`
+    `Installing ${adapterToUse.name} adapter (${adapterToUse.module}@${versionForCurrentGatsbyVersion.moduleVersion})`
   )
   // 4. If both a manually installed version and a cached version are not found, install the adapter into .cache/adapters
   try {
