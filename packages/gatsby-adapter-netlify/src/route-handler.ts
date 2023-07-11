@@ -70,7 +70,7 @@ export async function handleRoutesManifest(
       const invocationURL = `/.netlify/${
         route.cache ? `builders` : `functions`
       }/${functionName}`
-      _redirects += `${fromPath}  ${invocationURL}  200\n`
+      _redirects += `${encodeURI(fromPath)}  ${invocationURL}  200\n`
     } else if (route.type === `redirect`) {
       const {
         status: routeStatus,
@@ -123,16 +123,19 @@ export async function handleRoutesManifest(
     } else if (route.type === `static`) {
       // regular static asset without dynamic paths will just work, so skipping those
       if (route.path.includes(`:`) || route.path.includes(`*`)) {
-        _redirects += `${fromPath}  ${route.filePath.replace(
+        _redirects += `${encodeURI(fromPath)}  ${route.filePath.replace(
           /^public/,
           ``
         )}  200\n`
       }
 
-      _headers += `${fromPath}\n${route.headers.reduce((acc, curr) => {
-        acc += `  ${curr.key}: ${curr.value}\n`
-        return acc
-      }, ``)}`
+      _headers += `${encodeURI(fromPath)}\n${route.headers.reduce(
+        (acc, curr) => {
+          acc += `  ${curr.key}: ${curr.value}\n`
+          return acc
+        },
+        ``
+      )}`
     }
   }
 

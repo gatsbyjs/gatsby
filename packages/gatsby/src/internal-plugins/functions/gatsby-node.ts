@@ -154,6 +154,7 @@ const createWebpackConfig = async ({
     store.getState().flattenedPlugins
   )
 
+  const seenFunctionIds = new Set<string>()
   // Glob and return object with relative/absolute paths + which plugin
   // they belong to.
   const allFunctions = await Promise.all(
@@ -175,6 +176,22 @@ const createWebpackConfig = async ({
         )
         const finalName = urlResolve(dir, name === `index` ? `` : name)
 
+        // functionId should have only alphanumeric characters and dashes
+        const functionIdBase = _.kebabCase(compiledFunctionName).replace(
+          /[^a-zA-Z0-9-]/g,
+          `-`
+        )
+
+        let functionId = functionIdBase
+
+        if (seenFunctionIds.has(functionId)) {
+          let counter = 2
+          do {
+            functionId = `${functionIdBase}-${counter}`
+            counter++
+          } while (seenFunctionIds.has(functionId))
+        }
+
         knownFunctions.push({
           functionRoute: finalName,
           pluginName: glob.pluginName,
@@ -183,7 +200,7 @@ const createWebpackConfig = async ({
           relativeCompiledFilePath: compiledFunctionName,
           absoluteCompiledFilePath: compiledPath,
           matchPath: getMatchPath(finalName),
-          functionId: _.kebabCase(compiledFunctionName),
+          functionId,
         })
       })
 
