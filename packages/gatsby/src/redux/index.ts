@@ -38,7 +38,7 @@ const persistedReduxKeys = [
 const reducers = persistedReduxKeys.reduce((acc, key) => {
   const rawReducer = rawReducers[key]
   acc[key] = function (state, action): any {
-    if (action.type === `RESTORE_CACHE`) {
+    if (action.type === `RESTORE_CACHE` && action.payload[key]) {
       return action.payload[key]
     } else {
       return rawReducer(state, action)
