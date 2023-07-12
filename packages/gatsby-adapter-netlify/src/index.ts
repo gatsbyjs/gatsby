@@ -11,12 +11,18 @@ interface INetlifyAdapterOptions {
   excludeDatastoreFromEngineFunction?: boolean
 }
 
+let _cacheUtils: INetlifyCacheUtils | undefined
 async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
+  if (_cacheUtils) {
+    return _cacheUtils
+  }
   if (process.env.NETLIFY) {
     const CACHE_DIR = `/opt/build/cache`
-    return (await import(`@netlify/cache-utils`)).bindOpts({
+    _cacheUtils = (await import(`@netlify/cache-utils`)).bindOpts({
       cacheDir: CACHE_DIR,
     })
+
+    return _cacheUtils
   }
   return undefined
 }
