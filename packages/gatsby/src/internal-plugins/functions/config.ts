@@ -35,12 +35,14 @@ const defaultConfig = {
   },
 }
 
-let warnings: Array<{
+export interface IAPIFunctionWarning {
   property: string | null
   original: any
   expectedType: string
   replacedWith: any
-}> = []
+}
+
+let warnings: Array<IAPIFunctionWarning> = []
 
 function bodyParserConfigFailover(
   property: keyof IGatsbyBodyParserConfigProcessed,
@@ -141,34 +143,12 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
       return defaultConfig
     })
 
-export function createConfig(
-  userConfig: unknown,
-  functionObj: IGatsbyFunction
-): IGatsbyFunctionConfigProcessed {
+export function createConfig(userConfig: unknown): {
+  config: IGatsbyFunctionConfigProcessed
+  warnings: Array<IAPIFunctionWarning>
+} {
   warnings = []
   const { value } = functionConfigSchema.validate(userConfig)
-
-  if (warnings.length) {
-    for (const warning of warnings) {
-      reporter.warn(
-        `${
-          warning.property
-            ? `\`${warning.property}\` property of exported config`
-            : `Exported config`
-        } in \`${
-          functionObj.originalRelativeFilePath
-        }\` is misconfigured.\nExpected object:\n\n${
-          warning.expectedType
-        }\n\nGot:\n\n${JSON.stringify(
-          warning.original
-        )}\n\nUsing default:\n\n${JSON.stringify(
-          warning.replacedWith,
-          null,
-          2
-        )}`
-      )
-    }
-  }
-
-  return value as IGatsbyFunctionConfigProcessed
+  const config = value as IGatsbyFunctionConfigProcessed
+  return { config, warnings }
 }
