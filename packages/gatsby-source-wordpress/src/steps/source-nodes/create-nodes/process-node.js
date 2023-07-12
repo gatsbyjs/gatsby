@@ -670,7 +670,8 @@ export const replaceNodeHtmlImages = async ({
       ) {
         gatsbyImageHydrationData = {
           image: imageResize,
-          alt: cheerioImg?.attribs?.alt,
+          // Wordpress tells users to leave "alt" empty if image is decorative. But it returns undefined, not ``
+          alt: cheerioImg?.attribs?.alt ?? ``,
           className: `${
             cheerioImg?.attribs?.class || ``
           } inline-gatsby-image-wrapper`,
@@ -686,7 +687,8 @@ export const replaceNodeHtmlImages = async ({
           `img`,
           {
             src: publicUrl,
-            alt: cheerioImg?.attribs?.alt,
+            // Wordpress tells users to leave "alt" empty if image is decorative. But it returns undefined, not ``
+            alt: cheerioImg?.attribs?.alt ?? ``,
             className: `${
               cheerioImg?.attribs?.class || ``
             } inline-gatsby-image-wrapper`,
