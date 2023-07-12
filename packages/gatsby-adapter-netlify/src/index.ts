@@ -1,6 +1,7 @@
 import type { AdapterInit, IAdapterConfig } from "gatsby"
 import { prepareFunctionVariants } from "./lambda-handler"
 import { handleRoutesManifest } from "./route-handler"
+import packageJson from "gatsby-adapter-netlify/package.json"
 
 interface INetlifyCacheUtils {
   restore: (paths: Array<string>) => Promise<boolean>
@@ -66,6 +67,9 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       }
     },
     config: ({ reporter }): IAdapterConfig => {
+      reporter.info(
+        `[gatsby-adapter-netlify] version: ${packageJson?.version ?? `unknown`}`
+      )
       // excludeDatastoreFromEngineFunction can be enabled either via options or via env var (to preserve handling of env var that existed in Netlify build plugin).
       let excludeDatastoreFromEngineFunction =
         options?.excludeDatastoreFromEngineFunction
