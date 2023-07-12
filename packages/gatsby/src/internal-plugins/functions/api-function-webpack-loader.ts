@@ -16,7 +16,7 @@ const APIFunctionLoader: LoaderDefinition = async function () {
   const { urlencoded, text, json, raw } = require('body-parser')
   const multer = require('multer')
 
-  module.exports = function(req, res) {
+  function functionWrapper(req, res) {
     if (matchPath) {
       let functionPath = req.originalUrl
 
@@ -33,15 +33,18 @@ const APIFunctionLoader: LoaderDefinition = async function () {
       }
     }
 
-    // handle body parsing
+    // handle body parsing if request stream was not yet consumed
     // TODO: support user config
-    const middlewares = [
-      multer().any(),
-      raw({ limit: '100kb' }),
-      text({ limit: '100kb' }),
-      urlencoded({ limit: '100kb', extended: true }),
-      json({ limit: '100kb' })
-    ]
+    const middlewares = 
+      req.readableEnded 
+      ? [] 
+      : [
+        multer().any(),
+        raw({ limit: '100kb' }),
+        text({ limit: '100kb' }),
+        urlencoded({ limit: '100kb', extended: true }),
+        json({ limit: '100kb' })
+      ]
 
     let i = 0
     function runMiddlewareOrFunction() {
@@ -55,6 +58,8 @@ const APIFunctionLoader: LoaderDefinition = async function () {
 
     runMiddlewareOrFunction() 
   }
+
+  module.exports = typeof functionToExecute === 'function' ? functionWrapper : functionModule
   `
 }
 
