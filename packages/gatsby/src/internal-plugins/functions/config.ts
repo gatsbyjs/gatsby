@@ -1,6 +1,4 @@
 import Joi from "joi"
-import reporter from "gatsby-cli/lib/reporter"
-import type { IGatsbyFunction } from "../../internal"
 import type {
   GatsbyFunctionBodyParserCommonMiddlewareConfig,
   GatsbyFunctionBodyParserUrlencodedConfig,
