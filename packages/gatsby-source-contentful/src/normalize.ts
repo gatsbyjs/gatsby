@@ -118,7 +118,6 @@ const makeMakeId =
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 // Generates an unique id per space for reference resolving
-// TODO: space id is actually not factored in here!
 export const createRefId = (
   node:
     | IEntryWithAllLocalesAndWithoutLinkResolution<FieldsType, string>
