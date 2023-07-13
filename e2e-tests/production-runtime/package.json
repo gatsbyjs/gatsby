@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-plugin-search-and-replace": "^1.1.1",
-    "cypress": "^12.13.0",
+    "cypress": "^12.16.0",
     "gatsby": "next",
     "gatsby-cypress": "next",
     "gatsby-plugin-image": "next",
@@ -18,7 +18,7 @@
     "gatsby-source-filesystem": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.62.1",
+    "sass": "^1.63.6",
     "typeface-merriweather": "^1.1.13"
   },
   "keywords": [
@@ -55,7 +55,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.34.3",
+    "@playwright/test": "^1.35.1",
     "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "fs-extra": "^11.1.1",
@@ -63,7 +63,7 @@
     "is-ci": "^3.0.1",
     "prettier": "^2.8.8",
     "start-server-and-test": "^2.0.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.6"
   },
   "repository": {
     "type": "git",
