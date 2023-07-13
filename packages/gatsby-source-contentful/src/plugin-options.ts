@@ -40,7 +40,8 @@ const createPluginConfig = (
 
   return {
     get: (key): unknown => conf[key],
-    getOriginalPluginOptions: (): IPluginOptions => pluginOptions,
+    getOriginalPluginOptions: (): IPluginOptions =>
+      pluginOptions as IPluginOptions,
   }
 }
 
