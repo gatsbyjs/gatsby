@@ -25,6 +25,7 @@ import type {
   EntrySkeletonType,
   DeletedEntry,
   EntitySys,
+  ContentTypeField,
 } from "contentful"
 import type {
   IProcessedPluginOptions,
@@ -595,6 +596,14 @@ export const createNodesForContentType = ({
 
   create(contentTypeNode)
 
+  const fieldMap: Map<string, ContentTypeField> = new Map()
+  contentTypeItem.fields.forEach(f => {
+    const fieldName = restrictedNodeFields.includes(f.id)
+      ? `${conflictFieldPrefix}${f.id}`
+      : f.id
+    fieldMap.set(fieldName, f)
+  })
+
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -685,14 +694,7 @@ export const createNodesForContentType = ({
         Object.keys(entryItemFields).forEach(entryItemFieldKey => {
           if (entryItemFields[entryItemFieldKey]) {
             const entryItemFieldValue = entryItemFields[entryItemFieldKey]
-
-            // TODO:: how expensive is this?
-            const field = contentTypeItem.fields.find(
-              f =>
-                (restrictedNodeFields.includes(f.id)
-                  ? `${conflictFieldPrefix}${f.id}`
-                  : f.id) === entryItemFieldKey
-            )
+            const field = fieldMap.get(entryItemFieldKey)
             if (
               field?.type === `Link` ||
               (field?.type === `Array` && field.items?.type === `Link`)
@@ -823,13 +825,7 @@ export const createNodesForContentType = ({
         // Replace text fields with text nodes so we can process their markdown
         // into HTML.
         Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-          // TODO:: how expensive is this?
-          const field = contentTypeItem.fields.find(
-            f =>
-              (restrictedNodeFields.includes(f.id)
-                ? `${conflictFieldPrefix}${f.id}`
-                : f.id) === entryItemFieldKey
-          )
+          const field = fieldMap.get(entryItemFieldKey)
           if (field?.type === `Text`) {
             const fieldType = detectMarkdownField(
               field,
