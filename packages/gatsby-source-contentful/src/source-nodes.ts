@@ -623,7 +623,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
         await createNode({
           id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
           name: tag.name,
-          // TODO: update the structure of tags
           contentful_id: tag.sys.id,
           parent: null,
           children: [],
