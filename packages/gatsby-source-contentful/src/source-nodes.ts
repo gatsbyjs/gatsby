@@ -565,7 +565,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
 
       // A contentType can hold lots of entries which create nodes
       // We wait until all nodes are created and processed until we handle the next one
-      // TODO add batching in gatsby-core
       await createNodesForContentType({
         contentTypeItem,
         entries: entryList[i],
