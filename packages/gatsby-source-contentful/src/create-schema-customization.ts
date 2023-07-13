@@ -10,6 +10,7 @@ import {
   GraphQLString,
   GraphQLType,
 } from "gatsby/graphql"
+import type { ObjectTypeComposerArgumentConfigMapDefinition } from "graphql-compose"
 import { getRichTextEntityLinks } from "@contentful/rich-text-links"
 import { stripIndent } from "common-tags"
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
@@ -471,11 +472,13 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     )
 
     // Assets
-    const gatsbyImageData = getGatsbyImageFieldConfig(
-      async (
-        image: IContentfulAsset,
-        options: IContentfulImageAPITransformerOptions
-      ) => resolveGatsbyImageData(image, options, { cache }),
+    const gatsbyImageData = getGatsbyImageFieldConfig<
+      IContentfulAsset,
+      null,
+      IContentfulImageAPITransformerOptions
+    >(
+      async (image, options) =>
+        resolveGatsbyImageData(image, options, { cache }),
       {
         jpegProgressive: {
           type: `Boolean`,
@@ -498,9 +501,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           type: `Int`,
           defaultValue: 50,
         },
-        // TODO: fix the type for extraArgs in gatsby-plugin-iomage so we dont have to cast to any here
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any
+      } as unknown as ObjectTypeComposerArgumentConfigMapDefinition<IContentfulImageAPITransformerOptions>
     )
     gatsbyImageData.type = `JSON`
     createTypes(
