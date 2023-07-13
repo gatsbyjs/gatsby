@@ -80,17 +80,7 @@ const createContentfulErrorMessage = (e: any): string => {
     /**
      * Parse stringified error data from message
      * https://github.com/contentful/contentful-sdk-core/blob/4cfcd452ba0752237a26ce6b79d72a50af84d84e/src/error-handler.ts#L71-L75
-     *
-     * TODO: properly type this with TS
-     * type {
-     *    status?: number
-     *    statusText?: string
-     *    requestId?: string
-     *    message: string
-     *    !details: Record<string, unknown>
-     *    !request?: Record<string, unknown>
-     *  }
-     */
+     **/
     const errorData: IContentfulAPIError = JSON.parse(e.message)
     errorMessage.push(errorData.status && String(errorData.status))
     errorMessage.push(errorData.statusText)
