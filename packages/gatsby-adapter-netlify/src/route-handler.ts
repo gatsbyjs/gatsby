@@ -42,6 +42,11 @@ async function injectEntries(fileName: string, content: string): Promise<void> {
   ]
     .filter(Boolean)
     .join(``)
+    .replace(
+      /# @netlify\/plugin-gatsby redirects start(.|\n|\r)*# @netlify\/plugin-gatsby redirects end/gm,
+      ``
+    )
+    .replace(/## Created with gatsby-plugin-netlify(.|\n|\r)*$/gm, ``)
 
   await fs.outputFile(fileName, out)
 }
