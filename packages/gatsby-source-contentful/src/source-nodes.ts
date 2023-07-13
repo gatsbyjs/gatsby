@@ -298,7 +298,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       })
 
       localizedNodes.forEach(node => {
-        // TODO: nodes of text fields should be deleted as well
         if (node) {
           deleteNode(node)
         }
