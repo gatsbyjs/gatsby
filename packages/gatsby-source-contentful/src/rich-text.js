@@ -3,7 +3,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import resolveResponse from "contentful-resolve-response"
 
 export function renderRichText({ raw, references }, options = {}) {
-  const richText = JSON.parse(raw)
+  const richText = JSON.parse(raw || null)
 
   // If no references are given, there is no need to resolve them
   if (!references || !references.length) {
