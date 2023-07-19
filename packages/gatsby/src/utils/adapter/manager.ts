@@ -318,7 +318,7 @@ function getRoutesManifest(): RoutesManifest {
     if (fileAssets.has(pathToFillInPublicDir)) {
       fileAssets.delete(pathToFillInPublicDir)
     } else {
-      reporter.warn(
+      reporter.verbose(
         `[Adapters] Tried to remove "${pathToFillInPublicDir}" from fileAssets but it wasn't there`
       )
     }
