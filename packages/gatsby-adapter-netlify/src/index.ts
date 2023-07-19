@@ -35,7 +35,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       async restore({ directories, reporter }): Promise<boolean> {
         const utils = await getCacheUtils()
         if (utils) {
-          reporter.info(
+          reporter.verbose(
             `[gatsby-adapter-netlify] using @netlify/cache-utils restore`
           )
           return await utils.restore(directories)
@@ -46,7 +46,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       async store({ directories, reporter }): Promise<void> {
         const utils = await getCacheUtils()
         if (utils) {
-          reporter.info(
+          reporter.verbose(
             `[gatsby-adapter-netlify] using @netlify/cache-utils save`
           )
           await utils.save(directories)
@@ -67,7 +67,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       }
     },
     config: ({ reporter }): IAdapterConfig => {
-      reporter.info(
+      reporter.verbose(
         `[gatsby-adapter-netlify] version: ${packageJson?.version ?? `unknown`}`
       )
       // excludeDatastoreFromEngineFunction can be enabled either via options or via env var (to preserve handling of env var that existed in Netlify build plugin).
