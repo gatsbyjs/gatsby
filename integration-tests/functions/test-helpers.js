@@ -7,32 +7,47 @@ const FormData = require("form-data")
 
 jest.setTimeout(15000)
 
+const FETCH_RETRY_COUNT = 2
+async function fetchWithRetry(...args) {
+  for (let i = 0; i <= FETCH_RETRY_COUNT; i++) {
+    try {
+      const response = await fetch(...args)
+      return response
+    } catch (e) {
+      // ignore unless last retry
+      if (i === FETCH_RETRY_COUNT) {
+        throw e
+      }
+    }
+  }
+}
+
 export function runTests(env, host) {
   describe(env, () => {
     test(`top-level API`, async () => {
-      const result = await fetch(`${host}/api/top-level`).then(res =>
+      const result = await fetchWithRetry(`${host}/api/top-level`).then(res =>
         res.text()
       )
 
       expect(result).toMatchSnapshot()
     })
     test(`secondary-level API`, async () => {
-      const result = await fetch(`${host}/api/a-directory/function`).then(res =>
-        res.text()
-      )
+      const result = await fetchWithRetry(
+        `${host}/api/a-directory/function`
+      ).then(res => res.text())
 
       expect(result).toMatchSnapshot()
     })
     test(`secondary-level API with index.js`, async () => {
-      const result = await fetch(`${host}/api/a-directory`).then(res =>
+      const result = await fetchWithRetry(`${host}/api/a-directory`).then(res =>
         res.text()
       )
 
       expect(result).toMatchSnapshot()
     })
     test(`secondary-level API`, async () => {
-      const result = await fetch(`${host}/api/dir/function`).then(res =>
-        res.text()
+      const result = await fetchWithRetry(`${host}/api/dir/function`).then(
+        res => res.text()
       )
 
       expect(result).toMatchSnapshot()
@@ -48,7 +63,7 @@ export function runTests(env, host) {
       ]
 
       for (const route of routes) {
-        const result = await fetch(route).then(res => res.text())
+        const result = await fetchWithRetry(route).then(res => res.text())
 
         expect(result).toMatchSnapshot()
       }
@@ -59,7 +74,7 @@ export function runTests(env, host) {
         const routes = [`${host}/api/users/23/additional`]
 
         for (const route of routes) {
-          const result = await fetch(route).then(res => res.json())
+          const result = await fetchWithRetry(route).then(res => res.json())
 
           expect(result).toMatchSnapshot()
         }
@@ -67,14 +82,14 @@ export function runTests(env, host) {
       test(`unnamed wildcard routes`, async () => {
         const routes = [`${host}/api/dir/super`]
         for (const route of routes) {
-          const result = await fetch(route).then(res => res.json())
+          const result = await fetchWithRetry(route).then(res => res.json())
 
           expect(result).toMatchSnapshot()
         }
       })
       test(`named wildcard routes`, async () => {
         const route = `${host}/api/named-wildcard/super`
-        const result = await fetch(route).then(res => res.json())
+        const result = await fetchWithRetry(route).then(res => res.json())
 
         expect(result).toMatchInlineSnapshot(`
           Object {
@@ -86,8 +101,8 @@ export function runTests(env, host) {
 
     describe(`environment variables`, () => {
       test(`can use inside functions`, async () => {
-        const result = await fetch(`${host}/api/env-variables`).then(res =>
-          res.text()
+        const result = await fetchWithRetry(`${host}/api/env-variables`).then(
+          res => res.text()
         )
 
         expect(result).toEqual(`word`)
@@ -96,8 +111,8 @@ export function runTests(env, host) {
 
     describe(`typescript`, () => {
       test(`typescript functions work`, async () => {
-        const result = await fetch(`${host}/api/i-am-typescript`).then(res =>
-          res.text()
+        const result = await fetchWithRetry(`${host}/api/i-am-typescript`).then(
+          res => res.text()
         )
 
         expect(result).toMatchSnapshot()
@@ -107,13 +122,15 @@ export function runTests(env, host) {
     describe(`function errors don't crash the server`, () => {
       // This test mainly just shows that the server doesn't crash.
       test(`normal`, async () => {
-        const result = await fetch(`${host}/api/error-send-function-twice`)
+        const result = await fetchWithRetry(
+          `${host}/api/error-send-function-twice`
+        )
 
         expect(result.status).toEqual(200)
       })
 
       test(`no handler function export`, async () => {
-        const result = await fetch(`${host}/api/no-function-export`)
+        const result = await fetchWithRetry(`${host}/api/no-function-export`)
 
         expect(result.status).toEqual(500)
         const body = await result.text()
@@ -128,7 +145,7 @@ export function runTests(env, host) {
       })
 
       test(`function throws`, async () => {
-        const result = await fetch(`${host}/api/function-throw`)
+        const result = await fetchWithRetry(`${host}/api/function-throw`)
 
         expect(result.status).toEqual(500)
         const body = await result.text()
@@ -144,7 +161,7 @@ export function runTests(env, host) {
 
     describe(`response formats`, () => {
       test(`returns json correctly`, async () => {
-        const res = await fetch(`${host}/api/i-am-json`)
+        const res = await fetchWithRetry(`${host}/api/i-am-json`)
         const result = await res.json()
 
         const { date, ...headers } = Object.fromEntries(res.headers)
@@ -152,7 +169,7 @@ export function runTests(env, host) {
         expect(headers).toMatchSnapshot()
       })
       test(`returns text correctly`, async () => {
-        const res = await fetch(`${host}/api/i-am-typescript`)
+        const res = await fetchWithRetry(`${host}/api/i-am-typescript`)
         const result = await res.text()
 
         const { date, ...headers } = Object.fromEntries(res.headers)
@@ -163,19 +180,19 @@ export function runTests(env, host) {
 
     describe(`functions can send custom statuses`, () => {
       test(`can return 200 status`, async () => {
-        const res = await fetch(`${host}/api/status`)
+        const res = await fetchWithRetry(`${host}/api/status`)
 
         expect(res.status).toEqual(200)
       })
 
       test(`can return 404 status`, async () => {
-        const res = await fetch(`${host}/api/status?code=404`)
+        const res = await fetchWithRetry(`${host}/api/status?code=404`)
 
         expect(res.status).toEqual(404)
       })
 
       test(`can return 500 status`, async () => {
-        const res = await fetch(`${host}/api/status?code=500`)
+        const res = await fetchWithRetry(`${host}/api/status?code=500`)
 
         expect(res.status).toEqual(500)
       })
@@ -183,9 +200,9 @@ export function runTests(env, host) {
 
     describe(`functions can parse different ways of sending data`, () => {
       test(`query string`, async () => {
-        const result = await fetch(`${host}/api/parser?amIReal=true`).then(
-          res => res.json()
-        )
+        const result = await fetchWithRetry(
+          `${host}/api/parser?amIReal=true`
+        ).then(res => res.json())
 
         expect(result).toMatchSnapshot()
       })
@@ -194,7 +211,7 @@ export function runTests(env, host) {
         const { URLSearchParams } = require("url")
         const params = new URLSearchParams()
         params.append("a", `form parameters`)
-        const result = await fetch(`${host}/api/parser`, {
+        const result = await fetchWithRetry(`${host}/api/parser`, {
           method: `POST`,
           body: params,
         }).then(res => res.json())
@@ -207,7 +224,7 @@ export function runTests(env, host) {
 
         const form = new FormData()
         form.append("a", `form-data`)
-        const result = await fetch(`${host}/api/parser`, {
+        const result = await fetchWithRetry(`${host}/api/parser`, {
           method: `POST`,
           body: form,
         }).then(res => res.json())
@@ -217,7 +234,7 @@ export function runTests(env, host) {
 
       test(`json body`, async () => {
         const body = { a: `json` }
-        const result = await fetch(`${host}/api/parser`, {
+        const result = await fetchWithRetry(`${host}/api/parser`, {
           method: `POST`,
           body: JSON.stringify(body),
           headers: { "Content-Type": "application/json" },
@@ -233,7 +250,7 @@ export function runTests(env, host) {
 
         const form = new FormData()
         form.append("file", file)
-        const result = await fetch(`${host}/api/parser`, {
+        const result = await fetchWithRetry(`${host}/api/parser`, {
           method: `POST`,
           body: form,
         }).then(res => res.json())
@@ -246,7 +263,7 @@ export function runTests(env, host) {
       // const { createReadStream } = require("fs")
 
       // const stream = createReadStream(path.join(__dirname, "./fixtures/test.txt"))
-      // const res = await fetch(`${host}/api/parser`, {
+      // const res = await fetchWithRetry(`${host}/api/parser`, {
       // method: `POST`,
       // body: stream,
       // })
@@ -259,7 +276,7 @@ export function runTests(env, host) {
 
     describe(`functions get parsed cookies`, () => {
       test(`cookie`, async () => {
-        const result = await fetch(`${host}/api/cookie-me`, {
+        const result = await fetchWithRetry(`${host}/api/cookie-me`, {
           headers: { cookie: `foo=blue;` },
         }).then(res => res.json())
 
@@ -269,7 +286,7 @@ export function runTests(env, host) {
 
     describe(`functions can redirect`, () => {
       test(`normal`, async () => {
-        const result = await fetch(`${host}/api/redirect-me`)
+        const result = await fetchWithRetry(`${host}/api/redirect-me`)
 
         expect(result.url).toEqual(host + `/`)
       })
@@ -277,7 +294,7 @@ export function runTests(env, host) {
 
     describe(`functions can have custom middleware`, () => {
       test(`normal`, async () => {
-        const result = await fetch(`${host}/api/cors`)
+        const result = await fetchWithRetry(`${host}/api/cors`)
 
         const headers = Object.fromEntries(result.headers)
         expect(headers[`access-control-allow-origin`]).toEqual(`*`)
@@ -289,7 +306,7 @@ export function runTests(env, host) {
         describe(`50kb string`, () => {
           const body = `x`.repeat(50 * 1024)
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -308,7 +325,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { text: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-text-limit`,
               {
                 method: `POST`,
@@ -333,7 +350,7 @@ export function runTests(env, host) {
         describe(`50mb string`, () => {
           const body = `x`.repeat(50 * 1024 * 1024)
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -345,7 +362,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { text: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-text-limit`,
               {
                 method: `POST`,
@@ -370,7 +387,7 @@ export function runTests(env, host) {
         describe(`custom type`, () => {
           const body = `test-string`
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -389,7 +406,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { text: { type: "*/*" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-text-type`,
               {
                 method: `POST`,
@@ -418,7 +435,7 @@ export function runTests(env, host) {
             content: `x`.repeat(50 * 1024),
           })
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -439,7 +456,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { json: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-json-limit`,
               {
                 method: `POST`,
@@ -468,7 +485,7 @@ export function runTests(env, host) {
             content: `x`.repeat(50 * 1024 * 1024),
           })
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -480,7 +497,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { json: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-json-limit`,
               {
                 method: `POST`,
@@ -509,7 +526,7 @@ export function runTests(env, host) {
             content: `test-string`,
           })
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -528,7 +545,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { json: { type: "*/*" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-json-type`,
               {
                 method: `POST`,
@@ -557,7 +574,7 @@ export function runTests(env, host) {
             content: `x`.repeat(50 * 1024),
           })
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -576,7 +593,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { raw: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-raw-limit`,
               {
                 method: `POST`,
@@ -603,7 +620,7 @@ export function runTests(env, host) {
             content: `x`.repeat(50 * 1024 * 1024),
           })
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -615,7 +632,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { raw: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-raw-limit`,
               {
                 method: `POST`,
@@ -642,7 +659,7 @@ export function runTests(env, host) {
             content: `test-string`,
           })
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -661,7 +678,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { raw: { type: "*/*" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-raw-type`,
               {
                 method: `POST`,
@@ -688,7 +705,7 @@ export function runTests(env, host) {
             content: `test-string`,
           })
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -708,7 +725,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { raw: { type: "*/*" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-raw-type`,
               {
                 method: `POST`,
@@ -743,7 +760,7 @@ export function runTests(env, host) {
           body.append(`content`, `x`.repeat(50 * 1024))
 
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -764,7 +781,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { urlencoded: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-urlencoded-limit`,
               {
                 method: `POST`,
@@ -796,7 +813,7 @@ export function runTests(env, host) {
           body.append(`content`, `x`.repeat(50 * 1024 * 1024))
 
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -808,7 +825,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { urlencoded: { limit: "100mb" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-urlencoded-limit`,
               {
                 method: `POST`,
@@ -840,7 +857,7 @@ export function runTests(env, host) {
           body.append(`content`, `test-string`)
 
           it(`on default config`, async () => {
-            const result = await fetch(`${host}/api/config/defaults`, {
+            const result = await fetchWithRetry(`${host}/api/config/defaults`, {
               method: `POST`,
               body,
               headers: {
@@ -859,7 +876,7 @@ export function runTests(env, host) {
           })
 
           it(`on { bodyParser: { urlencoded: { type: "*/*" }}}`, async () => {
-            const result = await fetch(
+            const result = await fetchWithRetry(
               `${host}/api/config/body-parser-urlencoded-type`,
               {
                 method: `POST`,
@@ -885,18 +902,18 @@ export function runTests(env, host) {
 
     describe(`plugins can declare functions and they can be shadowed`, () => {
       test(`shadowing`, async () => {
-        const result = await fetch(
+        const result = await fetchWithRetry(
           `${host}/api/gatsby-plugin-cool/shadowed`
         ).then(res => res.text())
         expect(result).toEqual(`I am shadowed`)
 
-        const result2 = await fetch(
+        const result2 = await fetchWithRetry(
           `${host}/api/gatsby-plugin-cool/not-shadowed`
         ).then(res => res.text())
         expect(result2).toEqual(`I am not shadowed`)
       })
       test(`plugins can't declare functions outside of their namespace`, async () => {
-        const result = await fetch(
+        const result = await fetchWithRetry(
           `${host}/api/i-will-not-work-cause-namespacing`
         )
         expect(result.status).toEqual(404)
@@ -905,8 +922,8 @@ export function runTests(env, host) {
 
     describe(`typescript files are resolved without needing to specify their extension`, () => {
       test(`typescript`, async () => {
-        const result = await fetch(`${host}/api/extensions`).then(res =>
-          res.text()
+        const result = await fetchWithRetry(`${host}/api/extensions`).then(
+          res => res.text()
         )
         expect(result).toEqual(`hi`)
       })
@@ -914,23 +931,25 @@ export function runTests(env, host) {
 
     describe(`ignores files that match the pattern`, () => {
       test(`dotfile`, async () => {
-        const result = await fetch(`${host}/api/ignore/.config`)
+        const result = await fetchWithRetry(`${host}/api/ignore/.config`)
         expect(result.status).toEqual(404)
       })
       test(`.d.ts file`, async () => {
-        const result = await fetch(`${host}/api/ignore/foo.d`)
+        const result = await fetchWithRetry(`${host}/api/ignore/foo.d`)
         expect(result.status).toEqual(404)
       })
       test(`test file`, async () => {
-        const result = await fetch(`${host}/api/ignore/hello.test`)
+        const result = await fetchWithRetry(`${host}/api/ignore/hello.test`)
         expect(result.status).toEqual(404)
       })
       test(`test directory`, async () => {
-        const result = await fetch(`${host}/api/ignore/__tests__/hello`)
+        const result = await fetchWithRetry(
+          `${host}/api/ignore/__tests__/hello`
+        )
         expect(result.status).toEqual(404)
       })
       test(`test file in plugin`, async () => {
-        const result = await fetch(
+        const result = await fetchWithRetry(
           `${host}/api/gatsby-plugin-cool/shadowed.test`
         )
         expect(result.status).toEqual(404)
@@ -939,9 +958,9 @@ export function runTests(env, host) {
 
     describe(`bundling`, () => {
       test(`should succeed when gatsby-core-utils is imported`, async () => {
-        const result = await fetch(`${host}/api/ignore-lmdb-require`).then(
-          res => res.text()
-        )
+        const result = await fetchWithRetry(
+          `${host}/api/ignore-lmdb-require`
+        ).then(res => res.text())
         expect(result).toEqual(`hello world`)
       })
     })
@@ -968,7 +987,7 @@ export function runTests(env, host) {
     // path.join(apiDir, `function-a.js`)
     // )
     // setTimeout(async () => {
-    // const result = await fetch(
+    // const result = await fetchWithRetry(
     // `${host}/api/function-a`
     // ).then(res => res.text())
 
