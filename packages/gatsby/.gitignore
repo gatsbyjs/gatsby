@@ -35,3 +35,4 @@ cache-dir/commonjs/
 
 # cached files
 /latest-apis.json
+/latest-adapters.js

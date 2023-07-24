@@ -129,6 +129,7 @@ Object {
   "status": Object {
     "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
+    "cdnObfuscatedPrefix": "1234567890",
     "plugins": Object {},
   },
   "typeOwners": Object {

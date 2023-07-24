@@ -1,6 +1,7 @@
 try {
-  const { getLatestAPIs } = require('../dist/utils/get-latest-apis')
+  const { getLatestAPIs, getLatestAdapters } = require('../dist/utils/get-latest-gatsby-files')
   getLatestAPIs()
+  getLatestAdapters()
 } catch (e) {
   // we're probably just bootstrapping and not published yet!
 }

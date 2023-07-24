@@ -10,7 +10,7 @@ import { stripIndent } from "common-tags"
 import { trackCli } from "gatsby-telemetry"
 import { isWorker } from "gatsby-worker"
 import { resolveModuleExports } from "../resolve-module-exports"
-import { getLatestAPIs } from "../../utils/get-latest-apis"
+import { getLatestAPIs } from "../../utils/get-latest-gatsby-files"
 import { GatsbyNode, PackageJson } from "../../../"
 import {
   IPluginInfo,

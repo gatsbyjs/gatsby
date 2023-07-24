@@ -25,35 +25,51 @@ const { createRequire } = require(`module`)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function (this: any, source: string): string {
   let lmdbBinaryLocation: string | undefined
+
   try {
     const lmdbRoot =
       this?._module.resourceResolveData?.descriptionFileRoot ||
       path.dirname(this.resourcePath).replace(`/dist`, ``)
 
     const lmdbRequire = createRequire(this.resourcePath)
-    let nodeGypBuild
-    try {
-      nodeGypBuild = lmdbRequire(`node-gyp-build-optional-packages`)
-    } catch (e) {
-      // lmdb@2.3.8 way of loading binaries failed, we will try to fallback to
-      // old way before failing completely
+    const forcedBinaryModule = this.getOptions()?.forcedBinaryModule
+    let absoluteModulePath
+    if (forcedBinaryModule) {
+      try {
+        absoluteModulePath = lmdbRequire.resolve(forcedBinaryModule)
+      } catch (e) {
+        // no-op
+      }
     }
 
-    if (!nodeGypBuild) {
-      // if lmdb@2.3.8 didn't import expected node-gyp-build fork (node-gyp-build-optional-packages)
-      // let's try falling back to upstream package - if that doesn't work, we will fail compilation
-      nodeGypBuild = lmdbRequire(`node-gyp-build`)
+    if (!absoluteModulePath) {
+      let nodeGypBuild
+      try {
+        nodeGypBuild = lmdbRequire(`node-gyp-build-optional-packages`)
+      } catch (e) {
+        // lmdb@2.3.8 way of loading binaries failed, we will try to fallback to
+        // old way before failing completely
+      }
+
+      if (!nodeGypBuild) {
+        // if lmdb@2.3.8 didn't import expected node-gyp-build fork (node-gyp-build-optional-packages)
+        // let's try falling back to upstream package - if that doesn't work, we will fail compilation
+        nodeGypBuild = lmdbRequire(`node-gyp-build`)
+      }
+      absoluteModulePath = nodeGypBuild.path(lmdbRoot)
     }
 
     lmdbBinaryLocation = slash(
-      path.relative(
-        path.dirname(this.resourcePath),
-        nodeGypBuild.path(lmdbRoot)
-      )
+      path.relative(path.dirname(this.resourcePath), absoluteModulePath)
     )
   } catch (e) {
     return source
   }
+
+  if (!lmdbBinaryLocation) {
+    return source
+  }
+
   return source
     .replace(
       `require$1('node-gyp-build-optional-packages')(dirName)`,

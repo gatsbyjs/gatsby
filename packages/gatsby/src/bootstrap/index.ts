@@ -18,6 +18,7 @@ import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
 import { savePartialStateToDisk } from "../redux"
 import { IProgram } from "../commands/types"
+import type { IAdapterManager } from "../utils/adapter/types"
 
 const tracer = globalTracer()
 
@@ -26,6 +27,7 @@ export async function bootstrap(
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
   workerPool: GatsbyWorkerPool
+  adapterManager?: IAdapterManager
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
@@ -86,5 +88,6 @@ export async function bootstrap(
   return {
     gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,
     workerPool,
+    adapterManager: context.adapterManager,
   }
 }

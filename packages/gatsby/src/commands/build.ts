@@ -134,10 +134,11 @@ module.exports = async function build(
     })
   }
 
-  const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
-    program,
-    parentSpan: buildSpan,
-  })
+  const { gatsbyNodeGraphQLFunction, workerPool, adapterManager } =
+    await bootstrap({
+      program,
+      parentSpan: buildSpan,
+    })
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
@@ -694,6 +695,11 @@ module.exports = async function build(
 
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
+  }
+
+  if (adapterManager) {
+    await adapterManager.adapt()
+    await adapterManager.storeCache()
   }
 
   showExperimentNotices()

@@ -1,0 +1,274 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getRoutesManifest should return routes manifest 1`] = `
+Array [
+  Object {
+    "filePath": "public/page-data/sq/d/1.json",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/page-data/sq/d/1.json",
+    "type": "static",
+  },
+  Object {
+    "filePath": "public/_gatsby/slices/_gatsby-scripts-1.html",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/_gatsby/slices/_gatsby-scripts-1.html",
+    "type": "static",
+  },
+  Object {
+    "cache": true,
+    "functionId": "ssr-engine",
+    "path": "/page-data/dsg/page-data.json",
+    "type": "function",
+  },
+  Object {
+    "filePath": "public/page-data/index/page-data.json",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/page-data/index/page-data.json",
+    "type": "static",
+  },
+  Object {
+    "functionId": "ssr-engine",
+    "path": "/page-data/ssr/page-data.json",
+    "type": "function",
+  },
+  Object {
+    "functionId": "static-index-js",
+    "path": "/api/static/",
+    "type": "function",
+  },
+  Object {
+    "filePath": "public/page-data/app-data.json",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/page-data/app-data.json",
+    "type": "static",
+  },
+  Object {
+    "filePath": "public/app-123.js",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=31536000, immutable",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/app-123.js",
+    "type": "static",
+  },
+  Object {
+    "filePath": "public/chunk-map.json",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/chunk-map.json",
+    "type": "static",
+  },
+  Object {
+    "cache": true,
+    "functionId": "ssr-engine",
+    "path": "/dsg/",
+    "type": "function",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "ignoreCase": true,
+    "path": "/old-url",
+    "status": 301,
+    "toPath": "/new-url",
+    "type": "redirect",
+  },
+  Object {
+    "functionId": "ssr-engine",
+    "path": "/ssr/",
+    "type": "function",
+  },
+  Object {
+    "filePath": "public/webpack.stats.json",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/webpack.stats.json",
+    "type": "static",
+  },
+  Object {
+    "filePath": "public/index.html",
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/",
+    "type": "static",
+  },
+]
+`;

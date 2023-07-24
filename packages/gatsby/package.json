@@ -52,6 +52,7 @@
     "babel-preset-gatsby": "^3.12.0-next.1",
     "better-opn": "^2.1.1",
     "bluebird": "^3.7.2",
+    "body-parser": "1.20.1",
     "browserslist": "^4.21.9",
     "cache-manager": "^2.11.1",
     "chalk": "^4.1.2",
@@ -118,6 +119,7 @@
     "joi": "^17.9.2",
     "json-loader": "^0.5.7",
     "latest-version": "^7.0.0",
+    "linkfs": "^2.1.0",
     "lmdb": "2.5.3",
     "lodash": "^4.17.21",
     "meant": "^1.0.3",
@@ -213,6 +215,7 @@
     "node": ">=18.0.0"
   },
   "files": [
+    "adapters.js",
     "apis.json",
     "ipc.json",
     "cache-dir/",

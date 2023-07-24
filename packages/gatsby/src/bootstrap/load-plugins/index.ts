@@ -1,3 +1,4 @@
+import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
@@ -38,11 +39,31 @@ export async function loadPlugins(
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)
 
+  const { disablePlugins } = store.getState().program
+  const pluginArrayWithoutDisabledPlugins = pluginArray.filter(plugin => {
+    const disabledInfo = disablePlugins?.find(
+      entry => entry.name === plugin.name
+    )
+
+    if (disabledInfo) {
+      if (!process.env.GATSBY_WORKER_ID) {
+        // show this warning only once in main process
+        reporter.warn(
+          `Disabling plugin "${plugin.name}":\n${disabledInfo.reasons
+            .map(line => ` - ${line}`)
+            .join(`\n`)}`
+        )
+      }
+      return false
+    }
+    return true
+  })
+
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
   let { flattenedPlugins, badExports } = await collatePluginAPIs({
     currentAPIs,
-    flattenedPlugins: pluginArray,
+    flattenedPlugins: pluginArrayWithoutDisabledPlugins,
     rootDir,
   })
 
