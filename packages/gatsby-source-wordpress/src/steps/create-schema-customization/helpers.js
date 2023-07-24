@@ -435,19 +435,5 @@ export async function diffBuiltTypeDefs(typeDefs) {
       `\n\n...\n[Diff exceeded ${maxErrorLength} characters and was truncated]`
   }
 
-  if (process.env.WP_INCONSISTENT_SCHEMA_WARN !== `true`) {
-    reporter.info(
-      formatLogMessage(
-        `Panicking due to inconsistent schema customization. Turn this into a warning by setting process.env.WP_INCONSISTENT_SCHEMA_WARN to a string of "true"`
-      )
-    )
-    reporter.panic({
-      id: CODES.InconsistentSchemaCustomization,
-      context: {
-        sourceMessage: errorMessage,
-      },
-    })
-  } else {
-    reporter.warn(errorMessage)
-  }
+  reporter.warn(errorMessage)
 }
