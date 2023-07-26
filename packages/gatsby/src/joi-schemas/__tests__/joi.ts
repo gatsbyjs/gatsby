@@ -265,6 +265,106 @@ describe(`gatsby config`, () => {
       })
     )
   })
+
+  it(`returns empty array when headers are not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value?.headers).toEqual([])
+  })
+
+  it(`lets you create custom HTTP headers for a path`, () => {
+    const config = {
+      headers: [
+        {
+          source: `*`,
+          headers: [
+            {
+              key: `x-custom-header`,
+              value: `some value`,
+            },
+          ],
+        },
+      ],
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value?.headers).toEqual(config.headers)
+  })
+
+  it(`throws on incorrect headers definitions`, () => {
+    const configOne = {
+      headers: {
+        source: `*`,
+        headers: [
+          {
+            key: `x-custom-header`,
+            value: `some value`,
+          },
+        ],
+      },
+    }
+
+    const resultOne = gatsbyConfigSchema.validate(configOne)
+    expect(resultOne.error).toMatchInlineSnapshot(
+      `[ValidationError: "headers" must be an array]`
+    )
+
+    const configTwo = {
+      headers: [
+        {
+          source: `*`,
+          headers: {
+            key: `x-custom-header`,
+            value: `some value`,
+          },
+        },
+      ],
+    }
+
+    const resultTwo = gatsbyConfigSchema.validate(configTwo)
+    expect(resultTwo.error).toMatchInlineSnapshot(
+      `[ValidationError: "headers[0].headers" must be an array]`
+    )
+  })
+
+  it(`lets you add an adapter`, () => {
+    const config = {
+      adapter: {
+        name: `gatsby-adapter-name`,
+        cache: {
+          restore: (): Promise<void> => Promise.resolve(),
+          store: (): Promise<void> => Promise.resolve(),
+        },
+        adapt: (): Promise<void> => Promise.resolve(),
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value?.adapter).toEqual(config.adapter)
+  })
+
+  it(`throws on incorrect adapter setting`, () => {
+    const configOne = {
+      adapter: `gatsby-adapter-name`,
+    }
+
+    const resultOne = gatsbyConfigSchema.validate(configOne)
+    expect(resultOne.error).toMatchInlineSnapshot(
+      `[ValidationError: "adapter" must be of type object]`
+    )
+
+    const configTwo = {
+      adapter: {
+        name: `gatsby-adapter-name`,
+      },
+    }
+
+    const resultTwo = gatsbyConfigSchema.validate(configTwo)
+    expect(resultTwo.error).toMatchInlineSnapshot(
+      `[ValidationError: "adapter.adapt" is required]`
+    )
+  })
 })
 
 describe(`node schema`, () => {

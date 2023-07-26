@@ -15,6 +15,7 @@ const initialState: IStateProgram = {
   extensions: [],
   browserslist: [],
   report: reporter,
+  disablePlugins: [],
 }
 
 export const programReducer = (
@@ -24,6 +25,7 @@ export const programReducer = (
   switch (action.type) {
     case `SET_PROGRAM`:
       return {
+        ...state,
         ...action.payload,
       }
 
@@ -38,6 +40,27 @@ export const programReducer = (
         ...state,
         status: `BOOTSTRAP_FINISHED`,
       }
+
+    case `DISABLE_PLUGINS_BY_NAME`: {
+      if (!state.disablePlugins) {
+        state.disablePlugins = []
+      }
+      for (const pluginToDisable of action.payload.pluginsToDisable) {
+        let disabledPlugin = state.disablePlugins.find(
+          entry => entry.name === pluginToDisable
+        )
+        if (!disabledPlugin) {
+          disabledPlugin = {
+            name: pluginToDisable,
+            reasons: [],
+          }
+          state.disablePlugins.push(disabledPlugin)
+        }
+        disabledPlugin.reasons.push(action.payload.reason)
+      }
+
+      return state
+    }
 
     default:
       return state

@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "gatsby clean",
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS=true gatsby develop",
     "serve": "gatsby serve",
     "test-prod": "start-server-and-test serve 9000 jest:prod",
     "test-dev": "start-server-and-test develop 8000 jest:dev",

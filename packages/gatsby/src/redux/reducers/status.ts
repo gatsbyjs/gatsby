@@ -1,10 +1,12 @@
 import _ from "lodash"
+import { uuid } from "gatsby-core-utils"
 import { ActionsUnion, IGatsbyState } from "../types"
 
 const defaultState: IGatsbyState["status"] = {
   PLUGINS_HASH: ``,
   LAST_NODE_COUNTER: 0,
   plugins: {},
+  cdnObfuscatedPrefix: ``,
 }
 
 export const statusReducer = (
@@ -13,7 +15,16 @@ export const statusReducer = (
 ): IGatsbyState["status"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return defaultState
+      return {
+        ...defaultState,
+        cdnObfuscatedPrefix: state.cdnObfuscatedPrefix ?? ``,
+      }
+    case `INIT`: {
+      if (!state.cdnObfuscatedPrefix) {
+        state.cdnObfuscatedPrefix = uuid.v4()
+      }
+      return state
+    }
     case `UPDATE_PLUGINS_HASH`:
       return {
         ...state,

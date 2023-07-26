@@ -36,6 +36,7 @@ it("generates the expected api output", done => {
           "content-file-path",
           "slices",
           "stateful-source-nodes",
+          "adapters",
         ],
         "node": Object {
           "createPages": Object {},

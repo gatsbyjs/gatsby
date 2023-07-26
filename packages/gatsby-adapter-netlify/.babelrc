@@ -1,0 +1,10 @@
+{
+  "presets": [
+    [
+      "babel-preset-gatsby-package",
+      {
+        "keepDynamicImports": ["./src/index.ts"]
+      }
+    ]
+  ]
+}

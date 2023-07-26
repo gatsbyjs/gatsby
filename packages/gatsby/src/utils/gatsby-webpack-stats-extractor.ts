@@ -4,6 +4,7 @@ import { Compiler } from "webpack"
 import { PARTIAL_HYDRATION_CHUNK_REASON } from "./webpack/plugins/partial-hydration"
 import { store } from "../redux"
 import { ensureFileContent } from "./ensure-file-content"
+import { setWebpackAssets } from "./adapter/manager"
 
 let previousChunkMapJson: string | undefined
 let previousWebpackStatsJson: string | undefined
@@ -60,10 +61,42 @@ export class GatsbyWebpackStatsExtractor {
         }
       }
 
+      const {
+        namedChunkGroups = {},
+        name = ``,
+        ...assetsRelatedStats
+      } = stats.toJson({
+        all: false,
+        chunkGroups: true,
+        cachedAssets: true,
+        assets: true,
+      })
+
       const webpackStats = {
-        ...stats.toJson({ all: false, chunkGroups: true }),
+        name,
+        namedChunkGroups,
         assetsByChunkName: assets,
         childAssetsByChunkName: childAssets,
+      }
+
+      if (assetsRelatedStats.assets) {
+        const assets = new Set<string>()
+        for (const asset of assetsRelatedStats.assets) {
+          assets.add(asset.name)
+
+          if (asset.info.related) {
+            for (const relatedAssets of Object.values(asset.info.related)) {
+              if (Array.isArray(relatedAssets)) {
+                for (const relatedAsset of relatedAssets) {
+                  assets.add(relatedAsset)
+                }
+              } else {
+                assets.add(relatedAssets)
+              }
+            }
+          }
+        }
+        setWebpackAssets(assets)
       }
 
       const newChunkMapJson = JSON.stringify(assetsMap)

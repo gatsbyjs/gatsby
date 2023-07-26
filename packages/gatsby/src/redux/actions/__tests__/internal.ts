@@ -22,6 +22,7 @@ describe(`setSiteConfig`, () => {
       Object {
         "payload": Object {
           "graphqlTypegen": false,
+          "headers": Array [],
           "jsxRuntime": "classic",
           "pathPrefix": "",
           "polyfill": true,
@@ -41,6 +42,7 @@ describe(`setSiteConfig`, () => {
       Object {
         "payload": Object {
           "graphqlTypegen": false,
+          "headers": Array [],
           "jsxRuntime": "classic",
           "pathPrefix": "",
           "polyfill": true,

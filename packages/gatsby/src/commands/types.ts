@@ -35,6 +35,10 @@ export interface IProgram {
   verbose?: boolean
   prefixPaths?: boolean
   setStore?: (store: Store<IGatsbyState, AnyAction>) => void
+  disablePlugins?: Array<{
+    name: string
+    reasons: Array<string>
+  }>
 }
 
 /**

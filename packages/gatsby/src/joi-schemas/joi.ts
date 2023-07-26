@@ -83,6 +83,39 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
 
         return value
       }),
+    headers: Joi.array()
+      .items(
+        Joi.object()
+          .keys({
+            source: Joi.string().required(),
+            headers: Joi.array()
+              .items(
+                Joi.object()
+                  .keys({
+                    key: Joi.string().required(),
+                    value: Joi.string().required(),
+                  })
+                  .required()
+                  .unknown(false)
+              )
+              .required(),
+          })
+          .unknown(false)
+      )
+      .default([]),
+    adapter: Joi.object()
+      .keys({
+        name: Joi.string().required(),
+        cache: Joi.object()
+          .keys({
+            restore: Joi.func(),
+            store: Joi.func(),
+          })
+          .unknown(false),
+        adapt: Joi.func().required(),
+        config: Joi.func(),
+      })
+      .unknown(false),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(

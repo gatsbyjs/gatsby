@@ -11,7 +11,8 @@ module.exports = {
       `./src/bootstrap/get-config-file.ts`,
       `./src/bootstrap/resolve-module-exports.ts`,
       `./src/bootstrap/load-plugins/validate.ts`,
-      `./src/utils/import-gatsby-plugin.ts`
+      `./src/utils/adapter/init.ts`,
+      `./src/utils/import-gatsby-plugin.ts`,
     ]
   }]],
 }
