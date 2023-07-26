@@ -80,6 +80,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       await getExistingCachedNodes({
         actions,
         getNode,
+        pluginConfig,
       })
 
     // If the user knows they are offline, serve them cached result

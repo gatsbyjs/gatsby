@@ -1,10 +1,11 @@
-// @ts-check
 import { hasFeature } from "gatsby-plugin-utils/index"
 import { untilNextEventLoopTick } from "./utils"
 import { IContentfulEntry } from "./types/contentful"
 
 // @ts-ignore this is not available (yet) in typegen phase
 import { getDataStore } from "gatsby/dist/datastore"
+import { Actions, Node, NodePluginArgs } from "gatsby"
+import { IProcessedPluginOptions } from "./types/plugin"
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 export const existingNodes = new Map<string, IContentfulEntry>()
@@ -26,7 +27,15 @@ const memoryNodeCountsBySysType: IMemoryNodesCountsBySysType = {
   Entry: 0,
 }
 
-export async function getExistingCachedNodes({ actions, getNode }): Promise<{
+export async function getExistingCachedNodes({
+  actions,
+  getNode,
+  pluginConfig,
+}: {
+  actions: Actions
+  getNode: NodePluginArgs["getNode"]
+  pluginConfig: IProcessedPluginOptions
+}): Promise<{
   existingNodes: Map<string, IContentfulEntry>
   memoryNodeCountsBySysType: IMemoryNodesCountsBySysType
 }> {
@@ -35,6 +44,8 @@ export async function getExistingCachedNodes({ actions, getNode }): Promise<{
   const needToTouchNodes =
     !hasFeature(`stateful-source-nodes`) &&
     is.firstSourceNodesCallOfCurrentNodeProcess
+
+  const needToTouchLocalFileNodes = pluginConfig.get(`downloadLocal`)
 
   if (existingNodes.size === 0) {
     memoryNodeCountsBySysType.Asset = 0
@@ -46,7 +57,7 @@ export async function getExistingCachedNodes({ actions, getNode }): Promise<{
     for (const typeName of allNodeTypeNames) {
       const typeNodes = dataStore.iterateNodesByType(typeName)
 
-      const firstNodeOfType = Array.from(typeNodes.slice(0, 1))[0] as any
+      const firstNodeOfType = Array.from(typeNodes.slice(0, 1))[0]
 
       if (
         !firstNodeOfType ||
@@ -58,12 +69,27 @@ export async function getExistingCachedNodes({ actions, getNode }): Promise<{
       for (const node of typeNodes) {
         if (needToTouchNodes) {
           touchNode(node)
-
-          if (node?.fields?.includes(`localFile`)) {
-            // Prevent GraphQL type inference from crashing on this property
-            const fullNode = getNode(node.id)
-            const localFileNode = getNode(fullNode.fields.localFile)
-            touchNode(localFileNode)
+        }
+        // Handle nodes created by downloadLocal
+        if (
+          needToTouchLocalFileNodes &&
+          node?.fields &&
+          Object.keys(node?.fields).includes(`localFile`)
+        ) {
+          // Prevent GraphQL type inference from crashing on this property
+          interface INodeWithLocalFile extends Node {
+            fields: {
+              localFile: string
+              [key: string]: unknown
+            }
+          }
+          const fullNode = getNode(node.id)
+          if (fullNode) {
+            const localFileFullNode = fullNode as INodeWithLocalFile
+            const localFileNode = getNode(localFileFullNode.fields.localFile)
+            if (localFileNode) {
+              touchNode(localFileNode)
+            }
           }
         }
 
