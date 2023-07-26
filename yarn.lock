@@ -11910,6 +11910,68 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
+gatsby-core-utils@^4.12.0-next.1:
+  version "4.12.0-next.1"
+  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-4.12.0-next.1.tgz#808becbfbf6707402c67e84548e1af7c45c4b2f1"
+  integrity sha512-KsYDrt+D1j3xSp7GbrvcZ3LBbVd3jjUTh3G1JyrT6aq1qeLXuQx6SBAwMKYdB8oFMGQXz/Zd5dWMimK2MDN0aw==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+    ci-info "2.0.0"
+    configstore "^5.0.1"
+    fastq "^1.15.0"
+    file-type "^16.5.4"
+    fs-extra "^11.1.1"
+    got "^11.8.6"
+    hash-wasm "^4.9.0"
+    import-from "^4.0.0"
+    lmdb "2.5.3"
+    lock "^1.1.0"
+    node-object-hash "^2.3.10"
+    proper-lockfile "^4.1.2"
+    resolve-from "^5.0.0"
+    tmp "^0.2.1"
+    xdg-basedir "^4.0.0"
+
+gatsby-plugin-sharp@^5.12.0-next.0:
+  version "5.12.0-next.1"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-5.12.0-next.1.tgz#ae15aca241d9fcd415efeedf9167a155948bb36f"
+  integrity sha512-JK6tk2XiEtqVFQh3gLByEVChnHHwBKxi4lqU4ir0nq3itUUKORcUy/hH3yqNKUkFQyB/dv0C1wqVXzE92LC8nw==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+    async "^3.2.4"
+    bluebird "^3.7.2"
+    debug "^4.3.4"
+    filenamify "^4.3.0"
+    fs-extra "^11.1.1"
+    gatsby-core-utils "^4.12.0-next.1"
+    gatsby-plugin-utils "^4.12.0-next.1"
+    lodash "^4.17.21"
+    probe-image-size "^7.2.3"
+    semver "^7.5.3"
+    sharp "^0.32.1"
+
+gatsby-plugin-utils@^4.12.0-next.1:
+  version "4.12.0-next.1"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-utils/-/gatsby-plugin-utils-4.12.0-next.1.tgz#a693694f465eaa9db18a5c9c0593622ba5b6fbf2"
+  integrity sha512-xALBnAiQSUu7FH95LjkGutGwJhczMYG1QMuSkWhNgCy73bhJvZPihwgwFBNH808unypP6e8xNFjmjul109Alxg==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+    fastq "^1.15.0"
+    fs-extra "^11.1.1"
+    gatsby-core-utils "^4.12.0-next.1"
+    gatsby-sharp "^1.12.0-next.1"
+    graphql-compose "^9.0.10"
+    import-from "^4.0.0"
+    joi "^17.9.2"
+    mime "^3.0.0"
+
+gatsby-sharp@^1.12.0-next.1:
+  version "1.12.0-next.1"
+  resolved "https://registry.yarnpkg.com/gatsby-sharp/-/gatsby-sharp-1.12.0-next.1.tgz#2243ac0ee65b8590fa245c0f4b252e65a3c3dd8d"
+  integrity sha512-q7+rYMk3eOh/Wm+hvhJxsXxjLp6OIMH1lAs7+pORvyjsuwxtU29s7txT/3b71xsQTld/QxW79Ed5FHjtTDN9lw==
+  dependencies:
+    sharp "^0.32.1"
+
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
