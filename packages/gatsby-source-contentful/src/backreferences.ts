@@ -61,7 +61,7 @@ export async function getExistingCachedNodes({
 
       if (
         !firstNodeOfType ||
-        firstNodeOfType.internal.owner !== `gatsby-source-contentful`
+        firstNodeOfType.internal?.owner !== `gatsby-source-contentful`
       ) {
         continue
       }
