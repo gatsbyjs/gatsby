@@ -55,7 +55,9 @@ export async function getExistingCachedNodes({
     const allNodeTypeNames = Array.from(dataStore.getTypes())
 
     for (const typeName of allNodeTypeNames) {
-      const typeNodes: Array<Node> = dataStore.iterateNodesByType(typeName)
+      const typeNodes = dataStore.iterateNodesByType(
+        typeName
+      ) as Array<unknown> as Array<Node>
 
       const firstNodeOfType = Array.from(typeNodes.slice(0, 1))[0]
 
