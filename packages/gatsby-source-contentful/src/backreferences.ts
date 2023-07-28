@@ -55,13 +55,13 @@ export async function getExistingCachedNodes({
     const allNodeTypeNames = Array.from(dataStore.getTypes())
 
     for (const typeName of allNodeTypeNames) {
-      const typeNodes = dataStore.iterateNodesByType(typeName)
+      const typeNodes: Array<Node> = dataStore.iterateNodesByType(typeName)
 
       const firstNodeOfType = Array.from(typeNodes.slice(0, 1))[0]
 
       if (
         !firstNodeOfType ||
-        firstNodeOfType.internal?.owner !== `gatsby-source-contentful`
+        firstNodeOfType.internal.owner !== `gatsby-source-contentful`
       ) {
         continue
       }
