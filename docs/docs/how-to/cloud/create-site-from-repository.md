@@ -47,7 +47,7 @@ Next, you will be prompted to connect an optional content management system (CMS
 
 Now, you will be asked to [set up environment variables](/docs/reference/cloud/managing-environment-variables) for your site. The "Default" starter does not use any environment variables so you will skip this step as well. Click **"Build Site"** to continue.
 
-![Section to add environment variables to a new Gatbsy Cloud site](../../images/no-environment-variables.png)
+![Section to add environment variables to a new Gatsby Cloud site](../../images/no-environment-variables.png)
 
 ### 5. Finish
 

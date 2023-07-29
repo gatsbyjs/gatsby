@@ -54,9 +54,9 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
+         * Example : 'dev-gatsbyjswp.pantheonsite.io' or 'www.example-site.com'
          */
-        baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
+        baseUrl: `dev-gatsbyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,
         // Indicates whether the site is hosted on wordpress.com.
@@ -102,9 +102,9 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
-         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
+         * Example : 'dev-gatsbyjswp.pantheonsite.io' or 'www.example-site.com'
          */
-        baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
+        baseUrl: `dev-gatsbyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,
         // Indicates whether the site is hosted on wordpress.com.
