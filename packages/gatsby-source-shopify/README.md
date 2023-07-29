@@ -168,7 +168,7 @@ Not set by default. Allows you to override the priority status of a build. If se
 
 Not set by default. If set to a string (example `My Sales Channel`), only products, variants, collections, and locations that are published to that channel will be sourced. If you want to filter products by a Private App instead of a Public App or default sales channel, you have to provide the App ID instead of sales channel name. You can find this in the same place as the Shopify App Password.
 
-💡 Note: The `salesChannel` plugin option defaults to the value of `process.env.GATBSY_SHOPIFY_SALES_CHANNEL`. If that value is not set the plugin will source only objects that are published to the `online store` sales channel.
+💡 Note: The `salesChannel` plugin option defaults to the value of `process.env.GATSBY_SHOPIFY_SALES_CHANNEL`. If that value is not set the plugin will source only objects that are published to the `online store` sales channel.
 
 `apiVersion: string`
 
