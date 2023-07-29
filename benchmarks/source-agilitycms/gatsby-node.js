@@ -1,7 +1,7 @@
 const agility = require('./src/agility/utils')
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
-//gatsy-node.js
+//gatsby-node.js
 //CREATE RESOLVERS *******************************************************************************************
 exports.createResolvers = (args) => {
 
