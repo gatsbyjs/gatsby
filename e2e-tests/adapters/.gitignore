@@ -1,0 +1,13 @@
+node_modules/
+.cache/
+public
+
+# Local Netlify folder
+.netlify
+
+# Cypress output
+cypress/videos/
+cypress/screenshots/
+
+# Custom .yarnrc file for gatsby-dev on Yarn 3
+.yarnrc.yml

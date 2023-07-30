@@ -29,7 +29,7 @@ const lmdbDatastore = {
 
 const preSyncDeletedNodeIdsCache = new Set()
 
-function getDefaultDbPath(): string {
+export function getDefaultDbPath(): string {
   const dbFileName =
     process.env.NODE_ENV === `test`
       ? `test-datastore-${

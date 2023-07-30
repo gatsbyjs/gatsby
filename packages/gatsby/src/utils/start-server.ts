@@ -594,7 +594,7 @@ export async function startServer(
   const { developMiddleware } = store.getState().config
 
   if (developMiddleware) {
-    developMiddleware(app, program)
+    developMiddleware(app)
   }
 
   const { proxy, trailingSlash } = store.getState().config

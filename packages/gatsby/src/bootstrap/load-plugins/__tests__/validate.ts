@@ -6,7 +6,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 jest.mock(`../../resolve-module-exports`)
-jest.mock(`../../../utils/get-latest-apis`)
+jest.mock(`../../../utils/get-latest-gatsby-files`)
 
 import reporter from "gatsby-cli/lib/reporter"
 import {
@@ -18,7 +18,7 @@ import {
   ExportType,
   IEntry,
 } from "../validate"
-import { getLatestAPIs } from "../../../utils/get-latest-apis"
+import { getLatestAPIs } from "../../../utils/get-latest-gatsby-files"
 import { resolveModuleExports } from "../../resolve-module-exports"
 
 beforeEach(() => {

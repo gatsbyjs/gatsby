@@ -1,4 +1,5 @@
 import { createConfig } from "../config"
+import { printConfigWarnings } from "../middleware"
 import reporter from "gatsby-cli/lib/reporter"
 import type { IGatsbyFunction } from "../../../redux/types"
 const reporterWarnSpy = jest.spyOn(reporter, `warn`)
@@ -6,6 +7,15 @@ const reporterWarnSpy = jest.spyOn(reporter, `warn`)
 beforeEach(() => {
   reporterWarnSpy.mockReset()
 })
+
+function createConfigAndPrintWarnings(
+  userConfig: any,
+  functionObj: IGatsbyFunction
+): any {
+  const { config, warnings } = createConfig(userConfig)
+  printConfigWarnings(warnings, functionObj)
+  return config
+}
 
 const testFunction: IGatsbyFunction = {
   functionRoute: `a-directory/function`,
@@ -15,11 +25,13 @@ const testFunction: IGatsbyFunction = {
   originalRelativeFilePath: `a-directory/function.js`,
   relativeCompiledFilePath: `a-directory/function.js`,
   absoluteCompiledFilePath: `/Users/misiek/dev/functions-test/.cache/functions/a-directory/function.js`,
+  functionId: `a-directory/function`,
 }
 
-describe(`createConfig`, () => {
+describe(`createConfigAndPrintWarnings`, () => {
   it(`defaults`, () => {
-    expect(createConfig(undefined, testFunction)).toMatchInlineSnapshot(`
+    expect(createConfigAndPrintWarnings(undefined, testFunction))
+      .toMatchInlineSnapshot(`
       Object {
         "bodyParser": Object {
           "json": Object {
@@ -43,7 +55,7 @@ describe(`createConfig`, () => {
 
   describe(`input not matching schema (fallback to default and warnings)`, () => {
     it(`{ bodyParser: false }`, () => {
-      expect(createConfig({ bodyParser: false }, testFunction))
+      expect(createConfigAndPrintWarnings({ bodyParser: false }, testFunction))
         .toMatchInlineSnapshot(`
                   Object {
                     "bodyParser": Object {
@@ -101,7 +113,7 @@ describe(`createConfig`, () => {
     })
 
     it(`{ bodyParser: "foo" }`, () => {
-      expect(createConfig({ bodyParser: `foo` }, testFunction))
+      expect(createConfigAndPrintWarnings({ bodyParser: `foo` }, testFunction))
         .toMatchInlineSnapshot(`
                   Object {
                     "bodyParser": Object {
@@ -159,7 +171,7 @@ describe(`createConfig`, () => {
     })
 
     it(`{ unrelated: true }`, () => {
-      expect(createConfig({ unrelated: true }, testFunction))
+      expect(createConfigAndPrintWarnings({ unrelated: true }, testFunction))
         .toMatchInlineSnapshot(`
                   Object {
                     "bodyParser": Object {
@@ -216,8 +228,12 @@ describe(`createConfig`, () => {
     })
 
     it(`{ bodyParser: { unrelated: true } }`, () => {
-      expect(createConfig({ bodyParser: { unrelated: true } }, testFunction))
-        .toMatchInlineSnapshot(`
+      expect(
+        createConfigAndPrintWarnings(
+          { bodyParser: { unrelated: true } },
+          testFunction
+        )
+      ).toMatchInlineSnapshot(`
                   Object {
                     "bodyParser": Object {
                       "json": Object {
@@ -280,7 +296,7 @@ describe(`createConfig`, () => {
         const customTextConfig = {
           limit: `1mb`,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
@@ -300,7 +316,7 @@ describe(`createConfig`, () => {
         const customTextConfig = {
           type: `lorem/*`,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
@@ -318,7 +334,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - not an config object`, () => {
         const customTextConfig = `foo`
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
@@ -355,7 +371,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
         const customTextConfig = { wat: true }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
@@ -396,7 +412,7 @@ describe(`createConfig`, () => {
         const customTextConfig = {
           limit: `1mb`,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
@@ -417,7 +433,7 @@ describe(`createConfig`, () => {
         const customTextConfig = {
           type: `lorem/*`,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
@@ -435,7 +451,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - not an config object`, () => {
         const customTextConfig = `foo`
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
@@ -473,7 +489,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
         const customTextConfig = { wat: true }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
@@ -515,7 +531,7 @@ describe(`createConfig`, () => {
         const customTextConfig = {
           limit: `1mb`,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
@@ -535,7 +551,7 @@ describe(`createConfig`, () => {
         const customTextConfig = {
           type: `lorem/*`,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
@@ -553,7 +569,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - not an config object`, () => {
         const customTextConfig = `foo`
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
@@ -591,7 +607,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
         const customTextConfig = { wat: true }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
@@ -634,7 +650,7 @@ describe(`createConfig`, () => {
           limit: `1mb`,
           extended: true,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
@@ -656,7 +672,7 @@ describe(`createConfig`, () => {
           type: `lorem/*`,
           extended: true,
         }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
@@ -675,7 +691,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - not an config object`, () => {
         const customTextConfig = `foo`
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
@@ -716,7 +732,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
         const customTextConfig = { wat: true }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
@@ -757,7 +773,7 @@ describe(`createConfig`, () => {
 
       it(`input not matching schema (fallback to default) - "extended" is required"`, () => {
         const customTextConfig = { limit: `200kb` }
-        const generatedConfig = createConfig(
+        const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,

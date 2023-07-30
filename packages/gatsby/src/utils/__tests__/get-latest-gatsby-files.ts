@@ -15,7 +15,7 @@ jest.mock(`axios`, () => {
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const axios = require(`axios`)
-import { getLatestAPIs, IAPIResponse } from "../get-latest-apis"
+import { getLatestAPIs, IAPIResponse } from "../get-latest-gatsby-files"
 
 beforeEach(() => {
   ;[fs, axios].forEach(mock =>
@@ -47,7 +47,7 @@ describe(`default behavior: has network connectivity`, () => {
     expect(data).toEqual(getMockAPIFile())
   })
 
-  it(`writes api file`, async () => {
+  it(`writes apis.json file`, async () => {
     const data = await getLatestAPIs()
 
     expect(fs.writeFile).toHaveBeenCalledWith(
@@ -77,7 +77,7 @@ describe(`downloading APIs failure`, () => {
     expect(data).toEqual(apis)
   })
 
-  it(`falls back to local api.json if latest-apis.json not cached`, async () => {
+  it(`falls back to local apis.json if latest-apis.json not cached`, async () => {
     const apis = getMockAPIFile()
     fs.pathExists.mockResolvedValueOnce(false)
     fs.readJSON.mockResolvedValueOnce(apis)

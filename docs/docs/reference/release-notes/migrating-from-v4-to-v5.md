@@ -77,6 +77,12 @@ Or run
 npm install react@latest react-dom@latest
 ```
 
+Please note: If you use npm 7 or higher you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
+
+```shell
+npm install react@latest react-dom@latest --legacy-peer-deps
+```
+
 ### Update Gatsby related packages
 
 Update your `package.json` to use the `latest` version for all Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note that this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. All packages we manage received a major version bump. Community plugins may not be upgraded yet so please check their repository for the current status.

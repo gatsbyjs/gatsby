@@ -1,0 +1,38 @@
+{
+  "name": "adapters",
+  "version": "1.0.0",
+  "private": true,
+  "description": "E2E test site for testing official adapters",
+  "author": "LekoArts",
+  "scripts": {
+    "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
+    "build:debug": "cross-env USE_DEBUG_ADAPTER=y CYPRESS_SUPPORT=y npm run build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "cy:open": "cypress open --browser chrome --e2e",
+    "develop:debug": "start-server-and-test develop http://localhost:8000 'npm run cy:open -- --config baseUrl=http://localhost:8000'",
+    "ssat:debug": "start-server-and-test serve http://localhost:9000 cy:open",
+    "test:template": "cross-env-shell CYPRESS_GROUP_NAME=$ADAPTER TRAILING_SLASH=$TRAILING_SLASH node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH",
+    "test:template:debug": "cross-env-shell CYPRESS_GROUP_NAME=$ADAPTER TRAILING_SLASH=$TRAILING_SLASH npm run cy:open -- --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH",
+    "test:debug": "npm-run-all -s build:debug ssat:debug",
+    "test:netlify": "start-server-and-test 'cross-env TRAILING_SLASH=always BROWSER=none ntl serve --port 8888' http://localhost:8888 'cross-env ADAPTER=netlify TRAILING_SLASH=always npm run test:template'",
+    "test:netlify:debug": "start-server-and-test 'cross-env TRAILING_SLASH=always BROWSER=none ntl serve --port 8888' http://localhost:8888 'cross-env ADAPTER=netlify TRAILING_SLASH=always npm run test:template:debug'",
+    "test": "npm-run-all -c -s test:netlify"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "gatsby-adapter-netlify": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "cypress": "^12.14.0",
+    "gatsby-cypress": "^3.11.0",
+    "netlify-cli": "^15.8.0",
+    "npm-run-all": "^4.1.5",
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.1.6"
+  }
+}

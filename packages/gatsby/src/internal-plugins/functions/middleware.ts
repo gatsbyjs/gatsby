@@ -9,6 +9,7 @@ import {
   createConfig,
   IGatsbyFunctionConfigProcessed,
   IGatsbyBodyParserConfigProcessed,
+  IAPIFunctionWarning,
 } from "./config"
 import type { IGatsbyFunction } from "../../redux/types"
 
@@ -43,6 +44,33 @@ interface ICreateMiddlewareConfig {
   getFunctions: () => Array<IGatsbyFunction>
   prepareFn?: (functionObj: IGatsbyFunction) => Promise<void> | void
   showDebugMessageInResponse?: boolean
+}
+
+export function printConfigWarnings(
+  warnings: Array<IAPIFunctionWarning>,
+  functionObj: IGatsbyFunction
+): void {
+  if (warnings.length) {
+    for (const warning of warnings) {
+      reporter.warn(
+        `${
+          warning.property
+            ? `\`${warning.property}\` property of exported config`
+            : `Exported config`
+        } in \`${
+          functionObj.originalRelativeFilePath
+        }\` is misconfigured.\nExpected object:\n\n${
+          warning.expectedType
+        }\n\nGot:\n\n${JSON.stringify(
+          warning.original
+        )}\n\nUsing default:\n\n${JSON.stringify(
+          warning.replacedWith,
+          null,
+          2
+        )}`
+      )
+    }
+  }
 }
 
 function createSetContextFunctionMiddleware({
@@ -122,11 +150,15 @@ function createSetContextFunctionMiddleware({
       }
 
       if (fnToExecute) {
+        const { config, warnings } = createConfig(userConfig)
+
+        printConfigWarnings(warnings, functionObj)
+
         req.context = {
           functionObj,
           fnToExecute,
           params: req.params,
-          config: createConfig(userConfig, functionObj),
+          config,
           showDebugMessageInResponse: showDebugMessageInResponse ?? false,
         }
       }

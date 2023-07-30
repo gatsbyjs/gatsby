@@ -1,0 +1,49 @@
+@keyframes float {
+  50% {
+    transform: translateY(24px);
+  }
+}
+
+.titleStyles {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  color: rgb(21, 21, 22);
+}
+
+.astroWrapper {
+  transform: rotate(-18deg);
+  position: absolute;
+  top: 1.5rem;
+  right: 1.75rem;
+}
+
+.astro {
+  max-height: 128px;
+  animation-name: float;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+}
+
+.listStyles {
+  margin-top: 30px;
+  margin-bottom: 72px;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+}
+
+.listItemStyles {
+  font-weight: 300;
+  font-size: 24px;
+  max-width: 560px;
+}
+
+.linkStyle {
+  color: #8954a8;
+  font-weight: bold;
+  font-size: 16px;
+  vertical-align: 5%;
+  text-decoration: none;
+}

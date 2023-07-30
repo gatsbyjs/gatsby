@@ -10,8 +10,8 @@ interface ContentfulRichTextGatsbyReference {
 }
 
 interface RenderRichTextData<T extends ContentfulRichTextGatsbyReference> {
-  raw: string
-  references: T[]
+  raw?: string | null
+  references?: T[] | null
 }
 
 export function renderRichText<

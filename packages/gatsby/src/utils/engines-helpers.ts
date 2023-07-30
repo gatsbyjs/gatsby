@@ -1,4 +1,4 @@
-import { emitter } from "../redux"
+import { emitter, store } from "../redux"
 import { ICreatePageAction, ISetComponentFeatures } from "../redux/types"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
 
@@ -23,3 +23,13 @@ emitter.on(`SET_COMPONENT_FEATURES`, (action: ISetComponentFeatures) => {
     shouldSendTelemetryForHeadAPI = false
   }
 })
+
+export function shouldBundleDatastore(): boolean {
+  return !store.getState().adapter.config.excludeDatastoreFromEngineFunction
+}
+
+function getCDNObfuscatedPath(path: string): string {
+  return `${store.getState().status.cdnObfuscatedPrefix}-${path}`
+}
+
+export const LmdbOnCdnPath = getCDNObfuscatedPath(`data.mdb`)

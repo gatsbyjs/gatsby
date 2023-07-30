@@ -1,0 +1,57 @@
+{
+  "name": "gatsby-adapter-netlify",
+  "version": "1.1.0-next.0",
+  "description": "Gatsby adapter for Netlify",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-adapter"
+  ],
+  "author": "pieh",
+  "contributors": [
+    "LekoArts"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-adapter-netlify"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.20.13",
+    "@netlify/cache-utils": "^5.1.5",
+    "@netlify/functions": "^1.6.0",
+    "cookie": "^0.5.0",
+    "fs-extra": "^11.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "babel-preset-gatsby-package": "^3.13.0-next.0",
+    "cross-env": "^7.0.3",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "gatsby": "^5.10.0-alpha"
+  },
+  "files": [
+    "dist/"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -26,6 +26,8 @@ import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
 import { writeGraphQLConfig } from "../utils/graphql-typegen/file-writes"
+import { initAdapterManager } from "../utils/adapter/manager"
+import type { IAdapterManager } from "../utils/adapter/types"
 
 interface IPluginResolution {
   resolve: string
@@ -81,6 +83,7 @@ export async function initialize({
   store: Store<IGatsbyState, AnyAction>
   workerPool: WorkerPool.GatsbyWorkerPool
   webhookBody?: WebhookBody
+  adapterManager?: IAdapterManager
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -184,6 +187,14 @@ export async function initialize({
   })
   activity.end()
 
+  let adapterManager: IAdapterManager | undefined = undefined
+
+  // Only initialize adapters during "gatsby build"
+  if (process.env.gatsby_executing_command === `build`) {
+    adapterManager = await initAdapterManager()
+    await adapterManager.restoreCache()
+  }
+
   // Load plugins
   activity = reporter.activityTimer(`load plugins`, {
     parentSpan,
@@ -281,7 +292,7 @@ export async function initialize({
     activity.start()
     const files = await glob(
       [
-        `public/**/*.{html,css}`,
+        `public/**/*.{html,css,mdb}`,
         `!public/page-data/**/*`,
         `!public/static`,
         `!public/static/**/*.{html,css}`,
@@ -432,6 +443,7 @@ export async function initialize({
         `!.cache/compiled`,
         // Add webpack
         `!.cache/webpack`,
+        `!.cache/adapters`,
       ]
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
@@ -671,5 +683,6 @@ export async function initialize({
     store,
     workerPool,
     webhookBody: initialWebhookBody,
+    adapterManager,
   }
 }
