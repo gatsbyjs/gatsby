@@ -700,7 +700,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           if (field.disabled || field.omitted) {
             return
           }
-          if ([`id`, `sys`, `contentfulMetadata`].includes(field.id)) {
+          if (
+            [`id`, `sys`, `contentfulMetadata`, `linkedFrom`].includes(field.id)
+          ) {
             // Throw error on reserved field names as the Contenful GraphQL API does:
             // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/fields
             throw new Error(
