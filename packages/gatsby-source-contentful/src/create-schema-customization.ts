@@ -29,7 +29,7 @@ import type {
   IContentfulEntry,
   IContentfulImageAPITransformerOptions,
 } from "./types/contentful"
-import { detectMarkdownField } from "./utils"
+import { detectMarkdownField, makeContentTypeIdMap } from "./utils"
 import { restrictedNodeFields } from "./config"
 
 type CreateTypes = CreateSchemaCustomizationArgs["actions"]["createTypes"]
@@ -123,7 +123,7 @@ const getLinkFieldType = (
   field: ContentTypeField,
   schema: NodePluginSchema,
   createTypes: CreateTypes,
-  contentTypePrefix: string
+  contentTypeIdMap: Map<string, string>
 ): IContentfulGraphQLField => {
   // Check for validations
   const validations =
@@ -141,8 +141,8 @@ const getLinkFieldType = (
         : [linkContentType]
 
       // Full type names for union members, shorter variant for the union type name
-      const translatedTypeNames = contentTypes.map(typeName =>
-        makeTypeName(typeName, contentTypePrefix)
+      const translatedTypeNames = contentTypes.map(
+        typeId => contentTypeIdMap.get(typeId) as string
       )
       const shortTypeNames = contentTypes.map(typeName =>
         makeTypeName(typeName, ``)
@@ -203,9 +203,9 @@ const translateFieldType = (
   contentTypeItem: ContentType,
   schema: NodePluginSchema,
   createTypes: CreateTypes,
-  contentTypePrefix: string,
   enableMarkdownDetection: boolean,
-  markdownFields: MarkdownFieldDefinition
+  markdownFields: MarkdownFieldDefinition,
+  contentTypeIdMap: Map<string, string>
 ): GraphQLFieldConfig<unknown, unknown> => {
   let fieldType
   if (field.type === `Array`) {
@@ -226,16 +226,16 @@ const translateFieldType = (
             field,
             schema,
             createTypes,
-            contentTypePrefix
+            contentTypeIdMap
           )
         : translateFieldType(
             field.items,
             contentTypeItem,
             schema,
             createTypes,
-            contentTypePrefix,
             enableMarkdownDetection,
-            markdownFields
+            markdownFields,
+            contentTypeIdMap
           )
 
     fieldType = { ...fieldData, type: `[${fieldData.type}]` }
@@ -246,7 +246,7 @@ const translateFieldType = (
       field as ContentTypeField,
       schema,
       createTypes,
-      contentTypePrefix
+      contentTypeIdMap
     )
   } else {
     // Detect markdown in text fields
@@ -440,13 +440,19 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     )
 
     const reverseLinkFields = {}
+    const contentTypeIdMap = makeContentTypeIdMap(
+      contentTypeItems,
+      contentTypePrefix,
+      useNameForId
+    )
 
     contentTypeItems.forEach(contentType => {
-      let contentTypeItemId
-      if (useNameForId) {
-        contentTypeItemId = makeTypeName(contentType.name, contentTypePrefix)
-      } else {
-        contentTypeItemId = makeTypeName(contentType.sys.id, contentTypePrefix)
+      const contentTypeItemId = contentTypeIdMap.get(contentType.sys.id)
+
+      if (!contentTypeItemId) {
+        throw new Error(
+          `Could not locate id for content type ${contentType.sys.id} (${contentType.name})`
+        )
       }
 
       if (
@@ -707,19 +713,17 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             contentTypeItem,
             schema,
             createTypes,
-            contentTypePrefix,
             enableMarkdownDetection,
-            markdownFields
+            markdownFields,
+            contentTypeIdMap
           )
         })
 
-        const type = useNameForId
-          ? contentTypeItem.name
-          : contentTypeItem.sys.id
+        const type = contentTypeIdMap.get(contentTypeItem.sys.id) as string
 
         createTypes(
           schema.buildObjectType({
-            name: makeTypeName(type, contentTypePrefix),
+            name: type,
             fields: {
               id: { type: `ID!` },
               sys: { type: `ContentfulSys!` },
