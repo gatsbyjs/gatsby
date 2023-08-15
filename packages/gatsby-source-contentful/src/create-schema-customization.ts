@@ -349,7 +349,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         fields: {
           id: { type: `ID!` },
           sys: { type: `ContentfulSys!` },
-          metadata: { type: `ContentfulMetadata!` },
+          contentfulMetadata: { type: `ContentfulMetadata!` },
         },
         interfaces: [`Node`],
       })
@@ -361,7 +361,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         fields: {
           id: { type: `ID!` },
           sys: { type: `ContentfulSys!` },
-          metadata: { type: `ContentfulMetadata!` },
+          contentfulMetadata: { type: `ContentfulMetadata!` },
           linkedFrom: { type: `ContentfulLinkedFrom` },
         },
         interfaces: [`ContentfulEntity`, `Node`],
@@ -517,7 +517,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           fields: {
             id: { type: `ID!` },
             sys: { type: `ContentfulSys!` },
-            metadata: { type: `ContentfulMetadata!` },
+            contentfulMetadata: { type: `ContentfulMetadata!` },
             gatsbyImageData,
             ...(pluginConfig.get(`downloadLocal`)
               ? {
@@ -726,7 +726,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             fields: {
               id: { type: `ID!` },
               sys: { type: `ContentfulSys!` },
-              metadata: { type: `ContentfulMetadata!` },
+              contentfulMetadata: { type: `ContentfulMetadata!` },
               ...fields,
               linkedFrom: linkedFromName,
             },
