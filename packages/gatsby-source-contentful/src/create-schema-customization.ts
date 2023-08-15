@@ -30,6 +30,7 @@ import type {
   IContentfulImageAPITransformerOptions,
 } from "./types/contentful"
 import { detectMarkdownField, makeContentTypeIdMap } from "./utils"
+import { restrictedNodeFields } from "./config"
 
 type CreateTypes = CreateSchemaCustomizationArgs["actions"]["createTypes"]
 
@@ -700,9 +701,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           if (field.disabled || field.omitted) {
             return
           }
-          if (
-            [`id`, `sys`, `contentfulMetadata`, `linkedFrom`].includes(field.id)
-          ) {
+          if (restrictedNodeFields.includes(field.id)) {
             // Throw error on reserved field names as the Contenful GraphQL API does:
             // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/fields
             throw new Error(
