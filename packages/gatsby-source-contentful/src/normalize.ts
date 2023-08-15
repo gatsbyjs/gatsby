@@ -804,7 +804,7 @@ export const createNodesForContentType = ({
             publishedAt: entryItem.sys.updatedAt,
             publishedVersion: entryItem.sys.revision,
           },
-          metadata: {
+          contentfulMetadata: {
             tags: entryItem.metadata.tags.map(tag =>
               createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
             ),
@@ -963,7 +963,7 @@ export const createAssetNodes = async ({
       width: file.details?.image?.width ?? undefined,
       height: file.details?.image?.height ?? undefined,
       size: file.details?.size ?? null,
-      metadata: {
+      contentfulMetadata: {
         tags: assetItem.metadata.tags.map(tag =>
           createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
         ),

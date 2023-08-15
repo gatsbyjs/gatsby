@@ -47,7 +47,7 @@ export interface IContentfulLink {
 interface IContentfulEntity extends Node {
   id: string
   sys: IContentfulSys
-  metadata: IContentfulMetadata
+  contentfulMetadata: IContentfulMetadata
 }
 
 export interface IContentfulEntry extends IContentfulEntity {
