@@ -266,8 +266,8 @@ export interface IStaticQueryResultState {
 }
 
 export type GatsbyNodeAPI =
-  | "onPreBoostrap"
-  | "onPostBoostrap"
+  | "onPreBootstrap"
+  | "onPostBootstrap"
   | "onCreateWebpackConfig"
   | "onCreatePage"
   | "onCreateNode"
