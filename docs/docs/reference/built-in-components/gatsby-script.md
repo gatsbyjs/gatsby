@@ -11,7 +11,7 @@ Gatsby includes a built-in `<Script>` component that aids in loading scripts per
 
 It offers a convenient way to declare different [loading strategies](#strategies), and a default loading strategy that gives Gatsby users strong performance out of the box. It supports both [scripts with sources](#scripts-with-sources) and [inline scripts](#inline-scripts).
 
-Whether you want to leave the heavy lifting of managing scripts to Gatsby or you want maxiumum flexibility and control, the Gatsby `<Script>` component is a great tool for the job.
+Whether you want to leave the heavy lifting of managing scripts to Gatsby or you want maximum flexibility and control, the Gatsby `<Script>` component is a great tool for the job.
 
 ## Using Gatsby Script in your site
 
