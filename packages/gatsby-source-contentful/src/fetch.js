@@ -286,13 +286,9 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   try {
     while (!syncSuccess) {
       try {
-        const basicSyncConfig = {
-          limit: currentPageLimit,
-          resolveLinks: false,
-        }
         const query = syncToken
-          ? { nextSyncToken: syncToken, ...basicSyncConfig }
-          : { initial: true, ...basicSyncConfig }
+          ? { nextSyncToken: syncToken, resolveLinks: false }
+          : { initial: true, limit: currentPageLimit, resolveLinks: false }
         currentSyncData = await syncClient.sync(query)
         syncSuccess = true
       } catch (e) {

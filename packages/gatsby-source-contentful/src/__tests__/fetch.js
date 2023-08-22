@@ -440,7 +440,6 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(mockClient.sync).toHaveBeenCalledWith({
       nextSyncToken: `mocked`,
-      limit: 1000,
       resolveLinks: false,
     })
   })
