@@ -425,4 +425,23 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       }
     )
   })
+
+  it(`Properly queries CTF sync API for initial and subsequent data syncs`, async () => {
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
+
+    expect(mockClient.sync).toHaveBeenCalledWith({
+      initial: true,
+      limit: 1000,
+      resolveLinks: false,
+    })
+    mockClient.sync.mockClear()
+
+    await fetchContent({ pluginConfig, reporter, syncToken: `mocked` })
+
+    expect(mockClient.sync).toHaveBeenCalledWith({
+      nextSyncToken: `mocked`,
+      limit: 1000,
+      resolveLinks: false,
+    })
+  })
 })

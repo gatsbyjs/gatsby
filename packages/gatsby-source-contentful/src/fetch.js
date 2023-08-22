@@ -291,7 +291,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
           resolveLinks: false,
         }
         const query = syncToken
-          ? { nextSyncToken: syncToken }
+          ? { nextSyncToken: syncToken, ...basicSyncConfig }
           : { initial: true, ...basicSyncConfig }
         currentSyncData = await syncClient.sync(query)
         syncSuccess = true
