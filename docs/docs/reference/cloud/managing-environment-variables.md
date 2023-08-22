@@ -11,7 +11,7 @@ When working with Gatsby Cloud you will have two environments you can configure 
 1. Production Builds and Pull Request Builds
 1. CMS Previews
 
-This guide covers how to set environment variables and assumes you already have your site created.
+This guide covers how to set environment variables, and it assumes you already have your site created.
 
 ## Setting environment variables
 
