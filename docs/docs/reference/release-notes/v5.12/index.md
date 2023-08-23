@@ -73,6 +73,10 @@ Check [HTTP Headers](/docs/how-to/previews-deploys-hosting/headers/) for more in
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [SagarGi](https://github.com/SagarGi): chore(e2e-tests): change deprecated e2e test repo name [PR #38271](https://github.com/gatsbyjs/gatsby/pull/38271)
+- [derrysucari](https://github.com/derrysucari): fix(gatsby-source-contentful): handle nullable fields [PR #38358](https://github.com/gatsbyjs/gatsby/pull/38358)
+- [dslovinsky](https://github.com/dslovinsky): fix(babel-plugin-remove-graphql-queries): Correct `staticQueryDir` default and improved Storybook support [PR #38267](https://github.com/gatsbyjs/gatsby/pull/38267)
+- [kaltepeter](https://github.com/kaltepeter): chore(docs): clarify react upgrade with --legacy-peer-deps [PR #38359](https://github.com/gatsbyjs/gatsby/pull/38359)
+- [stall84](https://github.com/stall84): chore(docs): Improve "using-local-fonts" [PR #38250](https://github.com/gatsbyjs/gatsby/pull/38250)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.12.0-next.0...gatsby@5.12.0
