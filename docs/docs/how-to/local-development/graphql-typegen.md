@@ -15,11 +15,13 @@ This feature was added in `gatsby@4.15.0`. By default, this feature is only gene
 
 - A Gatsby project set up with `gatsby@4.15.0` or later.
 - The config option [`graphqlTypegen`](/docs/reference/config-files/gatsby-config/#graphqltypegen) set to `true` inside `gatsby-config`.
+
   ```js:title=gatsby-config.js
   module.exports = {
     graphqlTypegen: true,
   }
   ```
+
 - A `tsconfig.json` in your project with `"include": ["./src/**/*"]` set. See [full `tsconfig.json` example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-graphql-typegen/tsconfig.json).
 - Optional: If you use VSCode you may install the [GraphQL extension](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql).
 
@@ -203,7 +205,7 @@ module.exports = require("./site/.cache/typegen/graphql.config.json")
 
 You can optionally use [`graphql-eslint`](https://github.com/B2o5T/graphql-eslint) to lint your GraphQL queries. It seamlessly integrates with the `graphql.config.js` file you created in the other step.
 
-This guide assumes that you don't have any existing ESLint configuration yet. You'll need to adapt your configuration if you're already using ESLint and refer to [`graphql-eslint`'s documentation](https://github.com/B2o5T/graphql-eslint/tree/master/docs).
+This guide assumes that you don't have any existing ESLint configuration yet. You'll need to adapt your configuration if you're already using ESLint and refer to [`graphql-eslint`'s documentation](https://the-guild.dev/graphql/eslint/docs).
 
 1. Install dependencies
 
