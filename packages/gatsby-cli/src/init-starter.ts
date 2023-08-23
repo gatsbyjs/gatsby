@@ -127,11 +127,11 @@ const install = async (rootPath: string): Promise<void> => {
       await fs.remove(`package-lock.json`)
       await fs.remove(`bun.lockb`)
       await spawn(`yarnpkg`)
-    } else if(getPackageManager() === `bun` && checkForBun()){
+    } else if (getPackageManager() === `bun` && checkForBun()) {
       await fs.remove(`package-lock.json`)
       await fs.remove(`yarn.lock`)
       await spawn(`bun install`)
-    }else {
+    } else {
       await fs.remove(`yarn.lock`)
       await fs.remove(`bun.lockb`)
       await spawn(
