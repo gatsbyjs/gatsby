@@ -145,6 +145,7 @@ The `config` hook has to return an object with the following keys:
 - `supports` (Optional): Describe which features an adapters supports
   - `pathPrefix` (Optional): If `false`, Gatsby will fail the build if user tries to use pathPrefix
   - `trailingSlash` (Optional): Provide an array of supported [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) options, e.g. `['always']`
+- `pluginsToDisable` (Optional): Provide an array of plugin names that should be disabled when adapter is used. Purpose of this is to disable any potential plugins that serve similar role as adapter that would cause conflicts when both plugin and adapter is used at the same time.
 
 ## Running locally
 
