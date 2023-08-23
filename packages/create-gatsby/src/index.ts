@@ -183,7 +183,6 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
   const plugins: Array<string> = []
   const packages: Array<string> = []
   let pluginConfig: PluginConfigMap = {}
-  console.log(answers)
 
   // If a CMS is selected, ask CMS config questions after the main question set is complete
   if (answers.cms && answers.cms !== `none`) {
