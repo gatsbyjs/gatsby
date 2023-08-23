@@ -1,14 +1,14 @@
 ---
-date: "2023-07-26"
+date: "2023-08-23"
 version: "5.12.0"
 title: "v5.12 Release Notes"
 ---
 
-Welcome to `gatsby@5.12.0` release (July 2023 # TODO)
+Welcome to `gatsby@5.12.0` release (August 2023 #1)
 
-Key highlights of this release:
+Key highlight of this release:
 
-- [Hightlight Name](#highlight-name)
+- [Adapters](#adapters)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -20,14 +20,54 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## Hightlight Name
+## Adapters
 
-TODO
+In the beginning, Gatsby was just a Static Site Generation but now it’s a [Reactive Site Generator](https://www.gatsbyjs.com/blog/re-introducing-gatsby-a-reactive-site-generator) that offers features like Deferred Static Generation, Server-Side Rendering, or serverless functions. These additional features require more glue code on deployment platforms and for self-hosting Gatsby. In the past, plugins had to work around missing features or reach into Gatsby’s internals.
+
+Luckily, these problems are now in the past as today we’re happy to introduce **Gatsby Adapters**!
+
+Adapters are responsible for taking the production output from Gatsby and turning it into something your deployment platform understands. We want to make it easier to deploy and host Gatsby on your preferred platform and Gatsby Adapters are a huge step towards that goal.
+
+Want to learn more? Head to the [Gatsby adapters docs](/docs/how-to/previews-deploys-hosting/adapters).
+
+### Zero-Configuration Deployments
+
+With release of adapters we also introduce Zero-Configuration Deployments. Gatsby will automatically install and use platform specific adapter. This removes the need for either user having to manually configure deployment plugins or platform using tricks to automatically inject its deployment plugin on user behalf.
+
+Check [Zero-Configuration Deployments documentation](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) for more information.
+
+### HTTP Headers
+
+As part of the work on Gatsby Adapters, you’re now also able to define custom HTTP headers inside `gatsby-config`:
+
+```ts
+import type { GatsbyConfig } from "gatsby"
+
+const config: GatsbyConfig = {
+  headers: [
+    {
+      source: "/some-path",
+      headers: [
+        {
+          key: "x-custom-header",
+          value: "hello world",
+        },
+      ],
+    },
+  ],
+}
+
+export default config
+```
+
+This is common feature that deployment plugin offered via their plugin options so we decided to make that feature first class citizen in Gatsby.
+
+Check [HTTP Headers](/docs/how-to/previews-deploys-hosting/headers/) for more information.
 
 ## Notable bugfixes & improvements
 
 - `gatsby`:
-  - TODO
+  - Correctly support slice overrides in 404 page, via [PR #38263](https://github.com/gatsbyjs/gatsby/pull/38358)
 
 ## Contributors
 
