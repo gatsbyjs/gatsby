@@ -183,6 +183,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
   const plugins: Array<string> = []
   const packages: Array<string> = []
   let pluginConfig: PluginConfigMap = {}
+  console.log(answers)
 
   // If a CMS is selected, ask CMS config questions after the main question set is complete
   if (answers.cms && answers.cms !== `none`) {
@@ -328,7 +329,8 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
   await gitSetup(answers.project)
 
   const pm = await getPackageManager()
-  const runCommand = pm === `npm` ? `npm run` : `yarn`
+  const runCommand =
+    pm === `npm` ? `npm run` : pm === `bun` ? `bun run` : `yarn`
 
   reporter.info(
     stripIndent`
