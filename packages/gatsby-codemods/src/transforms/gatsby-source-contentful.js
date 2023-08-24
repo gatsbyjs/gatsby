@@ -89,7 +89,7 @@ export function updateImport(babel) {
             `${renderFilename(
               path,
               state
-            )}: You should change "contentfulId" to "sys.id"`
+            )}: You may need to change "contentfulId" to "sys.id"`
           )
         }
         if (path.node.name === `type`) {
@@ -110,17 +110,6 @@ export function updateImport(babel) {
         }
       },
       ObjectPattern(path, state) {
-        // rename sys.type to sys.contentType
-        path.node.properties.forEach(property => {
-          if (property.key?.name === `sys`) {
-            property.value.properties.forEach(sysProperty => {
-              if (sysProperty.key?.name === `type`) {
-                sysProperty.key.name = `contentType`
-              }
-            })
-          }
-        })
-
         // renamed & moved sys properties
         const transformedSysProperties = []
         path.node.properties.forEach(property => {
@@ -287,7 +276,7 @@ const flattenAssetFields = node => {
   return flatAssetFields
 }
 
-function processGraphQLQuery(query, state) {
+function processGraphQLQuery(query) {
   try {
     let hasChanged = false // this is sort of a hack, but print changes formatting and we only want to use it when we have to
     const ast = graphql.parse(query)
