@@ -32,7 +32,7 @@ Want to learn more? Head to the [Gatsby adapters docs](/docs/how-to/previews-dep
 
 ### Zero-Configuration Deployments
 
-With release of adapters we also introduce Zero-Configuration Deployments. Gatsby will automatically install and use platform specific adapter. This removes the need for either user having to manually configure deployment plugins or platform using tricks to automatically inject its deployment plugin on user behalf.
+In the past, deployment platforms had to resort to brittle tricks to automatically inject their deployment plugin to provide seamless experience for users or force users to manually install and configure their deployment plugin. With release of adapters we introduce easier support for Zero-Configuration Deployments. Gatsby will automatically install and use platform specific adapter.
 
 Check [Zero-Configuration Deployments documentation](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) for more information.
 
