@@ -25,8 +25,8 @@ The diagram below shows a high-level view of how all the pieces of this process 
 First, you write the code for your Gatsby site from your computer. When you're ready to make your changes live on the internet, you go through the following steps:
 
 1. You push your changes from your computer to a remote repository on GitHub. GitHub is an online platform for storing code for your projects.
-1. Gatsby Cloud watches your GitHub repository for changes. When it sees your new changes, Gatsby Cloud builds your site from your code on GitHub.
-1. Gatsby Cloud hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
+1. Netlify watches your GitHub repository for changes. When it sees your new changes, Netlify builds your site from your code on GitHub.
+1. Netlify hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
 
 </Collapsible>
 
@@ -247,13 +247,13 @@ You'll be able to visit the site locally at `http://localhost:8000/` for as long
 
 ## Set up a GitHub repo for your site
 
-GitHub is a website that many developers use to back up and share their code online. By uploading your code to GitHub, you'll be able to work on the same codebase from multiple computers. You'll also be able to use Gatsby Cloud to build and host your site.
+GitHub is a website that many developers use to back up and share their code online. By uploading your code to GitHub, you'll be able to work on the same codebase from multiple computers. You'll also be able to use Netlify to build and host your site.
 
 1. Each codebase on GitHub is stored in its own **repository** (also called a "repo", for short). To create a new repository for your blog, click the plus icon in the top-right corner of the navigation bar. Select "New repository".
 
    ![A dropdown in the navigation bar reveals the "New repository" button.](./new-repo-button.png)
 
-2. When filling out the form for your new repo, you can make it public or private. (This only affects the visibility of your code on GitHub. Your site will still be visible to everyone once you deploy it with Gatsby Cloud.) Leave the initialization option checkboxes unchecked.
+2. When filling out the form for your new repo, you can make it public or private. (This only affects the visibility of your code on GitHub. Your site will still be visible to everyone once you deploy it with Netlify.) Leave the initialization option checkboxes unchecked.
 
    ![The GitHub form to create a new repository. It's set to create a public repo called "my-first-gatsby-site". The options to add a README, .gitignore file, and license are unchecked.](./new-repo-options.png)
 
@@ -275,63 +275,12 @@ For instructions on how to set up a personal access token, follow GitHub's guide
 
 </Announcement>
 
-Now you have a copy of your code saved on GitHub's servers. In the next step, you'll connect your Gatsby Cloud account to the GitHub repo you just created.
+Now you have a copy of your code saved on GitHub's servers. Next up is to deploy your site to Netlify, which you can do by following the docs here: [Gatsby on Netlify](https://docs.netlify.com/integrations/frameworks/gatsby/).
 
-## Build your site with Gatsby Cloud
-
-Gatsby Cloud is an infrastructure platform that is specifically optimized for building, deploying, and hosting Gatsby sites. Once you connect your Gatsby Cloud account to your GitHub repository, Gatsby Cloud will build your site and make it available for others on the internet to see.
-
-To connect your code on GitHub to your Gatsby Cloud account, do the following:
-
-1. Go to your [Gatsby Cloud Dashboard](/dashboard/). Click on the **"Add a site"** button.
-
-   ![An empty Gatsby Cloud dashboard](./01-create-a-site-button.png)
-
-1. The next few steps will help you add your site to Gatsby Cloud. First, in the **"Import from a Git repository"** card click the **"GitHub"** icon to select GitHub as your Git provider.
-
-   ![The "Add a site" screen. Select the option for "Import from a Git repository".](./02-import-a-git-repo.png)
-
-1. If this is your first time connecting GitHub to Gatsby Cloud, you'll need to give Gatsby Cloud permission to access your GitHub account.
-
-  <Announcement>
-
-    **Note:** If you are part of more than one GitHub organization, you will need to first select the organization with which the repository resides at this step before selecting the repository itself.
-
-  </Announcement>
-
-1. A new browser window should open, where GitHub will ask you whether you want to give Gatsby Cloud permission to your GitHub repositories. You can choose whether to give Gatsby Cloud access to all of your GitHub repositories or to only the repository you created (`my-first-gatsby-site`). Then click **"Install"**.
-
-   ![The GitHub permissions page, asking whether you want to give Gatsby Cloud access to your repos. The "All repositories" option is selected.](./03-github-gatsby-cloud-permissions.png)
-
-1. Now, when you go back to the Gatsby Cloud window, the repository list should contain your GitHub repository. Select it by clicking on **"Import"**.
-
-   ![The "Select a Repository" dropdown in Gatsby Cloud lists the "my-first-gatsby-site" GitHub repository.](04-select-repository.png)
-
-1. Once you select your repo, you'll be navigated to the configuration step which presents you with a few more inputs. These let you tell Gatsby Cloud where to look in your GitHub repo for your Gatsby site. You can also change what Gatsby Cloud will name your site. **Leave the default settings** and click the **"Next"** button.
-
-   ![The new fields. "Base Branch" is set to "main", "Base Directory" is set to "/", and "Site Name" is set to "my-first-gatsby-site-main".](./05-add-site-details.png)
-
-1. Gatsby Cloud will ask you if you want to add any integrations to your site. For future projects, this might be useful if you want to use a CMS. Gatsby Cloud will also ask if you want to add any environment variables. Again, this may be useful for future projects, but for now, scroll past and click the **"Build Site"** button.
-
-   ![The "Integrations" tab of the "Add a site" screen.](./06-integrations-and-environment-variables.png)
-
-1. Now that your site has been created, you'll be taken to a site dashboard where you can see the status of your builds. Gatsby Cloud should start building your site automatically. You'll see a link to your new site, which is automatically hosted on Gatsby Cloud. You can share this link with anyone, and they'll be able to see your site online!
-
-   ![The Gatsby Cloud dashboard for a new site.](./07-site-page.png)
-
-You did it! Your Gatsby site is now online! 👏
-
-Every time you push a new change to the main branch of your GitHub repo, Gatsby Cloud will see the changes and automatically start a build for the new version of your site.
-
-<Announcement>
-
-**Tip:** There will be a unique URL for each build (like `https://build-49535320-b3ae-4761-bbeb-f8f7fa07e0fc.gtsb.io/`), and a URL that always has the latest build (like `my-first-gatsby-site-main.gatsbyjs.io`). You'll mostly want to share the human-readable URL, so that people can always see the most up-to-date version of your site. But in some cases (like when you're trying to debug a specific build of your site) it can be helpful to use the unique build URL.
-
-</Announcement>
 
 ## Summary
 
-In this section, you learned how to create a new Gatsby site and deploy it online using Gatsby Cloud. As a quick review, here's the diagram outlining the process:
+In this section, you learned how to create a new Gatsby site and deploy it online using Netlify. As a quick review, here's the diagram outlining the process:
 
 ![The workflow for how your code gets from your computer to your users. Extended description below.](deployment-workflow.png)
 
@@ -342,8 +291,8 @@ In this section, you learned how to create a new Gatsby site and deploy it onlin
 First, you write the code for your Gatsby site from your computer. When you're ready to make your changes live on the internet, you go through the following steps:
 
 1. You push your changes from your computer to a remote repository on GitHub. GitHub is an online platform for storing code for your projects.
-1. Gatsby Cloud watches your GitHub repository for changes. When it sees your new changes, Gatsby Cloud builds your site from your code on GitHub.
-1. Gatsby Cloud hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
+1. Netlify watches your GitHub repository for changes. When it sees your new changes, Netlify builds your site from your code on GitHub.
+1. Netlify hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
 
 </Collapsible>
 
@@ -351,8 +300,8 @@ First, you write the code for your Gatsby site from your computer. When you're r
 
 - To create a new Gatsby site from the command line, you can run the `gatsby new` command.
 - To run your site locally, use the `gatsby develop` command. You can view your site in a web browser at `localhost:8000`.
-- Gatsby Cloud is an infrastructure platform specifically optimized for building, deploying, and hosting Gatsby sites.
-  - When you push a new commit to the `main` branch of the GitHub repository for your site, Gatsby Cloud will detect the changes, rebuild a new version of your site, and then redeploy it.
+- Netlify is an infrastructure platform that can build, deploy, and host Gatsby sites and any other framework.
+  - When you push a new commit to the `main` branch of the GitHub repository for your site, Netlify will detect the changes, rebuild a new version of your site, and then redeploy it.
 
 <Announcement>
 
