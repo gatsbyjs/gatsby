@@ -297,7 +297,7 @@ function processGraphQLQuery(query) {
           // @todo sys field filters
         }
       },
-      SelectionSet(node) {
+      SelectionSet(node, visitor, visitorKeys) {
         // Rename content type node selectors
         node.selections.forEach(field => {
           if (isContentTypeSelector(field.name?.value)) {
