@@ -39,7 +39,7 @@ export function babelRecast(code, filePath) {
   return code
 }
 
-const CONTENT_TYPE_SELECTOR_REGEX = /^(allContentful|contentful)([A-Z0-9].+)/
+const CONTENT_TYPE_SELECTOR_REGEX = /^(allContentful|[cC]ontentful)([A-Z0-9].+)/
 const CONTENT_TYPE_SELECTOR_BLACKLIST = [`Asset`, `Reference`, `Id`]
 const SYS_FIELDS_TRANSFORMS = new Map([
   [`node_locale`, `locale`],
@@ -306,8 +306,8 @@ function processGraphQLQuery(query) {
           }
         })
 
+        // Move sys attributes into real sys
         if (visitorKeys.name?.value !== `sys`) {
-          // Move sys attributes into real sys
           const contentfulSysFields = node.selections.filter(({ name }) =>
             SYS_FIELDS_TRANSFORMS.has(name?.value)
           )
@@ -365,17 +365,75 @@ function processGraphQLQuery(query) {
 
         // @todo rich text
       },
-      Field(node, index) {
+      FragmentDefinition(node) {
+        if (isContentTypeSelector(node.typeCondition.name?.value)) {
+          node.typeCondition.name.value = updateContentfulSelector(
+            node.typeCondition.name.value
+          )
+          hasChanged = true
+
+          const contentfulSysFields = node.selectionSet.selections.filter(
+            ({ name }) => SYS_FIELDS_TRANSFORMS.has(name?.value)
+          )
+
+          if (contentfulSysFields.length) {
+            const transformedSysFields = cloneDeep(contentfulSysFields).map(
+              field => {
+                const transformedField = {
+                  ...field,
+                  name: {
+                    ...field.name,
+                    value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
+                  },
+                }
+
+                if (transformedField.name.value === `contentType`) {
+                  transformedField.selectionSet = {
+                    kind: `SelectionSet`,
+                    selections: [
+                      {
+                        kind: `Field`,
+                        name: { kind: `Name`, value: `name` },
+                      },
+                    ],
+                  }
+                }
+
+                return transformedField
+              }
+            )
+
+            const sysField = {
+              kind: `Field`,
+              name: {
+                kind: `Name`,
+                value: `sys`,
+              },
+              selectionSet: {
+                kind: `SelectionSet`,
+                selections: transformedSysFields,
+              },
+            }
+
+            // Inject the new sys at the first occurence of any old sys field
+            node.selectionSet.selections = injectSysField(
+              sysField,
+              node.selectionSet.selections
+            )
+
+            hasChanged = true
+          }
+        }
+      },
+      Field(node) {
         // Flatten asset file field
         const flatAssetFields = flattenAssetFields(node)
-
         if (flatAssetFields.length) {
           node.selectionSet.selections = injectNewFields(
             node.selectionSet.selections,
             flatAssetFields,
             `file`
           )
-
           hasChanged = true
         }
       },
