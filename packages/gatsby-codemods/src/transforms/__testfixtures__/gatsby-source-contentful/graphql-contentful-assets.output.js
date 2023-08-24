@@ -17,7 +17,7 @@ const result = await graphql(`{
       id
     }
   }
-  contentfulAsset(url: { ne: null } } }) {
+  contentfulAsset(url: {ne: null}) {
     id
   }
 }`)

@@ -235,8 +235,10 @@ const injectSysField = (sysField, selections) => {
 // Flatten the old deeply nested Contentful asset structure
 const flattenAssetFields = node => {
   const flatAssetFields = []
+
   // Flatten asset file field
   const fileField = locateSubfield(node, `file`)
+
   if (fileField) {
     // Top level file fields
     const urlField = locateSubfield(fileField, `url`)
@@ -285,6 +287,7 @@ function processGraphQLQuery(query) {
       Argument(node) {
         // flatten Contentful Asset filters
         if (node.name.value === `filter`) {
+          // Queries directly on allContentfulAssets
           const flatAssetFields = flattenAssetFields(node)
           if (flatAssetFields.length) {
             node.value.fields = injectNewFields(
@@ -294,8 +297,21 @@ function processGraphQLQuery(query) {
             )
             hasChanged = true
           }
-          // @todo sys field filters
+          // Subfields that might be asset fields
+          node.value.fields.forEach((field, fieldIndex) => {
+            const flatAssetFields = flattenAssetFields(field)
+            if (flatAssetFields.length) {
+              node.value.fields[fieldIndex].value.fields = injectNewFields(
+                node.value.fields[fieldIndex].value.fields,
+                flatAssetFields,
+                `file`
+              )
+              hasChanged = true
+            }
+          })
         }
+
+        // @todo sys field filters
       },
       SelectionSet(node, visitor, visitorKeys) {
         // Rename content type node selectors
@@ -434,6 +450,20 @@ function processGraphQLQuery(query) {
         }
       },
       Field(node) {
+        if (node.name.value === `contentfulAsset`) {
+          const flatAssetFields = flattenAssetFields({
+            value: { fields: node.arguments },
+          })
+
+          node.arguments = injectNewFields(
+            node.arguments,
+            flatAssetFields,
+            `file`
+          )
+
+          hasChanged = true
+        }
+
         // Flatten asset file field
         const flatAssetFields = flattenAssetFields(node)
         if (flatAssetFields.length) {
