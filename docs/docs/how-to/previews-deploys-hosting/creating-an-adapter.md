@@ -9,7 +9,7 @@ import Collapsible from "@components/collapsible"
 
 ## Introduction
 
-If an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) for your preferred deployment platform doesn't exist yet, you can build your own. While the specifics of the adapter depend on the deployment platform and its requirements, the initial setup is the same for every adapter.
+If an [adapter](/docs/docs/how-to/previews-deploys-hosting/adapters.md) for your preferred deployment platform doesn't exist yet, you can build your own. While the specifics of the adapter depend on the deployment platform and its requirements, the initial setup is the same for every adapter.
 
 By the end of this guide you should be able to create and publish an adapter.
 
@@ -105,7 +105,7 @@ You can find all TypeScript types [on GitHub](https://github.com/gatsbyjs/gatsby
 The adapter should export a function as a default export with these object keys:
 
 - `name`: Unique name of the adapter. Please follow the naming convention `gatsby-adapter-<name>` or `@scope/gatsby-adapter-<name>` to make it easier for people to discover your adapter.
-- `cache` (Optional): Both handlers receive `directories` which are the directories that should be cached/restored for a build and the [`reporter` instance](/docs/reference/config-files/node-api-helpers/#reporter).
+- `cache` (Optional): Both handlers receive `directories` which are the directories that should be cached/restored for a build and the [`reporter` instance](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter).
   - `restore`: Hook to restore `directories` from previous builds. Executed very early on in the build process. If the hook returns `false`, Gatsby will skip cache restoration.
   - `store`: Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
 - [`adapt`](#adapt): Hook to take Gatsby's output and prepare it for deployment on the adapter's platform. Executed as one of the last steps in the build process. Details on the inputs are [documented below](#adapt).
@@ -113,16 +113,16 @@ The adapter should export a function as a default export with these object keys:
 
 If your adapter accepts custom options, consider setting default values to make the adapter easier to use.
 
-`cache.restore`, `cache.store`, and `adapt` receive the [`reporter` instance](/docs/reference/config-files/node-api-helpers/#reporter), so you can output structured logs to the user’s terminal. **However**, please don’t overdo it and keep the output to a minimum. If a user requires more details, they can always use the CLI with the `--verbose` flag to get information about the adapter and logs for debugging.
+`cache.restore`, `cache.store`, and `adapt` receive the [`reporter` instance](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter), so you can output structured logs to the user’s terminal. **However**, please don’t overdo it and keep the output to a minimum. If a user requires more details, they can always use the CLI with the `--verbose` flag to get information about the adapter and logs for debugging.
 
 ### adapt
 
 The `adapt` hook takes Gatsby's output and prepares it for deployment on the adapter's platform. It receives the following inputs:
 
-- `routesManifest`: Array of objects with three different types: `static`, `function`, and `redirect`. Each object contains all necessary information to deploy and apply these routes. `static` routes will have default `headers` applied, which users can extend or overwrite with the [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) option inside `gatsby-config`. Routes will also have the [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) option applied to their paths.
+- `routesManifest`: Array of objects with three different types: `static`, `function`, and `redirect`. Each object contains all necessary information to deploy and apply these routes. `static` routes will have default `headers` applied, which users can extend or overwrite with the [HTTP headers](/docs/docs/how-to/previews-deploys-hosting/headers.md) option inside `gatsby-config`. Routes will also have the [`trailingSlash`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash) option applied to their paths.
 - `functionsManifest`: Array of objects containing each function's entry point and required files.
-- `pathPrefix`: Value of the [`pathPrefix`](/docs/reference/config-files/gatsby-config/#pathprefix) option inside `gatsby-config`
-- `trailingSlash`: Value of the [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) option inside `gatsby-config`
+- `pathPrefix`: Value of the [`pathPrefix`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#pathprefix) option inside `gatsby-config`
+- `trailingSlash`: Value of the [`trailingSlash`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash) option inside `gatsby-config`
 
 You can find the TypeScript types for these inputs on [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/types.ts).
 
@@ -144,7 +144,7 @@ The `config` hook has to return an object with the following keys:
 - `excludeDatastoreFromEngineFunction` (Optional): If `true`, Gatsby will not include the LMDB datastore in the serverless functions used for SSR/DSG. Instead, it will place the LMDB datastore into the `public` folder and later try to download the datastore from the given `deployURL`.
 - `supports` (Optional): Describe which features an adapters supports
   - `pathPrefix` (Optional): If `false`, Gatsby will fail the build if user tries to use pathPrefix
-  - `trailingSlash` (Optional): Provide an array of supported [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) options, e.g. `['always']`
+  - `trailingSlash` (Optional): Provide an array of supported [`trailingSlash`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash) options, e.g. `['always']`
 - `pluginsToDisable` (Optional): Provide an array of plugin names that should be disabled when adapter is used. Purpose of this is to disable any potential plugins that serve similar role as adapter that would cause conflicts when both plugin and adapter is used at the same time.
 
 ## Running locally
@@ -223,7 +223,7 @@ We recommend that you follow this checklist before you publish your adapter for 
   @scope/gatsby-adapter-<name>
   ```
 
-- Your `README` should explain to the user in concise steps how to install, use, and configure your adapter (also see [How to write a plugin README](/contributing/docs-contributions/how-to-write-a-plugin-readme/)). The `README` will be the first thing a user reviews so make sure that it's accessible to everyone.
+- Your `README` should explain to the user in concise steps how to install, use, and configure your adapter (also see [How to write a plugin README](https://www.gatsbyjs.com/contributing/docs-contributions/how-to-write-a-plugin-readme/)). The `README` will be the first thing a user reviews so make sure that it's accessible to everyone.
 - Set `1.0.0` as the `version` field in your adapter's `package.json`. For future releases, follow [semantic versioning](https://docs.npmjs.com/about-semantic-versioning).
 
   ```json:title=package.json
@@ -232,7 +232,7 @@ We recommend that you follow this checklist before you publish your adapter for 
   }
   ```
 
-- Include a `keywords` field in your adapter's `package.json`, containing `gatsby`, `gatsby-plugin`, and `gatsby-adapter`. This way the adapter can be found through the [plugin library](/plugins/).
+- Include a `keywords` field in your adapter's `package.json`, containing `gatsby`, `gatsby-plugin`, and `gatsby-adapter`. This way the adapter can be found through the [plugin library](https://www.gatsbyjs.com/plugins/).
 
   ```json:title=package.json
   {
@@ -308,6 +308,6 @@ We recommend that you follow this checklist before you publish your adapter for 
 ## Additional resources
 
 - [gatsby-adapter-netlify source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify)
-- [Adapters](/docs/how-to/previews-deploys-hosting/adapters/)
-- [Zero-Configuration Deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/)
+- [Adapters](/docs/docs/how-to/previews-deploys-hosting/adapters.md)
+- [Zero-Configuration Deployments](/docs/docs/how-to/previews-deploys-hosting/zero-configuration-deployments.md)
 - [Gatsby Adapters RFC](https://github.com/gatsbyjs/gatsby/discussions/38231)

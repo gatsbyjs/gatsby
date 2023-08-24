@@ -31,7 +31,7 @@ module.exports = {
 
 The `headers` option accepts an array of objects in the following shape:
 
-- `source`: A request path pattern. See [path matching](#path-matching) for more details on its syntax. The paths `/slug` and `/slug/` are equivalent since Gatsby normalizes [trailing slashes](/docs/reference/config-files/gatsby-config/#trailingslash).
+- `source`: A request path pattern. See [path matching](#path-matching) for more details on its syntax. The paths `/slug` and `/slug/` are equivalent since Gatsby normalizes [trailing slashes](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash).
 - `headers`: An array of objects in the following shape:
   - `key`: The case-insensitive name of the header
   - `value`: The value of the header
@@ -206,7 +206,7 @@ module.exports = {
 
 ## Defaults
 
-By default, Gatsby applies HTTP caching headers to its assets following the guide [Caching Static Sites](/docs/how-to/previews-deploys-hosting/caching/). You can find the specific values [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/constants.ts).
+By default, Gatsby applies HTTP caching headers to its assets following the guide [Caching Static Sites](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/caching/). You can find the specific values [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/constants.ts).
 
 You can use the `headers` option to override these defaults.
 

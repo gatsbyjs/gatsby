@@ -6,7 +6,7 @@ title: Adapters
 
 Adapters are responsible for taking the production output from Gatsby and turning it into something your deployment platform understands. They make it easier to build and deploy Gatsby sites on any deployment platform.
 
-Gatsby has different [rendering options](/docs/conceptual/rendering-options/) and features like Deferred Static Generation (DSG) and Server-Side rendering (SSR) require more setup than classic static site generation (SSG). Users can also set [HTTP headers](/docs/how-to/previews-deploys-hosting/headers/) or create [redirects](/docs/reference/config-files/actions/#createRedirect).
+Gatsby has different [rendering options](https://www.gatsbyjs.com/docs/conceptual/rendering-options/) and features like Deferred Static Generation (DSG) and Server-Side rendering (SSR) require more setup than classic static site generation (SSG). Users can also set [HTTP headers](/docs/docs/how-to/previews-deploys-hosting/headers.md) or create [redirects](https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect).
 
 Gatsby passes all the required information during the build to adapters to prepare these outputs for deployment on a specific platform. Here are some of the actions an adapter automatically takes:
 
@@ -26,7 +26,7 @@ You can use these official adapters:
 
 To find additional community adapters, [search npm for `gatsby-adapter`](https://www.npmjs.com/search?q=gatsby-adapter-).
 
-Can't find an adapter for your platform? Consider [creating an adapter](/docs/how-to/previews-deploys-hosting/creating-an-adapter/) yourself.
+Can't find an adapter for your platform? Consider [creating an adapter](/docs/docs/how-to/previews-deploys-hosting/creating-an-adapter.md) yourself.
 
 ## Using adapters
 
@@ -54,5 +54,5 @@ module.exports = {
 
 ## Additional resources
 
-- [Zero-Configuration Deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/)
-- [Creating an Adapter](/docs/how-to/previews-deploys-hosting/creating-an-adapter/)
+- [Zero-Configuration Deployments](/docs/docs/how-to/previews-deploys-hosting/zero-configuration-deployments.md)
+- [Creating an Adapter](/docs/docs/how-to/previews-deploys-hosting/creating-an-adapter.md)
