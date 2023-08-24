@@ -306,65 +306,56 @@ function processGraphQLQuery(query) {
           }
         })
 
-        // Rename sys.type to sys.contentType
-        node.selections.forEach(field => {
-          if (field.name?.value === `sys`) {
-            const typeField = locateSubfield(field, `type`)
-            if (typeField) {
-              typeField.name.value = `contentType`
-              hasChanged = true
-            }
-          }
-        })
-
-        // Move sys attributes into real sys
-        const contentfulSysFields = node.selections.filter(({ name }) =>
-          SYS_FIELDS_TRANSFORMS.has(name?.value)
-        )
-
-        if (contentfulSysFields.length) {
-          const transformedSysFields = cloneDeep(contentfulSysFields).map(
-            field => {
-              const transformedField = {
-                ...field,
-                name: {
-                  ...field.name,
-                  value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
-                },
-              }
-
-              if (transformedField.name.value === `contentType`) {
-                transformedField.selectionSet = {
-                  kind: `SelectionSet`,
-                  selections: [
-                    {
-                      kind: `Field`,
-                      name: { kind: `Name`, value: `name` },
-                    },
-                  ],
-                }
-              }
-
-              return transformedField
-            }
+        if (visitorKeys.name?.value !== `sys`) {
+          // Move sys attributes into real sys
+          const contentfulSysFields = node.selections.filter(({ name }) =>
+            SYS_FIELDS_TRANSFORMS.has(name?.value)
           )
 
-          const sysField = {
-            kind: `Field`,
-            name: {
-              kind: `Name`,
-              value: `sys`,
-            },
-            selectionSet: {
-              kind: `SelectionSet`,
-              selections: transformedSysFields,
-            },
+          if (contentfulSysFields.length) {
+            const transformedSysFields = cloneDeep(contentfulSysFields).map(
+              field => {
+                const transformedField = {
+                  ...field,
+                  name: {
+                    ...field.name,
+                    value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
+                  },
+                }
+
+                if (transformedField.name.value === `contentType`) {
+                  transformedField.selectionSet = {
+                    kind: `SelectionSet`,
+                    selections: [
+                      {
+                        kind: `Field`,
+                        name: { kind: `Name`, value: `name` },
+                      },
+                    ],
+                  }
+                }
+
+                return transformedField
+              }
+            )
+
+            const sysField = {
+              kind: `Field`,
+              name: {
+                kind: `Name`,
+                value: `sys`,
+              },
+              selectionSet: {
+                kind: `SelectionSet`,
+                selections: transformedSysFields,
+              },
+            }
+
+            // Inject the new sys at the first occurence of any old sys field
+            node.selections = injectSysField(sysField, node.selections)
+
+            hasChanged = true
           }
-
-          // Inject the new sys at the first occurence of any old sys field
-          node.selections = injectSysField(sysField, node.selections)
-
-          hasChanged = true
           return
         }
 
