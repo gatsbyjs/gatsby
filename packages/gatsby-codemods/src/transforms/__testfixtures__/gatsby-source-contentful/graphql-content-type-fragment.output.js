@@ -3,4 +3,12 @@ export const ExampleFragment = graphql`fragment Example on ContentfulContentType
   sys {
     id
   }
+  logo {
+    url
+    fileName
+    contentType
+    size
+    width
+    height
+  }
 }`
