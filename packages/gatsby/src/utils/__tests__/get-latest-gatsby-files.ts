@@ -1,9 +1,22 @@
+const mockFiles = new Map<string, string>()
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 jest.mock(`fs-extra`, () => {
   return {
-    readJSON: jest.fn(),
-    writeFile: jest.fn(),
-    pathExists: jest.fn(),
+    readJSON: jest.fn().mockImplementation(async filePath => {
+      const content = mockFiles.get(filePath)
+
+      if (content) {
+        return JSON.parse(content)
+      }
+      throw new Error(`File not found`)
+    }),
+    writeFile: jest.fn().mockImplementation(async (filePath, content) => {
+      mockFiles.set(filePath, content)
+    }),
+    pathExists: jest
+      .fn()
+      .mockImplementation(async filePath => mockFiles.has(filePath)),
   }
 })
 jest.mock(`axios`, () => {
@@ -19,7 +32,7 @@ import { getLatestAPIs, IAPIResponse } from "../get-latest-gatsby-files"
 
 beforeEach(() => {
   ;[fs, axios].forEach(mock =>
-    Object.keys(mock).forEach(key => mock[key].mockReset())
+    Object.keys(mock).forEach(key => mock[key].mockClear())
   )
 })
 
@@ -33,7 +46,6 @@ const getMockAPIFile = (): IAPIResponse => {
 
 describe(`default behavior: has network connectivity`, () => {
   beforeEach(() => {
-    fs.pathExists.mockResolvedValueOnce(false)
     axios.get.mockResolvedValueOnce({ data: getMockAPIFile() })
   })
 
@@ -65,8 +77,6 @@ describe(`downloading APIs failure`, () => {
 
   it(`falls back to downloaded cached file, if it exists`, async () => {
     const apis = getMockAPIFile()
-    fs.pathExists.mockResolvedValueOnce(true)
-    fs.readJSON.mockResolvedValueOnce(apis)
 
     const data = await getLatestAPIs()
 
@@ -78,9 +88,8 @@ describe(`downloading APIs failure`, () => {
   })
 
   it(`falls back to local apis.json if latest-apis.json not cached`, async () => {
-    const apis = getMockAPIFile()
-    fs.pathExists.mockResolvedValueOnce(false)
-    fs.readJSON.mockResolvedValueOnce(apis)
+    mockFiles.clear()
+    getMockAPIFile()
 
     await getLatestAPIs()
 
