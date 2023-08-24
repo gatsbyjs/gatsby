@@ -11,4 +11,19 @@ export const ExampleFragment = graphql`fragment Example on ContentfulContentType
     width
     height
   }
+}
+
+{
+  allContentfulContentTypeFoo {
+    nodes {
+      ... on Example {
+        sys {
+          id
+        }
+        logo {
+          url
+        }
+      }
+    }
+  }
 }`

@@ -17,4 +17,18 @@ export const ExampleFragment = graphql`
       }
     }
   }
+  {
+    allContentfulFoo {
+      nodes {
+        ... on Example {
+            contentful_id
+            logo {
+              file {
+                url
+              }
+            }
+          }
+        }
+    }
+  }
 `
