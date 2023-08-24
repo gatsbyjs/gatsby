@@ -1306,16 +1306,13 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
 }
 
 /**
- * Create a redirect from one page to another. Redirects work out of the box with Gatsby Cloud. Read more about
- * [working with redirects on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/1500003051241-Working-with-Redirects).
- * If you are hosting somewhere other than Gatsby Cloud, you will need a plugin to integrate the redirect data with
- * your hosting technology e.g. the [Netlify
- * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
- * [this plugin](/plugins/gatsby-plugin-meta-redirect/) to generate meta redirect
- * html files for redirecting on any static file host.
- * Keep the redirects configuration in sync with trailing slash configuration from
- * [Gatsby Config API](/docs/reference/config-files/gatsby-config/#trailingslash).
+ * Create a redirect from one page to another.
+ *
+ * Redirects must be implemented by your deployment platform (e.g. Gatsby Cloud, Netlify, etc.). You can use an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) or plugins for this. Alternatively, you can use [gatsby-plugin-meta-redirect](/plugins/gatsby-plugin-meta-redirect/) to generate meta redirect HTML files for redirecting on any static file host.
+ *
+ * You can read the source code of [gatsby-adapter-netlify](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify) to see how redirects are implemented on Netlify. Redirects also work out of the box on Gatsby Cloud.
+ *
+ * Keep the redirects configuration in sync with trailing slash configuration from [Gatsby Config API](/docs/reference/config-files/gatsby-config/#trailingslash).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
@@ -1332,12 +1329,14 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
  *   const { createRedirect } = actions
+ *
  *   createRedirect({ fromPath: '/old-url/', toPath: '/new-url/', isPermanent: true })
  *   createRedirect({ fromPath: '/url/', toPath: '/zn-CH/url/', conditions: { language: 'zn' }})
  *   createRedirect({ fromPath: '/url/', toPath: '/en/url/', conditions: { language: ['ca', 'us'] }})
  *   createRedirect({ fromPath: '/url/', toPath: '/ca/url/', conditions: { country: 'ca' }})
  *   createRedirect({ fromPath: '/url/', toPath: '/en/url/', conditions: { country: ['ca', 'us'] }})
  *   createRedirect({ fromPath: '/not_so-pretty_url/', toPath: '/pretty/url/', statusCode: 200 })
+ *
  *   // Create pages here
  * }
  */
