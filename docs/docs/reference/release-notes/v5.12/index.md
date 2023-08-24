@@ -1,5 +1,5 @@
 ---
-date: "2023-08-23"
+date: "2023-08-24"
 version: "5.12.0"
 title: "v5.12 Release Notes"
 ---
