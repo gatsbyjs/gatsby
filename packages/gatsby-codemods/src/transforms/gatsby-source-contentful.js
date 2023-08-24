@@ -365,6 +365,14 @@ function processGraphQLQuery(query) {
 
         // @todo rich text
       },
+      InlineFragment(node) {
+        if (isContentTypeSelector(node.typeCondition.name?.value)) {
+          node.typeCondition.name.value = updateContentfulSelector(
+            node.typeCondition.name.value
+          )
+          hasChanged = true
+        }
+      },
       FragmentDefinition(node) {
         if (isContentTypeSelector(node.typeCondition.name?.value)) {
           node.typeCondition.name.value = updateContentfulSelector(

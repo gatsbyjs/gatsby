@@ -1,4 +1,4 @@
-export const ExampleFragment = graphql`fragment Example on ContentfulContentTypeFoo {
+export const ExampleFragment = graphql`fragment Example on ContentfulContentTypeExample {
   title
   sys {
     id
@@ -16,7 +16,7 @@ export const ExampleFragment = graphql`fragment Example on ContentfulContentType
 {
   allContentfulContentTypeFoo {
     nodes {
-      ... on Example {
+      ... on ContentfulContentTypeExample {
         sys {
           id
         }

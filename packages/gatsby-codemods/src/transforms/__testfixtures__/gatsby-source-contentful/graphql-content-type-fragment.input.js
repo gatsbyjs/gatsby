@@ -1,5 +1,5 @@
 export const ExampleFragment = graphql`
-  fragment Example on ContentfulFoo {
+  fragment Example on ContentfulExample {
     title
     contentful_id
     logo {
@@ -20,15 +20,15 @@ export const ExampleFragment = graphql`
   {
     allContentfulFoo {
       nodes {
-        ... on Example {
-            contentful_id
-            logo {
-              file {
-                url
-              }
+        ... on ContentfulExample {
+          contentful_id
+          logo {
+            file {
+              url
             }
           }
         }
+      }
     }
   }
 `
