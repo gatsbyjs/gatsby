@@ -112,7 +112,7 @@ describe(`default behavior: has network connectivity`, () => {
       axios.get.mockResolvedValueOnce({ data: latestAdaptersMarker })
     })
 
-    it.only(`loads .js modules`, async () => {
+    it(`loads .js modules`, async () => {
       const data = await getLatestAdapters()
 
       expect(axios.get).toHaveBeenCalledWith(
