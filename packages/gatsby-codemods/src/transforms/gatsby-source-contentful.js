@@ -204,7 +204,9 @@ export function updateImport(babel) {
 
 // Locate a subfield within a selection set or fields
 function locateSubfield(node, fieldName) {
-  const subFields = node.selectionSet?.selections || node.value?.fields
+  const subFields = Array.isArray(node)
+    ? node
+    : node.selectionSet?.selections || node.value?.fields
   if (!subFields) {
     return null
   }
@@ -278,6 +280,58 @@ const flattenAssetFields = node => {
   return flatAssetFields
 }
 
+function createNewSysField(fields, fieldType = `Field`) {
+  const kind = fieldType === `Argument` ? `Argument` : `Field`
+  const subKind = fieldType === `Argument` ? `ObjectField` : `SelectionSet`
+  const subKindValue = fieldType === `Argument` ? `ObjectValue` : `SelectionSet`
+  const subKindIndex = fieldType === `Argument` ? `value` : `selectionSet`
+  const subKindIndex2 = fieldType === `Argument` ? `fields` : `selections`
+
+  const contentfulSysFields = fields.filter(({ name }) =>
+    SYS_FIELDS_TRANSFORMS.has(name?.value)
+  )
+
+  if (contentfulSysFields.length) {
+    const transformedSysFields = cloneDeep(contentfulSysFields).map(field => {
+      const transformedField = {
+        ...field,
+        name: {
+          ...field.name,
+          value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
+        },
+      }
+
+      if (transformedField.name.value === `contentType`) {
+        transformedField.selectionSet = {
+          kind: subKind,
+          [subKindIndex2]: [
+            {
+              kind: subKindValue,
+              name: { kind: `Name`, value: `name` },
+            },
+          ],
+        }
+      }
+
+      return transformedField
+    })
+
+    const sysField = {
+      kind: kind,
+      name: {
+        kind: `Name`,
+        value: `sys`,
+      },
+      [subKindIndex]: {
+        kind: subKindValue,
+        [subKindIndex2]: transformedSysFields,
+      },
+    }
+    return sysField
+  }
+  return null
+}
+
 function processGraphQLQuery(query) {
   try {
     let hasChanged = false // this is sort of a hack, but print changes formatting and we only want to use it when we have to
@@ -321,60 +375,6 @@ function processGraphQLQuery(query) {
             hasChanged = true
           }
         })
-
-        // Move sys attributes into real sys
-        if (visitorKeys.name?.value !== `sys`) {
-          const contentfulSysFields = node.selections.filter(({ name }) =>
-            SYS_FIELDS_TRANSFORMS.has(name?.value)
-          )
-
-          if (contentfulSysFields.length) {
-            const transformedSysFields = cloneDeep(contentfulSysFields).map(
-              field => {
-                const transformedField = {
-                  ...field,
-                  name: {
-                    ...field.name,
-                    value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
-                  },
-                }
-
-                if (transformedField.name.value === `contentType`) {
-                  transformedField.selectionSet = {
-                    kind: `SelectionSet`,
-                    selections: [
-                      {
-                        kind: `Field`,
-                        name: { kind: `Name`, value: `name` },
-                      },
-                    ],
-                  }
-                }
-
-                return transformedField
-              }
-            )
-
-            const sysField = {
-              kind: `Field`,
-              name: {
-                kind: `Name`,
-                value: `sys`,
-              },
-              selectionSet: {
-                kind: `SelectionSet`,
-                selections: transformedSysFields,
-              },
-            }
-
-            // Inject the new sys at the first occurence of any old sys field
-            node.selections = injectSysField(sysField, node.selections)
-
-            hasChanged = true
-          }
-          return
-        }
-
         // @todo transform sorting
 
         // @todo text field: field.field -> field.raw
@@ -387,6 +387,15 @@ function processGraphQLQuery(query) {
             node.typeCondition.name.value
           )
           hasChanged = true
+
+          const sysField = createNewSysField(node.selectionSet.selections)
+          if (sysField) {
+            node.selectionSet.selections = injectSysField(
+              sysField,
+              node.selectionSet.selections
+            )
+            hasChanged = true
+          }
         }
       },
       FragmentDefinition(node) {
@@ -396,55 +405,12 @@ function processGraphQLQuery(query) {
           )
           hasChanged = true
 
-          const contentfulSysFields = node.selectionSet.selections.filter(
-            ({ name }) => SYS_FIELDS_TRANSFORMS.has(name?.value)
-          )
-
-          if (contentfulSysFields.length) {
-            const transformedSysFields = cloneDeep(contentfulSysFields).map(
-              field => {
-                const transformedField = {
-                  ...field,
-                  name: {
-                    ...field.name,
-                    value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
-                  },
-                }
-
-                if (transformedField.name.value === `contentType`) {
-                  transformedField.selectionSet = {
-                    kind: `SelectionSet`,
-                    selections: [
-                      {
-                        kind: `Field`,
-                        name: { kind: `Name`, value: `name` },
-                      },
-                    ],
-                  }
-                }
-
-                return transformedField
-              }
-            )
-
-            const sysField = {
-              kind: `Field`,
-              name: {
-                kind: `Name`,
-                value: `sys`,
-              },
-              selectionSet: {
-                kind: `SelectionSet`,
-                selections: transformedSysFields,
-              },
-            }
-
-            // Inject the new sys at the first occurence of any old sys field
+          const sysField = createNewSysField(node.selectionSet.selections)
+          if (sysField) {
             node.selectionSet.selections = injectSysField(
               sysField,
               node.selectionSet.selections
             )
-
             hasChanged = true
           }
         }
@@ -462,6 +428,48 @@ function processGraphQLQuery(query) {
           )
 
           hasChanged = true
+        }
+
+        if (isContentTypeSelector(node.name.value)) {
+          // Move sys properties into new sys property
+          const nodesField =
+            node.name.value.indexOf(`all`) === 0 &&
+            locateSubfield(node, `nodes`)
+          const rootNode = nodesField || node
+
+          const sysField = createNewSysField(rootNode.selectionSet.selections)
+          if (sysField) {
+            rootNode.selectionSet.selections = injectSysField(
+              sysField,
+              rootNode.selectionSet.selections
+            )
+            hasChanged = true
+          }
+
+          const filterNode =
+            node.name.value.indexOf(`all`) === 0 &&
+            locateSubfield(node.arguments, `filter`)
+
+          const filterFields = filterNode?.value?.fields || node.arguments
+
+          if (filterFields && filterFields.length) {
+            const sysField = createNewSysField(filterFields, `Argument`)
+            // Inject the new sys at the first occurence of any old sys field
+            if (sysField) {
+              if (node.name.value.indexOf(`all`) === 0) {
+                const filterFieldIndex = node.arguments.findIndex(
+                  field => field.name?.value === `filter`
+                )
+                node.arguments[filterFieldIndex].value.fields = injectSysField(
+                  sysField,
+                  node.arguments[filterFieldIndex].value.fields
+                )
+              } else {
+                node.arguments = injectSysField(sysField, filterFields)
+              }
+              hasChanged = true
+            }
+          }
         }
 
         // Flatten asset file field

@@ -21,4 +21,14 @@ const result = await graphql(`{
       spaceId
     }
   }
+  allContentfulContentTypePage(
+    filter: {slug: {eq: "blog"}, sys: {locale: {eq: $locale}}}
+  ) {
+    nodes {
+      id
+    }
+  }
+  contentfulContentTypePage(slug: {eq: "blog"}, sys: {locale: {eq: $locale}}) {
+    id
+  }
 }`)

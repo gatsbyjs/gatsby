@@ -18,5 +18,15 @@ const result = await graphql(`
       revision
       spaceId
     }
+    allContentfulPage(
+      filter: { slug: { eq: "blog" }, node_locale: { eq: $locale } }
+    ) {
+      nodes {
+        id
+      }
+    }
+    contentfulPage(slug: { eq: "blog" }, node_locale: { eq: $locale }) {
+      id
+    }
   }
 `)
