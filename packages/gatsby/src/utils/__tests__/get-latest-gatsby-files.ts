@@ -1,9 +1,22 @@
+const mockFiles = new Map<string, string>()
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 jest.mock(`fs-extra`, () => {
   return {
-    readJSON: jest.fn(),
-    writeFile: jest.fn(),
-    pathExists: jest.fn(),
+    readJSON: jest.fn().mockImplementation(async filePath => {
+      const content = mockFiles.get(filePath)
+
+      if (content) {
+        return JSON.parse(content)
+      }
+      throw new Error(`File not found`)
+    }),
+    writeFile: jest.fn().mockImplementation(async (filePath, content) => {
+      mockFiles.set(filePath, content)
+    }),
+    pathExists: jest
+      .fn()
+      .mockImplementation(async filePath => mockFiles.has(filePath)),
   }
 })
 jest.mock(`axios`, () => {
@@ -13,13 +26,49 @@ jest.mock(`axios`, () => {
 })
 
 const path = require(`path`)
+
+const latestAdaptersModulePath = path.join(
+  __dirname,
+  `..`,
+  `..`,
+  `..`,
+  `latest-adapters.js`
+)
+
+const latestAdaptersMarker = `<mocked-adapters-js>`
+
+const mockAdaptersManifest: Array<IAdapterManifestEntry> = [
+  {
+    name: `Mock`,
+    module: `mock-adapter`,
+    test: () => !!process.env.MOCK_ADAPTER,
+    versions: [],
+  },
+]
+
+jest.doMock(
+  latestAdaptersModulePath,
+  (): Array<IAdapterManifestEntry> => {
+    if (mockFiles.get(latestAdaptersModulePath) === latestAdaptersMarker) {
+      return mockAdaptersManifest
+    }
+    throw new Error(`Module not found`)
+  },
+  { virtual: true }
+)
+
 const fs = require(`fs-extra`)
 const axios = require(`axios`)
-import { getLatestAPIs, IAPIResponse } from "../get-latest-gatsby-files"
+import { IAdapterManifestEntry } from "../adapter/types"
+import {
+  getLatestAPIs,
+  getLatestAdapters,
+  IAPIResponse,
+} from "../get-latest-gatsby-files"
 
 beforeEach(() => {
   ;[fs, axios].forEach(mock =>
-    Object.keys(mock).forEach(key => mock[key].mockReset())
+    Object.keys(mock).forEach(key => mock[key].mockClear())
   )
 })
 
@@ -32,29 +81,53 @@ const getMockAPIFile = (): IAPIResponse => {
 }
 
 describe(`default behavior: has network connectivity`, () => {
-  beforeEach(() => {
-    fs.pathExists.mockResolvedValueOnce(false)
-    axios.get.mockResolvedValueOnce({ data: getMockAPIFile() })
+  describe(`getLatestAPIs`, () => {
+    beforeEach(() => {
+      axios.get.mockResolvedValueOnce({ data: getMockAPIFile() })
+    })
+
+    it(`makes a request to unpkg to request file`, async () => {
+      const data = await getLatestAPIs()
+
+      expect(axios.get).toHaveBeenCalledWith(
+        expect.stringContaining(`unpkg.com`),
+        expect.any(Object)
+      )
+      expect(data).toEqual(getMockAPIFile())
+    })
+
+    it(`writes apis.json file`, async () => {
+      const data = await getLatestAPIs()
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        expect.stringContaining(`latest-apis.json`),
+        JSON.stringify(data, null, 2),
+        expect.any(String)
+      )
+    })
   })
 
-  it(`makes a request to unpkg to request file`, async () => {
-    const data = await getLatestAPIs()
+  describe(`getLatestAdapters`, () => {
+    beforeEach(() => {
+      axios.get.mockResolvedValueOnce({ data: latestAdaptersMarker })
+    })
 
-    expect(axios.get).toHaveBeenCalledWith(
-      expect.stringContaining(`unpkg.com`),
-      expect.any(Object)
-    )
-    expect(data).toEqual(getMockAPIFile())
-  })
+    it(`loads .js modules`, async () => {
+      const data = await getLatestAdapters()
 
-  it(`writes apis.json file`, async () => {
-    const data = await getLatestAPIs()
+      expect(axios.get).toHaveBeenCalledWith(
+        expect.stringContaining(`unpkg.com`),
+        expect.any(Object)
+      )
 
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      expect.stringContaining(`latest-apis.json`),
-      JSON.stringify(data, null, 2),
-      expect.any(String)
-    )
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        expect.stringContaining(`latest-adapters.js`),
+        latestAdaptersMarker,
+        expect.any(String)
+      )
+
+      expect(data).toEqual(mockAdaptersManifest)
+    })
   })
 })
 
@@ -65,8 +138,6 @@ describe(`downloading APIs failure`, () => {
 
   it(`falls back to downloaded cached file, if it exists`, async () => {
     const apis = getMockAPIFile()
-    fs.pathExists.mockResolvedValueOnce(true)
-    fs.readJSON.mockResolvedValueOnce(apis)
 
     const data = await getLatestAPIs()
 
@@ -78,9 +149,7 @@ describe(`downloading APIs failure`, () => {
   })
 
   it(`falls back to local apis.json if latest-apis.json not cached`, async () => {
-    const apis = getMockAPIFile()
-    fs.pathExists.mockResolvedValueOnce(false)
-    fs.readJSON.mockResolvedValueOnce(apis)
+    mockFiles.clear()
 
     await getLatestAPIs()
 

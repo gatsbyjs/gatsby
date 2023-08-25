@@ -38,11 +38,18 @@ const _getFile = async <T>({
       timeout: 5000,
     })
 
-    await fs.writeFile(outputFileName, data, `utf8`)
+    await fs.writeFile(
+      outputFileName,
+      typeof data === `string` ? data : JSON.stringify(data, null, 2),
+      `utf8`
+    )
 
     fileToUse = outputFileName
   } catch (e) {
-    // no-op
+    // if file was previously cached, use it
+    if (await fs.pathExists(outputFileName)) {
+      fileToUse = outputFileName
+    }
   }
 
   if (fileToUse.endsWith(`.json`)) {
