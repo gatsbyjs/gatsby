@@ -79,8 +79,31 @@ const injectNewFields = (selections, newFields, fieldToReplace) => {
   ]
 }
 
-export function updateImport(babel) {
-  const { types: t, template } = babel
+// JS: Find parent expressions based on property chain and returns it
+// function getParentExpression(node, properties) {
+//   // If it's not a MemberExpression or the current property doesn't match, exit early.
+//   if (
+//     node.type !== `MemberExpression` ||
+//     node.property.name !== properties[0]
+//   ) {
+//     console.dir({
+//       type: node.type,
+//       name: node.property?.name,
+//       properties,
+//     })
+//     return null
+//   }
+
+//   // If we've checked all properties and haven't exited early, the structure exists.
+//   if (properties.length === 1) {
+//     return node
+//   }
+
+//   // Recursively check the next property in the structure.
+//   return getParentExpression(node.object, properties.slice(1))
+// }
+
+export function updateImport() {
   return {
     visitor: {
       Identifier(path, state) {
@@ -145,6 +168,28 @@ export function updateImport(babel) {
         }
       },
       MemberExpression(path, state) {
+        // @todo transform objects containing asset data to new structure
+        // const assetPropertyPath = assetFlatStructure.get(
+        //   path.node.property?.name
+        // )
+        // console.log({ assetPropertyPath })
+        // if (assetPropertyPath) {
+        //   const parentExpression = getParentExpression(
+        //     path.node,
+        //     assetPropertyPath
+        //   )
+        //   if (parentExpression) {
+        //     console.log(`HURRAY`)
+        //     j(parentExpression).replaceWith(path.node)
+        //     // parentExpression.property.name = path.node.property.name
+        //     // delete path.node.object
+        //     // console.dir(
+        //     // // parentExpression.value = path.node.value
+        //     // path.node.parentPath.remove()
+        //     state.opts.hasChanged = true
+        //     return
+        //   }
+        // }
         if (isContentTypeSelector(path.node.property?.name)) {
           if (
             path.node.object?.name === `data` ||
@@ -233,6 +278,15 @@ const injectSysField = (sysField, selections) => {
     })
     .filter(Boolean)
 }
+
+// const assetFlatStructure = new Map([
+//   [`url`, [`url`, `file`]],
+//   [`fileName`, [`fileName`, `file`]],
+//   [`contentType`, [`contentType`, `file`]],
+//   [`size`, [`size`, `details`, `file`]],
+//   [`width`, [`width`, `image`, `details`, `file`]],
+//   [`height`, [`height`, `image`, `details`, `file`]],
+// ])
 
 // Flatten the old deeply nested Contentful asset structure
 const flattenAssetFields = node => {
@@ -367,7 +421,7 @@ function processGraphQLQuery(query) {
 
         // @todo sys field filters
       },
-      SelectionSet(node, visitor, visitorKeys) {
+      SelectionSet(node) {
         // Rename content type node selectors
         node.selections.forEach(field => {
           if (isContentTypeSelector(field.name?.value)) {
