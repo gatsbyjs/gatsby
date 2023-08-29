@@ -107,28 +107,35 @@ export function updateImport() {
   return {
     visitor: {
       Identifier(path, state) {
-        if (path.node.name === `contentfulId`) {
+        const sysField = SYS_FIELDS_TRANSFORMS.get(path.node.name)
+        if (sysField) {
           console.log(
-            `${renderFilename(
-              path,
-              state
-            )}: You may need to change "contentfulId" to "sys.id"`
+            `${renderFilename(path, state)}: You may need to change "${
+              path.node.name
+            }" to "${sysField}"`
           )
         }
-        if (path.node.name === `type`) {
+        if (
+          path.node.name === `createSchemaCustomization` &&
+          state.opts.filename.match(/gatsby-node/)
+        ) {
           console.log(
             `${renderFilename(
               path,
               state
-            )}: You may need to change "type" to "sys.contentType.name"`
+            )}: Check your custom schema customizations if you patch or adjust schema related to Contentful. You probably can remove it now.`
           )
         }
-        if (path.node.name === `contentType`) {
+
+        if (
+          path.node.name === `createSchemaCustomization` &&
+          state.opts.filename.match(/gatsby-node/)
+        ) {
           console.log(
             `${renderFilename(
               path,
               state
-            )}: You may need to change "file.contentType" to "contentType"`
+            )}: Check your custom schema customizations if you patch or adjust schema related to Contentful. You probably can remove it now.`
           )
         }
       },
@@ -190,6 +197,7 @@ export function updateImport() {
         //     return
         //   }
         // }
+
         if (isContentTypeSelector(path.node.property?.name)) {
           if (
             path.node.object?.name === `data` ||
