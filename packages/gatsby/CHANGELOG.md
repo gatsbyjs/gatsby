@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.3/packages/gatsby) (2023-08-28)
+
+#### Bug Fixes
+
+- fix api function compilation on Windows fix [#38489](https://github.com/gatsbyjs/gatsby/issues/38489) fix [#38491](https://github.com/gatsbyjs/gatsby/issues/38491) ([da050e5](https://github.com/gatsbyjs/gatsby/commit/da050e55d6794e9b570f31926471413365ff25f3))
+
+### [5.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.2/packages/gatsby) (2023-08-28)
+
+#### Bug Fixes
+
+- fix fetching adapters manifest from latest gatsby version fix [#38475](https://github.com/gatsbyjs/gatsby/issues/38475) fix [#38482](https://github.com/gatsbyjs/gatsby/issues/38482) ([6a73ee1](https://github.com/gatsbyjs/gatsby/commit/6a73ee19e3905a3ab96d2cfe81e0bbbed6ff1b8a))
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.1/packages/gatsby) (2023-08-24)
+
+#### Bug Fixes
+
+- fix fetching adapters manifest from latest gatsby version ([1f9e806](https://github.com/gatsbyjs/gatsby/commit/1f9e806bea4afb0dfc4a18d96e8a7fa7d823781a))
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.0/packages/gatsby) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Features
+
+- Adapters [#38232](https://github.com/gatsbyjs/gatsby/issues/38232) ([b2d4aef](https://github.com/gatsbyjs/gatsby/commit/b2d4aefa7716e3ef02a19b530a8a7e4678d086e1))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby [#38297](https://github.com/gatsbyjs/gatsby/issues/38297) ([544862b](https://github.com/gatsbyjs/gatsby/commit/544862b94334e00c9458c33ef79bdf032ff0fe29))
+- update dependency core-js to ^3.31.0 [#38309](https://github.com/gatsbyjs/gatsby/issues/38309) ([176b1cc](https://github.com/gatsbyjs/gatsby/commit/176b1ccc8b439d37522de9ad9413def399d89082))
+- copy slices overrides to 404.html copy [#38337](https://github.com/gatsbyjs/gatsby/issues/38337) ([6c7a0e3](https://github.com/gatsbyjs/gatsby/commit/6c7a0e3ab1a6b7aa1a7ef288b8d61bdf4e5b4622))
+- update dependency semver to ^7.5.3 [#38296](https://github.com/gatsbyjs/gatsby/issues/38296) ([11e64e2](https://github.com/gatsbyjs/gatsby/commit/11e64e20898cc97289bdbda00eb4bcc309828b23))
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+- Correct `staticQueryDir` default and improved Storybook support [#38267](https://github.com/gatsbyjs/gatsby/issues/38267) ([2fd6623](https://github.com/gatsbyjs/gatsby/commit/2fd6623b4dc7107a2169bcf39b938e27e07f1633))
+- allow touching nodes owned by another plugin [#38235](https://github.com/gatsbyjs/gatsby/issues/38235) ([5ec74c1](https://github.com/gatsbyjs/gatsby/commit/5ec74c1dd7031a9ad752b47c67708e59dadb0431))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-graphiql-explorer [#38279](https://github.com/gatsbyjs/gatsby/issues/38279) ([39c4987](https://github.com/gatsbyjs/gatsby/commit/39c4987e30954bea4bc5b07ad5c96fe9c1834855))
+- update dependency graphql to ^16.7.1 [#38302](https://github.com/gatsbyjs/gatsby/issues/38302) ([5549846](https://github.com/gatsbyjs/gatsby/commit/554984642f8b588262987a01f40274b695e77fb1))
+- update [dev] minor and patch dependencies for gatsby [#38278](https://github.com/gatsbyjs/gatsby/issues/38278) ([8a90efd](https://github.com/gatsbyjs/gatsby/commit/8a90efd76f0a635cc142d574f17b3797d73283ed))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.11.0/packages/gatsby) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
