@@ -46,8 +46,6 @@ npm install gatsby-source-contentful gatsby-plugin-image
 
 To get setup quickly with a new site and have Netlify do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on netlify.com](https://app.netlify.com/start/deploy?repository=https://github.com/contentful/starter-gatsby-blog).
 
-For more detailed instructions on manually configuring your Gatsby Contentful site for production builds and Preview builds visit the [Netlify docs](https://docs.netlify.com).
-
 ## How to use
 
 First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about `dotenv` and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
