@@ -8,6 +8,10 @@ const result = await graphql(`{
         publishedAt
         publishedVersion
         spaceId
+        type
+        contentType {
+          name
+        }
       }
     }
   }
@@ -19,6 +23,10 @@ const result = await graphql(`{
       publishedAt
       publishedVersion
       spaceId
+      type
+      contentType {
+        name
+      }
     }
   }
   allContentfulContentTypePage(

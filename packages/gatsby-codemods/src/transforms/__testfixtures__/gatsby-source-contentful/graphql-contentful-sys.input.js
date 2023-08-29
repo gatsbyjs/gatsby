@@ -8,6 +8,12 @@ const result = await graphql(`
         updatedAt
         revision
         spaceId
+        sys {
+          type
+          contentType {
+            __typename
+          }
+        }
       }
     }
     contentfulPage {
@@ -17,6 +23,12 @@ const result = await graphql(`
       updatedAt
       revision
       spaceId
+      sys {
+        type
+        contentType {
+          __typename
+        }
+      }
     }
     allContentfulPage(
       filter: { slug: { eq: "blog" }, node_locale: { eq: $locale } }

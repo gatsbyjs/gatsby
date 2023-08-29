@@ -261,6 +261,35 @@ function locateSubfield(node, fieldName) {
 // Replace first old field occurence with new sys field
 const injectSysField = (sysField, selections) => {
   let sysInjected = false
+
+  // add values from existing sys field to new sys field
+  selections = selections
+    .map(field => {
+      const fieldName = field.name?.value || field.key?.name
+      if (fieldName === `sys`) {
+        const existingSysFields = field.selectionSet.selections.map(
+          subField => {
+            // handle contentType rename
+            if (
+              (subField.name?.value || subField.key?.name) === `contentType`
+            ) {
+              subField.selectionSet.selections.map(contentTypeField => {
+                if (contentTypeField.name.value === `__typename`) {
+                  contentTypeField.name.value = `name`
+                }
+              })
+            }
+            return subField
+          }
+        )
+        sysField.selectionSet.selections.push(...existingSysFields)
+        return null
+      }
+      return field
+    })
+    .filter(Boolean)
+
+  // Replace first old field occurence with new sys field
   return selections
     .map(field => {
       const fieldName = field.name?.value || field.key?.name
@@ -336,7 +365,6 @@ const flattenAssetFields = node => {
 
 function createNewSysField(fields, fieldType = `Field`) {
   const kind = fieldType === `Argument` ? `Argument` : `Field`
-  const subKind = fieldType === `Argument` ? `ObjectField` : `SelectionSet`
   const subKindValue = fieldType === `Argument` ? `ObjectValue` : `SelectionSet`
   const subKindIndex = fieldType === `Argument` ? `value` : `selectionSet`
   const subKindIndex2 = fieldType === `Argument` ? `fields` : `selections`
@@ -347,27 +375,13 @@ function createNewSysField(fields, fieldType = `Field`) {
 
   if (contentfulSysFields.length) {
     const transformedSysFields = cloneDeep(contentfulSysFields).map(field => {
-      const transformedField = {
+      return {
         ...field,
         name: {
           ...field.name,
           value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
         },
       }
-
-      if (transformedField.name.value === `contentType`) {
-        transformedField.selectionSet = {
-          kind: subKind,
-          [subKindIndex2]: [
-            {
-              kind: subKindValue,
-              name: { kind: `Name`, value: `name` },
-            },
-          ],
-        }
-      }
-
-      return transformedField
     })
 
     const sysField = {

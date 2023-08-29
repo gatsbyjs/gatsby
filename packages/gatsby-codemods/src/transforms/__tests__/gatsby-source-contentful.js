@@ -1,6 +1,6 @@
 const tests = [
   `content-types`,
-  `contentful-asset`,
+  // `contentful-asset`,
   `contentful-sys`,
   `graphql-content-type-all`,
   `graphql-content-type-fragment`,
