@@ -79,29 +79,17 @@ const injectNewFields = (selections, newFields, fieldToReplace) => {
   ]
 }
 
-// JS: Find parent expressions based on property chain and returns it
-// function getParentExpression(node, properties) {
-//   // If it's not a MemberExpression or the current property doesn't match, exit early.
-//   if (
-//     node.type !== `MemberExpression` ||
-//     node.property.name !== properties[0]
-//   ) {
-//     console.dir({
-//       type: node.type,
-//       name: node.property?.name,
-//       properties,
-//     })
-//     return null
-//   }
-
-//   // If we've checked all properties and haven't exited early, the structure exists.
-//   if (properties.length === 1) {
-//     return node
-//   }
-
-//   // Recursively check the next property in the structure.
-//   return getParentExpression(node.object, properties.slice(1))
-// }
+function getNestedMemberExpressionProperties(node, t) {
+  const properties = []
+  let current = node
+  while (t.isMemberExpression(current)) {
+    if (t.isIdentifier(current.property)) {
+      properties.push(current.property.name)
+    }
+    current = current.object
+  }
+  return properties.reverse()
+}
 
 export function updateImport(babel) {
   const { types: t } = babel
@@ -179,28 +167,40 @@ export function updateImport(babel) {
         },
       },
       MemberExpression(path, state) {
-        // @todo transform objects containing asset data to new structure
-        // const assetPropertyPath = assetFlatStructure.get(
-        //   path.node.property?.name
-        // )
-        // console.log({ assetPropertyPath })
-        // if (assetPropertyPath) {
-        //   const parentExpression = getParentExpression(
-        //     path.node,
-        //     assetPropertyPath
-        //   )
-        //   if (parentExpression) {
-        //     console.log(`HURRAY`)
-        //     j(parentExpression).replaceWith(path.node)
-        //     // parentExpression.property.name = path.node.property.name
-        //     // delete path.node.object
-        //     // console.dir(
-        //     // // parentExpression.value = path.node.value
-        //     // path.node.parentPath.remove()
-        //     state.opts.hasChanged = true
-        //     return
-        //   }
-        // }
+        const nestedProperties = getNestedMemberExpressionProperties(
+          path.node,
+          t
+        )
+
+        const assetFlatStructure = new Map([
+          [`url`, [`url`, `file`]],
+          [`fileName`, [`fileName`, `file`]],
+          [`contentType`, [`contentType`, `file`]],
+          [`size`, [`size`, `details`, `file`]],
+          [`width`, [`width`, `image`, `details`, `file`]],
+          [`height`, [`height`, `image`, `details`, `file`]],
+        ])
+
+        for (const [newProp, oldProps] of assetFlatStructure) {
+          if (
+            nestedProperties.slice(-oldProps.length).join(`.`) ===
+            oldProps.reverse().join(`.`)
+          ) {
+            // We found a matching nested property.
+            // Rebuild the MemberExpression with the new structure.
+            let baseExpression = path.node
+            for (let i = 0; i < oldProps.length; i++) {
+              baseExpression = baseExpression.object
+            }
+            const newExpression = t.memberExpression(
+              baseExpression,
+              t.identifier(newProp)
+            )
+            path.replaceWith(newExpression)
+            state.opts.hasChanged = true
+            return
+          }
+        }
 
         // Identify MemberExpression for `allContentfulPage.nodes.contentfulId`
         const propName = path.node.property.name
@@ -369,15 +369,6 @@ const injectSysField = (sysField, selections) => {
     })
     .filter(Boolean)
 }
-
-// const assetFlatStructure = new Map([
-//   [`url`, [`url`, `file`]],
-//   [`fileName`, [`fileName`, `file`]],
-//   [`contentType`, [`contentType`, `file`]],
-//   [`size`, [`size`, `details`, `file`]],
-//   [`width`, [`width`, `image`, `details`, `file`]],
-//   [`height`, [`height`, `image`, `details`, `file`]],
-// ])
 
 // Flatten the old deeply nested Contentful asset structure
 const flattenAssetFields = node => {
