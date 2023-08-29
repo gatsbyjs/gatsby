@@ -32,6 +32,7 @@ const result = await graphql(`
     }
     allContentfulPage(
       filter: { slug: { eq: "blog" }, node_locale: { eq: $locale } }
+      sort: { updatedAt: DESC }
     ) {
       nodes {
         id

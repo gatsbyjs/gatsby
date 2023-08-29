@@ -31,6 +31,7 @@ const result = await graphql(`{
   }
   allContentfulContentTypePage(
     filter: {slug: {eq: "blog"}, sys: {locale: {eq: $locale}}}
+    sort: {sys: {publishedAt: DESC}}
   ) {
     nodes {
       id

@@ -1,6 +1,9 @@
 const result = await graphql(`
   {
-    allContentfulPage(filter: { logo: { file: { url: { ne: null } } } }) {
+    allContentfulPage(
+      filter: { logo: { file: { url: { ne: null } } } },
+      sort: [{createdAt: ASC}, {logo: {file: {fileName: ASC}}}]
+    ) {
       nodes {
         id
         logo {
@@ -19,7 +22,10 @@ const result = await graphql(`
         }
       }
     }
-    allContentfulAsset(filter: {file: { url: { ne: null } }}) {
+    allContentfulAsset(
+      filter: {file: { url: { ne: null } }},
+      sort: [{createdAt: ASC}, {file: {fileName: ASC}}]
+    ) {
       nodes {
         id
       }

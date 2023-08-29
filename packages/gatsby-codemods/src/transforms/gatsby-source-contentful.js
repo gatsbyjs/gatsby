@@ -405,43 +405,56 @@ function processGraphQLQuery(query) {
     let hasChanged = false // this is sort of a hack, but print changes formatting and we only want to use it when we have to
     const ast = graphql.parse(query)
 
+    function processArguments(node) {
+      // flatten Contentful Asset filters
+      // Queries directly on allContentfulAssets
+      const flatAssetFields = flattenAssetFields(node)
+      if (flatAssetFields.length) {
+        node.value.fields = injectNewFields(
+          node.value.fields,
+          flatAssetFields,
+          `file`
+        )
+        hasChanged = true
+      }
+      // Subfields that might be asset fields
+      node.value.fields.forEach((field, fieldIndex) => {
+        const flatAssetFields = flattenAssetFields(field)
+        if (flatAssetFields.length) {
+          node.value.fields[fieldIndex].value.fields = injectNewFields(
+            node.value.fields[fieldIndex].value.fields,
+            flatAssetFields,
+            `file`
+          )
+          hasChanged = true
+        }
+      })
+
+      // Rename metadata -> contentfulMetadata
+      node.value.fields.forEach(field => {
+        if (field.name.value === `metadata`) {
+          field.name.value = `contentfulMetadata`
+          hasChanged = true
+        }
+      })
+
+      const sysField = createNewSysField(node.value.fields, `Argument`)
+      if (sysField) {
+        node.value.fields = injectSysField(sysField, node.value.fields)
+        hasChanged = true
+      }
+    }
+
     graphql.visit(ast, {
       Argument(node) {
-        // flatten Contentful Asset filters
-        if (node.name.value === `filter`) {
-          // Queries directly on allContentfulAssets
-          const flatAssetFields = flattenAssetFields(node)
-          if (flatAssetFields.length) {
-            node.value.fields = injectNewFields(
-              node.value.fields,
-              flatAssetFields,
-              `file`
-            )
-            hasChanged = true
+        // Update filters and sort of collection endpoints
+        if ([`filter`, `sort`].includes(node.name.value)) {
+          if (node.value.kind === `ListValue`) {
+            node.value.values.forEach(node => processArguments({ value: node }))
+            return
           }
-          // Subfields that might be asset fields
-          node.value.fields.forEach((field, fieldIndex) => {
-            const flatAssetFields = flattenAssetFields(field)
-            if (flatAssetFields.length) {
-              node.value.fields[fieldIndex].value.fields = injectNewFields(
-                node.value.fields[fieldIndex].value.fields,
-                flatAssetFields,
-                `file`
-              )
-              hasChanged = true
-            }
-          })
-
-          // Rename metadata -> contentfulMetadata
-          node.value.fields.forEach(field => {
-            if (field.name.value === `metadata`) {
-              field.name.value = `contentfulMetadata`
-              hasChanged = true
-            }
-          })
+          processArguments(node)
         }
-
-        // @todo sys field filters
       },
       SelectionSet(node) {
         // Rename content type node selectors
@@ -451,7 +464,6 @@ function processGraphQLQuery(query) {
             hasChanged = true
           }
         })
-        // @todo transform sorting
 
         // @todo text field: field.field -> field.raw
 
