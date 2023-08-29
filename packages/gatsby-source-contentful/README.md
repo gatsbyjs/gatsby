@@ -44,7 +44,7 @@ npm install gatsby-source-contentful gatsby-plugin-image
 
 ## Setup Instructions
 
-To get setup quickly with a new site and have Netlify do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on netlify.com](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/nextjs-blog-theme).
+To get setup quickly with a new site and have Netlify do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on netlify.com](https://app.netlify.com/start/deploy?repository=https://github.com/contentful/starter-gatsby-blog).
 
 For more detailed instructions on manually configuring your Gatsby Contentful site for production builds and Preview builds visit the [Netlify docs](https://docs.netlify.com).
 
