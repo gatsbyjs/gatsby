@@ -103,30 +103,13 @@ const injectNewFields = (selections, newFields, fieldToReplace) => {
 //   return getParentExpression(node.object, properties.slice(1))
 // }
 
-export function updateImport() {
+export function updateImport(babel) {
+  const { types: t } = babel
+  // Stack to keep track of nesting
+  const stack = []
   return {
     visitor: {
       Identifier(path, state) {
-        const sysField = SYS_FIELDS_TRANSFORMS.get(path.node.name)
-        if (sysField) {
-          console.log(
-            `${renderFilename(path, state)}: You may need to change "${
-              path.node.name
-            }" to "${sysField}"`
-          )
-        }
-        if (
-          path.node.name === `createSchemaCustomization` &&
-          state.opts.filename.match(/gatsby-node/)
-        ) {
-          console.log(
-            `${renderFilename(
-              path,
-              state
-            )}: Check your custom schema customizations if you patch or adjust schema related to Contentful. You probably can remove it now.`
-          )
-        }
-
         if (
           path.node.name === `createSchemaCustomization` &&
           state.opts.filename.match(/gatsby-node/)
@@ -139,40 +122,61 @@ export function updateImport() {
           )
         }
       },
-      ObjectPattern(path, state) {
-        // renamed & moved sys properties
-        const transformedSysProperties = []
-        path.node.properties.forEach(property => {
-          if (SYS_FIELDS_TRANSFORMS.has(property.key?.name)) {
-            const transformedProp = {
-              ...property,
-              key: {
-                ...property.key,
-                name: SYS_FIELDS_TRANSFORMS.get(property.key.name),
-              },
+      ObjectPattern: {
+        enter(path) {
+          // Push this ObjectPattern onto the stack as we enter it
+          stack.push(path.node.properties.map(prop => prop.key.name))
+        },
+        exit(path) {
+          // Rename contentType.__typename to contentType.name
+          if (
+            JSON.stringify([[`sys`], [`contentType`], [`__typename`]]) ===
+            JSON.stringify(stack)
+          ) {
+            const typenameProp = path.node.properties.find(
+              prop => prop.key.name === `__typename`
+            )
+            if (typenameProp) {
+              typenameProp.key = t.identifier(`name`)
+              typenameProp.value = t.identifier(`name`)
             }
-
-            transformedSysProperties.push(transformedProp)
+            // Merge old sys fields into new structure
+          } else {
+            const transformedSysProperties = []
+            path.node.properties.forEach(property => {
+              if (SYS_FIELDS_TRANSFORMS.has(property.key?.name)) {
+                const transformedProp = {
+                  ...property,
+                  key: {
+                    ...property.key,
+                    name: SYS_FIELDS_TRANSFORMS.get(property.key.name),
+                  },
+                }
+                transformedSysProperties.push(transformedProp)
+              }
+            })
+            if (transformedSysProperties.length) {
+              const sysField = {
+                type: `Property`,
+                key: {
+                  type: `Identifier`,
+                  name: `sys`,
+                },
+                value: {
+                  type: `ObjectPattern`,
+                  properties: transformedSysProperties,
+                },
+              }
+              path.node.properties = injectSysField(
+                sysField,
+                path.node.properties
+              )
+            }
           }
-        })
 
-        if (transformedSysProperties.length) {
-          const sysField = {
-            type: `Property`,
-            key: {
-              type: `Identifier`,
-              name: `sys`,
-            },
-            value: {
-              type: `ObjectPattern`,
-              properties: transformedSysProperties,
-            },
-          }
-
-          path.node.properties = injectSysField(sysField, path.node.properties)
-
-          state.opts.hasChanged = true
-        }
+          // Pop this ObjectPattern off the stack as we exit it
+          stack.pop()
+        },
       },
       MemberExpression(path, state) {
         // @todo transform objects containing asset data to new structure
@@ -197,6 +201,36 @@ export function updateImport() {
         //     return
         //   }
         // }
+
+        // Identify MemberExpression for `allContentfulPage.nodes.contentfulId`
+        const propName = path.node.property.name
+        const replacement = SYS_FIELDS_TRANSFORMS.get(propName)
+
+        if (replacement) {
+          // Rewrite the MemberExpression with the new property
+          path.node.property = t.identifier(replacement)
+
+          // Also rewrite the parent node to `.sys.` if it's not already
+          if (path.node.object.property.name !== `sys`) {
+            path.node.object = t.memberExpression(
+              path.node.object,
+              t.identifier(`sys`)
+            )
+          }
+          state.opts.hasChanged = true
+        }
+
+        // Rename sys.contentType.__typename to sys.contentType.name
+        if (
+          propName === `__typename` &&
+          t.isMemberExpression(path.node.object) &&
+          t.isIdentifier(path.node.object.property, { name: `contentType` }) &&
+          t.isMemberExpression(path.node.object.object) &&
+          t.isIdentifier(path.node.object.object.property, { name: `sys` })
+        ) {
+          path.node.property = t.identifier(`name`)
+          return
+        }
 
         if (isContentTypeSelector(path.node.property?.name)) {
           if (
@@ -270,27 +304,47 @@ function locateSubfield(node, fieldName) {
 const injectSysField = (sysField, selections) => {
   let sysInjected = false
 
-  // add values from existing sys field to new sys field
   selections = selections
     .map(field => {
       const fieldName = field.name?.value || field.key?.name
       if (fieldName === `sys`) {
-        const existingSysFields = field.selectionSet.selections.map(
-          subField => {
-            // handle contentType rename
-            if (
-              (subField.name?.value || subField.key?.name) === `contentType`
-            ) {
-              subField.selectionSet.selections.map(contentTypeField => {
-                if (contentTypeField.name.value === `__typename`) {
+        const existingSysFields = (
+          field.selectionSet?.selections || field.value.properties
+        ).map(subField => {
+          const kind = subField.kind || subField.type
+          // handle contentType rename
+          if (
+            (kind === `ObjectProperty`
+              ? subField.key.name
+              : subField.name.value) === `contentType`
+          ) {
+            const subfields =
+              kind === `ObjectProperty`
+                ? subField.value.properties
+                : subField.selectionSet.selections
+
+            subfields.map(contentTypeField => {
+              const fieldName =
+                kind === `ObjectProperty`
+                  ? contentTypeField.key.name
+                  : contentTypeField.name.value
+
+              if (fieldName === `__typename`) {
+                if (kind === `ObjectProperty`) {
+                  contentTypeField.key.name = `name`
+                } else {
                   contentTypeField.name.value = `name`
                 }
-              })
-            }
-            return subField
+              }
+            })
           }
-        )
-        sysField.selectionSet.selections.push(...existingSysFields)
+          return subField
+        })
+        if (sysField?.type === `Property`) {
+          sysField.value.properties.push(...existingSysFields)
+        } else {
+          sysField.selectionSet.selections.push(...existingSysFields)
+        }
         return null
       }
       return field
