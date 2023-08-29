@@ -6,6 +6,7 @@ const tests = [
   `graphql-content-type-fragment`,
   `graphql-content-type-single`,
   `graphql-contentful-assets`,
+  `graphql-contentful-metadata`,
   `graphql-contentful-sys`,
 ]
 

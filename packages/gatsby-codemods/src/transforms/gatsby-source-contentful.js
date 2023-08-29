@@ -40,7 +40,7 @@ export function babelRecast(code, filePath) {
 }
 
 const CONTENT_TYPE_SELECTOR_REGEX = /^(allContentful|[cC]ontentful)([A-Z0-9].+)/
-const CONTENT_TYPE_SELECTOR_BLACKLIST = [`Asset`, `Reference`, `Id`]
+const CONTENT_TYPE_SELECTOR_BLACKLIST = [`Asset`, `Reference`, `Id`, `Tag`]
 const SYS_FIELDS_TRANSFORMS = new Map([
   [`node_locale`, `locale`],
   [`contentful_id`, `id`],
@@ -431,6 +431,14 @@ function processGraphQLQuery(query) {
               hasChanged = true
             }
           })
+
+          // Rename metadata -> contentfulMetadata
+          node.value.fields.forEach(field => {
+            if (field.name.value === `metadata`) {
+              field.name.value = `contentfulMetadata`
+              hasChanged = true
+            }
+          })
         }
 
         // @todo sys field filters
@@ -484,6 +492,7 @@ function processGraphQLQuery(query) {
         }
       },
       Field(node) {
+        // Flatten asset fields
         if (node.name.value === `contentfulAsset`) {
           const flatAssetFields = flattenAssetFields({
             value: { fields: node.arguments },
@@ -496,6 +505,15 @@ function processGraphQLQuery(query) {
           )
 
           hasChanged = true
+        }
+
+        // Rename metadata -> contentfulMetadata
+        if (node.name.value === `metadata`) {
+          const tagsField = locateSubfield(node, `tags`)
+          if (tagsField) {
+            node.name.value = `contentfulMetadata`
+            hasChanged = true
+          }
         }
 
         if (isContentTypeSelector(node.name.value)) {
