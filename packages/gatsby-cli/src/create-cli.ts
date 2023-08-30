@@ -590,7 +590,12 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
 
         if (cmd === `set`) {
           if (key === `pm` || key === `package-manager`) {
-            if (value && value !== `yarn` && value !== `npm` && value !== `bun`) {
+            if (
+              value &&
+              value !== `yarn` &&
+              value !== `npm` &&
+              value !== `bun`
+            ) {
               report.panic(`Package manager must be yarn, npm, or bun.`)
             }
 
