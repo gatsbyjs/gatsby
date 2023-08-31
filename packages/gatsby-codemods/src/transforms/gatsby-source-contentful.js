@@ -95,6 +95,8 @@ export function updateImport(babel) {
   const { types: t } = babel
   // Stack to keep track of nesting
   const stack = []
+  // Flag to indicate whether we are inside createResolvers function
+  let insideCreateResolvers = false
   return {
     visitor: {
       Identifier(path, state) {
@@ -109,13 +111,24 @@ export function updateImport(babel) {
             )}: Check your custom schema customizations if you patch or adjust schema related to Contentful. You probably can remove it now.`
           )
         }
+
+        // Rename content type identifiers within createResolvers
+        if (insideCreateResolvers) {
+          const variableName = path.node.name
+
+          // Check if the variable name matches the regex
+          if (isContentTypeSelector(variableName)) {
+            path.node.name = updateContentfulSelector(variableName)
+            state.opts.hasChanged = true
+          }
+        }
       },
       ObjectPattern: {
         enter(path) {
           // Push this ObjectPattern onto the stack as we enter it
           stack.push(path.node.properties.map(prop => prop.key.name))
         },
-        exit(path) {
+        exit(path, state) {
           // Rename contentType.__typename to contentType.name
           if (
             JSON.stringify([[`sys`], [`contentType`], [`__typename`]]) ===
@@ -159,6 +172,8 @@ export function updateImport(babel) {
                 sysField,
                 path.node.properties
               )
+
+              state.opts.hasChanged = true
             }
           }
 
@@ -249,6 +264,36 @@ export function updateImport(babel) {
             )
           }
         }
+      },
+      ExportNamedDeclaration: {
+        enter(path) {
+          const declaration = path.node.declaration
+
+          // For "export function createResolvers() {}"
+          if (
+            t.isFunctionDeclaration(declaration) &&
+            t.isIdentifier(declaration.id, { name: `createResolvers` })
+          ) {
+            insideCreateResolvers = true
+          }
+
+          // For "export const createResolvers = function() {}" or "export const createResolvers = () => {}"
+          else if (t.isVariableDeclaration(declaration)) {
+            const declarators = declaration.declarations
+            for (const declarator of declarators) {
+              if (
+                t.isIdentifier(declarator.id, { name: `createResolvers` }) &&
+                (t.isFunctionExpression(declarator.init) ||
+                  t.isArrowFunctionExpression(declarator.init))
+              ) {
+                insideCreateResolvers = true
+              }
+            }
+          }
+        },
+        exit(path) {
+          insideCreateResolvers = false
+        },
       },
       TaggedTemplateExpression({ node }, state) {
         if (node.tag.name !== `graphql`) {
