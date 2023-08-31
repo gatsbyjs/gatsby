@@ -4,9 +4,10 @@ import type { IContentfulEntry } from "./types/contentful"
 
 // @ts-ignore this is not available (yet) in typegen phase
 import { getDataStore } from "gatsby/dist/datastore"
+// @ts-ignore this is not available (yet) in typegen phase
+import type { IGatsbyNode } from "gatsby/dist/redux/types"
 import type { Actions, Node, NodePluginArgs } from "gatsby"
 import type { IProcessedPluginOptions } from "./types/plugin"
-import type { IGatsbyNode } from "gatsby/dist/redux/types"
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 export const existingNodes = new Map<string, IContentfulEntry>()
