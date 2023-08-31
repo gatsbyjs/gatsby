@@ -139,7 +139,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
       defaultLocale,
       locales: allLocales = [],
       space,
-    } = await fetchContent({ syncToken, pluginConfig, reporter })
+    } = await fetchContent({ syncToken, pluginConfig, reporter, parentSpan })
 
     const contentTypeItems = (await cache.get(
       CACHE_CONTENT_TYPES
