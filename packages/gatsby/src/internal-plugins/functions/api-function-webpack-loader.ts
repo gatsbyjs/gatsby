@@ -1,10 +1,11 @@
+import { slash } from "gatsby-core-utils"
 import type { LoaderDefinition } from "webpack"
 
 const APIFunctionLoader: LoaderDefinition = async function () {
   const params = new URLSearchParams(this.resourceQuery)
   const matchPath = params.get(`matchPath`)
 
-  const modulePath = this.resourcePath
+  const modulePath = slash(this.resourcePath)
 
   return /* javascript */ `
   const preferDefault = m => (m && m.default) || m

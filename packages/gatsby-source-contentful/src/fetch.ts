@@ -322,8 +322,8 @@ export async function fetchContent({
     reporter,
     syncProgress,
   })
-  const syncClient = createClient(contentfulSyncClientOptions)
-    .withoutLinkResolution.withAllLocales
+  const syncClient = createClient(contentfulSyncClientOptions).withAllLocales
+    .withoutLinkResolution
 
   let currentSyncData:
     | SyncCollection<
