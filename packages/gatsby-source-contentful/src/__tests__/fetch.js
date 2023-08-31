@@ -416,7 +416,6 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     expect(mockClient.sync).toHaveBeenCalledWith({
       initial: true,
       limit: 1000,
-      resolveLinks: false,
     })
     mockClient.sync.mockClear()
 
@@ -424,7 +423,6 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(mockClient.sync).toHaveBeenCalledWith({
       nextSyncToken: `mocked`,
-      resolveLinks: false,
     })
   })
 })
