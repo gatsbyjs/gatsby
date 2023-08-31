@@ -160,6 +160,9 @@ Array [
         "contentType": Object {
           "type": "String!",
         },
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "description": Object {
           "type": "String",
         },
@@ -262,9 +265,6 @@ Ignored if layout = FLUID.",
         },
         "linkedFrom": Object {
           "type": "ContentfulLinkedFrom",
-        },
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
         },
         "mimeType": Object {
           "type": "String!",
@@ -396,6 +396,9 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "decimal": Object {
           "type": "Float",
         },
@@ -412,9 +415,6 @@ Ignored if layout = FLUID.",
           "type": "Int",
         },
         "linkedFrom": "ContentfulLinkedFrom",
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
-        },
         "sys": Object {
           "type": "ContentfulSys!",
         },
@@ -436,6 +436,9 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
@@ -466,9 +469,6 @@ Ignored if layout = FLUID.",
             },
           },
           "type": "ContentfulMarkdown",
-        },
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
         },
         "short": Object {
           "type": "String",
@@ -503,6 +503,9 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
@@ -524,9 +527,6 @@ Ignored if layout = FLUID.",
             },
           },
           "type": "[ContentfulAsset]",
-        },
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
         },
         "one": Object {
           "extensions": Object {
@@ -573,13 +573,13 @@ Ignored if layout = FLUID.",
         "booleanLocalized": Object {
           "type": "Boolean",
         },
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
         "linkedFrom": "ContentfulLinkedFrom",
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
-        },
         "sys": Object {
           "type": "ContentfulSys!",
         },
@@ -601,6 +601,9 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "date": Object {
           "extensions": Object {
             "dateformat": Object {},
@@ -629,9 +632,6 @@ Ignored if layout = FLUID.",
           "type": "ID!",
         },
         "linkedFrom": "ContentfulLinkedFrom",
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
-        },
         "sys": Object {
           "type": "ContentfulSys!",
         },
@@ -653,6 +653,9 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
@@ -662,9 +665,6 @@ Ignored if layout = FLUID.",
         },
         "locationLocalized": Object {
           "type": "ContentfulLocation",
-        },
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
         },
         "sys": Object {
           "type": "ContentfulSys!",
@@ -687,6 +687,9 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
@@ -697,9 +700,6 @@ Ignored if layout = FLUID.",
           "type": "JSON",
         },
         "linkedFrom": "ContentfulLinkedFrom",
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
-        },
         "sys": Object {
           "type": "ContentfulSys!",
         },
@@ -721,13 +721,13 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
         "linkedFrom": "ContentfulLinkedFrom",
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
-        },
         "richText": Object {
           "type": "ContentfulRichText",
         },
@@ -758,6 +758,9 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
@@ -779,9 +782,6 @@ Ignored if layout = FLUID.",
             },
           },
           "type": "[ContentfulEntry]",
-        },
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
         },
         "one": Object {
           "extensions": Object {
@@ -822,13 +822,13 @@ Ignored if layout = FLUID.",
         "dontInfer": Object {},
       },
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
         "linkedFrom": "ContentfulLinkedFrom",
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
-        },
         "multipleItemsAllTypes": Object {
           "extensions": Object {
             "link": Object {
@@ -906,11 +906,11 @@ Array [
   Array [
     Object {
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
-        },
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
         },
         "sys": Object {
           "type": "ContentfulSys!",
@@ -925,14 +925,14 @@ Array [
   Array [
     Object {
       "fields": Object {
+        "contentfulMetadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "id": Object {
           "type": "ID!",
         },
         "linkedFrom": Object {
           "type": "ContentfulLinkedFrom",
-        },
-        "metadata": Object {
-          "type": "ContentfulMetadata!",
         },
         "sys": Object {
           "type": "ContentfulSys!",
