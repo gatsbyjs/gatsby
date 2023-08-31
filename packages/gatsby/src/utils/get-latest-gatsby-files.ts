@@ -32,30 +32,36 @@ const _getFile = async <T>({
   outputFileName: string
   defaultReturn: T
 }): Promise<T> => {
+  let fileToUse = path.join(ROOT, fileName)
   try {
     const { data } = await axios.get(`${UNPKG_ROOT}${fileName}`, {
       timeout: 5000,
     })
 
-    await fs.writeFile(outputFileName, JSON.stringify(data, null, 2), `utf8`)
+    await fs.writeFile(
+      outputFileName,
+      typeof data === `string` ? data : JSON.stringify(data, null, 2),
+      `utf8`
+    )
 
-    return data
+    fileToUse = outputFileName
   } catch (e) {
+    // if file was previously cached, use it
     if (await fs.pathExists(outputFileName)) {
-      return fs.readJSON(outputFileName)
+      fileToUse = outputFileName
     }
+  }
 
-    if (fileName.endsWith(`.json`)) {
-      return fs.readJSON(path.join(ROOT, fileName)).catch(() => defaultReturn)
-    } else {
-      try {
-        const importedFile = await import(path.join(ROOT, fileName))
-        const adapters = preferDefault(importedFile)
-        return adapters
-      } catch (e) {
-        // no-op
-        return defaultReturn
-      }
+  if (fileToUse.endsWith(`.json`)) {
+    return fs.readJSON(fileToUse).catch(() => defaultReturn)
+  } else {
+    try {
+      const importedFile = await import(fileToUse)
+      const adapters = preferDefault(importedFile)
+      return adapters
+    } catch (e) {
+      // no-op
+      return defaultReturn
     }
   }
 }

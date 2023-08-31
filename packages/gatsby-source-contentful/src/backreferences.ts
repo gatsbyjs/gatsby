@@ -1,11 +1,13 @@
 import { hasFeature } from "gatsby-plugin-utils/index"
 import { untilNextEventLoopTick } from "./utils"
-import { IContentfulEntry } from "./types/contentful"
+import type { IContentfulEntry } from "./types/contentful"
 
 // @ts-ignore this is not available (yet) in typegen phase
 import { getDataStore } from "gatsby/dist/datastore"
-import { Actions, Node, NodePluginArgs } from "gatsby"
-import { IProcessedPluginOptions } from "./types/plugin"
+// @ts-ignore this is not available (yet) in typegen phase
+import type { IGatsbyNode } from "gatsby/dist/redux/types"
+import type { Actions, Node, NodePluginArgs } from "gatsby"
+import type { IProcessedPluginOptions } from "./types/plugin"
 
 // Array of all existing Contentful nodes. Make it global and incrementally update it because it's hella slow to recreate this on every data update for large sites.
 export const existingNodes = new Map<string, IContentfulEntry>()
@@ -57,7 +59,9 @@ export async function getExistingCachedNodes({
     for (const typeName of allNodeTypeNames) {
       const typeNodes = dataStore.iterateNodesByType(typeName)
 
-      const firstNodeOfType = Array.from(typeNodes.slice(0, 1))[0]
+      const firstNodeOfType = Array.from(
+        typeNodes.slice(0, 1)
+      )[0] as unknown as IGatsbyNode
 
       if (
         !firstNodeOfType ||

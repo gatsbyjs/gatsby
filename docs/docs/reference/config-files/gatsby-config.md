@@ -2,10 +2,10 @@
 title: Gatsby Config API
 ---
 
-The file `gatsby-config.js`/`gatsby-config.ts` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site. You can author the file in JavaScript (CommonJS or [ES Modules (ESM)](/docs/how-to/custom-configuration/es-modules/) syntax) or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-configts).
+The `gatsby-config` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site. You can author the file in JavaScript (CommonJS or [ES Modules (ESM)](/docs/how-to/custom-configuration/es-modules/) syntax) or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-configts), for example `gatsby-config.js`, `gatsby-config.mjs`, or `gatsby-config.ts`.
 
 If you created a Gatsby site with the `npm init gatsby` command, there should already be a sample configuration file in your site's directory.
-_Note: There are many sample configs which may be helpful to reference in the different [Gatsby Example Websites](https://github.com/gatsbyjs/gatsby/tree/master/examples)._
+**Note:** There are many sample configs which may be helpful to reference in the different [Gatsby example websites](https://github.com/gatsbyjs/gatsby/tree/master/examples).
 
 ## Set up the configuration file
 
@@ -43,7 +43,7 @@ Read the [ES Modules (ESM) and Gatsby documentation](/docs/how-to/custom-configu
 
 ## Configuration options
 
-Options available to set within `gatsby-config.js` include:
+Options available to set within `gatsby-config` include:
 
 1. [siteMetadata](#sitemetadata) (object)
 1. [plugins](#plugins) (array)
@@ -51,6 +51,8 @@ Options available to set within `gatsby-config.js` include:
 1. [pathPrefix](#pathprefix) (string)
 1. [trailingSlash](#trailingslash) (string)
 1. [graphqlTypegen](#graphqltypegen) (boolean)
+1. [adapter](#adapter) (object)
+1. [headers](#headers) (array)
 1. [polyfill](#polyfill) (boolean)
 1. [mapping](#mapping-node-types) (object)
 1. [proxy](#proxy) (object)
@@ -159,7 +161,7 @@ module.exports = {
 
 ## pathPrefix
 
-It's common for sites to be hosted somewhere other than the root of their domain. Say you have a Gatsby site at `example.com/blog/`. In this case, you would need a prefix (`/blog`) added to all paths on the site.
+It's common for sites to be hosted somewhere other than the root of their domain. Say you have a Gatsby site at `example.com/blog`. In this case, you would need a prefix (`/blog`) added to all paths on the site. The default setting for this option is `""`.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -223,6 +225,48 @@ You can overwrite the search paths, which contain documents that should be scann
 > Support added in `gatsby@4.22.0`
 
 By default, `graphqlTypegen` is only run during `gatsby develop`. Set this option to `true` to create the `src/gatsby-types.d.ts` file also during `gatsby build`. Default: `false`.
+
+## adapter
+
+> Support added in `gatsby@5.12.0`
+
+You can set an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) or configure [zero-configuration deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) through the `adapter` setting.
+
+```js:title=gatsby-config.js
+const adapter = require("gatsby-adapter-foo")
+
+module.exports = {
+  adapter: adapter({
+    // adapter options if available
+  })
+}
+```
+
+Read the [adapters guide](/docs/how-to/previews-deploys-hosting/adapters/) to learn more.
+
+## headers
+
+> Support added in `gatsby@5.12.0`
+
+You can set custom HTTP headers on the response of a given path.
+
+```js:title=gatsby-config.js
+module.exports = {
+  headers: [
+    {
+      source: `/some-path`,
+      headers: [
+        {
+          key: `x-custom-header`,
+          value: `Hello World`,
+        }
+      ]
+    }
+  ]
+}
+```
+
+Read the [HTTP headers guide](/docs/how-to/previews-deploys-hosting/headers/) to learn more about header syntax, options, and behaviors.
 
 ## polyfill
 

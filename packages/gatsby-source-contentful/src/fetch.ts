@@ -7,6 +7,7 @@ import {
 } from "contentful"
 import type { Reporter } from "gatsby"
 import _ from "lodash"
+import type { Span } from "opentracing"
 
 import { formatPluginOptionsForCLI } from "./plugin-options"
 import { CODES } from "./report"
@@ -20,6 +21,7 @@ import type {
   ContentfulCollection,
 } from "contentful"
 import type { IProcessedPluginOptions } from "./types/plugin"
+import type { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress"
 
 /**
  * Generate a user friendly error message.
@@ -113,11 +115,11 @@ const createContentfulErrorMessage = (e: any): string => {
 function createContentfulClientOptions({
   pluginConfig,
   reporter,
-  syncProgress = { total: 0, tick: a => a },
+  syncProgress,
 }: {
   pluginConfig: IProcessedPluginOptions
   reporter: Reporter
-  syncProgress?: { total: number; tick: (a: number) => unknown }
+  syncProgress?: IProgressReporter
 }): CreateClientParams {
   let syncItemCount = 0
 
@@ -149,7 +151,8 @@ function createContentfulClientOptions({
       if (
         response.config.url === `sync` &&
         !response.isAxiosError &&
-        response?.data.items
+        response?.data.items &&
+        syncProgress
       ) {
         syncItemCount += response.data.items.length
         syncProgress.total = syncItemCount
@@ -273,10 +276,12 @@ export async function fetchContent({
   syncToken,
   pluginConfig,
   reporter,
+  parentSpan,
 }: {
   syncToken: string
   pluginConfig: IProcessedPluginOptions
   reporter: Reporter
+  parentSpan?: Span
 }): Promise<IFetchResult> {
   // Fetch locales and check connectivity
   const contentfulClientOptions = createContentfulClientOptions({
@@ -314,7 +319,10 @@ export async function fetchContent({
   const syncProgress = reporter.createProgress(
     `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
     pageLimit,
-    0
+    0,
+    {
+      parentSpan,
+    }
   )
   syncProgress.start()
   const contentfulSyncClientOptions = createContentfulClientOptions({
@@ -322,8 +330,8 @@ export async function fetchContent({
     reporter,
     syncProgress,
   })
-  const syncClient = createClient(contentfulSyncClientOptions)
-    .withoutLinkResolution.withAllLocales
+  const syncClient = createClient(contentfulSyncClientOptions).withAllLocales
+    .withoutLinkResolution
 
   let currentSyncData:
     | SyncCollection<
@@ -388,13 +396,13 @@ export async function fetchContent({
       currentSyncData?.entries.length +
         currentSyncData?.assets.length +
         currentSyncData?.deletedEntries.length +
-        currentSyncData?.deletedAssets.length
+        currentSyncData?.deletedAssets.length ===
+        0
     ) {
       syncProgress.tick()
       syncProgress.total = 1
     }
-
-    syncProgress.done()
+    syncProgress.end()
   }
 
   // We need to fetch tags with the non-sync API as the sync API doesn't support this.
