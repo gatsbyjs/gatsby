@@ -2,6 +2,7 @@ const tests = [
   `content-types`,
   `contentful-asset`,
   `contentful-sys`,
+  // `gatsby-node`,
   `graphql-content-type-all`,
   `graphql-content-type-fragment`,
   `graphql-content-type-single`,

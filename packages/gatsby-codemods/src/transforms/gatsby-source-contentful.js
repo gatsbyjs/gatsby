@@ -291,7 +291,7 @@ export function updateImport(babel) {
             }
           }
         },
-        exit(path) {
+        exit() {
           insideCreateResolvers = false
         },
       },
@@ -562,10 +562,6 @@ function processGraphQLQuery(query) {
             hasChanged = true
           }
         })
-
-        // @todo text field: field.field -> field.raw
-
-        // @todo rich text
       },
       InlineFragment(node) {
         if (isContentTypeSelector(node.typeCondition.name?.value)) {
