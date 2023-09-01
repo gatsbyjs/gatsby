@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.12.0/packages/gatsby-source-wordpress) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- Set empty default alt tag for inline images [#38341](https://github.com/gatsbyjs/gatsby/issues/38341) ([e5126f9](https://github.com/gatsbyjs/gatsby/commit/e5126f902861cdf5e61af1b169b885dcd90a10b1))
+- update minor and patch dependencies for gatsby-source-wordpress [#38293](https://github.com/gatsbyjs/gatsby/issues/38293) ([b074b85](https://github.com/gatsbyjs/gatsby/commit/b074b8545c7c0c1d11ff042a444ef698ba84c7c3))
+- update dependency semver to ^7.5.3 [#38296](https://github.com/gatsbyjs/gatsby/issues/38296) ([11e64e2](https://github.com/gatsbyjs/gatsby/commit/11e64e20898cc97289bdbda00eb4bcc309828b23))
+
+#### Chores
+
+- remove warning about multiple plugin instances [#38241](https://github.com/gatsbyjs/gatsby/issues/38241) ([b941380](https://github.com/gatsbyjs/gatsby/commit/b9413808c0dd7fe6d44487e41a3776608aa842fe))
+
 ## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.11.0/packages/gatsby-source-wordpress) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
