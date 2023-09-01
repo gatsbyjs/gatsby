@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.20.13",
     "@opentelemetry/semantic-conventions": "0.26.0",
-    "agentkeepalive": "^4.3.0",
+    "agentkeepalive": "^4.5.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.20.2",
     "fastq": "^1.15.0",
