@@ -872,14 +872,17 @@ module.exports = async (
         const builtinsExternalsDictionary = builtinModules.reduce(
           (acc, builtinModule) => {
             if (builtinModulesToTrack.includes(builtinModule)) {
-              acc[builtinModule] = `commonjs ${path.join(
+              const builtinModuleTracked = path.join(
                 program.directory,
                 `.cache`,
                 `ssr-builtin-trackers`,
                 builtinModule
-              )}`
+              )
+              acc[builtinModule] = `commonjs ${builtinModuleTracked}`
+              acc[`node:${builtinModule}`] = `commonjs ${builtinModuleTracked}`
             } else {
               acc[builtinModule] = `commonjs ${builtinModule}`
+              acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`
             }
             return acc
           },
