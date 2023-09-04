@@ -202,7 +202,7 @@ interface IForeignReferenceMap {
 }
 
 interface IForeignReferenceMapState {
-  links: Array<string>
+  links: { [key: string]: Array<string> }
   backLinks: IForeignReferenceMap
 }
 
@@ -257,7 +257,7 @@ export const buildForeignReferenceMap = ({
 }): IForeignReferenceMapState => {
   const foreignReferenceMapState: IForeignReferenceMapState =
     previousForeignReferenceMapState || {
-      links: [],
+      links: {},
       backLinks: {},
     }
 
