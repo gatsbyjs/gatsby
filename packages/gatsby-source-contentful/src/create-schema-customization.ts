@@ -134,19 +134,27 @@ const getLinkFieldType = (
     const linkContentTypeValidation = validations.find(
       ({ linkContentType }) => !!linkContentType
     )
-    if (linkContentTypeValidation) {
+    if (
+      linkContentTypeValidation &&
+      linkContentTypeValidation.linkContentType
+    ) {
       const { linkContentType } = linkContentTypeValidation
       const contentTypes = Array.isArray(linkContentType)
         ? linkContentType
         : [linkContentType]
 
+      // We need to remove non existant content types from outdated validations to avoid broken unions
+      const filteredTypes = contentTypes.filter(typeId =>
+        contentTypeIdMap.has(typeId)
+      )
+
       // Full type names for union members, shorter variant for the union type name
-      const translatedTypeNames = contentTypes.map(
+      const translatedTypeNames = filteredTypes.map(
         typeId => contentTypeIdMap.get(typeId) as string
       )
-      const shortTypeNames = contentTypes.map(typeName =>
-        makeTypeName(typeName, ``)
-      )
+      const shortTypeNames = filteredTypes
+        .map(typeName => makeTypeName(typeName, ``))
+        .sort()
 
       // Single content type
       if (translatedTypeNames.length === 1) {
