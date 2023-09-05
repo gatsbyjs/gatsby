@@ -13,7 +13,7 @@ const propTypes = {
 
 class CategoryTemplate extends React.Component {
   render() {
-    const category = this.props.data.contentfulCategory
+    const category = this.props.data.contentfulContentTypeCategory
     const {
       title: { title },
       product,
@@ -61,7 +61,7 @@ export default CategoryTemplate
 
 export const pageQuery = graphql`
   query ($id: String!) {
-    contentfulCategory(id: { eq: $id }) {
+    contentfulContentTypeCategory(id: { eq: $id }) {
       title {
         title
       }

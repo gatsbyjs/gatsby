@@ -13,7 +13,7 @@ const propTypes = {
 
 class ProductTemplate extends React.Component {
   render() {
-    const product = this.props.data.contentfulProduct
+    const product = this.props.data.contentfulContentTypeProduct
     const {
       productName: { productName },
       productDescription,
@@ -71,7 +71,7 @@ export default ProductTemplate
 
 export const pageQuery = graphql`
   query ($id: String!) {
-    contentfulProduct(id: { eq: $id }) {
+    contentfulContentTypeProduct(id: { eq: $id }) {
       productName {
         productName
       }
