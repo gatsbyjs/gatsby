@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.12.0/packages/gatsby-core-utils) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+
+#### Chores
+
+- update dependency msw to ^1.2.2 for gatsby-core-utils [#38283](https://github.com/gatsbyjs/gatsby/issues/38283) ([ada5fef](https://github.com/gatsbyjs/gatsby/commit/ada5fef39da6b48bac899243715472311b6343df))
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.11.0/packages/gatsby-core-utils) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
