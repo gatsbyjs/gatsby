@@ -129,6 +129,14 @@ export function updateImport(babel) {
           stack.push(path.node.properties.map(prop => prop.key.name))
         },
         exit(path, state) {
+          // Check if the variable name matches the regex
+          path.node.properties.forEach(prop => {
+            if (isContentTypeSelector(prop.key.name)) {
+              prop.key.name = updateContentfulSelector(prop.key.name)
+              state.opts.hasChanged = true
+            }
+          })
+
           // Rename contentType.__typename to contentType.name
           if (
             JSON.stringify([[`sys`], [`contentType`], [`__typename`]]) ===
@@ -294,6 +302,17 @@ export function updateImport(babel) {
         exit() {
           insideCreateResolvers = false
         },
+      },
+      TSInterfaceDeclaration(path, state) {
+        path.node.body.body.forEach(property => {
+          if (
+            t.isTSPropertySignature(property) &&
+            isContentTypeSelector(property.key.name)
+          ) {
+            property.key.name = updateContentfulSelector(property.key.name)
+            state.opts.hasChanged = true
+          }
+        })
       },
       TaggedTemplateExpression({ node }, state) {
         if (node.tag.name !== `graphql`) {

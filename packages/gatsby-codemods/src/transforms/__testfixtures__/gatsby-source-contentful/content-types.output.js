@@ -3,3 +3,8 @@ const demo = [
   ...data.allContentfulContentTypeBar.nodes,
 ]
 const content = data.contentfulContentTypePage.content
+const {
+  data: {
+    allContentfulContentTypeTemplatePage: { nodes: templatePages },
+  },
+} = await graphql(``)

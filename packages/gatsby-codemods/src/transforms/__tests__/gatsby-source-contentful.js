@@ -1,8 +1,9 @@
 const tests = [
   `content-types`,
+  `content-types-typescript`,
   `contentful-asset`,
   `contentful-sys`,
-  // `gatsby-node`,
+  `gatsby-node`,
   `graphql-content-type-all`,
   `graphql-content-type-fragment`,
   `graphql-content-type-single`,
@@ -19,7 +20,8 @@ describe(`codemods`, () => {
       __dirname,
       `gatsby-source-contentful`,
       null,
-      `gatsby-source-contentful/${test}`
+      `gatsby-source-contentful/${test}`,
+      { parser: test.indexOf(`typescript`) !== -1 ? `ts` : `js` }
     )
   )
 })
