@@ -92,9 +92,9 @@ export const pageQuery = graphql`
       edges {
         node {
           id
-          gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
+          gatsbyPath(filePath: "/products/{ContentfulContentTypeProduct.id}")
           productName {
-            productName
+            raw
           }
           image {
             gatsbyImageData(layout: FIXED, width: 75)
@@ -108,9 +108,9 @@ export const pageQuery = graphql`
       edges {
         node {
           id
-          gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
+          gatsbyPath(filePath: "/products/{ContentfulContentTypeProduct.id}")
           productName {
-            productName
+            raw
           }
           image {
             gatsbyImageData(layout: FIXED, width: 75)

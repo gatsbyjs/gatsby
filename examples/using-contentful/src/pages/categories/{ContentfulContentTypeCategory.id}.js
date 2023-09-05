@@ -15,8 +15,8 @@ class CategoryTemplate extends React.Component {
   render() {
     const category = this.props.data.contentfulContentTypeCategory
     const {
-      title: { title },
-      product,
+      title: { raw: title },
+      linkedFrom: { ContentfulContentTypeProduct },
       icon,
     } = category
     const iconImg = icon.gatsbyImageData
@@ -42,10 +42,10 @@ class CategoryTemplate extends React.Component {
         <div>
           <h2>Products</h2>
           <ul>
-            {product &&
-              product.map((p, i) => (
+            {ContentfulContentTypeProduct.length &&
+              ContentfulContentTypeProduct.map((p, i) => (
                 <li key={i}>
-                  <Link to={p.gatsbyPath}>{p.productName.productName}</Link>
+                  <Link to={p.gatsbyPath}>{p.productName.raw}</Link>
                 </li>
               ))}
           </ul>
@@ -63,16 +63,18 @@ export const pageQuery = graphql`
   query ($id: String!) {
     contentfulContentTypeCategory(id: { eq: $id }) {
       title {
-        title
+        raw
       }
       icon {
         gatsbyImageData(layout: FIXED, width: 75)
       }
-      product {
-        gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
-        id
-        productName {
-          productName
+      linkedFrom {
+        ContentfulContentTypeProduct {
+          gatsbyPath(filePath: "/products/{ContentfulContentTypeProduct.id}")
+          id
+          productName {
+            raw
+          }
         }
       }
     }
