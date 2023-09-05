@@ -126,7 +126,8 @@
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/using-contentful"
   ],
   "resolutions": {
     "@babel/plugin-transform-modules-commonjs": "7.18.6"
