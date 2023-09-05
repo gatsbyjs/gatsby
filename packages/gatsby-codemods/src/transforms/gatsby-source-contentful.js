@@ -126,12 +126,12 @@ export function updateImport(babel) {
       ObjectPattern: {
         enter(path) {
           // Push this ObjectPattern onto the stack as we enter it
-          stack.push(path.node.properties.map(prop => prop.key.name))
+          stack.push(path.node.properties.map(prop => prop.key?.name))
         },
         exit(path, state) {
           // Check if the variable name matches the regex
           path.node.properties.forEach(prop => {
-            if (isContentTypeSelector(prop.key.name)) {
+            if (isContentTypeSelector(prop.key?.name)) {
               prop.key.name = updateContentfulSelector(prop.key.name)
               state.opts.hasChanged = true
             }
@@ -234,7 +234,7 @@ export function updateImport(babel) {
           path.node.property = t.identifier(replacement)
 
           // Also rewrite the parent node to `.sys.` if it's not already
-          if (path.node.object.property.name !== `sys`) {
+          if (path.node.object.property?.name !== `sys`) {
             path.node.object = t.memberExpression(
               path.node.object,
               t.identifier(`sys`)
