@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@3.12.0/packages/gatsby-legacy-polyfills) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- update dependency core-js-compat to v3.31.0 [#38310](https://github.com/gatsbyjs/gatsby/issues/38310) ([c948af8](https://github.com/gatsbyjs/gatsby/commit/c948af8ab1e42e75b0463ff404f931b91bccdab0))
+
+#### Chores
+
+- update dependency core-js to v3.31.0 [#38301](https://github.com/gatsbyjs/gatsby/issues/38301) ([f9729f2](https://github.com/gatsbyjs/gatsby/commit/f9729f223fc3bbfcf6595320a9c0b2ba8d7ef4ba))
+
 ## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@3.11.0/packages/gatsby-legacy-polyfills) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
