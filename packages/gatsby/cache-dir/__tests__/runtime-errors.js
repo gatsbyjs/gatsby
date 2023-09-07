@@ -32,3 +32,16 @@ test(`renders native Error info`, () => {
 
   expect(msg).toBeVisible()
 })
+
+test(`renders Error info without stack`, () => {
+  const err = new Error(`boom`)
+  delete err.stack
+
+  const { getByText } = render(
+    <RuntimeErrors dismiss={() => undefined} errors={[err, err, err]} />
+  )
+
+  const msg = getByText(new RegExp(err.message, `i`))
+
+  expect(msg).toBeVisible()
+})
