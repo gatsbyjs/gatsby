@@ -24,18 +24,20 @@ function getCodeFrameInformationFromError(error) {
 }
 
 function WrappedAccordionItem({ error, open }) {
-  const codeFrameInformation = getCodeFrameInformationFromError(error)
+  const codeFrameInformation = error.stack
+    ? getCodeFrameInformationFromError(error)
+    : null
 
   const modulePath = codeFrameInformation?.moduleId
   const name = codeFrameInformation?.functionName
   // With the introduction of Metadata management the modulePath can have a resourceQuery that needs to be removed first
-  const filePath = modulePath.replace(/(\?|&)export=(default|head)$/, ``)
+  const filePath = modulePath?.replace(/(\?|&)export=(default|head)$/, ``)
 
   const res = useStackFrame(codeFrameInformation)
   const line = res.sourcePosition?.line
 
   const Title = () => {
-    if (!name) {
+    if (!name || !error.stack) {
       return <>Unknown Runtime Error</>
     }
 
@@ -53,18 +55,27 @@ function WrappedAccordionItem({ error, open }) {
   return (
     <AccordionItem open={open} title={<Title />}>
       <p data-gatsby-overlay="body__error-message">{error.message}</p>
-      <div data-gatsby-overlay="codeframe__top">
-        <div>
-          {filePath}:{line}
-        </div>
-        <button
-          data-gatsby-overlay="body__open-in-editor"
-          onClick={() => openInEditor(filePath, line)}
-        >
-          Open in Editor
-        </button>
-      </div>
-      <CodeFrame decoded={res.decoded} />
+      {error.stack ? (
+        <>
+          <div data-gatsby-overlay="codeframe__top">
+            <div>
+              {filePath}:{line}
+            </div>
+            <button
+              data-gatsby-overlay="body__open-in-editor"
+              onClick={() => openInEditor(filePath, line)}
+            >
+              Open in Editor
+            </button>
+          </div>
+          <CodeFrame decoded={res.decoded} />
+        </>
+      ) : (
+        <p data-font-weight="bold">
+          To identify the exact location of the error, please open the browser's
+          developer tools console.
+        </p>
+      )}
     </AccordionItem>
   )
 }
@@ -74,14 +85,20 @@ export function RuntimeErrors({ errors, dismiss }) {
     const errorCache = new Set()
     const errorList = []
     errors.forEach(error => {
-      // Second line contains the exact location
-      const secondLine = error.stack.split(`\n`)[1]
-      if (!errorCache.has(secondLine)) {
+      let cacheKey
+      if (error.stack) {
+        // Second line contains the exact location
+        const secondLine = error.stack?.split(`\n`)[1]
+        cacheKey = secondLine
+      } else {
+        cacheKey = error.toString()
+      }
+
+      if (!errorCache.has(cacheKey)) {
         errorList.push(error)
-        errorCache.add(secondLine)
+        errorCache.add(cacheKey)
       }
     })
-
     return errorList
   }, [errors])
   const hasMultipleErrors = deduplicatedErrors.length > 1

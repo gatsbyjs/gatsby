@@ -10,14 +10,16 @@ const initialResponse = {
   sourceContent: null,
 }
 
-export function useStackFrame({
-  moduleId,
-  lineNumber,
-  columnNumber,
-  skipSourceMap,
-  endLineNumber,
-  endColumnNumber,
-}) {
+export function useStackFrame(codeFrameInformation) {
+  const {
+    moduleId,
+    lineNumber,
+    columnNumber,
+    skipSourceMap,
+    endLineNumber,
+    endColumnNumber,
+  } = codeFrameInformation ?? {}
+
   let url =
     `/__original-stack-frame?moduleId=` +
     window.encodeURIComponent(moduleId) +
@@ -41,6 +43,8 @@ export function useStackFrame({
   const [response, setResponse] = React.useState(initialResponse)
 
   React.useEffect(() => {
+    if (!codeFrameInformation) return
+
     async function fetchData() {
       try {
         const res = await fetch(url)
