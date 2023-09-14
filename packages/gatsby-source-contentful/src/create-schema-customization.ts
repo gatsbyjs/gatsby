@@ -402,7 +402,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           contentType: {
             type: `ContentfulContentType`,
             extensions: {
-              link: { by: `id`, from: `sys.contentType` },
+              link: { by: `id`, from: `contentType` },
             },
           },
           firstPublishedAt: { type: ` Date!` },
