@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@5.12.0/packages/gatsby-source-graphql) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- update dependency @apollo/client to ^3.7.16 for gatsby-source-graphql [#38290](https://github.com/gatsbyjs/gatsby/issues/38290) ([7ffaebe](https://github.com/gatsbyjs/gatsby/commit/7ffaebed96d58cac5345d65d2850c02716942c82))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@5.11.0/packages/gatsby-source-graphql) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
