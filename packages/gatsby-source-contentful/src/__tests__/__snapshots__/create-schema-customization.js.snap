@@ -37,7 +37,7 @@ Array [
           "extensions": Object {
             "link": Object {
               "by": "id",
-              "from": "sys.contentType",
+              "from": "contentType",
             },
           },
           "type": "ContentfulContentType",
