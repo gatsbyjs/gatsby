@@ -1,6 +1,6 @@
 {
-  "name": "gatsby-plugin-netlify-cms",
-  "description": "A Gatsby plugin which generates the Netlify CMS single page app",
+  "name": "gatsby-plugin-decap-cms",
+  "description": "A Gatsby plugin which generates the Decap CMS single page app",
   "version": "7.13.0-next.0",
   "author": "Shawn Erquhart <shawn@erquh.art>",
   "bugs": {
@@ -25,19 +25,19 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-decap-cms#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
-    "netlify",
-    "netlify-cms",
+    "decap",
+    "decap-cms",
     "cms"
   ],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
-    "netlify-cms-app": "^2.9.0",
+    "decap-cms-app": "^2.9.0",
     "react": "^18.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^0.0.0",
     "webpack": "^5.0.0"
@@ -45,7 +45,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-netlify-cms"
+    "directory": "packages/gatsby-plugin-decap-cms"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
