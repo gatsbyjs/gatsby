@@ -292,9 +292,12 @@ function getRoutesManifest(): RoutesManifest {
       route.headers = createHeaders(route.path, route.headers)
     }
 
-    ;(route as RouteWithScore).score = rankRoute(route.path)
+    const routeWithScore: RouteWithScore = {
+      ...route,
+      score: rankRoute(route.path),
+    }
 
-    routes.push(route as RouteWithScore)
+    routes.push(routeWithScore)
   }
 
   function addStaticRoute({
