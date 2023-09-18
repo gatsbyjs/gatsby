@@ -20,33 +20,42 @@ const toNetlifyPath = (fromPath: string, toPath: string): Array<string> => {
 
   return [netlifyFromPath, netlifyToPath]
 }
-const MARKER_START = `# gatsby-adapter-netlify start`
-const MARKER_END = `# gatsby-adapter-netlify end`
+export const ADAPTER_MARKER_START = `# gatsby-adapter-netlify start`
+export const ADAPTER_MARKER_END = `# gatsby-adapter-netlify end`
+export const NETLIFY_PLUGIN_MARKER_START = `# @netlify/plugin-gatsby redirects start`
+export const NETLIFY_PLUGIN_MARKER_END = `# @netlify/plugin-gatsby redirects end`
+export const GATSBY_PLUGIN_MARKER_START = `## Created with gatsby-plugin-netlify`
 
-async function injectEntries(fileName: string, content: string): Promise<void> {
+export async function injectEntries(
+  fileName: string,
+  content: string
+): Promise<void> {
   await fs.ensureFile(fileName)
 
   const data = await fs.readFile(fileName, `utf8`)
-  const [initial = ``, rest = ``] = data.split(MARKER_START)
-  const [, final = ``] = rest.split(MARKER_END)
+  const [initial = ``, rest = ``] = data.split(ADAPTER_MARKER_START)
+  const [, final = ``] = rest.split(ADAPTER_MARKER_END)
   const out = [
     initial === EOL ? `` : initial,
     initial.endsWith(EOL) ? `` : EOL,
-    MARKER_START,
+    ADAPTER_MARKER_START,
     EOL,
     content,
     EOL,
-    MARKER_END,
+    ADAPTER_MARKER_END,
     final.startsWith(EOL) ? `` : EOL,
     final === EOL ? `` : final,
   ]
     .filter(Boolean)
     .join(``)
     .replace(
-      /# @netlify\/plugin-gatsby redirects start(.|\n|\r)*# @netlify\/plugin-gatsby redirects end/gm,
+      new RegExp(
+        `${NETLIFY_PLUGIN_MARKER_START}(.|\n|\r)*${NETLIFY_PLUGIN_MARKER_END}`,
+        `gm`
+      ),
       ``
     )
-    .replace(/## Created with gatsby-plugin-netlify(.|\n|\r)*$/gm, ``)
+    .replace(new RegExp(`${GATSBY_PLUGIN_MARKER_START}(.|\n|\r)*$`, `gm`), ``)
 
   await fs.outputFile(fileName, out)
 }
