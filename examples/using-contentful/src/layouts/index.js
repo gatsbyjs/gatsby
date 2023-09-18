@@ -12,7 +12,7 @@ const DefaultLayout = ({ children }) => (
   <>
     <header
       style={{
-        textAlign: "center",
+        textAlign: `center`,
         backgroundColor: `tomato`,
         padding: rhythm(1 / 2),
       }}
