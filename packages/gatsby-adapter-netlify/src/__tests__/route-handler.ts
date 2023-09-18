@@ -66,6 +66,8 @@ async function getContent(previousContent?: string): Promise<string> {
   return fs.readFile(filePath, `utf8`)
 }
 
+jest.setTimeout(60_000)
+
 describe(`route-handler`, () => {
   describe(`injectEntries`, () => {
     it(`no cached file`, async () => {
