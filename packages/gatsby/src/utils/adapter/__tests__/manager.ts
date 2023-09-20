@@ -92,6 +92,57 @@ describe(`getRoutesManifest`, () => {
       ])
     )
   })
+
+  it(`should return header rules`, () => {
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config, trailingSlash: `always` },
+    })
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`, `static/app-456.js`]))
+
+    const { headers } = getRoutesManifest()
+
+    expect(headers).toContainEqual({
+      headers: [
+        { key: "x-xss-protection", value: "1; mode=block" },
+        { key: "x-content-type-options", value: "nosniff" },
+        { key: "referrer-policy", value: "same-origin" },
+        { key: "x-frame-options", value: "DENY" },
+      ],
+      path: "/*",
+    })
+    expect(headers).toContainEqual({
+      headers: [
+        {
+          key: "cache-control",
+          value: "public, max-age=31536000, immutable",
+        },
+      ],
+      path: "/static/*",
+    })
+    expect(headers).toContainEqual({
+      headers: [
+        {
+          key: "cache-control",
+          value: "public, max-age=0, must-revalidate",
+        },
+      ],
+      path: "/page-data/index/page-data.json",
+    })
+    expect(headers).toContainEqual({
+      headers: [
+        {
+          key: "cache-control",
+          value: "public, max-age=31536000, immutable",
+        },
+      ],
+      path: "/app-123.js",
+    })
+
+    expect(headers).not.toContain(
+      expect.objectContaining({ path: "/static/app-456.js" })
+    )
+  })
 })
 
 describe(`getFunctionsManifest`, () => {
