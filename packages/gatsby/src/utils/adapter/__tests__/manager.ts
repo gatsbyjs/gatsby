@@ -50,7 +50,7 @@ describe(`getRoutesManifest`, () => {
     process.chdir(fixturesDir)
     setWebpackAssets(new Set([`app-123.js`]))
 
-    const routesManifest = getRoutesManifest()
+    const { routes: routesManifest } = getRoutesManifest()
 
     expect(routesManifest).toMatchSnapshot()
   })
@@ -62,7 +62,7 @@ describe(`getRoutesManifest`, () => {
     process.chdir(fixturesDir)
     setWebpackAssets(new Set([`app-123.js`]))
 
-    const routesManifest = getRoutesManifest()
+    const { routes: routesManifest } = getRoutesManifest()
 
     expect(routesManifest).toEqual(
       expect.arrayContaining([
@@ -81,7 +81,7 @@ describe(`getRoutesManifest`, () => {
     process.chdir(fixturesDir)
     setWebpackAssets(new Set([`app-123.js`]))
 
-    const routesManifest = getRoutesManifest()
+    const { routes: routesManifest } = getRoutesManifest()
 
     expect(routesManifest).toEqual(
       expect.arrayContaining([
