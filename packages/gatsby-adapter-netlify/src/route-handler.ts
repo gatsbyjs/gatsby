@@ -1,5 +1,7 @@
 import type { RoutesManifest } from "gatsby"
-import { EOL } from "os"
+import { tmpdir } from "os"
+import { Transform } from "stream"
+import { join, basename } from "path"
 import fs from "fs-extra"
 
 const NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST = new Set([
@@ -20,35 +22,112 @@ const toNetlifyPath = (fromPath: string, toPath: string): Array<string> => {
 
   return [netlifyFromPath, netlifyToPath]
 }
-const MARKER_START = `# gatsby-adapter-netlify start`
-const MARKER_END = `# gatsby-adapter-netlify end`
+export const ADAPTER_MARKER_START = `# gatsby-adapter-netlify start`
+export const ADAPTER_MARKER_END = `# gatsby-adapter-netlify end`
+export const NETLIFY_PLUGIN_MARKER_START = `# @netlify/plugin-gatsby redirects start`
+export const NETLIFY_PLUGIN_MARKER_END = `# @netlify/plugin-gatsby redirects end`
+export const GATSBY_PLUGIN_MARKER_START = `## Created with gatsby-plugin-netlify`
 
-async function injectEntries(fileName: string, content: string): Promise<void> {
+export async function injectEntries(
+  fileName: string,
+  content: string
+): Promise<void> {
   await fs.ensureFile(fileName)
 
-  const data = await fs.readFile(fileName, `utf8`)
-  const [initial = ``, rest = ``] = data.split(MARKER_START)
-  const [, final = ``] = rest.split(MARKER_END)
-  const out = [
-    initial === EOL ? `` : initial,
-    initial.endsWith(EOL) ? `` : EOL,
-    MARKER_START,
-    EOL,
-    content,
-    EOL,
-    MARKER_END,
-    final.startsWith(EOL) ? `` : EOL,
-    final === EOL ? `` : final,
-  ]
-    .filter(Boolean)
-    .join(``)
-    .replace(
-      /# @netlify\/plugin-gatsby redirects start(.|\n|\r)*# @netlify\/plugin-gatsby redirects end/gm,
-      ``
-    )
-    .replace(/## Created with gatsby-plugin-netlify(.|\n|\r)*$/gm, ``)
+  const tmpFile = join(
+    await fs.mkdtemp(join(tmpdir(), basename(fileName))),
+    `out.txt`
+  )
 
-  await fs.outputFile(fileName, out)
+  let tail = ``
+  let insideNetlifyPluginGatsby = false
+  let insideGatsbyPluginNetlify = false
+  let insideGatsbyAdapterNetlify = false
+  let injectedEntries = false
+
+  const annotatedContent = `${ADAPTER_MARKER_START}\n${content}\n${ADAPTER_MARKER_END}\n`
+
+  function getContentToAdd(final: boolean): string {
+    const lines = tail.split(`\n`)
+    tail = ``
+
+    let contentToAdd = ``
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i]
+
+      if (!final && i === lines.length - 1) {
+        tail = line
+        break
+      }
+
+      let skipLine =
+        insideGatsbyAdapterNetlify ||
+        insideGatsbyPluginNetlify ||
+        insideNetlifyPluginGatsby
+
+      if (line.includes(ADAPTER_MARKER_START)) {
+        skipLine = true
+        insideGatsbyAdapterNetlify = true
+      } else if (line.includes(ADAPTER_MARKER_END)) {
+        insideGatsbyAdapterNetlify = false
+        contentToAdd += annotatedContent
+        injectedEntries = true
+      } else if (line.includes(NETLIFY_PLUGIN_MARKER_START)) {
+        insideNetlifyPluginGatsby = true
+        skipLine = true
+      } else if (line.includes(NETLIFY_PLUGIN_MARKER_END)) {
+        insideNetlifyPluginGatsby = false
+      } else if (line.includes(GATSBY_PLUGIN_MARKER_START)) {
+        insideGatsbyPluginNetlify = true
+        skipLine = true
+      }
+
+      if (!skipLine) {
+        contentToAdd += line + `\n`
+      }
+    }
+
+    return contentToAdd
+  }
+
+  const streamReplacer = new Transform({
+    transform(chunk, _encoding, callback): void {
+      tail = tail + chunk.toString()
+
+      try {
+        callback(null, getContentToAdd(false))
+      } catch (e) {
+        callback(e)
+      }
+    },
+    flush(callback): void {
+      try {
+        let contentToAdd = getContentToAdd(true)
+        if (!injectedEntries) {
+          contentToAdd += annotatedContent
+        }
+        callback(null, contentToAdd)
+      } catch (e) {
+        callback(e)
+      }
+    },
+  })
+
+  await new Promise<void>((resolve, reject) => {
+    const writeStream = fs.createWriteStream(tmpFile)
+    const pipeline = fs
+      .createReadStream(fileName)
+      .pipe(streamReplacer)
+      .pipe(writeStream)
+
+    pipeline.on(`finish`, resolve)
+    pipeline.on(`error`, reject)
+    streamReplacer.on(`error`, reject)
+  })
+
+  // remove previous file and move new file from tmp to final path
+  await fs.remove(fileName)
+  await fs.move(tmpFile, fileName)
 }
 
 export async function handleRoutesManifest(
