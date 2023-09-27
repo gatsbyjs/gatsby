@@ -30,4 +30,6 @@ decls
 dist
 *.js
 !gatsby-node.js
+!.babelrc.js
+!jest.config.js
 !index.js
