@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.5/packages/gatsby) (2023-09-27)
+
+**Note:** Version bump only for package gatsby
+
 ### [5.12.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.4/packages/gatsby) (2023-09-05)
 
 #### Bug Fixes
