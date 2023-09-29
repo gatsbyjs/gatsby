@@ -65,7 +65,8 @@ export default function preset(_, options = {}) {
       [
         resolve(`@babel/preset-env`),
         {
-          corejs: 3,
+          // core-js recommends using the minor version here, see: https://github.com/zloirock/core-js#babelpreset-env
+          corejs: 3.31,
           loose: true,
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
