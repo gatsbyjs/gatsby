@@ -30,7 +30,7 @@ export function loadCachedConfig() {
 }
 
 export default function preset(_, options = {}) {
-  let { targets = null, reactImportSource = null } = options
+  let { corejs = 3, targets = null, reactImportSource = null } = options
 
   const stage = options.stage || `test`
   const pluginBabelConfig = loadCachedConfig()
@@ -65,8 +65,7 @@ export default function preset(_, options = {}) {
       [
         resolve(`@babel/preset-env`),
         {
-          // core-js recommends using the minor version here, see: https://github.com/zloirock/core-js#babelpreset-env
-          corejs: 3.31,
+          corejs,
           loose: true,
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
