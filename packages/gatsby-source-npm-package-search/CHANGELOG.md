@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@5.12.1/packages/gatsby-source-npm-package-search) (2023-10-09)
+
+#### Chores
+
+- bespoke treatment for `plugin-gatsby-cloud` and `source-contentful` [#38619](https://github.com/gatsbyjs/gatsby/issues/38619) [#38622](https://github.com/gatsbyjs/gatsby/issues/38622) ([4dc464b](https://github.com/gatsbyjs/gatsby/commit/4dc464b40ab80af178175663202203ceb1641d4b))
+
 ## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@5.12.0/packages/gatsby-source-npm-package-search) (2023-08-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
