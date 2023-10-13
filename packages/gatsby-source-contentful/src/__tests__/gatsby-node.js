@@ -674,13 +674,29 @@ describe(`gatsby-node`, () => {
 
     expect(schema.buildObjectType).not.toHaveBeenCalledWith(
       expect.objectContaining({
-        name: `ContentfulPerson`,
+        name: `ContentfulContentTypePerson`,
       })
     )
 
     expect(schema.buildObjectType).not.toHaveBeenCalledWith(
       expect.objectContaining({
-        name: `ContentfulBlogPost`,
+        name: `ContentfulContentTypeBlogPost`,
+      })
+    )
+
+    expect(actions.createNode).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        internal: expect.objectContaining({
+          type: `ContentfulContentTypeBlogPost`,
+        }),
+      })
+    )
+
+    expect(actions.createNode).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        internal: expect.objectContaining({
+          type: `ContentfulContentTypePerson`,
+        }),
       })
     )
   })

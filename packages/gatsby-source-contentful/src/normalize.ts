@@ -554,6 +554,7 @@ export const createNodesForContentType = ({
   const markdownFields: MarkdownFieldDefinition = new Map(
     pluginConfig.get(`markdownFields`)
   )
+  const contentTypePrefix: string = pluginConfig.get(`contentTypePrefix`)
 
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -784,7 +785,7 @@ export const createNodesForContentType = ({
           parent: contentTypeItemId,
           children: [],
           internal: {
-            type: makeTypeName(contentTypeItemId),
+            type: makeTypeName(contentTypeItemId, contentTypePrefix),
             // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
             contentDigest: entryItem.sys.updatedAt,
           },
