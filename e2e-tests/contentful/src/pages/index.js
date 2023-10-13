@@ -59,6 +59,9 @@ const IndexPage = () => (
       <li>
         <Link to="/ssr">SSR</Link>
       </li>
+      <li>
+        <Link to="/custom-fields">Custom Fields &amp; Resolver</Link>
+      </li>
     </ul>
   </Layout>
 )
