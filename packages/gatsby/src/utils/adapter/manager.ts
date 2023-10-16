@@ -276,7 +276,8 @@ function getRoutesManifest(): RoutesManifest {
 
   // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
   function addRoute(route: Route): void {
-    if (!route.path.startsWith(`/`)) {
+    const externalPathsRegex = new RegExp(`^https?://`, `i`)
+    if (!route.path.startsWith(`/`) && !externalPathsRegex.test(route.path)) {
       route.path = `/${route.path}`
     }
 
