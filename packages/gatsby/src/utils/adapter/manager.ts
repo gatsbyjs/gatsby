@@ -467,6 +467,7 @@ function getRoutesManifest(): RoutesManifest {
         (redirect.isPermanent
           ? HTTP_STATUS_CODE.MOVED_PERMANENTLY_301
           : HTTP_STATUS_CODE.FOUND_302),
+      force: redirect.force,
       ignoreCase: redirect.ignoreCase,
       headers: BASE_HEADERS,
     })

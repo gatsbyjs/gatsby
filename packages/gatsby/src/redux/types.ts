@@ -31,6 +31,7 @@ export interface IRedirect {
   redirectInBrowser?: boolean
   ignoreCase: boolean
   statusCode?: HttpStatusCode
+  force?: boolean
   // Users can add anything to this createRedirect API
   [key: string]: any
 }
