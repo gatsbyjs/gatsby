@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.12.1/packages/gatsby-plugin-sharp) (2023-10-09)
+
+#### Chores
+
+- upgrade sharp to latest v0.32.6 [#38374](https://github.com/gatsbyjs/gatsby/issues/38374) [#38617](https://github.com/gatsbyjs/gatsby/issues/38617) ([f1a4107](https://github.com/gatsbyjs/gatsby/commit/f1a41079fa1d25cd20139cfb15add6fe081ec3ee))
+
 ## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@5.12.0/packages/gatsby-plugin-sharp) (2023-08-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
