@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.7/packages/gatsby) (2023-10-17)
+
+#### Bug Fixes
+
+- open lmdb instances in writeable locations in generated ssr/dsg function [#38631](https://github.com/gatsbyjs/gatsby/issues/38631) [#38638](https://github.com/gatsbyjs/gatsby/issues/38638) ([acb8799](https://github.com/gatsbyjs/gatsby/commit/acb87998dd452610cc33ad21a7e5844f3786f426))
+
+### [5.12.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.6/packages/gatsby) (2023-10-09)
+
+**Note:** Version bump only for package gatsby
+
 ### [5.12.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.5/packages/gatsby) (2023-09-27)
 
 **Note:** Version bump only for package gatsby
