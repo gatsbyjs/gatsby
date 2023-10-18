@@ -17,6 +17,7 @@ import type {
   IAdapter,
   IAdapterFinalConfig,
   IAdapterConfig,
+  HeaderRoutes,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
@@ -31,6 +32,7 @@ import {
   BASE_HEADERS,
   MUST_REVALIDATE_HEADERS,
   PERMAMENT_CACHING_HEADERS,
+  PERMANENT_CACHE_CONTROL_HEADER,
 } from "./constants"
 import { createHeadersMatcher } from "./create-headers"
 import { HTTP_STATUS_CODE } from "../../redux/types"
@@ -201,10 +203,13 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined
+      let _headerRoutes: HeaderRoutes | undefined = undefined
       const adaptContext: IAdaptContext = {
         get routesManifest(): RoutesManifest {
           if (!_routesManifest) {
-            _routesManifest = getRoutesManifest()
+            const { routes, headers } = getRoutesManifest()
+            _routesManifest = routes
+            _headerRoutes = headers
           }
 
           return _routesManifest
@@ -215,6 +220,15 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           }
 
           return _functionsManifest
+        },
+        get headerRoutes(): HeaderRoutes {
+          if (!_headerRoutes) {
+            const { routes, headers } = getRoutesManifest()
+            _routesManifest = routes
+            _headerRoutes = headers
+          }
+
+          return _headerRoutes
         },
         reporter,
         // Our internal Gatsby config allows this to be undefined but for the adapter we should always pass through the default values and correctly show this in the TypeScript types
@@ -261,10 +275,44 @@ export function setWebpackAssets(assets: Set<string>): void {
 
 type RouteWithScore = { score: number } & Route
 
-function getRoutesManifest(): RoutesManifest {
+const headersAreEqual = (a, b) => a.key === b.key && a.value === b.value
+
+const defaultHeaderRoutes: HeaderRoutes = [
+  {
+    path: "/*",
+    headers: BASE_HEADERS,
+  },
+  {
+    path: "/static/*",
+    headers: PERMANENT_CACHE_CONTROL_HEADER,
+  },
+]
+
+const customHeaderFilter = (route: Route) => (h: IHeader["headers"][0]) => {
+  for (const baseHeader of BASE_HEADERS) {
+    if (headersAreEqual(baseHeader, h)) {
+      return false
+    }
+  }
+  if (route.path.startsWith(`/static/`)) {
+    for (const cachingHeader of PERMAMENT_CACHING_HEADERS) {
+      if (headersAreEqual(cachingHeader, h)) {
+        return false
+      }
+    }
+  }
+  return true
+}
+
+function getRoutesManifest(): {
+  routes: RoutesManifest
+  headers: HeaderRoutes
+} {
   const routes: Array<RouteWithScore> = []
   const state = store.getState()
   const createHeaders = createHeadersMatcher(state.config.headers)
+
+  const headerRoutes: HeaderRoutes = [...defaultHeaderRoutes]
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -290,11 +338,19 @@ function getRoutesManifest(): RoutesManifest {
 
     if (route.type !== `function`) {
       route.headers = createHeaders(route.path, route.headers)
+      console.log(`route.headers`, route.headers)
+      const customHeaders = route.headers.filter(customHeaderFilter(route))
+      if (customHeaders.length > 0) {
+        headerRoutes.push({ path: route.path, headers: customHeaders })
+      }
     }
 
-    ;(route as RouteWithScore).score = rankRoute(route.path)
+    const routeWithScore: RouteWithScore = {
+      ...route,
+      score: rankRoute(route.path),
+    }
 
-    routes.push(route as RouteWithScore)
+    routes.push(routeWithScore)
   }
 
   function addStaticRoute({
@@ -506,25 +562,27 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
-  return (
-    routes
-      .sort((a, b) => {
-        // The higher the score, the higher the specificity of our path
-        const order = b.score - a.score
-        if (order !== 0) {
-          return order
-        }
+  const sortedRoutes = routes
+    .sort((a, b) => {
+      // The higher the score, the higher the specificity of our path
+      const order = b.score - a.score
+      if (order !== 0) {
+        return order
+      }
 
-        // if specificity is the same we do lexigraphic comparison of path to ensure
-        // deterministic order regardless of order pages where created
-        return a.path.localeCompare(b.path)
-      })
-      // The score should be internal only, so we remove it from the final manifest
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .map(({ score, ...rest }): Route => {
-        return { ...rest }
-      })
-  )
+      // if specificity is the same we do lexigraphic comparison of path to ensure
+      // deterministic order regardless of order pages where created
+      return a.path.localeCompare(b.path)
+    })
+    // The score should be internal only, so we remove it from the final manifest
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .map(({ score, ...rest }): Route => {
+      return { ...rest }
+    })
+  return {
+    routes: sortedRoutes,
+    headers: headerRoutes,
+  }
 }
 
 function getFunctionsManifest(): FunctionsManifest {
