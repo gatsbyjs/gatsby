@@ -70,6 +70,20 @@ const redirects: IGatsbyState["redirects"] = [{
   ignoreCase: true,
   redirectInBrowser: false,
   toPath: '/new-url'
+}, {
+  fromPath: '/old-url2',
+  isPermanent: true,
+  ignoreCase: true,
+  redirectInBrowser: false,
+  toPath: '/new-url2',
+  force: true
+}, {
+  fromPath: '/old-url3',
+  isPermanent: true,
+  ignoreCase: true,
+  redirectInBrowser: false,
+  toPath: '/new-url3',
+  force: false
 }]
 
 const functions: IGatsbyState["functions"] = [{

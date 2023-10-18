@@ -8,10 +8,12 @@ export const createPages: GatsbyNode["createPages"] = ({ actions: { createRedire
   createRedirect({
     fromPath: applyTrailingSlashOption("/redirect", TRAILING_SLASH),
     toPath: applyTrailingSlashOption("/routes/redirect/hit", TRAILING_SLASH),
+    force: true,
   })
   createRedirect({
     fromPath: applyTrailingSlashOption("/routes/redirect/existing", TRAILING_SLASH),
     toPath: applyTrailingSlashOption("/routes/redirect/hit", TRAILING_SLASH),
+    force: false,
   })
 
   createSlice({

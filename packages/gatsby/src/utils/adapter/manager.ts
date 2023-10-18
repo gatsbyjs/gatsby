@@ -458,18 +458,28 @@ function getRoutesManifest(): RoutesManifest {
 
   // redirect routes
   for (const redirect of state.redirects.values()) {
+    const {
+      fromPath,
+      toPath,
+      statusCode,
+      isPermanent,
+      ignoreCase,
+      redirectInBrowser,
+      ...platformSpecificFields
+    } = redirect
+
     addRoute({
-      path: redirect.fromPath,
+      path: fromPath,
       type: `redirect`,
-      toPath: redirect.toPath,
+      toPath: toPath,
       status:
-        redirect.statusCode ??
-        (redirect.isPermanent
+        statusCode ??
+        (isPermanent
           ? HTTP_STATUS_CODE.MOVED_PERMANENTLY_301
           : HTTP_STATUS_CODE.FOUND_302),
-      force: redirect.force,
-      ignoreCase: redirect.ignoreCase,
+      ignoreCase: ignoreCase,
       headers: BASE_HEADERS,
+      platformSpecificFields,
     })
   }
 

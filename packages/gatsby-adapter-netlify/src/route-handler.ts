@@ -159,14 +159,13 @@ export async function handleRoutesManifest(
       const {
         status: routeStatus,
         toPath,
-        force,
         // TODO: add headers handling
         headers,
         ...rest
       } = route
       let status = String(routeStatus)
 
-      if (force) {
+      if (rest.force) {
         status = `${status}!`
       }
 

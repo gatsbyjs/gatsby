@@ -142,4 +142,11 @@ describe(`route-handler`, () => {
       })
     })
   })
+
+  describe(`forceRedirects`, () => {
+    const routesManifest = []
+    await handleRoutesManifest(routesManifest)
+
+    expect(status).toEqual(`200!`)
+  })
 })
