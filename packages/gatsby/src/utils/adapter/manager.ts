@@ -327,7 +327,10 @@ function getRoutesManifest(): {
 
   // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
   function addRoute(route: Route): void {
-    if (!route.path.startsWith(`/`)) {
+    if (
+      !route.path.startsWith(`/`) &&
+      !(route.path.startsWith(`https://`) || route.path.startsWith(`http://`))
+    ) {
       route.path = `/${route.path}`
     }
 
