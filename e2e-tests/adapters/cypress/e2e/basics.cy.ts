@@ -2,15 +2,14 @@ import { title } from "../../constants"
 
 describe("Basics", () => {
   beforeEach(() => {
-    cy.intercept("/gatsby-icon.png", req => {
-      req.on("before:response", res => {
-        // force all API responses to not be cached
-        res.headers["cache-control"] = "no-store"
-      })
-    }).as("static-folder-image")
+    cy.intercept("/gatsby-icon.png").as("static-folder-image")
     cy.intercept("/static/astro-**.png", req => {
       req.on("before:response", res => {
-        // force all API responses to not be cached
+        // this generally should be permamently cached, but that cause problems with intercepting
+        // see https://docs.cypress.io/api/commands/intercept#cyintercept-and-request-caching
+        // so we disable caching for this response
+        // tests for cache-control headers should be done elsewhere
+
         res.headers["cache-control"] = "no-store"
       })
     }).as("img-import")
@@ -25,14 +24,14 @@ describe("Basics", () => {
   // If this test fails, run "gatsby build" and retry
   it('should serve assets from "static" folder', () => {
     cy.wait("@static-folder-image").should(req => {
-      expect(req.response.statusCode).to.be.eq(200)
+      expect(req.response.statusCode).to.be.gte(200).and.lt(400)
     })
 
     cy.get('[alt="Gatsby Monogram Logo"]').should("be.visible")
   })
   it("should serve assets imported through webpack", () => {
     cy.wait("@img-import").should(req => {
-      expect(req.response.statusCode).to.be.eq(200)
+      expect(req.response.statusCode).to.be.gte(200).and.lt(400)
     })
 
     cy.get('[alt="Gatsby Astronaut"]').should("be.visible")
