@@ -275,34 +275,37 @@ export function setWebpackAssets(assets: Set<string>): void {
 
 type RouteWithScore = { score: number } & Route
 
-const headersAreEqual = (a, b) => a.key === b.key && a.value === b.value
+const headersAreEqual = (a, b): boolean =>
+  a.key === b.key && a.value === b.value
 
 const defaultHeaderRoutes: HeaderRoutes = [
   {
-    path: "/*",
+    path: `/*`,
     headers: BASE_HEADERS,
   },
   {
-    path: "/static/*",
+    path: `/static/*`,
     headers: PERMANENT_CACHE_CONTROL_HEADER,
   },
 ]
 
-const customHeaderFilter = (route: Route) => (h: IHeader["headers"][0]) => {
-  for (const baseHeader of BASE_HEADERS) {
-    if (headersAreEqual(baseHeader, h)) {
-      return false
-    }
-  }
-  if (route.path.startsWith(`/static/`)) {
-    for (const cachingHeader of PERMAMENT_CACHING_HEADERS) {
-      if (headersAreEqual(cachingHeader, h)) {
+const customHeaderFilter =
+  (route: Route) =>
+  (h: IHeader["headers"][0]): boolean => {
+    for (const baseHeader of BASE_HEADERS) {
+      if (headersAreEqual(baseHeader, h)) {
         return false
       }
     }
+    if (route.path.startsWith(`/static/`)) {
+      for (const cachingHeader of PERMAMENT_CACHING_HEADERS) {
+        if (headersAreEqual(cachingHeader, h)) {
+          return false
+        }
+      }
+    }
+    return true
   }
-  return true
-}
 
 function getRoutesManifest(): {
   routes: RoutesManifest
