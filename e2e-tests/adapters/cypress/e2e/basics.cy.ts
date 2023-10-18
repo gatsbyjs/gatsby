@@ -2,16 +2,18 @@ import { title } from "../../constants"
 
 describe("Basics", () => {
   beforeEach(() => {
-    cy.intercept("/gatsby-icon.png").as("static-folder-image")
-    cy.intercept("/static/astro-**.png").as("img-import")
-
-    // clear browser cache before each test - otherwise permanently cached assets (like img-import)
-    // would be intercepted only on very first test
-    cy.wrap(
-      Cypress.automation("remote:debugger:protocol", {
-        command: "Network.clearBrowserCache",
+    cy.intercept("/gatsby-icon.png", req => {
+      req.on("before:response", res => {
+        // force all API responses to not be cached
+        res.headers["cache-control"] = "no-store"
       })
-    )
+    }).as("static-folder-image")
+    cy.intercept("/static/astro-**.png", req => {
+      req.on("before:response", res => {
+        // force all API responses to not be cached
+        res.headers["cache-control"] = "no-store"
+      })
+    }).as("img-import")
 
     cy.visit("/").waitForRouteChange()
   })
