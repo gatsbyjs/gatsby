@@ -67,11 +67,11 @@ export type Route = IStaticRoute | IFunctionRoute | IRedirectRoute
 
 export type RoutesManifest = Array<Route>
 
-export interface HeaderRoute extends IBaseRoute {
+export interface IHeaderRoute extends IBaseRoute {
   headers: IHeader["headers"]
 }
 
-export type HeaderRoutes = HeaderRoute[]
+export type HeaderRoutes = Array<IHeaderRoute>
 export interface IFunctionDefinition {
   /**
    * Unique identifier of this function. Corresponds to the `functionId` inside the `routesManifest`.

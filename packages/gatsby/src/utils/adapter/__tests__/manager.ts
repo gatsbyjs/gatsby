@@ -92,7 +92,7 @@ describe(`getRoutesManifest`, () => {
       ])
     )
   })
-  
+
   it(`should not prepend '\\' to external redirects`, () => {
     mockStoreState(stateDefault)
     process.chdir(fixturesDir)
@@ -117,8 +117,8 @@ describe(`getRoutesManifest`, () => {
             source: `/ssr/*`,
             headers: [
               {
-                key: "x-ssr-header",
-                value: "my custom header value from config",
+                key: `x-ssr-header`,
+                value: `my custom header value from config`,
               },
             ],
           },
@@ -132,52 +132,52 @@ describe(`getRoutesManifest`, () => {
 
     expect(headers).toContainEqual({
       headers: [
-        { key: "x-xss-protection", value: "1; mode=block" },
-        { key: "x-content-type-options", value: "nosniff" },
-        { key: "referrer-policy", value: "same-origin" },
-        { key: "x-frame-options", value: "DENY" },
+        { key: `x-xss-protection`, value: `1; mode=block` },
+        { key: `x-content-type-options`, value: `nosniff` },
+        { key: `referrer-policy`, value: `same-origin` },
+        { key: `x-frame-options`, value: `DENY` },
       ],
-      path: "/*",
+      path: `/*`,
     })
     expect(headers).toContainEqual({
       headers: [
         {
-          key: "cache-control",
-          value: "public, max-age=31536000, immutable",
+          key: `cache-control`,
+          value: `public, max-age=31536000, immutable`,
         },
       ],
-      path: "/static/*",
+      path: `/static/*`,
     })
     expect(headers).toContainEqual({
       headers: [
         {
-          key: "cache-control",
-          value: "public, max-age=0, must-revalidate",
+          key: `cache-control`,
+          value: `public, max-age=0, must-revalidate`,
         },
       ],
-      path: "/page-data/index/page-data.json",
+      path: `/page-data/index/page-data.json`,
     })
     expect(headers).toContainEqual({
       headers: [
         {
-          key: "cache-control",
-          value: "public, max-age=31536000, immutable",
+          key: `cache-control`,
+          value: `public, max-age=31536000, immutable`,
         },
       ],
-      path: "/app-123.js",
+      path: `/app-123.js`,
     })
     expect(headers).not.toContainEqual({
       headers: [
-        { key: "x-xss-protection", value: "1; mode=block" },
-        { key: "x-content-type-options", value: "nosniff" },
-        { key: "referrer-policy", value: "same-origin" },
-        { key: "x-frame-options", value: "DENY" },
+        { key: `x-xss-protection`, value: `1; mode=block` },
+        { key: `x-content-type-options`, value: `nosniff` },
+        { key: `referrer-policy`, value: `same-origin` },
+        { key: `x-frame-options`, value: `DENY` },
       ],
-      path: "/ssr/*",
+      path: `/ssr/*`,
     })
 
     expect(headers).not.toContain(
-      expect.objectContaining({ path: "/static/app-456.js" })
+      expect.objectContaining({ path: `/static/app-456.js` })
     )
   })
 })
