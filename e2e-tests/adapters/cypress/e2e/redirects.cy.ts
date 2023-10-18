@@ -54,4 +54,12 @@ describe("Redirects", () => {
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
+  it("should force redirect ", () => {
+    cy.visit(applyTrailingSlashOption(`/routes/redirect/existing`, `never`), {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+      .assertRoute(applyTrailingSlashOption(`/routes/redirect/existing-force`, `never`))
+
+    cy.get(`h1`).should(`have.text`, `Existing Force`)
+  })
 })

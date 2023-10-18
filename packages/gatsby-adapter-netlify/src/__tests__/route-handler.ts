@@ -1,6 +1,7 @@
 import fs from "fs-extra"
 import { tmpdir } from "os"
 import { join } from "path"
+import { Route } from "gatsby/src/utils/adapter/types"
 import {
   injectEntries,
   ADAPTER_MARKER_START,
@@ -8,6 +9,7 @@ import {
   NETLIFY_PLUGIN_MARKER_START,
   NETLIFY_PLUGIN_MARKER_END,
   GATSBY_PLUGIN_MARKER_START,
+  handleRoutesManifest,
 } from "../route-handler"
 
 function generateLotOfContent(placeholderCharacter: string): string {
@@ -143,10 +145,19 @@ describe(`route-handler`, () => {
     })
   })
 
-  describe(`forceRedirects`, () => {
-    const routesManifest = []
-    await handleRoutesManifest(routesManifest)
+  // describe(`forceRedirects`, () => {
+  //   it(`honors the force parameter`, async () => {
+  //     const redirects: Route = {
+  //       path: `/old-url`,
+  //       type: `redirect`,
+  //       toPath: `/new-url`,
+  //       status: 200,
+  //       headers: [{}],
+  //       force: true,
+  //       conditions: { language: [`ca`, `us`] },
+  //     }
 
-    expect(status).toEqual(`200!`)
-  })
+  //     await handleRoutesManifest([redirects])
+  //   })
+  // })
 })
