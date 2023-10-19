@@ -344,7 +344,6 @@ function getRoutesManifest(): {
 
     if (route.type !== `function`) {
       route.headers = createHeaders(route.path, route.headers)
-      console.log(`route.headers`, route.headers)
       const customHeaders = route.headers.filter(customHeaderFilter(route))
       if (customHeaders.length > 0) {
         headerRoutes.push({ path: route.path, headers: customHeaders })

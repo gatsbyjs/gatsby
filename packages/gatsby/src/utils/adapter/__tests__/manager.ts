@@ -98,8 +98,8 @@ describe(`getRoutesManifest`, () => {
     process.chdir(fixturesDir)
     setWebpackAssets(new Set([`app-123.js`]))
 
-    const routesManifest = getRoutesManifest()
-    expect(routesManifest).toEqual(
+    const { routes } = getRoutesManifest()
+    expect(routes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ path: `https://old-url` }),
         expect.objectContaining({ path: `http://old-url` }),
@@ -111,7 +111,6 @@ describe(`getRoutesManifest`, () => {
     mockStoreState(stateDefault, {
       config: {
         ...stateDefault.config,
-        trailingSlash: `always`,
         headers: [
           {
             source: `/ssr/*`,

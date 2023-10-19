@@ -146,7 +146,7 @@ Array [
   },
   Object {
     "functionId": "static-index-js",
-    "path": "/api/static/",
+    "path": "/api/static",
     "type": "function",
   },
   Object {
@@ -233,7 +233,7 @@ Array [
   Object {
     "cache": true,
     "functionId": "ssr-engine",
-    "path": "/dsg/",
+    "path": "/dsg",
     "type": "function",
   },
   Object {
@@ -263,7 +263,7 @@ Array [
   },
   Object {
     "functionId": "ssr-engine",
-    "path": "/ssr/",
+    "path": "/ssr",
     "type": "function",
   },
   Object {
