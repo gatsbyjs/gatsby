@@ -130,11 +130,11 @@ export async function injectEntries(
   await fs.move(tmpFile, fileName)
 }
 
-export async function handleRoutesManifest(
-  routesManifest: RoutesManifest
-): Promise<{
+export function processRoutesManifest(routesManifest: RoutesManifest): {
+  redirects: string
+  headers: string
   lambdasThatUseCaching: Map<string, string>
-}> {
+} {
   const lambdasThatUseCaching = new Map<string, string>()
 
   let _redirects = ``
@@ -221,9 +221,18 @@ export async function handleRoutesManifest(
       )}`
     }
   }
+  return { redirects: _redirects, headers: _headers, lambdasThatUseCaching }
+}
 
-  await injectEntries(`public/_redirects`, _redirects)
-  await injectEntries(`public/_headers`, _headers)
+export async function handleRoutesManifest(
+  routesManifest: RoutesManifest
+): Promise<{
+  lambdasThatUseCaching: Map<string, string>
+}> {
+  const { redirects, headers, lambdasThatUseCaching } =
+    processRoutesManifest(routesManifest)
+  await injectEntries(`public/_redirects`, redirects)
+  await injectEntries(`public/_headers`, headers)
 
   return {
     lambdasThatUseCaching,

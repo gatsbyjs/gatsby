@@ -76,7 +76,8 @@ const redirects: IGatsbyState["redirects"] = [{
   ignoreCase: true,
   redirectInBrowser: false,
   toPath: '/new-url2',
-  force: true
+  force: true,
+  conditions: { language: [`ca`, `us`] }
 }, {
   fromPath: '/old-url3',
   isPermanent: true,

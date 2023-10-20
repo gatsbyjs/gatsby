@@ -479,7 +479,7 @@ function getRoutesManifest(): RoutesManifest {
           : HTTP_STATUS_CODE.FOUND_302),
       ignoreCase: ignoreCase,
       headers: BASE_HEADERS,
-      platformSpecificFields,
+      ...platformSpecificFields,
     })
   }
 

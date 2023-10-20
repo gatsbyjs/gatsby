@@ -106,11 +106,30 @@ describe(`getRoutesManifest`, () => {
       expect.arrayContaining([
         expect.objectContaining({
           path: `/old-url2`,
-          platformSpecificFields: { force: true },
+          force: true,
         }),
         expect.objectContaining({
           path: `/old-url3`,
-          platformSpecificFields: { force: false },
+          force: false,
+        }),
+      ])
+    )
+  })
+
+  it(`should respect "conditions" redirects parameter`, () => {
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config },
+    })
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`]))
+
+    const routesManifest = getRoutesManifest()
+
+    expect(routesManifest).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: `/old-url2`,
+          conditions: { language: [`ca`, `us`] },
         }),
       ])
     )

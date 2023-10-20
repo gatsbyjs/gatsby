@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 import { tmpdir } from "os"
 import { join } from "path"
-import { Route } from "gatsby/src/utils/adapter/types"
+import { Route, RoutesManifest } from "gatsby/src/utils/adapter/types"
 import {
   injectEntries,
   ADAPTER_MARKER_START,
@@ -9,7 +9,7 @@ import {
   NETLIFY_PLUGIN_MARKER_START,
   NETLIFY_PLUGIN_MARKER_END,
   GATSBY_PLUGIN_MARKER_START,
-  handleRoutesManifest,
+  processRoutesManifest,
 } from "../route-handler"
 
 function generateLotOfContent(placeholderCharacter: string): string {
@@ -145,19 +145,44 @@ describe(`route-handler`, () => {
     })
   })
 
-  // describe(`forceRedirects`, () => {
-  //   it(`honors the force parameter`, async () => {
-  //     const redirects: Route = {
-  //       path: `/old-url`,
-  //       type: `redirect`,
-  //       toPath: `/new-url`,
-  //       status: 200,
-  //       headers: [{}],
-  //       force: true,
-  //       conditions: { language: [`ca`, `us`] },
-  //     }
+  describe(`createRedirects`, () => {
+    it(`honors the force parameter`, async () => {
+      const manifest: RoutesManifest = [
+        {
+          path: `/old-url`,
+          type: `redirect`,
+          toPath: `/new-url`,
+          status: 301,
+          headers: [{ key: `string`, value: `string` }],
+          force: true,
+        },
+        {
+          path: `/old-url2`,
+          type: `redirect`,
+          toPath: `/new-url2`,
+          status: 308,
+          headers: [{ key: `string`, value: `string` }],
+          force: false,
+        },
+      ]
 
-  //     await handleRoutesManifest([redirects])
-  //   })
-  // })
+      const { redirects } = processRoutesManifest(manifest)
+      expect(redirects).toContain(`301!`)
+      expect(redirects).toContain(`308`)
+    })
+
+    it(`honors the conditions parameter`, async () => {
+      const redirect: Route = {
+        path: `/old-url`,
+        type: `redirect`,
+        toPath: `/new-url`,
+        status: 200,
+        headers: [{ key: `string`, value: `string` }],
+        conditions: { language: [`ca`, `us`] },
+      }
+
+      const { redirects } = processRoutesManifest([redirect])
+      expect(redirects).toContain(`Language:ca,us`)
+    })
+  })
 })
