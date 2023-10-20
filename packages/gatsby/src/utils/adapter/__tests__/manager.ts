@@ -50,9 +50,11 @@ describe(`getRoutesManifest`, () => {
     process.chdir(fixturesDir)
     setWebpackAssets(new Set([`app-123.js`]))
 
-    const { routes: routesManifest } = getRoutesManifest()
+    const { routes: routesManifest, headers: headerRoutes } =
+      getRoutesManifest()
 
     expect(routesManifest).toMatchSnapshot()
+    expect(headerRoutes).toMatchSnapshot()
   })
 
   it(`should respect "never" trailingSlash config option`, () => {
