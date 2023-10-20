@@ -1,4 +1,4 @@
-import type { RoutesManifest } from "gatsby"
+import type { RoutesManifest, HeaderRoutes } from "gatsby"
 import { tmpdir } from "os"
 import { Transform } from "stream"
 import { join, basename } from "path"
@@ -130,8 +130,16 @@ export async function injectEntries(
   await fs.move(tmpFile, fileName)
 }
 
+function buildHeaderString(path, headers): string {
+  return `${encodeURI(path)}\n${headers.reduce((acc, curr) => {
+    acc += `  ${curr.key}: ${curr.value}\n`
+    return acc
+  }, ``)}`
+}
+
 export async function handleRoutesManifest(
-  routesManifest: RoutesManifest
+  routesManifest: RoutesManifest,
+  headerRoutes: HeaderRoutes
 ): Promise<{
   lambdasThatUseCaching: Map<string, string>
 }> {
@@ -213,14 +221,18 @@ export async function handleRoutesManifest(
         )}  200\n`
       }
 
-      _headers += `${encodeURI(fromPath)}\n${route.headers.reduce(
-        (acc, curr) => {
-          acc += `  ${curr.key}: ${curr.value}\n`
-          return acc
-        },
-        ``
-      )}`
+      if (!headerRoutes) {
+        // don't generate _headers from routesManifest if headerRoutes are provided
+        _headers += buildHeaderString(route.path, route.headers)
+      }
     }
+  }
+
+  if (headerRoutes) {
+    _headers = headerRoutes.reduce((acc, curr) => {
+      acc += buildHeaderString(curr.path, curr.headers)
+      return acc
+    }, ``)
   }
 
   await injectEntries(`public/_redirects`, _redirects)
