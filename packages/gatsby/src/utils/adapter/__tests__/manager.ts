@@ -93,12 +93,25 @@ describe(`getRoutesManifest`, () => {
     )
   })
 
+  it(`should not prepend '\\' to external redirects`, () => {
+    mockStoreState(stateDefault)
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`]))
+
+    const routesManifest = getRoutesManifest()
+
+    expect(routesManifest).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: `https://old-url` }),
+        expect.objectContaining({ path: `http://old-url` }),
+      ])
+    )
+  })
+
   it(`should respect "force" redirects parameter`, () => {
     mockStoreState(stateDefault, {
       config: { ...stateDefault.config },
     })
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`]))
 
     const routesManifest = getRoutesManifest()
 
@@ -107,10 +120,6 @@ describe(`getRoutesManifest`, () => {
         expect.objectContaining({
           path: `/old-url2`,
           force: true,
-        }),
-        expect.objectContaining({
-          path: `/old-url3`,
-          force: false,
         }),
       ])
     )
