@@ -3,6 +3,7 @@ import { tmpdir } from "os"
 import { Transform } from "stream"
 import { join, basename } from "path"
 import fs from "fs-extra"
+import { createStaticAssetsPathHandler } from "./pretty-urls"
 
 const NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST = new Set([
   `query`,
@@ -137,6 +138,11 @@ export async function handleRoutesManifest(
 }> {
   const lambdasThatUseCaching = new Map<string, string>()
 
+  fs.writeFileSync(`test.json`, JSON.stringify(routesManifest, null, 2))
+
+  const { ensureStaticAssetPath, fileMovingDone } =
+    createStaticAssetsPathHandler()
+
   let _redirects = ``
   let _headers = ``
   for (const route of routesManifest) {
@@ -211,6 +217,8 @@ export async function handleRoutesManifest(
           /^public/,
           ``
         )}  200\n`
+      } else {
+        ensureStaticAssetPath(route.filePath, fromPath)
       }
 
       _headers += `${encodeURI(fromPath)}\n${route.headers.reduce(
@@ -222,6 +230,8 @@ export async function handleRoutesManifest(
       )}`
     }
   }
+
+  await fileMovingDone()
 
   await injectEntries(`public/_redirects`, _redirects)
   await injectEntries(`public/_headers`, _headers)

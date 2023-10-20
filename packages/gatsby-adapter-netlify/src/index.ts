@@ -102,8 +102,8 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         excludeDatastoreFromEngineFunction,
         deployURL,
         supports: {
-          pathPrefix: false,
-          trailingSlash: [`always`],
+          pathPrefix: true,
+          trailingSlash: [`always`, `never`, `ignore`],
         },
         pluginsToDisable: [
           `gatsby-plugin-netlify-cache`,

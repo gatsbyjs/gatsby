@@ -265,6 +265,9 @@ function getRoutesManifest(): RoutesManifest {
   const routes: Array<RouteWithScore> = []
   const state = store.getState()
   const createHeaders = createHeadersMatcher(state.config.headers)
+  const pathPrefix = state.program.prefixPaths
+    ? state.config.pathPrefix ?? ``
+    : ``
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -309,6 +312,10 @@ function getRoutesManifest(): RoutesManifest {
     pathToFillInPublicDir: string
     headers: IHeader["headers"]
   }): void {
+    if (pathPrefix && !path.startsWith(pathPrefix)) {
+      path = posix.join(pathPrefix, path)
+    }
+
     addRoute({
       path,
       type: `static`,
