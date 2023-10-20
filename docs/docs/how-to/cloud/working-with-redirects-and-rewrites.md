@@ -215,3 +215,4 @@ The important part here is that you have an external toPath with a complete URL 
 - Infinitely looping rules, where the “from” and “to” resolve to the same location, are incorrect and will be ignored.
 - We limit internal rewrites to one “hop” — you cannot proxy from Gatsby Site A to Gatsby Site B to Gatsby Site C in a single request.
 - A proxy request will timeout after 20 seconds
+- Use URL [Redirect Checker](https://redirectchecker.com/) to get detail redirection chain and its status code
