@@ -191,7 +191,21 @@ export class GraphQLEngine {
       },
     } as unknown as IGatsbyState
 
-    return findPageByPath(state, pathName, false)
+    let page = findPageByPath(state, pathName, false)
+    if (page) {
+      return page
+    }
+
+    if (
+      typeof __PATH_PREFIX__ === `string` &&
+      __PATH_PREFIX__ &&
+      pathName.startsWith(__PATH_PREFIX__)
+    ) {
+      const maybePath = pathName.slice(__PATH_PREFIX__.length)
+      page = findPageByPath(state, maybePath, false)
+    }
+
+    return page
   }
 }
 

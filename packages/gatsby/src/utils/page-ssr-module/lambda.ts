@@ -179,7 +179,7 @@ function getPathInfo(req: GatsbyFunctionRequest):
     }
   | undefined {
   // @ts-ignore GatsbyFunctionRequest.path is not in types ... there is no property in types that can be used to get a path currently
-  const matches = req.url.matchAll(/^\/?page-data\/(.+)\/page-data.json$/gm)
+  const matches = req.url.matchAll(/\/?page-data\/(.+)\/page-data.json$/gm)
   for (const [, requestedPagePath] of matches) {
     return {
       isPageData: true,

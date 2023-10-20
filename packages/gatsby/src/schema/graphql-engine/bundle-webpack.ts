@@ -57,6 +57,11 @@ export async function createGraphqlEngineBundle(
     require.resolve(`gatsby-plugin-typescript`)
   )
 
+  const state = store.getState()
+  const pathPrefix = state.program.prefixPaths
+    ? state.config.pathPrefix ?? ``
+    : ``
+
   const compiler = webpack({
     name: `Query Engine`,
     // mode: `production`,
@@ -221,6 +226,7 @@ export async function createGraphqlEngineBundle(
         "process.env.GATSBY_SLICES": JSON.stringify(
           !!process.env.GATSBY_SLICES
         ),
+        __PATH_PREFIX__: JSON.stringify(pathPrefix),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),
