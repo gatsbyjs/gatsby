@@ -286,6 +286,10 @@ function getRoutesManifest(): RoutesManifest {
       route.path = `/${route.path}`
     }
 
+    if (pathPrefix && !route.path.startsWith(pathPrefix)) {
+      route.path = posix.join(pathPrefix, route.path)
+    }
+
     // Apply trailing slash behavior unless it's a redirect. Redirects should always be exact matches
     if (route.type !== `redirect`) {
       route.path = applyTrailingSlashOption(
@@ -312,10 +316,6 @@ function getRoutesManifest(): RoutesManifest {
     pathToFillInPublicDir: string
     headers: IHeader["headers"]
   }): void {
-    if (pathPrefix && !path.startsWith(pathPrefix)) {
-      path = posix.join(pathPrefix, path)
-    }
-
     addRoute({
       path,
       type: `static`,
