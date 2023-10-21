@@ -95,6 +95,56 @@ Array [
     "type": "function",
   },
   Object {
+    "headers": Array [
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "ignoreCase": true,
+    "path": "http://old-url",
+    "status": 301,
+    "toPath": "http://new-url",
+    "type": "redirect",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "ignoreCase": true,
+    "path": "https://old-url",
+    "status": 301,
+    "toPath": "https://new-url",
+    "type": "redirect",
+  },
+  Object {
     "functionId": "static-index-js",
     "path": "/api/static/",
     "type": "function",
