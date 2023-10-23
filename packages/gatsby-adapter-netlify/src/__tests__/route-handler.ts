@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 import { tmpdir } from "os"
 import { join } from "path"
-import { Route, RoutesManifest } from "gatsby/src/utils/adapter/types"
+import type { IRedirectRoute, RoutesManifest } from "gatsby"
 import {
   injectEntries,
   ADAPTER_MARKER_START,
@@ -167,12 +167,15 @@ describe(`route-handler`, () => {
       ]
 
       const { redirects } = processRoutesManifest(manifest)
-      expect(redirects).toContain(`301!`)
-      expect(redirects).toContain(`308`)
+
+      // `!` is appended to status to mark forced redirect
+      expect(redirects).toMatch(/^\/old-url\s+\/new-url\s+301!$/m)
+      // `!` is not appended to status to mark not forced redirect
+      expect(redirects).toMatch(/^\/old-url2\s+\/new-url2\s+308$/m)
     })
 
     it(`honors the conditions parameter`, async () => {
-      const redirect: Route = {
+      const redirect: IRedirectRoute = {
         path: `/old-url`,
         type: `redirect`,
         toPath: `/new-url`,
@@ -182,7 +185,9 @@ describe(`route-handler`, () => {
       }
 
       const { redirects } = processRoutesManifest([redirect])
-      expect(redirects).toContain(`Language:ca,us`)
+      expect(redirects).toMatch(
+        /^\/old-url\s+\/new-url\s+200\s+Language:ca,us$/m
+      )
     })
   })
 })
