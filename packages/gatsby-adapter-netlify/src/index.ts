@@ -38,10 +38,13 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           reporter.verbose(
             `[gatsby-adapter-netlify] using @netlify/cache-utils restore`
           )
-          return await utils.restore(directories)
-          reporter.info(
-            `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`
-          )
+          const didRestore = await utils.restore(directories)
+          if (didRestore) {
+            reporter.info(
+              `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`
+            )
+          }
+          return didRestore
         }
 
         return false
