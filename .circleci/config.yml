@@ -323,7 +323,7 @@ jobs:
   e2e_tests_pnp:
     executor:
       name: node
-      image: "18.2.0"
+      image: "18.12.0"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
