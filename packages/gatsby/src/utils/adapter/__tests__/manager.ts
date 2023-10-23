@@ -99,6 +99,7 @@ describe(`getRoutesManifest`, () => {
     setWebpackAssets(new Set([`app-123.js`]))
 
     const routesManifest = getRoutesManifest()
+
     expect(routesManifest).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ path: `https://old-url` }),
@@ -106,6 +107,42 @@ describe(`getRoutesManifest`, () => {
       ])
     )
   })
+})
+
+it(`should respect "force" redirects parameter`, () => {
+  mockStoreState(stateDefault, {
+    config: { ...stateDefault.config },
+  })
+
+  const routesManifest = getRoutesManifest()
+
+  expect(routesManifest).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        path: `/old-url2`,
+        force: true,
+      }),
+    ])
+  )
+})
+
+it(`should respect "conditions" redirects parameter`, () => {
+  mockStoreState(stateDefault, {
+    config: { ...stateDefault.config },
+  })
+  process.chdir(fixturesDir)
+  setWebpackAssets(new Set([`app-123.js`]))
+
+  const routesManifest = getRoutesManifest()
+
+  expect(routesManifest).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        path: `/old-url2`,
+        conditions: { language: [`ca`, `us`] },
+      }),
+    ])
+  )
 })
 
 describe(`getFunctionsManifest`, () => {
