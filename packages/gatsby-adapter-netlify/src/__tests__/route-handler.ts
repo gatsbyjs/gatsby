@@ -1,6 +1,7 @@
 import fs from "fs-extra"
 import { tmpdir } from "os"
 import { join } from "path"
+import type { IRedirectRoute, RoutesManifest } from "gatsby"
 import {
   injectEntries,
   ADAPTER_MARKER_START,
@@ -8,6 +9,7 @@ import {
   NETLIFY_PLUGIN_MARKER_START,
   NETLIFY_PLUGIN_MARKER_END,
   GATSBY_PLUGIN_MARKER_START,
+  processRoutesManifest,
 } from "../route-handler"
 
 function generateLotOfContent(placeholderCharacter: string): string {
@@ -140,6 +142,52 @@ describe(`route-handler`, () => {
         expect(content.indexOf(NETLIFY_PLUGIN_MARKER_END)).toBe(-1)
         expect(content.indexOf(netlifyPluginGatsbyContent)).toBe(-1)
       })
+    })
+  })
+
+  describe(`createRedirects`, () => {
+    it(`honors the force parameter`, async () => {
+      const manifest: RoutesManifest = [
+        {
+          path: `/old-url`,
+          type: `redirect`,
+          toPath: `/new-url`,
+          status: 301,
+          headers: [{ key: `string`, value: `string` }],
+          force: true,
+        },
+        {
+          path: `/old-url2`,
+          type: `redirect`,
+          toPath: `/new-url2`,
+          status: 308,
+          headers: [{ key: `string`, value: `string` }],
+          force: false,
+        },
+      ]
+
+      const { redirects } = processRoutesManifest(manifest)
+
+      // `!` is appended to status to mark forced redirect
+      expect(redirects).toMatch(/^\/old-url\s+\/new-url\s+301!$/m)
+      // `!` is not appended to status to mark not forced redirect
+      expect(redirects).toMatch(/^\/old-url2\s+\/new-url2\s+308$/m)
+    })
+
+    it(`honors the conditions parameter`, async () => {
+      const redirect: IRedirectRoute = {
+        path: `/old-url`,
+        type: `redirect`,
+        toPath: `/new-url`,
+        status: 200,
+        headers: [{ key: `string`, value: `string` }],
+        conditions: { language: [`ca`, `us`] },
+      }
+
+      const { redirects } = processRoutesManifest([redirect])
+      expect(redirects).toMatch(
+        /^\/old-url\s+\/new-url\s+200\s+Language=ca,us$/m
+      )
     })
   })
 })

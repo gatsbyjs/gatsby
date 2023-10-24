@@ -32,6 +32,8 @@ const deployInfo = JSON.parse(deployResults.stdout)
 
 process.env.DEPLOY_URL = deployInfo.deploy_url
 
+console.log(`Deployed to ${deployInfo.deploy_url}`)
+
 try {
   await execa(`npm`, [`run`, npmScriptToRun], { stdio: `inherit` })
 } finally {
