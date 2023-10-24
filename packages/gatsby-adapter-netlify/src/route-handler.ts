@@ -193,7 +193,7 @@ export function processRoutesManifest(routesManifest: RoutesManifest): {
                   const conditionName =
                     conditionKey.charAt(0).toUpperCase() + conditionKey.slice(1)
 
-                  pieces.push(`${conditionName}:${conditionValue}`)
+                  pieces.push(`${conditionName}=${conditionValue}`)
                 }
               }
             }

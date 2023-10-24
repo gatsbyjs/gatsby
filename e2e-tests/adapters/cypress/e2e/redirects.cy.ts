@@ -48,8 +48,67 @@ describe("Redirects", () => {
     )
       .waitForRouteChange()
       .assertRoute(
-      applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
+        applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
+      )
+
+    cy.get(`h1`).should(`have.text`, `Hit`)
+  })
+  it("should respect country condition on redirect", () => {
+    cy.visit(
+      applyTrailingSlashOption(
+        `/routes/redirect/country-condition`,
+        TRAILING_SLASH
+      ),
+      {
+        failOnStatusCode: false,
+        headers: {
+          "x-nf-country": "us",
+        },
+      }
     )
+      .waitForRouteChange()
+      .assertRoute(
+        applyTrailingSlashOption(`/routes/redirect/hit-us`, TRAILING_SLASH)
+      )
+
+    cy.get(`h1`).should(`have.text`, `Hit US`)
+
+    cy.visit(
+      applyTrailingSlashOption(
+        `/routes/redirect/country-condition`,
+        TRAILING_SLASH
+      ),
+      {
+        failOnStatusCode: false,
+        headers: {
+          "x-nf-country": "de",
+        },
+      }
+    )
+      .waitForRouteChange()
+      .assertRoute(
+        applyTrailingSlashOption(`/routes/redirect/hit-de`, TRAILING_SLASH)
+      )
+
+    cy.get(`h1`).should(`have.text`, `Hit DE`)
+
+    // testing fallback
+    cy.visit(
+      applyTrailingSlashOption(
+        `/routes/redirect/country-condition`,
+        TRAILING_SLASH
+      ),
+      {
+        failOnStatusCode: false,
+        headers: {
+          "x-nf-country": "fr",
+        },
+      }
+    )
+      .waitForRouteChange()
+      .assertRoute(
+        applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
+      )
 
     cy.get(`h1`).should(`have.text`, `Hit`)
   })
@@ -57,7 +116,7 @@ describe("Redirects", () => {
     cy.visit(
       applyTrailingSlashOption(`/redirect`, TRAILING_SLASH) + `#anchor`,
       {
-      failOnStatusCode: false,
+        failOnStatusCode: false,
       }
     ).waitForRouteChange()
 
@@ -87,13 +146,16 @@ describe("Redirects", () => {
   it("should support search & hash parameter on direct visit", () => {
     cy.visit(
       applyTrailingSlashOption(`/redirect`, TRAILING_SLASH) +
-      `?query_param=hello#anchor`,
+        `?query_param=hello#anchor`,
       {
         failOnStatusCode: false,
       }
     ).waitForRouteChange()
 
-    cy.location(`pathname`).should(`equal`, applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH))
+    cy.location(`pathname`).should(
+      `equal`,
+      applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
+    )
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
