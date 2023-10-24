@@ -67,6 +67,11 @@ export type Route = IStaticRoute | IFunctionRoute | IRedirectRoute
 
 export type RoutesManifest = Array<Route>
 
+export interface IHeaderRoute extends IBaseRoute {
+  headers: IHeader["headers"]
+}
+
+export type HeaderRoutes = Array<IHeaderRoute>
 export interface IFunctionDefinition {
   /**
    * Unique identifier of this function. Corresponds to the `functionId` inside the `routesManifest`.
@@ -99,6 +104,7 @@ interface IDefaultContext {
 export interface IAdaptContext extends IDefaultContext {
   routesManifest: RoutesManifest
   functionsManifest: FunctionsManifest
+  headerRoutes: HeaderRoutes
   /**
    * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#pathprefix
    */
