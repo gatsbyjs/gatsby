@@ -182,7 +182,6 @@ describe(`getRoutesManifest`, () => {
     )
   })
 
-
   it(`should respect "force" redirects parameter`, () => {
     mockStoreState(stateDefault, {
       config: { ...stateDefault.config },
