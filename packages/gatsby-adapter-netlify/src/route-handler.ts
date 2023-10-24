@@ -131,11 +131,11 @@ export async function injectEntries(
   await fs.move(tmpFile, fileName)
 }
 
-export async function handleRoutesManifest(
-  routesManifest: RoutesManifest
-): Promise<{
+export function processRoutesManifest(routesManifest: RoutesManifest): {
+  redirects: string
+  headers: string
   lambdasThatUseCaching: Map<string, string>
-}> {
+} {
   const lambdasThatUseCaching = new Map<string, string>()
 
   fs.writeFileSync(`test.json`, JSON.stringify(routesManifest, null, 2))
@@ -165,14 +165,13 @@ export async function handleRoutesManifest(
       const {
         status: routeStatus,
         toPath,
-        force,
         // TODO: add headers handling
         headers,
         ...rest
       } = route
       let status = String(routeStatus)
 
-      if (force) {
+      if (rest.force) {
         status = `${status}!`
       }
 
@@ -200,7 +199,7 @@ export async function handleRoutesManifest(
                   const conditionName =
                     conditionKey.charAt(0).toUpperCase() + conditionKey.slice(1)
 
-                  pieces.push(`${conditionName}:${conditionValue}`)
+                  pieces.push(`${conditionName}=${conditionValue}`)
                 }
               }
             }
@@ -232,9 +231,18 @@ export async function handleRoutesManifest(
   }
 
   await fileMovingDone()
+  return { redirects: _redirects, headers: _headers, lambdasThatUseCaching }
+}
 
-  await injectEntries(`public/_redirects`, _redirects)
-  await injectEntries(`public/_headers`, _headers)
+export async function handleRoutesManifest(
+  routesManifest: RoutesManifest
+): Promise<{
+  lambdasThatUseCaching: Map<string, string>
+}> {
+  const { redirects, headers, lambdasThatUseCaching } =
+    processRoutesManifest(routesManifest)
+  await injectEntries(`public/_redirects`, redirects)
+  await injectEntries(`public/_headers`, headers)
 
   return {
     lambdasThatUseCaching,
