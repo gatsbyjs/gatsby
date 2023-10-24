@@ -186,7 +186,7 @@ describe(`route-handler`, () => {
 
       const { redirects } = processRoutesManifest([redirect])
       expect(redirects).toMatch(
-        /^\/old-url\s+\/new-url\s+200\s+Language:ca,us$/m
+        /^\/old-url\s+\/new-url\s+200\s+Language=ca,us$/m
       )
     })
   })
