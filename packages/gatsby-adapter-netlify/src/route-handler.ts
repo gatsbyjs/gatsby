@@ -130,7 +130,6 @@ export async function injectEntries(
   await fs.move(tmpFile, fileName)
 }
 
-
 function buildHeaderString(path, headers): string {
   return `${encodeURI(path)}\n${headers.reduce((acc, curr) => {
     acc += `  ${curr.key}: ${curr.value}\n`
@@ -138,7 +137,10 @@ function buildHeaderString(path, headers): string {
   }, ``)}`
 }
 
-export function processRoutesManifest(routesManifest: RoutesManifest): {
+export function processRoutesManifest(
+  routesManifest: RoutesManifest,
+  headerRoutes: HeaderRoutes
+): {
   redirects: string
   headers: string
   lambdasThatUseCaching: Map<string, string>
@@ -225,29 +227,28 @@ export function processRoutesManifest(routesManifest: RoutesManifest): {
         _headers += buildHeaderString(route.path, route.headers)
       }
     }
+
+    if (headerRoutes) {
+      _headers = headerRoutes.reduce((acc, curr) => {
+        acc += buildHeaderString(curr.path, curr.headers)
+        return acc
+      }, ``)
+    }
   }
   return { redirects: _redirects, headers: _headers, lambdasThatUseCaching }
 }
 
-
-  if (headerRoutes) {
-    _headers = headerRoutes.reduce((acc, curr) => {
-      acc += buildHeaderString(curr.path, curr.headers)
-      return acc
-    }, ``)
-  }
-
-  await injectEntries(`public/_redirects`, _redirects)
-  await injectEntries(`public/_headers`, _headers)
-}
-
 export async function handleRoutesManifest(
-  routesManifest: RoutesManifest
+  routesManifest: RoutesManifest,
+  headerRoutes: HeaderRoutes
 ): Promise<{
   lambdasThatUseCaching: Map<string, string>
 }> {
-  const { redirects, headers, lambdasThatUseCaching } =
-    processRoutesManifest(routesManifest)
+  const { redirects, headers, lambdasThatUseCaching } = processRoutesManifest(
+    routesManifest,
+    headerRoutes
+  )
+
   await injectEntries(`public/_redirects`, redirects)
   await injectEntries(`public/_headers`, headers)
 
