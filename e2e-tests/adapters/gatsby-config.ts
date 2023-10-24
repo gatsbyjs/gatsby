@@ -3,7 +3,8 @@ import debugAdapter from "./debug-adapter"
 import { siteDescription, title } from "./constants"
 
 const shouldUseDebugAdapter = process.env.USE_DEBUG_ADAPTER ?? false
-const trailingSlash = (process.env.TRAILING_SLASH || `never`) as GatsbyConfig["trailingSlash"]
+const trailingSlash = (process.env.TRAILING_SLASH ||
+  `never`) as GatsbyConfig["trailingSlash"]
 
 let configOverrides: GatsbyConfig = {}
 
@@ -21,6 +22,39 @@ const config: GatsbyConfig = {
   },
   trailingSlash,
   plugins: [],
+  headers: [
+    {
+      source: `/*`,
+      headers: [
+        {
+          key: "x-custom-header",
+          value: "my custom header value",
+        },
+      ],
+    },
+    {
+      source: `/ssr/*`,
+      headers: [
+        {
+          key: "x-ssr-header",
+          value: "my custom header value from config",
+        },
+        {
+          key: "x-ssr-header-overwrite",
+          value: "my custom header value from config",
+        },
+      ],
+    },
+    {
+      source: `/dsg/*`,
+      headers: [
+        {
+          key: "x-dsg-header",
+          value: "my custom header value",
+        },
+      ],
+    },
+  ],
   ...configOverrides,
 }
 
