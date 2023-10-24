@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.12.1/packages/gatsby-plugin-utils) (2023-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.12.0/packages/gatsby-plugin-utils) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+
+#### Chores
+
+- update dependency msw to ^1.2.2 for gatsby-plugin-utils [#38285](https://github.com/gatsbyjs/gatsby/issues/38285) ([13fc00f](https://github.com/gatsbyjs/gatsby/commit/13fc00f009097ad0eeec346f6732120e7d203257))
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.11.0/packages/gatsby-plugin-utils) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

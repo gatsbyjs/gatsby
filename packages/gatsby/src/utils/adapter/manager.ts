@@ -73,9 +73,7 @@ async function setAdapter({
       store.getState().program.prefixPaths &&
       store.getState().config.pathPrefix
     ) {
-      incompatibleFeatures.push(
-        `pathPrefix is not supported. Please remove the pathPrefix option from your gatsby-config, don't use "--prefix-paths" CLI toggle or PREFIX_PATHS environment variable.`
-      )
+      incompatibleFeatures.push(`pathPrefix is not supported.`)
     }
 
     // trailingSlash support
@@ -98,13 +96,13 @@ async function setAdapter({
     }
 
     if (incompatibleFeatures.length > 0) {
-      reporter.panic({
-        id: `12201`,
-        context: {
-          adapterName: instance.name,
-          incompatibleFeatures,
-        },
-      })
+      reporter.warn(
+        `Adapter "${
+          instance.name
+        }" is not compatible with following settings:\n${incompatibleFeatures
+          .map(line => ` - ${line}`)
+          .join(`\n`)}`
+      )
     }
 
     if (configFromAdapter.pluginsToDisable.length > 0) {
@@ -278,7 +276,10 @@ function getRoutesManifest(): RoutesManifest {
 
   // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
   function addRoute(route: Route): void {
-    if (!route.path.startsWith(`/`)) {
+    if (
+      !route.path.startsWith(`/`) &&
+      !(route.path.startsWith(`https://`) || route.path.startsWith(`http://`))
+    ) {
       route.path = `/${route.path}`
     }
 

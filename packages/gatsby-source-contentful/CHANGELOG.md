@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.2/packages/gatsby-source-contentful) (2023-10-09)
+
+#### Chores
+
+- upgrade sharp to latest v0.32.6 [#38374](https://github.com/gatsbyjs/gatsby/issues/38374) [#38617](https://github.com/gatsbyjs/gatsby/issues/38617) ([f1a4107](https://github.com/gatsbyjs/gatsby/commit/f1a41079fa1d25cd20139cfb15add6fe081ec3ee))
+
+### [8.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.1/packages/gatsby-source-contentful) (2023-10-05)
+
+#### Other Changes
+
+- Update gatsby-contentful-plugin README [#38480](https://github.com/gatsbyjs/gatsby/issues/38480) [#38607](https://github.com/gatsbyjs/gatsby/issues/38607) ([8061500](https://github.com/gatsbyjs/gatsby/commit/8061500bff895a13b825d8df2944244dab3477d5))
+
+## [8.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.0/packages/gatsby-source-contentful) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- handle nullable fields [#38358](https://github.com/gatsbyjs/gatsby/issues/38358) ([7a2778b](https://github.com/gatsbyjs/gatsby/commit/7a2778b2a7c142c7602704c852685338c6c8839e))
+- update minor and patch dependencies for gatsby-source-contentful [#38322](https://github.com/gatsbyjs/gatsby/issues/38322) ([06015b9](https://github.com/gatsbyjs/gatsby/commit/06015b9736b5b7b37497313b0e2a9d2829c9f419))
+- update dependency semver to ^7.5.3 [#38296](https://github.com/gatsbyjs/gatsby/issues/38296) ([11e64e2](https://github.com/gatsbyjs/gatsby/commit/11e64e20898cc97289bdbda00eb4bcc309828b23))
+
 ## [8.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.11.0/packages/gatsby-source-contentful) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

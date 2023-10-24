@@ -23,7 +23,13 @@ function setupFsWrapper(): string {
   } catch (e) {
     // we are in a read-only filesystem, so we need to use a temp dir
 
-    const TEMP_CACHE_DIR = path.join(tmpdir(), `gatsby`, `.cache`)
+    const TEMP_DIR = path.join(tmpdir(), `gatsby`)
+    const TEMP_CACHE_DIR = path.join(TEMP_DIR, `.cache`)
+
+    global.__GATSBY = {
+      root: TEMP_DIR,
+      buildId: ``,
+    }
 
     // TODO: don't hardcode this
     const cacheDir = `/var/task/.cache`
@@ -148,8 +154,8 @@ async function getEngine(): Promise<GraphQLEngineType> {
         reject(error)
       })
     })
+    console.log(`Downloaded datastore from CDN`)
   }
-  console.log(`Downloaded datastore from CDN`)
 
   const graphqlEngine = new GraphQLEngine({
     dbPath,

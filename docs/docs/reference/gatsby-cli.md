@@ -55,6 +55,7 @@ Options include:
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 | `--inspect`     | Opens a port for debugging                      |
+| `--verbose`     | Turn on verbose output                          |
 
 To set up HTTPS, follow the [Local HTTPS guide](/docs/local-https/).
 
@@ -93,6 +94,7 @@ Options include:
 | `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/)                                    |
 | `--graphql-tracing`          | Trace (see above) every graphql resolver, may have performance implications.                                                                 |
 | `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                                             |
+| `--verbose`                  | Turn on verbose output                                                                                                                       |
 
 In addition to these build options, there are some optional [build environment variables](/docs/how-to/local-development/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
 

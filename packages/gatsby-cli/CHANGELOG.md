@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.12.2/packages/gatsby-cli) (2023-10-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.12.1/packages/gatsby-cli) (2023-09-05)
+
+#### Bug Fixes
+
+- don't break builds when using features unsupported by adapter [#38520](https://github.com/gatsbyjs/gatsby/issues/38520) [#38521](https://github.com/gatsbyjs/gatsby/issues/38521) ([232ec13](https://github.com/gatsbyjs/gatsby/commit/232ec1392d699d4e1240e327dec9cbc0873b5067))
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.12.0/packages/gatsby-cli) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Features
+
+- Adapters [#38232](https://github.com/gatsbyjs/gatsby/issues/38232) ([b2d4aef](https://github.com/gatsbyjs/gatsby/commit/b2d4aefa7716e3ef02a19b530a8a7e4678d086e1))
+
+#### Bug Fixes
+
+- update dependency envinfo to ^7.10.0 for gatsby-cli [#38312](https://github.com/gatsbyjs/gatsby/issues/38312) ([5f7f910](https://github.com/gatsbyjs/gatsby/commit/5f7f910471332807ac49bc4d9336dbc3f7b60bcb))
+- update dependency semver to ^7.5.3 [#38296](https://github.com/gatsbyjs/gatsby/issues/38296) ([11e64e2](https://github.com/gatsbyjs/gatsby/commit/11e64e20898cc97289bdbda00eb4bcc309828b23))
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.11.0/packages/gatsby-cli) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)
