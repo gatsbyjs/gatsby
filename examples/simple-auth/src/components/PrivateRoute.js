@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
       // I had to comment this line as useEffect can't return null
       // return null
     }
-  }, [])
+  }, [location.pathname])
 
   return <Component {...rest} />
 }
