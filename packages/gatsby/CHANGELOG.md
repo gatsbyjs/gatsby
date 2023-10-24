@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.8](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.8/packages/gatsby) (2023-10-20)
+
+#### Bug Fixes
+
+- don't force leading slash for external paths in routes manifest [#38639](https://github.com/gatsbyjs/gatsby/issues/38639) [#38646](https://github.com/gatsbyjs/gatsby/issues/38646) ([8302bc8](https://github.com/gatsbyjs/gatsby/commit/8302bc8e781bd147c1a0ddbbaa5b50740b01ef95))
+
 ### [5.12.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.7/packages/gatsby) (2023-10-17)
 
 #### Bug Fixes

@@ -181,6 +181,43 @@ describe(`getRoutesManifest`, () => {
       expect.objectContaining({ path: `/static/app-456.js` })
     )
   })
+
+
+  it(`should respect "force" redirects parameter`, () => {
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config },
+    })
+
+    const { routes } = getRoutesManifest()
+
+    expect(routes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: `/old-url2`,
+          force: true,
+        }),
+      ])
+    )
+  })
+
+  it(`should respect "conditions" redirects parameter`, () => {
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config },
+    })
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`]))
+
+    const { routes } = getRoutesManifest()
+
+    expect(routes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: `/old-url2`,
+          conditions: { language: [`ca`, `us`] },
+        }),
+      ])
+    )
+  })
 })
 
 describe(`getFunctionsManifest`, () => {
