@@ -322,3 +322,110 @@ Array [
   },
 ]
 `;
+
+exports[`getRoutesManifest should return routes manifest 2`] = `
+Array [
+  Object {
+    "headers": Array [
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "path": "/*",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=31536000, immutable",
+      },
+    ],
+    "path": "/static/*",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+    ],
+    "path": "/",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+    ],
+    "path": "/page-data/index/page-data.json",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+    ],
+    "path": "/page-data/sq/d/1.json",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+    ],
+    "path": "/page-data/app-data.json",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=31536000, immutable",
+      },
+    ],
+    "path": "/app-123.js",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+    ],
+    "path": "/chunk-map.json",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+    ],
+    "path": "/webpack.stats.json",
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+    ],
+    "path": "/_gatsby/slices/_gatsby-scripts-1.html",
+  },
+]
+`;
