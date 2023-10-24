@@ -2,9 +2,7 @@ import { title } from "../../constants"
 
 describe("Headers", () => {
   beforeEach(() => {
-    beforeEach(() => {
-      cy.reload(true)
-    })
+    cy.reload(true)
     cy.visit("/").waitForRouteChange()
   })
 
