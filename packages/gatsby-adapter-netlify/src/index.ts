@@ -38,7 +38,13 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           reporter.verbose(
             `[gatsby-adapter-netlify] using @netlify/cache-utils restore`
           )
-          return await utils.restore(directories)
+          const didRestore = await utils.restore(directories)
+          if (didRestore) {
+            reporter.info(
+              `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`
+            )
+          }
+          return didRestore
         }
 
         return false
@@ -50,6 +56,9 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
             `[gatsby-adapter-netlify] using @netlify/cache-utils save`
           )
           await utils.save(directories)
+          reporter.info(
+            `[gatsby-adapter-netlify] Stored the Gatsby cache to speed up future builds. 🔥`
+          )
         }
       },
     },
