@@ -16,8 +16,8 @@
     "test:template": "cross-env-shell CYPRESS_GROUP_NAME=$ADAPTER TRAILING_SLASH=$TRAILING_SLASH node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH",
     "test:template:debug": "cross-env-shell CYPRESS_GROUP_NAME=$ADAPTER TRAILING_SLASH=$TRAILING_SLASH npm run cy:open -- --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH",
     "test:debug": "npm-run-all -s build:debug ssat:debug",
-    "test:netlify": "start-server-and-test 'cross-env TRAILING_SLASH=always BROWSER=none ntl serve --port 8888' http://localhost:8888 'cross-env ADAPTER=netlify TRAILING_SLASH=always npm run test:template'",
-    "test:netlify:debug": "start-server-and-test 'cross-env TRAILING_SLASH=always BROWSER=none ntl serve --port 8888' http://localhost:8888 'cross-env ADAPTER=netlify TRAILING_SLASH=always npm run test:template:debug'",
+    "test:netlify": "cross-env TRAILING_SLASH=always node scripts/deploy-and-run/netlify.mjs test:template",
+    "test:netlify:debug": "cross-env TRAILING_SLASH=always node scripts/deploy-and-run/netlify.mjs test:template:debug",
     "test": "npm-run-all -c -s test:netlify"
   },
   "dependencies": {
