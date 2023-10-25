@@ -135,6 +135,7 @@ export function processRoutesManifest(routesManifest: RoutesManifest): {
   redirects: string
   headers: string
   lambdasThatUseCaching: Map<string, string>
+  fileMovingPromise: Promise<void>
 } {
   const lambdasThatUseCaching = new Map<string, string>()
 
@@ -230,8 +231,12 @@ export function processRoutesManifest(routesManifest: RoutesManifest): {
     }
   }
 
-  await fileMovingDone()
-  return { redirects: _redirects, headers: _headers, lambdasThatUseCaching }
+  return {
+    redirects: _redirects,
+    headers: _headers,
+    lambdasThatUseCaching,
+    fileMovingPromise: fileMovingDone(),
+  }
 }
 
 export async function handleRoutesManifest(
@@ -239,10 +244,11 @@ export async function handleRoutesManifest(
 ): Promise<{
   lambdasThatUseCaching: Map<string, string>
 }> {
-  const { redirects, headers, lambdasThatUseCaching } =
+  const { redirects, headers, lambdasThatUseCaching, fileMovingPromise } =
     processRoutesManifest(routesManifest)
   await injectEntries(`public/_redirects`, redirects)
   await injectEntries(`public/_headers`, headers)
+  await fileMovingPromise
 
   return {
     lambdasThatUseCaching,

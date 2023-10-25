@@ -1,4 +1,4 @@
-// import fastq from "fastq"
+import fastq from "fastq"
 import fs from "fs-extra"
 
 function generateFilePathForStaticRoute(
@@ -19,32 +19,46 @@ function generateFilePathForStaticRoute(
   return routePath
 }
 
-export function createStaticAssetsPathHandler(): any {
-  const promises: Array<Promise<any>> = []
+interface IMoveTask {
+  from: string
+  to: string
+}
+
+export function createStaticAssetsPathHandler(): {
+  ensureStaticAssetPath: (filePath: string, routePath: string) => string
+  fileMovingDone: () => Promise<void>
+} {
+  const moveQueue = fastq<void, IMoveTask, void>(async (task, cb) => {
+    try {
+      await fs.move(task.from, task.to)
+      cb(null, undefined)
+    } catch (error) {
+      cb(error)
+    }
+  }, 2)
+
   function ensureStaticAssetPath(filePath: string, routePath: string): string {
     const shouldUsePrettyUrl = filePath.endsWith(`.html`)
-    // if (shouldUsePrettyUrl) {
+
     const expectedPath = `public${generateFilePathForStaticRoute(
       routePath,
       shouldUsePrettyUrl
     )}`
 
     if (expectedPath !== filePath) {
-      console.log(`pathDiff`, {
-        expectedPath,
-        filePath,
-        routePath,
-      })
-      const p = fs.move(filePath, expectedPath)
-      promises.push(p)
+      moveQueue.push({ from: filePath, to: expectedPath })
     }
-    // }
-    //
     return filePath
   }
 
-  const fileMovingDone = (): Promise<void> =>
-    Promise.all(promises).then(() => undefined)
+  const fileMovingDone = (): Promise<void> => {
+    if (moveQueue.idle()) {
+      return Promise.resolve()
+    }
+    return new Promise(resolve => {
+      moveQueue.drain = resolve
+    })
+  }
 
   return {
     ensureStaticAssetPath,
