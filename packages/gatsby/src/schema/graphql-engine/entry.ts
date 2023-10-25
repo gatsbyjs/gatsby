@@ -21,9 +21,12 @@ import {
   gatsbyNodes,
   gatsbyWorkers,
   flattenedPlugins,
-  // @ts-ignore
+  // @ts-ignore .cache/query-engine-plugins is generated before bundling
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
+
+// @ts-ignore __PATH_PREFIX__ is injected by webpack
+const PathPrefix = __PATH_PREFIX__
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -197,11 +200,11 @@ export class GraphQLEngine {
     }
 
     if (
-      typeof __PATH_PREFIX__ === `string` &&
-      __PATH_PREFIX__ &&
-      pathName.startsWith(__PATH_PREFIX__)
+      typeof PathPrefix === `string` &&
+      PathPrefix &&
+      pathName.startsWith(PathPrefix)
     ) {
-      const maybePath = pathName.slice(__PATH_PREFIX__.length)
+      const maybePath = pathName.slice(PathPrefix.length)
       page = findPageByPath(state, maybePath, false)
     }
 
