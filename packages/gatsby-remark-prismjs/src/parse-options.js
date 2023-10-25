@@ -12,11 +12,15 @@ module.exports = language => {
     let numberLinesStartAt
     let promptUserLocal
     let promptHostLocal
+    let promptTextLocal
     // Options can be given in any order and are optional
 
     options.forEach(option => {
       option = option.slice(0, -1)
-      const splitOption = option.replace(/ /g, ``).split(`:`)
+      const optionMatch = option.match(/(\w+)\:(.+)/); // extract named option data
+      const splitOption = optionMatch 
+        ? optionMatch.slice(1).map(value => value.trim()) 
+        : [option.replace(/ /g, ``)]
 
       // Test if the option is for line highlighting
       if (splitOption.length === 1 && rangeParser(option).length > 0) {
@@ -44,6 +48,9 @@ module.exports = language => {
       if (splitOption.length === 2 && splitOption[0] === `promptUser`) {
         promptUserLocal = splitOption[1]
       }
+      if (splitOption.length === 2 && splitOption[0] === `prompt`) {
+        promptTextLocal = splitOption[1]
+      }
       if (splitOption.length === 2 && splitOption[0] === `outputLines`) {
         outputLines = rangeParser(splitOption[1].trim()).filter(n => n > 0)
       }
@@ -57,6 +64,7 @@ module.exports = language => {
       outputLines,
       promptUserLocal,
       promptHostLocal,
+      promptTextLocal,
     }
   }
 

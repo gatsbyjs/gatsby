@@ -373,8 +373,8 @@ plugins: [
 
 ### Shell prompt
 
-To show fancy prompts next to shell commands (only triggers on `bash` and `shell`), either set `prompt.global` to `true` in `gatsby-config.js`,
-or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
+To show fancy prompts next to shell commands (only triggers on `bash`, `shell` and `powershell`), either set `prompt.global` to `true` in `gatsby-config.js`,
+or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, `{promptHost: <host>}`, `{prompt: <working directory>}` to a snippet.
 
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
 to the language.
@@ -388,6 +388,12 @@ unless explicitly overridden by the `promptUser` and `promptHost` options in the
 
 ````
 ```shell{promptUser: alice}{promptHost: dev.localhost}
+````
+
+Note that the parameters `promptUser` and `promptHost` are mutually exclusive with `prompt`. Which was added to support prompts for PowerShell.
+
+````
+```powershell{prompt:PS C:\>}
 ````
 
 ### Diff code blocks
