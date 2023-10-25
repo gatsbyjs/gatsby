@@ -7,7 +7,11 @@ if (process.env.E2E_ADAPTERS_NETLIFY_SITE_ID) {
 }
 process.env.ADAPTER = "netlify"
 
-const deployTitle = process.env.CIRCLE_SHA1 || "N/A"
+const deployTitle = `${
+  process.env.CIRCLE_SHA1 || "N/A commit"
+} - trailingSlash:${process.env.TRAILING_SLASH || `always`} / pathPrefix:${
+  process.env.PATH_PREFIX || `-`
+}`
 
 const npmScriptToRun = process.argv[2] || "test:netlify"
 
