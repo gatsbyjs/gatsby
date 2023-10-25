@@ -15,6 +15,9 @@ const deployTitle = `${
 
 const npmScriptToRun = process.argv[2] || "test:netlify"
 
+// ensure clean build
+await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
+
 const deployResults = await execa(
   "ntl",
   ["deploy", "--build", "--json", "--message", deployTitle],
