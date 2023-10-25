@@ -34,6 +34,6 @@ describe("Server Side Rendering (SSR)", () => {
     cy.location(`pathname`)
       .should(`equal`, errorPath)
       .get(`h1`)
-      .should(`have.text`, `INTERNAL SERVER ERROR`)
+      .should(`have.text`, `INTERNAL SERVER ERROR (custom)`)
   })
 })
