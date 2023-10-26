@@ -29,15 +29,7 @@ describe("Headers", () => {
   })
 
   //   it("should contain correct headers for static assets", () => {
-  //     cy.intercept("/static/astro-*.png").as(
-  //       "img-import"
-  //     )
-  //     cy.visit("/.png")
-
-  //     checkHeaders("@img-import", {
-  //       ...defaultHeaders,
-  //       "cache-control": "public, max-age=31536000, immutable",
-  //     })
+  //     @todo
   //   })
 
   it("should contain correct headers for ssr page", () => {
