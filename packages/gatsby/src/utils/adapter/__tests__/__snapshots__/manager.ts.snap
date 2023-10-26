@@ -262,6 +262,38 @@ Array [
     "type": "redirect",
   },
   Object {
+    "conditions": Object {
+      "language": Array [
+        "ca",
+        "us",
+      ],
+    },
+    "force": true,
+    "headers": Array [
+      Object {
+        "key": "x-xss-protection",
+        "value": "1; mode=block",
+      },
+      Object {
+        "key": "x-content-type-options",
+        "value": "nosniff",
+      },
+      Object {
+        "key": "referrer-policy",
+        "value": "same-origin",
+      },
+      Object {
+        "key": "x-frame-options",
+        "value": "DENY",
+      },
+    ],
+    "ignoreCase": true,
+    "path": "/old-url2",
+    "status": 301,
+    "toPath": "/new-url2",
+    "type": "redirect",
+  },
+  Object {
     "functionId": "ssr-engine",
     "path": "/ssr/",
     "type": "function",
