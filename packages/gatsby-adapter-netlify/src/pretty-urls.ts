@@ -22,6 +22,7 @@ function generateFilePathForStaticRoute(
 interface IMoveTask {
   from: string
   to: string
+  keepOriginalFile: boolean
 }
 
 export function createStaticAssetsPathHandler(): {
@@ -30,7 +31,11 @@ export function createStaticAssetsPathHandler(): {
 } {
   const moveQueue = fastq<void, IMoveTask, void>(async (task, cb) => {
     try {
-      await fs.move(task.from, task.to)
+      if (task.keepOriginalFile) {
+        await fs.copy(task.from, task.to)
+      } else {
+        await fs.move(task.from, task.to)
+      }
       cb(null, undefined)
     } catch (error) {
       cb(error)
@@ -46,7 +51,12 @@ export function createStaticAssetsPathHandler(): {
     )}`
 
     if (expectedPath !== filePath) {
-      moveQueue.push({ from: filePath, to: expectedPath })
+      moveQueue.push({
+        from: filePath,
+        to: expectedPath,
+        keepOriginalFile:
+          filePath === `public/404.html` || filePath === `public/400.html`,
+      })
     }
     return filePath
   }
