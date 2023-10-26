@@ -18,7 +18,7 @@ describe("Headers", () => {
     "x-frame-options": "DENY",
   }
 
-  it("should contain correct headers for index page and static assets", () => {
+  it("should contain correct headers for index page", () => {
     cy.intercept("/").as("index")
     cy.visit("/")
 
@@ -29,10 +29,10 @@ describe("Headers", () => {
   })
 
   //   it("should contain correct headers for static assets", () => {
-  //     cy.intercept("/static/astro-5459bfacab7ae1bcfb22dc9100754547.png").as(
+  //     cy.intercept("/static/astro-*.png").as(
   //       "img-import"
   //     )
-  //     cy.visit("/static/astro-5459bfacab7ae1bcfb22dc9100754547.png")
+  //     cy.visit("/.png")
 
   //     checkHeaders("@img-import", {
   //       ...defaultHeaders,
@@ -41,8 +41,8 @@ describe("Headers", () => {
   //   })
 
   it("should contain correct headers for ssr page", () => {
-    cy.intercept("/ssr/static").as("ssr")
-    cy.visit("/ssr/static")
+    cy.intercept("routes/ssr/static").as("ssr")
+    cy.visit("routes/ssr/static")
 
     checkHeaders("@ssr", {
       ...defaultHeaders,
@@ -51,8 +51,8 @@ describe("Headers", () => {
   })
 
   it("should contain correct headers for dsg page", () => {
-    cy.intercept("/dsg/static").as("dsg")
-    cy.visit("/dsg/static")
+    cy.intercept("routes/dsg/static").as("dsg")
+    cy.visit("routes/dsg/static")
 
     checkHeaders("@dsg", {
       ...defaultHeaders,

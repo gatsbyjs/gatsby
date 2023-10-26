@@ -33,7 +33,7 @@ const config: GatsbyConfig = {
       ],
     },
     {
-      source: `/ssr/*`,
+      source: `routes/ssr/*`,
       headers: [
         {
           key: "x-ssr-header",
@@ -46,7 +46,7 @@ const config: GatsbyConfig = {
       ],
     },
     {
-      source: `/dsg/*`,
+      source: `routes/dsg/*`,
       headers: [
         {
           key: "x-dsg-header",
