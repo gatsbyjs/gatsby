@@ -13,6 +13,7 @@ import type { ISSRData } from "./entry"
 import { link } from "linkfs"
 
 const cdnDatastore = `%CDN_DATASTORE_PATH%`
+const PATH_PREFIX = `%PATH_PREFIX`
 
 function setupFsWrapper(): string {
   // setup global._fsWrapper
@@ -172,14 +173,13 @@ function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
 }
 
-function getPathInfo(req: GatsbyFunctionRequest):
+function getPathInfo(requestPath: string):
   | {
       isPageData: boolean
       pagePath: string
     }
   | undefined {
-  // @ts-ignore GatsbyFunctionRequest.path is not in types ... there is no property in types that can be used to get a path currently
-  const matches = req.url.matchAll(/\/?page-data\/(.+)\/page-data.json$/gm)
+  const matches = requestPath.matchAll(/^\/?page-data\/(.+)\/page-data.json$/gm)
   for (const [, requestedPagePath] of matches) {
     return {
       isPageData: true,
@@ -190,8 +190,7 @@ function getPathInfo(req: GatsbyFunctionRequest):
   // if not matched
   return {
     isPageData: false,
-    // @ts-ignore GatsbyFunctionRequest.path is not in types ... there is no property in types that can be used to get a path currently
-    pagePath: req.url,
+    pagePath: requestPath,
   }
 }
 
@@ -232,25 +231,60 @@ function getErrorBody(statusCode: number): string {
   return body
 }
 
+interface IPageInfo {
+  page: IGatsbyPage
+  isPageData: boolean
+  pagePath: string
+}
+
+function getPage(
+  pathname: string,
+  graphqlEngine: GraphQLEngineType
+): IPageInfo | undefined {
+  const pathInfo = getPathInfo(pathname)
+  if (!pathInfo) {
+    return undefined
+  }
+
+  const { isPageData, pagePath } = pathInfo
+
+  const page = graphqlEngine.findPageByPath(pagePath)
+  if (!page) {
+    return undefined
+  }
+
+  return {
+    page,
+    isPageData,
+    pagePath,
+  }
+}
+
 async function engineHandler(
   req: GatsbyFunctionRequest,
   res: GatsbyFunctionResponse
 ): Promise<void> {
   try {
     const graphqlEngine = await engineReadyPromise
-    const pathInfo = getPathInfo(req)
-    if (!pathInfo) {
+    let pageInfo: IPageInfo | undefined
+
+    const originalPathName = req.url ?? ``
+
+    if (PATH_PREFIX && originalPathName.startsWith(PATH_PREFIX)) {
+      const maybePath = originalPathName.slice(PATH_PREFIX.length)
+      pageInfo = getPage(maybePath, graphqlEngine)
+    }
+
+    if (!pageInfo) {
+      pageInfo = getPage(originalPathName, graphqlEngine)
+    }
+
+    if (!pageInfo) {
       res.status(404).send(getErrorBody(404))
       return
     }
 
-    const { isPageData, pagePath } = pathInfo
-
-    const page = graphqlEngine.findPageByPath(pagePath)
-    if (!page) {
-      res.status(404).send(getErrorBody(404))
-      return
-    }
+    const { pagePath, isPageData, page } = pageInfo
 
     const data = await getData({
       pathName: pagePath,

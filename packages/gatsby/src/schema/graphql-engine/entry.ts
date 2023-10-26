@@ -21,12 +21,9 @@ import {
   gatsbyNodes,
   gatsbyWorkers,
   flattenedPlugins,
-  // @ts-ignore .cache/query-engine-plugins is generated before bundling
+  // @ts-ignore
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
-
-// @ts-ignore __PATH_PREFIX__ is injected by webpack
-const PathPrefix = __PATH_PREFIX__
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -194,21 +191,7 @@ export class GraphQLEngine {
       },
     } as unknown as IGatsbyState
 
-    let page = findPageByPath(state, pathName, false)
-    if (page) {
-      return page
-    }
-
-    if (
-      typeof PathPrefix === `string` &&
-      PathPrefix &&
-      pathName.startsWith(PathPrefix)
-    ) {
-      const maybePath = pathName.slice(PathPrefix.length)
-      page = findPageByPath(state, maybePath, false)
-    }
-
-    return page
+    return findPageByPath(state, pathName, false)
   }
 }
 
