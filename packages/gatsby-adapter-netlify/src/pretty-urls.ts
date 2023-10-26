@@ -55,7 +55,7 @@ export function createStaticAssetsPathHandler(): {
         from: filePath,
         to: expectedPath,
         keepOriginalFile:
-          filePath === `public/404.html` || filePath === `public/400.html`,
+          filePath === `public/404.html` || filePath === `public/500.html`,
       })
     }
     return filePath
