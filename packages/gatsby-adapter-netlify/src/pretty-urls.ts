@@ -1,7 +1,7 @@
 import fastq from "fastq"
 import fs from "fs-extra"
 
-function generatePrettyUrlFilePath(routePath: string): string {
+export function generatePrettyUrlFilePath(routePath: string): string {
   if (routePath.endsWith(`/`)) {
     return `${routePath}index.html`
   } else {
