@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.12.3/packages/gatsby-plugin-utils) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
 ### [4.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.12.2/packages/gatsby-plugin-utils) (2023-10-20)
 
 #### Bug Fixes

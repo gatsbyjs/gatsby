@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.9](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.9/packages/gatsby) (2023-10-26)
+
+#### Bug Fixes
+
+- respect 'force' and 'conditions' properties on redirects [#38657](https://github.com/gatsbyjs/gatsby/issues/38657) [#38664](https://github.com/gatsbyjs/gatsby/issues/38664) ([c43080f](https://github.com/gatsbyjs/gatsby/commit/c43080f49fe54022be141855db4e56d98398338c))
+- Adapter header rules [#38644](https://github.com/gatsbyjs/gatsby/issues/38644) [#38661](https://github.com/gatsbyjs/gatsby/issues/38661) ([6869562](https://github.com/gatsbyjs/gatsby/commit/6869562eb761b260d40d835148ae86e5de7d5165))
+
 ### [5.12.8](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.8/packages/gatsby) (2023-10-20)
 
 #### Bug Fixes
