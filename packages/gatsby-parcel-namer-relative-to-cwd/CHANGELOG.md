@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/@gatsbyjs/parcel-namer-relative-to-cwd@2.12.1/packages/@gatsbyjs/parcel-namer-relative-to-cwd) (2023-10-26)
+
+**Note:** Version bump only for package @gatsbyjs/parcel-namer-relative-to-cwd
+
 ## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/@gatsbyjs/parcel-namer-relative-to-cwd@2.12.0/packages/@gatsbyjs/parcel-namer-relative-to-cwd) (2023-08-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.12.3/packages/gatsby-plugin-utils) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+### [4.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.12.2/packages/gatsby-plugin-utils) (2023-10-20)
+
+#### Bug Fixes
+
+- support multiple instances of same variable in gatsbyImage placeholderUrl [#38626](https://github.com/gatsbyjs/gatsby/issues/38626) [#38647](https://github.com/gatsbyjs/gatsby/issues/38647) ([02e925a](https://github.com/gatsbyjs/gatsby/commit/02e925ae109d52a9a00182b802565eb32971ec4b))
+
 ### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.12.1/packages/gatsby-plugin-utils) (2023-10-09)
 
 **Note:** Version bump only for package gatsby-plugin-utils
