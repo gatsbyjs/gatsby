@@ -18,6 +18,10 @@ describe("Headers", () => {
       ...defaultHeaders,
       "cache-control": "public,max-age=0,must-revalidate",
     },
+    "@slice-data": {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
+    },
     "@img-webpack-import": {
       ...defaultHeaders,
       "cache-control": "public,max-age=31536000,immutable",
@@ -71,6 +75,9 @@ describe("Headers", () => {
 
     cy.intercept("**/page-data.json", WorkaroundCachedResponse).as("page-data")
     cy.intercept("**/app-data.json", WorkaroundCachedResponse).as("app-data")
+    cy.intercept("**/slice-data/*.json", WorkaroundCachedResponse).as(
+      "slice-data"
+    )
     cy.intercept("/static/astro-**.png", WorkaroundCachedResponse).as(
       "img-webpack-import"
     )
@@ -88,6 +95,7 @@ describe("Headers", () => {
 
     checkHeaders("@app-data")
     checkHeaders("@page-data")
+    checkHeaders("@slice-data")
     // index page is only one showing webpack imported image
     checkHeaders("@img-webpack-import")
     checkHeaders("@js")
@@ -105,8 +113,9 @@ describe("Headers", () => {
     })
 
     checkHeaders("@app-data")
-    checkHeaders("@js")
     // page-data is baked into SSR page so it's not fetched and we don't assert it
+    checkHeaders("@slice-data")
+    checkHeaders("@js")
   })
 
   it("should contain correct headers for dsg page", () => {
@@ -120,6 +129,7 @@ describe("Headers", () => {
 
     checkHeaders("@app-data")
     checkHeaders("@page-data")
+    checkHeaders("@slice-data")
     checkHeaders("@js")
   })
 })
