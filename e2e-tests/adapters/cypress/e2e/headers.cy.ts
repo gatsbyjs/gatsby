@@ -1,6 +1,33 @@
 import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
 
 describe("Headers", () => {
+  const defaultHeaders = {
+    "x-xss-protection": "1; mode=block",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "same-origin",
+    "x-frame-options": "DENY",
+  }
+
+  // DRY for repeated assertions in multple tests
+  const expectedHeadersByRouteAlias = {
+    "@app-data": {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
+    },
+    "@page-data": {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
+    },
+    "@img-webpack-import": {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=31536000,immutable",
+    },
+    "@js": {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=31536000,immutable",
+    },
+  }
+
   // `ntl serve` and actual deploy seem to have possible slight differences around header value formatting
   // so this just remove spaces around commas to make it easier to compare
   function normalizeHeaderValue(value: string | undefined): string | undefined {
@@ -10,7 +37,18 @@ describe("Headers", () => {
     // Remove spaces around commas
     return value.replace(/\s*,\s*/gm, `,`)
   }
-  function checkHeaders(routeAlias, expectedHeaders) {
+  function checkHeaders(
+    routeAlias: string,
+    expectedHeaders?: Record<string, string>
+  ) {
+    if (!expectedHeaders) {
+      expectedHeaders = expectedHeadersByRouteAlias[routeAlias]
+    }
+
+    if (!expectedHeaders) {
+      throw new Error(`No expected headers provided for "${routeAlias}`)
+    }
+
     cy.wait(routeAlias).then(interception => {
       Object.keys(expectedHeaders).forEach(headerKey => {
         const headers = interception.response.headers[headerKey]
@@ -26,22 +64,17 @@ describe("Headers", () => {
     })
   }
 
-  const defaultHeaders = {
-    "x-xss-protection": "1; mode=block",
-    "x-content-type-options": "nosniff",
-    "referrer-policy": "same-origin",
-    "x-frame-options": "DENY",
-  }
-
   beforeEach(() => {
     cy.intercept("/", WorkaroundCachedResponse).as("index")
+    cy.intercept("routes/ssr/static", WorkaroundCachedResponse).as("ssr")
+    cy.intercept("routes/dsg/static", WorkaroundCachedResponse).as("dsg")
+
     cy.intercept("**/page-data.json", WorkaroundCachedResponse).as("page-data")
     cy.intercept("**/app-data.json", WorkaroundCachedResponse).as("app-data")
     cy.intercept("/static/astro-**.png", WorkaroundCachedResponse).as(
-      "img-import"
+      "img-webpack-import"
     )
-    cy.intercept("routes/ssr/static", WorkaroundCachedResponse).as("ssr")
-    cy.intercept("routes/dsg/static", WorkaroundCachedResponse).as("dsg")
+    cy.intercept("*.js", WorkaroundCachedResponse).as("js")
   })
 
   it("should contain correct headers for index page", () => {
@@ -53,21 +86,11 @@ describe("Headers", () => {
       "cache-control": "public,max-age=0,must-revalidate",
     })
 
-    checkHeaders("@app-data", {
-      ...defaultHeaders,
-      "cache-control": "public,max-age=0,must-revalidate",
-    })
-
-    checkHeaders("@page-data", {
-      ...defaultHeaders,
-      "cache-control": "public,max-age=0,must-revalidate",
-    })
-
-    checkHeaders("@img-import", {
-      ...defaultHeaders,
-      "x-custom-header": "my custom header value",
-      "cache-control": "public,max-age=31536000,immutable",
-    })
+    checkHeaders("@app-data")
+    checkHeaders("@page-data")
+    // index page is only one showing webpack imported image
+    checkHeaders("@img-webpack-import")
+    checkHeaders("@js")
   })
 
   it("should contain correct headers for ssr page", () => {
@@ -81,11 +104,8 @@ describe("Headers", () => {
       "x-ssr-header-overwrite": "getServerData wins",
     })
 
-    checkHeaders("@app-data", {
-      ...defaultHeaders,
-      "cache-control": "public,max-age=0,must-revalidate",
-    })
-
+    checkHeaders("@app-data")
+    checkHeaders("@js")
     // page-data is baked into SSR page so it's not fetched and we don't assert it
   })
 
@@ -98,14 +118,8 @@ describe("Headers", () => {
       "x-dsg-header": "my custom header value",
     })
 
-    checkHeaders("@app-data", {
-      ...defaultHeaders,
-      "cache-control": "public,max-age=0,must-revalidate",
-    })
-
-    checkHeaders("@page-data", {
-      ...defaultHeaders,
-      "cache-control": "public,max-age=0,must-revalidate",
-    })
+    checkHeaders("@app-data")
+    checkHeaders("@page-data")
+    checkHeaders("@js")
   })
 })
