@@ -34,26 +34,34 @@ describe("Headers", () => {
   }
 
   beforeEach(() => {
-    cy.intercept("/").as("index")
+    cy.intercept("/", WorkaroundCachedResponse).as("index")
+    cy.intercept("**/page-data.json", WorkaroundCachedResponse).as("page-data")
+    cy.intercept("**/app-data.json", WorkaroundCachedResponse).as("app-data")
     cy.intercept("/static/astro-**.png", WorkaroundCachedResponse).as(
       "img-import"
     )
-    cy.intercept("routes/ssr/static").as("ssr")
-    cy.intercept("routes/dsg/static").as("dsg")
+    cy.intercept("routes/ssr/static", WorkaroundCachedResponse).as("ssr")
+    cy.intercept("routes/dsg/static", WorkaroundCachedResponse).as("dsg")
   })
 
   it("should contain correct headers for index page", () => {
-    cy.visit("/")
+    cy.visit("/").waitForRouteChange()
 
     checkHeaders("@index", {
       ...defaultHeaders,
       "x-custom-header": "my custom header value",
       "cache-control": "public,max-age=0,must-revalidate",
     })
-  })
 
-  it("should contain correct headers for static assets", () => {
-    cy.visit("/")
+    checkHeaders("@app-data", {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
+    })
+
+    checkHeaders("@page-data", {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
+    })
 
     checkHeaders("@img-import", {
       ...defaultHeaders,
@@ -63,7 +71,7 @@ describe("Headers", () => {
   })
 
   it("should contain correct headers for ssr page", () => {
-    cy.visit("routes/ssr/static")
+    cy.visit("routes/ssr/static").waitForRouteChange()
 
     checkHeaders("@ssr", {
       ...defaultHeaders,
@@ -72,15 +80,32 @@ describe("Headers", () => {
       "x-ssr-header-getserverdata": "my custom header value from getServerData",
       "x-ssr-header-overwrite": "getServerData wins",
     })
+
+    checkHeaders("@app-data", {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
+    })
+
+    // page-data is baked into SSR page so it's not fetched and we don't assert it
   })
 
   it("should contain correct headers for dsg page", () => {
-    cy.visit("routes/dsg/static")
+    cy.visit("routes/dsg/static").waitForRouteChange()
 
     checkHeaders("@dsg", {
       ...defaultHeaders,
       "x-custom-header": "my custom header value",
       "x-dsg-header": "my custom header value",
+    })
+
+    checkHeaders("@app-data", {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
+    })
+
+    checkHeaders("@page-data", {
+      ...defaultHeaders,
+      "cache-control": "public,max-age=0,must-revalidate",
     })
   })
 })
