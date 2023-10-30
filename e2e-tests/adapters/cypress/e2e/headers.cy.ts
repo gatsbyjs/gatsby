@@ -1,4 +1,4 @@
-import { title } from "../../constants"
+import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
 
 describe("Headers", () => {
   function checkHeaders(routeAlias, expectedHeaders) {
@@ -18,36 +18,51 @@ describe("Headers", () => {
     "x-frame-options": "DENY",
   }
 
-  it("should contain correct headers for index page", () => {
+  beforeEach(() => {
     cy.intercept("/").as("index")
+    cy.intercept("/static/astro-**.png", WorkaroundCachedResponse).as(
+      "img-import"
+    )
+    cy.intercept("routes/ssr/static").as("ssr")
+    cy.intercept("routes/dsg/static").as("dsg")
+  })
+
+  it("should contain correct headers for index page", () => {
     cy.visit("/")
 
     checkHeaders("@index", {
       ...defaultHeaders,
       "x-custom-header": "my custom header value",
+      "cache-control": "public,max-age=0,must-revalidate",
     })
   })
 
-  //   it("should contain correct headers for static assets", () => {
-  //     @todo
-  //   })
+  it("should contain correct headers for static assets", () => {
+    cy.visit("/")
+
+    checkHeaders("@img-import", {
+      ...defaultHeaders,
+      "x-custom-header": "my custom header value",
+      "cache-control": "public,max-age=31536000,immutable",
+    })
+  })
 
   it("should contain correct headers for ssr page", () => {
-    cy.intercept("routes/ssr/static").as("ssr")
     cy.visit("routes/ssr/static")
 
     checkHeaders("@ssr", {
       ...defaultHeaders,
+      "x-custom-header": "my custom header value",
       "x-ssr-header": "my custom header value from config",
     })
   })
 
   it("should contain correct headers for dsg page", () => {
-    cy.intercept("routes/dsg/static").as("dsg")
     cy.visit("routes/dsg/static")
 
     checkHeaders("@dsg", {
       ...defaultHeaders,
+      "x-custom-header": "my custom header value",
       "x-dsg-header": "my custom header value",
     })
   })
