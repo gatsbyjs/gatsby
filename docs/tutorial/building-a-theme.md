@@ -1455,7 +1455,7 @@ Inside the new `index.js` file, add the following:
 
 ```javascript:title=theme-test/src/gatsby-plugin-theme-ui/index.js
 import { merge } from "theme-ui"
-import { theme } from "@jlengstorf/gatsby-theme-events"
+import { theme } from "@jlengstorf/gatsby-theme-events/src/theme"
 
 const theme = merge(theme, {
   colors: {
