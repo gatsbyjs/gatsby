@@ -1,11 +1,26 @@
 import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
 
 describe("Headers", () => {
+  // `ntl serve` and actual deploy seem to have possible slight differences around header value formatting
+  // so this just remove spaces around commas to make it easier to compare
+  function normalizeHeaderValue(value: string | undefined): string | undefined {
+    if (typeof value === "undefined") {
+      return value
+    }
+    // Remove spaces around commas
+    return value.replace(/\s*,\s*/gm, `,`)
+  }
   function checkHeaders(routeAlias, expectedHeaders) {
     cy.wait(routeAlias).then(interception => {
       Object.keys(expectedHeaders).forEach(headerKey => {
-        expect(interception.response.headers[headerKey]).to.eq(
-          expectedHeaders[headerKey]
+        const headers = interception.response.headers[headerKey]
+
+        const firstHeader: string = Array.isArray(headers)
+          ? headers[0]
+          : headers
+
+        expect(normalizeHeaderValue(firstHeader)).to.eq(
+          normalizeHeaderValue(expectedHeaders[headerKey])
         )
       })
     })
