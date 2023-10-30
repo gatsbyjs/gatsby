@@ -1406,7 +1406,7 @@ module.exports = {
 
 ### Run the site
 
-Making sure you're in your `/theme-test` directory, run `npm run develop` to start the site.
+Making sure you're in your `/theme-test` directory, run `gatsby develop` to start the site.
 
 ![The new site, running your new Gatsby theme.](./images/building-a-theme-running-theme.png)
 
