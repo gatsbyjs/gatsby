@@ -54,6 +54,8 @@ describe("Headers", () => {
       ...defaultHeaders,
       "x-custom-header": "my custom header value",
       "x-ssr-header": "my custom header value from config",
+      "x-ssr-header-getserverdata": "my custom header value from getServerData",
+      "x-ssr-header-overwrite": "getServerData wins",
     })
   })
 

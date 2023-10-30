@@ -41,7 +41,7 @@ const config: GatsbyConfig = {
         },
         {
           key: "x-ssr-header-overwrite",
-          value: "my custom header value from config",
+          value: "config wins",
         },
       ],
     },
