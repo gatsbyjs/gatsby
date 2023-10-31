@@ -22,6 +22,10 @@ describe(`generatePrettyUrlFilePath`, () => {
 })
 
 describe(`createStaticAssetsPathHandler`, () => {
+  beforeEach(() => {
+    vol.reset()
+  })
+
   it(`no-op if filepath is already coorect for given route`, async () => {
     const copySpy = jest.spyOn(fse, `copy`)
     const moveSpy = jest.spyOn(fse, `move`)
@@ -111,6 +115,60 @@ describe(`createStaticAssetsPathHandler`, () => {
 
       expect(vol.existsSync(`public/index.css`)).toEqual(false)
       expect(vol.existsSync(`public/prefix/index.css`)).toEqual(true)
+    })
+
+    it(`handles dynamic param paths syntax (is not using reserved characters for file paths)`, async () => {
+      vol.fromJSON({ "public/[param]/index.html": `:param` }, process.cwd())
+
+      const { ensureStaticAssetPath, fileMovingDone } =
+        createStaticAssetsPathHandler()
+
+      expect(vol.existsSync(`public/[param]/index.html`)).toEqual(true)
+      expect(vol.existsSync(`public/foo/[param]/index.html`)).toEqual(false)
+
+      ensureStaticAssetPath(`public/[param]/index.html`, `/foo/:param/`)
+
+      await fileMovingDone()
+
+      expect(vol.existsSync(`public/foo/[param]/index.html`)).toEqual(true)
+      expect(vol.existsSync(`public/[param]/index.html`)).toEqual(false)
+    })
+
+    it(`handles dynamic named wildcard paths syntax (is not using reserved characters for file paths)`, async () => {
+      vol.fromJSON(
+        { "public/[...wildcard]/index.html": `*wildcard` },
+        process.cwd()
+      )
+
+      const { ensureStaticAssetPath, fileMovingDone } =
+        createStaticAssetsPathHandler()
+
+      expect(vol.existsSync(`public/[...wildcard]/index.html`)).toEqual(true)
+      expect(vol.existsSync(`public/foo/[...].html`)).toEqual(false)
+
+      ensureStaticAssetPath(`public/[...wildcard]/index.html`, `/foo/*`)
+
+      await fileMovingDone()
+
+      expect(vol.existsSync(`public/foo/[...].html`)).toEqual(true)
+      expect(vol.existsSync(`public/[...wildcard]/index.html`)).toEqual(false)
+    })
+
+    it(`handles dynamic unnamed wildcard paths syntax (is not using reserved characters for file paths)`, async () => {
+      vol.fromJSON({ "public/[...]/index.html": `*` }, process.cwd())
+
+      const { ensureStaticAssetPath, fileMovingDone } =
+        createStaticAssetsPathHandler()
+
+      expect(vol.existsSync(`public/[...]/index.html`)).toEqual(true)
+      expect(vol.existsSync(`public/foo/[...].html`)).toEqual(false)
+
+      ensureStaticAssetPath(`public/[...]/index.html`, `/foo/*`)
+
+      await fileMovingDone()
+
+      expect(vol.existsSync(`public/foo/[...].html`)).toEqual(true)
+      expect(vol.existsSync(`public/[...]/index.html`)).toEqual(false)
     })
 
     it(`keeps 404.html in root`, async () => {

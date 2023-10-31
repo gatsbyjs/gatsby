@@ -16,7 +16,10 @@ interface IMoveTask {
 }
 
 export function createStaticAssetsPathHandler(): {
-  ensureStaticAssetPath: (filePath: string, routePath: string) => string
+  ensureStaticAssetPath: (
+    filePath: string,
+    routePath: string
+  ) => { finalFilePath: string; isDynamic: boolean }
   fileMovingDone: () => Promise<void>
 } {
   const moveQueue = fastq<void, IMoveTask, void>(async (task, cb) => {
@@ -32,25 +35,43 @@ export function createStaticAssetsPathHandler(): {
     }
   }, 2)
 
-  function ensureStaticAssetPath(filePath: string, routePath: string): string {
+  function ensureStaticAssetPath(
+    filePath: string,
+    routePath: string
+  ): { finalFilePath: string; isDynamic: boolean } {
     const shouldUsePrettyUrl =
       filePath.endsWith(`.html`) && !routePath.endsWith(`.html`)
 
-    const expectedPath = `public${
+    let isDynamic = false
+    // dynamic routes syntax use characters that are reserved in a lot of filesystems
+    // so if route is dynamic we should normalize filepath
+    if (routePath.includes(`:`) || routePath.includes(`*`)) {
+      routePath = routePath
+        // replace `:param` with `[param]`
+        .replace(/:([^:/\\]+)/gm, `[$1]`)
+        // replace `*param` with `[...param]` and `*` with `[...]`
+        .replace(/\*([^:/\\]*|$)/gm, `[...$1]`)
+      isDynamic = true
+    }
+
+    const finalFilePath = `public${
       shouldUsePrettyUrl ? generatePrettyUrlFilePath(routePath) : routePath
     }`
 
-    if (expectedPath !== filePath) {
+    if (finalFilePath !== filePath) {
       moveQueue.push({
         from: filePath,
-        to: expectedPath,
+        to: finalFilePath,
         // 404.html should stay in root of PUBLISH_DIR to be used as custom 404 page
         // both 404.html and 500.html should stay in root of PUBLISH_DIR to be bundled correctly for SSR/DSG
         keepOriginalFile:
           filePath === `public/404.html` || filePath === `public/500.html`,
       })
     }
-    return filePath
+    return {
+      finalFilePath,
+      isDynamic,
+    }
   }
 
   const fileMovingDone = (): Promise<void> => {

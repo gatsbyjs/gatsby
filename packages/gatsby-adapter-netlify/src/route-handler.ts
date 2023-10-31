@@ -211,14 +211,16 @@ export function processRoutesManifest(routesManifest: RoutesManifest): {
       }
       _redirects += pieces.join(`  `) + `\n`
     } else if (route.type === `static`) {
-      // regular static asset without dynamic paths will just work, so skipping those
-      if (route.path.includes(`:`) || route.path.includes(`*`)) {
-        _redirects += `${encodeURI(fromPath)}  ${route.filePath.replace(
+      const { finalFilePath, isDynamic } = ensureStaticAssetPath(
+        route.filePath,
+        fromPath
+      )
+
+      if (isDynamic) {
+        _redirects += `${encodeURI(fromPath)}  ${finalFilePath.replace(
           /^public/,
           ``
         )}  200\n`
-      } else {
-        ensureStaticAssetPath(route.filePath, fromPath)
       }
 
       _headers += `${encodeURI(fromPath)}\n${route.headers.reduce(
