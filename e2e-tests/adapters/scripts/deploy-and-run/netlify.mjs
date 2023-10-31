@@ -47,8 +47,7 @@ console.log(`Deployed to ${deployUrl}`)
 try {
   await execa(`npm`, [`run`, npmScriptToRun], { stdio: `inherit` })
 } finally {
-  // temporaraily disable cleanup for debugging
-  if (false && !process.env.GATSBY_TEST_SKIP_CLEANUP) {
+  if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
     console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
 
     const deleteResponse = await execa("ntl", [
