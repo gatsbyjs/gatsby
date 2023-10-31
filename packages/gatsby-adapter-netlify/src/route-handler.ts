@@ -149,8 +149,6 @@ export function processRoutesManifest(
 } {
   const lambdasThatUseCaching = new Map<string, string>()
 
-  fs.writeFileSync(`test.json`, JSON.stringify(routesManifest, null, 2))
-
   const { ensureStaticAssetPath, fileMovingDone } =
     createStaticAssetsPathHandler()
 
