@@ -25,7 +25,6 @@ async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
     CACHE_DIR = `/opt/build/cache`
   }
   if (CACHE_DIR) {
-    console.log({ CACHE_DIR })
     _cacheUtils = (await import(`@netlify/cache-utils`)).bindOpts({
       cacheDir: CACHE_DIR,
     })
