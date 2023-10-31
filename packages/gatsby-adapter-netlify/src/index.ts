@@ -19,10 +19,10 @@ async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
     return _cacheUtils
   }
   let CACHE_DIR: string | undefined
-  if (process.env.NETLIFY) {
-    CACHE_DIR = `/opt/build/cache`
-  } else if (process.env.NETLIFY_LOCAL) {
+  if (process.env.NETLIFY_LOCAL) {
     CACHE_DIR = join(process.cwd(), `.netlify`, `build-cache`)
+  } else if (process.env.NETLIFY) {
+    CACHE_DIR = `/opt/build/cache`
   }
   if (CACHE_DIR) {
     console.log({ CACHE_DIR })
