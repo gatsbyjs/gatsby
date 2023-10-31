@@ -30,7 +30,14 @@ describe(`createStaticAssetsPathHandler`, () => {
     const copySpy = jest.spyOn(fse, `copy`)
     const moveSpy = jest.spyOn(fse, `move`)
 
-    vol.fromJSON({ "public/index.html": `index` }, process.cwd())
+    vol.fromJSON(
+      {
+        "public/index.html": `index`,
+        "public/_gatsby/slices/slice-1.html": `slice`,
+        "public/index.css": `body {}`,
+      },
+      process.cwd()
+    )
 
     const { ensureStaticAssetPath, fileMovingDone } =
       createStaticAssetsPathHandler()
