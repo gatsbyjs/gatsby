@@ -278,26 +278,26 @@ type RouteWithScore = { score: number } & Route
 const headersAreEqual = (a, b): boolean =>
   a.key === b.key && a.value === b.value
 
-const defaultHeaderRoutes: HeaderRoutes = [
+const getDefaultHeaderRoutes = (pathPrefix: string): HeaderRoutes => [
   {
-    path: `/*`,
+    path: `${pathPrefix}/*`,
     headers: BASE_HEADERS,
   },
   {
-    path: `/static/*`,
+    path: `${pathPrefix}/static/*`,
     headers: PERMANENT_CACHE_CONTROL_HEADER,
   },
 ]
 
 const customHeaderFilter =
-  (route: Route) =>
+  (route: Route, pathPrefix: string) =>
   (h: IHeader["headers"][0]): boolean => {
     for (const baseHeader of BASE_HEADERS) {
       if (headersAreEqual(baseHeader, h)) {
         return false
       }
     }
-    if (route.path.startsWith(`/static/`)) {
+    if (route.path.startsWith(`${pathPrefix}/static/`)) {
       for (const cachingHeader of PERMAMENT_CACHING_HEADERS) {
         if (headersAreEqual(cachingHeader, h)) {
           return false
@@ -318,7 +318,7 @@ function getRoutesManifest(): {
     ? state.config.pathPrefix ?? ``
     : ``
 
-  const headerRoutes: HeaderRoutes = [...defaultHeaderRoutes]
+  const headerRoutes: HeaderRoutes = [...getDefaultHeaderRoutes(pathPrefix)]
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -351,7 +351,9 @@ function getRoutesManifest(): {
 
     if (route.type !== `function`) {
       route.headers = createHeaders(route.path, route.headers)
-      const customHeaders = route.headers.filter(customHeaderFilter(route))
+      const customHeaders = route.headers.filter(
+        customHeaderFilter(route, pathPrefix)
+      )
       if (customHeaders.length > 0) {
         headerRoutes.push({ path: route.path, headers: customHeaders })
       }

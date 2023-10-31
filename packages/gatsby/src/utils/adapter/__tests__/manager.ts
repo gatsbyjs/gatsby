@@ -182,6 +182,84 @@ describe(`getRoutesManifest`, () => {
     )
   })
 
+  it(`should return header rules (path prefix variant)`, () => {
+    mockStoreState(stateDefault, {
+      program: {
+        ...stateDefault.program,
+        prefixPaths: true,
+      },
+      config: {
+        ...stateDefault.config,
+        pathPrefix: `/prefix`,
+        headers: [
+          {
+            source: `/ssr/*`,
+            headers: [
+              {
+                key: `x-ssr-header`,
+                value: `my custom header value from config`,
+              },
+            ],
+          },
+        ],
+      },
+    })
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`, `static/app-456.js`]))
+
+    const { headers } = getRoutesManifest()
+
+    expect(headers).toContainEqual({
+      headers: [
+        { key: `x-xss-protection`, value: `1; mode=block` },
+        { key: `x-content-type-options`, value: `nosniff` },
+        { key: `referrer-policy`, value: `same-origin` },
+        { key: `x-frame-options`, value: `DENY` },
+      ],
+      path: `/prefix/*`,
+    })
+    expect(headers).toContainEqual({
+      headers: [
+        {
+          key: `cache-control`,
+          value: `public, max-age=31536000, immutable`,
+        },
+      ],
+      path: `/prefix/static/*`,
+    })
+    expect(headers).toContainEqual({
+      headers: [
+        {
+          key: `cache-control`,
+          value: `public, max-age=0, must-revalidate`,
+        },
+      ],
+      path: `/prefix/page-data/index/page-data.json`,
+    })
+    expect(headers).toContainEqual({
+      headers: [
+        {
+          key: `cache-control`,
+          value: `public, max-age=31536000, immutable`,
+        },
+      ],
+      path: `/prefix/app-123.js`,
+    })
+    expect(headers).not.toContainEqual({
+      headers: [
+        { key: `x-xss-protection`, value: `1; mode=block` },
+        { key: `x-content-type-options`, value: `nosniff` },
+        { key: `referrer-policy`, value: `same-origin` },
+        { key: `x-frame-options`, value: `DENY` },
+      ],
+      path: `/prefix/ssr/*`,
+    })
+
+    expect(headers).not.toContain(
+      expect.objectContaining({ path: `/prefix/static/app-456.js` })
+    )
+  })
+
   it(`should respect "force" redirects parameter`, () => {
     mockStoreState(stateDefault, {
       config: { ...stateDefault.config },
