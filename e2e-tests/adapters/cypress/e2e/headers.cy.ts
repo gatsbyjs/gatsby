@@ -77,27 +77,28 @@ describe("Headers", () => {
   beforeEach(() => {
     cy.intercept(PATH_PREFIX + "/", WorkaroundCachedResponse).as("index")
     cy.intercept(
-      PATH_PREFIX + "routes/ssr/static",
+      PATH_PREFIX + "/routes/ssr/static",
       WorkaroundCachedResponse
     ).as("ssr")
     cy.intercept(
-      PATH_PREFIX + "routes/dsg/static",
+      PATH_PREFIX + "/routes/dsg/static",
       WorkaroundCachedResponse
     ).as("dsg")
 
     cy.intercept(
-      PATH_PREFIX + "**/page-data.json",
+      PATH_PREFIX + "/**/page-data.json",
       WorkaroundCachedResponse
     ).as("page-data")
-    cy.intercept(PATH_PREFIX + "**/app-data.json", WorkaroundCachedResponse).as(
-      "app-data"
-    )
     cy.intercept(
-      PATH_PREFIX + "**/slice-data/*.json",
+      PATH_PREFIX + "/**/app-data.json",
+      WorkaroundCachedResponse
+    ).as("app-data")
+    cy.intercept(
+      PATH_PREFIX + "/**/slice-data/*.json",
       WorkaroundCachedResponse
     ).as("slice-data")
     cy.intercept(
-      PATH_PREFIX + "**/page-data/sq/d/*.json",
+      PATH_PREFIX + "/**/page-data/sq/d/*.json",
       WorkaroundCachedResponse
     ).as("static-query-result")
 
@@ -105,7 +106,7 @@ describe("Headers", () => {
       PATH_PREFIX + "/static/astro-**.png",
       WorkaroundCachedResponse
     ).as("img-webpack-import")
-    cy.intercept(PATH_PREFIX + "*.js", WorkaroundCachedResponse).as("js")
+    cy.intercept(PATH_PREFIX + "/**/*.js", WorkaroundCachedResponse).as("js")
   })
 
   it("should contain correct headers for index page", () => {
