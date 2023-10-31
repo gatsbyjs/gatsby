@@ -1,20 +1,15 @@
 import { title } from "../../constants"
+import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
 
 const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
 
 describe("Basics", () => {
   beforeEach(() => {
     cy.intercept(PATH_PREFIX + "/gatsby-icon.png").as("static-folder-image")
-    cy.intercept(PATH_PREFIX + "/static/astro-**.png", req => {
-      req.on("before:response", res => {
-        // this generally should be permamently cached, but that cause problems with intercepting
-        // see https://docs.cypress.io/api/commands/intercept#cyintercept-and-request-caching
-        // so we disable caching for this response
-        // tests for cache-control headers should be done elsewhere
-
-        res.headers["cache-control"] = "no-store"
-      })
-    }).as("img-import")
+    cy.intercept(
+      PATH_PREFIX + "/static/astro-**.png",
+      WorkaroundCachedResponse
+    ).as("img-import")
 
     cy.visit("/").waitForRouteChange()
   })

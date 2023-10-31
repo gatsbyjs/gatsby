@@ -25,6 +25,39 @@ const config: GatsbyConfig = {
   trailingSlash,
   pathPrefix,
   plugins: [],
+  headers: [
+    {
+      source: `/*`,
+      headers: [
+        {
+          key: "x-custom-header",
+          value: "my custom header value",
+        },
+      ],
+    },
+    {
+      source: `routes/ssr/*`,
+      headers: [
+        {
+          key: "x-ssr-header",
+          value: "my custom header value from config",
+        },
+        {
+          key: "x-ssr-header-overwrite",
+          value: "config wins",
+        },
+      ],
+    },
+    {
+      source: `routes/dsg/*`,
+      headers: [
+        {
+          key: "x-dsg-header",
+          value: "my custom header value",
+        },
+      ],
+    },
+  ],
   ...configOverrides,
 }
 

@@ -68,9 +68,14 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         }
       },
     },
-    async adapt({ routesManifest, functionsManifest }): Promise<void> {
+    async adapt({
+      routesManifest,
+      functionsManifest,
+      headerRoutes,
+    }): Promise<void> {
       const { lambdasThatUseCaching } = await handleRoutesManifest(
-        routesManifest
+        routesManifest,
+        headerRoutes
       )
 
       // functions handling
