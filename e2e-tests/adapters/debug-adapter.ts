@@ -1,7 +1,7 @@
 import { inspect } from "util"
 import type { AdapterInit } from "gatsby"
 
-const createTestingAdapter: AdapterInit = (adapterOptions) => {
+const createTestingAdapter: AdapterInit = adapterOptions => {
   return {
     name: `gatsby-adapter-debug`,
     cache: {
@@ -10,10 +10,11 @@ const createTestingAdapter: AdapterInit = (adapterOptions) => {
       },
       store({ directories, reporter }) {
         reporter.info(`[gatsby-adapter-debug] cache.store() ${directories}`)
-      }
+      },
     },
     adapt({
       routesManifest,
+      headerRoutes,
       functionsManifest,
       pathPrefix,
       trailingSlash,
@@ -21,16 +22,23 @@ const createTestingAdapter: AdapterInit = (adapterOptions) => {
     }) {
       reporter.info(`[gatsby-adapter-debug] adapt()`)
 
-      console.log(`[gatsby-adapter-debug] adapt()`, inspect({
-        routesManifest,
-        functionsManifest,
-        pathPrefix,
-        trailingSlash,
-      }, {
-        depth: Infinity,
-        colors: true
-      }))
-    }
+      console.log(
+        `[gatsby-adapter-debug] adapt()`,
+        inspect(
+          {
+            routesManifest,
+            headerRoutes,
+            functionsManifest,
+            pathPrefix,
+            trailingSlash,
+          },
+          {
+            depth: Infinity,
+            colors: true,
+          }
+        )
+      )
+    },
   }
 }
 

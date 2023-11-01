@@ -7,15 +7,17 @@ const SSR = ({ serverData }) => {
       <h1>SSR</h1>
       <div>
         <code>
-          <pre>
-            {JSON.stringify({ serverData }, null, 2)}
-          </pre>
+          <pre>{JSON.stringify({ serverData }, null, 2)}</pre>
         </code>
       </div>
       <div>
         <code>
-          <pre data-testid="query">{JSON.stringify(serverData?.arg?.query)}</pre>
-          <pre data-testid="params">{JSON.stringify(serverData?.arg?.params)}</pre>
+          <pre data-testid="query">
+            {JSON.stringify(serverData?.arg?.query)}
+          </pre>
+          <pre data-testid="params">
+            {JSON.stringify(serverData?.arg?.params)}
+          </pre>
         </code>
       </div>
     </Layout>
@@ -31,6 +33,10 @@ export function getServerData(arg) {
     props: {
       ssr: true,
       arg,
+    },
+    headers: {
+      "x-ssr-header-getserverdata": "my custom header value from getServerData",
+      "x-ssr-header-overwrite": "getServerData wins",
     },
   }
 }
