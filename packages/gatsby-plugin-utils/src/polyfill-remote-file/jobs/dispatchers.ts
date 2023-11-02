@@ -8,7 +8,8 @@ export function shouldDispatch(): boolean {
   return (
     !(
       process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
-      process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
+      process.env.GATSBY_CLOUD_IMAGE_CDN === `true` ||
+      process.env.NETLIFY_IMAGE_CDN === `true`
     ) && process.env.NODE_ENV === `production`
   )
 }

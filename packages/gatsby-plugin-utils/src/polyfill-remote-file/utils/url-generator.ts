@@ -93,6 +93,9 @@ export function generateImageUrl(
   imageArgs: Parameters<typeof generateImageArgs>[0],
   store?: Store
 ): string {
+  if (process.env.NETLIFY_IMAGE_CDN) {
+    return generateImageUrlAlt(source, imageArgs, store)
+  }
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
   const queryStr = generateImageArgs(imageArgs)
 
@@ -171,4 +174,76 @@ function generateImageArgs({
   args.push(`q=${quality}`)
 
   return args.join(`&`)
+}
+
+export function generateImageUrlAlt(
+  source: {
+    url: string
+    filename: string
+    mimeType: string
+    internal: { contentDigest: string }
+  },
+  imageArgs: Parameters<typeof generateImageArgs>[0],
+  store?: Store
+): string {
+  const placeholderOrigin = `http://netlify.com`
+  const imageParams = generateImageArgsAlt(imageArgs)
+
+  const baseURL = new URL(`${placeholderOrigin}/${generateRoutePrefix(store)}`)
+
+  baseURL.search = imageParams.toString()
+  baseURL.searchParams.append(`url`, source.url)
+  baseURL.searchParams.append(`cd`, source.internal.contentDigest)
+
+  return `${baseURL.pathname}${baseURL.search}`
+}
+
+function generateRoutePrefix(store?: Store): string {
+  const state = store?.getState()
+
+  const pathPrefix = state?.program?.prefixPaths
+    ? state?.config?.pathPrefix
+    : ``
+
+  return pathPrefix + `.netlify/images`
+}
+
+export function generateImageArgsAlt({
+  width,
+  height,
+  format,
+  cropFocus,
+  quality,
+}: WidthOrHeight & {
+  format: string
+  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
+  quality: number
+}): URLSearchParams {
+  const params = new URLSearchParams()
+
+  if (width) {
+    params.append(`w`, width.toString())
+  }
+  if (height) {
+    params.append(`h`, height.toString())
+  }
+  if (cropFocus) {
+    params.append(`fit`, `crop`)
+    if (Array.isArray(cropFocus)) {
+      // For array of cropFocus values, append them as comma-separated string
+      params.append(`crop`, cropFocus.join(`,`))
+    } else {
+      params.append(`crop`, cropFocus)
+    }
+  }
+
+  if (format) {
+    params.append(`fm`, format)
+  }
+
+  if (quality) {
+    params.append(`q`, quality.toString())
+  }
+
+  return params
 }
