@@ -5,5 +5,5 @@
 [build.environment]
   NETLIFY_IMAGE_CDN = "true"
 
-[image]
+[images]
   remote_images = ["https://images.unsplash.com/*"]
