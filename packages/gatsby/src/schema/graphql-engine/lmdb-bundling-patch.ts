@@ -31,7 +31,11 @@ export default function (this: any, source: string): string {
       this?._module.resourceResolveData?.descriptionFileRoot ||
       path.dirname(this.resourcePath).replace(`/dist`, ``)
 
-    const lmdbRequire = createRequire(this.resourcePath)
+    const requirePath = this.getOptions()?.requirePath
+      ? this.getOptions()?.requirePath
+      : this.resourcePath
+    const lmdbRequire = createRequire(requirePath)
+
     const forcedBinaryModule = this.getOptions()?.forcedBinaryModule
     let absoluteModulePath
     if (forcedBinaryModule) {

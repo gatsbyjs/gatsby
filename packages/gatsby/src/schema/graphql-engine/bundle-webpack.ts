@@ -2,8 +2,10 @@
 
 import * as path from "path"
 import * as fs from "fs-extra"
+import execa, { Options as ExecaOptions } from "execa"
 import webpack, { Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
+import { dependencies } from "gatsby/package.json"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
@@ -12,6 +14,7 @@ import { schemaCustomizationAPIs } from "./print-plugins"
 import type { GatsbyNodeAPI } from "../../redux/types"
 import * as nodeApis from "../../utils/api-node-docs"
 import { store } from "../../redux"
+import report from "gatsby-cli/lib/reporter"
 
 type Reporter = typeof reporter
 
@@ -35,6 +38,67 @@ function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
   return apisToRemove
 }
 
+const getInternalPackagesCacheDir = (): string =>
+  path.join(process.cwd(), `.cache/internal-packages`)
+
+const createInternalPackagesCacheDir = async (): Promise<void> => {
+  const cacheDir = getInternalPackagesCacheDir()
+  await fs.ensureDir(cacheDir)
+  await fs.emptyDir(cacheDir)
+
+  const packageJsonPath = path.join(cacheDir, `package.json`)
+
+  await fs.outputJson(packageJsonPath, {
+    name: `gatsby-internal-packages`,
+    description: `This directory contains internal packages installed by Gatsby used to comply with the current platform requirements`,
+    version: `1.0.0`,
+    private: true,
+    author: `Gatsby`,
+    license: `MIT`,
+  })
+}
+
+function lmdbPrebuiltPackagePresent(): boolean {
+  try {
+    require.resolve(`@lmdb/lmdb-${process.platform}-${process.arch}`)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+async function installIfMissingLmdb(): Promise<string | undefined> {
+  if (lmdbPrebuiltPackagePresent()) return
+
+  await createInternalPackagesCacheDir()
+
+  const cacheDir = getInternalPackagesCacheDir()
+  const options: ExecaOptions = {
+    stderr: `inherit`,
+    cwd: cacheDir,
+  }
+
+  const npmAdditionalCliArgs = [
+    `--no-progress`,
+    `--no-audit`,
+    `--no-fund`,
+    `--loglevel`,
+    `error`,
+    `--color`,
+    `always`,
+    `--legacy-peer-deps`,
+    `--save-exact`,
+  ]
+
+  await execa(
+    `npm`,
+    [`install`, ...npmAdditionalCliArgs, `lmdb@${dependencies.lmdb}`],
+    options
+  )
+
+  return cacheDir
+}
+
 export async function createGraphqlEngineBundle(
   rootDir: string,
   reporter: Reporter,
@@ -56,6 +120,8 @@ export async function createGraphqlEngineBundle(
   const gatsbyPluginTSRequire = mod.createRequire(
     require.resolve(`gatsby-plugin-typescript`)
   )
+
+  const lmdbRequirePath = await installIfMissingLmdb()
 
   const compiler = webpack({
     name: `Query Engine`,
@@ -121,6 +187,7 @@ export async function createGraphqlEngineBundle(
                 {
                   loader: require.resolve(`./lmdb-bundling-patch`),
                   options: {
+                    requirePath: lmdbRequirePath,
                     forcedBinaryModule: store.getState().adapter.instance
                       ? `@lmdb/lmdb-${process.platform}-${process.arch}/node.abi83.glibc.node`
                       : undefined,
