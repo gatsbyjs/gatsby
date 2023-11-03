@@ -22,7 +22,10 @@
   },
   "dependencies": {
     "gatsby": "next",
-    "gatsby-adapter-netlify": "latest",
+    "gatsby-adapter-netlify": "next",
+    "gatsby-plugin-image": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-transformer-sharp": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
