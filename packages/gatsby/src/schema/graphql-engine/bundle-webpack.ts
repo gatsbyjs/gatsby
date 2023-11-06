@@ -72,7 +72,7 @@ function lmdbPrebuiltPackagePresent(): boolean {
 // Install lmdb under our internal cache if we detect the current installation
 // isn't using the pre-build binaries
 async function installIfMissingLmdb(): Promise<string | undefined> {
-  if (lmdbPrebuiltPackagePresent()) return
+  if (lmdbPrebuiltPackagePresent()) return undefined
 
   await createInternalPackagesCacheDir()
 
@@ -100,7 +100,7 @@ async function installIfMissingLmdb(): Promise<string | undefined> {
     options
   )
 
-  return path.join(cacheDir, "node_modules", "lmdb")
+  return path.join(cacheDir, `node_modules`, `lmdb`)
 }
 
 export async function createGraphqlEngineBundle(
