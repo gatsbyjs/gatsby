@@ -41,6 +41,7 @@ function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
 const getInternalPackagesCacheDir = (): string =>
   path.join(process.cwd(), `.cache/internal-packages`)
 
+// Create a directory and JS module where we install internally used packages
 const createInternalPackagesCacheDir = async (): Promise<void> => {
   const cacheDir = getInternalPackagesCacheDir()
   await fs.ensureDir(cacheDir)
@@ -58,6 +59,7 @@ const createInternalPackagesCacheDir = async (): Promise<void> => {
   })
 }
 
+// Detect if the prebuilt binaries for lmdb have been installed. These are installed under @lmdb and are tied to each platform/arch. We've seen instances where regular installations lack these modules because of a broken lockfile or skipping optional dependencies installs
 function lmdbPrebuiltPackagePresent(): boolean {
   try {
     require.resolve(`@lmdb/lmdb-${process.platform}-${process.arch}`)
@@ -67,6 +69,8 @@ function lmdbPrebuiltPackagePresent(): boolean {
   }
 }
 
+// Install lmdb under our internal cache if we detect the current installation
+// isn't using the pre-build binaries
 async function installIfMissingLmdb(): Promise<string | undefined> {
   if (lmdbPrebuiltPackagePresent()) return
 
@@ -96,7 +100,7 @@ async function installIfMissingLmdb(): Promise<string | undefined> {
     options
   )
 
-  return cacheDir
+  return path.join(cacheDir, "node_modules", "lmdb")
 }
 
 export async function createGraphqlEngineBundle(
@@ -121,7 +125,8 @@ export async function createGraphqlEngineBundle(
     require.resolve(`gatsby-plugin-typescript`)
   )
 
-  const lmdbRequirePath = await installIfMissingLmdb()
+  // Alternative lmdb path we've created to self heal from a "broken" lmdb installation
+  const alternativeLmdbPath = await installIfMissingLmdb()
 
   const compiler = webpack({
     name: `Query Engine`,
@@ -187,7 +192,7 @@ export async function createGraphqlEngineBundle(
                 {
                   loader: require.resolve(`./lmdb-bundling-patch`),
                   options: {
-                    requirePath: lmdbRequirePath,
+                    alternativeLmdbPath,
                     forcedBinaryModule: store.getState().adapter.instance
                       ? `@lmdb/lmdb-${process.platform}-${process.arch}/node.abi83.glibc.node`
                       : undefined,

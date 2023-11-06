@@ -26,14 +26,22 @@ const { createRequire } = require(`module`)
 export default function (this: any, source: string): string {
   let lmdbBinaryLocation: string | undefined
 
+  const alternativeLmdbPath = this.getOptions()?.alternativeLmdbPath
   try {
-    const lmdbRoot =
-      this?._module.resourceResolveData?.descriptionFileRoot ||
-      path.dirname(this.resourcePath).replace(`/dist`, ``)
+    let lmdbRoot: string
+    let requirePath: string
 
-    const requirePath = this.getOptions()?.requirePath
-      ? this.getOptions()?.requirePath
-      : this.resourcePath
+    // If we've been provided an alternative lmdb module path we should use it as require path and the our lmdb root
+    if (alternativeLmdbPath) {
+      lmdbRoot = alternativeLmdbPath
+      requirePath = alternativeLmdbPath
+    } else {
+      lmdbRoot =
+        this?._module.resourceresolvedata?.descriptionfileroot ||
+        path.dirname(this.resourcepath).replace(`/dist`, ``)
+      requirePath = this.resourcePath
+    }
+
     const lmdbRequire = createRequire(requirePath)
 
     const forcedBinaryModule = this.getOptions()?.forcedBinaryModule
