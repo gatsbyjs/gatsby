@@ -14,7 +14,6 @@ import { schemaCustomizationAPIs } from "./print-plugins"
 import type { GatsbyNodeAPI } from "../../redux/types"
 import * as nodeApis from "../../utils/api-node-docs"
 import { store } from "../../redux"
-import report from "gatsby-cli/lib/reporter"
 
 type Reporter = typeof reporter
 
