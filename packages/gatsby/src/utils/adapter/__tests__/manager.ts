@@ -109,6 +109,29 @@ describe(`getRoutesManifest`, () => {
     )
   })
 
+  it(`should not prepend '\\' to external redirects (path prefix variant)`, () => {
+    mockStoreState(stateDefault, {
+      program: {
+        ...stateDefault.program,
+        prefixPaths: true,
+      },
+      config: {
+        ...stateDefault.config,
+        pathPrefix: `/prefix`,
+      },
+    })
+    process.chdir(fixturesDir)
+    setWebpackAssets(new Set([`app-123.js`]))
+
+    const { routes } = getRoutesManifest()
+    expect(routes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: `https://old-url` }),
+        expect.objectContaining({ path: `http://old-url` }),
+      ])
+    )
+  })
+
   it(`should return header rules`, () => {
     mockStoreState(stateDefault, {
       config: {
