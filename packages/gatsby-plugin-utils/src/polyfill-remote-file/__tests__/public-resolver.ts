@@ -4,7 +4,9 @@ import { publicUrlResolver } from "../index"
 import { generateFileUrl } from "../utils/url-generator"
 import * as dispatchers from "../jobs/dispatchers"
 
-jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
+jest
+  .spyOn(dispatchers, `shouldDispatchLocalFileServiceJob`)
+  .mockImplementation(() => false)
 
 const store = {
   getState: (): { requestHeaders: Map<string, Record<string, string>> } => {
@@ -68,7 +70,9 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
 
-    dispatchers.shouldDispatch.mockImplementationOnce(() => true)
+    dispatchers.shouldDispatchLocalFileServiceJob.mockImplementationOnce(
+      () => true
+    )
 
     const source = {
       id: `1`,
@@ -105,7 +109,9 @@ describe(`publicResolver`, () => {
     const actions = {
       createJobV2: jest.fn(() => jest.fn()),
     }
-    dispatchers.shouldDispatch.mockImplementationOnce(() => true)
+    dispatchers.shouldDispatchLocalFileServiceJob.mockImplementationOnce(
+      () => true
+    )
 
     const source = {
       id: `1`,
@@ -145,7 +151,9 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
 
-    dispatchers.shouldDispatch.mockImplementationOnce(() => true)
+    dispatchers.shouldDispatchLocalFileServiceJob.mockImplementationOnce(
+      () => true
+    )
 
     const file = {
       id: `1`,
