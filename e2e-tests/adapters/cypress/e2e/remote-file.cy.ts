@@ -74,7 +74,7 @@ describe(
         }
       })
 
-      cy.get(".resize").then(async $imgs => {
+      cy.get(".resize").then({ timeout: 60000 }, async $imgs => {
         await testImages(Array.from($imgs), [
           {
             width: 100,
@@ -91,7 +91,9 @@ describe(
         ])
       })
 
-      cy.get(".fixed").then(async $imgs => {
+      cy.get(".fixed img:not([aria-hidden=true])").then(
+        { timeout: 60000 },
+        async $imgs => {
         await testImages(Array.from($imgs), [
           {
             width: 100,
@@ -106,9 +108,12 @@ describe(
             height: 67,
           },
         ])
-      })
+        }
+      )
 
-      cy.get(".constrained").then(async $imgs => {
+      cy.get(".constrained img:not([aria-hidden=true])").then(
+        { timeout: 60000 },
+        async $imgs => {
         await testImages(Array.from($imgs), [
           {
             width: 300,
@@ -123,9 +128,12 @@ describe(
             height: 200,
           },
         ])
-      })
+        }
+      )
 
-      cy.get(".full").then(async $imgs => {
+      cy.get(".full img:not([aria-hidden=true])").then(
+        { timeout: 60000 },
+        async $imgs => {
         await testImages(Array.from($imgs), [
           {
             height: 1229,
@@ -137,7 +145,8 @@ describe(
             height: 614,
           },
         ])
-      })
+        }
+      )
     })
 
     it(`should render a placeholder`, () => {
