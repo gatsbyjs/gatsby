@@ -18,7 +18,7 @@ describe(
   },
   () => {
     beforeEach(() => {
-      cy.visit(`/remote-file/`).waitForRouteChange()
+      cy.visit(`/routes/remote-file/`).waitForRouteChange()
 
       // trigger intersection observer
       cy.scrollTo("top")
@@ -33,7 +33,15 @@ describe(
       for (let i = 0; i < images.length; i++) {
         const expectation = expectations[i]
 
-        const res = await fetch(images[i].currentSrc, {
+        const url = images[i].currentSrc
+
+        const { href, origin } = new URL(url)
+        const urlWithoutOrigin = href.replace(origin, ``)
+
+        // using Netlify Image CDN
+        expect(urlWithoutOrigin).to.match(/^\/.netlify\/images/)
+
+        const res = await fetch(url, {
           method: "HEAD",
         })
         expect(res.ok).to.be.true
@@ -57,6 +65,8 @@ describe(
         )
 
         for (const url of urls) {
+          // using OSS implementation for publicURL for now
+          expect(url).to.match(/^\/_gatsby\/file/)
           const res = await fetch(url, {
             method: "HEAD",
           })
