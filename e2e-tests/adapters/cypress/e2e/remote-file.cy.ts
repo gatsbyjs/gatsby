@@ -131,23 +131,31 @@ describe(
         }
       )
 
-      cy.get(".full img:not([aria-hidden=true])").then(
-        { timeout: 60000 },
-        async $imgs => {
-        await testImages(Array.from($imgs), [
-          {
-            height: 1229,
-          },
-          {
-            height: 1478,
-          },
-          {
-            height: 614,
-          },
-        ])
-        }
-      )
-    })
+      cy.get(".full img:not([aria-hidden=true])", { timeout: 60000 }).then($imgs => {
+        const imgElements = Array.from($imgs);
+      
+        const checkImages = Cypress.Promise.all(
+          imgElements.map((img, index) => {
+            return new Cypress.Promise((resolve, reject) => {
+              const newImg = new Image();
+              newImg.onload = () => {
+                expect(newImg.naturalHeight).to.equal(
+                  [1229, 1478, 614][index], 
+                );
+                resolve();
+              };
+              newImg.onerror = () => {
+                reject(new Error('Image could not be loaded'));
+              };
+              newImg.src = img.getAttribute('src');
+            });
+          }),
+        );
+      
+        // Wait for all image checks to complete
+        cy.wrap(checkImages).should('be.fulfilled');
+      });
+      
 
     it(`should render a placeholder`, () => {
       cy.get(".fixed [data-placeholder-image]")
