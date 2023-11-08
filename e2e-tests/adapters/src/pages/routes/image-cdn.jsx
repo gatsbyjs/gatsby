@@ -19,6 +19,16 @@ export default function SSG({ data }) {
             </li>
           </>
         ))}
+        {data.allDeployedLocalImage.nodes.map((node, index) => (
+          <>
+            <li key={node.id + `-gatsby-image`}>
+              <GatsbyImage image={getImage(node)} />
+            </li>
+            {/* <li key={node.id + `-original`}>
+              <img src={node.publicUrl} />
+            </li> */}
+          </>
+        ))}
       </ul>
     </Layout>
   )
@@ -31,6 +41,12 @@ export const query = graphql`
         id
         gatsbyImage(width: 200)
         publicUrl
+      }
+    }
+    allDeployedLocalImage {
+      nodes {
+        id
+        gatsbyImage(width: 200, placeholder: NONE)
       }
     }
   }
