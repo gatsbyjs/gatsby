@@ -162,31 +162,6 @@ describe(
             },
           ])
         }
-
-        // {
-        //   const imgElements = Array.from($imgs)
-
-        //   const checkImages = Cypress.Promise.all(
-        //     imgElements.map((img, index) => {
-        //       return new Cypress.Promise((resolve, reject) => {
-        //         const newImg = new Image()
-        //         newImg.onload = () => {
-        //           expect(newImg.naturalHeight).to.equal(
-        //             [1229, 1478, 614][index]
-        //           )
-        //           resolve()
-        //         }
-        //         newImg.onerror = () => {
-        //           reject(new Error("Image could not be loaded"))
-        //         }
-        //         newImg.src = img.getAttribute("src")
-        //       })
-        //     })
-        //   )
-
-        //   // Wait for all image checks to complete
-        //   cy.wrap(checkImages).should("be.fulfilled")
-        // }
       )
     })
 
