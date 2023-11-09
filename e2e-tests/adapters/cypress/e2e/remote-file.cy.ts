@@ -45,6 +45,12 @@ describe(
           method: "HEAD",
         })
         expect(res.ok).to.be.true
+
+        const expectedNaturalWidth =
+          expectation.naturalWidth ?? expectation.width
+        const expectedNaturalHeight =
+          expectation.naturalHeight ?? expectation.height
+
         if (expectation.width) {
           expect(
             Math.ceil(images[i].getBoundingClientRect().width)
@@ -54,6 +60,16 @@ describe(
           expect(
             Math.ceil(images[i].getBoundingClientRect().height)
           ).to.be.equal(expectation.height)
+        }
+        if (expectedNaturalWidth) {
+          expect(Math.ceil(images[i].naturalWidth)).to.be.equal(
+            expectedNaturalWidth
+          )
+        }
+        if (expectedNaturalHeight) {
+          expect(Math.ceil(images[i].naturalHeight)).to.be.equal(
+            expectedNaturalHeight
+          )
         }
       }
     }
@@ -94,68 +110,85 @@ describe(
       cy.get(".fixed img:not([aria-hidden=true])").then(
         { timeout: 60000 },
         async $imgs => {
-        await testImages(Array.from($imgs), [
-          {
-            width: 100,
-            height: 133,
-          },
-          {
-            width: 100,
-            height: 160,
-          },
-          {
-            width: 100,
-            height: 67,
-          },
-        ])
+          await testImages(Array.from($imgs), [
+            {
+              width: 100,
+              height: 133,
+            },
+            {
+              width: 100,
+              height: 160,
+            },
+            {
+              width: 100,
+              height: 67,
+            },
+          ])
         }
       )
 
       cy.get(".constrained img:not([aria-hidden=true])").then(
         { timeout: 60000 },
         async $imgs => {
-        await testImages(Array.from($imgs), [
-          {
-            width: 300,
-            height: 400,
-          },
-          {
-            width: 300,
-            height: 481,
-          },
-          {
-            width: 300,
-            height: 200,
-          },
-        ])
+          await testImages(Array.from($imgs), [
+            {
+              width: 300,
+              height: 400,
+            },
+            {
+              width: 300,
+              height: 481,
+            },
+            {
+              width: 300,
+              height: 200,
+            },
+          ])
         }
       )
 
-      cy.get(".full img:not([aria-hidden=true])", { timeout: 60000 }).then($imgs => {
-        const imgElements = Array.from($imgs);
-      
-        const checkImages = Cypress.Promise.all(
-          imgElements.map((img, index) => {
-            return new Cypress.Promise((resolve, reject) => {
-              const newImg = new Image();
-              newImg.onload = () => {
-                expect(newImg.naturalHeight).to.equal(
-                  [1229, 1478, 614][index], 
-                );
-                resolve();
-              };
-              newImg.onerror = () => {
-                reject(new Error('Image could not be loaded'));
-              };
-              newImg.src = img.getAttribute('src');
-            });
-          }),
-        );
-      
-        // Wait for all image checks to complete
-        cy.wrap(checkImages).should('be.fulfilled');
-      });
-      
+      cy.get(".full img:not([aria-hidden=true])").then(
+        { timeout: 60000 },
+        async $imgs => {
+          await testImages(Array.from($imgs), [
+            {
+              naturalHeight: 1333,
+            },
+            {
+              naturalHeight: 1603,
+            },
+            {
+              naturalHeight: 666,
+            },
+          ])
+        }
+
+        // {
+        //   const imgElements = Array.from($imgs)
+
+        //   const checkImages = Cypress.Promise.all(
+        //     imgElements.map((img, index) => {
+        //       return new Cypress.Promise((resolve, reject) => {
+        //         const newImg = new Image()
+        //         newImg.onload = () => {
+        //           expect(newImg.naturalHeight).to.equal(
+        //             [1229, 1478, 614][index]
+        //           )
+        //           resolve()
+        //         }
+        //         newImg.onerror = () => {
+        //           reject(new Error("Image could not be loaded"))
+        //         }
+        //         newImg.src = img.getAttribute("src")
+        //       })
+        //     })
+        //   )
+
+        //   // Wait for all image checks to complete
+        //   cy.wrap(checkImages).should("be.fulfilled")
+        // }
+      )
+    })
 
     it(`should render a placeholder`, () => {
       cy.get(".fixed [data-placeholder-image]")
