@@ -37,8 +37,8 @@ export default function (this: any, source: string): string {
       requirePath = alternativeLmdbPath
     } else {
       lmdbRoot =
-        this?._module.resourceresolvedata?.descriptionfileroot ||
-        path.dirname(this.resourcepath).replace(`/dist`, ``)
+        this?._module.resourceResolveData?.descriptionFileRoot ||
+        path.dirname(this.resourcePath).replace(`/dist`, ``)
       requirePath = this.resourcePath
     }
 
