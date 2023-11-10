@@ -1,7 +1,7 @@
 import * as path from "path"
 import * as fs from "fs-extra"
 import { createContentDigest } from "gatsby-core-utils"
-import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
+// import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 import type { GatsbyNode } from "gatsby"
 import slicesData from "./shared-data/slices"
 
@@ -12,40 +12,24 @@ export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = () => {
   )
 }
 
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({
-  actions,
-  schema,
-}) => {
-  const { createTypes } = actions
-  const typeDefs = `
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
+  ({ actions, schema }) => {
+    const { createTypes } = actions
+    const typeDefs = `
       type Product implements Node {
           name: String
       }
     `
-  createTypes(typeDefs)
+    createTypes(typeDefs)
 
-  actions.createTypes(
-    addRemoteFilePolyfillInterface(
-      schema.buildObjectType({
-        name: "MyRemoteFile",
-        fields: {},
-        interfaces: ["Node", "RemoteFile"],
-      }),
-      {
-        schema,
-        actions,
-      }
-    )
-  )
-
-  actions.createTypes(`#graphql
+    actions.createTypes(`#graphql
     type HeadFunctionExportFsRouteApi implements Node {
       id: ID!
       slug: String!
       content: String!
     }
   `)
-}
+  }
 
 const products = ["Burger", "Chicken"]
 
@@ -66,51 +50,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({
     })
   })
 
-  const items = [
-    {
-      name: "photoA.jpg",
-      url:
-        "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
-      placeholderUrl:
-        "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=%width%&h=%height%",
-      mimeType: "image/jpg",
-      filename: "photo-1517849845537.jpg",
-      width: 2000,
-      height: 2667,
-    },
-    {
-      name: "photoB.jpg",
-      url:
-        "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=2000&q=10",
-      mimeType: "image/jpg",
-      filename: "photo-1552053831.jpg",
-      width: 1247,
-      height: 2000,
-    },
-    {
-      name: "photoC.jpg",
-      url:
-        "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
-      placeholderUrl:
-        "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=%width%&h=%height%",
-      mimeType: "image/jpg",
-      filename: "photo-1561037404.jpg",
-      width: 2000,
-      height: 1333,
-    },
-  ]
-
-  items.forEach((item, index) => {
-    actions.createNode({
-      id: createNodeId(`remote-file-${index}`),
-      ...item,
-      internal: {
-        type: "MyRemoteFile",
-        contentDigest: createContentDigest(item.url),
-      },
-    })
-  })
-
   actions.createNode({
     id: createNodeId(`head-function-export-fs-route-api`),
     slug: `/fs-route-api`,
@@ -127,13 +66,12 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({
 export const createPages: GatsbyNode["createPages"] = ({
   actions: { createPage, createRedirect, createSlice },
 }) => {
-
   //-------------------------Slices API----------------------------
   createSlice({
     id: `footer`,
     component: path.resolve(`./src/components/footer.js`),
     context: {
-      framework: slicesData.framework
+      framework: slicesData.framework,
     },
   })
 

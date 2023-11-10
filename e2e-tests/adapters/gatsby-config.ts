@@ -21,11 +21,7 @@ const config: GatsbyConfig = {
     siteDescription,
   },
   trailingSlash,
-  plugins: [
-    `gatsby-plugin-image`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-  ],
+  plugins: [`gatsby-cypress/remote-file/plugin`],
   headers: [
     {
       source: `/*`,

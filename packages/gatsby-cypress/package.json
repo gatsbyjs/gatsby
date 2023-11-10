@@ -16,7 +16,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13"
+    "@babel/runtime": "^7.20.13",
+    "gatsby-plugin-utils": "^4.13.0-next.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

@@ -108,7 +108,11 @@ module.exports = {
       },
     },
     {
-      files: [`**/cypress/integration/**/*`, `**/cypress/support/**/*`],
+      files: [
+        `**/cypress/integration/**/*`,
+        `**/cypress/support/**/*`,
+        `packages/gatsby-cypress/remote-file/cypress-test.js`,
+      ],
       globals: {
         cy: false,
         Cypress: false,
