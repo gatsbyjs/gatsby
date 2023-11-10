@@ -15,6 +15,16 @@ interface IMoveTask {
   keepOriginalFile: boolean
 }
 
+export function normalizeDynamicRoutePath(routePath: string): string {
+  return (
+    routePath
+      // replace `:param` with `[param]`
+      .replace(/:([^:/\\]+)/gm, `[$1]`)
+      // replace `*param` with `[...param]` and `*` with `[...]`
+      .replace(/\*([^:/\\]*)/gm, `[...$1]`)
+  )
+}
+
 export function createStaticAssetsPathHandler(): {
   ensureStaticAssetPath: (
     filePath: string,
@@ -46,11 +56,7 @@ export function createStaticAssetsPathHandler(): {
     // dynamic routes syntax use characters that are reserved in a lot of filesystems
     // so if route is dynamic we should normalize filepath
     if (routePath.includes(`:`) || routePath.includes(`*`)) {
-      routePath = routePath
-        // replace `:param` with `[param]`
-        .replace(/:([^:/\\]+)/gm, `[$1]`)
-        // replace `*param` with `[...param]` and `*` with `[...]`
-        .replace(/\*([^:/\\]*|$)/gm, `[...$1]`)
+      routePath = normalizeDynamicRoutePath(routePath)
       isDynamic = true
     }
 

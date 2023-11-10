@@ -3,6 +3,7 @@ import { vol } from "memfs"
 import {
   generatePrettyUrlFilePath,
   createStaticAssetsPathHandler,
+  normalizeDynamicRoutePath,
 } from "../pretty-urls"
 
 jest.mock(`fs`, () => jest.requireActual(`memfs`).fs)
@@ -18,6 +19,26 @@ describe(`generatePrettyUrlFilePath`, () => {
 
   it(`/foo/`, () => {
     expect(generatePrettyUrlFilePath(`/foo/`)).toEqual(`/foo/index.html`)
+  })
+})
+
+describe(`normalizeRoutePath`, () => {
+  it(`static path return path as-is`, () => {
+    expect(normalizeDynamicRoutePath(`/foo/`)).toEqual(`/foo/`)
+  })
+
+  it(`replaces ':param: with [param]`, () => {
+    expect(normalizeDynamicRoutePath(`/foo/:param/bar/`)).toEqual(
+      `/foo/[param]/bar/`
+    )
+  })
+
+  it(`replaces '*' with [...]`, () => {
+    expect(normalizeDynamicRoutePath(`/foo/*`)).toEqual(`/foo/[...]`)
+  })
+
+  it(`replaces '*named' with [...named]`, () => {
+    expect(normalizeDynamicRoutePath(`/foo/*named`)).toEqual(`/foo/[...named]`)
   })
 })
 
@@ -151,13 +172,13 @@ describe(`createStaticAssetsPathHandler`, () => {
         createStaticAssetsPathHandler()
 
       expect(vol.existsSync(`public/[...wildcard]/index.html`)).toEqual(true)
-      expect(vol.existsSync(`public/foo/[...].html`)).toEqual(false)
+      expect(vol.existsSync(`public/foo/[...wildcard].html`)).toEqual(false)
 
-      ensureStaticAssetPath(`public/[...wildcard]/index.html`, `/foo/*`)
+      ensureStaticAssetPath(`public/[...wildcard]/index.html`, `/foo/*wildcard`)
 
       await fileMovingDone()
 
-      expect(vol.existsSync(`public/foo/[...].html`)).toEqual(true)
+      expect(vol.existsSync(`public/foo/[...wildcard].html`)).toEqual(true)
       expect(vol.existsSync(`public/[...wildcard]/index.html`)).toEqual(false)
     })
 
