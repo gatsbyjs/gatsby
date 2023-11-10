@@ -1,3 +1,5 @@
+/* eslint-disable @babel/no-unused-expressions */
+
 export default function testRemoteFile({ remoteFilePagePath }) {
   Cypress.on(`uncaught:exception`, err => {
     if (
@@ -8,6 +10,7 @@ export default function testRemoteFile({ remoteFilePagePath }) {
     ) {
       return false
     }
+    return undefined
   })
 
   describe(
