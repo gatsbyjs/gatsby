@@ -32,7 +32,7 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-less`,
     `gatsby-plugin-stylus`,
-    `gatsby-cypress/remote-file/plugin`,
+    `gatsby-cypress`,
   ].concat(process.env.TEST_PLUGIN_OFFLINE ? [`gatsby-plugin-offline`] : []),
   partytownProxiedURLs: [
     `http://localhost:8888/three.js`,

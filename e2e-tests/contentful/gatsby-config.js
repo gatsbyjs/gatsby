@@ -29,6 +29,7 @@ module.exports = {
         },
       },
     },
+    `gatsby-cypress`,
     // Enable to update schema.sql
     // {
     //   resolve: `gatsby-plugin-schema-snapshot`,

@@ -9,4 +9,5 @@ module.exports = {
       title: `Trailing Slash`,
     },
   },
+  plugins: [`gatsby-cypress`],
 }

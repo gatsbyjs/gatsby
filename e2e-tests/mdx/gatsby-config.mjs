@@ -49,6 +49,7 @@ const config = {
       },
     },
     !process.env.CI && `gatsby-plugin-webpack-bundle-analyser-v2`,
+    `gatsby-cypress`,
   ].filter(Boolean),
 }
 

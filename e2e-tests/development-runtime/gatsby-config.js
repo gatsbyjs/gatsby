@@ -72,7 +72,7 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-less`,
     `gatsby-plugin-stylus`,
-    `gatsby-cypress/remote-file/plugin`,
+    `gatsby-cypress`,
   ],
   partytownProxiedURLs: [
     `http://localhost:8888/three.js`,

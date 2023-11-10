@@ -5,5 +5,10 @@ module.exports = {
       twitter: `chatsidhartha`,
     },
   },
-  plugins: [`gatsby-theme-about`, `gatsby-theme-local`, `gatsby-plugin-local`],
+  plugins: [
+    `gatsby-theme-about`,
+    `gatsby-theme-local`,
+    `gatsby-plugin-local`,
+    `gatsby-cypress`,
+  ],
 }

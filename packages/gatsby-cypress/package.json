@@ -1,6 +1,6 @@
 {
   "name": "gatsby-cypress",
-  "version": "3.13.0-next.0",
+  "version": "4.0.0-next.0",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
   "types": "index.d.ts",
