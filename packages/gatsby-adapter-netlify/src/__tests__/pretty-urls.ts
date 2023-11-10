@@ -210,7 +210,7 @@ describe(`createStaticAssetsPathHandler`, () => {
       await fileMovingDone()
 
       expect(vol.existsSync(`public/500.html`)).toEqual(true)
-      // 404 page is coped so it exists in both locations
+      // 500 page is coped so it exists in both locations
       expect(vol.existsSync(`public/foo/500.html`)).toEqual(true)
     })
   })
