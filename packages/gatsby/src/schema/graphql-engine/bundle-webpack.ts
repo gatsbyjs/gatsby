@@ -64,7 +64,6 @@ const lmdbPackage = `@lmdb/lmdb-${process.platform}-${process.arch}`
 
 // Detect if the prebuilt binaries for lmdb have been installed. These are installed under @lmdb and are tied to each platform/arch. We've seen instances where regular installations lack these modules because of a broken lockfile or skipping optional dependencies installs
 function installPrebuiltLmdb(): boolean {
-  console.log(`IN PREBUILD`)
   // Read lmdb's package.json, go through its optional depedencies and validate if there's a prebuilt lmdb module with a compatible binary to our platform and arch
   let packageJson: PackageJson
   try {
@@ -72,18 +71,13 @@ function installPrebuiltLmdb(): boolean {
       .dirname(require.resolve(`lmdb`))
       .replace(`/dist`, ``)
     const packageJsonPath = path.join(modulePath, `package.json`)
-    console.log(packageJsonPath)
     packageJson = JSON.parse(fs.readFileSync(packageJsonPath, `utf-8`))
-    console.log(JSON.stringify(packageJson, null, 2))
   } catch (e) {
-    console.log(e)
     // If we fail to read lmdb's package.json there's bigger problems here so just skip installation
     return false
   }
   // If there's no lmdb prebuilt package for our arch/platform listed as optional dep no point in trying to install it
   const { optionalDependencies } = packageJson
-  console.log(JSON.stringify(optionalDependencies, null, 2))
-  console.log(lmdbPackage)
   if (!optionalDependencies) return false
   if (!Object.keys(optionalDependencies).find(p => p === lmdbPackage))
     return false
@@ -121,9 +115,11 @@ async function installIfMissingLmdb(): Promise<string | undefined> {
     `--save-exact`,
   ]
 
-  console.log(`INSTALLIIIIING`)
-
-  await execa(`npm`, [`install`, ...npmAdditionalCliArgs, lmdbPackage], options)
+  await execa(
+    `npm`,
+    [`install`, ...npmAdditionalCliArgs, `${lmdbPackage}@${dependencies.lmdb}`],
+    options
+  )
 
   return path.join(cacheDir, `node_modules`, lmdbPackage)
 }
@@ -152,7 +148,16 @@ export async function createGraphqlEngineBundle(
 
   // Alternative lmdb path we've created to self heal from a "broken" lmdb installation
   const alternativeLmdbPath = await installIfMissingLmdb()
-  console.log(alternativeLmdbPath)
+
+  // We force a specific lmdb binary module if we detected a broken lmdb installation or if we detect the presence of an adapter
+  let forcedLmdbBinaryModule: string | undefined = undefined
+  if (store.getState().adapter.instance) {
+    forcedLmdbBinaryModule = `${lmdbPackage}/node.abi83.glibc.node`
+  }
+  // We always force the binary if we've installed an alternative path
+  if (alternativeLmdbPath) {
+    forcedLmdbBinaryModule = `${alternativeLmdbPath}/node.abi83.glibc.node`
+  }
 
   const compiler = webpack({
     name: `Query Engine`,
@@ -218,10 +223,7 @@ export async function createGraphqlEngineBundle(
                 {
                   loader: require.resolve(`./lmdb-bundling-patch`),
                   options: {
-                    alternativeLmdbPath,
-                    forcedBinaryModule: store.getState().adapter.instance
-                      ? `${lmdbPackage}/node.abi83.glibc.node`
-                      : undefined,
+                    forcedBinaryModule: forcedLmdbBinaryModule,
                   },
                 },
               ],
