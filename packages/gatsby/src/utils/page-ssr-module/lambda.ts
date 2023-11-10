@@ -13,7 +13,7 @@ import type { ISSRData } from "./entry"
 import { link } from "linkfs"
 
 const cdnDatastore = `%CDN_DATASTORE_PATH%`
-const PATH_PREFIX = `%PATH_PREFIX`
+const PATH_PREFIX = `%PATH_PREFIX%`
 
 function setupFsWrapper(): string {
   // setup global._fsWrapper

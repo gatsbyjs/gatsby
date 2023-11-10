@@ -234,7 +234,7 @@ export async function createPageSSRBundle({
         ? ``
         : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
     )
-    .replace(`%PATH_PREFIX`, pathPrefix)
+    .replace(`%PATH_PREFIX%`, pathPrefix)
 
   await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
 
