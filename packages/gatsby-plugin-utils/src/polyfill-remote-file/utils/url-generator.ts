@@ -94,7 +94,7 @@ export function generateImageUrl(
   store?: Store
 ): string {
   if (process.env.NETLIFY_IMAGE_CDN) {
-    return generateImageUrlAlt(source, imageArgs, store)
+    return generateImageUrlAlt(source, imageArgs)
   }
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
   const queryStr = generateImageArgs(imageArgs)
@@ -183,29 +183,18 @@ export function generateImageUrlAlt(
     mimeType: string
     internal: { contentDigest: string }
   },
-  imageArgs: Parameters<typeof generateImageArgs>[0],
-  store?: Store
+  imageArgs: Parameters<typeof generateImageArgs>[0]
 ): string {
   const placeholderOrigin = `http://netlify.com`
   const imageParams = generateImageArgsAlt(imageArgs)
 
-  const baseURL = new URL(`${placeholderOrigin}/${generateRoutePrefix(store)}`)
+  const baseURL = new URL(`${placeholderOrigin}/.netlify/images`)
 
   baseURL.search = imageParams.toString()
   baseURL.searchParams.append(`url`, source.url)
   baseURL.searchParams.append(`cd`, source.internal.contentDigest)
 
   return `${baseURL.pathname}${baseURL.search}`
-}
-
-function generateRoutePrefix(store?: Store): string {
-  const state = store?.getState()
-
-  const pathPrefix = state?.program?.prefixPaths
-    ? state?.config?.pathPrefix
-    : ``
-
-  return pathPrefix + `.netlify/images`
 }
 
 export function generateImageArgsAlt({
