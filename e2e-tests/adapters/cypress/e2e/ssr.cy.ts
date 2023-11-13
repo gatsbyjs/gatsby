@@ -1,6 +1,8 @@
 const staticPath = "/routes/ssr/static"
 const paramPath = "/routes/ssr/param"
 
+const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
+
 describe("Server Side Rendering (SSR)", () => {
   it(`direct visit no query params (${staticPath})`, () => {
     cy.visit(staticPath).waitForRouteChange()
@@ -32,8 +34,8 @@ describe("Server Side Rendering (SSR)", () => {
     cy.visit(errorPath, { failOnStatusCode: false }).waitForRouteChange()
 
     cy.location(`pathname`)
-      .should(`equal`, errorPath)
+      .should(`equal`, PATH_PREFIX + errorPath)
       .get(`h1`)
-      .should(`have.text`, `INTERNAL SERVER ERROR`)
+      .should(`have.text`, `INTERNAL SERVER ERROR (custom)`)
   })
 })
