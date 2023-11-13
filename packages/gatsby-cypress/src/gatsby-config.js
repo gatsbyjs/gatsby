@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: [`./remote-file/plugin`],
+  plugins: [require.resolve(`./remote-file/plugin`)],
 }
