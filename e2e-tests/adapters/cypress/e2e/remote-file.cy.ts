@@ -9,6 +9,8 @@ Cypress.on("uncaught:exception", err => {
   }
 })
 
+const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
+
 describe(
   `remote-file`,
   {
@@ -82,7 +84,7 @@ describe(
 
         for (const url of urls) {
           // using OSS implementation for publicURL for now
-          expect(url).to.match(/^\/_gatsby\/file/)
+          expect(url).to.match(new RegExp(`^${PATH_PREFIX}/_gatsby/file`))
           const res = await fetch(url, {
             method: "HEAD",
           })
