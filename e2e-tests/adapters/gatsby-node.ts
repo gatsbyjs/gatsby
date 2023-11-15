@@ -1,5 +1,6 @@
 import * as path from "path"
 import type { GatsbyNode, GatsbyConfig } from "gatsby"
+import * as fs from "fs-extra"
 
 import { applyTrailingSlashOption } from "./utils"
 
@@ -62,4 +63,19 @@ export const createPages: GatsbyNode["createPages"] = ({
     component: path.resolve(`./src/components/footer.jsx`),
     context: {},
   })
+}
+
+export const onPostBuild = () => {
+  const appendToNetlifyToml = `
+  [images]
+  remote_images = ["https://images.unsplash.com/*"]
+
+  [[redirects]]
+  from = "/test"
+  to = "/routes/remote-file"
+  status = 301
+  force = true
+  `
+
+  fs.appendFileSync("./netlify.toml", appendToNetlifyToml)
 }
