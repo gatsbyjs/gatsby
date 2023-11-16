@@ -37,5 +37,13 @@
     "npm-run-all": "^4.1.5",
     "start-server-and-test": "^2.0.0",
     "typescript": "^5.1.6"
+  },
+  "resolutions": {
+    "@lmdb/lmdb-darwin-arm64": "./no-op",
+    "@lmdb/lmdb-darwin-x64": "./no-op",
+    "@lmdb/lmdb-linux-arm": "./no-op",
+    "@lmdb/lmdb-linux-arm64": "./no-op",
+    "@lmdb/lmdb-linux-x64": "./no-op",
+    "@lmdb/lmdb-win32-x64": "./no-op"
   }
 }
