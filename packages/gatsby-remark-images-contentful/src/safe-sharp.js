@@ -162,7 +162,6 @@ try {
   } catch (e) {
     sharp = () => {
       const sharp = require(`sharp`)
-
       sharp.simd()
       sharp.concurrency(1)
 
