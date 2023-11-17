@@ -169,4 +169,5 @@ export const state = {
   slices,
   html,
   components,
+  program: {}
 } as unknown as IGatsbyState

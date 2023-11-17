@@ -7,6 +7,7 @@ Cypress.on("uncaught:exception", err => {
 })
 
 const TRAILING_SLASH = Cypress.env(`TRAILING_SLASH`) || `never`
+const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
 
 // Those tests won't work using `gatsby serve` because it doesn't support redirects
 
@@ -122,7 +123,8 @@ describe("Redirects", () => {
 
     cy.location(`pathname`).should(
       `equal`,
-      applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
+      PATH_PREFIX +
+        applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
     )
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, ``)
@@ -138,7 +140,8 @@ describe("Redirects", () => {
 
     cy.location(`pathname`).should(
       `equal`,
-      applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
+      PATH_PREFIX +
+        applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
     )
     cy.location(`hash`).should(`equal`, ``)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
@@ -154,7 +157,8 @@ describe("Redirects", () => {
 
     cy.location(`pathname`).should(
       `equal`,
-      applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
+      PATH_PREFIX +
+        applyTrailingSlashOption(`/routes/redirect/hit`, TRAILING_SLASH)
     )
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
