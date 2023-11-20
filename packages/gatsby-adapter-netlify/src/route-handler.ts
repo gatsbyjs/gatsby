@@ -3,6 +3,7 @@ import { tmpdir } from "os"
 import { Transform } from "stream"
 import { join, basename } from "path"
 import fs from "fs-extra"
+import { createStaticAssetsPathHandler } from "./pretty-urls"
 
 const NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST = new Set([
   `query`,
@@ -144,8 +145,12 @@ export function processRoutesManifest(
   redirects: string
   headers: string
   lambdasThatUseCaching: Map<string, string>
+  fileMovingPromise: Promise<void>
 } {
   const lambdasThatUseCaching = new Map<string, string>()
+
+  const { ensureStaticAssetPath, fileMovingDone } =
+    createStaticAssetsPathHandler()
 
   let _redirects = ``
   let _headers = ``
@@ -214,9 +219,13 @@ export function processRoutesManifest(
       }
       _redirects += pieces.join(`  `) + `\n`
     } else if (route.type === `static`) {
-      // regular static asset without dynamic paths will just work, so skipping those
-      if (route.path.includes(`:`) || route.path.includes(`*`)) {
-        _redirects += `${encodeURI(fromPath)}  ${route.filePath.replace(
+      const { finalFilePath, isDynamic } = ensureStaticAssetPath(
+        route.filePath,
+        fromPath
+      )
+
+      if (isDynamic) {
+        _redirects += `${encodeURI(fromPath)}  ${finalFilePath.replace(
           /^public/,
           ``
         )}  200\n`
@@ -235,7 +244,13 @@ export function processRoutesManifest(
       }, ``)
     }
   }
-  return { redirects: _redirects, headers: _headers, lambdasThatUseCaching }
+
+  return {
+    redirects: _redirects,
+    headers: _headers,
+    lambdasThatUseCaching,
+    fileMovingPromise: fileMovingDone(),
+  }
 }
 
 export async function handleRoutesManifest(
@@ -244,13 +259,12 @@ export async function handleRoutesManifest(
 ): Promise<{
   lambdasThatUseCaching: Map<string, string>
 }> {
-  const { redirects, headers, lambdasThatUseCaching } = processRoutesManifest(
-    routesManifest,
-    headerRoutes
-  )
+  const { redirects, headers, lambdasThatUseCaching, fileMovingPromise } =
+    processRoutesManifest(routesManifest, headerRoutes)
 
   await injectEntries(`public/_redirects`, redirects)
   await injectEntries(`public/_headers`, headers)
+  await fileMovingPromise
 
   return {
     lambdasThatUseCaching,

@@ -17,11 +17,10 @@ const paragraphStyles = {
   marginBottom: 48,
 }
 
-
 const NotFoundPage = () => {
   return (
     <main style={pageStyles}>
-      <h1 style={headingStyles}>Page not found</h1>
+      <h1 style={headingStyles}>Page not found (custom)</h1>
       <p style={paragraphStyles}>
         Sorry 😔, we couldn’t find what you were looking for.
         <br />
