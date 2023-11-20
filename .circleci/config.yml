@@ -597,6 +597,8 @@ workflows:
           <<: *e2e-test-workflow
       - integration_tests_esm_in_gatsby_files:
           <<: *e2e-test-workflow
+      - integration_tests_lmdb_regeneration:
+          <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:
             - bootstrap
