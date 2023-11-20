@@ -77,6 +77,9 @@ export async function createPageSSRBundle({
   isVerbose?: boolean
 }): Promise<webpack.Compilation | undefined> {
   const state = store.getState()
+  const pathPrefix = state.program.prefixPaths
+    ? state.config.pathPrefix ?? ``
+    : ``
   const slicesStateObject = {}
   for (const [key, value] of state.slices) {
     slicesStateObject[key] = value
@@ -224,12 +227,14 @@ export async function createPageSSRBundle({
     `utf-8`
   )
 
-  functionCode = functionCode.replace(
-    `%CDN_DATASTORE_PATH%`,
-    shouldBundleDatastore()
-      ? ``
-      : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
-  )
+  functionCode = functionCode
+    .replace(
+      `%CDN_DATASTORE_PATH%`,
+      shouldBundleDatastore()
+        ? ``
+        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
+    )
+    .replace(`%PATH_PREFIX%`, pathPrefix)
 
   await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
 

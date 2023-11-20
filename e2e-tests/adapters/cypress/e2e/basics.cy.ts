@@ -1,12 +1,15 @@
 import { title } from "../../constants"
 import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
 
+const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
+
 describe("Basics", () => {
   beforeEach(() => {
-    cy.intercept("/gatsby-icon.png").as("static-folder-image")
-    cy.intercept("/static/astro-**.png", WorkaroundCachedResponse).as(
-      "img-import"
-    )
+    cy.intercept(PATH_PREFIX + "/gatsby-icon.png").as("static-folder-image")
+    cy.intercept(
+      PATH_PREFIX + "/static/astro-**.png",
+      WorkaroundCachedResponse
+    ).as("img-import")
 
     cy.visit("/").waitForRouteChange()
   })
@@ -35,7 +38,7 @@ describe("Basics", () => {
       failOnStatusCode: false,
     })
 
-    cy.get("h1").should("have.text", "Page not found")
+    cy.get("h1").should("have.text", "Page not found (custom)")
   })
   it("should apply CSS", () => {
     cy.get(`h1`).should(`have.css`, `color`, `rgb(21, 21, 22)`)

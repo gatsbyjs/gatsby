@@ -698,8 +698,8 @@ module.exports = async function build(
   }
 
   if (adapterManager) {
-    await adapterManager.adapt()
     await adapterManager.storeCache()
+    await adapterManager.adapt()
   }
 
   showExperimentNotices()

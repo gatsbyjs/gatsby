@@ -1,3 +1,4 @@
+import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
 import { prepareFunctionVariants } from "./lambda-handler"
 import { handleRoutesManifest } from "./route-handler"
@@ -17,12 +18,16 @@ async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
   if (_cacheUtils) {
     return _cacheUtils
   }
-  if (process.env.NETLIFY) {
-    const CACHE_DIR = `/opt/build/cache`
+  let CACHE_DIR: string | undefined
+  if (process.env.NETLIFY_LOCAL) {
+    CACHE_DIR = join(process.cwd(), `.netlify`, `build-cache`)
+  } else if (process.env.NETLIFY) {
+    CACHE_DIR = `/opt/build/cache`
+  }
+  if (CACHE_DIR) {
     _cacheUtils = (await import(`@netlify/cache-utils`)).bindOpts({
       cacheDir: CACHE_DIR,
     })
-
     return _cacheUtils
   }
   return undefined
@@ -116,8 +121,8 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         excludeDatastoreFromEngineFunction,
         deployURL,
         supports: {
-          pathPrefix: false,
-          trailingSlash: [`always`],
+          pathPrefix: true,
+          trailingSlash: [`always`, `never`, `ignore`],
         },
         pluginsToDisable: [
           `gatsby-plugin-netlify-cache`,

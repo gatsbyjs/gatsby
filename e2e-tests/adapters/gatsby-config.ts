@@ -5,6 +5,8 @@ import { siteDescription, title } from "./constants"
 const shouldUseDebugAdapter = process.env.USE_DEBUG_ADAPTER ?? false
 const trailingSlash = (process.env.TRAILING_SLASH ||
   `never`) as GatsbyConfig["trailingSlash"]
+const pathPrefix = (process.env.PATH_PREFIX ||
+  undefined) as GatsbyConfig["pathPrefix"]
 
 let configOverrides: GatsbyConfig = {}
 
@@ -21,6 +23,7 @@ const config: GatsbyConfig = {
     siteDescription,
   },
   trailingSlash,
+  pathPrefix,
   plugins: [],
   headers: [
     {
