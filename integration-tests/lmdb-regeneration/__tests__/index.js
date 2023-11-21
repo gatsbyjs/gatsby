@@ -10,22 +10,14 @@ const rootPath = path.resolve(__dirname, "../")
 describe(`Lmdb regeneration`, () => {
   test(`gatbsy build detects lmdb setup built from source and installs pre-buit package`, async () => {
     const lmdbNodeModulesPath = path.resolve(rootPath, "node_modules", "lmdb")
-    // Make sure we clear out the current `lmdb` dependency
+    // Make sure we clear out the current `@lmdb` optional dependencies
     const pathsToRemove = [
-      lmdbNodeModulesPath,
-      path.resolve(rootPath, "node_modules", "gatsby", "node_modules", "lmdb"),
       path.resolve(rootPath, "node_modules", "@lmdb"),
       path.resolve(rootPath, "node_modules", "gatsby", "node_modules", "@lmdb"),
     ]
     for (let path of pathsToRemove) {
       fs.rmSync(path, { force: true, recursive: true })
     }
-    // Copy our fixture, built from source, into the `node_modules` directory
-    fs.cpSync(
-      path.resolve(__dirname, "fixtures", "lmdb"),
-      lmdbNodeModulesPath,
-      { recursive: true }
-    )
     // Check the lmdb instance we have installed does have a binary built from source since we need it to reproduce the fix we're trying to test
     // If this check fails then it means our fixture is wrong and we're relying on an lmdb instance with prebuilt binaries
     const builtFromSource = fs.existsSync(
