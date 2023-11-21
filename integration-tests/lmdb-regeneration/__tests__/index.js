@@ -38,7 +38,7 @@ describe(`Lmdb regeneration`, () => {
       stdout: `inherit`,
       cwd: rootPath,
     }
-    const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
+    const gatsbyBin = path.resolve(rootPath, `node_modules`, `gatsby`, `cli.js`)
     await execa(gatsbyBin, [`build`], options)
 
     // lmdb module with prebuilt binaries for our platform
