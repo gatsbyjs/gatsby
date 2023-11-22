@@ -706,7 +706,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       try {
         const fields = {}
         contentTypeItem.fields.forEach(field => {
-          if (field.disabled || field.omitted) {
+          if (field.omitted) {
             return
           }
           if (restrictedNodeFields.includes(field.id)) {
