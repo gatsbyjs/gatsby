@@ -93,3 +93,9 @@ export function isImage(node: {
 
   return node.mimeType.startsWith(`image/`) && node.mimeType !== `image/svg+xml`
 }
+
+export type ImageCdnTransformArgs = WidthOrHeight & {
+  format: string
+  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
+  quality: number
+}

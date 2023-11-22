@@ -4,3 +4,6 @@ publish = "public/"
 
 [build.environment]
 NETLIFY_IMAGE_CDN = "true"
+
+[images]
+remote_images = ["https://images.unsplash.com/*"]

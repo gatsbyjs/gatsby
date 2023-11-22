@@ -67,7 +67,7 @@ describe(`Add request headers`, () => {
     )
 
     expect(reporter.panic).toHaveBeenCalledWith(
-      `Plugin ${testPlugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
+      `Plugin ${testPlugin.name} attempted to use actions.setRequestHeaders for a domain that is not a valid URL. (${domain})`
     )
   })
 

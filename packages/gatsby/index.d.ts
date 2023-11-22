@@ -45,6 +45,7 @@ export {
   HeaderRoutes,
   FunctionsManifest,
   IAdapterConfig,
+  ImageCdnTransformArgs,
 } from "./dist/utils/adapter/types"
 
 export const useScrollRestoration: (key: string) => {
@@ -1389,6 +1390,13 @@ export interface Actions {
   setRequestHeaders(
     this: void,
     args: { domain: string; headers: Record<string, string> },
+    plugin?: ActionPlugin
+  ): void
+
+  /** @see https://www.gatsbyjs.com/docs/actions/#configureImageCDNDomain */
+  configureImageCDNDomain(
+    this: void,
+    args: { domain: string; headers?: Record<string, string> },
     plugin?: ActionPlugin
   ): void
 

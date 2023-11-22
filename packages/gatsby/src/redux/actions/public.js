@@ -1475,35 +1475,48 @@ actions.enableStatefulSourceNodes = (plugin: Plugin) => {
   }
 }
 
-/**
- * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
- *
- * @param {Object} $0
- * @param {string} $0.domain The domain to store the headers for.
- * @param {Object} $0.headers The headers to store.
- */
-actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
+function handleImageCDNConfig(
+  { domain, headers, areHeadersRequired, actionName },
+  plugin: Plugin
+) {
   const headersIsObject =
     typeof headers === `object` && headers !== null && !Array.isArray(headers)
 
-  const noHeaders = !headersIsObject
-  const noDomain = typeof domain !== `string`
+  let headersAreInvalid = false
+  if (areHeadersRequired) {
+    if (!headersIsObject) {
+      headersAreInvalid = true
+      reporter.warn(
+        `Plugin ${plugin.name} called actions.${actionName} with a headers property that isn't an object.`
+      )
+    }
+  } else {
+    // we only check if headers is valid if it's truthy
+    if (headers && !headersIsObject) {
+      headersAreInvalid = true
+      reporter.warn(
+        `Plugin ${plugin.name} called actions.${actionName} with a headers property that isn't an object or falsy.`
+      )
+    }
+  }
 
-  if (noHeaders) {
+  if (headersAreInvalid) {
     reporter.warn(
-      `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`
+      `Plugin ${plugin.name} called actions.${actionName} with a headers property that isn't an object.`
     )
   }
+
+  const noDomain = typeof domain !== `string`
 
   if (noDomain) {
     reporter.warn(
-      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`
+      `Plugin ${plugin.name} called actions.${actionName} with a domain property that isn't a string.`
     )
   }
 
-  if (noDomain || noHeaders) {
+  if (noDomain || headersAreInvalid) {
     reporter.panic(
-      `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`
+      `Plugin ${plugin.name} attempted to use actions.${actionName} with invalid arguments. See above warnings for more info.`
     )
 
     return null
@@ -1513,7 +1526,7 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
 
   if (baseDomain) {
     return {
-      type: `SET_REQUEST_HEADERS`,
+      type: `CONFIGURE_IMAGE_CDN`,
       payload: {
         domain: baseDomain,
         headers,
@@ -1521,11 +1534,47 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
     }
   } else {
     reporter.panic(
-      `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
+      `Plugin ${plugin.name} attempted to use actions.${actionName} for a domain that is not a valid URL. (${domain})`
     )
 
     return null
   }
 }
+
+/**
+ * Register domain used for Image CDN source images.
+ *
+ * @param {Object} $0
+ * @param {string} $0.domain The domain to store the headers for.
+ * @param {Object} $0.headers The headers to store. (optional)
+ */
+actions.configureImageCDNDomain = ({ domain, headers }, plugin: Plugin) =>
+  handleImageCDNConfig(
+    {
+      domain,
+      headers,
+      areHeadersRequired: false,
+      actionName: `configureImageCDNDomain`,
+    },
+    plugin
+  )
+
+/**
+ * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
+ *
+ * @param {Object} $0
+ * @param {string} $0.domain The domain to store the headers for.
+ * @param {Object} $0.headers The headers to store.
+ */
+actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) =>
+  handleImageCDNConfig(
+    {
+      domain,
+      headers,
+      areHeadersRequired: true,
+      actionName: `setRequestHeaders`,
+    },
+    plugin
+  )
 
 module.exports = { actions }

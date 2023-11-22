@@ -66,6 +66,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       routesManifest,
       functionsManifest,
       headerRoutes,
+      imageCDNDomains,
     }): Promise<void> {
       const { lambdasThatUseCaching } = await handleRoutesManifest(
         routesManifest,
@@ -79,6 +80,8 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           lambdasThatUseCaching.get(fun.functionId)
         )
       }
+
+      console.log({ imageCDNDomains })
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(
@@ -123,6 +126,9 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           `gatsby-plugin-netlify-cache`,
           `gatsby-plugin-netlify`,
         ],
+        imageCDNUrlGeneratorModulePath: require.resolve(
+          `./image-cdn-url-generator`
+        ),
       }
     },
   }

@@ -7,9 +7,57 @@ import { applyTrailingSlashOption } from "./utils"
 const TRAILING_SLASH = (process.env.TRAILING_SLASH ||
   `never`) as GatsbyConfig["trailingSlash"]
 
-export const createPages: GatsbyNode["createPages"] = ({
-  actions: { createRedirect, createSlice },
+export const createPages: GatsbyNode["createPages"] = async ({
+  actions: { createRedirect, createSlice, createPage },
+  graphql,
 }) => {
+  const { data, errors } = await graphql(`
+    {
+      allMyRemoteFile {
+        nodes {
+          id
+          url
+          filename
+          publicUrl
+          resize(width: 100) {
+            height
+            width
+            src
+          }
+          fixed: gatsbyImage(
+            layout: FIXED
+            width: 100
+            placeholder: DOMINANT_COLOR
+          )
+          constrained: gatsbyImage(
+            layout: CONSTRAINED
+            width: 300
+            placeholder: BLURRED
+          )
+          constrained_traced: gatsbyImage(
+            layout: CONSTRAINED
+            width: 300
+            placeholder: TRACED_SVG
+          )
+          full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
+        }
+      }
+    }
+  `)
+
+  if (errors) {
+    console.error(errors)
+    process.exit(1)
+  }
+
+  createPage({
+    path: `/routes/remote-file-context`,
+    component: path.resolve(`./src/templates/remote-file-context.jsx`),
+    context: {
+      remoteFile: data,
+    },
+  })
+
   createRedirect({
     fromPath: applyTrailingSlashOption("/redirect", TRAILING_SLASH),
     toPath: applyTrailingSlashOption("/routes/redirect/hit", TRAILING_SLASH),
@@ -65,17 +113,17 @@ export const createPages: GatsbyNode["createPages"] = ({
   })
 }
 
-export const onPostBuild = () => {
-  const appendToNetlifyToml = `
-  [images]
-  remote_images = ["https://images.unsplash.com/*"]
+// export const onPostBuild = () => {
+//   const appendToNetlifyToml = `
+//   [images]
+//   remote_images = ["https://images.unsplash.com/*"]
 
-  [[redirects]]
-  from = "/test"
-  to = "/routes/remote-file"
-  status = 301
-  force = true
-  `
+//   [[redirects]]
+//   from = "/test"
+//   to = "/routes/remote-file"
+//   status = 301
+//   force = true
+//   `
 
-  fs.appendFileSync("./netlify.toml", appendToNetlifyToml)
-}
+//   fs.appendFileSync("./netlify.toml", appendToNetlifyToml)
+// }

@@ -7,4 +7,5 @@ export * from "./has-feature"
 export type {
   IRemoteFileNodeInput,
   IRemoteImageNodeInput,
+  ImageCdnTransformArgs,
 } from "./polyfill-remote-file/types"

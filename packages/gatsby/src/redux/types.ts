@@ -290,7 +290,7 @@ export interface IGatsbyState {
     typesToPlugins: Map<IGatsbyNode[`internal`][`type`], IGatsbyPlugin[`name`]>
   }
   nodeManifests: Array<INodeManifest>
-  requestHeaders: Map<string, { [header: string]: string }>
+  requestHeaders: Map<string, { [header: string]: string } | undefined>
   statefulSourcePlugins: Set<string>
   telemetry: ITelemetry
   lastAction: ActionsUnion
@@ -524,6 +524,7 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
+  | IConfigureImageCDNAction
   | IEnableStatefulSourcePluginAction
   | ICreateSliceAction
   | IDeleteSliceAction
@@ -1180,6 +1181,16 @@ export interface ISetDomainRequestHeaders {
   payload: {
     domain: string
     headers: {
+      [header: string]: string
+    }
+  }
+}
+
+export interface IConfigureImageCDNAction {
+  type: `CONFIGURE_IMAGE_CDN`
+  payload: {
+    domain: string
+    headers?: {
       [header: string]: string
     }
   }
