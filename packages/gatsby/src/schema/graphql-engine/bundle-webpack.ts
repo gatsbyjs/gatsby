@@ -2,8 +2,10 @@
 
 import * as path from "path"
 import * as fs from "fs-extra"
+import execa, { Options as ExecaOptions } from "execa"
 import webpack, { Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
+import { dependencies } from "gatsby/package.json"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
@@ -12,6 +14,7 @@ import { schemaCustomizationAPIs } from "./print-plugins"
 import type { GatsbyNodeAPI } from "../../redux/types"
 import * as nodeApis from "../../utils/api-node-docs"
 import { store } from "../../redux"
+import { PackageJson } from "../../.."
 
 type Reporter = typeof reporter
 
@@ -35,6 +38,92 @@ function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
   return apisToRemove
 }
 
+const getInternalPackagesCacheDir = (): string =>
+  path.join(process.cwd(), `.cache/internal-packages`)
+
+// Create a directory and JS module where we install internally used packages
+const createInternalPackagesCacheDir = async (): Promise<void> => {
+  const cacheDir = getInternalPackagesCacheDir()
+  await fs.ensureDir(cacheDir)
+  await fs.emptyDir(cacheDir)
+
+  const packageJsonPath = path.join(cacheDir, `package.json`)
+
+  await fs.outputJson(packageJsonPath, {
+    name: `gatsby-internal-packages`,
+    description: `This directory contains internal packages installed by Gatsby used to comply with the current platform requirements`,
+    version: `1.0.0`,
+    private: true,
+    author: `Gatsby`,
+    license: `MIT`,
+  })
+}
+
+// lmdb module with prebuilt binaries for our platform
+const lmdbPackage = `@lmdb/lmdb-${process.platform}-${process.arch}`
+
+// Detect if the prebuilt binaries for lmdb have been installed. These are installed under @lmdb and are tied to each platform/arch. We've seen instances where regular installations lack these modules because of a broken lockfile or skipping optional dependencies installs
+function installPrebuiltLmdb(): boolean {
+  // Read lmdb's package.json, go through its optional depedencies and validate if there's a prebuilt lmdb module with a compatible binary to our platform and arch
+  let packageJson: PackageJson
+  try {
+    const modulePath = path
+      .dirname(require.resolve(`lmdb`))
+      .replace(`/dist`, ``)
+    const packageJsonPath = path.join(modulePath, `package.json`)
+    packageJson = JSON.parse(fs.readFileSync(packageJsonPath, `utf-8`))
+  } catch (e) {
+    // If we fail to read lmdb's package.json there's bigger problems here so just skip installation
+    return false
+  }
+  // If there's no lmdb prebuilt package for our arch/platform listed as optional dep no point in trying to install it
+  const { optionalDependencies } = packageJson
+  if (!optionalDependencies) return false
+  if (!Object.keys(optionalDependencies).find(p => p === lmdbPackage))
+    return false
+  try {
+    const lmdbRequire = mod.createRequire(require.resolve(`lmdb`))
+    lmdbRequire.resolve(lmdbPackage)
+    return false
+  } catch (e) {
+    return true
+  }
+}
+
+// Install lmdb's native system module under our internal cache if we detect the current installation
+// isn't using the pre-build binaries
+async function installIfMissingLmdb(): Promise<string | undefined> {
+  if (!installPrebuiltLmdb()) return undefined
+
+  await createInternalPackagesCacheDir()
+
+  const cacheDir = getInternalPackagesCacheDir()
+  const options: ExecaOptions = {
+    stderr: `inherit`,
+    cwd: cacheDir,
+  }
+
+  const npmAdditionalCliArgs = [
+    `--no-progress`,
+    `--no-audit`,
+    `--no-fund`,
+    `--loglevel`,
+    `error`,
+    `--color`,
+    `always`,
+    `--legacy-peer-deps`,
+    `--save-exact`,
+  ]
+
+  await execa(
+    `npm`,
+    [`install`, ...npmAdditionalCliArgs, `${lmdbPackage}@${dependencies.lmdb}`],
+    options
+  )
+
+  return path.join(cacheDir, `node_modules`, lmdbPackage)
+}
+
 export async function createGraphqlEngineBundle(
   rootDir: string,
   reporter: Reporter,
@@ -56,6 +145,19 @@ export async function createGraphqlEngineBundle(
   const gatsbyPluginTSRequire = mod.createRequire(
     require.resolve(`gatsby-plugin-typescript`)
   )
+
+  // Alternative lmdb path we've created to self heal from a "broken" lmdb installation
+  const alternativeLmdbPath = await installIfMissingLmdb()
+
+  // We force a specific lmdb binary module if we detected a broken lmdb installation or if we detect the presence of an adapter
+  let forcedLmdbBinaryModule: string | undefined = undefined
+  if (store.getState().adapter.instance) {
+    forcedLmdbBinaryModule = `${lmdbPackage}/node.abi83.glibc.node`
+  }
+  // We always force the binary if we've installed an alternative path
+  if (alternativeLmdbPath) {
+    forcedLmdbBinaryModule = `${alternativeLmdbPath}/node.abi83.glibc.node`
+  }
 
   const compiler = webpack({
     name: `Query Engine`,
@@ -121,9 +223,7 @@ export async function createGraphqlEngineBundle(
                 {
                   loader: require.resolve(`./lmdb-bundling-patch`),
                   options: {
-                    forcedBinaryModule: store.getState().adapter.instance
-                      ? `@lmdb/lmdb-${process.platform}-${process.arch}/node.abi83.glibc.node`
-                      : undefined,
+                    forcedBinaryModule: forcedLmdbBinaryModule,
                   },
                 },
               ],

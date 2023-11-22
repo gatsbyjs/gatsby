@@ -1,0 +1,22 @@
+{
+  "name": "lmdb-regeneration",
+  "private": true,
+  "author": "Sid Chatterjee",
+  "description": "A simplified bare-bones starter for Gatsby with DSG",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.1.0",
+    "jest": "^29.3.1"
+  }
+}
