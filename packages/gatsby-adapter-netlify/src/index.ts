@@ -10,6 +10,7 @@ interface INetlifyCacheUtils {
 
 interface INetlifyAdapterOptions {
   excludeDatastoreFromEngineFunction?: boolean
+  imageCDN?: boolean
 }
 
 let _cacheUtils: INetlifyCacheUtils | undefined
@@ -115,6 +116,16 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         excludeDatastoreFromEngineFunction = false
       }
 
+      let useImageCDN = options?.imageCDN
+      if (
+        typeof useImageCDN === `undefined` &&
+        typeof process.env.NETLIFY_IMAGE_CDN !== `undefined`
+      ) {
+        useImageCDN =
+          process.env.NETLIFY_IMAGE_CDN === `true` ||
+          process.env.NETLIFY_IMAGE_CDN === `1`
+      }
+
       return {
         excludeDatastoreFromEngineFunction,
         deployURL,
@@ -126,9 +137,9 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           `gatsby-plugin-netlify-cache`,
           `gatsby-plugin-netlify`,
         ],
-        imageCDNUrlGeneratorModulePath: require.resolve(
-          `./image-cdn-url-generator`
-        ),
+        imageCDNUrlGeneratorModulePath: useImageCDN
+          ? require.resolve(`./image-cdn-url-generator`)
+          : undefined,
       }
     },
   }

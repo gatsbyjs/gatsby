@@ -984,3 +984,14 @@ exports.createSchemaCustomization = (
     )
   }
 }
+
+exports.onPluginInit = ({ actions }, pluginOptions) => {
+  if (
+    pluginOptions?.imageCDN &&
+    typeof actions?.configureImageCDNDomain === `function`
+  ) {
+    actions.configureImageCDNDomain({
+      domain: pluginOptions.baseUrl,
+    })
+  }
+}

@@ -7,21 +7,21 @@ import Layout from "../../../components/layout"
 const RemoteFileSSR = ({ data }) => {
   return (
     <Layout>
-      <RemoteFileComponent contextData={data} />
+      <RemoteFileComponent contextData={data} publicUrl={false} />
     </Layout>
   )
 }
 
 export default RemoteFileSSR
 
-// export function getServerData(arg) {
-//   return {
-//     props: {
-//       ssr: true,
-//       arg,
-//     },
-//   }
-// }
+export function getServerData(arg) {
+  return {
+    props: {
+      ssr: true,
+      arg,
+    },
+  }
+}
 
 export const query = graphql`
   {
@@ -31,7 +31,8 @@ export const query = graphql`
         alias: id
         url
         filename
-        publicUrl
+        # FILE_CDN is kind of borked in SSR/DSG, so we're not testing it
+        # publicUrl
         resize(width: 100) {
           height
           width

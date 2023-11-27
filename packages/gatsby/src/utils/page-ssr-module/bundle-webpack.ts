@@ -224,12 +224,26 @@ export async function createPageSSRBundle({
     `utf-8`
   )
 
-  functionCode = functionCode.replace(
-    `%CDN_DATASTORE_PATH%`,
-    shouldBundleDatastore()
-      ? ``
-      : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
-  )
+  let IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
+    await fs.copyFile(
+      global.__GATSBY.imageCDNUrlGeneratorModulePath,
+      path.join(outputDir, `image-cdn-url-generator.js`)
+    )
+    IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./image-cdn-url-generator.js`
+  }
+
+  functionCode = functionCode
+    .replaceAll(
+      `%CDN_DATASTORE_PATH%`,
+      shouldBundleDatastore()
+        ? ``
+        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
+    )
+    .replaceAll(
+      `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
+      IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
+    )
 
   await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
 

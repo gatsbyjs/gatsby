@@ -3,7 +3,7 @@ import React from "react"
 
 import { GatsbyImage } from "gatsby-plugin-image"
 
-const RemoteFile = ({ contextData }) => {
+const RemoteFile = ({ contextData, publicUrl }) => {
   const staticQueryData = useStaticQuery(graphql`
     {
       allMyRemoteFile {
@@ -49,11 +49,13 @@ const RemoteFile = ({ contextData }) => {
     <>
       {data.allMyRemoteFile.nodes.map(node => (
         <div key={node.id}>
-          <h2>
-            <a href={node.publicUrl} data-testid="public">
-              {node.filename}
-            </a>
-          </h2>
+          {publicUrl !== false ? (
+            <h2>
+              <a href={node.publicUrl} data-testid="public">
+                {node.filename}
+              </a>
+            </h2>
+          ) : null}
           <pre>{JSON.stringify({ dataSource }, null, 2)}</pre>
           <img
             src={node.resize.src}
