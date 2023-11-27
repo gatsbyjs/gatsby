@@ -25,7 +25,7 @@ export function getServerData(arg) {
 
 export const query = graphql`
   {
-    allMyRemoteFile {
+    allMyRemoteFile(limit: 1) {
       nodes {
         id
         alias: id
