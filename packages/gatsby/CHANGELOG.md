@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.11](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.11/packages/gatsby) (2023-11-22)
+
+#### Bug Fixes
+
+- re-install lmdb when detecting the absence of @LMDB prebuilt packages [#38691](https://github.com/gatsbyjs/gatsby/issues/38691) [#38707](https://github.com/gatsbyjs/gatsby/issues/38707) ([f713e59](https://github.com/gatsbyjs/gatsby/commit/f713e5985b4c11cfc616fb8a8cfd8ea46f53f408))
+
+### [5.12.10](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.10/packages/gatsby) (2023-11-21)
+
+#### Features
+
+- support pathPrefix and trailingSlash options fix [#38666](https://github.com/gatsbyjs/gatsby/issues/38666) fix [#38701](https://github.com/gatsbyjs/gatsby/issues/38701) ([1090558](https://github.com/gatsbyjs/gatsby/commit/1090558010c5e73de49d5987ab38d30165581c51))
+
 ### [5.12.9](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.9/packages/gatsby) (2023-10-26)
 
 #### Bug Fixes
