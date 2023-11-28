@@ -25,33 +25,31 @@ export function getServerData(arg) {
 
 export const query = graphql`
   {
-    allMyRemoteFile(limit: 1) {
+    allMyRemoteFile {
       nodes {
         id
         alias: id
         url
         filename
-        # FILE_CDN is kind of borked in SSR/DSG, so we're not testing it
+        # FILE_CDN is kind of borked in SSR/DSG in general (not just with adapters)
+        # so we're not testing it yet
         # publicUrl
         resize(width: 100) {
           height
           width
           src
         }
-        fixed: gatsbyImage(
-          layout: FIXED
-          width: 100
-          placeholder: DOMINANT_COLOR
-        )
+        #
+        fixed: gatsbyImage(layout: FIXED, width: 100, placeholder: NONE)
         constrained: gatsbyImage(
           layout: CONSTRAINED
           width: 300
-          placeholder: BLURRED
+          placeholder: NONE
         )
         constrained_traced: gatsbyImage(
           layout: CONSTRAINED
           width: 300
-          placeholder: TRACED_SVG
+          placeholder: NONE
         )
         full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
       }
