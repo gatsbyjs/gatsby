@@ -16,9 +16,9 @@ export function shouldDispatchLocalFileServiceJob(): boolean {
 export function shouldDispatchLocalImageServiceJob(): boolean {
   return (
     !(
+      global.__GATSBY?.imageCDNUrlGeneratorModulePath ||
       process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
-      process.env.GATSBY_CLOUD_IMAGE_CDN === `true` ||
-      process.env.NETLIFY_IMAGE_CDN === `true`
+      process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
     ) && process.env.NODE_ENV === `production`
   )
 }

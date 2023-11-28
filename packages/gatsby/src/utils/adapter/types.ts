@@ -149,6 +149,10 @@ export interface IAdapterConfig {
    * plugin and adapter is used at the same time.
    */
   pluginsToDisable?: Array<string>
+  /**
+   * TODO: write description
+   */
+  imageCDNUrlGeneratorModulePath?: string
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }

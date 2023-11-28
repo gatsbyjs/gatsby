@@ -3,7 +3,7 @@ import { basename, extname } from "path"
 import { URL } from "url"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
-import type { ImageCropFocus, WidthOrHeight } from "../types"
+import type { ImageCdnTransformArgs } from "../types"
 import type { Store } from "gatsby"
 
 // this is an arbitrary origin that we use #branding so we can construct a full url for the URL constructor
@@ -83,6 +83,21 @@ export function generateFileUrl(
   return `${frontendHostName}${parsedURL.pathname}${parsedURL.search}`
 }
 
+type CustomImageCDNUrlGeneratorFn = (
+  source: {
+    url: string
+    mimeType: string
+    filename: string
+    internal: { contentDigest: string }
+  },
+  imageArgs: ImageCdnTransformArgs
+) => string
+
+let customImageCDNUrlGenerator: CustomImageCDNUrlGeneratorFn | undefined =
+  undefined
+
+const preferDefault = (m: any): any => (m && m.default) || m
+
 export function generateImageUrl(
   source: {
     url: string
@@ -90,12 +105,18 @@ export function generateImageUrl(
     filename: string
     internal: { contentDigest: string }
   },
-  imageArgs: Parameters<typeof generateImageArgs>[0],
+  imageArgs: ImageCdnTransformArgs,
   store?: Store
 ): string {
-  if (process.env.NETLIFY_IMAGE_CDN) {
-    return generateImageUrlAlt(source, imageArgs)
+  if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
+    if (!customImageCDNUrlGenerator) {
+      customImageCDNUrlGenerator = preferDefault(
+        require(global.__GATSBY.imageCDNUrlGeneratorModulePath)
+      ) as CustomImageCDNUrlGeneratorFn
+    }
+    return customImageCDNUrlGenerator(source, imageArgs)
   }
+
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
   const queryStr = generateImageArgs(imageArgs)
 
@@ -152,11 +173,7 @@ function generateImageArgs({
   format,
   cropFocus,
   quality,
-}: WidthOrHeight & {
-  format: string
-  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
-  quality: number
-}): string {
+}: ImageCdnTransformArgs): string {
   const args: Array<string> = []
   if (width) {
     args.push(`w=${width}`)
@@ -174,65 +191,4 @@ function generateImageArgs({
   args.push(`q=${quality}`)
 
   return args.join(`&`)
-}
-
-export function generateImageUrlAlt(
-  source: {
-    url: string
-    filename: string
-    mimeType: string
-    internal: { contentDigest: string }
-  },
-  imageArgs: Parameters<typeof generateImageArgs>[0]
-): string {
-  const placeholderOrigin = `http://netlify.com`
-  const imageParams = generateImageArgsAlt(imageArgs)
-
-  const baseURL = new URL(`${placeholderOrigin}/.netlify/images`)
-
-  baseURL.search = imageParams.toString()
-  baseURL.searchParams.append(`url`, source.url)
-  baseURL.searchParams.append(`cd`, source.internal.contentDigest)
-
-  return `${baseURL.pathname}${baseURL.search}`
-}
-
-export function generateImageArgsAlt({
-  width,
-  height,
-  format,
-  cropFocus,
-  quality,
-}: WidthOrHeight & {
-  format: string
-  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
-  quality: number
-}): URLSearchParams {
-  const params = new URLSearchParams()
-
-  if (width) {
-    params.append(`w`, width.toString())
-  }
-  if (height) {
-    params.append(`h`, height.toString())
-  }
-  if (cropFocus) {
-    params.append(`fit`, `crop`)
-    if (Array.isArray(cropFocus)) {
-      // For array of cropFocus values, append them as comma-separated string
-      params.append(`crop`, cropFocus.join(`,`))
-    } else {
-      params.append(`crop`, cropFocus)
-    }
-  }
-
-  if (format) {
-    params.append(`fm`, format)
-  }
-
-  if (quality) {
-    params.append(`q`, quality.toString())
-  }
-
-  return params
 }

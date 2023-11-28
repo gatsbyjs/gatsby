@@ -45,6 +45,7 @@ export {
   HeaderRoutes,
   FunctionsManifest,
   IAdapterConfig,
+  ImageCdnTransformArgs,
 } from "./dist/utils/adapter/types"
 
 export const useScrollRestoration: (key: string) => {
