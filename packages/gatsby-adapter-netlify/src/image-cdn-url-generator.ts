@@ -1,12 +1,11 @@
-import type { ImageCdnTransformArgs } from "gatsby"
+import type {
+  ImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
+  ImageCdnTransformArgs,
+} from "gatsby"
 
 export function generateImageUrl(
-  source: {
-    url: string
-    filename: string
-    mimeType: string
-    internal: { contentDigest: string }
-  },
+  source: ImageCdnSourceImage,
   imageArgs: ImageCdnTransformArgs
 ): string {
   const placeholderOrigin = `http://netlify.com`
@@ -57,4 +56,4 @@ export function generateImageArgs({
   return params
 }
 
-export default generateImageUrl
+export default generateImageUrl as ImageCdnUrlGeneratorFn

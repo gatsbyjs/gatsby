@@ -3,7 +3,11 @@ import { basename, extname } from "path"
 import { URL } from "url"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
-import type { ImageCdnTransformArgs } from "../types"
+import type {
+  CustomImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
+  ImageCdnTransformArgs,
+} from "../types"
 import type { Store } from "gatsby"
 
 // this is an arbitrary origin that we use #branding so we can construct a full url for the URL constructor
@@ -66,6 +70,12 @@ export function generateFileUrl(
   },
   store?: Store
 ): string {
+  const state = store?.getState()
+
+  const pathPrefix = state?.program?.prefixPaths
+    ? state?.config?.pathPrefix
+    : ``
+
   const fileExt = extname(filename)
   const filenameWithoutExt = basename(filename, fileExt)
 
@@ -74,7 +84,7 @@ export function generateFileUrl(
       {
         url,
       },
-      store
+      pathPrefix
     )}/${filenameWithoutExt}${fileExt}`
   )
 
@@ -83,45 +93,36 @@ export function generateFileUrl(
   return `${frontendHostName}${parsedURL.pathname}${parsedURL.search}`
 }
 
-type CustomImageCDNUrlGeneratorFn = (
-  source: {
-    url: string
-    mimeType: string
-    filename: string
-    internal: { contentDigest: string }
-  },
-  imageArgs: ImageCdnTransformArgs
-) => string
-
-let customImageCDNUrlGenerator: CustomImageCDNUrlGeneratorFn | undefined =
+let customImageCDNUrlGenerator: CustomImageCdnUrlGeneratorFn | undefined =
   undefined
 
 const preferDefault = (m: any): any => (m && m.default) || m
 
 export function generateImageUrl(
-  source: {
-    url: string
-    mimeType: string
-    filename: string
-    internal: { contentDigest: string }
-  },
+  source: ImageCdnSourceImage,
   imageArgs: ImageCdnTransformArgs,
   store?: Store
 ): string {
+  const state = store?.getState()
+
+  const pathPrefix = state?.program?.prefixPaths
+    ? state?.config?.pathPrefix
+    : ``
+
   if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
     if (!customImageCDNUrlGenerator) {
       customImageCDNUrlGenerator = preferDefault(
         require(global.__GATSBY.imageCDNUrlGeneratorModulePath)
-      ) as CustomImageCDNUrlGeneratorFn
+      ) as CustomImageCdnUrlGeneratorFn
     }
-    return customImageCDNUrlGenerator(source, imageArgs)
+    return customImageCDNUrlGenerator(source, imageArgs, pathPrefix)
   }
 
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
   const queryStr = generateImageArgs(imageArgs)
 
   const parsedURL = new URL(
-    `${ORIGIN}${generatePublicUrl(source, store)}/${createContentDigest(
+    `${ORIGIN}${generatePublicUrl(source, pathPrefix)}/${createContentDigest(
       queryStr
     )}/${filenameWithoutExt}.${imageArgs.format}`
   )
@@ -146,14 +147,8 @@ function generatePublicUrl(
     url: string
     mimeType?: string
   },
-  store?: Store
+  pathPrefix: string
 ): string {
-  const state = store?.getState()
-
-  const pathPrefix = state?.program?.prefixPaths
-    ? state?.config?.pathPrefix
-    : ``
-
   const remoteUrl = createContentDigest(url)
 
   let publicUrl =

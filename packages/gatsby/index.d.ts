@@ -45,6 +45,8 @@ export {
   HeaderRoutes,
   FunctionsManifest,
   IAdapterConfig,
+  ImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
   ImageCdnTransformArgs,
 } from "./dist/utils/adapter/types"
 
