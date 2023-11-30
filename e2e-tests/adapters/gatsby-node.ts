@@ -6,9 +6,53 @@ import { applyTrailingSlashOption } from "./utils"
 const TRAILING_SLASH = (process.env.TRAILING_SLASH ||
   `never`) as GatsbyConfig["trailingSlash"]
 
-export const createPages: GatsbyNode["createPages"] = ({
-  actions: { createRedirect, createSlice },
+export const createPages: GatsbyNode["createPages"] = async ({
+  actions: { createPage, createRedirect, createSlice },
+  graphql,
 }) => {
+  const { data: ImageCDNRemoteFileFromPageContextData } = await graphql(`
+    query ImageCDNGatsbyNode {
+      allMyRemoteFile {
+        nodes {
+          id
+          url
+          filename
+          publicUrl
+          resize(width: 100) {
+            height
+            width
+            src
+          }
+          fixed: gatsbyImage(
+            layout: FIXED
+            width: 100
+            placeholder: DOMINANT_COLOR
+          )
+          constrained: gatsbyImage(
+            layout: CONSTRAINED
+            width: 300
+            placeholder: BLURRED
+          )
+          constrained_traced: gatsbyImage(
+            layout: CONSTRAINED
+            width: 300
+            placeholder: TRACED_SVG
+          )
+          full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
+        }
+      }
+    }
+  `)
+
+  createPage({
+    path: applyTrailingSlashOption(
+      `/routes/remote-file-data-from-context/`,
+      TRAILING_SLASH
+    ),
+    component: path.resolve(`./src/templates/remote-file-from-context.jsx`),
+    context: ImageCDNRemoteFileFromPageContextData,
+  })
+
   createRedirect({
     fromPath: applyTrailingSlashOption("/redirect", TRAILING_SLASH),
     toPath: applyTrailingSlashOption("/routes/redirect/hit", TRAILING_SLASH),

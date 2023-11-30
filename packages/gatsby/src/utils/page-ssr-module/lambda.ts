@@ -27,10 +27,7 @@ function setupFsWrapper(): string {
     const TEMP_DIR = path.join(tmpdir(), `gatsby`)
     const TEMP_CACHE_DIR = path.join(TEMP_DIR, `.cache`)
 
-    global.__GATSBY = {
-      root: TEMP_DIR,
-      buildId: ``,
-    }
+    global.__GATSBY.root = TEMP_DIR
 
     // TODO: don't hardcode this
     const cacheDir = `/var/task/.cache`
@@ -88,6 +85,18 @@ function setupFsWrapper(): string {
 
     return dbPath
   }
+}
+
+global.__GATSBY = {
+  root: process.cwd(),
+  buildId: ``,
+}
+
+// eslint-disable-next-line no-constant-condition
+if (`%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
+  global.__GATSBY.imageCDNUrlGeneratorModulePath = require.resolve(
+    `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+  )
 }
 
 const dbPath = setupFsWrapper()

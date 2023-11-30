@@ -93,3 +93,25 @@ export function isImage(node: {
 
   return node.mimeType.startsWith(`image/`) && node.mimeType !== `image/svg+xml`
 }
+
+export type ImageCdnTransformArgs = WidthOrHeight & {
+  format: string
+  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
+  quality: number
+}
+
+interface IImageCdnSourceImage {
+  url: string
+  mimeType: string
+  filename: string
+  internal: { contentDigest: string }
+}
+
+// drop confusing double `II` from type/interface name
+export type ImageCdnSourceImage = IImageCdnSourceImage
+
+export type CustomImageCdnUrlGeneratorFn = (
+  source: ImageCdnSourceImage,
+  imageArgs: ImageCdnTransformArgs,
+  pathPrefix: string
+) => string

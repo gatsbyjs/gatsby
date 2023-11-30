@@ -2,6 +2,12 @@ import type reporter from "gatsby-cli/lib/reporter"
 import type { TrailingSlash } from "gatsby-page-utils"
 import type { IHeader, HttpStatusCode } from "../../redux/types"
 
+export type {
+  ImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
+  ImageCdnTransformArgs,
+} from "gatsby-plugin-utils"
+
 interface IBaseRoute {
   /**
    * Request path that should be matched for this route.
@@ -149,6 +155,10 @@ export interface IAdapterConfig {
    * plugin and adapter is used at the same time.
    */
   pluginsToDisable?: Array<string>
+  /**
+   * TODO: write description
+   */
+  imageCDNUrlGeneratorModulePath?: string
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }

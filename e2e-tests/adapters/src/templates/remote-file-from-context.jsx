@@ -1,10 +1,9 @@
-import { graphql } from "gatsby"
 import React from "react"
 
 import { GatsbyImage } from "gatsby-plugin-image"
-import Layout from "../../components/layout"
+import Layout from "../components/layout"
 
-const RemoteFile = ({ data }) => {
+const RemoteFile = ({ pageContext: data }) => {
   return (
     <Layout>
       {data.allMyRemoteFile.nodes.map(node => {
@@ -42,39 +41,5 @@ const RemoteFile = ({ data }) => {
     </Layout>
   )
 }
-
-export const pageQuery = graphql`
-  query SSGImageCDNPageQuery {
-    allMyRemoteFile {
-      nodes {
-        id
-        url
-        filename
-        publicUrl
-        resize(width: 100) {
-          height
-          width
-          src
-        }
-        fixed: gatsbyImage(
-          layout: FIXED
-          width: 100
-          placeholder: DOMINANT_COLOR
-        )
-        constrained: gatsbyImage(
-          layout: CONSTRAINED
-          width: 300
-          placeholder: BLURRED
-        )
-        constrained_traced: gatsbyImage(
-          layout: CONSTRAINED
-          width: 300
-          placeholder: TRACED_SVG
-        )
-        full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
-      }
-    }
-  }
-`
 
 export default RemoteFile

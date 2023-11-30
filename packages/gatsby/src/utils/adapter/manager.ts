@@ -251,6 +251,11 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
             `Can't exclude datastore from engine function without adapter providing deployURL`
           )
         }
+
+        if (configFromAdapter?.imageCDNUrlGeneratorModulePath) {
+          global.__GATSBY.imageCDNUrlGeneratorModulePath =
+            configFromAdapter.imageCDNUrlGeneratorModulePath
+        }
       }
 
       return {
