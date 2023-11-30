@@ -36,12 +36,12 @@ export function generateImageArgs({
     params.append(`h`, height.toString())
   }
   if (cropFocus) {
-    params.append(`fit`, `crop`)
+    params.append(`fit`, `cover`)
     if (Array.isArray(cropFocus)) {
       // For array of cropFocus values, append them as comma-separated string
-      params.append(`crop`, cropFocus.join(`,`))
+      params.append(`position`, cropFocus.join(`,`))
     } else {
-      params.append(`crop`, cropFocus)
+      params.append(`position`, cropFocus)
     }
   }
 
