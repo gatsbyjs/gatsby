@@ -22,6 +22,7 @@ import {
   ICreateResolverContext,
   IGatsbyPluginContext,
   ICreateSliceAction,
+  IAddImageCdnAllowedUrl,
 } from "../types"
 import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import { store } from "../index"
@@ -36,6 +37,7 @@ type RestrictionActionNames =
   | "addThirdPartySchema"
   | "printTypeDefinitions"
   | "createSlice"
+  | "addImageCdnAllowedUrl"
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
@@ -533,6 +535,22 @@ export const actions = {
       throw new Error(`createSlice is only available in Gatsby v5`)
     }
   },
+  /**
+   * @todo
+   */
+  addImageCdnAllowedUrl: (
+    url: string | Array<string>,
+    plugin: IGatsbyPlugin,
+    traceId?: string
+  ): IAddImageCdnAllowedUrl => {
+    const urls = Array.isArray(url) ? url : [url]
+    return {
+      type: `ADD_IMAGE_CDN_ALLOWED_URL`,
+      payload: { urls },
+      plugin,
+      traceId,
+    }
+  },
 }
 
 const withDeprecationWarning =
@@ -655,5 +673,8 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
   },
   createSlice: {
     [ALLOWED_IN]: [`createPages`],
+  },
+  addImageCdnAllowedUrl: {
+    [ALLOWED_IN]: [`onPreInit`, `onPreBootstrap`, `onPluginInit`],
   },
 })

@@ -204,6 +204,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined
       let _headerRoutes: HeaderRoutes | undefined = undefined
+      let _imageCdnAllowedUrls: Array<string> | undefined = undefined
       const adaptContext: IAdaptContext = {
         get routesManifest(): RoutesManifest {
           if (!_routesManifest) {
@@ -229,6 +230,15 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           }
 
           return _headerRoutes
+        },
+        get imageCdnAllowedUrls(): Array<string> {
+          if (!_imageCdnAllowedUrls) {
+            _imageCdnAllowedUrls = Array.from(
+              store.getState().imageCdnAllowedUrls
+            )
+          }
+
+          return _imageCdnAllowedUrls
         },
         reporter,
         // Our internal Gatsby config allows this to be undefined but for the adapter we should always pass through the default values and correctly show this in the TypeScript types

@@ -21,6 +21,7 @@ export { logPostBuildWarnings } from "~/steps/log-post-build-warnings"
 export { imageRoutes } from "~/steps/image-routes"
 
 export { setRequestHeaders } from "./set-request-headers"
+export { addImageCdnAllowedUrl } from "./add-image-cdn-allowed-url"
 
 export {
   hideAuthPluginOptions,

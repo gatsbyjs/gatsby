@@ -119,6 +119,10 @@ export interface IAdaptContext extends IDefaultContext {
    * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash
    */
   trailingSlash: TrailingSlash
+  /**
+   * @todo
+   */
+  imageCdnAllowedUrls: Array<string>
 }
 
 export interface ICacheContext extends IDefaultContext {

@@ -18,7 +18,7 @@
     "@types/jest": "^29.5.2",
     "@types/joi": "^14.3.4",
     "@types/lodash": "^4.14.195",
-    "@types/node": "^12.20.55",
+    "@types/node": "18.0.0",
     "@types/node-fetch": "^2.6.4",
     "@types/normalize-path": "^3.0.0",
     "@types/react": "^18.2.14",

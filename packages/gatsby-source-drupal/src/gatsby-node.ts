@@ -132,8 +132,12 @@ function gracefullyRethrow(activity, error) {
   }
 }
 
-exports.onPreBootstrap = (_, pluginOptions) => {
+exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setOptions(pluginOptions)
+
+  if (typeof actions?.addImageCdnAllowedUrl === `function`) {
+    actions.addImageCdnAllowedUrl(urlJoin(pluginOptions.baseUrl, `*`))
+  }
 }
 
 exports.sourceNodes = async (

@@ -1,4 +1,5 @@
 // @ts-check
+import { join } from "path/posix"
 import _ from "lodash"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
@@ -43,7 +44,10 @@ const validateContentfulAccess = async pluginOptions => {
   return undefined
 }
 
-export const onPreInit = async ({ store, reporter }) => {
+export const onPreInit = async (
+  { store, reporter, actions },
+  pluginOptions
+) => {
   // if gatsby-plugin-image is not installed
   try {
     await import(`gatsby-plugin-image/graphql-utils`)
@@ -68,6 +72,12 @@ export const onPreInit = async ({ store, reporter }) => {
         sourceMessage: `gatsby-plugin-image is missing from your gatsby-config file.\nPlease add "gatsby-plugin-image" to your plugins array.`,
       },
     })
+  }
+
+  if (typeof actions?.addImageCdnAllowedUrl === `function`) {
+    actions.addImageCdnAllowedUrl(
+      join(`https://images.ctfassets.net/`, pluginOptions.spaceId, `*`)
+    )
   }
 }
 

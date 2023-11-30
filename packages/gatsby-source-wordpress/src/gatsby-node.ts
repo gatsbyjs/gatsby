@@ -6,6 +6,7 @@ exports.onPluginInit = runApiSteps(
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.setRequestHeaders,
+    steps.addImageCdnAllowedUrl,
     steps.hideAuthPluginOptions,
   ],
   `onPluginInit`

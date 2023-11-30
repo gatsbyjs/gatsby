@@ -72,6 +72,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       routesManifest,
       functionsManifest,
       headerRoutes,
+      imageCdnAllowedUrls,
     }): Promise<void> {
       const { lambdasThatUseCaching } = await handleRoutesManifest(
         routesManifest,
@@ -85,6 +86,8 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           lambdasThatUseCaching.get(fun.functionId)
         )
       }
+
+      console.log({ imageCdnAllowedUrls })
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(
