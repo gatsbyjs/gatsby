@@ -20,7 +20,7 @@ describe(`generateImageUrl`, () => {
         quality: 80,
       })
     ).toMatchInlineSnapshot(
-      `"/.netlify/images?w=100&h=100&fit=crop&crop=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage.jpg&cd=1234"`
+      `"/.netlify/images?w=100&h=100&fit=cover&position=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage.jpg&cd=1234"`
     )
   })
 
@@ -43,7 +43,7 @@ describe(`generateImageUrl`, () => {
         quality: 80,
       })
     ).toMatchInlineSnapshot(
-      `"/.netlify/images?w=100&h=100&fit=crop&crop=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage-%C3%A9%C3%A0.jpg&cd=1234"`
+      `"/.netlify/images?w=100&h=100&fit=cover&position=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage-%C3%A9%C3%A0.jpg&cd=1234"`
     )
   })
 
@@ -66,7 +66,7 @@ describe(`generateImageUrl`, () => {
         quality: 80,
       })
     ).toMatchInlineSnapshot(
-      `"/.netlify/images?w=100&h=100&fit=crop&crop=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage+test.jpg&cd=1234"`
+      `"/.netlify/images?w=100&h=100&fit=cover&position=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage+test.jpg&cd=1234"`
     )
   })
 
@@ -89,14 +89,14 @@ describe(`generateImageUrl`, () => {
         quality: 80,
       })
     ).toMatchInlineSnapshot(
-      `"/.netlify/images?w=100&h=100&fit=crop&crop=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage%2520test.jpg&cd=1234"`
+      `"/.netlify/images?w=100&h=100&fit=cover&position=top&fm=webp&q=80&url=https%3A%2F%2Fexample.com%2Fimage%2520test.jpg&cd=1234"`
     )
   })
 
   it.each([
     [`width`, `w`, 100],
     [`height`, `h`, 50],
-    [`cropFocus`, `crop`, `center,right`],
+    [`cropFocus`, `position`, `center,right`],
     [`format`, `fm`, `webp`],
     [`quality`, `q`, 60],
   ] as Array<[keyof ImageArgs, string, ImageArgs[keyof ImageArgs]]>)(
