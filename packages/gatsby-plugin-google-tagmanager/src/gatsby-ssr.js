@@ -48,7 +48,7 @@ exports.onRenderBody = (
     dataLayerName = `dataLayer`,
     enableWebVitalsTracking = false,
     selfHostedOrigin = `https://www.googletagmanager.com`,
-    selfHostedPath = `gtm.js`
+    selfHostedPath = `gtm.js`,
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -98,7 +98,7 @@ exports.onRenderBody = (
             environmentParamStr,
             dataLayerName,
             selfHostedOrigin,
-            selfHostedPath
+            selfHostedPath,
           })}`,
         }}
       />
