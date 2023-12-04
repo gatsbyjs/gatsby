@@ -31,7 +31,7 @@ const configs = [
   {
     title: `remote-file (SSR, Page Query)`,
     pagePath: `/routes/ssr/remote-file/`,
-    fileCDN: false,
+    fileCDN: true,
     placeholders: false,
   },
 ]
@@ -110,8 +110,11 @@ for (const config of configs) {
             )
 
             for (const url of urls) {
-              // using OSS implementation for publicURL for now
-              expect(url).to.match(new RegExp(`^${PATH_PREFIX}/_gatsby/file`))
+              const { href, origin } = new URL(url)
+              const urlWithoutOrigin = href.replace(origin, ``)
+
+              // using Netlify Image CDN
+              expect(urlWithoutOrigin).to.match(/^\/.netlify\/images/)
               const res = await fetch(url, {
                 method: "HEAD",
               })
