@@ -4,21 +4,22 @@ import type {
   ImageCdnTransformArgs,
 } from "gatsby"
 
-export function generateImageUrl(
-  source: ImageCdnSourceImage,
-  imageArgs: ImageCdnTransformArgs
-): string {
-  const placeholderOrigin = `http://netlify.com`
-  const imageParams = generateImageArgs(imageArgs)
+export const generateImageUrl: ImageCdnUrlGeneratorFn =
+  function generateImageUrl(
+    source: ImageCdnSourceImage,
+    imageArgs: ImageCdnTransformArgs
+  ): string {
+    const placeholderOrigin = `http://netlify.com`
+    const imageParams = generateImageArgs(imageArgs)
 
-  const baseURL = new URL(`${placeholderOrigin}/.netlify/images`)
+    const baseURL = new URL(`${placeholderOrigin}/.netlify/images`)
 
-  baseURL.search = imageParams.toString()
-  baseURL.searchParams.append(`url`, source.url)
-  baseURL.searchParams.append(`cd`, source.internal.contentDigest)
+    baseURL.search = imageParams.toString()
+    baseURL.searchParams.append(`url`, source.url)
+    baseURL.searchParams.append(`cd`, source.internal.contentDigest)
 
-  return `${baseURL.pathname}${baseURL.search}`
-}
+    return `${baseURL.pathname}${baseURL.search}`
+  }
 
 export function generateImageArgs({
   width,
@@ -56,4 +57,4 @@ export function generateImageArgs({
   return params
 }
 
-export default generateImageUrl as ImageCdnUrlGeneratorFn
+export default generateImageUrl

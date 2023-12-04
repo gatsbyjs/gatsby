@@ -4,7 +4,7 @@ import { URL } from "url"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
 import type {
-  CustomImageCdnUrlGeneratorFn,
+  ImageCdnUrlGeneratorFn,
   ImageCdnSourceImage,
   ImageCdnTransformArgs,
 } from "../types"
@@ -93,8 +93,7 @@ export function generateFileUrl(
   return `${frontendHostName}${parsedURL.pathname}${parsedURL.search}`
 }
 
-let customImageCDNUrlGenerator: CustomImageCdnUrlGeneratorFn | undefined =
-  undefined
+let customImageCDNUrlGenerator: ImageCdnUrlGeneratorFn | undefined = undefined
 
 const preferDefault = (m: any): any => (m && m.default) || m
 
@@ -113,7 +112,7 @@ export function generateImageUrl(
     if (!customImageCDNUrlGenerator) {
       customImageCDNUrlGenerator = preferDefault(
         require(global.__GATSBY.imageCDNUrlGeneratorModulePath)
-      ) as CustomImageCdnUrlGeneratorFn
+      ) as ImageCdnUrlGeneratorFn
     }
     return customImageCDNUrlGenerator(source, imageArgs, pathPrefix)
   }

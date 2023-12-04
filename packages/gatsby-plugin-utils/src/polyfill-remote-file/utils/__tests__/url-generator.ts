@@ -5,7 +5,6 @@ import url from "url"
 import {
   generateFileUrl,
   generateImageUrl,
-  generateImageUrlAlt,
   ImageCDNUrlKeys,
 } from "../url-generator"
 

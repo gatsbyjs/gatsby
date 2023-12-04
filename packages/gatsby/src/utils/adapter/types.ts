@@ -2,11 +2,17 @@ import type reporter from "gatsby-cli/lib/reporter"
 import type { TrailingSlash } from "gatsby-page-utils"
 import type { IHeader, HttpStatusCode } from "../../redux/types"
 
+import type {
+  ImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
+  ImageCdnTransformArgs,
+} from "gatsby-plugin-utils/dist/polyfill-remote-file/types"
+
 export type {
   ImageCdnUrlGeneratorFn,
   ImageCdnSourceImage,
   ImageCdnTransformArgs,
-} from "gatsby-plugin-utils"
+}
 
 interface IBaseRoute {
   /**
@@ -158,15 +164,7 @@ export interface IAdapterConfig {
   /**
    * Path to a CommonJS module that implements an image CDN URL generation function. The function
    * is used to optimize image delivery by generating URLs that leverage CDN capabilities. This module
-   * should have a default export function that conforms to the 'ImageCdnUrlGeneratorFn' type:
-   *
-   * @param source - An object representing the source image, including properties like
-   *                 URL, filename, and MIME type.
-   * @param imageArgs - An object containing arguments for image transformation, such as
-   *                    format, quality, and crop focus.
-   * @param pathPrefix - A string representing the path prefix to be prepended to the
-   *                     generated URL.
-   * @returns A string representing the generated URL for the image on the CDN.
+   * should have a default export function that conforms to the {@link ImageCdnUrlGeneratorFn} type:
    *
    * Adapters should provide an absolute path to this module.
    * See 'packages/gatsby-adapter-netlify/src/image-cdn-url-generator.ts' as an implementation
