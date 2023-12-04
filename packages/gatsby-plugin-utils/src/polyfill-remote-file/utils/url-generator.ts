@@ -7,6 +7,7 @@ import type {
   ImageCdnUrlGeneratorFn,
   ImageCdnSourceImage,
   ImageCdnTransformArgs,
+  FileCdnUrlGeneratorFn,
 } from "../types"
 import type { Store } from "gatsby"
 
@@ -60,14 +61,13 @@ function appendUrlParamToSearchParams(
 
 const frontendHostName = process.env.IMAGE_CDN_HOSTNAME || ``
 
+let customImageCDNUrlGenerator: ImageCdnUrlGeneratorFn | undefined = undefined
+let customFileCDNUrlGenerator: FileCdnUrlGeneratorFn | undefined = undefined
+
+const preferDefault = (m: any): any => (m && m.default) || m
+
 export function generateFileUrl(
-  {
-    url,
-    filename,
-  }: {
-    url: string
-    filename: string
-  },
+  source: ImageCdnSourceImage,
   store?: Store
 ): string {
   const state = store?.getState()
@@ -75,6 +75,17 @@ export function generateFileUrl(
   const pathPrefix = state?.program?.prefixPaths
     ? state?.config?.pathPrefix
     : ``
+
+  if (global.__GATSBY?.fileCDNUrlGeneratorModulePath) {
+    if (!customFileCDNUrlGenerator) {
+      customFileCDNUrlGenerator = preferDefault(
+        require(global.__GATSBY.fileCDNUrlGeneratorModulePath)
+      ) as FileCdnUrlGeneratorFn
+    }
+    return customFileCDNUrlGenerator(source, pathPrefix)
+  }
+
+  const { url, filename } = source
 
   const fileExt = extname(filename)
   const filenameWithoutExt = basename(filename, fileExt)
@@ -92,10 +103,6 @@ export function generateFileUrl(
 
   return `${frontendHostName}${parsedURL.pathname}${parsedURL.search}`
 }
-
-let customImageCDNUrlGenerator: ImageCdnUrlGeneratorFn | undefined = undefined
-
-const preferDefault = (m: any): any => (m && m.default) || m
 
 export function generateImageUrl(
   source: ImageCdnSourceImage,

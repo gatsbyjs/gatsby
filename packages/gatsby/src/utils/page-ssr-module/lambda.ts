@@ -98,6 +98,12 @@ if (`%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
     `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
   )
 }
+// eslint-disable-next-line no-constant-condition
+if (`%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
+  global.__GATSBY.fileCDNUrlGeneratorModulePath = require.resolve(
+    `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+  )
+}
 
 const dbPath = setupFsWrapper()
 
