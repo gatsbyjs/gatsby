@@ -109,13 +109,11 @@ for (const config of configs) {
               $urls.map((_, $url) => $url.getAttribute("href"))
             )
 
-            for (const url of urls) {
-              const { href, origin } = new URL(url)
-              const urlWithoutOrigin = href.replace(origin, ``)
-
+            // urls is array of href attribute, not absolute urls, so it already is stripped of origin
+            for (const urlWithoutOrigin of urls) {
               // using Netlify Image CDN
               expect(urlWithoutOrigin).to.match(/^\/.netlify\/images/)
-              const res = await fetch(url, {
+              const res = await fetch(urlWithoutOrigin, {
                 method: "HEAD",
               })
               expect(res.ok).to.be.true
