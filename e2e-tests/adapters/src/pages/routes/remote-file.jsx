@@ -7,11 +7,11 @@ import Layout from "../../components/layout"
 const RemoteFile = ({ data }) => {
   return (
     <Layout>
-      {data.allMyRemoteFile.nodes.map(node => {
+      {data.allMyRemoteImage.nodes.map(node => {
         return (
           <div key={node.id}>
             <h2>
-              <a href={node.publicUrl} data-testid="public">
+              <a href={node.publicUrl} data-testid="image-public">
                 {node.filename}
               </a>
             </h2>
@@ -39,13 +39,24 @@ const RemoteFile = ({ data }) => {
           </div>
         )
       })}
+      {data.allMyRemoteFile.nodes.map(node => {
+        return (
+          <div key={node.id}>
+            <h2>
+              <a href={node.publicUrl} data-testid="file-public">
+                {node.filename}
+              </a>
+            </h2>
+          </div>
+        )
+      })}
     </Layout>
   )
 }
 
 export const pageQuery = graphql`
   query SSGImageCDNPageQuery {
-    allMyRemoteFile {
+    allMyRemoteImage {
       nodes {
         id
         url
@@ -72,6 +83,14 @@ export const pageQuery = graphql`
           placeholder: TRACED_SVG
         )
         full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
+      }
+    }
+    allMyRemoteFile {
+      nodes {
+        id
+        url
+        filename
+        publicUrl
       }
     }
   }

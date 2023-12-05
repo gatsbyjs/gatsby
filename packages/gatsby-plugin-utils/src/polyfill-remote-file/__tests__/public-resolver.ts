@@ -38,6 +38,10 @@ describe(`publicResolver`, () => {
       generateFileUrl({
         filename: source.filename,
         url: source.url,
+        mimeType: source.mimeType,
+        internal: {
+          contentDigest: source.internal.contentDigest,
+        },
       })
     )
   })
@@ -61,6 +65,10 @@ describe(`publicResolver`, () => {
       generateFileUrl({
         filename: source.filename,
         url: source.url,
+        mimeType: source.mimeType,
+        internal: {
+          contentDigest: source.internal.contentDigest,
+        },
       })
     )
   })
