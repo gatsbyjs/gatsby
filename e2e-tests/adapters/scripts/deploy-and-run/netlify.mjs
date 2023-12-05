@@ -1,5 +1,6 @@
 // @ts-check
 import { execa } from "execa"
+import { inspect } from "util"
 
 // only set NETLIFY_SITE_ID from E2E_ADAPTERS_NETLIFY_SITE_ID if it's set
 if (process.env.E2E_ADAPTERS_NETLIFY_SITE_ID) {
@@ -20,7 +21,7 @@ await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
 const deployResults = await execa(
   "ntl",
-  ["deploy", "--build", "--json", "--message", deployTitle],
+  ["deploy", "--build", "--json", "--cwd=.", "--message", deployTitle],
   {
     reject: false,
   }
@@ -42,6 +43,7 @@ const deployInfo = JSON.parse(deployResults.stdout)
 const deployUrl = deployInfo.deploy_url + (process.env.PATH_PREFIX ?? ``)
 process.env.DEPLOY_URL = deployUrl
 
+console.log(inspect({ deployInfo }, { depth: Infinity }))
 console.log(`Deployed to ${deployUrl}`)
 
 try {
