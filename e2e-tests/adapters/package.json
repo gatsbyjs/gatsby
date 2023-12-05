@@ -35,6 +35,7 @@
     "cross-env": "^7.0.3",
     "cypress": "^12.14.0",
     "dotenv": "^8.6.0",
+    "tree-cli": "0.6.7",
     "gatsby-cypress": "^3.11.0",
     "netlify-cli": "^17.9.0",
     "npm-run-all": "^4.1.5",
