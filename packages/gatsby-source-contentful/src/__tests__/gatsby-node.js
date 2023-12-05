@@ -16,6 +16,7 @@ import restrictedContentTypeFixture from "../__fixtures__/restricted-content-typ
 import unpublishedFieldDelivery from "../__fixtures__/unpublished-fields-delivery"
 import unpublishedFieldPreview from "../__fixtures__/unpublished-fields-preview"
 import preserveBackLinks from "../__fixtures__/preserve-back-links"
+import editingNodeReferecingNodeWithChildLink from "../__fixtures__/editing-node-referencing-nodes-with-child-links"
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
@@ -1421,5 +1422,69 @@ describe(`gatsby-node`, () => {
       blogPostNodes[0].id,
     ])
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS edit #1`)
+  })
+
+  it(`should not apply parent node links to child nodes`, async () => {
+    // @ts-ignore
+    fetchContentTypes.mockImplementation(
+      editingNodeReferecingNodeWithChildLink.contentTypeItems
+    )
+    fetchContent
+      // @ts-ignore
+      .mockImplementationOnce(
+        editingNodeReferecingNodeWithChildLink.initialSync
+      )
+      .mockImplementationOnce(editingNodeReferecingNodeWithChildLink.addALink)
+
+    let blogPostNodes
+    let blogCategoryNodes
+    let blogCategoryChildNodes
+    await simulateGatsbyBuild()
+
+    blogPostNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogPost`
+    )
+    blogCategoryNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogCategory`
+    )
+    blogCategoryChildNodes = blogCategoryNodes.flatMap(node =>
+      node.children.map(childId => getNode(childId))
+    )
+
+    expect(blogPostNodes.length).toEqual(1)
+    expect(blogCategoryNodes.length).toEqual(1)
+    expect(blogCategoryChildNodes.length).toEqual(1)
+    // no backref yet
+    expect(blogCategoryNodes[0][`blog post___NODE`]).toBeUndefined()
+    expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
+
+    // `body` field on child node is concrete value and not a link
+    expect(blogCategoryChildNodes[0][`body`]).toEqual(`cms`)
+    expect(blogCategoryChildNodes[0][`body___NODE`]).toBeUndefined()
+
+    await simulateGatsbyBuild()
+
+    blogPostNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogPost`
+    )
+    blogCategoryNodes = getNodes().filter(
+      node => node.internal.type === `ContentfulBlogCategory`
+    )
+    blogCategoryChildNodes = blogCategoryNodes.flatMap(node =>
+      node.children.map(childId => getNode(childId))
+    )
+
+    expect(blogPostNodes.length).toEqual(1)
+    expect(blogCategoryNodes.length).toEqual(1)
+    expect(blogCategoryChildNodes.length).toEqual(1)
+    // backref was added when entries were linked
+    expect(blogCategoryNodes[0][`blog post___NODE`]).toEqual([
+      blogPostNodes[0].id,
+    ])
+    expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
+
+    // `body` field on child node is concrete value and not a link
+    expect(blogCategoryChildNodes[0][`body`]).toEqual(`cms`)
+    expect(blogCategoryChildNodes[0][`body___NODE`]).toBeUndefined()
   })
 })

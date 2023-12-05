@@ -44,4 +44,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     selfHostedOrigin: Joi.string()
       .default(`https://www.googletagmanager.com`)
       .description(`The origin where GTM is hosted.`),
+    selfHostedPath: Joi.string()
+      .default(`gtm.js`)
+      .description(`The path where GTM is hosted.`),
   })
