@@ -821,6 +821,7 @@ export const createNodesForContentType = ({
 
         // Replace text fields with text nodes so we can process their markdown
         // into HTML.
+        const children: Array<string> = []
         Object.keys(entryItemFields).forEach(entryItemFieldKey => {
           const field = fieldMap.get(entryItemFieldKey)
           if (field?.type === `Text`) {
@@ -849,6 +850,7 @@ export const createNodesForContentType = ({
                 )
 
                 childrenNodes.push(textNode)
+                children.push(textNodeId)
               }
 
               entryItemFields[entryItemFieldKey] = textNodeId
@@ -859,6 +861,7 @@ export const createNodesForContentType = ({
         entryNode = {
           ...entryItemFields,
           ...entryNode,
+          children,
         }
         return entryNode
       }

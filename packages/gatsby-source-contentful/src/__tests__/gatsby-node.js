@@ -1469,10 +1469,10 @@ describe(`gatsby-node`, () => {
     await simulateGatsbyBuild()
 
     blogPostNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogPost`
+      node => node.internal.type === `ContentfulContentTypeBlogPost`
     )
     blogCategoryNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogCategory`
+      node => node.internal.type === `ContentfulContentTypeBlogCategory`
     )
     blogCategoryChildNodes = blogCategoryNodes.flatMap(node =>
       node.children.map(childId => getNode(childId))
@@ -1486,16 +1486,16 @@ describe(`gatsby-node`, () => {
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
 
     // `body` field on child node is concrete value and not a link
-    expect(blogCategoryChildNodes[0][`body`]).toEqual(`cms`)
-    expect(blogCategoryChildNodes[0][`body___NODE`]).toBeUndefined()
+    expect(blogCategoryChildNodes[0][`raw`]).toEqual(`cms`)
+    expect(blogCategoryChildNodes[0][`raw___NODE`]).toBeUndefined()
 
     await simulateGatsbyBuild()
 
     blogPostNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogPost`
+      node => node.internal.type === `ContentfulContentTypeBlogPost`
     )
     blogCategoryNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogCategory`
+      node => node.internal.type === `ContentfulContentTypeBlogCategory`
     )
     blogCategoryChildNodes = blogCategoryNodes.flatMap(node =>
       node.children.map(childId => getNode(childId))
@@ -1505,13 +1505,13 @@ describe(`gatsby-node`, () => {
     expect(blogCategoryNodes.length).toEqual(1)
     expect(blogCategoryChildNodes.length).toEqual(1)
     // backref was added when entries were linked
-    expect(blogCategoryNodes[0][`blog post___NODE`]).toEqual([
-      blogPostNodes[0].id,
-    ])
+    expect(
+      blogCategoryNodes[0].linkedFrom.ContentfulContentTypeBlogPost
+    ).toEqual([blogPostNodes[0].id])
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
 
     // `body` field on child node is concrete value and not a link
-    expect(blogCategoryChildNodes[0][`body`]).toEqual(`cms`)
-    expect(blogCategoryChildNodes[0][`body___NODE`]).toBeUndefined()
+    expect(blogCategoryChildNodes[0][`raw`]).toEqual(`cms`)
+    expect(blogCategoryChildNodes[0][`raw___NODE`]).toBeUndefined()
   })
 })
