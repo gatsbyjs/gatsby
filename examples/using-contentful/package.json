@@ -10,7 +10,7 @@
     "gatsby-plugin-image": "^3.13.0-next.0",
     "gatsby-plugin-sharp": "^5.13.0-next.0",
     "gatsby-plugin-typography": "^5.13.0-next.0",
-    "gatsby-source-contentful": "^8.13.0-next.1",
+    "gatsby-source-contentful": "^8.99.0-next.0",
     "gatsby-transformer-remark": "^6.13.0-next.0",
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
