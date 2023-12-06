@@ -176,10 +176,7 @@ export interface IAdapterConfig {
    */
   imageCDNUrlGeneratorModulePath?: string
   /**
-   * @todo: specify that image cdn does image transformation (like resizing) while file cdn does not
-   * (but might do content negotiation)
-   * Path to a CommonJS module that implements an file CDN URL generation function. The function
-   * is used to optimize image delivery by generating URLs that leverage CDN capabilities. This module
+   * Path to a CommonJS module that implements an file CDN URL generation function. This module
    * should have a default export function that conforms to the {@link FileCdnUrlGeneratorFn} type:
    *
    * Adapters should provide an absolute path to this module.

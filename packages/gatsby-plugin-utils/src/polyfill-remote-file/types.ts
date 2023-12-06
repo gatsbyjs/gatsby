@@ -128,7 +128,15 @@ export type ImageCdnUrlGeneratorFn = (
 
 export type FileCdnSourceImage = CdnSourceImage
 
+/**
+ * The function is used to optimize image delivery by generating URLs that leverage CDN capabilities
+ * @param {FileCdnSourceImage} source - An object representing the source file, including properties like
+ * URL, filename, and MIME type.
+ * @param {string} pathPrefix - A string representing the path prefix to be prepended to the
+ * generated URL.
+ * @returns {string} A string representing the generated URL for the file on the CDN.
+ */
 export type FileCdnUrlGeneratorFn = (
-  source: ImageCdnSourceImage,
+  source: FileCdnSourceImage,
   pathPrefix: string
 ) => string
