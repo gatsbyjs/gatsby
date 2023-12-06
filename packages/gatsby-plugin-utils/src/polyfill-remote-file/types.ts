@@ -118,7 +118,8 @@ export type ImageCdnSourceImage = CdnSourceImage
  * format, quality, and crop focus.
  * @param {string} pathPrefix - This parameter allows for an optional path prefix in the generated relative URL,
  * primarily influencing the location of the image transformation endpoint, particularly if not in the domain root.
- * @returns {string} A string representing the generated URL for the image on the CDN.
+ * @returns {string} A string representing the generated URL for the image on the CDN. Ideally it is relative url
+ * (starting with `/`, resulting in usage of same domain as site itself), but it can also be absolute URL.
  */
 export type ImageCdnUrlGeneratorFn = (
   source: ImageCdnSourceImage,
@@ -134,7 +135,8 @@ export type FileCdnSourceImage = CdnSourceImage
  * URL, filename, and MIME type.
  * @param {string} pathPrefix - A string representing the path prefix to be prepended to the
  * generated URL.
- * @returns {string} A string representing the generated URL for the file on the CDN.
+ * @returns {string} A string representing the generated URL for the file on the CDN. Ideally it is relative url
+ * (starting with `/`, resulting in usage of same domain as site itself), but it can also be absolute URL.
  */
 export type FileCdnUrlGeneratorFn = (
   source: FileCdnSourceImage,
