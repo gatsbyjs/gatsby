@@ -1,5 +1,5 @@
 import nodePath from "path"
-import { getPluginOptions } from "~/utils/get-gatsby-api"
+import { getStore } from "~/store"
 
 import type { Step } from "~/utils/run-steps"
 
@@ -8,13 +8,14 @@ export const addImageCdnAllowedUrl: Step = ({ actions }): void => {
     return
   }
 
-  const pluginOptions = getPluginOptions()
+  const { wpUrl } = getStore().getState().remoteSchema
 
-  const { url } = pluginOptions
+  if (!wpUrl) {
+    return
+  }
 
-  // url has `/graphql` at the end, so we need to remove it
-  // todo: use siteUrl from wpGraphql instead of url and trying to replace graphql
-  const wordpressRootUrl = url.replace(`/graphql`, ``)
+  const wordpressUrl = new URL(wpUrl)
+  wordpressUrl.pathname = nodePath.posix.join(wordpressUrl.pathname, `*`)
 
-  actions.addImageCdnAllowedUrl(nodePath.posix.join(wordpressRootUrl, `*`))
+  actions.addImageCdnAllowedUrl(wordpressUrl.href)
 }

@@ -675,6 +675,12 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
     [ALLOWED_IN]: [`createPages`],
   },
   addImageCdnAllowedUrl: {
-    [ALLOWED_IN]: [`onPreInit`, `onPreBootstrap`, `onPluginInit`],
+    [ALLOWED_IN]: [
+      `onPreInit`,
+      `onPreBootstrap`,
+      `onPluginInit`,
+      `createSchemaCustomization`,
+      `sourceNodes`,
+    ],
   },
 })

@@ -6,7 +6,6 @@ exports.onPluginInit = runApiSteps(
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.setRequestHeaders,
-    steps.addImageCdnAllowedUrl,
     steps.hideAuthPluginOptions,
   ],
   `onPluginInit`
@@ -25,6 +24,7 @@ exports.createSchemaCustomization = runApiSteps(
     steps.ensurePluginRequirementsAreMet,
     steps.ingestRemoteSchema,
     steps.createSchemaCustomization,
+    steps.addImageCdnAllowedUrl,
   ],
   `createSchemaCustomization`
 )
