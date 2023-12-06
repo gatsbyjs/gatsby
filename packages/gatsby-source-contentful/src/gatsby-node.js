@@ -1,5 +1,4 @@
 // @ts-check
-import { join } from "path/posix"
 import _ from "lodash"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
@@ -76,7 +75,7 @@ export const onPreInit = async (
 
   if (typeof actions?.addImageCdnAllowedUrl === `function`) {
     actions.addImageCdnAllowedUrl(
-      join(`https://images.ctfassets.net/`, pluginOptions.spaceId, `*`)
+      `https://images.ctfassets.net/${pluginOptions.spaceId}/*`
     )
   }
 }
