@@ -84,7 +84,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       functionsManifest,
       headerRoutes,
       pathPrefix,
-      imageCdnAllowedUrls,
+      remoteFileAllowedUrls,
     }): Promise<void> {
       if (useNetlifyImageCDN) {
         await prepareFileCdnHandler({ pathPrefix })
@@ -103,7 +103,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         )
       }
 
-      console.log({ imageCdnAllowedUrls })
+      console.log({ remoteFileAllowedUrls })
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(

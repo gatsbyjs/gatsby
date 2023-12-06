@@ -24,7 +24,7 @@ exports.createSchemaCustomization = runApiSteps(
     steps.ensurePluginRequirementsAreMet,
     steps.ingestRemoteSchema,
     steps.createSchemaCustomization,
-    steps.addImageCdnAllowedUrl,
+    steps.addRemoteFileAllowedUrl,
   ],
   `createSchemaCustomization`
 )

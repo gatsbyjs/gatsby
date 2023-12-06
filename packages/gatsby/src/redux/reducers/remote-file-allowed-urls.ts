@@ -1,11 +1,11 @@
 import { IGatsbyState, ActionsUnion } from "../types"
 
-export const imageCdnAllowedUrlsReducer = (
-  state: IGatsbyState["imageCdnAllowedUrls"] = new Set(),
+export const remoteFileAllowedUrlsReducer = (
+  state: IGatsbyState["remoteFileAllowedUrls"] = new Set(),
   action: ActionsUnion
-): IGatsbyState["imageCdnAllowedUrls"] => {
+): IGatsbyState["remoteFileAllowedUrls"] => {
   switch (action.type) {
-    case `ADD_IMAGE_CDN_ALLOWED_URL`: {
+    case `ADD_REMOTE_FILE_ALLOWED_URL`: {
       for (const url of action.payload.urls) {
         state.add(url)
       }

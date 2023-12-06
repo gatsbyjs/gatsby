@@ -132,7 +132,7 @@ export interface IAdaptContext extends IDefaultContext {
   /**
    * @todo
    */
-  imageCdnAllowedUrls: Array<string>
+  remoteFileAllowedUrls: Array<string>
 }
 
 export interface ICacheContext extends IDefaultContext {

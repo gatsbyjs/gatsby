@@ -37,7 +37,7 @@ type RestrictionActionNames =
   | "addThirdPartySchema"
   | "printTypeDefinitions"
   | "createSlice"
-  | "addImageCdnAllowedUrl"
+  | "addRemoteFileAllowedUrl"
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
@@ -538,14 +538,14 @@ export const actions = {
   /**
    * @todo
    */
-  addImageCdnAllowedUrl: (
+  addRemoteFileAllowedUrl: (
     url: string | Array<string>,
     plugin: IGatsbyPlugin,
     traceId?: string
   ): IAddImageCdnAllowedUrl => {
     const urls = Array.isArray(url) ? url : [url]
     return {
-      type: `ADD_IMAGE_CDN_ALLOWED_URL`,
+      type: `ADD_REMOTE_FILE_ALLOWED_URL`,
       payload: { urls },
       plugin,
       traceId,
@@ -674,7 +674,7 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
   createSlice: {
     [ALLOWED_IN]: [`createPages`],
   },
-  addImageCdnAllowedUrl: {
+  addRemoteFileAllowedUrl: {
     [ALLOWED_IN]: [
       `onPreInit`,
       `onPreBootstrap`,

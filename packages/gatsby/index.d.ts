@@ -1520,8 +1520,8 @@ export interface Actions {
    */
   enableStatefulSourceNodes?(this: void, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#addImageCdnAllowedUrl */
-  addImageCdnAllowedUrl?(
+  /** @see https://www.gatsbyjs.com/docs/actions/#addRemoteFileAllowedUrl */
+  addRemoteFileAllowedUrl?(
     this: void,
     url: string | Array<string>,
     plugin?: ActionPlugin,

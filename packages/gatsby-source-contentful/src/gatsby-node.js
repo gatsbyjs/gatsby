@@ -73,8 +73,8 @@ export const onPreInit = async (
     })
   }
 
-  if (typeof actions?.addImageCdnAllowedUrl === `function`) {
-    actions.addImageCdnAllowedUrl(
+  if (typeof actions?.addRemoteFileAllowedUrl === `function`) {
+    actions.addRemoteFileAllowedUrl(
       `https://images.ctfassets.net/${pluginOptions.spaceId}/*`
     )
   }

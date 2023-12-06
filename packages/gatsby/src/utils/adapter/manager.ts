@@ -231,10 +231,10 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
           return _headerRoutes
         },
-        get imageCdnAllowedUrls(): Array<string> {
+        get remoteFileAllowedUrls(): Array<string> {
           if (!_imageCdnAllowedUrls) {
             _imageCdnAllowedUrls = Array.from(
-              store.getState().imageCdnAllowedUrls
+              store.getState().remoteFileAllowedUrls
             )
           }
 

@@ -425,7 +425,7 @@ export interface IGatsbyState {
     manager: IAdapterManager
     config: IAdapterFinalConfig
   }
-  imageCdnAllowedUrls: Set<string>
+  remoteFileAllowedUrls: Set<string>
 }
 
 export type GatsbyStateKeys = keyof IGatsbyState
@@ -1221,7 +1221,7 @@ export interface IDisablePluginsByNameAction {
 }
 
 export interface IAddImageCdnAllowedUrl {
-  type: `ADD_IMAGE_CDN_ALLOWED_URL`
+  type: `ADD_REMOTE_FILE_ALLOWED_URL`
   payload: {
     urls: Array<string>
   }

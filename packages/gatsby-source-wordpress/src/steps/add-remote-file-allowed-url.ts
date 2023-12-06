@@ -3,8 +3,8 @@ import { getStore } from "~/store"
 
 import type { Step } from "~/utils/run-steps"
 
-export const addImageCdnAllowedUrl: Step = ({ actions }): void => {
-  if (typeof actions?.addImageCdnAllowedUrl !== `function`) {
+export const addRemoteFileAllowedUrl: Step = ({ actions }): void => {
+  if (typeof actions?.addRemoteFileAllowedUrl !== `function`) {
     return
   }
 
@@ -17,5 +17,5 @@ export const addImageCdnAllowedUrl: Step = ({ actions }): void => {
   const wordpressUrl = new URL(wpUrl)
   wordpressUrl.pathname = nodePath.posix.join(wordpressUrl.pathname, `*`)
 
-  actions.addImageCdnAllowedUrl(wordpressUrl.href)
+  actions.addRemoteFileAllowedUrl(wordpressUrl.href)
 }
