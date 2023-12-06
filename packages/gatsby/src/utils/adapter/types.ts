@@ -6,12 +6,16 @@ import type {
   ImageCdnUrlGeneratorFn,
   ImageCdnSourceImage,
   ImageCdnTransformArgs,
+  FileCdnUrlGeneratorFn,
+  FileCdnSourceImage,
 } from "gatsby-plugin-utils/dist/polyfill-remote-file/types"
 
 export type {
   ImageCdnUrlGeneratorFn,
   ImageCdnSourceImage,
   ImageCdnTransformArgs,
+  FileCdnUrlGeneratorFn,
+  FileCdnSourceImage,
 }
 
 interface IBaseRoute {
@@ -171,6 +175,15 @@ export interface IAdapterConfig {
    * example for the Netlify adapter.
    */
   imageCDNUrlGeneratorModulePath?: string
+  /**
+   * Path to a CommonJS module that implements an file CDN URL generation function. This module
+   * should have a default export function that conforms to the {@link FileCdnUrlGeneratorFn} type:
+   *
+   * Adapters should provide an absolute path to this module.
+   * See 'packages/gatsby-adapter-netlify/src/file-cdn-url-generator.ts' as an implementation
+   * example for the Netlify adapter.
+   */
+  fileCDNUrlGeneratorModulePath?: string
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }

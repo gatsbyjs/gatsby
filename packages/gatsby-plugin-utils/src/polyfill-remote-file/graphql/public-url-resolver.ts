@@ -15,6 +15,7 @@ export function publicUrlResolver(
     dispatchLocalFileServiceJob(
       {
         url: source.url,
+        mimeType: source.mimeType,
         filename: source.filename,
         contentDigest: source.internal.contentDigest,
       },
@@ -23,7 +24,17 @@ export function publicUrlResolver(
     )
   }
 
-  return generateFileUrl({ url: source.url, filename: source.filename }, store)
+  return generateFileUrl(
+    {
+      url: source.url,
+      mimeType: source.mimeType,
+      filename: source.filename,
+      internal: {
+        contentDigest: source.internal.contentDigest,
+      },
+    },
+    store
+  )
 }
 
 export function generatePublicUrlFieldConfig(

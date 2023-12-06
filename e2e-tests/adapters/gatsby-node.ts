@@ -12,7 +12,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
 }) => {
   const { data: ImageCDNRemoteFileFromPageContextData } = await graphql(`
     query ImageCDNGatsbyNode {
-      allMyRemoteFile {
+      allMyRemoteImage {
         nodes {
           id
           url
@@ -39,6 +39,14 @@ export const createPages: GatsbyNode["createPages"] = async ({
             placeholder: TRACED_SVG
           )
           full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
+        }
+      }
+      allMyRemoteFile {
+        nodes {
+          id
+          url
+          filename
+          publicUrl
         }
       }
     }
@@ -114,6 +122,21 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     actions.createTypes(
       addRemoteFilePolyfillInterface(
         schema.buildObjectType({
+          name: "MyRemoteImage",
+          fields: {},
+          interfaces: ["Node", "RemoteFile"],
+        }),
+        {
+          schema,
+          actions,
+          store,
+        }
+      )
+    )
+
+    actions.createTypes(
+      addRemoteFilePolyfillInterface(
+        schema.buildObjectType({
           name: "MyRemoteFile",
           fields: {},
           interfaces: ["Node", "RemoteFile"],
@@ -161,6 +184,14 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = function sourceNodes({
       width: 2000,
       height: 1333,
     },
+    {
+      // svg is not considered for image cdn - file cdn will be used
+      name: "fileA.svg",
+      url: "https://www.gatsbyjs.com/Gatsby-Logo.svg",
+      mimeType: "image/svg+xml",
+      filename: "Gatsby-Logo.svg",
+      type: `MyRemoteFile`,
+    },
   ]
 
   items.forEach((item, index) => {
@@ -168,7 +199,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = function sourceNodes({
       id: createNodeId(`remote-file-${index}`),
       ...item,
       internal: {
-        type: "MyRemoteFile",
+        type: item.type ?? "MyRemoteImage",
         contentDigest: createContentDigest(item.url),
       },
     })

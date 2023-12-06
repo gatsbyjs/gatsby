@@ -101,12 +101,14 @@ export type ImageCdnTransformArgs = WidthOrHeight & {
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type ImageCdnSourceImage = {
+type CdnSourceImage = {
   url: string
   mimeType: string
   filename: string
   internal: { contentDigest: string }
 }
+
+export type ImageCdnSourceImage = CdnSourceImage
 
 /**
  * The function is used to optimize image delivery by generating URLs that leverage CDN capabilities
@@ -121,5 +123,20 @@ export type ImageCdnSourceImage = {
 export type ImageCdnUrlGeneratorFn = (
   source: ImageCdnSourceImage,
   imageArgs: ImageCdnTransformArgs,
+  pathPrefix: string
+) => string
+
+export type FileCdnSourceImage = CdnSourceImage
+
+/**
+ * The function is used to optimize image delivery by generating URLs that leverage CDN capabilities
+ * @param {FileCdnSourceImage} source - An object representing the source file, including properties like
+ * URL, filename, and MIME type.
+ * @param {string} pathPrefix - A string representing the path prefix to be prepended to the
+ * generated URL.
+ * @returns {string} A string representing the generated URL for the file on the CDN.
+ */
+export type FileCdnUrlGeneratorFn = (
+  source: FileCdnSourceImage,
   pathPrefix: string
 ) => string

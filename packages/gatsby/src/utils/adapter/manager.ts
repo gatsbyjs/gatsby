@@ -256,6 +256,11 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           global.__GATSBY.imageCDNUrlGeneratorModulePath =
             configFromAdapter.imageCDNUrlGeneratorModulePath
         }
+
+        if (configFromAdapter?.fileCDNUrlGeneratorModulePath) {
+          global.__GATSBY.fileCDNUrlGeneratorModulePath =
+            configFromAdapter.fileCDNUrlGeneratorModulePath
+        }
       }
 
       return {

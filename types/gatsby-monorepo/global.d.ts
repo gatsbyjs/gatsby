@@ -8,6 +8,7 @@ declare module NodeJS {
       buildId: string
       root: string
       imageCDNUrlGeneratorModulePath?: string
+      fileCDNUrlGeneratorModulePath?: string
     }
 
     _polyfillRemoteFileCache?: import("gatsby").GatsbyCache
