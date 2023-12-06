@@ -1,7 +1,5 @@
 // @ts-check
 import { execa } from "execa"
-import { inspect } from "util"
-import tree from "tree-cli"
 
 // only set NETLIFY_SITE_ID from E2E_ADAPTERS_NETLIFY_SITE_ID if it's set
 if (process.env.E2E_ADAPTERS_NETLIFY_SITE_ID) {
@@ -44,35 +42,26 @@ const deployInfo = JSON.parse(deployResults.stdout)
 const deployUrl = deployInfo.deploy_url + (process.env.PATH_PREFIX ?? ``)
 process.env.DEPLOY_URL = deployUrl
 
-const { report } = await tree({
-  base: ".netlify",
-  noreport: true, // this just avoid outputting by default, still is generated
-  l: Infinity,
-})
-
-console.log(report)
-
-console.log(inspect({ deployInfo }, { depth: Infinity }))
 console.log(`Deployed to ${deployUrl}`)
 
 try {
   await execa(`npm`, [`run`, npmScriptToRun], { stdio: `inherit` })
 } finally {
-  // if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
-  //   console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
-  //   const deleteResponse = await execa("ntl", [
-  //     "api",
-  //     "deleteDeploy",
-  //     "--data",
-  //     `{ "deploy_id": "${deployInfo.deploy_id}" }`,
-  //   ])
-  //   if (deleteResponse.exitCode !== 0) {
-  //     throw new Error(
-  //       `Failed to delete project ${deleteResponse.stdout} ${deleteResponse.stderr} (${deleteResponse.exitCode})`
-  //     )
-  //   }
-  //   console.log(
-  //     `Successfully deleted project with deploy_id ${deployInfo.deploy_id}`
-  //   )
-  // }
+  if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
+    console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
+    const deleteResponse = await execa("ntl", [
+      "api",
+      "deleteDeploy",
+      "--data",
+      `{ "deploy_id": "${deployInfo.deploy_id}" }`,
+    ])
+    if (deleteResponse.exitCode !== 0) {
+      throw new Error(
+        `Failed to delete project ${deleteResponse.stdout} ${deleteResponse.stderr} (${deleteResponse.exitCode})`
+      )
+    }
+    console.log(
+      `Successfully deleted project with deploy_id ${deployInfo.deploy_id}`
+    )
+  }
 }
