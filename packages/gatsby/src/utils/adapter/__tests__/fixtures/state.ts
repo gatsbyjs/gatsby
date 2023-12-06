@@ -70,6 +70,26 @@ const redirects: IGatsbyState["redirects"] = [{
   ignoreCase: true,
   redirectInBrowser: false,
   toPath: '/new-url'
+}, {
+  fromPath: '/old-url2',
+  isPermanent: true,
+  ignoreCase: true,
+  redirectInBrowser: false,
+  toPath: '/new-url2',
+  force: true,
+  conditions: { language: [`ca`, `us`] }
+}, {
+  fromPath: 'https://old-url',
+  isPermanent: true,
+  ignoreCase: true,
+  redirectInBrowser: false,
+  toPath: 'https://new-url'
+}, {
+  fromPath: 'http://old-url',
+  isPermanent: true,
+  ignoreCase: true,
+  redirectInBrowser: false,
+  toPath: 'http://new-url'
 }]
 
 const functions: IGatsbyState["functions"] = [{
@@ -149,4 +169,5 @@ export const state = {
   slices,
   html,
   components,
+  program: {}
 } as unknown as IGatsbyState

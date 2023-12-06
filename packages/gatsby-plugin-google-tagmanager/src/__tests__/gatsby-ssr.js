@@ -228,5 +228,46 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         `${selfHostedOrigin}/ns.html`
       )
     })
+    it(`should set selfHostedPath as gtm.js by default`, () => {
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        id: `123`,
+        includeInDevelopment: true,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      const [preBodyConfig] = mocks.setPreBodyComponents.mock.calls[0][0]
+
+      // eslint-disable-next-line no-useless-escape
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        `https://www.googletagmanager.com/gtm.js`
+      )
+    })
+
+    it(`should set selfHostedPath`, () => {
+      const selfHostedPath = `YOUR_SELF_HOSTED_PATH`
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        id: `123`,
+        includeInDevelopment: true,
+        selfHostedPath: selfHostedPath,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      const [preBodyConfig] = mocks.setPreBodyComponents.mock.calls[0][0]
+
+      // eslint-disable-next-line no-useless-escape
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        `https://www.googletagmanager.com/${selfHostedPath}`
+      )
+    })
   })
 })

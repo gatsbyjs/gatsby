@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.11](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.11/packages/gatsby) (2023-11-22)
+
+#### Bug Fixes
+
+- re-install lmdb when detecting the absence of @LMDB prebuilt packages [#38691](https://github.com/gatsbyjs/gatsby/issues/38691) [#38707](https://github.com/gatsbyjs/gatsby/issues/38707) ([f713e59](https://github.com/gatsbyjs/gatsby/commit/f713e5985b4c11cfc616fb8a8cfd8ea46f53f408))
+
+### [5.12.10](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.10/packages/gatsby) (2023-11-21)
+
+#### Features
+
+- support pathPrefix and trailingSlash options fix [#38666](https://github.com/gatsbyjs/gatsby/issues/38666) fix [#38701](https://github.com/gatsbyjs/gatsby/issues/38701) ([1090558](https://github.com/gatsbyjs/gatsby/commit/1090558010c5e73de49d5987ab38d30165581c51))
+
+### [5.12.9](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.9/packages/gatsby) (2023-10-26)
+
+#### Bug Fixes
+
+- respect 'force' and 'conditions' properties on redirects [#38657](https://github.com/gatsbyjs/gatsby/issues/38657) [#38664](https://github.com/gatsbyjs/gatsby/issues/38664) ([c43080f](https://github.com/gatsbyjs/gatsby/commit/c43080f49fe54022be141855db4e56d98398338c))
+- Adapter header rules [#38644](https://github.com/gatsbyjs/gatsby/issues/38644) [#38661](https://github.com/gatsbyjs/gatsby/issues/38661) ([6869562](https://github.com/gatsbyjs/gatsby/commit/6869562eb761b260d40d835148ae86e5de7d5165))
+
+### [5.12.8](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.8/packages/gatsby) (2023-10-20)
+
+#### Bug Fixes
+
+- don't force leading slash for external paths in routes manifest [#38639](https://github.com/gatsbyjs/gatsby/issues/38639) [#38646](https://github.com/gatsbyjs/gatsby/issues/38646) ([8302bc8](https://github.com/gatsbyjs/gatsby/commit/8302bc8e781bd147c1a0ddbbaa5b50740b01ef95))
+
+### [5.12.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.7/packages/gatsby) (2023-10-17)
+
+#### Bug Fixes
+
+- open lmdb instances in writeable locations in generated ssr/dsg function [#38631](https://github.com/gatsbyjs/gatsby/issues/38631) [#38638](https://github.com/gatsbyjs/gatsby/issues/38638) ([acb8799](https://github.com/gatsbyjs/gatsby/commit/acb87998dd452610cc33ad21a7e5844f3786f426))
+
+### [5.12.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.6/packages/gatsby) (2023-10-09)
+
+**Note:** Version bump only for package gatsby
+
+### [5.12.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.5/packages/gatsby) (2023-09-27)
+
+**Note:** Version bump only for package gatsby
+
 ### [5.12.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.4/packages/gatsby) (2023-09-05)
 
 #### Bug Fixes

@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.12.5](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.5/packages/gatsby-source-contentful) (2023-12-04)
+
+#### Bug Fixes
+
+- don't apply parent node links to child nodes [#38728](https://github.com/gatsbyjs/gatsby/issues/38728) [#38730](https://github.com/gatsbyjs/gatsby/issues/38730) ([3380c59](https://github.com/gatsbyjs/gatsby/commit/3380c598b0e135c5972f745533ccea2f0c82ebb4))
+
+### [8.12.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.4/packages/gatsby-source-contentful) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+### [8.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.3/packages/gatsby-source-contentful) (2023-10-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+### [8.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.2/packages/gatsby-source-contentful) (2023-10-09)
+
+#### Chores
+
+- upgrade sharp to latest v0.32.6 [#38374](https://github.com/gatsbyjs/gatsby/issues/38374) [#38617](https://github.com/gatsbyjs/gatsby/issues/38617) ([f1a4107](https://github.com/gatsbyjs/gatsby/commit/f1a41079fa1d25cd20139cfb15add6fe081ec3ee))
+
+### [8.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.1/packages/gatsby-source-contentful) (2023-10-05)
+
+#### Other Changes
+
+- Update gatsby-contentful-plugin README [#38480](https://github.com/gatsbyjs/gatsby/issues/38480) [#38607](https://github.com/gatsbyjs/gatsby/issues/38607) ([8061500](https://github.com/gatsbyjs/gatsby/commit/8061500bff895a13b825d8df2944244dab3477d5))
+
 ## [8.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.12.0/packages/gatsby-source-contentful) (2023-08-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)

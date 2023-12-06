@@ -42,6 +42,7 @@ export {
   IRedirectRoute,
   IFunctionDefinition,
   RoutesManifest,
+  HeaderRoutes,
   FunctionsManifest,
   IAdapterConfig,
 } from "./dist/utils/adapter/types"
