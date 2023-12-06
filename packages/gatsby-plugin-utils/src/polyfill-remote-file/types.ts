@@ -114,8 +114,8 @@ export type ImageCdnSourceImage = {
  * URL, filename, and MIME type.
  * @param {ImageCdnTransformArgs} imageArgs - An object containing arguments for image transformation, such as
  * format, quality, and crop focus.
- * @param {string} pathPrefix - A string representing the path prefix to be prepended to the
- * generated URL.
+ * @param {string} pathPrefix - This parameter allows for an optional path prefix in the generated relative URL,
+ * primarily influencing the location of the image transformation endpoint, particularly if not in the domain root.
  * @returns {string} A string representing the generated URL for the image on the CDN.
  */
 export type ImageCdnUrlGeneratorFn = (
