@@ -1,6 +1,7 @@
 import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
 import { prepareFunctionVariants } from "./lambda-handler"
+import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
 
@@ -35,6 +36,16 @@ async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
 }
 
 const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
+  let useNetlifyImageCDN = options?.imageCDN
+  if (
+    typeof useNetlifyImageCDN === `undefined` &&
+    typeof process.env.NETLIFY_IMAGE_CDN !== `undefined`
+  ) {
+    useNetlifyImageCDN =
+      process.env.NETLIFY_IMAGE_CDN === `true` ||
+      process.env.NETLIFY_IMAGE_CDN === `1`
+  }
+
   return {
     name: `gatsby-adapter-netlify`,
     cache: {
@@ -72,8 +83,13 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       routesManifest,
       functionsManifest,
       headerRoutes,
+      pathPrefix,
       imageCdnAllowedUrls,
     }): Promise<void> {
+      if (useNetlifyImageCDN) {
+        await prepareFileCdnHandler({ pathPrefix })
+      }
+
       const { lambdasThatUseCaching } = await handleRoutesManifest(
         routesManifest,
         headerRoutes
@@ -121,16 +137,6 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         excludeDatastoreFromEngineFunction = false
       }
 
-      let useNetlifyImageCDN = options?.imageCDN
-      if (
-        typeof useNetlifyImageCDN === `undefined` &&
-        typeof process.env.NETLIFY_IMAGE_CDN !== `undefined`
-      ) {
-        useNetlifyImageCDN =
-          process.env.NETLIFY_IMAGE_CDN === `true` ||
-          process.env.NETLIFY_IMAGE_CDN === `1`
-      }
-
       return {
         excludeDatastoreFromEngineFunction,
         deployURL,
@@ -144,6 +150,9 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         ],
         imageCDNUrlGeneratorModulePath: useNetlifyImageCDN
           ? require.resolve(`./image-cdn-url-generator`)
+          : undefined,
+        fileCDNUrlGeneratorModulePath: useNetlifyImageCDN
+          ? require.resolve(`./file-cdn-url-generator`)
           : undefined,
       }
     },

@@ -5,7 +5,6 @@ import url from "url"
 import {
   generateFileUrl,
   generateImageUrl,
-  generateImageUrlAlt,
   ImageCDNUrlKeys,
 } from "../url-generator"
 
@@ -57,6 +56,10 @@ describe(`url-generator`, () => {
     const fileSource = {
       url: `https://example.com/file.pdf`,
       filename: `file.pdf`,
+      mimeType: `application/pdf`,
+      internal: {
+        contentDigest: `1234`,
+      },
     }
 
     expect(
@@ -109,6 +112,10 @@ describe(`url-generator`, () => {
         file: generateFileUrl({
           url: fileUrlToEncrypt,
           filename: `file.pdf`,
+          mimeType: `application/pdf`,
+          internal: {
+            contentDigest: `1234`,
+          },
         }),
         image: generateImageUrl(imageNode, resizeArgs),
       }[type]
@@ -187,6 +194,10 @@ describe(`url-generator`, () => {
       const source = {
         url: `https://example.com/file.pdf`,
         filename: `file.pdf`,
+        mimeType: `application/pdf`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(generateFileUrl(source)).toMatchInlineSnapshot(
@@ -198,6 +209,10 @@ describe(`url-generator`, () => {
       const source = {
         url: `https://example.com/file-éà.pdf`,
         filename: `file-éà.pdf`,
+        mimeType: `application/pdf`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(generateFileUrl(source)).toMatchInlineSnapshot(
@@ -209,6 +224,10 @@ describe(`url-generator`, () => {
       const source = {
         url: `https://example.com/file test.pdf`,
         filename: `file test.pdf`,
+        mimeType: `application/pdf`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(generateFileUrl(source)).toMatchInlineSnapshot(
@@ -220,6 +239,10 @@ describe(`url-generator`, () => {
       const source = {
         url: `https://example.com/file%20test.pdf`,
         filename: `file test.pdf`,
+        mimeType: `application/pdf`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(generateFileUrl(source)).toMatchInlineSnapshot(

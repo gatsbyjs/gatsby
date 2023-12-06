@@ -6,11 +6,11 @@ import Layout from "../components/layout"
 const RemoteFile = ({ pageContext: data }) => {
   return (
     <Layout>
-      {data.allMyRemoteFile.nodes.map(node => {
+      {data.allMyRemoteImage.nodes.map(node => {
         return (
           <div key={node.id}>
             <h2>
-              <a href={node.publicUrl} data-testid="public">
+              <a href={node.publicUrl} data-testid="image-public">
                 {node.filename}
               </a>
             </h2>
@@ -35,6 +35,17 @@ const RemoteFile = ({ pageContext: data }) => {
               />
               <GatsbyImage className="full" image={node.full} alt="" />
             </div>
+          </div>
+        )
+      })}
+      {data.allMyRemoteFile.nodes.map(node => {
+        return (
+          <div key={node.id}>
+            <h2>
+              <a href={node.publicUrl} data-testid="file-public">
+                {node.filename}
+              </a>
+            </h2>
           </div>
         )
       })}
