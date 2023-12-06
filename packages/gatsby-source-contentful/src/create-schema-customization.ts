@@ -579,11 +579,13 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
         const res = await context.nodeModel.findAll({
           query: {
-            sys: {
-              id: {
-                in: links,
+            filter: {
+              sys: {
+                id: {
+                  in: links,
+                },
+                spaceId: { eq: node.sys.spaceId },
               },
-              spaceId: { eq: node.sys.spaceId },
             },
           },
           type: `Contentful${entityType}`,
