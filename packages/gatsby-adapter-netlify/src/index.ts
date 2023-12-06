@@ -4,6 +4,7 @@ import { prepareFunctionVariants } from "./lambda-handler"
 import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
+import { handleAllowedRemoteUrls } from "./allowed-remote-urls"
 
 interface INetlifyCacheUtils {
   restore: (paths: Array<string>) => Promise<boolean>
@@ -86,8 +87,10 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       pathPrefix,
       remoteFileAllowedUrls,
     }): Promise<void> {
+      await handleAllowedRemoteUrls(remoteFileAllowedUrls)
+
       if (useNetlifyImageCDN) {
-        await prepareFileCdnHandler({ pathPrefix })
+        await prepareFileCdnHandler({ pathPrefix, remoteFileAllowedUrls })
       }
 
       const { lambdasThatUseCaching } = await handleRoutesManifest(
@@ -102,8 +105,6 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           lambdasThatUseCaching.get(fun.functionId)
         )
       }
-
-      console.log({ remoteFileAllowedUrls })
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(

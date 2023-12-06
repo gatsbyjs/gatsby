@@ -29,6 +29,7 @@ export async function prepareFileCdnHandler({
   pathPrefix,
 }: {
   pathPrefix: string
+  remoteFileAllowedUrls: Array<string>
 }): Promise<void> {
   const functionId = `file-cdn`
 
