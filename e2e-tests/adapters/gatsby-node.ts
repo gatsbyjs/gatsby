@@ -47,6 +47,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
           url
           filename
           publicUrl
+          isAllowed
         }
       }
     }
@@ -138,7 +139,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       addRemoteFilePolyfillInterface(
         schema.buildObjectType({
           name: "MyRemoteFile",
-          fields: {},
+          fields: {
+            isAllowed: `String!`,
+          },
           interfaces: ["Node", "RemoteFile"],
         }),
         {
@@ -148,6 +151,13 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         }
       )
     )
+
+    if (typeof actions.addRemoteFileAllowedUrl === `function`) {
+      actions.addRemoteFileAllowedUrl([
+        `https://images.unsplash.com/*`,
+        `https://www.gatsbyjs.com/*`,
+      ])
+    }
   }
 
 export const sourceNodes: GatsbyNode["sourceNodes"] = function sourceNodes({
@@ -191,6 +201,16 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = function sourceNodes({
       mimeType: "image/svg+xml",
       filename: "Gatsby-Logo.svg",
       type: `MyRemoteFile`,
+      isAllowed: true,
+    },
+    {
+      // svg is not considered for image cdn - file cdn will be used
+      name: "fileB.svg",
+      url: "https://www.not-allowed.com/not-allowed.svg",
+      mimeType: "image/svg+xml",
+      filename: "Gatsby-Logo.svg",
+      type: `MyRemoteFile`,
+      isAllowed: false,
     },
   ]
 

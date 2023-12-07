@@ -117,6 +117,11 @@ interface IDefaultContext {
   reporter: typeof reporter
 }
 
+export interface IRemoteFileAllowedUrls {
+  urlPatterns: Array<string>
+  regexes: Array<string>
+}
+
 export interface IAdaptContext extends IDefaultContext {
   routesManifest: RoutesManifest
   functionsManifest: FunctionsManifest
@@ -132,7 +137,7 @@ export interface IAdaptContext extends IDefaultContext {
   /**
    * @todo
    */
-  remoteFileAllowedUrls: Array<string>
+  remoteFileAllowedUrls: IRemoteFileAllowedUrls
 }
 
 export interface ICacheContext extends IDefaultContext {
