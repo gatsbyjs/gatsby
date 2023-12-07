@@ -536,7 +536,16 @@ export const actions = {
     }
   },
   /**
-   * @todo
+   * Declares URL Pattern that should be allowed to be used for Image or File CDN to prevent using of unexpected RemoteFile URLs.
+   *
+   * @availableIn [onPreInit, onPreBootstrap, onPluginInit, createSchemaCustomization]
+   *
+   * @param {string | string []} url URLPattern or Array of URL Patternss that should be allowed.
+   * URLPattern is a string that can contain wildcards (*) or parameter placeholders (e.g. :id).
+   * @example
+   * exports.onPreInit = ({ actions }) => {
+   *   actions.addRemoteFileAllowedUrl(`https://your-wordpress-instance.com/*`)
+   * }
    */
   addRemoteFileAllowedUrl: (
     url: string | Array<string>,
@@ -680,7 +689,6 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
       `onPreBootstrap`,
       `onPluginInit`,
       `createSchemaCustomization`,
-      `sourceNodes`,
     ],
   },
 })

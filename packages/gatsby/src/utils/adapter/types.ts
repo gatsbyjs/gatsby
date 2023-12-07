@@ -118,7 +118,13 @@ interface IDefaultContext {
 }
 
 export interface IRemoteFileAllowedUrls {
+  /**
+   * List of allowed remote image URLs using URLPattern format. In particular it uses wildcard `*` and param `:param` syntax.
+   */
   urlPatterns: Array<string>
+  /**
+   * List of allowed remote image URLs using Regex syntax.
+   */
   regexes: Array<string>
 }
 
@@ -135,7 +141,9 @@ export interface IAdaptContext extends IDefaultContext {
    */
   trailingSlash: TrailingSlash
   /**
-   * @todo
+   * List of allowed remote file URLs represented in URLPattern and Regex formats.
+   * Allowed urls are provided by user or plugins using `addRemoteFileAllowedUrl` action.
+   * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addRemoteFileAllowedUrl
    */
   remoteFileAllowedUrls: IRemoteFileAllowedUrls
 }
