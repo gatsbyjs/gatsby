@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.12](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.12/packages/gatsby) (2023-12-07)
+
+#### Chores
+
+- update gatsby-adapter-netlify version manifest [#38745](https://github.com/gatsbyjs/gatsby/issues/38745) [#38746](https://github.com/gatsbyjs/gatsby/issues/38746) [#38745](https://github.com/gatsbyjs/gatsby/issues/38745) [#38733](https://github.com/gatsbyjs/gatsby/issues/38733) ([bba81d6](https://github.com/gatsbyjs/gatsby/commit/bba81d6de43ef83f936ff72a6f64c33d559aa442))
+
 ### [5.12.11](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.11/packages/gatsby) (2023-11-22)
 
 #### Bug Fixes
