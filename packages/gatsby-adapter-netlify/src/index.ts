@@ -86,10 +86,14 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       headerRoutes,
       pathPrefix,
       remoteFileAllowedUrls,
+      reporter,
     }): Promise<void> {
-      await handleAllowedRemoteUrls(remoteFileAllowedUrls.regexes)
-
       if (useNetlifyImageCDN) {
+        await handleAllowedRemoteUrls({
+          remoteFileAllowedUrlRegexes: remoteFileAllowedUrls.regexes,
+          reporter,
+        })
+
         await prepareFileCdnHandler({
           pathPrefix,
           remoteFileAllowedUrlRegexes: remoteFileAllowedUrls.regexes,
