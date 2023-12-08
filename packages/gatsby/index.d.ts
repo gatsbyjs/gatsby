@@ -50,6 +50,7 @@ export {
   ImageCdnTransformArgs,
   FileCdnUrlGeneratorFn,
   FileCdnSourceImage,
+  RemoteFileAllowedUrls,
 } from "./dist/utils/adapter/types"
 
 export const useScrollRestoration: (key: string) => {

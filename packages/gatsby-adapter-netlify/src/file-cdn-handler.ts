@@ -3,6 +3,8 @@ import * as path from "path"
 
 import packageJson from "gatsby-adapter-netlify/package.json"
 
+import type { RemoteFileAllowedUrls } from "gatsby"
+
 export interface IFunctionManifest {
   version: 1
   functions: Array<
@@ -27,10 +29,10 @@ export interface IFunctionManifest {
 
 export async function prepareFileCdnHandler({
   pathPrefix,
-  remoteFileAllowedUrlRegexes,
+  remoteFileAllowedUrls,
 }: {
   pathPrefix: string
-  remoteFileAllowedUrlRegexes: Array<string>
+  remoteFileAllowedUrls: RemoteFileAllowedUrls
 }): Promise<void> {
   const functionId = `file-cdn`
 
@@ -50,8 +52,8 @@ export async function prepareFileCdnHandler({
   )
 
   const handlerSource = /* typescript */ `
-    const allowedUrlPatterns = [${remoteFileAllowedUrlRegexes.map(
-      regexSource => `new RegExp(\`${regexSource}\`)`
+    const allowedUrlPatterns = [${remoteFileAllowedUrls.map(
+      allowedUrl => `new RegExp(\`${allowedUrl.regexSource}\`)`
     )}]
 
     export default async (req: Request): Promise<Response> => {

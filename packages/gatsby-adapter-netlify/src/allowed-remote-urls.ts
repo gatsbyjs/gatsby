@@ -1,10 +1,10 @@
-import type { Reporter } from "gatsby"
+import type { Reporter, RemoteFileAllowedUrls } from "gatsby"
 
-export async function handleAllowedRemoteUrls({
-  remoteFileAllowedUrlRegexes,
+export async function handleAllowedRemoteUrlsNetlifyConfig({
+  remoteFileAllowedUrls,
   reporter,
 }: {
-  remoteFileAllowedUrlRegexes: Array<string>
+  remoteFileAllowedUrls: RemoteFileAllowedUrls
   reporter: Reporter
 }): Promise<void> {
   const { resolveConfig } = await import(`@netlify/config`)
@@ -14,10 +14,19 @@ export async function handleAllowedRemoteUrls({
     const allowedUrlsInNetlifyToml: Array<string> =
       cfg.config.images?.remote_images ?? []
 
+    const allowedUrlsInNetlifyTomlRegexes = allowedUrlsInNetlifyToml.map(
+      regexSource => new RegExp(regexSource)
+    )
+
     const missingAllowedUrlsInNetlifyToml: Array<string> = []
-    for (const remoteFileAllowedUrl of remoteFileAllowedUrlRegexes) {
-      if (!allowedUrlsInNetlifyToml.includes(remoteFileAllowedUrl)) {
-        missingAllowedUrlsInNetlifyToml.push(remoteFileAllowedUrl)
+    for (const remoteFileAllowedUrl of remoteFileAllowedUrls) {
+      // test if url pattern already passes one of the regexes in netlify.toml
+      const isAlreadyAllowed = allowedUrlsInNetlifyTomlRegexes.some(
+        allowedRegex => allowedRegex.test(remoteFileAllowedUrl.urlPattern)
+      )
+
+      if (!isAlreadyAllowed) {
+        missingAllowedUrlsInNetlifyToml.push(remoteFileAllowedUrl.regexSource)
       }
     }
 

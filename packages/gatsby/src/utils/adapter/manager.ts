@@ -19,7 +19,7 @@ import type {
   IAdapterFinalConfig,
   IAdapterConfig,
   HeaderRoutes,
-  IRemoteFileAllowedUrls,
+  RemoteFileAllowedUrls,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
@@ -206,7 +206,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined
       let _headerRoutes: HeaderRoutes | undefined = undefined
-      let _imageCdnAllowedUrls: IRemoteFileAllowedUrls | undefined = undefined
+      let _imageCdnAllowedUrls: RemoteFileAllowedUrls | undefined = undefined
       const adaptContext: IAdaptContext = {
         get routesManifest(): RoutesManifest {
           if (!_routesManifest) {
@@ -233,16 +233,16 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
           return _headerRoutes
         },
-        get remoteFileAllowedUrls(): IRemoteFileAllowedUrls {
+        get remoteFileAllowedUrls(): RemoteFileAllowedUrls {
           if (!_imageCdnAllowedUrls) {
-            const urlPatterns = Array.from(
+            _imageCdnAllowedUrls = Array.from(
               store.getState().remoteFileAllowedUrls
-            )
-
-            _imageCdnAllowedUrls = {
-              urlPatterns,
-              regexes: urlPatterns.map(pattern => pathToRegexp(pattern).source),
-            }
+            ).map(urlPattern => {
+              return {
+                urlPattern,
+                regexSource: pathToRegexp(urlPattern).source,
+              }
+            })
           }
 
           return _imageCdnAllowedUrls

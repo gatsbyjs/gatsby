@@ -117,16 +117,16 @@ interface IDefaultContext {
   reporter: typeof reporter
 }
 
-export interface IRemoteFileAllowedUrls {
+export type RemoteFileAllowedUrls = Array<{
   /**
-   * List of allowed remote image URLs using URLPattern format. In particular it uses wildcard `*` and param `:param` syntax.
+   * Allowed url in URLPattern format. In particular it uses wildcard `*` and param `:param` syntax.
    */
-  urlPatterns: Array<string>
+  urlPattern: string
   /**
-   * List of allowed remote image URLs using Regex syntax.
+   *Allowed url in regex source format
    */
-  regexes: Array<string>
-}
+  regexSource: string
+}>
 
 export interface IAdaptContext extends IDefaultContext {
   routesManifest: RoutesManifest
@@ -145,7 +145,7 @@ export interface IAdaptContext extends IDefaultContext {
    * Allowed urls are provided by user or plugins using `addRemoteFileAllowedUrl` action.
    * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addRemoteFileAllowedUrl
    */
-  remoteFileAllowedUrls: IRemoteFileAllowedUrls
+  remoteFileAllowedUrls: RemoteFileAllowedUrls
 }
 
 export interface ICacheContext extends IDefaultContext {
