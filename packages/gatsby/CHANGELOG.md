@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.12](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.12/packages/gatsby) (2023-12-07)
+
+#### Chores
+
+- update gatsby-adapter-netlify version manifest [#38745](https://github.com/gatsbyjs/gatsby/issues/38745) [#38746](https://github.com/gatsbyjs/gatsby/issues/38746) [#38745](https://github.com/gatsbyjs/gatsby/issues/38745) [#38733](https://github.com/gatsbyjs/gatsby/issues/38733) ([bba81d6](https://github.com/gatsbyjs/gatsby/commit/bba81d6de43ef83f936ff72a6f64c33d559aa442))
+
+### [5.12.11](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.11/packages/gatsby) (2023-11-22)
+
+#### Bug Fixes
+
+- re-install lmdb when detecting the absence of @LMDB prebuilt packages [#38691](https://github.com/gatsbyjs/gatsby/issues/38691) [#38707](https://github.com/gatsbyjs/gatsby/issues/38707) ([f713e59](https://github.com/gatsbyjs/gatsby/commit/f713e5985b4c11cfc616fb8a8cfd8ea46f53f408))
+
+### [5.12.10](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.10/packages/gatsby) (2023-11-21)
+
+#### Features
+
+- support pathPrefix and trailingSlash options fix [#38666](https://github.com/gatsbyjs/gatsby/issues/38666) fix [#38701](https://github.com/gatsbyjs/gatsby/issues/38701) ([1090558](https://github.com/gatsbyjs/gatsby/commit/1090558010c5e73de49d5987ab38d30165581c51))
+
+### [5.12.9](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.9/packages/gatsby) (2023-10-26)
+
+#### Bug Fixes
+
+- respect 'force' and 'conditions' properties on redirects [#38657](https://github.com/gatsbyjs/gatsby/issues/38657) [#38664](https://github.com/gatsbyjs/gatsby/issues/38664) ([c43080f](https://github.com/gatsbyjs/gatsby/commit/c43080f49fe54022be141855db4e56d98398338c))
+- Adapter header rules [#38644](https://github.com/gatsbyjs/gatsby/issues/38644) [#38661](https://github.com/gatsbyjs/gatsby/issues/38661) ([6869562](https://github.com/gatsbyjs/gatsby/commit/6869562eb761b260d40d835148ae86e5de7d5165))
+
 ### [5.12.8](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.8/packages/gatsby) (2023-10-20)
 
 #### Bug Fixes

@@ -1,13 +1,22 @@
 // @ts-check
-
 import { execa } from "execa"
 
-process.env.NETLIFY_SITE_ID = process.env.E2E_ADAPTERS_NETLIFY_SITE_ID
+// only set NETLIFY_SITE_ID from E2E_ADAPTERS_NETLIFY_SITE_ID if it's set
+if (process.env.E2E_ADAPTERS_NETLIFY_SITE_ID) {
+  process.env.NETLIFY_SITE_ID = process.env.E2E_ADAPTERS_NETLIFY_SITE_ID
+}
 process.env.ADAPTER = "netlify"
 
-const deployTitle = process.env.CIRCLE_SHA1 || "N/A"
+const deployTitle = `${
+  process.env.CIRCLE_SHA1 || "N/A commit"
+} - trailingSlash:${process.env.TRAILING_SLASH || `always`} / pathPrefix:${
+  process.env.PATH_PREFIX || `-`
+}`
 
 const npmScriptToRun = process.argv[2] || "test:netlify"
+
+// ensure clean build
+await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
 const deployResults = await execa(
   "ntl",
@@ -30,9 +39,10 @@ if (deployResults.exitCode !== 0) {
 
 const deployInfo = JSON.parse(deployResults.stdout)
 
-process.env.DEPLOY_URL = deployInfo.deploy_url
+const deployUrl = deployInfo.deploy_url + (process.env.PATH_PREFIX ?? ``)
+process.env.DEPLOY_URL = deployUrl
 
-console.log(`Deployed to ${deployInfo.deploy_url}`)
+console.log(`Deployed to ${deployUrl}`)
 
 try {
   await execa(`npm`, [`run`, npmScriptToRun], { stdio: `inherit` })

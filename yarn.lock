@@ -6070,6 +6070,11 @@ arg@^5.0.0:
   resolved "https://registry.yarnpkg.com/arg/-/arg-5.0.0.tgz#a20e2bb5710e82950a516b3f933fee5ed478be90"
   integrity sha512-4P8Zm2H+BRS+c/xX1LrHw0qKpEhdlZjLCgWy+d78T9vqa2Z2SiD2wMrYuWIAFy5IZUD7nnNXroRttz+0RzlrzQ==
 
+arg@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/arg/-/arg-5.0.2.tgz#c81433cc427c92c4dcf4865142dbca6f15acd59c"
+  integrity sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==
+
 argparse@^1.0.10, argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
@@ -7430,9 +7435,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001464, caniuse-lite@^1.0.30001503:
-  version "1.0.30001509"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001509.tgz#2b7ad5265392d6d2de25cd8776d1ab3899570d14"
-  integrity sha512-2uDDk+TRiTX5hMcUYT/7CSyzMZxjfGu0vAUjS2g0LSD8UoXOv0LtpH4LxGMemsiPq6LCVIUjNwVM0erkOkGCDA==
+  version "1.0.30001566"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001566.tgz"
+  integrity sha512-ggIhCsTxmITBAMmK8yZjEhCO5/47jKXPu6Dha/wuCS4JePVL+3uiDEBuhu2aIoT+bqTOR8L76Ip1ARL9xYsEJA==
 
 capital-case@^1.0.4:
   version "1.0.4"
@@ -13296,6 +13301,11 @@ husky@3.1.0:
     run-node "^1.0.0"
     slash "^3.0.0"
 
+hyperdyperid@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/hyperdyperid/-/hyperdyperid-1.2.0.tgz#59668d323ada92228d2a869d3e474d5a33b69e6b"
+  integrity sha512-Y93lCzHYgGWdrJ66yIktxiaGULYc6oGiABxhcO5AufBeOyoIdZF7bIfLaOrbM0iGIOXQQgxxRrFEnb+Y6w1n4A==
+
 hyperlinker@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/hyperlinker/-/hyperlinker-1.0.0.tgz#23dc9e38a206b208ee49bc2d6c8ef47027df0c0e"
@@ -15037,6 +15047,14 @@ json-diff@^1.0.6:
     colors "^1.4.0"
     dreamopt "~0.8.0"
 
+json-joy@^9.2.0:
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/json-joy/-/json-joy-9.6.0.tgz#b691310024205b2d082737ca3c7e72cac0e364ac"
+  integrity sha512-vJtJD89T0OOZFMaENe95xKCOdibMev/lELkclTdhZxLplwbBPxneWNuctUPizk2nLqtGfBxwCXVO42G9LBoFBA==
+  dependencies:
+    arg "^5.0.2"
+    hyperdyperid "^1.2.0"
+
 json-loader@^0.5.7:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
@@ -16522,6 +16540,14 @@ memfs@^3.1.2, memfs@^3.2.2:
   integrity sha512-1c9VPVvW5P7I85c35zAdEr1TD5+F11IToIHIlrVIcflfnzPkJa0ZoYEoEdYDP8KgPFoSZ/opDrUsAoZWym3mtw==
   dependencies:
     fs-monkey "1.0.3"
+
+memfs@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/memfs/-/memfs-4.6.0.tgz#e812d438f73482a7110420d13d381c730b9a4de5"
+  integrity sha512-I6mhA1//KEZfKRQT9LujyW6lRbX7RkC24xKododIDO3AGShcaFAMKElv1yFGWX8fD4UaSiwasr3NeQ5TdtHY1A==
+  dependencies:
+    json-joy "^9.2.0"
+    thingies "^1.11.1"
 
 memoizee@^0.4.15:
   version "0.4.15"
@@ -23306,6 +23332,11 @@ thenify-all@^1.0.0:
   integrity sha1-5p44obq+lpsBCCB5eLn2K4hgSDk=
   dependencies:
     any-promise "^1.0.0"
+
+thingies@^1.11.1:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/thingies/-/thingies-1.12.0.tgz#a815c224482d607aa70f563d3cbb351a338e4710"
+  integrity sha512-AiGqfYC1jLmJagbzQGuoZRM48JPsr9yB734a7K6wzr34NMhjUPrWSQrkF7ZBybf3yCerCL2Gcr02kMv4NmaZfA==
 
 thread-stream@^0.15.1:
   version "0.15.2"

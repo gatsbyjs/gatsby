@@ -1,8 +1,9 @@
-import type { RoutesManifest } from "gatsby"
+import type { RoutesManifest, HeaderRoutes } from "gatsby"
 import { tmpdir } from "os"
 import { Transform } from "stream"
 import { join, basename } from "path"
 import fs from "fs-extra"
+import { createStaticAssetsPathHandler } from "./pretty-urls"
 
 const NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST = new Set([
   `query`,
@@ -130,12 +131,26 @@ export async function injectEntries(
   await fs.move(tmpFile, fileName)
 }
 
-export function processRoutesManifest(routesManifest: RoutesManifest): {
+function buildHeaderString(path, headers): string {
+  return `${encodeURI(path)}\n${headers.reduce((acc, curr) => {
+    acc += `  ${curr.key}: ${curr.value}\n`
+    return acc
+  }, ``)}`
+}
+
+export function processRoutesManifest(
+  routesManifest: RoutesManifest,
+  headerRoutes: HeaderRoutes
+): {
   redirects: string
   headers: string
   lambdasThatUseCaching: Map<string, string>
+  fileMovingPromise: Promise<void>
 } {
   const lambdasThatUseCaching = new Map<string, string>()
+
+  const { ensureStaticAssetPath, fileMovingDone } =
+    createStaticAssetsPathHandler()
 
   let _redirects = ``
   let _headers = ``
@@ -204,35 +219,52 @@ export function processRoutesManifest(routesManifest: RoutesManifest): {
       }
       _redirects += pieces.join(`  `) + `\n`
     } else if (route.type === `static`) {
-      // regular static asset without dynamic paths will just work, so skipping those
-      if (route.path.includes(`:`) || route.path.includes(`*`)) {
-        _redirects += `${encodeURI(fromPath)}  ${route.filePath.replace(
+      const { finalFilePath, isDynamic } = ensureStaticAssetPath(
+        route.filePath,
+        fromPath
+      )
+
+      if (isDynamic) {
+        _redirects += `${encodeURI(fromPath)}  ${finalFilePath.replace(
           /^public/,
           ``
         )}  200\n`
       }
 
-      _headers += `${encodeURI(fromPath)}\n${route.headers.reduce(
-        (acc, curr) => {
-          acc += `  ${curr.key}: ${curr.value}\n`
-          return acc
-        },
-        ``
-      )}`
+      if (!headerRoutes) {
+        // don't generate _headers from routesManifest if headerRoutes are provided
+        _headers += buildHeaderString(route.path, route.headers)
+      }
+    }
+
+    if (headerRoutes) {
+      _headers = headerRoutes.reduce((acc, curr) => {
+        acc += buildHeaderString(curr.path, curr.headers)
+        return acc
+      }, ``)
     }
   }
-  return { redirects: _redirects, headers: _headers, lambdasThatUseCaching }
+
+  return {
+    redirects: _redirects,
+    headers: _headers,
+    lambdasThatUseCaching,
+    fileMovingPromise: fileMovingDone(),
+  }
 }
 
 export async function handleRoutesManifest(
-  routesManifest: RoutesManifest
+  routesManifest: RoutesManifest,
+  headerRoutes: HeaderRoutes
 ): Promise<{
   lambdasThatUseCaching: Map<string, string>
 }> {
-  const { redirects, headers, lambdasThatUseCaching } =
-    processRoutesManifest(routesManifest)
+  const { redirects, headers, lambdasThatUseCaching, fileMovingPromise } =
+    processRoutesManifest(routesManifest, headerRoutes)
+
   await injectEntries(`public/_redirects`, redirects)
   await injectEntries(`public/_headers`, headers)
+  await fileMovingPromise
 
   return {
     lambdasThatUseCaching,
