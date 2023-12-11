@@ -29,8 +29,8 @@ export const generateFileUrl: FileCdnUrlGeneratorFn = function generateFileUrl(
 
     baseURL.searchParams.append(`url`, source.url)
     baseURL.searchParams.append(`cd`, source.internal.contentDigest)
-    return `${baseURL.pathname}${baseURL.search}`
   }
+
   return `${baseURL.pathname}${baseURL.search}`
 }
 

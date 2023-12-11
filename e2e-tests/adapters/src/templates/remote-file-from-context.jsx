@@ -42,7 +42,11 @@ const RemoteFile = ({ pageContext: data }) => {
         return (
           <div key={node.id}>
             <h2>
-              <a href={node.publicUrl} data-testid="file-public">
+              <a
+                href={node.publicUrl}
+                data-testid="file-public"
+                data-allowed={node.isAllowed}
+              >
                 {node.filename}
               </a>
             </h2>

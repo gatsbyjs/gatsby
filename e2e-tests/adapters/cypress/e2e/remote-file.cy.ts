@@ -222,12 +222,17 @@ for (const config of configs) {
 
       it(`File CDN`, () => {
         cy.get('[data-testid="file-public"]').then(async $urls => {
-          const urls = Array.from(
-            $urls.map((_, $url) => $url.getAttribute("href"))
+          const fileCdnFixtures = Array.from(
+            $urls.map((_, $url) => {
+              return {
+                urlWithoutOrigin: $url.getAttribute("href"),
+                allowed: $url.getAttribute("data-allowed") === "true",
+              }
+            })
           )
 
           // urls is array of href attribute, not absolute urls, so it already is stripped of origin
-          for (const urlWithoutOrigin of urls) {
+          for (const { urlWithoutOrigin, allowed } of fileCdnFixtures) {
             // using Netlify Image CDN
             expect(urlWithoutOrigin).to.match(
               new RegExp(`^${PATH_PREFIX}/_gatsby/file`)
@@ -235,7 +240,12 @@ for (const config of configs) {
             const res = await fetch(urlWithoutOrigin, {
               method: "HEAD",
             })
-            expect(res.ok).to.be.true
+            if (allowed) {
+              expect(res.ok).to.be.true
+            } else {
+              expect(res.ok).to.be.false
+              expect(res.status).to.be.equal(500)
+            }
           }
         })
       })

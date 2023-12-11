@@ -3,6 +3,8 @@ import * as path from "path"
 
 import packageJson from "gatsby-adapter-netlify/package.json"
 
+import type { RemoteFileAllowedUrls } from "gatsby"
+
 export interface IFunctionManifest {
   version: 1
   functions: Array<
@@ -27,8 +29,10 @@ export interface IFunctionManifest {
 
 export async function prepareFileCdnHandler({
   pathPrefix,
+  remoteFileAllowedUrls,
 }: {
   pathPrefix: string
+  remoteFileAllowedUrls: RemoteFileAllowedUrls
 }): Promise<void> {
   const functionId = `file-cdn`
 
@@ -48,21 +52,20 @@ export async function prepareFileCdnHandler({
   )
 
   const handlerSource = /* typescript */ `
-    import type { Context } from "@netlify/edge-functions"
+    const allowedUrlPatterns = [${remoteFileAllowedUrls.map(
+      allowedUrl => `new RegExp(\`${allowedUrl.regexSource}\`)`
+    )}]
 
-    export default async (req: Request, context: Context): Promise<Response> => {
+    export default async (req: Request): Promise<Response> => {
       const url = new URL(req.url)
       const remoteUrl = url.searchParams.get("url")
-
-      // @todo: use allowed remote urls to decide wether request should be allowed
-      // blocked by https://github.com/gatsbyjs/gatsby/pull/38719
-      const isAllowed = true
+      
+      const isAllowed = allowedUrlPatterns.some(allowedUrlPattern => allowedUrlPattern.test(remoteUrl))
       if (isAllowed) {
-        console.log(\`URL allowed\`, { remoteUrl })
         return fetch(remoteUrl);
       } else {
         console.error(\`URL not allowed: \${remoteUrl}\`)
-        return new Response("Not allowed", { status: 403 })
+        return new Response("Bad request", { status: 500 })
       }
     }
   `
