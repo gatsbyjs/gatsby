@@ -17,8 +17,12 @@ const adaptersManifest = [
     test: () => !!process.env.NETLIFY || !!process.env.NETLIFY_LOCAL,
     versions: [
       {
-        gatsbyVersion: `^5.0.0`,
-        moduleVersion: `^1.0.0-alpha`,
+        gatsbyVersion: `^5.12.10`,
+        moduleVersion: `^1.0.4`,
+      },
+      {
+        gatsbyVersion: `>=5.0.0 <5.12.10`,
+        moduleVersion: `1.0.3`,
       }
     ],
   }
