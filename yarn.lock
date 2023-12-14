@@ -1409,22 +1409,22 @@
   resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.5.tgz#f501e3db37a5ac659f21ba0c2e61b278e58b64b9"
   integrity sha512-Zbr2Eo0AQ4yzmQr/36/h+6LKjmdVBB3Q5cGzO6rtlIKB/IOpbQVUZW+XAnhpJmJr9sIF97OZjgbhG9k7Sjn4yw==
 
-"@contentful/rich-text-react-renderer@^15.17.0":
-  version "15.17.0"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-react-renderer/-/rich-text-react-renderer-15.17.0.tgz#88b6c707eec5d0d45491be830f0cfb1a0fae9472"
-  integrity sha512-6dmfzq67eR2Pd4od1WMTWgatO0A873msb/hSFSgAEUwXyS3TjIQAFLfvPA3r6jPy6M5A26wUkfQ3I9caSHyqrw==
+"@contentful/rich-text-react-renderer@^15.19.0":
+  version "15.19.0"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-react-renderer/-/rich-text-react-renderer-15.19.0.tgz#9aa9f485170354cea6bbef5d63e0118b84f58c96"
+  integrity sha512-2lFDmoWocUXNxk+yvHNSUIgdhm7FCyE57KjYxuTnoC8R2nPVY+mC0I2c0aTOcP4CX/2QqZe/FAoospjU6nk1uw==
   dependencies:
-    "@contentful/rich-text-types" "^16.2.0"
+    "@contentful/rich-text-types" "^16.3.0"
 
 "@contentful/rich-text-types@^15.15.1":
   version "15.15.1"
   resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-15.15.1.tgz#96835cf0d0eba9e54f92ee43a4a1ce2a74014b53"
   integrity sha512-oheW0vkxWDuKBIIXDeJfZaRYo+NzKbC4gETMhH+MGJd4nfL9cqrOvtRxZBgnhICN4vDpH4my/zUIZGKcFqGSjQ==
 
-"@contentful/rich-text-types@^16.0.2", "@contentful/rich-text-types@^16.2.0":
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-16.2.0.tgz#5a98cb119340f4da46555216913e96d7ce58df70"
-  integrity sha512-4BHC+mfa50JB70epzpnas4EkiuB3mGdBZ5Rp8w7R5wXvswEf8TLg5yGau2FxmZeEjrAkDrt4vzBLVQ8v3Y//Jw==
+"@contentful/rich-text-types@^16.0.2", "@contentful/rich-text-types@^16.3.0":
+  version "16.3.0"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-16.3.0.tgz#d44145a43b32d61eb4d6a82d3001cdfddbbda42e"
+  integrity sha512-OfQmAu5bxE0CgQA3WlUleVej+ifFG/iXmB2DmUl4EyWyFue1aiIvfjxQhcDRSH4n1jUNMJ6L1wInZL8uV5m3TQ==
 
 "@discoveryjs/json-ext@^0.5.0":
   version "0.5.7"
@@ -17622,10 +17622,10 @@ node-fetch@2.6.7, node-fetch@cjs:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.11, node-fetch@^2.6.12, node-fetch@^2.6.5, node-fetch@^2.6.7:
-  version "2.6.12"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.12.tgz#02eb8e22074018e3d5a83016649d04df0e348fba"
-  integrity sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==
+node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.11, node-fetch@^2.6.12, node-fetch@^2.6.5, node-fetch@^2.6.7, node-fetch@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
+  integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -20046,7 +20046,7 @@ qs@6.11.0:
   dependencies:
     side-channel "^1.0.4"
 
-qs@^6.1.0, qs@^6.11.0, qs@^6.4.0, qs@^6.5.2, qs@^6.9.4:
+qs@^6.1.0, qs@^6.11.2, qs@^6.4.0, qs@^6.5.2, qs@^6.9.4:
   version "6.11.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.11.2.tgz#64bea51f12c1f5da1bc01496f48ffcff7c69d7d9"
   integrity sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==
@@ -24381,13 +24381,13 @@ url-polyfill@^1.1.12:
   resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.12.tgz#6cdaa17f6b022841b3aec0bf8dbd87ac0cd33331"
   integrity sha512-mYFmBHCapZjtcNHW0MDq9967t+z4Dmg5CJ0KqysK3+ZbyoNOWQHksGCTWwDhxGXllkWlOc10Xfko6v4a3ucM6A==
 
-url@^0.11.0, url@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/url/-/url-0.11.1.tgz#26f90f615427eca1b9f4d6a28288c147e2302a32"
-  integrity sha512-rWS3H04/+mzzJkv0eZ7vEDGiQbgquI1fGfOad6zKvgYQi1SzMmhl7c/DdRGxhaWrVH6z0qWITo8rpnxK/RfEhA==
+url@^0.11.0, url@^0.11.3:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/url/-/url-0.11.3.tgz#6f495f4b935de40ce4a0a52faee8954244f3d3ad"
+  integrity sha512-6hxOLGfZASQK/cijlZnZJTq8OXAkt/3YGfQX45vvMYXpZoo8NdWZcY73K108Jf759lS1Bv/8wXnHDTSz17dSRw==
   dependencies:
     punycode "^1.4.1"
-    qs "^6.11.0"
+    qs "^6.11.2"
 
 urltools@^0.4.1:
   version "0.4.1"
