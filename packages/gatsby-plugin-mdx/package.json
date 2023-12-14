@@ -28,9 +28,9 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.3.0",
-    "acorn": "^8.8.2",
+    "acorn": "^8.11.2",
     "acorn-jsx": "^5.3.2",
-    "astring": "^1.8.5",
+    "astring": "^1.8.6",
     "deepmerge": "^4.3.1",
     "estree-util-build-jsx": "^2.2.2",
     "fs-extra": "^11.1.1",
