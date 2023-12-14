@@ -68,7 +68,7 @@
     "file-type": "^16.5.4",
     "fs-extra": "^11.1.1",
     "got": "^11.8.6",
-    "hash-wasm": "^4.9.0",
+    "hash-wasm": "^4.11.0",
     "import-from": "^4.0.0",
     "lmdb": "2.5.3",
     "lock": "^1.1.0",
