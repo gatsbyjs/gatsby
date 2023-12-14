@@ -6,4 +6,7 @@
   NETLIFY_IMAGE_CDN = "true"
 
 [images]
-  remote_images = ["https://images.unsplash.com/*"]
+  remote_images = [
+    "^https:\\/\\/images\\.unsplash\\.com\\/(.*)",
+    "^https:\\/\\/www\\.gatsbyjs\\.com\\/(.*)",
+  ]
