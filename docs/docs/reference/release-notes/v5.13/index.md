@@ -24,7 +24,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 [`gatsby@4.10.0` introduced Image CDN](/docs/reference/release-notes/v4.10/#image-cdn) capability for Gatsby users. For best build performance it requires deployed site to handle image transformations at request time instead of at build time. Until now, handling those requests required supporting Gatsby specific URL format. With this release we're introducing support for custom URL generators that allow you to use your own URL format making it easier to integrate with existing site deployment platforms that offer Image CDN capabilities or using self managed Image CDNs by providing a way to generate URLs that are already in format expected by your CDN.
 
-Adapter API now offers ability to provide custom URL generators modules for both Image CDN (`gatsbyImage`) and File CDN (`publicUrl`). `gatsby-adapter-netlify@1.1.0` is optioanlly using this feature to make use of [Netlify's Image CDN](https://docs.netlify.com/image-cdn/overview/). Be sure to check [Netlify Adapter documentation](https://github.com/gatsbyjs/gatsby/blob/8f1bc5d8a04951c309238156cd097983224874a1/packages/gatsby-adapter-netlify/README.md#imagecdn) for more information how to enable and configure it.
+Adapter API now offers ability to provide custom URL generators modules for both Image CDN (`gatsbyImage`) and File CDN (`publicUrl`). `gatsby-adapter-netlify@1.1.0` is optioanlly using this feature to make use of [Netlify's Image CDN](https://docs.netlify.com/image-cdn/overview/). Be sure to check [Netlify Adapter documentation](https://www.npmjs.com/package/gatsby-adapter-netlify#imagecdn) for more information how to enable and configure it.
 
 Image and File CDN are using remote URL for source images and files. It is recommended to only allow certain remote URLs to be used to prevent abuse. This verions also introduced a way for source plugins that support Image and File CDN to declare list of allowed remote URLs with newly added `addRemoteFileAllowedUrl` action. Adapters will receive list of allowed URLs and can use it to validate remote URLs used in generated URLs as well as configure (or help users configure) their CDN to only allow those remote URLs.
 
@@ -32,9 +32,9 @@ Latest versions of `gatsby-source-contentful`, `gatsby-source-drupal` and `gatsb
 
 If you are interested in using custom URL generators in your adapter, check source code of `gatsby-adapter-netlify` for reference implementation:
 
-- [registering custom URL generators modules](https://github.com/gatsbyjs/gatsby/blob/8f1bc5d8a04951c309238156cd097983224874a1/packages/gatsby-adapter-netlify/src/index.ts#L159-L164)
-- [custom Image CDN URL generator](https://github.com/gatsbyjs/gatsby/blob/8f1bc5d8a04951c309238156cd097983224874a1/packages/gatsby-adapter-netlify/src/image-cdn-url-generator.ts)
-- [custom File CDN URL generator](https://github.com/gatsbyjs/gatsby/blob/8f1bc5d8a04951c309238156cd097983224874a1/packages/gatsby-adapter-netlify/src/file-cdn-url-generator.ts)
+- [registering custom URL generators modules](https://github.com/gatsbyjs/gatsby/blob/4a780fbac717b1df337f156e2ac4b2da6478106b/packages/gatsby-adapter-netlify/src/index.ts#L159-L164)
+- [custom Image CDN URL generator](https://github.com/gatsbyjs/gatsby/blob/4a780fbac717b1df337f156e2ac4b2da6478106b/packages/gatsby-adapter-netlify/src/image-cdn-url-generator.ts)
+- [custom File CDN URL generator](https://github.com/gatsbyjs/gatsby/blob/4a780fbac717b1df337f156e2ac4b2da6478106b/packages/gatsby-adapter-netlify/src/file-cdn-url-generator.ts)
 
 TODO: update github urls after https://github.com/gatsbyjs/gatsby/pull/38685 is merged and release branch is cut
 
