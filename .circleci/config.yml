@@ -399,8 +399,8 @@ jobs:
       - run: # Install pnpm
           command: npm install -g pnpm
           working_directory: /tmp/e2e-tests/gatsby-pnpm
-      - run: # Install before custom registry server is set
-          command: pnpm add start-server-and-test@^1.11.0
+      - run: # Install start-server-and-test
+          command: npm install -g start-server-and-test@^1.11.0
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
