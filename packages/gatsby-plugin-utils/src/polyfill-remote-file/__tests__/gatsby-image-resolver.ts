@@ -9,7 +9,9 @@ import { PlaceholderType } from "../placeholder-handler"
 import { generateImageUrl } from "../utils/url-generator"
 import type { Actions, Store } from "gatsby"
 
-jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
+jest
+  .spyOn(dispatchers, `shouldDispatchLocalImageServiceJob`)
+  .mockImplementation(() => false)
 jest.mock(`import-from`)
 jest.mock(`gatsby-core-utils/fetch-remote-file`, () => {
   return {
@@ -64,7 +66,7 @@ describe(`gatsbyImageData`, () => {
   afterAll(() => remove(cacheDir))
 
   beforeEach(() => {
-    dispatchers.shouldDispatch.mockClear()
+    dispatchers.shouldDispatchLocalImageServiceJob.mockClear()
     fetchRemoteFile.mockClear()
   })
 
@@ -179,7 +181,9 @@ describe(`gatsbyImageData`, () => {
         store
       )
     ).toBe(null)
-    expect(dispatchers.shouldDispatch).not.toHaveBeenCalled()
+    expect(
+      dispatchers.shouldDispatchLocalImageServiceJob
+    ).not.toHaveBeenCalled()
   })
 
   it(`should return proper image props for fixed layout`, async () => {

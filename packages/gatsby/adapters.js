@@ -22,7 +22,7 @@ const adaptersManifest = [
       },
       {
         gatsbyVersion: `>=5.0.0 <5.12.10`,
-        moduleVersion: `1.0.3`,
+        moduleVersion: `>=1.0.0 <=1.0.3`,
       }
     ],
   }

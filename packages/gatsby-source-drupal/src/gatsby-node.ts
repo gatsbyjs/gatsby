@@ -132,8 +132,12 @@ function gracefullyRethrow(activity, error) {
   }
 }
 
-exports.onPreBootstrap = (_, pluginOptions) => {
+exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setOptions(pluginOptions)
+
+  if (typeof actions?.addRemoteFileAllowedUrl === `function`) {
+    actions.addRemoteFileAllowedUrl(urlJoin(pluginOptions.baseUrl, `*`))
+  }
 }
 
 exports.sourceNodes = async (
