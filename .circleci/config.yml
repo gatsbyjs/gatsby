@@ -379,6 +379,42 @@ jobs:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
 
+  e2e_tests_pnpm:
+    executor:
+      name: node
+      image: "18.12.0"
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
+      - run:
+          command: mkdir -p /tmp/e2e-tests/
+          working_directory: ~/project
+      - run:
+          command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnpm
+          working_directory: ~/project
+      - run:
+          command: rm package-lock.json
+          working_directory: /tmp/e2e-tests/gatsby-pnpm
+      - run: # Install pnpm
+          command: npm install -g pnpm
+          working_directory: /tmp/e2e-tests/gatsby-pnpm
+      - run: # Install before custom registry server is set
+          command: pnpm add start-server-and-test@^1.11.0
+          working_directory: /tmp/e2e-tests/gatsby-pnpm
+      - run: # Set project dir
+          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Copy over packages
+          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once --package-manager pnpm
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run:
+          command: pnpm build
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run:
+          command: 'DEBUG=start-server-and-test pnpm start-server-and-test "pnpm develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+
   e2e_tests_development_runtime_with_react_18:
     <<: *e2e-executor
     steps:
@@ -603,6 +639,8 @@ workflows:
           requires:
             - bootstrap
       - e2e_tests_pnp:
+          <<: *e2e-test-workflow
+      - e2e_tests_pnpm:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
