@@ -94,6 +94,9 @@ export class CacheFolderResolver {
   }
 
   apply(resolver: Resolver): void {
+    // force fail e2e
+    return
+
     if (!this.isEnabled) {
       return
     }
