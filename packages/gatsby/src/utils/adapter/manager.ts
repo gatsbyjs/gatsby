@@ -7,6 +7,7 @@ import { posix } from "path"
 import { sync as globSync } from "glob"
 import telemetry from "gatsby-telemetry"
 import { copy, pathExists, unlink } from "fs-extra"
+import pathToRegexp from "path-to-regexp"
 import type {
   FunctionsManifest,
   IAdaptContext,
@@ -18,6 +19,7 @@ import type {
   IAdapterFinalConfig,
   IAdapterConfig,
   HeaderRoutes,
+  RemoteFileAllowedUrls,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
@@ -204,6 +206,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined
       let _headerRoutes: HeaderRoutes | undefined = undefined
+      let _imageCdnAllowedUrls: RemoteFileAllowedUrls | undefined = undefined
       const adaptContext: IAdaptContext = {
         get routesManifest(): RoutesManifest {
           if (!_routesManifest) {
@@ -230,6 +233,20 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
           return _headerRoutes
         },
+        get remoteFileAllowedUrls(): RemoteFileAllowedUrls {
+          if (!_imageCdnAllowedUrls) {
+            _imageCdnAllowedUrls = Array.from(
+              store.getState().remoteFileAllowedUrls
+            ).map(urlPattern => {
+              return {
+                urlPattern,
+                regexSource: pathToRegexp(urlPattern).source,
+              }
+            })
+          }
+
+          return _imageCdnAllowedUrls
+        },
         reporter,
         // Our internal Gatsby config allows this to be undefined but for the adapter we should always pass through the default values and correctly show this in the TypeScript types
         trailingSlash: trailingSlash as TrailingSlash,
@@ -250,6 +267,16 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           throw new Error(
             `Can't exclude datastore from engine function without adapter providing deployURL`
           )
+        }
+
+        if (configFromAdapter?.imageCDNUrlGeneratorModulePath) {
+          global.__GATSBY.imageCDNUrlGeneratorModulePath =
+            configFromAdapter.imageCDNUrlGeneratorModulePath
+        }
+
+        if (configFromAdapter?.fileCDNUrlGeneratorModulePath) {
+          global.__GATSBY.fileCDNUrlGeneratorModulePath =
+            configFromAdapter.fileCDNUrlGeneratorModulePath
         }
       }
 

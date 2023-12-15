@@ -38,6 +38,7 @@ import { slicesReducer } from "./slices"
 import { componentsUsingSlicesReducer } from "./components-using-slices"
 import { slicesByTemplateReducer } from "./slices-by-template"
 import { adapterReducer } from "./adapter"
+import { remoteFileAllowedUrlsReducer } from "./remote-file-allowed-urls"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -83,4 +84,5 @@ export {
   slicesByTemplateReducer as slicesByTemplate,
   telemetryReducer as telemetry,
   adapterReducer as adapter,
+  remoteFileAllowedUrlsReducer as remoteFileAllowedUrls,
 }

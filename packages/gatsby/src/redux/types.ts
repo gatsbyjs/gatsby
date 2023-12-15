@@ -425,6 +425,7 @@ export interface IGatsbyState {
     manager: IAdapterManager
     config: IAdapterFinalConfig
   }
+  remoteFileAllowedUrls: Set<string>
 }
 
 export type GatsbyStateKeys = keyof IGatsbyState
@@ -539,6 +540,7 @@ export type ActionsUnion =
   | IClearGatsbyImageSourceUrlAction
   | ISetAdapterAction
   | IDisablePluginsByNameAction
+  | IAddImageCdnAllowedUrl
 
 export interface IInitAction {
   type: `INIT`
@@ -1216,6 +1218,15 @@ export interface IDisablePluginsByNameAction {
     pluginsToDisable: Array<string>
     reason: string
   }
+}
+
+export interface IAddImageCdnAllowedUrl {
+  type: `ADD_REMOTE_FILE_ALLOWED_URL`
+  payload: {
+    urls: Array<string>
+  }
+  plugin: IGatsbyPlugin
+  traceId?: string
 }
 
 export interface ITelemetry {

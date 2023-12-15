@@ -22,6 +22,7 @@ import {
   ICreateResolverContext,
   IGatsbyPluginContext,
   ICreateSliceAction,
+  IAddImageCdnAllowedUrl,
 } from "../types"
 import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import { store } from "../index"
@@ -36,6 +37,7 @@ type RestrictionActionNames =
   | "addThirdPartySchema"
   | "printTypeDefinitions"
   | "createSlice"
+  | "addRemoteFileAllowedUrl"
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
@@ -533,6 +535,31 @@ export const actions = {
       throw new Error(`createSlice is only available in Gatsby v5`)
     }
   },
+  /**
+   * Declares URL Pattern that should be allowed to be used for Image or File CDN to prevent using of unexpected RemoteFile URLs.
+   *
+   * @availableIn [onPreInit, onPreBootstrap, onPluginInit, createSchemaCustomization]
+   *
+   * @param {string | string []} url URLPattern or Array of URL Patternss that should be allowed.
+   * URLPattern is a string that can contain wildcards (*) or parameter placeholders (e.g. :id).
+   * @example
+   * exports.onPreInit = ({ actions }) => {
+   *   actions.addRemoteFileAllowedUrl(`https://your-wordpress-instance.com/*`)
+   * }
+   */
+  addRemoteFileAllowedUrl: (
+    url: string | Array<string>,
+    plugin: IGatsbyPlugin,
+    traceId?: string
+  ): IAddImageCdnAllowedUrl => {
+    const urls = Array.isArray(url) ? url : [url]
+    return {
+      type: `ADD_REMOTE_FILE_ALLOWED_URL`,
+      payload: { urls },
+      plugin,
+      traceId,
+    }
+  },
 }
 
 const withDeprecationWarning =
@@ -655,5 +682,13 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
   },
   createSlice: {
     [ALLOWED_IN]: [`createPages`],
+  },
+  addRemoteFileAllowedUrl: {
+    [ALLOWED_IN]: [
+      `onPreInit`,
+      `onPreBootstrap`,
+      `onPluginInit`,
+      `createSchemaCustomization`,
+    ],
   },
 })
