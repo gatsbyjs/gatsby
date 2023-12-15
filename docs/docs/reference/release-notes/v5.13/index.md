@@ -57,6 +57,22 @@ If you are interested in using custom URL generators in your adapter, check sour
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [0o001](https://github.com/0o001): fix: GatsbyNodeAPI types [PR #38461](https://github.com/gatsbyjs/gatsby/pull/38461)
+- [CountryTk](https://github.com/CountryTk): feat(gatsby-plugin-google-tagmanager): add self hosted path option [PR #38731](https://github.com/gatsbyjs/gatsby/pull/38731)
+- [Hrishikesh-K](https://github.com/Hrishikesh-K): chore: added logging for cache handling [PR #38654](https://github.com/gatsbyjs/gatsby/pull/38654)
+- [axe312ger](https://github.com/axe312ger): fix: contentful delta updates [PR #38468](https://github.com/gatsbyjs/gatsby/pull/38468)
+- [cunhacf](https://github.com/cunhacf): fix(gatsby): support multiple instances of same variable in gatsbyImage placeholderUrl [PR #38626](https://github.com/gatsbyjs/gatsby/pull/38626)
+- [derrysucari](https://github.com/derrysucari): fix(gatsby): disable prettier for results of graphql typegen [PR #38453](https://github.com/gatsbyjs/gatsby/pull/38453)
+- [dhayab](https://github.com/dhayab): chore(docs): update algolia guide [PR #38458](https://github.com/gatsbyjs/gatsby/pull/38458)
+- [holtzy](https://github.com/holtzy): docs: Fix tiny typo (1 letter) [PR #38463](https://github.com/gatsbyjs/gatsby/pull/38463)
+- [joshuajames](https://github.com/joshuajames): chore(docs): update README.md [PR #38495](https://github.com/gatsbyjs/gatsby/pull/38495)
+- [jouni](https://github.com/jouni): docs: update `npm-cache` directory location [PR #38373](https://github.com/gatsbyjs/gatsby/pull/38373)
+- [kaltepeter](https://github.com/kaltepeter): chore(docs): fix broken eslint doc link in graphql-typegen docs [PR #38367](https://github.com/gatsbyjs/gatsby/pull/38367)
+- [laurenskling](https://github.com/laurenskling): docs: Update node-model.js to new sort syntax [PR #38515](https://github.com/gatsbyjs/gatsby/pull/38515)
+- [lovell](https://github.com/lovell): chore(deps): upgrade sharp to latest v0.32.6 [PR #38374](https://github.com/gatsbyjs/gatsby/pull/38374)
+- [palmiak](https://github.com/palmiak): docs: Changes the name of one of the service [PR #38650](https://github.com/gatsbyjs/gatsby/pull/38650)
+- [stephan1echung](https://github.com/stephan1echung)
+  - Update gatsby-cloud-plugin README [PR #38479](https://github.com/gatsbyjs/gatsby/pull/38479)
+  - Update gatsby-contentful-plugin README [PR #38480](https://github.com/gatsbyjs/gatsby/pull/38480)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@5.13.0-next.0...gatsby@5.13.0
