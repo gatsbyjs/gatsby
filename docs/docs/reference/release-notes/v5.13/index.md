@@ -1,5 +1,5 @@
 ---
-date: "2023-12-@TODO"
+date: "2023-12-18"
 version: "5.13.0"
 title: "v5.13 Release Notes"
 ---
