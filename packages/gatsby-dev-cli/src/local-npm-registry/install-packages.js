@@ -9,6 +9,7 @@ const installPackages = async ({
   yarnWorkspaceRoot,
   newlyPublishedPackageVersions,
   externalRegistry,
+  packageManager,
 }) => {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
@@ -127,20 +128,32 @@ const installPackages = async ({
 
     installCmd = [`yarn`, yarnCommands]
   } else {
-    const yarnCommands = [
-      `add`,
-      ...packagesToInstall.map(packageName => {
-        const packageVersion = newlyPublishedPackageVersions[packageName]
-        return `${packageName}@${packageVersion}`
-      }),
-      `--exact`,
-    ]
+    const packageAndVersionsToInstall = packagesToInstall.map(packageName => {
+      const packageVersion = newlyPublishedPackageVersions[packageName]
+      return `${packageName}@${packageVersion}`
+    })
 
-    if (!externalRegistry) {
-      yarnCommands.push(`--registry=${registryUrl}`)
+    if (packageManager === `pnpm`) {
+      const pnpmCommands = [
+        `add`,
+        ...packageAndVersionsToInstall,
+        `--save-exact`,
+      ]
+
+      if (!externalRegistry) {
+        pnpmCommands.push(`--registry=${registryUrl}`)
+      }
+
+      installCmd = [`pnpm`, pnpmCommands]
+    } else {
+      const yarnCommands = [`add`, ...packageAndVersionsToInstall, `--exact`]
+
+      if (!externalRegistry) {
+        yarnCommands.push(`--registry=${registryUrl}`)
+      }
+
+      installCmd = [`yarn`, yarnCommands]
     }
-
-    installCmd = [`yarn`, yarnCommands]
   }
 
   try {
