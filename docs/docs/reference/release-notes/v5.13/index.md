@@ -36,8 +36,6 @@ If you are interested in using custom URL generators in your adapter, check sour
 - [custom Image CDN URL generator](https://github.com/gatsbyjs/gatsby/blob/4a780fbac717b1df337f156e2ac4b2da6478106b/packages/gatsby-adapter-netlify/src/image-cdn-url-generator.ts)
 - [custom File CDN URL generator](https://github.com/gatsbyjs/gatsby/blob/4a780fbac717b1df337f156e2ac4b2da6478106b/packages/gatsby-adapter-netlify/src/file-cdn-url-generator.ts)
 
-TODO: update github urls after https://github.com/gatsbyjs/gatsby/pull/38685 is merged and release branch is cut
-
 ## Notable bugfixes & improvements
 
 - `gatsby`:
