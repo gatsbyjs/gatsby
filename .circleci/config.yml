@@ -404,16 +404,16 @@ jobs:
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
-          working_directory: /tmp/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Copy over packages
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once --package-manager pnpm
-          working_directory: /tmp/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run:
           command: pnpm build
-          working_directory: /tmp/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run:
           command: 'DEBUG=start-server-and-test pnpm start-server-and-test "pnpm develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
-          working_directory: /tmp/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnpm
 
   e2e_tests_development_runtime_with_react_18:
     <<: *e2e-executor
