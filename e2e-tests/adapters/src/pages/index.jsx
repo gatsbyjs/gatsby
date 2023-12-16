@@ -39,6 +39,18 @@ const routes = [
     text: "Client-Only Named Wildcard",
     url: "/routes/client-only/named-wildcard/corinno/fenring",
   },
+  {
+    text: "RemoteFile (ImageCDN and FileCDN) (SSG, Page Query)",
+    url: "/routes/remote-file",
+  },
+  {
+    text: "RemoteFile (ImageCDN and FileCDN) (SSG, Page Context)",
+    url: "/routes/remote-file-data-from-context",
+  },
+  {
+    text: "RemoteFile (ImageCDN and FileCDN) (SSR, Page Query)",
+    url: "/routes/ssr/remote-file",
+  },
 ]
 
 const functions = [

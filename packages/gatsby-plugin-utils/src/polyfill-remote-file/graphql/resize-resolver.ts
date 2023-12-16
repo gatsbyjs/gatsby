@@ -3,7 +3,7 @@ import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
 import {
   dispatchLocalImageServiceJob,
-  shouldDispatch,
+  shouldDispatchLocalImageServiceJob,
 } from "../jobs/dispatchers"
 import { isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
@@ -79,7 +79,7 @@ export async function resizeResolver(
     args as IResizeArgs & WidthOrHeight
   )
 
-  if (shouldDispatch()) {
+  if (shouldDispatchLocalImageServiceJob()) {
     dispatchLocalImageServiceJob(
       {
         url: source.url,

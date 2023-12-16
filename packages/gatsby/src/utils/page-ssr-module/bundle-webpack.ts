@@ -222,19 +222,45 @@ export async function createPageSSRBundle({
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
+  let IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
+    await fs.copyFile(
+      global.__GATSBY.imageCDNUrlGeneratorModulePath,
+      path.join(outputDir, `image-cdn-url-generator.js`)
+    )
+    IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./image-cdn-url-generator.js`
+  }
+
+  let FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  if (global.__GATSBY?.fileCDNUrlGeneratorModulePath) {
+    await fs.copyFile(
+      global.__GATSBY.fileCDNUrlGeneratorModulePath,
+      path.join(outputDir, `file-cdn-url-generator.js`)
+    )
+    FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./file-cdn-url-generator.js`
+  }
+
   let functionCode = await fs.readFile(
     path.join(__dirname, `lambda.js`),
     `utf-8`
   )
 
   functionCode = functionCode
-    .replace(
+    .replaceAll(
       `%CDN_DATASTORE_PATH%`,
       shouldBundleDatastore()
         ? ``
         : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
     )
-    .replace(`%PATH_PREFIX%`, pathPrefix)
+    .replaceAll(`%PATH_PREFIX%`, pathPrefix)
+    .replaceAll(
+      `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
+      IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
+    )
+    .replaceAll(
+      `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
+      FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
+    )
 
   await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
 

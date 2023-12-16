@@ -4,9 +4,20 @@ import { generateFileUrl, generateImageUrl } from "../utils/url-generator"
 import type { Actions, Store } from "gatsby"
 import { getRequestHeadersForUrl } from "../utils/get-request-headers-for-url"
 
-export function shouldDispatch(): boolean {
+export function shouldDispatchLocalFileServiceJob(): boolean {
   return (
     !(
+      global.__GATSBY?.fileCDNUrlGeneratorModulePath ||
+      process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
+      process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
+    ) && process.env.NODE_ENV === `production`
+  )
+}
+
+export function shouldDispatchLocalImageServiceJob(): boolean {
+  return (
+    !(
+      global.__GATSBY?.imageCDNUrlGeneratorModulePath ||
       process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
       process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
     ) && process.env.NODE_ENV === `production`
@@ -17,8 +28,14 @@ export function dispatchLocalFileServiceJob(
   {
     url,
     filename,
+    mimeType,
     contentDigest,
-  }: { url: string; filename: string; contentDigest: string },
+  }: {
+    url: string
+    filename: string
+    mimeType: string
+    contentDigest: string
+  },
   actions: Actions,
   store?: Store
 ): void {
@@ -26,7 +43,9 @@ export function dispatchLocalFileServiceJob(
   const publicUrl = generateFileUrl(
     {
       url,
+      mimeType,
       filename,
+      internal: { contentDigest },
     },
     store
   ).split(`/`)
