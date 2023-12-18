@@ -19,7 +19,7 @@ Adapters being tested:
 - You can use any Netlify site that you have access to or create an empty site with the Netlify CLI `ntl sites:create`.
 - Setting `GATSBY_TEST_SKIP_CLEANUP` to `1`, prevents the deploy from being deleted after the test run so you can iterate on the tests using the same deploy.
 - During the initial run, the `DEPLOY_URL` is logged. You can use this to run the tests for debugging like so:
-  `TRAILING_SLASH-always ADAPTER-netlify DEPLOY_URL=<deployUrlFromPreviousCommand> yarn test:netlify:debug`
+  `TRAILING_SLASH=always ADAPTER=netlify DEPLOY_URL=<deployUrlFromPreviousCommand> yarn test:netlify:debug`
 
 ### Adding a new adapter
 
