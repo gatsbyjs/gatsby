@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-nprogress@5.13.0/packages/gatsby-plugin-nprogress) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+**Note:** Version bump only for package gatsby-plugin-nprogress
+
 ## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-nprogress@5.12.0/packages/gatsby-plugin-nprogress) (2023-08-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)

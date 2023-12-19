@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@5.13.0/packages/gatsby-plugin-gatsby-cloud) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Other Changes
+
+- Update gatsby-cloud-plugin README [#38479](https://github.com/gatsbyjs/gatsby/issues/38479) ([743cb95](https://github.com/gatsbyjs/gatsby/commit/743cb95f0a5d86d705881eac986c188cc5bc48b6))
+
 ### [5.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@5.12.2/packages/gatsby-plugin-gatsby-cloud) (2023-10-26)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud
