@@ -7,6 +7,6 @@
 
 [images]
   remote_images = [
-    "^https:\\/\\/images\\.unsplash\\.com\\/(.*)",
-    "^https:\\/\\/www\\.gatsbyjs\\.com\\/(.*)",
+    "https://images.unsplash.com/.*",
+    "https://www.gatsbyjs.com/.*",
   ]
