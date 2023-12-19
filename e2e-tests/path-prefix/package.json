@@ -23,6 +23,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "clean": "gatsby clean",
     "prebuild": "del-cli -f assets && make-dir assets/blog",
     "build": "cross-env CYPRESS_SUPPORT=y gatsby build --prefix-paths",
     "postbuild": "cpy --cwd=./public --parents '**/*' '../assets/blog'",
@@ -30,6 +31,7 @@
     "format": "prettier --write '**/*.js'",
     "test": "npm run build && npm run start-server-and-test",
     "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
+    "start-server-and-test:locally": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:open",
     "serve": "npm-run-all --parallel serve:*",
     "serve:site": "gatsby serve --prefix-paths",
     "serve:assets": "node scripts/serve.js",
