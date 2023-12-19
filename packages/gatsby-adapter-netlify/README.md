@@ -65,7 +65,7 @@ Exact Remote Path regular expressions to use will depend on CMS you use and poss
   remote_images = [
     # <your-contentful-space-id> is specified in the `spaceId` option for the
     # gatsby-source-contentful plugin in your gatsby-config file.
-    "^https:\\/\\/images\\.ctfassets\\.net\\/<your-contentful-space-id>\\/(.*)"
+    "https://images.ctfassets.net/<your-contentful-space-id>/.*"
   ]
   ```
 
@@ -76,7 +76,7 @@ Exact Remote Path regular expressions to use will depend on CMS you use and poss
   remote_images = [
     # <your-drupal-base-url> is speciafied in the `baseUrl` option for the
     # gatsby-source-drupal plugin in your gatsby-config file.
-    "<your-drupal-base-url>\\/(.*)"
+    "<your-drupal-base-url>/.*"
   ]
   ```
 
@@ -88,7 +88,7 @@ Exact Remote Path regular expressions to use will depend on CMS you use and poss
     # <your-wordpress-url> is specified in the `url` option for the
     # gatsby-source-wordpress plugin in your gatsby-config file.
     # There is no need to include `/graphql in the path here`
-    "<your-wordpress-url>\\/(.*)"
+    "<your-wordpress-url>/.*"
   ]
   ```
 
@@ -96,10 +96,4 @@ Above examples are the most likely ones to be needed. However if you configure
 your CMS to host assets on different domain or path, you might need to adjust
 the patterns accordingly.
 
-Keep in mind that you will need to escape special regular expression symbols to avoid creating too permisible patterns:
-
-- `.` should be escaped as `\\.` (dot)
-- `/` should be escaped as `\\/` (slash)
-- your rule should start with `^` so domain matching is exact
-
-If you are using recent versions of Contentful, Drupal or Wordpress source plugins, Gatsby and Netlify Adapter will automatically detect missing Remote Path patterns and will warn you about it and provide require patterns to add to your configuration.
+If you are using recent versions of Contentful, Drupal or Wordpress source plugins, Gatsby and Netlify Adapter will automatically detect missing Remote Path patterns and will warn you about it and provide the required patterns to add to your configuration.
