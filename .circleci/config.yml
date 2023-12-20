@@ -341,6 +341,9 @@ jobs:
       - run:
           command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnp
           working_directory: ~/project
+      - run: # default doesn't have API functions so let's get some of those
+          command: cp -r ./e2e-tests/adapters/src/api /tmp/e2e-tests/gatsby-pnp/src/api
+          working_directory: ~/project
       - run:
           command: touch yarn.lock
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -392,6 +395,9 @@ jobs:
           working_directory: ~/project
       - run:
           command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnpm
+          working_directory: ~/project
+      - run: # default doesn't have API functions so let's get some of those
+          command: cp -r ./e2e-tests/adapters/src/api /tmp/e2e-tests/gatsby-pnpm/src/api
           working_directory: ~/project
       - run:
           command: rm package-lock.json
