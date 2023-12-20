@@ -20,29 +20,6 @@ const dir = {
   gatsbyNodeAsDirectory: `${__dirname}/fixtures/gatsby-node-as-directory`,
 }
 
-jest.mock(`gatsby-worker`, () => {
-  const gatsbyWorker = jest.requireActual(`gatsby-worker`)
-
-  const { WorkerPool: OriginalWorkerPool } = gatsbyWorker
-
-  class WorkerPoolThatCanUseTS extends OriginalWorkerPool {
-    constructor(workerPath: string, options: any) {
-      options.env = {
-        ...(options.env ?? {}),
-        NODE_OPTIONS: `--require ${require.resolve(
-          `../../worker/__tests__/test-helpers/ts-register.js`
-        )}`,
-      }
-      super(workerPath, options)
-    }
-  }
-
-  return {
-    ...gatsbyWorker,
-    WorkerPool: WorkerPoolThatCanUseTS,
-  }
-})
-
 jest.setTimeout(15000)
 
 jest.mock(`@parcel/core`, () => {
