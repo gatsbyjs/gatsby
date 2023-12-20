@@ -4,7 +4,7 @@ import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
 import {
   dispatchLocalImageServiceJob,
-  shouldDispatch,
+  shouldDispatchLocalImageServiceJob,
 } from "../jobs/dispatchers"
 import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
 import { ImageCropFocus, isImage } from "../types"
@@ -185,7 +185,7 @@ export async function gatsbyImageResolver(
   for (const format of sortedFormats) {
     let fallbackSrc: string | undefined = undefined
     const images = imageSizes.sizes.map(width => {
-      if (shouldDispatch()) {
+      if (shouldDispatchLocalImageServiceJob()) {
         dispatchLocalImageServiceJob(
           {
             url: source.url,

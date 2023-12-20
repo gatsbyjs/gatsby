@@ -1,3 +1,7 @@
+## ⚠️ This package is now deprecated
+
+The `gatsby-plugin-netlify-cms` package is now deprecated. This plugin has been renamed and moved to [Decap CMS](https://github.com/decaporg/gatsby-plugin-decap-cms). See [gatsby-plugin-decap-cms](https://www.npmjs.com/package/gatsby-plugin-decap-cms) for more information.
+
 # gatsby-plugin-netlify-cms
 
 **Gatsby v1 and Netlify CMS 1.x require [`gatsby-plugin-netlify-cms@^2.0.0`][1].**

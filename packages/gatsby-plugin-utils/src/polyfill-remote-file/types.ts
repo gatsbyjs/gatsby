@@ -93,3 +93,52 @@ export function isImage(node: {
 
   return node.mimeType.startsWith(`image/`) && node.mimeType !== `image/svg+xml`
 }
+
+export type ImageCdnTransformArgs = WidthOrHeight & {
+  format: string
+  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
+  quality: number
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type CdnSourceImage = {
+  url: string
+  mimeType: string
+  filename: string
+  internal: { contentDigest: string }
+}
+
+export type ImageCdnSourceImage = CdnSourceImage
+
+/**
+ * The function is used to optimize image delivery by generating URLs that leverage CDN capabilities
+ * @param {ImageCdnSourceImage} source - An object representing the source image, including properties like
+ * URL, filename, and MIME type.
+ * @param {ImageCdnTransformArgs} imageArgs - An object containing arguments for image transformation, such as
+ * format, quality, and crop focus.
+ * @param {string} pathPrefix - This parameter allows for an optional path prefix in the generated relative URL,
+ * primarily influencing the location of the image transformation endpoint, particularly if not in the domain root.
+ * @returns {string} A string representing the generated URL for the image on the CDN. Ideally it is relative url
+ * (starting with `/`, resulting in usage of same domain as site itself), but it can also be absolute URL.
+ */
+export type ImageCdnUrlGeneratorFn = (
+  source: ImageCdnSourceImage,
+  imageArgs: ImageCdnTransformArgs,
+  pathPrefix: string
+) => string
+
+export type FileCdnSourceImage = CdnSourceImage
+
+/**
+ * The function is used to optimize image delivery by generating URLs that leverage CDN capabilities
+ * @param {FileCdnSourceImage} source - An object representing the source file, including properties like
+ * URL, filename, and MIME type.
+ * @param {string} pathPrefix - A string representing the path prefix to be prepended to the
+ * generated URL.
+ * @returns {string} A string representing the generated URL for the file on the CDN. Ideally it is relative url
+ * (starting with `/`, resulting in usage of same domain as site itself), but it can also be absolute URL.
+ */
+export type FileCdnUrlGeneratorFn = (
+  source: FileCdnSourceImage,
+  pathPrefix: string
+) => string
