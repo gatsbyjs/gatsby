@@ -152,15 +152,18 @@ export async function compileGatsbyFiles(
       // entire .cache for users, which is not ideal either especially when we can just delete parcel's cache
       // and to recover automatically
       bundles = await worker.single.runParcel(siteRoot)
-    } catch (e) {
-      if (retry >= RETRY_COUNT) {
+    } catch (error) {
+      if (error.diagnostics) {
+        handleErrors(error.diagnostics)
+        return
+      } else if (retry >= RETRY_COUNT) {
         reporter.panic({
           id: `11904`,
-          error: e,
+          error,
           context: {
             siteRoot,
             retries: RETRY_COUNT,
-            sourceMessage: e.message,
+            sourceMessage: error.message,
           },
         })
       } else {
