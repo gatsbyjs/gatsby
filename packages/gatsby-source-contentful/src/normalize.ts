@@ -787,7 +787,7 @@ export const createNodesForContentType = ({
           internal: {
             type: makeTypeName(contentTypeItemId, contentTypePrefix),
             // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-            contentDigest: entryItem.sys.updatedAt,
+            contentDigest: entryItem.sys.updatedAt as string,
           },
           // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
           // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
