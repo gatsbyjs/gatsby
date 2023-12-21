@@ -9,10 +9,17 @@ Adapters being tested:
 
 ## Usage
 
-- To run all tests, use `npm run test`
-- To run individual tests, use `npm run test:%NAME` where `test:%NAME` is the script, e.g. `npm run test:netlify`
+- To run all tests, use `yarn test`
+- To run individual tests, use `yarn test:%NAME` where `test:%NAME` is the script, e.g. `yarn test:netlify`
+- If you want to open Cypress locally as a UI, you can run the `:debug` scripts. For example, `yarn test:netlify:debug` to test the Netlify Adapter with Cypress open.
 
-If you want to open Cypress locally as a UI, you can run the `:debug` scripts. For example, `npm run test:netlify:debug` to test the Netlify Adapter with Cypress open.
+## Netlify as Target Platform
+
+- If deploying the site to Netlify as the target platform, you can run `yarn test:netlify` with the following environment variables set, `E2E_ADAPTERS_NETLIFY_SITE_ID=<yourSiteId>`, `NETLIFY_AUTH_TOKEN=<yourAuthToken>`, and `GATSBY_TEST_SKIP_CLEANUP=1`.
+- You can use any Netlify site that you have access to or create an empty site with the Netlify CLI `ntl sites:create`.
+- Setting `GATSBY_TEST_SKIP_CLEANUP` to `1`, prevents the deploy from being deleted after the test run so you can iterate on the tests using the same deploy.
+- During the initial run, the `DEPLOY_URL` is logged. You can use this to run the tests for debugging like so:
+  `TRAILING_SLASH=always ADAPTER=netlify DEPLOY_URL=<deployUrlFromPreviousCommand> yarn test:netlify:debug`
 
 ### Adding a new adapter
 

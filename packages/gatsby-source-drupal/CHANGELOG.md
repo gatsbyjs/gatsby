@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.13.0/packages/gatsby-source-drupal) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Features
+
+- image and file cdn url generator adapter implementation [#38685](https://github.com/gatsbyjs/gatsby/issues/38685) [#38715](https://github.com/gatsbyjs/gatsby/issues/38715) [#discussion_r1414135797](https://github.com/gatsbyjs/gatsby/issues/discussion_r1414135797) [#38735](https://github.com/gatsbyjs/gatsby/issues/38735) [#38719](https://github.com/gatsbyjs/gatsby/issues/38719) ([4a780fb](https://github.com/gatsbyjs/gatsby/commit/4a780fbac717b1df337f156e2ac4b2da6478106b))
+
 ### [6.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.12.3/packages/gatsby-source-drupal) (2023-10-26)
 
 **Note:** Version bump only for package gatsby-source-drupal

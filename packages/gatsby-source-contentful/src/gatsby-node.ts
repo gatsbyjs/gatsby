@@ -43,10 +43,10 @@ const validateContentfulAccess = async (
   return undefined
 }
 
-export const onPreInit: GatsbyNode["onPreInit"] = async ({
-  store,
-  reporter,
-}) => {
+export const onPreInit: GatsbyNode["onPreInit"] = async (
+  { store, reporter, actions },
+  pluginOptions
+) => {
   // if gatsby-plugin-image is not installed
   try {
     await import(`gatsby-plugin-image/graphql-utils.js`)
@@ -72,6 +72,15 @@ export const onPreInit: GatsbyNode["onPreInit"] = async ({
         sourceMessage: `gatsby-plugin-image is missing from your gatsby-config file.\nPlease add "gatsby-plugin-image" to your plugins array.`,
       },
     })
+  }
+
+  if (
+    actions?.addRemoteFileAllowedUrl &&
+    typeof actions?.addRemoteFileAllowedUrl === `function`
+  ) {
+    actions.addRemoteFileAllowedUrl(
+      `https://images.ctfassets.net/${pluginOptions.spaceId}/*`
+    )
   }
 }
 

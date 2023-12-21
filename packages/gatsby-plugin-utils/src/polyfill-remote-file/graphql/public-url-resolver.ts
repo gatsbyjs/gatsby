@@ -1,7 +1,7 @@
 import { generateFileUrl } from "../utils/url-generator"
 import {
   dispatchLocalFileServiceJob,
-  shouldDispatch,
+  shouldDispatchLocalFileServiceJob,
 } from "../jobs/dispatchers"
 import type { Actions, Store } from "gatsby"
 import type { IRemoteFileNode, IGraphQLFieldConfigDefinition } from "../types"
@@ -11,10 +11,11 @@ export function publicUrlResolver(
   actions: Actions,
   store?: Store
 ): string {
-  if (shouldDispatch()) {
+  if (shouldDispatchLocalFileServiceJob()) {
     dispatchLocalFileServiceJob(
       {
         url: source.url,
+        mimeType: source.mimeType,
         filename: source.filename,
         contentDigest: source.internal.contentDigest,
       },
@@ -23,7 +24,17 @@ export function publicUrlResolver(
     )
   }
 
-  return generateFileUrl({ url: source.url, filename: source.filename }, store)
+  return generateFileUrl(
+    {
+      url: source.url,
+      mimeType: source.mimeType,
+      filename: source.filename,
+      internal: {
+        contentDigest: source.internal.contentDigest,
+      },
+    },
+    store
+  )
 }
 
 export function generatePublicUrlFieldConfig(
