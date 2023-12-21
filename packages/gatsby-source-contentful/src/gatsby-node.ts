@@ -74,10 +74,7 @@ export const onPreInit: GatsbyNode["onPreInit"] = async (
     })
   }
 
-  if (
-    actions?.addRemoteFileAllowedUrl &&
-    typeof actions?.addRemoteFileAllowedUrl === `function`
-  ) {
+  if (typeof actions?.addRemoteFileAllowedUrl === `function`) {
     actions.addRemoteFileAllowedUrl(
       `https://images.ctfassets.net/${pluginOptions.spaceId}/*`
     )
