@@ -468,17 +468,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] =
             continue
           }
 
-          // We need to remove properties from existing fields
-          // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
-          // Gatsby automatically will set `.owner` it back
-          delete nodeToUpdate.internal.owner
-          // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
-          // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
-          // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
-          // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
-          // we would also need to restore that field ourselves after re-creating a node)
-          delete nodeToUpdate.fields // plugin adds node field on asset nodes which don't have reverse links
-
           // We add or modify counter postfix to contentDigest
           // to make sure Gatsby treat this as data update
           let counter
