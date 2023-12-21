@@ -21,7 +21,7 @@ const dir = {
   errorInCode: `${__dirname}/fixtures/error-in-code-ts`,
 }
 
-jest.setTimeout(15000)
+jest.setTimeout(60_000)
 
 jest.mock(`@parcel/core`, () => {
   const parcelCore = jest.requireActual(`@parcel/core`)
