@@ -54,7 +54,7 @@ Before you start manual updates, take advantage of our codemods that automate mo
 **Option A:** (Direct Execution)
 
 ```bash
-npx gatsby-codemods@ctf-next gatsby-source-contentful gatsby-*.js src
+npx gatsby-codemods@ctf-next gatsby-source-contentful --extensions=js,ts,tsx gatsby-* src
 ```
 
 **Option B:** (Install, Execute, Uninstall)
@@ -64,16 +64,10 @@ npx gatsby-codemods@ctf-next gatsby-source-contentful gatsby-*.js src
 npm install -D jscodeshift gatsby-codemods@ctf-next
 
 # Execute codemods
-npx jscodeshift -t ./node_modules/gatsby-codemods/transforms/gatsby-source-contentful.js gatsby-*.js src/**/*.js
+npx jscodeshift -t ./node_modules/gatsby-codemods/transforms/gatsby-source-contentful.js --extensions=js,ts,tsx gatsby-* src
 
 # Uninstall codemods
 npm remove jscodeshift gatsby-codemods
-```
-
-**For TypeScript projects:** Include `.ts` and `.tsx` files in the transformation:
-
-```bash
-npx ... gatsby-*.js gatsby-*.ts src/**/*.js src/**/*.ts src/**/*.tsx
 ```
 
 **Handling Large Codebases:** If your project is particularly large, you may need to increase the maximum memory allocation for the process:
