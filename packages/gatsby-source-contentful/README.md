@@ -70,6 +70,7 @@ The v9 release of `gatsby-source-contentful` brings significant improvements, fo
 - **Updated Field Name Restrictions**: Fields can now be named `contentful_id`, with restrictions now applied to names like `sys`, `contentfulMetadata`, and `linkedFrom`.
 - **Refined Backlinks**: Backlinks/references are now located in the `linkedFrom` field, aligning with Contentful's GraphQL API structure.
 - **Expanded Configuration Options**: Additional [configuration options](#advanced-configuration) provide greater control and customization for your specific project needs.
+- **Updated @link Directive Usage**: The new version of the "gatsby-source-contentful" plugin adopts the @link directive, eliminating the warnings in the build log about the deprecated \_\_\_NODE convention in Gatsby v5.
 
 For a detailed migration guide and to leverage these improvements, refer to the [Migration Guide](./MIGRATION.md) section.
 
