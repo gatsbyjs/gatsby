@@ -104,6 +104,18 @@ jest.mock(`gatsby-core-utils/create-require-from-path`, () => {
   }
 })
 
+const getMockedPackageByVersion = (version: string): IMockedAdapterPackage => {
+  return {
+    version,
+    init: (): IAdapter => {
+      return {
+        name: `gatsby-adapter-test@${version}`,
+        adapt: (): void => {},
+      }
+    },
+  }
+}
+
 const getMockedPackage = (
   versionRange: string
 ): IMockedAdapterPackage | undefined => {
@@ -112,15 +124,7 @@ const getMockedPackage = (
     versionRange
   )
   if (version) {
-    return {
-      version,
-      init: (): IAdapter => {
-        return {
-          name: `gatsby-adapter-test@${version}`,
-          adapt: (): void => {},
-        }
-      },
-    }
+    return getMockedPackageByVersion(version)
   } else {
     return undefined
   }
@@ -537,6 +541,40 @@ describe(`getAdapterInit`, () => {
         spinner-end   \\"Installing Test adapter (gatsby-adapter-test@^1.0.4)\\"
         info          \\"If you plan on staying on this deployment platform, consider installing /\\"gatsby-adapter-test@^1.0.4/\\" as a dependency in your project. This will give you faster and more robust installs.\\""
       `)
+    })
+
+    it(`gatsby-dev`, async () => {
+      // gatsby-dev is a special case as it's not published to npm
+      // it sets package versions to ${current}-dev-${timestamp} and sometimes it's tricky with semver
+      // as for example 1.0.4-dev-1702672314858 does NOT satisfy ^1.0.4 and normally gatsby would install
+      // 1.0.4 from npm instead of using version installed in e2e-adapters site via gatsby-dev
+      // we force specific manifest in e2e-tests/adapters to always allow currently installed adapter version
+      // via GATSBY_ADAPTERS_MANIFEST env var
+      mockInstalledInSiteAdapter = getMockedPackageByVersion(
+        `1.0.4-dev-1702672314858`
+      )
+      mockAdaptersManifest = [
+        {
+          name: `Test`,
+          test: (): boolean => true,
+          module: `gatsby-adapter-test`,
+          versions: [
+            {
+              gatsbyVersion: `*`,
+              moduleVersion: `*`,
+            },
+          ].filter(Boolean),
+        },
+      ]
+
+      const adapterInit = await getAdapterInit(`5.12.10-dev-1702672314858`)
+      expect(adapterInit).not.toBeUndefined()
+      expect(adapterInit?.().name).toMatchInlineSnapshot(
+        `"gatsby-adapter-test@1.0.4-dev-1702672314858"`
+      )
+      expect(getLogsForSnapshot()).toMatchInlineSnapshot(
+        `"verbose       \\"Using site's adapter dependency /\\"gatsby-adapter-test@1.0.4-dev-1702672314858/\\"\\""`
+      )
     })
   })
 })

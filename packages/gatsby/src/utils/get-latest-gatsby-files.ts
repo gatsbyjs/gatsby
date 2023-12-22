@@ -39,29 +39,32 @@ const _getFile = async <T>({
   fileName,
   outputFileName,
   defaultReturn,
-  tryGithubFirst,
+  tryGithubBeforeUnpkg,
+  forcedContent,
 }: {
   fileName: string
   outputFileName: string
   defaultReturn: T
-  tryGithubFirst?: boolean
+  tryGithubBeforeUnpkg?: boolean
+  forcedContent?: string
 }): Promise<T> => {
   let fileToUse = path.join(ROOT, fileName)
 
-  let fetchedData = null
-  if (tryGithubFirst) {
-    fetchedData = await _fetchFile(GITHUB_ROOT, fileName)
+  let dataToUse = forcedContent
+
+  if (!dataToUse && tryGithubBeforeUnpkg) {
+    dataToUse = await _fetchFile(GITHUB_ROOT, fileName)
   }
-  if (!fetchedData) {
-    fetchedData = await _fetchFile(UNPKG_ROOT, fileName)
+  if (!dataToUse) {
+    dataToUse = await _fetchFile(UNPKG_ROOT, fileName)
   }
 
-  if (fetchedData) {
+  if (dataToUse) {
     await fs.writeFile(
       outputFileName,
-      typeof fetchedData === `string`
-        ? fetchedData
-        : JSON.stringify(fetchedData, null, 2),
+      typeof dataToUse === `string`
+        ? dataToUse
+        : JSON.stringify(dataToUse, null, 2),
       `utf8`
     )
 
@@ -107,5 +110,7 @@ export const getLatestAdapters = async (): Promise<
     defaultReturn: [],
     // trying github first for adapters manifest to be able to faster make changes to version manifest
     // as publishing latest version of gatsby package takes more time
-    tryGithubFirst: true,
+    tryGithubBeforeUnpkg: true,
+    // in e2e-tests/adapters we force adapters manifest to be used
+    forcedContent: process.env.GATSBY_ADAPTERS_MANIFEST,
   })
