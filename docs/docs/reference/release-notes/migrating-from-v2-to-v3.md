@@ -993,7 +993,7 @@ import { setPrototypeOf } from "./setPrototypeOf"
 Object.setPrototypeOf = setPrototypeOf
 ```
 
-Then inject them into webpack using the `onCreateWebpackConfig` API in `gatsy-node.js` during stage `build-javascript`:
+Then inject them into webpack using the `onCreateWebpackConfig` API in `gatsby-node.js` during stage `build-javascript`:
 
 ```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {

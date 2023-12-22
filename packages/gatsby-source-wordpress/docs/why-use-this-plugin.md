@@ -25,7 +25,7 @@ Check out this page on [convincing developers why Gatsby is awesome](https://www
 ### Related information:
 
 - [ReactJS](https://reactjs.org/)
-- [Gatsy Site Showcase](https://www.gatsbyjs.com/showcase/)
+- [Gatsby Site Showcase](https://www.gatsbyjs.com/showcase/)
 - [Gatsby Case Study Blog posts](https://www.gatsbyjs.com/blog/tags/case-studies/)
 - [How Tinder is using WordPress with Gatsby](https://www.gatsbyjs.com/blog/2020-04-07-la-2020-boss/)
 - [Zac Gordon on what Gatsby is and why to use it](https://www.youtube.com/watch?v=GuvAMcsoreI)
