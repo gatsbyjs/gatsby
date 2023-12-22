@@ -23,7 +23,7 @@
     "better-opn": "^2.1.1",
     "boxen": "^5.1.2",
     "chalk": "^4.1.2",
-    "clipboardy": "^2.3.0",
+    "clipboardy": "^4.0.0",
     "common-tags": "^1.8.2",
     "convert-hrtime": "^3.0.0",
     "create-gatsby": "^3.13.0",
