@@ -3,7 +3,6 @@
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyReporter } from "./gatsby-types"
 import prettier from "prettier"
-import clipboardy from "clipboardy"
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import rateLimit, { RateLimitedAxiosInstance } from "axios-rate-limit"
 import { bold } from "chalk"
@@ -70,6 +69,8 @@ const handleErrorOptions = async ({
 
   if (pluginOptions.debug.graphql.copyQueryOnError) {
     try {
+      // clipboardy is ESM-only package
+      const { default: clipboardy } = await import(`clipboardy`)
       await clipboardy.write(query)
     } catch (e) {
       // do nothing
@@ -529,6 +530,8 @@ ${slackChannelSupportMessage}`
 
     if (copyHtmlResponseOnError) {
       try {
+        // clipboardy is ESM-only package
+        const { default: clipboardy } = await import(`clipboardy`)
         if (`writeSync` in clipboardy) {
           clipboardy.writeSync(response.data)
         }
