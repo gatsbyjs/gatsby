@@ -16,6 +16,6 @@ Gatsby's plugin layer includes a wide variety of common website functionality th
 
 One point of confusion people sometimes have is "when don't I need a plugin?" The answer is "most things"! As a general rule, any npm package you might use while working on another JavaScript or React application can also be used with a Gatsby application. Even when plugins are helpful, they are always optional.
 
-Feel free to browse and search plugins at Gatsby's [Plugin Library](/plugins/) or read the documentation on [how to add a plugin](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/).
+Feel free to browse and search plugins at Gatsby's [Plugin Library](/plugins/) or read the documentation on [how to add a plugin](/docs/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site.md).
 
 Advanced use-cases include [making your own plugins](/docs/creating-plugins/) and either distribute them for fellow Gatsby developers to use or [install them locally](/docs/loading-plugins-from-your-local-plugins-folder/).
