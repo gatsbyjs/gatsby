@@ -1,4 +1,7 @@
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+import {
+  documentToReactComponents,
+  Options,
+} from "@contentful/rich-text-react-renderer"
 import {
   AssetHyperlink,
   AssetLinkBlock,
@@ -26,6 +29,20 @@ interface IContentfulRichTextLinks {
   entries: IContentfulRichTextLinksEntries
 }
 
+type AssetBlockMap = Map<string, AssetLinkBlock>
+type AssetHyperlinkMap = Map<string, AssetHyperlink>
+type EntryBlockMap = Map<string, EntryLinkBlock>
+type EntryInlineMap = Map<string, EntryLinkInline>
+type EntryHyperlinkMap = Map<string, EntryHyperlink>
+interface IMakeOptions {
+  assetBlockMap: AssetBlockMap
+  assetHyperlinkMap: AssetHyperlinkMap
+  entryBlockMap: EntryBlockMap
+  entryInlineMap: EntryInlineMap
+  entryHyperlinkMap: EntryHyperlinkMap
+}
+export type MakeOptions = (referenceMaps: IMakeOptions) => Options
+
 export function renderRichText(
   {
     json,
@@ -34,7 +51,7 @@ export function renderRichText(
     json: Document
     links: IContentfulRichTextLinks
   },
-  makeOptions = {}
+  makeOptions: MakeOptions | Options
 ): React.ReactNode {
   const options =
     typeof makeOptions === `function`
@@ -49,11 +66,11 @@ export function renderRichText(
  * https://www.contentful.com/blog/2021/04/14/rendering-linked-assets-entries-in-contentful/
  */
 function generateLinkMaps(links): {
-  assetBlockMap: Map<string, AssetLinkBlock>
-  assetHyperlinkMap: Map<string, AssetHyperlink>
-  entryBlockMap: Map<string, EntryLinkBlock>
-  entryInlineMap: Map<string, EntryLinkInline>
-  entryHyperlinkMap: Map<string, EntryHyperlink>
+  assetBlockMap: AssetBlockMap
+  assetHyperlinkMap: AssetHyperlinkMap
+  entryBlockMap: EntryBlockMap
+  entryInlineMap: EntryInlineMap
+  entryHyperlinkMap: EntryHyperlinkMap
 } {
   const assetBlockMap = new Map()
   for (const asset of links?.assets.block || []) {
