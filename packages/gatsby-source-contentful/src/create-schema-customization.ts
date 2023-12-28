@@ -465,7 +465,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
       if (
         contentType.fields.some(
-          field => field.linkType || field.items?.linkType
+          field =>
+            field.linkType || field.items?.linkType || field.type === `RichText`
         )
       ) {
         reverseLinkFields[contentTypeItemId] = {
@@ -476,6 +477,23 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         }
       }
     })
+
+    // When nothing is set up to be linked in the Contentful Content Model, schema building fails
+    // as empty fields get removed by graphql-compose
+    if (Object.keys(reverseLinkFields).length === 0) {
+      contentTypeItems.forEach(contentType => {
+        const contentTypeItemId = contentTypeIdMap.get(contentType.sys.id)
+
+        if (contentTypeItemId) {
+          reverseLinkFields[contentTypeItemId] = {
+            type: `[${contentTypeItemId}]`,
+            extensions: {
+              link: { by: `id`, from: contentTypeItemId },
+            },
+          }
+        }
+      })
+    }
 
     const linkedFromName = `ContentfulLinkedFrom`
     createTypes(
