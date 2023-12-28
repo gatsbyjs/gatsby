@@ -303,9 +303,20 @@ Instead of passing your option object into `renderRichText()` you now pass a opt
 
 **Old rendering logic:**
 
-```jsx
-const options = {
-  // options for rendering different node types
+```tsx
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { Options } from "@contentful/rich-text-react-renderer"
+import { BLOCKS, MARKS } from "@contentful/rich-text-types"
+
+const options: Options = {
+  renderNode: {
+    [BLOCKS.EMBEDDED_ASSET]: node => {
+      const image = getImage(node.data.target)
+      return image ? (
+        <GatsbyImage image={image} alt={node.data.target.description} />
+      ) : null
+    },
+  },
 }
 
 ;<div>{renderRichText(richText, options)}</div>
@@ -313,12 +324,29 @@ const options = {
 
 **New rendering logic:**
 
-```jsx
-const makeOptions = ({ assetBlockMap, entryBlockMap, entryInlineMap }) => {
-  return {
-    // updated options based on the new schema
-  }
-}
+```tsx
+import { renderRichText, MakeOptions } from "gatsby-source-contentful"
+import { BLOCKS, MARKS } from "@contentful/rich-text-types"
+
+const makeOptions: MakeOptions = ({
+  assetBlockMap,
+  assetHyperlinkMap,
+  entryBlockMap,
+  entryInlineMap,
+  entryHyperlinkMap,
+}) => ({
+  renderNode: {
+    [BLOCKS.EMBEDDED_ASSET]: node => {
+      const image = assetBlockMap.get(node.data.target.sys.id)
+      return (image && image.gatsbyImageData )? (
+        <GatsbyImage
+          image={image.gatsbyImageData}
+          alt={image.description || ""}
+        />
+      ) : null
+    },
+  },
+})
 
 ;<div>{renderRichText(richText, makeOptions)}</div>
 ```
