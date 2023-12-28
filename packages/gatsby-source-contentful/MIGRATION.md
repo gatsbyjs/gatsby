@@ -338,7 +338,7 @@ const makeOptions: MakeOptions = ({
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
       const image = assetBlockMap.get(node.data.target.sys.id)
-      return (image && image.gatsbyImageData )? (
+      return image && image.gatsbyImageData ? (
         <GatsbyImage
           image={image.gatsbyImageData}
           alt={image.description || ""}
