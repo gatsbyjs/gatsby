@@ -1,7 +1,10 @@
 {
   "presets": [
     [
-      "babel-preset-gatsby-package"
+      "babel-preset-gatsby-package",
+      {
+        "keepDynamicImports": ["./src/create-cli.ts"]
+      }
     ]
   ]
 }

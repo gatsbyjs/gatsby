@@ -9,8 +9,6 @@ import {
   generateReusableFragments,
 } from "./build-query-on-field-name"
 
-import clipboardy from "clipboardy"
-
 import { getStore } from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
 import prettier from "prettier"
@@ -317,6 +315,8 @@ const generateNodeQueriesFromIngestibleFields = async () => {
             `Query debug mode. Writing node list query for the ${nodesType.name} node type to the system clipboard and exiting\n\n`
           )
         )
+        // clipboardy is ESM-only package
+        const { default: clipboardy } = await import(`clipboardy`)
         await clipboardy.write(
           prettier.format(nodeListQueries[0], { parser: `graphql` })
         )

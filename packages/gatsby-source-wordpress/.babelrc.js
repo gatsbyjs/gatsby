@@ -1,5 +1,15 @@
 module.exports = {
-  presets: [[`babel-preset-gatsby-package`]],
+  presets: [
+    [
+      `babel-preset-gatsby-package`,
+      {
+        "keepDynamicImports": [
+          "./src/utils/fetch-graphql.ts",
+          "./src/steps/ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types.js"
+        ]
+      }
+    ]
+  ],
   plugins: [
     [
       `@babel/plugin-proposal-private-methods`,

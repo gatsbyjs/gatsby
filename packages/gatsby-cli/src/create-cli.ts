@@ -3,7 +3,6 @@ import resolveCwd from "resolve-cwd"
 import yargs from "yargs"
 import envinfo from "envinfo"
 import { sync as existsSync } from "fs-exists-cached"
-import clipboardy from "clipboardy"
 import {
   trackCli,
   setDefaultTags,
@@ -357,7 +356,10 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
             console.log(envinfoOutput)
 
             if (copyToClipboard) {
-              clipboardy.writeSync(envinfoOutput)
+              // clipboardy is ESM-only package
+              import(`clipboardy`).then(({ default: clipboardy }) => {
+                clipboardy.writeSync(envinfoOutput)
+              })
             }
           })
       } catch (err) {
