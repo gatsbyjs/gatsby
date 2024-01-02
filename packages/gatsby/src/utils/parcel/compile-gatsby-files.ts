@@ -143,7 +143,7 @@ export async function compileGatsbyFiles(
 
     await exponentialBackoff(retry)
 
-    let bundles: RunParcelReturn
+    let bundles: RunParcelReturn = []
     try {
       // sometimes parcel segfaults which is not something we can recover from, so we run parcel
       // in child process and IF it fails we try to delete parcel's cache (this seems to "fix" the problem
