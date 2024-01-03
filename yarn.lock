@@ -4844,10 +4844,10 @@
   resolved "https://registry.yarnpkg.com/@types/mdx/-/mdx-2.0.2.tgz#64be19baddba4323ae7893e077e98759316fe279"
   integrity sha512-mJGfgj4aWpiKb8C0nnJJchs1sHBHn0HugkVfqqyQi7Wn6mBRksLeQsPOFvih/Pu8L1vlDzfe/LidhVHBeUk3aQ==
 
-"@types/micromatch@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@types/micromatch/-/micromatch-4.0.2.tgz#ce29c8b166a73bf980a5727b1e4a4d099965151d"
-  integrity sha512-oqXqVb0ci19GtH0vOA/U2TmHTcRY9kuZl4mqUxe0QmJAlIW13kzhuK5pi1i9+ngav8FjpSb9FVS/GE00GLX1VA==
+"@types/micromatch@^4.0.2", "@types/micromatch@^4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@types/micromatch/-/micromatch-4.0.6.tgz#340535c2b90098ace8fc5e7eaec8562deedb4f2f"
+  integrity sha512-2eulCHWqjEpk9/vyic4tBhI8a9qQEl6DaK2n/sF7TweX9YESlypgKyhXMDGt4DAOy/jhLPvVrZc8pTDAMsplJA==
   dependencies:
     "@types/braces" "*"
 
