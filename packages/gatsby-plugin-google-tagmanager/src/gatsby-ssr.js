@@ -6,11 +6,12 @@ const generateGTM = ({
   environmentParamStr,
   dataLayerName,
   selfHostedOrigin,
+  selfHostedPath,
 }) => stripIndent`
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  '${selfHostedOrigin}/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
+  '${selfHostedOrigin}/${selfHostedPath}?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
   })(window,document,'script','${dataLayerName}', '${id}');`
 
 const generateGTMIframe = ({ id, environmentParamStr, selfHostedOrigin }) =>
@@ -47,6 +48,7 @@ exports.onRenderBody = (
     dataLayerName = `dataLayer`,
     enableWebVitalsTracking = false,
     selfHostedOrigin = `https://www.googletagmanager.com`,
+    selfHostedPath = `gtm.js`,
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -96,6 +98,7 @@ exports.onRenderBody = (
             environmentParamStr,
             dataLayerName,
             selfHostedOrigin,
+            selfHostedPath,
           })}`,
         }}
       />

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.1/packages/gatsby-source-wordpress) (2023-12-22)
+
+#### Chores
+
+- bump clipboardy [#38775](https://github.com/gatsbyjs/gatsby/issues/38775) [#38776](https://github.com/gatsbyjs/gatsby/issues/38776) ([4b892c5](https://github.com/gatsbyjs/gatsby/commit/4b892c5a3047093c4f99b56c702c654a18999630))
+
+## [7.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.0/packages/gatsby-source-wordpress) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Features
+
+- image and file cdn url generator adapter implementation [#38685](https://github.com/gatsbyjs/gatsby/issues/38685) [#38715](https://github.com/gatsbyjs/gatsby/issues/38715) [#discussion_r1414135797](https://github.com/gatsbyjs/gatsby/issues/discussion_r1414135797) [#38735](https://github.com/gatsbyjs/gatsby/issues/38735) [#38719](https://github.com/gatsbyjs/gatsby/issues/38719) ([4a780fb](https://github.com/gatsbyjs/gatsby/commit/4a780fbac717b1df337f156e2ac4b2da6478106b))
+
+#### Chores
+
+- upgrade sharp to latest v0.32.6 [#38374](https://github.com/gatsbyjs/gatsby/issues/38374) ([ca15ef3](https://github.com/gatsbyjs/gatsby/commit/ca15ef37be3febbacfb830193556048008b2fd58))
+
+### [7.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.12.3/packages/gatsby-source-wordpress) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [7.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.12.2/packages/gatsby-source-wordpress) (2023-10-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [7.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.12.1/packages/gatsby-source-wordpress) (2023-10-09)
+
+#### Chores
+
+- upgrade sharp to latest v0.32.6 [#38374](https://github.com/gatsbyjs/gatsby/issues/38374) [#38617](https://github.com/gatsbyjs/gatsby/issues/38617) ([f1a4107](https://github.com/gatsbyjs/gatsby/commit/f1a41079fa1d25cd20139cfb15add6fe081ec3ee))
+
 ## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.12.0/packages/gatsby-source-wordpress) (2023-08-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)

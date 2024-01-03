@@ -89,7 +89,11 @@ exports.sourceNodes = async (
     hits.map(async hit => {
       const parentId = createNodeId(`plugin ${hit.objectID}`)
 
-      if (!hit.readme) {
+      if (
+        !hit.readme ||
+        hit.objectID === `gatsby-plugin-gatsby-cloud` ||
+        hit.objectID === `gatsby-source-contentful`
+      ) {
         try {
           hit.readme = (
             await got.get(

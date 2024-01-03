@@ -77,6 +77,9 @@ export async function createPageSSRBundle({
   isVerbose?: boolean
 }): Promise<webpack.Compilation | undefined> {
   const state = store.getState()
+  const pathPrefix = state.program.prefixPaths
+    ? state.config.pathPrefix ?? ``
+    : ``
   const slicesStateObject = {}
   for (const [key, value] of state.slices) {
     slicesStateObject[key] = value
@@ -219,17 +222,45 @@ export async function createPageSSRBundle({
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
+  let IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
+    await fs.copyFile(
+      global.__GATSBY.imageCDNUrlGeneratorModulePath,
+      path.join(outputDir, `image-cdn-url-generator.js`)
+    )
+    IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./image-cdn-url-generator.js`
+  }
+
+  let FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  if (global.__GATSBY?.fileCDNUrlGeneratorModulePath) {
+    await fs.copyFile(
+      global.__GATSBY.fileCDNUrlGeneratorModulePath,
+      path.join(outputDir, `file-cdn-url-generator.js`)
+    )
+    FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./file-cdn-url-generator.js`
+  }
+
   let functionCode = await fs.readFile(
     path.join(__dirname, `lambda.js`),
     `utf-8`
   )
 
-  functionCode = functionCode.replace(
-    `%CDN_DATASTORE_PATH%`,
-    shouldBundleDatastore()
-      ? ``
-      : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
-  )
+  functionCode = functionCode
+    .replaceAll(
+      `%CDN_DATASTORE_PATH%`,
+      shouldBundleDatastore()
+        ? ``
+        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
+    )
+    .replaceAll(`%PATH_PREFIX%`, pathPrefix)
+    .replaceAll(
+      `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
+      IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
+    )
+    .replaceAll(
+      `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
+      FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
+    )
 
   await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
 

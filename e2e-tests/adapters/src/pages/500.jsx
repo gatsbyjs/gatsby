@@ -19,7 +19,7 @@ const paragraphStyles = {
 
 const InternalServerErrorPage = () => (
   <main style={pageStyles}>
-    <h1 style={headingStyles}>INTERNAL SERVER ERROR</h1>
+    <h1 style={headingStyles}>INTERNAL SERVER ERROR (custom)</h1>
     <p style={paragraphStyles}>
       <Link to="/">Go home</Link>
     </p>

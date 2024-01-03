@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "3.13.0-next.0",
+  "version": "3.14.0-next.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "@babel/core": "^7.20.12",
     "@babel/helper-plugin-test-runner": "7.18.6",
     "@babel/plugin-transform-modules-commonjs": "^7.20.11",
-    "@types/babel__core": "^7.20.1",
+    "@types/babel__core": "^7.20.5",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {

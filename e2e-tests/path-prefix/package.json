@@ -46,9 +46,9 @@
     "make-dir-cli": "^3.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
-    "start-server-and-test": "^2.0.0",
+    "start-server-and-test": "^2.0.3",
     "typescript": "^5.1.6",
-    "wait-on": "^7.0.1"
+    "wait-on": "^7.2.0"
   },
   "repository": {
     "type": "git",

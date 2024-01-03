@@ -13,7 +13,10 @@ const cacheDbFile =
       }`
     : `caches-lmdb`
 
-const dbPath = path.join(process.cwd(), `.cache/${cacheDbFile}`)
+const dbPath = path.join(
+  global.__GATSBY?.root || process.cwd(),
+  `.cache/${cacheDbFile}`
+)
 
 function getAlreadyOpenedStore(): RootDatabase | undefined {
   if (!globalThis.__GATSBY_OPEN_ROOT_LMDBS) {

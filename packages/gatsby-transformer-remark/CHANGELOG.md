@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.13.0/packages/gatsby-transformer-remark) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+### [6.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.12.3/packages/gatsby-transformer-remark) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+### [6.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.12.2/packages/gatsby-transformer-remark) (2023-10-20)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.12.1/packages/gatsby-transformer-remark) (2023-10-09)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
 ## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.12.0/packages/gatsby-transformer-remark) (2023-08-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)

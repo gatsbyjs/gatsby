@@ -8,7 +8,7 @@ The following services support Gatsby to varying degrees. Not all advances featu
 - [Clodui](https://www.clodui.com/docs/guides/how-to-deploy/deploying-gatsby-website/)
 - [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-a-gatsby-site/)
 - [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-gatsby-application-to-digitalocean-app-platform)
-- [Kinsta Application Hosting](https://kinsta.com/docs/gatsby-static-site-example/)
+- [Kinsta](https://kinsta.com/docs/gatsby-static-site-example/)
 - [KintoHub](https://www.kintohub.com/examples/gatsby/gatsby-example/)
 - [Render](https://render.com/docs/deploy-gatsby)
 - [Surge](https://surge.sh/help/getting-started-with-surge)

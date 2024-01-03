@@ -42,8 +42,15 @@ export {
   IRedirectRoute,
   IFunctionDefinition,
   RoutesManifest,
+  HeaderRoutes,
   FunctionsManifest,
   IAdapterConfig,
+  ImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
+  ImageCdnTransformArgs,
+  FileCdnUrlGeneratorFn,
+  FileCdnSourceImage,
+  RemoteFileAllowedUrls,
 } from "./dist/utils/adapter/types"
 
 export const useScrollRestoration: (key: string) => {
@@ -1512,7 +1519,15 @@ export interface Actions {
   /**
    * Marks the source plugin that called this function as stateful. Gatsby will not check for stale nodes for any plugin that calls this.
    */
-  enableStatefulSourceNodes?(this: void, plugin?: ActionPlugin)
+  enableStatefulSourceNodes?(this: void, plugin?: ActionPlugin): void
+
+  /** @see https://www.gatsbyjs.com/docs/actions/#addRemoteFileAllowedUrl */
+  addRemoteFileAllowedUrl?(
+    this: void,
+    url: string | Array<string>,
+    plugin?: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {

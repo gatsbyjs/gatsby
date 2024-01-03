@@ -273,7 +273,7 @@ function generatePlaceholderUrl({
   const aspectRatio = originalWidth / originalHeight
 
   return url
-    .replace(`%width%`, String(width))
-    .replace(`%height%`, Math.floor(width / aspectRatio).toString())
-    .replace(`%quality%`, String(quality))
+    .replaceAll(`%width%`, String(width))
+    .replaceAll(`%height%`, Math.floor(width / aspectRatio).toString())
+    .replaceAll(`%quality%`, String(quality))
 }

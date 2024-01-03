@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link, graphql } from "gatsby"
+import { Link, graphql, withPrefix } from "gatsby"
 import Layout from "../components/layout"
 import gatsbyAstronaut from "../images/astro.png"
 import "./index.css"
@@ -8,12 +8,12 @@ const routes = [
   {
     text: "Static",
     url: "/routes/static",
-    id: "static-without-slash"
+    id: "static-without-slash",
   },
   {
     text: "Static (With Slash)",
     url: "/routes/static/",
-    id: "static-with-slash"
+    id: "static-with-slash",
   },
   {
     text: "SSR",
@@ -38,7 +38,19 @@ const routes = [
   {
     text: "Client-Only Named Wildcard",
     url: "/routes/client-only/named-wildcard/corinno/fenring",
-  }
+  },
+  {
+    text: "RemoteFile (ImageCDN and FileCDN) (SSG, Page Query)",
+    url: "/routes/remote-file",
+  },
+  {
+    text: "RemoteFile (ImageCDN and FileCDN) (SSG, Page Context)",
+    url: "/routes/remote-file-data-from-context",
+  },
+  {
+    text: "RemoteFile (ImageCDN and FileCDN) (SSR, Page Query)",
+    url: "/routes/ssr/remote-file",
+  },
 ]
 
 const functions = [
@@ -67,7 +79,11 @@ const IndexPage = ({ data }) => {
         <img src={gatsbyAstronaut} alt="Gatsby Astronaut" className="astro" />
       </div>
       <div className="titleStyles">
-        <img src="/gatsby-icon.png" alt="Gatsby Monogram Logo" style={{ maxHeight: '40px', marginRight: '1rem' }} />
+        <img
+          src={withPrefix(`/gatsby-icon.png`)}
+          alt="Gatsby Monogram Logo"
+          style={{ maxHeight: "40px", marginRight: "1rem" }}
+        />
         <h1>{data.site.siteMetadata.title}</h1>
       </div>
       <ul className="listStyles">

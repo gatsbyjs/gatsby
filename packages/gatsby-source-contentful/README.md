@@ -44,9 +44,7 @@ npm install gatsby-source-contentful gatsby-plugin-image
 
 ## Setup Instructions
 
-To get setup quickly with a new site and have Gatsby Cloud do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on gatsbyjs.com](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/contentful/starter-gatsby-blog).
-
-For more detailed instructions on manually configuring your Gatsby Contentful site for production builds and Preview builds visit [the Gatsby Cloud knowledgebase](https://support.gatsbyjs.com/hc/en-us/articles/360056047134-Add-the-Gatsby-Cloud-App-to-Contentful).
+To get setup quickly with a new site and have Netlify do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on netlify.com](https://app.netlify.com/start/deploy?repository=https://github.com/contentful/starter-gatsby-blog).
 
 ## How to use
 
@@ -142,10 +140,6 @@ Possibility to limit how many locales/nodes are created in GraphQL. This can lim
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales
-
-**`forceFullSync`** [boolean][optional] [default: `false`]
-
-Prevents the use of sync tokens when accessing the Contentful API.
 
 **`proxy`** [object][optional] [default: `undefined`]
 
