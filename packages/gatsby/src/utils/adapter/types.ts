@@ -2,6 +2,22 @@ import type reporter from "gatsby-cli/lib/reporter"
 import type { TrailingSlash } from "gatsby-page-utils"
 import type { IHeader, HttpStatusCode } from "../../redux/types"
 
+import type {
+  ImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
+  ImageCdnTransformArgs,
+  FileCdnUrlGeneratorFn,
+  FileCdnSourceImage,
+} from "gatsby-plugin-utils/dist/polyfill-remote-file/types"
+
+export type {
+  ImageCdnUrlGeneratorFn,
+  ImageCdnSourceImage,
+  ImageCdnTransformArgs,
+  FileCdnUrlGeneratorFn,
+  FileCdnSourceImage,
+}
+
 interface IBaseRoute {
   /**
    * Request path that should be matched for this route.
@@ -101,6 +117,17 @@ interface IDefaultContext {
   reporter: typeof reporter
 }
 
+export type RemoteFileAllowedUrls = Array<{
+  /**
+   * Allowed url in URLPattern format. In particular it uses wildcard `*` and param `:param` syntax.
+   */
+  urlPattern: string
+  /**
+   *Allowed url in regex source format
+   */
+  regexSource: string
+}>
+
 export interface IAdaptContext extends IDefaultContext {
   routesManifest: RoutesManifest
   functionsManifest: FunctionsManifest
@@ -113,6 +140,12 @@ export interface IAdaptContext extends IDefaultContext {
    * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash
    */
   trailingSlash: TrailingSlash
+  /**
+   * List of allowed remote file URLs represented in URLPattern and Regex formats.
+   * Allowed urls are provided by user or plugins using `addRemoteFileAllowedUrl` action.
+   * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addRemoteFileAllowedUrl
+   */
+  remoteFileAllowedUrls: RemoteFileAllowedUrls
 }
 
 export interface ICacheContext extends IDefaultContext {
@@ -149,6 +182,25 @@ export interface IAdapterConfig {
    * plugin and adapter is used at the same time.
    */
   pluginsToDisable?: Array<string>
+  /**
+   * Path to a CommonJS module that implements an image CDN URL generation function. The function
+   * is used to optimize image delivery by generating URLs that leverage CDN capabilities. This module
+   * should have a default export function that conforms to the {@link ImageCdnUrlGeneratorFn} type:
+   *
+   * Adapters should provide an absolute path to this module.
+   * See 'packages/gatsby-adapter-netlify/src/image-cdn-url-generator.ts' as an implementation
+   * example for the Netlify adapter.
+   */
+  imageCDNUrlGeneratorModulePath?: string
+  /**
+   * Path to a CommonJS module that implements an file CDN URL generation function. This module
+   * should have a default export function that conforms to the {@link FileCdnUrlGeneratorFn} type:
+   *
+   * Adapters should provide an absolute path to this module.
+   * See 'packages/gatsby-adapter-netlify/src/file-cdn-url-generator.ts' as an implementation
+   * example for the Netlify adapter.
+   */
+  fileCDNUrlGeneratorModulePath?: string
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }

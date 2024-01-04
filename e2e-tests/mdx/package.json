@@ -3,15 +3,15 @@
   "description": "Gatsby MDX tester",
   "version": "1.0.0",
   "dependencies": {
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.11.3",
     "@mdx-js/react": "^2.3.0",
     "@sindresorhus/slugify": "^2.2.1",
     "cypress": "^12.16.0",
-    "fs-extra": "^11.1.1",
+    "fs-extra": "^11.2.0",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
-    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.31",
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.32",
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
@@ -48,7 +48,7 @@
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
     "prettier": "^2.8.8",
-    "start-server-and-test": "^2.0.0",
-    "typescript": "^5.1.6"
+    "start-server-and-test": "^2.0.3",
+    "typescript": "^5.3.3"
   }
 }

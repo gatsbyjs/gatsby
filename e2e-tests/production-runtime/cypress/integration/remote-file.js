@@ -37,6 +37,12 @@ describe(
           method: "HEAD",
         })
         expect(res.ok).to.be.true
+
+        const expectedNaturalWidth =
+          expectation.naturalWidth ?? expectation.width
+        const expectedNaturalHeight =
+          expectation.naturalHeight ?? expectation.height
+
         if (expectation.width) {
           expect(
             Math.ceil(images[i].getBoundingClientRect().width)
@@ -46,6 +52,17 @@ describe(
           expect(
             Math.ceil(images[i].getBoundingClientRect().height)
           ).to.be.equal(expectation.height)
+        }
+
+        if (expectedNaturalWidth) {
+          expect(Math.ceil(images[i].naturalWidth)).to.be.equal(
+            expectedNaturalWidth
+          )
+        }
+        if (expectedNaturalHeight) {
+          expect(Math.ceil(images[i].naturalHeight)).to.be.equal(
+            expectedNaturalHeight
+          )
         }
       }
     }
@@ -81,7 +98,7 @@ describe(
         ])
       })
 
-      cy.get(".fixed").then(async $imgs => {
+      cy.get(".fixed img:not([aria-hidden=true])").then(async $imgs => {
         await testImages(Array.from($imgs), [
           {
             width: 100,
@@ -98,7 +115,7 @@ describe(
         ])
       })
 
-      cy.get(".constrained").then(async $imgs => {
+      cy.get(".constrained img:not([aria-hidden=true])").then(async $imgs => {
         await testImages(Array.from($imgs), [
           {
             width: 300,
@@ -115,16 +132,19 @@ describe(
         ])
       })
 
-      cy.get(".full").then(async $imgs => {
+      cy.get(".full img:not([aria-hidden=true])").then(async $imgs => {
         await testImages(Array.from($imgs), [
           {
             height: 1229,
+            naturalHeight: 1333,
           },
           {
             height: 1478,
+            naturalHeight: 1603,
           },
           {
             height: 614,
+            naturalHeight: 666,
           },
         ])
       })

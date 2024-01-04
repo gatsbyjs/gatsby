@@ -313,6 +313,13 @@ jobs:
           test_path: integration-tests/esm-in-gatsby-files
           test_command: yarn test
 
+  integration_tests_lmdb_regeneration:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/lmdb-regeneration
+          test_command: yarn test
+
   e2e_tests_path-prefix:
     <<: *e2e-executor
     steps:
@@ -448,6 +455,8 @@ jobs:
 
   e2e_tests_adapters:
     <<: *e2e-executor
+    docker:
+      - image: cypress/browsers:node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
     steps:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
       - e2e-test:
@@ -589,6 +598,8 @@ workflows:
       - integration_tests_head_function_export:
           <<: *e2e-test-workflow
       - integration_tests_esm_in_gatsby_files:
+          <<: *e2e-test-workflow
+      - integration_tests_lmdb_regeneration:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:

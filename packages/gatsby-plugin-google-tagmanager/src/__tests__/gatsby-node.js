@@ -15,6 +15,7 @@ describe(`pluginOptionsSchema`, () => {
         routeChangeEventName: `YOUR_ROUTE_CHANGE_EVENT_NAME`,
         enableWebVitalsTracking: true,
         selfHostedOrigin: `YOUR_SELF_HOSTED_ORIGIN`,
+        selfHostedPath: `YOUR_SELF_HOSTED_PATH`,
       }
     )
 
