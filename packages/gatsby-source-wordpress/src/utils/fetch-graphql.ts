@@ -758,6 +758,20 @@ const fetchGraphql = async ({
       { retries: 5 }
     )
 
+    console.log(
+      require(`util`).inspect(
+        {
+          axios: `post`,
+          url: url,
+          query,
+          variables,
+          requestOptions,
+          response,
+        },
+        { depth: Infinity, colors: true }
+      )
+    )
+
     if (response.data === ``) {
       throw new Error(`GraphQL request returned an empty string.`)
     }

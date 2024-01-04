@@ -38,6 +38,17 @@ const _getFile = async <T>({
       timeout: 5000,
     })
 
+    console.log(
+      require(`util`).inspect(
+        {
+          axios: `get`,
+          url: `${UNPKG_ROOT}${fileName}`,
+          data,
+        },
+        { depth: Infinity, colors: true }
+      )
+    )
+
     await fs.writeFile(
       outputFileName,
       typeof data === `string` ? data : JSON.stringify(data, null, 2),
