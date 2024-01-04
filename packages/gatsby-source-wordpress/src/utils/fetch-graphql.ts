@@ -3,7 +3,11 @@
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyReporter } from "./gatsby-types"
 import prettier from "prettier"
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  RawAxiosRequestHeaders,
+} from "axios"
 import rateLimit, { RateLimitedAxiosInstance } from "axios-rate-limit"
 import { bold } from "chalk"
 import retry from "async-retry"
@@ -655,7 +659,7 @@ export interface IJSON {
   [key: string]: any
 }
 
-interface IFetchGraphQLHeaders {
+interface IFetchGraphQLHeaders extends RawAxiosRequestHeaders {
   WPGatsbyPreview?: string
   Authorization?: string
   WPGatsbyPreviewUser?: number
