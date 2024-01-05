@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-lever",
   "description": "Gatsby source plugin for building websites using the Lever.co Recruitment Software as a data source.",
-  "version": "5.14.0-next.0",
+  "version": "5.14.0-next.2",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "bundledDependencies": [],
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "axios": "^0.21.1",
+    "axios": "^1.6.2",
     "bluebird": "^3.7.2",
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "babel-preset-gatsby-package": "^3.14.0-next.0",
+    "babel-preset-gatsby-package": "^3.14.0-next.1",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever#readme",
