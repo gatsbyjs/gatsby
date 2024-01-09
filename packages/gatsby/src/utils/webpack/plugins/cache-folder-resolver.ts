@@ -45,10 +45,6 @@ export class CacheFolderResolver {
       // gatsby deps from the cache folder (unless user would install same deps too)
       // so we are checking if we can resolve deps from the cache folder
       // this check is not limited to pnpm and other package managers could hit this path too
-      const cacheDirReq = mod.createRequire(requestsFolder)
-
-      let isEverythingResolvableFromCacheDir = true
-      let isEverythingResolvableFromGatsbyPackage = true
 
       // Hardcoded list of gatsby deps used in gatsby browser and ssr runtimes
       // instead of checking if we use Yarn PnP (via `process.versions.pnp`),
@@ -66,19 +62,29 @@ export class CacheFolderResolver {
         `react-server-dom-webpack`,
         `gatsby-link`,
       ]
+
+      // test if we can resolve deps from the cache folder
+      let isEverythingResolvableFromCacheDir = true
+      const cacheDirReq = mod.createRequire(requestsFolder)
       for (const cacheDirDep of modulesToCheck) {
         try {
           cacheDirReq.resolve(cacheDirDep)
         } catch {
-          // something is not resolable from the cache folder, so we should not enable this plugin
+          // something is not resolvable from the cache folder, so we should not enable this plugin
           isEverythingResolvableFromCacheDir = false
+          break
         }
+      }
 
+      // test if we can resolve deps from the gatsby package
+      let isEverythingResolvableFromGatsbyPackage = true
+      for (const cacheDirDep of modulesToCheck) {
         try {
           require.resolve(cacheDirDep)
         } catch {
           // something is not resolvable from the gatsby package
           isEverythingResolvableFromGatsbyPackage = false
+          break
         }
       }
 
