@@ -109,11 +109,41 @@ describe(`default behavior: has network connectivity`, () => {
 
   describe(`getLatestAdapters`, () => {
     beforeEach(() => {
+      delete process.env.GATSBY_ADAPTERS_MANIFEST
+    })
+    it(`loads .js modules (prefers github)`, async () => {
       axios.get.mockResolvedValueOnce({ data: latestAdaptersMarker })
+      const data = await getLatestAdapters()
+
+      expect(axios.get).toHaveBeenCalledWith(
+        expect.stringContaining(`raw.githubusercontent.com`),
+        expect.any(Object)
+      )
+
+      expect(axios.get).not.toHaveBeenCalledWith(
+        expect.stringContaining(`unpkg.com`),
+        expect.any(Object)
+      )
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        expect.stringContaining(`latest-adapters.js`),
+        latestAdaptersMarker,
+        expect.any(String)
+      )
+
+      expect(data).toEqual(mockAdaptersManifest)
     })
 
-    it(`loads .js modules`, async () => {
+    it(`loads .js modules (fallbacks to unkpg of github fails)`, async () => {
+      axios.get.mockRejectedValueOnce(new Error(`does not matter`))
+      axios.get.mockResolvedValueOnce({ data: latestAdaptersMarker })
+
       const data = await getLatestAdapters()
+
+      expect(axios.get).toHaveBeenCalledWith(
+        expect.stringContaining(`raw.githubusercontent.com`),
+        expect.any(Object)
+      )
 
       expect(axios.get).toHaveBeenCalledWith(
         expect.stringContaining(`unpkg.com`),
@@ -123,6 +153,37 @@ describe(`default behavior: has network connectivity`, () => {
       expect(fs.writeFile).toHaveBeenCalledWith(
         expect.stringContaining(`latest-adapters.js`),
         latestAdaptersMarker,
+        expect.any(String)
+      )
+
+      expect(data).toEqual(mockAdaptersManifest)
+    })
+
+    it(`uses GATSBY_ADAPTERS_MANIFEST env var if set`, async () => {
+      process.env.GATSBY_ADAPTERS_MANIFEST = `custom_manifest`
+
+      axios.get.mockRejectedValueOnce(
+        new Error(`does not matter and should't be called`)
+      )
+      axios.get.mockRejectedValueOnce(
+        new Error(`does not matter and should't be called`)
+      )
+
+      const data = await getLatestAdapters()
+
+      expect(axios.get).not.toHaveBeenCalledWith(
+        expect.stringContaining(`raw.githubusercontent.com`),
+        expect.any(Object)
+      )
+
+      expect(axios.get).not.toHaveBeenCalledWith(
+        expect.stringContaining(`unpkg.com`),
+        expect.any(Object)
+      )
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        expect.stringContaining(`latest-adapters.js`),
+        process.env.GATSBY_ADAPTERS_MANIFEST,
         expect.any(String)
       )
 
