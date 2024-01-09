@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.13.1/packages/gatsby-cli) (2023-12-22)
+
+#### Chores
+
+- bump clipboardy [#38775](https://github.com/gatsbyjs/gatsby/issues/38775) [#38776](https://github.com/gatsbyjs/gatsby/issues/38776) ([4b892c5](https://github.com/gatsbyjs/gatsby/commit/4b892c5a3047093c4f99b56c702c654a18999630))
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.13.0/packages/gatsby-cli) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Bug Fixes
+
+- don't break builds when using features unsupported by adapter [#38520](https://github.com/gatsbyjs/gatsby/issues/38520) ([6674ad6](https://github.com/gatsbyjs/gatsby/commit/6674ad67946c6f65e17e2cfbe45f0e9f3c69a0a3))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-cli [#38592](https://github.com/gatsbyjs/gatsby/issues/38592) ([d148295](https://github.com/gatsbyjs/gatsby/commit/d1482959ee5e943f9ed74e7dfb9dccb078f87836))
+
 ### [5.12.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.12.4/packages/gatsby-cli) (2023-10-26)
 
 **Note:** Version bump only for package gatsby-cli

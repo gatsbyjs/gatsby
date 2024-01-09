@@ -9,11 +9,13 @@ import * as dispatchers from "../jobs/dispatchers"
 import type { Actions } from "gatsby"
 import type { ImageFit, IRemoteImageNode } from "../types"
 
-jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
+jest
+  .spyOn(dispatchers, `shouldDispatchLocalImageServiceJob`)
+  .mockImplementation(() => false)
 
 describe(`resizeResolver`, () => {
   beforeEach(() => {
-    dispatchers.shouldDispatch.mockClear()
+    dispatchers.shouldDispatchLocalImageServiceJob.mockClear()
   })
 
   const actions = {} as Actions
@@ -124,7 +126,9 @@ describe(`resizeResolver`, () => {
         actions
       )
     ).toBe(null)
-    expect(dispatchers.shouldDispatch).not.toHaveBeenCalled()
+    expect(
+      dispatchers.shouldDispatchLocalImageServiceJob
+    ).not.toHaveBeenCalled()
   })
 
   it(`should allow you to change the format of the file`, async () => {
@@ -303,7 +307,9 @@ describe(`resizeResolver`, () => {
       height: 160,
       quality: 75,
     }
-    dispatchers.shouldDispatch.mockImplementationOnce(() => true)
+    dispatchers.shouldDispatchLocalImageServiceJob.mockImplementationOnce(
+      () => true
+    )
 
     resizeResolver(portraitSource, { width: 100 }, actions)
     expect(actions.createJobV2).toHaveBeenCalledWith(

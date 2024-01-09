@@ -1,6 +1,6 @@
 {
   "name": "gatsby-adapter-netlify",
-  "version": "1.1.0-next.1",
+  "version": "1.2.0-next.1",
   "description": "Gatsby adapter for Netlify",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,15 +33,17 @@
   "dependencies": {
     "@babel/runtime": "^7.20.13",
     "@netlify/cache-utils": "^5.1.5",
+    "@netlify/config": "^20.10.0",
     "@netlify/functions": "^1.6.0",
-    "cookie": "^0.5.0",
+    "cookie": "^0.6.0",
     "fastq": "^1.15.0",
-    "fs-extra": "^11.1.1"
+    "fs-extra": "^11.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "babel-preset-gatsby-package": "^3.13.0-next.0",
+    "@netlify/edge-functions": "^2.2.0",
+    "babel-preset-gatsby-package": "^3.14.0-next.1",
     "cross-env": "^7.0.3",
     "memfs": "^4.6.0",
     "rimraf": "^5.0.5",

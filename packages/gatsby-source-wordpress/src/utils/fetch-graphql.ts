@@ -3,8 +3,11 @@
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyReporter } from "./gatsby-types"
 import prettier from "prettier"
-import clipboardy from "clipboardy"
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  RawAxiosRequestHeaders,
+} from "axios"
 import rateLimit, { RateLimitedAxiosInstance } from "axios-rate-limit"
 import { bold } from "chalk"
 import retry from "async-retry"
@@ -70,6 +73,8 @@ const handleErrorOptions = async ({
 
   if (pluginOptions.debug.graphql.copyQueryOnError) {
     try {
+      // clipboardy is ESM-only package
+      const { default: clipboardy } = await import(`clipboardy`)
       await clipboardy.write(query)
     } catch (e) {
       // do nothing
@@ -529,6 +534,8 @@ ${slackChannelSupportMessage}`
 
     if (copyHtmlResponseOnError) {
       try {
+        // clipboardy is ESM-only package
+        const { default: clipboardy } = await import(`clipboardy`)
         if (`writeSync` in clipboardy) {
           clipboardy.writeSync(response.data)
         }
@@ -652,7 +659,7 @@ export interface IJSON {
   [key: string]: any
 }
 
-interface IFetchGraphQLHeaders {
+interface IFetchGraphQLHeaders extends RawAxiosRequestHeaders {
   WPGatsbyPreview?: string
   Authorization?: string
   WPGatsbyPreviewUser?: number

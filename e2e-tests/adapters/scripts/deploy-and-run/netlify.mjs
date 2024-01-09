@@ -20,7 +20,7 @@ await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
 const deployResults = await execa(
   "ntl",
-  ["deploy", "--build", "--json", "--message", deployTitle],
+  ["deploy", "--build", "--json", "--cwd=.", "--message", deployTitle],
   {
     reject: false,
   }
@@ -49,20 +49,17 @@ try {
 } finally {
   if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
     console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
-
     const deleteResponse = await execa("ntl", [
       "api",
       "deleteDeploy",
       "--data",
       `{ "deploy_id": "${deployInfo.deploy_id}" }`,
     ])
-
     if (deleteResponse.exitCode !== 0) {
       throw new Error(
         `Failed to delete project ${deleteResponse.stdout} ${deleteResponse.stderr} (${deleteResponse.exitCode})`
       )
     }
-
     console.log(
       `Successfully deleted project with deploy_id ${deployInfo.deploy_id}`
     )

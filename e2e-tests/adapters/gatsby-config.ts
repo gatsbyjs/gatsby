@@ -24,7 +24,11 @@ const config: GatsbyConfig = {
   },
   trailingSlash,
   pathPrefix,
-  plugins: [],
+  plugins: [
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+  ],
   headers: [
     {
       source: `/*`,
