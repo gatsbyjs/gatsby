@@ -11,7 +11,7 @@ const codemods = [
 ]
 
 export const transformerDirectory = path.join(__dirname, `../`, `transforms`)
-export const jscodeshiftExecutable = require.resolve(`.bin/jscodeshift`)
+export const jscodeshiftExecutable = require.resolve(`jscodeshift/bin/jscodeshift.js`)
 
 export function runTransform(transform, targetDir) {
   const transformerPath = path.join(transformerDirectory, `${transform}.js`)
