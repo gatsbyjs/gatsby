@@ -77,7 +77,7 @@ export class CacheFolderResolver {
         try {
           require.resolve(cacheDirDep)
         } catch {
-          // something is not resolable from the gatsby package
+          // something is not resolvable from the gatsby package
           isEverythingResolvableFromGatsbyPackage = false
         }
       }
