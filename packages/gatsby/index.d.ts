@@ -34,6 +34,8 @@ export {
 
 export * from "gatsby-script"
 
+export { IGatsbyResolverContext } from "./src/schema/type-definitions"
+
 export {
   AdapterInit,
   IAdapter,
@@ -1776,7 +1778,8 @@ export interface NodeInput {
     content?: string
     contentDigest: string
     description?: string
-    contentFilePath?: string
+    contentFilePath?: string,
+    dontTrackInlineObjects?: boolean
   }
   [key: string]: unknown
 }
