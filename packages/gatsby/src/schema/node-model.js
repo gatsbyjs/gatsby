@@ -963,7 +963,7 @@ const addRootNodeToInlineObject = (
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
-    if (data?.internal.dontTrackInlineObjects) {
+    if (isNode && data.internal.dontTrackInlineObjects) {
       return
     }
     if (path.has(data)) return
