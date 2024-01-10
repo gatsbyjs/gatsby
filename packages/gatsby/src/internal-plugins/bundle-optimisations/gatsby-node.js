@@ -3,7 +3,7 @@ const path = require(`path`)
 exports.onCreateBabelConfig = ({ actions }) => {
   // rewrites import { get }from 'lodash' into import get from 'lodash/get';
   actions.setBabelPlugin({
-    name: `babel-plugin-lodash`,
+    name: `@sigmacomputing/babel-plugin-lodash`,
   })
 }
 
