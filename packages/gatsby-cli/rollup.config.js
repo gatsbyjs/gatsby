@@ -59,7 +59,7 @@ export default {
         ],
         "@babel/preset-react"
       ],
-      plugins: ["@babel/plugin-transform-runtime", "babel-plugin-lodash"],
+      plugins: ["@babel/plugin-transform-runtime", "@sigmacomputing/babel-plugin-lodash"],
       overrides: [
         {
           "test": ["**/*.ts", "**/*.tsx"],

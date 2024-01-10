@@ -38,6 +38,6 @@ exports.onCreateWebpackConfig = (
 // Add Lodash Babel plugin
 exports.onCreateBabelConfig = ({ actions }) => {
   actions.setBabelPlugin({
-    name: `babel-plugin-lodash`,
+    name: require.resolve(`@sigmacomputing/babel-plugin-lodash`),
   })
 }
