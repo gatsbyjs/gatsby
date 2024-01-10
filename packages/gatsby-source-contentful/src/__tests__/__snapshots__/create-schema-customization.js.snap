@@ -738,12 +738,15 @@ Ignored if layout = FLUID.",
         },
         "linkedFrom": "ContentfulLinkedFrom",
         "richText": Object {
+          "resolve": [Function],
           "type": "ContentfulRichText",
         },
         "richTextLocalized": Object {
+          "resolve": [Function],
           "type": "ContentfulRichText",
         },
         "richTextValidated": Object {
+          "resolve": [Function],
           "type": "ContentfulRichText",
         },
         "sys": Object {
