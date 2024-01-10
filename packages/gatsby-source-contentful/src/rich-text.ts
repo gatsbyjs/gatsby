@@ -42,7 +42,7 @@ export function renderRichText(
     json,
     links,
   }: {
-    json: unknown
+    json: Document
     links?: unknown
   },
   makeOptions?: MakeOptions | Options
@@ -52,7 +52,7 @@ export function renderRichText(
       ? makeOptions(generateLinkMaps(links as IContentfulRichTextLinks))
       : makeOptions
 
-  return documentToReactComponents(json as Document, options)
+  return documentToReactComponents(json, options)
 }
 
 /**
