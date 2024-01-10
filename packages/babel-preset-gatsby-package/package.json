@@ -19,7 +19,7 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/runtime": "^7.20.13",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "babel-plugin-lodash": "^3.3.4",
+    "@sigmacomputing/babel-plugin-lodash": "^3.3.5",
     "core-js": "^3.31.0"
   },
   "devDependencies": {
