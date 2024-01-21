@@ -12,6 +12,7 @@ import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
 import { IGatsbyFunction } from "../../redux/types"
 import { functionMiddlewares } from "./middleware"
+import mod from "module"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -305,6 +306,10 @@ const createWebpackConfig = async ({
     ? `functions-production`
     : `functions-development`
 
+  const gatsbyPluginTSRequire = mod.createRequire(
+    require.resolve(`gatsby-plugin-typescript`)
+  )
+
   return {
     entry: entries,
     output: {
@@ -373,9 +378,11 @@ const createWebpackConfig = async ({
             },
           },
           use: {
-            loader: `babel-loader`,
+            loader: require.resolve(`babel-loader`),
             options: {
-              presets: [`@babel/typescript`],
+              presets: [
+                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
+              ],
             },
           },
         },
@@ -383,9 +390,11 @@ const createWebpackConfig = async ({
           test: [/.js$/, /.ts$/],
           exclude: /node_modules/,
           use: {
-            loader: `babel-loader`,
+            loader: require.resolve(`babel-loader`),
             options: {
-              presets: [`@babel/typescript`],
+              presets: [
+                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
+              ],
             },
           },
         },

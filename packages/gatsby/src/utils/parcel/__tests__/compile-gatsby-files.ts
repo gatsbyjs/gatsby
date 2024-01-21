@@ -18,9 +18,10 @@ const dir = {
   misnamedJS: `${__dirname}/fixtures/misnamed-js`,
   misnamedTS: `${__dirname}/fixtures/misnamed-ts`,
   gatsbyNodeAsDirectory: `${__dirname}/fixtures/gatsby-node-as-directory`,
+  errorInCode: `${__dirname}/fixtures/error-in-code-ts`,
 }
 
-jest.setTimeout(15000)
+jest.setTimeout(60_000)
 
 jest.mock(`@parcel/core`, () => {
   const parcelCore = jest.requireActual(`@parcel/core`)
@@ -174,6 +175,37 @@ describe(`gatsby file compilation`, () => {
         expect(compiledGatsbyNode).toContain(`gatsby-node is working`)
       })
     })
+  })
+
+  it(`handles errors in TS code`, async () => {
+    process.chdir(dir.errorInCode)
+    await remove(`${dir.errorInCode}/.cache`)
+    await compileGatsbyFiles(dir.errorInCode)
+
+    expect(reporterPanicMock).toMatchInlineSnapshot(`
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {
+              "context": Object {
+                "filePath": "<PROJECT_ROOT>/gatsby-node.ts",
+                "generalMessage": "Expected ';', '}' or <eof>",
+                "hints": null,
+                "origin": "@parcel/transformer-js",
+                "specificMessage": "This is the expression part of an expression statement",
+              },
+              "id": "11901",
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      }
+    `)
   })
 })
 

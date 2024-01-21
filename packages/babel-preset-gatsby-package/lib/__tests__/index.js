@@ -38,7 +38,7 @@ describe(`babel-preset-gatsby-package`, () => {
               },
             },
           ],
-          "babel-plugin-lodash",
+          "@sigmacomputing/babel-plugin-lodash",
         ]
       `)
     })
@@ -63,7 +63,7 @@ describe(`babel-preset-gatsby-package`, () => {
               },
             },
           ],
-          "babel-plugin-lodash",
+          "@sigmacomputing/babel-plugin-lodash",
         ]
       `)
     })
@@ -111,7 +111,7 @@ describe(`babel-preset-gatsby-package`, () => {
               },
             },
           ],
-          "babel-plugin-lodash",
+          "@sigmacomputing/babel-plugin-lodash",
         ]
       `)
     })
@@ -136,7 +136,7 @@ describe(`babel-preset-gatsby-package`, () => {
               },
             },
           ],
-          "babel-plugin-lodash",
+          "@sigmacomputing/babel-plugin-lodash",
         ]
       `)
     })
@@ -163,7 +163,7 @@ describe(`babel-preset-gatsby-package`, () => {
               },
             },
           ],
-          "babel-plugin-lodash",
+          "@sigmacomputing/babel-plugin-lodash",
         ]
       `)
     })
@@ -188,7 +188,7 @@ describe(`babel-preset-gatsby-package`, () => {
               },
             },
           ],
-          "babel-plugin-lodash",
+          "@sigmacomputing/babel-plugin-lodash",
         ]
       `)
     })

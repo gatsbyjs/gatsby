@@ -3,6 +3,7 @@ import { LMDBCache, Cache } from "@parcel/cache"
 import path from "path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
+import { WorkerPool } from "gatsby-worker"
 import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
 import telemetry from "gatsby-telemetry"
 import { isNearMatch } from "../is-near-match"
@@ -49,6 +50,28 @@ export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
       },
     },
     cacheDir: getCacheDir(siteRoot),
+  })
+}
+
+interface IProcessBundle {
+  filePath: string
+  mainEntryPath?: string
+}
+
+type RunParcelReturn = Array<IProcessBundle>
+
+export async function runParcel(siteRoot: string): Promise<RunParcelReturn> {
+  const cache = new LMDBCache(getCacheDir(siteRoot)) as unknown as Cache
+  const parcel = constructParcel(siteRoot, cache)
+  const { bundleGraph } = await parcel.run()
+  const bundles = bundleGraph.getBundles()
+  // bundles is not serializable, so we need to extract the data we need
+  // so it crosses IPC boundaries
+  return bundles.map(bundle => {
+    return {
+      filePath: bundle.filePath,
+      mainEntryPath: bundle.getMainEntry()?.filePath,
+    }
   })
 }
 
@@ -107,32 +130,58 @@ export async function compileGatsbyFiles(
       })
     }
 
+    const worker = new WorkerPool<typeof import("./compile-gatsby-files")>(
+      require.resolve(`./compile-gatsby-files`),
+      {
+        numWorkers: 1,
+      }
+    )
+
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
     await ensureDir(distDir)
     await emptyDir(distDir)
 
     await exponentialBackoff(retry)
 
-    // for whatever reason TS thinks LMDBCache is some browser Cache and not actually Parcel's Cache
-    // so we force type it to Parcel's Cache
-    const cache = new LMDBCache(getCacheDir(siteRoot)) as unknown as Cache
-    const parcel = constructParcel(siteRoot, cache)
-    const { bundleGraph } = await parcel.run()
-    let cacheClosePromise = Promise.resolve()
+    let bundles: RunParcelReturn = []
     try {
-      // @ts-ignore store is public field on LMDBCache class, but public interface for Cache
-      // doesn't have it. There doesn't seem to be proper public API for this, so we have to
-      // resort to reaching into internals. Just in case this is wrapped in try/catch if
-      // parcel changes internals in future (closing cache is only needed when retrying
-      // so the if the change happens we shouldn't fail on happy builds)
-      cacheClosePromise = cache.store.close()
-    } catch (e) {
-      reporter.verbose(`Failed to close parcel cache\n${e.toString()}`)
+      // sometimes parcel segfaults which is not something we can recover from, so we run parcel
+      // in child process and IF it fails we try to delete parcel's cache (this seems to "fix" the problem
+      // causing segfaults?) and retry few times
+      // not ideal, but having gatsby segfaulting is really frustrating and common remedy is to clean
+      // entire .cache for users, which is not ideal either especially when we can just delete parcel's cache
+      // and to recover automatically
+      bundles = await worker.single.runParcel(siteRoot)
+    } catch (error) {
+      if (error.diagnostics) {
+        handleErrors(error.diagnostics)
+        return
+      } else if (retry >= RETRY_COUNT) {
+        reporter.panic({
+          id: `11904`,
+          error,
+          context: {
+            siteRoot,
+            retries: RETRY_COUNT,
+            sourceMessage: error.message,
+          },
+        })
+      } else {
+        await exponentialBackoff(retry)
+        try {
+          await remove(getCacheDir(siteRoot))
+        } catch {
+          // in windows we might get "EBUSY" errors if LMDB failed to close, so this try/catch is
+          // to prevent EBUSY errors from potentially hiding real import errors
+        }
+        await compileGatsbyFiles(siteRoot, retry + 1)
+        return
+      }
+    } finally {
+      worker.end()
     }
 
     await exponentialBackoff(retry)
-
-    const bundles = bundleGraph.getBundles()
 
     if (bundles.length === 0) return
 
@@ -150,7 +199,7 @@ export async function compileGatsbyFiles(
               siteRoot,
               retries: RETRY_COUNT,
               compiledFileLocation: bundle.filePath,
-              sourceFileLocation: bundle.getMainEntry()?.filePath,
+              sourceFileLocation: bundle.mainEntryPath,
             },
           })
         } else if (retry > 0) {
@@ -165,9 +214,6 @@ export async function compileGatsbyFiles(
           )
         }
 
-        // sometimes parcel cache gets in weird state and we need to clear the cache
-        await cacheClosePromise
-
         try {
           await remove(getCacheDir(siteRoot))
         } catch {
@@ -179,7 +225,7 @@ export async function compileGatsbyFiles(
         return
       }
 
-      const mainEntry = bundle.getMainEntry()?.filePath
+      const mainEntry = bundle.mainEntryPath
       // mainEntry won't exist for shared chunks
       if (mainEntry) {
         if (mainEntry.endsWith(`.ts`)) {

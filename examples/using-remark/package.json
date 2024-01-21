@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Florian Kissling <sechskilo@gmail.com>",
   "dependencies": {
-    "babel-plugin-lodash": "^3.3.4",
+    "@sigmacomputing/babel-plugin-lodash": "^3.3.5",
     "es6-object-assign": "^1.1.0",
     "gatsby": "next",
     "gatsby-core-utils": "next",

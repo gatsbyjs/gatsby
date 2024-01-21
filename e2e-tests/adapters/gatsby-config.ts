@@ -15,6 +15,22 @@ if (shouldUseDebugAdapter) {
   configOverrides = {
     adapter: debugAdapter(),
   }
+} else {
+  process.env.GATSBY_ADAPTERS_MANIFEST = /* javascript */ `
+    module.exports = [
+      {
+        name: 'Netlify',
+        module: 'gatsby-adapter-netlify',
+        test: () => !!process.env.NETLIFY || !!process.env.NETLIFY_LOCAL,
+        versions: [
+          {
+            gatsbyVersion: '*',
+            moduleVersion: '*',
+          }
+        ],
+      }
+    ]
+  `
 }
 
 const config: GatsbyConfig = {

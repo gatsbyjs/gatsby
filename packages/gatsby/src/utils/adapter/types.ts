@@ -302,5 +302,9 @@ export interface IAdapterManifestEntry {
      * Version of the adapter. This is a semver range.
      */
     moduleVersion: string
+    /**
+     * Can override the module defined in the parent manifest entry - useful for when the adapter is renamed.
+     */
+    module?: string
   }>
 }

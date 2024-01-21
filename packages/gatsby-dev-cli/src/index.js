@@ -44,7 +44,13 @@ You typically only need to configure this once.`
   .alias(`h`, `help`)
   .nargs(`v`, 0)
   .alias(`v`, `version`)
-  .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`).argv
+  .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`)
+  .choices(`package-manager`, [`yarn`, `pnpm`])
+  .default(`package-manager`, `yarn`)
+  .describe(
+    `package-manager`,
+    `Package manager to use for installing dependencies.`
+  ).argv
 
 if (argv.version) {
   console.log(getVersionInfo())
@@ -154,4 +160,5 @@ watch(gatsbyLocation, argv.packages, {
   monoRepoPackages,
   packageNameToPath,
   externalRegistry: argv.externalRegistry,
+  packageManager: argv.packageManager,
 })
