@@ -26,7 +26,7 @@ npm install gatsby-adapter-netlify
 Add `gatsby-adapter-netlify` to your [`gatsby-config`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/) and configure the [`adapter`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#adapter) option.
 
 ```js
-const adapter = require("gatsby-adapter-netlify")
+const adapter = require("gatsby-adapter-netlify").default
 
 module.exports = {
   adapter: adapter({
