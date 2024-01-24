@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.13.1/packages/gatsby-dev-cli) (2024-01-23)
+
+#### Bug Fixes
+
+- fix webpack compilation when pnpm is used fix [#38757](https://github.com/gatsbyjs/gatsby/issues/38757) fix [#38804](https://github.com/gatsbyjs/gatsby/issues/38804) ([fc0eea1](https://github.com/gatsbyjs/gatsby/commit/fc0eea1eec9edcce77018d6d58a3070292cd5887))
+
 ## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.13.0/packages/gatsby-dev-cli) (2023-12-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
