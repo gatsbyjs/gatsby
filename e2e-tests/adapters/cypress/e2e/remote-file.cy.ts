@@ -29,7 +29,7 @@ const configs = [
   {
     title: `remote-file (SSR, Page Query)`,
     pagePath: `/routes/ssr/remote-file/`,
-    placeholders: false,
+    placeholders: true,
   },
 ]
 
