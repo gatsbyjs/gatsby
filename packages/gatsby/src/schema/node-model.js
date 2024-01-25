@@ -498,6 +498,9 @@ class LocalNodeModel {
    * @param {Node} node Root Node
    */
   trackInlineObjectsInRootNode(node) {
+    if (node.internal.trackInlineObjects === false) {
+      return
+    }
     if (!this._trackedRootNodes.has(node)) {
       addRootNodeToInlineObject(
         this._rootNodeMap,
@@ -963,9 +966,6 @@ const addRootNodeToInlineObject = (
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
-    if (isNode && data.internal.trackInlineObjects === false) {
-      return
-    }
     if (path.has(data)) return
     path.add(data)
 
