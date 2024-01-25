@@ -156,6 +156,10 @@ describe(`getRoutesManifest`, () => {
 
     expect(headers).toContainEqual({
       headers: [
+        {
+          key: `cache-control`,
+          value: `public, max-age=0, must-revalidate`,
+        },
         { key: `x-xss-protection`, value: `1; mode=block` },
         { key: `x-content-type-options`, value: `nosniff` },
         { key: `referrer-policy`, value: `same-origin` },
@@ -171,15 +175,6 @@ describe(`getRoutesManifest`, () => {
         },
       ],
       path: `/static/*`,
-    })
-    expect(headers).toContainEqual({
-      headers: [
-        {
-          key: `cache-control`,
-          value: `public, max-age=0, must-revalidate`,
-        },
-      ],
-      path: `/page-data/index/page-data.json`,
     })
     expect(headers).toContainEqual({
       headers: [
@@ -234,6 +229,10 @@ describe(`getRoutesManifest`, () => {
 
     expect(headers).toContainEqual({
       headers: [
+        {
+          key: `cache-control`,
+          value: `public, max-age=0, must-revalidate`,
+        },
         { key: `x-xss-protection`, value: `1; mode=block` },
         { key: `x-content-type-options`, value: `nosniff` },
         { key: `referrer-policy`, value: `same-origin` },
@@ -249,15 +248,6 @@ describe(`getRoutesManifest`, () => {
         },
       ],
       path: `/prefix/static/*`,
-    })
-    expect(headers).toContainEqual({
-      headers: [
-        {
-          key: `cache-control`,
-          value: `public, max-age=0, must-revalidate`,
-        },
-      ],
-      path: `/prefix/page-data/index/page-data.json`,
     })
     expect(headers).toContainEqual({
       headers: [

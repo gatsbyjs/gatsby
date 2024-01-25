@@ -308,7 +308,7 @@ const headersAreEqual = (a, b): boolean =>
 const getDefaultHeaderRoutes = (pathPrefix: string): HeaderRoutes => [
   {
     path: `${pathPrefix}/*`,
-    headers: BASE_HEADERS,
+    headers: MUST_REVALIDATE_HEADERS,
   },
   {
     path: `${pathPrefix}/static/*`,
@@ -319,7 +319,7 @@ const getDefaultHeaderRoutes = (pathPrefix: string): HeaderRoutes => [
 const customHeaderFilter =
   (route: Route, pathPrefix: string) =>
   (h: IHeader["headers"][0]): boolean => {
-    for (const baseHeader of BASE_HEADERS) {
+    for (const baseHeader of MUST_REVALIDATE_HEADERS) {
       if (headersAreEqual(baseHeader, h)) {
         return false
       }
