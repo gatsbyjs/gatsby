@@ -788,7 +788,7 @@ export const createNodesForContentType = ({
             type: makeTypeName(contentTypeItemId, contentTypePrefix),
             // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
             contentDigest: entryItem.sys.updatedAt as string,
-            dontTrackInlineObjects: true,
+            trackInlineObjects: false,
           },
           // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
           // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
@@ -945,7 +945,7 @@ export const createAssetNodes = async ({
         type: `ContentfulAsset`,
         // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
         contentDigest: assetItem.sys.updatedAt,
-        dontTrackInlineObjects: true,
+        trackInlineObjects: false,
       },
       // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
       // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field

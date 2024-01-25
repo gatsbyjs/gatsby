@@ -1779,7 +1779,7 @@ export interface NodeInput {
     contentDigest: string
     description?: string
     contentFilePath?: string
-    dontTrackInlineObjects?: boolean
+    trackInlineObjects?: boolean
   }
   [key: string]: unknown
 }

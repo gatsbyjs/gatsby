@@ -215,7 +215,7 @@ type Internal {
   owner: String!
   type: String!
   contentFilePath: String
-  dontTrackInlineObjects: Boolean
+  trackInlineObjects: Boolean
 }
 
 \\"\\"\\"
@@ -556,7 +556,7 @@ input InternalFilterInput {
   owner: StringQueryOperatorInput
   type: StringQueryOperatorInput
   contentFilePath: StringQueryOperatorInput
-  dontTrackInlineObjects: BooleanQueryOperatorInput
+  trackInlineObjects: BooleanQueryOperatorInput
 }
 
 input BooleanQueryOperatorInput {
@@ -653,7 +653,7 @@ input InternalFieldSelector {
   owner: FieldSelectorEnum
   type: FieldSelectorEnum
   contentFilePath: FieldSelectorEnum
-  dontTrackInlineObjects: FieldSelectorEnum
+  trackInlineObjects: FieldSelectorEnum
 }
 
 type FileGroupConnection {
@@ -768,7 +768,7 @@ input InternalSortInput {
   owner: SortOrderEnum
   type: SortOrderEnum
   contentFilePath: SortOrderEnum
-  dontTrackInlineObjects: SortOrderEnum
+  trackInlineObjects: SortOrderEnum
 }
 
 type DirectoryConnection {
