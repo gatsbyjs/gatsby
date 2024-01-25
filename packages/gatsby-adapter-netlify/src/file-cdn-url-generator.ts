@@ -1,4 +1,4 @@
-import crypto from "crypto"
+import { createHash } from "crypto"
 import { basename } from "path"
 
 import type { FileCdnUrlGeneratorFn, FileCdnSourceImage } from "gatsby"
@@ -21,8 +21,7 @@ export const generateFileUrl: FileCdnUrlGeneratorFn = function generateFileUrl(
     baseURL.searchParams.append(`cd`, source.internal.contentDigest)
   } else {
     baseURL = new URL(
-      `${placeholderOrigin}${pathPrefix}/_gatsby/file/${crypto
-        .createHash(`md5`)
+      `${placeholderOrigin}${pathPrefix}/_gatsby/file/${createHash(`md5`)
         .update(source.url)
         .digest(`hex`)}/${basename(source.filename)}`
     )
