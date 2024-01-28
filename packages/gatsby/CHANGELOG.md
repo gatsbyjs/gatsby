@@ -3,6 +3,148 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.2/packages/gatsby) (2024-01-23)
+
+#### Bug Fixes
+
+- support builtin modules prefixed with `node:` on `build-html` fixed [#38516](https://github.com/gatsbyjs/gatsby/issues/38516) fixed [#38818](https://github.com/gatsbyjs/gatsby/issues/38818) ([c74745c](https://github.com/gatsbyjs/gatsby/commit/c74745c180f6e508d80dc680a721a63c7f6450bc))
+- fix webpack compilation when pnpm is used fix [#38757](https://github.com/gatsbyjs/gatsby/issues/38757) fix [#38804](https://github.com/gatsbyjs/gatsby/issues/38804) ([fc0eea1](https://github.com/gatsbyjs/gatsby/commit/fc0eea1eec9edcce77018d6d58a3070292cd5887))
+- try to automatically recover when parcel segfaults [#38773](https://github.com/gatsbyjs/gatsby/issues/38773) [#38799](https://github.com/gatsbyjs/gatsby/issues/38799) ([f6ed443](https://github.com/gatsbyjs/gatsby/commit/f6ed443f8042166c5292c79696877bb6270f4229))
+- more robust adapter zero-conf handling [#38778](https://github.com/gatsbyjs/gatsby/issues/38778) [#38800](https://github.com/gatsbyjs/gatsby/issues/38800) ([68b0821](https://github.com/gatsbyjs/gatsby/commit/68b0821df4ce236e488cfcd45104e06435d862b6))
+
+#### Chores
+
+- swap babel-plugin-lodash with updated version that doesn't use deprecated APIs [#38797](https://github.com/gatsbyjs/gatsby/issues/38797) [#38803](https://github.com/gatsbyjs/gatsby/issues/38803) ([c9f8c24](https://github.com/gatsbyjs/gatsby/commit/c9f8c24cdb65016d03f1f270d3df43b0467623f0))
+
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.1/packages/gatsby) (2023-12-22)
+
+**Note:** Version bump only for package gatsby
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.0/packages/gatsby) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Features
+
+- image and file cdn url generator adapter implementation [#38685](https://github.com/gatsbyjs/gatsby/issues/38685) [#38715](https://github.com/gatsbyjs/gatsby/issues/38715) [#discussion_r1414135797](https://github.com/gatsbyjs/gatsby/issues/discussion_r1414135797) [#38735](https://github.com/gatsbyjs/gatsby/issues/38735) [#38719](https://github.com/gatsbyjs/gatsby/issues/38719) ([4a780fb](https://github.com/gatsbyjs/gatsby/commit/4a780fbac717b1df337f156e2ac4b2da6478106b))
+- support pathPrefix and trailingSlash options fix [#38666](https://github.com/gatsbyjs/gatsby/issues/38666) ([63e57cf](https://github.com/gatsbyjs/gatsby/commit/63e57cf3dd96083d219c09741a751206bb715a53))
+
+#### Bug Fixes
+
+- allow gatsby-adapter-netlify@">=1.0.0 <=1.0.3" for gatsby@<5.12.10 [#38758](https://github.com/gatsbyjs/gatsby/issues/38758) ([1953e5c](https://github.com/gatsbyjs/gatsby/commit/1953e5cf818ec307c74dd9055df8edb394954981))
+- re-install lmdb when detecting the absence of @LMDB prebuilt packages [#38691](https://github.com/gatsbyjs/gatsby/issues/38691) ([e3365ab](https://github.com/gatsbyjs/gatsby/commit/e3365ab01eebb6c17bbae7fcb7e74040a0c4f260))
+- respect 'force' and 'conditions' properties on redirects [#38657](https://github.com/gatsbyjs/gatsby/issues/38657) ([48d311e](https://github.com/gatsbyjs/gatsby/commit/48d311e71f7ab6865b0615f6f291764b4b04a874))
+- Adapter header rules [#38644](https://github.com/gatsbyjs/gatsby/issues/38644) ([dc21604](https://github.com/gatsbyjs/gatsby/commit/dc21604411e36ec0f7e44854180b66ee1506b544))
+- don't force leading slash for external paths in routes manifest [#38639](https://github.com/gatsbyjs/gatsby/issues/38639) ([5dbcf9e](https://github.com/gatsbyjs/gatsby/commit/5dbcf9ea956880af7541aaf33ed2f764ec8632d5))
+- open lmdb instances in writeable locations in generated ssr/dsg function [#38631](https://github.com/gatsbyjs/gatsby/issues/38631) ([3af35ae](https://github.com/gatsbyjs/gatsby/commit/3af35ae0de6aae4bb700279317f6beec46ea50ad))
+- don't break builds when using features unsupported by adapter [#38520](https://github.com/gatsbyjs/gatsby/issues/38520) ([6674ad6](https://github.com/gatsbyjs/gatsby/commit/6674ad67946c6f65e17e2cfbe45f0e9f3c69a0a3))
+- fix api function compilation on Windows fix [#38489](https://github.com/gatsbyjs/gatsby/issues/38489) ([26feae4](https://github.com/gatsbyjs/gatsby/commit/26feae40fd79105519b85e87bba33d69c48bae10))
+- fix fetching adapters manifest from latest gatsby version fix [#38475](https://github.com/gatsbyjs/gatsby/issues/38475) ([d1e6aea](https://github.com/gatsbyjs/gatsby/commit/d1e6aea91c53915badc0b907170180d946cd6728))
+- GatsbyNodeAPI types [#38461](https://github.com/gatsbyjs/gatsby/issues/38461) ([1416d1e](https://github.com/gatsbyjs/gatsby/commit/1416d1eaa27dbcabed1ec82c030caacbe1fa5306))
+- disable prettier for results of graphql typegen [#38453](https://github.com/gatsbyjs/gatsby/issues/38453) ([421f95a](https://github.com/gatsbyjs/gatsby/commit/421f95a10e264097f7be422f02d9de91ac279119))
+
+#### Chores
+
+- update gatsby-adapter-netlify version manifest [#38745](https://github.com/gatsbyjs/gatsby/issues/38745) ([268a640](https://github.com/gatsbyjs/gatsby/commit/268a640fdd07d8937bb9acfdc4f8239b3e826aae))
+- Adapters [#38233](https://github.com/gatsbyjs/gatsby/issues/38233) ([7c6a7af](https://github.com/gatsbyjs/gatsby/commit/7c6a7aff5c3e3dafa5893ee3086cb14bcf876bd4))
+
+#### Other Changes
+
+- Update node-model.js to new sort syntax [#38515](https://github.com/gatsbyjs/gatsby/issues/38515) ([f55d88d](https://github.com/gatsbyjs/gatsby/commit/f55d88db7668f451234f135dbaf1cc26cad80e59))
+
+### [5.12.12](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.12/packages/gatsby) (2023-12-07)
+
+#### Chores
+
+- update gatsby-adapter-netlify version manifest [#38745](https://github.com/gatsbyjs/gatsby/issues/38745) [#38746](https://github.com/gatsbyjs/gatsby/issues/38746) [#38745](https://github.com/gatsbyjs/gatsby/issues/38745) [#38733](https://github.com/gatsbyjs/gatsby/issues/38733) ([bba81d6](https://github.com/gatsbyjs/gatsby/commit/bba81d6de43ef83f936ff72a6f64c33d559aa442))
+
+### [5.12.11](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.11/packages/gatsby) (2023-11-22)
+
+#### Bug Fixes
+
+- re-install lmdb when detecting the absence of @LMDB prebuilt packages [#38691](https://github.com/gatsbyjs/gatsby/issues/38691) [#38707](https://github.com/gatsbyjs/gatsby/issues/38707) ([f713e59](https://github.com/gatsbyjs/gatsby/commit/f713e5985b4c11cfc616fb8a8cfd8ea46f53f408))
+
+### [5.12.10](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.10/packages/gatsby) (2023-11-21)
+
+#### Features
+
+- support pathPrefix and trailingSlash options fix [#38666](https://github.com/gatsbyjs/gatsby/issues/38666) fix [#38701](https://github.com/gatsbyjs/gatsby/issues/38701) ([1090558](https://github.com/gatsbyjs/gatsby/commit/1090558010c5e73de49d5987ab38d30165581c51))
+
+### [5.12.9](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.9/packages/gatsby) (2023-10-26)
+
+#### Bug Fixes
+
+- respect 'force' and 'conditions' properties on redirects [#38657](https://github.com/gatsbyjs/gatsby/issues/38657) [#38664](https://github.com/gatsbyjs/gatsby/issues/38664) ([c43080f](https://github.com/gatsbyjs/gatsby/commit/c43080f49fe54022be141855db4e56d98398338c))
+- Adapter header rules [#38644](https://github.com/gatsbyjs/gatsby/issues/38644) [#38661](https://github.com/gatsbyjs/gatsby/issues/38661) ([6869562](https://github.com/gatsbyjs/gatsby/commit/6869562eb761b260d40d835148ae86e5de7d5165))
+
+### [5.12.8](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.8/packages/gatsby) (2023-10-20)
+
+#### Bug Fixes
+
+- don't force leading slash for external paths in routes manifest [#38639](https://github.com/gatsbyjs/gatsby/issues/38639) [#38646](https://github.com/gatsbyjs/gatsby/issues/38646) ([8302bc8](https://github.com/gatsbyjs/gatsby/commit/8302bc8e781bd147c1a0ddbbaa5b50740b01ef95))
+
+### [5.12.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.7/packages/gatsby) (2023-10-17)
+
+#### Bug Fixes
+
+- open lmdb instances in writeable locations in generated ssr/dsg function [#38631](https://github.com/gatsbyjs/gatsby/issues/38631) [#38638](https://github.com/gatsbyjs/gatsby/issues/38638) ([acb8799](https://github.com/gatsbyjs/gatsby/commit/acb87998dd452610cc33ad21a7e5844f3786f426))
+
+### [5.12.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.6/packages/gatsby) (2023-10-09)
+
+**Note:** Version bump only for package gatsby
+
+### [5.12.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.5/packages/gatsby) (2023-09-27)
+
+**Note:** Version bump only for package gatsby
+
+### [5.12.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.4/packages/gatsby) (2023-09-05)
+
+#### Bug Fixes
+
+- don't break builds when using features unsupported by adapter [#38520](https://github.com/gatsbyjs/gatsby/issues/38520) [#38521](https://github.com/gatsbyjs/gatsby/issues/38521) ([232ec13](https://github.com/gatsbyjs/gatsby/commit/232ec1392d699d4e1240e327dec9cbc0873b5067))
+
+### [5.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.3/packages/gatsby) (2023-08-28)
+
+#### Bug Fixes
+
+- fix api function compilation on Windows fix [#38489](https://github.com/gatsbyjs/gatsby/issues/38489) fix [#38491](https://github.com/gatsbyjs/gatsby/issues/38491) ([da050e5](https://github.com/gatsbyjs/gatsby/commit/da050e55d6794e9b570f31926471413365ff25f3))
+
+### [5.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.2/packages/gatsby) (2023-08-28)
+
+#### Bug Fixes
+
+- fix fetching adapters manifest from latest gatsby version fix [#38475](https://github.com/gatsbyjs/gatsby/issues/38475) fix [#38482](https://github.com/gatsbyjs/gatsby/issues/38482) ([6a73ee1](https://github.com/gatsbyjs/gatsby/commit/6a73ee19e3905a3ab96d2cfe81e0bbbed6ff1b8a))
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.1/packages/gatsby) (2023-08-24)
+
+#### Bug Fixes
+
+- fix fetching adapters manifest from latest gatsby version ([1f9e806](https://github.com/gatsbyjs/gatsby/commit/1f9e806bea4afb0dfc4a18d96e8a7fa7d823781a))
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.12.0/packages/gatsby) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Features
+
+- Adapters [#38232](https://github.com/gatsbyjs/gatsby/issues/38232) ([b2d4aef](https://github.com/gatsbyjs/gatsby/commit/b2d4aefa7716e3ef02a19b530a8a7e4678d086e1))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby [#38297](https://github.com/gatsbyjs/gatsby/issues/38297) ([544862b](https://github.com/gatsbyjs/gatsby/commit/544862b94334e00c9458c33ef79bdf032ff0fe29))
+- update dependency core-js to ^3.31.0 [#38309](https://github.com/gatsbyjs/gatsby/issues/38309) ([176b1cc](https://github.com/gatsbyjs/gatsby/commit/176b1ccc8b439d37522de9ad9413def399d89082))
+- copy slices overrides to 404.html copy [#38337](https://github.com/gatsbyjs/gatsby/issues/38337) ([6c7a0e3](https://github.com/gatsbyjs/gatsby/commit/6c7a0e3ab1a6b7aa1a7ef288b8d61bdf4e5b4622))
+- update dependency semver to ^7.5.3 [#38296](https://github.com/gatsbyjs/gatsby/issues/38296) ([11e64e2](https://github.com/gatsbyjs/gatsby/commit/11e64e20898cc97289bdbda00eb4bcc309828b23))
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+- Correct `staticQueryDir` default and improved Storybook support [#38267](https://github.com/gatsbyjs/gatsby/issues/38267) ([2fd6623](https://github.com/gatsbyjs/gatsby/commit/2fd6623b4dc7107a2169bcf39b938e27e07f1633))
+- allow touching nodes owned by another plugin [#38235](https://github.com/gatsbyjs/gatsby/issues/38235) ([5ec74c1](https://github.com/gatsbyjs/gatsby/commit/5ec74c1dd7031a9ad752b47c67708e59dadb0431))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-graphiql-explorer [#38279](https://github.com/gatsbyjs/gatsby/issues/38279) ([39c4987](https://github.com/gatsbyjs/gatsby/commit/39c4987e30954bea4bc5b07ad5c96fe9c1834855))
+- update dependency graphql to ^16.7.1 [#38302](https://github.com/gatsbyjs/gatsby/issues/38302) ([5549846](https://github.com/gatsbyjs/gatsby/commit/554984642f8b588262987a01f40274b695e77fb1))
+- update [dev] minor and patch dependencies for gatsby [#38278](https://github.com/gatsbyjs/gatsby/issues/38278) ([8a90efd](https://github.com/gatsbyjs/gatsby/commit/8a90efd76f0a635cc142d574f17b3797d73283ed))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.11.0/packages/gatsby) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

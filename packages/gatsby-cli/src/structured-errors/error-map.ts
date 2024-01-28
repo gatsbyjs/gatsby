@@ -926,6 +926,9 @@ const errors: Record<string, IErrorMapEntry> = {
     type: Type.ADAPTER,
     category: ErrorCategory.SYSTEM,
   },
+  // Currently not used, as the error was turned into warning
+  // Might be used in next major version of gatsby, but we still have to keep it
+  // because older gatsby versions might try to use this error ID
   "12201": {
     text: (context): string =>
       `Adapter "${

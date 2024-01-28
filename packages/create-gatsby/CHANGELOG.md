@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.13.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.13.1/packages/create-gatsby) (2024-01-23)
+
+**Note:** Version bump only for package create-gatsby
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.13.0/packages/create-gatsby) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+**Note:** Version bump only for package create-gatsby
+
+### [3.12.3](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.12.3/packages/create-gatsby) (2023-10-26)
+
+**Note:** Version bump only for package create-gatsby
+
+### [3.12.2](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.12.2/packages/create-gatsby) (2023-10-20)
+
+**Note:** Version bump only for package create-gatsby
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.12.1/packages/create-gatsby) (2023-10-09)
+
+**Note:** Version bump only for package create-gatsby
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.12.0/packages/create-gatsby) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Chores
+
+- update dependency @types/node to ^14.18.52 for create-gatsby [#38282](https://github.com/gatsbyjs/gatsby/issues/38282) ([3487bb8](https://github.com/gatsbyjs/gatsby/commit/3487bb8a58e26c0e379ea330196dd6f8e038edb9))
+
 ## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.11.0/packages/create-gatsby) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

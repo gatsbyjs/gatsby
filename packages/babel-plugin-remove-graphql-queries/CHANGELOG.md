@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@5.13.1/packages/babel-plugin-remove-graphql-queries) (2024-01-23)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@5.13.0/packages/babel-plugin-remove-graphql-queries) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@5.12.1/packages/babel-plugin-remove-graphql-queries) (2023-10-26)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@5.12.0/packages/babel-plugin-remove-graphql-queries) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- Correct `staticQueryDir` default and improved Storybook support [#38267](https://github.com/gatsbyjs/gatsby/issues/38267) ([2fd6623](https://github.com/gatsbyjs/gatsby/commit/2fd6623b4dc7107a2169bcf39b938e27e07f1633))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@5.11.0/packages/babel-plugin-remove-graphql-queries) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

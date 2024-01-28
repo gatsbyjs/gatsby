@@ -1,5 +1,7 @@
 # gatsby-plugin-gatsby-cloud
 
+⚠️ This plugin will be deprecated as Gatsby Cloud is being discontinued. [Learn more](https://www.netlify.com/blog/gatsby-cloud-evolution/).
+
 Automatically generates a `_headers.json` file and a `_redirects.json` file at the root of the public folder to configure
 headers and redirects on Gatsby Cloud.
 

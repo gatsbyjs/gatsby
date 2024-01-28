@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.13.1/packages/gatsby-core-utils) (2024-01-23)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.13.0/packages/gatsby-core-utils) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Bug Fixes
+
+- respect 'force' and 'conditions' properties on redirects [#38657](https://github.com/gatsbyjs/gatsby/issues/38657) ([48d311e](https://github.com/gatsbyjs/gatsby/commit/48d311e71f7ab6865b0615f6f291764b4b04a874))
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.12.1/packages/gatsby-core-utils) (2023-10-26)
+
+#### Bug Fixes
+
+- respect 'force' and 'conditions' properties on redirects [#38657](https://github.com/gatsbyjs/gatsby/issues/38657) [#38664](https://github.com/gatsbyjs/gatsby/issues/38664) ([c43080f](https://github.com/gatsbyjs/gatsby/commit/c43080f49fe54022be141855db4e56d98398338c))
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.12.0/packages/gatsby-core-utils) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+
+#### Chores
+
+- update dependency msw to ^1.2.2 for gatsby-core-utils [#38283](https://github.com/gatsbyjs/gatsby/issues/38283) ([ada5fef](https://github.com/gatsbyjs/gatsby/commit/ada5fef39da6b48bac899243715472311b6343df))
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.11.0/packages/gatsby-core-utils) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

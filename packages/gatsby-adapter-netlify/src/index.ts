@@ -1,7 +1,10 @@
+import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
 import { prepareFunctionVariants } from "./lambda-handler"
+import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
+import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 
 interface INetlifyCacheUtils {
   restore: (paths: Array<string>) => Promise<boolean>
@@ -10,6 +13,7 @@ interface INetlifyCacheUtils {
 
 interface INetlifyAdapterOptions {
   excludeDatastoreFromEngineFunction?: boolean
+  imageCDN?: boolean
 }
 
 let _cacheUtils: INetlifyCacheUtils | undefined
@@ -17,18 +21,32 @@ async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
   if (_cacheUtils) {
     return _cacheUtils
   }
-  if (process.env.NETLIFY) {
-    const CACHE_DIR = `/opt/build/cache`
+  let CACHE_DIR: string | undefined
+  if (process.env.NETLIFY_LOCAL) {
+    CACHE_DIR = join(process.cwd(), `.netlify`, `build-cache`)
+  } else if (process.env.NETLIFY) {
+    CACHE_DIR = `/opt/build/cache`
+  }
+  if (CACHE_DIR) {
     _cacheUtils = (await import(`@netlify/cache-utils`)).bindOpts({
       cacheDir: CACHE_DIR,
     })
-
     return _cacheUtils
   }
   return undefined
 }
 
 const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
+  let useNetlifyImageCDN = options?.imageCDN
+  if (
+    typeof useNetlifyImageCDN === `undefined` &&
+    typeof process.env.NETLIFY_IMAGE_CDN !== `undefined`
+  ) {
+    useNetlifyImageCDN =
+      process.env.NETLIFY_IMAGE_CDN === `true` ||
+      process.env.NETLIFY_IMAGE_CDN === `1`
+  }
+
   return {
     name: `gatsby-adapter-netlify`,
     cache: {
@@ -38,7 +56,13 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           reporter.verbose(
             `[gatsby-adapter-netlify] using @netlify/cache-utils restore`
           )
-          return await utils.restore(directories)
+          const didRestore = await utils.restore(directories)
+          if (didRestore) {
+            reporter.info(
+              `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`
+            )
+          }
+          return didRestore
         }
 
         return false
@@ -50,12 +74,35 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
             `[gatsby-adapter-netlify] using @netlify/cache-utils save`
           )
           await utils.save(directories)
+          reporter.info(
+            `[gatsby-adapter-netlify] Stored the Gatsby cache to speed up future builds. 🔥`
+          )
         }
       },
     },
-    async adapt({ routesManifest, functionsManifest }): Promise<void> {
+    async adapt({
+      routesManifest,
+      functionsManifest,
+      headerRoutes,
+      pathPrefix,
+      remoteFileAllowedUrls,
+      reporter,
+    }): Promise<void> {
+      if (useNetlifyImageCDN) {
+        await handleAllowedRemoteUrlsNetlifyConfig({
+          remoteFileAllowedUrls,
+          reporter,
+        })
+
+        await prepareFileCdnHandler({
+          pathPrefix,
+          remoteFileAllowedUrls,
+        })
+      }
+
       const { lambdasThatUseCaching } = await handleRoutesManifest(
-        routesManifest
+        routesManifest,
+        headerRoutes
       )
 
       // functions handling
@@ -102,13 +149,19 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         excludeDatastoreFromEngineFunction,
         deployURL,
         supports: {
-          pathPrefix: false,
-          trailingSlash: [`always`],
+          pathPrefix: true,
+          trailingSlash: [`always`, `never`, `ignore`],
         },
         pluginsToDisable: [
           `gatsby-plugin-netlify-cache`,
           `gatsby-plugin-netlify`,
         ],
+        imageCDNUrlGeneratorModulePath: useNetlifyImageCDN
+          ? require.resolve(`./image-cdn-url-generator`)
+          : undefined,
+        fileCDNUrlGeneratorModulePath: useNetlifyImageCDN
+          ? require.resolve(`./file-cdn-url-generator`)
+          : undefined,
       }
     },
   }

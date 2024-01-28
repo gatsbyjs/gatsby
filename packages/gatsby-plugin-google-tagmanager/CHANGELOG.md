@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@5.13.1/packages/gatsby-plugin-google-tagmanager) (2024-01-23)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@5.13.0/packages/gatsby-plugin-google-tagmanager) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Features
+
+- add self hosted path option [#38731](https://github.com/gatsbyjs/gatsby/issues/38731) ([8b9ee3f](https://github.com/gatsbyjs/gatsby/commit/8b9ee3fc84f1bb29387365ff7b10ff4f16153403))
+
+### [5.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@5.12.3/packages/gatsby-plugin-google-tagmanager) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+### [5.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@5.12.2/packages/gatsby-plugin-google-tagmanager) (2023-10-20)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@5.12.1/packages/gatsby-plugin-google-tagmanager) (2023-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@5.12.0/packages/gatsby-plugin-google-tagmanager) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@5.11.0/packages/gatsby-plugin-google-tagmanager) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

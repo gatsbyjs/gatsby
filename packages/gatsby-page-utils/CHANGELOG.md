@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.13.1/packages/gatsby-page-utils) (2024-01-23)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.13.0/packages/gatsby-page-utils) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.12.1/packages/gatsby-page-utils) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.12.0/packages/gatsby-page-utils) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Features
+
+- Adapters [#38232](https://github.com/gatsbyjs/gatsby/issues/38232) ([b2d4aef](https://github.com/gatsbyjs/gatsby/commit/b2d4aefa7716e3ef02a19b530a8a7e4678d086e1))
+
+#### Bug Fixes
+
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+
 ## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@3.11.0/packages/gatsby-page-utils) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

@@ -10,9 +10,10 @@ import { promisify } from "util"
 
 import type { IGatsbyPage } from "../../internal"
 import type { ISSRData } from "./entry"
-import { link } from "linkfs"
+import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
 const cdnDatastore = `%CDN_DATASTORE_PATH%`
+const PATH_PREFIX = `%PATH_PREFIX%`
 
 function setupFsWrapper(): string {
   // setup global._fsWrapper
@@ -23,10 +24,13 @@ function setupFsWrapper(): string {
   } catch (e) {
     // we are in a read-only filesystem, so we need to use a temp dir
 
-    const TEMP_CACHE_DIR = path.join(tmpdir(), `gatsby`, `.cache`)
+    const TEMP_DIR = path.join(tmpdir(), `gatsby`)
+    const TEMP_CACHE_DIR = path.join(TEMP_DIR, `.cache`)
+
+    global.__GATSBY.root = TEMP_DIR
 
     // TODO: don't hardcode this
-    const cacheDir = `/var/task/.cache`
+    const cacheDir = `${process.cwd()}/.cache`
 
     // we need to rewrite fs
     const rewrites = [
@@ -43,8 +47,63 @@ function setupFsWrapper(): string {
       to: TEMP_CACHE_DIR,
       rewrites,
     })
+
+    // copied from https://github.com/streamich/linkfs/blob/master/src/index.ts#L126-L142
+    function mapPathUsingRewrites(fsPath: fs.PathLike): string {
+      let filename = path.resolve(String(fsPath))
+      for (const [from, to] of rewrites) {
+        if (filename.indexOf(from) === 0) {
+          const rootRegex = /(?:^[a-zA-Z]:\\$)|(?:^\/$)/ // C:\ vs /
+          const isRoot = from.match(rootRegex)
+          const baseRegex = `^(` + from.replace(/\\/g, `\\\\`) + `)`
+
+          if (isRoot) {
+            const regex = new RegExp(baseRegex)
+            filename = filename.replace(regex, () => to + path.sep)
+          } else {
+            const regex = new RegExp(baseRegex + `(\\\\|/|$)`)
+            filename = filename.replace(regex, (_match, _p1, p2) => to + p2)
+          }
+        }
+      }
+      return filename
+    }
+
+    function applyRename<
+      T = typeof import("fs") | typeof import("fs").promises
+    >(fsToRewrite: T, lfs: T, method: "rename" | "renameSync"): void {
+      const original = fsToRewrite[method]
+      if (original) {
+        // @ts-ignore - complains about __promisify__ which doesn't actually exist in runtime
+        lfs[method] = (
+          ...args: Parameters<typeof import("fs")["rename" | "renameSync"]>
+        ): ReturnType<typeof import("fs")["rename" | "renameSync"]> => {
+          args[0] = mapPathUsingRewrites(args[0])
+          args[1] = mapPathUsingRewrites(args[1])
+          // @ts-ignore - can't decide which signature this is, but we just preserve the original
+          // signature here and mostly care about first 2 arguments being PathLike
+          return original.apply(fsToRewrite, args)
+        }
+      }
+    }
+
+    // linkfs doesn't handle following methods, so we need to add them manually
+    linkRewritableMethods.push(`createWriteStream`, `createReadStream`, `rm`)
+
+    function createLinkedFS<
+      T = typeof import("fs") | typeof import("fs").promises
+    >(fsToRewrite: T): T {
+      const linkedFS = link(fsToRewrite, rewrites) as T
+
+      // linkfs doesn't handle `to` argument in `rename` and `renameSync` methods
+      applyRename(fsToRewrite, linkedFS, `rename`)
+      applyRename(fsToRewrite, linkedFS, `renameSync`)
+
+      return linkedFS
+    }
+
     // Alias the cache dir paths to the temp dir
-    const lfs = link(fs, rewrites) as typeof import("fs")
+    const lfs = createLinkedFS(fs)
 
     // linkfs doesn't pass across the `native` prop, which graceful-fs needs
     for (const key in lfs) {
@@ -52,16 +111,68 @@ function setupFsWrapper(): string {
         lfs[key].native = fs[key].native
       }
     }
-
-    const dbPath = path.join(TEMP_CACHE_DIR, `data`, `datastore`)
-
     // 'promises' is not initially linked within the 'linkfs'
     // package, and is needed by underlying Gatsby code (the
     // @graphql-tools/code-file-loader)
-    lfs.promises = link(fs.promises, rewrites)
+    lfs.promises = createLinkedFS(fs.promises)
+
+    const originalWritesStream = fs.WriteStream
+    function LinkedWriteStream(
+      this: fs.WriteStream,
+      ...args: Parameters<(typeof fs)["createWriteStream"]>
+    ): fs.WriteStream {
+      args[0] = mapPathUsingRewrites(args[0])
+      args[1] =
+        typeof args[1] === `string`
+          ? {
+              flags: args[1],
+              // @ts-ignore there is `fs` property in options doh (https://nodejs.org/api/fs.html#fscreatewritestreampath-options)
+              fs: lfs,
+            }
+          : {
+              ...(args[1] || {}),
+              // @ts-ignore there is `fs` property in options doh (https://nodejs.org/api/fs.html#fscreatewritestreampath-options)
+              fs: lfs,
+            }
+
+      // @ts-ignore TS doesn't like extending prototype "classes"
+      return originalWritesStream.apply(this, args)
+    }
+    LinkedWriteStream.prototype = Object.create(originalWritesStream.prototype)
+    // @ts-ignore TS doesn't like extending prototype "classes"
+    lfs.WriteStream = LinkedWriteStream
+
+    const originalReadStream = fs.ReadStream
+    function LinkedReadStream(
+      this: fs.ReadStream,
+      ...args: Parameters<(typeof fs)["createReadStream"]>
+    ): fs.ReadStream {
+      args[0] = mapPathUsingRewrites(args[0])
+      args[1] =
+        typeof args[1] === `string`
+          ? {
+              flags: args[1],
+              // @ts-ignore there is `fs` property in options doh (https://nodejs.org/api/fs.html#fscreatewritestreampath-options)
+              fs: lfs,
+            }
+          : {
+              ...(args[1] || {}),
+              // @ts-ignore there is `fs` property in options doh (https://nodejs.org/api/fs.html#fscreatewritestreampath-options)
+              fs: lfs,
+            }
+
+      // @ts-ignore TS doesn't like extending prototype "classes"
+      return originalReadStream.apply(this, args)
+    }
+    LinkedReadStream.prototype = Object.create(originalReadStream.prototype)
+    // @ts-ignore TS doesn't like extending prototype "classes"
+    lfs.ReadStream = LinkedReadStream
+
+    const dbPath = path.join(TEMP_CACHE_DIR, `data`, `datastore`)
 
     // Gatsby uses this instead of fs if present
     // eslint-disable-next-line no-underscore-dangle
+    // @ts-ignore __promisify__ stuff
     global._fsWrapper = lfs
 
     if (!cdnDatastore) {
@@ -81,6 +192,24 @@ function setupFsWrapper(): string {
 
     return dbPath
   }
+}
+
+global.__GATSBY = {
+  root: process.cwd(),
+  buildId: ``,
+}
+
+// eslint-disable-next-line no-constant-condition
+if (`%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
+  global.__GATSBY.imageCDNUrlGeneratorModulePath = require.resolve(
+    `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+  )
+}
+// eslint-disable-next-line no-constant-condition
+if (`%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
+  global.__GATSBY.fileCDNUrlGeneratorModulePath = require.resolve(
+    `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+  )
 }
 
 const dbPath = setupFsWrapper()
@@ -148,8 +277,8 @@ async function getEngine(): Promise<GraphQLEngineType> {
         reject(error)
       })
     })
+    console.log(`Downloaded datastore from CDN`)
   }
-  console.log(`Downloaded datastore from CDN`)
 
   const graphqlEngine = new GraphQLEngine({
     dbPath,
@@ -166,14 +295,13 @@ function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
 }
 
-function getPathInfo(req: GatsbyFunctionRequest):
+function getPathInfo(requestPath: string):
   | {
       isPageData: boolean
       pagePath: string
     }
   | undefined {
-  // @ts-ignore GatsbyFunctionRequest.path is not in types ... there is no property in types that can be used to get a path currently
-  const matches = req.url.matchAll(/^\/?page-data\/(.+)\/page-data.json$/gm)
+  const matches = requestPath.matchAll(/^\/?page-data\/(.+)\/page-data.json$/gm)
   for (const [, requestedPagePath] of matches) {
     return {
       isPageData: true,
@@ -184,8 +312,7 @@ function getPathInfo(req: GatsbyFunctionRequest):
   // if not matched
   return {
     isPageData: false,
-    // @ts-ignore GatsbyFunctionRequest.path is not in types ... there is no property in types that can be used to get a path currently
-    pagePath: req.url,
+    pagePath: requestPath,
   }
 }
 
@@ -226,25 +353,60 @@ function getErrorBody(statusCode: number): string {
   return body
 }
 
+interface IPageInfo {
+  page: IGatsbyPage
+  isPageData: boolean
+  pagePath: string
+}
+
+function getPage(
+  pathname: string,
+  graphqlEngine: GraphQLEngineType
+): IPageInfo | undefined {
+  const pathInfo = getPathInfo(pathname)
+  if (!pathInfo) {
+    return undefined
+  }
+
+  const { isPageData, pagePath } = pathInfo
+
+  const page = graphqlEngine.findPageByPath(pagePath)
+  if (!page) {
+    return undefined
+  }
+
+  return {
+    page,
+    isPageData,
+    pagePath,
+  }
+}
+
 async function engineHandler(
   req: GatsbyFunctionRequest,
   res: GatsbyFunctionResponse
 ): Promise<void> {
   try {
     const graphqlEngine = await engineReadyPromise
-    const pathInfo = getPathInfo(req)
-    if (!pathInfo) {
+    let pageInfo: IPageInfo | undefined
+
+    const originalPathName = req.url ?? ``
+
+    if (PATH_PREFIX && originalPathName.startsWith(PATH_PREFIX)) {
+      const maybePath = originalPathName.slice(PATH_PREFIX.length)
+      pageInfo = getPage(maybePath, graphqlEngine)
+    }
+
+    if (!pageInfo) {
+      pageInfo = getPage(originalPathName, graphqlEngine)
+    }
+
+    if (!pageInfo) {
       res.status(404).send(getErrorBody(404))
       return
     }
 
-    const { isPageData, pagePath } = pathInfo
-
-    const page = graphqlEngine.findPageByPath(pagePath)
-    if (!page) {
-      res.status(404).send(getErrorBody(404))
-      return
-    }
+    const { pagePath, isPageData, page } = pageInfo
 
     const data = await getData({
       pathName: pagePath,

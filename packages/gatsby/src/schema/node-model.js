@@ -327,7 +327,7 @@ class LocalNodeModel {
    * const { entries, totalCount } = await findAll({
    *   type: `MyType`,
    *   query: {
-   *     sort: { fields: [`date`], order: [`desc`] },
+   *     sort: { date: `desc` },
    *     filter: { published: { eq: false } },
    *   },
    * })

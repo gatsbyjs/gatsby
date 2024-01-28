@@ -7,6 +7,7 @@ import { posix } from "path"
 import { sync as globSync } from "glob"
 import telemetry from "gatsby-telemetry"
 import { copy, pathExists, unlink } from "fs-extra"
+import pathToRegexp from "path-to-regexp"
 import type {
   FunctionsManifest,
   IAdaptContext,
@@ -17,6 +18,8 @@ import type {
   IAdapter,
   IAdapterFinalConfig,
   IAdapterConfig,
+  HeaderRoutes,
+  RemoteFileAllowedUrls,
 } from "./types"
 import { store, readState } from "../../redux"
 import { getPageMode } from "../page-mode"
@@ -31,6 +34,7 @@ import {
   BASE_HEADERS,
   MUST_REVALIDATE_HEADERS,
   PERMAMENT_CACHING_HEADERS,
+  PERMANENT_CACHE_CONTROL_HEADER,
 } from "./constants"
 import { createHeadersMatcher } from "./create-headers"
 import { HTTP_STATUS_CODE } from "../../redux/types"
@@ -73,9 +77,7 @@ async function setAdapter({
       store.getState().program.prefixPaths &&
       store.getState().config.pathPrefix
     ) {
-      incompatibleFeatures.push(
-        `pathPrefix is not supported. Please remove the pathPrefix option from your gatsby-config, don't use "--prefix-paths" CLI toggle or PREFIX_PATHS environment variable.`
-      )
+      incompatibleFeatures.push(`pathPrefix is not supported.`)
     }
 
     // trailingSlash support
@@ -98,13 +100,13 @@ async function setAdapter({
     }
 
     if (incompatibleFeatures.length > 0) {
-      reporter.panic({
-        id: `12201`,
-        context: {
-          adapterName: instance.name,
-          incompatibleFeatures,
-        },
-      })
+      reporter.warn(
+        `Adapter "${
+          instance.name
+        }" is not compatible with following settings:\n${incompatibleFeatures
+          .map(line => ` - ${line}`)
+          .join(`\n`)}`
+      )
     }
 
     if (configFromAdapter.pluginsToDisable.length > 0) {
@@ -203,10 +205,14 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
       let _routesManifest: RoutesManifest | undefined = undefined
       let _functionsManifest: FunctionsManifest | undefined = undefined
+      let _headerRoutes: HeaderRoutes | undefined = undefined
+      let _imageCdnAllowedUrls: RemoteFileAllowedUrls | undefined = undefined
       const adaptContext: IAdaptContext = {
         get routesManifest(): RoutesManifest {
           if (!_routesManifest) {
-            _routesManifest = getRoutesManifest()
+            const { routes, headers } = getRoutesManifest()
+            _routesManifest = routes
+            _headerRoutes = headers
           }
 
           return _routesManifest
@@ -217,6 +223,29 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           }
 
           return _functionsManifest
+        },
+        get headerRoutes(): HeaderRoutes {
+          if (!_headerRoutes) {
+            const { routes, headers } = getRoutesManifest()
+            _routesManifest = routes
+            _headerRoutes = headers
+          }
+
+          return _headerRoutes
+        },
+        get remoteFileAllowedUrls(): RemoteFileAllowedUrls {
+          if (!_imageCdnAllowedUrls) {
+            _imageCdnAllowedUrls = Array.from(
+              store.getState().remoteFileAllowedUrls
+            ).map(urlPattern => {
+              return {
+                urlPattern,
+                regexSource: pathToRegexp(urlPattern).source,
+              }
+            })
+          }
+
+          return _imageCdnAllowedUrls
         },
         reporter,
         // Our internal Gatsby config allows this to be undefined but for the adapter we should always pass through the default values and correctly show this in the TypeScript types
@@ -238,6 +267,16 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           throw new Error(
             `Can't exclude datastore from engine function without adapter providing deployURL`
           )
+        }
+
+        if (configFromAdapter?.imageCDNUrlGeneratorModulePath) {
+          global.__GATSBY.imageCDNUrlGeneratorModulePath =
+            configFromAdapter.imageCDNUrlGeneratorModulePath
+        }
+
+        if (configFromAdapter?.fileCDNUrlGeneratorModulePath) {
+          global.__GATSBY.fileCDNUrlGeneratorModulePath =
+            configFromAdapter.fileCDNUrlGeneratorModulePath
         }
       }
 
@@ -263,10 +302,50 @@ export function setWebpackAssets(assets: Set<string>): void {
 
 type RouteWithScore = { score: number } & Route
 
-function getRoutesManifest(): RoutesManifest {
+const headersAreEqual = (a, b): boolean =>
+  a.key === b.key && a.value === b.value
+
+const getDefaultHeaderRoutes = (pathPrefix: string): HeaderRoutes => [
+  {
+    path: `${pathPrefix}/*`,
+    headers: MUST_REVALIDATE_HEADERS,
+  },
+  {
+    path: `${pathPrefix}/static/*`,
+    headers: PERMANENT_CACHE_CONTROL_HEADER,
+  },
+]
+
+const customHeaderFilter =
+  (route: Route, pathPrefix: string) =>
+  (h: IHeader["headers"][0]): boolean => {
+    for (const baseHeader of MUST_REVALIDATE_HEADERS) {
+      if (headersAreEqual(baseHeader, h)) {
+        return false
+      }
+    }
+    if (route.path.startsWith(`${pathPrefix}/static/`)) {
+      for (const cachingHeader of PERMAMENT_CACHING_HEADERS) {
+        if (headersAreEqual(cachingHeader, h)) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+function getRoutesManifest(): {
+  routes: RoutesManifest
+  headers: HeaderRoutes
+} {
   const routes: Array<RouteWithScore> = []
   const state = store.getState()
   const createHeaders = createHeadersMatcher(state.config.headers)
+  const pathPrefix = state.program.prefixPaths
+    ? state.config.pathPrefix ?? ``
+    : ``
+
+  const headerRoutes: HeaderRoutes = [...getDefaultHeaderRoutes(pathPrefix)]
 
   const fileAssets = new Set(
     globSync(`**/**`, {
@@ -278,8 +357,16 @@ function getRoutesManifest(): RoutesManifest {
 
   // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
   function addRoute(route: Route): void {
-    if (!route.path.startsWith(`/`)) {
-      route.path = `/${route.path}`
+    if (
+      !(route.path.startsWith(`https://`) || route.path.startsWith(`http://`))
+    ) {
+      if (!route.path.startsWith(`/`)) {
+        route.path = `/${route.path}`
+      }
+
+      if (pathPrefix && !route.path.startsWith(pathPrefix)) {
+        route.path = posix.join(pathPrefix, route.path)
+      }
     }
 
     // Apply trailing slash behavior unless it's a redirect. Redirects should always be exact matches
@@ -292,11 +379,20 @@ function getRoutesManifest(): RoutesManifest {
 
     if (route.type !== `function`) {
       route.headers = createHeaders(route.path, route.headers)
+      const customHeaders = route.headers.filter(
+        customHeaderFilter(route, pathPrefix)
+      )
+      if (customHeaders.length > 0) {
+        headerRoutes.push({ path: route.path, headers: customHeaders })
+      }
     }
 
-    ;(route as RouteWithScore).score = rankRoute(route.path)
+    const routeWithScore: RouteWithScore = {
+      ...route,
+      score: rankRoute(route.path),
+    }
 
-    routes.push(route as RouteWithScore)
+    routes.push(routeWithScore)
   }
 
   function addStaticRoute({
@@ -460,17 +556,28 @@ function getRoutesManifest(): RoutesManifest {
 
   // redirect routes
   for (const redirect of state.redirects.values()) {
+    const {
+      fromPath,
+      toPath,
+      statusCode,
+      isPermanent,
+      ignoreCase,
+      redirectInBrowser,
+      ...platformSpecificFields
+    } = redirect
+
     addRoute({
-      path: redirect.fromPath,
+      path: fromPath,
       type: `redirect`,
-      toPath: redirect.toPath,
+      toPath: toPath,
       status:
-        redirect.statusCode ??
-        (redirect.isPermanent
+        statusCode ??
+        (isPermanent
           ? HTTP_STATUS_CODE.MOVED_PERMANENTLY_301
           : HTTP_STATUS_CODE.FOUND_302),
-      ignoreCase: redirect.ignoreCase,
+      ignoreCase: ignoreCase,
       headers: BASE_HEADERS,
+      ...platformSpecificFields,
     })
   }
 
@@ -508,25 +615,27 @@ function getRoutesManifest(): RoutesManifest {
     })
   }
 
-  return (
-    routes
-      .sort((a, b) => {
-        // The higher the score, the higher the specificity of our path
-        const order = b.score - a.score
-        if (order !== 0) {
-          return order
-        }
+  const sortedRoutes = routes
+    .sort((a, b) => {
+      // The higher the score, the higher the specificity of our path
+      const order = b.score - a.score
+      if (order !== 0) {
+        return order
+      }
 
-        // if specificity is the same we do lexigraphic comparison of path to ensure
-        // deterministic order regardless of order pages where created
-        return a.path.localeCompare(b.path)
-      })
-      // The score should be internal only, so we remove it from the final manifest
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .map(({ score, ...rest }): Route => {
-        return { ...rest }
-      })
-  )
+      // if specificity is the same we do lexigraphic comparison of path to ensure
+      // deterministic order regardless of order pages where created
+      return a.path.localeCompare(b.path)
+    })
+    // The score should be internal only, so we remove it from the final manifest
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .map(({ score, ...rest }): Route => {
+      return { ...rest }
+    })
+  return {
+    routes: sortedRoutes,
+    headers: headerRoutes,
+  }
 }
 
 function getFunctionsManifest(): FunctionsManifest {

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.13.1/packages/gatsby-plugin-mdx) (2024-01-23)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.13.0/packages/gatsby-plugin-mdx) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [5.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.12.3/packages/gatsby-plugin-mdx) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [5.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.12.2/packages/gatsby-plugin-mdx) (2023-10-20)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.12.1/packages/gatsby-plugin-mdx) (2023-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.12.0/packages/gatsby-plugin-mdx) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+
+#### Chores
+
+- update dependency webpack to ^5.88.1 for gatsby-plugin-mdx [#38306](https://github.com/gatsbyjs/gatsby/issues/38306) ([31df9ef](https://github.com/gatsbyjs/gatsby/commit/31df9efeec325c5c8f71d5ab242b63f909b27131))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@5.11.0/packages/gatsby-plugin-mdx) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

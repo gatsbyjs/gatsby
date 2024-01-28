@@ -6,6 +6,7 @@ import { preferDefault } from "../bootstrap/prefer-default"
 
 const ROOT = path.join(__dirname, `..`, `..`)
 const UNPKG_ROOT = `https://unpkg.com/gatsby/`
+const GITHUB_ROOT = `https://raw.githubusercontent.com/gatsbyjs/gatsby/master/packages/gatsby/`
 
 const FILE_NAMES = {
   APIS: `apis.json`,
@@ -23,29 +24,52 @@ export interface IAPIResponse {
   ssr: Record<string, any>
 }
 
+const _fetchFile = async (root: string, fileName: string): Promise<any> => {
+  try {
+    const { data } = await axios.get(`${root}${fileName}`, {
+      timeout: 5000,
+    })
+    return data
+  } catch (e) {
+    return null
+  }
+}
+
 const _getFile = async <T>({
   fileName,
   outputFileName,
   defaultReturn,
+  tryGithubBeforeUnpkg,
+  forcedContent,
 }: {
   fileName: string
   outputFileName: string
   defaultReturn: T
+  tryGithubBeforeUnpkg?: boolean
+  forcedContent?: string
 }): Promise<T> => {
   let fileToUse = path.join(ROOT, fileName)
-  try {
-    const { data } = await axios.get(`${UNPKG_ROOT}${fileName}`, {
-      timeout: 5000,
-    })
 
+  let dataToUse = forcedContent
+
+  if (!dataToUse && tryGithubBeforeUnpkg) {
+    dataToUse = await _fetchFile(GITHUB_ROOT, fileName)
+  }
+  if (!dataToUse) {
+    dataToUse = await _fetchFile(UNPKG_ROOT, fileName)
+  }
+
+  if (dataToUse) {
     await fs.writeFile(
       outputFileName,
-      typeof data === `string` ? data : JSON.stringify(data, null, 2),
+      typeof dataToUse === `string`
+        ? dataToUse
+        : JSON.stringify(dataToUse, null, 2),
       `utf8`
     )
 
     fileToUse = outputFileName
-  } catch (e) {
+  } else {
     // if file was previously cached, use it
     if (await fs.pathExists(outputFileName)) {
       fileToUse = outputFileName
@@ -84,4 +108,9 @@ export const getLatestAdapters = async (): Promise<
     fileName: FILE_NAMES.ADAPTERS,
     outputFileName: OUTPUT_FILES.ADAPTERS,
     defaultReturn: [],
+    // trying github first for adapters manifest to be able to faster make changes to version manifest
+    // as publishing latest version of gatsby package takes more time
+    tryGithubBeforeUnpkg: true,
+    // in e2e-tests/adapters we force adapters manifest to be used
+    forcedContent: process.env.GATSBY_ADAPTERS_MANIFEST,
   })

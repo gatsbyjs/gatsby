@@ -21,6 +21,7 @@ export { logPostBuildWarnings } from "~/steps/log-post-build-warnings"
 export { imageRoutes } from "~/steps/image-routes"
 
 export { setRequestHeaders } from "./set-request-headers"
+export { addRemoteFileAllowedUrl } from "./add-remote-file-allowed-url"
 
 export {
   hideAuthPluginOptions,

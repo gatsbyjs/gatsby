@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@5.13.1/packages/gatsby-remark-graphviz) (2024-01-23)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@5.13.0/packages/gatsby-remark-graphviz) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@5.12.0/packages/gatsby-remark-graphviz) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- Pin broken `unist-util-find` dep [#38261](https://github.com/gatsbyjs/gatsby/issues/38261) ([7e82972](https://github.com/gatsbyjs/gatsby/commit/7e82972bfce25295e71f513e59048b4b263afa34))
+
 ### [5.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@5.11.1/packages/gatsby-remark-graphviz) (2023-06-26)
 
 #### Bug Fixes

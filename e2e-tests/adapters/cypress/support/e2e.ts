@@ -15,6 +15,8 @@ declare global {
   }
 }
 
+const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
+
 Cypress.Commands.add(`assertRoute`, route => {
-  cy.url().should(`equal`, `${window.location.origin}${route}`)
+  cy.url().should(`equal`, `${window.location.origin}${PATH_PREFIX}${route}`)
 })

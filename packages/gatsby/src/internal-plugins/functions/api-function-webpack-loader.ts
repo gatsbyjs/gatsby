@@ -1,10 +1,11 @@
+import { slash } from "gatsby-core-utils"
 import type { LoaderDefinition } from "webpack"
 
 const APIFunctionLoader: LoaderDefinition = async function () {
   const params = new URLSearchParams(this.resourceQuery)
   const matchPath = params.get(`matchPath`)
 
-  const modulePath = this.resourcePath
+  const modulePath = slash(this.resourcePath)
 
   return /* javascript */ `
   const preferDefault = m => (m && m.default) || m
@@ -12,10 +13,14 @@ const APIFunctionLoader: LoaderDefinition = async function () {
   const functionModule = require('${modulePath}');
   const functionToExecute = preferDefault(functionModule);
   const matchPath = '${matchPath}';
-  const { match: reachMatch } = require('@gatsbyjs/reach-router');
-  const { urlencoded, text, json, raw } = require('body-parser')
-  const multer = require('multer')
-  const { createConfig } = require('gatsby/dist/internal-plugins/functions/config')
+  const { match: reachMatch } = require('${require.resolve(
+    `@gatsbyjs/reach-router`
+  )}');
+  const { urlencoded, text, json, raw } = require('${require.resolve(
+    `body-parser`
+  )}')
+  const multer = require('${require.resolve(`multer`)}')
+  const { createConfig } = require('${require.resolve(`./config`)}')
 
   function functionWrapper(req, res) {
     if (matchPath) {

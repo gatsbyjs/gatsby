@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [8.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.13.1/packages/gatsby-source-shopify) (2024-01-23)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [8.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.13.0/packages/gatsby-source-shopify) (2023-12-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
+
+#### Chores
+
+- upgrade sharp to latest v0.32.6 [#38374](https://github.com/gatsbyjs/gatsby/issues/38374) ([ca15ef3](https://github.com/gatsbyjs/gatsby/commit/ca15ef37be3febbacfb830193556048008b2fd58))
+
+### [8.12.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.12.3/packages/gatsby-source-shopify) (2023-10-26)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [8.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.12.2/packages/gatsby-source-shopify) (2023-10-20)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [8.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.12.1/packages/gatsby-source-shopify) (2023-10-09)
+
+#### Chores
+
+- upgrade sharp to latest v0.32.6 [#38374](https://github.com/gatsbyjs/gatsby/issues/38374) [#38617](https://github.com/gatsbyjs/gatsby/issues/38617) ([f1a4107](https://github.com/gatsbyjs/gatsby/commit/f1a41079fa1d25cd20139cfb15add6fe081ec3ee))
+
+## [8.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.12.0/packages/gatsby-source-shopify) (2023-08-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
+
+#### Bug Fixes
+
+- update typescript [#38324](https://github.com/gatsbyjs/gatsby/issues/38324) ([5d0d7c1](https://github.com/gatsbyjs/gatsby/commit/5d0d7c12552fa7570bad2002806bca3d18f923de))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-source-shopify [#38281](https://github.com/gatsbyjs/gatsby/issues/38281) ([0b7fa34](https://github.com/gatsbyjs/gatsby/commit/0b7fa34507dc22968569bcfd469376ce916672d0))
+
 ## [8.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.11.0/packages/gatsby-source-shopify) (2023-06-15)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.11)

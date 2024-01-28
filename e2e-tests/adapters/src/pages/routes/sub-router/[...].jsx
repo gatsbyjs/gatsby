@@ -1,10 +1,10 @@
 import * as React from "react"
 import { Router } from "@reach/router"
-import { Link } from "gatsby"
+import { Link, withPrefix } from "gatsby"
 import Layout from "../../../components/layout"
 
 const routes = [`/`, `/not-found`, `/page/profile`, `/nested`, `/nested/foo`]
-const basePath = `/routes/sub-router`
+const basePath = withPrefix(`/routes/sub-router`)
 
 const Page = ({ page }) => (
   <pre data-testid="dom-marker">[client-only-path] {page}</pre>

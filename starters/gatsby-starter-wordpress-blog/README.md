@@ -20,7 +20,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     ```shell
     # create a new Gatsby site using the gatsby-starter-wordpress-blog starter
-    gatsby new my-gatsby-starter-wordpress-blog-starter https://github.com/gatsbyjs/gatsby-starter-gatsby-starter-wordpress-blog
+    gatsby new my-gatsby-starter-wordpress-blog-starter https://github.com/gatsbyjs/gatsby-starter-wordpress-blog
     ```
 
 1.  **Start developing.**
@@ -44,7 +44,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
 Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
 
-[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-gatsby-starter-wordpress-blog)
+[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-wordpress-blog)
 
 ## 🧐 What's inside?
 

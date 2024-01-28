@@ -18,6 +18,11 @@ const sharp = require(`sharp`)
 fs.ensureDirSync = jest.fn()
 fs.existsSync = jest.fn().mockReturnValue(false)
 
+const decodeBase64PngAsRaw = async png =>
+  sharp(Buffer.from(png.replace(`data:image/png;base64,`, ``), `base64`))
+    .raw()
+    .toBuffer()
+
 const {
   base64,
   generateBase64,
@@ -136,10 +141,13 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
-      const result = await fluid({ file })
+      const { base64, ...result } = await fluid({ file })
 
       expect(actions.createJobV2).toHaveBeenCalledTimes(1)
       expect(result).toMatchSnapshot()
+
+      const rawPixelData = await decodeBase64PngAsRaw(base64)
+      expect(rawPixelData.toString(`hex`)).toMatchSnapshot()
     })
 
     it(`adds pathPrefix if defined`, async () => {
@@ -400,12 +408,15 @@ describe(`gatsby-plugin-sharp`, () => {
 
   describe(`base64`, () => {
     it(`converts image to base64`, async () => {
-      const result = await base64({
+      const { src, ...result } = await base64({
         file,
         args,
       })
 
       expect(result).toMatchSnapshot()
+
+      const rawPixelData = await decodeBase64PngAsRaw(src)
+      expect(rawPixelData.toString(`hex`)).toMatchSnapshot()
     })
 
     it(`should cache same image`, async () => {
@@ -597,25 +608,31 @@ describe(`gatsby-plugin-sharp`, () => {
         base64: false,
       }
 
-      const fixedSvg = await fixed({
+      const { tracedSVG: fixedTracedSVG, ...fixedSvg } = await fixed({
         file,
         args,
       })
 
       expect(fixedSvg).toMatchSnapshot(`fixed`)
 
-      expect(fixedSvg.tracedSVG).toMatch(`data:image/png;base64`)
-      expect(fixedSvg.tracedSVG).not.toMatch(`data:image/svg+xml`)
+      expect(fixedTracedSVG).toMatch(`data:image/png;base64`)
+      expect(fixedTracedSVG).not.toMatch(`data:image/svg+xml`)
 
-      const fluidSvg = await fluid({
+      const fixedRawPixelData = await decodeBase64PngAsRaw(fixedTracedSVG)
+      expect(fixedRawPixelData.toString(`hex`)).toMatchSnapshot()
+
+      const { tracedSVG: fluidTracedSVG, ...fluidSvg } = await fluid({
         file,
         args,
       })
 
       expect(fluidSvg).toMatchSnapshot(`fluid`)
 
-      expect(fluidSvg.tracedSVG).toMatch(`data:image/png;base64`)
-      expect(fluidSvg.tracedSVG).not.toMatch(`data:image/svg+xml`)
+      expect(fluidTracedSVG).toMatch(`data:image/png;base64`)
+      expect(fluidTracedSVG).not.toMatch(`data:image/svg+xml`)
+
+      const fluidRawPixelData = await decodeBase64PngAsRaw(fluidTracedSVG)
+      expect(fluidRawPixelData.toString(`hex`)).toMatchSnapshot()
     })
   })
 
@@ -627,13 +644,20 @@ describe(`gatsby-plugin-sharp`, () => {
     }
 
     it(`fixed`, async () => {
-      const result = await fixed({ file, args })
+      const { base64, ...result } = await fixed({ file, args })
+
       expect(result).toMatchSnapshot()
+
+      const rawPixelData = await decodeBase64PngAsRaw(base64)
+      expect(rawPixelData.toString(`hex`)).toMatchSnapshot()
     })
 
     it(`fluid`, async () => {
-      const result = await fluid({ file, args })
+      const { base64, ...result } = await fluid({ file, args })
       expect(result).toMatchSnapshot()
+
+      const rawPixelData = await decodeBase64PngAsRaw(base64)
+      expect(rawPixelData.toString(`hex`)).toMatchSnapshot()
     })
 
     it(`creates two different images for different duotone settings`, async () => {
