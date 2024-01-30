@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.3/packages/gatsby) (2024-01-25)
+
+#### Bug Fixes
+
+- add missing fs method rewrites to handle fetchRemoteFile in dsg/ssr engine [#38822](https://github.com/gatsbyjs/gatsby/issues/38822) [#38823](https://github.com/gatsbyjs/gatsby/issues/38823) ([c50e8f2](https://github.com/gatsbyjs/gatsby/commit/c50e8f2cd93898d9a483440ebd6eeeb492e73087))
+
+#### Performance Improvements
+
+- use must-revalidate cache-control header as common and only create header routes for routes with different cache-control [#38820](https://github.com/gatsbyjs/gatsby/issues/38820) [#38824](https://github.com/gatsbyjs/gatsby/issues/38824) ([d328fd8](https://github.com/gatsbyjs/gatsby/commit/d328fd8ffd255c235a61e8d3890640b21f26e770))
+
 ### [5.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.2/packages/gatsby) (2024-01-23)
 
 #### Bug Fixes
