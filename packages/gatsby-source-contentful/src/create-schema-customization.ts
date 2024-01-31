@@ -405,8 +405,18 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
               link: { by: `id`, from: `contentType` },
             },
           },
-          firstPublishedAt: { type: ` Date!` },
-          publishedAt: { type: ` Date!` },
+          firstPublishedAt: {
+            type: ` Date!`,
+            extensions: {
+              dateformat: {},
+            },
+          },
+          publishedAt: {
+            type: ` Date!`,
+            extensions: {
+              dateformat: {},
+            },
+          },
           publishedVersion: { type: ` Int!` },
           locale: { type: ` String!` },
         },
