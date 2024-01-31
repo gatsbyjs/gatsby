@@ -54,7 +54,7 @@ Before you start manual updates, take advantage of our codemods that automate mo
 **Option A:** (Direct Execution)
 
 ```bash
-npx gatsby-codemods@ctf-next gatsby-source-contentful gatsby-* src
+npx gatsby-codemods@ctf-next gatsby-source-contentful .
 ```
 
 **Hint:** If you use `.mjs` files, rename them to `.js` or `.ts` first.
@@ -66,7 +66,7 @@ npx gatsby-codemods@ctf-next gatsby-source-contentful gatsby-* src
 npm install -D jscodeshift gatsby-codemods@ctf-next
 
 # Execute codemods
-npx jscodeshift -t ./node_modules/gatsby-codemods/transforms/gatsby-source-contentful.js --extensions=js,ts,tsx gatsby-* src
+npx jscodeshift -t ./node_modules/gatsby-codemods/transforms/gatsby-source-contentful.js .
 
 # Uninstall codemods
 npm remove jscodeshift gatsby-codemods
