@@ -170,11 +170,6 @@ For example, to exclude content types starting with "page" \`contentTypeFilter: 
         .description(
           `Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.`
         ),
-      enableTags: Joi.boolean()
-        .description(
-          `Enable the new tags feature. This will disallow the content type name "tags" till the next major version of this plugin.`
-        )
-        .default(false),
       useNameForId: Joi.boolean()
         .description(
           `Use the content's \`name\` when generating the GraphQL schema e.g. a Content Type called \`[Component] Navigation bar\` will be named \`contentfulComponentNavigationBar\`.
