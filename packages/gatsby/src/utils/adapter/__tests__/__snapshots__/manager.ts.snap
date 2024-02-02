@@ -360,6 +360,10 @@ Array [
   Object {
     "headers": Array [
       Object {
+        "key": "cache-control",
+        "value": "public, max-age=0, must-revalidate",
+      },
+      Object {
         "key": "x-xss-protection",
         "value": "1; mode=block",
       },
@@ -391,73 +395,10 @@ Array [
     "headers": Array [
       Object {
         "key": "cache-control",
-        "value": "public, max-age=0, must-revalidate",
-      },
-    ],
-    "path": "/",
-  },
-  Object {
-    "headers": Array [
-      Object {
-        "key": "cache-control",
-        "value": "public, max-age=0, must-revalidate",
-      },
-    ],
-    "path": "/page-data/index/page-data.json",
-  },
-  Object {
-    "headers": Array [
-      Object {
-        "key": "cache-control",
-        "value": "public, max-age=0, must-revalidate",
-      },
-    ],
-    "path": "/page-data/sq/d/1.json",
-  },
-  Object {
-    "headers": Array [
-      Object {
-        "key": "cache-control",
-        "value": "public, max-age=0, must-revalidate",
-      },
-    ],
-    "path": "/page-data/app-data.json",
-  },
-  Object {
-    "headers": Array [
-      Object {
-        "key": "cache-control",
         "value": "public, max-age=31536000, immutable",
       },
     ],
     "path": "/app-123.js",
-  },
-  Object {
-    "headers": Array [
-      Object {
-        "key": "cache-control",
-        "value": "public, max-age=0, must-revalidate",
-      },
-    ],
-    "path": "/chunk-map.json",
-  },
-  Object {
-    "headers": Array [
-      Object {
-        "key": "cache-control",
-        "value": "public, max-age=0, must-revalidate",
-      },
-    ],
-    "path": "/webpack.stats.json",
-  },
-  Object {
-    "headers": Array [
-      Object {
-        "key": "cache-control",
-        "value": "public, max-age=0, must-revalidate",
-      },
-    ],
-    "path": "/_gatsby/slices/_gatsby-scripts-1.html",
   },
 ]
 `;

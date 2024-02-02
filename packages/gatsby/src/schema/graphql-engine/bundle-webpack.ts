@@ -129,6 +129,11 @@ export async function createGraphqlEngineBundle(
   reporter: Reporter,
   isVerbose?: boolean
 ): Promise<webpack.Compilation | undefined> {
+  const state = store.getState()
+  const pathPrefix = state.program.prefixPaths
+    ? state.config.pathPrefix ?? ``
+    : ``
+
   const schemaSnapshotString = await fs.readFile(
     path.join(rootDir, `.cache`, `schema.gql`),
     `utf-8`
@@ -151,7 +156,7 @@ export async function createGraphqlEngineBundle(
 
   // We force a specific lmdb binary module if we detected a broken lmdb installation or if we detect the presence of an adapter
   let forcedLmdbBinaryModule: string | undefined = undefined
-  if (store.getState().adapter.instance) {
+  if (state.adapter.instance) {
     forcedLmdbBinaryModule = `${lmdbPackage}/node.abi83.glibc.node`
   }
   // We always force the binary if we've installed an alternative path
@@ -317,6 +322,7 @@ export async function createGraphqlEngineBundle(
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
+        PATH_PREFIX: JSON.stringify(pathPrefix),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_SLICES": JSON.stringify(
           !!process.env.GATSBY_SLICES
