@@ -16,6 +16,7 @@ const defaultOptions: Omit<IPluginOptions, "spaceId" | "accessToken"> = {
   contentTypePrefix: `ContentfulContentType`,
   enableMarkdownDetection: true,
   markdownFields: [],
+  enforceRequiredFields: true,
 }
 
 /**

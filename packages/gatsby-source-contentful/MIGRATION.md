@@ -26,6 +26,7 @@ The v9 release of `gatsby-source-contentful` brings significant improvements, fo
     - [5. Assets](#5-assets)
       - [Old GraphlQL schema for assets](#old-graphlql-schema-for-assets)
       - [New GraphlQL schema for assets](#new-graphlql-schema-for-assets)
+    - [6. Using the Contentful Preview API (CPA)](#6-using-the-contentful-preview-api-cpa)
   - [Conclusion and Support](#conclusion-and-support)
 
 </details>
@@ -402,6 +403,30 @@ type ContentfulAsset implements ContentfulInternalReference & Node @dontInfer {
   height: Int
 }
 ```
+
+### 6. Using the Contentful Preview API (CPA)
+
+In version 9, fields marked as required in Contentful are automatically treated as non-nullable in Gatsby's GraphQL schema. This aligns the GraphQL schema more closely with your Contentful content model, enhancing type safety and predictability in your Gatsby project.
+
+However, when using the Contentful Preview API (CPA), you might encounter scenarios where unpublished content doesn't yet fulfill all required fields. To accommodate this, `gatsby-source-contentful` introduces the `enforceRequiredFields` configuration option.
+
+- **Configuration**: By default, `enforceRequiredFields` is `true`, enforcing the non-nullability of required fields. To override this behavior, particularly in development or preview environments, set `enforceRequiredFields` to `false`:
+
+```javascript
+// In your gatsby-config.js
+{
+  resolve: `gatsby-source-contentful`,
+  options: {
+    spaceId: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+    enforceRequiredFields: process.env.NODE_ENV !== 'production', // Example condition
+  },
+}
+```
+
+- **Environment Variables**: You can control this setting through environment variables, enabling non-nullable enforcement in production while disabling it in development or preview environments where you might be working with incomplete content.
+
+- **Impact on TypeScript**: For projects using TypeScript, changing the `enforceRequiredFields` setting will alter the generated types. With `enforceRequiredFields` set to `false`, fields that are required in Contentful but may be missing in the preview content will be nullable in the GraphQL schema. As a result, TypeScript users should ensure their code can handle potentially null values in these fields.
 
 ## Conclusion and Support
 

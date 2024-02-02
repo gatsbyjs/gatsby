@@ -22,7 +22,7 @@ import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { makeTypeName } from "./normalize"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
 import type { IPluginOptions, MarkdownFieldDefinition } from "./types/plugin"
-import type { ContentType, ContentTypeField, FieldItem } from "contentful"
+import type { ContentType, ContentTypeField } from "contentful"
 
 import type {
   IContentfulAsset,
@@ -207,11 +207,12 @@ const getLinkFieldType = (
 }
 // Translate Contentful field types to GraphQL field types
 const translateFieldType = (
-  field: ContentTypeField | FieldItem,
+  field: ContentTypeField,
   contentTypeItem: ContentType,
   schema: NodePluginSchema,
   createTypes: CreateTypes,
   enableMarkdownDetection: boolean,
+  enforceRequiredFields: boolean,
   markdownFields: MarkdownFieldDefinition,
   contentTypeIdMap: Map<string, string>
 ): GraphQLFieldConfig<unknown, unknown> => {
@@ -237,11 +238,12 @@ const translateFieldType = (
             contentTypeIdMap
           )
         : translateFieldType(
-            field.items,
+            field.items as ContentTypeField,
             contentTypeItem,
             schema,
             createTypes,
             enableMarkdownDetection,
+            enforceRequiredFields,
             markdownFields,
             contentTypeIdMap
           )
@@ -273,10 +275,10 @@ const translateFieldType = (
     fieldType = primitiveType(field)
   }
 
-  // To support Contentful's CPA (Content Preview API), we have to allow empty required fields.
-  // if (field.required) {
-  //   fieldType.type = `${fieldType.type}!`
-  // }
+  // To support Contentful's CPA (Content Preview API), required fields can be disabled by config.
+  if (enforceRequiredFields && field.required) {
+    fieldType.type = `${fieldType.type}!`
+  }
 
   return fieldType
 }
@@ -332,6 +334,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     const useNameForId = pluginConfig.get(`useNameForId`)
     const enableMarkdownDetection: boolean = pluginConfig.get(
       `enableMarkdownDetection`
+    )
+    const enforceRequiredFields: boolean = pluginConfig.get(
+      `enforceRequiredFields`
     )
     const markdownFields: MarkdownFieldDefinition = new Map(
       pluginConfig.get(`markdownFields`)
@@ -752,6 +757,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             schema,
             createTypes,
             enableMarkdownDetection,
+            enforceRequiredFields,
             markdownFields,
             contentTypeIdMap
           )

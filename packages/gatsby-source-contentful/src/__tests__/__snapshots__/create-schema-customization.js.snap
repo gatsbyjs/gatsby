@@ -46,6 +46,9 @@ Array [
           "type": " String!",
         },
         "firstPublishedAt": Object {
+          "extensions": Object {
+            "dateformat": Object {},
+          },
           "type": " Date!",
         },
         "id": Object {
@@ -55,6 +58,9 @@ Array [
           "type": " String!",
         },
         "publishedAt": Object {
+          "extensions": Object {
+            "dateformat": Object {},
+          },
           "type": " Date!",
         },
         "publishedVersion": Object {
@@ -428,7 +434,7 @@ Ignored if layout = FLUID.",
           "type": "ContentfulSys!",
         },
         "title": Object {
-          "type": "String",
+          "type": "String!",
         },
       },
       "interfaces": Array [
@@ -495,7 +501,7 @@ Ignored if layout = FLUID.",
           "type": "ContentfulSys!",
         },
         "title": Object {
-          "type": "String",
+          "type": "String!",
         },
       },
       "interfaces": Array [
@@ -559,7 +565,7 @@ Ignored if layout = FLUID.",
           "type": "ContentfulSys!",
         },
         "title": Object {
-          "type": "String",
+          "type": "String!",
         },
       },
       "interfaces": Array [
@@ -679,7 +685,7 @@ Ignored if layout = FLUID.",
           "type": "ContentfulSys!",
         },
         "title": Object {
-          "type": "String",
+          "type": "String!",
         },
       },
       "interfaces": Array [

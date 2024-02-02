@@ -170,6 +170,11 @@ For example, to exclude content types starting with "page" \`contentTypeFilter: 
         .description(
           `Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.`
         ),
+      enforceRequiredFields: Joi.boolean()
+        .description(
+          `Fields required in Contentful will also be required in Gatsby. If you are using Contentfuls Preview API (CPA), you may want to disable this conditionally.`
+        )
+        .default(true),
       useNameForId: Joi.boolean()
         .description(
           `Use the content's \`name\` when generating the GraphQL schema e.g. a Content Type called \`[Component] Navigation bar\` will be named \`contentfulComponentNavigationBar\`.
