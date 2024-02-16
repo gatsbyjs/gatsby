@@ -1,4 +1,5 @@
 import stackTrace, { StackFrame } from "stack-trace"
+import url from "url"
 import { codeFrameColumns } from "@babel/code-frame"
 import {
   TraceMap,
@@ -71,23 +72,32 @@ export const getNonGatsbyCodeFrame = ({
   const line = callSite.getLineNumber()
   const column = callSite.getColumnNumber()
 
-  const code = fs.readFileSync(fileName, { encoding: `utf-8` })
-  return {
-    fileName,
-    line,
-    column,
-    codeFrame: codeFrameColumns(
-      code,
-      {
-        start: {
-          line,
-          column,
+  const normalizedFileName = fileName.startsWith(`file://`)
+    ? url.fileURLToPath(fileName)
+    : fileName
+
+  try {
+    const code = fs.readFileSync(normalizedFileName, { encoding: `utf-8` })
+    return {
+      fileName,
+      line,
+      column,
+      codeFrame: codeFrameColumns(
+        code,
+        {
+          start: {
+            line,
+            column,
+          },
         },
-      },
-      {
-        highlightCode,
-      }
-    ),
+        {
+          highlightCode,
+        }
+      ),
+    }
+  } catch (e) {
+    console.error(`Errored getting code frame: ${e.stack}`)
+    return null
   }
 }
 
