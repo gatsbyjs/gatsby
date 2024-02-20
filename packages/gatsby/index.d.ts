@@ -35,7 +35,7 @@ export {
 
 export * from "gatsby-script"
 
-export { IGatsbyResolverContext } from "./src/schema/type-definitions"
+export { IGatsbyResolverContext } from "./dist/schema/type-definitions"
 
 export {
   AdapterInit,
