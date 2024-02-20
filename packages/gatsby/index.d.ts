@@ -23,6 +23,7 @@ export type AvailableFeatures =
   | "content-file-path"
   | "stateful-source-nodes"
   | "adapters"
+  | "track-inline-object-opt-out"
 
 export {
   Link,

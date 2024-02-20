@@ -2,6 +2,7 @@ import type { GatsbyNode } from "gatsby"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
+import { hasFeature } from "gatsby-plugin-utils/has-feature"
 
 import { CODES } from "./report"
 import { maskText } from "./plugin-options"
@@ -47,6 +48,17 @@ export const onPreInit: GatsbyNode["onPreInit"] = async (
   { store, reporter, actions },
   pluginOptions
 ) => {
+  // gatsby version is too old
+  if (!hasFeature(`track-inline-object-opt-out`)) {
+    reporter.panic({
+      id: CODES.GatsbyPluginMissing,
+      context: {
+        // TODO update message to reflect the actual version with track-inline-object-opt-out support
+        sourceMessage: `Used gatsby version is too old and doesn't support required features. Please update to gatsby@>=5.X.0`,
+      },
+    })
+  }
+
   // if gatsby-plugin-image is not installed
   try {
     await import(`gatsby-plugin-image/graphql-utils.js`)

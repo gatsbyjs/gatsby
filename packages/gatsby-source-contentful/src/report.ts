@@ -10,6 +10,7 @@ export const CODES = {
   ContentTypesMissing: `111006`,
   FetchTags: `111007`,
   GenericContentfulError: `111008`,
+  GatsbyTooOld: `111009`,
 }
 
 interface IErrorMap {
@@ -56,5 +57,10 @@ export const ERROR_MAP: IErrorMap = {
     text: context => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,
+  },
+  [CODES.GatsbyTooOld]: {
+    text: context => context.sourceMessage,
+    level: `ERROR`,
+    category: `USER`,
   },
 }
