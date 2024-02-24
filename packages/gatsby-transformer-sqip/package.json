@@ -13,11 +13,11 @@
     "gatsby-core-utils": "^4.14.0-next.2",
     "gatsby-plugin-sharp": "^5.14.0-next.2",
     "p-queue": "^6.6.2",
-    "sqip": "^1.0.0-alpha.41",
-    "sqip-plugin-blur": "^1.0.0-alpha.42",
-    "sqip-plugin-data-uri": "^1.0.0-alpha.42",
-    "sqip-plugin-primitive": "^1.0.0-alpha.43",
-    "sqip-plugin-svgo": "^1.0.0-alpha.43"
+    "sqip": "^1.0.0-alpha.43",
+    "sqip-plugin-blur": "^1.0.0-alpha.44",
+    "sqip-plugin-data-uri": "^1.0.0-alpha.44",
+    "sqip-plugin-primitive": "^1.0.0-alpha.45",
+    "sqip-plugin-svgo": "^1.0.0-alpha.45"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
