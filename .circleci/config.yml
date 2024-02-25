@@ -560,7 +560,7 @@ jobs:
             nvm install 18.0.0
             nvm alias default 18.0.0
             nvm use 18.0.0
-            choco install yarn
+            choco install yarn -y
       - run:
           name: Rebuild packages for windows
           command: |
