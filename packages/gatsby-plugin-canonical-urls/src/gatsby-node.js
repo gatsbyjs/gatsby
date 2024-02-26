@@ -6,4 +6,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     stripQueryString: Joi.boolean().description(
       `Enables stripQueryString to strip query strings from paths e.g. /blog?tag=foobar becomes /blog.`
     ),
+    excludes: Joi.array()
+      .items(Joi.string())
+      .description(
+        `Excludes paths from receiving a canonical link e.g. /blog/foobar`
+      ),
   })
