@@ -79,7 +79,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
   it(`does not create a canonical link if siteUrl is set but path is excluded`, async () => {
     const pluginOptions = {
       siteUrl: `http://someurl.com`,
-      excluded: [`/somepost`, `/excluded-page`],
+      excludes: [`/somepost`, `/excluded-page-two`],
     }
     const setHeadComponents = jest.fn()
     const pathname = `/somepost`
