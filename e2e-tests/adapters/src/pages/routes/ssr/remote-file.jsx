@@ -4,7 +4,7 @@ import React from "react"
 import { GatsbyImage } from "gatsby-plugin-image"
 import Layout from "../../../components/layout"
 
-const RemoteFile = ({ data }) => {
+const RemoteFile = ({ data, serverData }) => {
   return (
     <Layout>
       {data.allMyRemoteImage.nodes.map(node => {
@@ -54,6 +54,7 @@ const RemoteFile = ({ data }) => {
           </div>
         )
       })}
+      <pre>{JSON.stringify(serverData, null, 2)}</pre>
     </Layout>
   )
 }
@@ -65,8 +66,7 @@ export const pageQuery = graphql`
         id
         url
         filename
-        # FILE_CDN is not supported in SSR/DSG yet
-        # publicUrl
+        publicUrl
         resize(width: 100) {
           height
           width
@@ -75,23 +75,17 @@ export const pageQuery = graphql`
         fixed: gatsbyImage(
           layout: FIXED
           width: 100
-          # only NONE placeholder is supported in SSR/DSG
-          # placeholder: DOMINANT_COLOR
-          placeholder: NONE
+          placeholder: DOMINANT_COLOR
         )
         constrained: gatsbyImage(
           layout: CONSTRAINED
           width: 300
-          # only NONE placeholder is supported in SSR/DSG
-          # placeholder: DOMINANT_COLOR
-          placeholder: NONE
+          placeholder: BLURRED
         )
         constrained_traced: gatsbyImage(
           layout: CONSTRAINED
           width: 300
-          # only NONE placeholder is supported in SSR/DSG
-          # placeholder: DOMINANT_COLOR
-          placeholder: NONE
+          placeholder: TRACED_SVG
         )
         full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
       }
@@ -109,3 +103,11 @@ export const pageQuery = graphql`
 `
 
 export default RemoteFile
+
+export function getServerData() {
+  return {
+    props: {
+      ssr: true,
+    },
+  }
+}

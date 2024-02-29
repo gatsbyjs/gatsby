@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.2/packages/gatsby-source-wordpress) (2024-01-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [7.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.1/packages/gatsby-source-wordpress) (2023-12-22)
+
+#### Chores
+
+- bump clipboardy [#38775](https://github.com/gatsbyjs/gatsby/issues/38775) [#38776](https://github.com/gatsbyjs/gatsby/issues/38776) ([4b892c5](https://github.com/gatsbyjs/gatsby/commit/4b892c5a3047093c4f99b56c702c654a18999630))
+
 ## [7.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.0/packages/gatsby-source-wordpress) (2023-12-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)

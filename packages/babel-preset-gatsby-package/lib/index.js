@@ -86,7 +86,7 @@ function preset(context, options = {}) {
           availableFlags: availableCompilerFlags,
         },
       ],
-      r(`babel-plugin-lodash`),
+      r(`@sigmacomputing/babel-plugin-lodash`),
       Array.isArray(keepDynamicImports) && keepDynamicImports.length > 0 && [
         r(`./babel-transform-mark-to-keep-dynamic-import`),
         {

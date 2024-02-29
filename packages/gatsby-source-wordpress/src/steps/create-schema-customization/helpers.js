@@ -336,10 +336,8 @@ function mergeDuplicateTypesAndReturnDedupedList(typeDefs) {
  * This is to catch and add helpful error messages for when an inconsistent schema between builds is inadvertently created due to some bug
  */
 export async function diffBuiltTypeDefs(typeDefs) {
-  if (
-    process.env.NODE_ENV !== `development` &&
-    process.env.WP_DIFF_SCHEMA_CUSTOMIZATION !== `true`
-  ) {
+  // only diff the schema if the user has opted in
+  if (process.env.WP_DIFF_SCHEMA_CUSTOMIZATION !== `true`) {
     return
   }
 

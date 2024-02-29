@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.3/packages/gatsby) (2024-01-25)
+
+#### Bug Fixes
+
+- add missing fs method rewrites to handle fetchRemoteFile in dsg/ssr engine [#38822](https://github.com/gatsbyjs/gatsby/issues/38822) [#38823](https://github.com/gatsbyjs/gatsby/issues/38823) ([c50e8f2](https://github.com/gatsbyjs/gatsby/commit/c50e8f2cd93898d9a483440ebd6eeeb492e73087))
+
+#### Performance Improvements
+
+- use must-revalidate cache-control header as common and only create header routes for routes with different cache-control [#38820](https://github.com/gatsbyjs/gatsby/issues/38820) [#38824](https://github.com/gatsbyjs/gatsby/issues/38824) ([d328fd8](https://github.com/gatsbyjs/gatsby/commit/d328fd8ffd255c235a61e8d3890640b21f26e770))
+
+### [5.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.2/packages/gatsby) (2024-01-23)
+
+#### Bug Fixes
+
+- support builtin modules prefixed with `node:` on `build-html` fixed [#38516](https://github.com/gatsbyjs/gatsby/issues/38516) fixed [#38818](https://github.com/gatsbyjs/gatsby/issues/38818) ([c74745c](https://github.com/gatsbyjs/gatsby/commit/c74745c180f6e508d80dc680a721a63c7f6450bc))
+- fix webpack compilation when pnpm is used fix [#38757](https://github.com/gatsbyjs/gatsby/issues/38757) fix [#38804](https://github.com/gatsbyjs/gatsby/issues/38804) ([fc0eea1](https://github.com/gatsbyjs/gatsby/commit/fc0eea1eec9edcce77018d6d58a3070292cd5887))
+- try to automatically recover when parcel segfaults [#38773](https://github.com/gatsbyjs/gatsby/issues/38773) [#38799](https://github.com/gatsbyjs/gatsby/issues/38799) ([f6ed443](https://github.com/gatsbyjs/gatsby/commit/f6ed443f8042166c5292c79696877bb6270f4229))
+- more robust adapter zero-conf handling [#38778](https://github.com/gatsbyjs/gatsby/issues/38778) [#38800](https://github.com/gatsbyjs/gatsby/issues/38800) ([68b0821](https://github.com/gatsbyjs/gatsby/commit/68b0821df4ce236e488cfcd45104e06435d862b6))
+
+#### Chores
+
+- swap babel-plugin-lodash with updated version that doesn't use deprecated APIs [#38797](https://github.com/gatsbyjs/gatsby/issues/38797) [#38803](https://github.com/gatsbyjs/gatsby/issues/38803) ([c9f8c24](https://github.com/gatsbyjs/gatsby/commit/c9f8c24cdb65016d03f1f270d3df43b0467623f0))
+
+### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.1/packages/gatsby) (2023-12-22)
+
+**Note:** Version bump only for package gatsby
+
 ## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.0/packages/gatsby) (2023-12-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
