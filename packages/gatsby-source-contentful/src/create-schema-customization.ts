@@ -2,6 +2,7 @@ import type {
   GatsbyNode,
   NodePluginSchema,
   CreateSchemaCustomizationArgs,
+  IGatsbyResolverContext,
 } from "gatsby"
 import {
   GraphQLFieldConfig,
@@ -31,13 +32,27 @@ import type {
 } from "./types/contentful"
 import { detectMarkdownField, makeContentTypeIdMap } from "./utils"
 import { restrictedNodeFields } from "./config"
+import { Document } from "@contentful/rich-text-types"
 
 type CreateTypes = CreateSchemaCustomizationArgs["actions"]["createTypes"]
 
 interface IContentfulGraphQLField
-  extends Omit<Partial<GraphQLFieldConfig<unknown, unknown>>, "type"> {
+  extends Omit<
+    Partial<
+      GraphQLFieldConfig<
+        IContentfulEntry,
+        IGatsbyResolverContext<IContentfulEntry, unknown>
+      >
+    >,
+    "type"
+  > {
   type: string | GraphQLType
   id?: string
+}
+
+interface IRichTextFieldStructure {
+  richTextData: Document
+  spaceId: string
 }
 
 // Contentful content type schemas
@@ -112,7 +127,18 @@ const ContentfulDataTypes: Map<
   [
     `RichText`,
     (): IContentfulGraphQLField => {
-      return { type: `ContentfulRichText` }
+      return {
+        type: `ContentfulRichText`,
+        resolve: (source, args, context, info): IRichTextFieldStructure => {
+          const richTextData = context.defaultFieldResolver(
+            source,
+            args,
+            context,
+            info
+          )
+          return { richTextData, spaceId: source.sys.spaceId }
+        },
+      }
     },
   ],
 ])
@@ -599,16 +625,13 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     const makeRichTextLinksResolver =
       (nodeType, entityType) =>
       async (
-        source,
+        source: IRichTextFieldStructure,
         _args,
         context
       ): Promise<Array<IContentfulEntry> | null> => {
-        const links = getRichTextEntityLinks(source, nodeType)[entityType].map(
-          ({ id }) => id
-        )
-
-        const node = context.nodeModel.findRootNodeAncestor(source)
-        if (!node) return null
+        const links = getRichTextEntityLinks(source.richTextData, nodeType)[
+          entityType
+        ].map(({ id }) => id)
 
         const res = await context.nodeModel.findAll({
           query: {
@@ -617,7 +640,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                 id: {
                   in: links,
                 },
-                spaceId: { eq: node.sys.spaceId },
+                spaceId: { eq: source.spaceId },
               },
             },
           },
@@ -693,8 +716,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         fields: {
           json: {
             type: `JSON`,
-            resolve(source) {
-              return source
+            resolve(source: IRichTextFieldStructure) {
+              return source.richTextData
             },
           },
           links: {
