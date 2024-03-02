@@ -1,6 +1,6 @@
 import crypto from "crypto"
 import { basename, extname } from "path"
-import { URL } from "url"
+import { URL, URLSearchParams } from "url"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
 import type {
