@@ -1,171 +1,92 @@
-import type { IFunctionDefinition } from "gatsby"
-import packageJson from "gatsby-adapter-netlify/package.json"
-import fs from "fs-extra"
-import * as path from "path"
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
-interface INetlifyFunctionConfig {
-  externalNodeModules?: Array<string>
-  includedFiles?: Array<string>
-  includedFilesBasePath?: string
-  ignoredNodeModules?: Array<string>
-  nodeBundler?: "esbuild" | "esbuild_zisi" | "nft" | "zisi" | "none"
-  nodeSourcemap?: boolean
-  nodeVersion?: string
-  processDynamicNodeImports?: boolean
-  rustTargetDirectory?: string
-  schedule?: string
-  zipGo?: boolean
-  name?: string
-  generator?: string
-  nodeModuleFormat?: "cjs" | "esm"
-}
+exports[`produced handler is correct 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "<PROJECT_ROOT>/.netlify/functions-internal/test/test.js",
+      "
+const Stream = require(\\"stream\\")
+const http = require(\\"http\\")
+const { Buffer } = require(\\"buffer\\")
+const cookie = require(\\"./../../../packages/gatsby-adapter-netlify/node_modules/cookie/index.js\\")
 
-interface INetlifyFunctionManifest {
-  config: INetlifyFunctionConfig
-  version: number
-}
-
-export async function prepareFunction(
-  fun: IFunctionDefinition,
-  odbfunctionName?: string
-): Promise<void> {
-  let functionId = fun.functionId
-  let isODB = false
-
-  if (odbfunctionName) {
-    functionId = odbfunctionName
-    isODB = true
-  }
-
-  const internalFunctionsDir = path.join(
-    process.cwd(),
-    `.netlify`,
-    `functions-internal`,
-    functionId
-  )
-
-  await fs.ensureDir(internalFunctionsDir)
-
-  // This is a temporary hacky approach, eventually it should be just `fun.name`
-  const displayName = isODB
-    ? `DSG`
-    : fun.name === `SSR & DSG`
-    ? `SSR`
-    : fun.name
-
-  const functionManifest: INetlifyFunctionManifest = {
-    config: {
-      name: displayName,
-      generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
-      includedFiles: fun.requiredFiles.map(file =>
-        file.replace(/\[/g, `*`).replace(/]/g, `*`)
-      ),
-      externalNodeModules: [`msgpackr-extract`],
-    },
-    version: 1,
-  }
-
-  await fs.writeJSON(
-    path.join(internalFunctionsDir, `${functionId}.json`),
-    functionManifest
-  )
-
-  function getRelativePathToModule(modulePath: string): string {
-    const absolutePath = require.resolve(modulePath)
-
-    return `./` + path.relative(internalFunctionsDir, absolutePath)
-  }
-
-  const handlerSource = /* javascript */ `
-const Stream = require("stream")
-const http = require("http")
-const { Buffer } = require("buffer")
-const cookie = require("${getRelativePathToModule(`cookie`)}")
-${
-  isODB
-    ? `const { builder } = require("${getRelativePathToModule(
-        `@netlify/functions`
-      )}")`
-    : ``
-}
 
 const preferDefault = m => (m && m.default) || m
 
-const functionModule = require("${getRelativePathToModule(
-    path.join(process.cwd(), fun.pathToEntryPoint)
-  )}")
+const functionModule = require(\\"./../../../packages/gatsby-adapter-netlify/src/__tests__/fixtures/lambda-handler/entry.js\\")
 
 const functionHandler = preferDefault(functionModule)
 
 const statuses = {
-  "100": "Continue",
-  "101": "Switching Protocols",
-  "102": "Processing",
-  "103": "Early Hints",
-  "200": "OK",
-  "201": "Created",
-  "202": "Accepted",
-  "203": "Non-Authoritative Information",
-  "204": "No Content",
-  "205": "Reset Content",
-  "206": "Partial Content",
-  "207": "Multi-Status",
-  "208": "Already Reported",
-  "226": "IM Used",
-  "300": "Multiple Choices",
-  "301": "Moved Permanently",
-  "302": "Found",
-  "303": "See Other",
-  "304": "Not Modified",
-  "305": "Use Proxy",
-  "307": "Temporary Redirect",
-  "308": "Permanent Redirect",
-  "400": "Bad Request",
-  "401": "Unauthorized",
-  "402": "Payment Required",
-  "403": "Forbidden",
-  "404": "Not Found",
-  "405": "Method Not Allowed",
-  "406": "Not Acceptable",
-  "407": "Proxy Authentication Required",
-  "408": "Request Timeout",
-  "409": "Conflict",
-  "410": "Gone",
-  "411": "Length Required",
-  "412": "Precondition Failed",
-  "413": "Payload Too Large",
-  "414": "URI Too Long",
-  "415": "Unsupported Media Type",
-  "416": "Range Not Satisfiable",
-  "417": "Expectation Failed",
-  "418": "I'm a Teapot",
-  "421": "Misdirected Request",
-  "422": "Unprocessable Entity",
-  "423": "Locked",
-  "424": "Failed Dependency",
-  "425": "Too Early",
-  "426": "Upgrade Required",
-  "428": "Precondition Required",
-  "429": "Too Many Requests",
-  "431": "Request Header Fields Too Large",
-  "451": "Unavailable For Legal Reasons",
-  "500": "Internal Server Error",
-  "501": "Not Implemented",
-  "502": "Bad Gateway",
-  "503": "Service Unavailable",
-  "504": "Gateway Timeout",
-  "505": "HTTP Version Not Supported",
-  "506": "Variant Also Negotiates",
-  "507": "Insufficient Storage",
-  "508": "Loop Detected",
-  "509": "Bandwidth Limit Exceeded",
-  "510": "Not Extended",
-  "511": "Network Authentication Required"
+  \\"100\\": \\"Continue\\",
+  \\"101\\": \\"Switching Protocols\\",
+  \\"102\\": \\"Processing\\",
+  \\"103\\": \\"Early Hints\\",
+  \\"200\\": \\"OK\\",
+  \\"201\\": \\"Created\\",
+  \\"202\\": \\"Accepted\\",
+  \\"203\\": \\"Non-Authoritative Information\\",
+  \\"204\\": \\"No Content\\",
+  \\"205\\": \\"Reset Content\\",
+  \\"206\\": \\"Partial Content\\",
+  \\"207\\": \\"Multi-Status\\",
+  \\"208\\": \\"Already Reported\\",
+  \\"226\\": \\"IM Used\\",
+  \\"300\\": \\"Multiple Choices\\",
+  \\"301\\": \\"Moved Permanently\\",
+  \\"302\\": \\"Found\\",
+  \\"303\\": \\"See Other\\",
+  \\"304\\": \\"Not Modified\\",
+  \\"305\\": \\"Use Proxy\\",
+  \\"307\\": \\"Temporary Redirect\\",
+  \\"308\\": \\"Permanent Redirect\\",
+  \\"400\\": \\"Bad Request\\",
+  \\"401\\": \\"Unauthorized\\",
+  \\"402\\": \\"Payment Required\\",
+  \\"403\\": \\"Forbidden\\",
+  \\"404\\": \\"Not Found\\",
+  \\"405\\": \\"Method Not Allowed\\",
+  \\"406\\": \\"Not Acceptable\\",
+  \\"407\\": \\"Proxy Authentication Required\\",
+  \\"408\\": \\"Request Timeout\\",
+  \\"409\\": \\"Conflict\\",
+  \\"410\\": \\"Gone\\",
+  \\"411\\": \\"Length Required\\",
+  \\"412\\": \\"Precondition Failed\\",
+  \\"413\\": \\"Payload Too Large\\",
+  \\"414\\": \\"URI Too Long\\",
+  \\"415\\": \\"Unsupported Media Type\\",
+  \\"416\\": \\"Range Not Satisfiable\\",
+  \\"417\\": \\"Expectation Failed\\",
+  \\"418\\": \\"I'm a Teapot\\",
+  \\"421\\": \\"Misdirected Request\\",
+  \\"422\\": \\"Unprocessable Entity\\",
+  \\"423\\": \\"Locked\\",
+  \\"424\\": \\"Failed Dependency\\",
+  \\"425\\": \\"Too Early\\",
+  \\"426\\": \\"Upgrade Required\\",
+  \\"428\\": \\"Precondition Required\\",
+  \\"429\\": \\"Too Many Requests\\",
+  \\"431\\": \\"Request Header Fields Too Large\\",
+  \\"451\\": \\"Unavailable For Legal Reasons\\",
+  \\"500\\": \\"Internal Server Error\\",
+  \\"501\\": \\"Not Implemented\\",
+  \\"502\\": \\"Bad Gateway\\",
+  \\"503\\": \\"Service Unavailable\\",
+  \\"504\\": \\"Gateway Timeout\\",
+  \\"505\\": \\"HTTP Version Not Supported\\",
+  \\"506\\": \\"Variant Also Negotiates\\",
+  \\"507\\": \\"Insufficient Storage\\",
+  \\"508\\": \\"Loop Detected\\",
+  \\"509\\": \\"Bandwidth Limit Exceeded\\",
+  \\"510\\": \\"Not Extended\\",
+  \\"511\\": \\"Network Authentication Required\\"
 }
 
 const createRequestObject = ({ event, context }) => {
   const {
-    path = "",
+    path = \\"\\",
     multiValueQueryStringParameters,
     queryStringParameters,
     httpMethod,
@@ -199,7 +120,7 @@ const createRequestObject = ({ event, context }) => {
   }
   // req.connection = {}
   if (body) {
-    req.push(body, isBase64Encoded ? "base64" : undefined)
+    req.push(body, isBase64Encoded ? \\"base64\\" : undefined)
   }
   req.push(null)
   return req
@@ -336,27 +257,21 @@ const handler = async (event, context) => {
       const res = createResponseObject({ onResEnd: resolve })
       await functionHandler(req, res)
     } catch(error) {
-      console.error("Error executing " + event.path, error)
+      console.error(\\"Error executing \\" + event.path, error)
       resolve({ statusCode: 500 })
     }
   })
 }
 
-exports.handler = ${isODB ? `builder(handler)` : `handler`}
-`
-
-  await fs.writeFile(
-    path.join(internalFunctionsDir, `${functionId}.js`),
-    handlerSource
-  )
+exports.handler = handler
+",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
 }
-
-export async function prepareFunctionVariants(
-  fun: IFunctionDefinition,
-  odbfunctionName?: string
-): Promise<void> {
-  await prepareFunction(fun)
-  if (odbfunctionName) {
-    await prepareFunction(fun, odbfunctionName)
-  }
-}
+`;
