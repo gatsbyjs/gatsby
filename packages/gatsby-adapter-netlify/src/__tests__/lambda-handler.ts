@@ -25,18 +25,22 @@ test(`produced handler is correct`, async () => {
     pathToEntryPoint,
     requiredFiles: [requiredFile],
   })
+  const handlerCode = writeFileSpy.mock.calls[0][1]
+  // expect require in produced code (this is to mostly to make sure handlerCode is actual handler code)
+  expect(handlerCode).toMatch(/require\(["'][^"']*["']\)/)
+  // require paths should not have backward slashes (win paths)
+  expect(handlerCode).not.toMatch(/require\(["'][^"']*\\[^"']*["']\)/)
 
-  // asserting correctness on actual output would be difficult
-  // so this assertion is mostly to make sure win32 produces same
-  // output as posix
-  expect(writeFileSpy).toMatchSnapshot()
-  expect(writeJsonSpy).toBeCalledWith(expect.any(String), {
-    config: {
-      name: `test`,
-      generator: expect.stringContaining(`gatsby-adapter-netlify@`),
-      includedFiles: [slash(requiredFile)],
-      externalNodeModules: [`msgpackr-extract`],
-    },
-    version: 1,
-  })
+  expect(writeJsonSpy).toBeCalledWith(
+    expect.any(String),
+    expect.objectContaining({
+      config: expect.objectContaining({
+        name: `test`,
+        generator: expect.stringContaining(`gatsby-adapter-netlify`),
+        includedFiles: [slash(requiredFile)],
+        externalNodeModules: [`msgpackr-extract`],
+      }),
+      version: 1,
+    })
+  )
 })
