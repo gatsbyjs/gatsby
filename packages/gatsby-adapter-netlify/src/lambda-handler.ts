@@ -2,6 +2,7 @@ import type { IFunctionDefinition } from "gatsby"
 import packageJson from "gatsby-adapter-netlify/package.json"
 import fs from "fs-extra"
 import * as path from "path"
+import { slash } from "gatsby-core-utils/path"
 
 interface INetlifyFunctionConfig {
   externalNodeModules?: Array<string>
@@ -58,7 +59,7 @@ export async function prepareFunction(
       name: displayName,
       generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
       includedFiles: fun.requiredFiles.map(file =>
-        file.replace(/\[/g, `*`).replace(/]/g, `*`)
+        slash(file).replace(/\[/g, `*`).replace(/]/g, `*`)
       ),
       externalNodeModules: [`msgpackr-extract`],
     },
@@ -73,7 +74,10 @@ export async function prepareFunction(
   function getRelativePathToModule(modulePath: string): string {
     const absolutePath = require.resolve(modulePath)
 
-    return `./` + path.relative(internalFunctionsDir, absolutePath)
+    return (
+      `./` +
+      path.posix.relative(slash(internalFunctionsDir), slash(absolutePath))
+    )
   }
 
   const handlerSource = /* javascript */ `
