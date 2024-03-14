@@ -102,7 +102,7 @@ function getLMDBBinaryFromSiteLocation(
   if (
     !Object.keys(optionalDependencies ?? {}).find(p => p === lmdbPackageName)
   ) {
-    throw new Error("No optional dependencies in lmdb (?)")
+    throw new Error(`No optional dependencies in lmdb (?)`)
   }
   return getPackageLocationFromRequireContext(
     slash(require.resolve(`lmdb`)),
@@ -230,7 +230,7 @@ function checkIfNeedToInstallMissingSharp(
 ): IBinaryPackageStatus | undefined {
   try {
     // check if shapr is resolvable
-    const { version: sharpVersion } = require("sharp/package.json")
+    const { version: sharpVersion } = require(`sharp/package.json`)
 
     if (isEqual(lambdaTarget, currentTarget)) {
       return undefined
@@ -376,7 +376,7 @@ export async function createGraphqlEngineBundle(
     throw new Error(`no lmdb for target`)
   } else if (functionsTarget.platform === `linux`) {
     if (lmdbPackageInfo.needToInstall) {
-      throw new Error("no sharp for target")
+      throw new Error(`no lmdb for target`)
     }
 
     forcedLmdbBinaryModule = `${lmdbPackageInfo.packageLocation}/node.abi83.glibc.node`
@@ -384,7 +384,7 @@ export async function createGraphqlEngineBundle(
 
   if (sharpPackageInfo) {
     if (sharpPackageInfo.needToInstall) {
-      throw new Error("no sharp for target")
+      throw new Error(`no sharp for target`)
     }
     dynamicAliases[`sharp$`] = sharpPackageInfo.packageLocation
   }
@@ -560,7 +560,7 @@ export async function createGraphqlEngineBundle(
   })
 
   return new Promise((resolve, reject) => {
-    compiler.run(async (err, stats): void => {
+    compiler.run(async (err, stats): Promise<void> => {
       function getResourcePath(
         webpackModule?: Module | NormalModule | ConcatenatedModule | null
       ): string | undefined {
@@ -629,7 +629,7 @@ export async function createGraphqlEngineBundle(
           stats?.compilation?.assetsInfo ?? new Map()
         ).keys()) {
           if (asset?.endsWith(`.node`)) {
-            const targetRelPath = path.posix.relative("assets", asset)
+            const targetRelPath = path.posix.relative(`assets`, asset)
             const assetMeta = getAssetMeta(targetRelPath, stats?.compilation)
             const sourcePath = assetMeta?.path
             if (sourcePath) {
