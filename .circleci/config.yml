@@ -580,6 +580,47 @@ jobs:
       - store_test_results:
           path: ./test-results/jest-node/
 
+  windows_adapters_smoke:
+    executor:
+      name: win/default
+      shell: powershell.exe
+    steps:
+      - checkout
+      - run:
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+          shell: bash.exe
+      - <<: *attach_to_bootstrap
+      - run:
+          name: Install node 18.0.0 and yarn
+          command: |
+            nvm install 18.0.0
+            nvm alias default 18.0.0
+            nvm use 18.0.0
+            choco install yarn -y
+      - run:
+          name: Rebuild packages for windows
+          command: |
+            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+            yarn
+      - run:
+          command: mkdir -p /tmp/e2e-tests/
+          shell: bash.exe
+      - run:
+          command: cp -r ./e2e-test/adapters /tmp/e2e-tests/adapters
+          working_directory: ~/project
+          shell: bash.exe
+      - run: # Set project dir
+          command: node ./packages/gatsby-dev-cli/dist/index.js --set-path-to-repo .
+          shell: bash.exe
+      - run: # Copy over packages
+          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once
+          working_directory: /tmp/e2e-tests/adapters
+          shell: bash.exe
+      - run: # run smoke test
+          command: node scripts/deploy-and-run/netlify.mjs test:smoke
+          working_directory: /tmp/e2e-tests/adapters
+          shell: bash.exe
+
 workflows:
   version: 2
 
@@ -611,6 +652,9 @@ workflows:
           requires:
             - lint
             - bootstrap
+      - windows_adapters_smoke:
+          requires:
+            - bootstrap #todo - this should require windows_unit_tests, but for now let's run it earlier to setup job correctly
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
