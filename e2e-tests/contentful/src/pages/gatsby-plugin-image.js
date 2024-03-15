@@ -163,12 +163,12 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            {node.fixed && node?.sqip?.dataURI ? (
+            {node.fixed && node?.sqip?.additonalMetadata?.dataURI ? (
               <GatsbyImage
                 image={{
                   ...node.fixed,
-                  placeholder: node?.sqip?.dataURI
-                    ? { fallback: node.sqip.dataURI }
+                  placeholder: node?.sqip?.additonalMetadata?.dataURI
+                    ? { fallback: node.sqip.additonalMetadata?.dataURI }
                     : null,
                 }}
                 alt={node.title}
@@ -273,7 +273,9 @@ export const pageQuery = graphql`
         )
         customImageFormats: gatsbyImageData(formats: [AVIF, WEBP, AUTO])
         sqip(numberOfPrimitives: 12, blur: 0, mode: 1) {
-          dataURI
+          additionalMetadata {
+            dataURI
+          }
         }
       }
     }

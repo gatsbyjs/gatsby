@@ -24,7 +24,7 @@ const Layout = ({ children, data }) => {
           // Inject the sqip dataURI as base64 value
           fluid={{
             ...background.childImageSharp.fluid,
-            base64: background.childImageSharp.sqip.dataURI,
+            base64: background.childImageSharp.sqip.additonalMetadata.dataURI,
           }}
           alt={background.name}
         />
