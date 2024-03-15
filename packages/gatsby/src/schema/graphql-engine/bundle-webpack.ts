@@ -348,14 +348,20 @@ export async function createGraphqlEngineBundle(
     arch: process.arch,
   }
 
-  const functionsTarget: IPlatformAndArch = state.adapter.instance
-    ? {
-        // TODO: allow to pass target from adapter
-        // for now this seems most likely target
-        platform: `linux`,
-        arch: `x64`,
-      }
-    : currentTarget
+  const functionsTarget: IPlatformAndArch = {
+    platform:
+      process.env.GATSBY_FUNCTIONS_PLATFORM ??
+      state.program.functionsPlatform ??
+      state.adapter.config.functionsPlatform ??
+      currentTarget.platform,
+    arch:
+      process.env.GATSBY_FUNCTIONS_ARCH ??
+      state.program.functionsArch ??
+      state.adapter.config.functionsArch ??
+      currentTarget.arch,
+  }
+
+  console.log({ functionsTarget, currentTarget })
 
   const dynamicAliases: Record<string, string> = {}
   let forcedLmdbBinaryModule: string | undefined = undefined
@@ -373,9 +379,11 @@ export async function createGraphqlEngineBundle(
   )
 
   if (!lmdbPackageInfo) {
+    // TODO: better error / structured logging
     throw new Error(`no lmdb for target`)
   } else if (functionsTarget.platform === `linux`) {
     if (lmdbPackageInfo.needToInstall) {
+      // TODO: better error / structured logging
       throw new Error(`no lmdb for target`)
     }
 
@@ -384,6 +392,7 @@ export async function createGraphqlEngineBundle(
 
   if (sharpPackageInfo) {
     if (sharpPackageInfo.needToInstall) {
+      // TODO: better error / structured logging
       throw new Error(`no sharp for target`)
     }
     dynamicAliases[`sharp$`] = sharpPackageInfo.packageLocation
@@ -553,6 +562,12 @@ export async function createGraphqlEngineBundle(
         "process.env.GATSBY_SLICES": JSON.stringify(
           !!process.env.GATSBY_SLICES
         ),
+        "process.env.GATSBY_FUNCTIONS_PLATFORM": JSON.stringify(
+          functionsTarget.platform
+        ),
+        "process.env.GATSBY_FUNCTIONS_ARCH": JSON.stringify(
+          functionsTarget.arch
+        ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),
@@ -613,33 +628,35 @@ export async function createGraphqlEngineBundle(
           iterateModules(stats.compilation.modules, stats.compilation)
         }
 
-        const binaryFixingPromises: Array<Promise<void>> = []
-        // sigh - emitAsset used by relocator seems to corrupt binaries
-        // resulting in "ELF file's phentsize not the expected size" errors
-        // - see size diff
-        //   > find . -name node.abi83.glibc.node
-        // ./.cache/internal-packages/node_modules/@lmdb/lmdb-linux-x64/node.abi83.glibc.node
-        // ./.cache/query-engine/assets/node.abi83.glibc.node
-        // > ls -al ./.cache/query-engine/assets/node.abi83.glibc.node
-        // -rw-r--r-- 1 misiek 197121 1285429 Mar 14 11:36 ./.cache/query-engine/assets/node.abi83.glibc.node
-        // > ls -al ./.cache/internal-packages/node_modules/@lmdb/lmdb-linux-x64/node.abi83.glibc.node
-        // -rw-r--r-- 1 misiek 197121 693544 Mar 14 11:35 ./.cache/internal-packages/node_modules/@lmdb/lmdb-linux-x64/node.abi83.glibc.node
-        // so this tries to fix it by straight copying it over
-        for (const asset of (
-          stats?.compilation?.assetsInfo ?? new Map()
-        ).keys()) {
-          if (asset?.endsWith(`.node`)) {
-            const targetRelPath = path.posix.relative(`assets`, asset)
-            const assetMeta = getAssetMeta(targetRelPath, stats?.compilation)
-            const sourcePath = assetMeta?.path
-            if (sourcePath) {
-              const dist = path.join(outputDir, asset)
-              binaryFixingPromises.push(fs.copyFile(sourcePath, dist))
+        if (!isEqual(functionsTarget, currentTarget)) {
+          const binaryFixingPromises: Array<Promise<void>> = []
+          // sigh - emitAsset used by relocator seems to corrupt binaries
+          // resulting in "ELF file's phentsize not the expected size" errors
+          // - see size diff
+          //   > find . -name node.abi83.glibc.node
+          // ./.cache/internal-packages/node_modules/@lmdb/lmdb-linux-x64/node.abi83.glibc.node
+          // ./.cache/query-engine/assets/node.abi83.glibc.node
+          // > ls -al ./.cache/query-engine/assets/node.abi83.glibc.node
+          // -rw-r--r-- 1 misiek 197121 1285429 Mar 14 11:36 ./.cache/query-engine/assets/node.abi83.glibc.node
+          // > ls -al ./.cache/internal-packages/node_modules/@lmdb/lmdb-linux-x64/node.abi83.glibc.node
+          // -rw-r--r-- 1 misiek 197121 693544 Mar 14 11:35 ./.cache/internal-packages/node_modules/@lmdb/lmdb-linux-x64/node.abi83.glibc.node
+          // so this tries to fix it by straight copying it over
+          for (const asset of (
+            stats?.compilation?.assetsInfo ?? new Map()
+          ).keys()) {
+            if (asset?.endsWith(`.node`)) {
+              const targetRelPath = path.posix.relative(`assets`, asset)
+              const assetMeta = getAssetMeta(targetRelPath, stats?.compilation)
+              const sourcePath = assetMeta?.path
+              if (sourcePath) {
+                const dist = path.join(outputDir, asset)
+                binaryFixingPromises.push(fs.copyFile(sourcePath, dist))
+              }
             }
           }
-        }
 
-        await Promise.all(binaryFixingPromises)
+          await Promise.all(binaryFixingPromises)
+        }
 
         compiler.close(closeErr => {
           if (err) {

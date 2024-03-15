@@ -201,6 +201,14 @@ export interface IAdapterConfig {
    * example for the Netlify adapter.
    */
   fileCDNUrlGeneratorModulePath?: string
+  /**
+   * TODO: add description
+   */
+  functionsPlatform?: string
+  /**
+   * TODO: add description
+   */
+  functionsArch?: string
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
