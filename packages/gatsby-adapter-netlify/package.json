@@ -42,7 +42,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "@netlify/edge-functions": "^2.2.0",
+    "@netlify/edge-functions": "^2.3.1",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
     "memfs": "^4.6.0",

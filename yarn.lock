@@ -3309,10 +3309,10 @@
     validate-npm-package-name "^4.0.0"
     yargs "^17.6.0"
 
-"@netlify/edge-functions@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@netlify/edge-functions/-/edge-functions-2.2.0.tgz#5f7f5c7602a7f98888a4b4421576ca609dad2083"
-  integrity sha512-8UeKA2nUDB0oWE+Z0gLpA7wpLq8nM+NrZEQMfSdzfMJNvmYVabil/mS07rb0EBrUxM9PCKidKenaiCRnPTBSKw==
+"@netlify/edge-functions@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@netlify/edge-functions/-/edge-functions-2.3.1.tgz#45dc30894e57948b47a6b4fe6f05f664ec55716c"
+  integrity sha512-3sJzP1DmzMZppkAZpUixdHA4ryiKD1NSpLMRViYStE9Oe10rZPSnM8yl6A90vTBqCYvbAF5S7W9oPf2ucrCCIQ==
 
 "@netlify/functions@^1.6.0":
   version "1.6.0"
@@ -11814,12 +11814,7 @@ flush-write-stream@^1.0.0, flush-write-stream@^1.0.2:
     inherits "^2.0.1"
     readable-stream "^2.0.4"
 
-follow-redirects@^1.14.9:
-  version "1.14.9"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.9.tgz#dd4ea157de7bfaf9ea9b3fbd85aa16951f78d8d7"
-  integrity sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==
-
-follow-redirects@^1.15.4:
+follow-redirects@^1.14.9, follow-redirects@^1.15.4:
   version "1.15.4"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.4.tgz#cdc7d308bf6493126b17ea2191ea0ccf3e535adf"
   integrity sha512-Cr4D/5wlrb0z9dgERpUL3LrmPKVDsETIJhaCMeDfuFYcqa5bldGV6wBsAN6X/vxlXQtFBMrXdXxdL8CbDTGniw==
