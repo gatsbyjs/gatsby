@@ -606,7 +606,7 @@ jobs:
           command: mkdir -p /tmp/e2e-tests/
           shell: bash.exe
       - run:
-          command: cp -r ./e2e-test/adapters /tmp/e2e-tests/adapters
+          command: cp -r ./e2e-tests/adapters /tmp/e2e-tests/adapters
           working_directory: ~/project
           shell: bash.exe
       - run: # Set project dir
