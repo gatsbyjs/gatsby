@@ -1091,7 +1091,7 @@ You can make your theme styles extendable using the `gatsby-plugin-theme-ui` pac
 Install dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @theme-ui/mdx @emotion/react
+yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @theme-ui/mdx @mdx-js/react @emotion/react
 ```
 
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
@@ -1406,7 +1406,7 @@ module.exports = {
 
 ### Run the site
 
-Making sure you're in your `/theme-test` directory, run `npm run develop` to start the site.
+Making sure you're in your `/theme-test` directory, run `gatsby develop` to start the site.
 
 ![The new site, running your new Gatsby theme.](./images/building-a-theme-running-theme.png)
 
@@ -1455,7 +1455,7 @@ Inside the new `index.js` file, add the following:
 
 ```javascript:title=theme-test/src/gatsby-plugin-theme-ui/index.js
 import { merge } from "theme-ui"
-import { theme } from "@jlengstorf/gatsby-theme-events"
+import { theme } from "@jlengstorf/gatsby-theme-events/src/theme"
 
 const theme = merge(theme, {
   colors: {
