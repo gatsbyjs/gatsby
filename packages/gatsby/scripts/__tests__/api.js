@@ -37,6 +37,7 @@ it("generates the expected api output", done => {
           "slices",
           "stateful-source-nodes",
           "adapters",
+          "track-inline-object-opt-out",
         ],
         "node": Object {
           "createPages": Object {},

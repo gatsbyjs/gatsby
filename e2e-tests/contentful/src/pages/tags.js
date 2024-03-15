@@ -55,18 +55,18 @@ const TagsPage = ({ data }) => {
         data-cy-assets
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        {assets.map(({ title, file, metadata }) => {
+        {assets.map(({ title, url, contentfulMetadata }) => {
           const slug = slugify(title, { strict: true, lower: true })
           return (
             <div data-cy-id={slug} key={slug}>
               <h3>{title}</h3>
               <img
-                src={`${file.url}?w=300&h=300&fit=thumb&f=face`}
+                src={`${url}?w=300&h=300&fit=thumb&f=face`}
                 style={{ width: 300 }}
                 alt={title}
               />
               <div data-cy-value>
-                {metadata.tags.map(({ name }) => (
+                {contentfulMetadata.tags.map(({ name }) => (
                   <span
                     style={{
                       background: "tomato",
@@ -88,24 +88,23 @@ const TagsPage = ({ data }) => {
     </Layout>
   )
 }
-
 export default TagsPage
 
 export const pageQuery = graphql`
   query TagsQuery {
-    tags: allContentfulTag(sort: { fields: contentful_id }) {
+    tags: allContentfulTag(sort: { id: ASC }) {
       nodes {
         name
         contentful_id
       }
     }
-    integers: allContentfulNumber(
-      sort: { fields: contentful_id }
+    integers: allContentfulContentTypeNumber(
+      sort: { sys: { id: ASC } }
       filter: {
-        metadata: {
+        contentfulMetadata: {
           tags: { elemMatch: { contentful_id: { eq: "numberInteger" } } }
         }
-        node_locale: { eq: "en-US" }
+        sys: { locale: { eq: "en-US" } }
       }
     ) {
       nodes {
@@ -113,13 +112,13 @@ export const pageQuery = graphql`
         integer
       }
     }
-    decimals: allContentfulNumber(
-      sort: { fields: contentful_id }
+    decimals: allContentfulContentTypeNumber(
+      sort: { sys: { id: ASC } }
       filter: {
-        metadata: {
+        contentfulMetadata: {
           tags: { elemMatch: { contentful_id: { eq: "numberDecimal" } } }
         }
-        node_locale: { eq: "en-US" }
+        sys: { locale: { eq: "en-US" } }
       }
     ) {
       nodes {
@@ -128,18 +127,18 @@ export const pageQuery = graphql`
       }
     }
     assets: allContentfulAsset(
-      sort: { fields: contentful_id }
+      sort: { sys: { id: ASC } }
       filter: {
-        metadata: { tags: { elemMatch: { contentful_id: { eq: "animal" } } } }
-        node_locale: { eq: "en-US" }
+        contentfulMetadata: {
+          tags: { elemMatch: { contentful_id: { eq: "animal" } } }
+        }
+        sys: { locale: { eq: "en-US" } }
       }
     ) {
       nodes {
         title
-        file {
-          url
-        }
-        metadata {
+        url
+        contentfulMetadata {
           tags {
             name
           }

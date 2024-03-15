@@ -24,6 +24,7 @@ packages/gatsby-source-shopify/**/*.js
 packages/gatsby-plugin-preload-fonts/prepare/*.js
 packages/gatsby/cache-dir/commonjs/**/*
 packages/gatsby-codemods/transforms
+packages/gatsby-source-contentful/src/types/contentful-js-sdk
 packages/gatsby-source-graphql/batching
 packages/gatsby-plugin-gatsby-cloud/components
 packages/gatsby-plugin-gatsby-cloud/context

@@ -27,6 +27,7 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
       owner: `String!`,
       type: `String!`,
       contentFilePath: `String`,
+      trackInlineObjects: `Boolean`,
     })
     // TODO: Can be removed with graphql-compose 5.11
     tc.getInputTypeComposer()

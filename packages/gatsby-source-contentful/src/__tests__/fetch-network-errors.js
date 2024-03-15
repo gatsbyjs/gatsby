@@ -66,6 +66,11 @@ describe(`fetch-retry`, () => {
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
       )
       .reply(200, { items: [] })
+      // Tags
+      .get(
+        `/spaces/${options.spaceId}/environments/master/tags?skip=0&limit=1000`
+      )
+      .reply(200, { items: [] })
 
     await fetchContent({ pluginConfig, reporter, syncToken: null })
 
@@ -108,7 +113,7 @@ describe(`fetch-retry`, () => {
       const msg = expect(e.context.sourceMessage)
       msg.toEqual(
         expect.stringContaining(
-          `Fetching contentful data failed: ERR_BAD_RESPONSE 500 MockedContentfulError`
+          `Fetching contentful data failed: 500 MockedContentfulError Mocked message of Contentful error`
         )
       )
       msg.toEqual(expect.stringContaining(`Request ID: 123abc`))

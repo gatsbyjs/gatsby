@@ -66,7 +66,7 @@ describe("transform", () => {
     run()
 
     expect(console.log).toBeCalledWith(
-      `You have passed in invalid codemod name: does-not-exist. Please pass in one of the following: gatsby-plugin-image, global-graphql-calls, import-link, navigate-calls, rename-bound-action-creators, sort-and-aggr-graphql.`
+      `You have passed in invalid codemod name: does-not-exist. Please pass in one of the following: gatsby-source-contentful, gatsby-plugin-image, global-graphql-calls, import-link, navigate-calls, rename-bound-action-creators, sort-and-aggr-graphql.`
     )
   })
 })

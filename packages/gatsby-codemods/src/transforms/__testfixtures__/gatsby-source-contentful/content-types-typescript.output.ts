@@ -1,0 +1,3 @@
+interface Data {
+	allContentfulContentTypeTemplatePage: FooConnection
+}

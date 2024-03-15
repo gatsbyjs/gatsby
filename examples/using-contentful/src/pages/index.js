@@ -85,14 +85,16 @@ IndexPage.propTypes = propTypes
 export default IndexPage
 
 export const pageQuery = graphql`
-  query {
-    us: allContentfulProduct(filter: { node_locale: { eq: "en-US" } }) {
+  {
+    us: allContentfulContentTypeProduct(
+      filter: { sys: { locale: { eq: "en-US" } } }
+    ) {
       edges {
         node {
           id
-          gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
+          gatsbyPath(filePath: "/products/{ContentfulContentTypeProduct.id}")
           productName {
-            productName
+            raw
           }
           image {
             gatsbyImageData(layout: FIXED, width: 75)
@@ -100,13 +102,15 @@ export const pageQuery = graphql`
         }
       }
     }
-    german: allContentfulProduct(filter: { node_locale: { eq: "de" } }) {
+    german: allContentfulContentTypeProduct(
+      filter: { sys: { locale: { eq: "de" } } }
+    ) {
       edges {
         node {
           id
-          gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
+          gatsbyPath(filePath: "/products/{ContentfulContentTypeProduct.id}")
           productName {
-            productName
+            raw
           }
           image {
             gatsbyImageData(layout: FIXED, width: 75)

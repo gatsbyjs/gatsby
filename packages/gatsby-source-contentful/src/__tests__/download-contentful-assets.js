@@ -1,9 +1,6 @@
 // @ts-check
 import { downloadContentfulAssets } from "../download-contentful-assets"
 import { createAssetNodes } from "../normalize"
-import { createPluginConfig } from "../plugin-options"
-
-const pluginConfig = createPluginConfig({})
 
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
@@ -16,6 +13,8 @@ jest.mock(`gatsby-source-filesystem`, () => {
 })
 
 const reporter = {
+  info: jest.fn(),
+  warn: jest.fn(),
   createProgress: jest.fn(() => {
     return {
       start: jest.fn(),
@@ -24,25 +23,44 @@ const reporter = {
   }),
 }
 
+const getNode = jest.fn()
+const touchNode = jest.fn()
+const createNodeField = jest.fn()
+
+const mockedContentfulEntity = {
+  sys: { id: `mocked` },
+}
+
 const fixtures = [
   {
+    id: `aa1beda4-b14a-50f5-89a8-222992a46a41`,
+    internal: {
+      owner: `gatsby-source-contentful`,
+      type: `ContentfulAsset`,
+    },
+    fields: {
+      title: { "en-US": `TundraUS`, fr: `TundraFR` },
+      file: {
+        "en-US": {
+          url: `//images.ctfassets.net/testing/us-image.jpeg`,
+          details: { size: 123, image: { width: 123, height: 123 } },
+        },
+        fr: {
+          url: `//images.ctfassets.net/testing/fr-image.jpg`,
+          details: { size: 123, image: { width: 123, height: 123 } },
+        },
+      },
+    },
     sys: {
       id: `idJjXOxmNga8CSnQGEwTw`,
       type: `Asset`,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      space: mockedContentfulEntity,
+      environment: mockedContentfulEntity,
+      revision: 123,
     },
-    fields: {
-      file: {
-        "en-US": {
-          url: `//images.ctfassets.net/testing/us-image.jpeg`,
-        },
-      },
-    },
-    title: {
-      "en-US": `TundraUS`,
-      fr: `TundraFR`,
-    },
+    metadata: { tags: [] },
   },
 ]
 
@@ -52,15 +70,14 @@ describe(`downloadContentfulAssets`, () => {
     const createNodeId = jest.fn(id => id)
     const defaultLocale = `en-US`
     const locales = [{ code: `en-US` }, { code: `fr`, fallbackCode: `en-US` }]
-    const space = {
-      sys: {
-        id: `1234`,
-      },
-    }
+    const space = mockedContentfulEntity
 
     const cache = {
       get: jest.fn(() => Promise.resolve(null)),
       set: jest.fn(() => Promise.resolve(null)),
+      directory: __dirname,
+      name: `mocked`,
+      del: jest.fn(() => Promise.resolve()),
     }
 
     const assetNodes = []
@@ -73,25 +90,23 @@ describe(`downloadContentfulAssets`, () => {
           defaultLocale,
           locales,
           space,
-          pluginConfig,
         }))
       )
     }
 
-    await downloadContentfulAssets({
-      actions: { touchNode: jest.fn() },
+    await downloadContentfulAssets(
+      { createNodeId, cache, reporter, getNode },
+      { createNode, touchNode, createNodeField },
       assetNodes,
-      cache,
-      assetDownloadWorkers: 50,
-      reporter,
-    })
+      50
+    )
 
     assetNodes.forEach(n => {
       expect(cache.get).toHaveBeenCalledWith(
-        `contentful-asset-${n.contentful_id}-${n.node_locale}`
+        `contentful-asset-${n.sys.id}-${n.sys.locale}`
       )
       expect(cache.set).toHaveBeenCalledWith(
-        `contentful-asset-${n.contentful_id}-${n.node_locale}`,
+        `contentful-asset-${n.sys.id}-${n.sys.locale}`,
         expect.anything()
       )
     })

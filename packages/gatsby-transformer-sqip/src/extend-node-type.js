@@ -135,6 +135,8 @@ async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
 async function sqipContentful({ cache }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
+    createUrl,
+    mimeTypeExtensions,
   } = require(`gatsby-source-contentful`)
 
   const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
@@ -183,16 +185,9 @@ async function sqipContentful({ cache }) {
         },
       },
       async resolve(asset, fieldArgs) {
-        const {
-          createUrl,
-          mimeTypeExtensions,
-        } = require(`gatsby-source-contentful/image-helpers`)
+        const { mimeType, url: imgUrl, filename } = asset
 
-        const {
-          file: { contentType, url: imgUrl, fileName },
-        } = asset
-
-        if (!contentType.includes(`image/`)) {
+        if (!mimeType.includes(`image/`)) {
           return null
         }
 
@@ -220,9 +215,9 @@ async function sqipContentful({ cache }) {
           background,
         }
 
-        const extension = mimeTypeExtensions.get(contentType)
+        const extension = mimeTypeExtensions.get(mimeType)
         const url = createUrl(imgUrl, options)
-        const name = path.basename(fileName, extension)
+        const name = path.basename(filename, extension)
 
         const absolutePath = await fetchRemoteFile({
           url,
