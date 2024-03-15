@@ -313,7 +313,11 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         return next()
       })
     } catch (error) {
-      report.panic(`Error loading SSR/DSG engine`, error)
+      report.panic({
+        id: `98051`,
+        error,
+        context: {},
+      })
     }
   }
 

@@ -18,6 +18,11 @@ import { store } from "../../redux"
 import { PackageJson } from "../../.."
 import { slash } from "gatsby-core-utils/path"
 import { isEqual } from "lodash"
+import {
+  IPlatformAndArch,
+  getCurrentPlatformAndTarget,
+  getFunctionsTargetPlatformAndTarget,
+} from "../../utils/engines-helpers"
 
 type Reporter = typeof reporter
 
@@ -45,45 +50,44 @@ function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
   return apisToRemove
 }
 
-const getInternalPackagesCacheDir = (): string =>
-  path.posix.join(slash(process.cwd()), `.cache`, `internal-packages`)
+const getInternalPackagesCacheDir = (
+  functionsTarget: IPlatformAndArch
+): string =>
+  path.posix.join(
+    slash(process.cwd()),
+    `.cache`,
+    `internal-packages`,
+    `${functionsTarget.platform}-${functionsTarget.arch}`
+  )
 
 // Create a directory and JS module where we install internally used packages
 const createInternalPackagesCacheDir = async (
-  lambdaTarget: IPlatformAndArch
+  functionsTarget: IPlatformAndArch
 ): Promise<void> => {
-  const cacheDir = getInternalPackagesCacheDir()
+  const cacheDir = getInternalPackagesCacheDir(functionsTarget)
   await fs.ensureDir(cacheDir)
 
   const packageJsonPath = path.join(cacheDir, `package.json`)
 
-  if (fs.existsSync(packageJsonPath)) {
-    const existingPackageJson = JSON.parse(
-      fs.readFileSync(packageJsonPath, `utf-8`)
-    )
-    if (isEqual(existingPackageJson.lambdaTarget, lambdaTarget)) {
-      // if we have already package.json and it is against same lambda target, we can reuse it
-      // and potentially packages installed in it
-      return
-    }
+  if (!fs.existsSync(packageJsonPath)) {
+    await fs.emptyDir(cacheDir)
+
+    await fs.outputJson(packageJsonPath, {
+      name: `gatsby-internal-packages`,
+      description: `This directory contains internal packages installed by Gatsby used to comply with the current platform requirements`,
+      version: `1.0.0`,
+      private: true,
+      author: `Gatsby`,
+      license: `MIT`,
+      functionsTarget,
+    })
   }
-
-  await fs.emptyDir(cacheDir)
-
-  await fs.outputJson(packageJsonPath, {
-    name: `gatsby-internal-packages`,
-    description: `This directory contains internal packages installed by Gatsby used to comply with the current platform requirements`,
-    version: `1.0.0`,
-    private: true,
-    author: `Gatsby`,
-    license: `MIT`,
-    lambdaTarget,
-  })
 }
 
 function getLMDBBinaryFromSiteLocation(
   lmdbPackageName: string,
-  version: string
+  version: string,
+  functionsTarget: IPlatformAndArch
 ): string | undefined {
   // Read lmdb's package.json, go through its optional depedencies and validate if there's a prebuilt lmdb module with a compatible binary to our platform and arch
   let packageJson: PackageJson
@@ -102,7 +106,9 @@ function getLMDBBinaryFromSiteLocation(
   if (
     !Object.keys(optionalDependencies ?? {}).find(p => p === lmdbPackageName)
   ) {
-    throw new Error(`No optional dependencies in lmdb (?)`)
+    throw new Error(
+      `Target platform/arch for functions execution (${functionsTarget.platform}/${functionsTarget.arch}) is not supported.`
+    )
   }
   return getPackageLocationFromRequireContext(
     slash(require.resolve(`lmdb`)),
@@ -137,11 +143,6 @@ function getPackageLocationFromRequireContext(
   }
 }
 
-interface IPlatformAndArch {
-  platform: string
-  arch: string
-}
-
 interface ILMDBBinaryPackageStatusBase {
   packageName: string
   needToInstall: boolean
@@ -164,9 +165,10 @@ type IBinaryPackageStatus =
   | ILMDBBinaryPackageStatusNeedAlternative
 
 function checkIfInstalledInInternalPackagesCache(
-  packageStatus: IBinaryPackageStatus
+  packageStatus: IBinaryPackageStatus,
+  functionsTarget: IPlatformAndArch
 ): IBinaryPackageStatus {
-  const cacheDir = getInternalPackagesCacheDir()
+  const cacheDir = getInternalPackagesCacheDir(functionsTarget)
 
   const packageLocationFromInternalPackageCache =
     getPackageLocationFromRequireContext(
@@ -197,14 +199,15 @@ function checkIfInstalledInInternalPackagesCache(
 // Install lmdb's native system module under our internal cache if we detect the current installation
 // isn't using the pre-build binaries
 function checkIfNeedToInstallMissingLmdb(
-  lambdaTarget: IPlatformAndArch
+  functionsTarget: IPlatformAndArch
 ): IBinaryPackageStatus {
   // lmdb module with prebuilt binaries for target platform
-  const lmdbPackageName = `@lmdb/lmdb-${lambdaTarget.platform}-${lambdaTarget.arch}`
+  const lmdbPackageName = `@lmdb/lmdb-${functionsTarget.platform}-${functionsTarget.arch}`
 
   const lmdbBinaryFromSiteLocation = getLMDBBinaryFromSiteLocation(
     lmdbPackageName,
-    dependencies.lmdb
+    dependencies.lmdb,
+    functionsTarget
   )
 
   const sharedPackageStatus: ILMDBBinaryPackageStatusNeedAlternative = {
@@ -221,26 +224,32 @@ function checkIfNeedToInstallMissingLmdb(
     }
   }
 
-  return checkIfInstalledInInternalPackagesCache(sharedPackageStatus)
+  return checkIfInstalledInInternalPackagesCache(
+    sharedPackageStatus,
+    functionsTarget
+  )
 }
 
 function checkIfNeedToInstallMissingSharp(
-  lambdaTarget: IPlatformAndArch,
+  functionsTarget: IPlatformAndArch,
   currentTarget: IPlatformAndArch
 ): IBinaryPackageStatus | undefined {
   try {
     // check if shapr is resolvable
     const { version: sharpVersion } = require(`sharp/package.json`)
 
-    if (isEqual(lambdaTarget, currentTarget)) {
+    if (isEqual(functionsTarget, currentTarget)) {
       return undefined
     }
 
-    return checkIfInstalledInInternalPackagesCache({
-      needToInstall: true,
-      packageName: `sharp`,
-      packageVersion: sharpVersion,
-    })
+    return checkIfInstalledInInternalPackagesCache(
+      {
+        needToInstall: true,
+        packageName: `sharp`,
+        packageVersion: sharpVersion,
+      },
+      functionsTarget
+    )
   } catch (e) {
     return undefined
   }
@@ -248,7 +257,7 @@ function checkIfNeedToInstallMissingSharp(
 
 async function installMissing(
   packages: Array<IBinaryPackageStatus | undefined>,
-  lambdaTarget: IPlatformAndArch
+  functionsTarget: IPlatformAndArch
 ): Promise<Array<IBinaryPackageStatus | undefined>> {
   function shouldInstall(
     p: IBinaryPackageStatus | undefined
@@ -262,16 +271,16 @@ async function installMissing(
     return packages
   }
 
-  await createInternalPackagesCacheDir(lambdaTarget)
+  await createInternalPackagesCacheDir(functionsTarget)
 
-  const cacheDir = getInternalPackagesCacheDir()
+  const cacheDir = getInternalPackagesCacheDir(functionsTarget)
 
   const options: ExecaOptions = {
     stderr: `inherit`,
     cwd: cacheDir,
     env: {
-      npm_config_arch: lambdaTarget.arch,
-      npm_config_platform: lambdaTarget.platform,
+      npm_config_arch: functionsTarget.arch,
+      npm_config_platform: functionsTarget.platform,
     },
   }
 
@@ -343,25 +352,8 @@ export async function createGraphqlEngineBundle(
     require.resolve(`gatsby-plugin-typescript`)
   )
 
-  const currentTarget: IPlatformAndArch = {
-    platform: process.platform,
-    arch: process.arch,
-  }
-
-  const functionsTarget: IPlatformAndArch = {
-    platform:
-      process.env.GATSBY_FUNCTIONS_PLATFORM ??
-      state.program.functionsPlatform ??
-      state.adapter.config.functionsPlatform ??
-      currentTarget.platform,
-    arch:
-      process.env.GATSBY_FUNCTIONS_ARCH ??
-      state.program.functionsArch ??
-      state.adapter.config.functionsArch ??
-      currentTarget.arch,
-  }
-
-  console.log({ functionsTarget, currentTarget })
+  const currentTarget = getCurrentPlatformAndTarget()
+  const functionsTarget = getFunctionsTargetPlatformAndTarget()
 
   const dynamicAliases: Record<string, string> = {}
   let forcedLmdbBinaryModule: string | undefined = undefined
@@ -379,12 +371,14 @@ export async function createGraphqlEngineBundle(
   )
 
   if (!lmdbPackageInfo) {
-    // TODO: better error / structured logging
-    throw new Error(`no lmdb for target`)
+    throw new Error(`Failed to find required LMDB binary`)
   } else if (functionsTarget.platform === `linux`) {
+    // function execution platform is primarily linux, which is tested the most, so we only force that specific binary
+    // to not cause untested code paths
     if (lmdbPackageInfo.needToInstall) {
-      // TODO: better error / structured logging
-      throw new Error(`no lmdb for target`)
+      throw new Error(
+        `Failed to locate or install LMDB binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`
+      )
     }
 
     forcedLmdbBinaryModule = `${lmdbPackageInfo.packageLocation}/node.abi83.glibc.node`
@@ -392,8 +386,9 @@ export async function createGraphqlEngineBundle(
 
   if (sharpPackageInfo) {
     if (sharpPackageInfo.needToInstall) {
-      // TODO: better error / structured logging
-      throw new Error(`no sharp for target`)
+      throw new Error(
+        `Failed to locate or install Sharp binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`
+      )
     }
     dynamicAliases[`sharp$`] = sharpPackageInfo.packageLocation
   }
@@ -419,6 +414,7 @@ export async function createGraphqlEngineBundle(
       buildDependencies: {
         config: [__filename],
       },
+      version: JSON.stringify(functionsTarget),
     },
     // those are required in some runtime paths, but we don't need them
     externals: [
@@ -553,7 +549,6 @@ export async function createGraphqlEngineBundle(
     plugins: [
       new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
       new webpack.DefinePlugin({
-        // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
