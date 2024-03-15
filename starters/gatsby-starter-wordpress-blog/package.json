@@ -15,7 +15,7 @@
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-sharp": "^5.13.1",
-    "gatsby-source-wordpress": "^7.13.2",
+    "gatsby-source-wordpress": "^7.13.3",
     "gatsby-transformer-sharp": "^5.13.1",
     "html-react-parser": "^4.2.10",
     "lodash": "^4.17.21",
