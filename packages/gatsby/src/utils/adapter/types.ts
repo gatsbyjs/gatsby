@@ -202,11 +202,15 @@ export interface IAdapterConfig {
    */
   fileCDNUrlGeneratorModulePath?: string
   /**
-   * TODO: add description
+   * The platform bundled functions will execute on. Usually should be `linux`.
+   * This will be used if user didn't specify `GATSBY_FUNCTIONS_PLATFORM` environment variable
+   * or used `-functions-platform` CLI toggle. If none is defined current platform (process.platform) will be used.
    */
   functionsPlatform?: string
   /**
-   * TODO: add description
+   * The architecture bundled functions will execute on. Usually should be `x64`.
+   * This will be used if user didn't specify `GATSBY_FUNCTIONS_ARCH` environment variable
+   * or used `-functions-arch` CLI toggle. If none is defined current arch (process.arch) will be used.
    */
   functionsArch?: string
 }
