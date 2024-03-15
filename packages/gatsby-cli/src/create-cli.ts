@@ -277,12 +277,10 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         .option(`functions-platform`, {
           type: `string`,
           describe: `The platform bundled functions will execute on. Defaults to current platform or settings provided by used adapter.`,
-          default: process.platform,
         })
         .option(`functions-arch`, {
           type: `string`,
           describe: `The architecture bundled functions will execute on. Defaults to current architecture or settings provided by used adapter.`,
-          default: process.arch,
         }),
     handler: handlerP(
       getCommandHandler(
