@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify#readme",
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.23.9",
     "@netlify/cache-utils": "^5.1.5",
     "@netlify/config": "^20.10.0",
     "@netlify/functions": "^1.6.0",
@@ -40,8 +40,8 @@
     "fs-extra": "^11.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
     "@netlify/edge-functions": "^2.2.0",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
