@@ -12,6 +12,13 @@ describe(`page not found`, () => {
 
     cy.getTestElement(`page-title`).invoke(`text`).should(`eq`, `NOT FOUND`)
   })
+
+  it(`can preview 404 page - test`, () => {
+    cy.get(`button`).click()
+
+    cy.getTestElement(`page-title`).invoke(`text`).should(`eq`, `NOT FOUND`)
+  })
+
   it(`shows page listing`, () => {
     cy.get(`ul`).find(`li`).its(`length`).should(`be.gte`, 4)
   })
