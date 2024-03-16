@@ -512,7 +512,7 @@ Assets and tags are typically queried alongside ContentType nodes:
 
 ### Advanced Queries with Contentful and Gatsby
 
-Explore your GraphQL schema and data with GraphiQL, a browser-based IDE available at http://localhost:8000/\_\_\_graphql during Gatsby development. This tool is essential for experimenting with queries and understanding the Contentful data structure in your project.
+Explore your GraphQL schema and data with GraphiQL, a browser-based IDE available at http://localhost:8000/___graphql during Gatsby development. This tool is essential for experimenting with queries and understanding the Contentful data structure in your project.
 
 ## Working with Images and Contentful
 
