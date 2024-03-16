@@ -30,7 +30,7 @@
     "cypress": "^12.16.0",
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
-    "prettier": "^2.8.8",
+    "prettier": "^3.2.5",
     "start-server-and-test": "^2.0.3",
     "typescript": "^5.3.3"
   },
