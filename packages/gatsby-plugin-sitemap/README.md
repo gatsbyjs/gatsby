@@ -183,7 +183,7 @@ This function is executed via:
 
 ```javascript
 allPages.filter(
-  page => !excludes.some(excludedRoute => thisFunc(page, excludedRoute, tools))
+  page => !excludes.some(excludedRoute => thisFunc(page, excludes, tools))
 )
 ```
 
@@ -194,7 +194,7 @@ allPages.filter(
 | Param         | Type                | Description                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------- |
 | page          | <code>object</code> | contains the path key `{ path }`                                                    |
-| excludedRoute | <code>string</code> | Element from `excludes` Array in plugin config                                      |
+| excludes      | <code>string</code> | string[] Array in plugin config                                                     |
 | tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
 
 <a id="serialize"></a>
