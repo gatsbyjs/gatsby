@@ -1,5 +1,4 @@
 // @ts-check
-import isOnline from "is-online"
 import _ from "lodash"
 import {
   addNodeToExistingNodesCache,
@@ -35,6 +34,10 @@ const restrictedNodeFields = [
 ]
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
+
+async function isOnline() {
+  return (await import(`is-online`)).default()
+}
 
 /***
  * Localization algorithm
