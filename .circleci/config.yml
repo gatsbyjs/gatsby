@@ -583,12 +583,11 @@ jobs:
   windows_adapters_smoke:
     executor:
       name: win/default
-      shell: powershell.exe
+      shell: bash.exe
     steps:
       - checkout
       - run:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
-          shell: bash.exe
       - <<: *attach_to_bootstrap
       - run:
           name: Install node 18.0.0 and yarn
@@ -599,24 +598,20 @@ jobs:
             choco install yarn -y
       - run:
           name: Rebuild packages for windows
-          command: |
-            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
-            yarn
+          command: npm rebuild sharp
       - run:
           command: mkdir -p /tmp/e2e-tests/
-          shell: bash.exe
       - run:
           command: cp -r ./e2e-tests/adapters /tmp/e2e-tests/adapters
-          shell: bash.exe
+      - run:
+          command: pwd && ls
+          working_directory: /tmp/e2e-tests/adapters
       - run: # Set project dir
           command: node ./packages/gatsby-dev-cli/dist/index.js --set-path-to-repo .
-          shell: bash.exe
       - run: # Copy over packages
           command: cd /tmp/e2e-tests/adapters && node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once
-          shell: bash.exe
       - run: # run smoke test
           command: cd /tmp/e2e-tests/adapters && node scripts/deploy-and-run/netlify.mjs test:smoke
-          shell: bash.exe
 
 workflows:
   version: 2
