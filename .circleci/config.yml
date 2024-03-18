@@ -599,7 +599,7 @@ jobs:
             pip install setuptools
       - run:
           name: Rebuild packages for windows
-          command: npm rebuild sharp
+          command: npm rebuild sharp && yarn
       - run:
           command: mkdir -p /tmp/e2e-tests/
       - run:
