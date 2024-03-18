@@ -7,11 +7,11 @@ if (process.env.E2E_ADAPTERS_NETLIFY_SITE_ID) {
 }
 process.env.ADAPTER = "netlify"
 
-const deployTitle = `${
-  process.env.CIRCLE_SHA1 || "N/A commit"
-} - trailingSlash:${process.env.TRAILING_SLASH || `always`} / pathPrefix:${
-  process.env.PATH_PREFIX || `-`
-}`
+const deployTitle = `${process.env.CIRCLE_SHA1 || "N/A commit"} - ${
+  process.platform
+}/${process.arch} - / trailingSlash:${
+  process.env.TRAILING_SLASH || `always`
+} / pathPrefix:${process.env.PATH_PREFIX || `-`}`
 
 const npmScriptToRun = process.argv[2] || "test:netlify"
 
@@ -19,8 +19,8 @@ const npmScriptToRun = process.argv[2] || "test:netlify"
 await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
 const deployResults = await execa(
-  "ntl",
-  ["deploy", "--build", "--json", "--cwd=.", "--message", deployTitle],
+  "yarn",
+  ["ntl", "deploy", "--build", "--json", "--cwd=.", "--message", deployTitle],
   {
     reject: false,
   }
@@ -49,7 +49,8 @@ try {
 } finally {
   if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
     console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
-    const deleteResponse = await execa("ntl", [
+    const deleteResponse = await execa("yarn", [
+      "ntl",
       "api",
       "deleteDeploy",
       "--data",
