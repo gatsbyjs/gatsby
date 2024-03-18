@@ -595,11 +595,14 @@ jobs:
             nvm install 18.0.0
             nvm alias default 18.0.0
             nvm use 18.0.0
-            choco install yarn -y
-            pip install setuptools
+            npm install -g yarn
       - run:
-          name: Rebuild packages for windows
-          command: npm rebuild sharp && yarn
+          name: Clear out sharp
+          command: |
+            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+          shell: powershell.exe
+      - run:
+          command: yarn
       - run:
           command: mkdir -p /tmp/e2e-tests/
       - run:
