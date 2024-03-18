@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 
 /*
-this is used for development purposes only
-to be able to run `gatsby build` once to source data
-and print schema and then just rebundle graphql-engine
+This is used mostly for development purposes, but can be attempted to be used
+to regenerate just engines for local platform/arch if previous full build
+was done to deploy on platform with different arch/platform.
+
+For development purposes this is used to be able to run `gatsby build` once to
+source data and print schema and then just rebundle graphql-engine
 with source file changes and test re-built engine quickly
 
 Usage:
 There need to be at least one successful `gatsby build`
 before starting to use this script (warm up datastore,
 generate "page-ssr" bundle). Once that's done you can
-run following command in test site directory:
+run following command in site directory:
 
 ```shell
 node node_modules/gatsby/dist/schema/graphql-engine/standalone-regenerate.js
@@ -23,18 +26,18 @@ import reporter from "gatsby-cli/lib/reporter"
 import { loadConfigAndPlugins } from "../../utils/worker/child/load-config-and-plugins"
 import * as fs from "fs-extra"
 import { store } from "../../redux"
-import { validateEngines } from "../../utils/validate-engines"
+import { validateEnginesWithActivity } from "../../utils/validate-engines"
 
 async function run(): Promise<void> {
   process.env.GATSBY_SLICES = `1`
   // load config
-  console.log(`loading config and plugins`)
+  reporter.verbose(`loading config and plugins`)
   await loadConfigAndPlugins({
     siteDirectory: process.cwd(),
   })
 
   try {
-    console.log(`clearing webpack cache\n\n`)
+    reporter.verbose(`clearing webpack cache`)
     // get rid of cache if it exist
     await fs.remove(process.cwd() + `/.cache/webpack/query-engine`)
     await fs.remove(process.cwd() + `/.cache/webpack/page-ssr`)
@@ -46,7 +49,7 @@ async function run(): Promise<void> {
 
   // recompile
   const buildActivityTimer = reporter.activityTimer(
-    `Building Rendering Engines`
+    `(Re)Building Rendering Engines`
   )
   try {
     buildActivityTimer.start()
@@ -67,20 +70,9 @@ async function run(): Promise<void> {
     buildActivityTimer.end()
   }
 
-  // validate
-  const validateEnginesActivity = reporter.activityTimer(
-    `Validating Rendering Engines`
-  )
-  validateEnginesActivity.start()
-  try {
-    await validateEngines(process.cwd())
-  } catch (error) {
-    validateEnginesActivity.panic({ id: `98001`, context: {}, error })
-  } finally {
-    validateEnginesActivity.end()
-  }
+  await validateEnginesWithActivity(process.cwd())
 
-  console.log(`DONE`)
+  reporter.info(`Rebuilding Rendering Engines finished`)
 }
 
 run()

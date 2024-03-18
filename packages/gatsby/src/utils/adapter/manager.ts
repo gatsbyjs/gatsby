@@ -286,6 +286,8 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         deployURL: configFromAdapter?.deployURL,
         supports: configFromAdapter?.supports,
         pluginsToDisable: configFromAdapter?.pluginsToDisable ?? [],
+        functionsArch: configFromAdapter?.functionsArch,
+        functionsPlatform: configFromAdapter?.functionsPlatform,
       }
     },
   }

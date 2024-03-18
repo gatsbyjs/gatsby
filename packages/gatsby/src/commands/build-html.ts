@@ -42,6 +42,8 @@ export interface IBuildArgs extends IProgram {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
+  functionsPlatform?: string
+  functionsArch?: string
   // TODO remove in v4
   keepPageRenderer: boolean
 }

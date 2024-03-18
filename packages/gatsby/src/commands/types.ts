@@ -34,6 +34,8 @@ export interface IProgram {
   graphqlTracing?: boolean
   verbose?: boolean
   prefixPaths?: boolean
+  functionsPlatform?: string
+  functionsArch?: string
   setStore?: (store: Store<IGatsbyState, AnyAction>) => void
   disablePlugins?: Array<{
     name: string

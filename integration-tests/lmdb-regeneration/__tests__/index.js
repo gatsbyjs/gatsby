@@ -38,7 +38,13 @@ describe(`Lmdb regeneration`, () => {
 
     // If the fix worked correctly we should have installed the prebuilt binary for our platform under our `.cache` directory
     const lmdbRequire = mod.createRequire(
-      path.resolve(rootPath, ".cache", "internal-packages", "package.json")
+      path.resolve(
+        rootPath,
+        ".cache",
+        "internal-packages",
+        `${process.platform}-${process.arch}`,
+        "package.json"
+      )
     )
     expect(() => {
       lmdbRequire.resolve(lmdbPackage)

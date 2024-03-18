@@ -33,3 +33,34 @@ function getCDNObfuscatedPath(path: string): string {
 }
 
 export const LmdbOnCdnPath = getCDNObfuscatedPath(`data.mdb`)
+
+export interface IPlatformAndArch {
+  platform: string
+  arch: string
+}
+
+const currentTarget: IPlatformAndArch = {
+  platform: process.platform,
+  arch: process.arch,
+}
+
+export function getCurrentPlatformAndTarget(): IPlatformAndArch {
+  return currentTarget
+}
+
+export function getFunctionsTargetPlatformAndTarget(): IPlatformAndArch {
+  const state = store.getState()
+
+  return {
+    platform:
+      process.env.GATSBY_FUNCTIONS_PLATFORM ??
+      state.program.functionsPlatform ??
+      state.adapter.config.functionsPlatform ??
+      currentTarget.platform,
+    arch:
+      process.env.GATSBY_FUNCTIONS_ARCH ??
+      state.program.functionsArch ??
+      state.adapter.config.functionsArch ??
+      currentTarget.arch,
+  }
+}
