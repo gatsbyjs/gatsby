@@ -650,7 +650,12 @@ workflows:
             - bootstrap
       - windows_adapters_smoke:
           requires:
-            - bootstrap #todo - this should require windows_unit_tests, but for now let's run it earlier to setup job correctly
+            # ideally we wait for windows unit tests here, but because those are flaky
+            # feedback loop would be not practical, so at least wait for linux unit tests
+            # to resemble setup for more robust E2E tests
+            - lint
+            - bootstrap
+            - unit_tests_node18
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
