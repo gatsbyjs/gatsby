@@ -607,18 +607,15 @@ jobs:
           shell: bash.exe
       - run:
           command: cp -r ./e2e-tests/adapters /tmp/e2e-tests/adapters
-          working_directory: ~/project
           shell: bash.exe
       - run: # Set project dir
           command: node ./packages/gatsby-dev-cli/dist/index.js --set-path-to-repo .
           shell: bash.exe
       - run: # Copy over packages
-          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once
-          working_directory: /tmp/e2e-tests/adapters
+          command: cd /tmp/e2e-tests/adapters && node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once
           shell: bash.exe
       - run: # run smoke test
-          command: node scripts/deploy-and-run/netlify.mjs test:smoke
-          working_directory: /tmp/e2e-tests/adapters
+          command: cd /tmp/e2e-tests/adapters && node scripts/deploy-and-run/netlify.mjs test:smoke
           shell: bash.exe
 
 workflows:
