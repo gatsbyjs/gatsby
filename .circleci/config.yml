@@ -590,12 +590,12 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and node-gyp requirements
+          name: Install node 18.19.0, yarn and netlify-cli
           command: |
             nvm install 18.19.0
             nvm alias default 18.19.0
             nvm use 18.19.0
-            npm install -g yarn
+            npm install -g yarn netlify-cli
       - run:
           name: Clear out sharp
           command: |
