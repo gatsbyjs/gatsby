@@ -590,12 +590,13 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.0.0 and yarn
+          name: Install node 18.0.0, yarn and node-gyp requirements
           command: |
             nvm install 18.0.0
             nvm alias default 18.0.0
             nvm use 18.0.0
             choco install yarn -y
+            pip install setuptools
       - run:
           name: Rebuild packages for windows
           command: npm rebuild sharp
