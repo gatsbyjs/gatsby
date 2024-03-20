@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.13.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.3/packages/gatsby-source-wordpress) (2024-02-23)
+
+#### Bug Fixes
+
+- only diff wpgraphql schema if the user opts in [#38856](https://github.com/gatsbyjs/gatsby/issues/38856) [#38860](https://github.com/gatsbyjs/gatsby/issues/38860) ([85f6c90](https://github.com/gatsbyjs/gatsby/commit/85f6c909fa5ff9096d4ac7e3e62c7522c1887a60))
+
+#### Chores
+
+- upgrade file-type [#38861](https://github.com/gatsbyjs/gatsby/issues/38861) [#38863](https://github.com/gatsbyjs/gatsby/issues/38863) ([07761d4](https://github.com/gatsbyjs/gatsby/commit/07761d4c53c1b21bf80bf11ae55a71ee8795448c))
+
 ### [7.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.2/packages/gatsby-source-wordpress) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-source-wordpress
