@@ -17,13 +17,13 @@
     "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-source-wordpress": "^7.13.2",
     "gatsby-transformer-sharp": "^5.13.1",
-    "html-react-parser": "^4.2.10",
+    "html-react-parser": "^5.1.9",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "prettier": "2.8.8"
+    "prettier": "3.2.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-wordpress-blog#readme",
   "keywords": [
