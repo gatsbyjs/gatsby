@@ -8,9 +8,9 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@fontsource/merriweather": "^5.0.8",
-    "@fontsource-variable/montserrat": "^5.0.17",
-    "@wordpress/block-library": "^8.28.1",
+    "@fontsource/merriweather": "^5.0.12",
+    "@fontsource-variable/montserrat": "^5.0.18",
+    "@wordpress/block-library": "^8.31.0",
     "gatsby": "^5.13.3",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-manifest": "^5.13.1",
