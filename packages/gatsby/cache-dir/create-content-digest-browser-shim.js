@@ -1,1 +1,1 @@
-exports.createContentDigest = () => ``
+export const createContentDigest = () => ``
