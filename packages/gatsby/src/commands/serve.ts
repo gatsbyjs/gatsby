@@ -29,6 +29,7 @@ import {
   thirdPartyProxyPath,
   partytownProxy,
 } from "../internal-plugins/partytown/proxy"
+import { slash } from "gatsby-core-utils/path"
 
 interface IMatchPath {
   path: string
@@ -188,10 +189,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   let pageSSRModule: string | undefined
   try {
     graphqlEnginePath = require.resolve(
-      path.join(program.directory, `.cache`, `query-engine`)
+      path.posix.join(slash(program.directory), `.cache`, `query-engine`)
     )
     pageSSRModule = require.resolve(
-      path.join(program.directory, `.cache`, `page-ssr`)
+      path.posix.join(slash(program.directory), `.cache`, `page-ssr`)
     )
   } catch (error) {
     // TODO: Handle case of engine not being generated
@@ -204,7 +205,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       const { getData, renderPageData, renderHTML } =
         require(pageSSRModule) as typeof import("../utils/page-ssr-module/entry")
       const graphqlEngine = new GraphQLEngine({
-        dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
+        dbPath: path.posix.join(
+          slash(program.directory),
+          `.cache`,
+          `data`,
+          `datastore`
+        ),
       })
 
       router.get(
