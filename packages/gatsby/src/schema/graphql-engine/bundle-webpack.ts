@@ -102,10 +102,8 @@ function getLMDBBinaryFromSiteLocation(
     return undefined
   }
   // If there's no lmdb prebuilt package for our arch/platform listed as optional dep no point in trying to install it
-  const { optionalDependencies } = packageJson
-  if (
-    !Object.keys(optionalDependencies ?? {}).find(p => p === lmdbPackageName)
-  ) {
+  const { optionalDependencies = {} } = packageJson
+  if (!Object.keys(optionalDependencies).find(p => p === lmdbPackageName)) {
     throw new Error(
       `Target platform/arch for functions execution (${functionsTarget.platform}/${functionsTarget.arch}) is not supported.`
     )
