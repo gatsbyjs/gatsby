@@ -83,6 +83,12 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "98051": {
+    text: (): string => `Built Rendering Engines failed to load.`,
+    type: Type.ENGINE_EXECUTION,
+    level: Level.ERROR,
+    category: ErrorCategory.UNKNOWN,
+  },
   "98123": {
     text: (context): string =>
       `${context.stageLabel} failed\n\n${
