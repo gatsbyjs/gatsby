@@ -36,7 +36,7 @@ describe(`Lazy images`, () => {
   })
 
   it(`should process the rest of images on build`, async () => {
-    await execa(`yarn`, [`build`], {
+    await execa(`pnpm run`, [`build`], {
       cwd: basePath,
       env: { NODE_ENV: `production` },
     })
@@ -47,7 +47,7 @@ describe(`Lazy images`, () => {
 
   it(`should process all images from a clean build`, async () => {
     await clean()
-    await execa(`yarn`, [`build`], {
+    await execa(`pnpm run`, [`build`], {
       cwd: basePath,
       env: { NODE_ENV: `production` },
     })

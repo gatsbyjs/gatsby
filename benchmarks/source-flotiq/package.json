@@ -10,7 +10,7 @@
     "data-update": "node scripts/data-update.js",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
+    "start": "pnpm run develop",
     "serve": "gatsby serve"
   },
   "dependencies": {
@@ -19,10 +19,10 @@
     "gatsby": "^2.24.10",
     "gatsby-image": "^2.2.40",
     "gatsby-plugin-benchmark-reporting": "*",
-    "gatsby-plugin-sharp": "^2.6.21",
+    "gatsby-plugin-sharp": "^5.14.0-next.2",
     "gatsby-source-filesystem": "^2.3.22",
     "gatsby-source-flotiq": "*",
-    "gatsby-transformer-sharp": "^2.3.14",
+    "gatsby-transformer-sharp": "^5.13.1",
     "lodash.kebabcase": "^4.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"

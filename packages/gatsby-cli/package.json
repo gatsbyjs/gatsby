@@ -28,7 +28,7 @@
     "convert-hrtime": "^3.0.0",
     "create-gatsby": "^3.14.0-next.2",
     "envinfo": "^7.10.0",
-    "execa": "^5.1.1",
+    "execa": "^8.0.1",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.14.0-next.2",
@@ -72,7 +72,7 @@
     "rollup": "^2.79.1",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-internal": "^1.0.4",
-    "typescript": "^5.1.6"
+    "typescript": "5.4.4"
   },
   "files": [
     "lib/",
@@ -93,15 +93,15 @@
   "scripts": {
     "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
     "build:rollup": "rollup -c",
-    "build": "npm-run-all --npm-path npm -p build:babel build:rollup",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "build": "npm-run-all --npm-path pnpm -p build:babel build:rollup",
+    "prepare": "cross-env NODE_ENV=production pnpm run build && pnpm run typegen",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
-    "watch:babel": "npm run build:babel -- --watch",
-    "watch:rollup": "npm run build:rollup -- -w",
-    "watch": "npm-run-all --npm-path npm -p watch:babel watch:rollup",
+    "watch:babel": "pnpm run build:babel -- --watch",
+    "watch:rollup": "pnpm run build:rollup -- -w",
+    "watch": "npm-run-all --npm-path pnpm -p watch:babel watch:rollup",
     "postinstall": "node scripts/postinstall.js"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }

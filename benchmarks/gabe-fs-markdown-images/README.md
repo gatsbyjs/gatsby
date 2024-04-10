@@ -10,7 +10,7 @@ The results of this benchmark can be compared to the results of the `gabe-fs-mar
 
 ## Install
 
-Run `yarn` or `npm install`
+Run `yarn` or `pnpm install`
 
 ## Usage
 

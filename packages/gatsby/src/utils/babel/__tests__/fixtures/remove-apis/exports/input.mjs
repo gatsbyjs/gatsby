@@ -1,4 +1,4 @@
-const { fetch, Response } = require('node-fetch');
+// const { fetch, Response } = require('node-fetch');
 const usedReference = 'used reference';
 
 module.exports = function () {

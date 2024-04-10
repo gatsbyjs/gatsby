@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { execSync } from "child_process"
-import execa from "execa"
+import { execa } from "execa"
 import fs from "fs-extra"
 import path from "path"
 import { initStarter } from "../init-starter"
@@ -49,8 +48,8 @@ describe(`init-starter`, () => {
 
   describe(`initStarter / cloning`, () => {
     it(`reports an error when it s not possible to clone the repo`, async () => {
-      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
-      ;(execa as any).mockImplementation(() => {
+      path.join.mockImplementation(() => `/somewhere-here`)
+      execa.mockImplementation(() => {
         throw new Error(`Not possible to clone the repo`)
       })
 
@@ -78,9 +77,9 @@ describe(`init-starter`, () => {
     })
 
     it(`reports a success when everything is going ok`, async () => {
-      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
-      ;(execa as any).mockImplementation(() => Promise.resolve())
-      ;(fs as any).readJSON.mockImplementation(() => {
+      path.join.mockImplementation(() => `/somewhere-here`)
+      execa.mockImplementation(() => Promise.resolve())
+      fs.readJSON.mockImplementation(() => {
         return { name: `gatsby-project` }
       })
 
@@ -105,11 +104,11 @@ describe(`init-starter`, () => {
   })
 
   describe(`initStarter / install`, () => {
-    it(`process package installation with yarn`, async () => {
-      process.env.npm_config_user_agent = `yarn`
-      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
-      ;(execa as any).mockImplementation(() => Promise.resolve())
-      ;(fs as any).readJSON.mockImplementation(() => {
+    it(`process package installation with pnpm`, async () => {
+      process.env.npm_config_user_agent = `pnpm`
+      path.join.mockImplementation(() => `/somewhere-here`)
+      execa.mockImplementation(() => Promise.resolve())
+      fs.readJSON.mockImplementation(() => {
         return { name: `gatsby-project` }
       })
 
@@ -130,9 +129,9 @@ describe(`init-starter`, () => {
 
     it(`process package installation with NPM`, async () => {
       process.env.npm_config_user_agent = `npm`
-      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
-      ;(execa as any).mockImplementation(() => Promise.resolve())
-      ;(fs as any).readJSON.mockImplementation(() => {
+      path.join.mockImplementation(() => `/somewhere-here`)
+      execa.mockImplementation(() => Promise.resolve())
+      fs.readJSON.mockImplementation(() => {
         return { name: `gatsby-project` }
       })
 
@@ -178,12 +177,12 @@ describe(`init-starter`, () => {
 
     it(`gently informs the user that yarn is not available when trying to use it`, async () => {
       process.env.npm_config_user_agent = `yarn`
-      ;(execSync as any).mockImplementation(() => {
+      execSync.mockImplementation(() => {
         throw new Error(`Something wrong occurred when trying to use yarn`)
       })
-      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
-      ;(execa as any).mockImplementation(() => Promise.resolve())
-      ;(fs as any).readJSON.mockImplementation(() => {
+      path.join.mockImplementation(() => `/somewhere-here`)
+      execa.mockImplementation(() => Promise.resolve())
+      fs.readJSON.mockImplementation(() => {
         return { name: `gatsby-project` }
       })
 

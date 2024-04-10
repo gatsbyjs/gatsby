@@ -1,4 +1,4 @@
-import execa from "execa"
+import { execa } from "execa"
 import _ from "lodash"
 import * as Joi from "@hapi/joi"
 import path from "path"
@@ -9,7 +9,7 @@ import lock from "../lock"
 import resourceSchema from "../resource-schema"
 
 const packageMangerConfigKey = `cli.packageManager`
-const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
+const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `pnpm`
 
 const readPackageJson = async (root, pkg) => {
   let obj
@@ -32,7 +32,14 @@ export const generateClientComands = ({
   packageNames,
 }) => {
   const commands = []
-  if (packageManager === `yarn`) {
+  if (packageManager === `pnpm`) {
+    commands.push(`add`)
+    if (depType === `development`) {
+      commands.push(`-D`)
+    }
+
+    return commands.concat(packageNames)
+  } else if (packageManager === `yarn`) {
     commands.push(`add`)
     // Needed for Yarn Workspaces and is a no-opt elsewhere.
     commands.push(`-W`)
@@ -136,17 +143,13 @@ const create = async ({ root }, resource) => {
 const read = async ({ root }, id) => {
   const pkg = await readPackageJson(root, id)
 
-  if (pkg) {
-    return {
-      id,
-      name: id,
-      description: pkg.description,
-      version: pkg.version,
-      _message: `Installed NPM package ${id}@${pkg.version}`,
-    }
-  } else {
-    return undefined
-  }
+  return pkg ? {
+    id,
+    name: id,
+    description: pkg.description,
+    version: pkg.version,
+    _message: `Installed NPM package ${id}@${pkg.version}`,
+  } : undefined;
 }
 
 const schema = {
@@ -170,7 +173,7 @@ const destroy = async ({ root }, resource) => {
     return undefined
   }
 
-  await execa(`yarn`, [`remove`, resource.name, `-W`], {
+  await execa(`pnpm`, [`remove`, resource.name], {
     cwd: root,
   })
 

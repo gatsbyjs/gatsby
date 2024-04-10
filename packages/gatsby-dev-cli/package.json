@@ -14,7 +14,7 @@
     "chokidar": "^3.5.3",
     "configstore": "^5.0.1",
     "del": "^6.1.1",
-    "execa": "^5.1.1",
+    "execa": "^8.0.1",
     "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^11.2.0",
     "got": "^11.8.6",
@@ -43,11 +43,11 @@
   },
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production pnpm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }

@@ -5,9 +5,10 @@ import path from "path"
 import { reporter } from "./utils/reporter"
 import { spin } from "tiny-spin"
 import { getConfigStore } from "./utils/get-config-store"
-type PackageManager = "yarn" | "npm"
 import colors from "ansi-colors"
 import { clearLine } from "./utils/clear-line"
+
+type PackageManager = "pnpm" | "yarn" | "npm"
 
 const packageManagerConfigKey = `cli.packageManager`
 
@@ -19,6 +20,11 @@ export const getPackageManager = (
 
   if (actualPackageManager) {
     return actualPackageManager
+  }
+
+  if (npmConfigUserAgent?.includes(`pnpm`)) {
+    configStore.set(packageManagerConfigKey, `pnpm`)
+    return `pnpm`
   }
 
   if (npmConfigUserAgent?.includes(`yarn`)) {
@@ -142,7 +148,7 @@ const install = async (
       await execa(`yarnpkg`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
-      await execa(`npm`, [`install`, ...npmAdditionalCliArgs], options)
+      await execa(`pnpm`, [`install`, ...npmAdditionalCliArgs], options)
       await clearLine()
 
       reporter.success(`Installed Gatsby`)
@@ -151,7 +157,7 @@ const install = async (
       )
 
       await execa(
-        `npm`,
+        `pnpm`,
         [`install`, ...npmAdditionalCliArgs, ...packages],
         options
       )

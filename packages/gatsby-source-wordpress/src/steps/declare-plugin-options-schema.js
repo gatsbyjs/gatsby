@@ -1,5 +1,5 @@
 /**
- * This file is intentionally not TS so it can be run in a yarn script without being transpiled.
+ * This file is intentionally not TS so it can be run in a pnpm script without being transpiled.
  */
 const prettier = require(`prettier`)
 

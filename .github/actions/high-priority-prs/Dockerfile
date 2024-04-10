@@ -12,7 +12,7 @@ LABEL "com.github.actions.color"="white"
 COPY . .
 
 # Install dependencies
-RUN yarn
+RUN pnpm install
 
 # Run `node /index.js`
 ENTRYPOINT ["node", "/src/index.js"]

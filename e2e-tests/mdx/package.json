@@ -3,23 +3,23 @@
   "description": "Gatsby MDX tester",
   "version": "1.0.0",
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@mdx-js/react": "^2.3.0",
-    "@sindresorhus/slugify": "^2.2.1",
-    "cypress": "^12.16.0",
-    "fs-extra": "^11.2.0",
+    "@emotion/react": "11.11.3",
+    "@mdx-js/react": "2.3.0",
+    "@sindresorhus/slugify": "2.2.1",
+    "cypress": "12.16.0",
+    "fs-extra": "11.2.0",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
-    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.32",
+    "gatsby-plugin-webpack-bundle-analyser-v2": "1.1.32",
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "rehype-slug": "^5.1.0",
-    "remark-gfm": "^3.0.1",
-    "theme-ui": "^0.16.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "rehype-slug": "5.1.0",
+    "remark-gfm": "3.0.1",
+    "theme-ui": "0.16.0"
   },
   "keywords": [
     "gatsby"
@@ -30,9 +30,9 @@
     "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
     "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test:build": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test:build",
-    "test:develop": "npm run start-server-and-test:develop || (npm run reset && exit 1)",
-    "test": "npm run test:build && npm run test:develop",
+    "test:build": "cross-env CYPRESS_SUPPORT=y pnpm run build && pnpm run start-server-and-test:build",
+    "test:develop": "pnpm run start-server-and-test:develop || (pnpm run reset && exit 1)",
+    "test": "pnpm run test:build && pnpm run test:develop",
     "start-server-and-test:develop": "start-server-and-test develop http://localhost:8000 cy:run:develop",
     "start-server-and-test:build": "start-server-and-test serve http://localhost:9000 cy:run:build",
     "serve": "gatsby serve",
@@ -44,11 +44,10 @@
     "update": "node scripts/update.js"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
+    "cross-env": "7.0.3",
     "gatsby-cypress": "next",
-    "is-ci": "^3.0.1",
-    "prettier": "^2.8.8",
-    "start-server-and-test": "^2.0.3",
-    "typescript": "^5.3.3"
+    "is-ci": "3.0.1",
+    "start-server-and-test": "2.0.3",
+    "typescript": "5.4.4"
   }
 }

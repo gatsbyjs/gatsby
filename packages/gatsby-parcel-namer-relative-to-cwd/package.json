@@ -11,7 +11,7 @@
     "directory": "packages/gatsby-parcel-namer-relative-to-cwd"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.0.0",
     "parcel": "2.x"
   },
   "license": "MIT",
@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production pnpm run build",
     "watch": "babel -w src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\""
   },
   "files": [

@@ -3,7 +3,7 @@ import { GatsbyNode } from "gatsby"
 import { validateOptionsSchema } from "./validate"
 import { IPluginInfoOptions } from "./types"
 
-interface ITestPluginOptionsSchemaReturnType {
+type ITestPluginOptionsSchemaReturnType = {
   errors: Array<string>
   warnings: Array<string>
   isValid: boolean
@@ -11,10 +11,10 @@ interface ITestPluginOptionsSchemaReturnType {
 }
 
 export async function testPluginOptionsSchema(
-  pluginSchemaFunction: Exclude<GatsbyNode["pluginOptionsSchema"], undefined>,
+  pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
   pluginOptions: IPluginInfoOptions
-): Promise<ITestPluginOptionsSchemaReturnType> {
-  const pluginSchema = pluginSchemaFunction({
+): Promise<ITestPluginOptionsSchemaReturnType | undefined> {
+  const pluginSchema = pluginSchemaFunction?.({
     Joi: Joi.extend(joi => {
       return {
         type: `subPlugins`,
@@ -46,6 +46,11 @@ export async function testPluginOptionsSchema(
   })
 
   try {
+    if (typeof pluginSchema === 'undefined') {
+      return
+    }
+
+    // @ts-ignore
     const { warning } = await validateOptionsSchema(pluginSchema, pluginOptions)
 
     const warnings = warning?.details?.map(detail => detail.message) ?? []

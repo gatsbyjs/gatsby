@@ -84,7 +84,7 @@ async function main() {
           console.error(
             `[${pkg.name}]` +
               ` repository and/or homepage field in package.json are out of date.` +
-              `Run "yarn run check-repo-fields -- --fix" to update.`
+              `Run "pnpm run check-repo-fields -- --fix" to update.`
           )
         }
         // eslint complains if we don't consistently return the same type

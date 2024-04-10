@@ -40,6 +40,7 @@ describe(`worker (jobs)`, () => {
 
     worker = createTestWorker(3)
 
+    // @ts-ignore
     sendMessageSpy = jest.spyOn(worker, `sendMessage`)
     receivedMessageSpy = jest.fn()
     worker.onMessage(receivedMessageSpy)

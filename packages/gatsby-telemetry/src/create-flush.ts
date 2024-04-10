@@ -1,6 +1,6 @@
 import { isCI } from "gatsby-core-utils"
-const { join } = require(`path`)
-const { fork, spawnSync } = require(`child_process`)
+import { join } from "path"
+import { fork, spawnSync } from "child_process"
 import time, { TimeUnit } from "@turist/time"
 
 export function createFlush(isTrackingEnabled: boolean): () => Promise<void> {
@@ -11,9 +11,11 @@ export function createFlush(isTrackingEnabled: boolean): () => Promise<void> {
 
     if (isCI()) {
       spawnSync(process.execPath, [join(__dirname, `send.js`)], {
+        // @ts-ignore
         execArgv: [],
         timeout: time(1, TimeUnit.Minute),
       })
+
       return
     }
     // Submit events on background with out blocking the main process
@@ -23,6 +25,7 @@ export function createFlush(isTrackingEnabled: boolean): () => Promise<void> {
       stdio: `ignore`,
       execArgv: [],
     })
+
     forked.unref()
   }
 }

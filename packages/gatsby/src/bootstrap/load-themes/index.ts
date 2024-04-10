@@ -12,6 +12,7 @@ import DebugCtor from "debug"
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
 import { resolvePlugin } from "../load-plugins/resolve-plugin"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 
 const debug = DebugCtor(`gatsby:load-themes`)

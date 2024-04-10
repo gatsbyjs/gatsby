@@ -22,10 +22,10 @@
     "babel-plugin-replace-ts-export-assignment": "^0.0.2",
     "cross-env": "^7.0.3",
     "npm-run-all": "4.1.5",
-    "typescript": "^5.1.6"
+    "typescript": "5.4.4"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "prepare": "cross-env NODE_ENV=production npm-run-all --npm-path npm -s build typegen",
+    "prepare": "cross-env NODE_ENV=production npm-run-all --npm-path pnpm -s build typegen",
     "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\""
   }
 }

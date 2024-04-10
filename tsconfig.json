@@ -13,6 +13,7 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports":true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "jsx": "preserve",

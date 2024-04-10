@@ -59,7 +59,7 @@ The `creating-source-plugin-tutorial` project includes three directories:
 - `plugin`: The source plugin
 - `site`: An example Gatsby site
 
-The `site` uses the `plugin` which sources its data from `api`. As mentioned in [Part 0](/docs/tutorial/creating-a-source-plugin/part-0/#development-environment) this project uses yarn workspaces to make this setup work.
+The `site` uses the `plugin` which sources its data from `api`. As mentioned in [Part 0](/docs/tutorial/creating-a-source-plugin/part-0/#development-environment) this project uses pnpm workspaces to make this setup work.
 
 By having the plugin and an example site that uses the plugin in the same repository, you can more easily test your plugin.
 
@@ -97,7 +97,7 @@ Ready to see something happen in your browser? Then let's go!
 First, install the necessary dependencies to run everything:
 
 ```shell
-yarn
+pnpm install
 ```
 
 Afterwards, open a new window in your terminal (you should have two now).
@@ -105,7 +105,7 @@ Afterwards, open a new window in your terminal (you should have two now).
 In the first window, run the `develop:deps` script to start watching the `api` and `plugin` directories. If you change something inside `api`, the GraphQL server will be restarted, if you change something in `plugin` the TypeScript compiler will output updated files.
 
 ```shell
-yarn develop:deps
+pnpm run develop:deps
 ```
 
 You should find something like this in your terminal:
@@ -126,7 +126,7 @@ You should find something like this in your terminal:
 Now, in your second terminal window, run the `develop:site` script. This runs `gatsby develop` for the example site:
 
 ```shell
-yarn develop:site
+pnpm run develop:site
 ```
 
 While `gatsby develop` is running you should also note the `info Example plugin loaded...` log. This verifies that the plugin was successfully loaded for this initial demo. Yay 🎉

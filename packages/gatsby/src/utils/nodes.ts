@@ -18,10 +18,7 @@ export const hasNodeChanged = (id: string, digest: string): boolean => {
 /**
  * Get node and save path dependency.
  */
-export const getNodeAndSavePathDependency = (
-  id: string,
-  path: string
-): IGatsbyNode | undefined => {
+export function getNodeAndSavePathDependency(id: string, path: string | undefined = ''): IGatsbyNode | undefined {
   const node = getNode(id)
 
   if (!node) {

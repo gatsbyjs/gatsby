@@ -9,7 +9,7 @@ LABEL com.github.actions.color="purple"
 COPY . .
 
 # Install dependencies
-RUN yarn
+RUN pnpm install
 
 # Start node app
 ENTRYPOINT [ "node", "/index.js" ]

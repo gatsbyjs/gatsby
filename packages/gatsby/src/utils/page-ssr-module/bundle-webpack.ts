@@ -3,6 +3,7 @@ import * as fs from "fs-extra"
 import webpack from "webpack"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
 

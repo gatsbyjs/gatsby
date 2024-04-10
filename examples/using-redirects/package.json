@@ -18,6 +18,6 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "start": "npm run develop"
+    "start": "pnpm run develop"
   }
 }

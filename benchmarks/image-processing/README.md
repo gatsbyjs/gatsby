@@ -12,12 +12,12 @@ The max number of images you can process is 65535.
 First, install node modules required by package.json. This is needed only one time. Then run the build
 
 ```shell
-npm install
-npm run build
+pnpm install
+pnpm run build
 ```
 
 Alternatively;
 
 ```shell
-NUM_PAGES=2000 yarn bench
+NUM_PAGES=2000 pnpm run bench
 ```

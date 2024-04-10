@@ -8,6 +8,7 @@ import * as dispatchers from "../jobs/dispatchers"
 import { PlaceholderType } from "../placeholder-handler"
 import { generateImageUrl } from "../utils/url-generator"
 import type { Actions, Store } from "gatsby"
+import { satisfies } from "semver"
 
 jest
   .spyOn(dispatchers, `shouldDispatchLocalImageServiceJob`)
@@ -53,6 +54,7 @@ describe(`gatsbyImageData`, () => {
   beforeAll(async () => {
     await ensureDir(cacheDir)
 
+    // @ts-ignore
     importFrom.mockReturnValue({
       getCache: jest.fn(() => {
         return {
@@ -66,13 +68,16 @@ describe(`gatsbyImageData`, () => {
   afterAll(() => remove(cacheDir))
 
   beforeEach(() => {
+    // @ts-ignore
     dispatchers.shouldDispatchLocalImageServiceJob.mockClear()
+    // @ts-ignore
     fetchRemoteFile.mockClear()
   })
 
   const actions = {
     addGatsbyImageSourceUrl: jest.fn(),
-  } as Actions
+    // @ts-ignore
+  } satisfies Actions
 
   const portraitSource = {
     id: `1`,
@@ -100,10 +105,12 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
+      // @ts-ignore
       actions,
       store
     )
 
+    // @ts-ignore
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
 
     expect(parsedSrcSet.length).toBe(2)
@@ -136,9 +143,11 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         cropFocus: [`entropy`],
       },
+      // @ts-ignore
       actions,
       store
     )
+    // @ts-ignore
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
     expect(parsedSrcSet[0].src).toEqual(
       generateImageUrl(
@@ -194,11 +203,12 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
+      // @ts-ignore
       actions,
       store
     )
 
-    const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
+    const parsedSrcSet = parseSrcSet(result?.images.sources[0].srcSet ?? '')
     expect(parsedSrcSet.length).toBe(2)
     expect(parsedSrcSet[0].src).toEqual(
       generateImageUrl(
@@ -271,11 +281,12 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
+      // @ts-ignore
       actions,
       store
     )
 
-    const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
+    const parsedSrcSet = parseSrcSet(result?.images.sources[0].srcSet ?? '')
     expect(parsedSrcSet.length).toBe(4)
     expect(parsedSrcSet[0].src).toEqual(
       generateImageUrl(
@@ -386,11 +397,12 @@ describe(`gatsbyImageData`, () => {
         width: 2000,
         placeholder: `none`,
       },
+      // @ts-ignore
       actions,
       store
     )
 
-    const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
+    const parsedSrcSet = parseSrcSet(result?.images.sources[0].srcSet ?? '')
     expect(parsedSrcSet).toHaveLength(4)
     expect(parsedSrcSet[0].src).toEqual(
       generateImageUrl(
@@ -498,6 +510,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -509,6 +522,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -524,11 +538,12 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
+      // @ts-ignore
       actions,
       store
     )
 
-    const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
+    const parsedFixedSrcSet = parseSrcSet(fixedResult?.images.sources[0].srcSet ?? '')
     expect(parsedFixedSrcSet).toHaveLength(2)
     expect(parsedFixedSrcSet[0].src).toEqual(
       generateImageUrl(
@@ -564,7 +579,7 @@ describe(`gatsbyImageData`, () => {
     )
 
     const parsedConstrainedSrcSet = parseSrcSet(
-      constrainedResult.images.sources[0].srcSet
+      constrainedResult?.images.sources[0].srcSet ?? ''
     )
     expect(parsedConstrainedSrcSet).toHaveLength(2)
     expect(parsedConstrainedSrcSet[0].src).toEqual(
@@ -601,7 +616,7 @@ describe(`gatsbyImageData`, () => {
     )
 
     const parsedFullWidthSrcSet = parseSrcSet(
-      fullWidthResult.images.sources[0].srcSet
+      fullWidthResult?.images.sources[0].srcSet ?? ''
     )
     expect(parsedFullWidthSrcSet).toHaveLength(4)
   })
@@ -617,12 +632,13 @@ describe(`gatsbyImageData`, () => {
         layout: `constrained`,
         placeholder: `none`,
       },
+      // @ts-ignore
       actions,
       store
     )
 
-    expect(result.images.fallback.src).not.toContain(` `)
-    expect(result.images.fallback.src).toContain(`name%20with%20spaces`)
+    expect(result?.images.fallback.src).not.toContain(` `)
+    expect(result?.images.fallback.src).toContain(`name%20with%20spaces`)
   })
 
   it(`should return proper srcSet from breakpoints only for fullWidth`, async () => {
@@ -639,6 +655,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -650,6 +667,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -661,21 +679,22 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
+      // @ts-ignore
       actions,
       store
     )
 
-    const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
+    const parsedFixedSrcSet = parseSrcSet(fixedResult?.images.sources[0].srcSet ?? '')
     expect(parsedFixedSrcSet).toHaveLength(2)
     expect(parsedFixedSrcSet[0].descriptor).toEqual(`1x`)
     const parsedConstrainedSrcSet = parseSrcSet(
-      constrainedResult.images.sources[0].srcSet
+      constrainedResult?.images.sources[0].srcSet ?? ''
     )
     expect(parsedConstrainedSrcSet).toHaveLength(4)
     expect(parsedConstrainedSrcSet[0].descriptor).toEqual(`75w`)
 
     const parsedFullWidthSrcSet = parseSrcSet(
-      fullWidthResult.images.sources[0].srcSet
+      fullWidthResult?.images.sources[0].srcSet ?? ''
     )
     expect(parsedFullWidthSrcSet).toHaveLength(2)
     expect(parsedFullWidthSrcSet[0].descriptor).toEqual(`350w`)
@@ -683,6 +702,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should generate dominant color placeholder by default`, async () => {
+    // @ts-ignore
     fetchRemoteFile.mockResolvedValueOnce(
       path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
@@ -692,6 +712,7 @@ describe(`gatsbyImageData`, () => {
         layout: `fixed`,
         width: 300,
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -701,6 +722,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should generate base64 placeholder`, async () => {
+    // @ts-ignore
     fetchRemoteFile.mockResolvedValueOnce(
       path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
@@ -711,6 +733,7 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: PlaceholderType.BLURRED,
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -729,6 +752,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should generate tracedSVG placeholder (fallback to dominant_color)`, async () => {
+    // @ts-ignore
     fetchRemoteFile.mockResolvedValueOnce(
       path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
@@ -739,6 +763,7 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: PlaceholderType.TRACED_SVG,
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -765,6 +790,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -779,6 +805,7 @@ describe(`gatsbyImageData`, () => {
   it(`should fetch placeholder file with headers from the setRequestHeaders action`, async () => {
     const authToken = `Bearer 12345`
 
+    // @ts-ignore
     fetchRemoteFile.mockImplementationOnce(input => {
       if (!input.httpHeaders || input.httpHeaders.Authorization !== authToken) {
         throw Error(`No headers found for url ${input.url}`)
@@ -790,7 +817,7 @@ describe(`gatsbyImageData`, () => {
     const baseDomain = url.parse(portraitSource.url)?.hostname
 
     const store = {
-      getState: (): { requestHeaders: Map<string, Record<string, string>> } => {
+      getState: (): { requestHeaders: Map<string | null, { Authorization: string; }> } => {
         return {
           requestHeaders: new Map([[baseDomain, { Authorization: authToken }]]),
         }
@@ -804,6 +831,7 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: PlaceholderType.BLURRED,
       },
+      // @ts-ignore
       actions,
       store
     )
@@ -818,6 +846,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should call add image source urls to the redux store`, async () => {
+    // @ts-ignore
     fetchRemoteFile.mockResolvedValueOnce(
       path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )

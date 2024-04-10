@@ -78,6 +78,7 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
 
+    // @ts-ignore
     dispatchers.shouldDispatchLocalFileServiceJob.mockImplementationOnce(
       () => true
     )
@@ -95,6 +96,7 @@ describe(`publicResolver`, () => {
         contentDigest: `1`,
       },
     }
+    // @ts-ignore
     publicUrlResolver(source, actions, store)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -117,6 +119,7 @@ describe(`publicResolver`, () => {
     const actions = {
       createJobV2: jest.fn(() => jest.fn()),
     }
+    // @ts-ignore
     dispatchers.shouldDispatchLocalFileServiceJob.mockImplementationOnce(
       () => true
     )
@@ -136,6 +139,7 @@ describe(`publicResolver`, () => {
         contentDigest: `1`,
       },
     }
+    // @ts-ignore
     publicUrlResolver(source, actions, store)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -159,6 +163,7 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
 
+    // @ts-ignore
     dispatchers.shouldDispatchLocalFileServiceJob.mockImplementationOnce(
       () => true
     )
@@ -176,6 +181,7 @@ describe(`publicResolver`, () => {
         contentDigest: `1`,
       },
     }
+    // @ts-ignore
     publicUrlResolver(file, actions, store)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({

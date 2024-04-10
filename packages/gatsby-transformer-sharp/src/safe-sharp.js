@@ -21,7 +21,7 @@ const restoreConsoleError = () => {
 
 const getDetailedMessage = () => {
   try {
-    // `npm list` seems to work in yarn installed projects as long
+    // `pnpm list` seems to work in yarn installed projects as long
     // as there is no package-lock.json, so let's bail out
     // if both lock files exist
 
@@ -90,7 +90,7 @@ const getDetailedMessage = () => {
         return ` - ${depName}${
           sharpVersion
             ? ` (${sharpVersion})${
-                sharpVersion !== latestVersion ? ` - needs update` : ``
+                sharpVersion === latestVersion ? `` : ` - needs update`
               }`
             : ``
         }`
@@ -99,6 +99,10 @@ const getDetailedMessage = () => {
 
     if (packagesToUpdate.length > 0) {
       msg = msg.concat([
+        ``,
+        `If you are using pnpm, run:`,
+        ``,
+        `pnpm add ${packagesToUpdate.join(` `)}`,
         ``,
         `If you are using npm, run:`,
         ``,

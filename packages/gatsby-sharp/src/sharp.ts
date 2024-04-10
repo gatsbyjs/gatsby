@@ -1,1 +1,3 @@
-module.exports = require(`sharp`)
+import sharp from "sharp"
+
+export default sharp

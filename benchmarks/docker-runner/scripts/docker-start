@@ -1,7 +1,7 @@
 DOCKER_ID=$(./scripts/docker-get-id)
 if [ -n "$DOCKER_ID" ]; then
   echo "\nA gatsby-generic-benchmark container is already running with id $DOCKER_ID."
-  echo "Please use that container, or run \`yarn docker:stop\` to stop it.\n"
+  echo "Please use that container, or run \`pnpm run docker:stop\` to stop it.\n"
   return 1
 fi
 
@@ -23,4 +23,4 @@ DOCKER_ID=$(\
 sleep 1
 docker exec $DOCKER_ID bash -c "/usr/src/gatsby/benchmarks/docker-runner/scripts/docker-write-memory &"
 
-echo "\nStarted container id ${DOCKER_ID} with ${MEMORY_LIMIT} of memory! Run \`yarn docker:connect\` to connect to the container.\n"
+echo "\nStarted container id ${DOCKER_ID} with ${MEMORY_LIMIT} of memory! Run \`pnpm run docker:connect\` to connect to the container.\n"

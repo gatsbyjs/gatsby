@@ -12,10 +12,12 @@ let previousWebpackStatsJson: string | undefined
 export class GatsbyWebpackStatsExtractor {
   private plugin: { name: string }
   private publicPath: string
+  private nonce?: string | undefined
 
-  constructor(publicPath: string) {
+  constructor(publicPath: string, nonce?: string | undefined) {
     this.plugin = { name: `GatsbyWebpackStatsExtractor` }
     this.publicPath = publicPath
+    this.nonce = nonce
   }
   apply(compiler: Compiler): void {
     compiler.hooks.done.tapAsync(this.plugin.name, async (stats, done) => {
@@ -108,21 +110,17 @@ export class GatsbyWebpackStatsExtractor {
 
         if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
           // Add chunk mapping metadata to scripts slice
-          const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(
-            newChunkMapJson
-          )};`
+          const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify( newChunkMapJson )};`
 
-          const chunkSliceContents = `
-          <script
-            id="gatsby-chunk-mapping"
-          >
-            ${scriptChunkMapping}
-          </script>
-        `
+          const chunkSliceContents = typeof this.nonce === 'string'
+            ? `<script id="gatsby-chunk-mapping" nonce="${this.nonce}">${scriptChunkMapping}</script>`
+            : `<script id="gatsby-chunk-mapping">${scriptChunkMapping}</script>`
 
           await fs.ensureDir(path.join(`public`, `_gatsby`, `slices`))
 
-          const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
+          const hashSliceContents = typeof this.nonce === 'string'
+          ? `<script nonce="${this.nonce}">window.___webpackCompilationHash="${stats.hash}";</script>`
+          : `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
 
           const assetSliceContents: Array<string> = []
 
@@ -130,7 +128,9 @@ export class GatsbyWebpackStatsExtractor {
             for (const asset of assets.polyfill) {
               if (asset.endsWith(`.js`)) {
                 assetSliceContents.push(
-                  `<script src="${this.publicPath}/${asset}" nomodule></script>`
+                  typeof this.nonce === 'string'
+                    ? `<script src="${this.publicPath}/${asset}" nomodule nonce="${this.nonce}"></script>`
+                    : `<script src="${this.publicPath}/${asset}" nomodule></script>`
                 )
               }
             }
@@ -140,7 +140,9 @@ export class GatsbyWebpackStatsExtractor {
             for (const asset of assets.app) {
               if (asset.endsWith(`.js`)) {
                 assetSliceContents.push(
-                  `<script src="${this.publicPath}/${asset}" async></script>`
+                  typeof this.nonce === 'string'
+                    ? `<script src="${this.publicPath}/${asset}" nonce="${this.nonce}" async></script>`
+                    : `<script src="${this.publicPath}/${asset}" async></script>`
                 )
               }
             }

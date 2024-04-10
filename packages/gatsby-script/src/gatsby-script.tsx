@@ -1,33 +1,27 @@
-import React, { useEffect } from "react"
+import React, { useEffect, type ReactElement, type ScriptHTMLAttributes } from "react"
 import { collectedScriptsByPage } from "./collected-scripts-by-page"
-import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
 import { Location, useLocation } from "@gatsbyjs/reach-router"
 
-export enum ScriptStrategy {
-  postHydrate = `post-hydrate`,
-  idle = `idle`,
-  offMainThread = `off-main-thread`,
-}
+export type ScriptStrategy = 'post-hydrate' | 'idle' | 'off-main-thread'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export interface ScriptProps
-  extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad` | `onError`> {
-  id?: string
-  strategy?: ScriptStrategy | `post-hydrate` | `idle` | `off-main-thread`
-  children?: string
-  onLoad?: (event: Event) => void
-  onError?: (event: ErrorEvent) => void
-  forward?: Array<string>
+export type ScriptProps = Omit<ScriptHTMLAttributes<HTMLScriptElement>, 'onLoad' | 'onError'> & {
+  id?: string | undefined
+  strategy?: ScriptStrategy | undefined
+  children?: string | undefined
+  onLoad?: ((event: Event) => void) | undefined
+  onError?: ((event: ErrorEvent) => void) | undefined
+  forward?: Array<string> | undefined
 }
 
 const handledProps = new Set([
-  `src`,
-  `strategy`,
-  `dangerouslySetInnerHTML`,
-  `children`,
-  `onLoad`,
-  `onError`,
+  'src',
+  'strategy',
+  'dangerouslySetInnerHTML',
+  'children',
+  'onLoad',
+  'onError',
 ])
 
 // Used for de-duplication
@@ -52,7 +46,7 @@ function GatsbyScriptLocationWrapper(props: ScriptProps): JSX.Element {
 }
 
 function GatsbyScript(props: ScriptProps): ReactElement | null {
-  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
+  const { src, strategy = 'post-hydrate' } = props || {}
 
   const { pathname } = useLocation()
 
@@ -60,15 +54,15 @@ function GatsbyScript(props: ScriptProps): ReactElement | null {
     let details: IInjectedScriptDetails | null
 
     switch (strategy) {
-      case ScriptStrategy.postHydrate:
+      case 'post-hydrate':
         details = injectScript(props)
         break
-      case ScriptStrategy.idle:
+      case 'idle':
         requestIdleCallback(() => {
           details = injectScript(props)
         })
         break
-      case ScriptStrategy.offMainThread:
+      case 'off-main-thread':
         {
           const attributes = resolveAttributes(props)
           collectedScriptsByPage.set(pathname, attributes)
@@ -91,7 +85,7 @@ function GatsbyScript(props: ScriptProps): ReactElement | null {
     }
   }, [])
 
-  if (strategy === ScriptStrategy.offMainThread) {
+  if (strategy === 'off-main-thread') {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
 
@@ -134,7 +128,7 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
   const {
     id,
     src,
-    strategy = ScriptStrategy.postHydrate,
+    strategy = 'post-hydrate',
     onLoad,
     onError,
   } = props || {}

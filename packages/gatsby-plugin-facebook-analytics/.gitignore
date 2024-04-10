@@ -1,3 +1,4 @@
 /*.js
+/*.ts
 !index.js
 yarn.lock

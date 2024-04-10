@@ -6,7 +6,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "start": "npm run develop"
+    "start": "pnpm run develop"
   },
   "author": "Daniel Farrell <daniel.farrell@mobelux.com>",
   "license": "MIT",

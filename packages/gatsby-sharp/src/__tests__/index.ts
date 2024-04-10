@@ -3,7 +3,7 @@ import { exec } from "child_process"
 
 jest.mock(`child_process`, () => {
   return {
-    exec: jest.fn(async (command, options, cb) => {
+    exec: jest.fn(async (_command, _options, cb) => {
       setImmediate(() => {
         try {
           return cb(
@@ -30,6 +30,7 @@ function getSharpInstance(): typeof import("../index") {
 
 describe(`getSharpInstance`, () => {
   beforeEach(() => {
+    // @ts-ignore
     exec.mockClear()
   })
 
@@ -39,6 +40,7 @@ describe(`getSharpInstance`, () => {
 
     expect(exec).not.toHaveBeenCalled()
     expect(sharpInstance).toBeDefined()
+    // @ts-ignore
     expect(sharpInstance.versions).toBeDefined()
   })
 
@@ -60,6 +62,7 @@ describe(`getSharpInstance`, () => {
       try {
         const sharpInstance = await getSharpInstance()
         expect(sharpInstance).toBeDefined()
+        // @ts-ignore
         expect(sharpInstance.versions).toBeDefined()
       } catch (err) {
         // ignore

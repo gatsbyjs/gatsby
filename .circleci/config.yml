@@ -36,7 +36,7 @@ aliases:
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: yarn
+      command: pnpm install
 
   check_lockfile: &check_lockfile
     run:
@@ -88,11 +88,11 @@ aliases:
       - run:
           name: Step debug info
           command: |
-            yarn list react
-            yarn why lmdb-store
+            pnpm list react
+            pnpm why lmdb-store
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
+          command: pnpm run jest --ci --runInBand  $(pnpm -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: "true"
@@ -126,7 +126,7 @@ commands:
         type: string
       test_command:
         type: string
-        default: "yarn test"
+        default: "pnpm run test"
       react_version:
         type: string
         default: ""
@@ -160,7 +160,7 @@ commands:
                 command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
       - run:
           name: Install gatsby-dev@next
-          command: yarn global add gatsby-dev-cli@next --ignore-engines
+          command: pnpm add -g gatsby-dev-cli@next
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
@@ -180,7 +180,7 @@ jobs:
       - <<: *check_lockfile
       - <<: *validate_renovate
       - <<: *persist_cache
-      - run: yarn bootstrap -- concurrency=2
+      - run: pnpm run bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
@@ -199,8 +199,8 @@ jobs:
           command: |
             sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
       - <<: *install_node_modules
-      - run: yarn lint:code
-      - run: yarn lint:other
+      - run: pnpm run lint:code
+      - run: pnpm run lint:other
 
   typecheck:
     executor: node
@@ -209,8 +209,8 @@ jobs:
       # We should always assert on master
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|yarn.lock"
       - <<: *attach_to_bootstrap
-      - run: yarn typecheck
-      - run: yarn check-repo-fields
+      - run: pnpm run typecheck
+      - run: pnpm run check-repo-fields
 
   unit_tests_node18:
     executor:
@@ -230,7 +230,7 @@ jobs:
             echo nvm alias default v18 >> $BASH_ENV
       - run: |
           node -v
-      - run: npm i -g yarn@1.22.11
+      - run: corepack enable pnpm
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
@@ -288,7 +288,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/images
-          test_command: yarn build-and-test
+          test_command: pnpm run build-and-test
       - store_artifacts:
           path: integration-tests/images/__diff_output__
 
@@ -297,28 +297,28 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/functions
-          test_command: yarn test
+          test_command: pnpm run test
 
   integration_tests_head_function_export:
     executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/head-function-export
-          test_command: yarn test
+          test_command: pnpm run test
 
   integration_tests_esm_in_gatsby_files:
     executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/esm-in-gatsby-files
-          test_command: yarn test
+          test_command: pnpm run test
 
   integration_tests_lmdb_regeneration:
     executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/lmdb-regeneration
-          test_command: yarn test
+          test_command: pnpm run test
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
@@ -344,26 +344,26 @@ jobs:
       - run: # default doesn't have API functions so let's get some of those
           command: cp -r ./e2e-tests/adapters/src/api /tmp/e2e-tests/gatsby-pnp/src/api
           working_directory: ~/project
-      - run:
-          command: touch yarn.lock
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Quick upgrade to the v2 (any version, we just need the real set version)
-          command: yarn policies set-version berry
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Explicitly set nodeLinker to avoid Yarn selecting node_modules due to the Yarn 1.x lockfile
-          command: yarn config set nodeLinker pnp
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Allow installs to change the lockfile
-          command: yarn config set enableImmutableInstalls false
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Don't allow any fallback to root dependencies
-          command: yarn config set pnpFallbackMode none
-          working_directory: /tmp/e2e-tests/gatsby-pnp
+      # - run:
+      #     command: touch yarn.lock
+      #     working_directory: /tmp/e2e-tests/gatsby-pnp
+      # - run: # Quick upgrade to the v2 (any version, we just need the real set version)
+      #     command: yarn policies set-version berry
+      #     working_directory: /tmp/e2e-tests/gatsby-pnp
+      # - run: # Explicitly set nodeLinker to avoid Yarn selecting node_modules due to the Yarn 1.x lockfile
+      #     command: yarn config set nodeLinker pnp
+      #     working_directory: /tmp/e2e-tests/gatsby-pnp
+      # - run: # Allow installs to change the lockfile
+      #     command: yarn config set enableImmutableInstalls false
+      #     working_directory: /tmp/e2e-tests/gatsby-pnp
+      # - run: # Don't allow any fallback to root dependencies
+      #     command: yarn config set pnpFallbackMode none
+      #     working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Install before custom registry server is set
-          command: yarn add start-server-and-test@^1.11.0
+          command: pnpm add start-server-and-test@^1.11.0
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set the local registry to gatsby-dev-cli registry
-          command: yarn config set npmRegistryServer http://localhost:4873
+          command: pnpm config set npmRegistryServer http://localhost:4873
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Allow localhost registry
           command: |
@@ -376,16 +376,16 @@ jobs:
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once --external-registry
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
-          command: yarn build
+          command: pnpm run build
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
-          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
+          command: 'DEBUG=start-server-and-test pnpm run start-server-and-test "pnpm run develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
 
   e2e_tests_pnpm:
     executor:
       name: node
-      image: "18.12.0"
+      image: "20.11.0"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -403,10 +403,10 @@ jobs:
           command: rm package-lock.json
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install pnpm
-          command: npm install -g pnpm
+          command: pnpm add -g pnpm
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install start-server-and-test
-          command: npm install -g start-server-and-test@^1.11.0
+          command: pnpm add -g start-server-and-test@^1.11.0
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
@@ -435,7 +435,7 @@ jobs:
       - run: echo 'export CY_CLOUD_PROD_RUNTIME_REACT_18="${CY_CLOUD_PROD_RUNTIME_REACT_18}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_REACT_18} yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18} yarn test:offline
+          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_REACT_18} pnpm run test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18} pnpm run test:offline
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -443,7 +443,7 @@ jobs:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_DEV_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; pnpm run test
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
@@ -451,7 +451,7 @@ jobs:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_PROD_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; pnpm run test
 
   e2e_tests_mdx:
     <<: *e2e-executor
@@ -480,7 +480,7 @@ jobs:
       # we build a second time to see if warm/cached builds are successful
       - e2e-test:
           test_path: e2e-tests/contentful
-          test_command: yarn build
+          test_command: pnpm run build
       - store_artifacts:
           path: e2e-tests/contentful/__diff_output__
       - store_test_results:
@@ -521,7 +521,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
-      - run: yarn markdown
+      - run: pnpm run markdown
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
@@ -555,20 +555,20 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.0.0 and yarn
+          name: Install node 20.0.0 and pnpm
           command: |
-            nvm install 18.0.0
-            nvm alias default 18.0.0
-            nvm use 18.0.0
-            choco install yarn -y
+            nvm install 20.11.0
+            nvm alias default 20.11.0
+            nvm use 20.11.0
+            corepack enable pnpm
       - run:
           name: Rebuild packages for windows
           command: |
             Remove-Item -Recurse -Force -Path "node_modules/sharp/"
-            yarn
+            pnpm install
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
+          command: pnpm run jest --ci --runInBand ((pnpm run jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build && npm run typegen",
+    "prepare": "cross-env NODE_ENV=production pnpm run clean && pnpm run build && pnpm run typegen",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.tsx\"",
     "test": "jest",
     "clean": "del-cli dist/*"
@@ -57,7 +57,7 @@
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "opentracing": "^0.14.7",
-    "typescript": "^5.1.6",
+    "typescript": "5.4.4",
     "webpack": "^5.88.1"
   },
   "jest": {

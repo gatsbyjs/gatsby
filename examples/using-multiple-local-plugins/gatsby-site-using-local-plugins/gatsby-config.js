@@ -12,7 +12,7 @@ module.exports = {
       // including a plugin from outside the plugins folder needs the path to it
       resolve: require.resolve(`../gatsby-plugin-console-log-b`),
     },
-    // including a plugin with yarn or npm link
+    // including a plugin with pnpm or yarn or npm link
     //   in order for this plugin to be found when you run gatsby develop
     //   you first need to run `npm link ../gatsby-plugin-console-log-c` in the `gatsby-site-using-local-plugins` root folder
     // `gatsby-plugin-console-log-c`,

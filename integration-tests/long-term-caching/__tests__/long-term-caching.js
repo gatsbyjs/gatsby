@@ -39,7 +39,7 @@ describe(`long term caching`, () => {
   let pagesPath
 
   const createPublic0 = async () => {
-    execFileSync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`pnpm run`, [`build`], { cwd: basePath })
     return copy(`${basePath}/public`, `${basePath}/public-0`)
   }
 
@@ -51,7 +51,7 @@ describe(`long term caching`, () => {
     const modifiedData = data.replace(regex, `?`)
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    execFileSync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`pnpm run`, [`build`], { cwd: basePath })
     return copy(`${basePath}/public`, `${basePath}/public-1`)
   }
 
@@ -65,7 +65,7 @@ describe(`long term caching`, () => {
     const modifiedData = `${import1}\n${data}`
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    execFileSync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`pnpm run`, [`build`], { cwd: basePath })
     return copy(`${basePath}/public`, `${basePath}/public-2`)
   }
 
@@ -78,7 +78,7 @@ describe(`long term caching`, () => {
     const modifiedData = `${import1}\n${data}`
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    execFileSync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`pnpm run`, [`build`], { cwd: basePath })
     return copy(`${basePath}/public`, `${basePath}/public-3`)
   }
 
@@ -92,7 +92,7 @@ describe(`long term caching`, () => {
     const modifiedData = `${import1}\n${import2}\n${data}`
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
-    execFileSync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`pnpm run`, [`build`], { cwd: basePath })
     return copy(`${basePath}/public`, `${basePath}/public-4`)
   }
 
@@ -104,7 +104,7 @@ describe(`long term caching`, () => {
     const modifiedData = data.replace(regex, `?`)
     await writeFile(`${srcPath}/async-2.js`, modifiedData)
 
-    execFileSync(`yarn`, [`build`], { cwd: basePath })
+    execFileSync(`pnpm run`, [`build`], { cwd: basePath })
     return copy(`${basePath}/public`, `${basePath}/public-5`)
   }
 

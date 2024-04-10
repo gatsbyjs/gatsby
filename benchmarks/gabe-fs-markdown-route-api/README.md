@@ -8,14 +8,14 @@ The site can generate an arbitrary amount of super simple pages. Each page has a
 
 ## Install
 
-Run `yarn` or `npm install`
+Run `yarn` or `pnpm install`
 
 ## Usage
 
 You can start a benchmark run like this:
 
 ```shell
-N=1000 M=2 yarn bench
+N=1000 M=2 pnpm run bench
 ```
 
 - `N=1000`: instructs the run to build a site of 1000 pages
@@ -25,4 +25,4 @@ N=1000 M=2 yarn bench
 - Runs `gatsby clean`
 - Runs `gatsby build`
 
-The default `yarn bench` will build 512 pages with 1gb memory.
+The default `pnpm run bench` will build 512 pages with 1gb memory.

@@ -9,7 +9,7 @@
     "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
+    "start": "pnpm run develop",
     "serve": "gatsby serve",
     "data-update": "NODE_ENV=production node update-post.js"
   },

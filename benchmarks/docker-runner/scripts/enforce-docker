@@ -6,7 +6,7 @@ if [ ! -f /.dockerenv ]; then
   if [ -n "$DOCKER_ID" ]; then
     COMMAND="connect"
   fi
-  echo -e "\nThis must be run inside the docker container. Please run \`yarn docker:${COMMAND}\` and try again.\n"
+  echo -e "\nThis must be run inside the docker container. Please run \`pnpm run docker:${COMMAND}\` and try again.\n"
   exit 1
 fi
 

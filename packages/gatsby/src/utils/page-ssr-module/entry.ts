@@ -11,7 +11,7 @@ import type {
   IGatsbyState,
   IHeader,
 } from "../../redux/types"
-import { IGraphQLTelemetryRecord } from "../../schema/type-definitions"
+import type { IGraphQLTelemetryRecord } from "../../schema/type-definitions"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
 import type { IPageDataWithQueryResult, ISliceData } from "../page-data"
 import type { Request } from "express"
@@ -27,6 +27,7 @@ import {
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
 import { getServerData, IServerData } from "../get-server-data"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { initTracer } from "../tracer"
 import { getCodeFrame } from "../../query/graphql-errors-codeframe"

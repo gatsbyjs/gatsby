@@ -92,22 +92,22 @@
           "jsonTest": {
             "en-US": {
               "engines": {
-                "yarn": "^1.2.1"
+                "pnpm": "^8.56.0"
               },
               "private": true,
               "scripts": {
                 "jest": "jest",
                 "lint": "eslint --ext .js,.jsx packages/**/src",
                 "plop": "plop",
-                "test": "yarn lint && yarn jest",
+                "test": "pnpm run lint && pnpm run jest",
                 "lerna": "lerna",
                 "watch": "lerna run watch --no-sort --stream --concurrency 999",
-                "format": "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts",
+                "format": "pnpm run format-packages && pnpm run format-cache-dir && pnpm run format-www && pnpm run format-examples && pnpm run format-scripts",
                 "publish": "lerna publish",
-                "bootstrap": "yarn && npm run check-versions && lerna run prepublish",
+                "bootstrap": "pnpm install -r && pnpm run check-versions && lerna run prepublish",
                 "lint:flow": "babel-node scripts/flow-check.js",
                 "remotedev": "remotedev --hostname=localhost --port=19999",
-                "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
+                "test_bkup": "pnpm run lint && pnpm run test-node && pnpm run test-integration",
                 "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
                 "test:watch": "jest --watch",
                 "test:update": "jest --updateSnapshot",

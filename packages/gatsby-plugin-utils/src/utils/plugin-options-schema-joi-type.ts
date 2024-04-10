@@ -20,11 +20,11 @@ type Types =
 
 type BasicType = boolean | number | string | any[] | object | null
 
-type LanguageMessages = Record<string, string>
+type LanguageMessages = Record<string, string | Record<string, string>>
 
 type PresenceMode = "optional" | "required" | "forbidden"
 
-interface ErrorFormattingOptions {
+type ErrorFormattingOptions = {
   /**
    * when true, error message templates will escape special characters to HTML entities, for security purposes.
    *
@@ -79,7 +79,7 @@ interface ErrorFormattingOptions {
   }
 }
 
-interface BaseValidationOptions {
+type BaseValidationOptions = {
   /**
    * when true, stops validation on the first error, otherwise returns all the errors found.
    *
@@ -165,7 +165,7 @@ interface BaseValidationOptions {
   stripUnknown?: boolean | { arrays?: boolean; objects?: boolean }
 }
 
-interface ValidationOptions extends BaseValidationOptions {
+type ValidationOptions = BaseValidationOptions & {
   /**
    * overrides individual error messages. Defaults to no override (`{}`).
    * Messages use the same rules as templates.
@@ -176,7 +176,7 @@ interface ValidationOptions extends BaseValidationOptions {
   messages?: LanguageMessages
 }
 
-interface AsyncValidationOptions extends ValidationOptions {
+type AsyncValidationOptions = ValidationOptions & {
   /**
    * when true, warnings are returned alongside the value (i.e. `{ value, warning }`).
    *
@@ -185,16 +185,16 @@ interface AsyncValidationOptions extends ValidationOptions {
   warnings?: boolean
 }
 
-interface LanguageMessageTemplate {
+type LanguageMessageTemplate = {
   source: string
   rendered: string
 }
 
-interface ErrorValidationOptions extends BaseValidationOptions {
+type ErrorValidationOptions = BaseValidationOptions & {
   messages?: Record<string, LanguageMessageTemplate>
 }
 
-interface RenameOptions {
+type RenameOptions = {
   /**
    * if true, does not delete the old key name, keeping both the new and old keys in place.
    *
@@ -221,7 +221,7 @@ interface RenameOptions {
   ignoreUndefined?: boolean
 }
 
-interface TopLevelDomainOptions {
+type TopLevelDomainOptions = {
   /**
    * - `true` to use the IANA list of registered TLDs. This is the default value.
    * - `false` to allow any TLD not listed in the `deny` list, if present.
@@ -234,7 +234,7 @@ interface TopLevelDomainOptions {
   deny?: Set<string> | string[]
 }
 
-interface HierarchySeparatorOptions {
+type HierarchySeparatorOptions = {
   /**
    * overrides the default `.` hierarchy separator. Set to false to treat the key as a literal value.
    *
@@ -243,7 +243,7 @@ interface HierarchySeparatorOptions {
   separator?: string | false
 }
 
-interface EmailOptions {
+type EmailOptions = {
   /**
    * If `true`, Unicode characters are permitted
    *
@@ -282,7 +282,7 @@ interface EmailOptions {
   minDomainSegments?: number
 }
 
-interface DomainOptions {
+type DomainOptions = {
   /**
    * If `true`, Unicode characters are permitted
    *
@@ -304,7 +304,7 @@ interface DomainOptions {
   minDomainSegments?: number
 }
 
-interface HexOptions {
+type HexOptions = {
   /**
    * hex decoded representation must be byte aligned.
    * @default false
@@ -312,7 +312,7 @@ interface HexOptions {
   byteAligned?: boolean
 }
 
-interface IpOptions {
+type IpOptions = {
   /**
    * One or more IP address versions to validate against. Valid values: ipv4, ipv6, ipvfuture
    */
@@ -325,11 +325,11 @@ interface IpOptions {
 
 type GuidVersions = "uuidv1" | "uuidv2" | "uuidv3" | "uuidv4" | "uuidv5"
 
-interface GuidOptions {
+type GuidOptions = {
   version: GuidVersions[] | GuidVersions
 }
 
-interface UriOptions {
+type UriOptions = {
   /**
    * Specifies one or more acceptable Schemes, should only include the scheme name.
    * Can be an Array or String (strings are automatically escaped for use in a Regular Expression).
@@ -360,7 +360,7 @@ interface UriOptions {
   domain?: DomainOptions
 }
 
-interface DataUriOptions {
+type DataUriOptions = {
   /**
    * optional parameter defaulting to true which will require `=` padding if true or make padding optional if false
    *
@@ -369,7 +369,7 @@ interface DataUriOptions {
   paddingRequired?: boolean
 }
 
-interface Base64Options extends Pick<DataUriOptions, "paddingRequired"> {
+type Base64Options = Pick<DataUriOptions, "paddingRequired"> & {
   /**
    * if true, uses the URI-safe base64 format which replaces `+` with `-` and `\` with `_`.
    *
@@ -378,7 +378,7 @@ interface Base64Options extends Pick<DataUriOptions, "paddingRequired"> {
   urlSafe?: boolean
 }
 
-interface SwitchCases {
+type SwitchCases = {
   /**
    * the required condition joi type.
    */
@@ -389,7 +389,7 @@ interface SwitchCases {
   then: SchemaLike
 }
 
-interface SwitchDefault {
+type SwitchDefault = {
   /**
    * the alternative schema type if no cases matched.
    * Only one otherwise statement is allowed in switch as the last array item.
@@ -397,7 +397,7 @@ interface SwitchDefault {
   otherwise: SchemaLike
 }
 
-interface WhenOptions {
+type WhenOptions = {
   /**
    * the required condition joi type.
    */
@@ -430,7 +430,7 @@ interface WhenOptions {
   break?: boolean
 }
 
-interface WhenSchemaOptions {
+type WhenSchemaOptions = {
   /**
    * the alternative schema type if the condition is true. Required if otherwise is missing.
    */
@@ -441,7 +441,7 @@ interface WhenSchemaOptions {
   otherwise?: SchemaLike
 }
 
-interface Cache {
+type Cache = {
   /**
    * Add an item to the cache.
    *
@@ -456,7 +456,7 @@ interface Cache {
    */
   get(key: any): any
 }
-interface CacheProvisionOptions {
+type CacheProvisionOptions = {
   /**
    * number of items to store in the cache before the least used items are dropped.
    *
@@ -465,14 +465,14 @@ interface CacheProvisionOptions {
   max: number
 }
 
-interface CacheConfiguration {
+type CacheConfiguration = {
   /**
    * Provisions a simple LRU cache for caching simple inputs (`undefined`, `null`, strings, numbers, and booleans).
    */
   provision(options?: CacheProvisionOptions): void
 }
 
-interface CompileOptions {
+type CompileOptions = {
   /**
    * If true and the provided schema is (or contains parts) using an older version of joi, will return a compiled schema that is compatible with the older version.
    * If false, the schema is always compiled using the current version and if older schema components are found, an error is thrown.
@@ -480,7 +480,7 @@ interface CompileOptions {
   legacy: boolean
 }
 
-interface IsSchemaOptions {
+type IsSchemaOptions = {
   /**
    * If true, will identify schemas from older versions of joi, otherwise will throw an error.
    *
@@ -489,7 +489,7 @@ interface IsSchemaOptions {
   legacy: boolean
 }
 
-interface ReferenceOptions extends HierarchySeparatorOptions {
+type ReferenceOptions = HierarchySeparatorOptions & {
   /**
    * a function with the signature `function(value)` where `value` is the resolved reference value and the return value is the adjusted value to use.
    * Note that the adjust feature will not perform any type validation on the adjusted value and it must match the value expected by the rule it is used in.
@@ -550,7 +550,7 @@ interface ReferenceOptions extends HierarchySeparatorOptions {
   iterables?: boolean
 }
 
-interface StringRegexOptions {
+type StringRegexOptions = {
   /**
    * optional pattern name.
    */
@@ -564,7 +564,7 @@ interface StringRegexOptions {
   invert?: boolean
 }
 
-interface RuleOptions {
+type RuleOptions = {
   /**
    * if true, the rules will not be replaced by the same unique rule later.
    *
@@ -588,7 +588,7 @@ interface RuleOptions {
   warn?: boolean
 }
 
-interface ErrorReport extends Error {
+type ErrorReport = Error & {
   code: string
   flags: Record<string, ExtensionFlag>
   path: string[]
@@ -598,7 +598,7 @@ interface ErrorReport extends Error {
   value: any
 }
 
-interface ValidationError extends Error {
+type ValidationError = Error & {
   name: "ValidationError"
 
   isJoi: boolean
@@ -620,7 +620,7 @@ interface ValidationError extends Error {
   _object: any
 }
 
-interface ValidationErrorItem {
+type ValidationErrorItem = {
   message: string
   path: Array<string | number>
   type: string
@@ -631,35 +631,35 @@ type ValidationErrorFunction = (
   errors: ErrorReport[]
 ) => string | ValidationErrorItem | Error
 
-interface ValidationResult {
+type ValidationResult = {
   error?: ValidationError
   errors?: ValidationError
   warning?: ValidationError
   value: any
 }
 
-interface CreateErrorOptions {
+type CreateErrorOptions = {
   flags?: boolean
   messages?: LanguageMessages
 }
 
-interface ModifyOptions {
+type ModifyOptions = {
   each?: boolean
   once?: boolean
   ref?: boolean
   schema?: boolean
 }
 
-interface MutateRegisterOptions {
+type MutateRegisterOptions = {
   family?: any
   key?: any
 }
 
-interface SetFlagOptions {
+type SetFlagOptions = {
   clone: boolean
 }
 
-interface CustomHelpers<V = any> {
+type CustomHelpers<V = any> = {
   schema: ExtensionBoundSchema
   state: State
   prefs: ValidationOptions
@@ -702,14 +702,14 @@ export type Schema =
 
 type SchemaFunction = (schema: Schema) => Schema
 
-interface AddRuleOptions {
+type AddRuleOptions = {
   name: string
   args?: {
     [key: string]: any
   }
 }
 
-interface GetRuleOptions {
+type GetRuleOptions = {
   args?: Record<string, any>
   method?: string
   name: string
@@ -746,7 +746,7 @@ interface SchemaInternals {
     context: Context,
     state: State,
     prefs: ValidationOptions,
-    options?: CreateErrorOptions
+    options?: CreateErrorOptions | undefined
   ): Err
 
   /**
@@ -821,7 +821,7 @@ interface AnySchema extends SchemaInternals {
    */
   ruleset: this
 
-  type?: Types | string
+  type?: Types | string | undefined
 
   /**
    * Whitelists a value
@@ -861,7 +861,7 @@ interface AnySchema extends SchemaInternals {
   /**
    * Adds a custom validation function.
    */
-  custom(fn: CustomValidator, description?: string): this
+  custom(fn: CustomValidator, description?: string | undefined): this
 
   /**
    * Sets a default value if the original value is `undefined` where:
@@ -884,6 +884,7 @@ interface AnySchema extends SchemaInternals {
       | BasicType
       | Reference
       | ((parent: any, helpers: CustomHelpers) => BasicType | Reference)
+      | undefined
   ): this
 
   /**
@@ -912,7 +913,7 @@ interface AnySchema extends SchemaInternals {
    * Considers anything that matches the schema to be empty (undefined).
    * @param schema - any object or joi schema to match. An undefined schema unsets that rule.
    */
-  empty(schema?: SchemaLike): this
+  empty(schema?: SchemaLike | undefined): this
 
   /**
    * Adds the provided values into the allowed whitelist and marks them as the only valid values allowed.
@@ -996,7 +997,7 @@ interface AnySchema extends SchemaInternals {
    * If no id is set, the schema id defaults to the object key it is associated with.
    * If the schema is used in an array or alternatives type and no id is set, the schema in unreachable.
    */
-  id(name?: string): this
+  id(name?: string | undefined): this
 
   /**
    * Disallows values.
@@ -1080,7 +1081,7 @@ interface AnySchema extends SchemaInternals {
   /**
    * Outputs the original untouched value instead of the casted value.
    */
-  raw(enabled?: boolean): this
+  raw(enabled?: boolean | undefined): this
 
   /**
    * Marks a key as required which will not allow undefined as value. All keys are optional by default.
@@ -1109,13 +1110,13 @@ interface AnySchema extends SchemaInternals {
   /**
    * Sets the options.convert options to false which prevent type casting for the current key and any child keys.
    */
-  strict(isStrict?: boolean): this
+  strict(isStrict?: boolean | undefined): this
 
   /**
    * Marks a key to be removed from a resulting object or array after validation. Used to sanitize output.
    * @param [enabled=true] - if true, the value is stripped, otherwise the validated value is retained. Defaults to true.
    */
-  strip(enabled?: boolean): this
+  strip(enabled?: boolean | undefined): this
 
   /**
    * Annotates the key
@@ -1140,12 +1141,12 @@ interface AnySchema extends SchemaInternals {
   /**
    * Validates a value using the schema and options.
    */
-  validate(value: any, options?: ValidationOptions): ValidationResult
+  validate(value: any, options?: ValidationOptions | undefined): ValidationResult
 
   /**
    * Validates a value using the schema and options.
    */
-  validateAsync(value: any, options?: AsyncValidationOptions): Promise<any>
+  validateAsync(value: any, options?: AsyncValidationOptions | undefined): Promise<any>
 
   /**
    * Same as `rule({ warn: true })`.
@@ -1160,7 +1161,7 @@ interface AnySchema extends SchemaInternals {
    * Warnings are reported separately from errors alongside the result value via the warning key (i.e. `{ value, warning }`).
    * Warning are always included when calling `any.validate()`.
    */
-  warning(code: string, context?: Context): this
+  warning(code: string, context?: Context | undefined): this
 
   /**
    * Converts the type into an alternatives type where the conditions are merged into the type definition where:
@@ -1173,36 +1174,36 @@ interface AnySchema extends SchemaInternals {
   when(ref: Schema, options: WhenSchemaOptions): this
 }
 
-interface Description {
-  type?: Types | string
-  label?: string
-  description?: string
-  flags?: object
-  notes?: string[]
-  tags?: string[]
-  meta?: any[]
-  example?: any[]
-  valids?: any[]
-  invalids?: any[]
-  unit?: string
-  options?: ValidationOptions
+type Description = {
+  type?: Types | string | undefined
+  label?: string | undefined
+  description?: string | undefined
+  flags?: object | undefined
+  notes?: string[] | undefined
+  tags?: string[] | undefined
+  meta?: any[] | undefined
+  example?: any[] | undefined
+  valids?: any[] | undefined
+  invalids?: any[] | undefined
+  unit?: string | undefined
+  options?: ValidationOptions | undefined
   [key: string]: any
 }
 
-interface Context {
+type Context = {
   [key: string]: any
-  key?: string
-  label?: string
-  value?: any
+  key?: string | undefined
+  label?: string | undefined
+  value?: any | undefined
 }
 
-interface State {
-  key?: string
+type State = {
+  key?: string | undefined
   path: Array<string | number>
-  parent?: any
-  reference?: any
-  ancestors?: any
-  localize?(...args: any[]): State
+  parent?: any | undefined
+  reference?: any | undefined
+  ancestors?: any | undefined
+  localize?: ((...args: any[]) => State) | undefined
 }
 
 interface BooleanSchema extends AnySchema {
@@ -1218,7 +1219,7 @@ interface BooleanSchema extends AnySchema {
    * Allows the values provided to truthy and falsy as well as the "true" and "false" default conversion
    * (when not in `strict()` mode) to be matched in a case insensitive manner.
    */
-  sensitive(enabled?: boolean): this
+  sensitive(enabled?: boolean | undefined): this
 
   /**
    * Allows for additional values to be considered valid booleans by converting them to true during validation.
@@ -1292,7 +1293,7 @@ interface NumberSchema extends AnySchema {
   /**
    * Allows the number to be outside of JavaScript's safety range (Number.MIN_SAFE_INTEGER & Number.MAX_SAFE_INTEGER).
    */
-  unsafe(enabled?: any): this
+  unsafe(enabled?: any | undefined): this
 }
 
 interface StringSchema extends AnySchema {
@@ -1319,27 +1320,27 @@ interface StringSchema extends AnySchema {
   /**
    * Requires the string value to be a valid data URI string.
    */
-  dataUri(options?: DataUriOptions): this
+  dataUri(options?: DataUriOptions | undefined): this
 
   /**
    * Requires the string value to be a valid domain.
    */
-  domain(options?: DomainOptions): this
+  domain(options?: DomainOptions | undefined): this
 
   /**
    * Requires the string value to be a valid email address.
    */
-  email(options?: EmailOptions): this
+  email(options?: EmailOptions | undefined): this
 
   /**
    * Requires the string value to be a valid GUID.
    */
-  guid(options?: GuidOptions): this
+  guid(options?: GuidOptions | undefined): this
 
   /**
    * Requires the string value to be a valid hexadecimal string.
    */
-  hex(options?: HexOptions): this
+  hex(options?: HexOptions | undefined): this
 
   /**
    * Requires the string value to be a valid hostname as per RFC1123.
@@ -1354,7 +1355,7 @@ interface StringSchema extends AnySchema {
   /**
    * Requires the string value to be a valid ip address.
    */
-  ip(options?: IpOptions): this
+  ip(options?: IpOptions | undefined): this
 
   /**
    * Requires the string value to be in valid ISO 8601 date format.
@@ -1371,7 +1372,7 @@ interface StringSchema extends AnySchema {
    * @param limit - the required string length. It can also be a reference to another field.
    * @param encoding - if specified, the string length is calculated in bytes using the provided encoding.
    */
-  length(limit: number | Reference, encoding?: string): this
+  length(limit: number | Reference, encoding?: string | undefined): this
 
   /**
    * Requires the string value to be all lowercase. If the validation convert option is on (enabled by default), the string will be forced to lowercase.
@@ -1383,20 +1384,20 @@ interface StringSchema extends AnySchema {
    * @param limit - the maximum number of string characters allowed. It can also be a reference to another field.
    * @param encoding - if specified, the string length is calculated in bytes using the provided encoding.
    */
-  max(limit: number | Reference, encoding?: string): this
+  max(limit: number | Reference, encoding?: string | undefined): this
 
   /**
    * Specifies the minimum number string characters.
    * @param limit - the minimum number of string characters required. It can also be a reference to another field.
    * @param encoding - if specified, the string length is calculated in bytes using the provided encoding.
    */
-  min(limit: number | Reference, encoding?: string): this
+  min(limit: number | Reference, encoding?: string | undefined): this
 
   /**
    * Requires the string value to be in a unicode normalized form. If the validation convert option is on (enabled by default), the string will be normalized.
    * @param [form='NFC'] - The unicode normalization form to use. Valid values: NFC [default], NFD, NFKC, NFKD
    */
-  normalize(form?: "NFC" | "NFD" | "NFKC" | "NFKD"): this
+  normalize(form?: "NFC" | "NFD" | "NFKC" | "NFKD" | undefined): this
 
   /**
    * Defines a regular expression rule.
@@ -1407,7 +1408,7 @@ interface StringSchema extends AnySchema {
    *     name - optional pattern name.
    *     invert - optional boolean flag. Defaults to false behavior. If specified as true, the provided pattern will be disallowed instead of required.
    */
-  pattern(pattern: RegExp, options?: string | StringRegexOptions): this
+  pattern(pattern: RegExp, options?: string | StringRegexOptions | undefined): this
 
   /**
    * Defines a regular expression rule.
@@ -1418,7 +1419,7 @@ interface StringSchema extends AnySchema {
    *     name - optional pattern name.
    *     invert - optional boolean flag. Defaults to false behavior. If specified as true, the provided pattern will be disallowed instead of required.
    */
-  regex(pattern: RegExp, options?: string | StringRegexOptions): this
+  regex(pattern: RegExp, options?: string | StringRegexOptions | undefined): this
 
   /**
    * Replace characters matching the given pattern with the specified replacement string where:
@@ -1436,13 +1437,13 @@ interface StringSchema extends AnySchema {
    * Requires the string value to contain no whitespace before or after. If the validation convert option is on (enabled by default), the string will be trimmed.
    * @param [enabled=true] - optional parameter defaulting to true which allows you to reset the behavior of trim by providing a falsy value.
    */
-  trim(enabled?: any): this
+  trim(enabled?: any | undefined): this
 
   /**
    * Specifies whether the string.max() limit should be used as a truncation.
    * @param [enabled=true] - optional parameter defaulting to true which allows you to reset the behavior of truncate by providing a falsy value.
    */
-  truncate(enabled?: boolean): this
+  truncate(enabled?: boolean | undefined): this
 
   /**
    * Requires the string value to be all uppercase. If the validation convert option is on (enabled by default), the string will be forced to uppercase.
@@ -1452,12 +1453,12 @@ interface StringSchema extends AnySchema {
   /**
    * Requires the string value to be a valid RFC 3986 URI.
    */
-  uri(options?: UriOptions): this
+  uri(options?: UriOptions | undefined): this
 
   /**
    * Requires the string value to be a valid GUID.
    */
-  uuid(options?: GuidOptions): this
+  uuid(options?: GuidOptions | undefined): this
 }
 
 interface SymbolSchema extends AnySchema {
@@ -1469,21 +1470,21 @@ interface SymbolSchema extends AnySchema {
   ): this
 }
 
-interface ArraySortOptions {
+type ArraySortOptions = {
   /**
    * @default 'ascending'
    */
-  order?: "ascending" | "descending"
-  by?: string | Reference
+  order?: "ascending" | "descending" | undefined
+  by?: string | Reference | undefined
 }
 
-interface ArrayUniqueOptions extends HierarchySeparatorOptions {
+type ArrayUniqueOptions = HierarchySeparatorOptions & {
   /**
    * if true, undefined values for the dot notation string comparator will not cause the array to fail on uniqueness.
    *
    * @default false
    */
-  ignoreUndefined?: boolean
+  ignoreUndefined?: boolean | undefined
 }
 
 type ComparatorFunction = (a: any, b: any) => boolean
@@ -1536,18 +1537,18 @@ interface ArraySchema extends AnySchema {
    * Allow single values to be checked against rules as if it were provided as an array.
    * enabled can be used with a falsy value to go back to the default behavior.
    */
-  single(enabled?: any): this
+  single(enabled?: any | undefined): this
 
   /**
    * Sorts the array by given order.
    */
-  sort(options?: ArraySortOptions): this
+  sort(options?: ArraySortOptions | undefined): this
 
   /**
    * Allow this array to be sparse.
    * enabled can be used with a falsy value to go back to the default behavior.
    */
-  sparse(enabled?: any): this
+  sparse(enabled?: any | undefined): this
 
   /**
    * Requires the array values to be unique.
@@ -1557,13 +1558,13 @@ interface ArraySchema extends AnySchema {
    * a performance penalty is to be expected for this kind of operation.
    */
   unique(
-    comparator?: string | ComparatorFunction,
-    options?: ArrayUniqueOptions
+    comparator?: string | ComparatorFunction | undefined,
+    options?: ArrayUniqueOptions | undefined
   ): this
 }
 
-interface ObjectPatternOptions {
-  fallthrough?: boolean
+type ObjectPatternOptions = {
+  fallthrough?: boolean | undefined
   matches: SchemaLike | Reference
 }
 
@@ -1578,12 +1579,12 @@ export interface ObjectSchema<TSchema = any> extends AnySchema {
   /**
    * Appends the allowed object keys. If schema is null, undefined, or {}, no changes will be applied.
    */
-  append(schema?: SchemaMap<TSchema>): this
+  append(schema?: SchemaMap<TSchema> | undefined): this
 
   /**
    * Verifies an assertion where.
    */
-  assert(ref: string | Reference, schema: SchemaLike, message?: string): this
+  assert(ref: string | Reference, schema: SchemaLike, message?: string | undefined): this
 
   /**
    * Requires the object to be an instance of a given constructor.
@@ -1592,12 +1593,12 @@ export interface ObjectSchema<TSchema = any> extends AnySchema {
    * @param name - an alternate name to use in validation errors. This is useful when the constructor function does not have a name.
    */
   // tslint:disable-next-line:ban-types
-  instance(constructor: Function, name?: string): this
+  instance(constructor: Function, name?: string | undefined): this
 
   /**
    * Sets or extends the allowed object keys.
    */
-  keys(schema?: SchemaMap<TSchema>): this
+  keys(schema?: SchemaMap<TSchema> | undefined): this
 
   /**
    * Specifies the exact number of keys in the object.
@@ -1644,7 +1645,7 @@ export interface ObjectSchema<TSchema = any> extends AnySchema {
   pattern(
     pattern: RegExp | SchemaLike,
     schema: SchemaLike,
-    options?: ObjectPatternOptions
+    options?: ObjectPatternOptions | undefined
   ): this
 
   /**
@@ -1660,17 +1661,17 @@ export interface ObjectSchema<TSchema = any> extends AnySchema {
   /**
    * Renames a key to another name (deletes the renamed key).
    */
-  rename(from: string | RegExp, to: string, options?: RenameOptions): this
+  rename(from: string | RegExp, to: string, options?: RenameOptions | undefined): this
 
   /**
    * Requires the object to be a Joi schema instance.
    */
-  schema(type?: SchemaLike): this
+  schema(type?: SchemaLike | undefined): this
 
   /**
    * Overrides the handling of unknown keys for the scope of the current object only (does not apply to children).
    */
-  unknown(allow?: boolean): this
+  unknown(allow?: boolean | undefined): this
 
   /**
    * Requires the presence of other keys whenever the specified key is present.
@@ -1678,7 +1679,7 @@ export interface ObjectSchema<TSchema = any> extends AnySchema {
   with(
     key: string,
     peers: string | string[],
-    options?: HierarchySeparatorOptions
+    options?: HierarchySeparatorOptions | undefined
   ): this
 
   /**
@@ -1687,7 +1688,7 @@ export interface ObjectSchema<TSchema = any> extends AnySchema {
   without(
     key: string,
     peers: string | string[],
-    options?: HierarchySeparatorOptions
+    options?: HierarchySeparatorOptions | undefined
   ): this
 
   /**
@@ -1762,7 +1763,7 @@ interface DateSchema extends AnySchema {
    * Requires the value to be a timestamp interval from Unix Time.
    * @param type - the type of timestamp (allowed values are unix or javascript [default])
    */
-  timestamp(type?: "javascript" | "unix"): this
+  timestamp(type?: "javascript" | "unix" | undefined): this
 }
 
 interface FunctionSchema extends ObjectSchema {
@@ -1823,7 +1824,7 @@ interface LinkSchema extends AnySchema {
   ref(ref: string): this
 }
 
-interface Reference extends Exclude<ReferenceOptions, "prefix"> {
+type Reference = Exclude<ReferenceOptions, "prefix"> & {
   depth: number
   type: string
   key: string
@@ -1835,105 +1836,105 @@ interface Reference extends Exclude<ReferenceOptions, "prefix"> {
 
 type ExtensionBoundSchema = Schema & SchemaInternals
 
-interface RuleArgs {
+type RuleArgs = {
   name: string
-  ref?: boolean
-  assert?: ((value: any) => boolean) | AnySchema
-  message?: string
+  ref?: boolean | undefined
+  assert?: ((value: any) => boolean) | AnySchema | undefined
+  message?: string | undefined
 
   /**
    * Undocumented properties
    */
-  normalize?(value: any): any
+  normalize?: ((value: any) => any) | undefined
 }
 
 type RuleMethod = (...args: any[]) => any
 
-interface ExtensionRule {
+type ExtensionRule = {
   /**
    * alternative name for this rule.
    */
-  alias?: string
+  alias?: string | undefined
   /**
    * whether rule supports multiple invocations.
    */
-  multi?: boolean
+  multi?: boolean | undefined
   /**
    * Dual rule: converts or validates.
    */
-  convert?: boolean
+  convert?: boolean | undefined
   /**
    * list of arguments accepted by `method`.
    */
-  args?: Array<RuleArgs | string>
+  args?: Array<RuleArgs | string> | undefined
   /**
    * rule body.
    */
-  method?: RuleMethod | false
+  method?: RuleMethod | false | undefined
   /**
    * validation function.
    */
-  validate?(
+  validate?: ((
     value: any,
     helpers: any,
     args: Record<string, any>,
     options: any
-  ): any
+  ) => any) | undefined
 
   /**
    * undocumented flags.
    */
-  priority?: boolean
-  manifest?: boolean
+  priority?: boolean | undefined
+  manifest?: boolean | undefined
 }
 
-interface CoerceResult {
-  errors?: ErrorReport[]
-  value?: any
+type CoerceResult = {
+  errors?: ErrorReport[] | undefined
+  value?: any | undefined
 }
 
 type CoerceFunction = (value: any, helpers: CustomHelpers) => CoerceResult
 
-interface CoerceObject {
+type CoerceObject = {
   method: CoerceFunction
-  from?: string | string[]
+  from?: string | string[] | undefined
 }
 
-interface ExtensionFlag {
-  setter?: string
-  default?: any
+type ExtensionFlag = {
+  setter?: string | undefined
+  default?: any | undefined
 }
 
-interface ExtensionTermManifest {
+type ExtensionTermManifest = {
   mapped: {
     from: string
     to: string
   }
 }
 
-interface ExtensionTerm {
+type ExtensionTerm = {
   init: any[] | null
-  register?: any
-  manifest?: Record<string, "schema" | "single" | ExtensionTermManifest>
+  register?: any | undefined
+  manifest?: Record<string, "schema" | "single" | ExtensionTermManifest> | undefined
 }
 
-interface Extension {
+type Extension = {
   type: string
-  args?(...args: SchemaLike[]): Schema
-  base?: Schema
-  coerce?: CoerceFunction | CoerceObject
-  flags?: Record<string, ExtensionFlag>
+  args?: ((...args: SchemaLike[]) => Schema) | undefined
+  base?: Schema | undefined
+  coerce?: CoerceFunction | CoerceObject | undefined
+  flags?: Record<string, ExtensionFlag> | undefined
   manifest?: {
-    build?(obj: ExtensionBoundSchema, desc: Record<string, any>): any
-  }
-  messages?: LanguageMessages | string
-  modifiers?: Record<string, (rule: any, enabled?: boolean) => any>
-  overrides?: Record<string, (value: any) => Schema>
-  prepare?(value: any, helpers: CustomHelpers): any
-  rebuild?(schema: ExtensionBoundSchema): void
-  rules?: Record<string, ExtensionRule & ThisType<SchemaInternals>>
-  terms?: Record<string, ExtensionTerm>
-  validate?(value: any, helpers: CustomHelpers): any
+    build: ((obj: ExtensionBoundSchema, desc: Record<string, any>) => any) | undefined
+  } | undefined
+  messages?: LanguageMessages | string | undefined
+  modifiers?: Record<string, (rule: any, enabled?: boolean) => any> | undefined
+  overrides?: Record<string, (value: any) => Schema> | undefined
+  prepare?: ((value: any, helpers: CustomHelpers) => any) | undefined
+  rebuild?: ((schema: ExtensionBoundSchema) => void) | undefined
+  rules?: Record<string, ExtensionRule & ThisType<SchemaInternals>> | undefined
+  terms?: Record<string, ExtensionTerm> | undefined
+  validate?: ((value: any, helpers: CustomHelpers) => any) | undefined
 
   /**
    * undocumented options
@@ -1941,19 +1942,19 @@ interface Extension {
   cast?: Record<
     string,
     { from(value: any): any; to(value: any, helpers: CustomHelpers): any }
-  >
-  properties?: Record<string, any>
+  > | undefined
+  properties?: Record<string, any> | undefined
 }
 
 type ExtensionFactory = (joi: PluginOptionsSchemaJoi) => Extension
 
-interface Err {
+type Err = {
   toString(): string
 }
 
 // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-export interface PluginOptionsSchemaJoi {
+export type PluginOptionsSchemaJoi = {
   /**
    * Current version of the joi package.
    */
@@ -2015,7 +2016,7 @@ export interface PluginOptionsSchemaJoi {
    */
   // tslint:disable-next-line:no-unnecessary-generics
   object<TSchema = any, T = TSchema>(
-    schema?: SchemaMap<T>
+    schema?: SchemaMap<T> | undefined
   ): ObjectSchema<TSchema>
 
   /**
@@ -2049,7 +2050,7 @@ export interface PluginOptionsSchemaJoi {
    * in absolute terms from the schema run-time root (`Joi.link('/a')`),
    * or using schema ids implicitly using object keys or explicitly using `any.id()` (`Joi.link('#a.b.c')`).
    */
-  link(ref?: string): LinkSchema
+  link(ref?: string | undefined): LinkSchema
 
   /**
    * Validates a value against a schema and throws if validation fails.
@@ -2058,12 +2059,12 @@ export interface PluginOptionsSchemaJoi {
    * @param schema - the schema object.
    * @param message - optional message string prefix added in front of the error message. may also be an Error object.
    */
-  assert(value: any, schema: Schema, options?: ValidationOptions): void
+  assert(value: any, schema: Schema, options?: ValidationOptions | undefined): void
   assert(
     value: any,
     schema: Schema,
     message: string | Error,
-    options?: ValidationOptions
+    options?: ValidationOptions | undefined
   ): void
 
   /**
@@ -2073,12 +2074,12 @@ export interface PluginOptionsSchemaJoi {
    * @param schema - the schema object.
    * @param message - optional message string prefix added in front of the error message. may also be an Error object.
    */
-  attempt(value: any, schema: Schema, options?: ValidationOptions): any
+  attempt(value: any, schema: Schema, options?: ValidationOptions | undefined): any
   attempt(
     value: any,
     schema: Schema,
     message: string | Error,
-    options?: ValidationOptions
+    options?: ValidationOptions | undefined
   ): any
 
   cache: CacheConfiguration
@@ -2086,7 +2087,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Converts literal schema definition to joi schema object (or returns the same back if already a joi schema object).
    */
-  compile(schema: SchemaLike, options?: CompileOptions): Schema
+  compile(schema: SchemaLike, options?: CompileOptions | undefined): Schema
 
   /**
    * Checks if the provided preferences are valid.
@@ -2101,7 +2102,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Creates a custom validation schema.
    */
-  custom(fn: CustomValidator, description?: string): Schema
+  custom(fn: CustomValidator, description?: string | undefined): Schema
 
   /**
    * Creates a new Joi instance that will apply defaults onto newly created schemas
@@ -2114,7 +2115,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Generates a dynamic expression using a template string.
    */
-  expression(template: string, options?: ReferenceOptions): any
+  expression(template: string, options?: ReferenceOptions | undefined): any
 
   /**
    * Creates a new Joi instance customized with the extension(s) you provide included.
@@ -2124,7 +2125,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Creates a reference that when resolved, is used as an array of values to match against the rule.
    */
-  in(ref: string, options?: ReferenceOptions): Reference
+  in(ref: string, options?: ReferenceOptions | undefined): Reference
 
   /**
    * Checks whether or not the provided argument is an instance of ValidationError
@@ -2144,7 +2145,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Checks whether or not the provided argument is a joi schema.
    */
-  isSchema(schema: any, options?: IsSchemaOptions): boolean
+  isSchema(schema: any, options?: IsSchemaOptions | undefined): boolean
 
   /**
    * A special value used with `any.allow()`, `any.invalid()`, and `any.valid()` as the first value to reset any previously set values.
@@ -2154,7 +2155,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Generates a reference to the value of the named key.
    */
-  ref(key: string, options?: ReferenceOptions): Reference
+  ref(key: string, options?: ReferenceOptions | undefined): Reference
 
   /**
    * Returns an object where each key is a plain joi schema type.
@@ -2179,7 +2180,7 @@ export interface PluginOptionsSchemaJoi {
   /**
    * Generates a dynamic expression using a template string.
    */
-  x(template: string, options?: ReferenceOptions): any
+  x(template: string, options?: ReferenceOptions | undefined): any
 
   // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
   // Below are undocumented APIs. use at your own risk

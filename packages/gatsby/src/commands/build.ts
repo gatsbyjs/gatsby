@@ -1,13 +1,16 @@
 import path from "path"
+// @ts-ignore
 import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
+// @ts-ignore
 import telemetry from "gatsby-telemetry"
 import {
   updateInternalSiteMetadata,
   isTruthy,
   uuid,
   cpuCoreCount,
+  // @ts-ignore
 } from "gatsby-core-utils"
 import {
   buildRenderer,
@@ -16,7 +19,7 @@ import {
 } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import { bootstrap } from "../bootstrap"
-import apiRunnerNode from "../utils/api-runner-node"
+import {apiRunnerNode} from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
@@ -36,7 +39,6 @@ import {
 } from "../utils/feedback"
 import { actions } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
-import { Stage } from "./types"
 import {
   calculateDirtyQueries,
   runStaticQueries,
@@ -59,6 +61,7 @@ import {
   copyStaticQueriesToEngine,
 } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
 import {
@@ -140,6 +143,7 @@ module.exports = async function build(
       parentSpan: buildSpan,
     })
 
+    // @ts-ignore
   await apiRunnerNode(`onPreBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
@@ -186,7 +190,7 @@ module.exports = async function build(
     }).assets as Array<webpack.StatsAsset>
     webpackCompilationHash = stats.hash as string
   } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
+    buildActivityTimer.panic(structureWebpackErrors('build-javascript', err))
   } finally {
     buildActivityTimer.end()
   }
@@ -230,7 +234,7 @@ module.exports = async function build(
   try {
     const { close, stats } = await buildRenderer(
       program,
-      Stage.BuildHTML,
+      'build-html',
       buildSSRBundleActivityProgress.span
     )
 
@@ -248,7 +252,7 @@ module.exports = async function build(
 
     await close()
   } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+    buildActivityTimer.panic(structureWebpackErrors('build-html', err))
   } finally {
     buildSSRBundleActivityProgress.end()
   }
@@ -267,7 +271,7 @@ module.exports = async function build(
       const { buildPartialHydrationRenderer } = await import(`./build-html`)
       const { close } = await buildPartialHydrationRenderer(
         program,
-        Stage.BuildHTML,
+        'build-html',
         buildPartialHydrationBundleActivityProgress.span
       )
 
@@ -275,7 +279,7 @@ module.exports = async function build(
 
       await close()
     } catch (err) {
-      buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+      buildActivityTimer.panic(structureWebpackErrors('build-html', err))
     } finally {
       buildPartialHydrationBundleActivityProgress.end()
     }

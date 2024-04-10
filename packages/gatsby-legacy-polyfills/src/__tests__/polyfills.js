@@ -17,7 +17,7 @@ describe(`polyfills`, () => {
     )
 
     await execa(
-      `yarn`,
+      `pnpm install`,
       [
         ...buildScript.split(` `),
         `--no-compress`,

@@ -27,7 +27,7 @@
     "clean": "gatsby clean"
   },
   "devDependencies": {
-    "execa": "^4.0.3",
+    "execa": "^8.0.1",
     "fs-extra": "^9.0.1",
     "gatsby-core-utils": "latest",
     "md5-file": "^5.0.0",

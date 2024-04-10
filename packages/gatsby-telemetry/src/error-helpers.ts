@@ -1,8 +1,8 @@
 import { sep } from "path"
 
-export interface IErrorWithStdErrAndStdOut {
-  stderr?: Buffer | string
-  stdout?: Buffer | string
+export type IErrorWithStdErrAndStdOut = {
+  stderr?: Buffer | string | undefined
+  stdout?: Buffer | string | undefined
   [key: string]: unknown
 }
 

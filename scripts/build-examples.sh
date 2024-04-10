@@ -2,15 +2,15 @@
 
 status=""
 
-yarn bootstrap && cd examples &&
+pnpm run bootstrap && cd examples &&
 
 for example in *; do
   if [ -d "$example" ]; then
     cd "$example" &&
-    rm -f yarn.lock &&
-    yarn &&
+    rm -f pnpm-lock.yaml &&
+    pnpm install &&
     gatsby-dev -s &&
-    yarn build &&
+    pnpm run build &&
     status="${status}[success] building $example"$'\n' ||
     status="${status}[failure] building $example"$'\n'
     cd ..

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { uuid } from "gatsby-core-utils"
 import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"

@@ -94,7 +94,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 1. **Initialize a new project.**
 
    ```shell
-   npm init gatsby
+   pnpm init gatsby
    ```
 
    Give it the name "My Gatsby Site".
@@ -105,7 +105,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    ```shell
    cd my-gatsby-site/
-   npm run develop
+   pnpm run develop
    ```
 
 3. **Open the source code and start editing!**

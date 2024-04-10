@@ -149,7 +149,7 @@ const run = async () => {
           `${chalk.red(
             `Stopping publish`
           )}: there are files that need to be cleared.\n\nIf this is a bug in check script and everything is fine, run:\n\n${chalk.green(
-            `yarn lerna publish`
+            `pnpm run lerna publish`
           )}\n\ndirectly to skip checks (and hopefully apply changes to clear-package-dir script to fix it).`
         )
         process.exit(1)

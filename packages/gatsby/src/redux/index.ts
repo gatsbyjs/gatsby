@@ -8,13 +8,14 @@ import {
   Store,
 } from "redux"
 import _ from "lodash"
+// @ts-ignore
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
 import * as rawReducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
-import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
+import type { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
 
 const persistedReduxKeys = [
   `nodes`,
@@ -107,11 +108,11 @@ export type GatsbyReduxStore = Store<IGatsbyState> & {
   dispatch: ThunkDispatch<IGatsbyState, any, ActionsUnion> & IMultiDispatch
 }
 
-export const configureStore = (
-  initialState: IGatsbyState
-): GatsbyReduxStore => {
+export function configureStore(initialState: IGatsbyState): GatsbyReduxStore {
+  // @ts-ignore
   const store = createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
+    // @ts-ignore
     initialState,
     applyMiddleware(thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>, multi)
   )
@@ -120,6 +121,7 @@ export const configureStore = (
     type: `INIT`,
   })
 
+  // @ts-ignore
   return store
 }
 

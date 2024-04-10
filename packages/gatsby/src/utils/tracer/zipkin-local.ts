@@ -1,7 +1,7 @@
 import zipkin from "zipkin"
 import { HttpLogger } from "zipkin-transport-http"
 import ZipkinTracer from "zipkin-javascript-opentracing"
-import fetch from "node-fetch"
+// import fetch from "node-fetch"
 import { ZipkinBatchRecorder, ZipkinHttpLogger } from "./zipkin-types"
 
 let logger: ZipkinHttpLogger
@@ -48,13 +48,19 @@ export const create = (): ZipkinTracer => {
 const _processQueue = async (): Promise<void> => {
   if (logger.queue.length > 0) {
     const postBody = `[${logger.queue.join(`,`)}]`
+    const controller = new AbortController()
+
     try {
       const response = await fetch(logger.endpoint, {
         method: `POST`,
         body: postBody,
         headers: logger.headers,
-        timeout: logger.timeout,
+        signal: controller.signal,
       })
+
+      setTimeout(() => {
+        controller.abort()
+      }, logger.timeout)
 
       if (response.status !== 202) {
         const err =

@@ -2,9 +2,8 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const execa = require(`execa`)
 const { spawn } = require(`child_process`)
-const fetch = require(`node-fetch`)
 
-jest.setTimeout(100000)
+jest.setTimeout(100_000)
 
 const fixtureRoot = path.resolve(__dirname, `fixtures`)
 const siteRoot = path.resolve(__dirname, `..`)
@@ -68,7 +67,7 @@ async function waitForServeReady(serveProcess, retries = 0) {
   let ready = false
 
   try {
-    const { ok } = await fetch(`http://localhost:9000/`)
+    const { ok } = await globalThis.fetch(`http://localhost:9000/`)
     ready = ok
   } catch (_) {
     // Do nothing

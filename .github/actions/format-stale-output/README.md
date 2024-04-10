@@ -60,4 +60,4 @@ jobs:
 
 ## Building this Action
 
-Use [`@vercel/ncc`](https://github.com/vercel/ncc) to compile this action. You can run `npm run build` in this directory to run the command.
+Use [`@vercel/ncc`](https://github.com/vercel/ncc) to compile this action. You can run `pnpm run build` in this directory to run the command.

@@ -36,14 +36,14 @@
   "license": "MIT",
   "main": "lib/index.js",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "files": [
     "lib/*.js"
   ],
   "scripts": {
-    "build": "",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "build": "echo done",
+    "prepare": "cross-env NODE_ENV=production pnpm run build",
     "watch": ""
   }
 }

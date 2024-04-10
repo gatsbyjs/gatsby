@@ -2,15 +2,17 @@
 import path from "path"
 import tmp from "tmp"
 import { ChildProcess } from "child_process"
-import execa from "execa"
+import { execaNode } from "execa"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import fs from "fs-extra"
-import onExit from "signal-exit"
+import { onExit } from "signal-exit"
 import { v4 } from "gatsby-core-utils/uuid"
 import { slash } from "gatsby-core-utils/path"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
 import { IProgram, IDebugInfo } from "./types"
+// @ts-ignore
 import { flush as telemetryFlush } from "gatsby-telemetry"
 
 // Adapted from https://stackoverflow.com/a/16060619
@@ -72,7 +74,7 @@ class ControllableScript {
       }
     }
 
-    this.process = execa.node(tmpFileName, args, {
+    this.process = execaNode(tmpFileName, args, {
       env: {
         ...process.env,
         GATSBY_NODE_GLOBALS: JSON.stringify(global.__GATSBY ?? {}),
@@ -323,7 +325,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 }
 
-interface IShutdownServicesOptions {
+type IShutdownServicesOptions = {
   developProcess: ControllableScript
 }
 

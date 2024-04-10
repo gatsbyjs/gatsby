@@ -1,9 +1,10 @@
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import _ from "lodash"
 import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
 import { join } from "path"
 import { emptyDir, ensureDir, outputJson } from "fs-extra"
-import execa, { Options as ExecaOptions } from "execa"
+import { execa, type Options as ExecaOptions } from "execa"
 import { version as gatsbyVersionFromPackageJson } from "gatsby/package.json"
 import { satisfies } from "semver"
 import type { AdapterInit } from "./types"

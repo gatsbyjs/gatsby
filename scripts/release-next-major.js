@@ -159,7 +159,7 @@ let currentGitHash = null
 
     console.log(` `)
     console.log(`=== BUILDING V${nextMajor} ALPHA ===`)
-    await promiseSpawn(`yarn`, [`bootstrap`], {
+    await promiseSpawn(`pnpm run`, [`bootstrap`], {
       shell: true,
       env: {
         ...process.env,
@@ -171,7 +171,7 @@ let currentGitHash = null
     try {
       await promiseSpawn(
         `git`,
-        [`commit`, `-am`, `Comitting yarn changes`, `--no-verify`],
+        [`commit`, `-am`, `Comitting pnpm changes`, `--no-verify`],
         {
           cwd: path.resolve(__dirname, `../`),
           stdio: [`inherit`, `inherit`, `inherit`],

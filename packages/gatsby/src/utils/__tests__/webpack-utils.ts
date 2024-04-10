@@ -1,6 +1,6 @@
 import * as os from "os"
 import { createWebpackUtils } from "../webpack-utils"
-import { Stage, IProgram } from "../../commands/types"
+import { IProgram } from "../../commands/types"
 
 import autoprefixer from "autoprefixer"
 
@@ -28,7 +28,7 @@ jest.mock(`autoprefixer`, () =>
 let config
 
 beforeAll(() => {
-  config = createWebpackUtils(Stage.Develop, {
+  config = createWebpackUtils('develop', {
     directory: `${os.tmpdir()}/test`,
   } as IProgram)
 })
@@ -41,6 +41,7 @@ describe(`webpack utils`, () => {
     it(`uses the babel loader`, () => {
       const rule = config.rules.js([])
       const { loader } = rule.use({ issuer: `` })[0]
+      // @ts-ignore
       expect(loader).toInclude(`babel-loader`)
     })
     it(`has default options`, () => {
@@ -53,6 +54,7 @@ describe(`webpack utils`, () => {
       const { options } = rule.use({
         issuer: `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/_this_is_virtual_fs_path_/async-requires.js`,
       })[0]
+      // @ts-ignore
       expect(options.isPageTemplate).toBeTrue()
     })
     describe(`include function`, () => {

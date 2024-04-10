@@ -8,18 +8,21 @@ import { createHandler as createGraphqlEndpointHandler } from "graphql-http/lib/
 import type { OperationContext } from "graphql-http"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { FragmentDefinitionNode, GraphQLError, Kind } from "graphql"
+// @ts-ignore
 import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
 import cors from "cors"
+// @ts-ignore
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
 import * as fs from "fs-extra"
 
 import { withBasePath } from "../utils/path"
-import webpackConfig from "../utils/webpack.config"
+import {webpackConfig} from "../utils/webpack.config"
 import { store, emitter } from "../redux"
+// @ts-ignore
 import report from "gatsby-cli/lib/reporter"
 import * as WorkerPool from "../utils/worker/pool"
 
@@ -33,10 +36,10 @@ import {
 } from "./page-data"
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
-import apiRunnerNode from "../utils/api-runner-node"
+import {apiRunnerNode} from "../utils/api-runner-node"
 import * as path from "path"
 
-import { Stage, IProgram } from "../commands/types"
+import { IProgram } from "../commands/types"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 import { appendPreloadHeaders } from "./develop-preload-headers"
 import {
@@ -49,6 +52,7 @@ import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
 import { configureTrailingSlash } from "./express-middlewares"
 import type { Express } from "express"
+// @ts-ignore
 import { addImageRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 import { isFileInsideCompilations } from "./webpack/utils/is-file-inside-compilations"
 
@@ -97,7 +101,7 @@ export async function startServer(
     try {
       const { rendererPath, close } = await buildRenderer(
         program,
-        Stage.DevelopHTML,
+        'develop-html',
         activity.span
       )
       await doBuildPages(
@@ -105,7 +109,7 @@ export async function startServer(
         [`/`],
         activity,
         workerPool,
-        Stage.DevelopHTML
+        'develop-html'
       )
       // close the compiler
       await close()
@@ -128,7 +132,7 @@ export async function startServer(
   let pageRenderer: string
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const { buildRenderer } = require(`../commands/build-html`)
-    pageRenderer = (await buildRenderer(program, Stage.DevelopHTML))
+    pageRenderer = (await buildRenderer(program, 'develop-html'))
       .rendererPath
     const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
     initDevWorkerPool()
@@ -143,7 +147,7 @@ export async function startServer(
   const devConfig = await webpackConfig(
     program,
     directory,
-    Stage.Develop,
+    'develop',
     program.port,
     {
       parentSpan: webpackActivity.span,
@@ -276,7 +280,7 @@ export async function startServer(
   addImageRoutes(app, store)
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-    publicPath: devConfig.output.publicPath,
+    publicPath: devConfig.output?.publicPath,
     stats: `errors-only`,
     serverSideRender: true,
   })
@@ -645,6 +649,7 @@ export async function startServer(
     }, cors())
   }
 
+  // @ts-ignore
   await apiRunnerNode(`onCreateDevServer`, { app, deferNodeMutation: true })
 
   // In case nothing before handled hot-update - send 404.

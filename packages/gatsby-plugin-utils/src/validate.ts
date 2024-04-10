@@ -45,5 +45,5 @@ export async function validateOptionsSchema(
     ...validationOptions,
     externals: validateExternalRules,
     warnings: returnWarnings,
-  })) as Promise<IValidateAsyncResult>
+  })) satisfies Promise<IValidateAsyncResult>
 }

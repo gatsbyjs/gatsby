@@ -99,6 +99,10 @@ const getDetailedMessage = () => {
 
     if (packagesToUpdate.length > 0) {
       msg = msg.concat([
+        '',
+        `If you are using pnpm, run:`,
+        ``,
+        `pnpm add ${packagesToUpdate.join(` `)}`,
         ``,
         `If you are using npm, run:`,
         ``,
@@ -133,6 +137,7 @@ const handleMessage = msg => {
         `To get a list of installed packages that depend on "sharp" try running:`,
         ` - npm list sharp (if you use npm)`,
         ` - yarn why sharp (if you use yarn)`,
+        ` - pnpm why sharp (if you use pnpm)`,
         ` and update packages that depend on version older than latest listed in output of above command.`,
       ])
     } else {

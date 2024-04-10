@@ -18,7 +18,7 @@ export class Store {
     this.baseDir = baseDir
   }
 
-  appendToBuffer(event: unknown): void {
+  appendToBuffer(event: string | Uint8Array): void {
     try {
       appendFileSync(this.bufferFilePath, event, `utf8`)
     } catch (e) {

@@ -53,7 +53,7 @@ async function build(dockerExec) {
   // so we don't have to fix it right now
 
   while(code === 139) {
-    try {    
+    try {
       console.log(` - clearing cache`)
       await dockerExec(`rm -rf .cache`)
 
@@ -61,10 +61,10 @@ async function build(dockerExec) {
 
       start = Date.now()
       const { err  } = await dockerExec(
-        `yarn gatsby build`, 
+        `pnpm run gatsby build`,
         {
-          BUILD_NUM_NODES: args.numNodes, 
-          BUILD_STRING_NODE_SIZE: args.nodeSize, 
+          BUILD_NUM_NODES: args.numNodes,
+          BUILD_STRING_NODE_SIZE: args.nodeSize,
           NUM_KEYS_IN_LARGE_SIZE_OBJ: 1,
         }
       )
@@ -98,10 +98,10 @@ async function develop(dockerExec) {
 
     start = Date.now()
     const process = dockerExec(
-      `yarn gatsby develop -H 0.0.0.0 -p 9000`, 
+      `pnpm run gatsby develop -H 0.0.0.0 -p 9000`,
       {
-        BUILD_NUM_NODES: args.numNodes, 
-        BUILD_STRING_NODE_SIZE: args.nodeSize, 
+        BUILD_NUM_NODES: args.numNodes,
+        BUILD_STRING_NODE_SIZE: args.nodeSize,
         NUM_KEYS_IN_LARGE_SIZE_OBJ: 1
       },
       false
@@ -168,7 +168,7 @@ async function runTest() {
   let {code, time} = await command(dockerExec)
 
   console.log(`Finished test in ${time}s`)
-  
+
   if (code) {
     console.log(`\nFailed with code ${code}\n`)
   } else {

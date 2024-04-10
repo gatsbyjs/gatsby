@@ -8,7 +8,7 @@ The site can generate an arbitrary amount of super simple pages. Each page has a
 
 ## Install
 
-Run `yarn` or `npm install`
+Run `yarn` or `pnpm install`
 
 ## Usage
 

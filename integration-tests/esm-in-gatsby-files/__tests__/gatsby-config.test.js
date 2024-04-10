@@ -1,8 +1,8 @@
 import path from "path"
 import fs from "fs-extra"
-import execa from "execa"
+import { execa } from "execa"
 
-jest.setTimeout(100000)
+jest.setTimeout(100_000)
 
 const fixtureRoot = path.resolve(__dirname, `fixtures`)
 const siteRoot = path.resolve(__dirname, `..`)

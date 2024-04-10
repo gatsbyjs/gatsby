@@ -9,10 +9,12 @@ import {
   IGatsbyStaticQueryComponents,
   IGatsbyIncompleteJobV2,
   IGatsbyCompleteJobV2,
+  GatsbyNodeAPI,
 } from "../../../../redux/types"
 import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
-import apiRunner from "../../../api-runner-node"
+import {apiRunnerNode} from "../../../api-runner-node"
 import withResolverContext from "../../../../schema/context"
 
 // re-export all usual methods from production worker
@@ -94,8 +96,8 @@ export async function progress(message: string): Promise<void> {
 }
 
 // test: config
-export async function runAPI(apiName: string): Promise<any> {
-  return await apiRunner(apiName)
+export async function runAPI(apiName: GatsbyNodeAPI): Promise<any> {
+  return await apiRunnerNode(apiName)
 }
 
 // test: config

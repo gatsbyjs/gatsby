@@ -26,12 +26,12 @@ for folder in $GLOB; do
   echo "Validating $folder"
   echo ""
 
-  npm ci --legacy-peer-deps || exit 1
+  pnpm ci --legacy-peer-deps || exit 1
 
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&
-  yarn &&
-  npm run build ||
+  pnpm install &&
+  pnpm run build ||
   exit 1
 
   cd "$BASE" || exit

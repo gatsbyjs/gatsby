@@ -43,13 +43,13 @@
     "directory": "packages/gatsby-core-utils"
   },
   "scripts": {
-    "prebuild": "npm-run-all --npm-path npm clean",
-    "build": "npm-run-all --npm-path npm -s build:*",
+    "prebuild": "npm-run-all --npm-path pnpm clean",
+    "build": "npm-run-all --npm-path pnpm -s build:*",
     "build:cjs": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
     "build:mjs": "cross-env BABEL_ENV=modern babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\" --out-file-extension .mjs",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "prepare": "cross-env NODE_ENV=production npm-run-all --npm-path npm -s build typegen",
-    "watch": "npm-run-all --npm-path npm -p watch:*",
+    "prepare": "cross-env NODE_ENV=production npm-run-all --npm-path pnpm -s build typegen",
+    "watch": "npm-run-all --npm-path pnpm -p watch:*",
     "watch:cjs": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
     "watch:mjs": "cross-env BABEL_ENV=modern babel -w src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\" --out-file-extension .mjs",
     "clean": "del-cli dist/*"
@@ -79,18 +79,18 @@
     "xdg-basedir": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
-    "@types/ci-info": "2.0.0",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@types/ci-info": "3.1.0",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
-    "del-cli": "^5.0.0",
+    "del-cli": "^5.1.0",
     "is-uuid": "^1.0.2",
-    "msw": "^1.2.2",
+    "msw": "^2.2.13",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.1.6"
+    "typescript": "5.4.4"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }

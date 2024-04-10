@@ -2,7 +2,7 @@ import semverMaxSatisfying from "semver/ranges/max-satisfying"
 
 import { getAdapterInit, getAdaptersCacheDir } from "../init"
 import { AdapterInit, IAdapter, IAdapterManifestEntry } from "../types"
-import execa from "execa"
+import { execa } from "execa"
 
 let mockAdaptersManifest: Array<IAdapterManifestEntry> = []
 
@@ -203,6 +203,7 @@ describe(`getAdapterInit`, () => {
 
   describe(`matching adapter module for current environment`, () => {
     beforeEach(() => {
+      // @ts-ignore
       execa.mockClear()
       mockInstalledInSiteAdapter = undefined
       mockInstalledInCacheAdapter = undefined
@@ -322,6 +323,7 @@ describe(`getAdapterInit`, () => {
     })
 
     it(`panics if automatic installation of correct version of adapter fails`, async () => {
+      // @ts-ignore
       execa.mockImplementationOnce(() => {
         throw new Error(`npm install failed`)
       })

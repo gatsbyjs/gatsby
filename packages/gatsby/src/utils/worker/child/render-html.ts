@@ -3,7 +3,9 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
+// @ts-ignore
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
+// @ts-ignore
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 
 import {

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false
+  },
+  "include": ["src/**/*.ts", "src/__tests__/gatsby-node.js", "src/gatsby-ssr.tsx"],
+  "exclude": [
+    "node_modules",
+    "src/__tests__",
+    "src/__mocks__",
+    "dist",
+    "./node.d.ts"
+  ]
+}

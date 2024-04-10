@@ -140,7 +140,7 @@ function buildHeaderString(path, headers): string {
 
 export function processRoutesManifest(
   routesManifest: RoutesManifest,
-  headerRoutes: HeaderRoutes
+  headerRoutes?: HeaderRoutes | undefined
 ): {
   redirects: string
   headers: string

@@ -2,16 +2,16 @@ image:
   file: .gitpod.Dockerfile
 tasks:
   - init: >
-      yarn run bootstrap &&
+      pnpm run bootstrap &&
       cd ./examples/using-typescript &&
-      yarn install &&
+      pnpm install &&
       gatsby-dev --set-path-to-repo ../.. &&
       gatsby-dev --scan-once &&
       npx gatsby build &&
       cd ../.. &&
       touch /tmp/done.txt
     command: >
-      yarn run watch --scope={gatsby,gatsby-link}
+      pnpm run watch --scope={gatsby,gatsby-link}
   - openMode: split-right
     before: >
       cd ./examples/using-typescript

@@ -34,7 +34,7 @@ describe(`SSR`, () => {
   }, 30000)
 
   test(`dev & build outputs match`, async () => {
-    const childProcess = await execa(`yarn`, [`test-output`])
+    const childProcess = await execa(`pnpm run`, [`test-output`])
 
     expect(childProcess.exitCode).toEqual(0)
 

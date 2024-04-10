@@ -9,8 +9,8 @@ The standard interface for running a benchmark is:
 ```shell
 cd {benchmark directory}
 export NUM_PAGES={n}
-npm install
-npm run build / gatsby build
+pnpm install
+pnpm run build / gatsby build
 ```
 
 If a specific benchmark needs to perform some code generation (e.g. `markdown_id`),
@@ -20,5 +20,5 @@ Any `postinstall` script must ensure that previous benchmark runs do not interfe
 For example:
 
 ```text
-"postinstall": "del-cli ./generated && gatsby clean && npm run generate"
+"postinstall": "del-cli ./generated && gatsby clean && pnpm run generate"
 ```

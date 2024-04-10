@@ -1,10 +1,10 @@
-import boxen from "boxen"
+import boxen, { type Options } from "boxen"
 
 const defaultConfig = {
   padding: 1,
   borderColor: `blue`,
   borderStyle: `double`,
-} as boxen.Options
+} satisfies Options
 
 const defaultMessage =
   `Gatsby collects anonymous usage analytics\n` +
@@ -17,7 +17,7 @@ const defaultMessage =
  * Analytics notice for the end-user
  */
 export function showAnalyticsNotification(
-  config: boxen.Options = defaultConfig,
+  config: Options = defaultConfig,
   message: string = defaultMessage
 ): void {
   console.log(boxen(message, config))

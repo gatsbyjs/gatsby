@@ -72,7 +72,7 @@ async function watch(
 
       // When the gatsby binary is copied over, it is not setup with the executable
       // permissions that it is given when installed via yarn.
-      // This fixes the issue where after running gatsby-dev, running `yarn gatsby develop`
+      // This fixes the issue where after running gatsby-dev, running `pnpm run gatsby develop`
       // fails with a permission issue.
       // @fixes https://github.com/gatsbyjs/gatsby/issues/18809
       // Binary files we target:
@@ -162,11 +162,11 @@ async function watch(
           packageManager,
         })
       } else {
-        // run `yarn`
-        const yarnInstallCmd = [`yarn`]
+        // run `pnpm install`
+        const pnpmInstallCmd = [`pnpm install`]
 
         console.log(`Installing packages from public NPM registry`)
-        await promisifiedSpawn(yarnInstallCmd)
+        await promisifiedSpawn(pnpmInstallCmd)
         console.log(`Installation complete`)
       }
     } catch (e) {
@@ -351,11 +351,11 @@ async function watch(
           packagesToPublish.clear()
           isPublishing = false
         } else if (anyPackageNotInstalled) {
-          // run `yarn`
-          const yarnInstallCmd = [`yarn`]
+          // run `pnpm install`
+          const pnpmInstallCmd = [`pnpm install`]
 
           console.log(`Installing packages from public NPM registry`)
-          await promisifiedSpawn(yarnInstallCmd)
+          await promisifiedSpawn(pnpmInstallCmd)
           console.log(`Installation complete`)
         }
 

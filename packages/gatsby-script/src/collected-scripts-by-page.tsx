@@ -1,4 +1,4 @@
-import { ScriptProps } from "./gatsby-script"
+import type { ScriptProps } from "./gatsby-script"
 
 const _collectedScriptsByPage = new Map()
 

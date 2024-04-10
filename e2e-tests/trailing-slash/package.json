@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "author": "LekoArts",
   "dependencies": {
-    "cypress": "^12.16.0",
+    "cypress": "12.16.0",
     "gatsby": "next",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "license": "MIT",
   "scripts": {
@@ -26,17 +26,17 @@
     "build:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby build",
     "t:opt:develop": "cross-env-shell OPTION=$OPTION start-server-and-test develop:option http://localhost:8000 cy:develop:option",
     "t:opt:build": "cross-env-shell OPTION=$OPTION TRAILING_SLASH=$OPTION start-server-and-test serve http://localhost:9000 cy:build:option",
-    "test:always": "cross-env OPTION=always npm run build:option && cross-env OPTION=always npm run t:opt:build && npm run clean && cross-env OPTION=always npm run t:opt:develop",
-    "test:never": "cross-env OPTION=never npm run build:option && cross-env OPTION=never npm run t:opt:build && npm run clean && cross-env OPTION=never npm run t:opt:develop",
-    "test:ignore": "cross-env OPTION=ignore npm run build:option && cross-env OPTION=ignore npm run t:opt:build && npm run clean && cross-env OPTION=ignore npm run t:opt:develop",
+    "test:always": "cross-env OPTION=always pnpm run build:option && cross-env OPTION=always pnpm run t:opt:build && pnpm run clean && cross-env OPTION=always pnpm run t:opt:develop",
+    "test:never": "cross-env OPTION=never pnpm run build:option && cross-env OPTION=never pnpm run t:opt:build && pnpm run clean && cross-env OPTION=never pnpm run t:opt:develop",
+    "test:ignore": "cross-env OPTION=ignore pnpm run build:option && cross-env OPTION=ignore pnpm run t:opt:build && pnpm run clean && cross-env OPTION=ignore pnpm run t:opt:develop",
     "test": "npm-run-all -c -s test:always test:never test:ignore"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
+    "cross-env": "7.0.3",
     "gatsby-cypress": "next",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.8",
-    "start-server-and-test": "^2.0.3",
-    "typescript": "^5.3.3"
+    "npm-run-all": "4.1.5",
+    "prettier": "2.8.8",
+    "start-server-and-test": "2.0.3",
+    "typescript": "5.4.4"
   }
 }

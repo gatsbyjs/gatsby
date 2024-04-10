@@ -1,6 +1,8 @@
 import Bluebird from "bluebird"
 import fs from "fs-extra"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
+// @ts-ignore
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk } from "lodash"
 import { build, watch } from "../utils/webpack/bundle"
@@ -9,12 +11,12 @@ import fastq from "fastq"
 
 import { emitter, store } from "../redux"
 import webpack from "webpack"
-import webpackConfig from "../utils/webpack.config"
+import {webpackConfig} from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
 import { getPageData } from "../utils/get-page-data"
 
-import { Span } from "opentracing"
+import { Span, SpanContext } from "opentracing"
 import { IProgram, Stage } from "./types"
 import { ROUTES_DIRECTORY } from "../constants"
 import { PackageJson } from "../.."
@@ -32,7 +34,7 @@ type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
-export interface IBuildArgs extends IProgram {
+export type IBuildArgs = IProgram & {
   directory: string
   sitePackageJson: PackageJson
   prefixPaths: boolean
@@ -46,7 +48,7 @@ export interface IBuildArgs extends IProgram {
   keepPageRenderer: boolean
 }
 
-interface IBuildRendererResult {
+export type IBuildRendererResult = {
   rendererPath: string
   stats: webpack.Stats
   close: ReturnType<typeof watch>["close"]
@@ -66,32 +68,34 @@ export function devSSRWillInvalidate(): void {
 
 let activeRecompilations = 0
 
-export const getDevSSRWebpack = (): {
+export function getDevSSRWebpack(): {
   recompileAndResumeWatching: (
     allowTimedFallback: boolean
   ) => Promise<() => void>
   needToRecompileSSRBundle: boolean
-} => {
+} {
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
 
-  const watcher = devssrWebpackCompiler as webpack.Watching
-  const compiler = (devssrWebpackCompiler as webpack.Watching).compiler
-  if (watcher && compiler) {
+  const watcher = devssrWebpackCompiler
+  const compiler = devssrWebpackCompiler?.compiler
+
+  if (typeof watcher !== 'undefined' && typeof compiler !== 'undefined') {
     return {
-      recompileAndResumeWatching: async function recompileAndResumeWatching(
-        allowTimedFallback: boolean
-      ): Promise<() => void> {
+      async recompileAndResumeWatching(allowTimedFallback: boolean): Promise<() => void> {
         let isResolved = false
+
         return await new Promise<() => void>(resolve => {
           function stopWatching(): void {
             activeRecompilations--
             if (activeRecompilations === 0) {
-              watcher.suspend()
+              watcher?.suspend()
             }
           }
-          let timeout
+
+          let timeout: NodeJS.Timeout | undefined
+
           function finish(): void {
             emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
             if (!isResolved) {
@@ -112,7 +116,7 @@ export const getDevSSRWebpack = (): {
 
           if (allowTimedFallback) {
             // Timeout after 1.5s.
-            timeout = setTimeout(() => {
+            timeout = globalThis.setTimeout(() => {
               if (!isResolved) {
                 isResolved = true
                 resolve(stopWatching)
@@ -121,14 +125,12 @@ export const getDevSSRWebpack = (): {
           }
         })
       },
-      needToRecompileSSRBundle:
-        SSRBundleReceivedInvalidEvent || SSRBundleWillInvalidate,
+      needToRecompileSSRBundle: SSRBundleReceivedInvalidEvent || SSRBundleWillInvalidate,
     }
   } else {
     return {
       needToRecompileSSRBundle: false,
-      recompileAndResumeWatching: (): Promise<() => void> =>
-        Promise.resolve((): void => {}),
+      recompileAndResumeWatching: (): Promise<() => void> => Promise.resolve((): void => { }),
     }
   }
 }
@@ -213,6 +215,7 @@ const doBuildRenderer = async (
   stage: Stage
 ): Promise<IBuildRendererResult> => {
   const { stats, close } = await runWebpack(webpackConfig, stage, directory)
+
   if (stats?.hasErrors()) {
     reporter.panicOnBuild(
       structureWebpackErrors(stage, stats.compilation.errors)
@@ -254,11 +257,12 @@ const doBuildPartialHydrationRenderer = async (
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
-  parentSpan?: IActivity
+  parentSpan?: Span | SpanContext | undefined,
+  nonce?: string | undefined
 ): Promise<IBuildRendererResult> => {
-  const config = await webpackConfig(program, program.directory, stage, null, {
+  const config = await webpackConfig(program, program.directory, stage, undefined, {
     parentSpan,
-  })
+  }, nonce)
 
   return doBuildRenderer(program.directory, config, stage)
 }
@@ -266,20 +270,29 @@ export const buildRenderer = async (
 export const buildPartialHydrationRenderer = async (
   program: IProgram,
   stage: Stage,
-  parentSpan?: IActivity
+  parentSpan?: IActivity | undefined,
+  nonce?: string | undefined
 ): Promise<IBuildRendererResult> => {
-  const config = await webpackConfig(program, program.directory, stage, null, {
+  const config = await webpackConfig(program, program.directory, stage, undefined, {
     parentSpan,
-  })
+  }, nonce)
 
-  for (const rule of config.module.rules) {
-    if (`./test.js`.match(rule.test)) {
-      if (!rule.use) {
+  for (const rule of config.module?.rules ?? []) {
+    // @ts-ignore
+    if (`./test.js`.match(rule?.test)) {
+      // @ts-ignore
+      if (rule && !rule.use) {
+        // @ts-ignore
         rule.use = []
       }
-      if (!Array.isArray(rule.use)) {
+
+      // @ts-ignore
+      if (!Array.isArray(rule?.use)) {
+        // @ts-ignore
         rule.use = [rule.use]
       }
+
+      // @ts-ignore
       rule.use.push({
         loader: require.resolve(
           `../utils/webpack/loaders/partial-hydration-reference-loader`
@@ -291,6 +304,7 @@ export const buildPartialHydrationRenderer = async (
   // TODO add caching
   config.cache = false
 
+  // @ts-ignore
   config.output.path = path.join(
     program.directory,
     `.cache`,
@@ -301,6 +315,7 @@ export const buildPartialHydrationRenderer = async (
   // Instead of failing it'll be ignored
   try {
     // TODO collect javascript aliases to match the partial hydration bundle
+    // @ts-ignore
     config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
       `gatsby-plugin-image/dist/gatsby-image.browser.modern`
     )
@@ -320,7 +335,7 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
     // This function will fail on Windows with no further consequences.
   }
 }
-export interface IRenderHtmlResult {
+export type IRenderHtmlResult = {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
   previewErrors: Record<string, any>
 
@@ -342,7 +357,7 @@ const renderHTMLQueue = async (
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: Array<string>,
-  stage: Stage = Stage.BuildHTML
+  stage: Stage = 'build-html'
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -646,7 +661,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         toRegenerate,
         buildHTMLActivityProgress,
         workerPool,
-        Stage.BuildHTML
+        'build-html'
       )
     } catch (err) {
       let id = `95313`

@@ -1,5 +1,5 @@
 import * as fs from "fs-extra"
-import execa from "execa"
+import { execa } from "execa"
 import _ from "lodash"
 import {
   readConfigFile,
@@ -88,7 +88,7 @@ export const GatsbyPluginCreate = async ({
 }
 
 const packageMangerConfigKey = `cli.packageManager`
-const PACKAGE_MANAGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
+const PACKAGE_MANAGER = getConfigStore().get(packageMangerConfigKey) || `pnpm`
 
 const getPackageNames = (
   packages: Array<{ name: string; version: string }>
@@ -104,7 +104,15 @@ const generateClientCommands = ({
   packageNames: Array<string>
 }): Array<string> | undefined => {
   const commands: Array<string> = []
-  if (packageManager === `yarn`) {
+  if (packageManager === `pnpm`) {
+    commands.push(`add`)
+
+    if (depType === `development`) {
+      commands.push(`-D`)
+    }
+
+    return commands.concat(packageNames)
+  } else if (packageManager === `yarn`) {
     commands.push(`add`)
     // Needed for Yarn Workspaces and is a no-opt elsewhere.
     commands.push(`-W`)

@@ -11,12 +11,12 @@ describe(`testPluginOptionsSchema`, () => {
       })
     const expectedErrors = [`"toVerify" must be a boolean`]
 
-    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
+    const optionsSchema = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
     })
 
-    expect(isValid).toBe(false)
-    expect(errors).toEqual(expectedErrors)
+    expect(optionsSchema?.isValid).toBe(false)
+    expect(optionsSchema?.errors).toEqual(expectedErrors)
   })
 
   it(`should partially validate multiples value of a schema`, async () => {
@@ -31,13 +31,13 @@ describe(`testPluginOptionsSchema`, () => {
       `"toVerify" must be a boolean`,
     ]
 
-    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
+    const optionsSchema = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
       nb: `invalid value`,
     })
 
-    expect(isValid).toBe(false)
-    expect(errors).toEqual(expectedErrors)
+    expect(optionsSchema?.isValid).toBe(false)
+    expect(optionsSchema?.errors).toEqual(expectedErrors)
   })
 
   it(`should validate half of a real world plugin schema`, async () => {
@@ -90,7 +90,7 @@ describe(`testPluginOptionsSchema`, () => {
       `"exclude[2]" must be a string`,
     ]
 
-    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
+    const optionsSchema = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
       head: `invalid boolean value`,
       anonymize: `invalid boolean value`,
@@ -98,8 +98,8 @@ describe(`testPluginOptionsSchema`, () => {
       exclude: [0, 1, 2],
     })
 
-    expect(isValid).toBe(false)
-    expect(errors).toEqual(expectedErrors)
+    expect(optionsSchema?.isValid).toBe(false)
+    expect(optionsSchema?.errors).toEqual(expectedErrors)
   })
 
   it(`should validate an entire real world plugin schema`, async () => {
@@ -160,7 +160,7 @@ describe(`testPluginOptionsSchema`, () => {
       `"cookieDomain" must be a string`,
     ]
 
-    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
+    const optionsSchema = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
       head: `invalid boolean value`,
       anonymize: `invalid boolean value`,
@@ -176,8 +176,8 @@ describe(`testPluginOptionsSchema`, () => {
       cookieDomain: 9797,
     })
 
-    expect(isValid).toBe(false)
-    expect(errors).toEqual(expectedErrors)
+    expect(optionsSchema?.isValid).toBe(false)
+    expect(optionsSchema?.errors).toEqual(expectedErrors)
   })
 
   it(`should check the validity of a schema`, async () => {
@@ -186,11 +186,11 @@ describe(`testPluginOptionsSchema`, () => {
         toVerify: Joi.boolean(),
       })
 
-    const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
+    const optionsSchema = await testPluginOptionsSchema(pluginSchema, {
       toVerify: false,
     })
 
-    expect(isValid).toBe(true)
-    expect(errors).toEqual([])
+    expect(optionsSchema?.isValid).toBe(true)
+    expect(optionsSchema?.errors).toEqual([])
   })
 })

@@ -1,4 +1,4 @@
-import { fetch, Response } from 'node-fetch';
+// import { fetch, Response } from 'node-fetch';
 import something from 'my-import'
 import * as fs from "fs"
 

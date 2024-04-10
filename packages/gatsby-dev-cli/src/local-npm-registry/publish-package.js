@@ -18,17 +18,17 @@ const { registerCleanupTask } = require(`./cleanup-tasks`)
  * Edit package.json to:
  *  - adjust version to temporary one
  *  - change version selectors for dependencies that
- *    will be published, to make sure that yarn
+ *    will be published, to make sure that pnpm
  *    install them in local site
  */
-const adjustPackageJson = ({
+function adjustPackageJson({
   monoRepoPackageJsonPath,
   packageName,
   versionPostFix,
   packagesToPublish,
   ignorePackageJSONChanges,
   packageNameToPath,
-}) => {
+}) {
   // we need to check if package depend on any other package to will be published and
   // adjust version selector to point to dev version of package so local registry is used
   // for dependencies.
@@ -84,7 +84,7 @@ const adjustPackageJson = ({
 /**
  * Anonymous publishing require dummy .npmrc
  * See https://github.com/verdaccio/verdaccio/issues/212#issuecomment-308578500
- * This is `npm publish` (as in linked comment) and `yarn publish` requirement.
+ * This is `pnpm publish` (as in linked comment) and `pnpm publish` requirement.
  * This is not verdaccio restriction.
  */
 const createTemporaryNPMRC = ({ pathToPackage, root }) => {

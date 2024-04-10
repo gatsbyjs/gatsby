@@ -1,6 +1,6 @@
 import { GatsbyCLI } from "../test-helpers"
 import * as fs from "fs-extra"
-import execa from "execa"
+import { execa } from "execa"
 import { join } from "path"
 import { getConfigStore } from "gatsby-core-utils"
 
@@ -9,7 +9,7 @@ jest.setTimeout(MAX_TIMEOUT)
 
 const cwd = `execution-folder`
 
-const clean = dir => execa(`yarn`, ["del-cli", dir])
+const clean = dir => execa(`pnpm run`, ["del-cli", dir])
 
 describe(`gatsby new`, () => {
   // make folder for us to create sites into
@@ -20,7 +20,7 @@ describe(`gatsby new`, () => {
   beforeAll(async () => {
     await clean(dir)
     await fs.ensureDir(dir)
-    GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, `yarn`])
+    GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, `pnpm run`])
   })
 
   afterAll(async () => {

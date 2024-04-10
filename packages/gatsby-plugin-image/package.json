@@ -2,14 +2,14 @@
   "name": "gatsby-plugin-image",
   "version": "3.14.0-next.2",
   "scripts": {
-    "build": "npm-run-all --npm-path npm -s clean -p build:*",
+    "build": "npm-run-all --npm-path pnpm -s clean -p build:*",
     "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"use client\"",
-    "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",
+    "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declaration --declarationDir dist/src",
     "build:gatsby-ssr": "microbundle -i src/gatsby-ssr.tsx -f cjs -o ./[name].js --no-pkg-main --jsx React.createElement --jsxFragment React.Fragment --no-compress --external=common-tags,react --no-sourcemap",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --jsxFragment React.Fragment --define SERVER=true",
     "build:browser": "microbundle -i src/index.browser.ts -f cjs,modern --jsx React.createElement --jsxFragment React.Fragment -o dist/gatsby-image.browser --define SERVER=false",
     "prepare": "yarn build",
-    "watch": "npm-run-all --npm-path npm -s clean -p watch:*",
+    "watch": "npm-run-all --npm-path pnpm -s clean -p watch:*",
     "watch:gatsby-node": "yarn build:gatsby-node --watch",
     "watch:gatsby-ssr": "yarn build:gatsby-ssr watch",
     "watch:server": "yarn build:server --no-compress watch",
@@ -63,12 +63,12 @@
     "prepend-directive": "^1.1.0",
     "semver": "^7.5.3",
     "terser": "^5.16.8",
-    "typescript": "^5.1.6"
+    "typescript": "5.4.4"
   },
   "peerDependencies": {
     "@babel/core": "^7.12.3",
     "gatsby": "^5.0.0-next",
-    "gatsby-plugin-sharp": "^5.0.0-next",
+    "gatsby-plugin-sharp": "^5.14.0-next.2",
     "gatsby-source-filesystem": "^5.0.0-next",
     "react": "^18.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^0.0.0"

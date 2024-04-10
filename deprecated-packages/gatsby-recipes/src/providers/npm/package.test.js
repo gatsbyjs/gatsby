@@ -41,15 +41,15 @@ describe(`npm package resource`, () => {
 })
 
 describe(`package manager client commands`, () => {
-  it(`generates the correct commands for yarn`, () => {
+  it(`generates the correct commands for pnpm`, () => {
     const yarnInstall = pkg.generateClientComands({
-      packageManager: `yarn`,
+      packageManager: `pnpm`,
       depType: ``,
       packageNames: [`gatsby`],
     })
 
     const yarnDevInstall = pkg.generateClientComands({
-      packageManager: `yarn`,
+      packageManager: `pnpm`,
       depType: `development`,
       packageNames: [`eslint`],
     })
@@ -60,13 +60,13 @@ describe(`package manager client commands`, () => {
 
   it(`generates the correct commands for npm`, () => {
     const yarnInstall = pkg.generateClientComands({
-      packageManager: `npm`,
+      packageManager: `pnpm`,
       depType: ``,
       packageNames: [`gatsby`],
     })
 
     const yarnDevInstall = pkg.generateClientComands({
-      packageManager: `npm`,
+      packageManager: `pnpm`,
       depType: `development`,
       packageNames: [`eslint`],
     })

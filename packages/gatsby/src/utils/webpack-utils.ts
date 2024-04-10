@@ -11,6 +11,7 @@ import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
 import ESLintPlugin from "eslint-webpack-plugin"
+// @ts-ignore
 import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { getPublicPath } from "./get-public-path"
@@ -76,7 +77,7 @@ type MiniCSSExtractLoaderModuleOptions =
 /**
  * Utils that produce webpack `loader` objects
  */
-interface ILoaderUtils {
+export interface ILoaderUtils {
   yaml: LoaderResolver
   style: LoaderResolver
   css: LoaderResolver<{
@@ -118,7 +119,7 @@ type CssLoaderModuleOption = boolean | Record<string, any> | string
 /**
  * Utils that produce webpack rule objects
  */
-interface IRuleUtils {
+export interface IRuleUtils {
   /**
    * Handles JavaScript compilation via babel
    */
@@ -143,7 +144,7 @@ interface IRuleUtils {
   eslintRequired: () => RuleSetRule
 }
 
-type PluginUtils = BuiltinPlugins & {
+export type PluginUtils = BuiltinPlugins & {
   extractText: PluginFactory
   uglify: PluginFactory
   moment: PluginFactory
@@ -808,8 +809,8 @@ export const createWebpackUtils = (
   plugins.moment = (): WebpackPluginInstance =>
     plugins.ignore({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ })
 
-  plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
-    new GatsbyWebpackStatsExtractor(publicPath)
+  plugins.extractStats = (nonce?: string | undefined): GatsbyWebpackStatsExtractor =>
+    new GatsbyWebpackStatsExtractor(publicPath, nonce)
 
   // TODO: remove this in v5
   plugins.eslintGraphqlSchemaReload = (): null => null

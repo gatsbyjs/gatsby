@@ -18,7 +18,7 @@ const installPackages = async ({
   )
   let installCmd
   if (yarnWorkspaceRoot) {
-    // this is very hacky - given root, we run `yarn workspaces info`
+    // this is very hacky - given root, we run `pnpm workspaces info`
     // to get list of all workspaces and their locations, and manually
     // edit package.json file for packages we want to install
     // to make sure there are no mismatched versions of same package
@@ -26,7 +26,7 @@ const installPackages = async ({
     // (packages being mostly hoisted to top-level node_modules)
 
     const { stdout } = await promisifiedSpawn([
-      `yarn`,
+      `pnpm`,
       [`workspaces`, `info`, `--json`],
       { stdio: `pipe` },
     ])
@@ -126,7 +126,7 @@ const installPackages = async ({
       yarnCommands.push(`--registry=${registryUrl}`)
     }
 
-    installCmd = [`yarn`, yarnCommands]
+    installCmd = [`pnpm`, yarnCommands]
   } else {
     const packageAndVersionsToInstall = packagesToInstall.map(packageName => {
       const packageVersion = newlyPublishedPackageVersions[packageName]
@@ -152,7 +152,7 @@ const installPackages = async ({
         yarnCommands.push(`--registry=${registryUrl}`)
       }
 
-      installCmd = [`yarn`, yarnCommands]
+      installCmd = [`pnpm`, yarnCommands]
     }
   }
 

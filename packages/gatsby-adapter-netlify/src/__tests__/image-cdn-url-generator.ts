@@ -1,6 +1,6 @@
 import type { ImageCdnTransformArgs } from "gatsby"
 
-import { generateImageUrl, generateImageArgs } from "../image-cdn-url-generator"
+import { generateImageUrl } from "../image-cdn-url-generator"
 
 describe(`generateImageUrl`, () => {
   // pathPrefix is not used for images
@@ -127,6 +127,7 @@ describe(`generateImageUrl`, () => {
         // @ts-ignore remove typings
         `https://netlify.com${generateImageUrl(
           source,
+          // @ts-ignore
           {
             format: `webp`,
             [key]: value,
@@ -135,7 +136,7 @@ describe(`generateImageUrl`, () => {
         )}`
       )
 
-      expect(url.searchParams.get(queryKey)).toEqual(value.toString())
+      expect(url.searchParams.get(queryKey)).toEqual(value?.toString())
     }
   )
 })

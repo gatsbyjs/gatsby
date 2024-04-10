@@ -4,10 +4,10 @@ import { Stage } from "../../commands/types"
 
 describe(`structureWebpackErrors`, () => {
   const stages: Array<Stage> = [
-    Stage.BuildJavascript,
-    Stage.BuildHTML,
-    Stage.DevelopHTML,
-    Stage.Develop,
+    'build-javascript',
+    'build-html',
+    'develop-html',
+    'develop',
   ]
 
   describe.each(stages)(`stage: %s`, (stage: Stage) => {

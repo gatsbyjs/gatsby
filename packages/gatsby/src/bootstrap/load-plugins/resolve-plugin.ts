@@ -6,6 +6,7 @@ import { PackageJson } from "../../.."
 import { IPluginInfo, PluginRef } from "./types"
 import { createPluginId } from "./utils/create-id"
 import { createFileContentHash } from "./utils/create-hash"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { isString } from "lodash"
 import { checkLocalPlugin } from "./utils/check-local-plugin"

@@ -15,6 +15,7 @@ jest
 
 describe(`resizeResolver`, () => {
   beforeEach(() => {
+    // @ts-ignore
     dispatchers.shouldDispatchLocalImageServiceJob.mockClear()
   })
 
@@ -141,7 +142,7 @@ describe(`resizeResolver`, () => {
 
       actions
     )
-    expect(result.src.split(`?`)[0]).toMatch(/\.webp$/)
+    expect(result?.src.split(`?`)[0]).toMatch(/\.webp$/)
   })
 
   it(`should fail when wrong format is given`, async () => {
@@ -150,6 +151,7 @@ describe(`resizeResolver`, () => {
         portraitSource,
         {
           width: 100,
+          // @ts-ignore
           format: `unknown`,
         },
         actions
@@ -161,6 +163,7 @@ describe(`resizeResolver`, () => {
 
   it(`should fail when no height or width is given`, async () => {
     await expect(
+      // @ts-ignore
       resizeResolver(portraitSource, {}, actions)
     ).rejects.toThrowError(
       `No width or height is given to resize "${portraitSource.url}"`
@@ -210,7 +213,7 @@ describe(`resizeResolver`, () => {
       expect(url.searchParams.get(`u`)).toBe(source.url)
       expect(args.get(`w`)).toBe(`${expected.widthOnly[0]}`)
       expect(args.get(`h`)).toBe(`${expected.widthOnly[1]}`)
-      expect(result.src).toBe(
+      expect(result?.src).toBe(
         generateImageUrl(source, {
           width: expected.widthOnly[0],
           height: expected.widthOnly[1],
@@ -234,7 +237,7 @@ describe(`resizeResolver`, () => {
       expect(url.searchParams.get(`u`)).toBe(source.url)
       expect(args.get(`w`)).toBe(`${expected.heightOnly[0]}`)
       expect(args.get(`h`)).toBe(`${expected.heightOnly[1]}`)
-      expect(result.src).toBe(
+      expect(result?.src).toBe(
         generateImageUrl(source, {
           width: expected.heightOnly[0],
           height: expected.heightOnly[1],
@@ -307,10 +310,12 @@ describe(`resizeResolver`, () => {
       height: 160,
       quality: 75,
     }
+    // @ts-ignore
     dispatchers.shouldDispatchLocalImageServiceJob.mockImplementationOnce(
       () => true
     )
 
+    // @ts-ignore
     resizeResolver(portraitSource, { width: 100 }, actions)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({

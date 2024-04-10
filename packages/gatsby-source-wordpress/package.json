@@ -76,8 +76,8 @@
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
     "gatsby-plugin-image": "^3.0.0-next",
-    "gatsby-plugin-sharp": "^5.0.0-next",
-    "gatsby-transformer-sharp": "^5.0.0-next"
+    "gatsby-plugin-sharp": "^5.14.0-next.2",
+    "gatsby-transformer-sharp": "^5.13.1"
   },
   "repository": {
     "type": "git",
@@ -85,12 +85,12 @@
     "directory": "packages/gatsby-source-wordpress"
   },
   "scripts": {
-    "prepare": "npm run build",
-    "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
-    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps",
+    "prepare": "pnpm run build",
+    "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && pnpm run generate-plugin-options-docs",
+    "watch": "pnpm run build && babel -w src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps",
     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }

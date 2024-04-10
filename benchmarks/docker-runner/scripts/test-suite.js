@@ -59,7 +59,7 @@ function sleep(ms) {
 }
 
 // Write final results of a build
-function writeResults(build, memory, numNodes, nodeSize, result, code, time, maxMemoryUsage) {  
+function writeResults(build, memory, numNodes, nodeSize, result, code, time, maxMemoryUsage) {
   if (!fs.existsSync(resultsFile)) {
     const csvColumns = `build,memory,numNodes,nodeSize,result,code,time,maxMemoryUsage`
     fs.writeFileSync(resultsFile, `${csvColumns}\n`)
@@ -97,7 +97,7 @@ async function runTest(memory, numNodes, nodeSize, i) {
   let metrics = []
 
   // start the build
-  hostExec(`yarn test --memory ${memory} --num-nodes ${numNodes} --node-size ${nodeSize}`)
+  hostExec(`pnpm run test --memory ${memory} --num-nodes ${numNodes} --node-size ${nodeSize}`)
     .then((result) => {
       stdout = result.stdout
       code = 0
@@ -122,11 +122,11 @@ async function runTest(memory, numNodes, nodeSize, i) {
 
       if (stat && parseInt(stat) !== 0) {
         metrics.push({
-          build: i + 1, 
-          timestamp: Date.now() - start, 
-          memory, 
-          numNodes, 
-          nodeSize, 
+          build: i + 1,
+          timestamp: Date.now() - start,
+          memory,
+          numNodes,
+          nodeSize,
           usage: stat
         })
       }
@@ -134,7 +134,7 @@ async function runTest(memory, numNodes, nodeSize, i) {
 
     await sleep(250)
   }
-  
+
   // grab results
   const timerRegex = /Finished test in (.+)s/
   const match = stdout.match(timerRegex)
@@ -203,7 +203,7 @@ async function incremental() {
 
 /*
  * Exhaustive Test Suite
- * 
+ *
  * Runs N tests for each config in the powerset of the exhaustiveConfig
  * below, where N is exhaustiveTestsPerConfig.
  */

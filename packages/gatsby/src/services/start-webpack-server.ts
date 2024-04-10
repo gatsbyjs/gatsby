@@ -1,8 +1,8 @@
 import openurl from "better-opn"
+// @ts-ignore
 import report from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import { Compiler } from "webpack"
-import { Stage } from "../commands/types"
 
 import {
   reportWebpackWarnings,
@@ -33,11 +33,14 @@ export async function startWebpackServer({
 }> {
   if (!program || !app || !store) {
     report.panic(`Missing required params`)
+
+    throw new Error('Missing required params to startWebpackServer')
   }
+
   let { compiler, webpackActivity, websocketManager, webpackWatching } =
     await startServer(program, app, workerPool)
 
-  compiler.hooks.invalid.tap(`log compiling`, function () {
+  compiler.hooks.invalid.tap(`log compiling`, () => {
     if (!webpackActivity) {
       // mark webpack as pending if we are not in the middle of compilation already
       // when input is invalidated during compilation, webpack will automatically
@@ -47,7 +50,7 @@ export async function startWebpackServer({
     }
   })
 
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, (_, done) => {
     if (!webpackActivity) {
       // there can be multiple `watchRun` events before receiving single `done` event
       // webpack will not emit assets or `done` event until all pending invalidated
@@ -66,15 +69,15 @@ export async function startWebpackServer({
   return new Promise(resolve => {
     compiler.hooks.done.tapAsync(
       `print gatsby instructions`,
-      async function (stats, done) {
+      async (stats, done) => {
         if (isFirstCompile) {
           webpackWatching.suspend()
         }
 
         const urls = prepareUrls(
-          program.https ? `https` : `http`,
-          program.host,
-          program.port
+          program?.https ? `https` : `http`,
+          program?.host ?? 'localhost',
+          program?.port ?? 8000
         )
         const isSuccessful = !stats.hasErrors()
 
@@ -83,11 +86,11 @@ export async function startWebpackServer({
           // try.
           showExperimentNotices()
           printInstructions(
-            program.sitePackageJson.name || `(Unnamed package)`,
+            program?.sitePackageJson.name ?? `(Unnamed package)`,
             urls
           )
 
-          if (program.open) {
+          if (program?.open) {
             try {
               await openurl(urls.localUrlForBrowser)
             } catch {
@@ -110,7 +113,7 @@ export async function startWebpackServer({
 
           if (!isSuccessful) {
             const errors = structureWebpackErrors(
-              Stage.Develop,
+              'develop',
               stats.compilation.errors
             )
             webpackActivity.panicOnBuild(errors)

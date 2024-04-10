@@ -1,5 +1,5 @@
-const { exec } = require(`child_process`)
-const { createRequire } = require(`module`)
+import { exec } from "child_process"
+import { createRequire } from "module"
 
 let sharpInstance: typeof import("sharp")
 

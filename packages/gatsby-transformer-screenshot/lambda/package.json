@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "chrome-aws-lambda": "^2.1.1",
-    "gatsby-core-utils": "^4.12.1",
+    "gatsby-core-utils": "^4.14.0-next.2",
     "puppeteer-core": "^3.3.0"
   },
   "devDependencies": {
@@ -9,6 +9,6 @@
   },
   "keywords": [],
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }

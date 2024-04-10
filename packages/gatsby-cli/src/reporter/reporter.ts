@@ -26,6 +26,7 @@ import {
   registerAdditionalDiagnosticOutputHandler,
   AdditionalDiagnosticsOutputHandler,
 } from "./redux/diagnostics"
+// @ts-ignore
 import { isTruthy } from "gatsby-core-utils/is-truthy"
 
 const errorFormatter = getErrorFormatter()

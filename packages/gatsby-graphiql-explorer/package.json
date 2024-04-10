@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./src/webpack.config.js",
-    "watch": "npm run build -- --watch",
-    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "watch": "pnpm run build -- --watch",
+    "prepare": "cross-env NODE_ENV=production pnpm run clean && pnpm run build",
     "clean": "del-cli dist/*"
   },
   "keywords": [

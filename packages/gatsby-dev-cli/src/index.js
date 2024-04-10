@@ -30,7 +30,7 @@ You typically only need to configure this once.`
   .nargs(`external-registry`, 0)
   .describe(
     `external-registry`,
-    `Run 'yarn add' commands without the --registry flag.`
+    `Run 'pnpm add' commands without the --registry flag.`
   )
   .alias(`C`, `copy-all`)
   .nargs(`C`, 0)
@@ -45,8 +45,8 @@ You typically only need to configure this once.`
   .nargs(`v`, 0)
   .alias(`v`, `version`)
   .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`)
-  .choices(`package-manager`, [`yarn`, `pnpm`])
-  .default(`package-manager`, `yarn`)
+  .choices(`package-manager`, [`yarn`, `pnpm`, 'npm'])
+  .default(`package-manager`, `pnpm`)
   .describe(
     `package-manager`,
     `Package manager to use for installing dependencies.`

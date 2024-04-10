@@ -21,7 +21,7 @@ import type {
 } from "../types"
 import type { getRemoteFileEnums } from "./get-remote-file-enums"
 
-interface IGatsbyImageData {
+type IGatsbyImageData = {
   sources: Array<{
     srcSet: string
     type: string
@@ -34,7 +34,7 @@ interface IGatsbyImageData {
   }
 }
 
-interface ISourceMetadata {
+type ISourceMetadata = {
   width: number
   height: number
   format: ImageFormat
@@ -45,15 +45,15 @@ type IGatsbyImageDataArgs = Omit<
   CalculateImageSizesArgs,
   "fit" | "outputPixelDensities"
 > & {
-  formats?: Array<ImageFormat>
-  backgroundColor?: string
-  placeholder?: PlaceholderType | "none"
-  aspectRatio?: number
+  formats?: Array<ImageFormat> | undefined
+  backgroundColor?: string | undefined
+  placeholder?: PlaceholderType | "none" | undefined
+  aspectRatio?: number | undefined
   sizes?: string
-  cropFocus?: Array<ImageCropFocus>
-  fit?: CalculateImageSizesArgs["fit"]
-  outputPixelDensities?: CalculateImageSizesArgs["outputPixelDensities"]
-  quality?: number
+  cropFocus?: Array<ImageCropFocus> | undefined
+  fit?: CalculateImageSizesArgs["fit"] | undefined
+  outputPixelDensities?: CalculateImageSizesArgs["outputPixelDensities"] | undefined
+  quality?: number | undefined
 }
 
 type ImageSizeArgs = CalculateImageSizesArgs & {
@@ -81,13 +81,13 @@ export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
   actions: Actions,
-  store?: Store
+  store?: Store | undefined
 ): Promise<{
   images: IGatsbyImageData
   layout: string
   width: number
   height: number
-  backgroundColor?: string
+  backgroundColor?: string | undefined
   placeholder?: { fallback: string } | undefined
 } | null> {
   if (!isImage(source)) {

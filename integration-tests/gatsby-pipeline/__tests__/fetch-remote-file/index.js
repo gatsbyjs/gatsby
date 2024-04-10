@@ -11,7 +11,7 @@ const basePath = path.resolve(__dirname, `../../`)
 describe(`fetch-remote-file`, () => {
   beforeAll(async () => {
     await clean()
-    await execa(`yarn`, [`build`], {
+    await execa(`pnpm run`, [`build`], {
       cwd: basePath,
       // we want to force 1 query per worker
       env: { NODE_ENV: `production`, GATSBY_PARALLEL_QUERY_CHUNK_SIZE: `1` },

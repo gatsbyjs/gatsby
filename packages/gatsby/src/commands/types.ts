@@ -2,19 +2,19 @@ import { PackageJson, Reporter } from "gatsby"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 
-export interface ICert {
+export type ICert = {
   key: string
   cert: string
 }
 
-export interface IDebugInfo {
+export type IDebugInfo = {
   port: number
   break: boolean
 }
 
-export interface IProgram {
+export type IProgram = {
   _: `develop` | `build` | `clean` | `feedback` | `repl` | `serve`
-  status?: string // I think this type should not exist here. It seems to be added in the reducer, but not applicable to the caller site from gatsby-cli
+  status?: string | undefined // I think this type should not exist here. It seems to be added in the reducer, but not applicable to the caller site from gatsby-cli
   useYarn: boolean
   open: boolean
   openTracingConfigFile: string
@@ -23,37 +23,28 @@ export interface IProgram {
   proxyPort: number
   host: string
   report: Reporter
-  [`cert-file`]?: string
-  [`key-file`]?: string
+  [`cert-file`]?: string | undefined
+  [`key-file`]?: string | undefined
   directory: string
-  https?: boolean
+  https?: boolean | undefined
   sitePackageJson: PackageJson
-  ssl?: ICert
-  inspect?: number
-  inspectBrk?: number
-  graphqlTracing?: boolean
-  verbose?: boolean
-  prefixPaths?: boolean
-  setStore?: (store: Store<IGatsbyState, AnyAction>) => void
+  ssl?: ICert | undefined
+  inspect?: number | undefined
+  inspectBrk?: number | undefined
+  graphqlTracing?: boolean | undefined
+  verbose?: boolean | undefined
+  prefixPaths?: boolean | undefined
+  setStore?: ((store: Store<IGatsbyState, AnyAction>) => void) | undefined
   disablePlugins?: Array<{
     name: string
     reasons: Array<string>
-  }>
+  }> | undefined
 }
 
 /**
  * @deprecated
  * Use `Stage` instead
  */
+export type BuildHTMLStage = `develop-html` | `build-html`
 
-export enum BuildHTMLStage {
-  DevelopHTML = `develop-html`,
-  BuildHTML = `build-html`,
-}
-
-export enum Stage {
-  Develop = `develop`,
-  DevelopHTML = `develop-html`,
-  BuildJavascript = `build-javascript`,
-  BuildHTML = `build-html`,
-}
+export type Stage = `develop` | `develop-html` | `build-javascript` | `build-html`

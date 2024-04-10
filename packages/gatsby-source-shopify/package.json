@@ -5,7 +5,7 @@
   "scripts": {
     "watch": "tsc-watch --outDir .",
     "build": "tsc --outDir .",
-    "prepare": "cross-env NODE_ENV=production npm run build"
+    "prepare": "cross-env NODE_ENV=production pnpm run build"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "prettier": "^2.8.8",
     "prettier-check": "^2.0.0",
     "tsc-watch": "^6.0.4",
-    "typescript": "^5.1.6"
+    "typescript": "5.4.4"
   },
   "peerDependencies": {
     "gatsby-plugin-image": "^3.0.0-next"

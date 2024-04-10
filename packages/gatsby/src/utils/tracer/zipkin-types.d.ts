@@ -1,7 +1,7 @@
 import zipkin from "zipkin"
 import logger from "zipkin-transport-http"
 import { Span } from "opentracing"
-import { HeadersInit } from "node-fetch"
+// import { HeadersInit } from "node-fetch"
 
 export class ZipkinPartialSpan {
   traceId: string

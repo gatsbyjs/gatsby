@@ -2,10 +2,11 @@
 import { IBuildContext } from "./types"
 import * as fs from "fs-extra"
 import { Stats } from "webpack"
+// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { emitter } from "../redux"
 import { buildRenderer } from "../commands/build-html"
-import { Stage } from "../commands/types"
+// import { Stage } from "../commands/types"
 import { clearRequireCacheRecursively } from "../utils/clear-require-cache"
 
 export async function recompile(context: IBuildContext): Promise<Stats> {
@@ -28,9 +29,9 @@ async function recompileDevBundle({
       resolve(stats)
     }
     emitter.on(`COMPILATION_DONE`, finish)
-    webpackWatching.resume()
+    webpackWatching?.resume()
     // Suspending is just a flag, so it's safe to re-suspend right away
-    webpackWatching.suspend()
+    webpackWatching?.suspend()
   })
 }
 
@@ -46,7 +47,7 @@ async function recompileSSRBundle({
 
   const { close, rendererPath } = await buildRenderer(
     program,
-    Stage.DevelopHTML
+    'develop-html'
   )
 
   clearRequireCacheRecursively(rendererPath)

@@ -64,7 +64,7 @@ it(`throws an warning on unknown values`, async () => {
 
   const validWarnings = [`"notInSchema" is not allowed`]
 
-  const { hasWarnings, warnings } = await testPluginOptionsSchema(
+  const optionsSchema = await testPluginOptionsSchema(
     () => schema,
     {
       str: `bla`,
@@ -72,8 +72,8 @@ it(`throws an warning on unknown values`, async () => {
     }
   )
 
-  expect(hasWarnings).toBe(true)
-  expect(warnings).toEqual(validWarnings)
+  expect(optionsSchema?.hasWarnings).toBe(true)
+  expect(optionsSchema?.warnings).toEqual(validWarnings)
 })
 
 it(`populates default values`, async () => {

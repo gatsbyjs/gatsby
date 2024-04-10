@@ -1,5 +1,6 @@
 export function isGatsbyNodeLifecycleSupported(apiName: string): boolean {
   let availableAPIs
+
   try {
     availableAPIs = require(`gatsby/apis.json`)
   } catch (e) {

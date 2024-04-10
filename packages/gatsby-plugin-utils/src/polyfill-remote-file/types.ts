@@ -4,7 +4,7 @@ interface IRemoteFileNodeFields {
   url: string
   mimeType: string
   filename: string
-  filesize?: number
+  filesize?: number | undefined
 }
 
 export interface IRemoteFileNode extends IRemoteFileNodeFields, Node {}
@@ -16,7 +16,7 @@ export interface IRemoteFileNodeInput
 interface IRemoteImageNodeFields {
   width: number
   height: number
-  placeholderUrl?: string
+  placeholderUrl?: string | undefined
 }
 
 export interface IRemoteImageNode
@@ -39,16 +39,16 @@ export interface IGraphQLFieldConfigDefinition<
   TArgs = Record<string, unknown>
 > {
   type: string
-  description?: string
+  description?: string | undefined
   args?: {
     [Property in keyof TArgs]:
       | GraphqlType<TArgs[Property]>
       | {
           type: GraphqlType<TArgs[Property]>
-          description?: string
-          defaultValue?: TArgs[Property]
+          description?: string | undefined
+          defaultValue?: TArgs[Property] | undefined
         }
-  }
+  } | undefined
   resolve(source: TSource, args: TArgs): R
 }
 
@@ -78,8 +78,8 @@ export type CalculateImageSizesArgs = {
   fit: ImageFit
   layout: ImageLayout
   outputPixelDensities: Array<number>
-  breakpoints?: Array<number>
-  aspectRatio?: number
+  breakpoints?: Array<number> | undefined
+  aspectRatio?: number | undefined
 } & WidthOrHeight
 
 export function isImage(node: {
@@ -96,7 +96,7 @@ export function isImage(node: {
 
 export type ImageCdnTransformArgs = WidthOrHeight & {
   format: string
-  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
+  cropFocus?: ImageCropFocus | Array<ImageCropFocus> | undefined
   quality: number
 }
 

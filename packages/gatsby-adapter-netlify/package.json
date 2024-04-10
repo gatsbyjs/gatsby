@@ -12,7 +12,7 @@
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
     "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
+    "prepare": "cross-env NODE_ENV=production pnpm run build && pnpm run typegen"
   },
   "keywords": [
     "gatsby",
@@ -37,7 +37,8 @@
     "@netlify/functions": "^1.6.0",
     "cookie": "^0.6.0",
     "fastq": "^1.15.0",
-    "fs-extra": "^11.2.0"
+    "fs-extra": "^11.2.0",
+    "gatsby-telemetry": "4.14.0-next.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
@@ -47,7 +48,7 @@
     "cross-env": "^7.0.3",
     "memfs": "^4.6.0",
     "rimraf": "^5.0.5",
-    "typescript": "^5.1.6"
+    "typescript": "5.4.4"
   },
   "peerDependencies": {
     "gatsby": "^5.10.0-alpha"
@@ -56,6 +57,6 @@
     "dist/"
   ],
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }

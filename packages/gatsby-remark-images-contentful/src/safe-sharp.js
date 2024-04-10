@@ -100,6 +100,10 @@ const getDetailedMessage = () => {
     if (packagesToUpdate.length > 0) {
       msg = msg.concat([
         ``,
+        `If you are using pnpm, run:`,
+        ``,
+        `pnpm add ${packagesToUpdate.join(` `)}`,
+        ``,
         `If you are using npm, run:`,
         ``,
         `npm install ${packagesToUpdate.join(` `)}`,

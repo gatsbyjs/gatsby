@@ -1,24 +1,38 @@
 import path from "path"
 import fs from "fs-extra"
-import { rest } from "msw"
+import { http } from "msw"
 import { setupServer } from "msw/node"
 import { IMAGE_CDN } from "../gatsby-worker"
 import getSharpInstance from "gatsby-sharp"
 
 const server = setupServer(
-  rest.get(`https://example.com/another-file.jpg`, async (req, res, ctx) => {
+  http.get(`https://example.com/another-file.jpg`, async ({ request }) => {
     const content = await fs.readFile(
       path.join(__dirname, `../../__tests__/__fixtures__/dog-portrait.jpg`)
     )
 
-    return res(
-      ctx.set(`Content-Type`, `image/jpg`),
-      ctx.set(`Content-Length`, content.length.toString()),
-      ctx.status(200),
-      ctx.body(content)
-    )
+    return new Response(content.toString(), {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/jpg',
+        'Content-Length':  content.length.toString()
+      },
+    })
   })
 )
+
+async (req, res, ctx) => {
+  const content = await fs.readFile(
+    path.join(__dirname, `../../__tests__/__fixtures__/dog-portrait.jpg`)
+  )
+
+  return res(
+    ctx.set(`Content-Type`, `image/jpg`),
+    ctx.set(`Content-Length`, content.length.toString()),
+    ctx.status(200),
+    ctx.body(content)
+  )
+}
 
 describe(`gatsby-worker`, () => {
   beforeAll(() => server.listen())
@@ -38,6 +52,9 @@ describe(`gatsby-worker`, () => {
           width: 100,
           quality: 80,
           url: `https://example.com/another-file.jpg`,
+          httpHeaders: {
+
+          }
         },
       })
 

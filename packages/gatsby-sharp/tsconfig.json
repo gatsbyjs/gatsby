@@ -3,8 +3,12 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "CommonJS",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "outDir": "./",
+    "declarationDir": "dist",
+    "declaration": true
   },
+  "include": ["src"],
   "exclude": [
     "src/__tests__",
     "src/__mocks__",
