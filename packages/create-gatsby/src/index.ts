@@ -32,9 +32,9 @@ interface IAnswers {
   name: string
   project: string
   language: keyof typeof languages
-  styling?: keyof typeof styles
-  cms?: keyof typeof cmses
-  features?: Array<keyof typeof features>
+  styling?: keyof typeof styles | undefined
+  cms?: keyof typeof cmses | undefined
+  features?: Array<keyof typeof features> | undefined
 }
 
 /**

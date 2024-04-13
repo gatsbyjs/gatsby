@@ -1,6 +1,7 @@
 import fs from "fs-extra"
 import type { IncomingMessage } from "http"
 import type { Headers, Options } from "got"
+// @ts-ignore
 import type { GatsbyCache } from "gatsby"
 
 // keeping the I for backward compatibility

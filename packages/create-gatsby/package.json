@@ -21,7 +21,8 @@
     "@lukeed/uuid": "^2.0.1",
     "@types/configstore": "^6.0.2",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.12.6",
+    "@types/node": "^20.12.7",
+    "ansi-colors": "^4.1.3",
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.2",
     "enquirer": "^2.4.1",
@@ -30,7 +31,6 @@
     "gatsby-plugin-utils": "^4.14.0-next.2",
     "joi": "^17.12.3",
     "microbundle": "^0.15.1",
-    "node-fetch": "^3.3.2",
     "string-length": "^6.0.0",
     "terminal-link": "^3.0.0",
     "tiny-spin": "^1.0.2"
@@ -42,6 +42,7 @@
   },
   "author": "Matt Kane <matt@gatsbyjs.com>",
   "dependencies": {
-    "@babel/runtime": "^7.24.4"
+    "@babel/runtime": "^7.24.4",
+    "configstore": "^6.0.0"
   }
 }

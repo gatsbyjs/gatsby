@@ -3,6 +3,7 @@ import type { AdapterInit, IAdapterConfig } from "gatsby"
 import { prepareFunctionVariants } from "./lambda-handler"
 import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
+// @ts-ignore
 import packageJson from "gatsby-adapter-netlify/package.json"
 import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 

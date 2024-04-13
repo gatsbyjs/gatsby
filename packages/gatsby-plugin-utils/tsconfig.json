@@ -3,6 +3,7 @@
   "include": ["src"],
   "exclude": ["**/__tests__/**/*", "dist"],
   "compilerOptions": {
+    "moduleResolution": "Bundler",
     "declaration": false,
     "skipLibCheck": true
   }

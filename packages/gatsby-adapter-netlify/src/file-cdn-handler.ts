@@ -1,6 +1,7 @@
 import fs from "fs-extra"
 import * as path from "path"
 
+// @ts-ignore
 import packageJson from "gatsby-adapter-netlify/package.json"
 
 import type { RemoteFileAllowedUrls } from "gatsby"
@@ -59,7 +60,7 @@ export async function prepareFileCdnHandler({
     export default async (req: Request): Promise<Response> => {
       const url = new URL(req.url)
       const remoteUrl = url.searchParams.get("url")
-      
+
       const isAllowed = allowedUrlPatterns.some(allowedUrlPattern => allowedUrlPattern.test(remoteUrl))
       if (isAllowed) {
         return fetch(remoteUrl);

@@ -2,4 +2,7 @@
   "extends": "../../tsconfig.json",
   "include": ["src"],
   "exclude": ["node_modules", "src/__tests__", "dist"],
+  "compilerOptions": {
+    "resolveJsonModule": true
+  }
 }

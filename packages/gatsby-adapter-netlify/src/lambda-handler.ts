@@ -1,4 +1,5 @@
 import type { IFunctionDefinition } from "gatsby"
+// @ts-ignore
 import packageJson from "gatsby-adapter-netlify/package.json"
 import fs from "fs-extra"
 import * as path from "path"

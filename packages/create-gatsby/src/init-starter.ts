@@ -1,5 +1,5 @@
 import { execSync } from "child_process"
-import execa, { Options } from "execa"
+import { execa, type Options, type ExecaReturnBase } from "execa"
 import fs from "fs-extra"
 import path from "path"
 import { reporter } from "./utils/reporter"
@@ -54,7 +54,7 @@ const checkForYarn = (): boolean => {
 // Initialize newly cloned directory as a git repo
 const gitInit = async (
   rootPath: string
-): Promise<execa.ExecaReturnBase<string>> =>
+): Promise<ExecaReturnBase<string>> =>
   await execa(`git`, [`init`], { cwd: rootPath })
 
 // Create a .gitignore file if it is missing in the new directory
