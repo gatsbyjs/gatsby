@@ -1,6 +1,7 @@
-import { PackageJson, Reporter } from "gatsby"
-import { Store, AnyAction } from "redux"
-import { IGatsbyState } from "../redux/types"
+// @ts-ignore
+import type { PackageJson, Reporter } from "gatsby"
+import type { Store, AnyAction } from "redux"
+import type { IGatsbyState } from "../redux/types"
 
 export type ICert = {
   key: string
@@ -30,21 +31,17 @@ export type IProgram = {
   sitePackageJson: PackageJson
   ssl?: ICert | undefined
   inspect?: number | undefined
-  inspectBrk?: number | undefined
+  inspectBrk?: number| undefined
   graphqlTracing?: boolean | undefined
   verbose?: boolean | undefined
   prefixPaths?: boolean | undefined
+  functionsPlatform?: string | undefined
+  functionsArch?: string | undefined
   setStore?: ((store: Store<IGatsbyState, AnyAction>) => void) | undefined
   disablePlugins?: Array<{
     name: string
     reasons: Array<string>
   }> | undefined
 }
-
-/**
- * @deprecated
- * Use `Stage` instead
- */
-export type BuildHTMLStage = `develop-html` | `build-html`
 
 export type Stage = `develop` | `develop-html` | `build-javascript` | `build-html`

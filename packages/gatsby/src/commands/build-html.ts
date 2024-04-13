@@ -44,6 +44,8 @@ export type IBuildArgs = IProgram & {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
+  functionsPlatform?: string
+  functionsArch?: string
   // TODO remove in v4
   keepPageRenderer: boolean
 }

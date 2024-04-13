@@ -16,7 +16,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm-run-all --npm-path pnpm -p build:*",
-    "build:exclude": "cpy 'exclude.js' '../dist' --cwd=./src",
+    "build:exclude": "cpy \"exclude.js\" \"../dist\" --cwd=./src",
     "build:polyfills": "microbundle -f iife -i src/polyfills.js --no-sourcemap --external=none",
     "prepare": "cross-env NODE_ENV=production pnpm run build",
     "watch": "npm-run-all --npm-path pnpm -p watch:*",

@@ -69,7 +69,7 @@ import {
   getPageMode,
   preparePageTemplateConfigs,
 } from "../utils/page-mode"
-import { validateEngines } from "../utils/validate-engines"
+import { validateEnginesWithActivity } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
 import { getSSRChunkHashes } from "../utils/webpack/get-ssr-chunk-hashes"
@@ -299,20 +299,7 @@ module.exports = async function build(
   }
 
   if (shouldGenerateEngines()) {
-    const validateEnginesActivity = report.activityTimer(
-      `Validating Rendering Engines`,
-      {
-        parentSpan: buildSpan,
-      }
-    )
-    validateEnginesActivity.start()
-    try {
-      await validateEngines(store.getState().program.directory)
-    } catch (error) {
-      validateEnginesActivity.panic({ id: `98001`, context: {}, error })
-    } finally {
-      validateEnginesActivity.end()
-    }
+    await validateEnginesWithActivity(program.directory, buildSpan)
   }
 
   const cacheActivity = report.activityTimer(`Caching Webpack compilations`, {

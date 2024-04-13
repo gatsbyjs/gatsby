@@ -10,6 +10,7 @@ import { satisfies } from "semver"
 import type { AdapterInit } from "./types"
 import { preferDefault } from "../../bootstrap/prefer-default"
 import { getLatestAdapters } from "../get-latest-gatsby-files"
+import { maybeAddFileProtocol } from "../../bootstrap/resolve-js-file-path"
 
 export const getAdaptersCacheDir = (): string =>
   join(process.cwd(), `.cache/adapters`)
@@ -86,7 +87,9 @@ const tryLoadingAlreadyInstalledAdapter = async ({
       }
     }
 
-    const required = locationRequire.resolve(adapterToUse.module)
+    const required = maybeAddFileProtocol(
+      locationRequire.resolve(adapterToUse.module)
+    )
     if (required) {
       return {
         found: true,
