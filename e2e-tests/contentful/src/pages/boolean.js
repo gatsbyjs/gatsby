@@ -49,27 +49,36 @@ export default BooleanPage
 
 export const pageQuery = graphql`
   query BooleanQuery {
-    default: allContentfulBoolean(
-      sort: { fields: contentful_id }
-      filter: { node_locale: { eq: "en-US" }, booleanLocalized: { eq: null } }
+    default: allContentfulContentTypeBoolean(
+      sort: { sys: { id: ASC } }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        booleanLocalized: { eq: null }
+      }
     ) {
       nodes {
         title
         boolean
       }
     }
-    english: allContentfulBoolean(
-      sort: { fields: contentful_id }
-      filter: { node_locale: { eq: "en-US" }, booleanLocalized: { ne: null } }
+    english: allContentfulContentTypeBoolean(
+      sort: { sys: { id: ASC } }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        booleanLocalized: { ne: null }
+      }
     ) {
       nodes {
         title
         booleanLocalized
       }
     }
-    german: allContentfulBoolean(
-      sort: { fields: contentful_id }
-      filter: { node_locale: { eq: "de-DE" }, booleanLocalized: { ne: null } }
+    german: allContentfulContentTypeBoolean(
+      sort: { sys: { id: ASC } }
+      filter: {
+        sys: { locale: { eq: "de-DE" } }
+        booleanLocalized: { ne: null }
+      }
     ) {
       nodes {
         title

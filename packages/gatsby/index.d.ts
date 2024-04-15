@@ -23,6 +23,7 @@ export type AvailableFeatures =
   | "content-file-path"
   | "stateful-source-nodes"
   | "adapters"
+  | "track-inline-object-opt-out"
 
 export {
   Link,
@@ -33,6 +34,8 @@ export {
 } from "gatsby-link"
 
 export * from "gatsby-script"
+
+export { IGatsbyResolverContext } from "./dist/schema/type-definitions"
 
 export {
   AdapterInit,
@@ -1777,6 +1780,7 @@ export interface NodeInput {
     contentDigest: string
     description?: string
     contentFilePath?: string
+    trackInlineObjects?: boolean
   }
   [key: string]: unknown
 }
@@ -1785,7 +1789,7 @@ export interface Node extends NodeInput {
   parent: string | null
   children: string[]
   internal: NodeInput["internal"] & {
-    owner: string
+    owner?: string
   }
   [key: string]: unknown
 }

@@ -498,6 +498,9 @@ class LocalNodeModel {
    * @param {Node} node Root Node
    */
   trackInlineObjectsInRootNode(node) {
+    if (node.internal.trackInlineObjects === false) {
+      return
+    }
     if (!this._trackedRootNodes.has(node)) {
       addRootNodeToInlineObject(
         this._rootNodeMap,

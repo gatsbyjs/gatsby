@@ -4,7 +4,7 @@ import * as React from "react"
 import slugify from "slugify"
 
 import { BLOCKS, MARKS, INLINES } from "@contentful/rich-text-types"
-import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { renderRichText } from "gatsby-source-contentful"
 
 import Layout from "../components/layout"
 
@@ -20,13 +20,13 @@ function renderReferencedComponent(ref) {
   return <Component {...ref} />
 }
 
-const options = {
+const makeOptions = ({ assetBlockMap, entryBlockMap, entryInlineMap }) => ({
   renderMark: {
     [MARKS.BOLD]: text => <strong data-cy-strong>{text}</strong>,
   },
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-      const asset = node.data.target
+      const asset = assetBlockMap.get(node?.data?.target?.sys.id)
       if (asset.gatsbyImageData) {
         return <GatsbyImage image={asset.gatsbyImageData} />
       }
@@ -40,7 +40,7 @@ const options = {
       )
     },
     [BLOCKS.EMBEDDED_ENTRY]: node => {
-      const entry = node?.data?.target
+      const entry = entryBlockMap.get(node?.data?.target?.sys.id)
       if (!entry) {
         throw new Error(
           `Entity not available for node:\n${JSON.stringify(node, null, 2)}`
@@ -49,11 +49,11 @@ const options = {
       return renderReferencedComponent(entry)
     },
     [INLINES.EMBEDDED_ENTRY]: node => {
-      const entry = node.data.target
-      if (entry.__typename === "ContentfulText") {
+      const entry = entryInlineMap.get(node?.data?.target?.sys.id)
+      if (entry.__typename === "ContentfulContentTypeText") {
         return (
           <span data-cy-id="inline-text">
-            [Inline-ContentfulText] {entry.title}: {entry.short}
+            [Inline-ContentfulContentTypeText] {entry.short}
           </span>
         )
       }
@@ -64,7 +64,7 @@ const options = {
       )
     },
   },
-}
+})
 
 const RichTextPage = ({ data }) => {
   const defaultEntries = data.default.nodes
@@ -77,7 +77,7 @@ const RichTextPage = ({ data }) => {
         return (
           <div data-cy-id={slug} key={id}>
             <h2>{title}</h2>
-            {renderRichText(richText, options)}
+            {renderRichText(richText, makeOptions)}
             <hr />
           </div>
         )
@@ -89,7 +89,7 @@ const RichTextPage = ({ data }) => {
         return (
           <div data-cy-id={`english-${slug}`} key={id}>
             <h2>{title}</h2>
-            {renderRichText(richTextLocalized, options)}
+            {renderRichText(richTextLocalized, makeOptions)}
             <hr />
           </div>
         )
@@ -101,7 +101,7 @@ const RichTextPage = ({ data }) => {
         return (
           <div data-cy-id={`german-${slug}`} key={id}>
             <h2>{title}</h2>
-            {renderRichText(richTextLocalized, options)}
+            {renderRichText(richTextLocalized, makeOptions)}
             <hr />
           </div>
         )
@@ -114,71 +114,111 @@ export default RichTextPage
 
 export const pageQuery = graphql`
   query RichTextQuery {
-    default: allContentfulRichText(
-      sort: { fields: title }
+    default: allContentfulContentTypeRichText(
+      sort: { title: ASC }
       filter: {
         title: { glob: "!*Localized*|*Validated*" }
-        node_locale: { eq: "en-US" }
+        sys: { locale: { eq: "en-US" } }
       }
     ) {
       nodes {
         id
         title
         richText {
-          raw
-          references {
-            __typename
-            ... on ContentfulAsset {
-              contentful_id
-              gatsbyImageData(width: 200)
-            }
-            ... on ContentfulText {
-              contentful_id
-              title
-              short
-            }
-            ... on ContentfulLocation {
-              contentful_id
-              location {
-                lat
-                lon
-              }
-            }
-            ... on ContentfulContentReference {
-              contentful_id
-              title
-              one {
-                ... on ContentfulContentReference {
-                  contentful_id
-                  title
-                  content_reference {
-                    ... on ContentfulContentReference {
-                      contentful_id
-                      title
-                    }
-                  }
+          json
+          links {
+            assets {
+              block {
+                sys {
+                  id
                 }
+                gatsbyImageData(width: 200)
               }
-              many {
-                ... on ContentfulText {
-                  contentful_id
+            }
+            entries {
+              block {
+                __typename
+                sys {
+                  id
+                  type
+                }
+                ... on ContentfulContentTypeText {
                   title
                   short
                 }
-                ... on ContentfulNumber {
-                  contentful_id
-                  title
-                  integer
+                ... on ContentfulContentTypeLocation {
+                  location {
+                    lat
+                    lon
+                  }
                 }
-                ... on ContentfulContentReference {
-                  contentful_id
+                ... on ContentfulContentTypeContentReference {
                   title
-                  content_reference {
-                    ... on ContentfulContentReference {
-                      id
+                  one {
+                    __typename
+                    ... on ContentfulEntry {
+                      sys {
+                        id
+                      }
+                    }
+                    ... on ContentfulContentTypeText {
                       title
+                      short
+                    }
+                    ... on ContentfulContentTypeContentReference {
+                      title
+                      one {
+                        ... on ContentfulContentTypeContentReference {
+                          title
+                        }
+                      }
+                      many {
+                        ... on ContentfulContentTypeContentReference {
+                          title
+                        }
+                      }
                     }
                   }
+                  many {
+                    __typename
+                    ... on ContentfulEntry {
+                      sys {
+                        id
+                      }
+                    }
+                    ... on ContentfulContentTypeText {
+                      title
+                      short
+                    }
+                    ... on ContentfulContentTypeNumber {
+                      title
+                      integer
+                    }
+                    ... on ContentfulContentTypeContentReference {
+                      title
+                      one {
+                        ... on ContentfulContentTypeContentReference {
+                          title
+                        }
+                      }
+                      many {
+                        ... on ContentfulContentTypeContentReference {
+                          title
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              inline {
+                __typename
+                sys {
+                  id
+                  type
+                }
+                ... on ContentfulContentTypeText {
+                  title
+                  short
                 }
               }
             }
@@ -186,27 +226,33 @@ export const pageQuery = graphql`
         }
       }
     }
-    english: allContentfulRichText(
-      sort: { fields: title }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "en-US" } }
+    english: allContentfulContentTypeRichText(
+      sort: { title: ASC }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "en-US" } }
+      }
     ) {
       nodes {
         id
         title
         richTextLocalized {
-          raw
+          json
         }
       }
     }
-    german: allContentfulRichText(
-      sort: { fields: title }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "de-DE" } }
+    german: allContentfulContentTypeRichText(
+      sort: { title: ASC }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "de-DE" } }
+      }
     ) {
       nodes {
         id
         title
         richTextLocalized {
-          raw
+          json
         }
       }
     }

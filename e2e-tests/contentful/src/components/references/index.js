@@ -1,4 +1,4 @@
-export { ContentfulContentReference } from "./content-reference"
-export { ContentfulLocation } from "./location"
-export { ContentfulNumber } from "./number"
-export { ContentfulText } from "./text"
+export { ContentfulContentTypeContentReference } from "./content-reference"
+export { ContentfulContentTypeLocation } from "./location"
+export { ContentfulContentTypeNumber } from "./number"
+export { ContentfulContentTypeText } from "./text"

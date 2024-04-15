@@ -6,13 +6,13 @@ import {
   sourceNodes,
   onPreInit,
 } from "../gatsby-node"
-import { existingNodes, is, memoryNodeCounts } from "../backreferences"
+import { existingNodes, is } from "../backreferences"
 import { fetchContent, fetchContentTypes } from "../fetch"
-import { makeId } from "../normalize"
+import { makeId, makeTypeName } from "../normalize"
+import { defaultOptions } from "../plugin-options"
 
 import startersBlogFixture from "../__fixtures__/starter-blog-data"
 import richTextFixture from "../__fixtures__/rich-text-data"
-import restrictedContentTypeFixture from "../__fixtures__/restricted-content-type"
 import unpublishedFieldDelivery from "../__fixtures__/unpublished-fields-delivery"
 import unpublishedFieldPreview from "../__fixtures__/unpublished-fields-preview"
 import preserveBackLinks from "../__fixtures__/preserve-back-links"
@@ -27,7 +27,11 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-const defaultPluginOptions = { spaceId: `testSpaceId` }
+/** @type {import("gatsby-plugin-utils/types").IPluginInfoOptions} */
+const defaultPluginOptions = {
+  ...defaultOptions,
+  spaceId: `testSpaceId`,
+}
 
 // @ts-ignore
 fetchContentTypes.mockImplementation(() =>
@@ -96,16 +100,24 @@ describe(`gatsby-node`, () => {
     touchNode: jest.fn(),
     enableStatefulSourceNodes: jest.fn(),
   }
+
+  const schemaCustomizationTypes = []
   const schema = {
-    buildObjectType: jest.fn(() => {
-      return {
-        config: {
-          interfaces: [],
-        },
-      }
+    buildObjectType: jest.fn(config => {
+      schemaCustomizationTypes.push({
+        typeOrTypeDef: { config },
+        plugin: { name: `gatsby-source-contentful` },
+      })
+      return { config }
     }),
-    buildInterfaceType: jest.fn(),
+    buildInterfaceType: jest.fn(config => {
+      schemaCustomizationTypes.push({
+        typeOrTypeDef: { config },
+        plugin: { name: `gatsby-source-contentful` },
+      })
+    }),
   }
+
   let pluginStatus = {}
   const resetPluginStatus = () => {
     pluginStatus = {}
@@ -114,6 +126,7 @@ describe(`gatsby-node`, () => {
     getState: jest.fn(() => {
       return {
         program: { directory: process.cwd() },
+        schemaCustomization: { types: schemaCustomizationTypes },
         status: {
           plugins: {
             [`gatsby-source-contentful`]: pluginStatus,
@@ -122,10 +135,12 @@ describe(`gatsby-node`, () => {
       }
     }),
   }
+
   const cache = createMockCache()
   const getCache = jest.fn(() => cache)
   const reporter = {
     info: jest.fn(),
+    warn: jest.fn(),
     verbose: jest.fn(),
     panic: jest.fn(),
     activityTimer: () => {
@@ -180,6 +195,7 @@ describe(`gatsby-node`, () => {
         getCache,
         reporter,
         parentSpan,
+        schema,
       },
       pluginOptions
     )
@@ -247,7 +263,7 @@ describe(`gatsby-node`, () => {
                   type: value.sys.linkType || value.sys.type,
                 })
               )
-              matchedObject[`${field}___NODE`] = linkId
+              matchedObject[field] = linkId
 
               if (
                 value.sys.type !== `Asset` &&
@@ -257,7 +273,7 @@ describe(`gatsby-node`, () => {
                   references.set(linkId, {})
                 }
 
-                const referenceKey = `${currentContentType.name.toLowerCase()}___NODE`
+                const referenceKey = currentContentType.name.toLowerCase()
                 const reference = references.get(linkId)
                 const linkedNode = getNode(linkId)
                 reference[referenceKey] =
@@ -270,8 +286,8 @@ describe(`gatsby-node`, () => {
               break
             }
             case `Text`: {
-              const linkId = createNodeId(`${nodeId}${field}TextNode`)
-              matchedObject[`${field}___NODE`] = linkId
+              const linkId = createNodeId(`${nodeId}${field}MarkdownNode`)
+              matchedObject[field] = linkId
               break
             }
             default:
@@ -283,13 +299,23 @@ describe(`gatsby-node`, () => {
       })
 
       // update all matchedObjets with our backreferences
-      for (const [nodeId, value] of references) {
-        const matchedObject = {
-          ...nodeMap.get(nodeId),
-          ...value,
-        }
+      if (references.size) {
+        for (const [nodeId, value] of references) {
+          const matchedObject = nodeMap.get(nodeId)
+          if (matchedObject) {
+            matchedObject.linkedFrom = {}
 
-        nodeMap.set(nodeId, matchedObject)
+            for (const k of Object.keys(value)) {
+              const typeName = makeTypeName(k)
+              if (matchedObject[`linkedFrom`][typeName]) {
+                matchedObject[`linkedFrom`][typeName].push(...value[k])
+              } else {
+                matchedObject[`linkedFrom`][typeName] = value[k]
+              }
+            }
+            nodeMap.set(nodeId, matchedObject)
+          }
+        }
       }
 
       // match all entry nodes
@@ -320,7 +346,7 @@ describe(`gatsby-node`, () => {
         // check if all references got removed references should be removed
         for (const value of currentNodeMap.values()) {
           Object.keys(value).forEach(field => {
-            if (field.endsWith(`___NODE`)) {
+            if (![`id`, `parent`].includes(field)) {
               expect([].concat(value[field])).not.toContain(nodeId)
             }
           })
@@ -395,7 +421,12 @@ describe(`gatsby-node`, () => {
               true,
               noLocaleFallback
             ) || ``,
-          file,
+          mimeType: file.contentType,
+          filename: file.fileName,
+          url: `https:` + file.url,
+          size: file.details.size,
+          width: file.details?.image?.width || null,
+          height: file.details?.image?.height || null,
         })
       })
     })
@@ -443,6 +474,7 @@ describe(`gatsby-node`, () => {
     cache.set.mockClear()
     reporter.info.mockClear()
     reporter.panic.mockClear()
+    schemaCustomizationTypes.length = 0
   })
 
   let hasImported = false
@@ -622,12 +654,14 @@ describe(`gatsby-node`, () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
     schema.buildObjectType.mockClear()
-    // @ts-ignore
+
     await simulateGatsbyBuild({
-      typePrefix: `CustomPrefix`,
+      ...defaultPluginOptions,
+      // @ts-ignore
+      contentTypePrefix: `CustomPrefix`,
     })
 
-    expect(schema.buildObjectType).toHaveBeenCalledTimes(3)
+    expect(schema.buildObjectType).toHaveBeenCalledTimes(14)
     expect(schema.buildObjectType).toHaveBeenCalledWith(
       expect.objectContaining({
         name: `CustomPrefixPerson`,
@@ -638,27 +672,32 @@ describe(`gatsby-node`, () => {
         name: `CustomPrefixBlogPost`,
       })
     )
-    expect(schema.buildObjectType).toHaveBeenCalledWith(
+
+    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
       expect.objectContaining({
-        name: `CustomPrefixAsset`,
+        name: `ContentfulContentTypePerson`,
       })
     )
 
     expect(schema.buildObjectType).not.toHaveBeenCalledWith(
       expect.objectContaining({
-        name: `ContentfulPerson`,
+        name: `ContentfulContentTypeBlogPost`,
       })
     )
 
-    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
+    expect(actions.createNode).not.toHaveBeenCalledWith(
       expect.objectContaining({
-        name: `ContentfulBlogPost`,
+        internal: expect.objectContaining({
+          type: `ContentfulContentTypeBlogPost`,
+        }),
       })
     )
 
-    expect(schema.buildObjectType).not.toHaveBeenCalledWith(
+    expect(actions.createNode).not.toHaveBeenCalledWith(
       expect.objectContaining({
-        name: `ContentfulAsset`,
+        internal: expect.objectContaining({
+          type: `ContentfulContentTypePerson`,
+        }),
       })
     )
   })
@@ -708,7 +747,7 @@ describe(`gatsby-node`, () => {
 
     createdBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
-      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
+      expect(getNode(blogEntry[`author`])).toBeTruthy()
     })
 
     expect(actions.createNode).toHaveBeenCalledTimes(46)
@@ -798,7 +837,7 @@ describe(`gatsby-node`, () => {
     updatedBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
       expect(blogEntry.title).toBe(`Hello world 1234`)
-      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
+      expect(getNode(blogEntry[`author`])).toBeTruthy()
     })
 
     expect(actions.createNode).toHaveBeenCalledTimes(54)
@@ -866,8 +905,8 @@ describe(`gatsby-node`, () => {
     for (const author of getNodes().filter(
       n => n.internal.type === `ContentfulPerson`
     )) {
-      expect(author[`blog post___NODE`].length).toEqual(3)
-      expect(author[`blog post___NODE`]).toEqual(
+      expect(author[`blog post`].length).toEqual(3)
+      expect(author[`blog post`]).toEqual(
         expect.not.arrayContaining([
           makeId({
             spaceId: removedBlogEntry.sys.space.sys.id,
@@ -887,15 +926,15 @@ describe(`gatsby-node`, () => {
     // check if blog post exists
     removedBlogEntryIds.forEach(entryId => {
       const blogEntry = getNode(entryId)
-      authorIds.push(blogEntry[`author___NODE`])
+      authorIds.push(blogEntry[`author`])
       expect(blogEntry).not.toBeUndefined()
     })
 
     for (const author of getNodes().filter(
       n => n.internal.type === `ContentfulPerson`
     )) {
-      expect(author[`blog post___NODE`].length).toEqual(4)
-      expect(author[`blog post___NODE`]).toEqual(
+      expect(author[`blog post`].length).toEqual(4)
+      expect(author[`blog post`]).toEqual(
         expect.arrayContaining([
           makeId({
             spaceId: removedBlogEntry.sys.space.sys.id,
@@ -933,8 +972,8 @@ describe(`gatsby-node`, () => {
     for (const author of getNodes().filter(
       n => n.internal.type === `ContentfulPerson`
     )) {
-      expect(author[`blog post___NODE`].length).toEqual(3)
-      expect(author[`blog post___NODE`]).toEqual(
+      expect(author[`blog post`].length).toEqual(3)
+      expect(author[`blog post`]).toEqual(
         expect.not.arrayContaining([
           makeId({
             spaceId: removedBlogEntry.sys.space.sys.id,
@@ -949,14 +988,14 @@ describe(`gatsby-node`, () => {
 
     // check if references are gone
     authorIds.forEach(authorId => {
-      expect(getNode(authorId)[`blog post___NODE`]).toEqual(
+      expect(getNode(authorId)[`blog post`]).toEqual(
         expect.not.arrayContaining(deletedEntryIds)
       )
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(52)
+    expect(actions.createNode).toHaveBeenCalledTimes(48)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(2)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -1040,9 +1079,9 @@ describe(`gatsby-node`, () => {
       locales
     )
 
-    expect(actions.createNode).toHaveBeenCalledTimes(54)
+    expect(actions.createNode).toHaveBeenCalledTimes(48)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(2)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -1073,7 +1112,7 @@ describe(`gatsby-node`, () => {
     `)
   })
 
-  it(`stores rich text as raw with references attached`, async () => {
+  it(`stores rich text as JSON`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(richTextFixture.initialSync)
     // @ts-ignore
@@ -1085,15 +1124,53 @@ describe(`gatsby-node`, () => {
     const initNodes = getNodes()
 
     const homeNodes = initNodes.filter(
-      ({ contentful_id: id }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
+      ({ sys: { id } }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
     expect(homeNodes).toHaveLength(2)
     homeNodes.forEach(homeNode => {
-      expect(homeNode.content.references___NODE).toStrictEqual([
-        ...new Set(homeNode.content.references___NODE),
-      ])
-      expect(homeNode.content.references___NODE).toMatchSnapshot()
+      expect(homeNode.content).toMatchSnapshot()
     })
+  })
+
+  it(`should ignore markdown conversion when disabled in config`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+    schema.buildObjectType.mockClear()
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      enableMarkdownDetection: false,
+    })
+    expect(actions.createNode).toHaveBeenCalledTimes(18)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+
+    expect(
+      actions.createNode.mock.calls.filter(
+        call => call[0].internal.type == `ContentfulMarkdown`
+      )
+    ).toHaveLength(0)
+  })
+
+  it(`should be able to create markdown nodes from a predefined list in config`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+    schema.buildObjectType.mockClear()
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      enableMarkdownDetection: false,
+      markdownFields: [[`blogPost`, [`body`]]],
+    })
+    expect(actions.createNode).toHaveBeenCalledTimes(24)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+
+    expect(
+      actions.createNode.mock.calls.filter(
+        call => call[0].internal.type == `ContentfulMarkdown`
+      )
+    ).toHaveLength(6)
   })
 
   it(`is able to render unpublished fields in Delivery API`, async () => {
@@ -1331,56 +1408,6 @@ describe(`gatsby-node`, () => {
     )
   })
 
-  it(`panics when response contains restricted content types`, async () => {
-    // @ts-ignore
-    fetchContent.mockImplementationOnce(
-      restrictedContentTypeFixture.initialSync
-    )
-    // @ts-ignore
-    fetchContentTypes.mockImplementationOnce(
-      restrictedContentTypeFixture.contentTypeItems
-    )
-
-    await simulateGatsbyBuild()
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.objectContaining({
-        context: {
-          sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
-        },
-      })
-    )
-  })
-
-  it(`panics when response contains content type Tag while enableTags is true`, async () => {
-    // @ts-ignore
-    fetchContent.mockImplementationOnce(
-      restrictedContentTypeFixture.initialSync
-    )
-    const contentTypesWithTag = () => {
-      const manipulatedContentTypeItems =
-        restrictedContentTypeFixture.contentTypeItems()
-      manipulatedContentTypeItems[0].name = `Tag`
-      return manipulatedContentTypeItems
-    }
-    // @ts-ignore
-    fetchContentTypes.mockImplementationOnce(contentTypesWithTag)
-
-    await simulateGatsbyBuild({
-      spaceId: `mocked`,
-      enableTags: true,
-      useNameForId: true,
-    })
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.objectContaining({
-        context: {
-          sourceMessage: `Restricted ContentType name found. The name "tag" is not allowed.`,
-        },
-      })
-    )
-  })
-
   it(`should preserve back reference when referencing entry wasn't touched`, async () => {
     // @ts-ignore
     fetchContentTypes.mockImplementation(preserveBackLinks.contentTypeItems)
@@ -1394,33 +1421,33 @@ describe(`gatsby-node`, () => {
     await simulateGatsbyBuild()
 
     blogPostNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogPost`
+      node => node.internal.type === `ContentfulContentTypeBlogPost`
     )
     blogCategoryNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogCategory`
+      node => node.internal.type === `ContentfulContentTypeBlogCategory`
     )
 
     expect(blogPostNodes.length).toEqual(1)
     expect(blogCategoryNodes.length).toEqual(1)
-    expect(blogCategoryNodes[0][`blog post___NODE`]).toEqual([
-      blogPostNodes[0].id,
-    ])
+    expect(
+      blogCategoryNodes[0][`linkedFrom`][`ContentfulContentTypeBlogPost`]
+    ).toEqual([blogPostNodes[0].id])
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
 
     await simulateGatsbyBuild()
 
     blogPostNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogPost`
+      node => node.internal.type === `ContentfulContentTypeBlogPost`
     )
     blogCategoryNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogCategory`
+      node => node.internal.type === `ContentfulContentTypeBlogCategory`
     )
 
     expect(blogPostNodes.length).toEqual(1)
     expect(blogCategoryNodes.length).toEqual(1)
-    expect(blogCategoryNodes[0][`blog post___NODE`]).toEqual([
-      blogPostNodes[0].id,
-    ])
+    expect(
+      blogCategoryNodes[0][`linkedFrom`][`ContentfulContentTypeBlogPost`]
+    ).toEqual([blogPostNodes[0].id])
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS edit #1`)
   })
 
@@ -1442,10 +1469,10 @@ describe(`gatsby-node`, () => {
     await simulateGatsbyBuild()
 
     blogPostNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogPost`
+      node => node.internal.type === `ContentfulContentTypeBlogPost`
     )
     blogCategoryNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogCategory`
+      node => node.internal.type === `ContentfulContentTypeBlogCategory`
     )
     blogCategoryChildNodes = blogCategoryNodes.flatMap(node =>
       node.children.map(childId => getNode(childId))
@@ -1459,16 +1486,16 @@ describe(`gatsby-node`, () => {
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
 
     // `body` field on child node is concrete value and not a link
-    expect(blogCategoryChildNodes[0][`body`]).toEqual(`cms`)
-    expect(blogCategoryChildNodes[0][`body___NODE`]).toBeUndefined()
+    expect(blogCategoryChildNodes[0][`raw`]).toEqual(`cms`)
+    expect(blogCategoryChildNodes[0][`raw___NODE`]).toBeUndefined()
 
     await simulateGatsbyBuild()
 
     blogPostNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogPost`
+      node => node.internal.type === `ContentfulContentTypeBlogPost`
     )
     blogCategoryNodes = getNodes().filter(
-      node => node.internal.type === `ContentfulBlogCategory`
+      node => node.internal.type === `ContentfulContentTypeBlogCategory`
     )
     blogCategoryChildNodes = blogCategoryNodes.flatMap(node =>
       node.children.map(childId => getNode(childId))
@@ -1478,13 +1505,13 @@ describe(`gatsby-node`, () => {
     expect(blogCategoryNodes.length).toEqual(1)
     expect(blogCategoryChildNodes.length).toEqual(1)
     // backref was added when entries were linked
-    expect(blogCategoryNodes[0][`blog post___NODE`]).toEqual([
-      blogPostNodes[0].id,
-    ])
+    expect(
+      blogCategoryNodes[0].linkedFrom.ContentfulContentTypeBlogPost
+    ).toEqual([blogPostNodes[0].id])
     expect(blogCategoryNodes[0][`title`]).toEqual(`CMS`)
 
     // `body` field on child node is concrete value and not a link
-    expect(blogCategoryChildNodes[0][`body`]).toEqual(`cms`)
-    expect(blogCategoryChildNodes[0][`body___NODE`]).toBeUndefined()
+    expect(blogCategoryChildNodes[0][`raw`]).toEqual(`cms`)
+    expect(blogCategoryChildNodes[0][`raw___NODE`]).toBeUndefined()
   })
 })

@@ -1,7 +1,7 @@
 import { graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 import * as React from "react"
-import { useContentfulImage } from "gatsby-source-contentful/hooks"
+import { useContentfulImage } from "gatsby-source-contentful"
 
 import Layout from "../components/layout"
 import Grid from "../components/grid"
@@ -25,14 +25,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
               <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -43,14 +43,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fullWidth ? (
               <GatsbyImage image={node.fullWidth} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -62,14 +62,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fixed ? (
               <GatsbyImage image={node.fixed} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -81,35 +81,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.dominantColor ? (
               <GatsbyImage image={node.dominantColor} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
-            )}
-          </div>
-        ))}
-      </Grid>
-
-      <h2>
-        gatsby-plugin-image: Traced SVG Placeholder (fallback to DOMINANT_COLOR)
-      </h2>
-      <Grid data-cy="traced">
-        {data.default.nodes.map(node => (
-          <div key={node.title}>
-            <p>
-              <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
-              </strong>
-            </p>
-            {node.description && <p>{node.description}</p>}
-            {node.traced ? (
-              <GatsbyImage image={node.traced} alt={node.title} />
-            ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -121,14 +100,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.blurred ? (
               <GatsbyImage image={node.blurred} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -140,14 +119,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.customImageFormats ? (
               <GatsbyImage image={node.customImageFormats} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -159,7 +138,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -174,7 +153,7 @@ const GatsbyPluginImagePage = ({ data }) => {
                 alt={node.title}
               />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -186,14 +165,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
               <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -205,14 +184,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div key={node.title}>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
               <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -235,24 +214,24 @@ export const pageQuery = graphql`
   query GatsbyPluginImageQuery {
     default: allContentfulAsset(
       filter: {
-        contentful_id: {
-          in: [
-            "3ljGfnpegOnBTFGhV07iC1"
-            "3BSI9CgDdAn1JchXmY5IJi"
-            "65syuRuRVeKi03HvRsOkkb"
-          ]
+        sys: {
+          id: {
+            in: [
+              "3ljGfnpegOnBTFGhV07iC1"
+              "3BSI9CgDdAn1JchXmY5IJi"
+              "65syuRuRVeKi03HvRsOkkb"
+            ]
+          }
+          locale: { eq: "en-US" }
         }
-        node_locale: { eq: "en-US" }
       }
-      sort: { fields: contentful_id }
+      sort: { sys: { id: ASC } }
     ) {
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        filename
+        url
         constrained: gatsbyImageData(width: 420)
         fullWidth: gatsbyImageData(width: 200, layout: FIXED)
         fixed: gatsbyImageData(width: 200, layout: FIXED)
@@ -260,11 +239,6 @@ export const pageQuery = graphql`
           width: 200
           layout: FIXED
           placeholder: DOMINANT_COLOR
-        )
-        traced: gatsbyImageData(
-          width: 200
-          layout: FIXED
-          placeholder: TRACED_SVG
         )
         blurred: gatsbyImageData(
           width: 200
@@ -279,35 +253,29 @@ export const pageQuery = graphql`
     }
     english: allContentfulAsset(
       filter: {
-        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
-        node_locale: { eq: "en-US" }
+        sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "en-US" } }
       }
-      sort: { fields: contentful_id }
+      sort: { sys: { id: ASC } }
     ) {
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        filename
+        url
         constrained: gatsbyImageData(width: 420)
       }
     }
     german: allContentfulAsset(
       filter: {
-        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
-        node_locale: { eq: "de-DE" }
+        sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "de-DE" } }
       }
-      sort: { fields: contentful_id }
+      sort: { sys: { id: ASC } }
     ) {
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        filename
+        url
         constrained: gatsbyImageData(width: 420)
       }
     }

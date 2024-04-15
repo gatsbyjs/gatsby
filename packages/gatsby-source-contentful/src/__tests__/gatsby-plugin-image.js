@@ -1,12 +1,12 @@
+// @ts-check
 /**
  * @jest-environment node
  */
-// @ts-check
 import fs from "fs-extra"
 import { setPluginOptions } from "gatsby-plugin-sharp/plugin-options"
 import _ from "lodash"
 import { resolve } from "path"
-import { setFieldsOnGraphQLNodeType } from "../extend-node-type"
+import { createSchemaCustomization } from "../create-schema-customization"
 import { generateImageSource } from "../gatsby-plugin-image"
 import * as gatsbyCoreUtils from "gatsby-core-utils"
 import * as pluginSharp from "gatsby-plugin-sharp"
@@ -38,31 +38,53 @@ const createMockCache = () => {
 const cache = createMockCache()
 
 const exampleImage = {
-  defaultLocale: `en-US`,
-  file: {
-    url: `//images.ctfassets.net:443/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
-    fileName: `347966-contentful-logo-wordmark-dark (1)-4cd185-original-1582664935 (1).png`,
-    contentType: `image/png`,
-    details: {
-      size: 123456,
-      image: {
-        width: `1646`,
-        height: `338`,
-      },
-    },
+  sys: {
+    locale: `en-US`,
   },
+  url: `https://images.ctfassets.net:443/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
+  filename: `347966-contentful-logo-wordmark-dark (1)-4cd185-original-1582664935 (1).png`,
+  mimeType: `image/png`,
+  size: 123456,
+  width: `1646`,
+  height: `338`,
   internal: {
     contentDigest: `unique`,
   },
 }
 
 describe(`gatsby-plugin-image`, () => {
-  let extendedNodeType
+  let contentfulAsset
 
   beforeAll(async () => {
-    extendedNodeType = await setFieldsOnGraphQLNodeType({
-      type: { name: `ContentfulAsset` },
-      cache,
+    const actions = { createTypes: jest.fn() }
+    const schema = {
+      buildObjectType: jest.fn(config => {
+        return {
+          config,
+        }
+      }),
+      buildInterfaceType: jest.fn(),
+      buildUnionType: jest.fn(),
+    }
+    const cache = createMockCache()
+    const reporter = {
+      info: jest.fn(),
+      verbose: jest.fn(),
+      panic: jest.fn(),
+      activityTimer: () => {
+        return { start: jest.fn(), end: jest.fn() }
+      },
+    }
+
+    await createSchemaCustomization(
+      { schema, actions, reporter, cache },
+      { spaceId: `testSpaceId`, accessToken: `mocked` }
+    )
+
+    schema.buildObjectType.mock.calls.forEach(call => {
+      if (call[0].name === `ContentfulAsset`) {
+        contentfulAsset = call[0].fields
+      }
     })
   })
 
@@ -76,7 +98,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp",
+          "src": "//test.png?w=420&h=210&fm=webp",
           "width": 420,
         }
       `)
@@ -90,7 +112,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp&r=10",
+          "src": "//test.png?w=420&h=210&fm=webp&r=10",
           "width": 420,
         }
       `)
@@ -104,7 +126,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp&r=max",
+          "src": "//test.png?w=420&h=210&fm=webp&r=max",
           "width": 420,
         }
       `)
@@ -116,7 +138,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp",
+          "src": "//test.png?w=420&h=210&fm=webp",
           "width": 420,
         }
       `)
@@ -129,12 +151,9 @@ describe(`gatsby-plugin-image`, () => {
     })
 
     it(`default`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
-        // @ts-ignore
-        {},
-        null,
-        null
+        {}
       )
       expect(resp.images.sources[0].srcSet).toContain(`q=50`)
       expect(resp.images.sources[0].srcSet).toContain(`fm=webp`)
@@ -145,7 +164,7 @@ describe(`gatsby-plugin-image`, () => {
     })
 
     it(`force format`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
         {
@@ -162,7 +181,7 @@ describe(`gatsby-plugin-image`, () => {
     })
 
     it(`custom width`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
         {
@@ -180,14 +199,12 @@ describe(`gatsby-plugin-image`, () => {
       expect(resp).toMatchSnapshot()
     })
     it(`custom quality`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
         {
           quality: 90,
-        },
-        null,
-        null
+        }
       )
       expect(resp.images.sources[0].srcSet).toContain(`q=90`)
       expect(resp.images.sources[0].srcSet).toContain(`fm=webp`)
@@ -196,14 +213,12 @@ describe(`gatsby-plugin-image`, () => {
       expect(resp).toMatchSnapshot()
     })
     it(`layout fixed`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
         {
           layout: `fixed`,
-        },
-        null,
-        null
+        }
       )
       expect(resp.images.sources[0].srcSet).not.toContain(`,`)
       expect(resp.images.sources[0].sizes).not.toContain(`,`)
@@ -212,14 +227,12 @@ describe(`gatsby-plugin-image`, () => {
       expect(resp).toMatchSnapshot()
     })
     it(`layout full width`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
         {
           layout: `fullWidth`,
-        },
-        null,
-        null
+        }
       )
       expect(resp.images.sources[0].srcSet).toContain(`,`)
       expect(resp.images.sources[0].sizes).toEqual(`100vw`)
@@ -229,28 +242,24 @@ describe(`gatsby-plugin-image`, () => {
     })
 
     it(`placeholder blurred`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
         {
           placeholder: `blurred`,
-        },
-        null,
-        null
+        }
       )
       expect(resp.backgroundColor).toEqual(undefined)
       expect(resp.placeholder.fallback).toMatch(/^data:image\/png;base64,.+/)
       expect(resp).toMatchSnapshot()
     })
     it(`placeholder traced svg (falls back to DOMINANT_COLOR)`, async () => {
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
         {
           placeholder: `tracedSVG`,
-        },
-        null,
-        null
+        }
       )
       expect(resp.backgroundColor).toEqual(`#080808`)
       expect(resp.placeholder).not.toBeDefined()
@@ -266,12 +275,10 @@ describe(`gatsby-plugin-image`, () => {
         },
       })
 
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
-        {},
-        null,
-        null
+        {}
       )
       expect(resp.images.sources[0].srcSet).toContain(`q=42`)
       expect(resp.images.fallback.srcSet).toContain(`q=42`)
@@ -289,12 +296,10 @@ describe(`gatsby-plugin-image`, () => {
         },
       })
 
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
-        {},
-        null,
-        null
+        {}
       )
       expect(resp.images.sources[0].srcSet).toContain(`q=42`)
       expect(resp.images.fallback.srcSet).toContain(`q=60`)
@@ -311,12 +316,10 @@ describe(`gatsby-plugin-image`, () => {
         },
       })
 
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
-        {},
-        null,
-        null
+        {}
       )
       expect(resp.backgroundColor).toEqual(`#080808`)
       expect(resp.placeholder).not.toBeDefined()
@@ -333,12 +336,10 @@ describe(`gatsby-plugin-image`, () => {
         },
       })
 
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
-        {},
-        null,
-        null
+        {}
       )
       expect(resp.placeholder.fallback).toMatch(/^data:image\/png;base64,.+/)
       expect(resp).toMatchSnapshot()
@@ -352,12 +353,10 @@ describe(`gatsby-plugin-image`, () => {
         },
       })
 
-      const resp = await extendedNodeType.gatsbyImageData.resolve(
+      const resp = await contentfulAsset.gatsbyImageData.resolve(
         exampleImage,
         // @ts-ignore
-        {},
-        null,
-        null
+        {}
       )
       expect(resp.backgroundColor).toEqual(`#663399`)
       expect(resp).toMatchSnapshot()

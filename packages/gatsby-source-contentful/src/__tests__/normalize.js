@@ -1,11 +1,11 @@
 // @ts-check
 import {
   buildEntryList,
-  buildResolvableSet,
-  buildForeignReferenceMap,
-  createNodesForContentType,
-  createAssetNodes,
   buildFallbackChain,
+  buildForeignReferenceMap,
+  buildResolvableSet,
+  createAssetNodes,
+  createNodesForContentType,
   getLocalizedField,
   makeId,
 } from "../normalize"
@@ -19,19 +19,10 @@ const {
   space,
 } = require(`./data.json`)
 
-const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.com/docs/node-interface/
-const restrictedNodeFields = [
-  `id`,
-  `children`,
-  `contentful_id`,
-  `parent`,
-  `fields`,
-  `internal`,
-]
-
-const pluginConfig = createPluginConfig({})
-
+const pluginConfig = createPluginConfig({
+  accessToken: `mocked`,
+  spaceId: `mocked`,
+})
 const unstable_createNodeManifest = jest.fn()
 
 // Counts the created nodes per node type
@@ -48,7 +39,12 @@ function countCreatedNodeTypesFromMock(mock) {
   return nodeTypeCounts
 }
 
+const createNodeId = jest.fn(id => id)
+
 describe(`generic`, () => {
+  beforeEach(() => {
+    createNodeId.mockClear()
+  })
   it(`builds entry list`, () => {
     const entryList = buildEntryList({
       currentSyncData,
@@ -82,12 +78,15 @@ describe(`generic`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const allNodes = [...currentSyncData.entries, ...currentSyncData.assets]
 
     allNodes.forEach(node =>
-      expect(resolvable).toContain(`${node.sys.id}___${node.sys.type}`)
+      expect(resolvable).toContain(
+        `${space.sys.id}___${node.sys.id}___${node.sys.type}`
+      )
     )
   })
   it(`builds foreignReferenceMap`, () => {
@@ -99,6 +98,7 @@ describe(`generic`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMapState = buildForeignReferenceMap({
@@ -110,23 +110,24 @@ describe(`generic`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
     const referenceKeys = Object.keys(foreignReferenceMapState.backLinks)
     const expectedReferenceKeys = [
-      `2Y8LhXLnYAYqKCGEWG4EKI___Asset`,
-      `3wtvPBbBjiMKqKKga8I2Cu___Asset`,
-      `4LgMotpNF6W20YKmuemW0a___Entry`,
-      `4zj1ZOfHgQ8oqgaSKm4Qo2___Asset`,
-      `6m5AJ9vMPKc8OUoQeoCS4o___Asset`,
-      `6t4HKjytPi0mYgs240wkG___Asset`,
-      `7LAnCobuuWYSqks6wAwY2a___Entry`,
-      `10TkaLheGeQG6qQGqWYqUI___Asset`,
-      `24DPGBDeGEaYy8ms4Y8QMQ___Entry`,
-      `651CQ8rLoIYCeY6G0QG22q___Entry`,
-      `JrePkDVYomE8AwcuCUyMi___Entry`,
-      `KTRF62Q4gg60q6WCsWKw8___Asset`,
-      `wtrHxeu3zEoEce2MokCSi___Asset`,
-      `Xc0ny7GWsMEMCeASWO2um___Asset`,
+      `rocybtov1ozk___2Y8LhXLnYAYqKCGEWG4EKI___Asset`,
+      `rocybtov1ozk___3wtvPBbBjiMKqKKga8I2Cu___Asset`,
+      `rocybtov1ozk___4LgMotpNF6W20YKmuemW0a___Entry`,
+      `rocybtov1ozk___4zj1ZOfHgQ8oqgaSKm4Qo2___Asset`,
+      `rocybtov1ozk___6m5AJ9vMPKc8OUoQeoCS4o___Asset`,
+      `rocybtov1ozk___6t4HKjytPi0mYgs240wkG___Asset`,
+      `rocybtov1ozk___7LAnCobuuWYSqks6wAwY2a___Entry`,
+      `rocybtov1ozk___10TkaLheGeQG6qQGqWYqUI___Asset`,
+      `rocybtov1ozk___24DPGBDeGEaYy8ms4Y8QMQ___Entry`,
+      `rocybtov1ozk___651CQ8rLoIYCeY6G0QG22q___Entry`,
+      `rocybtov1ozk___JrePkDVYomE8AwcuCUyMi___Entry`,
+      `rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset`,
+      `rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset`,
+      `rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset`,
     ]
     expect(referenceKeys).toHaveLength(expectedReferenceKeys.length)
     expect(referenceKeys).toEqual(expect.arrayContaining(expectedReferenceKeys))
@@ -135,10 +136,10 @@ describe(`generic`, () => {
       expect(resolvable).toContain(referenceId)
 
       let expectedLength = 1
-      if (referenceId === `651CQ8rLoIYCeY6G0QG22q___Entry`) {
+      if (referenceId === `rocybtov1ozk___651CQ8rLoIYCeY6G0QG22q___Entry`) {
         expectedLength = 2
       }
-      if (referenceId === `7LAnCobuuWYSqks6wAwY2a___Entry`) {
+      if (referenceId === `rocybtov1ozk___7LAnCobuuWYSqks6wAwY2a___Entry`) {
         expectedLength = 3
       }
       expect(foreignReferenceMapState.backLinks[referenceId]).toHaveLength(
@@ -158,6 +159,7 @@ describe(`Process contentful data (by name)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMapState = buildForeignReferenceMap({
@@ -169,17 +171,20 @@ describe(`Process contentful data (by name)`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     expect(
-      foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
-        .name
-    ).toBe(`product___NODE`)
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___24DPGBDeGEaYy8ms4Y8QMQ___Entry`
+      ][0].name
+    ).toBe(`ContentfulContentTypeProduct`)
 
     expect(
-      foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
-        .name
-    ).toBe(`brand___NODE`)
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___2Y8LhXLnYAYqKCGEWG4EKI___Asset`
+      ][0].name
+    ).toBe(`ContentfulContentTypeBrand`)
   })
 
   it(`creates nodes for each entry`, () => {
@@ -191,6 +196,7 @@ describe(`Process contentful data (by name)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
@@ -202,16 +208,14 @@ describe(`Process contentful data (by name)`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
     const getNode = jest.fn(() => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({
         contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
@@ -229,40 +233,32 @@ describe(`Process contentful data (by name)`, () => {
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
-
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
-        // 3 Brand Contentful entries
-        ContentfulBrand: 6,
-        contentfulBrandCompanyDescriptionTextNode: 6,
-        contentfulBrandCompanyNameTextNode: 6,
-        // 2 Category Contentful entries
-        ContentfulCategory: 4,
-        contentfulCategoryCategoryDescriptionTextNode: 4,
-        contentfulCategoryTitleTextNode: 4,
         ContentfulContentType: contentTypeItems.length,
+        // Generated markdown child entities
+        ContentfulMarkdown: 38,
+        // 3 Brand Contentful entries
+        ContentfulContentTypeBrand: 6,
+        // 2 Category Contentful entries
+        ContentfulContentTypeCategory: 4,
         // 1 JSON Test Contentful entry
-        ContentfulJsonTest: 2,
-        contentfulJsonTestJsonStringTestJsonNode: 2,
-        contentfulJsonTestJsonTestJsonNode: 2,
+        ContentfulContentTypeJsonTest: 2,
         // 4 Product Contentful entries
-        ContentfulProduct: 8,
-        contentfulProductProductDescriptionTextNode: 8,
-        contentfulProductProductNameTextNode: 8,
+        ContentfulContentTypeProduct: 8,
         // 1 Remark Test Contentful entry
-        ContentfulRemarkTest: 2,
-        contentfulRemarkTestContentTextNode: 2,
+        ContentfulContentTypeRemarkTest: 2,
       })
     )
 
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(7)
+
     // Relevant to compare to compare warm and cold situation
-    expect(createNode.mock.calls.length).toBe(69) // "cold build entries" count
+    expect(createNode.mock.calls.length).toBe(65) // "cold build entries" count
   })
 
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn(() => Promise.resolve())
-    const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       createAssetNodes({
@@ -272,7 +268,6 @@ describe(`Process contentful data (by name)`, () => {
         defaultLocale,
         locales,
         space,
-        pluginConfig,
       })
     })
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
@@ -292,6 +287,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
@@ -303,10 +299,10 @@ describe(`Process existing mutated nodes in warm build`, () => {
       useNameForId: true,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
     let doReturn = true
     const getNode = jest.fn(id => {
       if (doReturn) {
@@ -317,7 +313,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         return {
           id,
           internal: {
-            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+            contentDigest: entryList[0][0].sys.publishedAt + `changed`,
           },
         }
       }
@@ -327,8 +323,6 @@ describe(`Process existing mutated nodes in warm build`, () => {
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({
         contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
@@ -346,36 +340,28 @@ describe(`Process existing mutated nodes in warm build`, () => {
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
-
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
-        // 3 Brand Contentful entries
-        ContentfulBrand: 6,
-        contentfulBrandCompanyDescriptionTextNode: 6,
-        contentfulBrandCompanyNameTextNode: 6,
-        // 2 Category Contentful entries
-        ContentfulCategory: 4,
-        contentfulCategoryCategoryDescriptionTextNode: 4,
-        contentfulCategoryTitleTextNode: 4,
         ContentfulContentType: contentTypeItems.length,
+        // Markdown child entities
+        ContentfulMarkdown: 38,
+        // 3 Brand Contentful entries
+        ContentfulContentTypeBrand: 6,
+        // 2 Category Contentful entries
+        ContentfulContentTypeCategory: 4,
         // 1 JSON Test Contentful entry
-        ContentfulJsonTest: 2,
-        contentfulJsonTestJsonStringTestJsonNode: 2,
-        contentfulJsonTestJsonTestJsonNode: 2,
+        ContentfulContentTypeJsonTest: 2,
         // 4 Product Contentful entries
-        ContentfulProduct: 8,
-        contentfulProductProductDescriptionTextNode: 8,
-        contentfulProductProductNameTextNode: 8,
+        ContentfulContentTypeProduct: 8,
         // 1 Remark Test Contentful entry
-        ContentfulRemarkTest: 2,
-        contentfulRemarkTestContentTextNode: 2,
+        ContentfulContentTypeRemarkTest: 2,
       })
     )
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(7)
 
     // Relevant to compare to compare warm and cold situation
     // This number ought to be the same as the cold build
-    expect(createNode.mock.calls.length).toBe(69) // "warm build where entry was changed" count
+    expect(createNode.mock.calls.length).toBe(65) // "warm build where entry was changed" count
   })
 })
 
@@ -388,6 +374,7 @@ describe(`Process contentful data (by id)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
     const foreignReferenceMapState = buildForeignReferenceMap({
       contentTypeItems,
@@ -398,17 +385,20 @@ describe(`Process contentful data (by id)`, () => {
       useNameForId: false,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     expect(
-      foreignReferenceMapState.backLinks[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0]
-        .name
-    ).toBe(`2pqfxujwe8qsykum0u6w8m___NODE`)
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___24DPGBDeGEaYy8ms4Y8QMQ___Entry`
+      ][0].name
+    ).toBe(`ContentfulContentType2PqfXuJwE8QSyKuM0U6W8M`)
 
     expect(
-      foreignReferenceMapState.backLinks[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0]
-        .name
-    ).toBe(`sfztzbsum8coewygeuyes___NODE`)
+      foreignReferenceMapState.backLinks[
+        `rocybtov1ozk___2Y8LhXLnYAYqKCGEWG4EKI___Asset`
+      ][0].name
+    ).toBe(`ContentfulContentTypeSFzTZbSuM8CoEwygeUYes`)
   })
 
   it(`creates nodes for each entry`, () => {
@@ -419,6 +409,7 @@ describe(`Process contentful data (by id)`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      spaceId: space.sys.id,
     })
     const foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
@@ -429,16 +420,14 @@ describe(`Process contentful data (by id)`, () => {
       useNameForId: false,
       previousForeignReferenceMapState: undefined,
       deletedEntries: [],
+      createNodeId,
     })
 
     const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
     const getNode = jest.fn(() => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({
         contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
@@ -455,32 +444,23 @@ describe(`Process contentful data (by id)`, () => {
     })
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
-
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
-        // 3 Brand Contentful entries
-        ContentfulSFzTZbSuM8CoEwygeUYes: 6,
-        contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode: 6,
-        contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode: 6,
-        // 2 Category Contentful entries
-        Contentful6XwpTaSiiI2Ak2Ww0Oi6Qa: 4,
-        contentful6XwpTaSiiI2Ak2Ww0Oi6QaCategoryDescriptionTextNode: 4,
-        contentful6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode: 4,
         ContentfulContentType: contentTypeItems.length,
+        // 3 Brand Contentful entries
+        ContentfulContentTypeSFzTZbSuM8CoEwygeUYes: 6,
+        // 2 Category Contentful entries
+        ContentfulContentType6XwpTaSiiI2Ak2Ww0Oi6Qa: 4,
         // 1 JSON Test Contentful entry
-        ContentfulJsonTest: 2,
-        contentfulJsonTestJsonStringTestJsonNode: 2,
-        contentfulJsonTestJsonTestJsonNode: 2,
+        ContentfulContentTypeJsonTest: 2,
         // 4 Product Contentful entries
-        Contentful2PqfXuJwE8QSyKuM0U6W8M: 8,
-        contentful2PqfXuJwE8QSyKuM0U6W8MProductDescriptionTextNode: 8,
-        contentful2PqfXuJwE8QSyKuM0U6W8MProductNameTextNode: 8,
+        ContentfulContentType2PqfXuJwE8QSyKuM0U6W8M: 8,
         // 1 Remark Test Contentful entry
-        ContentfulRemarkTest: 2,
-        contentfulRemarkTestContentTextNode: 2,
+        ContentfulContentTypeRemarkTest: 2,
       })
     )
+
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(7)
   })
 })
 

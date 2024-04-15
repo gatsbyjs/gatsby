@@ -1,1 +1,1 @@
-module.exports.schemes = require(`./schemes.js`)
+module.exports = require(`./dist/index.js`)

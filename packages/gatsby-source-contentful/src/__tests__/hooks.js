@@ -10,7 +10,7 @@ jest.mock(`react`, () => {
 describe(`useContentfulImage`, () => {
   const consoleWarnSpy = jest.spyOn(console, `warn`)
 
-  const image = { url: `//images.ctfassets.net/foo/bar/baz/image.jpg` }
+  const image = { url: `https://images.ctfassets.net/foo/bar/baz/image.jpg` }
 
   beforeEach(() => {
     consoleWarnSpy.mockClear()

@@ -2,6 +2,7 @@ import path from "path"
 import execa from "execa"
 
 const codemods = [
+  `gatsby-source-contentful`,
   `gatsby-plugin-image`,
   `global-graphql-calls`,
   `import-link`,

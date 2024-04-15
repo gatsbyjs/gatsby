@@ -24,7 +24,7 @@ const ContentReferencePage = ({ data }) => {
   return (
     <Layout>
       <h1>Default</h1>
-      {defaultEntries.map(({ contentful_id, title, one, many }) => {
+      {defaultEntries.map(({ sys: { id }, title, one, many, linkedFrom }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
@@ -37,15 +37,21 @@ const ContentReferencePage = ({ data }) => {
         }
 
         return (
-          <div data-cy-id={`default-${slug}`} key={contentful_id}>
-            <h2>{title}</h2>
+          <div data-cy-id={`default-${slug}`} key={id}>
+            <h2>
+              {title} ({id})
+            </h2>
             {content}
+            <h3>Linked from:</h3>
+            <pre>
+              <code>{JSON.stringify(linkedFrom, null, 2)}</code>
+            </pre>
           </div>
         )
       })}
       <h1>English Locale</h1>
       {englishEntries.map(
-        ({ contentful_id, title, oneLocalized, manyLocalized }) => {
+        ({ sys: { id }, title, oneLocalized, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
@@ -58,7 +64,7 @@ const ContentReferencePage = ({ data }) => {
           }
 
           return (
-            <div data-cy-id={`english-${slug}`} key={contentful_id}>
+            <div data-cy-id={`english-${slug}`} key={id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -67,7 +73,7 @@ const ContentReferencePage = ({ data }) => {
       )}
       <h1>German Locale</h1>
       {germanEntries.map(
-        ({ contentful_id, title, oneLocalized, manyLocalized }) => {
+        ({ sys: { id }, title, oneLocalized, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
@@ -80,7 +86,7 @@ const ContentReferencePage = ({ data }) => {
           }
 
           return (
-            <div data-cy-id={`german-${slug}`} key={contentful_id}>
+            <div data-cy-id={`german-${slug}`} key={id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -95,42 +101,65 @@ export default ContentReferencePage
 
 export const pageQuery = graphql`
   query ContentReferenceQuery {
-    default: allContentfulContentReference(
-      sort: { fields: title }
-      filter: { node_locale: { eq: "en-US" }, title: { glob: "!*Localized*" } }
+    default: allContentfulContentTypeContentReference(
+      sort: { title: ASC }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        title: { glob: "!*Localized*" }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
+        linkedFrom {
+          ContentfulContentTypeContentReference {
+            sys {
+              id
+            }
+          }
+        }
         one {
           __typename
-          ... on ContentfulText {
-            contentful_id
+          ... on ContentfulEntry {
+            sys {
+              id
+            }
+          }
+          ... on ContentfulContentTypeText {
             title
             short
           }
-          ... on ContentfulContentReference {
-            contentful_id
+          ... on ContentfulContentTypeNumber {
+            title
+            integer
+          }
+          ... on ContentfulContentTypeContentReference {
             title
             one {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeNumber {
+                title
+                integer
+              }
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
             many {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
@@ -138,38 +167,49 @@ export const pageQuery = graphql`
         }
         many {
           __typename
-          ... on ContentfulText {
-            contentful_id
+          ... on ContentfulEntry {
+            sys {
+              id
+            }
+          }
+          ... on ContentfulContentTypeText {
             title
             short
           }
-          ... on ContentfulNumber {
-            contentful_id
+          ... on ContentfulContentTypeNumber {
             title
             integer
           }
-          ... on ContentfulContentReference {
-            contentful_id
+          ... on ContentfulContentTypeContentReference {
             title
+            ... on ContentfulEntry {
+              sys {
+                id
+              }
+            }
             one {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeNumber {
+                title
+                integer
+              }
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
             many {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
@@ -177,61 +217,75 @@ export const pageQuery = graphql`
         }
       }
     }
-    english: allContentfulContentReference(
-      sort: { fields: title }
-      filter: { node_locale: { eq: "en-US" }, title: { glob: "*Localized*" } }
+    english: allContentfulContentTypeContentReference(
+      sort: { title: ASC }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        title: { glob: "*Localized*" }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         oneLocalized {
           __typename
-          title
-          decimal
-          integer
-        }
-        manyLocalized {
-          __typename
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             decimal
             integer
           }
-          ... on ContentfulText {
+        }
+        manyLocalized {
+          __typename
+          ... on ContentfulContentTypeNumber {
+            title
+            decimal
+            integer
+          }
+          ... on ContentfulContentTypeText {
             title
             short
             longPlain {
-              longPlain
+              raw
             }
           }
         }
       }
     }
-    german: allContentfulContentReference(
-      sort: { fields: title }
-      filter: { node_locale: { eq: "de-DE" }, title: { glob: "*Localized*" } }
+    german: allContentfulContentTypeContentReference(
+      sort: { title: ASC }
+      filter: {
+        sys: { locale: { eq: "de-DE" } }
+        title: { glob: "*Localized*" }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         oneLocalized {
           __typename
-          title
-          decimal
-          integer
-        }
-        manyLocalized {
-          __typename
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             decimal
             integer
           }
-          ... on ContentfulText {
+        }
+        manyLocalized {
+          __typename
+          ... on ContentfulContentTypeNumber {
+            title
+            decimal
+            integer
+          }
+          ... on ContentfulContentTypeText {
             title
             short
             longPlain {
-              longPlain
+              raw
             }
           }
         }

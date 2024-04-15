@@ -47,6 +47,9 @@ const mockClient = {
   }),
 }
 
+mockClient.withAllLocales = mockClient
+mockClient.withoutLinkResolution = mockClient
+
 jest.mock(`contentful`, () => {
   return {
     createClient: jest.fn(() => mockClient),
@@ -59,10 +62,6 @@ jest.mock(`../plugin-options`, () => {
     formatPluginOptionsForCLI: jest.fn(() => `formatPluginOptionsForCLIMock`),
   }
 })
-
-// jest so test output is not filled with contentful plugin logs
-// @ts-ignore
-global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
 
 const proxyOption = {
   host: `localhost`,
@@ -113,6 +112,9 @@ beforeEach(() => {
   global.process.exit.mockClear()
   reporter.panic.mockClear()
   mockClient.getLocales.mockClear()
+  mockClient.getContentTypes.mockClear()
+  mockClient.getSpace.mockClear()
+  mockClient.getTags.mockClear()
   // @ts-ignore
   formatPluginOptionsForCLI.mockClear()
   // @ts-ignore
@@ -124,7 +126,7 @@ afterAll(() => {
 })
 
 it(`calls contentful.createClient with expected params`, async () => {
-  await fetchContent({ pluginConfig, reporter, syncToken: null })
+  await fetchContent({ pluginConfig, reporter, syncToken: `` })
   expect(reporter.panic).not.toBeCalled()
   expect(createClient).toBeCalledWith(
     expect.objectContaining({
@@ -144,7 +146,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
       spaceId: `rocybtov1ozk`,
     }),
     reporter,
-    syncToken: null,
+    syncToken: ``,
   })
 
   expect(reporter.panic).not.toBeCalled()
@@ -170,7 +172,6 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
     limit: 1000,
-    order: `sys.createdAt`,
     skip: 0,
   })
 })
@@ -188,13 +189,12 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
     limit: 50,
-    order: `sys.createdAt`,
     skip: 0,
   })
 })
 
 describe(`Tags feature`, () => {
-  it(`tags are disabled by default`, async () => {
+  it(`calls contentful.getTags`, async () => {
     await fetchContent({
       pluginConfig: createPluginConfig({
         accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
@@ -202,28 +202,12 @@ describe(`Tags feature`, () => {
         pageLimit: 50,
       }),
       reporter,
-      syncToken: null,
-    })
-
-    expect(reporter.panic).not.toBeCalled()
-    expect(mockClient.getTags).not.toBeCalled()
-  })
-  it(`calls contentful.getTags when enabled`, async () => {
-    await fetchContent({
-      pluginConfig: createPluginConfig({
-        accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
-        spaceId: `rocybtov1ozk`,
-        pageLimit: 50,
-        enableTags: true,
-      }),
-      reporter,
-      syncToken: null,
+      syncToken: ``,
     })
 
     expect(reporter.panic).not.toBeCalled()
     expect(mockClient.getTags).toHaveBeenCalledWith({
       limit: 50,
-      order: `sys.createdAt`,
       skip: 0,
     })
   })
@@ -235,7 +219,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw new Error(`error`)
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -273,7 +257,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -314,7 +298,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchContent({
       pluginConfig: masterConfig,
       reporter,
-      syncToken: null,
+      syncToken: ``,
     })
 
     expect(reporter.panic).toBeCalledWith(
@@ -354,7 +338,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -395,7 +379,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: `` })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -432,7 +416,6 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     expect(mockClient.sync).toHaveBeenCalledWith({
       initial: true,
       limit: 1000,
-      resolveLinks: false,
     })
     mockClient.sync.mockClear()
 
@@ -440,7 +423,6 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(mockClient.sync).toHaveBeenCalledWith({
       nextSyncToken: `mocked`,
-      resolveLinks: false,
     })
   })
 })

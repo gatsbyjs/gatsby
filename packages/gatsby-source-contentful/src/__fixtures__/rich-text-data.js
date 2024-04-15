@@ -496,6 +496,7 @@ exports.initialSync = () => {
               },
             },
           },
+          metadata: { tags: [] },
         },
         {
           sys: {
@@ -658,6 +659,7 @@ exports.initialSync = () => {
               },
             },
           },
+          metadata: { tags: [] },
         },
       ],
       assets: [
@@ -702,6 +704,7 @@ exports.initialSync = () => {
               },
             },
           },
+          metadata: { tags: [] },
         },
         {
           sys: {
@@ -744,6 +747,7 @@ exports.initialSync = () => {
               },
             },
           },
+          metadata: { tags: [] },
         },
       ],
       deletedEntries: [],
@@ -751,85 +755,6 @@ exports.initialSync = () => {
       nextSyncToken: `FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CmxolIsOxF10EMMOGCXM-IFrCrhc0LUPDvkjDkms7w5gLw4sqw4_CvxsiZMOFFsOawpM8R8OVPAhMJ8O1w6zCmg`,
     },
 
-    defaultLocale: `en-US`,
-    locales: [
-      {
-        code: `en-US`,
-        name: `English (United States)`,
-        default: true,
-        fallbackCode: null,
-        sys: {
-          id: `1uSElBQA68GRKF30tpTxxT`,
-          type: `Locale`,
-          version: 1,
-        },
-      },
-      {
-        code: `nl`,
-        name: `Dutch`,
-        default: false,
-        fallbackCode: `en-US`,
-        sys: {
-          id: `2T7M2OzIrvE8cOCOF1HMuY`,
-          type: `Locale`,
-          version: 1,
-        },
-      },
-    ],
-    space: {
-      sys: {
-        type: `Space`,
-        id: `ahntqop9oi7x`,
-      },
-      name: `Rich Text`,
-      locales: [
-        {
-          code: `en-US`,
-          default: true,
-          name: `English (United States)`,
-          fallbackCode: null,
-        },
-      ],
-    },
-    tagItems: [],
-  }
-}
-
-// @todo this fixture is unused
-exports.deleteLinkedPage = () => {
-  return {
-    currentSyncData: {
-      entries: [],
-      assets: [],
-      deletedEntries: [
-        {
-          sys: {
-            type: `DeletedEntry`,
-            id: `7oHxo6bs0us9wIkq27qdyK`,
-            space: {
-              sys: {
-                type: `Link`,
-                linkType: `Space`,
-                id: `ahntqop9oi7x`,
-              },
-            },
-            environment: {
-              sys: {
-                id: `master`,
-                type: `Link`,
-                linkType: `Environment`,
-              },
-            },
-            revision: 1,
-            createdAt: `2020-10-16T12:29:38.094Z`,
-            updatedAt: `2020-10-16T12:29:38.094Z`,
-            deletedAt: `2020-10-16T12:29:38.094Z`,
-          },
-        },
-      ],
-      deletedAssets: [],
-      nextSyncToken: `FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CqcO3w6XCrMKuITDDiEoQSMKvIMOYwrzCn3sHPH3CvsK3w4A9w6LCjsOVwrjCjGwbw4rCl0fDl8OhU8Oqw67DhMOCwozDmxrChsOtRD4`,
-    },
     defaultLocale: `en-US`,
     locales: [
       {
