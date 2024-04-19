@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@6.13.2/packages/gatsby-plugin-offline) (2024-04-10)
+
+#### Bug Fixes
+
+- handler generation on windows [#38900](https://github.com/gatsbyjs/gatsby/issues/38900) [#38929](https://github.com/gatsbyjs/gatsby/issues/38929) ([edaf016](https://github.com/gatsbyjs/gatsby/commit/edaf016906b593f0e028fa4a4e0b4ecc41cf1cc6))
+
 ### [6.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@6.13.1/packages/gatsby-plugin-offline) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-plugin-offline
