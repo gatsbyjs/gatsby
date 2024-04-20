@@ -7,21 +7,23 @@ import { loadThemes } from "../load-themes"
 import { store } from "../../redux"
 import handleFlags from "../../utils/handle-flags"
 import availableFlags from "../../utils/flags"
-import { IProgram } from "../../commands/types"
-import { IGatsbyConfig } from "../../internal"
+import type { IProgram } from "../../commands/types"
+import type { IGatsbyConfig } from "../../internal"
+
+type Config = {
+  siteDirectory: string
+  processFlags?: boolean | undefined
+  program?: IProgram | undefined
+}
 
 export async function loadConfig({
   siteDirectory,
   processFlags = false,
-}: {
-  siteDirectory: string
-  processFlags?: boolean
-  program?: IProgram
-}): Promise<IGatsbyConfig> {
+}: Config): Promise<IGatsbyConfig> {
   // Try opening the site's gatsby-config.js file.
   const { configModule, configFilePath } = await getConfigFile(
     siteDirectory,
-    `gatsby-config`
+    `gatsby-config`,
   )
   let config = preferDefault(configModule)
 

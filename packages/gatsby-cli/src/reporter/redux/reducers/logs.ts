@@ -1,4 +1,4 @@
-import { ActionsUnion, IGatsbyCLIState, ISetLogs } from "../types"
+import type { ActionsUnion, IGatsbyCLIState, ISetLogs } from "../types"
 import { Actions } from "../../constants"
 
 export const reducer = (
@@ -6,7 +6,7 @@ export const reducer = (
     activities: {},
     status: ``,
   },
-  action: ActionsUnion | ISetLogs
+  action: ActionsUnion | ISetLogs,
 ): IGatsbyCLIState => {
   switch (action.type) {
     case Actions.SetStatus: {

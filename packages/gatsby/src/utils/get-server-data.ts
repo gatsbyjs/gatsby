@@ -2,21 +2,23 @@ import type { Request } from "express"
 import type { IGatsbyPage } from "../redux/types"
 import { match } from "@gatsbyjs/reach-router"
 
-export interface IServerData {
+export type IServerData = {
   headers?: Record<string, string>
   props?: Record<string, unknown>
   status?: number
 }
 
-interface IModuleWithServerData {
-  getServerData?: (args: {
-    headers: Map<string, unknown>
-    method: string
-    url: string
-    query?: Record<string, unknown>
-    params?: Record<string, unknown>
-    pageContext: Record<string, unknown>
-  }) => Promise<IServerData>
+type IModuleWithServerData = {
+  getServerData?:
+    | ((args: {
+        headers: Map<string, unknown>
+        method: string
+        url: string
+        query?: Record<string, unknown> | undefined
+        params?: Record<string, unknown> | undefined
+        pageContext: Record<string, unknown>
+      }) => Promise<IServerData>)
+    | undefined
 }
 
 export async function getServerData(
@@ -25,7 +27,7 @@ export async function getServerData(
     | undefined,
   page: IGatsbyPage,
   pagePath: string,
-  mod: IModuleWithServerData | undefined
+  mod: IModuleWithServerData | undefined,
 ): Promise<IServerData> {
   if (!mod?.getServerData) {
     return {}

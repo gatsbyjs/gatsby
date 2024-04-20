@@ -22,12 +22,12 @@
     "clean": "del-cli dist/*"
   },
   "devDependencies": {
-    "@testing-library/react": "^14.3.0",
+    "@testing-library/react": "^15.0.2",
     "cross-env": "^7.0.3",
     "del-cli": "^5.1.0",
     "microbundle": "^0.15.1",
     "prepend-directive": "^1.1.0",
-    "typescript": "5.4.4"
+    "typescript": "5.4.5"
   },
   "peerDependencies": {
     "@gatsbyjs/reach-router": "^2.0.1",
@@ -35,7 +35,7 @@
     "react-dom": "^18.2.0 || ^0.0.0"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-script#readme",
   "keywords": [

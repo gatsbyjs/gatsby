@@ -1,5 +1,6 @@
 import { murmurhash } from "gatsby-core-utils/murmurhash"
-import { JSXOpeningElement } from "@babel/types"
+// @ts-ignore
+import type { JSXOpeningElement, JSXAttribute } from "@babel/types"
 import { NodePath } from "@babel/core"
 import { getAttributeValues } from "babel-jsx-utils"
 import camelCase from "camelcase"
@@ -27,7 +28,7 @@ export const SHARP_ATTRIBUTES = new Set([
 ])
 
 export function normalizeProps(
-  props: Record<string, unknown>
+  props: Record<string, unknown>,
 ): Record<string, unknown> {
   const out = {
     ...props,
@@ -45,7 +46,11 @@ export function normalizeProps(
   }
 
   if (Array.isArray(out.formats)) {
-    out.formats = out.formats.map((format: string) => format.toLowerCase())
+    out.formats = out.formats
+      .map((format: unknown) => {
+        return typeof format === `string` ? format.toLowerCase() : ``
+      })
+      .filter(Boolean)
   }
 
   return out
@@ -53,7 +58,10 @@ export function normalizeProps(
 
 export function evaluateImageAttributes(
   nodePath: NodePath<JSXOpeningElement>,
-  onError?: (prop: string, nodePath: NodePath<any>) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onError?:
+    | ((prop: string, nodePath: NodePath<JSXAttribute> | undefined) => void)
+    | undefined,
 ): Record<string, unknown> {
   // Only get attributes that we need for generating the images
   return normalizeProps(getAttributeValues(nodePath, onError, SHARP_ATTRIBUTES))

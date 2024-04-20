@@ -1,14 +1,14 @@
 import normalize from "../../utils/normalize-path"
-import { IGatsbyState, ActionsUnion } from "../types"
+import type { IGatsbyState, ActionsUnion } from "../types"
 
 let programStatus = `BOOTSTRAPPING`
 
 // TODO: replace usages of this reducer with queries.trackedComponents
 //  It is here merely for compatibility.
-export const componentsReducer = (
-  state: IGatsbyState["components"] = new Map(),
-  action: ActionsUnion
-): IGatsbyState["components"] => {
+export function componentsReducer(
+  state: IGatsbyState["components"] | undefined = new Map(),
+  action: ActionsUnion,
+): IGatsbyState["components"] {
   switch (action.type) {
     case `CREATE_SLICE`: {
       let component = state.get(action.payload.componentPath)

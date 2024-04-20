@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@9.0.4",
   "name": "create-gatsby",
   "version": "3.14.0-next.2",
   "main": "lib/index.js",
@@ -17,6 +18,7 @@
     "stubs/"
   ],
   "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
     "@ascorbic/worker-threads-shim": "^1.0.0",
     "@lukeed/uuid": "^2.0.1",
     "@types/configstore": "^6.0.2",

@@ -1,10 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Module from "module"
 import path from "path"
 
 /**
  * We need to use private Module methods in this polyfill
  */
-interface IModulePrivateMethods {
+type IModulePrivateMethods = {
   _nodeModulePaths: (directory: string) => Array<string>
   _compile: (src: string, file: string) => void
 }

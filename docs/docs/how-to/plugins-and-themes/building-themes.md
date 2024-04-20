@@ -34,20 +34,20 @@ This will generate a new project for you. The file tree will look like this:
 ├── .gitignore
 ├── package.json
 ├── README.md
-└── yarn.lock
+└── pnpm-lock.yaml
 ```
 
 Yarn workspaces are a great way to set up a project for theme development because they support housing multiple packages in a single parent directory and link them together.
 
 For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project, and develop them locally.
 
-> 💡 If you prefer, you can develop themes as [local plugins](/docs/creating-a-local-plugin/). Using `yarn link` or `npm link` are also viable alternatives. In general, Gatsby recommends the yarn workspaces approach for building themes, and that's what the starter and this guide will reflect.
+> 💡 If you prefer, you can develop themes as [local plugins](/docs/creating-a-local-plugin/). Using `pnpm link` or `npm link` are also viable alternatives. In general, Gatsby recommends the pnpm workspaces approach for building themes, and that's what the starter and this guide will reflect.
 
-> 💡 The starter takes care of all of the configuration for developing a theme using yarn workspaces. If you're interested in more detail on this setup, check out [this blog post](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
+> 💡 The starter takes care of all of the configuration for developing a theme using pnpm workspaces. If you're interested in more detail on this setup, check out [this blog post](/blog/2019-05-22-setting-up-pnpm-workspaces-for-theme-development/).
 
 ## `package.json`
 
-The `package.json` in the root of the new project is primarily responsible for setting up the yarn workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
+The `package.json` in the root of the new project is primarily responsible for setting up the pnpm workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
 
 ```json:title=my-theme/package.json
 {
@@ -57,7 +57,7 @@ The `package.json` in the root of the new project is primarily responsible for s
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn workspace example build"
+    "build": "pnpm workspace example build"
   },
   // highlight-start
   "workspaces": ["gatsby-theme-minimal", "example"]

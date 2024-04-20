@@ -1,4 +1,4 @@
-import { IGatsbyConfig } from "../internal"
+import type { IGatsbyConfig } from "../internal"
 
 type ConstructConfigObjectResponse = Pick<
   IGatsbyConfig,
@@ -6,7 +6,7 @@ type ConstructConfigObjectResponse = Pick<
 >
 
 export function constructConfigObject(
-  gatsbyConfig: IGatsbyConfig
+  gatsbyConfig: IGatsbyConfig,
 ): ConstructConfigObjectResponse {
   return {
     trailingSlash: gatsbyConfig.trailingSlash ?? `always`,

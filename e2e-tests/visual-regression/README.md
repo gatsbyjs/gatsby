@@ -16,7 +16,7 @@ Specifying large screen sizes can also cause problems when running locally on a 
 
 ## Updating snapshots
 
-Run `yarn cy:update-snapshots` if you need to update them. Please note that unlike Jest, this doesn't delete outdated snapshots, so if you remove a test make sure to remove its snapshots too.
+Run `pnpm run cy:update-snapshots` if you need to update them. Please note that unlike Jest, this doesn't delete outdated snapshots, so if you remove a test make sure to remove its snapshots too.
 
 ## Credits
 

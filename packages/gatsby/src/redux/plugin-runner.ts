@@ -1,19 +1,22 @@
 import { Span } from "opentracing"
 import { emitter, store } from "./index"
-import apiRunnerNode from "../utils/api-runner-node"
+import { apiRunnerNode } from "../utils/api-runner-node"
 import { ActivityTracker } from "../../"
 import { ICreateNodeAction } from "./types"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Plugin = any // TODO
 
 // This might make sense to live somewhere else
-interface ICreatePageAction {
+type ICreatePageAction = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   graphql<TData, TVariables = any>(
     query: string,
-    variables?: TVariables
+    variables?: TVariables | undefined,
   ): Promise<{
-    errors?: any
-    data?: TData
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    errors?: any | undefined
+    data?: TData | undefined
   }>
   traceId: "initial-createPages"
   waitForCascadingActions: boolean
@@ -41,13 +44,13 @@ interface ICreatePageAction {
   }
 }
 
-export const startPluginRunner = (): void => {
+export function startPluginRunner(): void {
   const plugins = store.getState().flattenedPlugins
   const pluginsImplementingOnCreatePage = plugins.filter(plugin =>
-    plugin.nodeAPIs.includes(`onCreatePage`)
+    plugin.nodeAPIs.includes(`onCreatePage`),
   )
   const pluginsImplementingOnCreateNode = plugins.filter(plugin =>
-    plugin.nodeAPIs.includes(`onCreateNode`)
+    plugin.nodeAPIs.includes(`onCreateNode`),
   )
   if (pluginsImplementingOnCreatePage.length > 0) {
     emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
@@ -55,7 +58,7 @@ export const startPluginRunner = (): void => {
       apiRunnerNode(
         `onCreatePage`,
         { page, traceId: action.traceId, parentSpan: action.parentSpan },
-        { pluginSource: action.plugin.name, activity: action.activity }
+        { pluginSource: action.plugin.name, activity: action.activity },
       )
     })
   }

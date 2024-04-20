@@ -177,11 +177,11 @@ In addition to the explicit `--no-color` option, the CLI respects the presence o
 
 ## How to change your default package manager for your next project?
 
-When you use `gatsby new` for the first time to create a new project, you are asked to choose your default package manager between yarn and npm.
+When you use `gatsby new` for the first time to create a new project, you are asked to choose your default package manager between pnpm and npm.
 
 ```shell
 Which package manager would you like to use ? › - Use arrow-keys. Return to submit.
-❯  yarn
+❯  pnpm
    npm
 ```
 
@@ -201,12 +201,12 @@ gatsby options set [<key> <value>]
 | Argument | Description                                                                     |
 | -------- | ------------------------------------------------------------------------------- |
 | key      | Set the package manager `gatsby new` is using. choices: `pm`, `package-manager` |
-| value    | Set the package manager as `npm` or `yarn`.                                     |
+| value    | Set the package manager as `npm` or `pnpm`.                                     |
 
-To set the default package manager as `yarn` you'd run:
+To set the default package manager as `pnpm` you'd run:
 
 ```shell
-gatsby options set package-manager yarn
+gatsby options set package-manager pnpm
 ```
 
 ### Editing the config file
@@ -219,7 +219,7 @@ In it you’re going to see something like this.
 ```json:title=config.json
 {
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "pnpm@9.0.4",
   }
 }
 ```

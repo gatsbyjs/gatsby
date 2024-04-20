@@ -5,6 +5,7 @@ import * as fs from "fs-extra"
 import execa, { Options as ExecaOptions } from "execa"
 import webpack, { Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
+// @ts-ignore
 import { dependencies } from "gatsby/package.json"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
@@ -31,13 +32,13 @@ const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.posix.join(
   slash(process.cwd()),
   `.cache`,
-  `query-engine`
+  `query-engine`,
 )
 const cacheLocation = path.posix.join(
   slash(process.cwd()),
   `.cache`,
   `webpack`,
-  `query-engine`
+  `query-engine`,
 )
 
 function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
@@ -45,25 +46,26 @@ function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
   apisToKeep.add(`onPluginInit`)
 
   const apisToRemove = (Object.keys(nodeApis) as Array<GatsbyNodeAPI>).filter(
-    api => !apisToKeep.has(api)
+    api => !apisToKeep.has(api),
   )
   return apisToRemove
 }
 
-const getInternalPackagesCacheDir = (
-  functionsTarget: IPlatformAndArch
-): string =>
-  path.posix.join(
+function getInternalPackagesCacheDir(
+  functionsTarget: IPlatformAndArch,
+): string {
+  return path.posix.join(
     slash(process.cwd()),
     `.cache`,
     `internal-packages`,
-    `${functionsTarget.platform}-${functionsTarget.arch}`
+    `${functionsTarget.platform}-${functionsTarget.arch}`,
   )
+}
 
 // Create a directory and JS module where we install internally used packages
-const createInternalPackagesCacheDir = async (
-  functionsTarget: IPlatformAndArch
-): Promise<void> => {
+async function createInternalPackagesCacheDir(
+  functionsTarget: IPlatformAndArch,
+): Promise<void> {
   const cacheDir = getInternalPackagesCacheDir(functionsTarget)
   await fs.ensureDir(cacheDir)
 
@@ -87,7 +89,7 @@ const createInternalPackagesCacheDir = async (
 function getLMDBBinaryFromSiteLocation(
   lmdbPackageName: string,
   version: string,
-  functionsTarget: IPlatformAndArch
+  functionsTarget: IPlatformAndArch,
 ): string | undefined {
   // Read lmdb's package.json, go through its optional depedencies and validate if there's a prebuilt lmdb module with a compatible binary to our platform and arch
   let packageJson: PackageJson
@@ -96,7 +98,9 @@ function getLMDBBinaryFromSiteLocation(
       .dirname(slash(require.resolve(`lmdb`)))
       .replace(`/dist`, ``)
     const packageJsonPath = path.join(modulePath, `package.json`)
-    packageJson = JSON.parse(fs.readFileSync(packageJsonPath, `utf-8`))
+    packageJson = JSON.parse(
+      fs.readFileSync(packageJsonPath, `utf-8`),
+    ) as PackageJson
   } catch (e) {
     // If we fail to read lmdb's package.json there's bigger problems here so just skip installation
     return undefined
@@ -105,20 +109,20 @@ function getLMDBBinaryFromSiteLocation(
   const { optionalDependencies = {} } = packageJson
   if (!Object.keys(optionalDependencies).find(p => p === lmdbPackageName)) {
     throw new Error(
-      `Target platform/arch for functions execution (${functionsTarget.platform}/${functionsTarget.arch}) is not supported.`
+      `Target platform/arch for functions execution (${functionsTarget.platform}/${functionsTarget.arch}) is not supported.`,
     )
   }
   return getPackageLocationFromRequireContext(
     slash(require.resolve(`lmdb`)),
     lmdbPackageName,
-    version
+    version,
   )
 }
 
 function getPackageLocationFromRequireContext(
   location: string,
   packageName: string,
-  packageVersion?: string
+  packageVersion?: string,
 ): string | undefined {
   try {
     const requireId = `${packageName}/package.json`
@@ -128,8 +132,8 @@ function getPackageLocationFromRequireContext(
     if (packageVersion) {
       // delete locationRequire.cache[requireId]
       const { version } = JSON.parse(
-        fs.readFileSync(packageJsonLocation, `utf-8`)
-      )
+        fs.readFileSync(packageJsonLocation, `utf-8`),
+      ) as PackageJson
       if (packageVersion !== version) {
         return undefined
       }
@@ -141,22 +145,20 @@ function getPackageLocationFromRequireContext(
   }
 }
 
-interface ILMDBBinaryPackageStatusBase {
+type ILMDBBinaryPackageStatusBase = {
   packageName: string
   needToInstall: boolean
   packageVersion: string
 }
 
-interface ILMDBBinaryPackageStatusInstalled
-  extends ILMDBBinaryPackageStatusBase {
+type ILMDBBinaryPackageStatusInstalled = {
   needToInstall: false
   packageLocation: string
-}
+} & ILMDBBinaryPackageStatusBase
 
-interface ILMDBBinaryPackageStatusNeedAlternative
-  extends ILMDBBinaryPackageStatusBase {
+type ILMDBBinaryPackageStatusNeedAlternative = {
   needToInstall: true
-}
+} & ILMDBBinaryPackageStatusBase
 
 type IBinaryPackageStatus =
   | ILMDBBinaryPackageStatusInstalled
@@ -164,7 +166,7 @@ type IBinaryPackageStatus =
 
 function checkIfInstalledInInternalPackagesCache(
   packageStatus: IBinaryPackageStatus,
-  functionsTarget: IPlatformAndArch
+  functionsTarget: IPlatformAndArch,
 ): IBinaryPackageStatus {
   const cacheDir = getInternalPackagesCacheDir(functionsTarget)
 
@@ -172,7 +174,7 @@ function checkIfInstalledInInternalPackagesCache(
     getPackageLocationFromRequireContext(
       path.posix.join(cacheDir, `:internal:`),
       packageStatus.packageName,
-      packageStatus.packageVersion
+      packageStatus.packageVersion,
     )
 
   if (
@@ -197,7 +199,7 @@ function checkIfInstalledInInternalPackagesCache(
 // Install lmdb's native system module under our internal cache if we detect the current installation
 // isn't using the pre-build binaries
 function checkIfNeedToInstallMissingLmdb(
-  functionsTarget: IPlatformAndArch
+  functionsTarget: IPlatformAndArch,
 ): IBinaryPackageStatus {
   // lmdb module with prebuilt binaries for target platform
   const lmdbPackageName = `@lmdb/lmdb-${functionsTarget.platform}-${functionsTarget.arch}`
@@ -205,7 +207,7 @@ function checkIfNeedToInstallMissingLmdb(
   const lmdbBinaryFromSiteLocation = getLMDBBinaryFromSiteLocation(
     lmdbPackageName,
     dependencies.lmdb,
-    functionsTarget
+    functionsTarget,
   )
 
   const sharedPackageStatus: ILMDBBinaryPackageStatusNeedAlternative = {
@@ -224,13 +226,13 @@ function checkIfNeedToInstallMissingLmdb(
 
   return checkIfInstalledInInternalPackagesCache(
     sharedPackageStatus,
-    functionsTarget
+    functionsTarget,
   )
 }
 
 function checkIfNeedToInstallMissingSharp(
   functionsTarget: IPlatformAndArch,
-  currentTarget: IPlatformAndArch
+  currentTarget: IPlatformAndArch,
 ): IBinaryPackageStatus | undefined {
   try {
     // check if shapr is resolvable
@@ -246,7 +248,7 @@ function checkIfNeedToInstallMissingSharp(
         packageName: `sharp`,
         packageVersion: sharpVersion,
       },
-      functionsTarget
+      functionsTarget,
     )
   } catch (e) {
     return undefined
@@ -255,10 +257,10 @@ function checkIfNeedToInstallMissingSharp(
 
 async function installMissing(
   packages: Array<IBinaryPackageStatus | undefined>,
-  functionsTarget: IPlatformAndArch
+  functionsTarget: IPlatformAndArch,
 ): Promise<Array<IBinaryPackageStatus | undefined>> {
   function shouldInstall(
-    p: IBinaryPackageStatus | undefined
+    p: IBinaryPackageStatus | undefined,
   ): p is IBinaryPackageStatus {
     return Boolean(p?.needToInstall)
   }
@@ -296,14 +298,14 @@ async function installMissing(
     `--force`,
   ]
 
-  await execa(
+  await execa.execa(
     `npm`,
     [
       `install`,
       ...npmAdditionalCliArgs,
       ...packagesToInstall.map(p => `${p.packageName}@${p.packageVersion}`),
     ],
-    options
+    options,
   )
 
   return packages.map(info =>
@@ -315,18 +317,18 @@ async function installMissing(
             packageLocation: path.posix.join(
               cacheDir,
               `node_modules`,
-              info.packageName
+              info.packageName,
             ),
           }
         : info
-      : undefined
+      : undefined,
   )
 }
 
 export async function createGraphqlEngineBundle(
   rootDir: string,
   reporter: Reporter,
-  isVerbose?: boolean
+  isVerbose?: boolean,
 ): Promise<webpack.Compilation | undefined> {
   const state = store.getState()
   const pathPrefix = state.program.prefixPaths
@@ -335,7 +337,7 @@ export async function createGraphqlEngineBundle(
 
   const schemaSnapshotString = await fs.readFile(
     path.join(rootDir, `.cache`, `schema.gql`),
-    `utf-8`
+    `utf-8`,
   )
   await printQueryEnginePlugins()
 
@@ -347,7 +349,7 @@ export async function createGraphqlEngineBundle(
   }
 
   const gatsbyPluginTSRequire = mod.createRequire(
-    require.resolve(`gatsby-plugin-typescript`)
+    require.resolve(`gatsby-plugin-typescript`),
   )
 
   const currentTarget = getCurrentPlatformAndTarget()
@@ -365,7 +367,7 @@ export async function createGraphqlEngineBundle(
       checkIfNeedToInstallMissingLmdb(functionsTarget),
       checkIfNeedToInstallMissingSharp(functionsTarget, currentTarget),
     ],
-    functionsTarget
+    functionsTarget,
   )
 
   if (!lmdbPackageInfo) {
@@ -375,7 +377,7 @@ export async function createGraphqlEngineBundle(
     // to not cause untested code paths
     if (lmdbPackageInfo.needToInstall) {
       throw new Error(
-        `Failed to locate or install LMDB binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`
+        `Failed to locate or install LMDB binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`,
       )
     }
 
@@ -385,7 +387,7 @@ export async function createGraphqlEngineBundle(
   if (sharpPackageInfo) {
     if (sharpPackageInfo.needToInstall) {
       throw new Error(
-        `Failed to locate or install Sharp binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`
+        `Failed to locate or install Sharp binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`,
       )
     }
     dynamicAliases[`sharp$`] = sharpPackageInfo.packageLocation
@@ -470,7 +472,7 @@ export async function createGraphqlEngineBundle(
                 assetRelocatorUseEntry,
                 {
                   loader: require.resolve(
-                    `../../utils/webpack/loaders/webpack-remove-exports-loader`
+                    `../../utils/webpack/loaders/webpack-remove-exports-loader`,
                   ),
                   options: {
                     remove: getApisToRemoveForQueryEngine(),
@@ -553,13 +555,13 @@ export async function createGraphqlEngineBundle(
         PATH_PREFIX: JSON.stringify(pathPrefix),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_SLICES": JSON.stringify(
-          !!process.env.GATSBY_SLICES
+          !!process.env.GATSBY_SLICES,
         ),
         "process.env.GATSBY_FUNCTIONS_PLATFORM": JSON.stringify(
-          functionsTarget.platform
+          functionsTarget.platform,
         ),
         "process.env.GATSBY_FUNCTIONS_ARCH": JSON.stringify(
-          functionsTarget.arch
+          functionsTarget.arch,
         ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
@@ -570,7 +572,7 @@ export async function createGraphqlEngineBundle(
   return new Promise((resolve, reject) => {
     compiler.run(async (err, stats): Promise<void> => {
       function getResourcePath(
-        webpackModule?: Module | NormalModule | ConcatenatedModule | null
+        webpackModule?: Module | NormalModule | ConcatenatedModule | null,
       ): string | undefined {
         if (webpackModule && !(webpackModule instanceof ConcatenatedModule)) {
           return (webpackModule as NormalModule).resource
@@ -588,19 +590,19 @@ export async function createGraphqlEngineBundle(
 
       function iterateModules(
         webpackModules: Set<Module>,
-        compilation: Compilation
+        compilation: Compilation,
       ): void {
         for (const webpackModule of webpackModules) {
           if (webpackModule instanceof ConcatenatedModule) {
             iterateModules(
               (webpackModule as ConcatenatedModule).modules,
-              compilation
+              compilation,
             )
           } else {
             const resourcePath = getResourcePath(webpackModule)
             if (resourcePath?.includes(`ts-node`)) {
               const importedBy = getResourcePath(
-                compilation.moduleGraph.getIssuer(webpackModule)
+                compilation.moduleGraph.getIssuer(webpackModule),
               )
               const structuredError = {
                 id: `98011`,

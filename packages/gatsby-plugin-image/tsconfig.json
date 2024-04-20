@@ -3,17 +3,15 @@
     "allowJs": true,
     "declaration": true,
     "declarationMap": true,
-    "jsx": "react",
-    "target": "es5",
+    "jsx": "preserve",
+    "target": "ESNext",
     "outDir": "./dist",
     "declarationDir": "./dist",
-    "lib": ["es2016", "dom"],
+    "lib": ["ESNext", "dom"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "module": "ESNext",
-    "moduleResolution": "node",
-    "downlevelIteration": true
-    // "jsxFactory": "createElement"
+    "moduleResolution": "node"
   },
   "files": ["./src/global.ts", "./src/index.ts", "./src/index.browser.ts"]
 }

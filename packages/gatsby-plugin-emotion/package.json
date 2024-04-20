@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@9.0.4",
   "name": "gatsby-plugin-emotion",
   "description": "Gatsby plugin to add support for Emotion",
   "version": "8.14.0-next.2",
@@ -11,6 +12,7 @@
     "@emotion/babel-preset-css-prop": "^11.11.0"
   },
   "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
@@ -19,7 +21,7 @@
   "peerDependencies": {
     "@babel/core": "^7.24.4",
     "@emotion/react": "^11.11.4",
-    "gatsby": "^5.0.0-next"
+    "gatsby": "^5.13.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [
@@ -41,6 +43,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   }
 }

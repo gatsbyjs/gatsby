@@ -19,12 +19,12 @@ Defaults to building a site with 5k markdown pages and 25 maximum rows per age. 
 First, install node modules required by package.json. This is needed only one time. Then run the build
 
 ```shell
-yarn
-yarn build
+pnpm install
+pnpm run build
 ```
 
 Alternatively
 
 ```shell
-yarn bench
+pnpm run bench
 ```

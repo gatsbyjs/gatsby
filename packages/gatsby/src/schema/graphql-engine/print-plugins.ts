@@ -1,6 +1,7 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
 import * as fs from "fs-extra"
-import * as path from "path"
+import * as path from "node:path"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
@@ -36,7 +37,7 @@ async function renderQueryEnginePlugins(): Promise<string> {
     p =>
       includePlugins.has(p.name) ||
       (!excludePlugins.has(p.name) &&
-        p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api)))
+        p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api))),
   )
   const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
   const result = await render(usedPlugins, usedSubPlugins)
@@ -45,13 +46,13 @@ async function renderQueryEnginePlugins(): Promise<string> {
 
 function relativePluginPath(resolve: string): string {
   return slash(
-    path.relative(path.dirname(schemaCustomizationPluginsPath), resolve)
+    path.relative(path.dirname(schemaCustomizationPluginsPath), resolve),
   )
 }
 
 async function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
-  usedSubPlugins: IGatsbyState["flattenedPlugins"]
+  usedSubPlugins: IGatsbyState["flattenedPlugins"],
 ): Promise<string> {
   const uniqSubPlugins = uniq(usedSubPlugins)
 
@@ -73,20 +74,20 @@ async function render(
     ...usedPlugins.map(
       (plugin, i) =>
         `import * as pluginGatsbyNode${i} from "${relativePluginPath(
-          plugin.resolve
-        )}/gatsby-node"`
+          plugin.resolve,
+        )}/gatsby-node"`,
     ),
     ...pluginsWithWorkers.map(
       (plugin, i) =>
         `import * as pluginGatsbyWorker${i} from "${relativePluginPath(
-          plugin.resolve
-        )}/gatsby-worker"`
+          plugin.resolve,
+        )}/gatsby-worker"`,
     ),
     ...uniqSubPlugins.map((plugin, i) => {
       const importName = `subPlugin${i}`
       subPluginModuleToImportNameMapping.set(plugin.modulePath!, importName)
       return `import * as ${importName} from "${relativePluginPath(
-        plugin.modulePath!
+        plugin.modulePath!,
       )}"`
     }),
   ]
@@ -94,13 +95,13 @@ async function render(
     (plugin, i) =>
       `{ name: "${plugin.name}", module: pluginGatsbyNode${i}, importKey: ${
         i + 1
-      } },`
+      } },`,
   )
   const gatsbyWorkerExports = pluginsWithWorkers.map(
     (plugin, i) =>
       `{ name: "${plugin.name}", module: pluginGatsbyWorker${i}, importKey: ${
         i + 1
-      } },`
+      } },`,
   )
   const output = `
 ${imports.join(`\n`)}
@@ -120,6 +121,7 @@ export const flattenedPlugins =
         ...plugin,
         pluginOptions: _.cloneDeepWith(
           plugin.pluginOptions,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (value: any): any => {
             if (
               typeof value === `object` &&
@@ -131,27 +133,28 @@ export const flattenedPlugins =
               return {
                 ...subPlugin,
                 module: `_SKIP_START_${subPluginModuleToImportNameMapping.get(
-                  modulePath
+                  modulePath,
                 )}_SKIP_END_`,
                 resolve: ``,
                 pluginFilepath: ``,
               }
             }
             return undefined
-          }
+          },
         ),
       }
     }),
     null,
-    2
+    2,
   ).replace(/"_SKIP_START_|_SKIP_END_"/g, ``)}
 `
   return output
 }
 
 async function filterPluginsWithWorkers(
-  plugins: IGatsbyState["flattenedPlugins"]
+  plugins: IGatsbyState["flattenedPlugins"],
 ): Promise<IGatsbyState["flattenedPlugins"]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const filteredPlugins: Array<any> = []
 
   for (const plugin of plugins) {
@@ -168,17 +171,15 @@ async function filterPluginsWithWorkers(
   return filteredPlugins
 }
 
-type ArrayElement<ArrayType extends Array<unknown>> = ArrayType extends Array<
-  infer ElementType
->
-  ? ElementType
-  : never
+type ArrayElement<ArrayType extends Array<unknown>> =
+  ArrayType extends Array<infer ElementType> ? ElementType : never
 
 function getSubpluginsByPluginPath(
   parentPlugin: ArrayElement<IGatsbyState["flattenedPlugins"]>,
-  path: string
+  path: string,
 ): IGatsbyState["flattenedPlugins"] {
   const segments = path.split(`.`)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let roots: Array<any> = [parentPlugin.pluginOptions]
 
   for (const segment of segments) {
@@ -195,7 +196,7 @@ function getSubpluginsByPluginPath(
 
 function findSubPlugins(
   plugins: IGatsbyState["flattenedPlugins"],
-  allFlattenedPlugins: IGatsbyState["flattenedPlugins"]
+  allFlattenedPlugins: IGatsbyState["flattenedPlugins"],
 ): IGatsbyState["flattenedPlugins"] {
   const usedSubPluginResolves = new Set<string>(
     plugins
@@ -211,15 +212,15 @@ function findSubPlugins(
         return []
       })
       .map(plugin => plugin[`resolve`])
-      .filter((p: unknown): p is string => typeof p === `string`)
+      .filter((p: unknown): p is string => typeof p === `string`),
   )
   return allFlattenedPlugins.filter(
-    p => usedSubPluginResolves.has(p.resolve) && !!p.modulePath
+    p => usedSubPluginResolves.has(p.resolve) && !!p.modulePath,
   )
 }
 
 function uniq(
-  plugins: IGatsbyState["flattenedPlugins"]
+  plugins: IGatsbyState["flattenedPlugins"],
 ): IGatsbyState["flattenedPlugins"] {
   return Array.from(new Map(plugins.map(p => [p.resolve, p])).values())
 }

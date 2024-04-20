@@ -6,6 +6,7 @@ import {
   objectToDottedField,
 } from "../common/query"
 import { getDataStore, getNode } from "../"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { getValueAt } from "../../utils/get-value-at"
 import { getResolvedFields } from "../../schema/utils"
@@ -26,7 +27,7 @@ export type FilterOp =
 export type FilterCacheKey = string
 type GatsbyNodeID = string
 
-export interface IGatsbyNodePartial {
+export type IGatsbyNodePartial = {
   id: GatsbyNodeID
   internal: {
     type: string
@@ -35,6 +36,7 @@ export interface IGatsbyNodePartial {
   gatsbyNodePartialInternalData: {
     indexFields: Set<string>
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k: string]: any
 }
 
@@ -52,7 +54,8 @@ const nodeIdToIdentifierMap = new Map<
 export const getGatsbyNodePartial = (
   node: IGatsbyNode | IGatsbyNodePartial,
   indexFields: Array<string>,
-  resolvedFields: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: Record<string, any>,
 ): IGatsbyNodePartial => {
   // first, check if we have the partial in the cache
   const cacheKey = `${node.id}_____${node.internal.counter}`
@@ -65,8 +68,8 @@ export const getGatsbyNodePartial = (
       derefPartial &&
       _.every(
         indexFields.map(field =>
-          derefPartial!.gatsbyNodePartialInternalData.indexFields.has(field)
-        )
+          derefPartial!.gatsbyNodePartialInternalData.indexFields.has(field),
+        ),
       )
     ) {
       return derefPartial
@@ -85,7 +88,7 @@ export const getGatsbyNodePartial = (
 
   const sortFieldIds = getSortFieldIdentifierKeys(
     [...fieldsToStore],
-    resolvedFields
+    resolvedFields,
   )
   let fullNodeObject: IGatsbyNode | undefined =
     node.gatsbyNodePartialInternalData ? undefined : (node as IGatsbyNode)
@@ -102,7 +105,7 @@ export const getGatsbyNodePartial = (
 
         dottedFields[dottedField] = getValueAt(
           resolvedNodeFields,
-          dottedField.slice(`__gatsby_resolved.`.length)
+          dottedField.slice(`__gatsby_resolved.`.length),
         )
       } else {
         // if we haven't gotten the full node object, fetch it once
@@ -136,7 +139,7 @@ export const getGatsbyNodePartial = (
 const sortByIds = (a: IGatsbyNodePartial, b: IGatsbyNodePartial): number =>
   a.internal.counter - b.internal.counter
 
-export interface IFilterCache {
+export type IFilterCache = {
   op: FilterOp
   // In this map `undefined` values represent nodes that did not have the path
   // The individual arrays are ordered asc by internal.counter which will
@@ -169,7 +172,7 @@ export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
-  op: FilterOp
+  op: FilterOp,
 ): void {
   // Loop through byValue and make sure the buckets are sorted by counter
   // Since we don't do insertion sort, we have to do it afterwards
@@ -208,7 +211,7 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
 
 function postIndexingMetaSetupLtLteGtGte(
   filterCache: IFilterCache,
-  op: FilterOp
+  op: FilterOp,
 ): void {
   // Create an ordered array of individual nodes, ordered (grouped) by the
   // value to which the filter resolves. Nodes per value are ordered by
@@ -292,7 +295,8 @@ export const ensureIndexByQuery = (
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   indexFields: Array<string>,
-  resolvedFields: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: Record<string, any>,
 ): void => {
   const filterCache: IFilterCache = {
     op,
@@ -341,11 +345,12 @@ export const ensureIndexByQuery = (
 }
 
 export function ensureEmptyFilterCache(
-  filterCacheKey,
+  filterCacheKey: string,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache,
+  filtersCache: FiltersCache | undefined,
   indexFields: Array<string>,
-  resolvedFields: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: Record<string, any>,
 ): void {
   // This is called for queries without any filters
   // We want to cache the result since it's basically a list of nodes by type(s)
@@ -353,7 +358,7 @@ export function ensureEmptyFilterCache(
 
   const orderedByCounter: Array<IGatsbyNodePartial> = []
 
-  filtersCache.set(filterCacheKey, {
+  filtersCache?.set(filterCacheKey, {
     op: `$eq`, // Ignore.
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
     meta: {
@@ -366,7 +371,7 @@ export function ensureEmptyFilterCache(
       .iterateNodesByType(nodeTypeNames[0])
       .forEach(node => {
         orderedByCounter.push(
-          getGatsbyNodePartial(node, indexFields, resolvedFields)
+          getGatsbyNodePartial(node, indexFields, resolvedFields),
         )
       })
   } else {
@@ -377,7 +382,7 @@ export function ensureEmptyFilterCache(
       .forEach(node => {
         if (nodeTypeNames.includes(node.internal.type)) {
           orderedByCounter.push(
-            getGatsbyNodePartial(node, indexFields, resolvedFields)
+            getGatsbyNodePartial(node, indexFields, resolvedFields),
           )
         }
       })
@@ -400,12 +405,16 @@ function addNodeToFilterCache({
   chain: Array<string>
   filterCache: IFilterCache
   indexFields: Array<string>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: Record<string, any>
-  valueOffset?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  valueOffset?: IGatsbyNode | Array<IGatsbyNode> | undefined
 }): void {
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
-  let v = valueOffset as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let v: any = valueOffset
+
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
@@ -428,9 +437,16 @@ function addNodeToFilterCache({
       // Add an entry for each element of the array. This would work for ops
       // like eq and ne, but not sure about range ops like lt,lte,gt,gte.
 
-      v.forEach(v =>
-        markNodeForValue(filterCache, node, v, indexFields, resolvedFields)
-      )
+      v.forEach(v => {
+        return markNodeForValue(
+          filterCache,
+          node,
+          // @ts-ignore
+          v,
+          indexFields,
+          resolvedFields,
+        )
+      })
 
       return
     }
@@ -450,7 +466,8 @@ function markNodeForValue(
   node: IGatsbyNode,
   value: FilterValueNullable,
   indexFields: Array<string>,
-  resolvedFields: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: Record<string, any>,
 ): void {
   let arr = filterCache.byValue.get(value)
   if (!arr) {
@@ -464,18 +481,18 @@ function markNodeForValue(
   }
 }
 
-export const ensureIndexByElemMatch = (
+export function ensureIndexByElemMatch(
   op: FilterOp,
   filterCacheKey: FilterCacheKey,
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   indexFields: Array<string>,
-  resolvedFields: Record<string, any>
-): void => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: Record<string, any>,
+): void {
   // Given an elemMatch filter, generate the cache that contains all nodes that
   // matches a given value for that sub-query
-
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
@@ -528,10 +545,12 @@ function addNodeToBucketWithElemMatch({
   resolvedFields,
 }: {
   node: IGatsbyNode
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   valueAtCurrentStep: any // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch
   filterCache: IFilterCache
   indexFields: Array<string>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: Record<string, any>
 }): void {
   const { path, nestedQuery } = filter
@@ -586,10 +605,10 @@ function addNodeToBucketWithElemMatch({
   })
 }
 
-const binarySearchAsc = (
+function binarySearchAsc(
   values: Array<FilterValue>, // Assume ordered asc
-  needle: FilterValue
-): [number, number] | undefined => {
+  needle: FilterValue,
+): [number, number] | undefined {
   let min = 0
   let max = values.length - 1
   let pivot = Math.floor(values.length / 2)
@@ -621,10 +640,10 @@ const binarySearchAsc = (
   // Shouldn't be reachable
   return undefined
 }
-const binarySearchDesc = (
+function binarySearchDesc(
   values: Array<FilterValue>, // Assume ordered desc
-  needle: FilterValue
-): [number, number] | undefined => {
+  needle: FilterValue,
+): [number, number] | undefined {
   let min = 0
   let max = values.length - 1
   let pivot = Math.floor(values.length / 2)
@@ -669,12 +688,12 @@ const binarySearchDesc = (
  * Arrays returned by this function must be ordered by internal.counter and
  * not contain duplicate nodes (!)
  */
-export const getNodesFromCacheByValue = (
+export function getNodesFromCacheByValue(
   filterCacheKey: FilterCacheKey,
   filterValue: FilterValueNullable,
   filtersCache: FiltersCache,
-  wasElemMatch
-): Array<IGatsbyNodePartial> | undefined => {
+  wasElemMatch,
+): Array<IGatsbyNodePartial> | undefined {
   const filterCache = filtersCache.get(filterCacheKey)
   if (!filterCache) {
     return undefined
@@ -684,12 +703,10 @@ export const getNodesFromCacheByValue = (
 
   if (op === `$eq`) {
     // Arrays in byValue are assumed to be ordered by counter
-
     if (filterValue == null) {
       // Edge case for null; fetch all nodes for `null` and `undefined` because
       // `$eq` also returns nodes without the path when searching for `null`.
       // Not all ops do so, so we map non-existing paths to `undefined`.
-
       const arrNull = filterCache.byValue.get(null) ?? []
       const arrUndef = filterCache.byValue.get(undefined) ?? []
 
@@ -713,7 +730,7 @@ export const getNodesFromCacheByValue = (
     // For every value in the needle array, find the bucket of nodes for
     // that value, add this bucket of nodes to one list, return the list.
     filterValueArr.forEach((v: FilterValueNullable) =>
-      filterCache.byValue.get(v)?.forEach(v => set.add(v))
+      filterCache.byValue.get(v)?.forEach(v => set.add(v)),
     )
 
     const arr = [...set] // this is bad for perf but will guarantee us a unique set :(
@@ -741,7 +758,6 @@ export const getNodesFromCacheByValue = (
   if (op === `$nin`) {
     // This is essentially the same as the $ne operator, just with multiple
     // values to exclude.
-
     if (!Array.isArray(filterValue)) {
       throw new Error(`The $nin operator expects an array as value`)
     }
@@ -772,13 +788,11 @@ export const getNodesFromCacheByValue = (
   if (op === `$regex`) {
     // Note: $glob is converted to $regex so $glob filters go through here, too
     // Aside from the input pattern format, further behavior is exactly the same.
-
     // The input to the filter must be a string (including leading/trailing slash and regex flags)
     // By the time the filter reaches this point, the filterValue has to be a regex.
-
     if (!(filterValue instanceof RegExp)) {
       throw new Error(
-        `The value for the $regex comparator must be an instance of RegExp`
+        `The value for the $regex comparator must be an instance of RegExp`,
       )
     }
     const regex = filterValue
@@ -794,7 +808,6 @@ export const getNodesFromCacheByValue = (
 
     // TODO: we _can_ cache this list as well. Might make sense if it turns out that $regex is mostly used with literals
     // TODO: it may make sense to first collect all buckets and then to .concat them, or merge sort them
-
     arr.sort(sortByIds)
 
     // elemMatch can cause a node to appear in multiple buckets so we must dedupe
@@ -818,7 +831,7 @@ export const getNodesFromCacheByValue = (
 
   if (Array.isArray(filterValue)) {
     throw new Error(
-      "Array is an invalid filter value for the `" + op + "` comparator"
+      "Array is an invalid filter value for the `" + op + "` comparator",
     )
   }
 
@@ -826,14 +839,13 @@ export const getNodesFromCacheByValue = (
     // This is most likely an internal error, although it is possible for
     // users to talk to this API more directly.
     throw new Error(
-      `A RegExp instance is only valid for $regex and $glob comparators`
+      `A RegExp instance is only valid for $regex and $glob comparators`,
     )
   }
 
   if (op === `$lt`) {
     // First try a direct approach. If a value is queried that also exists then
     // we can prevent a binary search through the whole list, O(1) vs O(log n)
-
     const ranges = filterCache.meta.valueRangesAsc
     const nodes = filterCache.meta.nodesByValueAsc
 
@@ -851,7 +863,6 @@ export const getNodesFromCacheByValue = (
     // Query may ask for a value that doesn't appear in the list, like if the
     // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
-
     // Note: for lte, the valueAsc array must be list at this point
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
@@ -873,7 +884,6 @@ export const getNodesFromCacheByValue = (
     // Note: the pivot value _shouldnt_ match the filter value because that
     // means the value was actually found, but those should have been indexed
     // so should have yielded a result in the .get() above.
-
     const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
 
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
@@ -891,7 +901,6 @@ export const getNodesFromCacheByValue = (
   if (op === `$lte`) {
     // First try a direct approach. If a value is queried that also exists then
     // we can prevent a binary search through the whole list, O(1) vs O(log n)
-
     const ranges = filterCache.meta.valueRangesAsc
     const nodes = filterCache.meta.nodesByValueAsc
 
@@ -909,7 +918,6 @@ export const getNodesFromCacheByValue = (
     // Query may ask for a value that doesn't appear in the list, like if the
     // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
-
     // Note: for lte, the valueAsc array must be list at this point
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
@@ -931,7 +939,6 @@ export const getNodesFromCacheByValue = (
     // Note: the pivot value _shouldnt_ match the filter value because that
     // means the value was actually found, but those should have been indexed
     // so should have yielded a result in the .get() above.
-
     const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
 
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
@@ -949,7 +956,6 @@ export const getNodesFromCacheByValue = (
   if (op === `$gt`) {
     // First try a direct approach. If a value is queried that also exists then
     // we can prevent a binary search through the whole list, O(1) vs O(log n)
-
     const ranges = filterCache.meta.valueRangesDesc
     const nodes = filterCache.meta.nodesByValueDesc
 
@@ -967,7 +973,6 @@ export const getNodesFromCacheByValue = (
     // Query may ask for a value that doesn't appear in the list, like if the
     // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
-
     // Note: for gte, the valueDesc array must be list at this point
     const values = filterCache.meta.valuesDesc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
@@ -989,7 +994,6 @@ export const getNodesFromCacheByValue = (
     // Note: the pivot value _shouldnt_ match the filter value because that
     // means the value was actually found, but those should have been indexed
     // so should have yielded a result in the .get() above.
-
     const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
 
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
@@ -1007,7 +1011,6 @@ export const getNodesFromCacheByValue = (
   if (op === `$gte`) {
     // First try a direct approach. If a value is queried that also exists then
     // we can prevent a binary search through the whole list, O(1) vs O(log n)
-
     const ranges = filterCache.meta.valueRangesDesc
     const nodes = filterCache.meta.nodesByValueDesc
 
@@ -1025,7 +1028,6 @@ export const getNodesFromCacheByValue = (
     // Query may ask for a value that doesn't appear in the list, like if the
     // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
-
     // Note: for gte, the valueDesc array must be list at this point
     const values = filterCache.meta.valuesDesc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
@@ -1047,7 +1049,6 @@ export const getNodesFromCacheByValue = (
     // Note: the pivot value _shouldnt_ match the filter value because that
     // means the value was actually found, but those should have been indexed
     // so should have yielded a result in the .get() above.
-
     const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
 
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
@@ -1069,7 +1070,7 @@ export const getNodesFromCacheByValue = (
 function removeBucketFromSet(
   filterValue: FilterValueNullable,
   filterCache: IFilterCache,
-  set: Set<IGatsbyNodePartial>
+  set: Set<IGatsbyNodePartial>,
 ): void {
   if (filterValue === null) {
     // Edge case: $ne with `null` returns only the nodes that contain the full
@@ -1095,7 +1096,7 @@ function removeBucketFromSet(
  */
 export function intersectNodesByCounter(
   a: Array<IGatsbyNodePartial>,
-  b: Array<IGatsbyNodePartial>
+  b: Array<IGatsbyNodePartial>,
 ): Array<IGatsbyNodePartial> {
   let pointerA = 0
   let pointerB = 0
@@ -1116,7 +1117,7 @@ export function intersectNodesByCounter(
     } else {
       if (a[pointerA].id !== b[pointerB].id) {
         throw new Error(
-          `Invariant violation: inconsistent node counters detected`
+          `Invariant violation: inconsistent node counters detected`,
         )
       }
       // nodeA===nodeB. Make sure we didn't just add this node already.
@@ -1144,7 +1145,7 @@ export function intersectNodesByCounter(
  */
 export function unionNodesByCounter(
   a: Array<IGatsbyNodePartial>,
-  b: Array<IGatsbyNodePartial>
+  b: Array<IGatsbyNodePartial>,
 ): Array<IGatsbyNodePartial> {
   // TODO: perf check: is it helpful to init the array to max(maxA,maxB) items?
   const arr: Array<IGatsbyNodePartial> = []
@@ -1225,7 +1226,8 @@ function expensiveDedupeInline(arr: Array<IGatsbyNodePartial>): void {
 
 export function getSortFieldIdentifierKeys(
   indexFields: Array<string>,
-  resolvedFields: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: Record<string, any>,
 ): Array<string> {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)

@@ -1,18 +1,26 @@
-import React, { Fragment, FunctionComponent, PropsWithChildren } from "react"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import React, {
+  memo,
+  Fragment,
+  type JSX,
+  type ReactNode,
+  type ComponentType,
+} from "react"
 import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
 
-export interface ILayoutWrapperProps {
+export type ILayoutWrapperProps = {
   layout: Layout
   width: number
   height: number
 }
 
-const NativeScriptLoading: FunctionComponent = () => (
-  <script
-    type="module"
-    dangerouslySetInnerHTML={{
-      __html: terserMacro`
+function _NativeScriptLoading(): JSX.Element {
+  return (
+    <script
+      type="module"
+      dangerouslySetInnerHTML={{
+        __html: terserMacro`
 const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
 if (hasNativeLazyLoadSupport) {
   const gatsbyImages = document.querySelectorAll('img[data-main-image]');
@@ -41,14 +49,17 @@ if (hasNativeLazyLoadSupport) {
   }
 }
 `,
-    }}
-  />
-)
+      }}
+    />
+  )
+}
+
+const NativeScriptLoading: ComponentType = memo(_NativeScriptLoading)
 
 export function getSizer(
   layout: Layout,
   width: number,
-  height: number
+  height: number,
 ): string {
   let sizer = ``
   if (layout === `fullWidth`) {
@@ -64,11 +75,7 @@ export function getSizer(
   return sizer
 }
 
-const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
-  layout,
-  width,
-  height,
-}) {
+function _Sizer({ layout, width, height }: ILayoutWrapperProps): JSX.Element {
   if (layout === `fullWidth`) {
     return (
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
@@ -96,9 +103,13 @@ const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
   return null
 }
 
-export const LayoutWrapper: FunctionComponent<
-  PropsWithChildren<ILayoutWrapperProps>
-> = function LayoutWrapper({ children, ...props }) {
+const Sizer: ComponentType<ILayoutWrapperProps> =
+  memo<ILayoutWrapperProps>(_Sizer)
+
+function _LayoutWrapper({
+  children,
+  ...props
+}: ILayoutWrapperProps & { children: ReactNode }): JSX.Element {
   return (
     <Fragment>
       <Sizer {...props} />
@@ -108,3 +119,7 @@ export const LayoutWrapper: FunctionComponent<
     </Fragment>
   )
 }
+
+export const LayoutWrapper: ComponentType<
+  ILayoutWrapperProps & { children: ReactNode }
+> = memo<ILayoutWrapperProps & { children: ReactNode }>(_LayoutWrapper)

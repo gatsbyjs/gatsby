@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { LayoutWrapper } from "./layout-wrapper"
@@ -24,12 +25,13 @@ async function applyPolyfill(element: HTMLImageElement): Promise<void> {
       /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
     )
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ;(window as any).objectFitPolyfill(element)
 }
 
 function toggleLoaded(
   mainImage: HTMLElement,
-  placeholderImage: HTMLElement
+  placeholderImage: HTMLElement,
 ): void {
   mainImage.style.opacity = `1`
 
@@ -44,13 +46,13 @@ function startLoading(
   imageCache: Set<string>,
   onStartLoad: GatsbyImageProps["onStartLoad"],
   onLoad: GatsbyImageProps["onLoad"],
-  onError: GatsbyImageProps["onError"]
+  onError: GatsbyImageProps["onError"],
 ): () => void {
   const mainImage = element.querySelector(
-    `[data-main-image]`
+    `[data-main-image]`,
   ) as HTMLImageElement
   const placeholderImage = element.querySelector<HTMLElement>(
-    `[data-placeholder-image]`
+    `[data-placeholder-image]`,
   )
   const isCached = imageCache.has(cacheKey)
 
@@ -129,7 +131,7 @@ export function swapPlaceholderImage(
   style: React.CSSProperties,
   onStartLoad: GatsbyImageProps["onStartLoad"],
   onLoad: GatsbyImageProps["onLoad"],
-  onError: GatsbyImageProps["onError"]
+  onError: GatsbyImageProps["onError"],
 ): () => void {
   if (!hasNativeLazyLoadSupport()) {
     let cleanup
@@ -140,7 +142,7 @@ export function swapPlaceholderImage(
         imageCache,
         onStartLoad,
         onLoad,
-        onError
+        onError,
       )
     })
     const unobserve = io(element)
@@ -167,7 +169,7 @@ export function swapPlaceholderImage(
     imageCache,
     onStartLoad,
     onLoad,
-    onError
+    onError,
   )
 }
 
@@ -210,7 +212,7 @@ export function renderImageToString({
           height,
           wrapperBackgroundColor,
           objectFit,
-          objectPosition
+          objectPosition,
         )}
       />
 
@@ -224,6 +226,6 @@ export function renderImageToString({
         className={imgClassName}
         {...getMainProps(isLoading, isLoaded, images, loading, imgStyle)}
       />
-    </LayoutWrapper>
+    </LayoutWrapper>,
   )
 }

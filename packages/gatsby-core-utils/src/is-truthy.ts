@@ -1,5 +1,6 @@
 // Returns true for `true`, true, positive numbers
 // Returns false for `false`, false, 0, negative integers and anything else
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isTruthy(value: any): boolean {
   // Return if Boolean
   if (typeof value === `boolean`) return value

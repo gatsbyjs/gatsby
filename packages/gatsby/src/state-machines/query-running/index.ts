@@ -1,5 +1,5 @@
-import { MachineConfig, createMachine, assign } from "xstate"
-import { IQueryRunningContext } from "./types"
+import { type MachineConfig, createMachine, assign } from "xstate"
+import type { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
 
@@ -9,6 +9,7 @@ import { queryActions } from "./actions"
 
 const PAGE_QUERY_ENQUEUING_TIMEOUT = 50
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   predictableActionArguments: true,
   initial: `extractingQueries`,

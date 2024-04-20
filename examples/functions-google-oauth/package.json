@@ -19,14 +19,14 @@
     "gatsby": "next",
     "gatsby-plugin-gatsby-cloud": "next",
     "gatsby-plugin-sass": "next",
-    "googleapis": "^73.0.0",
-    "node-fetch": "^2.6.1",
-    "query-string": "^7.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.32.13"
+    "googleapis": "134.0.0",
+    "query-string": "9.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sass": "1.75.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.13.13"
+    "@total-typescript/ts-reset": "0.5.1",
+    "@babel/preset-react": "7.24.1"
   }
 }

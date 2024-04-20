@@ -1,36 +1,42 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import {
-  DbQuery,
-  IDbQueryQuery,
-  IDbQueryElemMatch,
-  IInputQuery,
-  FilterValueNullable,
+  type DbQuery,
+  type IDbQueryQuery,
+  type IDbQueryElemMatch,
+  type IInputQuery,
+  type FilterValueNullable,
   createDbQueriesFromObject,
   prefixResolvedFields,
   prepareQueryArgs,
 } from "../common/query"
 import {
-  FilterOp,
-  FilterCacheKey,
-  FiltersCache,
+  type FilterOp,
+  type FilterCacheKey,
+  type FiltersCache,
   ensureEmptyFilterCache,
   ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
   intersectNodesByCounter,
-  IFilterCache,
-  IGatsbyNodePartial,
+  type IFilterCache,
+  type IGatsbyNodePartial,
   getSortFieldIdentifierKeys,
   getGatsbyNodePartial,
 } from "./indexing"
-import { IGraphQLRunnerStats } from "../../query/types"
-import { IRunQueryArgs, IQueryResult } from "../types"
+import type { IGraphQLRunnerStats } from "../../query/types"
+import type { IRunQueryArgs, IQueryResult } from "../types"
 import { GatsbyIterable } from "../common/iterable"
 import { getNode } from "../"
+import type { IGatsbyNode } from "../../internal"
+import type { GraphQLSchema } from "graphql"
 
-export interface IRunFilterArg extends IRunQueryArgs {
-  filtersCache: FiltersCache
-}
+export type IRunFilterArg = {
+  gqlSchema: GraphQLSchema
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  gqlComposer: any
+  filtersCache?: FiltersCache | undefined
+} & IRunQueryArgs
 
 type ISortParameters =
   | {
@@ -44,7 +50,7 @@ type ISortParameters =
  */
 function createFilterCacheKey(
   typeNames: Array<string>,
-  filter: DbQuery | null
+  filter: DbQuery | null,
 ): FilterCacheKey {
   // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
   // (This function is future proof for elemMatch support, won't receive it yet)
@@ -81,9 +87,10 @@ function createFilterCacheKey(
 export function applyFastFilters(
   filters: Array<DbQuery>,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache,
+  filtersCache: FiltersCache | undefined,
   sortFields: Array<string>,
-  resolvedFields: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: any,
 ): Array<IGatsbyNodePartial> | null {
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
@@ -95,7 +102,7 @@ export function applyFastFilters(
     nodeTypeNames,
     filtersCache,
     sortFields,
-    resolvedFields
+    resolvedFields,
   )
 
   if (!nodesPerValueArrs) {
@@ -137,7 +144,8 @@ function getBucketsForFilters(
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   sortFields: Array<string>,
-  resolvedFields: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: any,
 ): Array<Array<IGatsbyNodePartial>> | undefined {
   const nodesPerValueArrs: Array<Array<IGatsbyNodePartial>> = []
 
@@ -154,7 +162,7 @@ function getBucketsForFilters(
         filtersCache,
         nodesPerValueArrs,
         sortFields,
-        resolvedFields
+        resolvedFields,
       )
     } else {
       // (Let TS warn us if a new query type gets added)
@@ -166,7 +174,7 @@ function getBucketsForFilters(
         filtersCache,
         nodesPerValueArrs,
         sortFields,
-        resolvedFields
+        resolvedFields,
       )
     }
   })
@@ -190,7 +198,8 @@ function getBucketsForQueryFilter(
   filtersCache: FiltersCache,
   nodesPerValueArrs: Array<Array<IGatsbyNodePartial>>,
   sortFields: Array<string>,
-  resolvedFields: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: any,
 ): boolean {
   const {
     path: filterPath,
@@ -206,7 +215,7 @@ function getBucketsForQueryFilter(
       nodeTypeNames,
       filtersCache,
       sortFields,
-      resolvedFields
+      resolvedFields,
     )
   }
 
@@ -214,7 +223,7 @@ function getBucketsForQueryFilter(
     filterCacheKey,
     filterValue as FilterValueNullable,
     filtersCache,
-    false
+    false,
   )
 
   if (!nodesPerValue) {
@@ -238,7 +247,8 @@ function collectBucketForElemMatch(
   filtersCache: FiltersCache,
   nodesPerValueArrs: Array<Array<IGatsbyNodePartial>>,
   sortFields: Array<string>,
-  resolvedFields: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolvedFields: any,
 ): boolean {
   // Get comparator and target value for this elemMatch
   let comparator: FilterOp = `$eq` // (Must be overridden but TS requires init)
@@ -263,7 +273,7 @@ function collectBucketForElemMatch(
       nodeTypeNames,
       filtersCache,
       sortFields,
-      resolvedFields
+      resolvedFields,
     )
   }
 
@@ -271,7 +281,7 @@ function collectBucketForElemMatch(
     filterCacheKey,
     targetValue,
     filtersCache,
-    true
+    true,
   )
 
   if (!nodesByValue) {
@@ -311,7 +321,7 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
     filtersCache,
     resolvedFields,
     stats,
-    sort
+    sort,
   )
 
   const sortedResult = sortNodes(result, sort, resolvedFields, stats)
@@ -332,15 +342,16 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
 function convertAndApplyFastFilters(
   filterFields: IInputQuery | undefined,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache,
+  filtersCache: FiltersCache | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: Record<string, any>,
   stats: IGraphQLRunnerStats,
-  sort: ISortParameters
+  sort: ISortParameters,
 ): Array<IGatsbyNodePartial> {
   const filters = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
-        resolvedFields
+        resolvedFields,
       )
     : []
 
@@ -350,7 +361,7 @@ function convertAndApplyFastFilters(
       const comparatorPath = filterStats.comparatorPath.join(`.`)
       stats.comparatorsUsed.set(
         comparatorPath,
-        (stats.comparatorsUsed.get(comparatorPath) || 0) + 1
+        (stats.comparatorsUsed.get(comparatorPath) || 0) + 1,
       )
       stats.uniqueFilterPaths.add(filterStats.filterPath.join(`.`))
     })
@@ -361,18 +372,18 @@ function convertAndApplyFastFilters(
 
   if (filters.length === 0) {
     const filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
-    if (!filtersCache.has(filterCacheKey)) {
+    if (!filtersCache?.has(filterCacheKey)) {
       ensureEmptyFilterCache(
         filterCacheKey,
         nodeTypeNames,
         filtersCache,
         sort?.fields || [],
-        resolvedFields
+        resolvedFields,
       )
     }
 
     // If there's a filter, there (now) must be an entry for this cache key
-    const filterCache = filtersCache.get(filterCacheKey) as IFilterCache
+    const filterCache = filtersCache?.get(filterCacheKey) as IFilterCache
     // If there is no filter then the ensureCache step will populate this:
     const cache = filterCache.meta.orderedByCounter as Array<IGatsbyNodePartial>
 
@@ -384,7 +395,7 @@ function convertAndApplyFastFilters(
     nodeTypeNames,
     filtersCache,
     sort?.fields || [],
-    resolvedFields
+    resolvedFields,
   )
 
   if (result) {
@@ -405,7 +416,7 @@ function convertAndApplyFastFilters(
 function filterToStats(
   filter: DbQuery,
   filterPath: Array<string> = [],
-  comparatorPath: Array<string> = []
+  comparatorPath: Array<string> = [],
 ): {
   filterPath: Array<string>
   comparatorPath: Array<string>
@@ -414,7 +425,7 @@ function filterToStats(
     return filterToStats(
       filter.nestedQuery,
       filterPath.concat(filter.path),
-      comparatorPath.concat([`elemMatch`])
+      comparatorPath.concat([`elemMatch`]),
     )
   } else {
     return {
@@ -431,8 +442,9 @@ function filterToStats(
 function sortNodes(
   nodes: Array<IGatsbyNodePartial>,
   sort: ISortParameters,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: any,
-  stats: IGraphQLRunnerStats
+  stats: IGraphQLRunnerStats,
 ): Array<IGatsbyNodePartial> {
   if (!sort || sort.fields?.length === 0 || !nodes || nodes.length === 0) {
     return nodes
@@ -440,16 +452,17 @@ function sortNodes(
 
   // create functions that return the item to compare on
   const sortFields = getSortFieldIdentifierKeys(sort.fields, resolvedFields)
-  const sortFns = sortFields.map(
-    field =>
-      (v): ((any) => any) =>
-        field in v
-          ? v[field]
-          : getGatsbyNodePartial(v, sort.fields, resolvedFields)[field]
+  const sortFns = sortFields.map(field =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (v: IGatsbyNode | IGatsbyNodePartial): ((args: any) => any) => {
+      return field in v
+        ? v[field]
+        : getGatsbyNodePartial(v, sort.fields, resolvedFields)[field]
+    },
   )
-  const sortOrder = sort.order.map(order =>
-    typeof order === `boolean` ? order : order.toLowerCase()
-  ) as Array<boolean | "asc" | "desc">
+  const sortOrder = sort.order.map(order => {
+    return typeof order === `boolean` ? order : order.toLowerCase()
+  }) as Array<boolean | "asc" | "desc">
 
   if (stats) {
     sortFields.forEach(sortField => {

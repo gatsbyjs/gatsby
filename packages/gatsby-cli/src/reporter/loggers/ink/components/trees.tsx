@@ -1,9 +1,14 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { ReactElement, useContext } from "react"
-import { Box, Text, BoxProps, Spacer } from "ink"
+import {
+  memo,
+  type JSX,
+  useContext,
+  ComponentType,
+  type ReactElement,
+} from "react"
 import path from "path"
+import { Box, Text, BoxProps, Spacer } from "ink"
 import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
-import StoreStateContext from "../context"
+import { StoreStateContext } from "../context"
 import {
   generatePageTree,
   generateSliceTree,
@@ -11,42 +16,57 @@ import {
   IComponentWithPageModes,
 } from "../../../../util/generate-trees"
 
-interface IPageAndSliceTreesProps {
+type IPageAndSliceTreesProps = {
   components: Map<string, IComponentWithPageModes>
   root: string
   slices: Map<string, Set<string>>
 }
 
-const Description: React.FC<BoxProps> = props => (
-  <Box>
-    <Box
-      {...props}
-      flexDirection="column"
-      borderStyle="round"
-      padding={1}
-      marginLeft={2}
-      marginRight={2}
-    >
-      <Box paddingLeft={2}>
-        <Text>(SSG) Generated at build time</Text>
-      </Box>
-      <Text>
-        D (DSG) Deferred static generation - page generated at runtime
-      </Text>
-      <Text>∞ (SSR) Server-side renders at runtime (uses getServerData)</Text>
-      <Text>λ (Function) Gatsby function</Text>
-    </Box>
-    <Spacer />
-  </Box>
-)
+function _Description(props: BoxProps): JSX.Element {
+  return (
+    <Box>
+      <Box
+        {...props}
+        flexDirection="column"
+        borderStyle="round"
+        padding={1}
+        marginLeft={2}
+        marginRight={2}
+      >
+        <Box paddingLeft={2}>
+          <Text>(SSG) Generated at build time</Text>
+        </Box>
 
-const TreeGenerator: React.FC<{
+        <Text>
+          D (DSG) Deferred static generation - page generated at runtime
+        </Text>
+
+        <Text>∞ (SSR) Server-side renders at runtime (uses getServerData)</Text>
+
+        <Text>λ (Function) Gatsby function</Text>
+      </Box>
+      <Spacer />
+    </Box>
+  )
+}
+
+const Description: ComponentType<BoxProps> = memo<BoxProps>(_Description)
+
+type TreeGeneratorProps = {
   file: string
   isFirst: boolean
   isLast: boolean
-  pages?: IComponentWithPageModes
-  slices?: Set<string>
-}> = ({ file, isFirst, isLast, pages, slices }) => {
+  pages?: IComponentWithPageModes | undefined
+  slices?: Set<string> | undefined
+}
+
+function _TreeGenerator({
+  file,
+  isFirst,
+  isLast,
+  pages,
+  slices,
+}: TreeGeneratorProps): JSX.Element {
   let topLevelIcon = `├`
   if (isFirst) {
     topLevelIcon = `┌`
@@ -69,14 +89,18 @@ const TreeGenerator: React.FC<{
         <Box paddingRight={1}>
           <Text>{topLevelIcon}</Text>
         </Box>
+
         <Text wrap="truncate-middle">{file}</Text>
       </Box>
+
       {items.map((item, index) => (
         <Box key={item.text}>
           <Text>{isLast ? ` ` : `│`}</Text>
+
           <Box paddingLeft={1} paddingRight={1}>
             <Text>{index === items.length - 1 ? `└` : `├`}</Text>
           </Box>
+
           <Box>
             <Text>
               {item.symbol} {item.text}
@@ -88,14 +112,20 @@ const TreeGenerator: React.FC<{
   )
 }
 
-const PageAndSliceTrees: React.FC<IPageAndSliceTreesProps> = ({
+const TreeGenerator: ComponentType<TreeGeneratorProps> =
+  memo<TreeGeneratorProps>(_TreeGenerator)
+
+function _PageAndSliceTrees({
   components,
   root,
   slices,
-}) => {
+}: IPageAndSliceTreesProps): JSX.Element {
   const componentList: Array<ReactElement> = []
+
   const sliceList: Array<ReactElement> = []
+
   let i = 0
+
   let j = 0
 
   for (const [componentPath, pages] of components) {
@@ -106,7 +136,7 @@ const PageAndSliceTrees: React.FC<IPageAndSliceTreesProps> = ({
         key={componentPath}
         file={path.posix.relative(root, componentPath)}
         pages={pages}
-      />
+      />,
     )
 
     i++
@@ -120,7 +150,7 @@ const PageAndSliceTrees: React.FC<IPageAndSliceTreesProps> = ({
         key={componentPath}
         file={path.posix.relative(root, componentPath)}
         slices={sliceNames}
-      />
+      />,
     )
 
     j++
@@ -131,12 +161,15 @@ const PageAndSliceTrees: React.FC<IPageAndSliceTreesProps> = ({
       <Box paddingBottom={1}>
         <Text underline>Pages</Text>
       </Box>
+
       {componentList}
+
       {slices.size > 0 && (
         <>
           <Box paddingTop={1} paddingBottom={1}>
             <Text underline>Slices</Text>
           </Box>
+
           {sliceList}
         </>
       )}
@@ -145,7 +178,10 @@ const PageAndSliceTrees: React.FC<IPageAndSliceTreesProps> = ({
   )
 }
 
-const Trees: React.FC = () => {
+const PageAndSliceTrees: ComponentType<IPageAndSliceTreesProps> =
+  memo<IPageAndSliceTreesProps>(_PageAndSliceTrees)
+
+function _Trees(): JSX.Element {
   const state = useContext(StoreStateContext)
 
   const componentWithPages = new Map<string, IComponentWithPageModes>()
@@ -202,4 +238,4 @@ const Trees: React.FC = () => {
   )
 }
 
-export default Trees
+export const Trees: ComponentType = memo(_Trees)

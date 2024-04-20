@@ -5,11 +5,11 @@ This Cypress suite tests the `trailingSlash` option inside `gatsby-config` and i
 Locally you can run for development:
 
 ```shell
-TRAILING_SLASH=your-option yarn debug:develop
+TRAILING_SLASH=your-option pnpm run debug:develop
 ```
 
 And for a build + serve:
 
 ```shell
-TRAILING_SLASH=your-option yarn build && yarn debug:build
+TRAILING_SLASH=your-option pnpm run build && pnpm run debug:build
 ```

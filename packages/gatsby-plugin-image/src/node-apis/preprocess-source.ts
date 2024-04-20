@@ -1,12 +1,15 @@
-import { PreprocessSourceArgs } from "gatsby"
+import type { PreprocessSourceArgs } from "gatsby"
 import { babelParseToAst } from "./parser"
-import path from "path"
+import path from "node:path"
 import { extractStaticImageProps } from "./parser"
-import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
+import { codeFrameColumns } from "@babel/code-frame"
 
 import { writeImages } from "./image-processing"
 import { getCacheDir } from "./node-utils"
 import { stripIndents } from "common-tags"
+import type { NodePath } from "@babel/traverse"
+// @ts-ignore
+import type { JSXAttribute } from "@babel/types"
 const extensions: Array<string> = [`.js`, `.jsx`, `.tsx`]
 
 export async function preprocessSource({
@@ -46,26 +49,34 @@ export async function preprocessSource({
     },
   })
 
-  const images = extractStaticImageProps(ast, filename, (prop, nodePath) => {
-    const sourceLocation = nodePath.node.loc as SourceLocation
-    const { start, end } = sourceLocation
-    reporter.error({
-      id: `95314`,
-      filePath: filename,
-      location: {
-        start,
-        end,
-      },
-      context: {
-        prop,
-        codeFrame: codeFrameColumns(contents, sourceLocation, {
-          linesAbove: 6,
-          linesBelow: 6,
-          highlightCode: true,
-        }),
-      },
-    })
-  })
+  const images = extractStaticImageProps(
+    ast,
+    filename,
+    (prop: string, nodePath: NodePath<JSXAttribute> | undefined): void => {
+      const sourceLocation = nodePath?.node.loc
+
+      reporter.error({
+        id: `95314`,
+        filePath: filename,
+        location: {
+          start: sourceLocation?.start,
+          end: sourceLocation?.end,
+        },
+        context: {
+          prop,
+          codeFrame: codeFrameColumns(
+            contents,
+            sourceLocation ?? { start: { line: 0 }, end: { line: 1 } },
+            {
+              linesAbove: 6,
+              linesBelow: 6,
+              highlightCode: true,
+            },
+          ),
+        },
+      })
+    },
+  )
 
   const sourceDir = path.dirname(filename)
   await writeImages({

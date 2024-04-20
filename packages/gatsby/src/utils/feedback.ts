@@ -22,7 +22,7 @@ export function showFeedbackRequest(): void {
     name: `https://gatsby.dev/feedback`,
   })
   report.log(
-    `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
+    `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`,
   )
   report.log(`\nGive us your feedback here: https://gatsby.dev/feedback\n\n`)
 }
@@ -33,10 +33,10 @@ export function showSevenDayFeedbackRequest(): void {
     name: `https://gatsby.dev/feedback-survey`,
   })
   report.log(
-    `\n\nHi there! Will you tell us about how you're learning Gatsby? \nIt takes less than 5 minutes and your feedback will help us make installing and using Gatsby so much better.`
+    `\n\nHi there! Will you tell us about how you're learning Gatsby? \nIt takes less than 5 minutes and your feedback will help us make installing and using Gatsby so much better.`,
   )
   report.log(
-    `\nGive us your feedback here: https://gatsby.dev/feedback-survey\n\n`
+    `\nGive us your feedback here: https://gatsby.dev/feedback-survey\n\n`,
   )
 }
 
@@ -48,11 +48,11 @@ const randomChanceToBeTrue = (): boolean => {
   const randomNumber = Math.floor(
     Math.random() *
       // One quarter year in days (roughly)
-      (30 * 3)
+      (30 * 3),
   )
   const randomNumberWithinQuarter = randomNumber + 30 * 3 * (currentQuarter - 1)
 
-  return randomNumberWithinQuarter === getDayOfYear(new Date())
+  return randomNumberWithinQuarter === getDayOfYear.getDayOfYear(new Date())
 }
 
 // We are only showing feedback requests to users in if they pass a few checks:

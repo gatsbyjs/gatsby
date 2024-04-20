@@ -26,7 +26,7 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
     !isEmpty((plugin as { option?: unknown }).option)
   ) {
     throw new Error(
-      `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`
+      `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`,
     )
   }
 
@@ -34,6 +34,7 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   if (plugin.subPluginPaths) {
     for (const subPluginPath of plugin.subPluginPaths) {
       const segments = subPluginPath.split(`.`)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let roots: Array<any> = [plugin.options]
 
       let pathToSwap = segments

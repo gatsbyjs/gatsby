@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@9.0.4",
   "name": "gatsby-cypress",
   "version": "3.14.0-next.2",
   "description": "Cypress tools for Gatsby projects",
@@ -19,8 +20,9 @@
     "@babel/runtime": "^7.20.13"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },
@@ -31,7 +33,7 @@
     "integration"
   ],
   "peerDependencies": {
-    "cypress": "^9.0.0 || ^10.0.0",
+    "cypress": "^13.7.3",
     "gatsby": "^5.0.0-next"
   },
   "scripts": {
@@ -40,6 +42,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   }
 }

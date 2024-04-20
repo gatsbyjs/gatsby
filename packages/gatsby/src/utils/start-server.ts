@@ -1,6 +1,9 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
-import webpackDevMiddleware from "webpack-dev-middleware"
-import got, { Method } from "got"
+import webpackDevMiddleware, {
+  type MultiWatching,
+} from "webpack-dev-middleware"
+// @ts-ignore
+import got, { type Method } from "got"
 import webpack, { Compilation } from "webpack"
 import express from "express"
 import compression from "compression"
@@ -20,26 +23,30 @@ import { codeFrameColumns } from "@babel/code-frame"
 import * as fs from "fs-extra"
 
 import { withBasePath } from "../utils/path"
-import {webpackConfig} from "../utils/webpack.config"
+import { webpackConfig } from "../utils/webpack.config"
 import { store, emitter } from "../redux"
 // @ts-ignore
 import report from "gatsby-cli/lib/reporter"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as WorkerPool from "../utils/worker/pool"
 
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
-import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
+import {
+  websocketManager,
+  type WebsocketManager,
+} from "../utils/websocket-manager"
 import {
   reverseFixedPagePath,
   readPageData,
-  IPageDataWithQueryResult,
+  type IPageDataWithQueryResult,
 } from "./page-data"
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
-import {apiRunnerNode} from "../utils/api-runner-node"
-import * as path from "path"
+import { apiRunnerNode } from "../utils/api-runner-node"
+import * as path from "node:path"
 
-import { IProgram } from "../commands/types"
+import type { IProgram } from "../commands/types"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 import { appendPreloadHeaders } from "./develop-preload-headers"
 import {
@@ -47,7 +54,7 @@ import {
   writeVirtualLoadingIndicatorModule,
 } from "./loading-indicator"
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
-import { getServerData, IServerData } from "./get-server-data"
+import { getServerData, type IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
 import { configureTrailingSlash } from "./express-middlewares"
@@ -56,18 +63,19 @@ import type { Express } from "express"
 import { addImageRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 import { isFileInsideCompilations } from "./webpack/utils/is-file-inside-compilations"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
-interface IServer {
+type IServer = {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
-  webpackWatching: IWebpackWatchingPauseResume
+  webpackWatching: webpack.Watching | MultiWatching | undefined
 }
 
-export interface IWebpackWatchingPauseResume {
+export type IWebpackWatchingPauseResume = {
   suspend: () => void
   resume: () => void
 }
@@ -75,13 +83,13 @@ export interface IWebpackWatchingPauseResume {
 export async function startServer(
   program: IProgram,
   app: Express,
-  workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create()
+  workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create(),
 ): Promise<IServer> {
   const directory = program.directory
   const PAGE_RENDERER_PATH = path.join(
     program.directory,
     ROUTES_DIRECTORY,
-    `render-page.js`
+    `render-page.js`,
   )
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
@@ -97,33 +105,32 @@ export async function startServer(
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
   const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
-  const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
+  async function createIndexHtml(activity: ActivityTracker): Promise<void> {
     try {
       const { rendererPath, close } = await buildRenderer(
         program,
-        'develop-html',
-        activity.span
+        `develop-html`,
+        activity.span,
       )
       await doBuildPages(
         rendererPath,
         [`/`],
         activity,
         workerPool,
-        'develop-html'
+        `develop-html`,
       )
       // close the compiler
       await close()
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
-        return
       }
       report.panic(
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
           See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
-        err
+        err,
       )
     }
   }
@@ -132,8 +139,7 @@ export async function startServer(
   let pageRenderer: string
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const { buildRenderer } = require(`../commands/build-html`)
-    pageRenderer = (await buildRenderer(program, 'develop-html'))
-      .rendererPath
+    pageRenderer = (await buildRenderer(program, `develop-html`)).rendererPath
     const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
     initDevWorkerPool()
   } else {
@@ -147,11 +153,11 @@ export async function startServer(
   const devConfig = await webpackConfig(
     program,
     directory,
-    'develop',
+    `develop`,
     program.port,
     {
       parentSpan: webpackActivity.span,
-    }
+    },
   )
 
   const compiler = webpack(devConfig)
@@ -166,7 +172,7 @@ export async function startServer(
       log: false,
       path: `/__webpack_hmr`,
       heartbeat: 10 * 1000,
-    })
+    }),
   )
 
   app.use(cors())
@@ -212,7 +218,7 @@ export async function startServer(
                 extensions: {
                   stack: err.stack ? err.stack.split(`\n`) : [],
                 },
-              } as unknown as GraphQLError)
+              }) as unknown as GraphQLError,
           )
         }
 
@@ -223,7 +229,7 @@ export async function startServer(
 
         return result
       },
-    })
+    }),
   )
 
   /**
@@ -234,7 +240,7 @@ export async function startServer(
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (
     req: express.Request,
-    pluginName?: string
+    pluginName?: string,
   ): Promise<void> => {
     global.__GATSBY.buildId = uuid.v4()
 
@@ -313,7 +319,7 @@ export async function startServer(
               req,
               page,
               potentialPagePath,
-              componentInstance
+              componentInstance,
             ).catch(error => error)
           }
 
@@ -331,7 +337,7 @@ export async function startServer(
           } else {
             pageData = await readPageData(
               path.join(store.getState().program.directory, `public`),
-              page.path
+              page.path,
             )
           }
 
@@ -383,7 +389,7 @@ export async function startServer(
         } catch (e) {
           report.error(
             `Error loading a result for the page query in "${requestedPagePath}" / "${potentialPagePath}". Query was not run and no cached result was found.`,
-            e
+            e,
           )
         }
       }
@@ -391,7 +397,7 @@ export async function startServer(
       res.status(404).send({
         path: potentialPagePath,
       })
-    }
+    },
   )
 
   app.get(`/__original-stack-frame`, (req, res) => {
@@ -416,7 +422,7 @@ export async function startServer(
 
       const absolutePath = path.resolve(
         store.getState().program.directory,
-        req.query.moduleId as string
+        req.query.moduleId as string,
       )
 
       const compilation: Compilation =
@@ -470,7 +476,7 @@ export async function startServer(
       const lineNumber = parseInt((req.query?.lineNumber as string) ?? 1, 10)
       const columnNumber = parseInt(
         (req.query?.columnNumber as string) ?? 1,
-        10
+        10,
       )
 
       let fileModule
@@ -533,7 +539,7 @@ export async function startServer(
       },
       {
         highlightCode: true,
-      }
+      },
     )
     res.json({
       codeFrame,
@@ -560,7 +566,7 @@ export async function startServer(
 
     const absolutePath = path.resolve(
       store.getState().program.directory,
-      filePath
+      filePath,
     )
 
     const compilation: Compilation =
@@ -587,7 +593,7 @@ export async function startServer(
       },
       {
         highlightCode: true,
-      }
+      },
     )
     res.json({
       codeFrame,
@@ -631,7 +637,7 @@ export async function startServer(
                 decompress: false,
               })
               .on(`response`, response =>
-                res.writeHead(response.statusCode || 200, response.headers)
+                res.writeHead(response.statusCode || 200, response.headers),
               )
               .on(`error`, (err, _, response) => {
                 if (response) {
@@ -642,7 +648,7 @@ export async function startServer(
                   report.error(message, err)
                   res.sendStatus(500)
                 }
-              })
+              }),
           )
           .pipe(res)
       })
@@ -745,7 +751,7 @@ export async function startServer(
           },
           {
             highlightCode: true,
-          }
+          },
         )
 
         const message = {
@@ -884,7 +890,7 @@ export async function startServer(
     const chokidar = require(`chokidar`)
     // Register watcher that rebuilds index.html every time html.js changes.
     const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-      slash(directoryPath(path))
+      slash(directoryPath(path)),
     )
 
     chokidar.watch(watchGlobs).on(`change`, async () => {

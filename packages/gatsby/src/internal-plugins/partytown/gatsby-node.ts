@@ -1,5 +1,6 @@
 import path from "path"
 import { copyLibFiles } from "@builder.io/partytown/utils"
+// @ts-ignore
 import { CreateDevServerArgs } from "gatsby"
 import { thirdPartyProxyPath, partytownProxy } from "./proxy"
 

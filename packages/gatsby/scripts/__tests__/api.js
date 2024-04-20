@@ -5,7 +5,7 @@ import systemPath from "path"
 const apiPath = systemPath.join(__dirname, "../../apis.json")
 
 it("generates the expected api output", done => {
-  childProcess.exec("node ../output-api-file.js", async () => {
+  childProcess.exec("node ../output-api-file.mjs", async () => {
     const json = await fs.readJSON(apiPath)
 
     expect(json).toMatchInlineSnapshot(`

@@ -1,17 +1,21 @@
-import * as path from "path"
+import * as path from "node:path"
 import * as fs from "fs-extra"
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
-export interface IScriptsAndStyles {
+export type IScriptsAndStyles = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   scripts: Array<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   styles: Array<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reversedStyles: Array<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reversedScripts: Array<any>
 }
 
-interface IChunk {
+type IChunk = {
   name: string
   rel: string
   content?: string
@@ -20,6 +24,7 @@ interface IChunk {
 
 const inlineCssPromiseCache = new Map<string, Promise<string>>()
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function readWebpackStats(publicDir: string): Promise<any> {
   const filePath = join(publicDir, `webpack.stats.json`)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
@@ -28,8 +33,11 @@ export async function readWebpackStats(publicDir: string): Promise<any> {
 }
 
 export async function getScriptsAndStylesForTemplate(
-  componentChunkName,
-  webpackStats
+  componentChunkName: string,
+  webpackStats: {
+    assetsByChunkName: Record<string, Array<string> | undefined>
+    childAssetsByChunkName: Record<string, Record<string, Array<string>>>
+  },
 ): Promise<IScriptsAndStyles> {
   const uniqScripts = new Map<string, IChunk>()
   const uniqStyles = new Map<string, IChunk>()
@@ -40,7 +48,7 @@ export async function getScriptsAndStylesForTemplate(
   function handleAsset(
     name: string,
     rel: string,
-    shouldGenerateLink: boolean = false
+    shouldGenerateLink: boolean = false,
   ): void {
     let uniqueAssetsMap: Map<string, IChunk> | undefined
 
@@ -107,6 +115,7 @@ export async function getScriptsAndStylesForTemplate(
       continue
     }
 
+    // eslint-disable-next-line prefer-const
     for (let [rel, assets] of Object.entries(childAssets)) {
       // Remove JS asset for templates(magic comments)
       if (chunkName !== `app`) {
@@ -142,12 +151,12 @@ export async function getScriptsAndStylesForTemplate(
       if (!getInlineCssPromise) {
         getInlineCssPromise = fs.readFile(
           join(process.cwd(), `public`, styleAsset.name),
-          `utf-8`
+          `utf-8`,
         )
 
         inlineCssPromiseCache.set(
           styleAsset.name,
-          getInlineCssPromise as Promise<string>
+          getInlineCssPromise as Promise<string>,
         )
       }
 

@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
-import { IGatsbyState, IRedirect, ICreateRedirectAction } from "../types"
+import type { IGatsbyState, IRedirect, ICreateRedirectAction } from "../types"
 
 const redirects = new Map<string, Array<IRedirect>>()
 
@@ -22,10 +23,10 @@ function add(redirect: IRedirect): void {
   samePathRedirects.push(redirect)
 }
 
-export const redirectsReducer = (
+export function redirectsReducer(
   state: IGatsbyState["redirects"] = [],
-  action: ICreateRedirectAction
-): IGatsbyState["redirects"] => {
+  action: ICreateRedirectAction,
+): IGatsbyState["redirects"] {
   switch (action.type) {
     case `CREATE_REDIRECT`: {
       const redirect = action.payload

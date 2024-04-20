@@ -1,4 +1,4 @@
-import {
+import type {
   IGatsbyState,
   IRemoveStaleJobV2Action,
   ICreateJobV2FromInternalAction,
@@ -8,7 +8,7 @@ import { isJobStale } from "../utils/jobs/manager"
 import { internalActions } from "../redux/actions"
 
 export const removeStaleJobs = (
-  jobs: IGatsbyState["jobsV2"]
+  jobs: IGatsbyState["jobsV2"],
 ): Array<IRemoveStaleJobV2Action | ICreateJobV2FromInternalAction> => {
   const actions: Array<
     IRemoveStaleJobV2Action | ICreateJobV2FromInternalAction

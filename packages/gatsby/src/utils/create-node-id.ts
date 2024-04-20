@@ -38,11 +38,11 @@ export function createNodeId(id: string | number, namespace: string): string {
     id = id.toString()
   } else if (typeof id !== `string`) {
     report.panic(
-      `The \`id\` parameter passed to createNodeId must be a String or Number (got ${typeof id})`
+      `The \`id\` parameter passed to createNodeId must be a String or Number (got ${typeof id})`,
     )
   } else if (typeof namespace !== `string`) {
     report.panic(
-      `The \`namespace\` parameter passed to createNodeId must be a String (got ${typeof namespace})`
+      `The \`namespace\` parameter passed to createNodeId must be a String (got ${typeof namespace})`,
     )
   }
 

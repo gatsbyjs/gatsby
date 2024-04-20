@@ -1,13 +1,10 @@
-import path from "path"
+import path from "node:path"
 
-export const getGatsbyVersion = (): string => {
+export function getGatsbyVersion(): string {
   try {
-    return require(path.join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    )).version
+    return require(
+      path.join(process.cwd(), `node_modules`, `gatsby`, `package.json`),
+    ).version
   } catch (e) {
     return ``
   }

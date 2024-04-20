@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { writeAll } from "../bootstrap/requires-writer"
-import { IQueryRunningContext } from "../state-machines/query-running/types"
+import type { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
 
 export async function writeOutRequires({

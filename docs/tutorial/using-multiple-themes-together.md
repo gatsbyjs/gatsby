@@ -412,7 +412,7 @@ This tutorial has introduced you to the idea of composing multiple themes togeth
 - [Gatsby Themes Reference Guide](/docs/themes/)
 - [Egghead.io Course: Gatsby Theme Authoring (free)](https://egghead.io/courses/gatsby-theme-authoring)
 - [IBM and Gatsby Themes: Driving Impact Through Design](https://www.youtube.com/watch?v=I2nh2juOKxM)
-- [Setting up yarn workspaces for Gatsby theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/#reach-skip-nav)
+- [Setting up pnpm workspaces for Gatsby theme development](/blog/2019-05-22-setting-up-pnpm-workspaces-for-theme-development/#reach-skip-nav)
 - [What is component shadowing?](/blog/2019-04-29-component-shadowing/)
 - [Customizing styles in Gatsby Themes with Theme-UI](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/)
 - [Composing and styling Gatsby Themes (with Brent Jackson) — Learn With Jason](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)

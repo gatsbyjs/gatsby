@@ -9,7 +9,7 @@ export const GATSBY_PLUGIN_PREVIEW_NAME = `@gatsby-cloud-pkg/gatsby-plugin-previ
 function addCloudPluginWhenInstalled(
   plugins: Array<IPluginInfo>,
   rootDir: string,
-  name: string
+  name: string,
 ): void {
   const cloudPluginLocation = resolveFromSilent(rootDir, name)
 
@@ -19,7 +19,7 @@ function addCloudPluginWhenInstalled(
         resolve: name,
         options: {},
       },
-      rootDir
+      rootDir,
     )
     plugins.push(processedGatsbyCloudPlugin)
   }
@@ -27,23 +27,23 @@ function addCloudPluginWhenInstalled(
 
 export function addGatsbyPluginPreviewWhenInstalled(
   plugins: Array<IPluginInfo>,
-  rootDir: string
+  rootDir: string,
 ): void {
   addCloudPluginWhenInstalled(plugins, rootDir, GATSBY_PLUGIN_PREVIEW_NAME)
 }
 
 export function addGatsbyPluginCloudPluginWhenInstalled(
   plugins: Array<IPluginInfo>,
-  rootDir: string
+  rootDir: string,
 ): void {
   addCloudPluginWhenInstalled(plugins, rootDir, GATSBY_CLOUD_PLUGIN_NAME)
 }
 
 export function incompatibleGatsbyCloudPlugin(
-  plugins: Array<IPluginInfo>
+  plugins: Array<IPluginInfo>,
 ): boolean {
   const plugin = plugins.find(
-    plugin => plugin.name === GATSBY_CLOUD_PLUGIN_NAME
+    plugin => plugin.name === GATSBY_CLOUD_PLUGIN_NAME,
   )
 
   return !semver.satisfies(plugin!.version, `>=4.0.0-alpha`, {

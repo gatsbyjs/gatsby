@@ -1,7 +1,7 @@
 import { setDefaultTags } from "gatsby-telemetry"
 import { getGatsbyVersion } from "gatsby-core-utils"
 
-export const getLocalGatsbyVersion = (): string => {
+export function getLocalGatsbyVersion(): string {
   const version = getGatsbyVersion()
 
   try {

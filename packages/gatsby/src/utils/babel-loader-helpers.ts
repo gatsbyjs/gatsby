@@ -1,15 +1,17 @@
-import path from "path"
+import path from "node:path"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Babel, {
-  ConfigItem,
-  PluginItem,
-  CreateConfigItemOptions,
+  type ConfigItem,
+  type PluginItem,
+  type CreateConfigItemOptions,
 } from "@babel/core"
 
 import { IBabelStage } from "../redux/types"
 import { Stage } from "../commands/types"
 
-interface ILoadCachedConfigReturnType {
+type ILoadCachedConfigReturnType = {
   stages: {
     test: IBabelStage
   }
@@ -22,10 +24,9 @@ const loadCachedConfig = (): ILoadCachedConfigReturnType => {
     },
   }
   if (process.env.NODE_ENV !== `test`) {
-    pluginBabelConfig = require(path.join(
-      process.cwd(),
-      `./.cache/babelState.json`
-    ))
+    pluginBabelConfig = require(
+      path.join(process.cwd(), `./.cache/babelState.json`),
+    )
   }
   return pluginBabelConfig
 }
@@ -44,15 +45,15 @@ export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
  */
 const configItemsMemoCache = new Map()
 
-export interface ICustomOptions extends Record<string, unknown> {
+export type ICustomOptions = {
   stage: Stage
   resourceQuery: string
-}
+} & Record<string, unknown>
 
 export const prepareOptions = (
   babel: typeof Babel,
   customOptions: ICustomOptions,
-  resolve: RequireResolve = require.resolve
+  resolve: RequireResolve = require.resolve,
 ): Array<Array<PluginItem>> => {
   const {
     stage,
@@ -81,7 +82,7 @@ export const prepareOptions = (
       ],
       {
         type: `plugin`,
-      }
+      },
     ),
   ]
 
@@ -112,8 +113,8 @@ export const prepareOptions = (
         ],
         {
           type: `plugin`,
-        }
-      )
+        },
+      ),
     )
   }
 
@@ -127,8 +128,8 @@ export const prepareOptions = (
         [resolve(`./babel/babel-plugin-add-slice-placeholder-location`)],
         {
           type: `plugin`,
-        }
-      )
+        },
+      ),
     )
   }
 
@@ -138,7 +139,7 @@ export const prepareOptions = (
     requiredPlugins.push(
       babel.createConfigItem([resolve(`react-refresh/babel`)], {
         type: `plugin`,
-      })
+      }),
     )
   }
 
@@ -157,8 +158,8 @@ export const prepareOptions = (
       ],
       {
         type: `preset`,
-      }
-    )
+      },
+    ),
   )
 
   // Go through babel state and create config items for presets/plugins from.
@@ -171,7 +172,7 @@ export const prepareOptions = (
         babel.createConfigItem([resolve(plugin.name), plugin.options], {
           dirname: plugin.name,
           type: `plugin`,
-        })
+        }),
       )
     })
     pluginBabelConfig.stages[stage].presets.forEach(preset => {
@@ -179,7 +180,7 @@ export const prepareOptions = (
         babel.createConfigItem([resolve(preset.name), preset.options], {
           dirname: preset.name,
           type: `preset`,
-        })
+        }),
       )
     })
   }
@@ -201,13 +202,13 @@ export const addRequiredPresetOptions = (
   babel: typeof Babel,
   presets: Array<ConfigItem>,
   options: { stage?: Stage } = {},
-  resolve: RequireResolve = require.resolve
+  resolve: RequireResolve = require.resolve,
 ): Array<PluginItem> => {
   // Always pass `stage` option to babel-preset-gatsby
   //  (even if defined in custom babelrc)
   const gatsbyPresetResolved = resolve(`babel-preset-gatsby`)
   const index = presets.findIndex(
-    p => p.file!.resolved === gatsbyPresetResolved
+    p => p.file!.resolved === gatsbyPresetResolved,
   )
 
   if (index !== -1) {
@@ -216,7 +217,7 @@ export const addRequiredPresetOptions = (
         gatsbyPresetResolved,
         { ...presets[index].options, stage: options.stage },
       ],
-      { type: `preset` }
+      { type: `preset` },
     )
   }
   return presets
@@ -235,7 +236,7 @@ export const mergeConfigItemOptions = ({
 }): Array<ConfigItem> => {
   const index = _.findIndex(
     items,
-    i => i.file?.resolved === itemToMerge.file?.resolved
+    i => i.file?.resolved === itemToMerge.file?.resolved,
   )
 
   // If this exist, merge the options, otherwise, add it to the array
@@ -247,7 +248,7 @@ export const mergeConfigItemOptions = ({
       ],
       {
         type,
-      }
+      },
     )
   } else {
     items.push(itemToMerge)

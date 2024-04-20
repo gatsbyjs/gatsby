@@ -15,7 +15,7 @@ test(`returns a valid value`, () => {
   expect(
     errorSchema.validate({
       context: {},
-    })
+    }),
   ).toMatchInlineSnapshot(`
     Object {
       "value": Object {

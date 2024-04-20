@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@9.0.4",
   "name": "gatsby-page-utils",
   "version": "3.14.0-next.2",
   "description": "Gatsby library that helps creating pages",
@@ -26,28 +27,29 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-page-utils#readme",
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.24.4",
     "bluebird": "^3.7.2",
-    "chokidar": "^3.5.3",
+    "chokidar": "^3.6.0",
     "fs-exists-cached": "^1.0.0",
     "gatsby-core-utils": "^4.14.0-next.2",
-    "glob": "^7.2.3",
+    "glob": "^10.3.12",
     "lodash": "^4.17.21",
     "micromatch": "^4.0.5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
-    "@types/micromatch": "^4.0.6",
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@types/micromatch": "^4.0.7",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.5",
-    "typescript": "5.4.4"
+    "typescript": "^5.4.5"
   },
   "files": [
     "dist/"
   ],
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   }
 }

@@ -1,9 +1,9 @@
-import { IGatsbyNode, IGatsbyState, ActionsUnion } from "../types"
+import type { IGatsbyNode, IGatsbyState, ActionsUnion } from "../types"
 
-const getNodesOfType = (
+function getNodesOfType(
   node: IGatsbyNode,
-  state: IGatsbyState["nodesByType"]
-): Map<string, IGatsbyNode> => {
+  state: IGatsbyState["nodesByType"],
+): Map<string, IGatsbyNode> {
   const { type } = node.internal
   if (!state.has(type)) {
     state.set(type, new Map())
@@ -12,17 +12,17 @@ const getNodesOfType = (
 
   if (!nodeByType) {
     throw new Error(
-      `An error occurred finding a node by it's type. This is likely a bug in gatsby. If you experience this error please open an issue.`
+      `An error occurred finding a node by it's type. This is likely a bug in gatsby. If you experience this error please open an issue.`,
     )
   }
 
   return nodeByType
 }
 
-export const nodesByTypeReducer = (
-  state: IGatsbyState["nodesByType"] = new Map(),
-  action: ActionsUnion
-): IGatsbyState["nodesByType"] => {
+export function nodesByTypeReducer(
+  state: IGatsbyState["nodesByType"] | undefined = new Map(),
+  action: ActionsUnion,
+): IGatsbyState["nodesByType"] {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()

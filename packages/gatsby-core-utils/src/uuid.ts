@@ -2,7 +2,7 @@
  * Copied from https://github.com/lukeed/uuid
  * https://github.com/lukeed/uuid/blob/master/src/secure.js
  */
-import { randomBytes } from "crypto"
+import { randomBytes } from "node:crypto"
 
 const SIZE = 4096
 const HEX: Array<string> = []

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default class Batcher<Callback extends (...args: Array<any>) => any> {
   private queue: Array<Parameters<Callback>> = []
   private callbacks: Array<(...args: Parameters<Callback>) => void> = []
@@ -18,7 +19,7 @@ export default class Batcher<Callback extends (...args: Array<any>) => any> {
   flush(): void {
     // call each callback for each item in the queue
     this.queue.forEach(args =>
-      this.callbacks.forEach(callback => callback(...args))
+      this.callbacks.forEach(callback => callback(...args)),
     )
 
     // pass the entire queue to all bulk callbacks

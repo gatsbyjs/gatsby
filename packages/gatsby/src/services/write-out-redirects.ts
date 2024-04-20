@@ -3,7 +3,7 @@ import {
   writeRedirects,
   startRedirectListener,
 } from "../bootstrap/redirects-writer"
-import { IQueryRunningContext } from "../state-machines/query-running/types"
+import type { IQueryRunningContext } from "../state-machines/query-running/types"
 
 export async function writeOutRedirects({
   parentSpan,

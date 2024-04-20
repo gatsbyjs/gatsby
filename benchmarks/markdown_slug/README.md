@@ -11,20 +11,20 @@ The pre-generate script stores pages in root/markdown-pages.
 ## Usage
 
 ```shell
-yarn
-yarn bench
+pnpm install
+pnpm run bench
 ```
 
-If you want to run the same pages without regenerating them you can use `yarn benchnb`. It's fine to use `gatsby clean` regardless.
+If you want to run the same pages without regenerating them you can use `pnpm run bench`. It's fine to use `gatsby clean` regardless.
 
 ### Detailed steps
 
-Use `yarn` to install if you want to use `gatsby-dev`. Otherwise I don't think it matters between `yarn` or `npm install`.
+Use `pnpm install` to install if you want to use `gatsby-dev`.
 
 ```shell
 # Requires node 8+
 # nvm use 8
-yarn
+pnpm install
 rm -r markdown-pages
 NUM_PAGES=2000 node md.generate.js
 gatsby clean

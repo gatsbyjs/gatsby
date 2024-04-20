@@ -1,23 +1,25 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
 import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import { md5, md5File } from "gatsby-core-utils"
-import path from "path"
+import path from "node:path"
 import telemetry from "gatsby-telemetry"
 import glob from "globby"
 
-import apiRunnerNode from "../utils/api-runner-node"
+import { apiRunnerNode } from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
-import { Store, AnyAction } from "redux"
+import type { Store, AnyAction } from "redux"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as WorkerPool from "../utils/worker/pool"
 import { startPluginRunner } from "../redux/plugin-runner"
 import { store, emitter } from "../redux"
 import reporter from "gatsby-cli/lib/reporter"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
-import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
-import { IGatsbyState, IStateProgram } from "../redux/types"
-import { IBuildContext } from "./types"
+import type { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
+import type { IGatsbyState, IStateProgram } from "../redux/types"
+import type { IBuildContext } from "./types"
 import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
@@ -29,14 +31,14 @@ import { writeGraphQLConfig } from "../utils/graphql-typegen/file-writes"
 import { initAdapterManager } from "../utils/adapter/manager"
 import type { IAdapterManager } from "../utils/adapter/types"
 
-interface IPluginResolution {
+type IPluginResolution = {
   resolve: string
   options: IPluginInfoOptions
 }
 
-interface IPluginResolutionSSR extends IPluginResolution {
+type IPluginResolutionSSR = {
   name: string
-}
+} & IPluginResolution
 
 // If the env variable GATSBY_EXPERIMENTAL_FAST_DEV is set, enable
 // all DEV experimental changes (but only during development & not on CI).
@@ -87,7 +89,7 @@ export async function initialize({
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
-      `GATSBY_DISABLE_CACHE_PERSISTENCE is enabled. Cache won't be persisted. Next builds will not be able to reuse any work done by current session.`
+      `GATSBY_DISABLE_CACHE_PERSISTENCE is enabled. Cache won't be persisted. Next builds will not be able to reuse any work done by current session.`,
     )
     telemetry.trackFeatureIsUsed(`DisableCachePersistence`)
   }
@@ -131,7 +133,7 @@ export async function initialize({
               store.getState().jobsV2.incomplete.size
             } jobs total):\n\n` + JSON.stringify(outputs, null, 2)
           : ``
-      }
+      },
     )
   }
 
@@ -217,7 +219,7 @@ export async function initialize({
 
   if (config && config.polyfill) {
     reporter.warn(
-      `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
+      `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`,
     )
   }
 
@@ -231,7 +233,7 @@ export async function initialize({
   } else if (isCI() && !process.env.GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI) {
     delete process.env.GATSBY_QUERY_ON_DEMAND
     reporter.verbose(
-      `Query on Demand is disabled in CI by default. You can enable it by setting GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI env var.`
+      `Query on Demand is disabled in CI by default. You can enable it by setting GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI env var.`,
     )
   }
 
@@ -287,10 +289,10 @@ export async function initialize({
       `delete html and css files from previous builds`,
       {
         parentSpan,
-      }
+      },
     )
     activity.start()
-    const files = await glob(
+    const files = await glob.globby(
       [
         `public/**/*.{html,css,mdb}`,
         `!public/page-data/**/*`,
@@ -299,7 +301,7 @@ export async function initialize({
       ],
       {
         cwd: program.directory,
-      }
+      },
     )
     await Promise.all(files.map(file => fs.remove(file)))
     activity.end()
@@ -312,7 +314,7 @@ export async function initialize({
       `delete worker cache from previous builds`,
       {
         parentSpan,
-      }
+      },
     )
     activity.start()
     await fs
@@ -348,8 +350,8 @@ export async function initialize({
   const hashes = await Promise.all(
     // Ignore optional files with .catch() as these are not required
     [md5File(`package.json`), state.config.trailingSlash as string].concat(
-      optionalFiles.map(f => md5File(f).catch(() => ``))
-    )
+      optionalFiles.map(f => md5File(f).catch(() => ``)),
+    ),
   )
 
   const pluginsHash = await md5(JSON.stringify(pluginVersions.concat(hashes)))
@@ -454,7 +456,7 @@ export async function initialize({
         deleteGlobs.push(`!.cache/caches/gatsby-source-filesystem`)
       }
 
-      const files = await glob(deleteGlobs, {
+      const files = await glob.globby(deleteGlobs, {
         cwd: program.directory,
       })
 
@@ -603,7 +605,7 @@ export async function initialize({
       name: '${plugin.name}',
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
-    }`
+    }`,
     )
     .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
@@ -611,7 +613,7 @@ export async function initialize({
   fs.writeFileSync(
     `${siteDir}/api-runner-browser-plugins.js`,
     browserAPIRunner,
-    `utf-8`
+    `utf-8`,
   )
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
@@ -652,7 +654,7 @@ export async function initialize({
   const siteDirectoryFiles = await fs.readdir(siteDirectory)
 
   const gatsbyFilesIsInESM = siteDirectoryFiles.some(file =>
-    file.match(/gatsby-(node|config)\.mjs/)
+    file.match(/gatsby-(node|config)\.mjs/),
   )
 
   if (gatsbyFilesIsInESM) {
@@ -671,10 +673,12 @@ export async function initialize({
 
   if (process.env.GATSBY_INITIAL_WEBHOOK_BODY) {
     try {
-      initialWebhookBody = JSON.parse(process.env.GATSBY_INITIAL_WEBHOOK_BODY)
+      initialWebhookBody = JSON.parse(
+        process.env.GATSBY_INITIAL_WEBHOOK_BODY,
+      ) as Record<string, unknown> | undefined
     } catch (e) {
       reporter.error(
-        `Failed to parse GATSBY_INITIAL_WEBHOOK_BODY as JSON:\n"${e.message}"`
+        `Failed to parse GATSBY_INITIAL_WEBHOOK_BODY as JSON:\n"${e.message}"`,
       )
     }
   }

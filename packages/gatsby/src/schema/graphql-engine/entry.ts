@@ -12,7 +12,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 import { setGatsbyPluginCache } from "../../utils/import-gatsby-plugin"
-import apiRunnerNode from "../../utils/api-runner-node"
+import { apiRunnerNode } from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
 import { runWithEngineContext } from "../../utils/engine-context"
@@ -30,7 +30,7 @@ type MaybePhantomActivity =
   | undefined
 
 const tracerReadyPromise = initTracer(
-  process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
+  process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``,
 )
 
 export class GraphQLEngine {
@@ -86,7 +86,7 @@ export class GraphQLEngine {
         setGatsbyPluginCache(
           { name, resolve: ``, importKey },
           `gatsby-node`,
-          module
+          module,
         )
       }
       for (const plugin of gatsbyWorkers) {
@@ -94,7 +94,7 @@ export class GraphQLEngine {
         setGatsbyPluginCache(
           { name, resolve: ``, importKey },
           `gatsby-worker`,
-          module
+          module,
         )
       }
 
@@ -129,8 +129,9 @@ export class GraphQLEngine {
 
   public async runQuery(
     query: string | Source,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: Record<string, any> = {},
-    opts?: IQueryOptions
+    opts?: IQueryOptions | undefined,
   ): Promise<ExecutionResult> {
     const engineContext = {
       requestId: uuid.v4(),
@@ -152,7 +153,7 @@ export class GraphQLEngine {
             `Waiting for graphql runner to init`,
             {
               parentSpan: opts.parentSpan,
-            }
+            },
           )
           gettingRunnerActivity.start()
         }
@@ -207,7 +208,7 @@ export class GraphQLEngine {
         },
         values(): Iterable<IGatsbyPage> {
           return getDataStore().iterateNodesByType(
-            `SitePage`
+            `SitePage`,
           ) as Iterable<IGatsbyPage>
         },
       },

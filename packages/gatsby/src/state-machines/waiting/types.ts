@@ -1,13 +1,13 @@
-import { Store, AnyAction } from "redux"
-import { IGatsbyState } from "../../redux/types"
+import type { Store, AnyAction } from "redux"
+import type { IGatsbyState } from "../../redux/types"
 
-export interface IMutationAction {
+export type IMutationAction = {
   type: string
   payload: Array<unknown>
 }
-export interface IWaitingContext {
+export type IWaitingContext = {
   nodeMutationBatch: Array<IMutationAction>
-  store?: Store<IGatsbyState, AnyAction>
+  store?: Store<IGatsbyState, AnyAction> | undefined
   runningBatch: Array<IMutationAction>
-  sourceFilesDirty?: boolean
+  sourceFilesDirty?: boolean | undefined
 }

@@ -8,7 +8,7 @@ import type { IsEqualCustomizer } from "lodash"
 export function deleteUntouchedPages(
   currentPages: Map<string, IGatsbyPage>,
   timeBeforeApisRan: number,
-  shouldRunCreatePagesStatefully: boolean
+  shouldRunCreatePagesStatefully: boolean,
 ): Array<string> {
   const deletedPages: Array<string> = []
 
@@ -28,7 +28,7 @@ export function deleteUntouchedPages(
 
 export function findChangedPages(
   oldPages: Map<string, IGatsbyPage>,
-  currentPages: Map<string, IGatsbyPage>
+  currentPages: Map<string, IGatsbyPage>,
 ): {
   changedPages: Array<string>
   deletedPages: Array<string>

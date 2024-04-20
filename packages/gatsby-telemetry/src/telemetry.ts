@@ -27,20 +27,20 @@ const dbEngine = `redux`
 
 export type SemVer = string
 
-interface IOSInfo {
+type IOSInfo = {
   nodeVersion: SemVer
   platform: string
   release: string
-  cpus?: string
+  cpus?: string | undefined
   arch: string
-  ci?: boolean
+  ci?: boolean | undefined
   ciName: string | null
-  docker?: boolean
-  termProgram?: string
+  docker?: boolean | undefined
+  termProgram?: string | undefined
   isTTY: boolean
 }
 
-export interface IAggregateStats {
+export type IAggregateStats = {
   count: number
   min: number
   max: number
@@ -51,81 +51,85 @@ export interface IAggregateStats {
   skewness: number
 }
 
-interface IAnalyticsTrackerConstructorParameters {
-  componentId?: SemVer
-  gatsbyCliVersion?: SemVer
-  trackingEnabled?: boolean
+type IAnalyticsTrackerConstructorParameters = {
+  componentId?: SemVer | undefined
+  gatsbyCliVersion?: SemVer | undefined
+  trackingEnabled?: boolean | undefined
 }
 
-export interface IStructuredError {
-  id?: string
-  code?: string
+export type IStructuredError = {
+  id?: string | undefined
+  code?: string | undefined
   text: string
-  level?: string
-  type?: string
-  context?: unknown
-  error?: {
-    stack?: string
-  }
+  level?: string | undefined
+  type?: string | undefined
+  context?: unknown | undefined
+  error?:
+    | {
+        stack?: string | null | undefined
+      }
+    | undefined
 }
 
-export interface IStructuredErrorV2 {
-  id?: string
+export type IStructuredErrorV2 = {
+  id?: string | undefined
   text: string
-  level?: string
-  type?: string
-  context?: string
-  stack?: string
+  level?: string | undefined
+  type?: string | undefined
+  context?: string | undefined
+  stack?: string | undefined
 }
 
-export interface ITelemetryTagsPayload {
-  name?: string
-  starterName?: string
-  siteName?: string
-  siteHash?: string
-  userAgent?: string
-  pluginName?: string
-  exitCode?: number
-  duration?: number
-  uiSource?: string
-  valid?: boolean
-  plugins?: Array<string>
-  pathname?: string
-  error?: IStructuredError | Array<IStructuredError>
-  cacheStatus?: string
-  pluginCachePurged?: string
-  dependencies?: Array<string>
-  devDependencies?: Array<string>
-  siteMeasurements?: {
-    pagesCount?: number
-    totalPagesCount?: number
-    createdNodesCount?: number
-    touchedNodesCount?: number
-    updatedNodesCount?: number
-    deletedNodesCount?: number
-    clientsCount?: number
-    paths?: Array<string | undefined>
-    bundleStats?: unknown
-    pageDataStats?: unknown
-    queryStats?: unknown
-    SSRCount?: number
-    DSGCount?: number
-    SSGCount?: number
-  }
-  errorV2?: IStructuredErrorV2
-  valueString?: string
-  valueStringArray?: Array<string>
-  valueInteger?: number
-  valueBoolean?: boolean
+export type ITelemetryTagsPayload = {
+  name?: string | undefined
+  starterName?: string | undefined
+  siteName?: string | undefined
+  siteHash?: string | undefined
+  userAgent?: string | undefined
+  pluginName?: string | undefined
+  exitCode?: number | undefined
+  duration?: number | undefined
+  uiSource?: string | undefined
+  valid?: boolean | undefined
+  plugins?: Array<string> | undefined
+  pathname?: string | undefined
+  error?: IStructuredError | Array<IStructuredError> | undefined
+  cacheStatus?: string | undefined
+  pluginCachePurged?: string | undefined
+  dependencies?: Array<string> | undefined
+  devDependencies?: Array<string> | undefined
+  siteMeasurements?:
+    | {
+        pagesCount?: number | undefined
+        totalPagesCount?: number | undefined
+        createdNodesCount?: number | undefined
+        touchedNodesCount?: number | undefined
+        updatedNodesCount?: number | undefined
+        deletedNodesCount?: number | undefined
+        clientsCount?: number | undefined
+        paths?: Array<string | undefined> | undefined
+        bundleStats?: unknown | undefined
+        pageDataStats?: unknown | undefined
+        queryStats?: unknown | undefined
+        SSRCount?: number | undefined
+        DSGCount?: number | undefined
+        SSGCount?: number | undefined
+      }
+    | undefined
+  errorV2?: IStructuredErrorV2 | undefined
+  valueString?: string | undefined
+  valueStringArray?: Array<string> | undefined
+  valueInteger?: number | undefined
+  valueBoolean?: boolean | undefined
 }
 
-export interface IDefaultTelemetryTagsPayload extends ITelemetryTagsPayload {
-  gatsbyCliVersion?: SemVer
-  installedGatsbyVersion?: SemVer
+export type IDefaultTelemetryTagsPayload = ITelemetryTagsPayload & {
+  gatsbyCliVersion?: SemVer | undefined
+  installedGatsbyVersion?: SemVer | undefined
 }
 
-export interface ITelemetryOptsPayload {
-  debounce?: boolean
+export type ITelemetryOptsPayload = {
+  debounce?: boolean | undefined
 }
 
 export class AnalyticsTracker {
@@ -134,16 +138,16 @@ export class AnalyticsTracker {
   debouncer = {}
   metadataCache = {}
   defaultTags = {}
-  osInfo?: IOSInfo // lazy
-  trackingEnabled?: boolean // lazy
-  componentVersion?: string
+  osInfo?: IOSInfo | undefined // lazy
+  trackingEnabled?: boolean | undefined // lazy
+  componentVersion?: string | undefined
   sessionId: string = this.getSessionId()
-  gatsbyCliVersion?: SemVer
-  installedGatsbyVersion?: SemVer
-  repositoryId?: IRepositoryId
+  gatsbyCliVersion?: SemVer | undefined
+  installedGatsbyVersion?: SemVer | undefined
+  repositoryId?: IRepositoryId | undefined
   features = new Set<string>()
   machineId: string
-  siteHash?: string = createContentDigest(process.cwd())
+  siteHash?: string | undefined = createContentDigest(process.cwd())
   lastEnvTagsFromFileTime = 0
   lastEnvTagsFromFileValue: ITelemetryTagsPayload = {}
 
@@ -178,6 +182,7 @@ export class AnalyticsTracker {
   // Hence we need to use process level globals that are not scoped to this module.
   // Due to the forking on develop process, we also need to pass this via process.env so that child processes have the same sessionId
   getSessionId(): string {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const p = process as any
     if (!p.gatsbyTelemetrySessionId) {
       const inherited = process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID
@@ -241,7 +246,7 @@ export class AnalyticsTracker {
   trackCli(
     type: string | Array<string> = ``,
     tags: ITelemetryTagsPayload = {},
-    opts: ITelemetryOptsPayload = { debounce: false }
+    opts: ITelemetryOptsPayload = { debounce: false },
   ): void {
     if (!this.isTrackingEnabled()) {
       return
@@ -255,7 +260,7 @@ export class AnalyticsTracker {
   captureEvent(
     type: string | Array<string> = ``,
     tags: ITelemetryTagsPayload = {},
-    opts: ITelemetryOptsPayload = { debounce: false }
+    opts: ITelemetryOptsPayload = { debounce: false },
   ): void {
     if (!this.isTrackingEnabled()) {
       return
@@ -313,7 +318,7 @@ export class AnalyticsTracker {
 
   formatErrorAndStoreEvent(
     eventType: string,
-    tags: ITelemetryTagsPayload
+    tags: ITelemetryTagsPayload,
   ): void {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
@@ -468,7 +473,7 @@ export class AnalyticsTracker {
 
   addSiteMeasurement(
     event: string,
-    obj: ITelemetryTagsPayload["siteMeasurements"]
+    obj: ITelemetryTagsPayload["siteMeasurements"],
   ): void {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
@@ -493,7 +498,7 @@ export class AnalyticsTracker {
     const stdDev =
       Math.sqrt(
         data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
-          (data.length - 1)
+          (data.length - 1),
       ) || 0
 
     const skewness =

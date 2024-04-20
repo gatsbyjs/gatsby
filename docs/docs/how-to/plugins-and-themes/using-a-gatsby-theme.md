@@ -8,7 +8,7 @@ While you can [get started quickly with a Gatsby theme starter](/docs/how-to/plu
 
 ## Installing a Theme
 
-Like any Gatsby plugin, Gatsby themes are Node.js packages, so you can install them like other published packages in Node using npm or [yarn, including local workspaces](#using-yarn-workspaces).
+Like any Gatsby plugin, Gatsby themes are Node.js packages, so you can install them like other published packages in Node using npm or [pnpm, including local workspaces](#using-pnpm-workspaces).
 
 For example, `gatsby-theme-blog` is the official Gatsby theme for creating a blog.
 
@@ -48,7 +48,7 @@ Public Gatsby themes are published on npm for anyone to use. You can also publis
 
 ## Using Yarn Workspaces
 
-If you would like to work with unpublished themes, consider [setting up Yarn Workspaces for theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/) and [using Yarn](/docs/reference/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) instead of npm.
+If you would like to work with unpublished themes, consider [setting up Yarn Workspaces for theme development](/blog/2019-05-22-setting-up-pnpm-workspaces-for-theme-development/) and [using Yarn](/docs/reference/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) instead of npm.
 
 ## Additional Reading
 

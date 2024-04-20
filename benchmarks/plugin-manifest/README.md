@@ -1,15 +1,15 @@
 # gatsby-plugin-manifest performance tests
 
-- Setup: `yarn`
-- Run: `yarn bench`
+- Setup: `pnpm install`
+- Run: `pnpm run bench`
 
 Benchmarks the current production version of the plugin unless you use `gatsby-dev`.
 
-## To benchmark the current branch:
+## To benchmark the current branch
 
 ```shell
 # In the root of the Gatsby repository
-yarn run watch --scope=gatsby-plugin-manifest .
+pnpm run watch --scope=gatsby-plugin-manifest .
 ```
 
 ```shell

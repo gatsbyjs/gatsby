@@ -1,6 +1,6 @@
 import { getStorage, LockStatus, getDatabaseDir } from "./utils/get-storage"
 
-interface IMutex {
+type IMutex = {
   acquire(): Promise<void>
   release(): Promise<void>
 }
@@ -11,7 +11,7 @@ const DEFAULT_MUTEX_INTERVAL = 3000
 async function waitUntilUnlocked(
   storage: ReturnType<typeof getStorage>,
   key: string,
-  timeout: number
+  timeout: number,
 ): Promise<void> {
   const isUnlocked = await storage.mutex.ifNoExists(key, () => {
     storage.mutex.put(key, LockStatus.Locked)
@@ -35,7 +35,7 @@ async function waitUntilUnlocked(
  */
 export function createMutex(
   key: string,
-  timeout = DEFAULT_MUTEX_INTERVAL
+  timeout = DEFAULT_MUTEX_INTERVAL,
 ): IMutex {
   const storage = getStorage(getDatabaseDir())
   const BUILD_ID = global.__GATSBY?.buildId ?? ``

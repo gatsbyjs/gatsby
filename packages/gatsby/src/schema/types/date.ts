@@ -1,29 +1,39 @@
-import moment, { MomentInput, unitOfTime, LocaleSpecifier } from "moment"
-import { GraphQLScalarType, Kind, GraphQLFieldConfig } from "graphql"
+import moment, {
+  type MomentInput,
+  unitOfTime,
+  type LocaleSpecifier,
+} from "moment"
+import { GraphQLScalarType, Kind, type GraphQLFieldConfig } from "graphql"
 import { oneLine } from "common-tags"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import GatsbyCacheLmdb from "../../utils/cache-lmdb"
 
-interface IFormatDateArgs {
+export type IFormatDateArgs = {
   date: Date | string
-  fromNow?: boolean
-  formatString?: string
-  difference?: unitOfTime.Diff
-  locale?: LocaleSpecifier
+  fromNow?: boolean | undefined
+  formatString?: string | undefined
+  difference?: unitOfTime.Diff | undefined
+  locale?: LocaleSpecifier | undefined
 }
-interface IDateResolverOption {
-  locale?: string
-  formatString?: string
-  fromNow?: boolean
-  difference?: string
-  from?: string
-  fromNode?: boolean
+export type IDateResolverOption = {
+  locale?: string | undefined
+  formatString?: string | undefined
+  fromNow?: boolean | undefined
+  difference?: string | undefined
+  from?: string | undefined
+  fromNode?: boolean | undefined
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DateResolverFieldConfig = GraphQLFieldConfig<any, any, any>
-type DateResolver = (
+export type DateResolver = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   source: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   context: any,
-  info: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  info: any,
 ) => Promise<null | string | number | Array<string | number>>
 
 const ISO_8601_FORMAT = [
@@ -141,7 +151,7 @@ const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format => {
   return [...matchedFormat]
     .map(token =>
       // see if the token (YYYY or ss) is found, else we just return the value
-      momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token
+      momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token,
     )
     .join(``)
 }).join(`|`)
@@ -156,7 +166,7 @@ const ISO_8601_FORMAT_LENGTHS = [
 
       // we add count of +01 & +01:00
       return acc.concat([val.length, val.length + 3, val.length + 5])
-    }, [])
+    }, []),
   ),
 ]
 
@@ -221,14 +231,14 @@ function getFormatDateCache(): GatsbyCacheLmdb {
   return formatDateCache
 }
 
-const formatDate = async ({
+async function formatDate({
   date,
   fromNow,
   difference,
   formatString,
   locale = `en`,
-}: IFormatDateArgs): Promise<string | number> => {
-  const normalizedDate = JSON.parse(JSON.stringify(date))
+}: IFormatDateArgs): Promise<string | number> {
+  const normalizedDate = JSON.parse(JSON.stringify(date)) as string | number
   if (formatString) {
     const cacheKey = `${normalizedDate}-${formatString}-${locale}`
     const cachedFormat = await getFormatDateCache().get(cacheKey)
@@ -252,16 +262,17 @@ const formatDate = async ({
   } else if (difference) {
     return moment().diff(
       moment.utc(normalizedDate, ISO_8601_FORMAT, true).locale(locale),
-      difference
+      difference,
     )
   }
   return normalizedDate
 }
 
-export const getDateResolver = (
+export function getDateResolver(
   options: IDateResolverOption = {},
-  fieldConfig: DateResolverFieldConfig
-): { args: Record<string, any>; resolve: DateResolver } => {
+  fieldConfig: DateResolverFieldConfig,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { args: Record<string, any>; resolve: DateResolver } {
   const { locale, formatString, fromNow, difference } = options
   return {
     args: {
@@ -311,7 +322,7 @@ export const getDateResolver = (
 
       if (Array.isArray(date)) {
         return await Promise.all(
-          date.map(d => formatDate({ date: d, ...args }))
+          date.map(d => formatDate({ date: d, ...args })),
         )
       }
 

@@ -1,5 +1,5 @@
 import {
-  IGroupedQueryIds,
+  type IGroupedQueryIds,
   runPageQueries,
   runStaticQueries,
 } from "../../../services"
@@ -8,14 +8,13 @@ import { GraphQLRunner } from "../../../query/graphql-runner"
 import { getDataStore } from "../../../datastore"
 import { setState } from "./state"
 import { buildSchema } from "./schema"
-import {
+import type {
   IAddPendingPageDataWriteAction,
   ICreatePageDependencyAction,
   IGatsbyState,
   IPageQueryRunAction,
   IQueryStartAction,
 } from "../../../redux/types"
-import { DeepPartial } from "redux"
 import { waitUntilPageQueryResultsAreStored } from "../../page-data"
 
 export function setComponents(): void {
@@ -25,8 +24,8 @@ export function setComponents(): void {
 export async function saveQueriesDependencies(): Promise<void> {
   // Drop `queryNodes` from query state - it can be restored from other pieces of state
   // and is there only as a perf optimization
-  const pickNecessaryQueryState = <T extends DeepPartial<IGatsbyState>>(
-    state: T
+  const pickNecessaryQueryState = <T extends Partial<IGatsbyState>>(
+    state: T,
   ): T => {
     if (!state?.queries?.queryNodes) return state
     return { ...state, queries: { ...state.queries, queryNodes: new Map() } }
@@ -34,7 +33,7 @@ export async function saveQueriesDependencies(): Promise<void> {
   savePartialStateToDisk(
     [`queries`, `telemetry`],
     process.env.GATSBY_WORKER_ID,
-    pickNecessaryQueryState
+    pickNecessaryQueryState,
   )
 
   // make sure page query results we put in lmdb-store are flushed
@@ -61,7 +60,7 @@ type ActionsToReplay = Array<
 >
 
 export async function runQueries(
-  queryIds: IGroupedQueryIds
+  queryIds: IGroupedQueryIds,
 ): Promise<ActionsToReplay> {
   const actionsToReplay: ActionsToReplay = []
 

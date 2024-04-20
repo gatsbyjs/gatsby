@@ -5,14 +5,14 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^3.0.0-next.0",
-    "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet": "^5.2.1"
+    "gatsby": "next",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0"
   },
   "devDependencies": {
-    "prettier": "2.0.4"
+    "@total-typescript/ts-reset": "0.5.1"
   },
   "keywords": [
     "gatsby"

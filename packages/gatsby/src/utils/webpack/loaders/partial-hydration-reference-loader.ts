@@ -2,7 +2,6 @@
 import { parse } from "acorn-loose"
 import { simple as walk } from "acorn-walk"
 import type { LoaderDefinitionFunction } from "webpack"
-import type { Node } from "acorn-loose"
 import type {
   ExportNamedDeclaration,
   ExportDefaultDeclaration,
@@ -13,7 +12,7 @@ import { createNormalizedModuleKey } from "../utils/create-normalized-module-key
 
 function createNamedReference(
   name: string,
-  normalizedModuleKey: string
+  normalizedModuleKey: string,
 ): string {
   return `export const ${name} = {
     $$typeof: Symbol.for('react.module.reference'),
@@ -24,7 +23,7 @@ function createNamedReference(
 
 function createDefaultReference(
   name: string,
-  normalizedModuleKey: string
+  normalizedModuleKey: string,
 ): string {
   return `export default {
     $$typeof: Symbol.for('react.module.reference'),
@@ -45,18 +44,18 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
 
   const normalizedModuleKey = createNormalizedModuleKey(
     this.resourcePath,
-    this.rootContext
+    this.rootContext,
   )
 
   walk(parse(content, { ecmaVersion: 2020, sourceType: `module` }), {
-    ExpressionStatement(plainAcornNode: Node) {
+    ExpressionStatement(plainAcornNode) {
       const node = plainAcornNode as unknown as Directive
 
       if (node.directive === `use client`) {
         hasClientExportDirective = true
       }
     },
-    ExportNamedDeclaration(plainAcornNode: Node) {
+    ExportNamedDeclaration(plainAcornNode) {
       const node = plainAcornNode as unknown as ExportNamedDeclaration
 
       if (!hasClientExportDirective) return
@@ -67,7 +66,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
           for (const { id } of node.declaration.declarations || []) {
             if (id.type === `Identifier` && id.name) {
               references.push(
-                createNamedReference(id.name, normalizedModuleKey)
+                createNamedReference(id.name, normalizedModuleKey),
               )
             }
 
@@ -76,7 +75,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
               for (const { value } of id.properties) {
                 if (value.type === `Identifier` && value.name) {
                   references.push(
-                    createNamedReference(value.name, normalizedModuleKey)
+                    createNamedReference(value.name, normalizedModuleKey),
                   )
                 }
               }
@@ -86,7 +85,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
               for (const element of id.elements || []) {
                 if (element?.type === `Identifier` && element.name) {
                   references.push(
-                    createNamedReference(element.name, normalizedModuleKey)
+                    createNamedReference(element.name, normalizedModuleKey),
                   )
                 }
               }
@@ -102,8 +101,8 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             references.push(
               createNamedReference(
                 node.declaration.id.name,
-                normalizedModuleKey
-              )
+                normalizedModuleKey,
+              ),
             )
           }
           break
@@ -119,21 +118,21 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
           ) {
             if (specifier.exported.name === `default`) {
               references.push(
-                createDefaultReference(`default`, normalizedModuleKey)
+                createDefaultReference(`default`, normalizedModuleKey),
               )
             } else {
               references.push(
                 createNamedReference(
                   specifier.exported.name,
-                  normalizedModuleKey
-                )
+                  normalizedModuleKey,
+                ),
               )
             }
           }
         }
       }
     },
-    ExportDefaultDeclaration(plainAcornNode: Node) {
+    ExportDefaultDeclaration(plainAcornNode) {
       const node = plainAcornNode as unknown as ExportDefaultDeclaration
 
       if (!hasClientExportDirective) return
@@ -143,14 +142,14 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         case `Identifier`:
           if (node.declaration.name) {
             references.push(
-              createDefaultReference(`default`, normalizedModuleKey)
+              createDefaultReference(`default`, normalizedModuleKey),
             )
           }
           break
         case `FunctionDeclaration`:
         case `ClassDeclaration`:
           references.push(
-            createDefaultReference(`default`, normalizedModuleKey)
+            createDefaultReference(`default`, normalizedModuleKey),
           )
           break
       }
@@ -171,7 +170,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         left.property?.name
       ) {
         references.push(
-          createNamedReference(left.property.name, normalizedModuleKey)
+          createNamedReference(left.property.name, normalizedModuleKey),
         )
       }
     },

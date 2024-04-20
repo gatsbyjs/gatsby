@@ -1,18 +1,19 @@
 import sysPath from "path"
 import express from "express"
+// @ts-ignore
 import { ServeStaticOptions } from "serve-static"
 import parseUrl from "parseurl"
 
 export function developStatic(
   root: string,
-  options: ServeStaticOptions
+  options: ServeStaticOptions,
 ): express.Handler {
   const expressStatic = express.static(root, options)
 
   return function (
     req: express.Request,
     res: express.Response,
-    next: express.NextFunction
+    next: express.NextFunction,
   ): typeof expressStatic | void {
     if ([`GET`, `HEAD`].includes(req.method)) {
       const path = parseUrl(req).pathname

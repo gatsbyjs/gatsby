@@ -1,11 +1,12 @@
 import traverse from "@babel/traverse"
-import { NodePath } from "@babel/core"
-import { JSXOpeningElement } from "@babel/types"
-import { parse, ParserOptions } from "@babel/parser"
+import type { NodePath } from "@babel/core"
+// @ts-ignore
+import type { JSXAttribute } from "@babel/types"
+import { parse, type ParserOptions } from "@babel/parser"
 import babel from "@babel/core"
 import { slash } from "gatsby-core-utils"
 import { evaluateImageAttributes, hashOptions } from "../babel-helpers"
-import { IStaticImageProps } from "../components/static-image.server"
+import type { IStaticImageProps } from "../components/static-image.server"
 
 const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
@@ -55,7 +56,7 @@ export function getBabelParserOptions(filePath: string): ParserOptions {
     return {
       ...PARSER_OPTIONS,
       plugins: (plugins || []).map(plugin =>
-        plugin === `flow` ? `typescript` : plugin
+        plugin === `flow` ? `typescript` : plugin,
       ),
     }
   }
@@ -64,7 +65,7 @@ export function getBabelParserOptions(filePath: string): ParserOptions {
 
 export function babelParseToAst(
   contents: string,
-  filePath: string
+  filePath: string,
 ): babel.types.File {
   return parse(contents, getBabelParserOptions(filePath))
 }
@@ -76,7 +77,10 @@ export function babelParseToAst(
 export const extractStaticImageProps = (
   ast: babel.types.File,
   filename: string,
-  onError?: (prop: string, nodePath: NodePath) => void
+  onError?: (
+    prop: string,
+    nodePath: NodePath<JSXAttribute> | undefined,
+  ) => void | undefined,
 ): Map<string, IStaticImageProps> => {
   const images: Map<string, IStaticImageProps> = new Map()
 
@@ -92,8 +96,8 @@ export const extractStaticImageProps = (
       }
       const image = evaluateImageAttributes(
         // There's a conflict between the definition of NodePath in @babel/core and @babel/traverse
-        nodePath as unknown as NodePath<JSXOpeningElement>,
-        onError
+        nodePath,
+        onError,
       ) as unknown as IStaticImageProps
       // When the image props are the same for multiple StaticImage but they are in different locations
       // the hash will be the same then. We need to make sure that the hash is unique.

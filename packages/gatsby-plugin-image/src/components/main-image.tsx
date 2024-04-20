@@ -1,9 +1,10 @@
-import React from "react"
-import { Picture, PictureProps } from "./picture"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import React, { type JSX, type ComponentType, memo } from "react"
+import { Picture, type PictureProps } from "./picture"
 
 export type MainImageProps = PictureProps
 
-export const MainImage: React.FC<PictureProps> = function MainImage(props) {
+function _MainImage(props: MainImageProps): JSX.Element {
   return (
     <>
       <Picture {...props} />
@@ -13,6 +14,9 @@ export const MainImage: React.FC<PictureProps> = function MainImage(props) {
     </>
   )
 }
+
+export const MainImage: ComponentType<MainImageProps> =
+  memo<MainImageProps>(_MainImage)
 
 MainImage.displayName = `MainImage`
 MainImage.propTypes = Picture.propTypes

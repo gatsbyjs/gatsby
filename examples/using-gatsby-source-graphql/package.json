@@ -9,7 +9,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "dateformat": "^3.0.3",
+    "dateformat": "5.0.3",
     "gatsby": "next",
     "gatsby-image": "next",
     "gatsby-plugin-netlify": "next",
@@ -17,22 +17,17 @@
     "gatsby-source-filesystem": "next",
     "gatsby-source-graphql": "next",
     "gatsby-transformer-sharp": "next",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "remark": "^11.0.2",
-    "remark-html": "^10.0.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "remark": "15.0.1",
+    "remark-html": "16.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-flowtype": "^4.7.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.6",
-    "prettier": "2.1.1",
-    "prettier-eslint-cli": "5.0.0"
+    "@total-typescript/ts-reset": "0.5.1",
+    "babel-eslint": "10.1.0",
+    "eslint": "8.57.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jsx-a11y": "6.8.0",
+    "eslint-plugin-react": "7.34.1"
   }
 }

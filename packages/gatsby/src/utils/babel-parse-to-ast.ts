@@ -1,5 +1,5 @@
-import { parse, ParserOptions } from "@babel/parser"
-import { File } from "@babel/types"
+import { parse, type ParserOptions } from "@babel/parser"
+import type { File } from "@babel/types"
 
 const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
@@ -49,7 +49,7 @@ export function getBabelParserOptions(filePath: string): ParserOptions {
     return {
       ...PARSER_OPTIONS,
       plugins: plugins!.map(plugin =>
-        plugin === `flow` ? `typescript` : plugin
+        plugin === `flow` ? `typescript` : plugin,
       ),
     }
   }

@@ -1,24 +1,22 @@
 import { stripIndent, stripIndents } from "common-tags"
 import {
-  IOptionalGraphQLInfoContext,
-  Level,
   Type,
+  Level,
   ErrorCategory,
+  type IOptionalGraphQLInfoContext,
 } from "./types"
 
-const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
-  `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${
-    context.filePath ? `\n\nFile path: ${context.filePath}` : ``
-  }${context.urlPath ? `\nUrl path: ${context.urlPath}` : ``}${
-    context.plugin ? `\nPlugin: ${context.plugin}` : ``
-  }`
+function optionalGraphQLInfo(context: IOptionalGraphQLInfoContext): string {
+  return `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${context.filePath ? `\n\nFile path: ${context.filePath}` : ``}${context.urlPath ? `\nUrl path: ${context.urlPath}` : ``}${context.plugin ? `\nPlugin: ${context.plugin}` : ``}`
+}
 
-const getSharedNodeManifestWarning = (inputManifest: {
+function getSharedNodeManifestWarning(inputManifest: {
   manifestId: string
   node: { id: string }
   pluginName: string
-}): string =>
-  `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
+}): string {
+  return `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
+}
 
 const errors: Record<string, IErrorMapEntry> = {
   "": {
@@ -34,33 +32,36 @@ const errors: Record<string, IErrorMapEntry> = {
     type: Type.UNKNOWN,
   },
   "95312": {
-    text: (context): string =>
-      `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
+    text: (context): string => {
+      return `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`
+    },
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,
     type: Type.HTML_COMPILATION,
   },
   "95313": {
-    text: (context): string =>
-      `Building static HTML failed${
-        context.errorPath ? ` for path "${context.errorPath}"` : ``
-      }`,
+    text: (context): string => {
+      return `Building static HTML failed${context.errorPath ? ` for path "${context.errorPath}"` : ``}`
+    },
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.UNKNOWN,
     type: Type.HTML_COMPILATION,
   },
   "95314": {
-    text: (context): string => context.errorMessage,
+    text: (context): string => {
+      return context.errorMessage
+    },
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     type: Type.HTML_COMPILATION,
     category: ErrorCategory.UNKNOWN,
   },
   "95315": {
-    text: (context): string =>
-      `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`,
+    text: (context): string => {
+      return `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`
+    },
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.ENGINE_EXECUTION,
@@ -225,8 +226,8 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       stripIndent(`
         GraphQL syntax error in query:\n\n${context.sourceMessage}${
-        context.codeFrame ? `\n\n${context.codeFrame}` : ``
-      }`),
+          context.codeFrame ? `\n\n${context.codeFrame}` : ``
+        }`),
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -262,8 +263,8 @@ const errors: Record<string, IErrorMapEntry> = {
         There was an error in your GraphQL query:\n\n${
           context.sourceMessage
         }${optionalGraphQLInfo(
-        context
-      )}\n\n${staticQueryMessage}\n\n${generalMessage}`)
+          context,
+        )}\n\n${staticQueryMessage}\n\n${generalMessage}`)
     },
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
@@ -319,7 +320,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }\n\nThe field "${
         context.field
       }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.${optionalGraphQLInfo(
-        context
+        context,
       )}`,
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
@@ -449,7 +450,7 @@ const errors: Record<string, IErrorMapEntry> = {
       } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.input,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     type: Type.API_NODE_VALIDATION,
@@ -463,7 +464,7 @@ const errors: Record<string, IErrorMapEntry> = {
       } must set the page path when creating a page.\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.pageObject,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -487,7 +488,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }"\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.input,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -505,7 +506,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }")\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.input,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -547,7 +548,7 @@ const errors: Record<string, IErrorMapEntry> = {
                 ``,
                 ...context.fixes.map(fix => `- ${fix}`),
               ]
-            : []
+            : [],
         )
         .join(`\n`),
     level: Level.ERROR,
@@ -578,13 +579,15 @@ const errors: Record<string, IErrorMapEntry> = {
       [
         stripIndent(`
           Invalid plugin options for "${context.pluginName}"${
-          context.configDir ? `, configured by ${context.configDir}` : ``
-        }:
+            context.configDir ? `, configured by ${context.configDir}` : ``
+          }:
         `),
       ]
         .concat([``])
         .concat(
-          context.validationErrors.map(error => `- ${error.message}`).join(`\n`)
+          context.validationErrors
+            .map(error => `- ${error.message}`)
+            .join(`\n`),
         )
         .join(`\n`),
     type: Type.API_NODE_VALIDATION,
@@ -607,7 +610,7 @@ const errors: Record<string, IErrorMapEntry> = {
       } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
         context.input,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -621,7 +624,7 @@ const errors: Record<string, IErrorMapEntry> = {
       } must set the slice id when creating a slice.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
         context.sliceObject,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -639,7 +642,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }")\n\nThe object passed to createSlice:\n${JSON.stringify(
         context.input,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -655,7 +658,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }"\n\nThe slice object passed to createSlice:\n${JSON.stringify(
         context.input,
         null,
-        4
+        4,
       )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -776,8 +779,8 @@ const errors: Record<string, IErrorMapEntry> = {
       stripIndent(`
         The path "${context.path}" errored during SSR.
         Edit its component ${context.filePath}${
-        context.line ? `:${context.line}:${context.column}` : ``
-      } to resolve the error.`),
+          context.line ? `:${context.line}:${context.column}` : ``
+        } to resolve the error.`),
     level: Level.WARNING,
     category: ErrorCategory.USER,
     type: Type.HTML_GENERATION_DEV_SSR,
@@ -808,7 +811,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }" state without any updates for ${(
         context.stuckStatusWatchdogTimeoutDelay / 1000
       ).toFixed(
-        3
+        3,
       )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${
         context.stuckStatusDiagnosticMessage
       }${context.additionalOutput}`,
@@ -820,7 +823,7 @@ const errors: Record<string, IErrorMapEntry> = {
   // Node Manifest warnings
   "11801": {
     text: ({ inputManifest }): string => `${getSharedNodeManifestWarning(
-      inputManifest
+      inputManifest,
     )} but Gatsby couldn't find a page for this node.
       If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a ownerNodeId is added to createPage() if you're not using the Filesystem Route API). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.\n`,
     level: Level.WARNING,
@@ -830,7 +833,7 @@ const errors: Record<string, IErrorMapEntry> = {
   "11802": {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
-        inputManifest
+        inputManifest,
       )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.id in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
@@ -839,7 +842,7 @@ const errors: Record<string, IErrorMapEntry> = {
   "11805": {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
-        inputManifest
+        inputManifest,
       )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.slug in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
@@ -848,7 +851,7 @@ const errors: Record<string, IErrorMapEntry> = {
   "11803": {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
-        inputManifest
+        inputManifest,
       )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page where this node is queried.\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
@@ -868,14 +871,14 @@ const errors: Record<string, IErrorMapEntry> = {
     Failed to compile Gatsby files ${
       context.origin ? `(${context.origin})` : ``
     }:
-    
+
     ${context.generalMessage}. ${context.specificMessage ?? ``}
     ${
       context.hints
         ? context.hints.map(
             h => `
     Hints:
-    - ${h}\n`
+    - ${h}\n`,
           )
         : ``
     }
@@ -915,9 +918,9 @@ const errors: Record<string, IErrorMapEntry> = {
   },
   "12100": {
     text: (
-      context
+      context,
     ): string => `There was an error while trying to generate TS types from your GraphQL queries:
-    
+
     ${context.sourceMessage}`,
     level: Level.ERROR,
     type: Type.API_TYPESCRIPT_TYPEGEN,
@@ -954,7 +957,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }
 
       This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers are used in a component without declaring the "use client" directive at the top of the file.
-      
+
       Consider adding "use client" to the top of your file if your component is interactive, otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
     `),
     level: Level.ERROR,
@@ -967,11 +970,11 @@ const errors: Record<string, IErrorMapEntry> = {
       stripIndents(
         `
         Failed to restore previous client module manifest.
-        
+
         This can happen if the manifest is corrupted or is not compatible with the current version of Gatsby.
 
         Please run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/new-issue for more help.
-        `
+        `,
       ),
     level: Level.ERROR,
     type: Type.RSC_COMPILATION,
@@ -986,7 +989,7 @@ export const errorMap: Record<ErrorId, IErrorMapEntry> = errors
 
 export const defaultError = errorMap[``]
 
-export interface IErrorMapEntry {
+export type IErrorMapEntry = {
   text: (context) => string
   // Public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union with string interpolation
   level: `${Level}`
@@ -996,8 +999,7 @@ export interface IErrorMapEntry {
 }
 
 // Make level and type optional for plugins
-export interface IErrorMapEntryPublicApi
-  extends Omit<IErrorMapEntry, "level" | "type"> {
+export type IErrorMapEntryPublicApi = {
   level?: `${Level}`
   type?: `${Type}` | ((context) => `${Type}`)
-}
+} & Omit<IErrorMapEntry, "level" | "type">

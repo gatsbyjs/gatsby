@@ -1,50 +1,53 @@
 import { ErrorId } from "./error-map"
 
-export interface IConstructError {
+export type IConstructError = {
   details: {
-    id?: ErrorId
-    context?: Record<string, any>
-    error?: Error
-    pluginName?: string
+    id?: ErrorId | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context?: Record<string, any> | undefined
+    error?: Error | undefined
+    pluginName?: string | undefined
     [key: string]: unknown
   }
 }
 
-export interface ILocationPosition {
+export type ILocationPosition = {
   line: number
   column: number
 }
 
-export interface IStructuredStackFrame {
+export type IStructuredStackFrame = {
   fileName: string
-  functionName?: string
-  lineNumber?: number
-  columnNumber?: number
+  functionName?: string | undefined
+  lineNumber?: number | undefined
+  columnNumber?: number | undefined
 }
 
-export interface IStructuredError {
-  code?: string
+export type IStructuredError = {
+  code?: string | undefined
   text: string
   stack: Array<IStructuredStackFrame>
-  filePath?: string
-  location?: {
-    start: ILocationPosition
-    end?: ILocationPosition
-  }
-  category?: `${ErrorCategory}`
-  error?: Error
-  group?: string
+  filePath?: string | undefined
+  location?:
+    | {
+        start: ILocationPosition
+        end?: ILocationPosition | undefined
+      }
+    | undefined
+  category?: `${ErrorCategory}` | undefined
+  error?: Error | undefined
+  group?: string | undefined
   level: `${Level}`
   type: `${Type}`
-  docsUrl?: string
-  pluginName?: string
+  docsUrl?: string | undefined
+  pluginName?: string | undefined
 }
 
-export interface IOptionalGraphQLInfoContext {
-  codeFrame?: string
-  filePath?: string
-  urlPath?: string
-  plugin?: string
+export type IOptionalGraphQLInfoContext = {
+  codeFrame?: string | undefined
+  filePath?: string | undefined
+  urlPath?: string | undefined
+  plugin?: string | undefined
 }
 
 export enum Level {

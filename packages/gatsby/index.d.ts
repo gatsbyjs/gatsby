@@ -109,7 +109,7 @@ export type PageProps<
   DataType = object,
   PageContextType = object,
   LocationState = WindowLocation["state"],
-  ServerDataType = object
+  ServerDataType = object,
 > = {
   /** The path for this current page */
   path: string
@@ -178,7 +178,7 @@ export type PageProps<
 export type HeadProps<
   DataType = object,
   PageContextType = object,
-  ServerDataType = object
+  ServerDataType = object,
 > = {
   location: {
     /**
@@ -206,7 +206,7 @@ export type HeadProps<
  * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
 export type HeadFC<DataType = object, PageContextType = object> = (
-  props: HeadProps<DataType, PageContextType>
+  props: HeadProps<DataType, PageContextType>,
 ) => JSX.Element
 
 type SerializableProps =
@@ -243,7 +243,7 @@ export declare function Slice(props: SlicePlaceholderProps): JSX.Element
 export type SliceComponentProps<
   DataType = object,
   SliceContextType = object,
-  AdditionalSerializableProps extends ISerializableObject = object
+  AdditionalSerializableProps extends ISerializableObject = object,
 > = {
   data: DataType
   sliceContext: SliceContextType
@@ -276,7 +276,7 @@ export type GetServerDataReturn<ServerDataType = Record<string, unknown>> =
  * A shorthand type for combining the props and return type for the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
 export type GetServerData<ServerDataType> = (
-  props: GetServerDataProps
+  props: GetServerDataProps,
 ) => GetServerDataReturn<ServerDataType>
 
 /**
@@ -408,7 +408,7 @@ export interface GatsbyConfig {
  */
 export interface GatsbyNode<
   TNode extends Record<string, unknown> = Record<string, unknown>,
-  TContext = Record<string, unknown>
+  TContext = Record<string, unknown>,
 > {
   /**
    * Tell plugins to add pages. This extension point is called only after the initial
@@ -422,7 +422,7 @@ export interface GatsbyNode<
       traceId: "initial-createPages"
     },
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -444,7 +444,7 @@ export interface GatsbyNode<
       traceId: "initial-createPagesStatefully"
     },
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -455,7 +455,7 @@ export interface GatsbyNode<
   onCreateBabelConfig?(
     args: CreateBabelConfigArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -475,7 +475,7 @@ export interface GatsbyNode<
   onCreateDevServer?(
     args: CreateDevServerArgs,
     options: PluginOptions,
-    calllback: PluginCallback<void>
+    calllback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -516,7 +516,7 @@ export interface GatsbyNode<
   onCreateNode?(
     args: CreateNodeArgs<TNode>,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -541,7 +541,7 @@ export interface GatsbyNode<
   onCreatePage?(
     args: CreatePageArgs<TContext>,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -551,42 +551,42 @@ export interface GatsbyNode<
   onCreateWebpackConfig?(
     args: CreateWebpackConfigArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
   onPostBootstrap?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /** The last extension point called after all other parts of the build process are complete. */
   onPostBuild?(
     args: BuildArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreBootstrap?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /** The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start. */
   onPreBuild?(
     args: BuildArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
   onPreExtractQueries?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -602,14 +602,14 @@ export interface GatsbyNode<
   onPluginInit?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreInit?(
     args: PreInitArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -619,7 +619,7 @@ export interface GatsbyNode<
   preprocessSource?(
     args: PreprocessSourceArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | string | Promise<void | string>
 
   /**
@@ -628,7 +628,7 @@ export interface GatsbyNode<
   resolvableExtensions?(
     args: ResolvableExtensionsArgs,
     options: PluginOptions,
-    callback: PluginCallback<Array<string>>
+    callback: PluginCallback<Array<string>>,
   ): Array<string> | Promise<Array<string>>
 
   /**
@@ -653,7 +653,7 @@ export interface GatsbyNode<
   setFieldsOnGraphQLNodeType?(
     args: SetFieldsOnGraphQLNodeTypeArgs,
     options: PluginOptions,
-    callback: PluginCallback<any>
+    callback: PluginCallback<any>,
   ): any
 
   /**
@@ -669,7 +669,7 @@ export interface GatsbyNode<
   sourceNodes?(
     args: SourceNodesArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -709,7 +709,7 @@ export interface GatsbyNode<
   createResolvers?(
     args: CreateResolversArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -725,7 +725,7 @@ export interface GatsbyNode<
   createSchemaCustomization?(
     args: CreateSchemaCustomizationArgs,
     options: PluginOptions,
-    callback: PluginCallback<void>
+    callback: PluginCallback<void>,
   ): void | Promise<void>
 
   /**
@@ -743,61 +743,61 @@ export interface GatsbyNode<
 export interface GatsbyBrowser<
   DataType = Record<string, unknown>,
   PageContext = Record<string, unknown>,
-  LocationState = WindowLocation["state"]
+  LocationState = WindowLocation["state"],
 > {
   disableCorePrefetching?(
     args: BrowserPluginArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): boolean
   onClientEntry?(args: BrowserPluginArgs, options: PluginOptions): void
   onInitialClientRender?(args: BrowserPluginArgs, options: PluginOptions): void
   onPostPrefetchPathname?(
     args: PrefetchPathnameArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): void
   onPreRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): void
   onPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): void
   onRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): void
   onRouteUpdateDelayed?(
     args: RouteUpdateDelayedArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): void
   onServiceWorkerActive?(args: ServiceWorkerArgs, options: PluginOptions): void
   onServiceWorkerInstalled?(
     args: ServiceWorkerArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): void
   onServiceWorkerRedundant?(
     args: ServiceWorkerArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): void
   onServiceWorkerUpdateFound?(
     args: ServiceWorkerArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): void
   onServiceWorkerUpdateReady?(
     args: ServiceWorkerArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): void
   registerServiceWorker?(
     args: BrowserPluginArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): boolean
   replaceHydrateFunction?(
     args: BrowserPluginArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): Renderer
   shouldUpdateScroll?(
     args: ShouldUpdateScrollArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): boolean | [number, number] | string
   wrapPageElement?(
     args: WrapPageElementBrowserArgs<DataType, PageContext, LocationState>,
-    options: PluginOptions
+    options: PluginOptions,
   ): React.ReactElement
   wrapRootElement?(
     args: WrapRootElementBrowserArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): React.ReactElement
 }
 
@@ -808,7 +808,7 @@ export interface GatsbyBrowser<
  */
 export interface GatsbySSR<
   DataSet = Record<string, unknown>,
-  PageContext = Record<string, unknown>
+  PageContext = Record<string, unknown>,
 > {
   /**
    * Called after every page Gatsby server renders while building HTML so you can
@@ -888,7 +888,7 @@ export interface GatsbySSR<
    */
   replaceRenderer?(
     args: ReplaceRendererArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): void | Promise<void>
 
   /**
@@ -910,7 +910,7 @@ export interface GatsbySSR<
    */
   wrapPageElement?(
     args: WrapPageElementNodeArgs<DataSet, PageContext>,
-    options: PluginOptions
+    options: PluginOptions,
   ): React.ReactElement
 
   /**
@@ -937,7 +937,7 @@ export interface GatsbySSR<
    */
   wrapRootElement?(
     args: WrapRootElementNodeArgs,
-    options: PluginOptions
+    options: PluginOptions,
   ): React.ReactElement
 }
 
@@ -951,7 +951,7 @@ export type PluginCallback<R = any> = (err: Error | null, result?: R) => void
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
   graphql<TData, TVariables = any>(
     query: string,
-    variables?: TVariables
+    variables?: TVariables,
   ): Promise<{
     errors?: any
     data?: TData
@@ -975,7 +975,7 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateNodeArgs<
-  TNode extends Record<string, unknown> = Record<string, unknown>
+  TNode extends Record<string, unknown> = Record<string, unknown>,
 > extends ParentSpanPluginArgs {
   node: Node & TNode
   traceId: string
@@ -1047,25 +1047,25 @@ export interface GatsbyGraphQLScalarType {
 }
 
 export type GatsbyGraphQLType =
-  | GatsbyGraphQLObjectType
-  | GatsbyGraphQLInputObjectType
-  | GatsbyGraphQLUnionType
-  | GatsbyGraphQLInterfaceType
-  | GatsbyGraphQLEnumType
-  | GatsbyGraphQLScalarType
+  | GraphQLInterfaceType
+  | GraphQLUnionType
+  | GraphQLEnumType
+  | GraphQLInputObjectType
+  | GraphQLScalarType
+  | GraphQLObjectType
 
 export interface NodePluginSchema {
   buildObjectType(
-    config: ComposeObjectTypeConfig<any, any>
+    config: ComposeObjectTypeConfig<any, any>,
   ): GatsbyGraphQLObjectType
   buildUnionType(
-    config: ComposeUnionTypeConfig<any, any>
+    config: ComposeUnionTypeConfig<any, any>,
   ): GatsbyGraphQLUnionType
   buildInterfaceType(
-    config: ComposeInterfaceTypeConfig<any, any>
+    config: ComposeInterfaceTypeConfig<any, any>,
   ): GatsbyGraphQLInterfaceType
   buildInputObjectType(
-    config: ComposeInputObjectTypeConfig
+    config: ComposeInputObjectTypeConfig,
   ): GatsbyGraphQLInputObjectType
   buildEnumType(config: ComposeEnumTypeConfig): GatsbyGraphQLEnumType
   buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
@@ -1129,7 +1129,7 @@ export interface ReplaceRendererArgs {
 
 export interface WrapPageElementNodeArgs<
   DataType = Record<string, unknown>,
-  PageContextType = Record<string, unknown>
+  PageContextType = Record<string, unknown>,
 > {
   element: React.ReactElement
   props: PageProps<DataType, PageContextType>
@@ -1320,7 +1320,7 @@ interface ActionOptions {
 export interface BuildArgs extends ParentSpanPluginArgs {
   graphql<TData, TVariables = any>(
     query: string,
-    variables?: TVariables
+    variables?: TVariables,
   ): Promise<{
     errors?: any
     data?: TData
@@ -1336,7 +1336,7 @@ export interface Actions {
     this: void,
     args: Page<TContext>,
     plugin?: ActionPlugin,
-    option?: ActionOptions
+    option?: ActionOptions,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createSlice */
@@ -1344,7 +1344,7 @@ export interface Actions {
     this: void,
     args: SliceInput<TContext>,
     plugin?: ActionPlugin,
-    option?: ActionOptions
+    option?: ActionOptions,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
@@ -1355,7 +1355,7 @@ export interface Actions {
     this: void,
     node: NodeInput & TNode,
     plugin?: ActionPlugin,
-    options?: ActionOptions
+    options?: ActionOptions,
   ): void | Promise<void>
 
   /** @see https://www.gatsbyjs.com/docs/actions/#touchNode */
@@ -1370,14 +1370,14 @@ export interface Actions {
       value: any
     },
     plugin?: ActionPlugin,
-    options?: ActionOptions
+    options?: ActionOptions,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createParentChildLink */
   createParentChildLink(
     this: void,
     args: { parent: Node; child: NodeInput },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
@@ -1388,14 +1388,14 @@ export interface Actions {
       node: Node
       updatedAtUTC?: string | number
     },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setRequestHeaders */
   setRequestHeaders(
     this: void,
     args: { domain: string; headers: Record<string, string> },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setWebpackConfig */
@@ -1411,21 +1411,21 @@ export interface Actions {
   setBabelPlugin(
     this: void,
     config: { name: string; options: object },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPreset */
   setBabelPreset(
     this: void,
     config: { name: string; options: object },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createJob */
   createJob(
     this: void,
     job: Record<string, unknown> & { id: string },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createJobV2 */
@@ -1437,7 +1437,7 @@ export interface Actions {
       outputDir: string
       args: Record<string, unknown>
     },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): Promise<unknown>
 
   /** @see https://www.gatsbyjs.com/docs/actions/#addGatsbyImageSourceUrl */
@@ -1447,7 +1447,7 @@ export interface Actions {
   setJob(
     this: void,
     job: Record<string, unknown> & { id: string },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#endJob */
@@ -1457,7 +1457,7 @@ export interface Actions {
   setPluginStatus(
     this: void,
     status: Record<string, unknown>,
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createRedirect */
@@ -1473,7 +1473,7 @@ export interface Actions {
       ignoreCase?: boolean
       [key: string]: unknown
     },
-    plugin?: ActionPlugin
+    plugin?: ActionPlugin,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#addThirdPartySchema */
@@ -1481,7 +1481,7 @@ export interface Actions {
     this: void,
     args: { schema: object },
     plugin?: ActionPlugin,
-    traceId?: string
+    traceId?: string,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createTypes */
@@ -1493,7 +1493,7 @@ export interface Actions {
       | GatsbyGraphQLType
       | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
     plugin?: ActionPlugin,
-    traceId?: string
+    traceId?: string,
   ): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createFieldExtension */
@@ -1501,7 +1501,7 @@ export interface Actions {
     this: void,
     extension: object,
     plugin?: ActionPlugin,
-    traceId?: string
+    traceId?: string,
   ): void
 
   printTypeDefinitions(
@@ -1513,7 +1513,7 @@ export interface Actions {
       withFieldTypes?: boolean
     },
     plugin?: ActionPlugin,
-    traceId?: string
+    traceId?: string,
   ): void
 
   /**
@@ -1526,7 +1526,7 @@ export interface Actions {
     this: void,
     url: string | Array<string>,
     plugin?: ActionPlugin,
-    traceId?: string
+    traceId?: string,
   ): void
 }
 
@@ -1742,7 +1742,7 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
 export interface WrapPageElementBrowserArgs<
   DataType = Record<string, unknown>,
   PageContextType = Record<string, unknown>,
-  LocationState = WindowLocation["state"]
+  LocationState = WindowLocation["state"],
 > extends BrowserPluginArgs {
   element: React.ReactElement
   props: PageProps<DataType, PageContextType, LocationState>

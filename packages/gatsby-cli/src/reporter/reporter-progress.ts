@@ -2,8 +2,8 @@ import * as reporterActionsForTypes from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
-import { IStructuredError } from "../structured-errors/types"
-import { ErrorMeta } from "./types"
+import type { IStructuredError } from "../structured-errors/types"
+import type { ErrorMeta } from "./types"
 
 interface ICreateProgressReporterArguments {
   id: string
@@ -19,12 +19,12 @@ interface ICreateProgressReporterArguments {
 export interface IProgressReporter {
   start(): void
   setStatus(statusText: string): void
-  tick(increment?: number): void
+  tick(increment?: number | undefined): void
   panicOnBuild(
     errorMeta: ErrorMeta,
     error?: Error | Array<Error>
   ): IStructuredError | Array<IStructuredError>
-  panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): never
+  panic(errorMeta: ErrorMeta, error?: Error | Array<Error> | undefined): never
   end(): void
   done(): void
   total: number

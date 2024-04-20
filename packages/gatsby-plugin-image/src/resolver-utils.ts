@@ -39,16 +39,17 @@ export const ImagePlaceholderType: EnumTypeComposerAsObjectDefinition = {
   },
 }
 
-export interface IGatsbyGraphQLFieldConfig<TSource, TContext, TArgs> {
-  description?: string
+export type IGatsbyGraphQLFieldConfig<TSource, TContext, TArgs> = {
+  description?: string | undefined
   type: string
-  args?: Record<string, IGatsbyGraphQLResolverArgumentConfig>
+  args?: Record<string, IGatsbyGraphQLResolverArgumentConfig> | undefined
   resolve: GraphQLFieldResolver<TSource, TContext, TArgs>
 }
-export interface IGatsbyGraphQLResolverArgumentConfig<TValue = any> {
-  description?: string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type IGatsbyGraphQLResolverArgumentConfig<TValue = any> = {
+  description?: string | undefined
   type: string | Array<string>
-  defaultValue?: TValue
+  defaultValue?: TValue | undefined
 }
 export type IGatsbyImageResolverArgs = Pick<
   ISharpGatsbyImageArgs & IImageSizeArgs,
@@ -68,7 +69,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
     TContext,
     IGatsbyImageResolverArgs & TArgs
   >,
-  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs>
+  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs> | undefined,
 ): ObjectTypeComposerFieldConfigAsObjectDefinition<
   TSource,
   TContext,
@@ -76,6 +77,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
 > {
   return {
     type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
+    // @ts-ignore
     args: {
       layout: {
         type: ImageLayoutType.name,
@@ -160,7 +162,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
     TContext,
     IGatsbyImageFieldArgs & TArgs
   >,
-  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs>
+  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs>,
 ): ObjectTypeComposerFieldConfigAsObjectDefinition<
   TSource,
   TContext,
@@ -168,6 +170,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
 > {
   return {
     type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
+    // @ts-ignore
     args: {
       layout: {
         type: ImageLayoutType.name,

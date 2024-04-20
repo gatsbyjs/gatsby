@@ -1,4 +1,4 @@
-import * as path from "path"
+import * as path from "node:path"
 import { readFile, pathExistsSync } from "fs-extra"
 
 export function getConfigPath(root: string): string {
@@ -10,7 +10,7 @@ export function getConfigPath(root: string): string {
 }
 
 export async function readConfigFile(root: string): Promise<string> {
-  let src
+  let src: string
   try {
     src = await readFile(getConfigPath(root), `utf8`)
   } catch (e) {

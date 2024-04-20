@@ -1,7 +1,9 @@
 import { Path } from "graphql/jsutils/Path"
 
 import report from "gatsby-cli/lib/reporter"
+// @ts-ignore
 import { IActivityArgs } from "gatsby-cli/src/reporter/reporter"
+// @ts-ignore
 import { IPhantomReporter } from "gatsby-cli/src/reporter/reporter-phantom"
 
 import { IGraphQLSpanTracer } from "../schema/type-definitions"
@@ -18,7 +20,7 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
   constructor(name: string, activityArgs: IActivityArgs) {
     this.parentActivity = report.phantomActivity(
       name,
-      activityArgs
+      activityArgs,
     ) as IPhantomReporter
     this.activities = new Map()
   }

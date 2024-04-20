@@ -34,7 +34,7 @@ function initialState(): IGatsbyState["html"] {
 
 export function htmlReducer(
   state: IGatsbyState["html"] = initialState(),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["html"] {
   switch (action.type) {
     case `DELETE_CACHE`: {
@@ -106,7 +106,7 @@ export function htmlReducer(
       if (!htmlFile) {
         // invariant
         throw new Error(
-          `[html reducer] how can I delete page that wasn't created (?)`
+          `[html reducer] how can I delete page that wasn't created (?)`,
         )
       }
 
@@ -125,7 +125,7 @@ export function htmlReducer(
       if (action.payload.queryType === `static`) {
         // static query case
         let staticQueryResult = state.trackedStaticQueryResults.get(
-          action.payload.queryHash
+          action.payload.queryHash,
         )
         if (!staticQueryResult) {
           staticQueryResult = {
@@ -134,7 +134,7 @@ export function htmlReducer(
           }
           state.trackedStaticQueryResults.set(
             action.payload.queryHash,
-            staticQueryResult
+            staticQueryResult,
           )
         } else if (
           staticQueryResult.staticQueryResultHash !== action.payload.resultHash
@@ -151,7 +151,7 @@ export function htmlReducer(
       if (!htmlFile) {
         // invariant
         throw new Error(
-          `[html reducer] I received event that query for a page finished running, but I'm not aware of the page it ran for (?)`
+          `[html reducer] I received event that query for a page finished running, but I'm not aware of the page it ran for (?)`,
         )
       }
 
@@ -176,7 +176,7 @@ export function htmlReducer(
 
     case `ADD_SLICE_DATA_STATS`: {
       const sliceProps = state.slicesProps.bySliceName.get(
-        action.payload.sliceName
+        action.payload.sliceName,
       )
       if (!sliceProps) {
         throw new Error(`no slice props for ${action.payload.sliceName}`)
@@ -214,7 +214,7 @@ export function htmlReducer(
             })
           } else {
             process.stdout.write(
-              `---no pages for:\n${JSON.stringify(action.payload, null, 2)}\n`
+              `---no pages for:\n${JSON.stringify(action.payload, null, 2)}\n`,
             )
           }
         }
@@ -321,7 +321,7 @@ export function htmlReducer(
 
     case `SET_SLICES_PROPS`: {
       for (const [pagePath, slicesDataBySliceId] of Object.entries(
-        action.payload
+        action.payload,
       )) {
         const newListOfSlices = new Set<string>()
         for (const [

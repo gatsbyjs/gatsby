@@ -1,14 +1,14 @@
-import React, { FunctionComponent } from "react"
+import { memo, type JSX, type ComponentType } from "react"
 import path from "path"
 import { Box, Text } from "ink"
 import { IStructuredError } from "../../../../structured-errors/types"
 
-interface IFileProps {
+type IFileProps = {
   filePath: string
   location: IStructuredError["location"]
 }
 
-const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
+function _File({ filePath, location }: IFileProps): JSX.Element {
   const lineNumber = location?.start.line
 
   let locString = ``
@@ -28,14 +28,19 @@ const File: FunctionComponent<IFileProps> = ({ filePath, location }) => {
   )
 }
 
-interface IDocsLinkProps {
+const File: ComponentType<IFileProps> = memo<IFileProps>(_File)
+
+type IDocsLinkProps = {
   docsUrl: string | undefined
 }
 
-const DocsLink: FunctionComponent<IDocsLinkProps> = ({ docsUrl }) => {
+function _DocsLink({ docsUrl }: IDocsLinkProps): JSX.Element | null {
   // TODO: when there's no specific docsUrl, add helpful message describing how
   // to submit an issue
-  if (docsUrl === `https://gatsby.dev/issue-how-to`) return null
+  if (docsUrl === `https://gatsby.dev/issue-how-to`) {
+    return null
+  }
+
   return (
     <Box marginTop={1}>
       <Text>See our docs page for more info on this error: {docsUrl}</Text>
@@ -43,14 +48,15 @@ const DocsLink: FunctionComponent<IDocsLinkProps> = ({ docsUrl }) => {
   )
 }
 
-export interface IErrorProps {
+const DocsLink: ComponentType<IDocsLinkProps> = memo<IDocsLinkProps>(_DocsLink)
+
+export type IErrorProps = {
   details: IStructuredError
 }
 
-export const Error: FunctionComponent<IErrorProps> = React.memo(
-  ({ details }) => (
+function _Error({ details }: IErrorProps): JSX.Element {
+  return (
     // const stackLength = get(details, `stack.length`, 0
-
     <Box marginY={1} flexDirection="column">
       <Box flexDirection="column">
         <Box flexDirection="column">
@@ -76,20 +82,22 @@ export const Error: FunctionComponent<IErrorProps> = React.memo(
         <DocsLink docsUrl={details.docsUrl} />
       </Box>
       {/* TODO: use this to replace errorFormatter.render in reporter.error func
-      {stackLength > 0 && (
-        <Box>
-          <Color>
-            <Box flexDirection="column">
-              <Box>Error stack:</Box>
-              {details.stack.map((item, id) => (
-                <Box key={id}>
-                  {item.fileName && `${item.fileName} line ${item.lineNumber}`}
+          {stackLength > 0 && (
+            <Box>
+              <Color>
+                <Box flexDirection="column">
+                  <Box>Error stack:</Box>
+                  {details.stack.map((item, id) => (
+                    <Box key={id}>
+                      {item.fileName && `${item.fileName} line ${item.lineNumber}`}
+                    </Box>
+                  ))}
                 </Box>
-              ))}
+              </Color>
             </Box>
-          </Color>
-        </Box>
-      )} */}
+          )} */}
     </Box>
   )
-)
+}
+
+export const Error: ComponentType<IErrorProps> = memo<IErrorProps>(_Error)

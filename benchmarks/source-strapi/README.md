@@ -9,5 +9,5 @@ Create a .env file from the template:
 Update data:
 
 ```shell
-yarn date-update
+pnpm run date-update
 ```

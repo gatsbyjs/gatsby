@@ -208,11 +208,11 @@ JAMStack refers to a modern web architecture using [JavaScript](#javascript), [A
 
 ### JavaScript
 
-A programming language that helps us make the web dynamic and interactive. [JavaScript](https://developer.mozilla.org/en-US/docs/Web/Javascript) is a widely deployed web technology in browsers. It is also used on the server-side with [Node.js](#node). It is an implementation of the [ECMAScript](#ECMAScript) specification.
+A programming language that helps us make the web dynamic and interactive. [JavaScript](https://developer.mozilla.org/en-US/docs/Web/Javascript) is a widely deployed web technology in browsers. It is also used on the server-side with [Node.js](#node). It is an implementation of the [ECMAScript](#ecmascript) specification.
 
 ### [JSX](/docs/glossary/jsx/)
 
-JSX is an extension to JavaScript that allows developers to write HTML and custom components in the same piece of code. The [React team recommends](https://reactjs.org/docs/introducing-jsx.html) using it to describe what a [UI](#UI) should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript. Some important details to note are that because JSX uses JavaScript, some HTML attributes in your markup have to be swapped out to avoid reserved words in JavaScript (things like `htmlFor` and `className`).
+JSX is an extension to JavaScript that allows developers to write HTML and custom components in the same piece of code. The [React team recommends](https://reactjs.org/docs/introducing-jsx.html) using it to describe what a [UI](#ui) should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript. Some important details to note are that because JSX uses JavaScript, some HTML attributes in your markup have to be swapped out to avoid reserved words in JavaScript (things like `htmlFor` and `className`).
 
 ## K
 
@@ -236,7 +236,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ### [npm](/docs/glossary/npm/)
 
-[Node](#node) [package](#package) manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
+[Node](#node) [package](#package) manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Pnpm](#pnpm).
 
 ### Node
 
@@ -252,7 +252,7 @@ A program that lets you run [JavaScript](#javascript) on your computer. Gatsby i
 
 ### Package
 
-A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [npm](#npm) and [Yarn](#yarn) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
+A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [npm](#npm) and [Pnpm](#pnpm) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
 
 ### Page
 
@@ -306,7 +306,7 @@ A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) 
 
 ### Run Script
 
-An executable command defined in the `scripts` property of your `package.json` file. See [npm](https://docs.npmjs.com/cli/v8/using-npm/scripts) and [yarn](https://classic.yarnpkg.com/lang/en/docs/cli/run/) run script documentation for more information.
+An executable command defined in the `scripts` property of your `package.json` file. See [npm](https://docs.npmjs.com/cli/v8/using-npm/scripts) and [pnpm](https://pnpm.io/cli/run) run script documentation for more information.
 
 ### Runtime
 
@@ -394,7 +394,7 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ## Y
 
-### [Yarn](/docs/glossary/yarn/)
+### [Pnpm](/docs/glossary/pnpm/)
 
 A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/code-contributions#setting-up-your-local-dev-environment).
 

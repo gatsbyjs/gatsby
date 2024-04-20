@@ -1,6 +1,6 @@
 import { AsyncLocalStorage } from "async_hooks"
 
-export interface IEngineContext {
+export type IEngineContext = {
   requestId: string
 }
 
@@ -15,7 +15,8 @@ export function getEngineContext(): IEngineContext | undefined {
 
 export function runWithEngineContext<T>(
   context: IEngineContext,
-  fn: (...args: Array<any>) => T
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fn: (...args: Array<any>) => T,
 ): T {
   // @ts-ignore typings are incorrect, run() returns the result of fn()
   return getAsyncLocalStorage().run(context, fn)

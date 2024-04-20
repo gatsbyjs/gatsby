@@ -6,7 +6,7 @@ import { getPhysicalCpuCount } from "./physical-cpu-count"
  * @param ignoreEnvVar Ignore the 'GATSBY_CPU_COUNT' env var to calculate the requested type of CPU cores
  * @return Count of the requested type of CPU cores. Defaults to number of physical cores or 1
  */
-export const cpuCoreCount = (ignoreEnvVar?: boolean): number => {
+export function cpuCoreCount(ignoreEnvVar?: boolean): number {
   try {
     let coreCount = getPhysicalCpuCount() || 1
 
@@ -23,7 +23,6 @@ export const cpuCoreCount = (ignoreEnvVar?: boolean): number => {
       switch (typeof coreCountArg) {
         case `string`:
           // Leave at Default CPU count if coreCountArg === `physical_cores`
-
           // CPU count === logical CPU count
           // throw error if we have a problem counting logical cores
           if (coreCountArg === `logical_cores`) {
@@ -31,7 +30,7 @@ export const cpuCoreCount = (ignoreEnvVar?: boolean): number => {
 
             if (typeof coreCount !== `number`) {
               throw new Error(
-                `process.env.GATSBY_CPU_COUNT is set to 'logical_cores' but there was a problem finding the number of logical cores`
+                `process.env.GATSBY_CPU_COUNT is set to 'logical_cores' but there was a problem finding the number of logical cores`,
               )
             }
           }

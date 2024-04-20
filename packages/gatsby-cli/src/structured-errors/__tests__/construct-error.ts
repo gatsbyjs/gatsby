@@ -5,6 +5,7 @@ import { Level } from "../types"
 const processExit = (
   jest.spyOn(process, `exit`) as unknown as jest.Mock
 ).mockImplementation(() => {})
+
 const log = (
   jest.spyOn(console, `log`) as unknown as jest.Mock
 ).mockImplementation(() => {})
@@ -25,7 +26,7 @@ test(`it logs error on invalid schema`, () => {
 
   expect(log).toHaveBeenCalledWith(
     `Failed to validate error`,
-    expect.any(Object)
+    expect.any(Object),
   )
 })
 
@@ -39,12 +40,13 @@ test(`it constructs an error from the supplied errorMap`, () => {
   const error = constructError(
     { details: { id: `1337`, context: { someProp: `Error!` } } },
     {
+      // @ts-ignore
       "1337": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
         docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
-    }
+    },
   )
 
   expect(error.code).toBe(`1337`)
@@ -55,12 +57,13 @@ test(`it does not overwrite internal error map`, () => {
   const error = constructError(
     { details: { id: `95312`, context: { undefinedGlobal: `window` } } },
     {
+      // @ts-ignore
       "95312": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
         docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
-    }
+    },
   )
 
   expect(error.code).toBe(`95312`)

@@ -7,20 +7,20 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-plugin-manifest": "next",
-    "gatsby-plugin-perf-budgets": "0.0.17",
+    "gatsby-plugin-perf-budgets": "0.0.18",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-transformer-sharp": "next",
-    "node-libs-browser": "^2.2.1",
-    "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet": "^6.1.0",
-    "react-redux": "^7.2.2",
-    "redux": "^4.0.5"
+    "node-libs-browser": "2.2.1",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0",
+    "react-redux": "9.1.1",
+    "redux": "5.0.1"
   },
   "devDependencies": {
-    "prettier": "2.2.1"
+    "@total-typescript/ts-reset": "0.5.1"
   },
   "keywords": [
     "gatsby"
@@ -29,7 +29,6 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "pnpm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",

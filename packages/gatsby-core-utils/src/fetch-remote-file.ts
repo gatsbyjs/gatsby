@@ -1,6 +1,7 @@
 import fileType from "file-type"
 import path from "path"
 import fs from "fs-extra"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Queue from "fastq"
 import { createContentDigest } from "./create-content-digest"
 import {
@@ -12,10 +13,11 @@ import { slash } from "./path"
 import { requestRemoteNode } from "./remote-file-utils/fetch-file"
 import { getStorage, getDatabaseDir } from "./utils/get-storage"
 import { createMutex } from "./mutex"
+// @ts-ignore
 import type { Options } from "got"
 import type { IFetchRemoteFileOptions } from "./remote-file-utils/fetch-file"
 
-interface ITask {
+type ITask = {
   args: IFetchRemoteFileOptions
 }
 
@@ -31,7 +33,7 @@ export type { IFetchRemoteFileOptions }
  * Downloads a remote file to disk
  */
 export async function fetchRemoteFile(
-  args: IFetchRemoteFileOptions
+  args: IFetchRemoteFileOptions,
 ): Promise<string> {
   // when cachekey is present we can do more persistance
   if (args.cacheKey) {
@@ -63,7 +65,7 @@ export async function fetchRemoteFile(
 
 function isPublicPath(downloadPath: string): boolean {
   return downloadPath.startsWith(
-    path.join(global.__GATSBY?.root ?? process.cwd(), `public`)
+    path.join(global.__GATSBY?.root ?? process.cwd(), `public`),
   )
 }
 
@@ -78,7 +80,7 @@ async function copyCachedPathToDownloadPath({
   if (!alreadyCopiedFiles.has(downloadPath)) {
     const copyFileMutex = createMutex(
       `gatsby-core-utils:copy-fetch:${downloadPath}`,
-      200
+      200,
     )
     await copyFileMutex.acquire()
     if (!alreadyCopiedFiles.has(downloadPath)) {
@@ -107,7 +109,7 @@ const queue = Queue<null, ITask, string>(
       return void cb(e)
     }
   },
-  GATSBY_CONCURRENT_DOWNLOAD
+  GATSBY_CONCURRENT_DOWNLOAD,
 )
 
 /**
@@ -210,7 +212,7 @@ async function fetchFile({
       url,
       headers,
       tmpFilename,
-      httpOptions
+      httpOptions,
     )
 
     if (response.statusCode === 200) {
@@ -218,7 +220,7 @@ async function fetchFile({
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
       if (!ext) {
         // if this is fresh response - try to guess extension and cache result for future
-        const filetype = await fileType.fromFile(tmpFilename)
+        const filetype = await fileType.fileTypeFromFile(tmpFilename)
         if (filetype) {
           ext = `.${filetype.ext}`
 
@@ -268,7 +270,7 @@ async function setInFlightObject(
       ReturnType<ReturnType<typeof getStorage>["remoteFileInfo"]["get"]>
     >,
     "buildId"
-  >
+  >,
 ): Promise<void> {
   if (!buildId) {
     inFlightMap.set(key, path.join(value.directory, value.path))

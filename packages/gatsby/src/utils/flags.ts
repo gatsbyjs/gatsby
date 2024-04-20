@@ -1,12 +1,13 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import semver from "semver"
 
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
-export const satisfiesSemvers = (
-  semverConstraints: Record<string, string>
-): boolean => {
+export function satisfiesSemvers(
+  semverConstraints: Record<string, string>,
+): boolean {
   // Check each semver check for the flag.
   // If any are false, then the flag doesn't pass
   const result = _.toPairs(semverConstraints).every(
@@ -22,7 +23,7 @@ export const satisfiesSemvers = (
       return semver.satisfies(packageVersion, semverConstraint, {
         includePrerelease: true,
       })
-    }
+    },
   )
 
   return result
@@ -30,7 +31,7 @@ export const satisfiesSemvers = (
 
 export type fitnessEnum = true | false | "OPT_IN" | "LOCKED_IN"
 
-export interface IFlag {
+export type IFlag = {
   name: string
   env: string
   description: string
@@ -70,10 +71,10 @@ export interface IFlag {
    *
    * It is shown to users when testFitness() returns `false` but flag is set in gatsby-config.js
    */
-  requires?: string
-  includedFlags?: Array<string>
-  umbrellaIssue?: string
-  noCI?: boolean
+  requires?: string | undefined
+  includedFlags?: Array<string> | undefined
+  umbrellaIssue?: string | undefined
+  noCI?: boolean | undefined
 }
 
 const activeFlags: Array<IFlag> = [

@@ -1,13 +1,14 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { oneLine } from "common-tags"
 import moment from "moment"
 
-import { IGatsbyState, ActionsUnion } from "../types"
+import type { IGatsbyState, ActionsUnion } from "../types"
 
-export const jobsReducer = (
+export function jobsReducer(
   state: IGatsbyState["jobs"] = { active: [], done: [] },
-  action: ActionsUnion
-): IGatsbyState["jobs"] => {
+  action: ActionsUnion,
+): IGatsbyState["jobs"] {
   switch (action.type) {
     case `CREATE_JOB`:
     case `SET_JOB`: {

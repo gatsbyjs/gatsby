@@ -1,4 +1,4 @@
-import { IDataStore } from "./types"
+import type { IDataStore } from "./types"
 import { emitter } from "../redux"
 
 let dataStore: IDataStore

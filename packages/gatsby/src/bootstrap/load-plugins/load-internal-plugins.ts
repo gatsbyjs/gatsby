@@ -1,9 +1,9 @@
 import { slash } from "gatsby-core-utils"
 import { uniqWith, isEqual } from "lodash"
-import path from "path"
+import path from "node:path"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
-import {
+import type {
   IPluginInfo,
   IPluginRefObject,
   IPluginRefOptions,
@@ -25,7 +25,7 @@ const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
 
 export function loadInternalPlugins(
   config: ISiteConfig = {},
-  rootDir: string
+  rootDir: string,
 ): Array<IPluginInfo> {
   // Instantiate plugins.
   const plugins: Array<IPluginInfo> = []
@@ -71,8 +71,8 @@ export function loadInternalPlugins(
             pathCheck: false,
           },
         },
-        rootDir
-      )
+        rootDir,
+      ),
     )
   })
 
@@ -81,7 +81,7 @@ export function loadInternalPlugins(
     incompatibleGatsbyCloudPlugin(plugins)
   ) {
     reporter.panic(
-      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@next`
+      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@next`,
     )
   }
 
@@ -112,7 +112,7 @@ export function loadInternalPlugins(
           jsxPragma: `React`,
         },
       },
-      rootDir
+      rootDir,
     )
     plugins.push(processedTypeScriptPlugin)
   }
@@ -143,7 +143,7 @@ export function loadInternalPlugins(
         typeof plugin !== `string` &&
         plugin.resolve === `gatsby-plugin-page-creator` &&
         slash((plugin.options && plugin.options.path) || ``) ===
-          slash(path.join(program.directory, `src/pages`))
+          slash(path.join(program.directory, `src/pages`)),
     )
     if (pageCreatorPlugin) {
       // override the options if there are any user specified options
@@ -156,7 +156,7 @@ export function loadInternalPlugins(
       resolve: require.resolve(`gatsby-plugin-page-creator`),
       options: pageCreatorOptions,
     },
-    rootDir
+    rootDir,
   )
 
   plugins.push(processedPageCreatorPlugin)
@@ -167,8 +167,8 @@ export function loadInternalPlugins(
   plugins.push(
     processPlugin(
       path.join(__dirname, `../../internal-plugins/partytown`),
-      rootDir
-    )
+      rootDir,
+    ),
   )
 
   const uniquePlugins = uniqWith(plugins, isEqual)

@@ -1,6 +1,15 @@
-import chokidar, { FSWatcher } from "chokidar"
-import { Actions, ParentSpanPluginArgs, GatsbyCache, Reporter } from "gatsby"
-import { createImageNode, IImageMetadata, writeImage } from "./image-processing"
+import chokidar, { type FSWatcher } from "chokidar"
+import type {
+  Actions,
+  ParentSpanPluginArgs,
+  GatsbyCache,
+  Reporter,
+} from "gatsby"
+import {
+  createImageNode,
+  type IImageMetadata,
+  writeImage,
+} from "./image-processing"
 import type { FileSystemNode } from "gatsby-source-filesystem"
 
 let watcher: FSWatcher | undefined
@@ -61,7 +70,7 @@ async function updateImages({
 }): Promise<void> {
   // See if any static image instances use this source image file
   const imageRefs: Record<string, IImageMetadata> = await cache.get(
-    `ref-${node.id}`
+    `ref-${node.id}`,
   )
 
   if (!imageRefs) {
@@ -77,7 +86,7 @@ async function updateImages({
         }
         // Update the image
         await writeImage(node, args, pathPrefix, reporter, cache, cacheFilename)
-      }
-    )
+      },
+    ),
   )
 }

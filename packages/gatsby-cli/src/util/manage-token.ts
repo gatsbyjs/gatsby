@@ -4,9 +4,12 @@ import report from "../reporter"
 const tokenKey = `cli.token`
 const tokenExpirationKey = `cli.tokenExpiration`
 
-const getExpiration = (): string => getConfigStore().get(tokenExpirationKey)
-export const getToken = async (): Promise<string> => {
-  const expiration = await getExpiration()
+function getExpiration(): string {
+  return getConfigStore().get(tokenExpirationKey)
+}
+
+export function getToken(): string {
+  const expiration = getExpiration()
   const tokenHasExpired = new Date() > new Date(expiration)
   if (tokenHasExpired) {
     report.warn(`Your token has expired, you may need to login again`)
@@ -14,7 +17,7 @@ export const getToken = async (): Promise<string> => {
   return getConfigStore().get(tokenKey)
 }
 
-export const setToken = (token: string | null, expiration: string): void => {
+export function setToken(token: string | null, expiration: string): void {
   const store = getConfigStore()
 
   store.set(tokenKey, token)

@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@9.0.4",
   "name": "gatsby-dev-cli",
   "description": "CLI helpers for contributors working on Gatsby",
   "version": "5.14.0-next.2",
@@ -10,44 +11,58 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "chokidar": "^3.5.3",
-    "configstore": "^5.0.1",
-    "del": "^6.1.1",
+    "@babel/runtime": "^7.24.4",
+    "chokidar": "^3.6.0",
+    "configstore": "^6.0.0",
+    "del": "^7.1.0",
     "execa": "^8.0.1",
     "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^11.2.0",
-    "got": "^11.8.6",
+    "got": "^14.2.1",
     "is-absolute": "^1.0.0",
     "lodash": "^4.17.21",
-    "signal-exit": "^3.0.7",
-    "verdaccio": "^5.25.0",
-    "yargs": "^15.4.1"
+    "signal-exit": "^4.1.0",
+    "verdaccio": "^5.30.3",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
-    "cross-env": "^7.0.3"
+    "rollup": "^4.14.2",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-internal": "^1.0.4",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
+    "cross-env": "^7.0.3",
+    "typescript": "^5.4.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-dev-cli"
   },
   "scripts": {
-    "build": "babel src --out-dir dist --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production pnpm run build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\""
+    "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
+    "build:rollup": "rollup -c",
+    "build": "npm-run-all --npm-path pnpm -p build:babel build:rollup",
+    "prepare": "cross-env NODE_ENV=production pnpm run build && pnpm run typegen",
+    "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
+    "watch:babel": "pnpm run build:babel -- --watch",
+    "watch:rollup": "pnpm run build:rollup -- -w",
+    "watch": "npm-run-all --npm-path pnpm -p watch:babel watch:rollup"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   }
 }

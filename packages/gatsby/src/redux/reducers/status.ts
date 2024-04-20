@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { uuid } from "gatsby-core-utils"
 import { ActionsUnion, IGatsbyState } from "../types"
@@ -9,10 +10,10 @@ const defaultState: IGatsbyState["status"] = {
   cdnObfuscatedPrefix: ``,
 }
 
-export const statusReducer = (
+export function statusReducer(
   state: IGatsbyState["status"] = defaultState,
-  action: ActionsUnion
-): IGatsbyState["status"] => {
+  action: ActionsUnion,
+): IGatsbyState["status"] {
   switch (action.type) {
     case `DELETE_CACHE`:
       return {
@@ -39,8 +40,8 @@ export const statusReducer = (
           `You must pass an object into setPluginStatus. What was passed in was ${JSON.stringify(
             action.payload,
             null,
-            4
-          )}`
+            4,
+          )}`,
         )
       }
       return {
@@ -50,7 +51,7 @@ export const statusReducer = (
           [action.plugin.name]: _.merge(
             {},
             state.plugins[action.plugin.name],
-            action.payload
+            action.payload,
           ),
         },
       }

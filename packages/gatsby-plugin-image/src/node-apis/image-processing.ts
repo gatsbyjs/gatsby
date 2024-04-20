@@ -1,21 +1,20 @@
-import {
+import type {
   GatsbyCache,
   Reporter,
   ParentSpanPluginArgs,
   Actions,
-  Store,
 } from "gatsby"
 import fs from "fs-extra"
-import path from "path"
+import path from "node:path"
 import { watchImage } from "./watcher"
 import type { FileSystemNode } from "gatsby-source-filesystem"
-import { IStaticImageProps } from "../components/static-image.server"
-import { ISharpGatsbyImageArgs } from "../image-utils"
+import type { IStaticImageProps } from "../components/static-image.server"
+import type { ISharpGatsbyImageArgs } from "../image-utils"
 
 const supportedTypes = new Set([`image/png`, `image/jpeg`, `image/webp`])
-export interface IImageMetadata {
+export type IImageMetadata = {
   isFixed: boolean
-  contentDigest?: string
+  contentDigest?: string | undefined
   args: Record<string, unknown>
   cacheFilename: string
 }
@@ -36,10 +35,11 @@ export async function createImageNode({
   }
 
   let file: FileSystemNode
+
   try {
-    const {
-      createFileNode,
-    } = require(`gatsby-source-filesystem/create-file-node`)
+    const { createFileNode } = require(
+      `gatsby-source-filesystem/create-file-node`,
+    )
     file = await createFileNode(fullPath, createNodeId, {})
   } catch (e) {
     reporter.panic(`Please install gatsby-source-filesystem`)
@@ -57,8 +57,9 @@ export async function createImageNode({
   return file
 }
 
-export const isRemoteURL = (url: string): boolean =>
-  url.startsWith(`http://`) || url.startsWith(`https://`)
+export function isRemoteURL(url: string): boolean {
+  return url.startsWith(`http://`) || url.startsWith(`https://`)
+}
 
 export async function writeImages({
   images,
@@ -92,8 +93,9 @@ export async function writeImages({
       if (isRemoteURL(src)) {
         let createRemoteFileNode
         try {
-          createRemoteFileNode =
-            require(`gatsby-source-filesystem`).createRemoteFileNode
+          createRemoteFileNode = require(
+            `gatsby-source-filesystem`,
+          ).createRemoteFileNode
         } catch (e) {
           reporter.panic(`Please install gatsby-source-filesystem`)
         }
@@ -116,7 +118,7 @@ export async function writeImages({
           reporter.error(
             `The file loaded from ${src} is not a valid image type. Found "${
               file?.internal.mediaType || `unknown`
-            }"`
+            }"`,
           )
           return
         }
@@ -125,15 +127,15 @@ export async function writeImages({
 
         if (!fs.existsSync(fullPath)) {
           reporter.warn(
-            `Could not find image "${src}" in "${filename}". Looked for ${fullPath}.`
+            `Could not find image "${src}" in "${filename}". Looked for ${fullPath}.`,
           )
           return
         }
 
         try {
-          const {
-            createFileNode,
-          } = require(`gatsby-source-filesystem/create-file-node`)
+          const { createFileNode } = require(
+            `gatsby-source-filesystem/create-file-node`,
+          )
 
           file = await createFileNode(fullPath, createNodeId, {})
         } catch (e) {
@@ -148,6 +150,7 @@ export async function writeImages({
 
       // We need our own type, because `File` belongs to the filesystem plugin
       file.internal.type = `StaticImage`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (file.internal as any).owner
       createNode(file)
 
@@ -179,7 +182,7 @@ export async function writeImages({
           reporter,
         })
       }
-    }
+    },
   )
 
   return Promise.all(promises).then(() => {})
@@ -191,7 +194,7 @@ export async function writeImage(
   pathPrefix: string,
   reporter: Reporter,
   cache: GatsbyCache,
-  filename: string
+  filename: string,
 ): Promise<void> {
   let generateImageData
   try {

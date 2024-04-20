@@ -1,5 +1,5 @@
 import {
-  IBuildContext,
+  type IBuildContext,
   startWebpackServer,
   initialize,
   recompile,
@@ -13,8 +13,9 @@ import {
 } from "../data-layer"
 import { queryRunningMachine } from "../query-running"
 import { waitingMachine } from "../waiting"
-import { MachineOptions } from "xstate"
+import type { MachineOptions } from "xstate"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const developServices: MachineOptions<IBuildContext, any>["services"] = {
   initializeData: initializeDataMachine,
   reloadData: reloadDataMachine,

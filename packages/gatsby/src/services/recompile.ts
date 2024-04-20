@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
-import { IBuildContext } from "./types"
-import * as fs from "fs-extra"
-import { Stats } from "webpack"
+import type { IBuildContext } from "./types"
+import fs from "fs-extra"
+import type { Stats } from "webpack"
 // @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { emitter } from "../redux"
@@ -45,10 +45,7 @@ async function recompileSSRBundle({
   }
   reporter.verbose(`Recompiling SSR bundle`)
 
-  const { close, rendererPath } = await buildRenderer(
-    program,
-    'develop-html'
-  )
+  const { close, rendererPath } = await buildRenderer(program, `develop-html`)
 
   clearRequireCacheRecursively(rendererPath)
 
@@ -60,10 +57,10 @@ async function recompileSSRBundle({
 }
 
 async function includesSSRComponent(
-  recompiledFiles: Set<string>
+  recompiledFiles: Set<string>,
 ): Promise<boolean> {
   const result = await Promise.all(
-    Array.from(recompiledFiles).map(path => isSSRPageComponent(path))
+    Array.from(recompiledFiles).map(path => isSSRPageComponent(path)),
   )
   return result.some(isSSR => isSSR === true)
 }

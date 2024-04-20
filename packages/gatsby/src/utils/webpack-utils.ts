@@ -4,12 +4,18 @@ import { GraphQLSchema } from "graphql"
 import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import TerserPlugin from "terser-webpack-plugin"
+// @ts-ignore
 import type { MinifyOptions as TerserOptions } from "terser"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import ESLintPlugin from "eslint-webpack-plugin"
 // @ts-ignore
 import { cpuCoreCount } from "gatsby-core-utils"
@@ -27,12 +33,14 @@ import { store } from "../redux"
 import type { RuleSetUseItem } from "webpack"
 import { ROUTES_DIRECTORY } from "../constants"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Loader = string | { loader: string; options?: { [name: string]: any } }
 type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LoaderOptions = Record<string, any>
 type RuleFactory<T = Record<string, unknown>> = (
-  options?: T & LoaderOptions
+  options?: T & LoaderOptions,
 ) => RuleSetRule
 
 type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
@@ -40,6 +48,7 @@ type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
   external?: RuleFactory<T>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PluginFactory = (...args: any) => WebpackPluginInstance | null
 
 type BuiltinPlugins = typeof builtinPlugins
@@ -53,47 +62,53 @@ type CSSModulesOptions =
         | "global"
         | "pure"
         | ((resourcePath: string) => "local" | "global" | "pure")
-      auto?: boolean
-      exportGlobals?: boolean
-      localIdentName?: string
-      localIdentContext?: string
-      localIdentHashPrefix?: string
-      namedExport?: boolean
+        | undefined
+      auto?: boolean | undefined
+      exportGlobals?: boolean | undefined
+      localIdentName?: string | undefined
+      localIdentContext?: string | undefined
+      localIdentHashPrefix?: string | undefined
+      namedExport?: boolean | undefined
       exportLocalsConvention?:
         | "asIs"
         | "camelCaseOnly"
         | "camelCase"
         | "dashes"
         | "dashesOnly"
-      exportOnlyLocals?: boolean
+        | undefined
+      exportOnlyLocals?: boolean | undefined
     }
 
 type MiniCSSExtractLoaderModuleOptions =
   | undefined
   | boolean
   | {
-      namedExport?: boolean
+      namedExport?: boolean | undefined
     }
 /**
  * Utils that produce webpack `loader` objects
  */
-export interface ILoaderUtils {
+export type ILoaderUtils = {
   yaml: LoaderResolver
   style: LoaderResolver
   css: LoaderResolver<{
-    url?: boolean | ((url: string, resourcePath: string) => boolean)
+    url?: boolean | ((url: string, resourcePath: string) => boolean) | undefined
     import?:
       | boolean
       | ((url: string, media: string, resourcePath: string) => boolean)
-    modules?: CSSModulesOptions
-    sourceMap?: boolean
-    importLoaders?: number
-    esModule?: boolean
+      | undefined
+    modules?: CSSModulesOptions | undefined
+    sourceMap?: boolean | undefined
+    importLoaders?: number | undefined
+    esModule?: boolean | undefined
   }>
   postcss: LoaderResolver<{
-    browsers?: Array<string>
-    overrideBrowserslist?: Array<string>
-    plugins?: Array<PostCSSPlugin> | ((loader: Loader) => Array<PostCSSPlugin>)
+    browsers?: Array<string> | undefined
+    overrideBrowserslist?: Array<string> | undefined
+    plugins?:
+      | Array<PostCSSPlugin>
+      | ((loader: Loader) => Array<PostCSSPlugin>)
+      | undefined
   }>
 
   file: LoaderResolver
@@ -105,27 +120,28 @@ export interface ILoaderUtils {
   dependencies: LoaderResolver
 
   miniCssExtract: LoaderResolver
-  imports?: LoaderResolver
-  exports?: LoaderResolver
+  imports?: LoaderResolver | undefined
+  exports?: LoaderResolver | undefined
 }
 
-interface IModuleThatUseGatsby {
+type IModuleThatUseGatsby = {
   name: string
   path: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CssLoaderModuleOption = boolean | Record<string, any> | string
 
 /**
  * Utils that produce webpack rule objects
  */
-export interface IRuleUtils {
+export type IRuleUtils = {
   /**
    * Handles JavaScript compilation via babel
    */
   js: RuleFactory<{ modulesThatUseGatsby?: Array<IModuleThatUseGatsby> }>
   dependencies: RuleFactory<{
-    modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
+    modulesThatUseGatsby?: Array<IModuleThatUseGatsby> | undefined
   }>
   yaml: RuleFactory
   fonts: RuleFactory
@@ -134,8 +150,8 @@ export interface IRuleUtils {
   media: RuleFactory
 
   css: ContextualRuleFactory<{
-    browsers?: Array<string>
-    modules?: CssLoaderModuleOption
+    browsers?: Array<string> | undefined
+    modules?: CssLoaderModuleOption | undefined
   }>
   cssModules: RuleFactory
   postcss: ContextualRuleFactory<{ overrideBrowserOptions: Array<string> }>
@@ -161,7 +177,7 @@ export type PluginUtils = BuiltinPlugins & {
 /**
  * webpack atoms namespace
  */
-interface IWebpackUtils {
+type IWebpackUtils = {
   loaders: ILoaderUtils
 
   rules: IRuleUtils
@@ -174,10 +190,10 @@ const vendorRegex = /(node_modules|bower_components)/
 /**
  * A factory method that produces an atoms namespace
  */
-export const createWebpackUtils = (
+export function createWebpackUtils(
   stage: Stage,
-  program: IProgram
-): IWebpackUtils => {
+  program: IProgram,
+): IWebpackUtils {
   const assetRelativeRoot = `static/`
   const supportedBrowsers = getBrowsersList(program.directory)
 
@@ -219,7 +235,7 @@ export const createWebpackUtils = (
     // while preserving "url" (publicPath)
     fileLoaderCommonOptions.outputPath = path.relative(
       ROUTES_DIRECTORY,
-      `public`
+      `public`,
     )
     fileLoaderCommonOptions.publicPath = publicPath || `/`
   }
@@ -266,7 +282,7 @@ export const createWebpackUtils = (
     miniCssExtract: (
       options: {
         modules?: MiniCSSExtractLoaderModuleOptions
-      } = {}
+      } = {},
     ) => {
       let moduleOptions: MiniCSSExtractLoaderModuleOptions = undefined
 
@@ -338,8 +354,13 @@ export const createWebpackUtils = (
         options: {
           execute: false,
           sourceMap: !PRODUCTION,
-          // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-          postcssOptions: (loaderContext: any) => {
+          // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-explicit-any
+          postcssOptions: (
+            loaderContext: Loader,
+          ): {
+            browsers?: Array<string> | undefined
+            plugins: Array<PostCSSPlugin>
+          } => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let postCSSPlugins: Array<PostCSSPlugin> = []
             if (plugins) {
@@ -352,7 +373,7 @@ export const createWebpackUtils = (
               flexbox: `no-2009`,
               ...((
                 postCSSPlugins.find(
-                  plugin => plugin.postcssPlugin === `autoprefixer`
+                  plugin => plugin.postcssPlugin === `autoprefixer`,
                 ) as unknown as autoprefixer.ExportedAPI
               )?.options ?? {}),
             })
@@ -401,7 +422,7 @@ export const createWebpackUtils = (
             program.directory,
             `.cache`,
             `webpack`,
-            `babel`
+            `babel`,
           ),
           ...options,
           rootDir: program.directory,
@@ -417,7 +438,7 @@ export const createWebpackUtils = (
             program.directory,
             `.cache`,
             `webpack`,
-            `babel`
+            `babel`,
           ),
           ...options,
         },
@@ -453,7 +474,7 @@ export const createWebpackUtils = (
           // If the module uses Gatsby as a dependency
           // we want to treat it as src so we can extract queries
           return modulesThatUseGatsby.some(module =>
-            modulePath.includes(module.path)
+            modulePath.includes(module.path),
           )
         },
         type: `javascript/auto`,
@@ -543,8 +564,8 @@ export const createWebpackUtils = (
       ]
       const doNotPolyfillRegex = new RegExp(
         `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
-          `|`
-        )})[\\\\/]`
+          `|`,
+        )})[\\\\/]`,
       )
 
       return {
@@ -558,7 +579,7 @@ export const createWebpackUtils = (
           // If dep uses Gatsby, exclude
           if (
             modulesThatUseGatsby.some(module =>
-              modulePath.includes(module.path)
+              modulePath.includes(module.path),
             )
           ) {
             return true
@@ -767,7 +788,7 @@ export const createWebpackUtils = (
           },
         ],
       },
-    }
+    },
   ): CssMinimizerPlugin =>
     new CssMinimizerPlugin({
       parallel: Math.max(1, cpuCoreCount() - 1),
@@ -785,7 +806,7 @@ export const createWebpackUtils = (
       // If the module uses Gatsby as a dependency
       // we want to treat it as src because of shadowing
       return !modulesThatUseGatsby.some(module =>
-        modulePath.includes(module.path)
+        modulePath.includes(module.path),
       )
     }
 
@@ -801,15 +822,20 @@ export const createWebpackUtils = (
     })
   }
 
-  plugins.extractText = (options: any): WebpackPluginInstance =>
-    new MiniCssExtractPlugin({
-      ...options,
+  plugins.extractText = (
+    options: MiniCssExtractPlugin.PluginOptions,
+  ): WebpackPluginInstance => new MiniCssExtractPlugin(options)
+
+  plugins.moment = (): WebpackPluginInstance => {
+    return plugins.ignore({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
     })
+  }
 
-  plugins.moment = (): WebpackPluginInstance =>
-    plugins.ignore({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ })
-
-  plugins.extractStats = (nonce?: string | undefined): GatsbyWebpackStatsExtractor =>
+  plugins.extractStats = (
+    nonce?: string | undefined,
+  ): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor(publicPath, nonce)
 
   // TODO: remove this in v5

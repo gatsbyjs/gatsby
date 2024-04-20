@@ -48,7 +48,7 @@ describe(`Production loader`, () => {
           .body(
             typeof responseText === `string`
               ? responseText
-              : JSON.stringify(responseText)
+              : JSON.stringify(responseText),
           )
       })
     }
@@ -128,7 +128,7 @@ describe(`Production loader`, () => {
         payload,
       }
       expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -148,7 +148,7 @@ describe(`Production loader`, () => {
         payload,
       }
       expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -168,7 +168,7 @@ describe(`Production loader`, () => {
         payload,
       }
       expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -186,7 +186,7 @@ describe(`Production loader`, () => {
         notFound: true,
       }
       expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -204,7 +204,7 @@ describe(`Production loader`, () => {
         retries: 3,
       }
       expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
@@ -220,7 +220,7 @@ describe(`Production loader`, () => {
         {
           path: `/500.html`,
         },
-        true
+        true,
       )
 
       const expectation = {
@@ -232,7 +232,7 @@ describe(`Production loader`, () => {
         },
       }
       expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -249,7 +249,7 @@ describe(`Production loader`, () => {
         pagePath: `/blocked-page`,
       }
       expect(await prodLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
       expect(xhrCount).toBe(4)
@@ -278,7 +278,7 @@ describe(`Production loader`, () => {
         payload,
       }
       expect(await prodLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(prodLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -311,8 +311,8 @@ describe(`Production loader`, () => {
           .body(
             JSON.stringify({
               webpackCompilationHash: `123`,
-            })
-          )
+            }),
+          ),
       )
       emitter.emit.mockReset()
     })
@@ -338,7 +338,7 @@ describe(`Production loader`, () => {
         Promise.resolve({
           payload: pageData,
           status: `success`,
-        })
+        }),
       )
 
       const expectation = await prodLoader.loadPage(`/mypage`)
@@ -356,7 +356,7 @@ describe(`Production loader`, () => {
         expect.objectContaining({
           payload: expectation,
           status: `success`,
-        })
+        }),
       )
       expect(emitter.emit).toHaveBeenCalledTimes(1)
       expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
@@ -379,7 +379,7 @@ describe(`Production loader`, () => {
           payload: pageData,
           status: `success`,
           notFound: true,
-        })
+        }),
       )
 
       await prodLoader.loadPage(`/mypage/`)
@@ -406,7 +406,7 @@ describe(`Production loader`, () => {
         Promise.resolve({
           payload: pageData,
           status: `success`,
-        })
+        }),
       )
 
       await prodLoader.loadPage(`/mypage/`)
@@ -429,7 +429,7 @@ describe(`Production loader`, () => {
         Promise.resolve({
           payload: pageData,
           status: `error`,
-        })
+        }),
       )
 
       expect(await prodLoader.loadPage(`/mypage/`)).toEqual({ status: `error` })
@@ -443,7 +443,7 @@ describe(`Production loader`, () => {
       prodLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           status: `error`,
-        })
+        }),
       )
 
       expect(await prodLoader.loadPage(`/404.html/`)).toEqual({
@@ -465,7 +465,7 @@ describe(`Production loader`, () => {
             staticQueryHashes: [],
           },
           status: `success`,
-        })
+        }),
       )
 
       const expectation = await prodLoader.loadPage(`/mypage/`)
@@ -485,7 +485,7 @@ describe(`Production loader`, () => {
             staticQueryHashes: [],
           },
           status: `success`,
-        })
+        }),
       )
 
       const loadPagePromise = prodLoader.loadPage(`/test-page/`)
@@ -577,7 +577,7 @@ describe(`Production loader`, () => {
         `onPostPrefetchPathname`,
         {
           pathname: `/mypath/`,
-        }
+        },
       )
     })
 
@@ -601,12 +601,12 @@ describe(`Production loader`, () => {
       expect(prodLoader.apiRunner).toHaveBeenNthCalledWith(
         1,
         `onPrefetchPathname`,
-        expect.anything()
+        expect.anything(),
       )
       expect(prodLoader.apiRunner).toHaveBeenNthCalledWith(
         2,
         `onPostPrefetchPathname`,
-        expect.anything()
+        expect.anything(),
       )
     })
   })

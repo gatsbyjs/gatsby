@@ -1,8 +1,11 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
-import { IStructuredError, ErrorCategory } from "../../structured-errors/types"
-import { IRenderPageArgs } from "../types"
+import {
+  type IStructuredError,
+  ErrorCategory,
+} from "../../structured-errors/types"
+import type { IRenderPageArgs } from "../types"
 
-export interface IGatsbyCLIState {
+export type IGatsbyCLIState = {
   activities: {
     [id: string]: IActivity
   }
@@ -21,21 +24,21 @@ export type ActionsUnion =
   | ISetLogs
   | IRenderPageTree
 
-export interface IActivity {
-  startTime?: [number, number]
+export type IActivity = {
+  startTime?: [number, number] | undefined
   id: string
   uuid: string
   text: string
   type: ActivityTypes
   status: ActivityStatuses
   statusText: string
-  current?: number
-  total?: number
-  duration?: number
-  errored?: boolean
+  current?: number | undefined
+  total?: number | undefined
+  duration?: number | undefined
+  errored?: boolean | undefined
 }
 
-export interface ILog {
+export type ILog = {
   level: string
   text: string | undefined
   statusText: string | undefined
@@ -43,7 +46,7 @@ export interface ILog {
   group: string | undefined
   code: string | undefined
   type: string | undefined
-  category?: keyof typeof ErrorCategory
+  category?: keyof typeof ErrorCategory | undefined
   filePath: string | undefined
   location: IStructuredError["location"] | undefined
   docsUrl: string | undefined
@@ -57,17 +60,17 @@ export interface ILog {
   pluginName: string | undefined
 }
 
-export interface ICreateLog {
+export type ICreateLog = {
   type: Actions.Log
   payload: ILog
 }
 
-export interface ISetStatus {
+export type ISetStatus = {
   type: Actions.SetStatus
   payload: ActivityStatuses | ""
 }
 
-export interface IPendingActivity {
+export type IPendingActivity = {
   type: Actions.PendingActivity
   payload: {
     id: string
@@ -77,12 +80,12 @@ export interface IPendingActivity {
   }
 }
 
-export interface IStartActivity {
+export type IStartActivity = {
   type: Actions.StartActivity
   payload: IActivity
 }
 
-export interface ICancelActivity {
+export type ICancelActivity = {
   type: Actions.CancelActivity
   payload: {
     id: string
@@ -92,7 +95,7 @@ export interface ICancelActivity {
   }
 }
 
-export interface IEndActivity {
+export type IEndActivity = {
   type: Actions.EndActivity
   payload: {
     uuid: string
@@ -103,7 +106,7 @@ export interface IEndActivity {
   }
 }
 
-export interface IUpdateActivity {
+export type IUpdateActivity = {
   type: Actions.UpdateActivity
   payload: {
     uuid: string
@@ -114,19 +117,19 @@ export interface IUpdateActivity {
   }
 }
 
-export interface IActivityErrored {
+export type IActivityErrored = {
   type: Actions.ActivityErrored
   payload: {
     id: string
   }
 }
 
-export interface ISetLogs {
+export type ISetLogs = {
   type: Actions.SetLogs
   payload: IGatsbyCLIState
 }
 
-export interface IRenderPageTree {
+export type IRenderPageTree = {
   type: Actions.RenderPageTree
   payload: IRenderPageArgs
 }

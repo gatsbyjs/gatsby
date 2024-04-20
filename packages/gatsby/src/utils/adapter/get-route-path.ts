@@ -1,7 +1,7 @@
 import type { IGatsbyFunction, IGatsbyPage } from "../../redux/types"
 
 function maybeDropNamedPartOfWildcard(
-  path: string | undefined
+  path: string | undefined,
 ): string | undefined {
   if (!path) {
     return path
@@ -16,7 +16,7 @@ export function getRoutePathFromPage(page: IGatsbyPage): string {
 }
 
 export function getRoutePathFromFunction(
-  functionInfo: IGatsbyFunction
+  functionInfo: IGatsbyFunction,
 ): string {
   return (
     maybeDropNamedPartOfWildcard(functionInfo.matchPath) ??

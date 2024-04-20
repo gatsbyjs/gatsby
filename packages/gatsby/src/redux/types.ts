@@ -1,21 +1,22 @@
 // @ts-ignore
 import type { TrailingSlash } from "gatsby-page-utils"
 import type { Express } from "express"
-import { IProgram, Stage } from "../commands/types"
+import type { IProgram, Stage } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import {
-  DocumentNode,
+  type DocumentNode,
   GraphQLSchema,
-  DefinitionNode,
-  SourceLocation,
+  type DefinitionNode,
+  type SourceLocation,
 } from "graphql"
 import { SchemaComposer } from "graphql-compose"
-import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
-import { ThunkAction } from "redux-thunk"
-import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
-import { ITypeMetadata } from "../schema/infer/inference-metadata"
+// @ts-ignore
+import type { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
+import type { ThunkAction } from "redux-thunk"
+import type { InternalJob, JobResultInterface } from "../utils/jobs/manager"
+import type { ITypeMetadata } from "../schema/infer/inference-metadata"
 import { Span } from "opentracing"
-import { ICollectedSlices } from "../utils/babel/find-slices"
+import type { ICollectedSlices } from "../utils/babel/find-slices"
 import type {
   IAdapter,
   IAdapterFinalConfig,
@@ -31,13 +32,16 @@ export type IRedirect = {
   toPath: string
   isPermanent?: boolean | undefined
   redirectInBrowser?: boolean | undefined
-  ignoreCase: boolean
+  ignoreCase?: boolean | undefined
   statusCode?: HttpStatusCode | undefined
   // Users can add anything to this createRedirect API
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
-export type ProgramStatus = `BOOTSTRAP_FINISHED` | `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+export type ProgramStatus =
+  | `BOOTSTRAP_FINISHED`
+  | `BOOTSTRAP_QUERY_RUNNING_FINISHED`
 
 export type PageMode = "SSG" | "DSG" | "SSR"
 
@@ -112,24 +116,29 @@ export type IHeader = {
 
 // TODO: The keys of IGatsbyConfig are all optional so that in reducers like reducers/config.ts the default state for the config can be an empty object. This isn't ideal because some of those options are actually always defined because Joi validation sets defaults. Somehow fix this :D
 export type IGatsbyConfig = {
-  plugins?: Array<{
-    // This is the name of the plugin like `gatsby-plugin-manifest`
-    resolve: string
-    options: {
-      [key: string]: unknown
-    }
-  }> | undefined
-  siteMetadata?: {
-    title?: string | undefined
-    author?: string | undefined
-    description?: string | undefined
-    siteUrl?: string | undefined
-    // siteMetadata is free form
-    [key: string]: unknown
-  } | undefined
+  plugins?:
+    | Array<{
+        // This is the name of the plugin like `gatsby-plugin-manifest`
+        resolve: string
+        options: {
+          [key: string]: unknown
+        }
+      }>
+    | undefined
+  siteMetadata?:
+    | {
+        title?: string | undefined
+        author?: string | undefined
+        description?: string | undefined
+        siteUrl?: string | undefined
+        // siteMetadata is free form
+        [key: string]: unknown
+      }
+    | undefined
   // @deprecated
   polyfill?: boolean | undefined
   developMiddleware?: ((app: Express) => void) | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   proxy?: any | undefined
   partytownProxiedURLs?: Array<string> | undefined
   pathPrefix?: string | undefined
@@ -164,10 +173,12 @@ export type IGatsbyPlugin = {
   id: Identifier
   name: string
   version: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
 export type IGatsbyPluginContext = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: (...args: Array<any>) => any
 }
 
@@ -274,6 +285,11 @@ export type GatsbyNodeAPI =
   | "createPagesStatefully"
   | "createPages"
   | "onPostBuild"
+  | "onPluginInit"
+  | "createSchemaCustomization"
+  | "onPreExtractQueries"
+  | "onPreInit"
+  | "resolvableExtensions"
 
 export type FlattenedPlugin = {
   resolve: SystemPath
@@ -301,6 +317,7 @@ export type IGatsbyState = {
   program: IStateProgram
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   typeOwners: {
@@ -348,7 +365,9 @@ export type IGatsbyState = {
   }
   // @deprecated
   jobs: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     active: Array<any> // TODO
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     done: Array<any> // TODO
   }
   jobsV2: {
@@ -365,13 +384,25 @@ export type IGatsbyState = {
     }
   }
   schemaCustomization: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     composer: null | SchemaComposer<any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: Record<string, any>
     fieldExtensions: GraphQLFieldExtensionDefinition
     printConfig: {
       path?: string | undefined
-      include?: { types?: Array<string> | undefined; plugins?: Array<string> | undefined } | undefined
-      exclude?: { types?: Array<string> | undefined; plugins?: Array<string> | undefined } | undefined
+      include?:
+        | {
+            types?: Array<string> | undefined
+            plugins?: Array<string> | undefined
+          }
+        | undefined
+      exclude?:
+        | {
+            types?: Array<string> | undefined
+            plugins?: Array<string> | undefined
+          }
+        | undefined
       withFieldTypes?: boolean | undefined
     } | null
     thirdPartySchemas: Array<GraphQLSchema>
@@ -787,8 +818,18 @@ export type IPrintTypeDefinitions = {
   traceId?: string | undefined
   payload: {
     path?: string | undefined
-    include?: { types?: Array<string> | undefined; plugins?: Array<string> | undefined } | undefined
-    exclude?: { types?: Array<string> | undefined; plugins?: Array<string> | undefined } | undefined
+    include?:
+      | {
+          types?: Array<string> | undefined
+          plugins?: Array<string> | undefined
+        }
+      | undefined
+    exclude?:
+      | {
+          types?: Array<string> | undefined
+          plugins?: Array<string> | undefined
+        }
+      | undefined
     withFieldTypes?: boolean | undefined
   }
 }
@@ -808,6 +849,7 @@ type IClearSchemaCustomizationAction = {
 
 type ISetSchemaComposerAction = {
   type: `SET_SCHEMA_COMPOSER`
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload: SchemaComposer<any>
 }
 
@@ -831,7 +873,7 @@ export type ICreateSliceAction = {
   payload: IGatsbySlice
   plugin?: IGatsbyPlugin | undefined
   traceId: string | undefined
-  componentModified?: boolean
+  componentModified?: boolean | undefined
   contextModified?: boolean
 }
 
@@ -1641,4 +1683,5 @@ export const HTTP_STATUS_CODE = {
   NETWORK_AUTHENTICATION_REQUIRED_511: 511,
 } as const
 
-export type HttpStatusCode = (typeof HTTP_STATUS_CODE)[keyof typeof HTTP_STATUS_CODE]
+export type HttpStatusCode =
+  (typeof HTTP_STATUS_CODE)[keyof typeof HTTP_STATUS_CODE]

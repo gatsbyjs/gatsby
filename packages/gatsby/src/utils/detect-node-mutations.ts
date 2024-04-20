@@ -47,7 +47,9 @@ const nodeProxy = createProxyHandler({
  * This also ensures reference equality: `memoizedProxy(obj) === memoizedProxy(obj)`.
  * If we didn't reuse already created proxy above comparison would return false.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const referenceMap = new WeakMap<any, any>()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function memoizedProxy<T>(target: T, handler: ProxyHandler<any>): T {
   const alreadyWrapped = referenceMap.get(target)
   if (alreadyWrapped) {
@@ -63,8 +65,12 @@ function createProxyHandler({
   onGet,
   onSet,
 }: {
-  onGet?: (key: string | symbol, value: any) => any
-  onSet?: (target: any, key: string | symbol, value: any) => boolean | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onGet?: ((key: string | symbol, value: any) => any) | undefined
+  onSet?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | ((target: any, key: string | symbol, value: any) => boolean | undefined)
+    | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } = {}): ProxyHandler<any> {
   function set(target, key, value): boolean {
     if (onSet) {
@@ -85,12 +91,13 @@ function createProxyHandler({
       reporter.warn(
         `Node mutation detected\n\n${
           codeFrame ? `${codeFrame}\n\n` : ``
-        }${error.stack.replace(/^Error:?\s*/, ``)}`
+        }${error.stack.replace(/^Error:?\s*/, ``)}`,
       )
     }
     return true
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function get(target, key): any {
     const value = target[key]
 
@@ -131,7 +138,7 @@ export function enableNodeMutationsDetection(): void {
   shouldWrapNodesInProxies = true
 
   reporter.warn(
-    `Node mutation detection is enabled. Remember to disable it after you are finished with diagnostic as it will cause build performance degradation.`
+    `Node mutation detection is enabled. Remember to disable it after you are finished with diagnostic as it will cause build performance degradation.`,
   )
 }
 
@@ -144,7 +151,7 @@ export function wrapNode<T extends IGatsbyNode | undefined>(node: T): T {
 }
 
 export function wrapNodes<T extends Array<IGatsbyNode> | undefined>(
-  nodes: T
+  nodes: T,
 ): T {
   if (nodes && shouldWrapNodesInProxies && nodes.length > 0) {
     return nodes.map(node => memoizedProxy(node, nodeProxy)) as T

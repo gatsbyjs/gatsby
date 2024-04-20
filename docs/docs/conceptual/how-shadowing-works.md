@@ -52,7 +52,7 @@ const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
 
 exports.onCreateWebpackConfig = (
   { store, stage, getConfig, rules, loaders, actions },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { flattenedPlugins, themes } = store.getState()
 
@@ -169,7 +169,7 @@ getThemeAndComponent(filepath) {
 
 The `resolved` hook is called after Webpack's default resolution process has been completed. At that point, the requested path has been resolved to the absolute path on disk of the file that would have been used if no shadowing was being performed. At that point, `node_modules`, aliases and symlinks have all been resolved. Also, the requested path will contain the file extension that was determined by Webpack.
 
-For example, let's assume that user code requires a file named `gatsby-theme-tomato/src/button/heading`. On entering `before-resolved` hook for `GatsbyThemeComponentShadowingResolverPlugin`, `request.path` might looks something like `/some/path/my-site/node_modules/gatsby-theme-tomato/src/button/heading.js` (that is if `gatsby-theme-tomato` has been installed from a npm repository; that would be `/some/path/my-site/packages/gatsby-theme-tomato/src/button/heading.js` if yarn-style workspaces are being used). Now, assuming that theme `gatsby-theme-tomato` has been properly registered in that site's gatsby-config.js, then `getThemeAndComponent` will return:
+For example, let's assume that user code requires a file named `gatsby-theme-tomato/src/button/heading`. On entering `before-resolved` hook for `GatsbyThemeComponentShadowingResolverPlugin`, `request.path` might looks something like `/some/path/my-site/node_modules/gatsby-theme-tomato/src/button/heading.js` (that is if `gatsby-theme-tomato` has been installed from a npm repository; that would be `/some/path/my-site/packages/gatsby-theme-tomato/src/button/heading.js` if pnpm-style workspaces are being used). Now, assuming that theme `gatsby-theme-tomato` has been properly registered in that site's gatsby-config.js, then `getThemeAndComponent` will return:
 
 ```js
 ;[
@@ -215,7 +215,7 @@ if (builtComponentPath) {
     { ...request, path: builtComponentPath },
     null,
     {},
-    callback
+    callback,
   )
 } else {
   return callback()
@@ -245,7 +245,7 @@ Additionally, the original theme is removed because that's the default behavior 
 
 ```js
 const themes = this.themes.filter(
-  ({ themeName }) => themeName !== theme.themeName
+  ({ themeName }) => themeName !== theme.themeName,
 )
 
 const themesArray = [
@@ -253,7 +253,7 @@ const themesArray = [
 ].concat(
   themes
     .reverse()
-    .map(({ themeDir }) => path.join(themeDir, `src`, theme.themeName))
+    .map(({ themeDir }) => path.join(themeDir, `src`, theme.themeName)),
 )
 ```
 

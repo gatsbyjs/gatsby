@@ -1,6 +1,6 @@
 import { processStaticQueries } from "../query"
 import reporter from "gatsby-cli/lib/reporter"
-import { IQueryRunningContext } from "../state-machines/query-running/types"
+import type { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
 
 export async function runStaticQueries({
@@ -28,7 +28,7 @@ export async function runStaticQueries({
     {
       id: `static-query-running`,
       parentSpan,
-    }
+    },
   )
 
   await processStaticQueries(staticQueryIds, {

@@ -2,17 +2,17 @@ import {
   applyMiddleware,
   combineReducers,
   createStore,
-  DeepPartial,
-  Middleware,
+  // Middleware,
   ReducersMapObject,
   Store,
 } from "redux"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 // @ts-ignore
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
-import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
+import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk"
 import * as rawReducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import type { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
@@ -38,6 +38,7 @@ const persistedReduxKeys = [
 
 const reducers = persistedReduxKeys.reduce((acc, key) => {
   const rawReducer = rawReducers[key]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   acc[key] = function (state, action): any {
     if (action.type === `RESTORE_CACHE` && action.payload[key]) {
       return action.payload[key]
@@ -53,7 +54,7 @@ const reducers = persistedReduxKeys.reduce((acc, key) => {
 export const emitter = mett()
 
 // Read old node data from cache.
-export const readState = (): IGatsbyState => {
+export function readState(): IGatsbyState {
   try {
     const state = readFromCache() as IGatsbyState
     if (state.nodes) {
@@ -89,32 +90,42 @@ export const readState = (): IGatsbyState => {
   }
 }
 
-export interface IMultiDispatch {
+export type IMultiDispatch = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   <T extends ActionsUnion | ThunkAction<any, IGatsbyState, any, ActionsUnion>>(
-    action: Array<T>
+    action: Array<T>,
   ): Array<T>
 }
 
 /**
  * Redux middleware handling array of actions
  */
-const multi: Middleware<IMultiDispatch> =
-  ({ dispatch }) =>
-  next =>
-  (action: ActionsUnion): ActionsUnion | Array<ActionsUnion> =>
-    Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function multi({ dispatch }): (next: any) => (action: any) => any {
+  return next => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (action): any => {
+      return Array.isArray(action)
+        ? action.filter(Boolean).map(dispatch)
+        : next(action)
+    }
+  }
+}
 
 export type GatsbyReduxStore = Store<IGatsbyState> & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch: ThunkDispatch<IGatsbyState, any, ActionsUnion> & IMultiDispatch
 }
 
 export function configureStore(initialState: IGatsbyState): GatsbyReduxStore {
   // @ts-ignore
   const store = createStore(
-    combineReducers<IGatsbyState>({ ...reducers }),
+    // @ts-ignore
+    combineReducers<IGatsbyState>(reducers),
     // @ts-ignore
     initialState,
-    applyMiddleware(thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>, multi)
+    // @ts-ignore
+    applyMiddleware(thunk, multi),
   )
 
   store.dispatch({
@@ -126,22 +137,23 @@ export function configureStore(initialState: IGatsbyState): GatsbyReduxStore {
 }
 
 export const store: GatsbyReduxStore = configureStore(
-  process.env.GATSBY_WORKER_POOL_WORKER ? ({} as IGatsbyState) : readState()
+  process.env.GATSBY_WORKER_POOL_WORKER ? ({} as IGatsbyState) : readState(),
 )
 
 /**
  * Allows overloading some reducers (e.g. when setting a custom datastore)
  */
 export function replaceReducer(
-  customReducers: Partial<ReducersMapObject<IGatsbyState>>
+  customReducers: Partial<ReducersMapObject<IGatsbyState>>,
 ): void {
   store.replaceReducer(
-    combineReducers<IGatsbyState>({ ...reducers, ...customReducers })
+    // @ts-ignore
+    combineReducers<IGatsbyState>({ ...reducers, ...customReducers }),
   )
 }
 
 // Persist state.
-export const saveState = (): void => {
+export function saveState(): void {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     // do not persist cache if above env var is set.
     // this is to temporarily unblock builds that hit the v8.serialize related
@@ -156,11 +168,11 @@ export const saveState = (): void => {
   return writeToCache(sliceOfStateToPersist)
 }
 
-export const savePartialStateToDisk = (
+export function savePartialStateToDisk(
   slices: Array<GatsbyStateKeys>,
-  optionalPrefix?: string,
-  transformState?: <T extends DeepPartial<IGatsbyState>>(state: T) => T
-): void => {
+  optionalPrefix?: string | undefined,
+  transformState?: (<T extends IGatsbyState>(state: T) => T) | undefined,
+): void {
   const state = store.getState()
   const contents = _.pick(state, slices)
   const savedContents = transformState ? transformState(contents) : contents
@@ -168,12 +180,12 @@ export const savePartialStateToDisk = (
   return writeToCache(savedContents, slices, optionalPrefix)
 }
 
-export const loadPartialStateFromDisk = (
+export function loadPartialStateFromDisk(
   slices: Array<GatsbyStateKeys>,
-  optionalPrefix?: string
-): DeepPartial<IGatsbyState> => {
+  optionalPrefix?: string,
+): IGatsbyState {
   try {
-    return readFromCache(slices, optionalPrefix) as DeepPartial<IGatsbyState>
+    return readFromCache(slices, optionalPrefix) as IGatsbyState
   } catch (e) {
     // ignore errors.
   }

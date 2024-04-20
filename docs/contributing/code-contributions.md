@@ -12,19 +12,19 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 
 ### Install Node and Yarn
 
-- Ensure you have the latest **LTS** version of Node installed (`>= 18`) by executing `node --version`
-- [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
-- Ensure you have the version 1 of Yarn installed (`^1`) by executing `yarn --version`. The Gatsby monorepo does not yet support later versions of Yarn.
+- Ensure you have the latest **LTS** version of Node installed (`>= 20.12.2`) by executing `node --version`
+- [Install](https://pnpm.io/installation) the Pnpm package manager.
+- Ensure you have Pnpm installed (`^1`) by executing `pnpm --version`.
 
 ### Fork, clone, and branch the repository
 
 - [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [official `gatsbyjs/gatsby` repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone https://github.com/<your-username>/gatsby.git`
-- Set up repo and install dependencies: `yarn run bootstrap`
+- Set up repo and install dependencies: `pnpm run bootstrap`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
-- Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
-  - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
-  - To watch just one package such as `gatsby`, run `yarn run watch --scope=gatsby`.
+- Run `pnpm run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
+  - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `pnpm run watch --scope={gatsby,gatsby-cli}`.
+  - To watch just one package such as `gatsby`, run `pnpm run watch --scope=gatsby`.
 
 > **Note:** Optionally you can run `git clone --depth=1 https://github.com/<your-username>/gatsby.git` to do a shallow clone (smaller download size) rather than a deep clone, however this sometimes leads to problems when you want to reference older upstream branches.
 
@@ -32,19 +32,19 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 
 - Install [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli):
   - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -v`
-  - If not, install globally: `yarn global add gatsby-dev-cli`
+  - If not, install globally: `pnpm global add gatsby-dev-cli`
   - Run `gatsby-dev --set-path-to-repo /path/to/my/forked/version/gatsby` to point `gatsby-dev-cli` to your fork
-- Run `yarn install` in each of the sites you're testing.
+- Run `pnpm install` in each of the sites you're testing.
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](https://www.npmjs.com/package/gatsby-dev-cli) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
   - To copy files from just one package such as `gatsby`, run `gatsby-dev --packages gatsby`
-  - Note: If you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
-- If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory, revert any changes to `package.json` and lockfiles, and reinstall modules with `npm install` or `yarn install` . Alternatively, you can run:
+  - Note: If you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `pnpm add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
+- If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory, revert any changes to `package.json` and lockfiles, and reinstall modules with `npm install` or `pnpm install` . Alternatively, you can run:
 
   ```shell
-  git checkout package.json; yarn --force
+  git checkout package.json; pnpm --force
   ```
 
 ### Add tests
@@ -53,24 +53,24 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
   - Begin by adding unit tests with Jest.
   - If you want to test out this feature in a more real-world application you can also consider adding [integration tests](https://github.com/gatsbyjs/gatsby/tree/master/integration-tests) and [end-to-end tests](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests).
   - If you're unsure on how to add tests or which types of test, ask in a comment in the pull request
-- Once you're done, make sure all unit tests still pass: `yarn test`.
-  - To run tests for a single package you can run: `yarn jest <package-name>`.
-  - To run a single test file you can run: `yarn jest <file-path>`.
+- Once you're done, make sure all unit tests still pass: `pnpm run test`.
+  - To run tests for a single package you can run: `pnpm run jest <package-name>`.
+  - To run a single test file you can run: `pnpm run jest <file-path>`.
   - Once you push your changes to GitHub, the CI will run tests in a controlled environment and might uncover failures on e.g. different type of machines (Linux vs. Windows)
 
 If you're adding e2e tests and want to run them against local changes:
 
-- In the root of the monorepo, run `yarn lerna run build --scope=<package-name>` where `package-name` is the directory containing the changes you're testing.
+- In the root of the monorepo, run `pnpm run lerna run build --scope=<package-name>` where `package-name` is the directory containing the changes you're testing.
 - Run `gatsby-dev` inside your specific e2e test directory, for example `e2e-tests/themes/development-runtime`.
-- While the previous step is running, open a new terminal window and run `yarn test` in that same e2e test directory.
+- While the previous step is running, open a new terminal window and run `pnpm run test` in that same e2e test directory.
 
 ### Troubleshooting
 
 At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an Discussion on GitHub](https://github.com/gatsbyjs/gatsby/discussions/categories/help). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
 
 - When you went through the initial setup some time ago and now want to contribute something new, you should make sure to [sync your fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork) with the latest changes from the primary branch on [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby). Otherwise, you might run into issues where files are not found as they were renamed, moved, or deleted.
-- After syncing your fork, run `yarn run bootstrap` to compile all packages. When files or tests depend on the build output (files in `/dist` directories) they might fail otherwise.
-- Make sure to run `yarn run watch` on the packages' source code you're changing.
+- After syncing your fork, run `pnpm run bootstrap` to compile all packages. When files or tests depend on the build output (files in `/dist` directories) they might fail otherwise.
+- Make sure to run `pnpm run watch` on the packages' source code you're changing.
 
 ## How to open a pull request
 

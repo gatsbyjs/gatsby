@@ -60,7 +60,7 @@ export default function (this: any, source: string): string {
     }
 
     lmdbBinaryLocation = slash(
-      path.relative(path.dirname(this.resourcePath), absoluteModulePath)
+      path.relative(path.dirname(this.resourcePath), absoluteModulePath),
     )
   } catch (e) {
     return source
@@ -73,22 +73,22 @@ export default function (this: any, source: string): string {
   return source
     .replace(
       `require$1('node-gyp-build-optional-packages')(dirName)`,
-      `require(${JSON.stringify(lmdbBinaryLocation)})`
+      `require(${JSON.stringify(lmdbBinaryLocation)})`,
     )
     .replace(
       `require$1('node-gyp-build')(dirName)`,
-      `require(${JSON.stringify(lmdbBinaryLocation)})`
+      `require(${JSON.stringify(lmdbBinaryLocation)})`,
     )
     .replace(
       `loadNAPI__default["default"](dirName);`,
-      `require(${JSON.stringify(lmdbBinaryLocation)})`
+      `require(${JSON.stringify(lmdbBinaryLocation)})`,
     )
     .replace(
       `require$2.resolve('./dict/dict.txt')`,
-      `require.resolve('../dict/dict.txt')`
+      `require.resolve('../dict/dict.txt')`,
     )
     .replace(
       /fs\.readFileSync\(new URL\('\.\/dict\/dict\.txt',\s*\(typeof\s*document\s*===\s*'undefined'\s*\?\s*new\s*\(require\('u'\s*\+\s*'rl'\)\.URL\)\s*\('file:'\s*\+\s*__filename\).href\s*:\s*\(document\.currentScript\s*&&\s*document\.currentScript\.src\s*\|\|\s*new URL\('index\.cjs',\s*document\.baseURI\)\.href\)\)\.replace\(\/dist\[\\\\\\\/\]index\.cjs\$\/,\s*''\)\)\)/g,
-      `fs.readFileSync(require.resolve('../dict/dict.txt'))`
+      `fs.readFileSync(require.resolve('../dict/dict.txt'))`,
     )
 }

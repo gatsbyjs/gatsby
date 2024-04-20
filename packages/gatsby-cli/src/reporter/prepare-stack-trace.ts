@@ -2,7 +2,7 @@
  * https://github.com/evanw/node-source-map-support/blob/master/source-map-support.js
  */
 
-import { readFileSync, readdirSync } from "fs"
+import { readFileSync, readdirSync } from "node:fs"
 import { codeFrameColumns } from "@babel/code-frame"
 import stackTrace from "stack-trace"
 import {
@@ -12,7 +12,7 @@ import {
   InvalidOriginalMapping,
   sourceContentFor,
 } from "@jridgewell/trace-mapping"
-import * as path from "path"
+import path from "path"
 
 export class ErrorWithCodeFrame extends Error {
   codeFrame?: string = ``
@@ -30,7 +30,7 @@ export class ErrorWithCodeFrame extends Error {
 
 export function prepareStackTrace(
   error: Error,
-  sourceOfMainMap: string
+  sourceOfMainMap: string,
 ): ErrorWithCodeFrame {
   const newError = new ErrorWithCodeFrame(error)
   // source point to single map, but with code splitting for build-html we need to handle more maps
@@ -41,7 +41,7 @@ export function prepareStackTrace(
     .map(fileName => path.join(bundleDir, fileName))
 
   const maps = bundleDirMapFiles.map(
-    source => new TraceMap(readFileSync(source, `utf8`))
+    source => new TraceMap(readFileSync(source, `utf8`)),
   )
 
   const stack = stackTrace
@@ -53,7 +53,7 @@ export function prepareStackTrace(
         (!frame.getFileName() ||
           !frame
             .getFileName()
-            .match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/))
+            .match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/)),
     )
 
   newError.codeFrame = getErrorSource(maps, stack[0])
@@ -66,7 +66,7 @@ export function prepareStackTrace(
 
 function getErrorSource(
   maps: Array<TraceMap>,
-  topFrame: stackTrace.StackFrame | IWrappedStackFrame
+  topFrame: stackTrace.StackFrame | IWrappedStackFrame,
 ): string {
   let source
   for (const map of maps) {
@@ -87,12 +87,12 @@ function getErrorSource(
         },
         {
           highlightCode: true,
-        }
+        },
       )
     : ``
 }
 
-interface IWrappedStackFrame {
+type IWrappedStackFrame = {
   getFileName(): string
   getLineNumber(): number
   getColumnNumber(): number
@@ -103,7 +103,7 @@ interface IWrappedStackFrame {
 
 function wrapCallSite(
   maps: Array<TraceMap>,
-  frame: stackTrace.StackFrame
+  frame: stackTrace.StackFrame,
 ): IWrappedStackFrame | stackTrace.StackFrame {
   const source = frame.getFileName()
   if (!source) return frame

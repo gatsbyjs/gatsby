@@ -10,7 +10,7 @@ The results of this benchmark can be compared to the results of the `gabe-fs-mar
 
 ## Install
 
-Run `yarn` or `pnpm install`
+Run `pnpm install`
 
 ## Usage
 
@@ -47,7 +47,7 @@ It's important to note that the pool will persist between benchmark runs, while 
 Either way, you can start a benchmark run using the following. If the pool doesn't exist or does not have enough images, images will be generated:
 
 ```shell
-W=100 H=200 N=1000 M=2 yarn bench
+W=100 H=200 N=1000 M=2 pnpm run bench
 ```
 
 - `N=1000`: instructs the run to build a site of 1000 pages
@@ -60,4 +60,4 @@ W=100 H=200 N=1000 M=2 yarn bench
 - Runs `gatsby clean`
 - Runs `gatsby build`
 
-The default `yarn bench` will build 512 pages with 1gb memory.
+The default `pnpm run bench` will build 512 pages with 1gb memory.

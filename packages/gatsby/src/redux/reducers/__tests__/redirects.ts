@@ -1,4 +1,4 @@
-import { ICreateRedirectAction, IRedirect } from "../../types"
+import type { ICreateRedirectAction, IRedirect } from "../../types"
 
 let reducer
 
@@ -77,11 +77,12 @@ describe(`redirects`, () => {
   it(`prevents duplicate redirects`, () => {
     function createRedirect(
       fromPath: string,
-      toPath: string
+      toPath: string,
+      ignoreCase?: boolean | undefined,
     ): ICreateRedirectAction {
       return {
         type: `CREATE_REDIRECT`,
-        payload: { fromPath, toPath },
+        payload: { fromPath, toPath, ignoreCase },
       }
     }
 
@@ -107,27 +108,31 @@ describe(`redirects`, () => {
     let state = reducer(
       undefined,
       createRedirect({
+        ignoreCase: false,
         fromPath: `/page`,
         toPath: `/en/page`,
         Language: `en`,
-      })
+      }),
     )
     state = reducer(
       state,
       createRedirect({
+        ignoreCase: false,
         fromPath: `/page`,
         toPath: `/pt/page`,
         Language: `pt`,
-      })
+      }),
     )
 
     expect(state).toEqual([
       {
+        ignoreCase: false,
         fromPath: `/page`,
         toPath: `/en/page`,
         Language: `en`,
       },
       {
+        ignoreCase: false,
         fromPath: `/page`,
         toPath: `/pt/page`,
         Language: `pt`,

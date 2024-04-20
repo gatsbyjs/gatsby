@@ -3,17 +3,18 @@ import type { IHeader } from "../../redux/types"
 import { rankRoute } from "../rank-route"
 
 type Headers = IHeader["headers"]
-interface IHeaderWithScore extends IHeader {
+type IHeaderWithScore = {
   score: number
-}
+} & IHeader
 
 // We don't care if the path has a trailing slash or not, but to be able to compare stuff we need to normalize it
-const normalizePath = (input: string): string =>
-  input.endsWith(`/`) ? input : `${input}/`
+function normalizePath(input: string): string {
+  return input.endsWith(`/`) ? input : `${input}/`
+}
 
-export const createHeadersMatcher = (
-  headers: Array<IHeader> | undefined
-): ((path: string, defaultHeaders: Headers) => Headers) => {
+export function createHeadersMatcher(
+  headers: Array<IHeader> | undefined,
+): (path: string, defaultHeaders: Headers) => Headers {
   // Split the incoming user headers into two buckets:
   // - dynamicHeaders: Headers with dynamic paths (e.g. /* or /:tests)
   // - staticHeaders: Headers with fully static paths (e.g. /static/)

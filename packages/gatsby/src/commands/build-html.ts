@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Bluebird from "bluebird"
 import fs from "fs-extra"
 // @ts-ignore
@@ -11,7 +12,7 @@ import fastq from "fastq"
 
 import { emitter, store } from "../redux"
 import webpack from "webpack"
-import {webpackConfig} from "../utils/webpack.config"
+import { webpackConfig } from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
 import { getPageData } from "../utils/get-page-data"
@@ -30,6 +31,7 @@ import { extractUndefinedGlobal } from "../utils/extract-undefined-global"
 import { modifyPageDataForErrorMessage } from "../utils/page-data"
 import { setFilesFromDevelopHtmlCompilation } from "../utils/webpack/utils/is-file-inside-compilations"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -72,7 +74,7 @@ let activeRecompilations = 0
 
 export function getDevSSRWebpack(): {
   recompileAndResumeWatching: (
-    allowTimedFallback: boolean
+    allowTimedFallback: boolean,
   ) => Promise<() => void>
   needToRecompileSSRBundle: boolean
 } {
@@ -83,9 +85,11 @@ export function getDevSSRWebpack(): {
   const watcher = devssrWebpackCompiler
   const compiler = devssrWebpackCompiler?.compiler
 
-  if (typeof watcher !== 'undefined' && typeof compiler !== 'undefined') {
+  if (typeof watcher !== `undefined` && typeof compiler !== `undefined`) {
     return {
-      async recompileAndResumeWatching(allowTimedFallback: boolean): Promise<() => void> {
+      async recompileAndResumeWatching(
+        allowTimedFallback: boolean,
+      ): Promise<() => void> {
         let isResolved = false
 
         return await new Promise<() => void>(resolve => {
@@ -127,12 +131,14 @@ export function getDevSSRWebpack(): {
           }
         })
       },
-      needToRecompileSSRBundle: SSRBundleReceivedInvalidEvent || SSRBundleWillInvalidate,
+      needToRecompileSSRBundle:
+        SSRBundleReceivedInvalidEvent || SSRBundleWillInvalidate,
     }
   } else {
     return {
       needToRecompileSSRBundle: false,
-      recompileAndResumeWatching: (): Promise<() => void> => Promise.resolve((): void => { }),
+      recompileAndResumeWatching: (): Promise<() => void> =>
+        Promise.resolve((): void => {}),
     }
   }
 }
@@ -142,7 +148,7 @@ let newHash = ``
 const runWebpack = (
   compilerConfig,
   stage: Stage,
-  directory: string
+  directory: string,
 ): Promise<{
   stats: webpack.Stats
   close: ReturnType<typeof watch>["close"]
@@ -179,9 +185,9 @@ const runWebpack = (
           } else {
             newHash = stats?.hash || ``
 
-            const {
-              restartWorker,
-            } = require(`../utils/dev-ssr/render-dev-html`)
+            const { restartWorker } = require(
+              `../utils/dev-ssr/render-dev-html`,
+            )
             // Make sure we use the latest version during development
             if (oldHash !== `` && newHash !== oldHash) {
               restartWorker(`${directory}/${ROUTES_DIRECTORY}render-page.js`)
@@ -193,11 +199,11 @@ const runWebpack = (
               stats: stats as webpack.Stats,
               close: () =>
                 new Promise((resolve, reject): void =>
-                  watcher.close(err => (err ? reject(err) : resolve()))
+                  watcher.close(err => (err ? reject(err) : resolve())),
                 ),
             })
           }
-        }
+        },
       )
       devssrWebpackCompiler = watcher
     } else {
@@ -205,7 +211,7 @@ const runWebpack = (
         ({ stats, close }) => {
           resolve({ stats, close })
         },
-        err => reject(err)
+        err => reject(err),
       )
     }
   })
@@ -214,13 +220,13 @@ const runWebpack = (
 const doBuildRenderer = async (
   directory: string,
   webpackConfig: webpack.Configuration,
-  stage: Stage
+  stage: Stage,
 ): Promise<IBuildRendererResult> => {
   const { stats, close } = await runWebpack(webpackConfig, stage, directory)
 
   if (stats?.hasErrors()) {
     reporter.panicOnBuild(
-      structureWebpackErrors(stage, stats.compilation.errors)
+      structureWebpackErrors(stage, stats.compilation.errors),
     )
   }
 
@@ -239,12 +245,12 @@ const doBuildRenderer = async (
 const doBuildPartialHydrationRenderer = async (
   directory: string,
   webpackConfig: webpack.Configuration,
-  stage: Stage
+  stage: Stage,
 ): Promise<IBuildRendererResult> => {
   const { stats, close } = await runWebpack(webpackConfig, stage, directory)
   if (stats?.hasErrors()) {
     reporter.panicOnBuild(
-      structureWebpackErrors(stage, stats.compilation.errors)
+      structureWebpackErrors(stage, stats.compilation.errors),
     )
   }
 
@@ -260,11 +266,18 @@ export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan?: Span | SpanContext | undefined,
-  nonce?: string | undefined
+  nonce?: string | undefined,
 ): Promise<IBuildRendererResult> => {
-  const config = await webpackConfig(program, program.directory, stage, undefined, {
-    parentSpan,
-  }, nonce)
+  const config = await webpackConfig(
+    program,
+    program.directory,
+    stage,
+    undefined,
+    {
+      parentSpan,
+    },
+    nonce,
+  )
 
   return doBuildRenderer(program.directory, config, stage)
 }
@@ -273,11 +286,18 @@ export const buildPartialHydrationRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan?: IActivity | undefined,
-  nonce?: string | undefined
+  nonce?: string | undefined,
 ): Promise<IBuildRendererResult> => {
-  const config = await webpackConfig(program, program.directory, stage, undefined, {
-    parentSpan,
-  }, nonce)
+  const config = await webpackConfig(
+    program,
+    program.directory,
+    stage,
+    undefined,
+    {
+      parentSpan,
+    },
+    nonce,
+  )
 
   for (const rule of config.module?.rules ?? []) {
     // @ts-ignore
@@ -297,7 +317,7 @@ export const buildPartialHydrationRenderer = async (
       // @ts-ignore
       rule.use.push({
         loader: require.resolve(
-          `../utils/webpack/loaders/partial-hydration-reference-loader`
+          `../utils/webpack/loaders/partial-hydration-reference-loader`,
         ),
       })
     }
@@ -310,7 +330,7 @@ export const buildPartialHydrationRenderer = async (
   config.output.path = path.join(
     program.directory,
     `.cache`,
-    `partial-hydration`
+    `partial-hydration`,
   )
 
   // require.resolve might fail the build if the package is not installed
@@ -319,7 +339,7 @@ export const buildPartialHydrationRenderer = async (
     // TODO collect javascript aliases to match the partial hydration bundle
     // @ts-ignore
     config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
-      `gatsby-plugin-image/dist/gatsby-image.browser.modern`
+      `gatsby-plugin-image/dist/gatsby-image.browser.modern`,
     )
   } catch (e) {
     // do nothing
@@ -339,6 +359,7 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 }
 export type IRenderHtmlResult = {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   previewErrors: Record<string, any>
 
   slicesPropsPerPage: Record<
@@ -359,7 +380,7 @@ const renderHTMLQueue = async (
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: Array<string>,
-  stage: Stage = 'build-html'
+  stage: Stage = `build-html`,
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -406,7 +427,7 @@ const renderHTMLQueue = async (
                 seenErrors.add(error.stack)
                 const prettyError = createErrorFromString(
                   error.stack,
-                  `${htmlComponentRendererPath}.map`
+                  `${htmlComponentRendererPath}.map`,
                 )
 
                 const errorMessageStr = `${prettyError.stack}${
@@ -421,8 +442,8 @@ const renderHTMLQueue = async (
                 errorMessage.pagePaths.push(pagePath)
                 errorMessages.set(error.stack, errorMessage)
               }
-            }
-          )
+            },
+          ),
         )
 
         for (const value of errorMessages.values()) {
@@ -450,8 +471,9 @@ const renderHTMLQueue = async (
           })
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         for (const [_pagePath, arrayOfUsages] of Object.entries(
-          htmlRenderMeta.unsafeBuiltinsUsageByPagePath
+          htmlRenderMeta.unsafeBuiltinsUsageByPagePath,
         )) {
           for (const unsafeUsageStack of arrayOfUsages) {
             uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
@@ -465,8 +487,9 @@ const renderHTMLQueue = async (
     })
   } catch (e) {
     if (e?.context?.unsafeBuiltinsUsageByPagePath) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (const [_pagePath, arrayOfUsages] of Object.entries(
-        e.context.unsafeBuiltinsUsageByPagePath
+        e.context.unsafeBuiltinsUsageByPagePath,
       )) {
         // @ts-ignore TS doesn't know arrayOfUsages is Iterable
         for (const unsafeUsageStack of arrayOfUsages) {
@@ -478,7 +501,7 @@ const renderHTMLQueue = async (
   } finally {
     if (uniqueUnsafeBuiltinUsedStacks.size > 0) {
       console.warn(
-        `Unsafe builtin method was used, future builds will need to rebuild all pages`
+        `Unsafe builtin method was used, future builds will need to rebuild all pages`,
       )
       store.dispatch({
         type: `SSR_USED_UNSAFE_BUILTIN`,
@@ -488,7 +511,7 @@ const renderHTMLQueue = async (
     for (const unsafeBuiltinUsedStack of uniqueUnsafeBuiltinUsedStacks) {
       const prettyError = createErrorFromString(
         unsafeBuiltinUsedStack,
-        `${htmlComponentRendererPath}.map`
+        `${htmlComponentRendererPath}.map`,
       )
 
       const warningMessage = `${prettyError.stack}${
@@ -504,7 +527,7 @@ const renderPartialHydrationQueue = async (
   workerPool: GatsbyWorkerPool,
   activity: IActivity,
   pages: Array<string>,
-  program: IProgram
+  program: IProgram,
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -533,7 +556,7 @@ const renderPartialHydrationQueue = async (
       if (activity && activity.tick) {
         activity.tick(pageSegment.length)
       }
-    })
+    }),
   )
 }
 
@@ -559,7 +582,7 @@ export const doBuildPages = async (
   pagePaths: Array<string>,
   activity: IActivity,
   workerPool: GatsbyWorkerPool,
-  stage: Stage
+  stage: Stage,
 ): Promise<void> => {
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
@@ -654,7 +677,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       0,
       {
         parentSpan,
-      }
+      },
     )
     buildHTMLActivityProgress.start()
     try {
@@ -663,7 +686,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         toRegenerate,
         buildHTMLActivityProgress,
         workerPool,
-        'build-html'
+        `build-html`,
       )
     } catch (err) {
       let id = `95313`
@@ -702,7 +725,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         0,
         {
           parentSpan,
-        }
+        },
       )
       try {
         buildHTMLActivityProgress.start()
@@ -710,7 +733,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
           workerPool,
           buildHTMLActivityProgress,
           toRegenerate,
-          program
+          program,
         )
       } catch (error) {
         // Generic error with page path and useful stack trace, accurate code frame can be a future improvement
@@ -749,7 +772,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   if (toDelete.length > 0) {
     const publicDir = path.join(program.directory, `public`)
     const deletePageDataActivityTimer = reporter.activityTimer(
-      `Delete previous page data`
+      `Delete previous page data`,
     )
     deletePageDataActivityTimer.start()
     await buildUtils.removePageFiles(publicDir, toDelete)
@@ -792,7 +815,7 @@ export async function buildSlices({
       `Building slices HTML (${slicesProps.length})`,
       {
         parentSpan,
-      }
+      },
     )
     buildHTMLActivityProgress.start()
 
@@ -816,7 +839,7 @@ export async function buildSlices({
     } catch (err) {
       const prettyError = createErrorFromString(
         err.stack,
-        `${htmlComponentRendererPath}.map`
+        `${htmlComponentRendererPath}.map`,
       )
 
       const undefinedGlobal = extractUndefinedGlobal(err)

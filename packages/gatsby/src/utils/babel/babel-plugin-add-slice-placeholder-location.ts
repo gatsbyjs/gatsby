@@ -1,5 +1,5 @@
 import { relative } from "path"
-import type { PluginObj, types as BabelTypes, PluginPass } from "@babel/core"
+import { PluginObj, types as BabelTypes, PluginPass } from "@babel/core"
 import { ObjectProperty } from "@babel/types"
 import { store } from "../../redux"
 
@@ -16,7 +16,7 @@ export default function addSlicePlaceholderLocation(
     types: t,
   }: {
     types: typeof BabelTypes
-  }
+  },
 ): PluginObj {
   return {
     name: `babel-plugin-add-slice-placeholder-location`,
@@ -26,6 +26,7 @@ export default function addSlicePlaceholderLocation(
           return
         }
 
+        // @ts-ignore
         if (this.file.opts.filename) {
           const __renderedByLocationProperties: Array<ObjectProperty> = [
             t.objectProperty(
@@ -33,9 +34,10 @@ export default function addSlicePlaceholderLocation(
               t.stringLiteral(
                 relative(
                   store.getState().program.directory,
-                  this.file.opts.filename
-                )
-              )
+                  // @ts-ignore
+                  this.file.opts.filename,
+                ),
+              ),
             ),
           ]
 
@@ -43,16 +45,16 @@ export default function addSlicePlaceholderLocation(
             __renderedByLocationProperties.push(
               t.objectProperty(
                 t.identifier(`lineNumber`),
-                t.numericLiteral(nodePath.node.loc.start.line)
-              )
+                t.numericLiteral(nodePath.node.loc.start.line),
+              ),
             )
 
             if (nodePath.node.loc?.start.column) {
               __renderedByLocationProperties.push(
                 t.objectProperty(
                   t.identifier(`columnNumber`),
-                  t.numericLiteral(nodePath.node.loc.start.column + 1)
-                )
+                  t.numericLiteral(nodePath.node.loc.start.column + 1),
+                ),
               )
             }
 
@@ -60,16 +62,16 @@ export default function addSlicePlaceholderLocation(
               __renderedByLocationProperties.push(
                 t.objectProperty(
                   t.identifier(`endLineNumber`),
-                  t.numericLiteral(nodePath.node.loc.end.line)
-                )
+                  t.numericLiteral(nodePath.node.loc.end.line),
+                ),
               )
 
               if (nodePath.node.loc?.end.column) {
                 __renderedByLocationProperties.push(
                   t.objectProperty(
                     t.identifier(`endColumnNumber`),
-                    t.numericLiteral(nodePath.node.loc.end.column + 1)
-                  )
+                    t.numericLiteral(nodePath.node.loc.end.column + 1),
+                  ),
                 )
               }
             }
@@ -78,8 +80,8 @@ export default function addSlicePlaceholderLocation(
           const newProp = t.jsxAttribute(
             t.jsxIdentifier(`__renderedByLocation`),
             t.jsxExpressionContainer(
-              t.objectExpression(__renderedByLocationProperties)
-            )
+              t.objectExpression(__renderedByLocationProperties),
+            ),
           )
 
           nodePath.node.attributes.push(newProp)

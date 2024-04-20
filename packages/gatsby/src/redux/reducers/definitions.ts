@@ -1,9 +1,9 @@
-import { ActionsUnion, IGatsbyState } from "../types"
+import type { ActionsUnion, IGatsbyState } from "../types"
 
-export const definitionsReducer = (
-  state: IGatsbyState["definitions"] = new Map(),
-  action: ActionsUnion
-): IGatsbyState["definitions"] => {
+export function definitionsReducer(
+  state: IGatsbyState["definitions"] | undefined = new Map(),
+  action: ActionsUnion,
+): IGatsbyState["definitions"] {
   switch (action.type) {
     case `SET_GRAPHQL_DEFINITIONS`:
       return action.payload

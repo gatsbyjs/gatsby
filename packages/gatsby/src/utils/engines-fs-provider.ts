@@ -7,7 +7,7 @@
 
 declare global {
   namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/consistent-type-definitions
     interface Global {
       _fsWrapper: typeof import("fs")
       _actualFsWrapper: typeof import("fs")

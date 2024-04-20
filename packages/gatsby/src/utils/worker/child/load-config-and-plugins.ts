@@ -1,7 +1,7 @@
 import { loadConfig } from "../../../bootstrap/load-config"
 import { loadPlugins } from "../../../bootstrap/load-plugins"
 import { store } from "../../../redux"
-import apiRunnerNode from "../../api-runner-node"
+import { apiRunnerNode } from "../../api-runner-node"
 
 export async function loadConfigAndPlugins(
   ...args: Parameters<typeof loadConfig>

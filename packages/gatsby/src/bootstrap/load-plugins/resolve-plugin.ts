@@ -1,12 +1,11 @@
-import path from "path"
-import fs from "fs"
+import path from "node:path"
+import fs from "node:fs"
 import { slash, createRequireFromPath } from "gatsby-core-utils"
 import { warnOnIncompatiblePeerDependency } from "./validate"
-import { PackageJson } from "../../.."
-import { IPluginInfo, PluginRef } from "./types"
+import type { PackageJson } from "../../.."
+import type { IPluginInfo, PluginRef } from "./types"
 import { createPluginId } from "./utils/create-id"
 import { createFileContentHash } from "./utils/create-hash"
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { isString } from "lodash"
 import { checkLocalPlugin } from "./utils/check-local-plugin"
@@ -29,12 +28,12 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   // Handle local plugins
   const { validLocalPlugin, localPluginPath = `` } = checkLocalPlugin(
     plugin,
-    rootDir
+    rootDir,
   )
 
   if (validLocalPlugin && localPluginPath) {
     const packageJSON = JSON.parse(
-      fs.readFileSync(`${localPluginPath}/package.json`, `utf-8`)
+      fs.readFileSync(`${localPluginPath}/package.json`, `utf-8`),
     ) as PackageJson
     const name = packageJSON.name || pluginName
     warnOnIncompatiblePeerDependency(name, packageJSON)
@@ -66,31 +65,31 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
         requireSource.resolve(
           path.isAbsolute(pluginName)
             ? pluginName
-            : `${pluginName}/package.json`
-        )
-      )
+            : `${pluginName}/package.json`,
+        ),
+      ),
     )
 
     const packageJSON = JSON.parse(
-      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-    )
-    warnOnIncompatiblePeerDependency(packageJSON.name, packageJSON)
+      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
+    ) as PackageJson
+    warnOnIncompatiblePeerDependency(packageJSON.name ?? ``, packageJSON)
 
     return {
       resolve: resolvedPath,
-      id: createPluginId(packageJSON.name),
-      name: packageJSON.name,
-      version: packageJSON.version,
+      id: createPluginId(packageJSON.name ?? ``),
+      name: packageJSON.name ?? ``,
+      version: packageJSON.version ?? ``,
     }
   } catch (err) {
     if (process.env.gatsby_log_level === `verbose`) {
       reporter.panicOnBuild(
         `plugin "${pluginName} threw the following error:\n`,
-        err
+        err,
       )
     } else {
       reporter.panicOnBuild(
-        `There was a problem loading plugin "${pluginName}". Perhaps you need to install its package?\nUse --verbose to see actual error.`
+        `There was a problem loading plugin "${pluginName}". Perhaps you need to install its package?\nUse --verbose to see actual error.`,
       )
     }
     throw new Error(`unreachable`)

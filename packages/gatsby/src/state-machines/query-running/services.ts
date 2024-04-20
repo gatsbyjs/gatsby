@@ -1,4 +1,4 @@
-import { MachineOptions } from "xstate"
+import type { MachineOptions } from "xstate"
 import {
   extractQueries,
   writeOutRequires,
@@ -9,10 +9,11 @@ import {
   waitUntilAllJobsComplete,
   writeOutRedirects,
 } from "../../services"
-import { IQueryRunningContext } from "./types"
+import type { IQueryRunningContext } from "./types"
 
 export const queryRunningServices: MachineOptions<
   IQueryRunningContext,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any
 >["services"] = {
   extractQueries,

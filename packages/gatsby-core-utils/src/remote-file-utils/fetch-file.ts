@@ -1,5 +1,6 @@
 import fs from "fs-extra"
 import type { IncomingMessage } from "http"
+// @ts-ignore
 import type { Headers, Options } from "got"
 // @ts-ignore
 import type { GatsbyCache } from "gatsby"
@@ -7,25 +8,20 @@ import type { GatsbyCache } from "gatsby"
 // keeping the I for backward compatibility
 export type IFetchRemoteFileOptions = {
   url: string
-  auth?: {
-    htaccess_pass?: string
-    htaccess_user?: string
-  }
-  httpHeaders?: Headers
-  ext?: string
-  name?: string
-  cacheKey?: string
-  excludeDigest?: boolean
-} & (
-  | {
-      directory: string
-      cache?: never
-    }
-  | {
-      directory?: never
-      cache: GatsbyCache
-    }
-)
+  auth?:
+    | {
+        htaccess_pass?: string | undefined
+        htaccess_user?: string | undefined
+      }
+    | undefined
+  httpHeaders?: Headers | undefined
+  ext?: string | undefined
+  name?: string | undefined
+  cacheKey?: string | undefined
+  excludeDigest?: boolean | undefined
+  directory: string
+  cache?: GatsbyCache | undefined
+}
 
 const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT
   ? parseInt(process.env.GATSBY_STALL_RETRY_LIMIT, 10)
@@ -83,7 +79,7 @@ export async function requestRemoteNode(
   headers: Headers,
   tmpFilename: string,
   httpOptions?: Options,
-  attempt: number = 1
+  attempt: number = 1,
 ): Promise<IncomingMessage> {
   // TODO(v5): use dynamic import syntax - it's currently blocked because older v4 versions have V8-compile-cache
   // const { default: got, RequestError } = await import(`got`)
@@ -108,7 +104,13 @@ export async function requestRemoteNode(
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOptions, attempt + 1)
+          requestRemoteNode(
+            url,
+            headers,
+            tmpFilename,
+            httpOptions,
+            attempt + 1,
+          ),
         )
       } else {
         // TODO move to new Error type
@@ -188,8 +190,8 @@ export async function requestRemoteNode(
                 headers,
                 tmpFilename,
                 httpOptions,
-                attempt + 1
-              )
+                attempt + 1,
+              ),
             )
           }, BACKOFF_TIME * attempt)
 
@@ -251,9 +253,9 @@ export async function requestRemoteNode(
                   headers,
                   tmpFilename,
                   httpOptions,
-                  attempt + 1
-                )
-              )
+                  attempt + 1,
+                ),
+              ),
             )
 
             return undefined
@@ -261,7 +263,7 @@ export async function requestRemoteNode(
             // TODO move to new Error type
             // eslint-disable-next-line prefer-promise-reject-errors
             return reject(
-              `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
+              `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`,
             )
           }
         }

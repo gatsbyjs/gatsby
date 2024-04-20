@@ -1,10 +1,10 @@
 import merge from "lodash/merge"
-import { IGatsbyState, ActionsUnion } from "../types"
+import type { IGatsbyState, ActionsUnion } from "../types"
 
-export const resolvedNodesCacheReducer = (
-  state: IGatsbyState["resolvedNodesCache"] = new Map(),
-  action: ActionsUnion
-): IGatsbyState["resolvedNodesCache"] => {
+export function resolvedNodesCacheReducer(
+  state: IGatsbyState["resolvedNodesCache"] | undefined = new Map(),
+  action: ActionsUnion,
+): IGatsbyState["resolvedNodesCache"] {
   switch (action.type) {
     case `DELETE_CACHE`:
     case `CREATE_NODE`:
@@ -22,7 +22,7 @@ export const resolvedNodesCacheReducer = (
             // merge new resolved fields for given node id with previously existing ones
             existingResolvedNodes.set(
               nodeId,
-              merge(previouslyResolvedNodeFields, resolvedFields)
+              merge(previouslyResolvedNodeFields, resolvedFields),
             )
           } else {
             // we didn't have any resolved fields for this node id, so we can just set new

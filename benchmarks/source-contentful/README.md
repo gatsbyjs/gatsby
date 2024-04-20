@@ -9,11 +9,11 @@ Those individual article pages and the homepage share a common "Layout" componen
 
 1. Setup will-it-build data source
 2. Copy `.env.example` to `.env.development` and make sure all variables are set
-3. Run `yarn setup`
+3. Run `pnpm run setup`
 
 Note that the script is idempotent, so you can re-run it on failures.
 
-Also use `yarn setup --skip [N:number]` to skip first `N` articles
+Also use `pnpm run setup --skip [N:number]` to skip first `N` articles
 (for example articles created during a previous run which failed)
 
 ### Fixing broken images
@@ -21,21 +21,21 @@ Also use `yarn setup --skip [N:number]` to skip first `N` articles
 Sometimes Contentful silently fails to process images which causes builds to fail.
 Use following approach to fix those:
 
-1. Run `yarn site find-broken-images`
+1. Run `pnpm run site find-broken-images`
 2. Change image URLs in will-it-build dataset for this site to some other images
    (or just use one of the larger sites and set `BENCHMARK_SITE_ID` appropriately)
-3. Run `yarn site fix-broken-images imageid1 imageid2 imageid3`
+3. Run `pnpm run site fix-broken-images imageid1 imageid2 imageid3`
    This command updates broken images with images from the `BENCHMARK_SITE_ID` dataset
 
 ## Build a site
 
 1. Copy `.env.example` to `.env.production`
 2. Set `BENCHMARK_CONTENTFUL_SPACE_ID` and `BENCHMARK_CONTENTFUL_ACCESS_TOKEN` variables
-3. Run `yarn build`
+3. Run `pnpm run build`
 
 ## Update data
 
 1. Copy `.env.example` to `.env.production`
 2. Set `BENCHMARK_CONTENTFUL_SPACE_ID` and `BENCHMARK_CONTENTFUL_MANAGEMENT_TOKEN`
    variables
-3. Run `yarn data-update`
+3. Run `pnpm run data-update`

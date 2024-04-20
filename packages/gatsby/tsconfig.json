@@ -1,6 +1,9 @@
 {
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false
+  },
   // For now index.d.ts is manually-created, but gatsby/internal is auto-generated
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/schema/node-model.js"],
   "exclude": ["**/__tests__/**/*"]
 }

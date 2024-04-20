@@ -1,4 +1,4 @@
-import { ActionsUnion, IActivity } from "./types"
+import type { ActionsUnion, IActivity } from "./types"
 import { ActivityStatuses } from "../constants"
 import { calcElapsedTime } from "../../util/calc-elapsed-time"
 import { isActivityInProgress } from "./utils"
@@ -8,7 +8,7 @@ import type { GatsbyCLIStore } from "./"
 function calculateTimeoutDelay(
   envVarValue: string | undefined,
   defaultValue: number,
-  min: number
+  min: number,
 ): number {
   if (!envVarValue) {
     return 0
@@ -43,7 +43,7 @@ const additionalDiagnosticOutputHandlers: Array<AdditionalDiagnosticsOutputHandl
   []
 
 export function registerAdditionalDiagnosticOutputHandler(
-  handler: AdditionalDiagnosticsOutputHandler
+  handler: AdditionalDiagnosticsOutputHandler,
 ): void {
   additionalDiagnosticOutputHandlers.push(handler)
 }
@@ -65,18 +65,18 @@ function generateAdditionalOutput(): string {
 }
 
 export function createStructuredLoggingDiagnosticsMiddleware(
-  getStore: () => GatsbyCLIStore
+  getStore: () => GatsbyCLIStore,
 ): DiagnosticsMiddleware {
   const stuckStatusDiagnosticTimeoutDelay = calculateTimeoutDelay(
     process.env.GATSBY_DIAGNOSTIC_STUCK_STATUS_TIMEOUT,
     FIVE_MINUTES, // default timeout
-    FIVE_SECONDS // minimal timeout (this is mostly useful for debugging diagnostic code itself)
+    FIVE_SECONDS, // minimal timeout (this is mostly useful for debugging diagnostic code itself)
   )
 
   const stuckStatusWatchdogTimeoutDelay = calculateTimeoutDelay(
     process.env.GATSBY_WATCHDOG_STUCK_STATUS_TIMEOUT,
     TEN_MINUTES, // default timeout
-    TEN_SECONDS // minimal timeout (this is mostly useful for debugging diagnostic code itself)
+    TEN_SECONDS, // minimal timeout (this is mostly useful for debugging diagnostic code itself)
   )
 
   if (!stuckStatusDiagnosticTimeoutDelay && !stuckStatusWatchdogTimeoutDelay) {
@@ -111,10 +111,9 @@ export function createStructuredLoggingDiagnosticsMiddleware(
   function generateStuckStatusDiagnosticMessage(): string {
     const activities = inProgressActivities()
     return Object.values(activities)
-      .map(
-        activity =>
-          `- Activity "${activity.text}" of type "${activity.type}" is currently in state "${activity.status}"`
-      )
+      .map(activity => {
+        return `- Activity "${activity.text}" of type "${activity.type}" is currently in state "${activity.status}"`
+      })
       .join(`\n`)
   }
 
@@ -146,14 +145,14 @@ export function createStructuredLoggingDiagnosticsMiddleware(
               `This is just diagnostic information (enabled by GATSBY_DIAGNOSTIC_STUCK_STATUS_TIMEOUT):\n\nThere was activity since last diagnostic message. Log action:\n\n${JSON.stringify(
                 action,
                 null,
-                2
+                2,
               )}\n\nCurrently Gatsby is in: "${
                 getStore().getState().logs.status
               }" state.${
                 activitiesDiagnosticsMessage.length > 0
                   ? `\n\nActivities preventing Gatsby from transitioning to idle state:\n\n${activitiesDiagnosticsMessage}`
                   : ``
-              }`
+              }`,
             )
           })
           displayedStuckStatusDiagnosticWarning = false
@@ -169,7 +168,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
                 }" state without any updates for ${(
                   stuckStatusDiagnosticTimeoutDelay / 1000
                 ).toFixed(
-                  3
+                  3,
                 )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${generateStuckStatusDiagnosticMessage()}${
                   stuckStatusWatchdogTimeoutDelay
                     ? `\n\nProcess will be terminated in ${(
@@ -178,12 +177,12 @@ export function createStructuredLoggingDiagnosticsMiddleware(
                         1000
                       ).toFixed(3)} seconds if nothing will change.`
                     : ``
-                }${generateAdditionalOutput()}`
+                }${generateAdditionalOutput()}`,
               )
               displayingStuckStatusDiagnosticWarning = false
               displayedStuckStatusDiagnosticWarning = true
             },
-            stuckStatusDiagnosticTimeoutDelay
+            stuckStatusDiagnosticTimeoutDelay,
           )
         }
       }
@@ -209,7 +208,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
                 },
               })
             },
-            stuckStatusWatchdogTimeoutDelay
+            stuckStatusWatchdogTimeoutDelay,
           )
         }
       }

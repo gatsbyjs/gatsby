@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
-import { IGatsbyState } from "../../redux/types"
+import type { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
@@ -11,15 +11,15 @@ import {
   handleMultipleReplaceRenderers,
   validateConfigPluginsOptions,
 } from "./validate"
-import { IFlattenedPlugin } from "./types"
+import type { IFlattenedPlugin } from "./types"
 import { normalizeConfig } from "./utils/normalize"
 import { getAPI } from "./utils/get-api"
 import { flattenPlugins } from "./utils/flatten-plugins"
-import { IGatsbyConfig } from "../../internal"
+import type { IGatsbyConfig } from "../../internal"
 
 export async function loadPlugins(
   rawConfig: IGatsbyConfig,
-  rootDir: string
+  rootDir: string,
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
   const config = normalizeConfig(rawConfig)
@@ -42,7 +42,7 @@ export async function loadPlugins(
   const { disablePlugins } = store.getState().program
   const pluginArrayWithoutDisabledPlugins = pluginArray.filter(plugin => {
     const disabledInfo = disablePlugins?.find(
-      entry => entry.name === plugin.name
+      entry => entry.name === plugin.name,
     )
 
     if (disabledInfo) {
@@ -51,7 +51,7 @@ export async function loadPlugins(
         reporter.warn(
           `Disabling plugin "${plugin.name}":\n${disabledInfo.reasons
             .map(line => ` - ${line}`)
-            .join(`\n`)}`
+            .join(`\n`)}`,
         )
       }
       return false
@@ -61,6 +61,7 @@ export async function loadPlugins(
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
+  // eslint-disable-next-line prefer-const
   let { flattenedPlugins, badExports } = await collatePluginAPIs({
     currentAPIs,
     flattenedPlugins: pluginArrayWithoutDisabledPlugins,

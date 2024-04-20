@@ -3,31 +3,32 @@ import { memoize } from "lodash"
 
 import { createRequireFromPath } from "gatsby-core-utils"
 import { join, dirname } from "path"
-import { PackageJson } from "../.."
+import type { PackageJson } from "../.."
 import { readFile } from "fs-extra"
 
-interface IDependency {
+export type IDependency = {
   name: string
   version: string
   path: string
 }
 
-const getAllDependencies = (pkg: PackageJson): Set<[string, string]> =>
-  new Set([
+export function getAllDependencies(pkg: PackageJson): Set<[string, string]> {
+  return new Set([
     ...Object.entries(pkg.dependencies || {}),
     ...Object.entries(pkg.devDependencies || {}),
     ...Object.entries(pkg.optionalDependencies || {}),
   ])
-
-const readJSON = async (file: string): Promise<PackageJson> => {
-  const buffer = await readFile(file)
-  return JSON.parse(buffer.toString())
 }
 
-const getTreeFromNodeModules = async (
+async function readJSON(file: string): Promise<PackageJson> {
+  const buffer = await readFile(file)
+  return JSON.parse(buffer.toString()) as PackageJson
+}
+
+export async function getTreeFromNodeModules(
   dir: string,
-  results: Map<string, IDependency> = new Map()
-): Promise<Array<IDependency>> => {
+  results: Map<string, IDependency> | undefined = new Map(),
+): Promise<Array<IDependency>> {
   const requireFromHere = createRequireFromPath(`${dir}/:internal:`)
   let packageJSON: PackageJson
   try {
@@ -55,10 +56,9 @@ const getTreeFromNodeModules = async (
             results.set(currentDependency.name, currentDependency)
         }
       } catch (error) {
-        // Sometimes dev dependencies of dependencies aren't installed
-        // when using `yarn`. This is okay and safe to ignore.
+        console.error(`Error reading ${name}/package.json`, error)
       }
-    })
+    }),
   )
 
   return Array.from(results.values())
@@ -68,5 +68,5 @@ export const getGatsbyDependents = memoize(
   async (): Promise<Array<IDependency>> => {
     const { program } = store.getState()
     return getTreeFromNodeModules(program.directory)
-  }
+  },
 )

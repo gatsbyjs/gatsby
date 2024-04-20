@@ -1,9 +1,9 @@
-import { IGatsbyState, ISetSiteFunctions } from "../types"
+import type { IGatsbyState, ISetSiteFunctions } from "../types"
 
-export const functionsReducer = (
-  state: IGatsbyState["functions"] = [],
-  action: ISetSiteFunctions
-): IGatsbyState["functions"] => {
+export function functionsReducer(
+  state: IGatsbyState["functions"] | undefined = [],
+  action: ISetSiteFunctions,
+): IGatsbyState["functions"] {
   switch (action.type) {
     case `SET_SITE_FUNCTIONS`:
       return action.payload

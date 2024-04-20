@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@9.0.4",
   "name": "@gatsbyjs/parcel-namer-relative-to-cwd",
   "main": "lib/index.js",
   "version": "2.14.0-next.2",
@@ -11,19 +12,20 @@
     "directory": "packages/gatsby-parcel-namer-relative-to-cwd"
   },
   "engines": {
-    "node": ">=20.0.0",
+    "node": ">=20.12.2",
     "parcel": "2.x"
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "@parcel/namer-default": "2.8.3",
-    "@parcel/plugin": "2.8.3",
+    "@babel/runtime": "^7.24.4",
+    "@parcel/namer-default": "2.12.0",
+    "@parcel/plugin": "2.12.0",
     "gatsby-core-utils": "^4.14.0-next.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },

@@ -2,7 +2,8 @@ import { outputFile, readFile } from "fs-extra"
 
 export async function ensureFileContent(
   file: string,
-  data: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
 ): Promise<boolean> {
   let previousContent: string | undefined = undefined
   try {

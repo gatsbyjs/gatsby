@@ -1,5 +1,6 @@
 export function listPlugins({ root }: { root: string }): Array<string> {
   const parsedPlugins: Array<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     string | { resolve: string; options: Record<string, any> }
   > = require(`${root}/gatsby-config`)?.plugins
 

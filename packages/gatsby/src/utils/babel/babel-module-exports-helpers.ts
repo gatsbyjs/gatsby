@@ -1,4 +1,4 @@
-import { ExportNamedDeclaration, ObjectPattern } from "@babel/types"
+import type { ExportNamedDeclaration, ObjectPattern } from "@babel/types"
 import { NodePath } from "@babel/core"
 
 /**
@@ -28,7 +28,7 @@ export function hasSibling(path: NodePath): boolean {
 export function removeExportProperties(
   exportPath: NodePath<ExportNamedDeclaration>,
   objectPath: NodePath<ObjectPattern>,
-  propertiesToRemove: Array<string>
+  propertiesToRemove: Array<string>,
 ): void {
   for (let i = 0; i < objectPath.node.properties.length; i++) {
     const property = objectPath.node.properties[i]

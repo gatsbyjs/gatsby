@@ -1,18 +1,19 @@
-import { IQueryRunningContext } from "./types"
+import type { IQueryRunningContext } from "./types"
 import {
-  DoneInvokeEvent,
+  type DoneInvokeEvent,
   assign,
-  ActionFunctionMap,
-  AnyEventObject,
+  type ActionFunctionMap,
+  type AnyEventObject,
 } from "xstate"
 import { enqueueFlush } from "../../utils/page-data"
 
-export const flushPageData = (context: IQueryRunningContext): void => {
+export function flushPageData(context: IQueryRunningContext): void {
   enqueueFlush(context.parentSpan)
 }
 
 export const assignDirtyQueries = assign<
   IQueryRunningContext,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DoneInvokeEvent<any>
 >((_context, { data }) => {
   const { queryIds } = data
@@ -33,7 +34,10 @@ export const trackRequestedQueryRun = assign<
   IQueryRunningContext,
   AnyEventObject
 >({
-  pendingQueryRuns: (context, { payload }) => {
+  pendingQueryRuns: (
+    context: IQueryRunningContext,
+    { payload }: AnyEventObject,
+  ): Set<string> => {
     const pendingQueryRuns = context.pendingQueryRuns || new Set<string>()
     if (payload?.pagePath) {
       pendingQueryRuns.add(payload.pagePath)
@@ -47,6 +51,7 @@ export const clearCurrentlyHandledPendingQueryRuns =
     currentlyHandledPendingQueryRuns: undefined,
   })
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const queryActions: ActionFunctionMap<IQueryRunningContext, any> = {
   assignDirtyQueries,
   flushPageData,

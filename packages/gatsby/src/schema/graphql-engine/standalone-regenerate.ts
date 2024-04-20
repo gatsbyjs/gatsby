@@ -49,7 +49,7 @@ async function run(): Promise<void> {
 
   // recompile
   const buildActivityTimer = reporter.activityTimer(
-    `(Re)Building Rendering Engines`
+    `(Re)Building Rendering Engines`,
   )
   try {
     buildActivityTimer.start()

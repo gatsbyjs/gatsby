@@ -386,7 +386,7 @@ If you defined the `engines` key you'll also need to update the minimum version:
 ```json:title=package.json
 {
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   }
 }
 ```

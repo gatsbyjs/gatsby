@@ -1,3 +1,4 @@
+// @ts-ignore
 import { match as reachMatch } from "@gatsbyjs/reach-router"
 import cookie from "cookie"
 import { urlencoded, text, json, raw } from "express"
@@ -20,7 +21,7 @@ const expressBuiltinMiddleware = {
   raw,
 }
 
-interface IGatsbyRequestContext {
+type IGatsbyRequestContext = {
   functionObj: IGatsbyFunction
   fnToExecute: (req: Request, res: Response) => void | Promise<void>
   // we massage params early in setContext middleware, but apparently other middlewares
@@ -30,17 +31,17 @@ interface IGatsbyRequestContext {
   showDebugMessageInResponse: boolean
 }
 
-interface IGatsbyInternalRequest extends Request {
+type IGatsbyInternalRequest = {
   context?: IGatsbyRequestContext
-}
+} & Request
 
 type IGatsbyMiddleware = (
   req: IGatsbyInternalRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void> | void
 
-interface ICreateMiddlewareConfig {
+type ICreateMiddlewareConfig = {
   getFunctions: () => Array<IGatsbyFunction>
   prepareFn?: (functionObj: IGatsbyFunction) => Promise<void> | void
   showDebugMessageInResponse?: boolean
@@ -48,7 +49,7 @@ interface ICreateMiddlewareConfig {
 
 export function printConfigWarnings(
   warnings: Array<IAPIFunctionWarning>,
-  functionObj: IGatsbyFunction
+  functionObj: IGatsbyFunction,
 ): void {
   if (warnings.length) {
     for (const warning of warnings) {
@@ -62,12 +63,12 @@ export function printConfigWarnings(
         }\` is misconfigured.\nExpected object:\n\n${
           warning.expectedType
         }\n\nGot:\n\n${JSON.stringify(
-          warning.original
+          warning.original,
         )}\n\nUsing default:\n\n${JSON.stringify(
           warning.replacedWith,
           null,
-          2
-        )}`
+          2,
+        )}`,
       )
     }
   }
@@ -81,14 +82,14 @@ function createSetContextFunctionMiddleware({
   return async function executeFunction(
     req: IGatsbyInternalRequest,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     const functions = getFunctions()
     const { "0": pathFragment } = req.params
 
     // Check first for exact matches.
     let functionObj = functions.find(
-      ({ functionRoute }) => functionRoute === pathFragment
+      ({ functionRoute }) => functionRoute === pathFragment,
     )
 
     if (!functionObj) {
@@ -140,7 +141,7 @@ function createSetContextFunctionMiddleware({
             res
               .status(500)
               .send(
-                `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
+                `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`,
               )
           } else {
             res.sendStatus(500)
@@ -171,7 +172,7 @@ function createSetContextFunctionMiddleware({
 function setCookies(
   req: IGatsbyInternalRequest,
   _res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   const cookies = req.headers.cookie
 
@@ -185,12 +186,12 @@ function setCookies(
 }
 
 function bodyParserMiddlewareWithConfig(
-  type: keyof IGatsbyBodyParserConfigProcessed
+  type: keyof IGatsbyBodyParserConfigProcessed,
 ): IGatsbyMiddleware {
   return function (
     req: IGatsbyInternalRequest,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): void {
     if (req.context && req.context.config.bodyParser) {
       const bodyParserConfig = req.context.config.bodyParser[type]
@@ -204,7 +205,7 @@ function bodyParserMiddlewareWithConfig(
 async function executeFunction(
   req: IGatsbyInternalRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   if (req.context) {
     reporter.verbose(`Running ${req.context.functionObj.functionRoute}`)
@@ -227,7 +228,7 @@ async function executeFunction(
           res
             .status(500)
             .send(
-              `Error when executing function "${context.functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
+              `Error when executing function "${context.functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`,
             )
         } else {
           res.sendStatus(500)
@@ -239,7 +240,7 @@ async function executeFunction(
     reporter.log(
       `Executed function "/api/${context.functionObj.functionRoute}" in ${
         end - start
-      }ms`
+      }ms`,
     )
   } else {
     next()
@@ -247,7 +248,7 @@ async function executeFunction(
 }
 
 export function functionMiddlewares(
-  middlewareConfig: ICreateMiddlewareConfig
+  middlewareConfig: ICreateMiddlewareConfig,
 ): Array<RequestHandler> {
   const setContext = createSetContextFunctionMiddleware(middlewareConfig)
 

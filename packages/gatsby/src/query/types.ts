@@ -1,6 +1,6 @@
 import { ExecutionResult } from "graphql"
 
-export interface IGraphQLRunnerStats {
+export type IGraphQLRunnerStats = {
   totalQueries: number
   uniqueOperations: Set<string>
   uniqueQueries: Set<string>
@@ -14,7 +14,7 @@ export interface IGraphQLRunnerStats {
   uniqueSorts: Set<string>
 }
 
-export interface IGraphQLRunnerStatResults {
+export type IGraphQLRunnerStatResults = {
   totalQueries: number
   uniqueOperations: number
   uniqueQueries: number
@@ -28,9 +28,10 @@ export interface IGraphQLRunnerStatResults {
   uniqueSorts: number
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PageContext = Record<string, any>
 
-export interface IExecutionResult extends ExecutionResult {
+export type IExecutionResult = {
   pageContext?: PageContext
   serverData?: unknown
-}
+} & ExecutionResult

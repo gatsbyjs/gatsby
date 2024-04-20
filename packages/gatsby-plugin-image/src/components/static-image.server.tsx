@@ -1,28 +1,29 @@
-import React, { FunctionComponent, ReactElement } from "react"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import React, { type ComponentType, type ReactElement } from "react"
 import {
   altValidator,
   GatsbyImage as GatsbyImageServer,
 } from "./gatsby-image.server"
 import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import PropTypes from "prop-types"
 import { ISharpGatsbyImageArgs } from "../image-utils"
 
-export interface IStaticImageProps
-  extends Omit<GatsbyImageProps, "image">,
-    Omit<ISharpGatsbyImageArgs, "backgroundColor"> {
+export type IStaticImageProps = {
   src: string
   filename?: string
-}
+} & Omit<GatsbyImageProps, "image"> &
+  Omit<ISharpGatsbyImageArgs, "backgroundColor">
 
 // These values are added by Babel. Do not add them manually
-interface IPrivateProps {
+type IPrivateProps = {
   __imageData?: IGatsbyImageData
   __error?: string
 }
 
 export function _getStaticImage(
-  GatsbyImage: FunctionComponent<GatsbyImageProps>
-): React.FC<IStaticImageProps & IPrivateProps> {
+  GatsbyImage: ComponentType<GatsbyImageProps>,
+): React.FC<IStaticImageProps & IPrivateProps> | null {
   return function StaticImage({
     src,
     __imageData: imageData,
@@ -57,30 +58,32 @@ export function _getStaticImage(
     console.warn(`Image not loaded`, src)
     if (!__error && process.env.NODE_ENV === `development`) {
       console.warn(
-        `Please ensure that "gatsby-plugin-image" is included in the plugins array in gatsby-config.js, and that your version of gatsby is at least 2.24.78`
+        `Please ensure that "gatsby-plugin-image" is included in the plugins array in gatsby-config.js, and that your version of gatsby is at least 2.24.78`,
       )
     }
     return null
   }
 }
 
-const StaticImage: React.FC<IStaticImageProps & IPrivateProps> =
+export const StaticImage: ComponentType<IStaticImageProps & IPrivateProps> =
   _getStaticImage(GatsbyImageServer)
 
-const checkDimensionProps: PropTypes.Validator<number> = (
+function checkDimensionProps(
   props: IStaticImageProps & IPrivateProps,
   propName: keyof IStaticImageProps & IPrivateProps,
-  ...rest
-) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ...rest: Array<any>
+): Error {
   if (
     props.layout === `fullWidth` &&
     (propName === `width` || propName === `height`) &&
     props[propName]
   ) {
     return new Error(
-      `"${propName}" ${props[propName]} may not be passed when layout is fullWidth.`
+      `"${propName}" ${props[propName]} may not be passed when layout is fullWidth.`,
     )
   }
+  // @ts-ignore
   return PropTypes.number(props, propName, ...rest)
 }
 
@@ -101,12 +104,10 @@ export const propTypes = {
     }
 
     return new Error(
-      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "constrained". Valid values are "fixed", "fullWidth" or "constrained".`
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "constrained". Valid values are "fixed", "fullWidth" or "constrained".`,
     )
   },
 }
 
 StaticImage.displayName = `StaticImage`
 StaticImage.propTypes = propTypes
-
-export { StaticImage }

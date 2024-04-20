@@ -70,7 +70,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Chores
 
-- Various `yarn bootstrap` fixes fixes [#38223](https://github.com/gatsbyjs/gatsby/issues/38223) ([df12265](https://github.com/gatsbyjs/gatsby/commit/df1226576b911be0f962c149c0bcbad279d9f806))
+- Various `pnpm run bootstrap` fixes fixes [#38223](https://github.com/gatsbyjs/gatsby/issues/38223) ([df12265](https://github.com/gatsbyjs/gatsby/commit/df1226576b911be0f962c149c0bcbad279d9f806))
 - update semver [#38171](https://github.com/gatsbyjs/gatsby/issues/38171) ([208cdef](https://github.com/gatsbyjs/gatsby/commit/208cdef13f6488251ba1810a57a1e28c38635631))
 
 ## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.10.0/packages/gatsby-cli) (2023-05-16)
@@ -2268,7 +2268,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-cli:** Remove one of package-lock.json and yarn.lock on gatsby new ([#13225](https://github.com/gatsbyjs/gatsby/issues/13225)) ([3510a46](https://github.com/gatsbyjs/gatsby/commit/3510a46)), closes [#13210](https://github.com/gatsbyjs/gatsby/issues/13210)
+- **gatsby-cli:** Remove one of package-lock.json and pnpm-lock.yaml on gatsby new ([#13225](https://github.com/gatsbyjs/gatsby/issues/13225)) ([3510a46](https://github.com/gatsbyjs/gatsby/commit/3510a46)), closes [#13210](https://github.com/gatsbyjs/gatsby/issues/13210)
 
 ## [2.5.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.5.5...gatsby-cli@2.5.6) (2019-04-09)
 

@@ -1,6 +1,5 @@
-import path from "path"
+import path from "node:path"
 import * as fs from "fs-extra"
-import axios from "axios"
 import { IAdapterManifestEntry } from "./adapter/types"
 import { preferDefault } from "../bootstrap/prefer-default"
 
@@ -18,24 +17,41 @@ const OUTPUT_FILES = {
   ADAPTERS: path.join(ROOT, `latest-adapters.js`),
 }
 
-export interface IAPIResponse {
+export type IAPIResponse = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   browser: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ssr: Record<string, any>
 }
 
-const _fetchFile = async (root: string, fileName: string): Promise<any> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function _fetchFile(root: string, fileName: string): Promise<any> {
   try {
-    const { data } = await axios.get(`${root}${fileName}`, {
-      timeout: 5000,
-    })
-    return data
+    const controller = new AbortController()
+
+    const tm = globalThis.setTimeout(() => {
+      controller.abort()
+    }, 5000)
+
+    const response = await globalThis
+      .fetch(`${root}${fileName}`, {
+        signal: controller.signal,
+      })
+      .then(res => {
+        globalThis.clearTimeout(tm)
+        return res.json()
+      })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (response as any).data
   } catch (e) {
     return null
   }
 }
 
-const _getFile = async <T>({
+async function _getFile<T>({
   fileName,
   outputFileName,
   defaultReturn,
@@ -45,9 +61,9 @@ const _getFile = async <T>({
   fileName: string
   outputFileName: string
   defaultReturn: T
-  tryGithubBeforeUnpkg?: boolean
-  forcedContent?: string
-}): Promise<T> => {
+  tryGithubBeforeUnpkg?: boolean | undefined
+  forcedContent?: string | undefined
+}): Promise<T> {
   let fileToUse = path.join(ROOT, fileName)
 
   let dataToUse = forcedContent
@@ -65,7 +81,7 @@ const _getFile = async <T>({
       typeof dataToUse === `string`
         ? dataToUse
         : JSON.stringify(dataToUse, null, 2),
-      `utf8`
+      `utf8`,
     )
 
     fileToUse = outputFileName
@@ -90,8 +106,8 @@ const _getFile = async <T>({
   }
 }
 
-export const getLatestAPIs = async (): Promise<IAPIResponse> =>
-  _getFile({
+export async function getLatestAPIs(): Promise<IAPIResponse> {
+  return _getFile({
     fileName: FILE_NAMES.APIS,
     outputFileName: OUTPUT_FILES.APIS,
     defaultReturn: {
@@ -100,11 +116,12 @@ export const getLatestAPIs = async (): Promise<IAPIResponse> =>
       ssr: {},
     },
   })
+}
 
-export const getLatestAdapters = async (): Promise<
+export async function getLatestAdapters(): Promise<
   Array<IAdapterManifestEntry>
-> =>
-  _getFile({
+> {
+  return _getFile({
     fileName: FILE_NAMES.ADAPTERS,
     outputFileName: OUTPUT_FILES.ADAPTERS,
     defaultReturn: [],
@@ -114,3 +131,4 @@ export const getLatestAdapters = async (): Promise<
     // in e2e-tests/adapters we force adapters manifest to be used
     forcedContent: process.env.GATSBY_ADAPTERS_MANIFEST,
   })
+}

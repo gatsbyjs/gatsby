@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import path from "path"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
+// @ts-ignore
 import { match } from "@gatsbyjs/reach-router"
 import { joinPath, md5, slash } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
@@ -17,13 +19,13 @@ import { rankRoute } from "../utils/rank-route"
 const hasContentFilePath = (componentPath: string): boolean =>
   componentPath.includes(`?__contentFilePath=`)
 
-interface IGatsbyPageComponent {
+type IGatsbyPageComponent = {
   componentPath: string
   componentChunkName: string
   hasHeadComponent: boolean
 }
 
-interface IGatsbyPageMatchPath {
+type IGatsbyPageMatchPath = {
   path: string
   matchPath: string | undefined
 }
@@ -41,14 +43,14 @@ type IBareComponentData = Pick<
   hasHeadComponent: boolean
 }
 
-export const getComponents = (
+export function getComponents(
   pages: Array<IGatsbyPage>,
   slices: IGatsbyState["slices"],
-  components: IGatsbyState["components"]
-): Array<IGatsbyPageComponent> => {
-  const pickComponentFields = (
-    page: IGatsbyPage | IGatsbySlice
-  ): IBareComponentData => {
+  components: IGatsbyState["components"],
+): Array<IGatsbyPageComponent> {
+  function pickComponentFields(
+    page: IGatsbyPage | IGatsbySlice,
+  ): IBareComponentData {
     return {
       componentPath: page.componentPath,
       componentChunkName: page.componentChunkName,
@@ -59,9 +61,9 @@ export const getComponents = (
   return _.orderBy(
     _.uniqBy(
       _.map([...pages, ...slices.values()], pickComponentFields),
-      c => c.componentChunkName
+      c => c.componentChunkName,
     ),
-    c => c.componentChunkName
+    c => c.componentChunkName,
   )
 }
 
@@ -69,24 +71,22 @@ export const getComponents = (
  * Get all dynamic routes and sort them by most specific at the top
  * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
  */
-const getMatchPaths = (
-  pages: Array<IGatsbyPage>
-): Array<IGatsbyPageMatchPath> => {
-  interface IMatchPathEntry extends IGatsbyPage {
+function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
+  type IMatchPathEntry = {
     index: number
     score: number
     matchPath: string
-  }
+  } & IGatsbyPage
 
-  const createMatchPathEntry = (
+  function createMatchPathEntry(
     page: IGatsbyPage,
-    index: number
-  ): IMatchPathEntry => {
+    index: number,
+  ): IMatchPathEntry {
     const { matchPath } = page
 
     if (matchPath === undefined) {
       return reporter.panic(
-        `Error: matchPath property is undefined for page ${page.path}, should be a string`
+        `Error: matchPath property is undefined for page ${page.path}, should be a string`,
       ) as never
     }
 
@@ -117,7 +117,7 @@ const getMatchPaths = (
     pages.forEach((page: IGatsbyPage, index: number): void => {
       const isInsideMatchPath = !!matchPathPages.find(
         pageWithMatchPath =>
-          !page.matchPath && match(pageWithMatchPath.matchPath, page.path)
+          !page.matchPath && match(pageWithMatchPath.matchPath, page.path),
       )
 
       if (isInsideMatchPath) {
@@ -127,8 +127,8 @@ const getMatchPaths = (
               ...page,
               matchPath: page.path,
             },
-            index
-          )
+            index,
+          ),
         )
       }
     })
@@ -154,7 +154,7 @@ const getMatchPaths = (
 }
 
 // Write out pages information.
-export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
+export async function writeAll(state: IGatsbyState): Promise<boolean> {
   const { program, slices } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
@@ -167,11 +167,12 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     ]
 
     // Remove any page components that no longer exist.
-    cleanedSSRVisitedPageComponents = components.filter(
-      c =>
+    cleanedSSRVisitedPageComponents = components.filter(c => {
+      return (
         ssrVisitedPageComponents.some(s => s === c.componentChunkName) ||
         c.componentChunkName.startsWith(`slice---`)
-    )
+      )
+    })
   }
 
   const newHash = await md5(
@@ -179,7 +180,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
       matchPaths,
       components,
       cleanedSSRVisitedPageComponents,
-    })
+    }),
   )
 
   if (newHash === lastHash) {
@@ -191,11 +192,10 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     // Create file with sync requires of visited page components files.
-
     const lazySyncRequires = `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
       .map(
         (c: IGatsbyPageComponent): string =>
-          `  "${c.componentChunkName}": require("${joinPath(c.componentPath)}")`
+          `  "${c.componentChunkName}": require("${joinPath(c.componentPath)}")`,
       )
       .join(`,\n`)}
   }\n\n`
@@ -215,8 +215,8 @@ const preferDefault = m => (m && m.default) || m
     .map(
       (c: IGatsbyPageComponent): string =>
         `  "${c.componentChunkName}": preferDefault(require("${joinPath(
-          c.componentPath
-        )}"))`
+          c.componentPath,
+        )}"))`,
     )
     .join(`,\n`)}
 }\n\n`
@@ -233,16 +233,14 @@ const preferDefault = m => (m && m.default) || m
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
           getAbsolutePathForVirtualModule(`$virtual`),
-          c.componentPath
+          c.componentPath,
         )
 
         const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
 
         return `  "${c.componentChunkName}": () => import("${slash(
-          `./${relativeComponentPath}`
-        )}${rqPrefix}export=default" /* webpackChunkName: "${
-          c.componentChunkName
-        }" */)`
+          `./${relativeComponentPath}`,
+        )}${rqPrefix}export=default" /* webpackChunkName: "${c.componentChunkName}" */)`
       })
       .join(`,\n`)}
 }\n\n
@@ -255,16 +253,14 @@ exports.head = {\n${components
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
           getAbsolutePathForVirtualModule(`$virtual`),
-          c.componentPath
+          c.componentPath,
         )
 
         const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
 
         return `  "${c.componentChunkName}": () => import("${slash(
-          `./${relativeComponentPath}`
-        )}${rqPrefix}export=head" /* webpackChunkName: "${
-          c.componentChunkName
-        }head" */)`
+          `./${relativeComponentPath}`,
+        )}${rqPrefix}export=head" /* webpackChunkName: "${c.componentChunkName}head" */)`
       })
       .filter(Boolean)
       .join(`,\n`)}
@@ -275,21 +271,21 @@ exports.head = {\n${components
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
           getAbsolutePathForVirtualModule(`$virtual`),
-          c.componentPath
+          c.componentPath,
         )
         return `  "${c.componentChunkName}": () => import("${slash(
-          `./${relativeComponentPath}`
+          `./${relativeComponentPath}`,
         )}" /* webpackChunkName: "${c.componentChunkName}" */)`
       })
       .join(`,\n`)}
 }\n\n`
   }
 
-  const writeAndMove = (
+  function writeAndMove(
     virtualFilePath: string,
     file: string,
-    data: string
-  ): Promise<void> => {
+    data: string,
+  ): Promise<void> {
     writeModule(virtualFilePath, data)
 
     // files in .cache are not used anymore as part of webpack builds, but
@@ -307,12 +303,12 @@ exports.head = {\n${components
     writeAndMove(
       `$virtual/async-requires.js`,
       `async-requires.js`,
-      asyncRequires
+      asyncRequires,
     ),
     writeAndMove(
       `$virtual/match-paths.json`,
       `match-paths.json`,
-      JSON.stringify(matchPaths, null, 4)
+      JSON.stringify(matchPaths, null, 4),
     ),
   ])
 
@@ -333,7 +329,7 @@ const debouncedWriteAll = _.debounce(
     // using "leading" can cause double `writeAll` call - particularly
     // when refreshing data using `/__refresh` hook.
     leading: false,
-  }
+  },
 )
 
 /**
@@ -341,7 +337,7 @@ const debouncedWriteAll = _.debounce(
  * files as required
  */
 let listenerStarted = false
-export const startListener = (): void => {
+export function startListener(): void {
   // Only start the listener once.
   if (listenerStarted) {
     return

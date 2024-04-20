@@ -1,10 +1,10 @@
 import report from "gatsby-cli/lib/reporter"
-import { Span } from "opentracing"
+import type { Span } from "opentracing"
 import { sourceNodesApiRunner } from "./source-nodes-api-runner"
 import { store } from "../redux"
 import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
-import { IGatsbyState, IGatsbyNode } from "../redux/types"
+import type { IGatsbyState, IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
 
 const { deleteNode } = actions
@@ -29,7 +29,7 @@ function discoverPluginNamesWithoutNodes(): Array<string> {
         // "Can generate nodes"
         plugin.nodeAPIs.includes(`sourceNodes`) &&
         // "Has not generated nodes"
-        !pluginNamesThatCreatedNodes.has(plugin.name)
+        !pluginNamesThatCreatedNodes.has(plugin.name),
     )
     .map(plugin => plugin.name)
 }
@@ -42,8 +42,8 @@ function warnForPluginsWithoutNodes(): void {
 
   pluginNamesWithNoNodes.map(name =>
     report.warn(
-      `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`
-    )
+      `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`,
+    ),
   )
 }
 
@@ -52,7 +52,7 @@ function warnForPluginsWithoutNodes(): void {
  */
 function getStaleNodes(
   state: IGatsbyState,
-  nodes: GatsbyIterable<IGatsbyNode>
+  nodes: GatsbyIterable<IGatsbyNode>,
 ): GatsbyIterable<IGatsbyNode> {
   return nodes.filter(node => {
     let rootNode = node
@@ -69,7 +69,7 @@ function getStaleNodes(
     if (whileCount > 100) {
       console.log(
         `It looks like you have a node that's set its parent as itself`,
-        rootNode
+        rootNode,
       )
     }
 
@@ -85,7 +85,7 @@ function getStaleNodes(
  * Find all stale nodes and delete them unless the node type has been opted out of stale node garbage collection.
  */
 async function deleteStaleNodes(
-  previouslyExistingNodeTypeNames: Array<string>
+  previouslyExistingNodeTypeNames: Array<string>,
 ): Promise<void> {
   const state = store.getState()
 
@@ -154,7 +154,7 @@ export default async ({
   const { typeOwners } = store.getState()
 
   const previouslyExistingNodeTypeNames: Array<string> = Array.from(
-    typeOwners.typesToPlugins.keys() || []
+    typeOwners.typesToPlugins.keys() || [],
   )
 
   await sourceNodesApiRunner({

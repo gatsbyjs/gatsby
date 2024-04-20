@@ -39,6 +39,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   }
 }

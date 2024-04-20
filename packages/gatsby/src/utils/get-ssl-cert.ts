@@ -1,11 +1,11 @@
 import report from "gatsby-cli/lib/reporter"
-import fs from "fs"
-import path from "path"
-import os from "os"
+import fs from "node:fs"
+import path from "node:path"
+import os from "node:os"
 import { ICert } from "../commands/types"
 import prompts from "prompts"
 
-const absoluteOrDirectory = (directory: string, filePath: string): string => {
+function absoluteOrDirectory(directory: string, filePath: string): string {
   // Support absolute paths
   if (path.isAbsolute(filePath)) {
     return filePath
@@ -13,7 +13,7 @@ const absoluteOrDirectory = (directory: string, filePath: string): string => {
   return path.join(directory, filePath)
 }
 
-const getWindowsEncryptionPassword = async (): Promise<string> => {
+async function getWindowsEncryptionPassword(): Promise<string> {
   report.info(
     [
       `A password is required to access the secure certificate authority key`,
@@ -23,7 +23,7 @@ const getWindowsEncryptionPassword = async (): Promise<string> => {
       `for future use.  If any new certificates are signed later, you will need`,
       `to use this same password.`,
       ``,
-    ].join(`\n`)
+    ].join(`\n`),
   )
   const results = await prompts({
     type: `password`,
@@ -34,21 +34,22 @@ const getWindowsEncryptionPassword = async (): Promise<string> => {
   return results.value
 }
 
-export interface IGetSslCertArgs {
+export type IGetSslCertArgs = {
   name: string
-  certFile?: string
-  keyFile?: string
-  caFile?: string
   directory: string
+  caFile?: string | undefined
+  keyFile?: string | undefined
+  certFile?: string | undefined
 }
 
+// eslint-disable-next-line consistent-return
 export async function getSslCert({
   name,
   certFile,
   keyFile,
   caFile,
   directory,
-}: IGetSslCertArgs): Promise<ICert | false> {
+}: IGetSslCertArgs): Promise<ICert | undefined> {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
   if (certFile ? !keyFile : keyFile) {
@@ -72,8 +73,9 @@ export async function getSslCert({
   }
 
   report.info(
-    `setting up automatic SSL certificate (may require elevated permissions/sudo)\n`
+    `setting up automatic SSL certificate (may require elevated permissions/sudo)\n`,
   )
+
   try {
     if ([`linux`, `darwin`].includes(os.platform()) && !process.env.HOME) {
       // this is a total hack to ensure process.env.HOME is set on linux and mac
@@ -110,6 +112,4 @@ export async function getSslCert({
       },
     })
   }
-
-  return false
 }

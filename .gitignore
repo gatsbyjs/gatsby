@@ -45,7 +45,6 @@ __diff_output__/
 
 # IDE specific
 .idea/
-.vscode/
 *.sw*
 
 # misc

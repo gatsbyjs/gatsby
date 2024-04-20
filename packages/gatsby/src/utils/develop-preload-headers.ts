@@ -1,5 +1,5 @@
-import { Response } from "express"
-import * as path from "path"
+import type { Response } from "express"
+import path from "node:path"
 import { fixedPagePath } from "gatsby-core-utils"
 import { findPageByPath } from "./find-page-by-path"
 import { readPageData } from "./page-data"
@@ -13,7 +13,7 @@ import { getPageMode } from "./page-mode"
  */
 export async function appendPreloadHeaders(
   requestPath: string,
-  res: Response
+  res: Response,
 ): Promise<void> {
   // add common.js and socket.io.js preload headers
   // TODO: make socket.io part not blocking - we don't need it anymore to render the page
@@ -27,7 +27,7 @@ export async function appendPreloadHeaders(
     // add app-data.json preload
     res.append(
       `Link`,
-      `</page-data/app-data.json>; rel=preload; as=fetch ; crossorigin`
+      `</page-data/app-data.json>; rel=preload; as=fetch ; crossorigin`,
     )
 
     // add page-data.json preload
@@ -48,14 +48,14 @@ export async function appendPreloadHeaders(
         `</${path.join(
           `page-data`,
           encodeURI(fixedPagePath(pagePath)),
-          `page-data.json`
-        )}>; rel=preload; as=fetch ; crossorigin`
+          `page-data.json`,
+        )}>; rel=preload; as=fetch ; crossorigin`,
       )
 
       try {
         const pageData = await readPageData(
           path.join(store.getState().program.directory, `public`),
-          pagePath
+          pagePath,
         )
 
         // iterate over needed static queries and add them to Set of static queries to preload
@@ -74,7 +74,7 @@ export async function appendPreloadHeaders(
     for (const staticQueryHash of staticQueriesToPreload) {
       res.append(
         `Link`,
-        `</page-data/sq/d/${staticQueryHash}.json>; rel=preload; as=fetch ; crossorigin`
+        `</page-data/sq/d/${staticQueryHash}.json>; rel=preload; as=fetch ; crossorigin`,
       )
     }
   } else {

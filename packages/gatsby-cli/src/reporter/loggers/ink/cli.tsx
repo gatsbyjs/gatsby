@@ -1,4 +1,4 @@
-import React from "react"
+import { Component, type ReactElement, type ErrorInfo } from "react"
 import { Box, Static } from "ink"
 import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
@@ -6,34 +6,35 @@ import { Spinner } from "./components/spinner"
 import { ProgressBar } from "./components/progress-bar"
 import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
-import Develop from "./components/develop"
-import Trees from "./components/trees"
+import { ConnectedDevelop } from "./components/develop"
+import { Trees } from "./components/trees"
 import { IGatsbyCLIState, IActivity, ILog } from "../../redux/types"
 import { ActivityLogLevels } from "../../constants"
 import { IStructuredError } from "../../../structured-errors/types"
 
 const showProgress = isTTY()
 
-interface ICLIProps {
+type ICLIProps = {
   logs: IGatsbyCLIState
   messages: Array<ILog>
   showStatusBar: boolean
   showTrees: boolean
 }
 
-interface ICLIState {
+type ICLIState = {
   hasError: boolean
   error?: Error
 }
 
-class CLI extends React.Component<ICLIProps, ICLIState> {
+export class CLI extends Component<ICLIProps, ICLIState> {
   readonly state: ICLIState = {
     hasError: false,
   }
-  memoizedReactElementsForMessages: Array<React.ReactElement> = []
+  memoizedReactElementsForMessages: Array<ReactElement> = []
 
-  componentDidCatch(error: Error, info: React.ErrorInfo): void {
+  componentDidCatch(error: Error, info: ErrorInfo): void {
     trackBuildError(`INK`, {
+      // @ts-ignore
       error: {
         error: {
           stack: info.componentStack,
@@ -47,7 +48,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
     return { hasError: true, error }
   }
 
-  render(): React.ReactElement {
+  render(): JSX.Element {
     const {
       logs: { activities },
       messages,
@@ -90,7 +91,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static items={messages}>
-            {(message): React.ReactElement =>
+            {(message): ReactElement =>
               message.level === `ERROR` ? (
                 <ErrorComponent
                   details={message as IStructuredError}
@@ -104,7 +105,8 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
               )
             }
           </Static>
-          {showTrees && <Trees />}
+
+          {showTrees ? <Trees /> : null}
 
           {spinners.map(activity => (
             <Spinner key={activity.id} {...activity} />
@@ -121,10 +123,8 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
           ))}
         </Box>
 
-        {showStatusBar && <Develop />}
+        {showStatusBar ? <ConnectedDevelop /> : null}
       </Box>
     )
   }
 }
-
-export default CLI

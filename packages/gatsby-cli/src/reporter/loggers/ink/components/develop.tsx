@@ -1,12 +1,20 @@
-import React, { useContext, useState, useEffect } from "react"
+import {
+  memo,
+  type JSX,
+  useState,
+  useEffect,
+  useContext,
+  type ComponentType,
+} from "react"
 import { Box, Text, useStdout } from "ink"
-import StoreStateContext from "../context"
+
+import { StoreStateContext } from "../context"
 import { ActivityStatuses } from "../../../constants"
 import { createLabel } from "./utils"
 
-const getLabel = (
-  level: ActivityStatuses | string
-): ReturnType<typeof createLabel> => {
+function getLabel(
+  level: ActivityStatuses | string,
+): ReturnType<typeof createLabel> {
   switch (level) {
     case ActivityStatuses.InProgress:
       return createLabel(`In Progress`, `white`)
@@ -23,7 +31,7 @@ const getLabel = (
 }
 
 // Track the width and height of the terminal. Responsive app design baby!
-const useTerminalResize = (): Array<number> => {
+function useTerminalResize(): Array<number> {
   const { stdout } = useStdout()
 
   // stdout type is nullable, so we need to handle case where it is undefined for type checking.
@@ -51,13 +59,13 @@ const useTerminalResize = (): Array<number> => {
   return sizes
 }
 
-interface IDevelopProps {
+type IDevelopProps = {
   pagesCount: number
   appName: string
   status: ActivityStatuses | ""
 }
 
-const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
+function _Develop({ pagesCount, appName, status }: IDevelopProps): JSX.Element {
   const [width] = useTerminalResize()
 
   const StatusLabel = getLabel(status)
@@ -78,7 +86,9 @@ const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
   )
 }
 
-const ConnectedDevelop: React.FC = () => {
+const Develop: ComponentType<IDevelopProps> = memo<IDevelopProps>(_Develop)
+
+function _ConnectedDevelop(): JSX.Element {
   const state = useContext(StoreStateContext)
 
   return (
@@ -92,4 +102,4 @@ const ConnectedDevelop: React.FC = () => {
   )
 }
 
-export default ConnectedDevelop
+export const ConnectedDevelop: ComponentType = memo(_ConnectedDevelop)

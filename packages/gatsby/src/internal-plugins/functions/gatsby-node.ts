@@ -1,9 +1,12 @@
 import fs from "fs-extra"
-import glob from "glob"
+import glob, { type GlobOptions } from "glob"
 import path from "path"
+// @ts-ignore
 import webpack from "webpack"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
+// @ts-ignore
 import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
@@ -16,7 +19,7 @@ import mod from "module"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
-interface IGlobPattern {
+type IGlobPattern = {
   /** The plugin that owns this namespace **/
   pluginName: string
   /** The root path to the functions **/
@@ -34,8 +37,8 @@ let activeEntries = {}
 
 async function ensureFunctionIsCompiled(
   functionObj: IGatsbyFunction,
-  compiledFunctionsDir: string
-): Promise<any> {
+  compiledFunctionsDir: string,
+): Promise<void> {
   // stat the compiled function. If it's there, then return.
   let compiledFileExists = false
   try {
@@ -67,12 +70,16 @@ async function ensureFunctionIsCompiled(
 }
 
 // Create glob type w/ glob, plugin name, root path
-const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
+function createGlobArray(
+  siteDirectoryPath: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugins: Array<{ name: string; resolve: string }>,
+): Array<IGlobPattern> {
   const globs: Array<IGlobPattern> = []
 
   function globIgnorePatterns(
     root: string,
-    pluginName?: string
+    pluginName?: string,
   ): Array<string> {
     const nestedFolder = pluginName ? `/${pluginName}/**/` : `/**/`
 
@@ -126,16 +133,15 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
 
 async function globAsync(
   pattern: string,
-  options: glob.IOptions = {}
+  options: GlobOptions = {},
 ): Promise<Array<string>> {
   return await new Promise((resolve, reject) => {
-    glob(pattern, options, (err, files) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(files)
-      }
-    })
+    glob
+      .glob(pattern, options)
+      .then(path => {
+        resolve(path as Array<string>)
+      })
+      .catch(reject)
   })
 }
 
@@ -147,12 +153,12 @@ const createWebpackConfig = async ({
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
     `.cache`,
-    `functions`
+    `functions`,
   )
 
   const globs = createGlobArray(
     siteDirectoryPath,
-    store.getState().flattenedPlugins
+    store.getState().flattenedPlugins,
   )
 
   const seenFunctionIds = new Set<string>()
@@ -173,14 +179,14 @@ const createWebpackConfig = async ({
         const compiledFunctionName = path.join(dir, name + `.js`)
         const compiledPath = path.join(
           compiledFunctionsDir,
-          compiledFunctionName
+          compiledFunctionName,
         )
         const finalName = urlResolve(dir, name === `index` ? `` : name)
 
         // functionId should have only alphanumeric characters and dashes
         const functionIdBase = _.kebabCase(compiledFunctionName).replace(
           /[^a-zA-Z0-9-]/g,
-          `-`
+          `-`,
         )
 
         let functionId = functionIdBase
@@ -206,7 +212,7 @@ const createWebpackConfig = async ({
       })
 
       return knownFunctions
-    })
+    }),
   )
 
   // Combine functions by the route name so that functions in the default
@@ -219,7 +225,7 @@ const createWebpackConfig = async ({
   // Write out manifest for use by `gatsby serve` and plugins
   fs.writeFileSync(
     path.join(compiledFunctionsDir, `manifest.json`),
-    JSON.stringify(knownFunctions, null, 4)
+    JSON.stringify(knownFunctions, null, 4),
   )
 
   const {
@@ -243,20 +249,26 @@ const createWebpackConfig = async ({
     if (err.code !== `ENOENT`) {
       reporter.error(
         `There was a problem processing the .env file (${envFile})`,
-        err
+        err,
       )
     }
   }
 
-  const envObject = Object.keys(parsed).reduce((acc, key) => {
-    acc[key] = JSON.stringify(parsed[key])
-    return acc
-  }, {} as Record<string, string>)
+  const envObject = Object.keys(parsed).reduce(
+    (acc, key) => {
+      acc[key] = JSON.stringify(parsed[key])
+      return acc
+    },
+    {} as Record<string, string>,
+  )
 
-  const varsFromProcessEnv = Object.keys(process.env).reduce((acc, key) => {
-    acc[key] = JSON.stringify(process.env[key])
-    return acc
-  }, {} as Record<string, string>)
+  const varsFromProcessEnv = Object.keys(process.env).reduce(
+    (acc, key) => {
+      acc[key] = JSON.stringify(process.env[key])
+      return acc
+    },
+    {} as Record<string, string>,
+  )
 
   // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
   envObject.NODE_ENV = JSON.stringify(nodeEnv)
@@ -271,7 +283,7 @@ const createWebpackConfig = async ({
     },
     {
       "process.env": `({})`,
-    }
+    },
   )
 
   const entries = {}
@@ -290,7 +302,7 @@ const createWebpackConfig = async ({
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
     const compiledNameWithoutExtension = path.join(
       parsedFile.dir,
-      parsedFile.name
+      parsedFile.name,
     )
 
     let entryToTheFunction = functionObj.originalAbsoluteFilePath
@@ -307,7 +319,7 @@ const createWebpackConfig = async ({
     : `functions-development`
 
   const gatsbyPluginTSRequire = mod.createRequire(
-    require.resolve(`gatsby-plugin-typescript`)
+    require.resolve(`gatsby-plugin-typescript`),
   )
 
   return {
@@ -337,7 +349,7 @@ const createWebpackConfig = async ({
         siteDirectoryPath,
         `.cache`,
         `webpack`,
-        `stage-` + stage
+        `stage-` + stage,
       ),
     },
 
@@ -403,7 +415,7 @@ const createWebpackConfig = async ({
     plugins: [
       new webpack.DefinePlugin({
         PREFIX_TO_STRIP: JSON.stringify(
-          program.prefixPaths ? pathPrefix?.replace(/(^\/+|\/+$)/g, ``) : ``
+          program.prefixPaths ? pathPrefix?.replace(/(^\/+|\/+$)/g, ``) : ``,
         ),
         ...processEnvVars,
       }),
@@ -411,7 +423,7 @@ const createWebpackConfig = async ({
         checkResource(resource): boolean {
           if (resource === `lmdb`) {
             reporter.warn(
-              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.\nIf you are importing utils from \`gatsby-core-utils\`, make sure to import from a specific module (for example \`gatsby-core-utils/create-content-digest\`).`
+              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.\nIf you are importing utils from \`gatsby-core-utils\`, make sure to import from a specific module (for example \`gatsby-core-utils/create-content-digest\`).`,
             )
             return true
           }
@@ -440,7 +452,7 @@ export async function onPreBootstrap({
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
     `.cache`,
-    `functions`
+    `functions`,
   )
 
   await fs.ensureDir(compiledFunctionsDir)
@@ -504,7 +516,7 @@ export async function onPreBootstrap({
 
         const globs = createGlobArray(
           siteDirectoryPath,
-          store.getState().flattenedPlugins
+          store.getState().flattenedPlugins,
         )
 
         // Watch for env files to change and restart the webpack watcher.
@@ -514,7 +526,7 @@ export async function onPreBootstrap({
               `${siteDirectoryPath}/.env*`,
               ...globs.map(glob => glob.globPattern),
             ],
-            { ignoreInitial: true }
+            { ignoreInitial: true },
           )
           .on(`all`, async (event, path) => {
             // Ignore change events from the API directory for functions we're
@@ -528,7 +540,7 @@ export async function onPreBootstrap({
             }
 
             reporter.log(
-              `Restarting function watcher due to change to "${path}"`
+              `Restarting function watcher due to change to "${path}"`,
             )
 
             // Otherwise, restart the watcher
@@ -568,7 +580,7 @@ export async function onCreateDevServer({
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
     `.cache`,
-    `functions`
+    `functions`,
   )
 
   app.use(
@@ -584,6 +596,6 @@ export async function onCreateDevServer({
         await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
       },
       showDebugMessageInResponse: true,
-    })
+    }),
   )
 }

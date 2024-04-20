@@ -1,17 +1,22 @@
-const trimSlashes = (part: string): string => part.replace(/(^\/)|(\/$)/g, ``)
+function trimSlashes(part: string): string {
+  return part.replace(/(^\/)|(\/$)/g, ``)
+}
 
-const isURL = (possibleUrl: string): boolean =>
-  [`http://`, `https://`, `//`].some(expr => possibleUrl.startsWith(expr))
+function isURL(possibleUrl: string): boolean {
+  return [`http://`, `https://`, `//`].some(expr =>
+    possibleUrl.startsWith(expr),
+  )
+}
 
-export const getPublicPath = ({
+export function getPublicPath({
   assetPrefix,
   pathPrefix,
   prefixPaths,
 }: {
-  assetPrefix?: string
-  pathPrefix?: string
-  prefixPaths?: boolean
-}): string => {
+  assetPrefix?: string | undefined
+  pathPrefix?: string | undefined
+  prefixPaths?: boolean | undefined
+}): string {
   if (prefixPaths && (assetPrefix || pathPrefix)) {
     const normalized = [assetPrefix, pathPrefix]
       .filter((part): part is string => (part ? part.length > 0 : false))

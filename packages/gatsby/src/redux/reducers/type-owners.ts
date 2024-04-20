@@ -1,6 +1,6 @@
 import { stripIndent } from "common-tags"
 import { reportOnce } from "../../utils/report-once"
-import {
+import type {
   ActionsUnion,
   IGatsbyNode,
   IGatsbyPlugin,
@@ -11,7 +11,7 @@ function setTypeOwner(
   typeName: string,
   plugin: IGatsbyPlugin,
   typeOwners: IGatsbyState["typeOwners"],
-  fullNode?: IGatsbyNode
+  fullNode?: IGatsbyNode,
 ): IGatsbyState["typeOwners"] {
   const ownerName = plugin?.name || fullNode?.internal.owner
 
@@ -47,7 +47,7 @@ function setTypeOwner(
           ? stripIndent(
               `The node object passed to "createNode":
 
-              ${JSON.stringify(fullNode, null, 4)}\n`
+              ${JSON.stringify(fullNode, null, 4)}\n`,
             )
           : ``
       }
@@ -60,13 +60,13 @@ function setTypeOwner(
   return typeOwners
 }
 
-export const typeOwnersReducer = (
+export function typeOwnersReducer(
   typeOwners: IGatsbyState["typeOwners"] = {
     pluginsToTypes: new Map(),
     typesToPlugins: new Map(),
   } as IGatsbyState["typeOwners"],
-  action: ActionsUnion
-): IGatsbyState["typeOwners"] => {
+  action: ActionsUnion,
+): IGatsbyState["typeOwners"] {
   switch (action.type) {
     case `DELETE_NODE`: {
       const { plugin, payload: internalNode } = action
@@ -75,7 +75,7 @@ export const typeOwnersReducer = (
         const pluginName = plugin.name
 
         const previouslyRecordedOwnerName = typeOwners.typesToPlugins.get(
-          internalNode.internal.type
+          internalNode.internal.type,
         )
 
         if (
@@ -86,9 +86,7 @@ export const typeOwnersReducer = (
           throw new Error(stripIndent`
             The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
-            The node type "${
-              internalNode.internal.type
-            }" is owned by "${previouslyRecordedOwnerName}".
+            The node type "${internalNode.internal.type}" is owned by "${previouslyRecordedOwnerName}".
 
             The node object passed to "deleteNode":
 
@@ -117,7 +115,7 @@ export const typeOwnersReducer = (
             Nodes can only be updated by their owner. Node "${node.id}" is
             owned by "${oldNode.internal.owner}" and another plugin "${owner}"
             tried to update it.
-          `
+          `,
         )
       }
 

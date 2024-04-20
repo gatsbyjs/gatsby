@@ -1,17 +1,17 @@
 import merge from "webpack-merge"
 import { ActionsUnion, IGatsbyState } from "../types"
 
-export const webpackReducer = (
+export function webpackReducer(
   state: IGatsbyState["webpack"] = {},
-  action: ActionsUnion
-): IGatsbyState["webpack"] => {
+  action: ActionsUnion,
+): IGatsbyState["webpack"] {
   switch (action.type) {
     case `SET_WEBPACK_CONFIG`: {
       const nextConfig = action.payload
       delete nextConfig.entry
       delete nextConfig.output
       delete nextConfig.target
-      delete nextConfig.resolveLoaders
+      delete nextConfig.resolveLoader
 
       return merge(state, nextConfig)
     }

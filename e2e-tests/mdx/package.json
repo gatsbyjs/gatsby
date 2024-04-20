@@ -48,6 +48,6 @@
     "gatsby-cypress": "next",
     "is-ci": "3.0.1",
     "start-server-and-test": "2.0.3",
-    "typescript": "5.4.4"
+    "typescript": "5.4.5"
   }
 }

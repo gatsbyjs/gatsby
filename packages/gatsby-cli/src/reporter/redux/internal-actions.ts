@@ -1,8 +1,7 @@
-// @ts-ignore
 import { uuid } from "gatsby-core-utils"
 import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"
-import { Dispatch } from "redux"
+import type { Dispatch } from "redux"
 
 import { getStore } from "./"
 import {
@@ -40,7 +39,7 @@ const ActivityStatusToLogLevel = {
 }
 
 let weShouldExit = false
-signalExit(() => {
+signalExit.onExit(() => {
   weShouldExit = true
 })
 
@@ -280,7 +279,7 @@ export const endActivity = ({
           activity_current: activity.current,
           activity_total: activity.total,
           activity_type: activity.type,
-        })
+        }),
       )
     }
   }

@@ -1,8 +1,9 @@
 import fs from "fs-extra"
-import path from "path"
+import path from "node:path"
 
-const checkForHtmlSuffix = (pagePath: string): boolean =>
-  !/\.(html?)$/i.test(pagePath)
+function checkForHtmlSuffix(pagePath: string): boolean {
+  return !/\.(html?)$/i.test(pagePath)
+}
 
 export function generateHtmlPath(dir: string, outputPath: string): string {
   let outputFileName = outputPath.replace(/^(\/|\\)/, ``) //  Remove leading slashes for webpack-dev-server
@@ -16,7 +17,7 @@ export function generateHtmlPath(dir: string, outputPath: string): string {
 
 export async function remove(
   { publicDir }: { publicDir: string },
-  pagePath: string
+  pagePath: string,
 ): Promise<void> {
   const filePath = generateHtmlPath(publicDir, pagePath)
   if (fs.existsSync(filePath)) {

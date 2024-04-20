@@ -1,7 +1,7 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { emitter, store } from "../redux"
-import apiRunnerNode from "../utils/api-runner-node"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { apiRunnerNode } from "../utils/api-runner-node"
+import type { IDataLayerContext } from "../state-machines/data-layer/types"
 import { actions } from "../redux/actions"
 
 export async function postBootstrap({

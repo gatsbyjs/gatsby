@@ -6,7 +6,7 @@ Gatsby packages to Gatsby sites that you're testing your changes on.
 
 ## Install
 
-`npm install -g gatsby-dev-cli`
+`pnpm install -g gatsby-dev-cli`
 
 ## Configuration / First time setup
 
@@ -36,7 +36,7 @@ watchers to build Gatsby source code.
 If you've recently run `gatsby-dev` your `node_modules` will be out of sync with currently published packages. In order to undo this, you can remove the `node_modules` directory or run:
 
 ```shell
-git checkout package.json; yarn --force
+git checkout package.json; pnpm install
 ```
 
 or
@@ -80,4 +80,4 @@ Disable copying files into node_modules and force usage of local npm repository.
 
 #### `--external-registry`
 
-Run `yarn add` commands without the `--registry` flag. This is helpful when using yarn 2/3 and you need to use `yarn config set npmRegistryServer http://localhost:4873` and `echo -e 'unsafeHttpWhitelist:\n - "localhost"' >> .yarnrc.yml` before running `gatsby-dev-cli`.
+Run `pnpm add` commands without the `--registry` flag. you need to use `pnpm config set npmRegistryServer http://localhost:4873` and `echo -e 'unsafeHttpWhitelist:\n - "localhost"' >> .npmrc` before running `gatsby-dev-cli`.

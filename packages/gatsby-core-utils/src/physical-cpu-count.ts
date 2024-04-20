@@ -1,6 +1,6 @@
 // Forked from physical-cpu-count package from npm
-import os from "os"
-import childProcess from "child_process"
+import os from "node:os"
+import childProcess from "node:child_process"
 
 function exec(command: string): string {
   const output = childProcess.execSync(command, { encoding: `utf8` })
@@ -25,7 +25,7 @@ export function getPhysicalCpuCount(): number {
   try {
     if (platform === `linux`) {
       const output = exec(
-        `lscpu -p | grep -E -v "^#" | sort -u -t, -k 2,4 | wc -l`
+        `lscpu -p | grep -E -v "^#" | sort -u -t, -k 2,4 | wc -l`,
       )
       return Number(output.trim())
     }

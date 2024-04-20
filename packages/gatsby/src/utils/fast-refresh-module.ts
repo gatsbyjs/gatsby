@@ -3,12 +3,13 @@ type Event = [
   Channel,
   {
     action: string
-    payload?: any
-  }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload?: any | undefined
+  },
 ]
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/consistent-type-definitions
   interface Window {
     _gatsbyEvents: Array<Event> | { push: (event: Event) => void }
   }

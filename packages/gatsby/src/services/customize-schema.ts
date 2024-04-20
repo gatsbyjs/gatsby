@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import type { IDataLayerContext } from "../state-machines/data-layer/types"
 
 export async function customizeSchema({
   parentSpan,

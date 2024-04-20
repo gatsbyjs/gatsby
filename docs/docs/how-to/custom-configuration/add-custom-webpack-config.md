@@ -75,10 +75,10 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 
 You can always find more information on _resolve_ and other options in the official [webpack docs](https://webpack.js.org/concepts/).
 
-### Importing non-webpack tools using `yarn`
+### Importing non-webpack tools using `pnpm`
 
 Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. ESLint or TypeScript.
-But if you are using yarn, then the best practice is to set up your imports in `package.json` as shown below:
+But if you are using pnpm, then the best practice is to set up your imports in `package.json` as shown below:
 
 ```json:title=package.json
 {

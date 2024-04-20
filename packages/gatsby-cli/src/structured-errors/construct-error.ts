@@ -13,7 +13,7 @@ import { IConstructError, IStructuredError } from "./types"
 // Validate the constructed object against an error schema
 const constructError = (
   { details: { id, ...otherDetails } }: IConstructError,
-  suppliedErrorMap: Record<ErrorId, IErrorMapEntryPublicApi>
+  suppliedErrorMap: Record<ErrorId, IErrorMapEntryPublicApi>,
 ): IStructuredError => {
   let errorMapEntry = defaultError
 

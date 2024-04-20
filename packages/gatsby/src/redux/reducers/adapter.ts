@@ -1,8 +1,8 @@
 import { noOpAdapterManager } from "../../utils/adapter/no-op-manager"
 import type { ActionsUnion, IGatsbyState } from "../types"
 
-export const adapterReducer = (
-  state: IGatsbyState["adapter"] = {
+export function adapterReducer(
+  state: IGatsbyState["adapter"] | undefined = {
     instance: undefined,
     manager: noOpAdapterManager(),
     config: {
@@ -10,8 +10,8 @@ export const adapterReducer = (
       pluginsToDisable: [],
     },
   },
-  action: ActionsUnion
-): IGatsbyState["adapter"] => {
+  action: ActionsUnion,
+): IGatsbyState["adapter"] {
   switch (action.type) {
     case `SET_ADAPTER`:
       return action.payload

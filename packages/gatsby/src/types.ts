@@ -1,4 +1,6 @@
-export interface IMatch {
+import "@total-typescript/ts-reset"
+
+export type IMatch = {
   id: string
   context: {
     sourceMessage: string

@@ -47,7 +47,7 @@ if (process.send) {
   }, 1000)
 }
 
-onExit(() => {
+onExit.onExit(() => {
   let SSGCount = 0
   let DSGCount = 0
   let SSRCount = 0
@@ -80,12 +80,12 @@ process.on(
     if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
       process.exit(msg.action.payload)
     }
-  }
+  },
 )
 
-interface IDevelopArgs extends IProgram {
+type IDevelopArgs = {
   debugInfo: IDebugInfo | null
-}
+} & IProgram
 
 const openDebuggerPort = (debugInfo: IDebugInfo): void => {
   if (inspector.url() !== undefined) {
@@ -129,7 +129,8 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   })
 
   await initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
+      program.openTracingConfigFile,
   )
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
@@ -162,6 +163,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     return next()
   })
 
+  // @ts-ignore
   const machine = developMachine.withContext({
     program,
     parentSpan,
@@ -171,7 +173,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     shouldRunInitialTypegen: true,
   })
 
-  const service = interpret(machine)
+  const service = interpret(machine, {})
 
   if (program.verbose) {
     logTransitions(service)

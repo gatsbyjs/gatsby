@@ -1,4 +1,4 @@
-import { IGatsbyPage, IGatsbyState } from "../redux/types"
+import type { IGatsbyPage, IGatsbyState } from "../redux/types"
 import { pick } from "@gatsbyjs/reach-router"
 
 // Ranks and picks the best page to match. Each segment gets the highest
@@ -12,10 +12,10 @@ import { pick } from "@gatsbyjs/reach-router"
 //
 // In the future, we could move this pagesByMatchPath computation outside this
 // function and save some processing power
-const findBestMatchingPage = (
+function findBestMatchingPage(
   pages: Map<string, IGatsbyPage>,
-  path: string
-): IGatsbyPage | null => {
+  path: string,
+): IGatsbyPage | null {
   // Pick only routes with matchPath for better performance.
   // Exact match should have already been checked
   const pagesByMatchPath: Record<string, IGatsbyPage> = {}
@@ -43,7 +43,7 @@ const findBestMatchingPage = (
 export function findPageByPath(
   state: IGatsbyState,
   path: string,
-  fallbackTo404: boolean = false
+  fallbackTo404: boolean = false,
 ): IGatsbyPage | undefined {
   const { pages } = state
 
@@ -78,7 +78,7 @@ export function findPageByPath(
 
     const bare = path.slice(
       hasLeadingSlash ? 1 : 0,
-      hasTrailingSlash ? -1 : path.length
+      hasTrailingSlash ? -1 : path.length,
     )
 
     ;[bare, `/` + bare, bare + `/`, `/` + bare + `/`].some(potentialPath => {

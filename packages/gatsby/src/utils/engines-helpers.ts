@@ -34,7 +34,7 @@ function getCDNObfuscatedPath(path: string): string {
 
 export const LmdbOnCdnPath = getCDNObfuscatedPath(`data.mdb`)
 
-export interface IPlatformAndArch {
+export type IPlatformAndArch = {
   platform: string
   arch: string
 }

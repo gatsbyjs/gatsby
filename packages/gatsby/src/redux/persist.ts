@@ -1,6 +1,6 @@
-import path from "path"
-import os from "os"
-import v8 from "v8"
+import path from "node:path"
+import os from "node:os"
+import v8 from "node:v8"
 import {
   existsSync,
   mkdtempSync,
@@ -10,7 +10,7 @@ import {
   writeFileSync,
   outputFileSync,
 } from "fs-extra"
-import {
+import type {
   ICachedReduxState,
   IGatsbyNode,
   IGatsbyPage,
@@ -19,7 +19,6 @@ import {
 import { sync as globSync } from "glob"
 import { createContentDigest } from "gatsby-core-utils"
 import report from "gatsby-cli/lib/reporter"
-import { DeepPartial } from "redux"
 
 const getReduxCacheFolder = (): string =>
   // This is a function for the case that somebody does a process.chdir (#19800)
@@ -44,8 +43,8 @@ function reduxWorkerSlicesPrefix(dir: string): string {
 
 export function readFromCache(
   slices?: Array<GatsbyStateKeys>,
-  optionalPrefix: string = ``
-): DeepPartial<ICachedReduxState> {
+  optionalPrefix: string = ``,
+): Partial<ICachedReduxState> {
   // The cache is stored in two steps; the nodes and pages in chunks and the rest
   // First we revive the rest, then we inject the nodes and pages into that obj (if any)
   // Each chunk is stored in its own file, this circumvents max buffer lengths
@@ -61,34 +60,34 @@ export function readFromCache(
       readFileSync(
         reduxWorkerSlicesPrefix(cacheFolder) +
           `${optionalPrefix}_` +
-          createContentDigest(slices)
-      )
+          createContentDigest(slices),
+      ),
     )
   }
 
   const obj: ICachedReduxState = v8.deserialize(
-    readFileSync(reduxSharedFile(cacheFolder))
+    readFileSync(reduxSharedFile(cacheFolder)),
   )
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const nodesChunks = globSync(
-    reduxChunkedNodesFilePrefix(cacheFolder) + `*`
+    reduxChunkedNodesFilePrefix(cacheFolder) + `*`,
   ).map(file => v8.deserialize(readFileSync(file)))
 
   const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
 
   if (!nodesChunks.length) {
     report.info(
-      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`,
     )
-    return {} as DeepPartial<ICachedReduxState>
+    return {} as Partial<ICachedReduxState>
   }
 
   obj.nodes = new Map(nodes)
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const pagesChunks = globSync(
-    reduxChunkedPagesFilePrefix(cacheFolder) + `*`
+    reduxChunkedPagesFilePrefix(cacheFolder) + `*`,
   ).map(file => v8.deserialize(readFileSync(file)))
 
   const pages: Array<[string, IGatsbyPage]> = [].concat(...pagesChunks)
@@ -100,7 +99,7 @@ export function readFromCache(
 
 export function guessSafeChunkSize(
   values: Array<[string, IGatsbyNode]> | Array<[string, IGatsbyPage]>,
-  showMaxSizeWarning: boolean = false
+  showMaxSizeWarning: boolean = false,
 ): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
@@ -120,7 +119,7 @@ export function guessSafeChunkSize(
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
   if (showMaxSizeWarning && maxSize > 500000) {
     report.warn(
-      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
+      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`,
     )
   }
 
@@ -132,7 +131,7 @@ export function guessSafeChunkSize(
 
 function prepareCacheFolder(
   targetDir: string,
-  contents: DeepPartial<ICachedReduxState>
+  contents: Partial<ICachedReduxState>,
 ): void {
   // Temporarily save the nodes and pages and remove them from the main redux store
   // This prevents an OOM when the page nodes collectively contain too much data
@@ -175,7 +174,7 @@ function prepareCacheFolder(
     for (let i = 0; i < chunks; ++i) {
       writeFileSync(
         reduxChunkedNodesFilePrefix(targetDir) + i,
-        v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize))
+        v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize)),
       )
     }
   }
@@ -189,7 +188,7 @@ function prepareCacheFolder(
     for (let i = 0; i < chunks; ++i) {
       writeFileSync(
         reduxChunkedPagesFilePrefix(targetDir) + i,
-        v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize))
+        v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize)),
       )
     }
   }
@@ -212,9 +211,9 @@ function safelyRenameToBak(cacheFolder: string): string {
 }
 
 export function writeToCache(
-  contents: DeepPartial<ICachedReduxState>,
+  contents: Partial<ICachedReduxState>,
   slices?: Array<GatsbyStateKeys>,
-  optionalPrefix: string = ``
+  optionalPrefix: string = ``,
 ): void {
   // Writing the "slices" also to the "redux" folder introduces subtle bugs when
   // e.g. the whole folder gets replaced some "slices" are lost
@@ -226,7 +225,7 @@ export function writeToCache(
       reduxWorkerSlicesPrefix(cacheFolder) +
         `${optionalPrefix}_` +
         createContentDigest(slices),
-      v8.serialize(contents)
+      v8.serialize(contents),
     )
     return
   }
@@ -260,7 +259,7 @@ export function writeToCache(
     }
   } catch (e) {
     report.warn(
-      `Non-fatal: Deleting the old cache folder failed, left behind in \`${bakName}\`. Rimraf reported this error: ${e}`
+      `Non-fatal: Deleting the old cache folder failed, left behind in \`${bakName}\`. Rimraf reported this error: ${e}`,
     )
   }
 }

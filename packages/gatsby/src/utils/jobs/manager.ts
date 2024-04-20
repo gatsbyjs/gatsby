@@ -1,7 +1,8 @@
-import path from "path"
+import path from "node:path"
 import hasha from "hasha"
 import fs from "fs-extra"
-import pDefer from "p-defer"
+import pDefer, { type DeferredPromise } from "p-defer"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { createContentDigest, slash, uuid } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
@@ -32,11 +33,12 @@ let hasShownIPCDisabledWarning = false
 
 const jobsInProcess: Map<
   string,
-  { id: string; deferred: pDefer.DeferredPromise<Record<string, unknown>> }
+  { id: string; deferred: DeferredPromise<Record<string, unknown>> }
 > = new Map()
 const externalJobsMap: Map<
   string,
-  { job: InternalJob; deferred: pDefer.DeferredPromise<any> }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { job: InternalJob; deferred: DeferredPromise<any> }
 > = new Map()
 
 /**
@@ -53,10 +55,10 @@ function convertPathsToAbsolute(filePath: string): string {
  * Get contenthash of a file
  */
 function createFileHash(path: string): string {
-  return hasha.fromFileSync(path, { algorithm: `sha1` })
+  return hasha.hashFileSync(path, { algorithm: `sha1` })
 }
 
-let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
+let hasActiveJobs: DeferredPromise<void> | null = null
 
 function hasExternalJobsEnabled(): boolean {
   return (
@@ -70,7 +72,7 @@ function hasExternalJobsEnabled(): boolean {
  */
 async function runLocalWorker<T>(
   workerFn: { ({ inputPaths, outputDir, args }: InternalJob): T },
-  job: InternalJob
+  job: InternalJob,
 ): Promise<T> {
   await fs.ensureDir(job.outputDir)
 
@@ -84,7 +86,7 @@ async function runLocalWorker<T>(
             inputPaths: job.inputPaths,
             outputDir: job.outputDir,
             args: job.args,
-          } as InternalJob)
+          } as InternalJob),
         )
       } catch (err) {
         reject(new WorkerError(err))
@@ -93,6 +95,7 @@ async function runLocalWorker<T>(
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isJobsIPCMessage(msg: any): msg is IncomingMessages {
   return (
     msg &&
@@ -128,7 +131,9 @@ function listenForJobMessages(): void {
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function runExternalWorker(job: InternalJob): Promise<any> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deferred = pDefer<any>()
 
   externalJobsMap.set(job.id, {
@@ -153,7 +158,7 @@ function runExternalWorker(job: InternalJob): Promise<any> {
  */
 function runJob(
   job: InternalJob,
-  forceLocal = false
+  forceLocal = false,
 ): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
@@ -175,7 +180,7 @@ function runJob(
           if (!hasShownIPCDisabledWarning) {
             hasShownIPCDisabledWarning = true
             reporter.warn(
-              `Offloading of a job failed as IPC could not be detected. Running job locally.`
+              `Offloading of a job failed as IPC could not be detected. Running job locally.`,
             )
           }
         }
@@ -184,7 +189,7 @@ function runJob(
     })
   } catch (err) {
     throw new Error(
-      `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`
+      `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`,
     )
   }
 }
@@ -201,7 +206,7 @@ function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
  */
 export function createInternalJob(
   job: JobInput | InternalJob,
-  plugin: { name: string; version: string; resolve: string }
+  plugin: { name: string; version: string; resolve: string },
 ): InternalJob {
   // It looks like we already have an augmented job so we shouldn't redo this work
   if (isInternalJob(job)) {
@@ -239,7 +244,7 @@ export function createInternalJob(
   internalJob.contentDigest = createContentDigest({
     name: job.name,
     inputPaths: internalJob.inputPaths.map(
-      inputPath => inputPath.contentDigest
+      inputPath => inputPath.contentDigest,
     ),
     outputDir: internalJob.outputDir,
     args: internalJob.args,
@@ -258,7 +263,7 @@ const activitiesForJobTypes = new Map<
  * Creates a job
  */
 export async function enqueueJob(
-  job: InternalJob
+  job: InternalJob,
 ): Promise<Record<string, unknown>> {
   // When we already have a job that's executing, return the same promise.
   // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
@@ -285,7 +290,7 @@ export async function enqueueJob(
     activityForJobsProgress = reporter.createProgress(
       `Running ${jobType} jobs`,
       1,
-      0
+      0,
     )
     activityForJobsProgress.start()
     activitiesForJobTypes.set(jobType, activityForJobsProgress)
@@ -304,7 +309,7 @@ export async function enqueueJob(
     // this check is to keep our worker results consistent for cloud
     if (result != null && !_.isPlainObject(result)) {
       throw new Error(
-        `Result of a worker should be an object, type of "${typeof result}" was given`
+        `Result of a worker should be an object, type of "${typeof result}" was given`,
       )
     }
     deferred.resolve(result)
@@ -329,7 +334,7 @@ export async function enqueueJob(
  * Get in progress job promise
  */
 export function getInProcessJobPromise(
-  contentDigest: string
+  contentDigest: string,
 ): Promise<Record<string, unknown>> | undefined {
   return jobsInProcess.get(contentDigest)?.deferred.promise
 }
@@ -356,6 +361,7 @@ export async function waitUntilAllJobsComplete(): Promise<void> {
  * Wait for specific jobs for engines
  */
 export async function waitJobs(jobDigests: Set<string>): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const promises: Array<Promise<any>> = []
   for (const [digest, job] of jobsInProcess) {
     if (jobDigests.has(digest)) {
@@ -366,7 +372,7 @@ export async function waitJobs(jobDigests: Set<string>): Promise<void> {
 }
 
 export function isJobStale(
-  job: Partial<InternalJob> & { inputPaths: InternalJob["inputPaths"] }
+  job: Partial<InternalJob> & { inputPaths: InternalJob["inputPaths"] },
 ): boolean {
   const areInputPathsStale = job.inputPaths.some(inputPath => {
     // does the inputPath still exists?

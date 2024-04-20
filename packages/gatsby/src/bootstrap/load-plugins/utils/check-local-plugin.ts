@@ -1,15 +1,15 @@
-import { PluginRef } from "../types"
+import type { PluginRef } from "../types"
 import { sync as existsSync } from "fs-exists-cached"
 import { slash } from "gatsby-core-utils"
-import path from "path"
+import path from "node:path"
 
 /**
  * Checks if a plugin is a valid local plugin and returns the resolved path if it is.
  */
 export function checkLocalPlugin(
   plugin: PluginRef,
-  rootDir: string
-): { validLocalPlugin: boolean; localPluginPath?: string } {
+  rootDir: string,
+): { validLocalPlugin: boolean; localPluginPath?: string | undefined } {
   const pluginName = typeof plugin === `string` ? plugin : plugin.resolve
 
   // Make sure the plugin exists relatively

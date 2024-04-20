@@ -1,23 +1,23 @@
 import sortBy from "lodash/sortBy"
 import report from "gatsby-cli/lib/reporter"
 import typeOf from "type-of"
-import util from "util"
+import util from "node:util"
 
-import { Node } from "../../../index"
+import type { Node } from "../../../index"
 
-export interface ITypeConflictExample {
+export type ITypeConflictExample = {
   value: unknown
   type: string
   parent?: Node
   arrayTypes?: Array<string>
 }
 
-interface ITypeConflict {
+type ITypeConflict = {
   value: unknown
   description?: string
 }
 
-const formatValue = (value: unknown): string => {
+function formatValue(value: unknown): string {
   if (!Array.isArray(value)) {
     return util.inspect(value, {
       colors: true,
@@ -54,7 +54,7 @@ const formatValue = (value: unknown): string => {
   return `[ ${output.join(`, `)} ]`
 }
 
-class TypeConflictEntry {
+export class TypeConflictEntry {
   selector: string
   types: Map<string, ITypeConflict>
 
@@ -73,7 +73,7 @@ class TypeConflictEntry {
   printEntry(): void {
     const sortedByTypeName = sortBy(
       Array.from(this.types.entries()),
-      ([typeName]) => typeName
+      ([typeName]) => typeName,
     )
 
     report.log(
@@ -82,14 +82,14 @@ class TypeConflictEntry {
           ([typeName, { value, description }]) =>
             `\n - type: ${typeName}\n   value: ${formatValue(value)}${
               description && `\n   source: ${description}`
-            }`
+            }`,
         )
-        .join(``)}`
+        .join(``)}`,
     )
   }
 }
 
-class TypeConflictReporter {
+export class TypeConflictReporter {
   entries: Map<string, TypeConflictEntry>
 
   constructor() {
@@ -135,7 +135,7 @@ class TypeConflictReporter {
           `If you know all field types in advance, the best strategy is to ` +
           `explicitly define them with the \`createTypes\` action, and skip ` +
           `inference with the \`@dontInfer\` directive.\n` +
-          `See https://www.gatsbyjs.com/docs/actions/#createTypes`
+          `See https://www.gatsbyjs.com/docs/actions/#createTypes`,
       )
       this.entries.forEach(entry => entry.printEntry())
     }
@@ -145,5 +145,3 @@ class TypeConflictReporter {
     return Array.from(this.entries.values())
   }
 }
-
-export { TypeConflictReporter, TypeConflictEntry }

@@ -5,6 +5,12 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
+  type JSX,
+  type ElementType,
+  type ImgHTMLAttributes,
+  type CSSProperties,
+  type ReactEventHandler,
+  type ComponentType,
 } from "react"
 import {
   getWrapperProps,
@@ -13,54 +19,47 @@ import {
 } from "./hooks"
 import { getSizer } from "./layout-wrapper"
 import { propTypes } from "./gatsby-image.server"
-import type {
-  FC,
-  ElementType,
-  FunctionComponent,
-  ImgHTMLAttributes,
-  CSSProperties,
-  ReactEventHandler,
-} from "react"
-import type { renderImageToString } from "./lazy-hydrate"
+
+import { renderImageToString } from "./lazy-hydrate"
 import type { PlaceholderProps } from "./placeholder"
 import type { MainImageProps } from "./main-image"
 import type { Layout } from "../image-utils"
 
 const imageCache = new Set<string>()
+
 let renderImageToStringPromise
 let renderImage: typeof renderImageToString | undefined
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export interface GatsbyImageProps
-  extends Omit<
-    ImgHTMLAttributes<HTMLImageElement>,
-    "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
-  > {
+export type GatsbyImageProps = {
   alt: string
-  as?: ElementType
-  className?: string
-  class?: string
-  imgClassName?: string
+  as?: ElementType | undefined
+  className?: string | undefined
+  class?: string | undefined
+  imgClassName?: string | undefined
   image: IGatsbyImageData
-  imgStyle?: CSSProperties
-  backgroundColor?: string
-  objectFit?: CSSProperties["objectFit"]
-  objectPosition?: CSSProperties["objectPosition"]
-  onLoad?: (props: { wasCached: boolean }) => void
-  onError?: ReactEventHandler<HTMLImageElement>
-  onStartLoad?: (props: { wasCached: boolean }) => void
-}
+  imgStyle?: CSSProperties | undefined
+  backgroundColor?: string | undefined
+  objectFit?: CSSProperties["objectFit"] | undefined
+  objectPosition?: CSSProperties["objectPosition"] | undefined
+  onLoad?: ((props: { wasCached: boolean }) => void) | undefined
+  onError?: ReactEventHandler<HTMLImageElement> | undefined
+  onStartLoad?: ((props: { wasCached: boolean }) => void) | undefined
+} & Omit<
+  ImgHTMLAttributes<HTMLImageElement>,
+  "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
+>
 
-export interface IGatsbyImageData {
+export type IGatsbyImageData = {
   layout: Layout
   width: number
   height: number
-  backgroundColor?: string
+  backgroundColor?: string | undefined
   images: Pick<MainImageProps, "sources" | "fallback">
-  placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
+  placeholder?: Pick<PlaceholderProps, "sources" | "fallback"> | undefined
 }
 
-const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
+function _GatsbyImageHydrator({
   as = `div`,
   image,
   style,
@@ -71,14 +70,17 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
   onLoad,
   onError,
   ...props
-}) {
+}: GatsbyImageProps): JSX.Element {
   const { width, height, layout } = image
+
   const {
     style: wStyle,
     className: wClass,
     ...wrapperProps
   } = getWrapperProps(width, height, layout)
+
   const root = useRef<HTMLElement>()
+
   const cacheKey = useMemo(() => JSON.stringify(image.images), [image.images])
 
   // Preact uses class instead of className so we need to check for both
@@ -98,15 +100,16 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
             renderImageToString,
             swapPlaceholderImage,
           }
-        }
+        },
       )
     }
 
     // The plugin image component is a bit special where if it's server-side rendered, we add extra script tags to support lazy-loading without
     // In this case we stop hydration but fire the correct events.
     const ssrImage = root.current.querySelector(
-      `[data-gatsby-image-ssr]`
+      `[data-gatsby-image-ssr]`,
     ) as HTMLImageElement
+
     if (ssrImage && hasNativeLazyLoadSupport()) {
       if (ssrImage.complete) {
         // Trigger onStartload and onLoad events
@@ -118,7 +121,7 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
         })
 
         // remove ssr key for state updates but add delay to not fight with native code snippt of gatsby-ssr
-        setTimeout(() => {
+        globalThis.setTimeout(() => {
           ssrImage.removeAttribute(`data-gatsby-image-ssr`)
         }, 0)
       } else {
@@ -133,7 +136,7 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
             wasCached: true,
           })
           // remove ssr key for state updates but add delay to not fight with native code snippt of gatsby-ssr
-          setTimeout(() => {
+          globalThis.setTimeout(() => {
             ssrImage.removeAttribute(`data-gatsby-image-ssr`)
           }, 0)
         })
@@ -173,12 +176,12 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
                 style,
                 onStartLoad,
                 onLoad,
-                onError
+                onError,
               )
             }
           })
         }
-      }
+      },
     )
 
     // eslint-disable-next-line consistent-return
@@ -229,25 +232,29 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
   })
 }
 
-export const GatsbyImage: FunctionComponent<GatsbyImageProps> = memo(
-  function GatsbyImage(props) {
-    if (!props.image) {
-      if (process.env.NODE_ENV === `development`) {
-        console.warn(`[gatsby-plugin-image] Missing image prop`)
-      }
+const GatsbyImageHydrator: ComponentType<GatsbyImageProps> =
+  memo<GatsbyImageProps>(_GatsbyImageHydrator)
 
-      return null
+function _GatsbyImage(props: GatsbyImageProps): JSX.Element {
+  if (!props.image) {
+    if (process.env.NODE_ENV === `development`) {
+      console.warn(`[gatsby-plugin-image] Missing image prop`)
     }
 
-    if (!gatsbyImageIsInstalled() && process.env.NODE_ENV === `development`) {
-      console.warn(
-        `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
-      )
-    }
-
-    return createElement(GatsbyImageHydrator, props)
+    return null
   }
-)
+
+  if (!gatsbyImageIsInstalled() && process.env.NODE_ENV === `development`) {
+    console.warn(
+      `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`,
+    )
+  }
+
+  return createElement(GatsbyImageHydrator, props)
+}
+
+export const GatsbyImage: ComponentType<GatsbyImageProps> =
+  memo<GatsbyImageProps>(_GatsbyImage)
 
 GatsbyImage.propTypes = propTypes
 GatsbyImage.displayName = `GatsbyImage`

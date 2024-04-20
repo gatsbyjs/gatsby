@@ -4,11 +4,11 @@ import type { IGatsbyState } from "../redux/types"
 import { findPageByPath } from "./find-page-by-path"
 
 export const configureTrailingSlash =
-  (getState: () => IGatsbyState, option: TrailingSlash | undefined) =>
+  (getState: () => IGatsbyState, option?: TrailingSlash | undefined) =>
   (
     req: express.Request,
     res: express.Response,
-    next: express.NextFunction
+    next: express.NextFunction,
   ): void => {
     const method = req.method.toLocaleLowerCase()
     if (![`get`, `head`].includes(method)) {

@@ -1,18 +1,17 @@
 import {
   assign,
-  AnyEventObject,
-  ActionFunction,
+  type AnyEventObject,
+  type ActionFunction,
   spawn,
-  DoneEventObject,
+  type DoneEventObject,
 } from "xstate"
-import { IBuildContext } from "../../services"
+import type { IBuildContext, IMutationAction } from "../../services"
 import { actions } from "../../redux/actions"
 import { listenForMutations } from "../../services/listen-for-mutations"
-import { DataLayerResult } from "../data-layer"
+import type { DataLayerResult } from "../data-layer"
 import { saveState } from "../../redux/save-state"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
-import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
 import { callRealApi } from "../../utils/call-deferred-api"
 import {
@@ -24,17 +23,20 @@ import { writeTypeScriptTypes } from "../../utils/graphql-typegen/ts-codegen"
  * Handler for when we're inside handlers that should be able to mutate nodes
  * Instead of queueing, we call it right away
  */
-export const callApi: ActionFunction<IBuildContext, AnyEventObject> = (
-  { store },
-  event
-) => callRealApi(event.payload, store)
+export const callApi: ActionFunction<IBuildContext, AnyEventObject> =
+  function callApi({ store }: IBuildContext, event: AnyEventObject): void {
+    return callRealApi(event.payload, store)
+  }
 
 /**
  * Event handler used in all states where we're not ready to process node
  * mutations. Instead we add it to a batch to process when we're next idle
  */
 export const addNodeMutation = assign<IBuildContext, AnyEventObject>({
-  nodeMutationBatch: ({ nodeMutationBatch = [] }, { payload }) => {
+  nodeMutationBatch: (
+    { nodeMutationBatch = [] }: IBuildContext,
+    { payload }: AnyEventObject,
+  ): Array<IMutationAction> => {
     // It's not pretty, but it's much quicker than concat
     nodeMutationBatch.push(payload)
     return nodeMutationBatch
@@ -42,19 +44,17 @@ export const addNodeMutation = assign<IBuildContext, AnyEventObject>({
 })
 
 export const assignStoreAndWorkerPool = assign<IBuildContext, DoneEventObject>(
-  (_context, event) => {
+  (_context: IBuildContext, event: DoneEventObject) => {
     const { store, workerPool } = event.data
     return {
       store,
       workerPool,
     }
-  }
+  },
 )
 
-const setQueryRunningFinished = async (): Promise<void> => {
-  store.dispatch(
-    actions.setProgramStatus(ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED)
-  )
+async function setQueryRunningFinished(): Promise<void> {
+  store.dispatch(actions.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
 }
 
 export const markQueryFilesDirty = assign<IBuildContext>({
@@ -62,13 +62,13 @@ export const markQueryFilesDirty = assign<IBuildContext>({
 })
 
 export const markSourceFilesDirty = assign<IBuildContext, AnyEventObject>(
-  (context, event) => {
+  (context: IBuildContext, event: AnyEventObject) => {
     const prev = context.changedSourceFiles ?? new Set()
     return {
       sourceFilesDirty: true,
       changedSourceFiles: prev.add(event.payload ?? event.file),
     }
-  }
+  },
 )
 
 export const markSourceFilesClean = assign<IBuildContext>({
@@ -77,11 +77,11 @@ export const markSourceFilesClean = assign<IBuildContext>({
 })
 
 export const setRecompiledFiles = assign<IBuildContext, AnyEventObject>(
-  context => {
+  (context: IBuildContext) => {
     return {
       recompiledFiles: context.changedSourceFiles,
     }
-  }
+  },
 )
 
 export const markNodesDirty = assign<IBuildContext>({
@@ -99,7 +99,7 @@ export const incrementRecompileCount = assign<IBuildContext>({
     reporter.verbose(
       `Re-running queries because nodes mutated during query run. Count: ${
         count + 1
-      }`
+      }`,
     )
     return count + 1
   },
@@ -111,7 +111,7 @@ export const resetRecompileCount = assign<IBuildContext>({
 })
 
 export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
-  (_context, { data }): DataLayerResult => data
+  (_context, { data }): DataLayerResult => data,
 )
 
 /**
@@ -127,7 +127,7 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
     return {
       ...data,
     }
-  }
+  },
 )
 
 export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
@@ -153,18 +153,18 @@ export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({
 export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
   parentSpan?.finish()
 
-export const saveDbState = (): Promise<void> => saveState()
+export const saveDbState = (): void => saveState()
 
 export const logError: ActionFunction<IBuildContext, AnyEventObject> = (
   _context,
-  event
+  event,
 ) => {
   reporter.error(event.data)
 }
 
 export const panic: ActionFunction<IBuildContext, AnyEventObject> = (
   _context,
-  event
+  event,
 ) => {
   reporter.panic(event.data)
 }
@@ -177,7 +177,7 @@ export const panicBecauseOfInfiniteLoop: ActionFunction<
     reporter.stripIndent(`
   Panicking because nodes appear to be being changed every time we run queries. This would cause the site to recompile infinitely.
   Check custom resolvers to see if they are unconditionally creating or mutating nodes on every query.
-  This may happen if they create nodes with a field that is different every time, such as a timestamp or unique id.`)
+  This may happen if they create nodes with a field that is different every time, such as a timestamp or unique id.`),
   )
 }
 
@@ -239,7 +239,7 @@ export const definitionsTypegen: ActionFunction<
       directory,
       schema,
       definitions,
-      graphqlTypegenOptions
+      graphqlTypegenOptions,
     )
   } catch (err) {
     context.reporter!.panicOnBuild({

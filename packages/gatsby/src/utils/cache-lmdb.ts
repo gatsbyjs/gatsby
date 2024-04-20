@@ -1,6 +1,6 @@
 import { open, RootDatabase, Database, DatabaseOptions } from "lmdb"
 import * as fs from "fs-extra"
-import * as path from "path"
+import path from "node:path"
 
 // Since the regular GatsbyCache saves to "caches" this should be "caches-lmdb"
 const cacheDbFile =
@@ -15,7 +15,7 @@ const cacheDbFile =
 
 const dbPath = path.join(
   global.__GATSBY?.root || process.cwd(),
-  `.cache/${cacheDbFile}`
+  `.cache/${cacheDbFile}`,
 )
 
 function getAlreadyOpenedStore(): RootDatabase | undefined {

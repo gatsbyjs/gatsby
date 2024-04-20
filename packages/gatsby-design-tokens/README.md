@@ -39,7 +39,7 @@ npm install gatsby-design-tokens --save
 Using [Yarn](https://yarnpkg.com/):
 
 ```shell
-yarn add gatsby-design-tokens
+pnpm add gatsby-design-tokens
 ```
 
 ## Tokens 🍒🍋🍏
@@ -100,7 +100,7 @@ import {
 
 ### `theme`
 
-A basic `theme-ui` theme composed of unmodified tokens, with one exception: `colors` are modified to provide the basic set of variables described in https://theme-ui.com/theme-spec#color.
+A basic `theme-ui` theme composed of unmodified tokens, with one exception: `colors` are modified to provide the basic set of variables described in <https://theme-ui.com/theme-spec#color>.
 
 TBD: Adopt the `theme-ui` definitions for the basic `colors` tokens.
 
@@ -132,7 +132,7 @@ import {
 
 The theme currently in use on gatsbyjs.com via `gatsby-plugin-theme-ui`:
 
-- Extends the base theme's `colors` with a couple .org-specific things, and provides a `dark` mode (ref. https://theme-ui.com/color-modes).
+- Extends the base theme's `colors` with a couple .org-specific things, and provides a `dark` mode (ref. <https://theme-ui.com/color-modes>).
 - Adds .org-specific `sizes` and `zIndices`.
 - Adds a couple of `variants`.
 - Uses `hex2rgba` to create rgba colors.
@@ -177,10 +177,10 @@ git clone https://github.com/gatsbyjs/gatsby.git
 cd gatsby
 
 # set up the repo, install dependencies for `packages`, and build the latter
-yarn run bootstrap
+pnpm run bootstrap
 
 # make sure tests are passing
-yarn test
+pnpm run test
 
 # create a new feature branch
 git checkout -b topics/new-feature-name
@@ -191,7 +191,7 @@ git checkout -b topics/new-feature-name
 Assuming `gatsby-cli` [is installed](https://www.gatsbyjs.com/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes), let's install [`gatsby-dev-cli`](<(https://www.npmjs.com/package/gatsby-dev-cli)>) with
 
 ```shell
-yarn global add gatsby-dev-cli
+pnpm add -g gatsby-dev-cli
 ```
 
 `gatsby-dev-cli` needs to know where your local Gatsby repository lives; navigate to its root folder, get the absolute path to it via `pwd`, and tell `gatsby-dev-cli` about it with
@@ -205,23 +205,23 @@ gatsby-dev --set-path-to-repo /path-to-local-gatsby/gatsby
 ```shell
 cd /path-to-local-gatsby/gatsby/www
 
-yarn # to install dependencies
+pnpm install # to install dependencies
 ```
 
 Follow the [README instructions](https://github.com/gatsbyjs/gatsby/blob/master/www/README.md) to [add a .env.development file](https://github.com/gatsbyjs/gatsby/blob/master/www/README.md#environment-variables) in `www`, and add `GATSBY_SCREENSHOT_PLACEHOLDER=true` to
 
 > […] skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image
 
-Run `yarn develop`, which thanks to the previous step shouldn't take ~40 minutes but way less. Hopefully you should be able to browse a local version of gatsbyjs.com after this. Let's leave `yarn develop` running!
+Run `pnpm run develop`, which thanks to the previous step shouldn't take ~40 minutes but way less. Hopefully you should be able to browse a local version of gatsbyjs.com after this. Let's leave `pnpm run develop` running!
 
 ### 3. Rebuild `gatsby-design-tokens` when it changes, and use `gatsby-dev` to copy the changed-and-compiled package over to `www/node_modules`
 
-- Open a new terminal window, go to the root of your local `gatsby` repo, and run `yarn run watch` to watch for changes in `packages`, and recompile the modified package.
-  - To watch only certain packages, use `yarn run watch --scope=gatsby-design-tokens` or `--scope={gatsby,gatsby-cli}`.
+- Open a new terminal window, go to the root of your local `gatsby` repo, and run `pnpm run watch` to watch for changes in `packages`, and recompile the modified package.
+  - To watch only certain packages, use `pnpm run watch --scope=gatsby-design-tokens` or `--scope={gatsby,gatsby-cli}`.
 - Last, in another new terminal window, go to `gatsby/www`, and run `gatsby-dev --packages=gatsby-design-tokens` to copy the latest local version of the `gatsby-design-tokens` package over to `www/node_modules`.
   - Alternatively pass an array to watch multiple packages, or use plain `gatsby-dev` to copy the latest versions of all local packages that are used in your project's `package.json`.
 
-### 4. Finally!
+### 4. Finally
 
 Let's try if everything is running and watching and recompiling!
 Let's open `packages/gatsby-design-tokens/src/fonts.js`, and replace

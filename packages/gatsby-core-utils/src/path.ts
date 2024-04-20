@@ -1,5 +1,5 @@
-import path from "path"
-import os from "os"
+import path from "node:path"
+import os from "node:os"
 
 /**
  * Joins all given path segments and converts
@@ -74,8 +74,9 @@ const nodePaths = [
  * Checks if the file name matches a node path
  * @param fileName File name
  */
-export const isNodeInternalModulePath = (fileName: string): boolean =>
-  nodePaths.some(regTest => regTest.test(fileName))
+export function isNodeInternalModulePath(fileName: string): boolean {
+  return nodePaths.some(regTest => regTest.test(fileName))
+}
 
 /**
  * Convert Windows backslash paths to slash paths: foo\\bar ➔ foo/bar

@@ -5,7 +5,9 @@ Stress tests creating lots of queries.
 # Usage
 
 ```shell
-NUM_TYPES=5 NUM_PAGES=1000 yarn bench
+NUM_TYPES=5 NUM_PAGES=1000
+pnpm install
+pnpm run bench
 ```
 
 Defaults to building a site with 5k pages split evenly amongst 10 types.

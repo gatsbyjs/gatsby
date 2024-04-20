@@ -1,21 +1,21 @@
-import pDefer from "p-defer"
+import pDefer, { type DeferredPromise } from "p-defer"
 
 import {
   MESSAGE_TYPES,
-  InternalJob,
-  IJobCreatedMessage,
+  type InternalJob,
+  type IJobCreatedMessage,
   WorkerError,
 } from "./types"
 import { store } from "../../redux"
 import { internalActions } from "../../redux/actions"
-import { GatsbyWorkerPool } from "../worker/types"
+import type { GatsbyWorkerPool } from "../worker/types"
 import { isWorker, getMessenger } from "../worker/messaging"
 
-let hasActiveWorkerJobs: pDefer.DeferredPromise<void> | null = null
+let hasActiveWorkerJobs: DeferredPromise<void> | null = null
 let activeWorkerJobs = 0
 
 export function initJobsMessagingInMainProcess(
-  workerPool: GatsbyWorkerPool
+  workerPool: GatsbyWorkerPool,
 ): void {
   workerPool.onMessage((msg, workerId) => {
     if (msg.type === MESSAGE_TYPES.JOB_CREATED) {
@@ -34,7 +34,7 @@ export function initJobsMessagingInMainProcess(
                 result,
               },
             },
-            workerId
+            workerId,
           )
         })
         .catch(error => {
@@ -47,7 +47,7 @@ export function initJobsMessagingInMainProcess(
                 stack: error.stack,
               },
             },
-            workerId
+            workerId,
           )
         })
         .finally(() => {
@@ -60,8 +60,9 @@ export function initJobsMessagingInMainProcess(
   })
 }
 
-export const waitUntilWorkerJobsAreComplete = (): Promise<void> =>
-  hasActiveWorkerJobs ? hasActiveWorkerJobs.promise : Promise.resolve()
+export function waitUntilWorkerJobsAreComplete(): Promise<void> {
+  return hasActiveWorkerJobs ? hasActiveWorkerJobs.promise : Promise.resolve()
+}
 
 /**
  * This map is ONLY used in worker. It's purpose is to keep track of promises returned to plugins
@@ -70,7 +71,7 @@ export const waitUntilWorkerJobsAreComplete = (): Promise<void> =>
  */
 const deferredWorkerPromises = new Map<
   InternalJob["id"],
-  pDefer.DeferredPromise<Record<string, unknown>>
+  DeferredPromise<Record<string, unknown>>
 >()
 const gatsbyWorkerMessenger = getMessenger()
 export function initJobsMessagingInWorker(): void {
@@ -82,7 +83,7 @@ export function initJobsMessagingInWorker(): void {
 
         if (!deferredPromise) {
           throw new Error(
-            `Received message about completed job that wasn't scheduled by this worker`
+            `Received message about completed job that wasn't scheduled by this worker`,
           )
         }
 
@@ -94,7 +95,7 @@ export function initJobsMessagingInWorker(): void {
 
         if (!deferredPromise) {
           throw new Error(
-            `Received message about failed job that wasn't scheduled by this worker`
+            `Received message about failed job that wasn't scheduled by this worker`,
           )
         }
 
@@ -114,7 +115,7 @@ export function initJobsMessagingInWorker(): void {
  * a promise. Will return `undefined` if called not in worker context.
  */
 export function maybeSendJobToMainProcess(
-  job: InternalJob
+  job: InternalJob,
 ): Promise<Record<string, unknown>> | undefined {
   if (isWorker && gatsbyWorkerMessenger) {
     const deferredWorkerPromise = pDefer<Record<string, unknown>>()

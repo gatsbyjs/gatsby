@@ -1,4 +1,5 @@
 import slugify from "slugify"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { lexicographicSortSchema } from "graphql"
 import type { GraphQLSchema } from "graphql"
@@ -16,7 +17,7 @@ export function stabilizeSchema(schema: GraphQLSchema): GraphQLSchema {
 
 export function sortDefinitions(
   a: IDefinitionMeta,
-  b: IDefinitionMeta
+  b: IDefinitionMeta,
 ): number {
   return a.name.localeCompare(b.name)
 }
@@ -64,7 +65,7 @@ function isTargetDefinition(def: IDefinitionMeta): boolean {
 }
 
 export function filterTargetDefinitions(
-  defMap: DefinitionMap
+  defMap: DefinitionMap,
 ): Map<string, IDefinitionMeta> {
   const defs: Array<[name: string, def: IDefinitionMeta]> = []
   for (const [name, def] of defMap) {

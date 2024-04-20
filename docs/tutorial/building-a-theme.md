@@ -4,9 +4,9 @@ title: Building a Theme
 
 In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring). **Note:** The video instructions are slightly outdated at times, thus the written instructions here are the source of truth.
 
-## Set up yarn workspaces
+## Set up pnpm workspaces
 
-In this section, you'll learn how to structure folders and configure yarn workspaces to develop Gatsby themes. You'll create two workspaces, `gatsby-theme-events` and `site`.
+In this section, you'll learn how to structure folders and configure pnpm workspaces to develop Gatsby themes. You'll create two workspaces, `gatsby-theme-events` and `site`.
 
 In this example, `gatsby-theme-events` will be a dependency of `site` so you'll run `site` to see everything working.
 
@@ -51,7 +51,7 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
 }
 ```
 
-- The `"name"` corresponds to the yarn workspace you defined earlier, in the root-level `package.json` folder.
+- The `"name"` corresponds to the pnpm workspace you defined earlier, in the root-level `package.json` folder.
 - Because you'll install `gatsby-theme-events` as a package, you have to specify a `"main"` entry point.
   - This file won't do anything, but it does need to resolve, so create a new file in `gatsby-theme-events` called `index.js`.
 
@@ -78,22 +78,22 @@ In the `package.json` file in `site`, add the following:
 ```
 
 - `"private"` is set to true, because you won't be publishing the site to npm.
-- The `"name"` again corresponds to the yarn workspace you defined earlier, in the root-level `package.json` folder.
+- The `"name"` again corresponds to the pnpm workspace you defined earlier, in the root-level `package.json` folder.
 
 ### Add dependencies to `site`
 
 Now add `gatsby`, `react`, `react-dom`, and `gatsby-theme-events` as dependencies in `site`:
 
 ```shell
-yarn workspace site add gatsby react react-dom gatsby-theme-events@*
+pnpm workspace site add gatsby react react-dom gatsby-theme-events@*
 ```
 
 > 🚨 If you use [zsh](https://en.wikipedia.org/wiki/Z_shell), the `*` needs to be quoted, e.g. `gatsby-theme-events@"*"` or `"gatsby-theme-events@*"`.
 
-- When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
+- When you run `pnpm workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
 - You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
 
-> 💡 For more details on using yarn workspaces, you might be interested to check out Gatsby's [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
+> 💡 For more details on using pnpm workspaces, you might be interested to check out Gatsby's [blog post on setting up pnpm workspaces](/blog/2019-05-22-setting-up-pnpm-workspaces-for-theme-development/).
 
 You should now see the following dependencies in your `site/package.json`:
 
@@ -108,7 +108,7 @@ You should now see the following dependencies in your `site/package.json`:
 }
 ```
 
-If you run `yarn workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
+If you run `pnpm workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
 
 ```json
 {
@@ -132,7 +132,7 @@ If you run `yarn workspaces info`, you'll be able to verify that the site is usi
 Targeting the `gatsby-theme-events` workspace, install `gatsby`, `react`, and `react-dom` as peer dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add -P gatsby react react-dom
+pnpm workspace gatsby-theme-events add -P gatsby react react-dom
 ```
 
 > 💡 The `-P` flag is shorthand for installing peer dependencies.
@@ -169,7 +169,7 @@ module.exports = {
 Run `site` to verify that it's working.
 
 ```shell
-yarn workspace site develop
+pnpm workspace site develop
 ```
 
 You should see a Gatsby site successfully running in development mode. Since there's no content, visiting the site should serve a default Gatsby 404 page.
@@ -211,7 +211,7 @@ Add some sample data:
 To read this YAML data, you'll need to install a few more dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-source-filesystem gatsby-transformer-yaml
+pnpm workspace gatsby-theme-events add gatsby-source-filesystem gatsby-transformer-yaml
 ```
 
 > 💡 `gatsby-source-filesystem` will let you load the `events.yml` file. `gatsby-transformer-yaml` will let you parse it as YAML data.
@@ -240,7 +240,7 @@ module.exports = {
 With this saved, restart the development server:
 
 ```shell
-yarn workspace site develop
+pnpm workspace site develop
 ```
 
 Open up the GraphiQL explorer for the site, and make a test query on `allEvent`:
@@ -476,7 +476,7 @@ exports.createResolvers = ({ createResolvers }) => {
 Test that this is working by running `site` again:
 
 ```shell
-yarn workspace site develop
+pnpm workspace site develop
 ```
 
 If you query this time for `allEvent`, you'll see the `Event` data, including the new slugs:
@@ -622,7 +622,7 @@ export default EventTemplate
 To test that the root path (`"/"`) and individual event pages are building successfully, run `site` in develop mode again:
 
 ```shell
-yarn workspace site develop
+pnpm workspace site develop
 ```
 
 You should see the placeholder `events.js` component at `http://localhost:8000/`.
@@ -1070,7 +1070,7 @@ module.exports = {
 To test this, run the site:
 
 ```shell
-yarn workspace site develop
+pnpm workspace site develop
 ```
 
 Once this is running, you'll observe two things:
@@ -1091,7 +1091,7 @@ You can make your theme styles extendable using the `gatsby-plugin-theme-ui` pac
 Install dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @theme-ui/mdx @emotion/react
+pnpm workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @theme-ui/mdx @emotion/react
 ```
 
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
@@ -1255,7 +1255,7 @@ export default Layout
 Run the site to see the theme changes that are starting to take effect:
 
 ```shell
-yarn workspace site develop
+pnpm workspace site develop
 ```
 
 ![Theme UI changes starting to take effect on the site. For example, the header is now purple.](./images/building-a-theme-theme-ui-changes.png)

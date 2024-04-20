@@ -1,6 +1,6 @@
-import { createMachine, StatesConfig, MachineOptions } from "xstate"
+import { createMachine, type StatesConfig, type MachineOptions } from "xstate"
 import { dataLayerActions } from "./actions"
-import { IDataLayerContext } from "./types"
+import type { IDataLayerContext } from "./types"
 import { dataLayerServices } from "./services"
 
 export type DataLayerResult = Pick<
@@ -11,6 +11,7 @@ export type DataLayerResult = Pick<
   | "pagesToDelete"
 >
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const loadDataStates: StatesConfig<IDataLayerContext, any, any> = {
   customizingSchema: {
     invoke: {
@@ -33,6 +34,7 @@ const loadDataStates: StatesConfig<IDataLayerContext, any, any> = {
   },
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
   buildingSchema: {
     invoke: {
@@ -64,6 +66,7 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
   },
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
   buildingSchema: {
     invoke: {
@@ -87,6 +90,7 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
   },
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const doneState: StatesConfig<IDataLayerContext, any, any> = {
   done: {
     type: `final`,
@@ -106,6 +110,7 @@ const doneState: StatesConfig<IDataLayerContext, any, any> = {
   },
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const options: Partial<MachineOptions<IDataLayerContext, any>> = {
   actions: dataLayerActions,
   services: dataLayerServices,
@@ -127,7 +132,7 @@ export const initializeDataMachine = createMachine(
       ...doneState,
     },
   },
-  options
+  options,
 )
 
 /**
@@ -146,7 +151,7 @@ export const reloadDataMachine = createMachine(
       ...doneState,
     },
   },
-  options
+  options,
 )
 
 /**
@@ -164,5 +169,5 @@ export const recreatePagesMachine = createMachine(
       ...doneState,
     },
   },
-  options
+  options,
 )

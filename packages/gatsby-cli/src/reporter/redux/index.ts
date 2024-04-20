@@ -1,11 +1,11 @@
 import { createStore, combineReducers, Store } from "redux"
 import { reducer as logsReducer } from "./reducers/logs"
 import { reducer as pageTreeReducer } from "./reducers/page-tree"
-import { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
+import type { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
 import { isInternalAction } from "./utils"
 import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
-import { IRenderPageArgs } from "../../reporter/types"
+import type { IRenderPageArgs } from "../../reporter/types"
 
 let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
   createStore(
@@ -13,12 +13,14 @@ let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
       logs: logsReducer,
       pageTree: pageTreeReducer,
     }),
-    {}
+    {},
   )
 
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ActionLogListener = (action: ActionsUnion) => any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Thunk = (...args: Array<any>) => ActionsUnion
 
 const storeSwapListeners: Array<StoreListener> = []
@@ -29,7 +31,7 @@ export const getStore = (): typeof store => store
 const diagnosticsMiddleware =
   createStructuredLoggingDiagnosticsMiddleware(getStore)
 
-export const dispatch = (action: ActionsUnion | Thunk): void => {
+export function dispatch(action: ActionsUnion | Thunk): void {
   if (!action) {
     return
   }
@@ -65,23 +67,24 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
   }
 }
 
-export const onStoreSwap = (fn: StoreListener): void => {
+export function onStoreSwap(fn: StoreListener): void {
   storeSwapListeners.push(fn)
 }
 
-export const onLogAction = (fn: ActionLogListener): (() => void) => {
+export function onLogAction(fn: ActionLogListener): () => void {
   onLogActionListeners.add(fn)
 
-  return (): void => {
+  return function (): void {
     onLogActionListeners.delete(fn)
   }
 }
 
-export const setStore = (s: GatsbyCLIStore): void => {
+export function setStore(s: GatsbyCLIStore): void {
   s.dispatch({
     type: Actions.SetLogs,
     payload: store.getState().logs,
-  } as ISetLogs)
+  } satisfies ISetLogs)
+
   store = s
   storeSwapListeners.forEach(fn => fn(store))
 }

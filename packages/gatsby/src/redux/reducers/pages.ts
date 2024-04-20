@@ -1,4 +1,4 @@
-import {
+import type {
   IGatsbyState,
   IGatsbyPage,
   IDeleteCacheAction,
@@ -7,14 +7,14 @@ import {
   IMaterializePageMode,
 } from "../types"
 
-export const pagesReducer = (
+export function pagesReducer(
   state: IGatsbyState["pages"] = new Map<string, IGatsbyPage>(),
   action:
     | IDeleteCacheAction
     | ICreatePageAction
     | IDeletePageAction
-    | IMaterializePageMode
-): IGatsbyState["pages"] => {
+    | IMaterializePageMode,
+): IGatsbyState["pages"] {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
@@ -27,7 +27,7 @@ export const pagesReducer = (
         console.log(``)
 
         throw new Error(
-          `Pages can only be created by plugins. There wasn't a plugin set when creating this page.`
+          `Pages can only be created by plugins. There wasn't a plugin set when creating this page.`,
         )
       }
 

@@ -1,12 +1,14 @@
-import React from "react"
+import { memo, type ComponentType, type JSX } from "react"
 import { Box, Text } from "ink"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import InkSpinner from "ink-spinner"
 
-interface ISpinnerProps {
+type ISpinnerProps = {
   text: string
-  statusText?: string
+  statusText?: string | undefined
 }
-export function Spinner({ text, statusText }: ISpinnerProps): JSX.Element {
+
+function _Spinner({ text, statusText }: ISpinnerProps): JSX.Element {
   let label = text
   if (statusText) {
     label += ` — ${statusText}`
@@ -20,3 +22,6 @@ export function Spinner({ text, statusText }: ISpinnerProps): JSX.Element {
     </Box>
   )
 }
+
+export const Spinner: ComponentType<ISpinnerProps> =
+  memo<ISpinnerProps>(_Spinner)

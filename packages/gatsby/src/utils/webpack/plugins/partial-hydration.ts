@@ -9,15 +9,16 @@ import webpack, {
   Compiler,
   AsyncDependenciesBlock,
 } from "webpack"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import type Reporter from "gatsby-cli/lib/reporter"
 
-interface IModuleExport {
+type IModuleExport = {
   id: string
   chunks: Array<string>
   name: string
 }
 
-interface IDirective {
+type IDirective = {
   directive?: string
 }
 
@@ -42,7 +43,7 @@ export class PartialHydrationPlugin {
 
   _generateManifest(
     compilation: Compilation,
-    rootContext: string
+    rootContext: string,
   ): Record<string, Record<string, IModuleExport>> {
     const moduleGraph = compilation.moduleGraph
     const chunkGraph = compilation.chunkGraph
@@ -54,7 +55,7 @@ export class PartialHydrationPlugin {
       id: string,
       module: Module | NormalModule,
       exports: Array<{ originalExport: string; resolvedExport: string }>,
-      chunkIds: Array<string>
+      chunkIds: Array<string>,
     ): void => {
       const normalModule: NormalModule = module as NormalModule
 
@@ -74,7 +75,7 @@ export class PartialHydrationPlugin {
           if (mod.buildInfo.rsc) {
             const normalizedModuleKey = createNormalizedModuleKey(
               mod.resource,
-              rootContext
+              rootContext,
             )
 
             if (normalizedModuleKey !== undefined) {
@@ -86,7 +87,7 @@ export class PartialHydrationPlugin {
         if (normalModule.buildInfo?.rsc) {
           const normalizedModuleKey = createNormalizedModuleKey(
             normalModule.resource,
-            rootContext
+            rootContext,
           )
 
           if (normalizedModuleKey !== undefined) {
@@ -107,6 +108,7 @@ export class PartialHydrationPlugin {
       >
     > = new Map()
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function recordModuleExports(module): any {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const childMap = new Map()
@@ -156,7 +158,7 @@ export class PartialHydrationPlugin {
               if (subMod.buildInfo.rsc) {
                 mapOriginalModuleToPotentiallyConcatanetedModule.set(
                   subMod,
-                  mod
+                  mod,
                 )
                 newClientModules.add(mod)
               }
@@ -208,7 +210,7 @@ export class PartialHydrationPlugin {
   async addClientModuleEntries(
     // @ts-ignore
     compiler: Compiler,
-    compilation: Compilation
+    compilation: Compilation,
   ): Promise<void> {
     const clientModules: Array<webpack.NormalModule> = []
     const cssModules = (this._collectedCssModules = new Set())
@@ -249,7 +251,7 @@ export class PartialHydrationPlugin {
           for (const connection of incomingConnections) {
             if (connection.dependency) {
               const dependencyBlock = compilation.moduleGraph.getParentBlock(
-                connection.dependency
+                connection.dependency,
               )
 
               if (
@@ -272,7 +274,7 @@ export class PartialHydrationPlugin {
                   // import from async-requires and let webpack remove it rom the bundle (or rather just not add it)
                   // if it's not used anywhere else
                   compilation.moduleGraph.removeConnection(
-                    connection.dependency
+                    connection.dependency,
                   )
                 }
               }
@@ -297,18 +299,18 @@ export class PartialHydrationPlugin {
               `./` +
               path.relative(
                 compilation.options.context as string,
-                module.userRequest
-              )
+                module.userRequest,
+              ),
           )
           .join(`,`),
-      }
+      },
     )}!`
 
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(
       clientSSRLoader,
       {
         name: `app`,
-      }
+      },
     )
     await this.addEntry(compilation, ``, clientComponentEntryDep, {
       name: `app`,
@@ -318,10 +320,12 @@ export class PartialHydrationPlugin {
   addEntry(
     compilation: Compilation,
     context: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     entry: any /* Dependency */,
     options: {
       name: string
-    } /* EntryOptions */
+    } /* EntryOptions */,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> /* Promise<module> */ {
     return new Promise((resolve, reject) => {
       // @ts-ignore
@@ -340,6 +344,7 @@ export class PartialHydrationPlugin {
             dependency: entry,
           },
           // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (err: Error | undefined, module: any) => {
             if (err) {
               compilation.hooks.failedEntry.call(entry, options, err)
@@ -348,7 +353,7 @@ export class PartialHydrationPlugin {
 
             compilation.hooks.succeedEntry.call(entry, options, module)
             return resolve(module)
-          }
+          },
         )
       } catch (e) {
         console.log({ e })
@@ -368,8 +373,9 @@ export class PartialHydrationPlugin {
         }
 
         this._previousManifest = JSON.parse(
-          fs.readFileSync(this._manifestPath, `utf-8`)
-        )
+          fs.readFileSync(this._manifestPath, `utf-8`),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ) as any
       } catch (error) {
         this._reporter.panic({
           id: `80001`,
@@ -395,7 +401,7 @@ export class PartialHydrationPlugin {
             const hasClientExportDirective = ast.body.find(
               statement =>
                 statement.type === `ExpressionStatement` &&
-                (statement as IDirective).directive === `use client`
+                (statement as IDirective).directive === `use client`,
             )
 
             const module = parser.state.module
@@ -440,6 +446,7 @@ export class PartialHydrationPlugin {
 
             let isInAnyChunk = false
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             for (const _ of usedInChunks) {
               isInAnyChunk = true
               break
@@ -466,7 +473,7 @@ export class PartialHydrationPlugin {
                 group.setModulePostOrderIndex(
                   cssModule,
                   // @ts-ignore
-                  group._modulePostOrderIndices.size + 1
+                  group._modulePostOrderIndices.size + 1,
                 )
               }
             }
@@ -482,7 +489,7 @@ export class PartialHydrationPlugin {
           () => {
             const manifest = this._generateManifest(
               compilation,
-              compilation.options.context as string
+              compilation.options.context as string,
             )
 
             /**
@@ -491,7 +498,7 @@ export class PartialHydrationPlugin {
              */
             const emitManifestPath = `..${this._manifestPath.replace(
               compiler.context,
-              ``
+              ``,
             )}`
 
             compilation.emitAsset(
@@ -500,14 +507,14 @@ export class PartialHydrationPlugin {
                 JSON.stringify(
                   { ...this._previousManifest, ...manifest },
                   null,
-                  2
+                  2,
                 ),
-                false
-              )
+                false,
+              ),
             )
-          }
+          },
         )
-      }
+      },
     )
   }
 }

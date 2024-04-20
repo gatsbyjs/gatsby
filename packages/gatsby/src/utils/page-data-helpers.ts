@@ -1,15 +1,20 @@
 import reporter from "gatsby-cli/lib/reporter"
-import type { IStructuredError } from "gatsby-cli/src/structured-errors/types"
-import { IGatsbyPage, IGatsbyState } from "../redux/types"
-import { ICollectedSlices } from "./babel/find-slices"
 
-interface IPageDataBase {
+import type { IGatsbyPage, IGatsbyState } from "../redux/types"
+import type { ICollectedSlices } from "./babel/find-slices"
+import type { IStructuredError } from "gatsby-telemetry/lib/telemetry"
+
+type IPageDataBase = {
   componentChunkName: IGatsbyPage["componentChunkName"]
   matchPath: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
   staticQueryHashes: Array<string>
-  getServerDataError?: IStructuredError | Array<IStructuredError> | null
-  manifestId?: string
+  getServerDataError?:
+    | IStructuredError
+    | Array<IStructuredError>
+    | null
+    | undefined
+  manifestId?: string | undefined
 }
 export type IPageDataInput = IPageDataBase & {
   slices: Record<string, string>
@@ -26,8 +31,8 @@ function traverseSlicesUsedByTemplates(
   overrideSlices: Record<string, string>,
   slicesUsedByTemplates: Map<string, ICollectedSlices>,
   slices: IGatsbyState["slices"],
-  formattedSlices: Record<string, string> = {},
-  handledSlices: Set<string> = new Set<string>()
+  formattedSlices: Record<string, string> | undefined = {},
+  handledSlices: Set<string> | undefined = new Set<string>(),
 ): Record<string, string> | null {
   if (handledSlices.has(componentPath)) {
     return null
@@ -72,7 +77,7 @@ function traverseSlicesUsedByTemplates(
       slicesUsedByTemplates,
       slices,
       formattedSlices,
-      handledSlices
+      handledSlices,
     )
   }
 
@@ -91,7 +96,7 @@ export function constructPageDataString(
   }: IPageDataInput,
   result: string | Buffer,
   slicesUsedByTemplates: Map<string, ICollectedSlices>,
-  slices: IGatsbyState["slices"]
+  slices: IGatsbyState["slices"],
 ): string {
   let body =
     `{` +
@@ -106,7 +111,7 @@ export function constructPageDataString(
       componentPath,
       overrideSlices,
       slicesUsedByTemplates,
-      slices
+      slices,
     )
 
     if (formattedSlices) {
@@ -132,10 +137,10 @@ export function reverseFixedPagePath(pageDataRequestPath: string): string {
 }
 
 export function getPagePathFromPageDataPath(
-  pageDataPath: string
+  pageDataPath: string,
 ): string | null {
   const matches = pageDataPath.matchAll(
-    /^\/?page-data\/(.+)\/page-data.json$/gm
+    /^\/?page-data\/(.+)\/page-data.json$/gm,
   )
   for (const [, requestedPagePath] of matches) {
     return reverseFixedPagePath(requestedPagePath)

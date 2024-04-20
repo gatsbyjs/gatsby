@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 
-import {
+import type {
   IGatsbyState,
   ICreateNodeManifest,
   IDeleteNodeManifests,
@@ -11,7 +11,7 @@ const DEFAULT_MAX_DAYS_OLD = 30
 
 export const nodeManifestReducer = (
   state: IGatsbyState["nodeManifests"] = [],
-  action: ICreateNodeManifest | IDeleteNodeManifests
+  action: ICreateNodeManifest | IDeleteNodeManifests,
 ): IGatsbyState["nodeManifests"] => {
   switch (action.type) {
     case `CREATE_NODE_MANIFEST`: {
@@ -23,11 +23,12 @@ export const nodeManifestReducer = (
       if (updatedAtUTC) {
         const nodeLastUpdatedAtUTC: number = new Date(updatedAtUTC).getTime()
         if (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (nodeLastUpdatedAtUTC as any) instanceof Date &&
           !isNaN(nodeLastUpdatedAtUTC)
         ) {
           reporter.warn(
-            `Plugin ${pluginName} called unstable_createNodeManifest with an updatedAtUTC that isn't a proper value to instantiate a Date.`
+            `Plugin ${pluginName} called unstable_createNodeManifest with an updatedAtUTC that isn't a proper value to instantiate a Date.`,
           )
 
           return state
@@ -43,7 +44,7 @@ export const nodeManifestReducer = (
 
       if (typeof manifestId !== `string`) {
         reporter.warn(
-          `Plugin ${pluginName} called unstable_createNodeManifest with a manifestId that isn't a string.`
+          `Plugin ${pluginName} called unstable_createNodeManifest with a manifestId that isn't a string.`,
         )
 
         return state
@@ -51,7 +52,7 @@ export const nodeManifestReducer = (
 
       if (!node?.id) {
         reporter.warn(
-          `Plugin ${pluginName} called unstable_createNodeManifest but didn't provide a node.`
+          `Plugin ${pluginName} called unstable_createNodeManifest but didn't provide a node.`,
         )
 
         return state

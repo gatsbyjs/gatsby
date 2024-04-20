@@ -1,4 +1,4 @@
-import { IBuildContext } from "../internal"
+import type { IBuildContext } from "../internal"
 import {
   writeGraphQLFragments,
   writeGraphQLSchema,
@@ -15,7 +15,7 @@ export async function graphQLTypegen({
   // But this should never happen unless e.g. the state machine doesn't receive this information from a parent state machine
   if (!program || !store || !reporter) {
     throw new Error(
-      `Missing required params in graphQLTypegen. program: ${!!program}. store: ${!!store}.`
+      `Missing required params in graphQLTypegen. program: ${!!program}. store: ${!!store}.`,
     )
   }
   const directory = program.directory
@@ -24,7 +24,7 @@ export async function graphQLTypegen({
     `Generating GraphQL and TypeScript types`,
     {
       parentSpan,
-    }
+    },
   )
   activity.start()
 
@@ -42,7 +42,7 @@ export async function graphQLTypegen({
       directory,
       schema,
       definitions,
-      graphqlTypegenOptions
+      graphqlTypegenOptions,
     )
   } catch (err) {
     activity.panicOnBuild({

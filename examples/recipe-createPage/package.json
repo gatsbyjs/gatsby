@@ -6,13 +6,13 @@
   "author": "@gatsbyjs",
   "dependencies": {
     "gatsby": "next",
-    "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet": "^5.2.1"
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0"
   },
   "devDependencies": {
-    "prettier": "2.1.1"
+    "@total-typescript/ts-reset": "0.5.1"
   },
   "keywords": [
     "gatsby"

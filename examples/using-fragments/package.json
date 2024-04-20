@@ -14,11 +14,11 @@
   },
   "dependencies": {
     "gatsby": "next",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "prettier": "2.1.1"
+    "@total-typescript/ts-reset": "0.5.1"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,8 @@
 import sourceNodesAndRemoveStaleNodes from "../utils/source-nodes"
 import reporter from "gatsby-cli/lib/reporter"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import type { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
-import { IGatsbyPage } from "../redux/types"
+import type { IGatsbyPage } from "../redux/types"
 import { findChangedPages } from "../utils/changed-pages"
 
 export async function sourceNodes({
@@ -38,17 +38,17 @@ export async function sourceNodes({
 
   const { changedPages, deletedPages } = findChangedPages(
     currentPages,
-    store.getState().pages
+    store.getState().pages,
   )
 
   reporter.verbose(
-    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
+    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`,
   )
 
   reporter.verbose(
     `Found ${changedPages.length} changed page${
       changedPages.length === 1 ? `` : `s`
-    }`
+    }`,
   )
   tim.end()
 

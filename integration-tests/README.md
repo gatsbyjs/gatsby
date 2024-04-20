@@ -10,6 +10,6 @@ These are tests triggered via the `test:integration` script. They do not run in 
 
 ## Running the tests
 
-Run `yarn test:integration` or `npm run test:integration` to run the suite of integration tests.
+Run `pnpm run test:integration` or `npm run test:integration` to run the suite of integration tests.
 
 Thanks for contributing to Gatsby!

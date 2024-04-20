@@ -10,6 +10,6 @@ Those individual article pages and the homepage share a common "Layout" componen
 
 Make sure to add the environment variables in the `.env.example` file. To run the update script, you need to add a write token as well.
 
-```
-yarn update-post
+```shell
+pnpm run update-post
 ```

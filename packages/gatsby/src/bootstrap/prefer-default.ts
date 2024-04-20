@@ -1,1 +1,4 @@
-export const preferDefault = (m: any): any => (m && m.default) || m
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function preferDefault(m: any): any {
+  return (m && m.default) || m
+}

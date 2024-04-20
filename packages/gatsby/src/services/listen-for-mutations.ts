@@ -1,28 +1,31 @@
 import { emitter } from "../redux"
-import { InvokeCallback, Sender } from "xstate"
+import type { InvokeCallback, Sender } from "xstate"
 
-export const listenForMutations: InvokeCallback = (callback: Sender<any>) => {
-  const emitMutation = (event: unknown): void => {
+export const listenForMutations: InvokeCallback = function listenForMutations(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  callback: Sender<any>,
+) {
+  function emitMutation(event: unknown): void {
     callback({ type: `ADD_NODE_MUTATION`, payload: event })
   }
 
-  const emitSourceChange = (event: unknown): void => {
+  function emitSourceChange(event: unknown): void {
     callback({ type: `SOURCE_FILE_CHANGED`, payload: event })
   }
 
-  const emitWebhook = (event: unknown): void => {
+  function emitWebhook(event: unknown): void {
     callback({ type: `WEBHOOK_RECEIVED`, payload: event })
   }
 
-  const emitQueryRunRequest = (event: unknown): void => {
+  function emitQueryRunRequest(event: unknown): void {
     callback({ type: `QUERY_RUN_REQUESTED`, payload: event })
   }
 
-  const emitSetSchema = (event: unknown): void => {
+  function emitSetSchema(event: unknown): void {
     callback({ type: `SET_SCHEMA`, payload: event })
   }
 
-  const emitGraphQLDefinitions = (event: unknown): void => {
+  function emitGraphQLDefinitions(event: unknown): void {
     callback({ type: `SET_GRAPHQL_DEFINITIONS`, payload: event })
   }
 

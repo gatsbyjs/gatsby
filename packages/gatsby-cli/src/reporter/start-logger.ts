@@ -4,7 +4,7 @@
 import semver from "semver"
 import { isCI } from "gatsby-core-utils"
 
-export const startLogger = (): void => {
+export function startLogger(): void {
   if (!process.env.GATSBY_LOGGER) {
     if (
       semver.satisfies(process.version, `>=8`) &&
@@ -21,7 +21,6 @@ export const startLogger = (): void => {
     // FIXME: disable IPC logger when inside worker. IPC messages crash jest-worker.
     // This is just workaround to not crash process when reporter is used in worker context.
     // process.env.FORCE_COLOR = `0`
-
     // TODO move to dynamic imports
     require(`./loggers/ipc`).initializeIPCLogger()
   }

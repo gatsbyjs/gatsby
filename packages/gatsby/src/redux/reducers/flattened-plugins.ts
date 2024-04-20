@@ -1,9 +1,9 @@
-import { IGatsbyState, ActionsUnion } from "../types"
+import type { IGatsbyState, ActionsUnion } from "../types"
 
-export const flattenedPluginsReducer = (
-  state: IGatsbyState["flattenedPlugins"] = [],
-  action: ActionsUnion
-): IGatsbyState["flattenedPlugins"] => {
+export function flattenedPluginsReducer(
+  state: IGatsbyState["flattenedPlugins"] | undefined = [],
+  action: ActionsUnion,
+): IGatsbyState["flattenedPlugins"] {
   switch (action.type) {
     case `SET_SITE_FLATTENED_PLUGINS`:
       return [...action.payload]

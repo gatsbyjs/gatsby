@@ -1,19 +1,19 @@
 import manager, {
-  Store,
-  StoreConfig,
-  CachingConfig,
-  MultiCache,
+  type Store,
+  type StoreConfig,
+  type CachingConfig,
+  type MultiCache,
 } from "cache-manager"
 import fs from "fs-extra"
 import * as fsStore from "../cache/cache-fs"
-import path from "path"
+import path from "node:path"
 
 const MAX_CACHE_SIZE = 250
 const TTL = Number.MAX_SAFE_INTEGER
 
-interface ICacheProperties {
-  name?: string
-  store?: Store
+type ICacheProperties = {
+  name?: string | undefined
+  store?: Store | undefined
 }
 
 export default class GatsbyCache {
@@ -33,7 +33,7 @@ export default class GatsbyCache {
       global.__GATSBY?.root ?? process.cwd(),
       `.cache`,
       `caches`,
-      name
+      name,
     )
   }
 
@@ -67,7 +67,7 @@ export default class GatsbyCache {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `GatsbyCache wasn't initialised yet, please run the init method first`
+          `GatsbyCache wasn't initialised yet, please run the init method first`,
         )
       }
       this.cache.get<T>(key, (err, res) => {
@@ -79,12 +79,12 @@ export default class GatsbyCache {
   async set<T>(
     key: string,
     value: T,
-    args: CachingConfig = { ttl: TTL }
+    args: CachingConfig = { ttl: TTL },
   ): Promise<T | undefined> {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `GatsbyCache wasn't initialised yet, please run the init method first`
+          `GatsbyCache wasn't initialised yet, please run the init method first`,
         )
       }
       this.cache.set(key, value, args, err => {
@@ -96,7 +96,7 @@ export default class GatsbyCache {
   async del(key: string): Promise<void> {
     if (!this.cache) {
       throw new Error(
-        `GatsbyCache wasn't initialised yet, please run the init method first`
+        `GatsbyCache wasn't initialised yet, please run the init method first`,
       )
     }
 

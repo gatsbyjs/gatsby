@@ -22,9 +22,10 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@types/node": "17.0.31",
-    "@types/react": "17.0.44",
-    "@types/react-dom": "17.0.16",
-    "typescript": "5.4.4"
+    "@total-typescript/ts-reset": "0.5.1",
+    "@types/node": "20.12.7",
+    "@types/react": "18.2.78",
+    "@types/react-dom": "18.2.25",
+    "typescript": "5.4.5"
   }
 }

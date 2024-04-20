@@ -1,5 +1,5 @@
-import { MachineConfig, assign, createMachine } from "xstate"
-import { IWaitingContext } from "./types"
+import { type MachineConfig, assign, createMachine } from "xstate"
+import type { IWaitingContext } from "./types"
 import { waitingActions } from "./actions"
 import { waitingServices } from "./services"
 
@@ -13,6 +13,7 @@ export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
  * This idle state also handles batching of node mutations and running of
  * mutations when we first start it
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   predictableActionArguments: true,
   id: `waitingMachine`,
@@ -119,6 +120,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
         src: `runMutationBatch`,
         // When we're done, clear the running batch ready for next time
         onDone: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           actions: assign<IWaitingContext, any>({
             runningBatch: [],
           }),

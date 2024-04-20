@@ -1,10 +1,10 @@
 // @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
-import _ from "lodash"
 import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
 import { join } from "path"
 import { emptyDir, ensureDir, outputJson } from "fs-extra"
 import { execa, type Options as ExecaOptions } from "execa"
+// @ts-ignore
 import { version as gatsbyVersionFromPackageJson } from "gatsby/package.json"
 import { satisfies } from "semver"
 import type { AdapterInit } from "./types"
@@ -12,10 +12,11 @@ import { preferDefault } from "../../bootstrap/prefer-default"
 import { getLatestAdapters } from "../get-latest-gatsby-files"
 import { maybeAddFileProtocol } from "../../bootstrap/resolve-js-file-path"
 
-export const getAdaptersCacheDir = (): string =>
-  join(process.cwd(), `.cache/adapters`)
+export function getAdaptersCacheDir(): string {
+  return join(process.cwd(), `.cache/adapters`)
+}
 
-const createAdaptersCacheDir = async (): Promise<void> => {
+async function createAdaptersCacheDir(): Promise<void> {
   await ensureDir(getAdaptersCacheDir())
   await emptyDir(getAdaptersCacheDir())
 
@@ -31,14 +32,14 @@ const createAdaptersCacheDir = async (): Promise<void> => {
   })
 }
 
-interface IAdapterToUse {
+type IAdapterToUse = {
   name: string
   module: string
   gatsbyVersion: string
   moduleVersion: string
 }
 
-const tryLoadingAlreadyInstalledAdapter = async ({
+async function tryLoadingAlreadyInstalledAdapter({
   adapterToUse,
   installLocation,
   currentGatsbyVersion,
@@ -63,13 +64,13 @@ const tryLoadingAlreadyInstalledAdapter = async ({
           loadedModule: AdapterInit
         }
     ))
-> => {
+> {
   try {
     const locationRequire = createRequireFromPath(
-      `${installLocation}/:internal:`
+      `${installLocation}/:internal:`,
     )
     const adapterPackageJson = locationRequire(
-      `${adapterToUse.module}/package.json`
+      `${adapterToUse.module}/package.json`,
     )
     const adapterPackageVersion = adapterPackageJson?.version
 
@@ -88,7 +89,7 @@ const tryLoadingAlreadyInstalledAdapter = async ({
     }
 
     const required = maybeAddFileProtocol(
-      locationRequire.resolve(adapterToUse.module)
+      locationRequire.resolve(adapterToUse.module),
     )
     if (required) {
       return {
@@ -96,7 +97,7 @@ const tryLoadingAlreadyInstalledAdapter = async ({
         compatible: true,
         installedVersion: adapterPackageVersion,
         loadedModule: preferDefault(
-          preferDefault(await import(required))
+          preferDefault(await import(required)),
         ) as AdapterInit,
       }
     } else {
@@ -111,24 +112,24 @@ const tryLoadingAlreadyInstalledAdapter = async ({
   }
 }
 
-const handleAdapterProblem = (
+function handleAdapterProblem(
   message: string,
-  panicFn = reporter.panic
-): never | undefined => {
+  panicFn = reporter.panic,
+): never | undefined {
   if (!process.env.GATSBY_CONTINUE_BUILD_ON_ADAPTER_MISMATCH) {
     panicFn(
-      `${message}\n\nZero-configuration deployment failed to avoid potentially broken deployment.\nIf you want build to continue despite above problems:\n - configure adapter manually in gatsby-config which will skip zero-configuration deployment attempt\n - or set GATSBY_CONTINUE_BUILD_ON_MISSING_ADAPTER=true environment variable to continue build without an adapter.`
+      `${message}\n\nZero-configuration deployment failed to avoid potentially broken deployment.\nIf you want build to continue despite above problems:\n - configure adapter manually in gatsby-config which will skip zero-configuration deployment attempt\n - or set GATSBY_CONTINUE_BUILD_ON_MISSING_ADAPTER=true environment variable to continue build without an adapter.`,
     )
   } else {
     reporter.warn(
-      `${message}\n\nContinuing build using without using any adapter due to GATSBY_CONTINUE_BUILD_ON_MISSING_ADAPTER environment variable being set`
+      `${message}\n\nContinuing build using without using any adapter due to GATSBY_CONTINUE_BUILD_ON_MISSING_ADAPTER environment variable being set`,
     )
   }
   return undefined
 }
 
 export async function getAdapterInit(
-  currentGatsbyVersion: string = gatsbyVersionFromPackageJson
+  currentGatsbyVersion: string = gatsbyVersionFromPackageJson,
 ): Promise<AdapterInit | undefined> {
   // 0. Try to fetch the latest adapters manifest - if it fails, we continue with manifest packaged with current version of gatsby
   const latestAdapters = await getLatestAdapters()
@@ -139,7 +140,7 @@ export async function getAdapterInit(
 
   if (!adapterEntry) {
     reporter.verbose(
-      `No adapter was found for the current environment. Skipping adapter initialization.`
+      `No adapter was found for the current environment. Skipping adapter initialization.`,
     )
     return undefined
   }
@@ -166,7 +167,7 @@ export async function getAdapterInit(
 
   if (!adapterToUse) {
     return handleAdapterProblem(
-      `No version of ${adapterEntry.name} adapter is compatible with your current Gatsby version ${currentGatsbyVersion}.`
+      `No version of ${adapterEntry.name} adapter is compatible with your current Gatsby version ${currentGatsbyVersion}.`,
     )
   }
 
@@ -181,12 +182,12 @@ export async function getAdapterInit(
     if (adapterInstalledByUserResults.found) {
       if (adapterInstalledByUserResults.compatible) {
         reporter.verbose(
-          `Using site's adapter dependency "${adapterToUse.module}@${adapterInstalledByUserResults.installedVersion}"`
+          `Using site's adapter dependency "${adapterToUse.module}@${adapterInstalledByUserResults.installedVersion}"`,
         )
         return adapterInstalledByUserResults.loadedModule
       } else {
         reporter.warn(
-          `Ignoring incompatible ${adapterToUse.module}@${adapterInstalledByUserResults.installedVersion} installed by site. ${adapterInstalledByUserResults.incompatibilityReason}`
+          `Ignoring incompatible ${adapterToUse.module}@${adapterInstalledByUserResults.installedVersion} installed by site. ${adapterInstalledByUserResults.incompatibilityReason}`,
         )
       }
     }
@@ -204,12 +205,12 @@ export async function getAdapterInit(
     if (adapterPreviouslyInstalledInCacheAdaptersResults.found) {
       if (adapterPreviouslyInstalledInCacheAdaptersResults.compatible) {
         reporter.verbose(
-          `Using previously adapter previously installed by gatsby "${adapterToUse.module}@${adapterPreviouslyInstalledInCacheAdaptersResults.installedVersion}"`
+          `Using previously adapter previously installed by gatsby "${adapterToUse.module}@${adapterPreviouslyInstalledInCacheAdaptersResults.installedVersion}"`,
         )
         return adapterPreviouslyInstalledInCacheAdaptersResults.loadedModule
       } else {
         reporter.verbose(
-          `Ignoring incompatible ${adapterToUse.module} installed by gatsby in ".cache/adapters" before. ${adapterPreviouslyInstalledInCacheAdaptersResults.incompatibilityReason}`
+          `Ignoring incompatible ${adapterToUse.module} installed by gatsby in ".cache/adapters" before. ${adapterPreviouslyInstalledInCacheAdaptersResults.incompatibilityReason}`,
         )
       }
     }
@@ -219,7 +220,7 @@ export async function getAdapterInit(
     // 5. If user has not installed the adapter manually or is incompatible and we don't have cached version installed by gatsby or that version is not compatible
     //    we try to install compatible version into .cache/adapters
     const installTimer = reporter.activityTimer(
-      `Installing ${adapterToUse.name} adapter (${adapterToUse.module}@${adapterToUse.moduleVersion})`
+      `Installing ${adapterToUse.name} adapter (${adapterToUse.module}@${adapterToUse.moduleVersion})`,
     )
 
     try {
@@ -250,12 +251,12 @@ export async function getAdapterInit(
           ...npmAdditionalCliArgs,
           `${adapterToUse.module}@${adapterToUse.moduleVersion}`,
         ],
-        options
+        options,
       )
     } catch (e) {
       return handleAdapterProblem(
         `Could not install adapter "${adapterToUse.module}@${adapterToUse.moduleVersion}". Please install it yourself by adding it to your package.json's dependencies and try building your project again.`,
-        installTimer.panic
+        installTimer.panic,
       )
     }
 
@@ -274,19 +275,19 @@ export async function getAdapterInit(
     if (adapterAutoInstalledInCacheAdaptersResults.found) {
       if (adapterAutoInstalledInCacheAdaptersResults.compatible) {
         reporter.info(
-          `If you plan on staying on this deployment platform, consider installing "${adapterToUse.module}@${adapterToUse.moduleVersion}" as a dependency in your project. This will give you faster and more robust installs.`
+          `If you plan on staying on this deployment platform, consider installing "${adapterToUse.module}@${adapterToUse.moduleVersion}" as a dependency in your project. This will give you faster and more robust installs.`,
         )
         return adapterAutoInstalledInCacheAdaptersResults.loadedModule
       } else {
         // this indicates a bug as we install version with range from manifest, and now after trying to load the adapter we consider that adapter incompatible
         return handleAdapterProblem(
-          `Auto installed adapter "${adapterToUse.module}@${adapterAutoInstalledInCacheAdaptersResults.installedVersion}"`
+          `Auto installed adapter "${adapterToUse.module}@${adapterAutoInstalledInCacheAdaptersResults.installedVersion}"`,
         )
       }
     } else {
       // this indicates a bug with adapter itself (fail to resolve main entry point) OR the adapter loading logic
       return handleAdapterProblem(
-        `Could not load adapter "${adapterToUse.module}@${adapterToUse.moduleVersion}". Adapter entry point is not resolvable.`
+        `Could not load adapter "${adapterToUse.module}@${adapterToUse.moduleVersion}". Adapter entry point is not resolvable.`,
       )
     }
   }

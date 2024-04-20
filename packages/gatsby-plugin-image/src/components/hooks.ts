@@ -13,9 +13,12 @@ import type {
 } from "../image-utils"
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
-export const hasNativeLazyLoadSupport = (): boolean =>
-  typeof HTMLImageElement !== `undefined` &&
-  `loading` in HTMLImageElement.prototype
+export function hasNativeLazyLoadSupport(): boolean {
+  return (
+    typeof HTMLImageElement !== `undefined` &&
+    `loading` in HTMLImageElement.prototype
+  )
+}
 
 export function gatsbyImageIsInstalled(): boolean {
   return typeof GATSBY___IMAGE !== `undefined` && GATSBY___IMAGE
@@ -28,25 +31,29 @@ export type IGatsbyImageParent<T = never> = T & {
   gatsbyImage: IGatsbyImageData
 }
 export type FileNode = Partial<Node> & {
-  childImageSharp?: IGatsbyImageDataParent<Partial<Node>>
+  childImageSharp?: IGatsbyImageDataParent<Partial<Node>> | undefined
 }
 
-const isGatsbyImageData = (
+function isGatsbyImageData(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  node: IGatsbyImageData | any
-): node is IGatsbyImageData =>
-  // 🦆 check for a deep prop to be sure this is a valid gatsbyImageData object
-  Boolean(node?.images?.fallback?.src)
+  node: IGatsbyImageData | any,
+): node is IGatsbyImageData {
+  return Boolean(node?.images?.fallback?.src)
+}
 
-const isGatsbyImageDataParent = <T>(
+function isGatsbyImageDataParent<T>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  node: IGatsbyImageDataParent<T> | any
-): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
+  node: IGatsbyImageDataParent<T> | any,
+): node is IGatsbyImageDataParent<T> {
+  return Boolean(node?.gatsbyImageData)
+}
 
-const isGatsbyImageParent = <T>(
+function isGatsbyImageParent<T>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  node: IGatsbyImageParent<T> | any
-): node is IGatsbyImageParent<T> => Boolean(node?.gatsbyImage)
+  node: IGatsbyImageParent<T> | any,
+): node is IGatsbyImageParent<T> {
+  return Boolean(node?.gatsbyImage)
+}
 
 export type ImageDataLike =
   | FileNode
@@ -54,9 +61,9 @@ export type ImageDataLike =
   | IGatsbyImageParent
   | IGatsbyImageData
 
-export const getImage = (
-  node: ImageDataLike | null
-): IGatsbyImageData | undefined => {
+export function getImage(
+  node: ImageDataLike | null,
+): IGatsbyImageData | undefined {
   // This checks both for gatsbyImageData and gatsbyImage
   if (isGatsbyImageData(node)) {
     return node
@@ -72,16 +79,18 @@ export const getImage = (
   return node?.childImageSharp?.gatsbyImageData
 }
 
-export const getSrc = (node: ImageDataLike): string | undefined =>
-  getImage(node)?.images?.fallback?.src
+export function getSrc(node: ImageDataLike): string | undefined {
+  return getImage(node)?.images?.fallback?.src
+}
 
-export const getSrcSet = (node: ImageDataLike): string | undefined =>
-  getImage(node)?.images?.fallback?.srcSet
+export function getSrcSet(node: ImageDataLike): string | undefined {
+  return getImage(node)?.images?.fallback?.srcSet
+}
 
 export function getWrapperProps(
   width: number,
   height: number,
-  layout: Layout
+  layout: Layout,
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
   "data-gatsby-image-wrapper": string
 } {
@@ -113,30 +122,30 @@ export function getWrapperProps(
   }
 }
 
-export interface IUrlBuilderArgs<OptionsType> {
+export type IUrlBuilderArgs<OptionsType> = {
   width: number
   height: number
   baseUrl: string
   format: ImageFormat
   options: OptionsType
 }
-export interface IGetImageDataArgs<OptionsType = Record<string, unknown>> {
+export type IGetImageDataArgs<OptionsType = Record<string, unknown>> = {
   baseUrl: string
   /**
    * For constrained and fixed images, the size of the image element
    */
-  width?: number
-  height?: number
+  width?: number | undefined
+  height?: number | undefined
   /**
    * If available, pass the source image width and height
    */
-  sourceWidth?: number
-  sourceHeight?: number
+  sourceWidth?: number | undefined
+  sourceHeight?: number | undefined
   /**
    * If only one dimension is passed, then this will be used to calculate the other.
    */
-  aspectRatio?: number
-  layout?: Layout
+  aspectRatio?: number | undefined
+  layout?: Layout | undefined
   /**
    * Returns a URL based on the passed arguments. Should be a pure function
    */
@@ -145,24 +154,24 @@ export interface IGetImageDataArgs<OptionsType = Record<string, unknown>> {
   /**
    * Should be a data URI
    */
-  placeholderURL?: string
-  backgroundColor?: string
+  placeholderURL?: string | undefined
+  backgroundColor?: string | undefined
   /**
    * Used in error messages etc
    */
-  pluginName?: string
+  pluginName?: string | undefined
 
   /**
    * If you do not support auto-format, pass an array of image types here
    */
-  formats?: Array<ImageFormat>
+  formats?: Array<ImageFormat> | undefined
 
-  breakpoints?: Array<number>
+  breakpoints?: Array<number> | undefined
 
   /**
    * Passed to the urlBuilder function
    */
-  options?: OptionsType
+  options?: OptionsType | undefined
 }
 
 /**
@@ -189,7 +198,7 @@ export function getImageData<OptionsType>({
     baseUrl: string,
     width: number,
     height?: number,
-    format?: ImageFormat
+    format?: ImageFormat,
   ): IImage => {
     return {
       width,
@@ -221,8 +230,8 @@ export function getMainProps(
   isLoading: boolean,
   isLoaded: boolean,
   images: IGatsbyImageData["images"],
-  loading?: "eager" | "lazy",
-  style: CSSProperties = {}
+  loading?: "eager" | "lazy" | undefined,
+  style: CSSProperties = {},
 ): Partial<MainImageProps> {
   // fallback when it's not configured in gatsby-config.
   if (!gatsbyImageIsInstalled()) {
@@ -262,11 +271,11 @@ export function getPlaceholderProps(
   placeholder: PlaceholderImageAttrs | undefined,
   isLoaded: boolean,
   layout: Layout,
-  width?: number,
-  height?: number,
-  backgroundColor?: string,
-  objectFit?: CSSProperties["objectFit"],
-  objectPosition?: CSSProperties["objectPosition"]
+  width?: number | undefined,
+  height?: number | undefined,
+  backgroundColor?: string | undefined,
+  objectFit?: CSSProperties["objectFit"] | undefined,
+  objectPosition?: CSSProperties["objectPosition"] | undefined,
 ): PlaceholderImageAttrs {
   const wrapperStyle: CSSProperties = {}
 
@@ -325,7 +334,7 @@ export function getPlaceholderProps(
   return result
 }
 
-export interface IArtDirectedImage {
+export type IArtDirectedImage = {
   media: string
   image: IGatsbyImageData
 }
@@ -343,7 +352,7 @@ export interface IArtDirectedImage {
  */
 export function withArtDirection(
   defaultImage: IGatsbyImageData,
-  artDirected: Array<IArtDirectedImage>
+  artDirected: Array<IArtDirectedImage>,
 ): IGatsbyImageData {
   const { images, placeholder, ...props } = defaultImage
   const output: IGatsbyImageData = {
@@ -358,11 +367,11 @@ export function withArtDirection(
     },
   }
 
-  artDirected.forEach(({ media, image }) => {
+  artDirected.forEach(({ media, image }: IArtDirectedImage): void => {
     if (!media) {
       if (process.env.NODE_ENV === `development`) {
         console.warn(
-          "[gatsby-plugin-image] All art-directed images passed to must have a value set for `media`. Skipping."
+          "[gatsby-plugin-image] All art-directed images passed to must have a value set for `media`. Skipping.",
         )
       }
       return
@@ -373,7 +382,7 @@ export function withArtDirection(
       process.env.NODE_ENV === `development`
     ) {
       console.warn(
-        `[gatsby-plugin-image] Mismatched image layout: expected "${defaultImage.layout}" but received "${image.layout}". All art-directed images use the same layout as the default image`
+        `[gatsby-plugin-image] Mismatched image layout: expected "${defaultImage.layout}" but received "${image.layout}". All art-directed images use the same layout as the default image`,
       )
     }
 
@@ -384,7 +393,7 @@ export function withArtDirection(
       {
         media,
         srcSet: image.images.fallback.srcSet,
-      }
+      },
     )
 
     if (!output.placeholder) {

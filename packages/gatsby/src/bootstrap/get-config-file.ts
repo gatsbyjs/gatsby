@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 import { testImportError } from "../utils/test-import-error"
 import report from "gatsby-cli/lib/reporter"
-import path from "path"
+import path from "node:path"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
 import { resolveJSFilepath, maybeAddFileProtocol } from "./resolve-js-file-path"
@@ -10,9 +10,9 @@ import { preferDefault } from "./prefer-default"
 export async function getConfigFile(
   siteDirectory: string,
   configName: string,
-  distance: number = 3
+  distance: number = 3,
 ): Promise<{
-  configModule: any
+  configModule: unknown
   configFilePath: string
 }> {
   const compiledResult = await attemptImportCompiled(siteDirectory, configName)
@@ -24,7 +24,7 @@ export async function getConfigFile(
   const uncompiledResult = await attemptImportUncompiled(
     siteDirectory,
     configName,
-    distance
+    distance,
   )
 
   return uncompiledResult || {}
@@ -32,7 +32,7 @@ export async function getConfigFile(
 
 async function attemptImport(
   siteDirectory: string,
-  configPath: string
+  configPath: string,
 ): Promise<{
   configModule: unknown
   configFilePath: string
@@ -55,7 +55,7 @@ async function attemptImport(
 
 async function attemptImportCompiled(
   siteDirectory: string,
-  configName: string
+  configName: string,
 ): Promise<{
   configModule: unknown
   configFilePath: string
@@ -65,7 +65,7 @@ async function attemptImportCompiled(
   try {
     const compiledConfigPath = path.join(
       `${siteDirectory}/${COMPILED_CACHE_DIR}`,
-      configName
+      configName,
     )
     compiledResult = await attemptImport(siteDirectory, compiledConfigPath)
   } catch (error) {
@@ -85,7 +85,7 @@ async function attemptImportCompiled(
 async function attemptImportUncompiled(
   siteDirectory: string,
   configName: string,
-  distance: number
+  distance: number,
 ): Promise<{
   configModule: unknown
   configFilePath: string
@@ -118,7 +118,7 @@ async function attemptImportUncompiled(
   const { tsConfig, nearMatch } = await checkTsAndNearMatch(
     siteDirectory,
     configName,
-    distance
+    distance,
   )
 
   // gatsby-config.ts exists but compiled gatsby-config.js does not
@@ -168,7 +168,7 @@ async function attemptImportUncompiled(
 async function checkTsAndNearMatch(
   siteDirectory: string,
   configName: string,
-  distance: number
+  distance: number,
 ): Promise<{
   tsConfig: boolean
   nearMatch: string

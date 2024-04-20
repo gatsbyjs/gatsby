@@ -1,11 +1,13 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import path from "path"
 import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
+// @ts-ignore
 import { version as gatsbyVersion } from "gatsby/package.json"
 import reporter from "gatsby-cli/lib/reporter"
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
-import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
+
 import { stripIndent } from "common-tags"
 import { trackCli } from "gatsby-telemetry"
 import { isWorker } from "gatsby-worker"
@@ -17,21 +19,22 @@ import {
   IFlattenedPlugin,
   IPluginInfoOptions,
   ISiteConfig,
+  IPluginRefObject,
 } from "./types"
 import { resolvePlugin } from "./resolve-plugin"
 import { preferDefault } from "../prefer-default"
 import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
 import { maybeAddFileProtocol } from "../resolve-js-file-path"
 
-interface IApi {
-  version?: string
+type IApi = {
+  version?: string | undefined
 }
 
-export interface IEntry {
+export type IEntry = {
   exportName: string
   pluginName: string
   pluginVersion: string
-  api?: IApi
+  api?: IApi | undefined
 }
 
 export type ExportType = "node" | "browser" | "ssr"
@@ -44,8 +47,8 @@ export type ICurrentAPIs = {
   [exportType in ExportType]: Array<string>
 }
 
-const getGatsbyUpgradeVersion = (entries: ReadonlyArray<IEntry>): string =>
-  entries.reduce((version, entry) => {
+function getGatsbyUpgradeVersion(entries: ReadonlyArray<IEntry>): string {
+  return entries.reduce((version, entry) => {
     if (entry.api && entry.api.version) {
       return semver.gt(entry.api.version, version || `0.0.0`)
         ? entry.api.version
@@ -53,13 +56,14 @@ const getGatsbyUpgradeVersion = (entries: ReadonlyArray<IEntry>): string =>
     }
     return version
   }, ``)
+}
 
 // Given a plugin object, an array of the API names it exports and an
 // array of valid API names, return an array of invalid API exports.
 function getBadExports(
   plugin: IPluginInfo,
   pluginAPIKeys: ReadonlyArray<string>,
-  apis: ReadonlyArray<string>
+  apis: ReadonlyArray<string>,
 ): Array<IEntry> {
   let badExports: Array<IEntry> = []
   // Discover any exports from plugins which are not "known"
@@ -70,7 +74,7 @@ function getBadExports(
         pluginName: plugin.name,
         pluginVersion: plugin.version,
       }
-    })
+    }),
   )
   return badExports
 }
@@ -79,7 +83,7 @@ function getErrorContext(
   badExports: Array<IEntry>,
   exportType: ExportType,
   currentAPIs: ICurrentAPIs,
-  latestAPIs: { [exportType in ExportType]: { [exportName: string]: IApi } }
+  latestAPIs: { [exportType in ExportType]: { [exportName: string]: IApi } },
 ): {
   errors: Array<string>
   entries: Array<IEntry>
@@ -103,7 +107,7 @@ function getErrorContext(
   entries.forEach(entry => {
     const similarities = stringSimilarity.findBestMatch(
       entry.exportName,
-      currentAPIs[exportType]
+      currentAPIs[exportType],
     )
     const isDefaultPlugin = entry.pluginName == `default-site-plugin`
 
@@ -115,17 +119,17 @@ function getErrorContext(
 
     if (isDefaultPlugin) {
       errors.push(
-        `- Your local gatsby-${exportType}.js is using the API "${entry.exportName}" which ${message}.`
+        `- Your local gatsby-${exportType}.js is using the API "${entry.exportName}" which ${message}.`,
       )
     } else {
       errors.push(
-        `- The plugin ${entry.pluginName}@${entry.pluginVersion} is using the API "${entry.exportName}" which ${message}.`
+        `- The plugin ${entry.pluginName}@${entry.pluginVersion} is using the API "${entry.exportName}" which ${message}.`,
       )
     }
 
     if (similarities.bestMatch.rating > 0.5) {
       fixes.push(
-        `Rename "${entry.exportName}" -> "${similarities.bestMatch.target}"`
+        `Rename "${entry.exportName}" -> "${similarities.bestMatch.target}"`,
       )
     }
   })
@@ -143,7 +147,7 @@ function getErrorContext(
       .concat(
         fixes.length > 0
           ? [`\n`, `Some of the following may help fix the error(s):`, ...fixes]
-          : []
+          : [],
       )
       .filter(Boolean)
       .join(`\n`),
@@ -158,7 +162,7 @@ export async function handleBadExports({
   badExports: { [api in ExportType]: Array<IEntry> }
 }): Promise<void> {
   const hasBadExports = Object.keys(badExports).find(
-    api => badExports[api].length > 0
+    api => badExports[api].length > 0,
   )
   if (hasBadExports) {
     const latestAPIs = await getLatestAPIs()
@@ -170,7 +174,7 @@ export async function handleBadExports({
           entries,
           exportType as keyof typeof badExports,
           currentAPIs,
-          latestAPIs
+          latestAPIs,
         )
         reporter.error({
           id: `11329`,
@@ -181,9 +185,13 @@ export async function handleBadExports({
   }
 }
 
-const addModuleImportAndValidateOptions =
-  (rootDir: string, incErrors: (inc: number) => void) =>
-  async (value: Array<IPluginRefObject>): Promise<Array<IPluginRefObject>> => {
+const addModuleImportAndValidateOptions = (
+  rootDir: string,
+  incErrors: (inc: number) => void,
+) => {
+  return async (
+    value: Array<IPluginRefObject>,
+  ): Promise<Array<IPluginRefObject>> => {
     for (const plugin of value) {
       if (plugin.modulePath) {
         const importedModule = await import(
@@ -200,10 +208,11 @@ const addModuleImportAndValidateOptions =
     incErrors(subErrors)
     return subPlugins
   }
+}
 
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
-  rootDir: string
+  rootDir: string,
 ): Promise<{
   errors: number
   plugins: Array<IPluginRefObject>
@@ -240,8 +249,8 @@ async function validatePluginsOptions(
                   joi.object({
                     resolve: Joi.string(),
                     options: Joi.object({}).unknown(true),
-                  })
-                )
+                  }),
+                ),
               )
               .custom((arrayValue, helpers) => {
                 const entry = helpers.schema._flags.entry
@@ -253,7 +262,7 @@ async function validatePluginsOptions(
                   try {
                     const resolvedPlugin = resolvePlugin(value, rootDir)
                     const modulePath = require.resolve(
-                      `${resolvedPlugin.resolve}${entry ? `/${entry}` : ``}`
+                      `${resolvedPlugin.resolve}${entry ? `/${entry}` : ``}`,
                     )
                     value.modulePath = modulePath
 
@@ -265,12 +274,12 @@ async function validatePluginsOptions(
                           Array.isArray(
                             helpers.state.ancestors[
                               helpers.state.path.length - index - 1
-                            ]
+                            ],
                           )
                         ) {
                           if (index !== helpers.state.path.length - 1) {
                             throw new Error(
-                              `No support for arrays not at the end of path`
+                              `No support for arrays not at the end of path`,
                             )
                           }
                           return `[]`
@@ -294,10 +303,11 @@ async function validatePluginsOptions(
                   rootDir,
                   (inc: number): void => {
                     errors += inc
-                  }
+                  },
                 ),
-                `add module key to subplugin`
+                `add module key to subplugin`,
               ),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             args: (schema: any, args: any): any => {
               if (
                 args?.entry &&
@@ -324,7 +334,7 @@ async function validatePluginsOptions(
       if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
         // Validate correct usage of pluginOptionsSchema
         reporter.warn(
-          `Plugin "${plugin.resolve}" has an invalid options schema so we cannot verify your configuration for it.`
+          `Plugin "${plugin.resolve}" has an invalid options schema so we cannot verify your configuration for it.`,
         )
         return plugin
       }
@@ -341,7 +351,7 @@ async function validatePluginsOptions(
 
         const { value, warning } = await validateOptionsSchema(
           optionsSchema,
-          (plugin.options as IPluginInfoOptions) || {}
+          (plugin.options as IPluginInfoOptions) || {},
         )
 
         plugin.options = value
@@ -353,14 +363,12 @@ async function validatePluginsOptions(
           reporter.warn(
             stripIndent(`
         Warning: there are unknown plugin options for "${plugin.resolve}"${
-              configDir ? `, configured by ${configDir}` : ``
-            }: ${validationWarnings
-              .map(error => error.path.join(`.`))
-              .join(`, `)}
+          configDir ? `, configured by ${configDir}` : ``
+        }: ${validationWarnings.map(error => error.path.join(`.`)).join(`, `)}
         Please open an issue at https://ghub.io/${
           plugin.resolve
         } if you believe this option is valid.
-      `)
+      `),
           )
           trackCli(`UNKNOWN_PLUGIN_OPTION`, {
             name: plugin.resolve,
@@ -376,7 +384,7 @@ async function validatePluginsOptions(
           const { errors: subErrors, plugins: subPlugins } =
             await validatePluginsOptions(
               plugin.options.plugins as Array<IPluginRefObject>,
-              rootDir
+              rootDir,
             )
           plugin.options.plugins = subPlugins
           if (subPlugins.length > 0) {
@@ -408,20 +416,20 @@ async function validatePluginsOptions(
       }
 
       return plugin
-    })
+    }),
   )
   return { errors, plugins: newPlugins }
 }
 
 export async function validateConfigPluginsOptions(
   config: ISiteConfig = {},
-  rootDir: string
+  rootDir: string,
 ): Promise<void> {
   if (!config.plugins) return
 
   const { errors, plugins } = await validatePluginsOptions(
     config.plugins,
-    rootDir
+    rootDir,
   )
 
   config.plugins = plugins
@@ -466,40 +474,40 @@ export async function collatePluginAPIs({
       {
         mode: `import`,
         rootDir,
-      }
+      },
     )
     const pluginBrowserExports = await resolveModuleExports(
       `${plugin.resolve}/gatsby-browser`,
       {
         rootDir,
-      }
+      },
     )
     const pluginSSRExports = await resolveModuleExports(
       `${plugin.resolve}/gatsby-ssr`,
-      { rootDir }
+      { rootDir },
     )
 
     if (pluginNodeExports.length > 0) {
       plugin.nodeAPIs = _.intersection(pluginNodeExports, currentAPIs.node)
       badExports.node = badExports.node.concat(
-        getBadExports(plugin, pluginNodeExports, currentAPIs.node)
+        getBadExports(plugin, pluginNodeExports, currentAPIs.node),
       ) // Collate any bad exports
     }
 
     if (pluginBrowserExports.length > 0) {
       plugin.browserAPIs = _.intersection(
         pluginBrowserExports,
-        currentAPIs.browser
+        currentAPIs.browser,
       )
       badExports.browser = badExports.browser.concat(
-        getBadExports(plugin, pluginBrowserExports, currentAPIs.browser)
+        getBadExports(plugin, pluginBrowserExports, currentAPIs.browser),
       ) // Collate any bad exports
     }
 
     if (pluginSSRExports.length > 0) {
       plugin.ssrAPIs = _.intersection(pluginSSRExports, currentAPIs.ssr)
       badExports.ssr = badExports.ssr.concat(
-        getBadExports(plugin, pluginSSRExports, currentAPIs.ssr)
+        getBadExports(plugin, pluginSSRExports, currentAPIs.ssr),
       ) // Collate any bad exports
     }
   }
@@ -524,17 +532,17 @@ export const handleMultipleReplaceRenderers = ({
       reporter.warn(`replaceRenderer API found in these plugins:`)
       reporter.warn(rendererPlugins.join(`, `))
       reporter.warn(
-        `This might be an error, see: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/`
+        `This might be an error, see: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/`,
       )
     } else {
       console.log(``)
       reporter.error(
-        `Gatsby's replaceRenderer API is implemented by multiple plugins:`
+        `Gatsby's replaceRenderer API is implemented by multiple plugins:`,
       )
       reporter.error(rendererPlugins.join(`, `))
       reporter.error(`This will break your build`)
       reporter.error(
-        `See: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/`
+        `See: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/`,
       )
       if (process.env.NODE_ENV === `production`) process.exit(1)
     }
@@ -548,7 +556,7 @@ export const handleMultipleReplaceRenderers = ({
     flattenedPlugins.forEach((fp, i) => {
       if (ignorable.includes(fp.name)) {
         messages.push(
-          `Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: ${fp.name}`
+          `Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: ${fp.name}`,
         )
         flattenedPlugins[i].skipSSR = true
       }
@@ -565,7 +573,7 @@ export const handleMultipleReplaceRenderers = ({
 
 export function warnOnIncompatiblePeerDependency(
   name: string,
-  packageJSON: PackageJson
+  packageJSON: PackageJson,
 ): void {
   // Note: In the future the peer dependency should be enforced for all plugins.
   const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
@@ -577,7 +585,7 @@ export function warnOnIncompatiblePeerDependency(
     })
   ) {
     reporter.warn(
-      `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion} - It requires gatsby@${gatsbyPeerDependency}`
+      `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion} - It requires gatsby@${gatsbyPeerDependency}`,
     )
   }
 }

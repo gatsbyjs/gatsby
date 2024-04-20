@@ -36,7 +36,7 @@
     "clean": "gatsby clean",
     "test": "pnpm run build && pnpm run start-server-and-test && pnpm run test-env-vars",
     "test:dir-traversel-access": "! curl -f http://localhost:9000/%2e%2e/SHOULD_NOT_SERVE",
-    "test:offline": "pnpm run build:offline && yarn start-server-and-test:offline && pnpm run test-env-vars",
+    "test:offline": "pnpm run build:offline && pnpm run start-server-and-test:offline && pnpm run test-env-vars",
     "test-env-vars": " node __tests__/env-vars.js",
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 serve-static-files http://localhost:8888 combined",
     "start-server-and-test:locally": "start-server-and-test serve http://localhost:9000 serve-static-files http://localhost:8888 cy:open",
@@ -63,7 +63,7 @@
     "is-ci": "3.0.1",
     "prettier": "2.8.8",
     "start-server-and-test": "2.0.3",
-    "typescript": "5.4.4"
+    "typescript": "5.4.5"
   },
   "repository": {
     "type": "git",

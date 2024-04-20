@@ -1,6 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import VirtualModulesPlugin from "webpack-virtual-modules"
 import * as path from "path"
 import * as fs from "fs-extra"
+import type { Compiler } from "webpack"
 /*
  * This module allows creating virtual (in memory only) modules / files
  * that webpack compilation can access without the need to write module
@@ -16,7 +18,7 @@ import * as fs from "fs-extra"
  * in response to external events that are happening while `gatsby develop` is running.
  */
 
-interface IGatsbyWebpackVirtualModulesContext {
+type IGatsbyWebpackVirtualModulesContext = {
   writeModule: VirtualModulesPlugin["writeModule"]
 }
 
@@ -26,7 +28,7 @@ const instances: Array<IGatsbyWebpackVirtualModulesContext> = []
 export const VIRTUAL_MODULES_BASE_PATH = `.cache/_this_is_virtual_fs_path_`
 
 export class GatsbyWebpackVirtualModules {
-  apply(compiler): void {
+  apply(compiler: Compiler): void {
     const virtualModules = new VirtualModulesPlugin(fileContentLookup)
     virtualModules.apply(compiler)
     instances.push({

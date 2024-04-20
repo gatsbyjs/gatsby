@@ -1,20 +1,21 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
-import { IFlag } from "./flags"
+import type { IFlag } from "./flags"
 import chalk from "chalk"
 import { commaListsAnd } from "common-tags"
 import { distance } from "fastest-levenshtein"
 
-const handleFlags = (
+function handleFlags(
   flags: Array<IFlag>,
   configFlags: Record<string, boolean> = {},
-  executingCommand = process.env.gatsby_executing_command
+  executingCommand = process.env.gatsby_executing_command,
 ): {
   enabledConfigFlags: Array<IFlag>
   unknownFlagMessage: string
   unfitFlagMessage: string
   message: string
-} => {
+} {
   // Prepare config flags.
   // Filter out any flags that are set to false.
   const availableFlags = new Map<string, IFlag>()
@@ -55,9 +56,7 @@ const handleFlags = (
     unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known:`
     unknownConfigFlags.forEach(
       flag =>
-        (unknownFlagMessage += `\n- ${flag.flag}${
-          flag.didYouMean ? ` (did you mean: ${flag.didYouMean})` : ``
-        }`)
+        (unknownFlagMessage += `\n- ${flag.flag}${flag.didYouMean ? ` (did you mean: ${flag.didYouMean})` : ``}`),
     )
   }
 
@@ -113,7 +112,7 @@ const handleFlags = (
       `The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:\n` +
       unfitConfigFlags
         .map(
-          flag => `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`
+          flag => `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`,
         )
         .join(`\n`)
   }
@@ -160,7 +159,6 @@ const handleFlags = (
 
   // TODO remove flags that longer exist.
   //  w/ message of thanks
-
   const generateFlagLine = (flag): string => {
     let message = ``
     message += `\n- ${flag.name}`
@@ -242,7 +240,7 @@ The following flags were automatically enabled on your site:`
             ? `is one other flag`
             : `are ${otherFlagSuggestionLines.length} other flags`
         } available that you might be interested in:${otherFlagSuggestionLines.join(
-          ``
+          ``,
         )}`
       }
     }

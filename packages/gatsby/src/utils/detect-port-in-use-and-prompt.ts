@@ -2,12 +2,12 @@ import detectPort from "detect-port"
 import report from "gatsby-cli/lib/reporter"
 import prompts from "prompts"
 
-export const detectPortInUseAndPrompt = async (
+export async function detectPortInUseAndPrompt(
   port: number,
-  hostname?: string
-): Promise<number> => {
+  hostname?: string | undefined,
+): Promise<number> {
   const detectedPort = await detectPort({ port, hostname }).catch(
-    (err: Error) => report.panic(err)
+    (err: Error) => report.panic(err),
   )
   if (port !== detectedPort) {
     report.log(`\nSomething is already running at port ${port}`)

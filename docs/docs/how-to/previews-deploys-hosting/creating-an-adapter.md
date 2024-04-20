@@ -149,7 +149,7 @@ The `config` hook has to return an object with the following keys:
 
 ## Running locally
 
-If you want to test your adapter locally, you can use [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link), [yarn link](https://yarnpkg.com/cli/link), or equivalent in other package managers. You'd use your adapter like so:
+If you want to test your adapter locally, you can use [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link), [pnpm link](https://pnpm.io/cli/link), or equivalent in other package managers. You'd use your adapter like so:
 
 ```js:title=gatsby-config.js
 // gatsby-adapter-foo would be your linked adapter

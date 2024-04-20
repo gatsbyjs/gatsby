@@ -1,6 +1,7 @@
-import path from "path"
-import crypto from "crypto"
-import Url from "url"
+import path from "node:path"
+import crypto from "node:crypto"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import Url from "node:url"
 
 /**
  * getParsedPath
@@ -50,7 +51,7 @@ const filenamePurgeRegex = /:|\/|\*|\?|"|<|>|\||\\/g
 export function createFilePath(
   directory: string,
   filename: string,
-  ext: string
+  ext: string,
 ): string {
   directory = decodeURIComponent(directory)
   filename = decodeURIComponent(filename)
@@ -61,7 +62,7 @@ export function createFilePath(
   if (shouldAddHash) {
     return path.join(
       directory,
-      `${purgedFileName}-${createFileHash(filename)}${ext}`
+      `${purgedFileName}-${createFileHash(filename)}${ext}`,
     )
   } else {
     return path.join(directory, `${filename}${ext}`)

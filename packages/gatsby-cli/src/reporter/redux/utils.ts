@@ -5,7 +5,7 @@ import { ActionsUnion, IActivity } from "./types"
 import signalExit from "signal-exit"
 
 export function isActivityInProgress(
-  activityStatus: ActivityStatuses
+  activityStatus: ActivityStatuses,
 ): boolean {
   return (
     activityStatus === ActivityStatuses.InProgress ||
@@ -13,10 +13,10 @@ export function isActivityInProgress(
   )
 }
 
-export const getGlobalStatus = (
+export function getGlobalStatus(
   id: string,
-  status: ActivityStatuses
-): ActivityStatuses => {
+  status: ActivityStatuses,
+): ActivityStatuses {
   const { logs } = getStore().getState()
 
   const currentActivities = [id, ...Object.keys(logs.activities)]
@@ -24,7 +24,7 @@ export const getGlobalStatus = (
   return currentActivities.reduce(
     (
       generatedStatus: ActivityStatuses,
-      activityId: string
+      activityId: string,
     ): ActivityStatuses => {
       const activityStatus =
         activityId === id ? status : logs.activities[activityId].status
@@ -44,50 +44,54 @@ export const getGlobalStatus = (
       }
       return generatedStatus
     },
-    ActivityStatuses.Success
-  ) as ActivityStatuses
+    ActivityStatuses.Success,
+  )
 }
 
-export const getActivity = (id: string): IActivity | null =>
-  getStore().getState().logs.activities[id]
+export function getActivity(id: string): IActivity | null {
+  return getStore().getState().logs.activities[id]
+}
 
 /**
  * @returns {Number} Milliseconds from activity start
  */
-export const getElapsedTimeMS = (activity: IActivity): number => {
+export function getElapsedTimeMS(activity: IActivity): number {
   const elapsed = process.hrtime(activity.startTime)
+  // @ts-ignore
   return convertHrtime(elapsed).milliseconds
 }
 
-export const isInternalAction = (action: ActionsUnion): boolean => {
+export function isInternalAction(action: ActionsUnion): boolean {
   switch (action.type) {
     case Actions.PendingActivity:
     case Actions.CancelActivity:
-    case Actions.ActivityErrored:
+    case Actions.ActivityErrored: {
       return true
+    }
     case Actions.StartActivity:
-    case Actions.EndActivity:
+    case Actions.EndActivity: {
       return action.payload.type === ActivityTypes.Hidden
-    default:
+    }
+    default: {
       return false
+    }
   }
 }
 
 /**
  * Like setTimeout, but also handle signalExit
  */
-export const delayedCall = (fn: () => void, timeout: number): (() => void) => {
-  const fnWrap = (): void => {
+export function delayedCall(fn: () => void, timeout: number): () => void {
+  function fnWrap(): void {
     fn()
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     clear()
   }
 
-  const timeoutID = setTimeout(fnWrap, timeout)
-  const cancelSignalExit = signalExit(fnWrap)
+  const timeoutID = globalThis.setTimeout(fnWrap, timeout)
+  const cancelSignalExit = signalExit.onExit(fnWrap)
 
-  const clear = (): void => {
-    clearTimeout(timeoutID)
+  function clear(): void {
+    globalThis.clearTimeout(timeoutID)
     cancelSignalExit()
   }
 

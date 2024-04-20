@@ -3,6 +3,6 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "src/__tests__", "dist"],
   "compilerOptions": {
-    "declaration": false
+    "declaration": true
   }
 }

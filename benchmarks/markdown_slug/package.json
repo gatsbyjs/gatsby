@@ -33,7 +33,7 @@
     "ts-node": "8.9.0",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.75",
-    "typescript": "5.4.4",
+    "typescript": "5.4.5",
     "typography": "0.16.19",
     "typography-theme-wordpress-2016": "0.16.19"
   },

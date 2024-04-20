@@ -36,12 +36,12 @@ import { createHeadersMatcher } from "../adapter/create-headers"
 import { MUST_REVALIDATE_HEADERS } from "../adapter/constants"
 import { getRoutePathFromPage } from "../adapter/get-route-path"
 
-export interface ITemplateDetails {
+export type ITemplateDetails = {
   query: string
   staticQueryHashes: Array<string>
   assets: IScriptsAndStyles
 }
-export interface ISSRData {
+export type ISSRData = {
   results: IExecutionResult
   page: IGatsbyPage
   templateDetails: ITemplateDetails
@@ -65,7 +65,7 @@ declare global {
 }
 
 const tracerReadyPromise = initTracer(
-  process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
+  process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``,
 )
 
 type MaybePhantomActivity =
@@ -108,7 +108,7 @@ export async function getData({
           `Finding details about page and template`,
           {
             parentSpan: getDataWrapperActivity.span,
-          }
+          },
         )
         findMetaActivity.start()
       }
@@ -128,7 +128,7 @@ export async function getData({
       templateDetails = INLINED_TEMPLATE_TO_DETAILS[page.componentChunkName]
       if (!templateDetails) {
         throw new Error(
-          `Page template details for "${page.componentChunkName}" not found`
+          `Page template details for "${page.componentChunkName}" not found`,
         )
       }
     } finally {
@@ -137,6 +137,7 @@ export async function getData({
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const executionPromises: Array<Promise<any>> = []
 
     // 3. Execute query
@@ -165,7 +166,7 @@ export async function getData({
               parentSpan: runningQueryActivity?.span,
               forceGraphqlTracing: !!runningQueryActivity,
               telemetryResolverTimings,
-            }
+            },
           )
           .then(queryResults => {
             if (queryResults.errors && queryResults.errors.length > 0) {
@@ -173,11 +174,11 @@ export async function getData({
               const codeFrame = getCodeFrame(
                 templateDetails.query,
                 e.locations && e.locations[0].line,
-                e.locations && e.locations[0].column
+                e.locations && e.locations[0].column,
               )
 
               const queryRunningError = new Error(
-                e.message + `\n\n` + codeFrame
+                e.message + `\n\n` + codeFrame,
               )
               queryRunningError.stack = e.stack
               throw queryRunningError
@@ -189,7 +190,7 @@ export async function getData({
             if (runningQueryActivity) {
               runningQueryActivity.end()
             }
-          })
+          }),
       )
     }
 
@@ -201,7 +202,7 @@ export async function getData({
           `Running getServerData`,
           {
             parentSpan: getDataWrapperActivity.span,
-          }
+          },
         )
         runningGetServerDataActivity.start()
       }
@@ -215,7 +216,7 @@ export async function getData({
             if (runningGetServerDataActivity) {
               runningGetServerDataActivity.end()
             }
-          })
+          }),
       )
     }
 
@@ -231,7 +232,7 @@ export async function getData({
     // get headers from defaults and config
     const headersFromConfig = createHeaders(
       getRoutePathFromPage(page),
-      MUST_REVALIDATE_HEADERS
+      MUST_REVALIDATE_HEADERS,
     )
     // convert headers array to object
     for (const header of headersFromConfig) {
@@ -241,7 +242,7 @@ export async function getData({
     if (serverData?.headers) {
       // add headers from getServerData to object (which will overwrite headers from config if overlapping)
       for (const [headerKey, headerValue] of Object.entries(
-        serverData.headers
+        serverData.headers,
       )) {
         serverDataHeaders[headerKey] = headerValue
       }
@@ -254,7 +255,7 @@ export async function getData({
         .map(
           ([k, v]) =>
             // Preserve QueryString encoding
-            `${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`
+            `${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`,
         )
         .join(`&`)
       if (maybeQueryString) {
@@ -286,13 +287,15 @@ function getPath(data: ISSRData): string {
   )
 }
 
+type PageData = {
+  data: ISSRData
+  spanContext?: Span | SpanContext
+}
+
 export async function renderPageData({
   data,
   spanContext,
-}: {
-  data: ISSRData
-  spanContext?: Span | SpanContext
-}): Promise<IPageDataWithQueryResult> {
+}: PageData): Promise<IPageDataWithQueryResult> {
   await tracerReadyPromise
 
   let activity: MaybePhantomActivity
@@ -323,7 +326,7 @@ export async function renderPageData({
       }
     const slicesUsedByTemplates: IGatsbyState["slicesByTemplate"] = new Map()
     for (const [key, value] of Object.entries(
-      slicesUsedByTemplatesFromBundler
+      slicesUsedByTemplatesFromBundler,
     )) {
       slicesUsedByTemplates.set(key, value)
     }
@@ -341,41 +344,43 @@ export async function renderPageData({
       },
       JSON.stringify(data.results),
       slicesUsedByTemplates,
-      slices
+      slices,
     )
 
-    return JSON.parse(results)
+    return JSON.parse(results) as IPageDataWithQueryResult
   } finally {
     if (activity) {
       activity.end()
     }
   }
 }
-const readStaticQuery = async (
-  staticQueryHash: string
-): Promise<Record<string, { data: unknown }>> => {
+async function readStaticQuery(
+  staticQueryHash: string,
+): Promise<Record<string, { data: unknown }>> {
   const filePath = path.join(__dirname, `sq`, `${staticQueryHash}.json`)
   const rawSQContext = await fs.readFile(filePath, `utf-8`)
 
-  return JSON.parse(rawSQContext)
+  return JSON.parse(rawSQContext) as Record<string, { data: unknown }>
 }
 
-const readSliceData = async (sliceName: string): Promise<ISliceData> => {
+async function readSliceData(sliceName: string): Promise<ISliceData> {
   const filePath = path.join(__dirname, `slice-data`, `${sliceName}.json`)
 
   const rawSliceData = await fs.readFile(filePath, `utf-8`)
-  return JSON.parse(rawSliceData)
+  return JSON.parse(rawSliceData) as ISliceData
+}
+
+type RenderHTMLConfig = {
+  data: ISSRData
+  pageData?: IPageDataWithQueryResult
+  spanContext?: Span | SpanContext
 }
 
 export async function renderHTML({
   data,
   pageData,
   spanContext,
-}: {
-  data: ISSRData
-  pageData?: IPageDataWithQueryResult
-  spanContext?: Span | SpanContext
-}): Promise<string> {
+}: RenderHTMLConfig): Promise<string> {
   await tracerReadyPromise
 
   let wrapperActivity: MaybePhantomActivity
@@ -403,7 +408,7 @@ export async function renderHTML({
             `Preparing slice-data`,
             {
               parentSpan: wrapperActivity.span,
-            }
+            },
           )
           readSliceDataActivity.start()
         }
@@ -425,7 +430,7 @@ export async function renderHTML({
           `Preparing StaticQueries context`,
           {
             parentSpan: wrapperActivity.span,
-          }
+          },
         )
         readStaticQueryContextActivity.start()
       }
@@ -442,7 +447,7 @@ export async function renderHTML({
           return {
             [staticQueryHash]: await readStaticQuery(staticQueryHash),
           }
-        })
+        }),
       )
 
       staticQueryContext = Object.assign({}, ...contextsToMerge)
@@ -459,7 +464,7 @@ export async function renderHTML({
           `Actually rendering HTML`,
           {
             parentSpan: wrapperActivity.span,
-          }
+          },
         )
         renderHTMLActivity.start()
       }
@@ -477,7 +482,7 @@ export async function renderHTML({
 
       return results.html.replace(
         `<slice-start id="_gatsby-scripts-1"></slice-start><slice-end id="_gatsby-scripts-1"></slice-end>`,
-        GATSBY_SLICES_SCRIPT
+        GATSBY_SLICES_SCRIPT,
       )
     } finally {
       if (renderHTMLActivity) {

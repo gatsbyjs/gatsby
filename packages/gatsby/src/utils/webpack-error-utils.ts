@@ -1,21 +1,21 @@
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { WebpackError, StatsCompilation, Module, NormalModule } from "webpack"
-import { Stage as StageEnum } from "../commands/types"
+import { Stage } from "../commands/types"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 
-const stageCodeToReadableLabel: Record<StageEnum, string> = {
-  [StageEnum.BuildJavascript]: `Generating JavaScript bundles`,
-  [StageEnum.BuildHTML]: `Generating SSR bundle`,
-  [StageEnum.DevelopHTML]: `Generating development SSR bundle`,
-  [StageEnum.Develop]: `Generating development JavaScript bundle`,
+const stageCodeToReadableLabel: Record<Stage, string> = {
+  [`build-javascript`]: `Generating JavaScript bundles`,
+  [`build-html`]: `Generating SSR bundle`,
+  [`develop-html`]: `Generating development SSR bundle`,
+  [`develop`]: `Generating development JavaScript bundle`,
 }
 
-interface IFileLocation {
+type IFileLocation = {
   line: number
   column: number
 }
 
-interface IWebpackError {
+type IWebpackError = {
   name: string
   message: string
   file?: string
@@ -33,7 +33,7 @@ interface IWebpackError {
   }
 }
 
-interface ITransformedWebpackError {
+type ITransformedWebpackError = {
   id: string
   filePath: string
   location?: {
@@ -41,7 +41,7 @@ interface ITransformedWebpackError {
     end: IFileLocation
   }
   context: {
-    stage: StageEnum
+    stage: Stage
     stageLabel: string
     sourceMessage?: string
     [key: string]: unknown
@@ -49,8 +49,8 @@ interface ITransformedWebpackError {
 }
 
 const transformWebpackError = (
-  stage: StageEnum,
-  webpackError: WebpackError
+  stage: Stage,
+  webpackError: WebpackError,
 ): ITransformedWebpackError => {
   const castedWebpackError = webpackError as unknown as IWebpackError
 
@@ -98,7 +98,7 @@ const transformWebpackError = (
   if (castedWebpackError.name === `ModuleNotFoundError`) {
     const matches =
       castedWebpackError.error?.message.match(
-        /Can't resolve '(.*?)' in '(.*?)'/m
+        /Can't resolve '(.*?)' in '(.*?)'/m,
       ) ?? []
 
     id = `98124`
@@ -134,19 +134,19 @@ const transformWebpackError = (
 
 // With the introduction of Head API, the modulePath can have a resourceQuery so this function can be used to remove it
 const removeResourceQuery = (
-  moduleName: string | undefined
+  moduleName: string | undefined,
 ): string | undefined => {
   const moduleNameWithoutQuery = moduleName?.replace(
     /(\?|&)export=(default|head)$/,
-    ``
+    ``,
   )
 
   return moduleNameWithoutQuery
 }
 
 export const structureWebpackErrors = (
-  stage: StageEnum,
-  webpackError: WebpackError | Array<WebpackError>
+  stage: Stage,
+  webpackError: WebpackError | Array<WebpackError>,
 ): Array<ITransformedWebpackError> | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
     return webpackError.map(e => transformWebpackError(stage, e))
@@ -157,7 +157,7 @@ export const structureWebpackErrors = (
 
 export const reportWebpackWarnings = (
   warnings: StatsCompilation["warnings"] = [],
-  reporter: Reporter
+  reporter: Reporter,
 ): void => {
   let warningMessages: Array<string> = []
   if (typeof warnings[0] === `string`) {
@@ -168,7 +168,7 @@ export const reportWebpackWarnings = (
   ) {
     warningMessages = warnings.map(
       warning =>
-        `${removeResourceQuery(warning.moduleName)}\n\n${warning.message}`
+        `${removeResourceQuery(warning.moduleName)}\n\n${warning.message}`,
     )
   } else if (warnings[0]?.message) {
     warningMessages = warnings.map(warning => warning.message)

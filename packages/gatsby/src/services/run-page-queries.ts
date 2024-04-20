@@ -1,6 +1,6 @@
 import { processPageQueries } from "../query"
 import reporter from "gatsby-cli/lib/reporter"
-import { IQueryRunningContext } from "../state-machines/query-running/types"
+import type { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
 
 export async function runPageQueries({
@@ -30,7 +30,7 @@ export async function runPageQueries({
     {
       id: `page-query-running`,
       parentSpan,
-    }
+    },
   )
 
   await processPageQueries(pageQueryIds, {

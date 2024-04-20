@@ -1,4 +1,4 @@
-import { IStateProgram, ActionsUnion } from "../types"
+import type { IStateProgram, ActionsUnion } from "../types"
 import { reporter } from "gatsby-cli/lib/reporter/reporter"
 
 const initialState: IStateProgram = {
@@ -18,10 +18,10 @@ const initialState: IStateProgram = {
   disablePlugins: [],
 }
 
-export const programReducer = (
+export function programReducer(
   state: IStateProgram = initialState,
-  action: ActionsUnion
-): IStateProgram => {
+  action: ActionsUnion,
+): IStateProgram {
   switch (action.type) {
     case `SET_PROGRAM`:
       return {
@@ -47,7 +47,7 @@ export const programReducer = (
       }
       for (const pluginToDisable of action.payload.pluginsToDisable) {
         let disabledPlugin = state.disablePlugins.find(
-          entry => entry.name === pluginToDisable
+          entry => entry.name === pluginToDisable,
         )
         if (!disabledPlugin) {
           disabledPlugin = {

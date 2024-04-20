@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "18.0.0"
+        default: "20.12.2"
       gatsby_major:
         type: string
         default: "5"
@@ -385,7 +385,7 @@ jobs:
   e2e_tests_pnpm:
     executor:
       name: node
-      image: "20.11.0"
+      image: "20.12.2"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -555,12 +555,13 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 20.0.0 and pnpm
+          name: Install node 20.12.2 and pnpm
           command: |
-            nvm install 20.11.0
-            nvm alias default 20.11.0
-            nvm use 20.11.0
+            nvm install 20.12.2
+            nvm alias default 20.12.2
+            nvm use 20.12.2
             corepack enable pnpm
+            corepack use pnpm@latest
       - run:
           name: Rebuild packages for windows
           command: |
@@ -590,19 +591,21 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and netlify-cli
+          name: Install node 20.12.2, pnpm and netlify-cli
           command: |
-            nvm install 18.19.0
-            nvm alias default 18.19.0
-            nvm use 18.19.0
-            npm install -g yarn netlify-cli
+            nvm install 20.12.2
+            nvm alias default 20.12.2
+            nvm use 20.12.2
+            corepack enable pnpm
+            corepack use pnpm@latest
+            npm install -g netlify-cli
       - run:
           name: Clear out sharp
           command: |
             Remove-Item -Recurse -Force -Path "node_modules/sharp/"
           shell: powershell.exe
       - run:
-          command: yarn
+          command: pnpm install
       - run:
           command: mkdir -p /tmp/e2e-tests/
       - run:

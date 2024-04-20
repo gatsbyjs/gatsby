@@ -1,8 +1,12 @@
-import { ISiteConfig, IRawSiteConfig } from "../types"
-import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
+import type {
+  ISiteConfig,
+  IRawSiteConfig,
+  IPluginRefObject,
+  PluginRef,
+} from "../types"
 
 export function normalizePlugin(
-  plugin: IPluginRefObject | string
+  plugin: IPluginRefObject | string,
 ): IPluginRefObject {
   if (typeof plugin === `string`) {
     return {
@@ -22,7 +26,7 @@ export function normalizePlugin(
 }
 
 export function normalizePlugins(
-  plugins?: Array<PluginRef>
+  plugins?: Array<PluginRef>,
 ): Array<IPluginRefObject> {
   return (plugins || []).map(normalizePlugin)
 }

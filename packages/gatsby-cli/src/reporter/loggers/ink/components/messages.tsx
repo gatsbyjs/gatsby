@@ -1,12 +1,12 @@
-import React from "react"
+import { type ComponentType, memo, type JSX } from "react"
 import { Box, Text } from "ink"
 import { createLabel } from "./utils"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
 
-const getLabel = (
-  level: ActivityLogLevels | LogLevels
-): ReturnType<typeof createLabel> => {
+function getLabel(
+  level: ActivityLogLevels | LogLevels,
+): ReturnType<typeof createLabel> {
   switch (level) {
     case ActivityLogLevels.Success:
     case LogLevels.Success:
@@ -27,36 +27,45 @@ const getLabel = (
   }
 }
 
-export interface IMessageProps {
+export type IMessageProps = {
   level: ActivityLogLevels | LogLevels
   text: string
-  duration?: number
-  statusText?: string
+  duration?: number | undefined
+  statusText?: string | undefined
 }
 
-export const Message = React.memo<IMessageProps>(
-  ({ level, text, duration, statusText }) => {
-    let message = text
-    if (duration) {
-      message += ` - ${duration.toFixed(3)}s`
-    }
-    if (statusText) {
-      message += ` - ${statusText}`
-    }
-    if (!level || level === `LOG`) {
-      return <Text>{message}</Text>
-    }
+function _Message({
+  level,
+  text,
+  duration,
+  statusText,
+}: IMessageProps): JSX.Element {
+  let message = text
 
-    const TextLabel = getLabel(level)
-
-    return (
-      <Box flexDirection="row">
-        <Text wrap="wrap">
-          <TextLabel />
-          {` `}
-          {message}
-        </Text>
-      </Box>
-    )
+  if (duration) {
+    message += ` - ${duration.toFixed(3)}s`
   }
-)
+
+  if (statusText) {
+    message += ` - ${statusText}`
+  }
+
+  if (!level || level === `LOG`) {
+    return <Text>{message}</Text>
+  }
+
+  const TextLabel = getLabel(level)
+
+  return (
+    <Box flexDirection="row">
+      <Text wrap="wrap">
+        <TextLabel />
+        {` `}
+        {message}
+      </Text>
+    </Box>
+  )
+}
+
+export const Message: ComponentType<IMessageProps> =
+  memo<IMessageProps>(_Message)

@@ -1,6 +1,6 @@
 import { assertStore } from "./assert-store"
-import { Store } from "redux"
-import { IMutationAction } from "../services"
+import type { Store } from "redux"
+import type { IMutationAction } from "../services"
 import { actions } from "../redux/actions"
 import reporter from "gatsby-cli/lib/reporter"
 /**
@@ -8,7 +8,7 @@ import reporter from "gatsby-cli/lib/reporter"
  * They may include a `resolve` prop (if they are createNode actions).
  * If so, we resolve the promise when we're done
  */
-export const callRealApi = (event: IMutationAction, store?: Store): void => {
+export function callRealApi(event: IMutationAction, store?: Store): void {
   assertStore(store)
   const { type, payload, resolve } = event
   if (type in actions) {

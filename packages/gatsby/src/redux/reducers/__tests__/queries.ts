@@ -34,6 +34,7 @@ let Pages
 let StaticQueries
 let ComponentQueries
 beforeEach(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   state = reducer(undefined, `@@setup` as any)
   Pages = {
     foo: {
@@ -431,13 +432,13 @@ describe(`createPages API end`, () => {
     state = removeStaticQuery(state, StaticQueries.q1.id)
 
     expect(
-      state.trackedComponents.get(`/static-query-component1.js`)
+      state.trackedComponents.get(`/static-query-component1.js`),
     ).toMatchObject({
       staticQueries: new Set([]),
     })
     // sanity check:
     expect(
-      state.trackedComponents.get(`/static-query-component2.js`)
+      state.trackedComponents.get(`/static-query-component2.js`),
     ).toMatchObject({
       staticQueries: new Set([`sq--q2`]),
     })
@@ -455,6 +456,7 @@ describe(`query extraction`, () => {
   })
 
   it(`saves query text on the first extraction`, () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state = reducer(state, queryExtracted(ComponentQueries.foo, {} as any))
 
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
@@ -464,6 +466,7 @@ describe(`query extraction`, () => {
   })
 
   it(`marks all page queries associated with the component as dirty on the first run`, () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state = reducer(state, queryExtracted(ComponentQueries.bar, {} as any))
 
     expect(state.trackedQueries.get(`/bar`)).toMatchObject({
@@ -495,13 +498,15 @@ describe(`query extraction`, () => {
       state,
       queryExtractionBabelError(
         { componentPath: `/foo.js`, error: new Error(`Babel error`) },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
     state = reducer(
       state,
-      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any),
     )
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0)
   })
@@ -513,21 +518,25 @@ describe(`query extraction`, () => {
       state,
       queryExtractionBabelError(
         { componentPath: `/foo.js`, error: new Error(`Babel error`) },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     state = reducer(
       state,
-      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any),
     )
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
     state = reducer(
       state,
-      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any),
     )
     state = reducer(
       state,
-      queryExtracted(ComponentQueries.fooEdited, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtracted(ComponentQueries.fooEdited, {} as any),
     )
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(FLAG_DIRTY_TEXT)
   })
@@ -548,7 +557,7 @@ describe(`query extraction`, () => {
     state = editFooQuery(state, ComponentQueries.fooEdited)
 
     expect(state.trackedComponents.get(`/foo.js`)?.query).toEqual(
-      ComponentQueries.fooEdited.query
+      ComponentQueries.fooEdited.query,
     )
   })
 
@@ -558,12 +567,14 @@ describe(`query extraction`, () => {
       state,
       queryExtractionGraphQLError(
         { componentPath: `/foo.js`, error: `GraphQL syntax error` },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     state = reducer(
       state,
-      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any),
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
       errors: FLAG_ERROR_EXTRACTION,
@@ -576,12 +587,14 @@ describe(`query extraction`, () => {
       state,
       queryExtractionBabelError(
         { componentPath: `/foo.js`, error: new Error(`Babel error`) },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     state = reducer(
       state,
-      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtracted({ componentPath: `/foo.js`, query: `` }, {} as any),
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
       errors: FLAG_ERROR_EXTRACTION,
@@ -590,9 +603,11 @@ describe(`query extraction`, () => {
   })
 
   function editFooQuery(state, newFoo): QueriesState {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state = reducer(state, queryExtracted(ComponentQueries.foo, {} as any))
     state = runQuery(state, { path: Pages.foo.path })
     expect(state.trackedQueries.get(`/foo`)?.dirty).toEqual(0) // sanity-check
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return reducer(state, queryExtracted(newFoo, {} as any))
   }
 })
@@ -603,8 +618,9 @@ describe(`query extraction error`, () => {
       state,
       queryExtractionBabelError(
         { componentPath: `/foo.js`, error: new Error(`babel error`) },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
       errors: FLAG_ERROR_EXTRACTION,
@@ -616,8 +632,9 @@ describe(`query extraction error`, () => {
       state,
       queryExtractionGraphQLError(
         { componentPath: `/foo.js`, error: `GraphQL syntax error` },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
       errors: FLAG_ERROR_EXTRACTION,
@@ -629,12 +646,14 @@ describe(`query extraction error`, () => {
       state,
       queryExtractionBabelError(
         { componentPath: `/foo.js`, error: new Error(`babel error`) },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     state = reducer(
       state,
-      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any),
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
       errors: 0,
@@ -646,12 +665,14 @@ describe(`query extraction error`, () => {
       state,
       queryExtractionGraphQLError(
         { componentPath: `/foo.js`, error: `GraphQL syntax error` },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     state = reducer(
       state,
-      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryExtractedBabelSuccess({ componentPath: `/foo.js` }, {} as any),
     )
     expect(state.trackedComponents.get(`/foo.js`)).toMatchObject({
       errors: 0,
@@ -825,8 +846,9 @@ describe(`query start`, () => {
           path: Pages.foo.path,
           isPage: true,
         },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     expect(state.byNode.get(`123`)?.has(`/foo`)).toEqual(false)
     expect(state.byConnection.get(`Test`)?.has(`/foo`)).toEqual(false)
@@ -841,8 +863,9 @@ describe(`query start`, () => {
           path: StaticQueries.q1.id,
           isPage: false,
         },
-        {} as any
-      )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+      ),
     )
     expect(state.byNode.get(`123`)?.has(`sq--q1`)).toEqual(false)
     expect(state.byConnection.get(`Test`)?.has(`sq--q1`)).toEqual(false)
@@ -853,16 +876,17 @@ describe(`create node`, () => {
   it.todo(`marks page query as dirty when it has this node as a dependency`)
   it.todo(`marks static query as dirty when it has this node as a dependency`)
   it.todo(
-    `does not mark page query as dirty when this node is not a query dependency`
+    `does not mark page query as dirty when this node is not a query dependency`,
   )
   it.todo(
-    `does not mark static query as dirty when this node is not a query dependency`
+    `does not mark static query as dirty when this node is not a query dependency`,
   )
 })
 
 describe(`delete node`, () => {
   it(`accounts for undefined payload`, () => {
     const runDeleteNode = (): void => {
+      // @ts-ignore
       reducer(state, { type: `DELETE_NODE`, payload: undefined })
     }
     expect(runDeleteNode).not.toThrow(`Cannot read property 'id' of undefined`)
@@ -871,10 +895,10 @@ describe(`delete node`, () => {
   it.todo(`marks page query as dirty when it has this node as a dependency`)
   it.todo(`marks static query as dirty when it has this node as a dependency`)
   it.todo(
-    `does not mark page query as dirty when this node is not a query dependency`
+    `does not mark page query as dirty when this node is not a query dependency`,
   )
   it.todo(
-    `does not mark static query as dirty when this node is not a query dependency`
+    `does not mark static query as dirty when this node is not a query dependency`,
   )
 })
 
@@ -916,6 +940,9 @@ describe(`merge worker query state`, () => {
       type: `MERGE_WORKER_QUERY_STATE`,
       payload: {
         workerId: 1,
+        queryStateTelemetryChunk: {
+          gatsbyImageSourceUrls: new Set<string>(),
+        },
         queryStateChunk: {
           byNode: new Map([[`worker-random-id`, new Set([`/worker-page`])]]),
           byConnection: new Map([[`WorkerType`, new Set([`/worker-page`])]]),
@@ -936,15 +963,15 @@ describe(`merge worker query state`, () => {
     })
     expect(state.byNode.get(`123`)).toEqual(new Set([`/foo`]))
     expect(state.byNode.get(`worker-random-id`)).toEqual(
-      new Set([`/worker-page`])
+      new Set([`/worker-page`]),
     )
     expect(state.byConnection.get(`Foo`)).toEqual(new Set([`/foo`]))
     expect(state.byConnection.get(`WorkerType`)).toEqual(
-      new Set([`/worker-page`])
+      new Set([`/worker-page`]),
     )
     expect(state.queryNodes.get(`/foo`)).toEqual(new Set([`123`]))
     expect(state.queryNodes.get(`/worker-page`)).toEqual(
-      new Set([`worker-random-id`])
+      new Set([`worker-random-id`]),
     )
   })
 
@@ -953,6 +980,9 @@ describe(`merge worker query state`, () => {
       type: `MERGE_WORKER_QUERY_STATE`,
       payload: {
         workerId: 1,
+        queryStateTelemetryChunk: {
+          gatsbyImageSourceUrls: new Set<string>(),
+        },
         queryStateChunk: {
           byNode: new Map(),
           byConnection: new Map(),
@@ -966,7 +996,7 @@ describe(`merge worker query state`, () => {
     }
 
     expect(() => reducer(state, action)).toThrow(
-      `Assertion failed: workerState.deletedQueries.size === 0 (worker #1)`
+      `Assertion failed: workerState.deletedQueries.size === 0 (worker #1)`,
     )
   })
 
@@ -975,6 +1005,9 @@ describe(`merge worker query state`, () => {
       type: `MERGE_WORKER_QUERY_STATE`,
       payload: {
         workerId: 1,
+        queryStateTelemetryChunk: {
+          gatsbyImageSourceUrls: new Set<string>(),
+        },
         queryStateChunk: {
           byNode: new Map(),
           byConnection: new Map(),
@@ -998,7 +1031,7 @@ describe(`merge worker query state`, () => {
     }
 
     expect(() => reducer(state, action)).toThrow(
-      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #1)`
+      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #1)`,
     )
   })
 
@@ -1007,6 +1040,9 @@ describe(`merge worker query state`, () => {
       type: `MERGE_WORKER_QUERY_STATE`,
       payload: {
         workerId: 1,
+        queryStateTelemetryChunk: {
+          gatsbyImageSourceUrls: new Set<string>(),
+        },
         queryStateChunk: {
           byNode: new Map(),
           byConnection: new Map(),
@@ -1023,6 +1059,9 @@ describe(`merge worker query state`, () => {
       type: `MERGE_WORKER_QUERY_STATE`,
       payload: {
         workerId: 2,
+        queryStateTelemetryChunk: {
+          gatsbyImageSourceUrls: new Set<string>(),
+        },
         queryStateChunk: {
           byNode: new Map(),
           byConnection: new Map(),
@@ -1036,10 +1075,10 @@ describe(`merge worker query state`, () => {
     }
 
     expect(() => reducer(state, action1)).toThrow(
-      `Assertion failed: all worker queries are not dirty (worker #1)`
+      `Assertion failed: all worker queries are not dirty (worker #1)`,
     )
     expect(() => reducer(state, action2)).toThrow(
-      `Assertion failed: all worker queries are not running (worker #2)`
+      `Assertion failed: all worker queries are not running (worker #2)`,
     )
   })
 })
@@ -1047,7 +1086,7 @@ describe(`merge worker query state`, () => {
 function createPage(
   state: QueriesState,
   page: Partial<IGatsbyPage>,
-  other: Partial<ICreatePageAction> = {}
+  other: Partial<ICreatePageAction> = {},
 ): QueriesState {
   return reducer(state, {
     type: `CREATE_PAGE`,
@@ -1058,7 +1097,7 @@ function createPage(
 
 function deletePage(
   state: QueriesState,
-  page: Partial<IGatsbyPage>
+  page: Partial<IGatsbyPage>,
 ): QueriesState {
   return reducer(state, {
     type: `DELETE_PAGE`,
@@ -1068,7 +1107,7 @@ function deletePage(
 
 function runQuery(
   state: QueriesState,
-  payload: Partial<IQueryStartAction["payload"]>
+  payload: Partial<IQueryStartAction["payload"]>,
 ): QueriesState {
   const tmp = startQuery(state, payload)
   return finishQuery(tmp, payload)
@@ -1076,21 +1115,23 @@ function runQuery(
 
 function startQuery(
   state: QueriesState,
-  payload: Partial<IQueryStartAction["payload"]>
+  payload: Partial<IQueryStartAction["payload"]>,
 ): QueriesState {
   return reducer(
     state,
-    queryStart(payload as IQueryStartAction["payload"], {} as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    queryStart(payload as IQueryStartAction["payload"], {} as any),
   )
 }
 
 function finishQuery(
   state: QueriesState,
-  payload: Partial<IPageQueryRunAction["payload"]>
+  payload: Partial<IPageQueryRunAction["payload"]>,
 ): QueriesState {
   return reducer(
     state,
-    pageQueryRun(payload as IPageQueryRunAction["payload"], {} as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    pageQueryRun(payload as IPageQueryRunAction["payload"], {} as any),
   )
 }
 

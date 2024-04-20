@@ -1,17 +1,18 @@
 import { onLogAction } from "../../redux/index"
-import { ISetStatus, ActionsUnion } from "../../redux/types"
+import type { ISetStatus, ActionsUnion } from "../../redux/types"
 import { Actions, LogLevels } from "../../constants"
 import stripAnsi from "strip-ansi"
 import { cloneDeep } from "lodash"
 
-const isStringPayload = (action: ActionsUnion): action is ISetStatus =>
-  typeof action.payload === `string`
+function isStringPayload(action: ActionsUnion): action is ISetStatus {
+  return typeof action.payload === `string`
+}
 
 /**
  * Payload can either be a String or an Object
  * See more at integration-tests/structured-logging/__tests__/to-do.js
  */
-const sanitizeAction = (action: ActionsUnion): ActionsUnion => {
+function sanitizeAction(action: ActionsUnion): ActionsUnion {
   const copiedAction = cloneDeep(action)
 
   if (isStringPayload(copiedAction)) {
@@ -28,7 +29,7 @@ const sanitizeAction = (action: ActionsUnion): ActionsUnion => {
   return copiedAction
 }
 
-export const initializeIPCLogger = (): void => {
+export function initializeIPCLogger(): void {
   onLogAction((action: ActionsUnion) => {
     if (!process.send) return
 
@@ -45,7 +46,7 @@ export const initializeIPCLogger = (): void => {
       // Override Success and Log types to Info over IPC
       if (
         [LogLevels.Success, LogLevels.Log].includes(
-          sanitizedAction.payload.level as LogLevels
+          sanitizedAction.payload.level as LogLevels,
         )
       ) {
         sanitizedAction.payload.level = LogLevels.Info

@@ -8,12 +8,12 @@ import { getConfigStore } from "./utils/get-config-store"
 import colors from "ansi-colors"
 import { clearLine } from "./utils/clear-line"
 
-type PackageManager = "pnpm" | "yarn" | "npm"
+type PackageManager = "pnpm" | "npm"
 
 const packageManagerConfigKey = `cli.packageManager`
 
 export const getPackageManager = (
-  npmConfigUserAgent?: string
+  npmConfigUserAgent?: string | undefined,
 ): PackageManager => {
   const configStore = getConfigStore()
   const actualPackageManager = configStore.get(packageManagerConfigKey)
@@ -27,11 +27,6 @@ export const getPackageManager = (
     return `pnpm`
   }
 
-  if (npmConfigUserAgent?.includes(`yarn`)) {
-    configStore.set(packageManagerConfigKey, `yarn`)
-    return `yarn`
-  }
-
   configStore.set(packageManagerConfigKey, `npm`)
   return `npm`
 }
@@ -39,38 +34,37 @@ export const getPackageManager = (
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
-const checkForYarn = (): boolean => {
-  try {
-    execSync(`yarnpkg --version`, { stdio: `ignore` })
-    return true
-  } catch (e) {
-    reporter.info(
-      `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
-    )
-    return false
-  }
-}
+// const checkForYarn = (): boolean => {
+//   try {
+//     execSync(`yarnpkg --version`, { stdio: `ignore` })
+//     return true
+//   } catch (e) {
+//     reporter.info(
+//       `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`,
+//     )
+//     return false
+//   }
+// }
 
 // Initialize newly cloned directory as a git repo
-const gitInit = async (
-  rootPath: string
-): Promise<ExecaReturnBase<string>> =>
-  await execa(`git`, [`init`], { cwd: rootPath })
+async function gitInit(rootPath: string): Promise<ExecaReturnBase<string>> {
+  return await execa(`git`, [`init`], { cwd: rootPath })
+}
 
 // Create a .gitignore file if it is missing in the new directory
-const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
+async function maybeCreateGitIgnore(rootPath: string): Promise<void> {
   if (fs.existsSync(path.join(rootPath, `.gitignore`))) {
     return
   }
 
   await fs.writeFile(
     path.join(rootPath, `.gitignore`),
-    `.cache\nnode_modules\npublic\n`
+    `.cache\nnode_modules\npublic\n`,
   )
 }
 
 // Create an initial git commit in the new directory
-const createInitialGitCommit = async (rootPath: string): Promise<void> => {
+async function createInitialGitCommit(rootPath: string): Promise<void> {
   await execa(`git`, [`add`, `-A`], { cwd: rootPath })
   // use execSync instead of spawn to handle git clients using
   // pgp signatures (with password)
@@ -85,10 +79,10 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
   }
 }
 
-const setNameInPackage = async (
+async function setNameInPackage(
   sitePath: string,
-  npmSafeSiteName: string
-): Promise<void> => {
+  npmSafeSiteName: string,
+): Promise<void> {
   const packageJsonPath = path.join(sitePath, `package.json`)
   const packageJson = await fs.readJSON(packageJsonPath)
   packageJson.name = npmSafeSiteName
@@ -109,22 +103,22 @@ const setNameInPackage = async (
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
-const install = async (
+async function install(
   rootPath: string,
-  packages: Array<string>
-): Promise<void> => {
+  packages: Array<string>,
+): Promise<void> {
   const prevDir = process.cwd()
 
   reporter.info(
-    `${colors.blueBright(colors.symbols.pointer)} Installing Gatsby...`
+    `${colors.blueBright(colors.symbols.pointer)} Installing Gatsby...`,
   )
 
   process.chdir(rootPath)
 
-  const npmConfigUserAgent = process.env.npm_config_user_agent
+  // const npmConfigUserAgent = process.env.npm_config_user_agent
 
   try {
-    const pm = getPackageManager(npmConfigUserAgent)
+    // const pm = getPackageManager(npmConfigUserAgent)
 
     const options: Options = {
       stderr: `inherit`,
@@ -139,30 +133,30 @@ const install = async (
       `--no-audit`,
     ]
 
-    if (pm === `yarn` && checkForYarn()) {
-      const args = packages.length
-        ? [`add`, `--silent`, ...packages]
-        : [`--silent`]
+    // if (pm === `yarn` && checkForYarn()) {
+    //   const args = packages.length
+    //     ? [`add`, `--silent`, ...packages]
+    //     : [`--silent`]
 
-      await fs.remove(`package-lock.json`)
-      await execa(`yarnpkg`, args, options)
-    } else {
-      await fs.remove(`yarn.lock`)
-      await execa(`pnpm`, [`install`, ...npmAdditionalCliArgs], options)
-      await clearLine()
+    //   await fs.remove(`package-lock.json`)
+    //   await execa(`yarnpkg`, args, options)
+    // } else {
+    await fs.remove(`yarn.lock`)
+    await execa(`pnpm`, [`install`, ...npmAdditionalCliArgs], options)
+    await clearLine()
 
-      reporter.success(`Installed Gatsby`)
-      reporter.info(
-        `${colors.blueBright(colors.symbols.pointer)} Installing plugins...`
-      )
+    reporter.success(`Installed Gatsby`)
+    reporter.info(
+      `${colors.blueBright(colors.symbols.pointer)} Installing plugins...`,
+    )
 
-      await execa(
-        `pnpm`,
-        [`install`, ...npmAdditionalCliArgs, ...packages],
-        options
-      )
-      await clearLine()
-    }
+    await execa(
+      `pnpm`,
+      [`install`, ...npmAdditionalCliArgs, ...packages],
+      options,
+    )
+    await clearLine()
+    // }
 
     reporter.success(`Installed plugins`)
   } catch (e) {
@@ -173,11 +167,11 @@ const install = async (
 }
 
 // Clones starter from URI.
-const clone = async (
+async function clone(
   url: string,
   rootPath: string,
-  branch?: string
-): Promise<void> => {
+  branch?: string | undefined,
+): Promise<void> {
   const branchProps = branch ? [`-b`, branch] : []
   const stop = spin(`Cloning site template`)
   const args = [
@@ -217,7 +211,7 @@ export async function initStarter(
   starter: string,
   rootPath: string,
   packages: Array<string>,
-  npmSafeSiteName: string
+  npmSafeSiteName: string,
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 

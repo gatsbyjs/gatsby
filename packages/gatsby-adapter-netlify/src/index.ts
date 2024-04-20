@@ -163,6 +163,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         fileCDNUrlGeneratorModulePath: useNetlifyImageCDN
           ? require.resolve(`./file-cdn-url-generator`)
           : undefined,
+        // @ts-ignore
         functionsPlatform: `linux`,
         functionsArch: `x64`,
       }

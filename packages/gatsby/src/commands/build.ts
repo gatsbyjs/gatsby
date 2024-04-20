@@ -19,11 +19,11 @@ import {
 } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import { bootstrap } from "../bootstrap"
-import {apiRunnerNode} from "../utils/api-runner-node"
+import { apiRunnerNode } from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
-import * as db from "../redux/save-state"
+import { saveState } from "../redux/save-state"
 import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
@@ -63,6 +63,7 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 // @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
+// @ts-ignore
 import type webpack from "webpack"
 import {
   materializePageMode,
@@ -78,7 +79,8 @@ import { writeTypeScriptTypes } from "../utils/graphql-typegen/ts-codegen"
 module.exports = async function build(
   program: IBuildArgs,
   // Let external systems running Gatsby to inject attributes
-  externalTelemetryAttributes: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  externalTelemetryAttributes: Record<string, any>,
 ): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
@@ -94,7 +96,7 @@ module.exports = async function build(
 
   if (program.profile) {
     report.warn(
-      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.com/docs/profiling-site-performance-with-react-profiler/#performance-impact`
+      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.com/docs/profiling-site-performance-with-react-profiler/#performance-impact`,
     )
   }
 
@@ -113,7 +115,7 @@ module.exports = async function build(
   if (!externalTelemetryAttributes) {
     await initTracer(
       process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
-        program.openTracingConfigFile
+        program.openTracingConfigFile,
     )
   }
 
@@ -121,7 +123,7 @@ module.exports = async function build(
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
-  signalExit(exitCode => {
+  signalExit.onExit(exitCode => {
     telemetry.trackCli(`BUILD_END`, {
       exitCode: exitCode as number | undefined,
     })
@@ -143,7 +145,7 @@ module.exports = async function build(
       parentSpan: buildSpan,
     })
 
-    // @ts-ignore
+  // @ts-ignore
   await apiRunnerNode(`onPreBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
@@ -164,17 +166,18 @@ module.exports = async function build(
   let webpackSSRCompilationHash: string | null = null
   let templateCompilationHashes: Record<string, string> = {}
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const engineBundlingPromises: Array<Promise<any>> = []
   const buildActivityTimer = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
-    { parentSpan: buildSpan }
+    { parentSpan: buildSpan },
   )
   buildActivityTimer.start()
 
   try {
     const { stats, close } = await buildProductionBundle(
       program,
-      buildActivityTimer.span
+      buildActivityTimer.span,
     )
     closeJavascriptBundleCompilation = close
 
@@ -190,7 +193,7 @@ module.exports = async function build(
     }).assets as Array<webpack.StatsAsset>
     webpackCompilationHash = stats.hash as string
   } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors('build-javascript', err))
+    buildActivityTimer.panic(structureWebpackErrors(`build-javascript`, err))
   } finally {
     buildActivityTimer.end()
   }
@@ -199,13 +202,13 @@ module.exports = async function build(
     const state = store.getState()
     const buildActivityTimer = report.activityTimer(
       `Building Rendering Engines`,
-      { parentSpan: buildSpan }
+      { parentSpan: buildSpan },
     )
     try {
       buildActivityTimer.start()
       // bundle graphql-engine
       engineBundlingPromises.push(
-        createGraphqlEngineBundle(program.directory, report, program.verbose)
+        createGraphqlEngineBundle(program.directory, report, program.verbose),
       )
 
       engineBundlingPromises.push(
@@ -216,7 +219,7 @@ module.exports = async function build(
           webpackCompilationHash: webpackCompilationHash as string, // we set webpackCompilationHash above
           reporter: report,
           isVerbose: program.verbose,
-        })
+        }),
       )
       await Promise.all(engineBundlingPromises)
     } catch (err) {
@@ -228,14 +231,14 @@ module.exports = async function build(
 
   const buildSSRBundleActivityProgress = report.activityTimer(
     `Building HTML renderer`,
-    { parentSpan: buildSpan }
+    { parentSpan: buildSpan },
   )
   buildSSRBundleActivityProgress.start()
   try {
     const { close, stats } = await buildRenderer(
       program,
-      'build-html',
-      buildSSRBundleActivityProgress.span
+      `build-html`,
+      buildSSRBundleActivityProgress.span,
     )
 
     closeHTMLBundleCompilation = close
@@ -252,7 +255,7 @@ module.exports = async function build(
 
     await close()
   } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors('build-html', err))
+    buildActivityTimer.panic(structureWebpackErrors(`build-html`, err))
   } finally {
     buildSSRBundleActivityProgress.end()
   }
@@ -264,22 +267,22 @@ module.exports = async function build(
   ) {
     const buildPartialHydrationBundleActivityProgress = report.activityTimer(
       `Building Partial Hydration renderer`,
-      { parentSpan: buildSpan }
+      { parentSpan: buildSpan },
     )
     buildPartialHydrationBundleActivityProgress.start()
     try {
       const { buildPartialHydrationRenderer } = await import(`./build-html`)
       const { close } = await buildPartialHydrationRenderer(
         program,
-        'build-html',
-        buildPartialHydrationBundleActivityProgress.span
+        `build-html`,
+        buildPartialHydrationBundleActivityProgress.span,
       )
 
       closePartialHydrationBundleCompilation = close
 
       await close()
     } catch (err) {
-      buildActivityTimer.panic(structureWebpackErrors('build-html', err))
+      buildActivityTimer.panic(structureWebpackErrors(`build-html`, err))
     } finally {
       buildPartialHydrationBundleActivityProgress.end()
     }
@@ -326,7 +329,7 @@ module.exports = async function build(
   // Only run queries with mode SSG
 
   queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-    query => getPageMode(query) === `SSG`
+    query => getPageMode(query) === `SSG`,
   )
 
   // Start saving page.mode in the main process (while queries run in workers in parallel)
@@ -432,7 +435,7 @@ module.exports = async function build(
         `Rewriting compilation hashes`,
         {
           parentSpan: buildSpan,
-        }
+        },
       )
       rewriteActivityTimer.start()
 
@@ -463,10 +466,10 @@ module.exports = async function build(
               availableTemplates: [...store.getState().components.keys()],
             })
             throw new Error(
-              `something changed in webpack but I don't know what`
+              `something changed in webpack but I don't know what`,
             )
           }
-        }
+        },
       )
     }
 
@@ -487,14 +490,14 @@ module.exports = async function build(
       const sliceDataPath = path.join(
         state.program.directory,
         `public`,
-        `slice-data`
+        `slice-data`,
       )
       if (fs.existsSync(sliceDataPath)) {
         const destination = path.join(
           state.program.directory,
           `.cache`,
           `page-ssr`,
-          `slice-data`
+          `slice-data`,
         )
         fs.copySync(sliceDataPath, destination)
       }
@@ -532,12 +535,12 @@ module.exports = async function build(
 
   store.dispatch(actions.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
 
-  await db.saveState()
+  saveState()
 
   await waitUntilAllJobsComplete()
 
   // we need to save it again to make sure our latest state has been saved
-  await db.saveState()
+  saveState()
 
   if (shouldGenerateEngines()) {
     // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
@@ -568,7 +571,7 @@ module.exports = async function build(
         `Generating TypeScript types`,
         {
           parentSpan: buildSpan,
-        }
+        },
       )
       typegenActivity.start()
 
@@ -577,7 +580,7 @@ module.exports = async function build(
           directory,
           schema,
           definitions,
-          graphqlTypegenOptions
+          graphqlTypegenOptions,
         )
       } catch (err) {
         typegenActivity.panicOnBuild({
@@ -616,7 +619,7 @@ module.exports = async function build(
   }
 
   // Make sure we saved the latest state so we have all jobs cached
-  await db.saveState()
+  saveState()
 
   const state = store.getState()
   reporter._renderPageTree({
@@ -651,7 +654,7 @@ module.exports = async function build(
       report.info(
         `Built pages:\n${toRegenerate
           .map(path => `Updated page: ${path}`)
-          .join(`\n`)}`
+          .join(`\n`)}`,
       )
     }
 
@@ -659,7 +662,7 @@ module.exports = async function build(
       report.info(
         `Deleted pages:\n${toDelete
           .map(path => `Deleted page: ${path}`)
-          .join(`\n`)}`
+          .join(`\n`)}`,
       )
     }
   }
@@ -667,7 +670,7 @@ module.exports = async function build(
   if (program.writeToFile) {
     const createdFilesPath = path.resolve(
       `${program.directory}/.cache`,
-      `newPages.txt`
+      `newPages.txt`,
     )
     const createdFilesContent = toRegenerate.length
       ? `${toRegenerate.join(`\n`)}\n`
@@ -675,7 +678,7 @@ module.exports = async function build(
 
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
-      `deletedPages.txt`
+      `deletedPages.txt`,
     )
     const deletedFilesContent = toDelete.length
       ? `${toDelete.join(`\n`)}\n`

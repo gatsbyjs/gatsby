@@ -65,15 +65,15 @@ module.exports = {
 }
 ```
 
-### Using `npm link` or `yarn link`
+### Using `pnpm link` or `pnpm link`
 
-You can use [`npm link`](https://docs.npmjs.com/cli/link.html) or [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) to reference a package from another location on your machine.
+You can use [`pnpm link`](https://docs.npmjs.com/cli/link.html) or [`pnpm link`](https://pnpm.io/cli/link) to reference a package from another location on your machine.
 
-By running `npm link ../path/to/my-plugin` in the root of your Gatsby site, your computer will create a symlink to your package.
+By running `pnpm link ../path/to/my-plugin` in the root of your Gatsby site, your computer will create a symlink to your package.
 
-This is a similar process to setting up yarn workspaces for development with Gatsby themes (which is the recommended approach for developing themes). You can read how to set up a site in this manner in the [Building a Theme guide](/tutorial/building-a-theme/#set-up-yarn-workspaces).
+This is a similar process to setting up pnpm workspaces for development with Gatsby themes (which is the recommended approach for developing themes). You can read how to set up a site in this manner in the [Setting up Pnpm Workspaces](https://pnpm.io/workspaces).
 
-**Note**: See an example of using a local plugin from the plugins folder, with `require.resolve`, and `npm link` in [this example repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-local-plugins).
+**Note**: See an example of using a local plugin from the plugins folder, with `require.resolve`, and `pnpm link` in [this example repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-local-plugins).
 
 ## Compilation and processing with Babel
 

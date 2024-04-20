@@ -15,7 +15,7 @@ cd gatsby-site-using-local-plugins
 You'll need to install dependencies for the site by running:
 
 ```shell
-npm install
+pnpm install
 ```
 
 Then run `gatsby develop`:
@@ -53,7 +53,7 @@ module.exports = {
       // including a plugin from outside the plugins folder needs the path to it
       resolve: require.resolve(`../gatsby-plugin-console-log-b`),
     },
-    // including a plugin with yarn or npm link
+    // including a plugin with pnpm link or npm link
     //   in order for this plugin to be found when you run gatsby develop
     //   you first need to run `npm link ../gatsby-plugin-console-log-c` in the `gatsby-site-using-local-plugins` root folder
     `gatsby-plugin-console-log-c`, // highlight-line
@@ -64,7 +64,7 @@ module.exports = {
 And then run:
 
 ```shell:title=gatsby-site-using-multiple-local-plugins
-npm link ../gatsby-plugin-console-log-c
+pnpm link ../gatsby-plugin-console-log-c
 ```
 
 When you run `gatsby develop` now, you should see the last plugin logging another line:
@@ -75,7 +75,7 @@ $ gatsby develop
   success load plugins - 1.047s
   logging to the console from plugins folder
   logging to the console from a plugin in another project with require.resolve
-+ logging to the console from a plugin in another project with npm/yarn link
++ logging to the console from a plugin in another project with npm/pnpm link
   logging to the console from site's gatsby-node
   success onPreInit - 0.023s
 ```

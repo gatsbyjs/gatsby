@@ -1,13 +1,13 @@
-import { ActionsUnion, IGatsbyState } from "../types"
+import type { ActionsUnion, IGatsbyState } from "../types"
 
 const initialState = {
   gatsbyImageSourceUrls: new Set<string>(),
 }
 
-export const telemetryReducer = (
+export function telemetryReducer(
   state: IGatsbyState["telemetry"] = initialState,
-  action: ActionsUnion
-): IGatsbyState["telemetry"] => {
+  action: ActionsUnion,
+): IGatsbyState["telemetry"] {
   switch (action.type) {
     case `PROCESS_GATSBY_IMAGE_SOURCE_URL`: {
       const { sourceUrl } = action.payload

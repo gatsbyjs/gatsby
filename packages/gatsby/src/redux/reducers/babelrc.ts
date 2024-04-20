@@ -1,8 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 
-import { IGatsbyState, ActionsUnion, IPlugin } from "../types"
+import type { IGatsbyState, ActionsUnion, IPlugin } from "../types"
 
-export const babelrcReducer = (
+export function babelrcReducer(
   state: IGatsbyState["babelrc"] = {
     stages: {
       develop: {
@@ -39,8 +40,8 @@ export const babelrcReducer = (
       },
     },
   },
-  action: ActionsUnion
-): IGatsbyState["babelrc"] => {
+  action: ActionsUnion,
+): IGatsbyState["babelrc"] {
   switch (action.type) {
     case `SET_BABEL_PLUGIN`: {
       Object.keys(state.stages).forEach(stage => {
@@ -50,7 +51,7 @@ export const babelrcReducer = (
 
         const index = _.findIndex(
           state.stages[stage].plugins,
-          (plugin: IPlugin) => plugin.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name,
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.
@@ -78,7 +79,7 @@ export const babelrcReducer = (
 
         const index = _.findIndex(
           state.stages[stage].presets,
-          (plugin: IPlugin) => plugin.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name,
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.

@@ -1,6 +1,6 @@
 import path from "path"
 import resolveCwd from "resolve-cwd"
-import yargs from "yargs"
+import yargs, { type Arguments, type Argv } from "yargs"
 import envinfo from "envinfo"
 import { sync as existsSync } from "fs-exists-cached"
 import {
@@ -21,15 +21,15 @@ import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
 
 const handlerP =
-  (fn: (args: yargs.Arguments) => void) =>
-  (args: yargs.Arguments): void => {
+  (fn: (args: Arguments) => void) =>
+  (args: Arguments): void => {
     Promise.resolve(fn(args)).then(
       () => process.exit(0),
-      err => report.panic(err)
+      err => report.panic(err),
     )
   }
 
-function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
+function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
   const defaultHost = `localhost`
   const defaultPort = `8000`
   const directory = path.resolve(`.`)
@@ -47,6 +47,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   }
 
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
+
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
@@ -64,7 +65,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   }
 
   function resolveLocalCommand(
-    command: string
+    command: string,
   ): ((...args: Array<unknown>) => void) | never {
     if (!isLocalSite) {
       cli.showHelp()
@@ -72,7 +73,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site.\n` +
           `Either the current working directory does not contain a valid package.json or ` +
-          `'gatsby' is not specified as a dependency`
+          `'gatsby' is not specified as a dependency`,
       )
     }
 
@@ -83,7 +84,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
+          `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`,
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -94,26 +95,25 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       }
 
       return report.panic(
-        `Handler for command "${command}" is not a function. Your Gatsby package might be corrupted, try reinstalling it and running the command again.`
+        `Handler for command "${command}" is not a function. Your Gatsby package might be corrupted, try reinstalling it and running the command again.`,
       )
     } catch (err) {
       cli.showHelp()
       return report.panic(
         `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`,
-        err
+        err,
       )
     }
   }
 
   function getCommandHandler(
     command: string,
-    handler?: (
-      args: yargs.Arguments,
-      cmd: (args: yargs.Arguments) => void
-    ) => void,
-    nodeEnv?: string | undefined
-  ): (argv: yargs.Arguments) => void {
-    return (argv: yargs.Arguments): void => {
+    handler?:
+      | ((args: Arguments, cmd: (args: Arguments) => void) => void)
+      | undefined,
+    nodeEnv?: string | undefined,
+  ): (argv: Arguments) => void {
+    return (argv: Arguments): void => {
       report.setVerbose(!!argv.verbose)
 
       report.setNoColor(!!(argv.noColor || process.env.NO_COLOR))
@@ -143,8 +143,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     describe:
       `Start development server. Watches files, rebuilds, and hot reloads ` +
       `if something changes`,
-    builder: _ =>
-      _.option(`H`, {
+    builder: _ => {
+      return _.option(`H`, {
         alias: `host`,
         type: `string`,
         default: process.env.GATSBY_HOST || defaultHost,
@@ -203,11 +203,12 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         .option(`inspect-brk`, {
           type: `number`,
           describe: `Opens a port for debugging. Will block until debugger is attached. See https://www.gatsbyjs.com/docs/debugging-the-build-process/`,
-        }),
+        })
+    },
     handler: handlerP(
       getCommandHandler(
         `develop`,
-        (args: yargs.Arguments, cmd: (args: yargs.Arguments) => unknown) => {
+        (args: Arguments, cmd: (args: Arguments) => unknown) => {
           if (Object.prototype.hasOwnProperty.call(args, `inspect`)) {
             args.inspect = args.inspect || 9229
           }
@@ -221,82 +222,84 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           // kills it so this is fine.
           return new Promise(() => {})
         },
-        process.env.NODE_ENV || `development`
-      )
+        process.env.NODE_ENV || `development`,
+      ),
     ),
   })
 
   cli.command({
     command: `build`,
     describe: `Build a Gatsby project.`,
-    builder: _ =>
-      _.option(`prefix-paths`, {
-        type: `boolean`,
-        default:
-          process.env.PREFIX_PATHS === `true` ||
-          process.env.PREFIX_PATHS === `1`,
-        describe: `Build site with link paths prefixed with the pathPrefix value in gatsby-config.js. Default is env.PREFIX_PATHS or false.`,
-      })
-        .option(`no-uglify`, {
-          type: `boolean`,
-          default: false,
-          describe: `Build site without uglifying JS bundles (for debugging).`,
-        })
-        .option(`profile`, {
+    builder: _ => {
+      return (
+        _.option(`prefix-paths`, {
           type: `boolean`,
           default:
-            process.env.REACT_PROFILE === `true` ||
-            process.env.REACT_PROFILE === `1`,
-          describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
+            process.env.PREFIX_PATHS === `true` ||
+            process.env.PREFIX_PATHS === `1`,
+          describe: `Build site with link paths prefixed with the pathPrefix value in gatsby-config.js. Default is env.PREFIX_PATHS or false.`,
         })
-        .option(`graphql-tracing`, {
-          type: `boolean`,
-          describe: `Trace every graphql resolver, may have performance implications`,
-          default: false,
-        })
-        .option(`open-tracing-config-file`, {
-          type: `string`,
-          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
-        })
-        // log-pages and write-to-file were added specifically to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
-        // in gatsby@2. They are useful, but not very applicable (specifically `--write-to-file`) as generic approach, as it only
-        // list pages without other artifacts, so it's useful in very narrow scope. Because we don't have alternative right now
-        // those toggles are kept for users that rely on them, but we won't promote them and will keep them "hidden".
-        .option(`log-pages`, {
-          type: `boolean`,
-          default: false,
-          describe: `Log the pages that changes since last build.`,
-          hidden: true,
-        })
-        .option(`write-to-file`, {
-          type: `boolean`,
-          default: false,
-          describe: `Save the log of changed pages for future comparison.`,
-          hidden: true,
-        })
-        .option(`functions-platform`, {
-          type: `string`,
-          describe: `The platform bundled functions will execute on. Defaults to current platform or settings provided by used adapter.`,
-        })
-        .option(`functions-arch`, {
-          type: `string`,
-          describe: `The architecture bundled functions will execute on. Defaults to current architecture or settings provided by used adapter.`,
-        }),
+          .option(`no-uglify`, {
+            type: `boolean`,
+            default: false,
+            describe: `Build site without uglifying JS bundles (for debugging).`,
+          })
+          .option(`profile`, {
+            type: `boolean`,
+            default:
+              process.env.REACT_PROFILE === `true` ||
+              process.env.REACT_PROFILE === `1`,
+            describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
+          })
+          .option(`graphql-tracing`, {
+            type: `boolean`,
+            describe: `Trace every graphql resolver, may have performance implications`,
+            default: false,
+          })
+          .option(`open-tracing-config-file`, {
+            type: `string`,
+            describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
+          })
+          // log-pages and write-to-file were added specifically to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
+          // in gatsby@2. They are useful, but not very applicable (specifically `--write-to-file`) as generic approach, as it only
+          // list pages without other artifacts, so it's useful in very narrow scope. Because we don't have alternative right now
+          // those toggles are kept for users that rely on them, but we won't promote them and will keep them "hidden".
+          .option(`log-pages`, {
+            type: `boolean`,
+            default: false,
+            describe: `Log the pages that changes since last build.`,
+            hidden: true,
+          })
+          .option(`write-to-file`, {
+            type: `boolean`,
+            default: false,
+            describe: `Save the log of changed pages for future comparison.`,
+            hidden: true,
+          })
+          .option(`functions-platform`, {
+            type: `string`,
+            describe: `The platform bundled functions will execute on. Defaults to current platform or settings provided by used adapter.`,
+          })
+          .option(`functions-arch`, {
+            type: `string`,
+            describe: `The architecture bundled functions will execute on. Defaults to current architecture or settings provided by used adapter.`,
+          })
+      )
+    },
     handler: handlerP(
       getCommandHandler(
         `build`,
-        (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
-          cmd(args),
-        `production`
-      )
+        (args: Arguments, cmd: (args: Arguments) => void) => cmd(args),
+        `production`,
+      ),
     ),
   })
 
   cli.command({
     command: `serve`,
     describe: `Serve previously built Gatsby site.`,
-    builder: _ =>
-      _.option(`H`, {
+    builder: _ => {
+      return _.option(`H`, {
         alias: `host`,
         type: `string`,
         default: defaultHost,
@@ -323,27 +326,28 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
-        }),
+        })
+    },
 
     handler: getCommandHandler(
       `serve`,
-      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
-        cmd(args),
-      process.env.NODE_ENV || `production`
+      (args: Arguments, cmd: (args: Arguments) => void) => cmd(args),
+      process.env.NODE_ENV || `production`,
     ),
   })
 
   cli.command({
     command: `info`,
     describe: `Get environment information for debugging and issue reporting`,
-    builder: _ =>
-      _.option(`C`, {
+    builder: _ => {
+      return _.option(`C`, {
         alias: `clipboard`,
         type: `boolean`,
         default: false,
         describe: `Automagically copy environment information to clipboard`,
-      }),
-    handler: (args: yargs.Arguments) => {
+      })
+    },
+    handler: (args: Arguments) => {
       try {
         const copyToClipboard =
           // Clipboard is not accessible when on a linux tty
@@ -379,14 +383,15 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
   cli.command({
     command: `feedback`,
-    builder: _ =>
-      _.option(`disable`, {
+    builder: _ => {
+      return _.option(`disable`, {
         type: `boolean`,
         describe: `Opt out of future feedback requests`,
       }).option(`enable`, {
         type: `boolean`,
         describe: `Opt into future feedback requests`,
-      }),
+      })
+    },
     handler: getCommandHandler(`feedback`),
   })
 
@@ -401,26 +406,22 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     describe: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.com/docs/gatsby-repl/)`,
     handler: getCommandHandler(
       `repl`,
-      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
-        cmd(args),
-      process.env.NODE_ENV || `development`
+      (args: Arguments, cmd: (args: Arguments) => void) => cmd(args),
+      process.env.NODE_ENV || `development`,
     ),
   })
 
   cli.command({
     command: `plugin <cmd> [plugins...]`,
     describe: `Useful commands relating to Gatsby plugins`,
-    builder: yargs =>
-      yargs.positional(`cmd`, {
+    builder: yargs => {
+      return yargs.positional(`cmd`, {
         choices: [`docs`, `ls`],
         describe: "Valid commands include `docs`, `ls`.",
         type: `string`,
-      }),
-    handler: async ({
-      cmd,
-    }: yargs.Arguments<{
-      cmd: string | undefined
-    }>) => {
+      })
+    },
+    handler: async ({ cmd }) => {
       const pluginHandler = require(`./handlers/plugin`).default
       await pluginHandler(siteInfo.directory, cmd)
     },
@@ -439,7 +440,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       command: `logout`,
       describe: `Sign out of Gatsby Cloud.`,
       handler: handlerP(async () => {
-        await logout()
+        logout()
       }),
     })
 
@@ -456,9 +457,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 function isLocalGatsbySite(): boolean {
   let inGatsbySite = false
   try {
-    const { dependencies, devDependencies } = require(path.resolve(
-      `./package.json`
-    ))
+    const { dependencies, devDependencies } = require(
+      path.resolve(`./package.json`),
+    )
     inGatsbySite =
       (dependencies && dependencies.gatsby) ||
       (devDependencies && devDependencies.gatsby)
@@ -487,7 +488,17 @@ Gatsby version: ${gatsbyVersion}
   }
 }
 
-export const createCli = (argv: Array<string>): yargs.Arguments => {
+export function createCli(argv: Array<string>):
+  | {
+      [x: string]: unknown
+      _: Array<string | number>
+      $0: string
+    }
+  | Promise<{
+      [x: string]: unknown
+      _: Array<string | number>
+      $0: string
+    }> {
   const cli = yargs(argv).parserConfiguration({
     "boolean-negation": false,
   })
@@ -526,7 +537,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
     cli.version(
       `version`,
       `Show the version of the Gatsby CLI and the Gatsby package in the current project`,
-      getVersionInfo()
+      getVersionInfo(),
     )
     setDefaultTags({ gatsbyCliVersion: version })
   } catch (e) {
@@ -565,7 +576,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
             description: `Disable telemetry`,
           }),
 
-      handler: handlerP(({ enable, disable }: yargs.Arguments) => {
+      handler: handlerP(({ enable, disable }) => {
         const enabled = Boolean(enable) || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
@@ -574,8 +585,8 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
     .command({
       command: `options [cmd] [key] [value]`,
       describe: `View or set your gatsby-cli configuration settings.`,
-      builder: yargs =>
-        yargs
+      builder: yargs => {
+        return yargs
           .positional(`cmd`, {
             choices: [`set`],
             type: `string`,
@@ -587,12 +598,12 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
             describe: `Set the package manager \`gatsby new\` is using.`,
           })
           .positional(`value`, {
-            choices: ['npm', 'yarn', 'pnpm'],
-            type: 'string',
-            describe: `Set package manager as \`npm\` or \`yarn\` or \`pnpm\`.`,
-          }),
-
-      handler: handlerP(({ cmd, key, value }: yargs.Arguments) => {
+            choices: [`npm`, `pnpm`],
+            type: `string`,
+            describe: `Set package manager as \`npm\` or \`pnpm\`.`,
+          })
+      },
+      handler: handlerP(({ cmd, key, value }) => {
         if (!getPackageManager()) {
           trackCli(`SET_DEFAULT_PACKAGE_MANAGER`, { name: `npm` })
           setPackageManager(`npm`)
@@ -600,8 +611,8 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
 
         if (cmd === `set`) {
           if (key === `pm` || key === `package-manager`) {
-            if (value && value !== `yarn` && value !== `npm` && value !== 'pnpm') {
-              report.panic(`Package manager must be yarn or npm or pnpm.`)
+            if (value && value !== `npm` && value !== `pnpm`) {
+              report.panic(`Package manager must be npm or pnpm.`)
             }
 
             if (value) {
@@ -615,7 +626,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
             }
           } else {
             reporter.warn(
-              `Please pass your desired config key and value. Currently you can only set your package manager using \`pm\`.`
+              `Please pass your desired config key and value. Currently you can only set your package manager using \`pm\`.`,
             )
           }
           return

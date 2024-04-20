@@ -1,42 +1,42 @@
-import fetch from "node-fetch"
 import opn from "better-opn"
 import reporter from "./reporter"
 import { getToken, setToken } from "./util/manage-token"
 
-interface ITicket {
+type ITicket = {
   verified: boolean
-  token?: string | null
-  expiration?: string | null
+  token?: string | null | undefined
+  expiration?: string | null | undefined
 }
 
-const createTicket = async (): Promise<string> => {
+async function createTicket(): Promise<string> {
   let ticketId
+
   try {
-    const ticketResponse = await fetch(
+    const ticketResponse = await globalThis.fetch(
       `https://auth.gatsbyjs.com/auth/tickets/create`,
       {
         method: `post`,
-      }
+      },
     )
     const ticketJson = await ticketResponse.json()
     ticketId = ticketJson.ticketId
   } catch (e) {
     reporter.panic(
       `We had trouble connecting to Gatsby Cloud to create a login session.
-Please try again later, and if it continues to have trouble connecting file an issue.`
+Please try again later, and if it continues to have trouble connecting file an issue.`,
     )
   }
 
   return ticketId
 }
 
-const getTicket = async (ticketId: string): Promise<ITicket> => {
+async function getTicket(ticketId: string): Promise<ITicket> {
   let ticket: ITicket = {
     verified: false,
   }
   try {
-    const ticketResponse = await fetch(
-      `https://auth.gatsbyjs.com/auth/tickets/${ticketId}`
+    const ticketResponse = await globalThis.fetch(
+      `https://auth.gatsbyjs.com/auth/tickets/${ticketId}`,
     )
     const ticketJson = await ticketResponse.json()
     ticket = ticketJson
@@ -47,7 +47,7 @@ const getTicket = async (ticketId: string): Promise<ITicket> => {
   return ticket
 }
 
-const handleOpenBrowser = (url): void => {
+function handleOpenBrowser(url: string): void {
   // TODO: this will break if run from the CLI
   // for ideas see https://github.com/netlify/cli/blob/908f285fb80f04bf2635da73381c94387b9c8b0d/src/utils/open-browser.js
   console.log(``)
@@ -78,7 +78,7 @@ export async function login(): Promise<void> {
   // Open browser for authentication
   const authUrl = `${webUrl}/dashboard/login?authType=EXTERNAL_AUTH&ticketId=${ticketId}&noredirect=1`
 
-  await handleOpenBrowser(authUrl)
+  handleOpenBrowser(authUrl)
 
   // Poll until the ticket has been verified, and should have the token attached
   function pollForTicket(): Promise<ITicket> {
@@ -103,7 +103,7 @@ export async function login(): Promise<void> {
   const ticket = await pollForTicket()
 
   if (ticket?.token && ticket?.expiration) {
-    await setToken(ticket.token, ticket.expiration)
+    setToken(ticket.token, ticket.expiration)
   }
   reporter.info(`You have been logged in!`)
 }

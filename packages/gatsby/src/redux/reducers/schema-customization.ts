@@ -1,20 +1,23 @@
-import { IGatsbyState, ActionsUnion } from "../types"
+import type { IGatsbyState, ActionsUnion } from "../types"
 
-const initialState = (): IGatsbyState["schemaCustomization"] => {
+function initialState(): IGatsbyState["schemaCustomization"] {
   return {
     composer: null,
     context: {},
-    fieldExtensions: {},
+    fieldExtensions: {
+      name: ``,
+      extend: (): void => {},
+    },
     printConfig: null,
     thirdPartySchemas: [],
     types: [],
   }
 }
 
-export const schemaCustomizationReducer = (
+export function schemaCustomizationReducer(
   state: IGatsbyState["schemaCustomization"] = initialState(),
-  action: ActionsUnion
-): IGatsbyState["schemaCustomization"] => {
+  action: ActionsUnion,
+): IGatsbyState["schemaCustomization"] {
   switch (action.type) {
     case `ADD_THIRD_PARTY_SCHEMA`:
       return {

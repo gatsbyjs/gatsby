@@ -9,24 +9,23 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-plugin-postcss": "next",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^1.0.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.4.3"
   },
   "devDependencies": {
-    "cheerio": "^1.0.0-rc.9",
-    "cross-env": "^7.0.3",
-    "execa": "^8.0.1",
-    "fs-extra": "^10.0.0",
+    "@total-typescript/ts-reset": "0.5.1",
+    "cheerio": "1.0.0-rc.12",
+    "cross-env": "7.0.3",
+    "execa": "8.0.1",
+    "fs-extra": "11.2.0",
     "gatsby-core-utils": "next",
-    "jest": "^29.3.1",
-    "jest-diff": "^29.3.1",
-    "jest-serializer-path": "^0.1.15",
-    "node-fetch": "^2.6.1",
+    "jest": "29.7.0",
+    "jest-diff": "29.7.0",
+    "jest-serializer-path": "0.1.15",
     "npm-run-all": "4.1.5",
-    "prettier": "^2.3.1",
-    "start-server-and-test": "^1.11.3",
-    "strip-ansi": "^6.0.1"
+    "start-server-and-test": "2.0.3",
+    "strip-ansi": "7.1.0"
   },
   "license": "MIT",
   "private": true,

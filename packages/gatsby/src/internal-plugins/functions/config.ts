@@ -1,7 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Joi from "joi"
+
 import type {
   GatsbyFunctionBodyParserCommonMiddlewareConfig,
   GatsbyFunctionBodyParserUrlencodedConfig,
+  // @ts-ignore
 } from "gatsby"
 
 const DEFAULT_LIMIT = `100kb`
@@ -9,13 +12,13 @@ const DEFAULT_LIMIT = `100kb`
 // similar to `GatsbyFunctionBodyParserConfig` and `IGatsbyFunctionConfigProcessed`
 // from index.d.ts, just with fields required (not optional).
 // `createConfig()` will fill in defaults
-export interface IGatsbyBodyParserConfigProcessed {
+export type IGatsbyBodyParserConfigProcessed = {
   json: GatsbyFunctionBodyParserCommonMiddlewareConfig
   raw: GatsbyFunctionBodyParserCommonMiddlewareConfig
   text: GatsbyFunctionBodyParserCommonMiddlewareConfig
   urlencoded: GatsbyFunctionBodyParserUrlencodedConfig
 }
-export interface IGatsbyFunctionConfigProcessed {
+export type IGatsbyFunctionConfigProcessed = {
   bodyParser: IGatsbyBodyParserConfigProcessed
 }
 
@@ -33,10 +36,12 @@ const defaultConfig = {
   },
 }
 
-export interface IAPIFunctionWarning {
+export type IAPIFunctionWarning = {
   property: string | null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   original: any
   expectedType: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   replacedWith: any
 }
 
@@ -44,8 +49,19 @@ let warnings: Array<IAPIFunctionWarning> = []
 
 function bodyParserConfigFailover(
   property: keyof IGatsbyBodyParserConfigProcessed,
-  expectedType: string
-): any {
+  expectedType: string,
+): (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  _: any,
+  {
+    original,
+  }: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    original: any
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+) => any {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function actualFailover(_, { original }): any {
     warnings.push({
       property: `bodyParser.${property}`,
@@ -72,8 +88,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .failover(
               bodyParserConfigFailover(
                 `json`,
-                `{\n  type?: string\n  limit?: string | number\n}`
-              )
+                `{\n  type?: string\n  limit?: string | number\n}`,
+              ),
             )
             .unknown(false),
           text: Joi.object()
@@ -86,8 +102,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .failover(
               bodyParserConfigFailover(
                 `text`,
-                `{\n  type?: string\n  limit?: string | number\n}`
-              )
+                `{\n  type?: string\n  limit?: string | number\n}`,
+              ),
             ),
           raw: Joi.object()
             .keys({
@@ -99,8 +115,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .failover(
               bodyParserConfigFailover(
                 `raw`,
-                `{\n  type?: string\n  limit?: string | number\n}`
-              )
+                `{\n  type?: string\n  limit?: string | number\n}`,
+              ),
             ),
           urlencoded: Joi.object()
             .keys({
@@ -113,8 +129,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .failover(
               bodyParserConfigFailover(
                 `urlencoded`,
-                `{\n  type?: string\n  limit: string | number\n  extended: boolean\n}`
-              )
+                `{\n  type?: string\n  limit: string | number\n  extended: boolean\n}`,
+              ),
             ),
         })
         .unknown(false)

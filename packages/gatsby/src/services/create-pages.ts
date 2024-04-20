@@ -1,5 +1,5 @@
 import reporter from "gatsby-cli/lib/reporter"
-import apiRunnerNode from "../utils/api-runner-node"
+import { apiRunnerNode } from "../utils/api-runner-node"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
 import { IGatsbyPage } from "../redux/types"
@@ -40,7 +40,7 @@ export async function createPages({
       reporter.warn(
         `Your GraphQL query in createPages took ${
           totalMS / 1000
-        } seconds which is an unexpectedly long time. See https://gatsby.dev/create-pages-performance for tips on how to improve this.`
+        } seconds which is an unexpectedly long time. See https://gatsby.dev/create-pages-performance for tips on how to improve this.`,
       )
     }
     return returnValue
@@ -59,7 +59,7 @@ export async function createPages({
       parentSpan: activity.span,
       deferNodeMutation,
     },
-    { activity }
+    { activity },
   )
   activity.end()
 
@@ -79,7 +79,7 @@ export async function createPages({
       },
       {
         activity,
-      }
+      },
     )
     activity.end()
   }
@@ -89,7 +89,7 @@ export async function createPages({
     `Total nodes: ${dataStore.countNodes()}, ` +
       `SitePage nodes: ${
         store.getState().pages.size
-      } (use --verbose for breakdown)`
+      } (use --verbose for breakdown)`,
   )
 
   if (process.env.gatsby_log_level === `verbose`) {
@@ -97,7 +97,7 @@ export async function createPages({
     reporter.verbose(
       `Number of node types: ${types.length}. Nodes per type: ${types
         .map(type => type + `: ` + dataStore.countNodes(type))
-        .join(`, `)}`
+        .join(`, `)}`,
     )
   }
 
@@ -106,11 +106,11 @@ export async function createPages({
   const deletedPages = deleteUntouchedPages(
     store.getState().pages,
     timestamp,
-    !!shouldRunCreatePagesStatefully
+    !!shouldRunCreatePagesStatefully,
   )
 
   reporter.verbose(
-    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
+    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`,
   )
 
   const tim = reporter.activityTimer(`Checking for changed pages`, {
@@ -120,13 +120,13 @@ export async function createPages({
 
   const { changedPages } = findChangedPages(
     currentPages,
-    store.getState().pages
+    store.getState().pages,
   )
 
   reporter.verbose(
     `Found ${changedPages.length} changed page${
       changedPages.length === 1 ? `` : `s`
-    }`
+    }`,
   )
 
   tim.end()

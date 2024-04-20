@@ -3,7 +3,7 @@ import { createServiceLock, getService } from "./service-lock"
 import { readConfigFile, getConfigPath } from "./utils"
 import { lock } from "./lock"
 
-export interface ISiteMetadata {
+export type ISiteMetadata = {
   sitePath: string
   name?: string
   pid?: number
@@ -11,14 +11,14 @@ export interface ISiteMetadata {
 }
 
 export async function getInternalSiteMetadata(
-  sitePath: string
+  sitePath: string,
 ): Promise<ISiteMetadata | null> {
   return getService(sitePath, `metadata`, true)
 }
 
 export async function updateInternalSiteMetadata(
   metadata: ISiteMetadata,
-  merge = true
+  merge = true,
 ): Promise<void> {
   if (merge) {
     const oldMetadata = await getInternalSiteMetadata(metadata.sitePath)
@@ -28,7 +28,7 @@ export async function updateInternalSiteMetadata(
   }
 
   return createServiceLock(metadata.sitePath, `metadata`, metadata).then(
-    unlock => unlock?.()
+    unlock => unlock?.(),
   )
 }
 
@@ -41,7 +41,7 @@ export { updateInternalSiteMetadata as updateSiteMetadata }
  */
 function addField(
   src: string,
-  { name, value }: { name: string; value: string }
+  { name, value }: { name: string; value: string },
 ): string {
   const FIND = `  siteMetadata: {\n`
   const REPLACE = `  siteMetadata: {\n    ${name}: \`${value}\`,\n`
@@ -51,7 +51,7 @@ function addField(
 
 export async function addFieldToMinimalSiteMetadata(
   { root }: { root: string },
-  { name, value }: { name: string; value: string }
+  { name, value }: { name: string; value: string },
 ): Promise<void> {
   const release = await lock(`gatsby-config.js`)
   const configSrc = await readConfigFile(root)

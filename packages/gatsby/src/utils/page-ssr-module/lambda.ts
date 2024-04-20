@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { GatsbyFunctionResponse, GatsbyFunctionRequest } from "gatsby"
 import * as path from "path"
 import * as fs from "fs-extra"
@@ -70,14 +71,14 @@ function setupFsWrapper(): string {
     }
 
     function applyRename<
-      T = typeof import("fs") | typeof import("fs").promises
+      T = typeof import("fs") | typeof import("fs").promises,
     >(fsToRewrite: T, lfs: T, method: "rename" | "renameSync"): void {
       const original = fsToRewrite[method]
       if (original) {
         // @ts-ignore - complains about __promisify__ which doesn't actually exist in runtime
         lfs[method] = (
-          ...args: Parameters<typeof import("fs")["rename" | "renameSync"]>
-        ): ReturnType<typeof import("fs")["rename" | "renameSync"]> => {
+          ...args: Parameters<(typeof import("fs"))["rename" | "renameSync"]>
+        ): ReturnType<(typeof import("fs"))["rename" | "renameSync"]> => {
           args[0] = mapPathUsingRewrites(args[0])
           args[1] = mapPathUsingRewrites(args[1])
           // @ts-ignore - can't decide which signature this is, but we just preserve the original
@@ -91,7 +92,7 @@ function setupFsWrapper(): string {
     linkRewritableMethods.push(`createWriteStream`, `createReadStream`, `rm`)
 
     function createLinkedFS<
-      T = typeof import("fs") | typeof import("fs").promises
+      T = typeof import("fs") | typeof import("fs").promises,
     >(fsToRewrite: T): T {
       const linkedFS = link(fsToRewrite, rewrites) as T
 
@@ -202,13 +203,13 @@ global.__GATSBY = {
 // eslint-disable-next-line no-constant-condition
 if (`%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
   global.__GATSBY.imageCDNUrlGeneratorModulePath = require.resolve(
-    `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+    `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
   )
 }
 // eslint-disable-next-line no-constant-condition
 if (`%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
   global.__GATSBY.fileCDNUrlGeneratorModulePath = require.resolve(
-    `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+    `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
   )
 }
 
@@ -220,17 +221,19 @@ const dbPath = setupFsWrapper()
 type GraphQLEngineType =
   import("../../schema/graphql-engine/entry").GraphQLEngine
 
-const { GraphQLEngine } =
-  require(`../query-engine`) as typeof import("../../schema/graphql-engine/entry")
+const { GraphQLEngine } = require(
+  `../query-engine`,
+) as typeof import("../../schema/graphql-engine/entry")
 
-const { getData, renderPageData, renderHTML } =
-  require(`./index`) as typeof import("./entry")
+const { getData, renderPageData, renderHTML } = require(
+  `./index`,
+) as typeof import("./entry")
 
 const streamPipeline = promisify(pipeline)
 
 function get(
   url: string,
-  callback?: (res: IncomingMessage) => void
+  callback?: (res: IncomingMessage) => void,
 ): ClientRequest {
   return new URL(url).protocol === `https:`
     ? httpsGet(url, callback)
@@ -242,7 +245,7 @@ async function getEngine(): Promise<GraphQLEngineType> {
     // if this variable is set we need to download the datastore from the CDN
     const downloadPath = dbPath + `/data.mdb`
     console.log(
-      `Downloading datastore from CDN (${cdnDatastore} -> ${downloadPath})`
+      `Downloading datastore from CDN (${cdnDatastore} -> ${downloadPath})`,
     )
 
     await fs.ensureDir(dbPath)
@@ -257,8 +260,8 @@ async function getEngine(): Promise<GraphQLEngineType> {
             new Error(
               `Failed to download ${cdnDatastore}: ${response.statusCode} ${
                 response.statusMessage || ``
-              }`
-            )
+              }`,
+            ),
           )
           return
         }
@@ -353,7 +356,7 @@ function getErrorBody(statusCode: number): string {
   return body
 }
 
-interface IPageInfo {
+type IPageInfo = {
   page: IGatsbyPage
   isPageData: boolean
   pagePath: string
@@ -361,7 +364,7 @@ interface IPageInfo {
 
 function getPage(
   pathname: string,
-  graphqlEngine: GraphQLEngineType
+  graphqlEngine: GraphQLEngineType,
 ): IPageInfo | undefined {
   const pathInfo = getPathInfo(pathname)
   if (!pathInfo) {
@@ -384,7 +387,7 @@ function getPage(
 
 async function engineHandler(
   req: GatsbyFunctionRequest,
-  res: GatsbyFunctionResponse
+  res: GatsbyFunctionResponse,
 ): Promise<void> {
   try {
     const graphqlEngine = await engineReadyPromise

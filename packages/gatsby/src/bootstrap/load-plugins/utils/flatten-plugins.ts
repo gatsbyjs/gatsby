@@ -3,9 +3,9 @@ import { IPluginInfo } from "../types"
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
 // for subplugins.
-export const flattenPlugins = (
-  plugins: Array<IPluginInfo>
-): Array<IPluginInfo> => {
+export function flattenPlugins(
+  plugins: Array<IPluginInfo>,
+): Array<IPluginInfo> {
   const flattened: Array<IPluginInfo> = []
   const extractPlugins = (plugin: IPluginInfo): void => {
     if (plugin.subPluginPaths) {
@@ -15,6 +15,7 @@ export const flattenPlugins = (
         // Reason for doing stringified path with . separator was that it was just easier to prevent duplicates
         // in subPluginPaths array (as each subplugin in the gatsby-config would add subplugin path).
         const segments = subPluginPath.split(`.`)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let roots: Array<any> = [plugin.pluginOptions]
         for (const segment of segments) {
           if (segment === `[]`) {

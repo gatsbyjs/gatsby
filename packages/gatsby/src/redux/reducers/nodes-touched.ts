@@ -1,10 +1,9 @@
-import { ActionsUnion } from "./../types"
-import { IGatsbyState } from "gatsby/src/redux/types"
+import type { ActionsUnion, IGatsbyState } from "./../types"
 
-export const nodesTouchedReducer = (
-  state: IGatsbyState["nodesTouched"] = new Set(),
-  action: ActionsUnion
-): IGatsbyState["nodesTouched"] => {
+export function nodesTouchedReducer(
+  state: IGatsbyState["nodesTouched"] | undefined = new Set(),
+  action: ActionsUnion,
+): IGatsbyState["nodesTouched"] {
   switch (action.type) {
     case `CREATE_NODE`:
       state.add(action.payload.id)

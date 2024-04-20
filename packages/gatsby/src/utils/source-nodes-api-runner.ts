@@ -1,5 +1,16 @@
 import { Span } from "opentracing"
-import apiRunner from "./api-runner-node"
+import { apiRunnerNode } from "./api-runner-node"
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import Promise from "bluebird"
+
+type SourceNodesApiRunnerConfig = {
+  traceId: string
+  webhookBody: unknown
+  pluginName?: string
+  parentSpan?: Span
+  deferNodeMutation?: boolean
+}
 
 export function sourceNodesApiRunner({
   traceId,
@@ -7,14 +18,8 @@ export function sourceNodesApiRunner({
   parentSpan,
   webhookBody,
   pluginName,
-}: {
-  traceId: string
-  webhookBody: unknown
-  pluginName?: string
-  parentSpan?: Span
-  deferNodeMutation?: boolean
-}): Promise<void> {
-  return apiRunner(`sourceNodes`, {
+}: SourceNodesApiRunnerConfig): Promise<unknown> | null {
+  return apiRunnerNode(`sourceNodes`, {
     traceId,
     waitForCascadingActions: true,
     deferNodeMutation,

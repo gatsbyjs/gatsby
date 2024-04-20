@@ -1,18 +1,18 @@
-import { RootDatabase, open, ArrayLikeIterable } from "lmdb"
+import { type RootDatabase, open } from "lmdb"
 // import { performance } from "perf_hooks"
-import { ActionsUnion, IGatsbyNode } from "../../redux/types"
+import type { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
-import { IDataStore, ILmdbDatabases, IQueryResult } from "../types"
+import type { IDataStore, ILmdbDatabases, IQueryResult } from "../types"
 import { emitter, replaceReducer } from "../../redux"
 import { GatsbyIterable } from "../common/iterable"
 import { doRunQuery } from "./query/run-query"
 import {
-  IRunFilterArg,
+  type IRunFilterArg,
   runFastFiltersAndSort,
 } from "../in-memory/run-fast-filters"
 
-const lmdbDatastore = {
+const lmdbDatastore: IDataStore = {
   getNode,
   getTypes,
   countNodes,
@@ -50,7 +50,7 @@ let databases
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
   namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/consistent-type-definitions
     interface Global {
       __GATSBY_OPEN_LMDBS?: Map<string, ILmdbDatabases>
       __GATSBY_OPEN_ROOT_LMDBS?: Map<string, RootDatabase>
@@ -104,7 +104,6 @@ function getDatabases(): ILmdbDatabases {
         name: `nodes`,
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
         // sharedStructuresKey: Symbol.for(`structures`),
-        // @ts-ignore
         cache: {
           // expirer: false disables LRU part and only take care of WeakRefs
           // this way we don't retain nodes strongly, but will continue to
@@ -166,7 +165,7 @@ function iterateNodes(): GatsbyIterable<IGatsbyNode> {
     nodesDb
       .getKeys({ snapshot: false })
       .map(nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined))
-      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
+      .filter(Boolean) as Iterable<IGatsbyNode>,
   )
 }
 
@@ -176,7 +175,7 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
     nodesByType
       .getValues(type)
       .map(nodeId => getNode(nodeId))
-      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
+      .filter(Boolean) as Iterable<IGatsbyNode>,
   )
 }
 
@@ -198,7 +197,7 @@ function countNodes(typeName?: string): number {
     const stats = getDatabases().nodes.getStats() as { entryCount: number }
     return Math.max(
       Number(stats.entryCount) - preSyncDeletedNodeIdsCache.size,
-      0
+      0,
     ) // FIXME: add -1 when restoring shared structures key
   }
 
@@ -217,6 +216,7 @@ async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
   return Promise.resolve(runFastFiltersAndSort(args))
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let lastOperationPromise: Promise<any> = Promise.resolve()
 
 function updateDataStore(action: ActionsUnion): void {

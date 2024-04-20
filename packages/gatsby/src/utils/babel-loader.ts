@@ -1,12 +1,13 @@
 import babelLoader from "babel-loader"
 import type { Compiler } from "webpack"
-import Babel, { ConfigItem } from "@babel/core"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import Babel, { type ConfigItem } from "@babel/core"
 import {
   prepareOptions,
   getCustomOptions,
   mergeConfigItemOptions,
   addRequiredPresetOptions,
-  ICustomOptions,
+  type ICustomOptions,
 } from "./babel-loader-helpers"
 import type { Stage } from "../commands/types"
 import { getBrowsersList } from "./browserslist"
@@ -27,12 +28,12 @@ import { getBrowsersList } from "./browserslist"
  * You can find documentation for the custom loader here: https://babeljs.io/docs/en/next/babel-core.html#loadpartialconfig
  */
 
-interface IBabelCustomLoader {
+type IBabelCustomLoader = {
   custom: ICustomOptions
   loader: Record<string, unknown>
 }
 
-const customOptionsCache = new Map()
+const customOptionsCache = new Map<string, IBabelCustomLoader>()
 const configCache = new Map()
 const babelrcFileToCacheKey = new Map()
 
@@ -47,7 +48,7 @@ const customBabelLoader = babelLoader.custom(babel => {
       resourceQuery,
       rootDir = process.cwd(),
       ...options
-    }): IBabelCustomLoader {
+    }): IBabelCustomLoader | undefined {
       const customOptionsCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
 
       if (customOptionsCache.has(customOptionsCacheKey)) {

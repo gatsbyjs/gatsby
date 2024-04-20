@@ -7,16 +7,25 @@ import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
-import {
-  IErrorMapEntryPublicApi,
+import type {
   ErrorId,
+  IErrorMapEntryPublicApi,
 } from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
-import { IConstructError, IStructuredError } from "../structured-errors/types"
-import { createTimerReporter, ITimerReporter } from "./reporter-timer"
-import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
-import { createProgressReporter, IProgressReporter } from "./reporter-progress"
+import type {
+  IConstructError,
+  IStructuredError,
+} from "../structured-errors/types"
+import { createTimerReporter, type ITimerReporter } from "./reporter-timer"
 import {
+  createPhantomReporter,
+  type IPhantomReporter,
+} from "./reporter-phantom"
+import {
+  createProgressReporter,
+  type IProgressReporter,
+} from "./reporter-progress"
+import type {
   ErrorMeta,
   CreateLogAction,
   ILogIntent,
@@ -24,9 +33,8 @@ import {
 } from "./types"
 import {
   registerAdditionalDiagnosticOutputHandler,
-  AdditionalDiagnosticsOutputHandler,
+  type AdditionalDiagnosticsOutputHandler,
 } from "./redux/diagnostics"
-// @ts-ignore
 import { isTruthy } from "gatsby-core-utils/is-truthy"
 
 const errorFormatter = getErrorFormatter()
@@ -34,15 +42,17 @@ const tracer = globalTracer()
 
 let reporterActions = reduxReporterActions
 
-export interface IActivityArgs {
+export type IActivityArgs = {
   id?: string
   parentSpan?: Span | SpanContext
-  tags?: { [key: string]: any }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tags?: { [key: string]: any } | undefined
 }
 
 // eslint-disable-next-line prefer-const
 let isVerbose = isTruthy(process.env.GATSBY_REPORTER_ISVERBOSE)
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isLogIntentMessage(msg: any): msg is ILogIntent {
   return msg && msg.type === `LOG_INTENT`
 }
@@ -107,8 +117,8 @@ class Reporter {
    */
   panic = (
     errorMeta: ErrorMeta,
-    error?: Error | Array<Error>,
-    pluginName?: string
+    error?: Error | Array<Error> | undefined,
+    pluginName?: string | undefined,
   ): never => {
     const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`GENERAL_PANIC`, { error: reporterError })
@@ -118,8 +128,8 @@ class Reporter {
 
   panicOnBuild = (
     errorMeta: ErrorMeta,
-    error?: Error | Array<Error>,
-    pluginName?: string
+    error?: Error | Array<Error> | undefined,
+    pluginName?: string | undefined,
   ): IStructuredError | Array<IStructuredError> => {
     const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`BUILD_PANIC`, { error: reporterError })
@@ -132,8 +142,8 @@ class Reporter {
 
   error = (
     errorMeta: ErrorMeta | Array<ErrorMeta>,
-    error?: Error | Array<Error>,
-    pluginName?: string
+    error?: Error | Array<Error> | undefined,
+    pluginName?: string | undefined,
   ): IStructuredError | Array<IStructuredError> => {
     let details: IConstructError["details"] = {
       context: {},
@@ -146,7 +156,7 @@ class Reporter {
     if (error) {
       if (Array.isArray(error)) {
         return error.map(errorItem =>
-          this.error(errorMeta, errorItem)
+          this.error(errorMeta, errorItem),
         ) as Array<IStructuredError>
       }
       details.error = error
@@ -165,7 +175,7 @@ class Reporter {
     } else if (Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
       return errorMeta.map(errorItem =>
-        this.error(errorItem)
+        this.error(errorItem),
       ) as Array<IStructuredError>
       // 4.
       //    reporter.error(errorMeta);
@@ -222,20 +232,24 @@ class Reporter {
     }
   }
 
-  success = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Success, text })
-  info = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Info, text })
-  warn = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Warning, text })
-  log = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Log, text })
+  success = (text?: string | undefined): CreateLogAction => {
+    return reporterActions.createLog({ level: LogLevels.Success, text })
+  }
+  info = (text?: string | undefined): CreateLogAction => {
+    return reporterActions.createLog({ level: LogLevels.Info, text })
+  }
+  warn = (text?: string | undefined): CreateLogAction => {
+    return reporterActions.createLog({ level: LogLevels.Warning, text })
+  }
+  log = (text?: string | undefined): CreateLogAction => {
+    return reporterActions.createLog({ level: LogLevels.Log, text })
+  }
 
   pendingActivity = reporterActions.createPendingActivity
 
   completeActivity = (
     id: string,
-    status: ActivityStatuses = ActivityStatuses.Success
+    status: ActivityStatuses = ActivityStatuses.Success,
   ): void => {
     reporterActions.endActivity({ id, status })
   }
@@ -246,8 +260,9 @@ class Reporter {
   activityTimer = (
     text: string,
     activityArgs: IActivityArgs = {},
-    pluginName?: string
+    pluginName?: string | undefined,
   ): ITimerReporter => {
+    // eslint-disable-next-line prefer-const
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
@@ -278,8 +293,9 @@ class Reporter {
    */
   phantomActivity = (
     text: string,
-    activityArgs: IActivityArgs = {}
+    activityArgs: IActivityArgs = {},
   ): IPhantomReporter => {
+    // eslint-disable-next-line prefer-const
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
@@ -299,8 +315,9 @@ class Reporter {
     total = 0,
     start = 0,
     activityArgs: IActivityArgs = {},
-    pluginName?: string
+    pluginName?: string,
   ): IProgressReporter => {
+    // eslint-disable-next-line prefer-const
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
@@ -339,6 +356,7 @@ class Reporter {
           payload: {
             name: actionCreatorName,
             args,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
         })
       }
@@ -349,7 +367,7 @@ class Reporter {
   // This method is called by core when initializing worker pool, so main process can receive
   // messages from workers and dispatch structured logs created by workers to parent process.
   _initReporterMessagingInMain(
-    onMessage: (listener: (msg: ILogIntent | unknown) => void) => void
+    onMessage: (listener: (msg: ILogIntent | unknown) => void) => void,
   ): void {
     onMessage(msg => {
       if (isLogIntentMessage(msg)) {
@@ -357,7 +375,7 @@ class Reporter {
           reduxReporterActions,
           // @ts-ignore Next line (`...msg.payload.args`) cause "A spread argument
           // must either have a tuple type or be passed to a rest parameter"
-          ...msg.payload.args
+          ...msg.payload.args,
         )
       }
     })
@@ -368,7 +386,7 @@ class Reporter {
   }
 
   _registerAdditionalDiagnosticOutputHandler(
-    handler: AdditionalDiagnosticsOutputHandler
+    handler: AdditionalDiagnosticsOutputHandler,
   ): void {
     registerAdditionalDiagnosticOutputHandler(handler)
   }

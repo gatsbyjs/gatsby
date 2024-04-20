@@ -1,27 +1,27 @@
-import { Span } from "opentracing"
+import type { Span } from "opentracing"
 import reporter from "gatsby-cli/lib/reporter"
-import { IProgram } from "../../commands/types"
-import { Runner } from "../../bootstrap/create-graphql-runner"
-import { GraphQLRunner } from "../../query/graphql-runner"
-import { Store, AnyAction } from "redux"
-import { IGatsbyState } from "../../redux/types"
-import { IGroupedQueryIds } from "../../services/types"
-import { WebsocketManager } from "../../utils/websocket-manager"
+import type { IProgram } from "../../commands/types"
+import type { Runner } from "../../bootstrap/create-graphql-runner"
+import type { GraphQLRunner } from "../../query/graphql-runner"
+import type { Store, AnyAction } from "redux"
+import type { IGatsbyState } from "../../redux/types"
+import type { IGroupedQueryIds } from "../../services/types"
+import type { WebsocketManager } from "../../utils/websocket-manager"
 
 type Reporter = typeof reporter
 
-export interface IQueryRunningContext {
-  reporter?: Reporter
-  program?: IProgram
-  store?: Store<IGatsbyState, AnyAction>
-  parentSpan?: Span
-  gatsbyNodeGraphQLFunction?: Runner
-  graphqlRunner?: GraphQLRunner
-  pagesToBuild?: Array<string>
-  pagesToDelete?: Array<string>
-  queryIds?: IGroupedQueryIds
-  websocketManager?: WebsocketManager
-  filesDirty?: boolean
-  pendingQueryRuns?: Set<string>
-  currentlyHandledPendingQueryRuns?: Set<string>
+export type IQueryRunningContext = {
+  reporter?: Reporter | undefined
+  program?: IProgram | undefined
+  store?: Store<IGatsbyState, AnyAction> | undefined
+  parentSpan?: Span | undefined
+  gatsbyNodeGraphQLFunction?: Runner | undefined
+  graphqlRunner?: GraphQLRunner | undefined
+  pagesToBuild?: Array<string> | undefined
+  pagesToDelete?: Array<string> | undefined
+  queryIds?: IGroupedQueryIds | undefined
+  websocketManager?: WebsocketManager | undefined
+  filesDirty?: boolean | undefined
+  pendingQueryRuns?: Set<string> | undefined
+  currentlyHandledPendingQueryRuns?: Set<string> | undefined
 }

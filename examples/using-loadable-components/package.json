@@ -4,21 +4,22 @@
   "version": "0.1.0",
   "author": "Grayson Hicks <graysonhicks@gmail.com>",
   "dependencies": {
-    "@loadable/component": "^5.15.0",
+    "@loadable/component": "5.16.3",
     "gatsby": "next",
     "gatsby-plugin-gatsby-cloud": "next",
     "gatsby-plugin-image": "next",
-    "gatsby-plugin-loadable-components-ssr": "3.0.0",
+    "gatsby-plugin-loadable-components-ssr": "4.3.2",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-sharp": "next",
-    "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet": "^6.1.0"
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0"
   },
   "devDependencies": {
+    "@total-typescript/ts-reset": "0.5.1",
     "gatsby-plugin-perf-budgets": "0.0.18"
   },
   "keywords": [

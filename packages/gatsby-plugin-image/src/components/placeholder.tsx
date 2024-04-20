@@ -1,29 +1,38 @@
-import React, { FunctionComponent, ImgHTMLAttributes } from "react"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import React, {
+  memo,
+  type JSX,
+  type ComponentType,
+  type ImgHTMLAttributes,
+} from "react"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as PropTypes from "prop-types"
 import { Picture, SourceProps } from "./picture"
 
 export type PlaceholderProps = ImgHTMLAttributes<HTMLImageElement> & {
-  fallback?: string
-  sources?: Array<SourceProps>
+  fallback?: string | undefined
+  sources?: Array<SourceProps> | undefined
 }
 
-export const Placeholder: FunctionComponent<PlaceholderProps> =
-  function Placeholder({ fallback, ...props }) {
-    if (fallback) {
-      return (
-        <Picture
-          {...props}
-          fallback={{
-            src: fallback,
-          }}
-          aria-hidden
-          alt=""
-        />
-      )
-    } else {
-      return <div {...props}></div>
-    }
+function _Placeholder({ fallback, ...props }: PlaceholderProps): JSX.Element {
+  if (fallback) {
+    return (
+      <Picture
+        {...props}
+        fallback={{
+          src: fallback,
+        }}
+        aria-hidden
+        alt=""
+      />
+    )
+  } else {
+    return <div {...props}></div>
   }
+}
+
+export const Placeholder: ComponentType<PlaceholderProps> =
+  memo<PlaceholderProps>(_Placeholder)
 
 Placeholder.displayName = `Placeholder`
 Placeholder.propTypes = {
@@ -35,7 +44,7 @@ Placeholder.propTypes = {
     }
 
     return new Error(
-      `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`
+      `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`,
     )
   },
 }

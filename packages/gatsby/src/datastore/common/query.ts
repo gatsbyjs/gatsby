@@ -1,14 +1,15 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as _ from "lodash"
 import { prepareRegex } from "../../utils/prepare-regex"
 import { makeRe } from "micromatch"
 
-export interface IDbQueryQuery {
+export type IDbQueryQuery = {
   type: "query"
   path: Array<string>
   query: IDbFilterStatement
 }
 
-export interface IDbQueryElemMatch {
+export type IDbQueryElemMatch = {
   type: "elemMatch"
   path: Array<string>
   nestedQuery: DbQuery
@@ -49,12 +50,12 @@ export type FilterValue =
 
 // The value is an object with arbitrary keys that are either filter values or,
 // recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`
-export interface IInputQuery {
+export type IInputQuery = {
   [key: string]: FilterValueNullable | IInputQuery
 }
 // Similar to IInputQuery except the comparator leaf nodes will have their
 // key prefixed with `$` and their value, in some cases, normalized.
-export interface IPreparedQueryArg {
+export type IPreparedQueryArg = {
   [key: string]: FilterValueNullable | IPreparedQueryArg
 }
 
@@ -66,7 +67,7 @@ function isDbComparator(value: string): value is DbComparator {
 
 export type DbComparatorValue = string | number | boolean | RegExp | null
 
-export interface IDbFilterStatement {
+export type IDbFilterStatement = {
   comparator: DbComparator
   value: DbComparatorValue | Array<DbComparatorValue>
 }
@@ -77,14 +78,16 @@ export interface IDbFilterStatement {
  * nested objects with multiple keys to separate instances.
  */
 export function createDbQueriesFromObject(
-  filter: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  filter: Record<string, any>,
 ): Array<DbQuery> {
   return createDbQueriesFromObjectNested(filter)
 }
 
 function createDbQueriesFromObjectNested(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filter: Record<string, any>,
-  path: Array<string> = []
+  path: Array<string> = [],
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
   return _.flatMap(keys, (key: string): Array<DbQuery> => {
@@ -148,7 +151,7 @@ export function getFilterStatement(dbQuery: DbQuery): IDbFilterStatement {
 
 export function prefixResolvedFields(
   queries: Array<DbQuery>,
-  resolvedFields: Record<string, unknown>
+  resolvedFields: Record<string, unknown>,
 ): Array<DbQuery> {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.getOwnPropertyNames(dottedFields)
@@ -174,21 +177,21 @@ export function prefixResolvedFields(
  *   { foo: { eq: 5 } } -> { foo: { $eq: 5 }}
  */
 export function prepareQueryArgs(
-  filterFields: Array<IInputQuery> | IInputQuery = {}
+  filterFields: Array<IInputQuery> | IInputQuery = {},
 ): IPreparedQueryArg {
   const filters = {}
   Object.keys(filterFields).forEach(key => {
     const value = filterFields[key]
     if (_.isPlainObject(value)) {
       filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
-        value as IInputQuery
+        value as IInputQuery,
       )
     } else {
       switch (key) {
         case `regex`:
           if (typeof value !== `string`) {
             throw new Error(
-              `The $regex comparator is expecting the regex as a string, not an actual regex or anything else`
+              `The $regex comparator is expecting the regex as a string, not an actual regex or anything else`,
             )
           }
           filters[`$regex`] = prepareRegex(value)
@@ -239,7 +242,7 @@ export function prepareQueryArgs(
 // Like above, but doesn't handle $elemMatch
 export function objectToDottedField(
   obj: Record<string, unknown>,
-  path: Array<string> = []
+  path: Array<string> = [],
 ): Record<string, unknown> {
   let result = {}
   Object.keys(obj).forEach(key => {
@@ -247,7 +250,7 @@ export function objectToDottedField(
     if (_.isPlainObject(value)) {
       const pathResult = objectToDottedField(
         value as Record<string, unknown>,
-        path.concat(key)
+        path.concat(key),
       )
       result = {
         ...result,
@@ -285,7 +288,7 @@ function compareBySpecificityDesc(a: DbQuery, b: DbQuery): number {
   const bSpecificity = comparatorSpecificity[bComparator]
   if (!aSpecificity || !bSpecificity) {
     throw new Error(
-      `Unexpected comparator pair: ${aComparator}, ${bComparator}`
+      `Unexpected comparator pair: ${aComparator}, ${bComparator}`,
     )
   }
   return aSpecificity > bSpecificity ? -1 : 1

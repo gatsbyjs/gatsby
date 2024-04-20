@@ -6,32 +6,32 @@ This monorepo serves as an example of a site using a first class source plugin t
 
 ## Setup
 
-This monorepo uses yarn workspaces to manage the 3 individual projects:
+This monorepo uses pnpm workspaces to manage the 3 individual projects:
 
 - api: a Node.js API with in-memory data, and a Post and Author type, as well as support for subscriptions when Posts are mutated
 - example-site: a barebones Gatsby site that implements the source plugin
 - source-plugin: a plugin that uses several Gatsby APIs to source data from the API, create responsive/optimized images from remote locations, and link the nodes in the example site
 
-To install dependencies for all projects run the install command in the root of the yarn workspace (which requires yarn to be installed):
+To install dependencies for all projects run the install command in the root of the pnpm workspace (which requires pnpm to be installed):
 
-```
-yarn install
+```shell
+pnpm install
 ```
 
-_Note: if you aren't using yarn, you can navigate into each of the 3 folders and run `npm install` instead_
+_Note: if you aren't using pnpm, you can navigate into each of the 3 folders and run `npm install` instead_
 
 Then you can run the api or example projects in separate terminal windows with the commands below.
 
 For the API which runs at `http://localhost:4000`, use this command:
 
-```
-yarn workspace api start
+```shell
+pnpm workspace api start
 ```
 
 And to run the example site with `gatsby develop` at `http://localhost:8000`, use this command:
 
-```
-yarn workspace example-site develop
+```shell
+pnpm workspace example-site develop
 ```
 
 Running the example site also runs the plugin because it is included in the site's config. You'll see output in the console for different functionality and then can open up the browser to `http://localhost:8000` to see the site.

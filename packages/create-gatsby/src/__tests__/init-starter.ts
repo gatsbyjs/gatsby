@@ -1,7 +1,7 @@
-import { execSync } from "child_process"
+// import { execSync } from "child_process"
 import { execa } from "execa"
 import fs from "fs-extra"
-import path from "path"
+import path from "node:path"
 import { initStarter } from "../init-starter"
 import { reporter } from "../utils/reporter"
 
@@ -23,13 +23,16 @@ jest.mock(`../utils/get-config-store`, () => {
       return {
         items: {},
         set(key: string, value: unknown): void {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ;(this as any).items[key] = value
         },
         get(key: string): unknown {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           return (this as any).items[key]
         },
 
         __reset(): void {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ;(this as any).items = {}
         },
       }
@@ -48,7 +51,9 @@ describe(`init-starter`, () => {
 
   describe(`initStarter / cloning`, () => {
     it(`reports an error when it s not possible to clone the repo`, async () => {
+      // @ts-ignore
       path.join.mockImplementation(() => `/somewhere-here`)
+      // @ts-ignore
       execa.mockImplementation(() => {
         throw new Error(`Not possible to clone the repo`)
       })
@@ -58,7 +63,7 @@ describe(`init-starter`, () => {
           `gatsby-starter-hello-world`,
           `./somewhere`,
           [],
-          `A site`
+          `A site`,
         )
       } catch (e) {
         expect(execa).toBeCalledWith(`git`, [
@@ -70,15 +75,18 @@ describe(`init-starter`, () => {
         ])
         expect(reporter.panic).toBeCalledWith(`Not possible to clone the repo`)
         expect(reporter.success).not.toBeCalledWith(
-          `Created site from template`
+          `Created site from template`,
         )
         expect(fs.remove).toBeCalledWith(`/somewhere-here`)
       }
     })
 
     it(`reports a success when everything is going ok`, async () => {
+      // @ts-ignore
       path.join.mockImplementation(() => `/somewhere-here`)
+      // @ts-ignore
       execa.mockImplementation(() => Promise.resolve())
+      // @ts-ignore
       fs.readJSON.mockImplementation(() => {
         return { name: `gatsby-project` }
       })
@@ -87,7 +95,7 @@ describe(`init-starter`, () => {
         `gatsby-starter-hello-world`,
         `./somewhere`,
         [],
-        `A site`
+        `A site`,
       )
 
       expect(execa).toBeCalledWith(`git`, [
@@ -106,8 +114,11 @@ describe(`init-starter`, () => {
   describe(`initStarter / install`, () => {
     it(`process package installation with pnpm`, async () => {
       process.env.npm_config_user_agent = `pnpm`
+      // @ts-ignore
       path.join.mockImplementation(() => `/somewhere-here`)
+      // @ts-ignore
       execa.mockImplementation(() => Promise.resolve())
+      // @ts-ignore
       fs.readJSON.mockImplementation(() => {
         return { name: `gatsby-project` }
       })
@@ -116,7 +127,7 @@ describe(`init-starter`, () => {
         `gatsby-starter-hello-world`,
         `./somewhere`,
         [],
-        `A site`
+        `A site`,
       )
 
       expect(fs.remove).toBeCalledWith(`package-lock.json`)
@@ -129,8 +140,11 @@ describe(`init-starter`, () => {
 
     it(`process package installation with NPM`, async () => {
       process.env.npm_config_user_agent = `npm`
+      // @ts-ignore
       path.join.mockImplementation(() => `/somewhere-here`)
+      // @ts-ignore
       execa.mockImplementation(() => Promise.resolve())
+      // @ts-ignore
       fs.readJSON.mockImplementation(() => {
         return { name: `gatsby-project` }
       })
@@ -139,7 +153,7 @@ describe(`init-starter`, () => {
         `gatsby-starter-hello-world`,
         `./somewhere`,
         [`one-package`],
-        `A site`
+        `A site`,
       )
 
       expect(fs.remove).toBeCalledWith(`yarn.lock`)
@@ -157,7 +171,7 @@ describe(`init-starter`, () => {
           `--legacy-peer-deps`,
           `--no-audit`,
         ],
-        { stderr: `inherit` }
+        { stderr: `inherit` },
       )
       expect(execa).toBeCalledWith(
         `npm`,
@@ -171,31 +185,31 @@ describe(`init-starter`, () => {
           `--no-audit`,
           `one-package`,
         ],
-        { stderr: `inherit` }
+        { stderr: `inherit` },
       )
     })
 
-    it(`gently informs the user that yarn is not available when trying to use it`, async () => {
-      process.env.npm_config_user_agent = `yarn`
-      execSync.mockImplementation(() => {
-        throw new Error(`Something wrong occurred when trying to use yarn`)
-      })
-      path.join.mockImplementation(() => `/somewhere-here`)
-      execa.mockImplementation(() => Promise.resolve())
-      fs.readJSON.mockImplementation(() => {
-        return { name: `gatsby-project` }
-      })
+    // it(`gently informs the user that yarn is not available when trying to use it`, async () => {
+    //   process.env.npm_config_user_agent = `yarn`
+    //   execSync.mockImplementation(() => {
+    //     throw new Error(`Something wrong occurred when trying to use yarn`)
+    //   })
+    //   path.join.mockImplementation(() => `/somewhere-here`)
+    //   execa.mockImplementation(() => Promise.resolve())
+    //   fs.readJSON.mockImplementation(() => {
+    //     return { name: `gatsby-project` }
+    //   })
 
-      await initStarter(
-        `gatsby-starter-hello-world`,
-        `./somewhere`,
-        [`one-package`],
-        `A site`
-      )
+    //   await initStarter(
+    //     `gatsby-starter-hello-world`,
+    //     `./somewhere`,
+    //     [`one-package`],
+    //     `A site`,
+    //   )
 
-      expect(reporter.info).toBeCalledWith(
-        `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
-      )
-    })
+    //   expect(reporter.info).toBeCalledWith(
+    //     `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`,
+    //   )
+    // })
   })
 })

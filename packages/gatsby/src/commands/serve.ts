@@ -1,4 +1,4 @@
-import path from "path"
+import path from "node:path"
 import openurl from "better-opn"
 import fs from "fs-extra"
 import compression from "compression"
@@ -31,21 +31,21 @@ import {
 } from "../internal-plugins/partytown/proxy"
 import { slash } from "gatsby-core-utils/path"
 
-interface IMatchPath {
+type IMatchPath = {
   path: string
   matchPath: string
 }
 
-interface IServeProgram extends IProgram {
+type IServeProgram = {
   prefixPaths: boolean
-}
+} & IProgram
 
-onExit(() => {
+onExit.onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
 })
 
 const readMatchPaths = async (
-  program: IServeProgram
+  program: IServeProgram,
 ): Promise<Array<IMatchPath>> => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
@@ -55,13 +55,13 @@ const readMatchPaths = async (
     report.warn(error)
     report.warn(
       `Could not read ${chalk.bold(
-        `match-paths.json`
-      )} from the .cache directory`
+        `match-paths.json`,
+      )} from the .cache directory`,
     )
     report.warn(
       `Client-side routing will not work correctly. Maybe you need to re-run ${chalk.bold(
-        `gatsby build`
-      )}?`
+        `gatsby build`,
+      )}?`,
     )
   }
   return JSON.parse(rawJSON) as Array<IMatchPath>
@@ -72,17 +72,17 @@ const matchPathRouter =
     matchPaths: Array<IMatchPath>,
     options: {
       root: string
-    }
+    },
   ) =>
   (
     req: express.Request,
     res: express.Response,
-    next: express.NextFunction
+    next: express.NextFunction,
   ): void => {
     const { url } = req
     if (req.accepts(`html`)) {
       const matchPath = matchPaths.find(
-        ({ matchPath }) => reachMatch(matchPath, url) !== null
+        ({ matchPath }) => reachMatch(matchPath, url) !== null,
       )
       if (matchPath) {
         return res.sendFile(
@@ -92,7 +92,7 @@ const matchPathRouter =
             if (err) {
               next()
             }
-          }
+          },
         )
       }
     }
@@ -103,14 +103,16 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
   await initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
+      program.openTracingConfigFile,
   )
+  // eslint-disable-next-line prefer-const
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
   const { configModule } = await getConfigFile(
     program.directory,
-    `gatsby-config`
+    `gatsby-config`,
   )
   const config: IGatsbyConfig = preferDefault(configModule)
 
@@ -146,13 +148,13 @@ module.exports = async (program: IServeProgram): Promise<void> => {
             },
             values(): Iterable<IGatsbyPage> {
               return getDataStore().iterateNodesByType(
-                `SitePage`
+                `SitePage`,
               ) as Iterable<IGatsbyPage>
             },
           },
-        } as unknown as IGatsbyState),
-      trailingSlash
-    )
+        }) as unknown as IGatsbyState,
+      trailingSlash,
+    ),
   )
 
   router.use(express.static(`public`, { dotfiles: `allow` }))
@@ -160,14 +162,17 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const compiledFunctionsDir = path.join(
     program.directory,
     `.cache`,
-    `functions`
+    `functions`,
   )
 
   let functions: Array<IGatsbyFunction> = []
   try {
     functions = JSON.parse(
-      fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`), `utf-8`)
-    )
+      fs.readFileSync(
+        path.join(compiledFunctionsDir, `manifest.json`),
+        `utf-8`,
+      ),
+    ) as Array<IGatsbyFunction>
   } catch (e) {
     // ignore
   }
@@ -189,10 +194,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   let pageSSRModule: string | undefined
   try {
     graphqlEnginePath = require.resolve(
-      path.posix.join(slash(program.directory), `.cache`, `query-engine`)
+      path.posix.join(slash(program.directory), `.cache`, `query-engine`),
     )
     pageSSRModule = require.resolve(
-      path.posix.join(slash(program.directory), `.cache`, `page-ssr`)
+      path.posix.join(slash(program.directory), `.cache`, `page-ssr`),
     )
   } catch (error) {
     // TODO: Handle case of engine not being generated
@@ -200,16 +205,18 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
   if (graphqlEnginePath && pageSSRModule) {
     try {
-      const { GraphQLEngine } =
-        require(graphqlEnginePath) as typeof import("../schema/graphql-engine/entry")
-      const { getData, renderPageData, renderHTML } =
-        require(pageSSRModule) as typeof import("../utils/page-ssr-module/entry")
+      const { GraphQLEngine } = require(
+        graphqlEnginePath,
+      ) as typeof import("../schema/graphql-engine/entry")
+      const { getData, renderPageData, renderHTML } = require(
+        pageSSRModule,
+      ) as typeof import("../utils/page-ssr-module/entry")
       const graphqlEngine = new GraphQLEngine({
         dbPath: path.posix.join(
           slash(program.directory),
           `.cache`,
           `data`,
-          `datastore`
+          `datastore`,
         ),
       })
 
@@ -226,7 +233,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const requestActivity = report.phantomActivity(
-              `request for "${req.path}"`
+              `request for "${req.path}"`,
             )
             requestActivity.start()
             try {
@@ -240,7 +247,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               const results = await renderPageData({ data, spanContext })
               if (data.serverDataHeaders) {
                 for (const [name, value] of Object.entries(
-                  data.serverDataHeaders
+                  data.serverDataHeaders,
                 )) {
                   res.setHeader(name, value)
                 }
@@ -254,7 +261,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
             } catch (e) {
               report.error(
                 `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
-                e
+                e,
               )
               return res
                 .status(500)
@@ -266,7 +273,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           }
 
           return void next()
-        }
+        },
       )
 
       router.use(async (req, res, next) => {
@@ -275,7 +282,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const page = graphqlEngine.findPageByPath(potentialPagePath)
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const requestActivity = report.phantomActivity(
-              `request for "${req.path}"`
+              `request for "${req.path}"`,
             )
             requestActivity.start()
 
@@ -290,7 +297,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               const results = await renderHTML({ data, spanContext })
               if (data.serverDataHeaders) {
                 for (const [name, value] of Object.entries(
-                  data.serverDataHeaders
+                  data.serverDataHeaders,
                 )) {
                   res.setHeader(name, value)
                 }
@@ -304,7 +311,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
             } catch (e) {
               report.error(
                 `Rendering html for "${potentialPagePath}" failed.`,
-                e
+                e,
               )
               return res.status(500).sendFile(`500.html`, { root }, err => {
                 if (err) {
@@ -340,12 +347,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(function (
     _: express.Request,
     res: express.Response,
-    next: express.NextFunction
+    next: express.NextFunction,
   ) {
     res.header(`Access-Control-Allow-Origin`, `*`)
     res.header(
       `Access-Control-Allow-Headers`,
-      `Origin, X-Requested-With, Content-Type, Accept`
+      `Origin, X-Requested-With, Content-Type, Accept`,
     )
     next()
   })
@@ -358,10 +365,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
     if (urls.lanUrlForTerminal) {
       console.log(
-        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`
+        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`,
       )
       console.log(
-        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`
+        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`,
       )
     } else {
       console.log(`  ${urls.localUrlForTerminal}`)
@@ -373,16 +380,16 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       const urls = prepareUrls(
         program.ssl ? `https` : `http`,
         program.host,
-        port
+        port,
       )
       printInstructions(
         program.sitePackageJson.name || `(Unnamed package)`,
-        urls
+        urls,
       )
       if (open) {
         report.info(`Opening browser...`)
         Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
-          report.warn(`Browser not opened because no browser was found`)
+          report.warn(`Browser not opened because no browser was found`),
         )
       }
     })

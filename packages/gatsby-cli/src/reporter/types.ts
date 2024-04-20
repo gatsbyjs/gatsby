@@ -1,19 +1,23 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as ActionCreators from "./redux/actions"
 // TODO: This needs to be implemented when redux/acitons is converted to TS
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type CreateLogAction = any
 
 export type ErrorMeta =
   | {
       id: string
-      error?: Error
+      error?: Error | undefined
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       context: Record<string, any>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [id: string]: any
     }
   | string
   | Error
   | Array<ErrorMeta>
 
-export interface ILogIntent {
+export type ILogIntent = {
   type: "LOG_INTENT"
   payload:
     | {
@@ -60,20 +64,20 @@ export interface ILogIntent {
 
 type PageMode = "SSG" | "DSG" | "SSR"
 
-interface IGatsbyPageComponent {
+type IGatsbyPageComponent = {
   componentPath: string
   pages: Set<string>
   isSlice: boolean
 }
-interface IGatsbyPage {
+type IGatsbyPage = {
   mode: PageMode
 }
-interface IGatsbyFunction {
+type IGatsbyFunction = {
   functionRoute: string
   originalAbsoluteFilePath: string
 }
 
-export interface IRenderPageArgs {
+export type IRenderPageArgs = {
   pages: Map<string, IGatsbyPage>
   components: Map<string, IGatsbyPageComponent>
   functions: Array<IGatsbyFunction>

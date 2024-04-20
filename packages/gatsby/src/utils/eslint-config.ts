@@ -1,5 +1,5 @@
 import { ESLint } from "eslint"
-import path from "path"
+import path from "node:path"
 
 const eslintRulePaths = path.resolve(`${__dirname}/eslint-rules`)
 const eslintRequirePreset = require.resolve(`./eslint/required`)
@@ -35,9 +35,9 @@ export const eslintRequiredConfig: ESLint.Options = {
   },
 }
 
-export const eslintConfig = (
-  usingAutomaticJsxRuntime: boolean
-): ESLint.Options => {
+export function eslintConfig(
+  usingAutomaticJsxRuntime: boolean,
+): ESLint.Options {
   return {
     useEslintrc: false,
     resolvePluginsRelativeTo: __dirname,

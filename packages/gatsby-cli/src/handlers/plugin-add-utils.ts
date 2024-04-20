@@ -1,5 +1,6 @@
 import * as fs from "fs-extra"
 import { execa } from "execa"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import {
   readConfigFile,
@@ -8,9 +9,10 @@ import {
   getConfigStore,
 } from "gatsby-core-utils"
 import { transform, TransformOptions } from "@babel/core"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BabelPluginAddPluginsToGatsbyConfig from "./plugin-babel-utils"
 
-const addPluginToConfig = (
+function addPluginToConfig(
   src: string,
   srcPath: string,
   {
@@ -21,8 +23,8 @@ const addPluginToConfig = (
     name: string
     options: Record<string, unknown> | undefined
     key: string
-  }
-): string => {
+  },
+): string {
   let code
 
   try {
@@ -62,19 +64,19 @@ const addPluginToConfig = (
   return code
 }
 
-interface IGatsbyPluginCreateInput {
+type IGatsbyPluginCreateInput = {
   root: string
   name: string
   options: Record<string, unknown> | undefined
   key: string
 }
 
-export const GatsbyPluginCreate = async ({
+export async function GatsbyPluginCreate({
   root,
   name,
   options,
   key,
-}: IGatsbyPluginCreateInput): Promise<void> => {
+}: IGatsbyPluginCreateInput): Promise<void> {
   const release = await lock(`gatsby-config.js`)
   const configSrcPath = getConfigPath(root)
   const configSrc = await readConfigFile(root)
@@ -90,11 +92,13 @@ export const GatsbyPluginCreate = async ({
 const packageMangerConfigKey = `cli.packageManager`
 const PACKAGE_MANAGER = getConfigStore().get(packageMangerConfigKey) || `pnpm`
 
-const getPackageNames = (
-  packages: Array<{ name: string; version: string }>
-): Array<string> => packages.map(n => `${n.name}@${n.version}`)
+function getPackageNames(
+  packages: Array<{ name: string; version: string }>,
+): Array<string> {
+  return packages.map(n => `${n.name}@${n.version}`)
+}
 
-const generateClientCommands = ({
+function generateClientCommands({
   packageManager,
   depType,
   packageNames,
@@ -102,7 +106,7 @@ const generateClientCommands = ({
   packageManager: string
   depType: string
   packageNames: Array<string>
-}): Array<string> | undefined => {
+}): Array<string> | undefined {
   const commands: Array<string> = []
   if (packageManager === `pnpm`) {
     commands.push(`add`)
@@ -112,15 +116,14 @@ const generateClientCommands = ({
     }
 
     return commands.concat(packageNames)
-  } else if (packageManager === `yarn`) {
-    commands.push(`add`)
-    // Needed for Yarn Workspaces and is a no-opt elsewhere.
-    commands.push(`-W`)
-    if (depType === `development`) {
-      commands.push(`--dev`)
-    }
-
-    return commands.concat(packageNames)
+    // } else if (packageManager === `yarn`) {
+    //   commands.push(`add`)
+    //   // Needed for Yarn Workspaces and is a no-opt elsewhere.
+    //   commands.push(`-W`)
+    //   if (depType === `development`) {
+    //     commands.push(`--dev`)
+    //   }
+    //   return commands.concat(packageNames)
   } else if (packageManager === `npm`) {
     commands.push(`install`)
     if (depType === `development`) {
@@ -133,11 +136,15 @@ const generateClientCommands = ({
 }
 
 let installs: Array<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   outsideResolve: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   outsideReject: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resource: any
 }> = []
-const executeInstalls = async (root: string): Promise<void> => {
+
+async function executeInstalls(root: string): Promise<void> {
   // @ts-ignore - fix me
   const types = _.groupBy(installs, c => c.resource.dependencyType)
 
@@ -149,7 +156,7 @@ const executeInstalls = async (root: string): Promise<void> => {
   const packagesToInstall = types[depType]
   installs = installs.filter(
     // @ts-ignore - fix me
-    i => !packagesToInstall.some(p => i.resource.name === p.resource.name)
+    i => !packagesToInstall.some(p => i.resource.name === p.resource.name),
   )
 
   // @ts-ignore - fix me
@@ -175,7 +182,7 @@ const executeInstalls = async (root: string): Promise<void> => {
         JSON.stringify({
           message: e.shortMessage,
           installationError: `Could not install package`,
-        })
+        }),
       )
     })
   }
@@ -194,15 +201,15 @@ const executeInstalls = async (root: string): Promise<void> => {
 
 const debouncedExecute = _.debounce(executeInstalls, 25)
 
-interface IPackageCreateInput {
+type IPackageCreateInput = {
   root: string
   name: string
 }
 
-const createInstall = async ({
+async function createInstall({
   root,
   name,
-}: IPackageCreateInput): Promise<unknown> => {
+}: IPackageCreateInput): Promise<unknown> {
   let outsideResolve
   let outsideReject
   const promise = new Promise((resolve, reject) => {
@@ -219,9 +226,9 @@ const createInstall = async ({
   return promise
 }
 
-export const NPMPackageCreate = async ({
+export async function NPMPackageCreate({
   root,
   name,
-}: IPackageCreateInput): Promise<void> => {
+}: IPackageCreateInput): Promise<void> {
   await createInstall({ root, name })
 }

@@ -14,12 +14,11 @@ export async function compileMDX(
   { absolutePath, source }: { absolutePath: string; source: string | Buffer },
   options: ProcessorOptions,
   cache: NodePluginArgs["cache"],
-  reporter: NodePluginArgs["reporter"]
+  reporter: NodePluginArgs["reporter"],
 ): Promise<{ processedMDX: string; metadata: IMdxMetadata } | null> {
   try {
-    const { createProcessor } = await cachedImport<
-      typeof import("@mdx-js/mdx")
-    >(`@mdx-js/mdx`)
+    const { createProcessor } =
+      await cachedImport<typeof import("@mdx-js/mdx")>(`@mdx-js/mdx`)
     const { VFile } = await cachedImport<typeof import("vfile")>(`vfile`)
 
     const processor = createProcessor(options)
@@ -27,19 +26,19 @@ export async function compileMDX(
     // Pass required custom data into the processor
     processor.data(
       `mdxNodeId`,
-      await cache.get(createFileToMdxCacheKey(absolutePath))
+      await cache.get(createFileToMdxCacheKey(absolutePath)),
     )
     processor.data(`mdxMetadata`, {})
 
     const result = await processor.process(
       // Inject path to original file for remark plugins. See: https://github.com/gatsbyjs/gatsby/issues/26914
-      new VFile({ value: source, path: absolutePath })
+      new VFile({ value: source, path: absolutePath }),
     )
 
     // Clone metadata so ensure it won't be overridden by later processings
     const clonedMetadata = Object.assign(
       {},
-      processor.data(`mdxMetadata`) as IMdxMetadata
+      processor.data(`mdxMetadata`) as IMdxMetadata,
     )
     const processedMDX = result.toString()
 
@@ -81,14 +80,14 @@ export const compileMDXWithCustomOptions = async (
     reporter: NodePluginArgs["reporter"]
     cache: NodePluginArgs["cache"]
     store: NodePluginArgs["store"]
-  }
+  },
 ): Promise<{
   processedMDX: string
   metadata: IMdxMetadata
 } | null> => {
   const customPluginOptions = deepmerge(
     Object.assign({}, pluginOptions),
-    customOptions
+    customOptions,
   )
 
   // Prepare MDX compile
@@ -109,6 +108,6 @@ export const compileMDXWithCustomOptions = async (
     },
     mdxOptions,
     cache,
-    reporter
+    reporter,
   )
 }

@@ -20,12 +20,13 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@testing-library/cypress": "9.0.0",
-    "axe-core": "4.7.0",
-    "cypress": "12.11.0",
-    "cypress-axe": "1.4.0",
-    "gatsby-cypress": "3.9.0",
-    "start-server-and-test": "2.0.0",
-    "typescript": "5.4.4"
+    "@total-typescript/ts-reset": "0.5.1",
+    "@testing-library/cypress": "10.0.1",
+    "axe-core": "4.9.0",
+    "cypress": "13.7.3",
+    "cypress-axe": "1.5.0",
+    "gatsby-cypress": "3.13.1",
+    "start-server-and-test": "2.0.3",
+    "typescript": "5.4.5"
   }
 }

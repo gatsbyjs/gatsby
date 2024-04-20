@@ -123,9 +123,9 @@ In your Gatsby project, you are going to have some dependencies that get stored 
 
 In npm, you can use the `npm audit` command to check your dependencies. This command is available in all npm versions greater than `6.0.0`. Check [npm docs](https://docs.npmjs.com/cli/audit) for more options.
 
-### Using yarn
+### Using pnpm
 
-Similar to npm, you can use the `yarn audit` command. It is available starting with version `1.12.0` though it is not yet available in version 2. Check the [yarn docs](https://classic.yarnpkg.com/en/docs/cli/audit/) for more options.
+Similar to npm, you can use the `pnpm audit` command. Check the [pnpm docs](https://pnpm.io/cli/audit) for more options.
 
 ## Key Security
 

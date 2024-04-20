@@ -28,13 +28,13 @@ After the process is complete, some additional packages are needed.
 Change directories to the `js-search-example` folder and issue the following command:
 
 ```shell
-npm install js-search axios
+npm install js-search
 ```
 
-Or if Yarn is being used:
+Or if pnpm is being used:
 
 ```shell
-yarn add js-search axios
+pnpm add js-search
 ```
 
 **Note**:
@@ -57,7 +57,6 @@ Start by creating a file named `SearchContainer.js` in the `src/components/` fol
 
 ```jsx:title=src/components/SearchContainer.js
 import React, { Component } from "react"
-import Axios from "axios"
 import * as JsSearch from "js-search"
 
 class Search extends Component {
@@ -73,7 +72,7 @@ class Search extends Component {
    * React lifecycle method to fetch the data
    */
   async componentDidMount() {
-    Axios.get("https://bvaughn.github.io/js-search/books.json")
+    windows.fetch("https://bvaughn.github.io/js-search/books.json")
       .then(result => {
         const bookData = result.data
         this.setState({ bookList: bookData.books })
@@ -268,13 +267,11 @@ Start by modifying the `gatsby-node.js` file by adding the following code:
 
 ```javascript:title=gatsby-node.js
 const path = require("path")
-const axios = require("axios")
 
 exports.createPages = ({ actions }) => {
   const { createPage } = actions
   return new Promise((resolve, reject) => {
-    axios
-      .get("https://bvaughn.github.io/js-search/books.json")
+    windows.fetch("https://bvaughn.github.io/js-search/books.json")
       .then(result => {
         const { data } = result
         /**

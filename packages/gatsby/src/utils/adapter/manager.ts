@@ -1,5 +1,5 @@
 import reporter from "gatsby-cli/lib/reporter"
-import { applyTrailingSlashOption, TrailingSlash } from "gatsby-page-utils"
+import { applyTrailingSlashOption, type TrailingSlash } from "gatsby-page-utils"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
 import { slash } from "gatsby-core-utils/path"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
@@ -51,7 +51,7 @@ async function setAdapter({
   instance,
   manager,
 }: {
-  instance?: IAdapter
+  instance?: IAdapter | undefined
   manager: IAdapterManager
 }): Promise<void> {
   const configFromAdapter = await manager.config()
@@ -86,7 +86,7 @@ async function setAdapter({
 
       if (
         !configFromAdapter.supports.trailingSlash.includes(
-          trailingSlash ?? `always`
+          trailingSlash ?? `always`,
         )
       ) {
         incompatibleFeatures.push(
@@ -94,7 +94,7 @@ async function setAdapter({
             configFromAdapter.supports.trailingSlash.length > 1 ? `s` : ``
           }: ${configFromAdapter.supports.trailingSlash
             .map(option => `"${option}"`)
-            .join(`, `)}`
+            .join(`, `)}`,
         )
       }
     }
@@ -105,7 +105,7 @@ async function setAdapter({
           instance.name
         }" is not compatible with following settings:\n${incompatibleFeatures
           .map(line => ` - ${line}`)
-          .join(`\n`)}`
+          .join(`\n`)}`,
       )
     }
 
@@ -236,11 +236,11 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         get remoteFileAllowedUrls(): RemoteFileAllowedUrls {
           if (!_imageCdnAllowedUrls) {
             _imageCdnAllowedUrls = Array.from(
-              store.getState().remoteFileAllowedUrls
+              store.getState().remoteFileAllowedUrls,
             ).map(urlPattern => {
               return {
                 urlPattern,
-                regexSource: pathToRegexp(urlPattern).source,
+                regexSource: pathToRegexp.pathToRegexp(urlPattern).source,
               }
             })
           }
@@ -265,7 +265,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           !configFromAdapter?.deployURL
         ) {
           throw new Error(
-            `Can't exclude datastore from engine function without adapter providing deployURL`
+            `Can't exclude datastore from engine function without adapter providing deployURL`,
           )
         }
 
@@ -354,7 +354,7 @@ function getRoutesManifest(): {
       cwd: posix.join(process.cwd(), `public`),
       nodir: true,
       dot: true,
-    }).map(filePath => slash(filePath))
+    }).map(filePath => slash(filePath)),
   )
 
   // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
@@ -375,14 +375,14 @@ function getRoutesManifest(): {
     if (route.type !== `redirect`) {
       route.path = applyTrailingSlashOption(
         route.path,
-        state.config.trailingSlash
+        state.config.trailingSlash,
       )
     }
 
     if (route.type !== `function`) {
       route.headers = createHeaders(route.path, route.headers)
       const customHeaders = route.headers.filter(
-        customHeaderFilter(route, pathPrefix)
+        customHeaderFilter(route, pathPrefix),
       )
       if (customHeaders.length > 0) {
         headerRoutes.push({ path: route.path, headers: customHeaders })
@@ -417,7 +417,7 @@ function getRoutesManifest(): {
       fileAssets.delete(pathToFillInPublicDir)
     } else {
       reporter.verbose(
-        `[Adapters] Tried to remove "${pathToFillInPublicDir}" from fileAssets but it wasn't there`
+        `[Adapters] Tried to remove "${pathToFillInPublicDir}" from fileAssets but it wasn't there`,
       )
     }
   }
@@ -564,7 +564,7 @@ function getRoutesManifest(): {
       statusCode,
       isPermanent,
       ignoreCase,
-      redirectInBrowser,
+      // redirectInBrowser,
       ...platformSpecificFields
     } = redirect
 
@@ -647,11 +647,11 @@ function getFunctionsManifest(): FunctionsManifest {
     const pathToEntryPoint = posix.join(
       `.cache`,
       `functions`,
-      functionInfo.relativeCompiledFilePath
+      functionInfo.relativeCompiledFilePath,
     )
     const relativePathWithoutFileExtension = posix.join(
       posix.parse(functionInfo.originalRelativeFilePath).dir,
-      posix.parse(functionInfo.originalRelativeFilePath).name
+      posix.parse(functionInfo.originalRelativeFilePath).name,
     )
 
     functions.push({

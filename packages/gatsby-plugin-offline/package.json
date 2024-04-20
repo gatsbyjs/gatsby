@@ -7,22 +7,23 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "cheerio": "^1.0.0-rc.10",
+    "@babel/runtime": "^7.24.4",
+    "cheerio": "^1.0.0-rc.12",
     "gatsby-core-utils": "^4.14.0-next.2",
-    "glob": "^7.2.3",
-    "idb-keyval": "^3.2.0",
+    "glob": "^10.3.12",
+    "idb-keyval": "^6.2.1",
     "lodash": "^4.17.21",
-    "workbox-build": "^4.3.1"
+    "workbox-build": "^7.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
-    "cpy-cli": "^4.2.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "gatsby-plugin-utils": "^4.14.0-next.2",
-    "rewire": "^6.0.0"
+    "rewire": "^7.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#readme",
   "keywords": [
@@ -35,9 +36,9 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
-    "react": "^18.0.0 || ^0.0.0",
-    "react-dom": "^18.0.0 || ^0.0.0"
+    "gatsby": "^5.13.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,6 @@
     "watch": "pnpm run build:sw-append -- --watch & pnpm run build:src -- --watch"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2"
   }
 }

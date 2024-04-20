@@ -1,14 +1,15 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import fs from "fs-extra"
 import { joinPath, md5 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { store, emitter } from "../redux"
-import { IRedirect } from "../redux/types"
+import type { IRedirect } from "../redux/types"
 
 let lastHash: string | null = null
 let bootstrapFinished = false
 
-export const writeRedirects = async (): Promise<void> => {
+export async function writeRedirects(): Promise<void> {
   bootstrapFinished = true
 
   const { program, redirects, pages } = store.getState()
@@ -28,9 +29,7 @@ export const writeRedirects = async (): Promise<void> => {
       pages.has(alternativePath)
     ) {
       redirectMatchingPageWarnings.push(
-        ` - page: "${
-          hasSamePage ? redirect.fromPath : alternativePath
-        }" and redirect: "${redirect.fromPath}" -> "${redirect.toPath}"`
+        ` - page: "${hasSamePage ? redirect.fromPath : alternativePath}" and redirect: "${redirect.fromPath}" -> "${redirect.toPath}"`,
       )
     }
     // Filter for redirects that are meant for the browser.
@@ -47,8 +46,8 @@ export const writeRedirects = async (): Promise<void> => {
   if (redirectMatchingPageWarnings.length > 0) {
     reporter.warn(
       `There are routes that match both page and redirect. Pages take precedence over redirects so the redirect will not work:\n${redirectMatchingPageWarnings.join(
-        `\n`
-      )}`
+        `\n`,
+      )}`,
     )
   }
 
@@ -62,7 +61,7 @@ export const writeRedirects = async (): Promise<void> => {
 
   await fs.writeFile(
     joinPath(program.directory, `.cache/redirects.json`),
-    JSON.stringify(browserRedirects, null, 2)
+    JSON.stringify(browserRedirects, null, 2),
   )
 }
 

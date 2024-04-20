@@ -20,7 +20,7 @@ import { actions } from "../redux/actions"
 import { IGatsbyStaticQueryComponents } from "../redux/types"
 import queryCompiler from "./query-compiler"
 import report from "gatsby-cli/lib/reporter"
-import { getGatsbyDependents } from "../utils/gatsby-dependents"
+import { getGatsbyDependents } from "../utils/get-gatsby-dependents"
 import { processNodeManifests } from "../utils/node-manifest"
 
 const debug = require(`debug`)(`gatsby:query-watcher`)
@@ -61,7 +61,7 @@ const getQueriesSnapshot = (): IQuerySnapshot => {
   const snapshot: IQuerySnapshot = {
     components: new Map<string, IComponent>(state.components),
     staticQueryComponents: new Map<string, IGatsbyStaticQueryComponents>(
-      state.staticQueryComponents
+      state.staticQueryComponents,
     ),
     componentsWithCleanFilePaths,
   }
@@ -71,7 +71,7 @@ const getQueriesSnapshot = (): IQuerySnapshot => {
 
 const handleComponentsWithRemovedQueries = (
   { staticQueryComponents }: IQuerySnapshot,
-  queries: Map<string, IQuery>
+  queries: Map<string, IQuery>,
 ): void => {
   // If a component had static query and it doesn't have it
   // anymore - update the store
@@ -89,7 +89,7 @@ const handleComponentsWithRemovedQueries = (
 const handleQuery = (
   { staticQueryComponents }: IQuerySnapshot,
   query: IQuery,
-  component: string
+  component: string,
 ): boolean => {
   // If this is a static query
   // Add action / reducer + watch staticquery files
@@ -114,13 +114,13 @@ const handleQuery = (
           id: query.id,
           query: query.text,
           hash: query.hash,
-        })
+        }),
       )
 
       debug(
         `Static query in ${component} ${
           isNewQuery ? `was added` : `has changed`
-        }.`
+        }.`,
       )
     }
     return true
@@ -146,7 +146,7 @@ const watch = async (rootDir: string): Promise<void> => {
   watcher = chokidar
     .watch(
       [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
-      { ignoreInitial: true, ignored: [`**/*.d.ts`] }
+      { ignoreInitial: true, ignored: [`**/*.d.ts`] },
     )
     .on(`change`, path => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
@@ -196,7 +196,7 @@ const clearInactiveComponents = (): void => {
   components.forEach(component => {
     if (!activeTemplates.has(component.componentPath)) {
       debug(
-        `${component.componentPath} component was removed because it isn't used by any page`
+        `${component.componentPath} component was removed because it isn't used by any page`,
       )
       store.dispatch({
         type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`,
@@ -230,7 +230,7 @@ export const startWatchDeletePage = (): void => {
 
 export const updateStateAndRunQueries = async (
   isFirstRun: boolean,
-  { parentSpan }: { parentSpan?: Span } = {}
+  { parentSpan }: { parentSpan?: Span } = {},
 ): Promise<void> => {
   const snapshot = getQueriesSnapshot()
   const queries: Map<string, IQuery> = await queryCompiler({ parentSpan })
@@ -252,7 +252,7 @@ export const updateStateAndRunQueries = async (
       actions.queryExtracted({
         componentPath: c.componentPath,
         query: isStaticQuery ? `` : text,
-      })
+      }),
     )
   })
 
@@ -268,11 +268,11 @@ export const updateStateAndRunQueries = async (
     } else if (
       isFirstRun &&
       !snapshot.componentsWithCleanFilePaths.has(
-        getPathToLayoutComponent(component)
+        getPathToLayoutComponent(component),
       )
     ) {
       report.warn(
-        `The GraphQL query in the non-page component "${component}" will not be run.`
+        `The GraphQL query in the non-page component "${component}" will not be run.`,
       )
       queriesWillNotRun = true
     }

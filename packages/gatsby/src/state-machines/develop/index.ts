@@ -1,25 +1,27 @@
 import {
-  MachineConfig,
-  AnyEventObject,
+  type MachineConfig,
+  type AnyEventObject,
   forwardTo,
   createMachine,
   assign,
 } from "xstate"
-import { IDataLayerContext } from "../data-layer/types"
-import { IQueryRunningContext } from "../query-running/types"
-import { IWaitingContext } from "../waiting/types"
+import type { IDataLayerContext } from "../data-layer/types"
+import type { IQueryRunningContext } from "../query-running/types"
+import type { IWaitingContext } from "../waiting/types"
 import { buildActions } from "./actions"
 import { developServices } from "./services"
-import { IBuildContext } from "../../services"
+import type { IBuildContext } from "../../services"
 
 const RECOMPILE_PANIC_LIMIT = 6
 
-const getGraphqlTypegenConfig = (ctx: IBuildContext): boolean =>
-  !!ctx.store!.getState().config.graphqlTypegen
+function getGraphqlTypegenConfig(ctx: IBuildContext): boolean {
+  return !!ctx.store!.getState().config.graphqlTypegen
+}
 
 /**
  * This is the top-level state machine for the `gatsby develop` command
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
   predictableActionArguments: true,
   id: `build`,

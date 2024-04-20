@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {

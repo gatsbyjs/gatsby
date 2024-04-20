@@ -1,20 +1,20 @@
 type SYMBOLS = " " | "D" | "∞" | "λ"
 
-export interface IComponentWithPageModes {
+export type IComponentWithPageModes = {
   SSG: Set<string>
   DSG: Set<string>
   SSR: Set<string>
   FN: Set<string>
 }
 
-export interface ITreeLine {
+export type ITreeLine = {
   text: string
   symbol: SYMBOLS
 }
 
 export function generatePageTree(
   collections: IComponentWithPageModes,
-  LIMIT: number = 8
+  LIMIT: number = 8,
 ): Array<ITreeLine> {
   const SSGIterator = collections.SSG.values()
   const DSGIterator = collections.DSG.values()
@@ -25,25 +25,25 @@ export function generatePageTree(
     SSGIterator,
     ` `,
     LIMIT / 4,
-    collections.SSG.size
+    collections.SSG.size,
   )
   const DSGPages: Array<ITreeLine> = generateLineUntilLimit(
     DSGIterator,
     `D`,
     LIMIT / 4,
-    collections.DSG.size
+    collections.DSG.size,
   )
   const SSRPages: Array<ITreeLine> = generateLineUntilLimit(
     SSRIterator,
     `∞`,
     LIMIT / 4,
-    collections.SSR.size
+    collections.SSR.size,
   )
   const FNPages: Array<ITreeLine> = generateLineUntilLimit(
     FNIterator,
     `λ`,
     LIMIT / 4,
-    collections.FN.size
+    collections.FN.size,
   )
 
   return SSGPages.concat(DSGPages).concat(SSRPages).concat(FNPages)
@@ -51,7 +51,7 @@ export function generatePageTree(
 
 export function generateSliceTree(
   slices: Set<string>,
-  LIMIT: number = 8
+  LIMIT: number = 8,
 ): Array<ITreeLine> {
   const slicesIterator = slices.values()
 
@@ -62,7 +62,7 @@ function generateLineUntilLimit(
   iterator: IterableIterator<string>,
   symbol: SYMBOLS,
   limit: number,
-  max: number
+  max: number,
 ): Array<ITreeLine> {
   const output: Array<ITreeLine> = []
 

@@ -76,7 +76,7 @@ To show some of the differences of how your project structure could differ by mo
   │   ├── index.js
   │   ├── logo.svg
   │   └── serviceWorker.js
-  └── yarn.lock
+  └── pnpm-lock.yaml
 ```
 
 Whereas a default Gatsby project will look something like this (files that are different between Create React App and Gatsby are highlighted):
@@ -98,7 +98,7 @@ Whereas a default Gatsby project will look something like this (files that are d
 + │   ├── components
 + │   ├── images
 + │   └── pages
-  └── yarn.lock
+  └── pnpm-lock.yaml
 ```
 
 The structure of a [Gatsby project](/docs/reference/gatsby-project-structure/) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/reference/config-files/gatsby-browser/) and for [server-side rendering](/docs/reference/config-files/gatsby-ssr/), though much of the project structure is similar enough to feel comfortable quickly.

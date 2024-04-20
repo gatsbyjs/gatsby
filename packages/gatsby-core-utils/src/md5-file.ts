@@ -6,7 +6,7 @@ import * as fs from "fs-extra"
  * @param filePath Absolute path to the file
  * @returns MD5 hash in hex format
  */
-export const md5File = async (filePath: string): Promise<string> => {
+export async function md5File(filePath: string): Promise<string> {
   const md5hasher = await createMD5()
 
   return new Promise((resolve, reject) => {

@@ -1,35 +1,36 @@
-import { walkStream as fsWalkStream, Entry } from "@nodelib/fs.walk"
+import { walkStream as fsWalkStream, type Entry } from "@nodelib/fs.walk"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
-import path from "path"
+import path from "node:path"
 import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import type { IGatsbySlice, IGatsbyState } from "../redux/types"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import type GatsbyCacheLmdb from "./cache-lmdb"
 import {
   constructPageDataString,
   reverseFixedPagePath,
-  IPageData,
-  IPageDataInput,
+  type IPageData,
+  type IPageDataInput,
 } from "./page-data-helpers"
 import { Span } from "opentracing"
 
 export { reverseFixedPagePath }
 import { processNodeManifests } from "../utils/node-manifest"
-import { IExecutionResult } from "../query/types"
+import type { IExecutionResult } from "../query/types"
 import { getPageMode } from "./page-mode"
-import { ICollectedSlices } from "./babel/find-slices"
+import type { ICollectedSlices } from "./babel/find-slices"
 import { ensureFileContent } from "./ensure-file-content"
 
-export interface IPageDataWithQueryResult extends IPageData {
+export type IPageDataWithQueryResult = {
   result: IExecutionResult
-}
+} & IPageData
 
-export interface ISliceData {
+export type ISliceData = {
   componentChunkName: string
   result: IExecutionResult
   staticQueryHashes: Array<string>
@@ -37,16 +38,16 @@ export interface ISliceData {
 
 export async function readPageData(
   publicDir: string,
-  pagePath: string
+  pagePath: string,
 ): Promise<IPageDataWithQueryResult> {
   const filePath = generatePageDataPath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
-  return JSON.parse(rawPageData)
+  return JSON.parse(rawPageData) as IPageDataWithQueryResult
 }
 
 export async function removePageData(
   publicDir: string,
-  pagePath: string
+  pagePath: string,
 ): Promise<void> {
   const filePath = generatePageDataPath(publicDir, pagePath)
 
@@ -81,11 +82,11 @@ export function waitUntilPageQueryResultsAreStored(): Promise<void> {
 
 export async function savePageQueryResult(
   pagePath: string,
-  stringifiedResult: string
+  stringifiedResult: string,
 ): Promise<void> {
   savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
     pagePath,
-    stringifiedResult
+    stringifiedResult,
   ) as Promise<void>
 }
 
@@ -101,7 +102,7 @@ export async function writePageData(
   publicDir: string,
   pageData: IPageDataInput,
   slicesUsedByTemplates: Map<string, ICollectedSlices>,
-  slices: IGatsbyState["slices"]
+  slices: IGatsbyState["slices"],
 ): Promise<string> {
   const result = await readPageQueryResult(pageData.path)
 
@@ -111,7 +112,7 @@ export async function writePageData(
     pageData,
     result,
     slicesUsedByTemplates,
-    slices
+    slices,
   )
 
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
@@ -134,11 +135,11 @@ export async function writePageData(
 export async function writeSliceData(
   publicDir: string,
   { componentChunkName, name }: IGatsbySlice,
-  staticQueryHashes: Array<string>
+  staticQueryHashes: Array<string>,
 ): Promise<string> {
   const result = JSON.parse(
-    (await readPageQueryResult(`slice--${name}`)).toString()
-  )
+    (await readPageQueryResult(`slice--${name}`)).toString(),
+  ) as IExecutionResult
 
   const outputFilePath = path.join(publicDir, `slice-data`, `${name}.json`)
 
@@ -168,11 +169,11 @@ export async function writeSliceData(
 
 export async function readSliceData(
   publicDir: string,
-  sliceName: string
+  sliceName: string,
 ): Promise<IPageDataWithQueryResult> {
   const filePath = path.join(publicDir, `slice-data`, `${sliceName}.json`)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
-  return JSON.parse(rawPageData)
+  return JSON.parse(rawPageData) as IPageDataWithQueryResult
 }
 
 let isFlushPending = false
@@ -238,7 +239,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
               nodeManifests.length - maxManifestIdsToLog
             } additional ID's that were not logged due to output length.`
           : ``
-      }`
+      }`,
     )
 
     nodeManifestPagePathMap = await processNodeManifests()
@@ -251,7 +252,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
       `Writing page-data.json and slice-data.json files to public directory`,
       pagePaths.size + sliceNames.size,
       0,
-      { id: `write-page-data-public-directory`, parentSpan }
+      { id: `write-page-data-public-directory`, parentSpan },
     )
     writePageDataActivity.start()
   }
@@ -283,7 +284,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
           if (!query) {
             // this should not happen ever
             throw new Error(
-              `We have a page, but we don't have registered query for it (???)`
+              `We have a page, but we don't have registered query for it (???)`,
             )
           }
 
@@ -308,7 +309,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
                 staticQueryHashes,
               },
               slicesByTemplate,
-              slices
+              slices,
             )
 
             if (!isBuild) {
@@ -321,7 +322,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
             shouldClearPendingWrite = false
             reporter.panicOnBuild(
               `Failed to write page-data for ""${page.path}`,
-              e
+              e,
             )
           }
           writePageDataActivity.tick()
@@ -346,7 +347,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
         const result = await writeSliceData(
           path.join(program.directory, `public`),
           slice,
-          staticQueryHashes
+          staticQueryHashes,
         )
 
         writePageDataActivity.tick()
@@ -433,7 +434,7 @@ export async function handleStalePageData(parentSpan: Span): Promise<void> {
       })
 
       stream.on(`end`, () => resolve(results))
-    }
+    },
   )
 
   const expectedPageDataFiles = new Set<string>()
@@ -453,7 +454,7 @@ export async function handleStalePageData(parentSpan: Span): Promise<void> {
   activity.end()
 }
 
-interface IModifyPageDataForErrorMessage {
+type IModifyPageDataForErrorMessage = {
   errors: {
     graphql?: IPageDataWithQueryResult["result"]["errors"]
     getServerData?: IPageDataWithQueryResult["getServerDataError"]
@@ -466,7 +467,7 @@ interface IModifyPageDataForErrorMessage {
 }
 
 export function modifyPageDataForErrorMessage(
-  input: IPageDataWithQueryResult
+  input: IPageDataWithQueryResult,
 ): IModifyPageDataForErrorMessage {
   const optionalData = {
     ...(input.result?.pageContext

@@ -1,4 +1,5 @@
-import path from "path"
+import path from "node:path"
 
-export const getCacheDir = (root: string): string =>
-  path.join(root, `.cache`, `caches`, `gatsby-plugin-image`)
+export function getCacheDir(root: string): string {
+  return path.join(root, `.cache`, `caches`, `gatsby-plugin-image`)
+}

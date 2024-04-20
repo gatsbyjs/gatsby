@@ -1,10 +1,10 @@
-import fs from "fs"
-import crypto from "crypto"
+import fs from "node:fs"
+import crypto from "node:crypto"
 import glob from "glob"
 
 export function createFileContentHash(
   root: string,
-  globPattern: string
+  globPattern: string,
 ): string {
   // TODO: Use hash-wasm
   const hash = crypto.createHash(`md5`)

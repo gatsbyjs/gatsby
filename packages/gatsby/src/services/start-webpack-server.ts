@@ -2,7 +2,7 @@ import openurl from "better-opn"
 // @ts-ignore
 import report from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
-import { Compiler } from "webpack"
+import type { Compiler } from "webpack"
 
 import {
   reportWebpackWarnings,
@@ -12,9 +12,12 @@ import {
 import { showExperimentNotices } from "../utils/show-experiment-notice"
 import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
-import { startServer, IWebpackWatchingPauseResume } from "../utils/start-server"
-import { WebsocketManager } from "../utils/websocket-manager"
-import { IBuildContext } from "./"
+import {
+  startServer,
+  type IWebpackWatchingPauseResume,
+} from "../utils/start-server"
+import type { WebsocketManager } from "../utils/websocket-manager"
+import type { IBuildContext } from "./"
 import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
@@ -29,14 +32,13 @@ export async function startWebpackServer({
 }: Partial<IBuildContext>): Promise<{
   compiler: Compiler
   websocketManager: WebsocketManager
-  webpackWatching: IWebpackWatchingPauseResume
+  webpackWatching: IWebpackWatchingPauseResume | undefined
 }> {
   if (!program || !app || !store) {
     report.panic(`Missing required params`)
-
-    throw new Error('Missing required params to startWebpackServer')
   }
 
+  // eslint-disable-next-line prefer-const
   let { compiler, webpackActivity, websocketManager, webpackWatching } =
     await startServer(program, app, workerPool)
 
@@ -71,13 +73,13 @@ export async function startWebpackServer({
       `print gatsby instructions`,
       async (stats, done) => {
         if (isFirstCompile) {
-          webpackWatching.suspend()
+          webpackWatching?.suspend()
         }
 
         const urls = prepareUrls(
           program?.https ? `https` : `http`,
-          program?.host ?? 'localhost',
-          program?.port ?? 8000
+          program?.host ?? `localhost`,
+          program?.port ?? 8000,
         )
         const isSuccessful = !stats.hasErrors()
 
@@ -87,7 +89,7 @@ export async function startWebpackServer({
           showExperimentNotices()
           printInstructions(
             program?.sitePackageJson.name ?? `(Unnamed package)`,
-            urls
+            urls,
           )
 
           if (program?.open) {
@@ -96,8 +98,8 @@ export async function startWebpackServer({
             } catch {
               console.log(
                 `${chalk.yellow(
-                  `warn`
-                )} Browser not opened because no browser was found`
+                  `warn`,
+                )} Browser not opened because no browser was found`,
               )
             }
           }
@@ -113,8 +115,8 @@ export async function startWebpackServer({
 
           if (!isSuccessful) {
             const errors = structureWebpackErrors(
-              'develop',
-              stats.compilation.errors
+              `develop`,
+              stats.compilation.errors,
             )
             webpackActivity.panicOnBuild(errors)
           }
@@ -126,7 +128,7 @@ export async function startWebpackServer({
         done()
         emitter.emit(`COMPILATION_DONE`, stats)
         resolve({ compiler, websocketManager, webpackWatching })
-      }
+      },
     )
   })
 }

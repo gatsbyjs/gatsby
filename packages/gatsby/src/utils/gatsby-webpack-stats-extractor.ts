@@ -1,6 +1,6 @@
 import fs from "fs-extra"
-import path from "path"
-import { Compiler } from "webpack"
+import path from "node:path"
+import type { Compiler } from "webpack"
 import { PARTIAL_HYDRATION_CHUNK_REASON } from "./webpack/plugins/partial-hydration"
 import { store } from "../redux"
 import { ensureFileContent } from "./ensure-file-content"
@@ -37,15 +37,15 @@ export class GatsbyWebpackStatsExtractor {
             .filter(
               f =>
                 f.slice(-4) !== `.map` &&
-                f.slice(0, chunkGroup.name?.length) === chunkGroup.name
+                f.slice(0, chunkGroup.name?.length) === chunkGroup.name,
             )
             .map(filename => `/${filename}`)
 
           for (const [rel, childChunkGroups] of Object.entries(
             chunkGroup.getChildrenByOrders(
               stats.compilation.moduleGraph,
-              stats.compilation.chunkGraph
-            )
+              stats.compilation.chunkGraph,
+            ),
           )) {
             if (!(chunkGroup.name in childAssets)) {
               childAssets[chunkGroup.name] = {}
@@ -105,22 +105,24 @@ export class GatsbyWebpackStatsExtractor {
       if (newChunkMapJson !== previousChunkMapJson) {
         await fs.writeFile(
           path.join(`public`, `chunk-map.json`),
-          newChunkMapJson
+          newChunkMapJson,
         )
 
         if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
           // Add chunk mapping metadata to scripts slice
-          const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify( newChunkMapJson )};`
+          const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(newChunkMapJson)};`
 
-          const chunkSliceContents = typeof this.nonce === 'string'
-            ? `<script id="gatsby-chunk-mapping" nonce="${this.nonce}">${scriptChunkMapping}</script>`
-            : `<script id="gatsby-chunk-mapping">${scriptChunkMapping}</script>`
+          const chunkSliceContents =
+            typeof this.nonce === `string`
+              ? `<script id="gatsby-chunk-mapping" nonce="${this.nonce}">${scriptChunkMapping}</script>`
+              : `<script id="gatsby-chunk-mapping">${scriptChunkMapping}</script>`
 
           await fs.ensureDir(path.join(`public`, `_gatsby`, `slices`))
 
-          const hashSliceContents = typeof this.nonce === 'string'
-          ? `<script nonce="${this.nonce}">window.___webpackCompilationHash="${stats.hash}";</script>`
-          : `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
+          const hashSliceContents =
+            typeof this.nonce === `string`
+              ? `<script nonce="${this.nonce}">window.___webpackCompilationHash="${stats.hash}";</script>`
+              : `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
 
           const assetSliceContents: Array<string> = []
 
@@ -128,9 +130,9 @@ export class GatsbyWebpackStatsExtractor {
             for (const asset of assets.polyfill) {
               if (asset.endsWith(`.js`)) {
                 assetSliceContents.push(
-                  typeof this.nonce === 'string'
+                  typeof this.nonce === `string`
                     ? `<script src="${this.publicPath}/${asset}" nomodule nonce="${this.nonce}"></script>`
-                    : `<script src="${this.publicPath}/${asset}" nomodule></script>`
+                    : `<script src="${this.publicPath}/${asset}" nomodule></script>`,
                 )
               }
             }
@@ -140,9 +142,9 @@ export class GatsbyWebpackStatsExtractor {
             for (const asset of assets.app) {
               if (asset.endsWith(`.js`)) {
                 assetSliceContents.push(
-                  typeof this.nonce === 'string'
+                  typeof this.nonce === `string`
                     ? `<script src="${this.publicPath}/${asset}" nonce="${this.nonce}" async></script>`
-                    : `<script src="${this.publicPath}/${asset}" async></script>`
+                    : `<script src="${this.publicPath}/${asset}" async></script>`,
                 )
               }
             }
@@ -150,7 +152,9 @@ export class GatsbyWebpackStatsExtractor {
 
           const scriptsSliceHtmlChanged = await ensureFileContent(
             path.join(`public`, `_gatsby`, `slices`, `_gatsby-scripts-1.html`),
-            chunkSliceContents + hashSliceContents + assetSliceContents.join(``)
+            chunkSliceContents +
+              hashSliceContents +
+              assetSliceContents.join(``),
           )
 
           if (scriptsSliceHtmlChanged) {
@@ -167,7 +171,7 @@ export class GatsbyWebpackStatsExtractor {
       if (newWebpackStatsJson !== previousWebpackStatsJson) {
         await fs.writeFile(
           path.join(`public`, `webpack.stats.json`),
-          newWebpackStatsJson
+          newWebpackStatsJson,
         )
         previousWebpackStatsJson = newWebpackStatsJson
       }

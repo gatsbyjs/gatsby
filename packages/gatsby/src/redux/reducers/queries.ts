@@ -1,4 +1,4 @@
-import {
+import type {
   ActionsUnion,
   IComponentState,
   IGatsbyState,
@@ -19,7 +19,7 @@ export const FLAG_ERROR_EXTRACTION = 0b0001
 
 export const FLAG_RUNNING_INFLIGHT = 0b0001
 
-const initialState = (): IGatsbyState["queries"] => {
+function initialState(): IGatsbyState["queries"] {
   return {
     byNode: new Map<NodeId, Set<QueryId>>(),
     byConnection: new Map<ConnectionName, Set<QueryId>>(),
@@ -31,14 +31,14 @@ const initialState = (): IGatsbyState["queries"] => {
   }
 }
 
-const initialQueryState = (): IQueryState => {
+function initialQueryState(): IQueryState {
   return {
     dirty: -1, // unknown, must be set right after init
     running: 0,
   }
 }
 
-const initialComponentState = (): IComponentState => {
+function initialComponentState(): IComponentState {
   return {
     componentPath: ``,
     query: ``,
@@ -58,8 +58,8 @@ const initialComponentState = (): IComponentState => {
  * Dirty queries must be re-ran.
  */
 export function queriesReducer(
-  state: IGatsbyState["queries"] = initialState(),
-  action: ActionsUnion
+  state: IGatsbyState["queries"] | undefined = initialState(),
+  action: ActionsUnion,
 ): IGatsbyState["queries"] {
   switch (action.type) {
     case `DELETE_CACHE`:
@@ -72,7 +72,9 @@ export function queriesReducer(
         query = registerQuery(state, path)
         query.dirty = setFlag(
           query.dirty,
-          action.contextModified ? FLAG_DIRTY_PAGE_CONTEXT : FLAG_DIRTY_NEW_PAGE
+          action.contextModified
+            ? FLAG_DIRTY_PAGE_CONTEXT
+            : FLAG_DIRTY_NEW_PAGE,
         )
         state = trackDirtyQuery(state, path)
       }
@@ -88,7 +90,9 @@ export function queriesReducer(
         query = registerQuery(state, path)
         query.dirty = setFlag(
           query.dirty,
-          action.contextModified ? FLAG_DIRTY_PAGE_CONTEXT : FLAG_DIRTY_NEW_PAGE
+          action.contextModified
+            ? FLAG_DIRTY_PAGE_CONTEXT
+            : FLAG_DIRTY_NEW_PAGE,
         )
         state = trackDirtyQuery(state, path)
       }
@@ -276,7 +280,7 @@ export function hasFlag(allFlags: number, flag: number): boolean {
 function addNodeDependency(
   state: IGatsbyState["queries"],
   queryId: QueryId,
-  nodeId: NodeId
+  nodeId: NodeId,
 ): IGatsbyState["queries"] {
   // Perf: using two-side maps.
   //   Without additional `queryNodes` map we would have to loop through
@@ -299,7 +303,7 @@ function addNodeDependency(
 function addConnectionDependency(
   state: IGatsbyState["queries"],
   queryId: QueryId,
-  connection: ConnectionName
+  connection: ConnectionName,
 ): IGatsbyState["queries"] {
   // Note: not using two-side maps for connections as associated overhead
   //   for small number of elements is greater then benefits, so no perf. gains
@@ -314,7 +318,7 @@ function addConnectionDependency(
 
 function clearNodeDependencies(
   state: IGatsbyState["queries"],
-  queryId: QueryId
+  queryId: QueryId,
 ): IGatsbyState["queries"] {
   const queryNodeIds = state.queryNodes.get(queryId) ?? new Set()
   for (const nodeId of queryNodeIds) {
@@ -328,7 +332,7 @@ function clearNodeDependencies(
 
 function clearConnectionDependencies(
   state: IGatsbyState["queries"],
-  queryId: QueryId
+  queryId: QueryId,
 ): IGatsbyState["queries"] {
   for (const [, queryIds] of state.byConnection) {
     queryIds.delete(queryId)
@@ -338,7 +342,7 @@ function clearConnectionDependencies(
 
 function registerQuery(
   state: IGatsbyState["queries"],
-  queryId: QueryId
+  queryId: QueryId,
 ): IQueryState {
   let query = state.trackedQueries.get(queryId)
   if (!query) {
@@ -350,7 +354,7 @@ function registerQuery(
 
 function registerComponent(
   state: IGatsbyState["queries"],
-  componentPath: string
+  componentPath: string,
 ): IComponentState {
   let component = state.trackedComponents.get(componentPath)
   if (!component) {
@@ -363,7 +367,7 @@ function registerComponent(
 
 function trackDirtyQuery(
   state: IGatsbyState["queries"],
-  queryId: QueryId
+  queryId: QueryId,
 ): IGatsbyState["queries"] {
   if (process.env.GATSBY_QUERY_ON_DEMAND) {
     state.dirtyQueriesListToEmitViaWebsocket.push(queryId)
@@ -372,14 +376,14 @@ function trackDirtyQuery(
   return state
 }
 
-interface IWorkerStateChunk {
+type IWorkerStateChunk = {
   workerId: number
   queryStateChunk: IGatsbyState["queries"]
 }
 
 function mergeWorkerDataDependencies(
   state: IGatsbyState["queries"],
-  workerStateChunk: IWorkerStateChunk
+  workerStateChunk: IWorkerStateChunk,
 ): IGatsbyState["queries"] {
   const queryState = workerStateChunk.queryStateChunk
 
@@ -409,23 +413,23 @@ function assertCorrectWorkerState({
 }: IWorkerStateChunk): void {
   if (queryStateChunk.deletedQueries.size !== 0) {
     throw new Error(
-      `Assertion failed: workerState.deletedQueries.size === 0 (worker #${workerId})`
+      `Assertion failed: workerState.deletedQueries.size === 0 (worker #${workerId})`,
     )
   }
   if (queryStateChunk.trackedComponents.size !== 0) {
     throw new Error(
-      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #${workerId})`
+      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #${workerId})`,
     )
   }
   for (const query of queryStateChunk.trackedQueries.values()) {
     if (query.dirty) {
       throw new Error(
-        `Assertion failed: all worker queries are not dirty (worker #${workerId})`
+        `Assertion failed: all worker queries are not dirty (worker #${workerId})`,
       )
     }
     if (query.running) {
       throw new Error(
-        `Assertion failed: all worker queries are not running (worker #${workerId})`
+        `Assertion failed: all worker queries are not running (worker #${workerId})`,
       )
     }
   }

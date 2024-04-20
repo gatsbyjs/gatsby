@@ -1,6 +1,7 @@
 import { Parcel } from "@parcel/core"
 import { LMDBCache, Cache } from "@parcel/cache"
 import path from "path"
+// @ts-ignore
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
 import { WorkerPool } from "gatsby-worker"
@@ -53,7 +54,7 @@ export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
   })
 }
 
-interface IProcessBundle {
+type IProcessBundle = {
   filePath: string
   mainEntryPath?: string
 }
@@ -81,7 +82,7 @@ export async function runParcel(siteRoot: string): Promise<RunParcelReturn> {
  */
 export async function compileGatsbyFiles(
   siteRoot: string,
-  retry: number = 0
+  retry: number = 0,
 ): Promise<void> {
   try {
     const gatsbyNodeName = `gatsby-node`
@@ -134,7 +135,7 @@ export async function compileGatsbyFiles(
       require.resolve(`./compile-gatsby-files`),
       {
         numWorkers: 1,
-      }
+      },
     )
 
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
@@ -210,7 +211,7 @@ export async function compileGatsbyFiles(
               bundle.filePath
             }" after retry, attempting another retry (#${
               retry + 1
-            } of ${RETRY_COUNT}) - "${e.message}"`
+            } of ${RETRY_COUNT}) - "${e.message}"`,
           )
         }
 
@@ -293,7 +294,7 @@ function handleErrors(diagnostics: Array<Diagnostic>): void {
 
 export function getResolvedFieldsForPlugin(
   rootDir: string,
-  pluginName: string
+  pluginName: string,
 ): {
   resolvedCompiledGatsbyNode?: string
 } {
@@ -301,7 +302,7 @@ export function getResolvedFieldsForPlugin(
     resolvedCompiledGatsbyNode: findCompiledLocalPluginModule(
       rootDir,
       pluginName,
-      `gatsby-node`
+      `gatsby-node`,
     ),
   }
 }
@@ -309,7 +310,7 @@ export function getResolvedFieldsForPlugin(
 export function findCompiledLocalPluginModule(
   rootDir: string,
   pluginName: string,
-  moduleName: "gatsby-config" | "gatsby-node"
+  moduleName: "gatsby-config" | "gatsby-node",
 ): string | undefined {
   const compiledPathForPlugin =
     pluginName === `default-site-plugin`

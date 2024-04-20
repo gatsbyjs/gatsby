@@ -10,7 +10,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 
 For starters, let's install all the required packages we're going to need.
 
-`yarn add bulma sass gatsby-plugin-sass`
+`pnpm add bulma sass gatsby-plugin-sass`
 
 Then, add the `gatsby-plugin-sass` in to `gatsby-config.js`.
 

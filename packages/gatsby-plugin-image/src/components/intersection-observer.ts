@@ -16,7 +16,7 @@ const FAST_CONNECTION_THRESHOLD = `1250px`
 const SLOW_CONNECTION_THRESHOLD = `2500px`
 
 export function createIntersectionObserver(
-  callback: () => void
+  callback: () => void,
 ): (element: HTMLElement) => Unobserver {
   const connectionType = connection?.effectiveType
 
@@ -45,7 +45,7 @@ export function createIntersectionObserver(
           connectionType === `4g` && !connection?.saveData
             ? FAST_CONNECTION_THRESHOLD
             : SLOW_CONNECTION_THRESHOLD,
-      }
+      },
     )
   }
 

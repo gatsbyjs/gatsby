@@ -2,7 +2,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { slash } from "gatsby-core-utils"
 import { startRedirectListener } from "./redirects-writer"
 import {
-  IBuildContext,
+  type IBuildContext,
   initialize,
   customizeSchema,
   sourceNodes,
@@ -12,18 +12,18 @@ import {
   writeOutRedirects,
   postBootstrap,
 } from "../services"
-import { Runner, createGraphQLRunner } from "./create-graphql-runner"
+import { type Runner, createGraphQLRunner } from "./create-graphql-runner"
 import { globalTracer } from "opentracing"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
 import { savePartialStateToDisk } from "../redux"
-import { IProgram } from "../commands/types"
+import type { IProgram } from "../commands/types"
 import type { IAdapterManager } from "../utils/adapter/types"
 
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: Partial<IBuildContext> & { program: IProgram }
+  initialContext: Partial<IBuildContext> & { program: IProgram },
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
   workerPool: GatsbyWorkerPool
@@ -62,7 +62,7 @@ export async function bootstrap(
 
   context.gatsbyNodeGraphQLFunction = createGraphQLRunner(
     context.store,
-    reporter
+    reporter,
   )
 
   await createPages(context)

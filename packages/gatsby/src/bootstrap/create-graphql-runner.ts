@@ -12,7 +12,8 @@ import { IMatch } from "../types"
 
 export type Runner = (
   query: string | Source,
-  context: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: Record<string, any>,
 ) => Promise<ExecutionResult>
 
 export const createGraphQLRunner = (
@@ -24,7 +25,7 @@ export const createGraphQLRunner = (
   }: { parentSpan: Span | undefined; graphqlTracing?: boolean } = {
     parentSpan: undefined,
     graphqlTracing: false,
-  }
+  },
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
   let runner: GraphQLRunner | undefined = new GraphQLRunner(store, {
@@ -60,7 +61,7 @@ export const createGraphQLRunner = (
       })
       .then(result => {
         if (result.errors) {
-          const structuredErrors = result.errors
+          const structuredErrors: Array<IMatch> = result.errors
             .map(e => {
               // Find the file where graphql was called.
               const file = stackTrace
@@ -88,7 +89,7 @@ export const createGraphQLRunner = (
 
               return null
             })
-            .filter(Boolean as unknown as (match) => match is IMatch)
+            .filter(Boolean) as Array<IMatch>
 
           if (structuredErrors.length) {
             // panic on build exits the process

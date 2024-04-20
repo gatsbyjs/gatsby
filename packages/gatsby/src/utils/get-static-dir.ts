@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 import chokidar from "chokidar"
-import nodePath from "path"
+import nodePath from "node:path"
 import { store } from "../redux"
 
 /**
@@ -8,7 +8,7 @@ import { store } from "../redux"
  * --
  * Copy files from the static directory to the public directory
  */
-export const copyStaticDirs = (): void => {
+export function copyStaticDirs(): void {
   // access the store to get themes
   const { flattenedPlugins } = store.getState()
   // if there are legacy themes, only use them. Otherwise proceed with plugins
@@ -28,7 +28,7 @@ export const copyStaticDirs = (): void => {
     .map(folder =>
       fs.copySync(folder, nodePath.join(process.cwd(), `public`), {
         dereference: true,
-      })
+      }),
     )
 
   const staticDir = nodePath.join(process.cwd(), `static`)
@@ -43,7 +43,7 @@ export const copyStaticDirs = (): void => {
  * --
  * Set up a watcher to sync changes from the static directory to the public directory
  */
-export const syncStaticDir = (): void => {
+export function syncStaticDir(): void {
   const staticDir = nodePath.join(process.cwd(), `static`)
   chokidar
     .watch(staticDir)

@@ -46,7 +46,7 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
 
   Section with instructions on how to use the feature, e.g. with a canary.
 
-  <!-- When defining a canary for installation, tell users to use `--save-exact` (npm) or `--exact` (yarn) flag. -->
+  <!-- When defining a canary for installation, tell users to use `--save-exact` (npm) or `--exact` (pnpm) flag. -->
 
   ### CodeSandbox
 
@@ -144,9 +144,9 @@ Each month the team will attempt to review some set of open RFC discussions.
 
 Every accepted feature should have a core team champion, who will represent the feature and its progress.
 
-**Gatsby's RFC process owes its inspiration to the [React RFC process], [Yarn RFC process], [Rust RFC process], and [Ember RFC process]**
+**Gatsby's RFC process owes its inspiration to the [React RFC process], [pnpm RFC process], [Rust RFC process], and [Ember RFC process]**
 
 [react rfc process]: https://github.com/reactjs/rfcs
-[yarn rfc process]: https://github.com/yarnpkg/rfcs
 [rust rfc process]: https://github.com/rust-lang/rfcs
 [ember rfc process]: https://github.com/emberjs/rfcs
+[pnpm rfc process]: https://github.com/pnpm/rfcs

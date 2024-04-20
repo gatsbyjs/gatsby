@@ -1,10 +1,10 @@
 import { Rule } from "eslint"
 import { slash } from "gatsby-core-utils"
-import { GatsbyReduxStore } from "../redux"
+import type { GatsbyReduxStore } from "../redux"
 
 export function isPageTemplate(
   s: GatsbyReduxStore,
-  c: Rule.RuleContext
+  c: Rule.RuleContext,
 ): boolean {
   const filename = c.getFilename()
   if (!filename) {
@@ -14,6 +14,7 @@ export function isPageTemplate(
   return s.getState().components.has(slash(filename))
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function test(t): any {
   return Object.assign(t, {
     parserOptions: {

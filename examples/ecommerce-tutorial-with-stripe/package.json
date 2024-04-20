@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "author": "@thorwebdev",
   "dependencies": {
-    "@stripe/stripe-js": "^1.9.0",
+    "@stripe/stripe-js": "3.3.0",
     "gatsby": "next",
     "gatsby-image": "next",
     "gatsby-plugin-manifest": "next",
@@ -13,12 +13,12 @@
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-source-filesystem": "next",
-    "gatsby-source-stripe": "^3.1.1",
+    "gatsby-source-stripe": "4.0.0",
     "gatsby-transformer-sharp": "next",
-    "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet": "^5.2.1"
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0"
   },
   "keywords": [
     "gatsby"
@@ -32,7 +32,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
-    "prettier": "2.1.1"
+    "@total-typescript/ts-reset": "0.5.1"
   },
   "repository": {
     "type": "git",

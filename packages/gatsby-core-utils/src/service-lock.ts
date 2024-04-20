@@ -5,24 +5,25 @@
  *
  * NOTE(@mxstbr): This is NOT EXPORTED from the main index.ts due to this relying on Node.js-specific APIs but core-utils also being used in browser environments. See https://github.com/jprichardson/node-fs-extra/issues/743
  */
-import path from "path"
+import path from "node:path"
 import tmp from "tmp"
 import fs from "fs-extra"
 import xdgBasedir from "xdg-basedir"
 import { createContentDigest } from "./create-content-digest"
 import { isCI } from "./ci"
 
-const globalConfigPath = xdgBasedir.config || tmp.fileSync().name
+const globalConfigPath = xdgBasedir.xdgConfig || tmp.fileSync().name
 
-const getSiteDir = (programPath: string): string => {
+function getSiteDir(programPath: string): string {
   const hash = createContentDigest(programPath)
 
   return path.join(globalConfigPath, `gatsby`, `sites`, hash)
 }
 
 const DATA_FILE_EXTENSION = `.json`
-const getDataFilePath = (siteDir: string, serviceName: string): string =>
-  path.join(siteDir, `${serviceName}${DATA_FILE_EXTENSION}`)
+function getDataFilePath(siteDir: string, serviceName: string): string {
+  return path.join(siteDir, `${serviceName}${DATA_FILE_EXTENSION}`)
+}
 
 const lockfileOptions = {
   // Use the minimum stale duration
@@ -37,11 +38,13 @@ function getLockFileInstance(): typeof import("proper-lockfile") {
 }
 
 const memoryServices = {}
-export const createServiceLock = async (
+
+export async function createServiceLock(
   programPath: string,
   serviceName: string,
-  content: Record<string, any>
-): Promise<UnlockFn | null> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content: Record<string, any>,
+): Promise<UnlockFn | null> {
   // NOTE(@mxstbr): In CI, we cannot reliably access the global config dir and do not need cross-process coordination anyway
   // so we fall back to storing the services in memory instead!
   if (isCI()) {
@@ -71,11 +74,11 @@ export const createServiceLock = async (
   }
 }
 
-export const getService = async <T = Record<string, unknown>>(
+export async function getService<T = Record<string, unknown>>(
   programPath: string,
   serviceName: string,
-  ignoreLockfile: boolean = false
-): Promise<T | null> => {
+  ignoreLockfile: boolean = false,
+): Promise<T | null> {
   if (isCI()) return memoryServices[serviceName] || null
 
   const siteDir = getSiteDir(programPath)
@@ -88,7 +91,7 @@ export const getService = async <T = Record<string, unknown>>(
       (await lockfile.check(serviceDataFile, lockfileOptions))
     ) {
       return JSON.parse(
-        await fs.readFile(serviceDataFile, `utf8`).catch(() => `null`)
+        await fs.readFile(serviceDataFile, `utf8`).catch(() => `null`),
       )
     }
 
@@ -98,7 +101,8 @@ export const getService = async <T = Record<string, unknown>>(
   }
 }
 
-export const getServices = async (programPath: string): Promise<any> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getServices(programPath: string): Promise<any> {
   if (isCI()) return memoryServices
   const siteDir = getSiteDir(programPath)
 
@@ -108,9 +112,9 @@ export const getServices = async (programPath: string): Promise<any> => {
 
   const services = {}
   await Promise.all(
-    serviceNames.map(async service => {
+    serviceNames.map(async (service: string): Promise<void> => {
       services[service] = await getService(programPath, service, true)
-    })
+    }),
   )
 
   return services

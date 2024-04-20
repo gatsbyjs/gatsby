@@ -1,8 +1,8 @@
-import { IDataStore, IQueryResult } from "../types"
+import type { IDataStore, IQueryResult } from "../types"
 import { store } from "../../redux"
-import { IGatsbyNode } from "../../redux/types"
+import type { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { GatsbyIterable } from "../common/iterable"
-import { IRunFilterArg, runFastFiltersAndSort } from "./run-fast-filters"
+import { type IRunFilterArg, runFastFiltersAndSort } from "./run-fast-filters"
 
 /**
  * @deprecated
@@ -39,7 +39,7 @@ function getTypes(): Array<string> {
   return Array.from(store.getState().nodesByType.keys()).sort()
 }
 
-function countNodes(typeName?: string): number {
+function countNodes(typeName?: string | undefined): number {
   if (!typeName) {
     return store.getState().nodes.size
   }
@@ -49,6 +49,10 @@ function countNodes(typeName?: string): number {
 
 function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
   return Promise.resolve(runFastFiltersAndSort(args))
+}
+
+function updateDataStore(action: ActionsUnion): void {
+  store.dispatch(action)
 }
 
 const readyPromise = Promise.resolve(undefined)
@@ -70,6 +74,7 @@ export function setupInMemoryStore(): IDataStore {
     iterateNodes,
     iterateNodesByType,
     runQuery,
+    updateDataStore,
 
     // deprecated:
     getNodes,

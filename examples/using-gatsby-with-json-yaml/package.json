@@ -6,10 +6,10 @@
   "author": "jonniebigodes",
   "dependencies": {
     "gatsby": "next",
-    "js-yaml": "^3.14.0",
-    "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "js-yaml": "4.1.0",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "keywords": [
     "gatsby"
@@ -18,10 +18,9 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "start": "pnpm run develop",
-    "format": "prettier --write \"src/**/*.js\""
+    "start": "pnpm run develop"
   },
   "devDependencies": {
-    "prettier": "2.1.1"
+    "@total-typescript/ts-reset": "0.5.1"
   }
 }

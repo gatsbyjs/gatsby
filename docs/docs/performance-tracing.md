@@ -60,16 +60,16 @@ const api = require(`@opentelemetry/api`)
 const { TracerShim } = require(`@opentelemetry/shim-opentracing`)
 const opentracing = require(`opentracing`)
 const { NodeSDK } = require(`@opentelemetry/sdk-node`)
-const {
-  getNodeAutoInstrumentations,
-} = require(`@opentelemetry/auto-instrumentations-node`)
+const { getNodeAutoInstrumentations } = require(
+  `@opentelemetry/auto-instrumentations-node`,
+)
 const { Resource } = require(`@opentelemetry/resources`)
-const {
-  SemanticResourceAttributes,
-} = require(`@opentelemetry/semantic-conventions`)
-const {
-  CollectorTraceExporter,
-} = require(`@opentelemetry/exporter-collector-grpc`)
+const { SemanticResourceAttributes } = require(
+  `@opentelemetry/semantic-conventions`,
+)
+const { CollectorTraceExporter } = require(
+  `@opentelemetry/exporter-collector-grpc`,
+)
 
 const metadata = new Metadata()
 metadata.set(`x-honeycomb-team`, `ADD YOUR API KEY`)
@@ -118,7 +118,7 @@ GATSBY_OPEN_TRACING_CONFIG_FILE=tracing.js node -r ./tracing.js node_modules/gat
 1. Add [jaeger-client](https://www.npmjs.com/package/jaeger-client) to your site:
 
    ```shell
-   yarn add jaeger-client
+   pnpm add jaeger-client
    ```
 
    or

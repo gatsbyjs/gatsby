@@ -1,14 +1,16 @@
-import { assign, DoneInvokeEvent, ActionFunctionMap } from "xstate"
+import { assign, type DoneInvokeEvent, type ActionFunctionMap } from "xstate"
 import { createGraphQLRunner } from "../../bootstrap/create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
-import { IDataLayerContext } from "./types"
+import type { IDataLayerContext } from "./types"
 import { assertStore } from "../../utils/assert-store"
 import { GraphQLRunner } from "../../query/graphql-runner"
 
-const concatUnique = <T>(
+function concatUnique<T>(
   array1: Array<T> = [],
-  array2: Array<T> = []
-): Array<T> => Array.from(new Set(array1.concat(array2)))
+  array2: Array<T> = [],
+): Array<T> {
+  return Array.from(new Set(array1.concat(array2)))
+}
 
 export const assignChangedPages = assign<
   IDataLayerContext,
@@ -33,9 +35,10 @@ export const assignGraphQLRunners = assign<IDataLayerContext>(
         graphqlTracing: program?.graphqlTracing,
       }),
     }
-  }
+  },
 )
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const dataLayerActions: ActionFunctionMap<IDataLayerContext, any> = {
   assignChangedPages,
   assignGraphQLRunners,

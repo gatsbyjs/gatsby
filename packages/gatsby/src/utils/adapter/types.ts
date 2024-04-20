@@ -156,12 +156,12 @@ export interface IAdapterConfig {
   /**
    * URL representing the unique URL for an individual deploy
    */
-  deployURL?: string
+  deployURL?: string | undefined
   /**
    * If `true`, Gatsby will not include the LMDB datastore in the serverless functions used for SSR/DSG.
    * Instead, it will try to download the datastore from the given `deployURL`.
    */
-  excludeDatastoreFromEngineFunction?: boolean
+  excludeDatastoreFromEngineFunction?: boolean | undefined
   /**
    * Adapters can optionally describe which features they support to prevent potentially faulty deployments
    */
@@ -169,19 +169,19 @@ export interface IAdapterConfig {
     /**
      * If `false`, Gatsby will fail the build if user tries to use pathPrefix.
      */
-    pathPrefix?: boolean
+    pathPrefix?: boolean | undefined
     /**
      * Provide array of supported traling slash options
      * @example [`always`]
      */
-    trailingSlash?: Array<TrailingSlash>
-  }
+    trailingSlash?: Array<TrailingSlash> | undefined
+  } | undefined
   /**
    * List of plugins that should be disabled when using this adapter. Purpose of this is to disable
    * any potential plugins that serve similar role as adapter that would cause conflicts when both
    * plugin and adapter is used at the same time.
    */
-  pluginsToDisable?: Array<string>
+  pluginsToDisable?: Array<string> | undefined
   /**
    * Path to a CommonJS module that implements an image CDN URL generation function. The function
    * is used to optimize image delivery by generating URLs that leverage CDN capabilities. This module
@@ -191,7 +191,7 @@ export interface IAdapterConfig {
    * See 'packages/gatsby-adapter-netlify/src/image-cdn-url-generator.ts' as an implementation
    * example for the Netlify adapter.
    */
-  imageCDNUrlGeneratorModulePath?: string
+  imageCDNUrlGeneratorModulePath?: string | undefined
   /**
    * Path to a CommonJS module that implements an file CDN URL generation function. This module
    * should have a default export function that conforms to the {@link FileCdnUrlGeneratorFn} type:
@@ -200,19 +200,19 @@ export interface IAdapterConfig {
    * See 'packages/gatsby-adapter-netlify/src/file-cdn-url-generator.ts' as an implementation
    * example for the Netlify adapter.
    */
-  fileCDNUrlGeneratorModulePath?: string
+  fileCDNUrlGeneratorModulePath?: string | undefined
   /**
    * The platform bundled functions will execute on. Usually should be `linux`.
    * This will be used if user didn't specify `GATSBY_FUNCTIONS_PLATFORM` environment variable
    * or used `-functions-platform` CLI toggle. If none is defined current platform (process.platform) will be used.
    */
-  functionsPlatform?: string
+  functionsPlatform?: string | undefined
   /**
    * The architecture bundled functions will execute on. Usually should be `x64`.
    * This will be used if user didn't specify `GATSBY_FUNCTIONS_ARCH` environment variable
    * or used `-functions-arch` CLI toggle. If none is defined current arch (process.arch) will be used.
    */
-  functionsArch?: string
+  functionsArch?: string | undefined
 }
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }

@@ -1,4 +1,4 @@
-import {
+import type {
   IGatsbyState,
   IDeleteCacheAction,
   ICreateServerVisitedPage,
@@ -7,8 +7,9 @@ import {
 type StateMap = Map<"server", Set<string>>
 
 // The develop server always wants these page components.
-const createDefault = (): StateMap => {
+function createDefault(): StateMap {
   const defaults = new Set<string>()
+
   defaults.add(`component---cache-dev-404-page-js`)
   defaults.add(`component---src-pages-404-js`)
   defaults.add(`component---src-pages-index-js`)
@@ -18,10 +19,10 @@ const createDefault = (): StateMap => {
   return state
 }
 
-export const visitedPagesReducer = (
+export function visitedPagesReducer(
   state: IGatsbyState["visitedPages"] = createDefault(),
-  action: IDeleteCacheAction | ICreateServerVisitedPage
-): IGatsbyState["visitedPages"] => {
+  action: IDeleteCacheAction | ICreateServerVisitedPage,
+): IGatsbyState["visitedPages"] {
   switch (action.type) {
     case `DELETE_CACHE`:
       return createDefault()

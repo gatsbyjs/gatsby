@@ -5,14 +5,16 @@ Stress tests various query filters (with optional sorting and counting).
 # Usage
 
 ```shell
-NUM_NODES=1000 NUM_PAGES=1000 FILTER=eq SORT=1 TEXT=1 COUNT=1 yarn bench
+NUM_NODES=1000 NUM_PAGES=1000 FILTER=eq SORT=1 TEXT=1 COUNT=1
+pnpm install
+pnpm run bench
 ```
 
 ## Description
 
 All queries have `limit=100` (although some of them may return just several items or 0).
 
-### Env vars:
+### Env vars
 
 - `NUM_NODES`: The number of nodes created (1000 by default)
 - `NUM_PAGES`: The number of pages created (1000 by default, must be <= `NUM_NODES`)
@@ -53,20 +55,23 @@ All queries have `limit=100` (although some of them may return just several item
 Let's figure out time complexity of `gt` filter. To make this happen - let's run the benchmark
 3 times with the same number of pages but growing number of nodes:
 
-### run 1:
+### run 1
 
 ```shell
-NUM_NODES=1000 FILTER=gt yarn bench
+NUM_NODES=1000 FILTER=gt
+pnpm run bench
 ```
 
-### run 2:
+### run 2
 
 ```shell
-NUM_NODES=10000 FILTER=gt yarn bench
+NUM_NODES=10000 FILTER=gt
+pnpm run bench
 ```
 
-### run 3:
+### run 3
 
 ```shell
-NUM_NODES=100000 FILTER=gt yarn bench
+NUM_NODES=100000 FILTER=gt
+pnpm run bench
 ```

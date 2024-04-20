@@ -1,13 +1,7 @@
 module.exports = {
   parser: `@babel/eslint-parser`,
-  extends: [
-    `google`,
-    `eslint:recommended`,
-    `plugin:flowtype/recommended`,
-    `plugin:react/recommended`,
-    `prettier`,
-  ],
-  plugins: [`flowtype`, `prettier`, `react`, `filenames`, `@babel`],
+  extends: [`eslint:recommended`, `plugin:react/recommended`, `prettier`],
+  plugins: [`prettier`, `react`, `filenames`, `@babel`],
   parserOptions: {
     ecmaVersion: 2016,
     sourceType: `module`,
@@ -41,6 +35,7 @@ module.exports = {
     __TRAILING_SLASH__: true,
   },
   rules: {
+    "react/react-in-jsx-scope": `off`,
     "@babel/no-unused-expressions": [
       `error`,
       {
@@ -50,11 +45,7 @@ module.exports = {
     "no-unused-expressions": `off`,
     "@babel/no-invalid-this": `error`,
     "no-invalid-this": `off`,
-    "arrow-body-style": [
-      `error`,
-      `as-needed`,
-      { requireReturnForObjectLiteral: true },
-    ],
+    "arrow-body-style": `off`,
     "new-cap": `off`,
     "no-unused-vars": [
       `warn`,
@@ -237,10 +228,7 @@ module.exports = {
         // Type is still useful for opaque types
         // e.g.,
         // type UUID = string
-        "@typescript-eslint/consistent-type-definitions": [
-          `error`,
-          `interface`,
-        ],
+        "@typescript-eslint/consistent-type-definitions": [`error`, `type`],
         "@typescript-eslint/no-use-before-define": [
           `error`,
           { functions: false },
@@ -258,7 +246,6 @@ module.exports = {
         ],
         // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
         // so disabling them in .ts(x) files
-        "flowtype/no-types-missing-file-annotation": `off`,
         "@typescript-eslint/array-type": [`error`, { default: `generic` }],
       },
     },

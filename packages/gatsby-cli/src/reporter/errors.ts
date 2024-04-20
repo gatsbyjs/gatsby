@@ -1,7 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import PrettyError from "pretty-error"
 import stackTrace from "stack-trace"
 import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
-// @ts-ignore
 import { isNodeInternalModulePath } from "gatsby-core-utils"
 import { IStructuredStackFrame } from "../structured-errors/types"
 import { readFileSync } from "fs-extra"
@@ -10,14 +10,14 @@ import { codeFrameColumns } from "@babel/code-frame"
 const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
 
 const packagesToSkipTest = new RegExp(
-  `node_modules[\\/](${packagesToSkip.join(`|`)})`
+  `node_modules[\\/](${packagesToSkip.join(`|`)})`,
 )
 
 // TO-DO: move this this out of this file (and probably delete this file completely)
 // it's here because it re-implements similar thing as `pretty-error` already does
-export const sanitizeStructuredStackTrace = (
-  stack: Array<stackTrace.StackFrame>
-): Array<IStructuredStackFrame> => {
+export function sanitizeStructuredStackTrace(
+  stack: Array<stackTrace.StackFrame>,
+): Array<IStructuredStackFrame> {
   // first filter out not useful call sites
   stack = stack.filter(callSite => {
     if (!callSite.getFileName()) {
@@ -61,13 +61,13 @@ export function getErrorFormatter(): PrettyError {
   prettyError.skipPackage(
     `regenerator-runtime`,
     `graphql`,
-    `core-js`
+    `core-js`,
     // `static-site-generator-webpack-plugin`,
     // `tapable`, // webpack
   )
 
   // @ts-ignore the type defs in prettyError are wrong
-  prettyError.skip((traceLine: any) => {
+  prettyError.skip(traceLine => {
     if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
     return false
   })
@@ -89,7 +89,7 @@ export function getErrorFormatter(): PrettyError {
   }
 
   prettyError.render = (
-    err: PrettyRenderError | Array<PrettyRenderError>
+    err: PrettyRenderError | Array<PrettyRenderError>,
   ): string => {
     if (Array.isArray(err)) {
       return err.map(e => prettyError.render(e)).join(`\n`)
@@ -103,14 +103,16 @@ export function getErrorFormatter(): PrettyError {
 }
 
 type ErrorWithPotentialForcedLocation = Error & {
-  forcedLocation?: {
-    fileName: string
-    lineNumber?: number
-    columnNumber?: number
-    endLineNumber?: number
-    endColumnNumber?: number
-    functionName?: string
-  }
+  forcedLocation?:
+    | {
+        fileName: string
+        lineNumber?: number | undefined
+        columnNumber?: number | undefined
+        endLineNumber?: number | undefined
+        endColumnNumber?: number | undefined
+        functionName?: string | undefined
+      }
+    | undefined
 }
 
 /**
@@ -119,10 +121,11 @@ type ErrorWithPotentialForcedLocation = Error & {
  */
 export function createErrorFromString(
   errorOrErrorStack: string | ErrorWithPotentialForcedLocation = ``,
-  sourceMapFile: string
+  sourceMapFile: string,
 ): ErrorWithCodeFrame {
   if (typeof errorOrErrorStack === `string`) {
     const errorStr = errorOrErrorStack
+    // eslint-disable-next-line prefer-const
     let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
     // pull the message from the first line then remove the `Error:` prefix
     // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
@@ -148,16 +151,14 @@ export function createErrorFromString(
       const error = new Error(errorOrErrorStack.message) as ErrorWithCodeFrame
       error.stack = `${errorOrErrorStack.message}
   at ${forcedLocation.functionName ?? `<anonymous>`} (${
-        forcedLocation.fileName
-      }${
-        forcedLocation.lineNumber
-          ? `:${forcedLocation.lineNumber}${
-              forcedLocation.columnNumber
-                ? `:${forcedLocation.columnNumber}`
-                : ``
-            }`
-          : ``
-      })`
+    forcedLocation.fileName
+  }${
+    forcedLocation.lineNumber
+      ? `:${forcedLocation.lineNumber}${
+          forcedLocation.columnNumber ? `:${forcedLocation.columnNumber}` : ``
+        }`
+      : ``
+  })`
 
       try {
         const source = readFileSync(forcedLocation.fileName, `utf8`)
@@ -178,7 +179,7 @@ export function createErrorFromString(
           },
           {
             highlightCode: true,
-          }
+          },
         )
       } catch (e) {
         // failed to generate codeframe, we still should show an error so we keep going

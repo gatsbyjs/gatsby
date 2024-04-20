@@ -8,7 +8,7 @@ import { createPendingActivity } from "./redux/actions"
 import { ActivityStatuses } from "./constants"
 import { reporter } from "./reporter"
 
-const interruptActivities = (): void => {
+function interruptActivities(): void {
   const { activities } = getStore().getState().logs
   Object.keys(activities).forEach(activityId => {
     const activity = activities[activityId]
@@ -21,7 +21,7 @@ const interruptActivities = (): void => {
   })
 }
 
-export const prematureEnd = (): void => {
+export function prematureEnd(): void {
   // hack so at least one activity is surely failed, so
   // we are guaranteed to generate FAILED status
   // if none of activity did explicitly fail
@@ -33,10 +33,12 @@ export const prematureEnd = (): void => {
   interruptActivities()
 }
 
-export const catchExitSignals = (): void => {
-  signalExit((code, signal) => {
-    if (code !== 0 && signal !== `SIGINT` && signal !== `SIGTERM`)
+export function catchExitSignals(): void {
+  signalExit.onExit((code, signal) => {
+    if (code !== 0 && signal !== `SIGINT` && signal !== `SIGTERM`) {
       prematureEnd()
-    else interruptActivities()
+    } else {
+      interruptActivities()
+    }
   })
 }

@@ -20,7 +20,7 @@ export const KNOWN_CONFIG_KEYS = [
 
 export function didYouMean(
   configKey: string,
-  commands: Array<string> = KNOWN_CONFIG_KEYS
+  commands: Array<string> = KNOWN_CONFIG_KEYS,
 ): string {
   const bestSimilarity = meant(configKey, commands)
 

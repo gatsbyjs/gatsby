@@ -6,7 +6,7 @@
 const CONTENT_FILE_PATH_QUERY = `?__contentFilePath=`
 
 // Split the path component URI without using the expensive URI.parse()
-export const splitComponentPath = (componentPath: string): Array<string> => {
+export function splitComponentPath(componentPath: string): Array<string> {
   // If the path does not include the contentFilePath query, we can assume its a regular path
   if (!componentPath.includes(CONTENT_FILE_PATH_QUERY)) {
     return [componentPath]
@@ -14,14 +14,14 @@ export const splitComponentPath = (componentPath: string): Array<string> => {
 
   const cleanedComponentPath = componentPath.replace(
     /&export=(default|head)$/,
-    ``
+    ``,
   )
   const splitPath = cleanedComponentPath.split(CONTENT_FILE_PATH_QUERY)
 
   // We only support URI paths with the `?__contentFilePath=` parameter
   if (splitPath.length !== 2) {
     throw new Error(
-      `The following page component must contain '${CONTENT_FILE_PATH_QUERY}':\n${cleanedComponentPath}`
+      `The following page component must contain '${CONTENT_FILE_PATH_QUERY}':\n${cleanedComponentPath}`,
     )
   }
 
@@ -29,12 +29,13 @@ export const splitComponentPath = (componentPath: string): Array<string> => {
 }
 
 // Get the path to the actual js page component
-export const getPathToLayoutComponent = (componentPath: string): string =>
-  splitComponentPath(componentPath)[0]
+export function getPathToLayoutComponent(componentPath: string): string {
+  return splitComponentPath(componentPath)[0]
+}
 
 // Get the path to the content file, falling back to the js component if no content file is given.
 // Pages directly created from `.mdx` files
-export const getPathToContentComponent = (componentPath: string): string => {
+export function getPathToContentComponent(componentPath: string): string {
   const splitPath = splitComponentPath(componentPath)
   if (splitPath.length === 1) {
     return splitPath[0]
