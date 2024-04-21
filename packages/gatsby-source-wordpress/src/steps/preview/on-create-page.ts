@@ -13,9 +13,9 @@ There was an attempt to use store.componentDataDependencies but my implementatio
 was buggy and unreliable. @todo it's worth trying to remove the need for
 pageContext.id again in the future.
  */
-export const onCreatepageSavePreviewNodeIdToPageDependency = (
-  helpers: GatsbyNodeApiHelpers
-): void => {
+export function onCreatepageSavePreviewNodeIdToPageDependency(
+  helpers: GatsbyNodeApiHelpers,
+): void {
   // if we're not in preview mode we don't want to track this
   if (!inPreviewMode()) {
     return
@@ -43,9 +43,9 @@ export const onCreatepageSavePreviewNodeIdToPageDependency = (
  * if both of those things are true we invoke the callback to
  * respond to the WP instance preview client
  */
-export const onCreatePageRespondToPreviewStatusQuery = async (
-  helpers: GatsbyNodeApiHelpers
-): Promise<void> => {
+export async function onCreatePageRespondToPreviewStatusQuery(
+  helpers: GatsbyNodeApiHelpers,
+): Promise<void> {
   // if we're not in preview mode we don't want to set this up
   if (!inPreviewMode()) {
     return
@@ -90,8 +90,8 @@ export const onCreatePageRespondToPreviewStatusQuery = async (
   if (!nodeThatCreatedThisPage) {
     helpers.reporter.warn(
       formatLogMessage(
-        `There was an attempt to call a Preview onPageCreated callback for node ${nodeIdThatCreatedThisPage}, but no node was found.`
-      )
+        `There was an attempt to call a Preview onPageCreated callback for node ${nodeIdThatCreatedThisPage}, but no node was found.`,
+      ),
     )
     return
   }

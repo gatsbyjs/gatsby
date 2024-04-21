@@ -5,14 +5,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "removeComments": false,
+    "moduleResolution": "node",
     "preserveConstEnums": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "target": "es2017",
+    "target": "ESNext",
     "declaration": true,
-    "lib": ["es2017", "dom", "esnext.asynciterable"]
+    "lib": ["ESNext", "dom", "esnext.asynciterable"]
   }
 }

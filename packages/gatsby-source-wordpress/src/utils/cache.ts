@@ -2,7 +2,7 @@ import { GatsbyHelpers } from "~/utils/gatsby-types"
 import manager from "cache-manager"
 import fs from "fs-extra"
 import fsStore from "cache-manager-fs-hash"
-import path from "path"
+import path from "node:path"
 import rimraf from "rimraf"
 
 import { getStore, withPluginKey } from "~/store"
@@ -24,9 +24,9 @@ const cacheDir = `.wordpress-cache/caches`
 
 type Store = manager.StoreConfig["store"]
 
-interface ICacheOptions {
-  name?: string
-  store?: Store
+type ICacheOptions = {
+  name?: string | undefined
+  store?: Store | undefined
 }
 export default class Cache {
   private store: Store
@@ -77,7 +77,7 @@ export default class Cache {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `Cache wasn't initialized yet, please run the init method first`,
         )
       }
       this.cache.get(key, (err, res) => {
@@ -90,7 +90,7 @@ export default class Cache {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `Cache wasn't initialised yet, please run the init method first`,
         )
       }
       this.cache.set(key, value, args, err => {
@@ -194,7 +194,7 @@ export const setHardCachedNodes = async ({
   const allNodes = await helpers.getNodes()
 
   const allWpNodes = allNodes.filter(
-    (node: Node) => node.internal.owner === `gatsby-source-wordpress`
+    (node: Node) => node.internal.owner === `gatsby-source-wordpress`,
   )
 
   await setHardCachedData({
@@ -209,15 +209,17 @@ export const setHardCachedNodes = async ({
   await copyStaticDirectory()
 }
 
-export const clearHardCache = async (): Promise<void> => {
+export async function clearHardCache(): Promise<void> {
   await new Promise(resolve => {
     const directory = new Cache().cacheBase
 
-    rimraf(directory, resolve)
+    rimraf.rimrafSync(directory)
+
+    resolve(undefined)
   })
 }
 
-export const clearHardCachedNodes = async (): Promise<void> => {
+export async function clearHardCachedNodes(): Promise<void> {
   const hardCachedNodes = !!(await getHardCachedNodes())
 
   if (hardCachedNodes) {
@@ -229,13 +231,13 @@ export const clearHardCachedNodes = async (): Promise<void> => {
 }
 
 // persistent cache
-export const setPersistentCache = async ({
+export async function setPersistentCache({
   key,
   value,
 }: {
   key: string
   value: unknown
-}): Promise<void> => {
+}): Promise<void> {
   const { helpers } = getGatsbyApi()
 
   await Promise.all([
@@ -246,11 +248,11 @@ export const setPersistentCache = async ({
   ])
 }
 
-export const getPersistentCache = async ({
+export async function getPersistentCache({
   key,
 }: {
   key: string
-}): Promise<unknown> => {
+}): Promise<unknown> {
   const { helpers } = getGatsbyApi()
 
   const cachedData = await helpers.cache.get(withPluginKey(key))
@@ -264,11 +266,11 @@ export const getPersistentCache = async ({
   return hardCachedData
 }
 
-export const restoreHardCachedNodes = async ({
+export async function restoreHardCachedNodes({
   hardCachedNodes,
 }: {
   hardCachedNodes: Array<Node>
-}): Promise<Array<string>> => {
+}): Promise<Array<string>> {
   const loggerTypeCounts = {}
 
   const { helpers, pluginOptions } = getGatsbyApi()
@@ -347,7 +349,7 @@ export const restoreHardCachedNodes = async ({
       await helpers.actions.createNode(remoteNode)
 
       return null
-    })
+    }),
   )
 
   Object.entries(loggerTypeCounts).forEach(([typeName, count]) => {

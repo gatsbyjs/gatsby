@@ -1,8 +1,8 @@
-import url from "url"
+import url from "node:url"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Range from "semver/classes/range"
 
 import type { NodePluginArgs } from "gatsby"
-import fetch from "node-fetch"
 
 import fetchGraphql from "~/utils/fetch-graphql"
 import { formatLogMessage } from "~/utils/format-log-message"
@@ -16,14 +16,12 @@ import {
   genericDownloadMessage,
 } from "~/supported-remote-plugin-versions"
 
-const parseRange = (
-  range: string
-): {
+function parseRange(range: string): {
   message: string
   minVersion: string
   maxVersion: string
   isARange: boolean
-} => {
+} {
   const {
     set: [versions],
   } = new Range(range)
@@ -47,7 +45,7 @@ const parseRange = (
   }
 }
 
-const areRemotePluginVersionsSatisfied = async ({
+async function areRemotePluginVersionsSatisfied({
   helpers,
   disableCompatibilityCheck,
   url: wpGraphQLEndpoint,
@@ -55,7 +53,7 @@ const areRemotePluginVersionsSatisfied = async ({
   helpers: NodePluginArgs
   url: string
   disableCompatibilityCheck: boolean
-}): Promise<void> => {
+}): Promise<void> {
   if (disableCompatibilityCheck) {
     return
   }
@@ -95,13 +93,13 @@ const areRemotePluginVersionsSatisfied = async ({
   } catch (e) {
     if (
       e.message.includes(
-        `Cannot query field "wpGatsbyCompatibility" on type "RootQuery".`
+        `Cannot query field "wpGatsbyCompatibility" on type "RootQuery".`,
       )
     ) {
       helpers.reporter.panic(
         formatLogMessage(
-          `Your version of WPGatsby is too old to determine if we're compatible.${genericDownloadMessage}`
-        )
+          `Your version of WPGatsby is too old to determine if we're compatible.${genericDownloadMessage}`,
+        ),
       )
     } else {
       helpers.reporter.panic(e.message)
@@ -135,16 +133,12 @@ const areRemotePluginVersionsSatisfied = async ({
 
   if (!wpgqlIsSatisfied) {
     const { minVersion, maxVersion } = parseRange(
-      supportedWpPluginVersions.WPGraphQL.version
+      supportedWpPluginVersions.WPGraphQL.version,
     )
 
-    message += `Your remote version of WPGraphQL is not within the accepted range\n(${
-      supportedWpPluginVersions.WPGraphQL.version
-    }).\n\nThis is not a bug and it means one of two things:\n you either need to upgrade WPGraphQL or gatsby-source-wordpress.
+    message += `Your remote version of WPGraphQL is not within the accepted range\n(${supportedWpPluginVersions.WPGraphQL.version}).\n\nThis is not a bug and it means one of two things:\n you either need to upgrade WPGraphQL or gatsby-source-wordpress.
 
-1. If the version of WPGraphQL in your WordPress instance is higher than ${
-      maxVersion || minVersion
-    }
+1. If the version of WPGraphQL in your WordPress instance is higher than ${maxVersion || minVersion}
 it means you need to upgrade your version of gatsby-source-wordpress.
 
 2. If the version of WPGraphQL in your WordPress instance is lower than ${minVersion}
@@ -159,18 +153,14 @@ You can find a matching WPGraphQL version at https://github.com/wp-graphql/wp-gr
 
   if (!wpGatsbyIsSatisfied) {
     const { minVersion, maxVersion } = parseRange(
-      supportedWpPluginVersions.WPGatsby.version
+      supportedWpPluginVersions.WPGatsby.version,
     )
 
     const { hostname, protocol } = url.parse(wpGraphQLEndpoint)
 
-    message += `Your remote version of WPGatsby is not within the accepted range\n(${
-      supportedWpPluginVersions.WPGatsby.version
-    })\n\nThis is not a bug and it means one of two things:\n you either need to upgrade WPGatsby or gatsby-source-wordpress.
+    message += `Your remote version of WPGatsby is not within the accepted range\n(${supportedWpPluginVersions.WPGatsby.version})\n\nThis is not a bug and it means one of two things:\n you either need to upgrade WPGatsby or gatsby-source-wordpress.
 
-1. If the version of WPGatsby in your WordPress instance is higher than ${
-      maxVersion || minVersion
-    }
+1. If the version of WPGatsby in your WordPress instance is higher than ${maxVersion || minVersion}
 it means you need to upgrade your version of gatsby-source-wordpress.
 
 2. If the version of WPGatsby in your WordPress instance is lower than ${minVersion}
@@ -194,14 +184,14 @@ ${reasons}`
 // when a graphql request is made with no query
 // for example if 2 root fields are registered with the fieldname "products"
 // this will throw a helpful error message explaining that one should be removed
-const blankGetRequest = async ({
+async function blankGetRequest({
   url,
   helpers,
 }: {
   url: string
   helpers: NodePluginArgs
-}): Promise<void> =>
-  fetch(url)
+}): Promise<void> {
+  return fetch(url)
     .then(response => response.json())
     .then(json => {
       if (json?.errors?.length) {
@@ -211,24 +201,22 @@ const blankGetRequest = async ({
           firstError.debugMessage ||
           (firstError.message &&
             !firstError.message?.includes(
-              `GraphQL Request must include at least one of those two parameters: "query" or "queryId"`
+              `GraphQL Request must include at least one of those two parameters: "query" or "queryId"`,
             ))
         ) {
           helpers.reporter.panic(
             formatLogMessage(`WPGraphQL returned a debug message on startup:
 
 ${firstError.debugMessage || firstError.message}
-          `)
+          `),
           )
         }
       }
     })
-    .catch(() => {
-      // this is ignored because a /graphql request will always return a 200 at this point
-      // we've already checked prior to this point that /graphql is up and returns a response.
-    })
+    .catch(() => {})
+}
 
-const isWpGatsby = async (): Promise<void> => {
+async function isWpGatsby(): Promise<void> {
   fetchGraphql({
     query: /* GraphQL */ `
       {
@@ -245,11 +233,11 @@ const isWpGatsby = async (): Promise<void> => {
   })
 }
 
-const prettyPermalinksAreEnabled = async ({
+async function prettyPermalinksAreEnabled({
   helpers,
 }: {
   helpers: NodePluginArgs
-}): Promise<void> => {
+}): Promise<void> {
   try {
     const { data } = await fetchGraphql({
       query: /* GraphQL */ `
@@ -274,7 +262,7 @@ Pretty permalinks are not enabled in your WordPress instance.
 Gatsby routing requires this setting to function properly.
 Please enable pretty permalinks by changing your settings at
 ${data.generalSettings.url}/wp-admin/options-permalink.php.
-`)
+`),
       )
     }
   } catch (e) {
@@ -282,9 +270,9 @@ ${data.generalSettings.url}/wp-admin/options-permalink.php.
   }
 }
 
-const ensurePluginRequirementsAreMet = async (
-  helpers: NodePluginArgs
-): Promise<void> => {
+export async function ensurePluginRequirementsAreMet(
+  helpers: NodePluginArgs,
+): Promise<void> {
   if (
     helpers.traceId === `refresh-createSchemaCustomization` ||
     // PQR doesn't have a trace id.
@@ -295,7 +283,7 @@ const ensurePluginRequirementsAreMet = async (
   }
 
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`ensuring plugin requirements are met`)
+    formatLogMessage(`ensuring plugin requirements are met`),
   )
 
   activity.start()
@@ -336,5 +324,3 @@ const ensurePluginRequirementsAreMet = async (
 
   activity.end()
 }
-
-export { ensurePluginRequirementsAreMet }

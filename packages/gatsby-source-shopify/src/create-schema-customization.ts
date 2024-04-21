@@ -11,7 +11,7 @@ import { productVariantTypeBuilder } from "./type-builders/product-variant-type"
 
 export function createSchemaCustomization(
   gatsbyApi: CreateSchemaCustomizationArgs,
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
 ): void {
   const { actions } = gatsbyApi
   const {

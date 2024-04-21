@@ -1,3 +1,4 @@
+// @ts-ignore
 import { SourceNodesArgs } from "gatsby"
 
 import { shopifyTypes } from "./shopify-types"
@@ -9,7 +10,7 @@ import {
   processShopifyImages,
 } from "./helpers"
 
-interface IDecoratedResultChildren {
+type IDecoratedResultChildren = {
   [key: string]: Array<string | IDecoratedResult>
 }
 
@@ -17,14 +18,14 @@ function isNode(result: IDecoratedResult): boolean {
   const keys = Object.keys(result)
   return Boolean(
     result.shopifyId &&
-      !(keys.length === 2 && result.__parentId && result.shopifyId)
+      !(keys.length === 2 && result.__parentId && result.shopifyId),
   )
 }
 
 export async function processBulkResults(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
-  results: BulkResults
+  results: BulkResults,
 ): Promise<number> {
   let nodeCount = 0
   const promises: Array<Promise<void>> = []
@@ -36,7 +37,7 @@ export async function processBulkResults(
   for (let i = results.length - 1; i >= 0; i -= 1) {
     const result = decorateBulkObject(
       results[i],
-      gatsbyCreateNodeId
+      gatsbyCreateNodeId,
     ) as IDecoratedResult
     /**
      * @todo detect the following different as JSON.stringify order is not deterministic
@@ -76,7 +77,7 @@ export async function processBulkResults(
             ]
           } else {
             throw new Error(
-              `There is no shopifyType for child type: ${childType}`
+              `There is no shopifyType for child type: ${childType}`,
             )
           }
         }
@@ -84,7 +85,7 @@ export async function processBulkResults(
 
       if (!isShopifyId(result.shopifyId)) {
         throw new Error(
-          `Expected an ID in the format gid://shopify/<typename>/<id>`
+          `Expected an ID in the format gid://shopify/<typename>/<id>`,
         )
       }
 
@@ -100,8 +101,8 @@ export async function processBulkResults(
       if (pluginOptions.downloadImages && imageFields) {
         promises.push(
           processShopifyImages(gatsbyApi, node).then(() =>
-            gatsbyApi.actions.createNode(node)
-          )
+            gatsbyApi.actions.createNode(node),
+          ),
         )
       } else {
         gatsbyApi.actions.createNode(node)

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { SourceNodesArgs } from "gatsby"
 
 import { updateCache } from "./update-cache"
@@ -7,12 +8,12 @@ import { isPriorityBuild, getLastBuildTime, setLastBuildTime } from "./helpers"
 
 export async function sourceNodes(
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
 ): Promise<void> {
   const { shopifyConnections: connections } = pluginOptions
 
   gatsbyApi.reporter.info(
-    `Running ${isPriorityBuild(pluginOptions) ? `` : `non-`}priority queries`
+    `Running ${isPriorityBuild(pluginOptions) ? `` : `non-`}priority queries`,
   )
 
   const currentBuildTime = Date.now()
@@ -35,7 +36,7 @@ export async function sourceNodes(
     cancelOperationInProgress,
     gatsbyApi,
     pluginOptions,
-    lastBuildTime
+    lastBuildTime,
   )
 
   const operations = [productsOperation, productVariantsOperation]

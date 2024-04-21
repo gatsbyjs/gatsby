@@ -1,4 +1,4 @@
-import fetch from "node-fetch"
+// @ts-ignore
 import { SourceNodesArgs } from "gatsby"
 import { createInterface } from "readline"
 import { shiftLeft } from "shift-left"
@@ -17,15 +17,15 @@ export function makeSourceFromOperation(
   cancelOperationInProgress: () => Promise<void>,
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
-  lastBuildTime?: Date
-) {
+  lastBuildTime?: Date,
+): (op: IShopifyBulkOperation) => Promise<void> {
   return async function sourceFromOperation(
-    op: IShopifyBulkOperation
+    op: IShopifyBulkOperation,
   ): Promise<void> {
     const { reporter } = gatsbyApi
 
     const operationTimer = reporter.activityTimer(
-      `source ${lastBuildTime ? `changed ` : ``}shopify ${op.name}`
+      `source ${lastBuildTime ? `changed ` : ``}shopify ${op.name}`,
     )
 
     operationTimer.start()
@@ -55,7 +55,7 @@ export function makeSourceFromOperation(
               },
               error: new Error(msg),
             }
-          })
+          }),
         )
       }
 
@@ -69,6 +69,7 @@ export function makeSourceFromOperation(
       const { body: jsonLines } = await fetch(resp.node.url)
 
       const rl = createInterface({
+        // @ts-ignore
         input: jsonLines,
         crlfDelay: Infinity,
       })
@@ -82,7 +83,7 @@ export function makeSourceFromOperation(
       const nodeCount = await processBulkResults(
         gatsbyApi,
         pluginOptions,
-        results
+        results,
       )
 
       operationTimer.setStatus(`${nodeCount} nodes`)
@@ -106,7 +107,7 @@ export function makeSourceFromOperation(
           } else {
             // A prod build canceled me, wait and try again
             operationTimer.setStatus(
-              `This operation has been canceled by a higher priority build. It will retry shortly.`
+              `This operation has been canceled by a higher priority build. It will retry shortly.`,
             )
             operationTimer.end()
             await new Promise(resolve => setTimeout(resolve, 5000))

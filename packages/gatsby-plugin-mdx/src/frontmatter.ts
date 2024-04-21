@@ -4,7 +4,7 @@ const cacheMap = new Map()
 
 export function parseFrontmatter(
   cacheKey: string,
-  source: string
+  source: string,
 ): { body: string; frontmatter: { [key: string]: unknown } } {
   if (cacheMap.has(cacheKey)) {
     return cacheMap.get(cacheKey)

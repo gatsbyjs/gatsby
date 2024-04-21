@@ -1,9 +1,11 @@
-import nodePath from "path"
+import nodePath from "node:path"
 import { getStore } from "~/store"
 
 import type { Step } from "~/utils/run-steps"
 
-export const addRemoteFileAllowedUrl: Step = ({ actions }): void => {
+export const addRemoteFileAllowedUrl: Step = function addRemoteFileAllowedUrl({
+  actions,
+}): void {
   if (typeof actions?.addRemoteFileAllowedUrl !== `function`) {
     return
   }

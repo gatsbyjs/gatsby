@@ -1,37 +1,38 @@
 /* eslint-disable @babel/no-invalid-this */
-import path from "path"
+import path from "node:path"
 import type { NodePluginArgs } from "gatsby"
 import { slash } from "gatsby-core-utils/path"
 import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
 import type {
   Program,
-  Declaration,
-  Expression,
   ExportDefaultDeclaration,
   Identifier,
   FunctionDeclaration,
+  Directive,
+  ModuleDeclaration,
+  Statement,
 } from "estree"
 import type { LoaderDefinition } from "webpack"
 import type { IMdxPluginOptions } from "./plugin-options"
 import { ERROR_CODES } from "./error-utils"
 import { cachedImport } from "./cache-helpers"
 
-export interface IGatsbyLayoutLoaderOptions {
+export type IGatsbyLayoutLoaderOptions = {
   options: IMdxPluginOptions
   nodeExists: (path: string) => Promise<boolean>
   reporter: NodePluginArgs["reporter"]
 }
 
 // Wrap MDX content with Gatsby Layout component
-const gatsbyLayoutLoader: LoaderDefinition = async function (
-  source
+const gatsbyLayoutLoader: LoaderDefinition = async function gatsbyLayoutLoader(
+  source,
 ): Promise<string | Buffer> {
   const { nodeExists, reporter } =
     this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
   // resource query param or if the MDX file is directly loaded as path.
   const mdxPath = getPathToContentComponent(
-    `${this.resourcePath}${this.resourceQuery}`
+    `${this.resourcePath}${this.resourceQuery}`,
   )
 
   if (!(await nodeExists(mdxPath))) {
@@ -110,7 +111,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
      * Output:
      * export default (props) => <PageTemplate {...props}>{GATSBY_COMPILED_MDX}</PageTemplate>
      **/
-    const newBody: Array<any> = []
+    const newBody: Array<Directive | Statement | ModuleDeclaration> = []
     AST.body.forEach(child => {
       if (
         child.type === `ImportDeclaration` &&
@@ -124,10 +125,13 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         return
       }
 
-      const declaration = child.declaration as Declaration | Expression
+      const declaration = child.declaration as
+        | Directive
+        | Statement
+        | ModuleDeclaration
       const pageComponentName =
         (declaration as FunctionDeclaration).id?.name ||
-        (declaration as Identifier).name ||
+        (declaration as unknown as Identifier).name ||
         null
 
       if (!pageComponentName) {

@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { GatsbyNode } from "gatsby"
 import { ERROR_MAP } from "./error-map"
 

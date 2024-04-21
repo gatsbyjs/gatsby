@@ -1,3 +1,4 @@
+// @ts-ignore
 import { NodePluginArgs, SourceNodesArgs } from "gatsby"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
@@ -8,13 +9,13 @@ const pattern = /^gid:\/\/shopify\/(\w+)\/(.+)$/
 export function createNodeId(
   shopifyId: string,
   gatsbyApi: NodePluginArgs,
-  { typePrefix }: IShopifyPluginOptions
+  { typePrefix }: IShopifyPluginOptions,
 ): string {
   return gatsbyApi.createNodeId(`${typePrefix}${shopifyId}`)
 }
 
 export function getPluginStatus(
-  gatsbyApi: NodePluginArgs
+  gatsbyApi: NodePluginArgs,
 ): Record<string, never> {
   return (
     gatsbyApi.store.getState().status.plugins?.[`gatsby-source-shopify`] || {}
@@ -23,7 +24,7 @@ export function getPluginStatus(
 
 export function getLastBuildTime(
   gatsbyApi: NodePluginArgs,
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
 ): Date | undefined {
   const { typePrefix } = pluginOptions
   const status = getPluginStatus(gatsbyApi)
@@ -37,7 +38,7 @@ export function getLastBuildTime(
 export function setLastBuildTime(
   gatsbyApi: NodePluginArgs,
   pluginOptions: IShopifyPluginOptions,
-  currentBuildTime: number
+  currentBuildTime: number,
 ): void {
   const { typePrefix } = pluginOptions
   const status = getPluginStatus(gatsbyApi)
@@ -74,12 +75,12 @@ export function decorateBulkObject(
   input: unknown,
   createGatsbyNodeId: (shopifyId: string) => string,
   inputKey: string | null = null,
-  parent: unknown | null = null
+  parent: unknown | null = null,
 ): unknown {
   if (input && typeof input === `object`) {
     if (Array.isArray(input)) {
       return input.map(item =>
-        decorateBulkObject(item, createGatsbyNodeId, inputKey, input)
+        decorateBulkObject(item, createGatsbyNodeId, inputKey, input),
       )
     }
 
@@ -110,7 +111,7 @@ export function decorateBulkObject(
 
 export async function processShopifyImages(
   { actions: { createNode }, createNodeId, cache }: SourceNodesArgs,
-  node: IShopifyNode
+  node: IShopifyNode,
 ): Promise<void> {
   const type = parseShopifyId(node.shopifyId)[1]
   const imageFields = shopifyTypes[type].imageFields
@@ -146,7 +147,7 @@ export function parseImageExtension(url: string): string {
     return basename.slice(dot + 1)
   } else {
     throw new Error(
-      `Could not parse file extension from Shopify image URL: ${url}`
+      `Could not parse file extension from Shopify image URL: ${url}`,
     )
   }
 }

@@ -1,5 +1,3 @@
-import { Response } from "node-fetch"
-
 export const pluginErrorCodes = {
   bulkOperationFailed: `111000`,
   unknownSourcingFailure: `111001`,

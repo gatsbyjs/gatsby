@@ -1,9 +1,10 @@
 import { getPluginOptions } from "./../../utils/get-gatsby-api"
 import { GatsbyHelpers } from "~/utils/gatsby-types"
-import path from "path"
+import path from "node:path"
 import fs from "fs-extra"
 import chalk from "chalk"
-import urlUtil from "url"
+import urlUtil from "node:url"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import PQueue from "p-queue"
 import { dump } from "dumper.js"
 import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
@@ -40,7 +41,7 @@ export type PreviewStatusUnion =
   | `GATSBY_PREVIEW_PROCESS_ERROR`
   | `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`
 
-export interface IPreviewData {
+export type IPreviewData = {
   previewDatabaseId: number
   userDatabaseId: number
   token: string
@@ -50,19 +51,19 @@ export interface IPreviewData {
   id: string
   isDraft: boolean
   singleName: string
-  since?: number
-  refreshing?: boolean
-  preview?: boolean
-  manifestIds?: Array<string>
+  since?: number | undefined
+  refreshing?: boolean | undefined
+  preview?: boolean | undefined
+  manifestIds?: Array<string> | undefined
 }
 
-interface IPageNode {
+type IPageNode = {
   path: string
 }
 
 let previewQueue: PQueue
 
-const getPreviewQueue = (): PQueue => {
+function getPreviewQueue(): PQueue {
   if (!previewQueue) {
     const { previewRequestConcurrency } =
       getStore().getState().gatsbyApi.pluginOptions.schema
@@ -78,7 +79,7 @@ const getPreviewQueue = (): PQueue => {
 
 // This checks wether or not we're already currently processing a preview
 // for the passed preview id.
-const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
+function previewForIdIsAlreadyBeingProcessed(id: string): boolean {
   if (!id) {
     return false
   }
@@ -98,13 +99,13 @@ const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
  * that way there will be no 404's and Gatsby will overwrite our dummy file when it
  * needs to.
  */
-const writeDummyPageDataJsonIfNeeded = async ({
+async function writeDummyPageDataJsonIfNeeded({
   previewData,
   pageNode,
 }: {
   previewData: IPreviewData
   pageNode: IPageNode
-}): Promise<void> => {
+}): Promise<void> {
   if (!previewData.isDraft) {
     return
   }
@@ -112,7 +113,7 @@ const writeDummyPageDataJsonIfNeeded = async ({
   const pageDataDirectory = path.join(
     process.cwd(),
     `public/page-data`,
-    pageNode.path
+    pageNode.path,
   )
 
   await fs.ensureDir(pageDataDirectory)
@@ -128,7 +129,7 @@ const writeDummyPageDataJsonIfNeeded = async ({
   }
 }
 
-interface IOnPreviewStatusInput {
+type IOnPreviewStatusInput = {
   status: PreviewStatusUnion
   context?: string
   nodeId?: string
@@ -201,14 +202,14 @@ const createPreviewStatusCallback =
     if (data?.wpGatsbyRemotePreviewStatus?.success) {
       reporter.log(
         formatLogMessage(
-          `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`
-        )
+          `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`,
+        ),
       )
     } else {
       reporter.log(
         formatLogMessage(
-          `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
-        )
+          `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`,
+        ),
       )
     }
   }
@@ -221,7 +222,7 @@ const createPreviewStatusCallback =
  * previewForIdIsAlreadyBeingProcessed to see if another preview webhook
  * already started processing for this action
  */
-export const sourcePreview = async ({
+export async function sourcePreview({
   previewData,
   reporter,
   actions,
@@ -229,7 +230,7 @@ export const sourcePreview = async ({
   previewData: IPreviewData
   reporter: Reporter
   actions: typeof gatsbyActions
-}): Promise<void> => {
+}): Promise<void> {
   if (previewForIdIsAlreadyBeingProcessed(previewData?.id)) {
     return
   }
@@ -245,22 +246,24 @@ export const sourcePreview = async ({
   ]
 
   const missingProperties = requiredProperties.filter(
-    property => !(property in previewData)
+    property => !(property in previewData),
   )
 
   if (!previewData || missingProperties.length) {
     reporter.warn(
       formatLogMessage(
-        `sourcePreview was called but the required previewData properties weren't provided.`
-      )
+        `sourcePreview was called but the required previewData properties weren't provided.`,
+      ),
     )
     reporter.info(
       formatLogMessage(
-        `Missing properties: \n${JSON.stringify(missingProperties, null, 2)}`
-      )
+        `Missing properties: \n${JSON.stringify(missingProperties, null, 2)}`,
+      ),
     )
     reporter.log(
-      formatLogMessage(`previewData: \n${JSON.stringify(previewData, null, 2)}`)
+      formatLogMessage(
+        `previewData: \n${JSON.stringify(previewData, null, 2)}`,
+      ),
     )
     return
   }
@@ -306,7 +309,7 @@ export const sourcePreview = async ({
  * It should only ever run in Preview mode, which is process.env.ENABLE_GATSBY_REFRESH_ENDPOINT = true
  * It first sources all pending preview actions, then calls sourcePreview() for each of them.
  */
-export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
+export async function sourcePreviews(helpers: GatsbyHelpers): Promise<void> {
   const { webhookBody, reporter, actions } = helpers
   const {
     debug: { preview: inPreviewDebugModeOption },
@@ -339,11 +342,11 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
       reporter.warn(
         formatLogMessage(
           `Received preview data from a different remote URL than the one specified in plugin options. Preview will not work. Please send preview requests from the WP instance configured in gatsby-config.js.\n\n ${chalk.bold(
-            `Remote URL:`
+            `Remote URL:`,
           )} ${webhookBody.remoteUrl}\n ${chalk.bold(
-            `Plugin options URL:`
-          )} ${url}\n\n`
-        )
+            `Plugin options URL:`,
+          )} ${url}\n\n`,
+        ),
       )
 
       return
@@ -413,7 +416,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
   if (!previewActions?.length) {
     if (inPreviewDebugMode) {
       reporter.info(
-        `Preview for id ${webhookBody?.id} returned no action monitor actions.`
+        `Preview for id ${webhookBody?.id} returned no action monitor actions.`,
       )
     }
     return
@@ -421,7 +424,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
 
   if (inPreviewDebugMode) {
     reporter.info(
-      `Preview for id ${webhookBody?.id} returned the following actions:`
+      `Preview for id ${webhookBody?.id} returned the following actions:`,
     )
     dump(previewActions)
   }
@@ -434,7 +437,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
         previewData: { ...previewData, token: webhookBody.token },
         reporter,
         actions,
-      })
+      }),
     )
   }
 

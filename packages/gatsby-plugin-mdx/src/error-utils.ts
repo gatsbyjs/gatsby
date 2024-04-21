@@ -8,6 +8,7 @@ export const ERROR_CODES = {
 
 export const ERROR_MAP = {
   [ERROR_CODES.MdxCompilation]: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     text: (context: { absolutePath: string; errorMeta: any }): string =>
       `Failed to compile the file "${context.absolutePath}". Original error message:\n\n${context.errorMeta.message}`,
     level: `ERROR`,

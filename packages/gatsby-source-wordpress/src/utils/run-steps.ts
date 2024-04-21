@@ -1,23 +1,23 @@
-import { GatsbyNodeApiHelpers, GatsbyReporter } from "./gatsby-types"
-import { IPluginOptions } from "~/models/gatsby-api"
+import type { GatsbyNodeApiHelpers, GatsbyReporter } from "./gatsby-types"
+import type { IPluginOptions } from "~/models/gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { invokeAndCleanupLeftoverPreviewCallbacks } from "../steps/preview/cleanup"
 import { CODES } from "./report"
-import { IGatsbyApiHook, wrapApiHook } from "~/store"
+import { type IGatsbyApiHook, wrapApiHook } from "~/store"
 
 export type Step = (
-  helpers?: GatsbyNodeApiHelpers,
-  pluginOptions?: IPluginOptions
+  helpers?: GatsbyNodeApiHelpers | undefined,
+  pluginOptions?: IPluginOptions | undefined,
 ) => Promise<void> | void
 
 export type ActivityTimer = ReturnType<GatsbyReporter["activityTimer"]>
 
-const runSteps = async (
+export async function runSteps(
   steps: Array<Step>,
   helpers: GatsbyNodeApiHelpers,
   pluginOptions: IPluginOptions,
-  apiName: string
-): Promise<void> => {
+  apiName: string,
+): Promise<void> {
   for (const step of steps) {
     try {
       const { timeBuildSteps } = pluginOptions?.debug ?? {}
@@ -33,7 +33,7 @@ const runSteps = async (
         activity = helpers.reporter.activityTimer(
           formatLogMessage(`step -${!apiName ? `-` : ``}> ${step.name}`, {
             useVerboseStyle: true,
-          })
+          }),
         )
         activity.start()
       }
@@ -48,9 +48,7 @@ const runSteps = async (
         activity.end()
       }
     } catch (e) {
-      const sharedError = `Encountered a critical error when running the ${
-        apiName ? `${apiName}.` : ``
-      }${step.name} build step.`
+      const sharedError = `Encountered a critical error when running the ${apiName ? `${apiName}.` : ``}${step.name} build step.`
 
       // on errors, invoke any preview callbacks to send news of this error back to the WP Preview window.
       await invokeAndCleanupLeftoverPreviewCallbacks({
@@ -65,7 +63,7 @@ const runSteps = async (
         context: {
           sourceMessage: formatLogMessage(
             `\n\n\t${sharedError}\n\tSee above for more information.`,
-            { useVerboseStyle: true }
+            { useVerboseStyle: true },
           ),
         },
       })
@@ -79,7 +77,7 @@ const runSteps = async (
  * Example input: "onPluginInit|unstable_onPluginInit"
  * Example output: "onPluginInit"
  */
-const findApiName = (initialApiNameString: string): string => {
+export function findApiName(initialApiNameString: string): string {
   if (!initialApiNameString.includes(`|`)) {
     return initialApiNameString
   }
@@ -97,24 +95,26 @@ const findApiName = (initialApiNameString: string): string => {
   } catch (e) {
     console.error(
       `Could not check if Gatsby supports node API's [${potentialApiNames.join(
-        `, `
-      )}]. Trying to use the first available API name (${potentialApiNames[0]})`
+        `, `,
+      )}]. Trying to use the first available API name (${potentialApiNames[0]})`,
     )
 
     return potentialApiNames[0]
   }
 
   throw new Error(
-    `Couldn't find any supported Gatsby Node API's in ${initialApiNameString}`
+    `Couldn't find any supported Gatsby Node API's in ${initialApiNameString}`,
   )
 }
 
-const runApiSteps = (steps: Array<Step>, apiName: string): IGatsbyApiHook =>
-  wrapApiHook(
+export function runApiSteps(
+  steps: Array<Step>,
+  apiName: string,
+): IGatsbyApiHook {
+  return wrapApiHook(
     async (
       helpers: GatsbyNodeApiHelpers,
-      pluginOptions: IPluginOptions
-    ): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName)
+      pluginOptions: IPluginOptions,
+    ): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName),
   )
-
-export { runSteps, runApiSteps, findApiName }
+}

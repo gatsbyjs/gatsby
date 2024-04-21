@@ -1,3 +1,4 @@
+// @ts-ignore
 import { SourceNodesArgs } from "gatsby"
 
 import { eventsApi } from "./events"
@@ -20,7 +21,7 @@ function invalidateNode(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
   nodeMap: IShopifyNodeMap,
-  id: string
+  id: string,
 ): Array<string> {
   const { typePrefix } = pluginOptions
 
@@ -36,7 +37,7 @@ function invalidateNode(
       for (const field of coupledNodeFields) {
         for (const coupledNodeId of node[field] as Array<string>) {
           invalidatedNodeIds = invalidatedNodeIds.concat(
-            invalidateNode(gatsbyApi, pluginOptions, nodeMap, coupledNodeId)
+            invalidateNode(gatsbyApi, pluginOptions, nodeMap, coupledNodeId),
           )
         }
       }
@@ -48,7 +49,7 @@ function invalidateNode(
 
 function reportNodeDeletion(
   gatsbyApi: SourceNodesArgs,
-  node: IShopifyNode
+  node: IShopifyNode,
 ): void {
   const type = parseShopifyId(node.shopifyId)[1]
   deletionCounter[type] = (deletionCounter[type] || 0) + 1
@@ -71,7 +72,7 @@ function reportDeletionSummary(gatsbyApi: SourceNodesArgs): void {
 export async function updateCache(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
-  lastBuildTime: Date
+  lastBuildTime: Date,
 ): Promise<void> {
   const { typePrefix } = pluginOptions
 
@@ -90,10 +91,10 @@ export async function updateCache(
       const shopifyId = `gid://shopify/${value.subject_type}/${value.subject_id}`
       const nodeId = createNodeId(shopifyId, gatsbyApi, pluginOptions)
       return acc.concat(
-        invalidateNode(gatsbyApi, pluginOptions, nodeMap, nodeId)
+        invalidateNode(gatsbyApi, pluginOptions, nodeMap, nodeId),
       )
     },
-    []
+    [],
   )
 
   for (const node of Object.values(nodeMap)) {

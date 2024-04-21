@@ -2,21 +2,26 @@ import type { Node } from "unist"
 import { cachedImport } from "./cache-helpers"
 
 // ensure only one `/` in new url
-const withPathPrefix = (url: string, pathPrefix: string): string =>
-  (pathPrefix + url).replace(/\/\//, `/`)
+function withPathPrefix(url: string, pathPrefix: string): string {
+  return (pathPrefix + url).replace(/\/\//, `/`)
+}
 
 // Ensure relative links include `pathPrefix`
-export const remarkPathPlugin = ({ pathPrefix }: { pathPrefix: string }) =>
-  async function transformer(markdownAST: Node): Promise<Node> {
+export function remarkPathPlugin({
+  pathPrefix,
+}: {
+  pathPrefix: string
+}): (markdownAST: Node) => Promise<Node> {
+  return async function transformer(markdownAST: Node): Promise<Node> {
     if (!pathPrefix) {
       return markdownAST
     }
-    const { visit } = await cachedImport<typeof import("unist-util-visit")>(
-      `unist-util-visit`
-    )
+
+    const { visit } =
+      await cachedImport<typeof import("unist-util-visit")>(`unist-util-visit`)
 
     visit(markdownAST, [`link`, `definition`], (node: Node) => {
-      const typedNode = node as { url?: string }
+      const typedNode = node as { url?: string | undefined }
       if (
         typedNode.url &&
         typeof typedNode.url === `string` &&
@@ -26,5 +31,7 @@ export const remarkPathPlugin = ({ pathPrefix }: { pathPrefix: string }) =>
         typedNode.url = withPathPrefix(typedNode.url, pathPrefix)
       }
     })
+
     return markdownAST
   }
+}

@@ -1,7 +1,7 @@
 import { BulkQuery } from "./bulk-query"
 
 export class ProductsQuery extends BulkQuery {
-  query(date?: Date): string {
+  query(date?: Date | undefined): string {
     const publishedStatus = this.pluginOptions.salesChannel
       ? `'${this.pluginOptions.salesChannel}:visible'`
       : `published`

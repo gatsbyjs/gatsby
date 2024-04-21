@@ -25,9 +25,11 @@ export async function compileMDX(
 
     // Pass required custom data into the processor
     processor.data(
+      // @ts-ignore
       `mdxNodeId`,
       await cache.get(createFileToMdxCacheKey(absolutePath)),
     )
+    // @ts-ignore
     processor.data(`mdxMetadata`, {})
 
     const result = await processor.process(
@@ -36,12 +38,11 @@ export async function compileMDX(
     )
 
     // Clone metadata so ensure it won't be overridden by later processings
-    const clonedMetadata = Object.assign(
-      {},
-      processor.data(`mdxMetadata`) as IMdxMetadata,
-    )
+    // @ts-ignore
+    const clonedMetadata = Object.assign({}, processor.data(`mdxMetadata`))
     const processedMDX = result.toString()
 
+    // @ts-ignore
     return { processedMDX, metadata: clonedMetadata }
   } catch (error) {
     reporter.panicOnBuild({
@@ -60,7 +61,7 @@ export async function compileMDX(
  * compilation pipeline. Very useful to create your own resolvers that return custom metadata.
  * Internally used to generate the tables of contents and the excerpts.
  */
-export const compileMDXWithCustomOptions = async (
+export async function compileMDXWithCustomOptions(
   { absolutePath, source }: { absolutePath: string; source: string | Buffer },
   {
     pluginOptions,
@@ -84,7 +85,7 @@ export const compileMDXWithCustomOptions = async (
 ): Promise<{
   processedMDX: string
   metadata: IMdxMetadata
-} | null> => {
+} | null> {
   const customPluginOptions = deepmerge(
     Object.assign({}, pluginOptions),
     customOptions,

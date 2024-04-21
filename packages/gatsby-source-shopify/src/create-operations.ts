@@ -1,3 +1,4 @@
+// @ts-ignore
 import { SourceNodesArgs } from "gatsby"
 
 import { createGraphqlClient } from "./clients"
@@ -15,7 +16,7 @@ import {
   CANCEL_OPERATION,
 } from "./static-queries"
 
-interface IOperations {
+type IOperations = {
   productsOperation: IShopifyBulkOperation
   productVariantsOperation: IShopifyBulkOperation
   ordersOperation: IShopifyBulkOperation
@@ -26,7 +27,7 @@ interface IOperations {
   finishLastOperation: () => Promise<void>
   completedOperation: (
     operationId: string,
-    interval?: number
+    interval?: number | undefined,
   ) => Promise<{ node: IBulkOperationNode }>
 }
 
@@ -36,7 +37,7 @@ const failedStatuses = [`FAILED`, `CANCELED`]
 export function createOperationObject(
   graphqlClient: IGraphQLClient,
   operationQuery: string,
-  name: string
+  name: string,
 ): IShopifyBulkOperation {
   return {
     execute: (): Promise<IBulkOperationRunQueryResponse> =>
@@ -48,7 +49,7 @@ export function createOperationObject(
 export function createOperations(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
-  lastBuildTime?: Date
+  lastBuildTime?: Date | undefined,
 ): IOperations {
   const graphqlClient = createGraphqlClient(pluginOptions)
 
@@ -67,7 +68,7 @@ export function createOperations(
     if (currentBulkOperation && currentBulkOperation.id) {
       if (!finishedStatuses.includes(currentBulkOperation.status)) {
         const timer = gatsbyApi.reporter.activityTimer(
-          `Waiting for operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
+          `Waiting for operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`,
         )
         timer.start()
 
@@ -82,10 +83,10 @@ export function createOperations(
           ) {
             lastWarningTime = Date.now()
             const runtime = Math.floor(
-              (lastWarningTime - queryStartTime) / 1000
+              (lastWarningTime - queryStartTime) / 1000,
             )
             gatsbyApi.reporter.warn(
-              `Operation ${currentBulkOperation.id} is still running after ${runtime} seconds with status "${currentBulkOperation.status}"`
+              `Operation ${currentBulkOperation.id} is still running after ${runtime} seconds with status "${currentBulkOperation.status}"`,
             )
 
             // handle next interval, slowly increase time so we don't flood every minute
@@ -97,7 +98,7 @@ export function createOperations(
           }
 
           timer.setStatus(
-            `Polling operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
+            `Polling operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`,
           )
         }
 
@@ -107,13 +108,13 @@ export function createOperations(
   }
 
   async function cancelOperation(
-    id: string
+    id: string,
   ): Promise<IBulkOperationCancelResponse> {
     return graphqlClient.request<IBulkOperationCancelResponse>(
       CANCEL_OPERATION,
       {
         id,
-      }
+      },
     )
   }
 
@@ -125,7 +126,7 @@ export function createOperations(
     }
 
     const cancelTimer = gatsbyApi.reporter.activityTimer(
-      `Cancelling previous operation: ${bulkOperation.id}`
+      `Cancelling previous operation: ${bulkOperation.id}`,
     )
 
     cancelTimer.start()
@@ -140,7 +141,7 @@ export function createOperations(
         const currentOp = await currentOperation()
         bulkOperation = currentOp.currentBulkOperation
         cancelTimer.setStatus(
-          `Waiting for operation to cancel: ${bulkOperation.id}`
+          `Waiting for operation to cancel: ${bulkOperation.id}`,
         )
       }
       cancelTimer.setStatus(`Cancelled operation: ${bulkOperation.id}`)
@@ -154,7 +155,7 @@ export function createOperations(
         await new Promise(resolve => setTimeout(resolve, 100))
         bulkOperation = (await currentOperation()).currentBulkOperation
         cancelTimer.setStatus(
-          `Waiting for operation to complete: ${bulkOperation.id}`
+          `Waiting for operation to complete: ${bulkOperation.id}`,
         )
       }
       cancelTimer.setStatus(`Completed operation: ${bulkOperation.id}`)
@@ -172,7 +173,7 @@ export function createOperations(
    */
   async function completedOperation(
     operationId: string,
-    interval = 1000
+    interval = 1000,
   ): Promise<{ node: IBulkOperationNode }> {
     let operation = await graphqlClient.request<{
       node: IBulkOperationNode
@@ -209,31 +210,31 @@ export function createOperations(
     productsOperation: exports.createOperationObject(
       graphqlClient,
       new ProductsQuery(pluginOptions).query(lastBuildTime),
-      `products`
+      `products`,
     ),
 
     productVariantsOperation: exports.createOperationObject(
       graphqlClient,
       new ProductVariantsQuery(pluginOptions).query(lastBuildTime),
-      `variants`
+      `variants`,
     ),
 
     ordersOperation: exports.createOperationObject(
       graphqlClient,
       new OrdersQuery(pluginOptions).query(lastBuildTime),
-      `orders`
+      `orders`,
     ),
 
     collectionsOperation: exports.createOperationObject(
       graphqlClient,
       new CollectionsQuery(pluginOptions).query(lastBuildTime),
-      `collections`
+      `collections`,
     ),
 
     locationsOperation: exports.createOperationObject(
       graphqlClient,
       new LocationsQuery(pluginOptions).query(lastBuildTime),
-      `locations`
+      `locations`,
     ),
 
     cancelOperationInProgress,

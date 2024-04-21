@@ -6,7 +6,7 @@ import { slash } from "gatsby-core-utils/path"
 import { createFileToMdxCacheKey } from "./cache-helpers"
 import { compileMDX } from "./compile-mdx"
 
-export interface IGatsbyMDXLoaderOptions {
+export type IGatsbyMDXLoaderOptions = {
   options: ProcessorOptions
   getNode: NodePluginArgs["getNode"]
   cache: NodePluginArgs["cache"]
@@ -14,7 +14,9 @@ export interface IGatsbyMDXLoaderOptions {
 }
 
 // Custom MDX Loader that compiles MDX to JSX
-const gatsbyMDXLoader: LoaderDefinition = async function (source) {
+const gatsbyMDXLoader: LoaderDefinition = async function gatsbyMDXLoader(
+  source: string,
+): Promise<string> {
   const { options, getNode, cache, reporter } =
     this.getOptions() as IGatsbyMDXLoaderOptions
   const resourcePath = slash(this.resourcePath)
@@ -37,7 +39,7 @@ const gatsbyMDXLoader: LoaderDefinition = async function (source) {
     },
     options,
     cache,
-    reporter
+    reporter,
   )
 
   if (compileRes?.processedMDX) {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createModel } from "@rematch/core"
 import { findNamedTypeName } from "~/steps/create-schema-customization/helpers"
-import { IRootModel } from "."
+import type { IRootModel } from "."
 
 const remoteSchema = createModel<IRootModel>()({
   state: {

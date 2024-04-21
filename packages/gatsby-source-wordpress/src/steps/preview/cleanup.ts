@@ -1,7 +1,7 @@
-import { inPreviewMode, PreviewStatusUnion } from "."
-import { OnPageCreatedCallback } from "~/models/preview"
+import { inPreviewMode, type PreviewStatusUnion } from "."
+import type { OnPageCreatedCallback } from "~/models/preview"
 import { getStore } from "~/store"
-import { NodePluginArgs } from "gatsby"
+import type { NodePluginArgs } from "gatsby"
 
 /**
  * This callback is invoked to send WP the preview status. In this case the status
@@ -15,13 +15,13 @@ const invokeLeftoverPreviewCallback =
     error,
   }: {
     status: PreviewStatusUnion
-    context?: string
-    error?: Error
+    context?: string | undefined
+    error?: Error | undefined
     getNode: NodePluginArgs["getNode"]
   }) =>
   async ([nodeId, callback]: [
     string,
-    OnPageCreatedCallback
+    OnPageCreatedCallback,
   ]): Promise<void> => {
     const passedNode = getNode(nodeId)
 
@@ -43,8 +43,8 @@ export const invokeAndCleanupLeftoverPreviewCallbacks = async ({
   error,
 }: {
   status: PreviewStatusUnion
-  context?: string
-  error?: Error
+  context?: string | undefined
+  error?: Error | undefined
 }): Promise<void> => {
   const state = getStore().getState()
 
@@ -57,8 +57,8 @@ export const invokeAndCleanupLeftoverPreviewCallbacks = async ({
   if (leftoverCallbacksExist) {
     await Promise.all(
       Object.entries(leftoverCallbacks).map(
-        invokeLeftoverPreviewCallback({ getNode, status, context, error })
-      )
+        invokeLeftoverPreviewCallback({ getNode, status, context, error }),
+      ),
     )
 
     // after processing our callbacks, we need to remove them all so they don't get called again in the future

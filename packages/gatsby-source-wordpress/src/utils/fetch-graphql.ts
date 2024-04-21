@@ -1,15 +1,13 @@
-/* eslint-disable no-useless-escape */
-
-import { IPluginOptions } from "~/models/gatsby-api"
-import { GatsbyReporter } from "./gatsby-types"
+import type { IPluginOptions } from "~/models/gatsby-api"
+import type { GatsbyReporter } from "./gatsby-types"
 import prettier from "prettier"
 import axios, {
-  AxiosRequestConfig,
-  AxiosResponse,
-  RawAxiosRequestHeaders,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type RawAxiosRequestHeaders,
 } from "axios"
 import rateLimit, { RateLimitedAxiosInstance } from "axios-rate-limit"
-import { bold } from "chalk"
+import chalk from "chalk"
 import retry from "async-retry"
 import { formatLogMessage } from "./format-log-message"
 import { getStore } from "~/store"
@@ -31,38 +29,41 @@ export const moduleHelpers = {
   },
 }
 
-const errorIs500ish = (e: Error): boolean =>
-  e.message.includes(`Request failed with status code 50`) &&
-  (e.message.includes(`502`) ||
-    e.message.includes(`503`) ||
-    e.message.includes(`500`) ||
-    e.message.includes(`504`))
+function errorIs500ish(e: Error): boolean {
+  return (
+    e.message.includes(`Request failed with status code 50`) &&
+    (e.message.includes(`502`) ||
+      e.message.includes(`503`) ||
+      e.message.includes(`500`) ||
+      e.message.includes(`504`))
+  )
+}
 
-interface IHandleErrorOptionsInput {
+type IHandleErrorOptionsInput = {
   variables: IJSON
   query: string
   pluginOptions: IPluginOptions
   reporter: GatsbyReporter
 }
 
-const handleErrorOptions = async ({
+async function handleErrorOptions({
   variables,
   query,
   pluginOptions,
   reporter,
-}: IHandleErrorOptionsInput): Promise<void> => {
+}: IHandleErrorOptionsInput): Promise<void> {
   if (
     variables &&
     Object.keys(variables).length &&
     pluginOptions.debug.graphql.showQueryVarsOnError
   ) {
     reporter.info(
-      formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`)
+      formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`),
     )
   }
 
   try {
-    query = prettier.format(query, { parser: `graphql` })
+    query = await prettier.format(query, { parser: `graphql` })
   } catch (e) {
     // do nothing
   }
@@ -82,7 +83,7 @@ const handleErrorOptions = async ({
   }
 }
 
-interface IHandleErrors {
+type IHandleErrors = {
   variables: IJSON
   query: string
   pluginOptions: IPluginOptions
@@ -92,7 +93,7 @@ interface IHandleErrors {
   errorContext: string
 }
 
-const handleErrors = async ({
+async function handleErrors({
   variables,
   query,
   pluginOptions,
@@ -100,7 +101,7 @@ const handleErrors = async ({
   responseJSON,
   panicOnError,
   errorContext,
-}: IHandleErrors): Promise<void> => {
+}: IHandleErrors): Promise<void> {
   await handleErrorOptions({
     variables,
     query,
@@ -121,14 +122,14 @@ const handleErrors = async ({
       id: CODES.BadResponse,
       context: {
         sourceMessage: formatLogMessage(
-          errorContext || `Encountered errors. See above for details.`
+          errorContext || `Encountered errors. See above for details.`,
         ),
       },
     })
   }
 }
 
-interface IHandleGraphQLErrorsInput {
+type IHandleGraphQLErrorsInput = {
   query: string
   variables: IJSON
   response: AxiosResponse
@@ -139,7 +140,7 @@ interface IHandleGraphQLErrorsInput {
   forceReportCriticalErrors: boolean
 }
 
-const handleGraphQLErrors = async ({
+async function handleGraphQLErrors({
   query,
   variables,
   response,
@@ -148,7 +149,7 @@ const handleGraphQLErrors = async ({
   reporter,
   errorContext,
   forceReportCriticalErrors = false,
-}: IHandleGraphQLErrorsInput): Promise<void> => {
+}: IHandleGraphQLErrorsInput): Promise<void> {
   const pluginOptions = getPluginOptions()
 
   const json = response?.data
@@ -221,8 +222,8 @@ const handleGraphQLErrors = async ({
     if (error.debugMessage) {
       reporter.error(
         formatLogMessage(
-          `Error category: ${error.category} \n\nError: \n  ${error.message} \n\n Debug message: \n  ${error.debugMessage} \n\n Error path: ${errorPath}`
-        )
+          `Error category: ${error.category} \n\nError: \n  ${error.message} \n\n Debug message: \n  ${error.debugMessage} \n\n Error path: ${errorPath}`,
+        ),
       )
     } else {
       reporter.error(
@@ -232,16 +233,14 @@ const handleGraphQLErrors = async ({
               ? error.locations
                   .map(
                     location =>
-                      `location: line ${location.line}, column: ${location.column}`
+                      `location: line ${location.line}, column: ${location.column}`,
                   )
                   ?.join(`. `)
               : ``
-          } \n\t ${
-            error.message
-          }  \n\n Error path: ${errorPath} \n\n If you haven't already, try adding ${bold(
-            `define( 'GRAPHQL_DEBUG', true );`
-          )} to your wp-config.php for more detailed error messages.`
-        )
+          } \n\t ${error.message}  \n\n Error path: ${errorPath} \n\n If you haven't already, try adding ${chalk.bold(
+            `define( 'GRAPHQL_DEBUG', true );`,
+          )} to your wp-config.php for more detailed error messages.`,
+        ),
       )
     }
   }
@@ -257,13 +256,13 @@ const handleGraphQLErrors = async ({
   })
 }
 
-const ensureStatementsAreTrue = `${bold(
-  `Please ensure the following statements are true`
+const ensureStatementsAreTrue = `${chalk.bold(
+  `Please ensure the following statements are true`,
 )} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed and active in your WordPress backend\n  - Your WordPress debug.log does not contain critical errors`
 
 // @todo add a link to docs page for debugging
 const genericError = ({ url }: { url: string }): string =>
-  `GraphQL request to ${bold(url)} failed.\n\n${ensureStatementsAreTrue}`
+  `GraphQL request to ${chalk.bold(url)} failed.\n\n${ensureStatementsAreTrue}`
 
 const slackChannelSupportMessage = `If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.`
 
@@ -271,10 +270,10 @@ const getLowerRequestConcurrencyOptionMessage = (): string => {
   const { requestConcurrency, previewRequestConcurrency, perPage } =
     getStore().getState().gatsbyApi.pluginOptions.schema
 
-  return `Try reducing the ${bold(
-    `requestConcurrency`
-  )} for content updates or the ${bold(
-    `previewRequestConcurrency`
+  return `Try reducing the ${chalk.bold(
+    `requestConcurrency`,
+  )} for content updates or the ${chalk.bold(
+    `previewRequestConcurrency`,
   )} for previews, and/or reducing the schema.perPage option:
 
 {
@@ -289,7 +288,7 @@ const getLowerRequestConcurrencyOptionMessage = (): string => {
 }`
 }
 
-interface IHandleFetchErrors {
+type IHandleFetchErrors = {
   e: Error
   reporter: GatsbyReporter
   url: string
@@ -298,9 +297,9 @@ interface IHandleFetchErrors {
   query: string
   response: AxiosResponse
   errorContext: string
-  variables?: IJSON
-  isFirstRequest?: boolean
-  headers?: IFetchGraphQLHeaders
+  variables?: IJSON | undefined
+  isFirstRequest?: boolean | undefined
+  headers?: IFetchGraphQLHeaders | undefined
 }
 
 const handleFetchErrors = async ({
@@ -335,9 +334,9 @@ const handleFetchErrors = async ({
           `It took too long for ${url} to respond (longer than ${
             timeout / 1000
           } seconds).\n\nEither your URL is wrong, you need to increase server resources, or you need to decrease the amount of resources each request takes.\n\nYou can configure how much resources each request takes by lowering your \`options.schema.perPage\` value from the default of 100 nodes per request.\nAlternatively you can increase the request timeout by setting a value in milliseconds to \`options.schema.timeout\`, the current setting is ${timeout}.\n\n${genericError(
-            { url }
+            { url },
           )}`,
-          { useVerboseStyle: true }
+          { useVerboseStyle: true },
         ),
       },
     })
@@ -353,10 +352,10 @@ const handleFetchErrors = async ({
       id: CODES.WordPress500ishError,
       context: {
         sourceMessage: formatLogMessage(
-          `Your WordPress server at ${bold(url)} appears to be overloaded.
+          `Your WordPress server at ${chalk.bold(url)} appears to be overloaded.
 
 ${getLowerRequestConcurrencyOptionMessage()}`,
-          { useVerboseStyle: true }
+          { useVerboseStyle: true },
         ),
       },
     })
@@ -373,9 +372,9 @@ Your WordPress server is either overloaded or encountered a PHP error.
 ${errorContext ? `\n${errorContext}\n` : ``}
 Enable WordPress debugging by adding the following to your wp-config.php file:
 
-define("WP\_DEBUG", true);
-define("WP\_DEBUG\_LOG", true);
-define("GRAPHQL\_DEBUG", true);
+define("WP_DEBUG", true);
+define("WP_DEBUG_LOG", true);
+define("GRAPHQL_DEBUG", true);
 
 (See https://wordpress.org/support/article/debugging-in-wordpress/ for more info)
 
@@ -384,7 +383,7 @@ Then run another build before checking your WordPress instance's debug.log file 
 If you don't see any errors in debug.log:
 
 ${getLowerRequestConcurrencyOptionMessage()}`,
-          { useVerboseStyle: true }
+          { useVerboseStyle: true },
         ),
       },
     })
@@ -404,9 +403,8 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
       id: CODES.Authentication,
       context: {
         sourceMessage: formatLogMessage(
-          `Request failed with status code 401.\n\nThe HTTP Basic Auth credentials you've provided in plugin options were rejected.\nDouble check that your credentials are correct.
-         \n${genericError({ url })}`,
-          { useVerboseStyle: true }
+          `Request failed with status code 401.\n\nThe HTTP Basic Auth credentials you've provided in plugin options were rejected.\nDouble check that your credentials are correct. \n${genericError({ url })}`,
+          { useVerboseStyle: true },
         ),
       },
     })
@@ -429,9 +427,8 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
               }
             }
           }
-        }
-         \n${genericError({ url })}`,
-          { useVerboseStyle: true }
+        } \n${genericError({ url })}`,
+          { useVerboseStyle: true },
         ),
       },
     })
@@ -446,7 +443,7 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
       id: CODES.RequestDenied,
       context: {
         sourceMessage: formatLogMessage(
-          `${e.message}\n\nThe GraphQL request was forbidden.\nIf you are using a security plugin like WordFence or a server firewall you may need to add your IP address to the allow list or adjust your firewall settings for your GraphQL endpoint.\n\n${errorContext}`
+          `${e.message}\n\nThe GraphQL request was forbidden.\nIf you are using a security plugin like WordFence or a server firewall you may need to add your IP address to the allow list or adjust your firewall settings for your GraphQL endpoint.\n\n${errorContext}`,
         ),
       },
     })
@@ -467,7 +464,7 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
   return examplePreventRedirect();
 }
 
-${slackChannelSupportMessage}`
+${slackChannelSupportMessage}`,
         ),
       },
     })
@@ -497,7 +494,7 @@ ${slackChannelSupportMessage}`
         .post(
           `${urlWithoutTrailingSlash}/graphql`,
           { query, variables },
-          requestOptions
+          requestOptions,
         )
 
       const contentType = response?.headers[`content-type`]
@@ -512,13 +509,13 @@ ${slackChannelSupportMessage}`
             sourceMessage: formatLogMessage(
               `${
                 errorContext ? `${errorContext}` : ``
-              }\n\nThe supplied url ${bold(
-                urlWithoutTrailingSlash
-              )} is invalid,\nhowever ${bold(
-                urlWithoutTrailingSlash + `/graphql`
-              )} works!\n\nFor this plugin to consume the wp-graphql schema, you'll need to specify the full URL\n(${bold(
-                urlWithoutTrailingSlash + `/graphql`
-              )}) in your gatsby-config.\n\nYou can learn more about configuring the source plugin URL here:\n${docsLink}\n\n`
+              }\n\nThe supplied url ${chalk.bold(
+                urlWithoutTrailingSlash,
+              )} is invalid,\nhowever ${chalk.bold(
+                urlWithoutTrailingSlash + `/graphql`,
+              )} works!\n\nFor this plugin to consume the wp-graphql schema, you'll need to specify the full URL\n(${chalk.bold(
+                urlWithoutTrailingSlash + `/graphql`,
+              )}) in your gatsby-config.\n\nYou can learn more about configuring the source plugin URL here:\n${docsLink}\n\n`,
             ),
           },
         })
@@ -542,8 +539,8 @@ ${slackChannelSupportMessage}`
       } catch (e) {
         reporter.error(
           formatLogMessage(
-            `Unable to copy html response on error.\n\n${e.message ?? ``}`
-          )
+            `Unable to copy html response on error.\n\n${e.message ?? ``}`,
+          ),
         )
       }
     }
@@ -557,8 +554,8 @@ ${slackChannelSupportMessage}`
           } \n\nReceived HTML as a response. Are you sure ${url} is the correct URL and WPGraphQL is active?\n\nIf you're sure WPGraphQL is active, visit that URL in a browser - if it redirects to the correct URL,\nor you've entered the wrong URL in settings,\nyou might receive this error.\nVisit that URL in your browser and if it looks good copy/paste it from your URL bar to your gatsby-config.js.\n\n${ensureStatementsAreTrue}${
             copyHtmlResponseOnError
               ? `\n\nCopied HTML response to your clipboard.`
-              : `\n\n${bold(
-                  `Further debugging`
+              : `\n\n${chalk.bold(
+                  `Further debugging`,
                 )}\nIf you still receive this error after following the steps above, this may be a problem with your WordPress instance.\nA plugin or theme may be adding additional output for some posts or pages.\nAdd the following plugin option to copy the html response to your clipboard for debugging.\nYou can paste the response into an html file to see what's being returned.\n
 {
   resolve: "gatsby-source-wordpress",
@@ -574,7 +571,7 @@ ${slackChannelSupportMessage}`
         `,
           {
             useVerboseStyle: true,
-          }
+          },
         ),
       },
     })
@@ -589,7 +586,7 @@ ${slackChannelSupportMessage}`
 
 if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
   return;
-}\n\nYou can use the gatsby-source-wordpress debug options to determine which GraphQL request is causing this error.\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debuggraphql-object`
+}\n\nYou can use the gatsby-source-wordpress debug options to determine which GraphQL request is causing this error.\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debuggraphql-object`,
         ),
       },
     })
@@ -625,7 +622,7 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
       id: CODES.SelfSignedCert,
       context: {
         sourceMessage: formatLogMessage(
-          `${e.message}\n\nSee the docs for more information:\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/using-self-signed-certificates.md`
+          `${e.message}\n\nSee the docs for more information:\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/using-self-signed-certificates.md`,
         ),
       },
     })
@@ -643,7 +640,7 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
         }\n\n${genericError({ url })}`,
         {
           useVerboseStyle: true,
-        }
+        },
       ),
     },
   })
@@ -651,7 +648,7 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
   return
 }
 
-export interface IJSON {
+export type IJSON = {
   // these will always be different depending on where this is used
   // we need this for GraphQL results and the node filter api
   // which can be used in any way by users
@@ -659,35 +656,35 @@ export interface IJSON {
   [key: string]: any
 }
 
-interface IFetchGraphQLHeaders extends RawAxiosRequestHeaders {
-  WPGatsbyPreview?: string
-  Authorization?: string
-  WPGatsbyPreviewUser?: number
-}
+type IFetchGraphQLHeaders = {
+  WPGatsbyPreview?: string | undefined
+  Authorization?: string | undefined
+  WPGatsbyPreviewUser?: number | undefined
+} & RawAxiosRequestHeaders
 
-interface IErrorMap {
+type IErrorMap = {
   from: string
   to: string
 }
 
-interface IFetchGraphQLInput {
-  url?: string
+type IFetchGraphQLInput = {
+  url?: string | undefined
   query: string
-  errorContext?: string
-  ignoreGraphQLErrors?: boolean
-  panicOnError?: boolean
-  throwGqlErrors?: boolean
-  throwFetchErrors?: boolean
-  isFirstRequest?: boolean
-  forceReportCriticalErrors?: boolean
-  errorMap?: IErrorMap
-  variables?: IJSON
-  headers?: IFetchGraphQLHeaders
+  errorContext?: string | undefined
+  ignoreGraphQLErrors?: boolean | undefined
+  panicOnError?: boolean | undefined
+  throwGqlErrors?: boolean | undefined
+  throwFetchErrors?: boolean | undefined
+  isFirstRequest?: boolean | undefined
+  forceReportCriticalErrors?: boolean | undefined
+  errorMap?: IErrorMap | undefined
+  variables?: IJSON | undefined
+  headers?: IFetchGraphQLHeaders | undefined
 }
 
 type IGraphQLDataResponse = IJSON
 
-const fetchGraphql = async ({
+export default async function fetchGraphql({
   query,
   errorMap,
   ignoreGraphQLErrors = false,
@@ -700,7 +697,7 @@ const fetchGraphql = async ({
   errorContext = null,
   isFirstRequest = false,
   forceReportCriticalErrors = false,
-}: IFetchGraphQLInput): Promise<IGraphQLDataResponse> => {
+}: IFetchGraphQLInput): Promise<IGraphQLDataResponse> {
   const { helpers, pluginOptions } = getStore().getState().gatsbyApi
   const limit = pluginOptions?.schema?.requestConcurrency
 
@@ -755,7 +752,7 @@ const fetchGraphql = async ({
               throw e
             }
           }),
-      { retries: 5 }
+      { retries: 5 },
     )
 
     if (response.data === ``) {
@@ -821,5 +818,3 @@ const fetchGraphql = async ({
 
   return response?.data
 }
-
-export default fetchGraphql

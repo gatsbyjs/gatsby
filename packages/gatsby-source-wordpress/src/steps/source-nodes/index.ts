@@ -10,9 +10,11 @@ import { allowFileDownloaderProgressBarToClear } from "./create-nodes/create-rem
 import { sourcePreviews } from "~/steps/preview"
 import { hasStatefulSourceNodes } from "~/utils/gatsby-features"
 
-const sourceNodes: Step = async (helpers, pluginOptions) => {
+export const sourceNodes: Step = async function sourceNodes(
+  helpers,
+): Promise<void> {
   const { cache, webhookBody, refetchAll, actions } = helpers
-  const typePrefix = pluginOptions.schema?.typePrefix ?? ``
+  // const typePrefix = pluginOptions.schema?.typePrefix ?? ``
 
   if (hasStatefulSourceNodes) {
     actions.enableStatefulSourceNodes()
@@ -72,5 +74,3 @@ const sourceNodes: Step = async (helpers, pluginOptions) => {
   dispatch.remoteSchema.setSchemaWasChanged(false)
   dispatch.develop.resumeRefreshPolling()
 }
-
-export { sourceNodes }

@@ -1,7 +1,7 @@
 import { BulkQuery } from "./bulk-query"
 
 export class OrdersQuery extends BulkQuery {
-  query(date?: Date): string {
+  query(date?: Date | undefined): string {
     const filters = []
     if (date) {
       const isoDate = date.toISOString()

@@ -8,11 +8,11 @@ import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 import { createModel } from "@rematch/core"
 import { IRootModel } from "."
 
-export interface IPluginOptionsPreset {
+export type IPluginOptionsPreset = {
   presetName: string
   useIf: (
     helpers: GatsbyNodeApiHelpers,
-    pluginOptions: IPluginOptions
+    pluginOptions: IPluginOptions,
   ) => boolean
   options: IPluginOptions
 }
@@ -53,83 +53,99 @@ export const previewOptimizationPreset: IPluginOptionsPreset = {
         : {},
   },
 }
-export interface IPluginOptions {
-  url?: string
-  verbose?: boolean
+export type IPluginOptions = {
+  url?: string | undefined
+  verbose?: boolean | undefined
   debug?: {
-    throwRefetchErrors?: boolean
-    graphql?: {
-      showQueryOnError?: boolean
-      showQueryVarsOnError?: boolean
-      copyQueryOnError?: boolean
-      panicOnError?: boolean
-      onlyReportCriticalErrors?: boolean
-      copyNodeSourcingQueryAndExit?: boolean
-      writeQueriesToDisk?: boolean
-      copyHtmlResponseOnError?: boolean
-      printIntrospectionDiff?: boolean
-    }
-    timeBuildSteps?: Array<string> | boolean
-    disableCompatibilityCheck?: boolean
-    preview?: boolean
+    throwRefetchErrors?: boolean | undefined
+    graphql?:
+      | {
+          showQueryOnError?: boolean | undefined
+          showQueryVarsOnError?: boolean | undefined
+          copyQueryOnError?: boolean | undefined
+          panicOnError?: boolean | undefined
+          onlyReportCriticalErrors?: boolean | undefined
+          copyNodeSourcingQueryAndExit?: boolean | undefined
+          writeQueriesToDisk?: boolean | undefined
+          copyHtmlResponseOnError?: boolean | undefined
+          printIntrospectionDiff?: boolean | undefined
+        }
+      | undefined
+    timeBuildSteps?: Array<string> | boolean | undefined
+    disableCompatibilityCheck?: boolean | undefined
+    preview?: boolean | undefined
   }
-  develop?: {
-    nodeUpdateInterval?: number
-    hardCacheMediaFiles?: boolean
-    hardCacheData?: boolean
-  }
-  production?: {
-    hardCacheMediaFiles?: boolean
-    allow404Images?: boolean
-    allow401Images?: boolean
-  }
-  auth?: {
-    htaccess: {
-      username: string | null
-      password: string | null
-    }
-  }
-  schema?: {
-    queryDepth: number
-    circularQueryLimit: number
-    typePrefix: string
-    timeout: number // 30 seconds
-    perPage: number
-    requestConcurrency?: number
-    previewRequestConcurrency?: number
-  }
-  excludeFieldNames?: []
-  html?: {
-    useGatsbyImage?: boolean
-    gatsbyImageOptions?: Record<string, unknown>
-    imageMaxWidth?: number
-    fallbackImageMaxWidth?: number
-    imageQuality?: number
-    createStaticFiles?: boolean
-    placeholderType?: `blurred` | `dominantColor`
-  }
-  presets?: Array<IPluginOptionsPreset>
-  type?: {
-    [typename: string]: {
-      limit?: number
-      excludeFieldNames?: Array<string>
-
-      exclude?: boolean
-      // @todo type this
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      beforeChangeNode?: (any) => Promise<any>
-      nodeInterface?: boolean
-      lazyNodes?: boolean
-      createFileNodes?: boolean
-      localFile?: {
-        excludeByMimeTypes?: Array<string>
-        maxFileSizeBytes?: number
-        requestConcurrency?: number
+  develop?:
+    | {
+        nodeUpdateInterval?: number | undefined
+        hardCacheMediaFiles?: boolean | undefined
+        hardCacheData?: boolean | undefined
       }
+    | undefined
+  production?:
+    | {
+        hardCacheMediaFiles?: boolean | undefined
+        allow404Images?: boolean | undefined
+        allow401Images?: boolean | undefined
+      }
+    | undefined
+  auth?:
+    | {
+        htaccess: {
+          username: string | null
+          password: string | null
+        }
+      }
+    | undefined
+  schema?:
+    | {
+        queryDepth: number
+        circularQueryLimit: number
+        typePrefix: string
+        timeout: number // 30 seconds
+        perPage: number
+        requestConcurrency?: number | undefined
+        previewRequestConcurrency?: number | undefined
+      }
+    | undefined
+  excludeFieldNames?: Array<string> | undefined
+  html?:
+    | {
+        useGatsbyImage?: boolean | undefined
+        gatsbyImageOptions?: Record<string, unknown> | undefined
+        imageMaxWidth?: number | undefined
+        fallbackImageMaxWidth?: number | undefined
+        imageQuality?: number | undefined
+        createStaticFiles?: boolean | undefined
+        placeholderType?: `blurred` | `dominantColor` | undefined
+      }
+    | undefined
+  presets?: Array<IPluginOptionsPreset> | undefined
+  type?:
+    | {
+        [typename: string]: {
+          limit?: number | undefined
+          excludeFieldNames?: Array<string> | undefined
 
-      placeholderSizeName?: string
-    }
-  }
+          exclude?: boolean | undefined
+          // @todo type this
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          beforeChangeNode?: ((any) => Promise<any>) | undefined
+          nodeInterface?: boolean | undefined
+          lazyNodes?: boolean | undefined
+          createFileNodes?: boolean | undefined
+          localFile?:
+            | {
+                excludeByMimeTypes?: Array<string> | undefined
+                maxFileSizeBytes?: number | undefined
+                requestConcurrency?: number | undefined
+              }
+            | undefined
+
+          placeholderSizeName?: string
+        }
+      }
+    | undefined
 }
 
 const defaultPluginOptions: IPluginOptions = {
@@ -312,7 +328,7 @@ const defaultPluginOptions: IPluginOptions = {
   },
 }
 
-export interface IGatsbyApiState {
+export type IGatsbyApiState = {
   helpers: GatsbyNodeApiHelpers
   pluginOptions: IPluginOptions
   activePluginOptionsPresets?: Array<IPluginOptionsPreset>
@@ -327,7 +343,7 @@ const gatsbyApi = createModel<IRootModel>()({
   reducers: {
     setState(
       state: IGatsbyApiState,
-      payload: IGatsbyApiState
+      payload: IGatsbyApiState,
     ): IGatsbyApiState {
       const stateCopy = cloneDeep(state)
 
@@ -340,7 +356,7 @@ const gatsbyApi = createModel<IRootModel>()({
        * If it returns true, that preset is used.
        */
       const optionsPresets = [...defaultPresets, ...userPresets]?.filter(
-        preset => preset.useIf(payload.helpers, payload.pluginOptions)
+        preset => preset.useIf(payload.helpers, payload.pluginOptions),
       )
 
       if (optionsPresets?.length) {

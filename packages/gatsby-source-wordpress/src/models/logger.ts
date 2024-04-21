@@ -6,7 +6,7 @@ import { IRootModel } from "."
 
 type ITimerReporter = ReturnType<Reporter["activityTimer"]>
 
-export interface ILoggerState {
+export type ILoggerState = {
   entityCount: number
   typeCount: { [name: string]: number }
   activityTimers: {
@@ -24,7 +24,7 @@ const logger = createModel<IRootModel>()({
   reducers: {
     incrementActivityTimer(
       state: ILoggerState,
-      { typeName, by, action = `fetched` }
+      { typeName, by, action = `fetched` },
     ): ILoggerState {
       const logger = state.activityTimers[typeName]
 
@@ -44,7 +44,7 @@ const logger = createModel<IRootModel>()({
 
     stopActivityTimer(
       state: ILoggerState,
-      { typeName, action = `fetched` }: { typeName: string; action: string }
+      { typeName, action = `fetched` }: { typeName: string; action: string },
     ): ILoggerState {
       const logger = state.activityTimers[typeName]
 
@@ -63,7 +63,11 @@ const logger = createModel<IRootModel>()({
         typeName,
         reporter,
         pluginOptions,
-      }: { typeName: string; reporter: Reporter; pluginOptions: IPluginOptions }
+      }: {
+        typeName: string
+        reporter: Reporter
+        pluginOptions: IPluginOptions
+      },
     ): ILoggerState {
       if (state.activityTimers[typeName]) {
         return state
@@ -74,7 +78,7 @@ const logger = createModel<IRootModel>()({
         activity: reporter.activityTimer(
           formatLogMessage(typeName, {
             useVerboseStyle: pluginOptions.verbose,
-          })
+          }),
         ),
       }
 

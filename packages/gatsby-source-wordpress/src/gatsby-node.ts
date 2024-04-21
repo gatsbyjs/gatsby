@@ -1,24 +1,24 @@
 import { runApiSteps } from "./utils/run-steps"
 import * as steps from "./steps"
 
-exports.onPluginInit = runApiSteps(
+export const onPluginInit = runApiSteps(
   [
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.setRequestHeaders,
     steps.hideAuthPluginOptions,
   ],
-  `onPluginInit`
+  `onPluginInit`,
 )
 
-exports.onPreBootstrap = runApiSteps(
+export const onPreBootstrap = runApiSteps(
   [steps.restoreAuthPluginOptions],
-  `onPreBootstrap`
+  `onPreBootstrap`,
 )
 
-exports.pluginOptionsSchema = steps.pluginOptionsSchema
+export const pluginOptionsSchema = steps.pluginOptionsSchema
 
-exports.createSchemaCustomization = runApiSteps(
+export const createSchemaCustomization = runApiSteps(
   [
     steps.setGatsbyApiToState,
     steps.ensurePluginRequirementsAreMet,
@@ -26,43 +26,43 @@ exports.createSchemaCustomization = runApiSteps(
     steps.createSchemaCustomization,
     steps.addRemoteFileAllowedUrl,
   ],
-  `createSchemaCustomization`
+  `createSchemaCustomization`,
 )
 
-exports.sourceNodes = runApiSteps(
+export const sourceNodes = runApiSteps(
   [
     steps.setGatsbyApiToState,
     steps.persistPreviouslyCachedImages,
     steps.sourceNodes,
     steps.setImageNodeIdCache,
   ],
-  `sourceNodes`
+  `sourceNodes`,
 )
 
-exports.onPreExtractQueries = runApiSteps(
+export const onPreExtractQueries = runApiSteps(
   [steps.onPreExtractQueriesInvokeLeftoverPreviewCallbacks],
-  `onPreExtractQueries`
+  `onPreExtractQueries`,
 )
 
-exports.onPostBuild = runApiSteps(
+export const onPostBuild = runApiSteps(
   [steps.setImageNodeIdCache, steps.logPostBuildWarnings],
-  `onPostBuild`
+  `onPostBuild`,
 )
 
-exports.onCreatePage = runApiSteps(
+export const onCreatePage = runApiSteps(
   [
     steps.onCreatepageSavePreviewNodeIdToPageDependency,
     steps.onCreatePageRespondToPreviewStatusQuery,
   ],
-  `onCreatePage`
+  `onCreatePage`,
 )
 
-exports.onCreateDevServer = runApiSteps(
+export const onCreateDevServer = runApiSteps(
   [
     steps.imageRoutes,
     steps.setImageNodeIdCache,
     steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,
   ],
-  `onCreateDevServer`
+  `onCreateDevServer`,
 )

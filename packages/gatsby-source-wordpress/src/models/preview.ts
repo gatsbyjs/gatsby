@@ -6,12 +6,12 @@ import { IRootModel } from "."
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OnPageCreatedCallback = (node: any) => Promise<void>
 
-export interface IStoredPage {
+export type IStoredPage = {
   path: string
   updatedAt: number
 }
 
-export interface IPreviewState {
+export type IPreviewState = {
   nodePageCreatedCallbacks: {
     [nodeId: string]: OnPageCreatedCallback
   }
@@ -27,20 +27,20 @@ export interface IPreviewState {
   }
 }
 
-export interface IPreviewReducers {
+export type IPreviewReducers = {
   subscribeToPagesCreatedFromNodeById: (
     state: IPreviewState,
     payload: {
       nodeId: string
       sendPreviewStatus: OnPageCreatedCallback
       modified: string
-    }
+    },
   ) => IPreviewState
   unSubscribeToPagesCreatedFromNodeById: (
     state: IPreviewState,
     payload: {
       nodeId: string
-    }
+    },
   ) => IPreviewState
   clearPreviewCallbacks: (state: IPreviewState) => IPreviewState
   saveNodePageState: (
@@ -48,7 +48,7 @@ export interface IPreviewReducers {
     payload: {
       nodeId: string
       page: IStoredPage
-    }
+    },
   ) => IPreviewState
 }
 
@@ -66,7 +66,7 @@ const previewStore = createModel<IRootModel>()({
         nodeId,
       }: {
         nodeId: string
-      }
+      },
     ) {
       if (state.nodePageCreatedCallbacks?.[nodeId]) {
         delete state.nodePageCreatedCallbacks[nodeId]
@@ -84,7 +84,7 @@ const previewStore = createModel<IRootModel>()({
         nodeId: string
         sendPreviewStatus: OnPageCreatedCallback
         modified: string
-      }
+      },
     ) {
       // save the callback for this nodeId
       // when a page is created from a node that has this id,
@@ -108,7 +108,7 @@ const previewStore = createModel<IRootModel>()({
       }: {
         nodeId: string
         page: IStoredPage
-      }
+      },
     ) {
       state.nodeIdsToCreatedPages[nodeId] = {
         page,

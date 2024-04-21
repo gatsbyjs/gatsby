@@ -16,7 +16,7 @@ export {
   onCreatepageSavePreviewNodeIdToPageDependency,
 } from "./preview/on-create-page"
 
-export { pluginOptionsSchema } from "~/steps/declare-plugin-options-schema"
+export { pluginOptionsSchema } from "~/steps/declare-plugin-options-schema.mjs"
 export { logPostBuildWarnings } from "~/steps/log-post-build-warnings"
 export { imageRoutes } from "~/steps/image-routes"
 

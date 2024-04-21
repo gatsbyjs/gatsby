@@ -7,7 +7,7 @@ import { BulkQuery } from "./bulk-query"
  * once the issue is resolved.
  */
 export class LocationsQuery extends BulkQuery {
-  query(date?: Date): string {
+  query(date?: Date | undefined): string {
     const publishedStatus = this.pluginOptions.salesChannel
       ? `'${encodeURIComponent(this.pluginOptions.salesChannel)}:visible'`
       : `published`

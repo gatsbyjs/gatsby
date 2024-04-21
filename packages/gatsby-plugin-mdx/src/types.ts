@@ -1,28 +1,28 @@
 import type { VFile, VFileData } from "vfile"
 import type { Node } from "gatsby"
 
-export interface IMdxNode extends Node {
-  rawBody?: string
-  body?: string
-}
+export type IMdxNode = {
+  rawBody?: string | undefined
+  body?: string | undefined
+} & Node
 
-export interface IFileNode extends Node {
-  sourceInstanceName?: string
-  absolutePath?: string
-}
+export type IFileNode = {
+  sourceInstanceName?: string | undefined
+  absolutePath?: string | undefined
+} & Node
 
-interface IMdxVFileDataMeta {
+type IMdxVFileDataMeta = {
   [key: string]: unknown
 }
 
-interface IMdxVFileData extends VFileData {
-  meta?: IMdxVFileDataMeta
-}
+type IMdxVFileData = {
+  meta?: IMdxVFileDataMeta | undefined
+} & VFileData
 
-export interface IMdxVFile extends VFile {
+export type IMdxVFile = {
   data: IMdxVFileData
-}
+} & VFile
 
-export interface IMdxMetadata {
+export type IMdxMetadata = {
   [key: string]: unknown
 }

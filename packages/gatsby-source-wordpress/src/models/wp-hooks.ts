@@ -1,14 +1,14 @@
 import { createModel } from "@rematch/core"
-import { IRootModel } from "."
+import type { IRootModel } from "."
 
-export interface INodeFilter {
+export type INodeFilter = {
   name: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filter: (any) => any
+  filter: (arg: any) => any
   priority?: number
 }
 
-export interface IWPHooksState {
+export type IWPHooksState = {
   nodeFilters: { [name: string]: Array<INodeFilter> }
 }
 
@@ -20,7 +20,7 @@ const wpHooks = createModel<IRootModel>()({
   reducers: {
     addNodeFilter(
       state: IWPHooksState,
-      nodeFilter: INodeFilter
+      nodeFilter: INodeFilter,
     ): IWPHooksState {
       const { name, filter, priority = 10 } = nodeFilter
 

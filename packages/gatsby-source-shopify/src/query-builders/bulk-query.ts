@@ -5,7 +5,7 @@ export abstract class BulkQuery {
     this.pluginOptions = pluginOptions
   }
 
-  abstract query(date?: Date): string
+  abstract query(date?: Date | undefined): string
 
   protected bulkOperationQuery(query: string): string {
     return `

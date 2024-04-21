@@ -3,7 +3,9 @@ import { getPluginOptions } from "~/utils/get-gatsby-api"
 
 import type { Step } from "~/utils/run-steps"
 
-export const setRequestHeaders: Step = ({ actions }): void => {
+export const setRequestHeaders: Step = function setRequestHeaders({
+  actions,
+}): void {
   if (typeof actions?.setRequestHeaders !== `function`) {
     return
   }

@@ -1,15 +1,15 @@
 import { IJSON } from "../utils/fetch-graphql"
 import { getStore } from "~/store"
 
-interface INodeFilterInput {
+type INodeFilterInput = {
   name: string
   context: IJSON
   data: IJSON
 }
 
-type NodeFilterFn = (INodeFilterInput) => IJSON
+type NodeFilterFn = (arg: INodeFilterInput) => IJSON
 
-interface INodeFilter {
+type INodeFilter = {
   name: string
   filter: NodeFilterFn
   priority: number
@@ -24,11 +24,11 @@ interface INodeFilter {
  * @param {object} context Any additional data to pass to the filter functions that are applied
  * @param {object} data The initial data to be filtered
  */
-export const applyNodeFilter = async ({
+export async function applyNodeFilter({
   name,
   context,
   data,
-}: INodeFilterInput): Promise<IJSON> => {
+}: INodeFilterInput): Promise<IJSON> {
   if (!name) {
     return data
   }
@@ -57,10 +57,6 @@ export const applyNodeFilter = async ({
  * @param {function} filter The function to run when applying this filter
  * @param {integer} priority The priority for this filter to run in. lower means earlier execution
  */
-export const addNodeFilter = ({
-  name,
-  filter,
-  priority,
-}: INodeFilter): void => {
+export function addNodeFilter({ name, filter, priority }: INodeFilter): void {
   getStore().dispatch.wpHooks.addNodeFilter({ name, filter, priority })
 }

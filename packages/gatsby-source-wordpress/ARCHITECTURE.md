@@ -127,7 +127,7 @@ In development this isn't as critical and refetching everything can be really an
 
 ### ActionMonitor (WPGatsby change events)
 
-After an initial cold build, the current timestamp is stored in cache. On any subsequent build this timestamp is sent via a gql query to WPGraphQL/WPGatsby/WordPress to ask what's changed since the last time data was fetched. See `src/steps/source-nodes/update-nodes/fetch-node-updates.js` and `src/steps/source-nodes/index.ts`. A list of change events is fetched and the source plugin loops through them and processes CREATE/UPDATE and DELETE events (see `src/steps/source-nodes/update-nodes/wp-actions`). WordPress itself doesn't store these events so there is a lot of custom code/logic in WPGatsby that hooks into various WordPress events and stores data in the WP db. See https://github.com/gatsbyjs/wp-gatsby/tree/master/src/ActionMonitor. After each update, a new timestamp is stored to later get change events since that time.
+After an initial cold build, the current timestamp is stored in cache. On any subsequent build this timestamp is sent via a gql query to WPGraphQL/WPGatsby/WordPress to ask what's changed since the last time data was fetched. See `src/steps/source-nodes/update-nodes/fetch-node-updates.js` and `src/steps/source-nodes/index.ts`. A list of change events is fetched and the source plugin loops through them and processes CREATE/UPDATE and DELETE events (see `src/steps/source-nodes/update-nodes/wp-actions`). WordPress itself doesn't store these events so there is a lot of custom code/logic in WPGatsby that hooks into various WordPress events and stores data in the WP db. See <https://github.com/gatsbyjs/wp-gatsby/tree/master/src/ActionMonitor>. After each update, a new timestamp is stored to later get change events since that time.
 
 ### Hard caching files and data (for improved local dev DX)
 
@@ -136,15 +136,15 @@ Searching the project for `hardCacheMediaFiles` and `hardCacheData` will lead yo
 
 ## Basic Auth
 
-Basic Auth options are added in `src/steps/source-nodes/create-nodes/create-remote-media-item-node.js` and `src/steps/source-nodes/create-nodes/create-remote-file-node/index.js`. This option is intended for use with server-level authentication, not WP level authentication. The reason for this is Gatsby data should be considered public data. Anything not public should not be exposed to Gatsby as it could be accidentally leaked via GraphQL queries or the `/__graphql` endpoint of a running Preview instance. This option is intended to allow you to lock down your `/graphql` WPGraphQL endpoint so it can only be requested with some credentials. See https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/features/security.md for more info.
+Basic Auth options are added in `src/steps/source-nodes/create-nodes/create-remote-media-item-node.js` and `src/steps/source-nodes/create-nodes/create-remote-file-node/index.js`. This option is intended for use with server-level authentication, not WP level authentication. The reason for this is Gatsby data should be considered public data. Anything not public should not be exposed to Gatsby as it could be accidentally leaked via GraphQL queries or the `/__graphql` endpoint of a running Preview instance. This option is intended to allow you to lock down your `/graphql` WPGraphQL endpoint so it can only be requested with some credentials. See <https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/features/security.md> for more info.
 
 ## Debugging options
 
-There are a lot of debugging options to print out different info about the process. Check the debugging section in plugin options docs https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debug. These are scattered throughout the codebase.
+There are a lot of debugging options to print out different info about the process. Check the debugging section in plugin options docs <https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debug>. These are scattered throughout the codebase.
 
 ## Plugin options schema and documentation generation
 
-The plugin options schema is defined in `src/steps/declare-plugin-options-schema.ts`. On each `yarn build`, `yarn generate-plugin-options-docs` is also run. This npm script runs `generate-plugin-options-docs.js` which uses the plugin options schema to generate the plugin options docs (in `docs/plugin-options.md`).
+The plugin options schema is defined in `src/steps/declare-plugin-options-schema.ts`. On each `yarn build`, `yarn generate-plugin-options-docs` is also run. This npm script runs `generate-plugin-options-docs.mjs` which uses the plugin options schema to generate the plugin options docs (in `docs/plugin-options.md`).
 
 ## `gatsby develop` DX features
 
@@ -153,7 +153,7 @@ When developing a site locally, this plugin periodically checks for data or sche
 ## WPGatsby
 
 The WPGatsby plugin stores and exposes WP change events for Gatsby to query and then update data/schema with.
-It also adds some additional fields to the WPGraphQL schema (like `schemaMd5` and [compatibility api](#compatibility-api-dx-and-security-ish-feature) fields) which the source plugin requires to function. See https://github.com/gatsbyjs/wp-gatsby for more info.
+It also adds some additional fields to the WPGraphQL schema (like `schemaMd5` and [compatibility api](#compatibility-api-dx-and-security-ish-feature) fields) which the source plugin requires to function. See <https://github.com/gatsbyjs/wp-gatsby> for more info.
 
 ## Preview
 

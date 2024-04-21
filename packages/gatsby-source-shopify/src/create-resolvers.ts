@@ -1,3 +1,4 @@
+// @ts-ignore
 import { CreateResolversArgs } from "gatsby"
 import { getGatsbyImageFieldConfig } from "gatsby-plugin-image/graphql-utils"
 
@@ -6,7 +7,7 @@ import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
 
 export function createResolvers(
   gatsbyApi: CreateResolversArgs,
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
 ): void {
   const { createResolvers, cache } = gatsbyApi
   const {
@@ -41,7 +42,7 @@ export function createResolvers(
                   nodeModel: {
                     findOne: (object: unknown) => IShopifyNode | undefined
                   }
-                }
+                },
               ) =>
                 context.nodeModel.findOne({
                   type: `${typePrefix}ShopifyMetafield`,

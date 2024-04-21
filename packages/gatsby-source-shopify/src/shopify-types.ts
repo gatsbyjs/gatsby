@@ -16,14 +16,14 @@
 
 // eslint-disable @typescript-eslint/naming-convention
 
-interface IShopifyTypes {
+type IShopifyTypes = {
   [key: string]: {
-    key?: string
+    key?: string | undefined
     coupled: boolean
-    optionalKey?: string
-    imageFields?: Array<string>
-    referenceFields?: Array<string>
-    coupledNodeFields?: Array<string>
+    optionalKey?: string | undefined
+    imageFields?: Array<string> | undefined
+    referenceFields?: Array<string> | undefined
+    coupledNodeFields?: Array<string> | undefined
   }
 }
 

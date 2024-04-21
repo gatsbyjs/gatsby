@@ -1,4 +1,5 @@
-import { IErrorMapEntry } from "gatsby-cli/lib/structured-errors/error-map"
+// @ts-ignore
+import type { IErrorMapEntry } from "gatsby-cli/lib/structured-errors/error-map"
 
 export const CODES = {
   /* Fetch errors */
@@ -19,14 +20,16 @@ export const CODES = {
   SourcePluginCodeError: `112003`,
 }
 
-interface IErrorContext {
+type IErrorContext = {
   sourceMessage: string
 }
-interface IErrorMap {
+type IErrorMap = {
   [code: string]: IErrorMapEntry
 }
 
-const getErrorText = (context: IErrorContext): string => context.sourceMessage
+function getErrorText(context: IErrorContext): string {
+  return context.sourceMessage
+}
 
 export const ERROR_MAP: IErrorMap = {
   [CODES.WordPressFilters]: {

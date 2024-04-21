@@ -147,7 +147,7 @@ interface IShopifyPluginOptions {
   shopifyConnections: Array<string>
   typePrefix: string
   salesChannel: string
-  prioritize?: boolean,
+  prioritize?: boolean
   apiVersion: string
 }
 

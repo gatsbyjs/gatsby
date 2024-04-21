@@ -1,19 +1,19 @@
-import { RematchStore, init } from "@rematch/core"
+import { type RematchStore, init } from "@rematch/core"
 import immerPlugin from "@rematch/immer"
 import { enableMapSet } from "immer"
-import models, { IRootModel } from "./models"
+import models, { type IRootModel } from "./models"
 
 import { AsyncLocalStorage } from "async_hooks"
-import { IPluginOptions } from "./models/gatsby-api"
-import { GatsbyNodeApiHelpers } from "./utils/gatsby-types"
+import type { IPluginOptions } from "./models/gatsby-api"
+import type { GatsbyNodeApiHelpers } from "./utils/gatsby-types"
 
-export interface IGatsbyApiHook {
+export type IGatsbyApiHook = {
   (helpers: GatsbyNodeApiHelpers, pluginOptions: IPluginOptions): Promise<void>
 }
 
 export type Store = RematchStore<IRootModel, Record<string, never>>
 
-export interface IStoreData {
+export type IStoreData = {
   store: Store
   key: string
 }
@@ -22,11 +22,12 @@ export const asyncLocalStorage = new AsyncLocalStorage<IStoreData>()
 
 const STORE_MAP = new Map<string, Store>()
 
-export const createStore = (): Store =>
-  init({
+export function createStore(): Store {
+  return init({
     models,
     plugins: [immerPlugin<IRootModel>()],
   })
+}
 
 /**
  * Wraps the API hook with the async local storage context
@@ -44,7 +45,7 @@ export const wrapApiHook =
     const store = STORE_MAP.get(typePrefix)
 
     return asyncLocalStorage.run({ store, key: typePrefix }, async () =>
-      hook(helpers, pluginOptions)
+      hook(helpers, pluginOptions),
     )
   }
 
@@ -58,13 +59,19 @@ export const getStore = (): Store => {
   return alsStore.store
 }
 
-export const snapshotContext = (): (() => void) => {
+export function snapshotContext(): () => void {
   const alsStore = asyncLocalStorage.getStore()
-  return (): void => asyncLocalStorage.enterWith(alsStore)
+  return (): void => {
+    return asyncLocalStorage.enterWith(alsStore)
+  }
 }
 
-export const getPluginKey = (): string => asyncLocalStorage.getStore().key
+export function getPluginKey(): string {
+  return asyncLocalStorage.getStore().key
+}
 
-export const withPluginKey = (str: string): string => `${getPluginKey()}-${str}`
+export function withPluginKey(str: string): string {
+  return `${getPluginKey()}-${str}`
+}
 
 export default getStore

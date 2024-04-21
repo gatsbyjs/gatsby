@@ -1,14 +1,15 @@
-import { readFileSync } from "fs"
+import { readFileSync } from "node:fs"
+// @ts-ignore
 import { GatsbyCache } from "gatsby"
-import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
+import type { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import {
   generateImageData,
   getLowResolutionImageURL,
-  IGatsbyImageData,
-  IGatsbyImageHelperArgs,
-  IImage,
-  ImageFormat,
+  type IGatsbyImageData,
+  type IGatsbyImageHelperArgs,
+  type IImage,
+  type ImageFormat,
 } from "gatsby-plugin-image"
 
 import { urlBuilder } from "./get-shopify-image"
@@ -46,14 +47,19 @@ function getBase64DataURI({ imageBase64 }: { imageBase64: string }): string {
   return `data:image/png;base64,${imageBase64}`
 }
 
-export function makeResolveGatsbyImageData(cache: GatsbyCache) {
+export function makeResolveGatsbyImageData(
+  cache: GatsbyCache,
+): (
+  image: IShopifyImage,
+  { formats, layout, ...remainingOptions }: IGatsbyImageFieldArgs,
+) => Promise<IGatsbyImageData | null> {
   return async function resolveGatsbyImageData(
     image: IShopifyImage,
     {
       formats = [`auto`],
       layout = `constrained`,
       ...remainingOptions
-    }: IGatsbyImageFieldArgs
+    }: IGatsbyImageFieldArgs,
   ): Promise<IGatsbyImageData | null> {
     // Sharp cannot optimize GIFs so we must return null in that case
     const ext = parseImageExtension(image.originalSrc)
@@ -65,7 +71,7 @@ export function makeResolveGatsbyImageData(cache: GatsbyCache) {
       filename,
       width,
       height,
-      toFormat
+      toFormat,
     ): IImageWithPlaceholder => {
       return {
         width,

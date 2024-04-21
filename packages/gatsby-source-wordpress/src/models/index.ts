@@ -6,7 +6,7 @@ import wpHooks from "./wp-hooks"
 import previewStore from "./preview"
 import develop from "./develop"
 import postBuildWarningCounts from "./post-build-warning-logs"
-import { Models, createModel } from "@rematch/core"
+import { type Models, createModel } from "@rematch/core"
 
 export const settings = createModel<IRootModel>()({
   state: 0,
@@ -18,7 +18,7 @@ export const settings = createModel<IRootModel>()({
   },
 })
 
-export interface IRootModel extends Models<IRootModel> {
+export type IRootModel = {
   remoteSchema: typeof remoteSchema
   gatsbyApi: typeof gatsbyApi
   logger: typeof logger
@@ -27,7 +27,7 @@ export interface IRootModel extends Models<IRootModel> {
   previewStore: typeof previewStore
   develop: typeof develop
   postBuildWarningCounts: typeof postBuildWarningCounts
-}
+} & Models<IRootModel>
 
 const models: IRootModel = {
   remoteSchema,

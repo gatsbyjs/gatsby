@@ -1,7 +1,7 @@
 import {
-  IUrlBuilderArgs,
+  type IUrlBuilderArgs,
   getImageData,
-  IGatsbyImageData,
+  type IGatsbyImageData,
 } from "gatsby-plugin-image"
 
 const validFormats = new Set([`jpg`, `jpeg`, `png`, `webp`, `auto`])
@@ -16,11 +16,12 @@ export function urlBuilder({
     console.warn(
       `${format} is not a valid format. Valid formats are: ${[
         ...validFormats,
-      ].join(`, `)}`
+      ].join(`, `)}`,
     )
     format = `auto`
   }
 
+  // eslint-disable-next-line prefer-const
   let [basename, version] = baseUrl.split(`?`)
 
   const dot = basename.lastIndexOf(`.`)

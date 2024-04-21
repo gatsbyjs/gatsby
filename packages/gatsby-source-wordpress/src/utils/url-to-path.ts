@@ -1,3 +1,5 @@
 import { parse } from "url"
 
-export default (link: string): string => parse(link).pathname
+export default function urlToPath(link: string): string {
+  return parse(link).pathname
+}

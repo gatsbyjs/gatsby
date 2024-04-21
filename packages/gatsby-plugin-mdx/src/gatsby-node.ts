@@ -1,7 +1,7 @@
 import type { GatsbyNode, NodeInput } from "gatsby"
 import type { FileSystemNode } from "gatsby-source-filesystem"
 import type { Options } from "rehype-infer-description-meta"
-import path from "path"
+import path from "node:path"
 import fs from "fs-extra"
 import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
 import { defaultOptions, enhanceMdxOptions } from "./plugin-options"
@@ -28,7 +28,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
       cache,
       store,
     },
-    pluginOptions
+    pluginOptions,
   ) => {
     const options = defaultOptions(pluginOptions)
 
@@ -63,6 +63,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
         rules: [
           {
             test: /\.mdx?$/,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             use: ({ resourceQuery, issuer }): Array<any> => [
               loaders.js({
                 isPageTemplate: /async-requires/.test(issuer),
@@ -77,6 +78,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
           {
             test: /\.[tj]sx?$/,
             resourceQuery: /__contentFilePath=.+\.mdx?(&export=.*)?$/,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             use: ({ resourceQuery, issuer }): Array<any> => [
               loaders.js({
                 isPageTemplate: /async-requires/.test(issuer),
@@ -99,7 +101,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
  */
 export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
   _data,
-  pluginOptions
+  pluginOptions,
 ) => defaultOptions(pluginOptions).extensions
 
 /**
@@ -107,7 +109,7 @@ export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
   { filename, getNode, getNodesByType, pathPrefix, reporter, cache, store },
-  pluginOptions
+  pluginOptions,
 ) => {
   const options = defaultOptions(pluginOptions)
   const { extensions } = options
@@ -141,7 +143,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     },
     mdxOptions,
     cache,
-    reporter
+    reporter,
   )
 
   if (!compileRes?.processedMDX) {
@@ -162,7 +164,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       schema,
       store,
     },
-    pluginOptions
+    pluginOptions,
   ) => {
     const { createTypes } = actions
     const typeDefs = [
@@ -211,7 +213,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                   reporter,
                   cache,
                   store,
-                }
+                },
               )
 
               if (!result) {
@@ -261,7 +263,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                   reporter,
                   cache,
                   store,
-                }
+                },
               )
 
               if (!result) {
@@ -284,7 +286,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const shouldOnCreateNode: GatsbyNode["shouldOnCreateNode"] = (
   { node }: { node: FileSystemNode },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { extensions } = defaultOptions(pluginOptions)
   return node.internal.type === `File` && extensions.includes(node.ext)
@@ -304,7 +306,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
 
   const { frontmatter, body } = parseFrontmatter(
     node.internal.contentDigest,
-    rawBody
+    rawBody,
   )
   const mdxNode: NodeInput = {
     id: createNodeId(`${node.id} >>> Mdx`),
@@ -329,7 +331,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
  */
 export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   { page, actions, getNodesByType },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createPage, deletePage } = actions
   const { extensions } = defaultOptions(pluginOptions)
@@ -343,7 +345,7 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   }
 
   const fileNode = getNodesByType(`File`).find(
-    node => node.absolutePath === mdxPath
+    node => node.absolutePath === mdxPath,
   )
   if (!fileNode) {
     throw new Error(`Could not locate File node for ${mdxPath}`)
@@ -354,7 +356,7 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
     const content = await fs.readFile(mdxPath, `utf8`)
     const { frontmatter } = parseFrontmatter(
       fileNode.internal.contentDigest,
-      content
+      content,
     )
 
     deletePage(page)
@@ -384,10 +386,10 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .items(Joi.string())
       .default([`.mdx`])
       .description(
-        `Configure the file extensions that gatsby-plugin-mdx will process`
+        `Configure the file extensions that gatsby-plugin-mdx will process`,
       ),
     gatsbyRemarkPlugins: Joi.subPlugins().description(
-      `Use Gatsby-specific remark plugins`
+      `Use Gatsby-specific remark plugins`,
     ),
     mdxOptions: Joi.object()
       .keys({
@@ -398,7 +400,7 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
         outputFormat: Joi.string()
           .valid(`program`, `function-body`)
           .description(
-            `Whether to compile to a whole program or a function body`
+            `Whether to compile to a whole program or a function body`,
           ),
         mdExtensions: Joi.array()
           .items(Joi.string().regex(/^\./))
@@ -407,13 +409,13 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
           .items(Joi.string().regex(/^\./))
           .description(`Extensions (with \`.\`) for MDX`),
         recmaPlugins: Joi.array().description(
-          `List of recma (esast, JavaScript) plugins`
+          `List of recma (esast, JavaScript) plugins`,
         ),
         remarkPlugins: Joi.array().description(
-          `List of remark (mdast, markdown) plugins`
+          `List of remark (mdast, markdown) plugins`,
         ),
         rehypePlugins: Joi.array().description(
-          `List of rehype (hast, HTML) plugins`
+          `List of rehype (hast, HTML) plugins`,
         ),
         remarkRehypeOptions: Joi.object()
           .unknown()
@@ -422,6 +424,6 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .unknown(true)
       .default({})
       .description(
-        `Pass any options to MDX. See: https://mdxjs.com/packages/mdx/#compilefile-options`
+        `Pass any options to MDX. See: https://mdxjs.com/packages/mdx/#compilefile-options`,
       ),
   })

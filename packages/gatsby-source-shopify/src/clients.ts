@@ -1,4 +1,3 @@
-import fetch, { Response } from "node-fetch"
 import { HttpError } from "./errors"
 
 const MAX_BACKOFF_MILLISECONDS = 60000
@@ -7,14 +6,14 @@ const MAX_BACKOFF_MILLISECONDS = 60000
 // "hacky" code in createRestClient
 
 export function createGraphqlClient(
-  options: IShopifyPluginOptions
+  options: IShopifyPluginOptions,
 ): IGraphQLClient {
   const url = `https://${options.storeUrl}/admin/api/${options.apiVersion}/graphql.json`
 
   async function graphqlFetch<T>(
     query: string,
     variables?: Record<string, unknown>,
-    retries = 0
+    retries = 0,
   ): Promise<T> {
     const response = await fetch(url, {
       method: `POST`,
@@ -55,7 +54,7 @@ export function createRestClient(options: IShopifyPluginOptions): IRestClient {
         "X-Shopify-Access-Token": options.password,
       },
     },
-    retries = 3
+    retries = 3,
   ): Promise<Response> {
     /**
      * This is kind of a hack, but...
@@ -68,7 +67,7 @@ export function createRestClient(options: IShopifyPluginOptions): IRestClient {
      */
     const url = path.includes(options.storeUrl) ? path : `${baseUrl}${path}`
 
-    const resp = await fetch(url, fetchOptions)
+    const resp = await globalThis.fetch(url, fetchOptions)
 
     if (!resp.ok && retries > 0 && resp.status === 429) {
       // rate limit
@@ -81,6 +80,7 @@ export function createRestClient(options: IShopifyPluginOptions): IRestClient {
   }
 
   return {
+    // @ts-ignore
     request: async (path: string): Promise<Response> => shopifyFetch(path),
   }
 }
