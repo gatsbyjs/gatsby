@@ -14,10 +14,10 @@ const APIFunctionLoader: LoaderDefinition = async function () {
   const functionToExecute = preferDefault(functionModule);
   const matchPath = '${matchPath}';
   const { match: reachMatch } = require('${slash(
-    require.resolve(`@gatsbyjs/reach-router`)
+    require.resolve(`@gatsbyjs/reach-router`),
   )}');
   const { urlencoded, text, json, raw } = require('${slash(
-    require.resolve(`body-parser`)
+    require.resolve(`body-parser`),
   )}')
   const multer = require('${slash(require.resolve(`multer`))}')
   const { createConfig } = require('${slash(require.resolve(`./config`))}')
@@ -41,9 +41,9 @@ const APIFunctionLoader: LoaderDefinition = async function () {
 
     // handle body parsing if request stream was not yet consumed
     const { config } = createConfig(functionModule?.config)
-    const middlewares = 
-      req.readableEnded 
-      ? [] 
+    const middlewares =
+      req.readableEnded
+      ? []
       : [
         multer().any(),
         raw(config?.bodyParser?.raw ?? { limit: '100kb' }),
@@ -62,10 +62,10 @@ const APIFunctionLoader: LoaderDefinition = async function () {
     }
 
 
-    runMiddlewareOrFunction() 
+    runMiddlewareOrFunction()
   }
 
-  module.exports = typeof functionToExecute === 'function' 
+  module.exports = typeof functionToExecute === 'function'
     ? {
       default: functionWrapper,
       config: functionModule?.config

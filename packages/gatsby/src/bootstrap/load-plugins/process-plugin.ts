@@ -1,4 +1,4 @@
-import { IPluginInfo, PluginRef } from "./types"
+import type { IPluginInfo, PluginRef } from "./types"
 import { createPluginId } from "./utils/create-id"
 import { resolvePlugin } from "./resolve-plugin"
 import { isString, isEmpty, set, merge } from "lodash"
@@ -44,7 +44,7 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
           pathToSwap = pathToSwap.slice(0, pathToSwap.length - 1)
           roots = roots.flat()
         } else {
-          roots = roots.map(root => root[segment])
+          roots = roots.map((root) => root[segment])
         }
       }
       roots = roots.flat()

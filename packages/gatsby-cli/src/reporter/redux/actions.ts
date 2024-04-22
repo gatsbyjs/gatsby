@@ -1,5 +1,5 @@
 import { bindActionCreators } from "redux"
-import { Dispatch } from "redux"
+import type { Dispatch } from "redux"
 import { dispatch } from "./"
 
 import * as actions from "./internal-actions"

@@ -3,9 +3,9 @@ import type { IGatsbyPage } from "../redux/types"
 import { match } from "@gatsbyjs/reach-router"
 
 export type IServerData = {
-  headers?: Record<string, string>
-  props?: Record<string, unknown>
-  status?: number
+  headers?: Record<string, string> | undefined
+  props?: Record<string, unknown> | undefined
+  status?: number | undefined
 }
 
 type IModuleWithServerData = {

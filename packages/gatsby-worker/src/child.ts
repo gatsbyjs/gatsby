@@ -1,8 +1,8 @@
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import {
-  ParentMessageUnion,
-  ChildMessageUnion,
+  type ParentMessageUnion,
+  type ChildMessageUnion,
   EXECUTE,
   END,
   ERROR,
@@ -13,10 +13,10 @@ import {
 import { isPromise } from "./utils"
 
 let counter = 0
-export interface IGatsbyWorkerMessenger<
+export type IGatsbyWorkerMessenger<
   MessagesFromParent = unknown,
-  MessagesFromChild = MessagesFromParent
-> {
+  MessagesFromChild = MessagesFromParent,
+> = {
   onMessage: (listener: (msg: MessagesFromParent) => void) => void
   sendMessage: (msg: MessagesFromChild) => void
   messagingVersion: 1
@@ -28,7 +28,7 @@ export interface IGatsbyWorkerMessenger<
 let isWorker = false
 let getMessenger = function <
   MessagesFromParent = unknown,
-  MessagesFromChild = MessagesFromParent
+  MessagesFromChild = MessagesFromParent,
 >(): IGatsbyWorkerMessenger<MessagesFromParent, MessagesFromChild> | undefined {
   return undefined
 }
@@ -41,22 +41,23 @@ if (
   const workerInFlightsDumpLocation =
     process.env.GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION
   isWorker = true
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const listeners: Array<(msg: any) => void> = []
 
   const inFlightMessages = new Set<ChildMessageUnion>()
-  signalExit(() => {
+  signalExit.onExit(() => {
     if (inFlightMessages.size > 0) {
       // this need to be sync
       fs.outputJsonSync(
         workerInFlightsDumpLocation,
-        Array.from(inFlightMessages)
+        Array.from(inFlightMessages),
       )
     }
   })
 
   function ensuredSendToMain(msg: ChildMessageUnion): void {
     inFlightMessages.add(msg)
-    process.send!(msg, undefined, undefined, error => {
+    process.send!(msg, undefined, undefined, (error) => {
       if (!error) {
         inFlightMessages.delete(msg)
       }
@@ -89,7 +90,7 @@ if (
 
   getMessenger = function <
     MessagesFromParent = unknown,
-    MessagesFromChild = MessagesFromParent
+    MessagesFromChild = MessagesFromParent,
   >(): IGatsbyWorkerMessenger<MessagesFromParent, MessagesFromChild> {
     return {
       onMessage(listener: (msg: MessagesFromParent) => void): void {

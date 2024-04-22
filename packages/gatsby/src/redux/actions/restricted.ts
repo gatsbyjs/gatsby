@@ -1,17 +1,17 @@
 import camelCase from "lodash/camelCase"
 import isEqual from "lodash/isEqual"
 
-import { GraphQLSchema, GraphQLOutputType } from "graphql"
-import { ActionCreator } from "redux"
-import { ThunkAction } from "redux-thunk"
+import { GraphQLSchema, type GraphQLOutputType } from "graphql"
+import type { ActionCreator } from "redux"
+import type { ThunkAction } from "redux-thunk"
 import report from "gatsby-cli/lib/reporter"
 import { parseTypeDef } from "../../schema/types/type-defs"
 import {
-  GraphQLFieldExtensionDefinition,
+  type GraphQLFieldExtensionDefinition,
   reservedExtensionNames,
 } from "../../schema/extensions"
-import { GatsbyGraphQLType } from "../../schema/types/type-builders"
-import {
+import type { GatsbyGraphQLType } from "../../schema/types/type-builders"
+import type {
   IGatsbyPlugin,
   ActionsUnion,
   IAddThirdPartySchema,
@@ -41,9 +41,10 @@ type RestrictionActionNames =
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ActionCreator<ThunkAction<any, IGatsbyState, any, ActionsUnion>>
 
-export interface ICreateSliceInput {
+export type ICreateSliceInput = {
   id: string
   component: string
   context: Record<string, unknown>
@@ -67,7 +68,7 @@ export const actions = {
   addThirdPartySchema: (
     { schema }: { schema: GraphQLSchema },
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string,
   ): IAddThirdPartySchema => {
     return {
       type: `ADD_THIRD_PARTY_SCHEMA`,
@@ -222,10 +223,12 @@ export const actions = {
     types:
       | string
       | GraphQLOutputType
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       | GatsbyGraphQLType<any, any>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       | Array<string | GraphQLOutputType | GatsbyGraphQLType<any, any>>,
-    plugin: IGatsbyPlugin,
-    traceId?: string
+    plugin?: IGatsbyPlugin | undefined,
+    traceId?: string | undefined,
   ): ICreateTypes => {
     return {
       type: `CREATE_TYPES`,
@@ -282,7 +285,7 @@ export const actions = {
     (
       extension: GraphQLFieldExtensionDefinition,
       plugin: IGatsbyPlugin,
-      traceId?: string
+      traceId?: string,
     ): ThunkAction<
       void,
       IGatsbyState,
@@ -295,15 +298,15 @@ export const actions = {
 
       if (!name) {
         report.error(
-          `The provided field extension must have a \`name\` property.`
+          `The provided field extension must have a \`name\` property.`,
         )
       } else if (reservedExtensionNames.includes(name)) {
         report.error(
-          `The field extension name \`${name}\` is reserved for internal use.`
+          `The field extension name \`${name}\` is reserved for internal use.`,
         )
       } else if (fieldExtensions[name]) {
         report.error(
-          `A field extension with the name \`${name}\` has already been registered.`
+          `A field extension with the name \`${name}\` has already been registered.`,
         )
       } else {
         dispatch({
@@ -362,7 +365,7 @@ export const actions = {
       withFieldTypes?: boolean
     },
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string,
   ): IPrintTypeDefinitions => {
     return {
       type: `PRINT_SCHEMA_REQUESTED`,
@@ -407,21 +410,20 @@ export const actions = {
    *   }))
    * }
    */
-  createResolverContext:
-    (
-      context: IGatsbyPluginContext,
-      plugin: IGatsbyPlugin,
-      traceId?: string
-    ): ThunkAction<
-      void,
-      IGatsbyState,
-      Record<string, unknown>,
-      ICreateResolverContext
-    > =>
-    (dispatch): void => {
+  createResolverContext: (
+    context: IGatsbyPluginContext,
+    plugin: IGatsbyPlugin,
+    traceId?: string,
+  ): ThunkAction<
+    void,
+    IGatsbyState,
+    Record<string, unknown>,
+    ICreateResolverContext
+  > => {
+    return (dispatch): void => {
       if (!context || typeof context !== `object`) {
         report.error(
-          `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
+          `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`,
         )
       } else {
         const { name } = plugin || {}
@@ -436,7 +438,8 @@ export const actions = {
           payload,
         })
       }
-    },
+    }
+  },
 
   /**
    * Create a new Slice. See the technical docs for the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
@@ -461,7 +464,7 @@ export const actions = {
   createSlice: (
     payload: ICreateSliceInput,
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string | undefined,
   ): ICreateSliceAction => {
     if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
       let name = `The plugin "${plugin.name}"`
@@ -519,7 +522,7 @@ export const actions = {
         payload: {
           componentChunkName: generateComponentChunkName(
             payload.component,
-            `slice`
+            `slice`,
           ),
           componentPath,
           // note: we use "name" internally instead of id
@@ -550,7 +553,7 @@ export const actions = {
   addRemoteFileAllowedUrl: (
     url: string | Array<string>,
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string | undefined,
   ): IAddImageCdnAllowedUrl => {
     const urls = Array.isArray(url) ? url : [url]
     return {
@@ -562,20 +565,21 @@ export const actions = {
   },
 }
 
-const withDeprecationWarning =
-  (
-    actionName: RestrictionActionNames,
-    action: SomeActionCreator,
-    api: API,
-    allowedIn: Array<API>
-  ): SomeActionCreator =>
-  (...args: Array<any>): ReturnType<ActionCreator<any>> => {
+function withDeprecationWarning(
+  actionName: RestrictionActionNames,
+  action: SomeActionCreator,
+  api: API,
+  allowedIn: Array<API>,
+): SomeActionCreator {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (...args: Array<any>): ReturnType<ActionCreator<any>> => {
     report.warn(
       `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
-        `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+        `Please use: ${allowedIn.map((a) => `\`${a}\``).join(`, `)}.`,
     )
     return action(...args)
   }
+}
 
 const withErrorMessage =
   (actionName: RestrictionActionNames, api: API, allowedIn: Array<API>) =>
@@ -584,7 +588,7 @@ const withErrorMessage =
   (): void => {
     report.error(
       `\`${actionName}\` is not available in the \`${api}\` API. ` +
-        `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+        `Please use: ${allowedIn.map((a) => `\`${a}\``).join(`, `)}.`,
     )
   }
 
@@ -608,53 +612,54 @@ type AvailableActionsByAPI = Record<
   { [K in RestrictionActionNames]: SomeActionCreator }
 >
 
-const set = (
+function set(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   availableActionsByAPI: Record<string, any>,
   api: API,
   actionName: RestrictionActionNames,
-  action: SomeActionCreator
-): void => {
-  availableActionsByAPI[api] = availableActionsByAPI[api] || {}
+  action: SomeActionCreator,
+): void {
+  availableActionsByAPI[api] = availableActionsByAPI[api] ?? {}
   availableActionsByAPI[api][actionName] = action
 }
 
-const mapAvailableActionsToAPIs = (
-  restrictions: Restrictions
-): AvailableActionsByAPI => {
+function mapAvailableActionsToAPIs(
+  restrictions: Restrictions,
+): AvailableActionsByAPI {
   const availableActionsByAPI: AvailableActionsByAPI = {}
 
   const actionNames = Object.keys(restrictions) as Array<
     keyof typeof restrictions
   >
-  actionNames.forEach(actionName => {
+  actionNames.forEach((actionName) => {
     const action = actions[actionName]
 
     const allowedIn: Array<API> = restrictions[actionName][ALLOWED_IN] || []
-    allowedIn.forEach(api =>
-      set(availableActionsByAPI, api, actionName, action)
+    allowedIn.forEach((api) =>
+      set(availableActionsByAPI, api, actionName, action),
     )
 
     const deprecatedIn: Array<API> =
       restrictions[actionName][DEPRECATED_IN] || []
-    deprecatedIn.forEach(api =>
+    deprecatedIn.forEach((api) =>
       set(
         availableActionsByAPI,
         api,
         actionName,
-        withDeprecationWarning(actionName, action, api, allowedIn)
-      )
+        withDeprecationWarning(actionName, action, api, allowedIn),
+      ),
     )
 
     const forbiddenIn = nodeAPIs.filter(
-      api => ![...allowedIn, ...deprecatedIn].includes(api)
+      (api) => ![...allowedIn, ...deprecatedIn].includes(api),
     )
-    forbiddenIn.forEach(api =>
+    forbiddenIn.forEach((api) =>
       set(
         availableActionsByAPI,
         api,
         actionName,
-        withErrorMessage(actionName, api, allowedIn)
-      )
+        withErrorMessage(actionName, api, allowedIn),
+      ),
     )
   })
 

@@ -7,14 +7,14 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.24.4",
     "normalize-path": "^3.0.0",
     "parse-numeric-range": "^1.3.0",
-    "unist-util-map": "^2.0.1"
+    "unist-util-map": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },
@@ -26,8 +26,10 @@
     "remark"
   ],
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
-    "gatsby-remark-prismjs": "^7.0.0-next"
+    "gatsby": "^5.14.0-next.2",
+    "gatsby-remark-prismjs": "^7.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "license": "MIT",
   "main": "index.js",

@@ -1,11 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Joi from "joi"
-
 import type {
   GatsbyFunctionBodyParserCommonMiddlewareConfig,
   GatsbyFunctionBodyParserUrlencodedConfig,
-  // @ts-ignore
-} from "gatsby"
+} from "../../.."
 
 const DEFAULT_LIMIT = `100kb`
 

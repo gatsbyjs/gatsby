@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import Axios from "axios"
 import * as JsSearch from "js-search"
 
 class Search extends Component {
@@ -15,13 +14,13 @@ class Search extends Component {
    * React lifecycle method to fetch the data
    */
   async componentDidMount() {
-    Axios.get(`https://bvaughn.github.io/js-search/books.json`)
-      .then(result => {
+    fetch(`https://bvaughn.github.io/js-search/books.json`)
+      .then((result) => {
         const bookData = result.data
         this.setState({ bookList: bookData.books })
         this.rebuildIndex()
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ isError: true })
         console.log(`====================================`)
         console.log(`Something bad happened while fetching the data\n${err}`)
@@ -67,23 +66,18 @@ class Search extends Component {
    * handles the input change and perform a search with js-search
    * in which the results will be added to the state
    */
-  searchData = e => {
+  searchData = (e) => {
     const { search } = this.state
     const queryResult = search.search(e.target.value)
     this.setState({ searchQuery: e.target.value, searchResults: queryResult })
   }
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault()
   }
 
   render() {
-    const {
-      isError,
-      isLoading,
-      bookList,
-      searchResults,
-      searchQuery,
-    } = this.state
+    const { isError, isLoading, bookList, searchResults, searchQuery } =
+      this.state
     const queryResults = searchQuery === `` ? bookList : searchResults
 
     if (isLoading) {
@@ -181,7 +175,7 @@ class Search extends Component {
               </thead>
               <tbody>
                 {/* eslint-disable */}
-                {queryResults.map(item => {
+                {queryResults.map((item) => {
                   return (
                     <tr key={`row_${item.isbn}`}>
                       <td

@@ -2,7 +2,7 @@
 
 import * as path from "path"
 import * as fs from "fs-extra"
-import execa, { Options as ExecaOptions } from "execa"
+import execa, { type Options as ExecaOptions } from "execa"
 import webpack, { Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
 // @ts-ignore
@@ -16,11 +16,11 @@ import { schemaCustomizationAPIs } from "./print-plugins"
 import type { GatsbyNodeAPI } from "../../redux/types"
 import * as nodeApis from "../../utils/api-node-docs"
 import { store } from "../../redux"
-import { PackageJson } from "../../.."
+import type { PackageJson } from "../../.."
 import { slash } from "gatsby-core-utils/path"
 import { isEqual } from "lodash"
 import {
-  IPlatformAndArch,
+  type IPlatformAndArch,
   getCurrentPlatformAndTarget,
   getFunctionsTargetPlatformAndTarget,
 } from "../../utils/engines-helpers"
@@ -46,7 +46,7 @@ function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
   apisToKeep.add(`onPluginInit`)
 
   const apisToRemove = (Object.keys(nodeApis) as Array<GatsbyNodeAPI>).filter(
-    api => !apisToKeep.has(api),
+    (api) => !apisToKeep.has(api),
   )
   return apisToRemove
 }
@@ -107,7 +107,7 @@ function getLMDBBinaryFromSiteLocation(
   }
   // If there's no lmdb prebuilt package for our arch/platform listed as optional dep no point in trying to install it
   const { optionalDependencies = {} } = packageJson
-  if (!Object.keys(optionalDependencies).find(p => p === lmdbPackageName)) {
+  if (!Object.keys(optionalDependencies).find((p) => p === lmdbPackageName)) {
     throw new Error(
       `Target platform/arch for functions execution (${functionsTarget.platform}/${functionsTarget.arch}) is not supported.`,
     )
@@ -303,12 +303,12 @@ async function installMissing(
     [
       `install`,
       ...npmAdditionalCliArgs,
-      ...packagesToInstall.map(p => `${p.packageName}@${p.packageVersion}`),
+      ...packagesToInstall.map((p) => `${p.packageName}@${p.packageVersion}`),
     ],
     options,
   )
 
-  return packages.map(info =>
+  return packages.map((info) =>
     info
       ? info.needToInstall
         ? {
@@ -653,7 +653,7 @@ export async function createGraphqlEngineBundle(
           await Promise.all(binaryFixingPromises)
         }
 
-        compiler.close(closeErr => {
+        compiler.close((closeErr) => {
           if (err) {
             return reject(err)
           }

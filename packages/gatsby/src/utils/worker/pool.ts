@@ -4,13 +4,13 @@ import reporter from "gatsby-cli/lib/reporter"
 import { cpuCoreCount } from "gatsby-core-utils"
 import { Span } from "opentracing"
 
-import { IGroupedQueryIds } from "../../services"
+import type { IGroupedQueryIds } from "../../services"
 import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
 import { initReporterMessagingInMainProcess } from "./reporter"
 
-import { GatsbyWorkerPool } from "./types"
+import type { GatsbyWorkerPool } from "./types"
 import { loadPartialStateFromDisk, store } from "../../redux"
-import { ActionsUnion, IGatsbyState } from "../../redux/types"
+import type { ActionsUnion, IGatsbyState } from "../../redux/types"
 
 export type { GatsbyWorkerPool }
 
@@ -45,34 +45,36 @@ function handleRunQueriesInWorkersQueueError(e: Error): never {
 }
 
 export async function runQueriesInWorkersQueue(
-  pool: GatsbyWorkerPool,
+  pool: GatsbyWorkerPool | undefined,
   queryIds: IGroupedQueryIds,
-  opts?: {
-    chunkSize?: number
-    parentSpan?: Span
-  }
+  opts?:
+    | {
+        chunkSize?: number
+        parentSpan?: Span
+      }
+    | undefined,
 ): Promise<void> {
   const activity = reporter.createProgress(
     `run queries in workers`,
     queryIds.staticQueryIds.length + queryIds.pageQueryIds.length,
     0,
-    { parentSpan: opts?.parentSpan }
+    { parentSpan: opts?.parentSpan },
   )
   activity.start()
   try {
     const staticQuerySegments = chunk(
       queryIds.staticQueryIds,
-      opts?.chunkSize ?? queriesChunkSize
+      opts?.chunkSize ?? queriesChunkSize,
     )
     const pageQuerySegments = chunk(
       queryIds.pageQueryIds,
-      opts?.chunkSize ?? queriesChunkSize
+      opts?.chunkSize ?? queriesChunkSize,
     )
 
-    pool.all.setComponents()
+    pool?.all.setComponents()
 
     for (const segment of staticQuerySegments) {
-      pool.single
+      pool?.single
         .runQueries({
           pageQueryIds: [],
           staticQueryIds: segment,
@@ -86,7 +88,7 @@ export async function runQueriesInWorkersQueue(
     }
 
     for (const segment of pageQuerySegments) {
-      pool.single
+      pool?.single
         .runQueries({
           pageQueryIds: segment,
           staticQueryIds: [],
@@ -102,7 +104,7 @@ export async function runQueriesInWorkersQueue(
     // note that we only await on this and not on anything before (`.setComponents()` or `.runQueries()`)
     // because gatsby-worker will queue tasks internally and worker will never execute multiple tasks at the same time
     // so awaiting `.saveQueriesDependencies()` is enough to make sure `.setComponents()` and `.runQueries()` finished
-    await Promise.all(pool.all.saveQueriesDependencies())
+    await Promise.all(pool?.all.saveQueriesDependencies() ?? [])
   } catch (e) {
     handleRunQueriesInWorkersQueueError(e)
   } finally {
@@ -112,7 +114,7 @@ export async function runQueriesInWorkersQueue(
 
 export async function mergeWorkerState(
   pool: GatsbyWorkerPool,
-  parentSpan?: Span
+  parentSpan?: Span,
 ): Promise<void> {
   const activity = reporter.activityTimer(`Merge worker state`, { parentSpan })
   activity.start()
@@ -120,7 +122,7 @@ export async function mergeWorkerState(
   for (const { workerId } of pool.getWorkerInfo()) {
     const state = loadPartialStateFromDisk(
       [`queries`, `telemetry`],
-      String(workerId)
+      String(workerId),
     )
     const queryStateChunk = state.queries as IGatsbyState["queries"]
     const queryStateTelemetryChunk =
@@ -148,14 +150,14 @@ export async function mergeWorkerState(
           ...payload,
         },
       })
-      await new Promise(resolve => process.nextTick(resolve))
+      await new Promise((resolve) => process.nextTick(resolve))
     }
   }
   activity.end()
 }
 
 async function replayWorkerActions(
-  actions: Array<ActionsUnion>
+  actions: Array<ActionsUnion>,
 ): Promise<void> {
   let i = 1
   for (const action of actions) {
@@ -163,7 +165,7 @@ async function replayWorkerActions(
 
     // Give event loop some breath
     if (i++ % 100 === 0) {
-      await new Promise(resolve => process.nextTick(resolve))
+      await new Promise((resolve) => process.nextTick(resolve))
     }
   }
 }

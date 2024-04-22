@@ -26,7 +26,7 @@
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.5",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "files": [
     "lib/",

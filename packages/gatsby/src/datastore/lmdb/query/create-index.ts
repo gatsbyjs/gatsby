@@ -1,19 +1,19 @@
 import { inspect } from "util"
 import { store } from "../../../redux"
-import { IGatsbyNode } from "../../../redux/types"
-import { IDataStore, ILmdbDatabases } from "../../types"
+import type { IGatsbyNode } from "../../../redux/types"
+import type { IDataStore, ILmdbDatabases } from "../../types"
 import { cartesianProduct, resolveFieldValue } from "./common"
 
-interface IIndexingContext {
+type IIndexingContext = {
   databases: ILmdbDatabases
   datastore: IDataStore
 }
 
 export type IndexFields = Map<string, number> // name, direction
 
-export interface IIndexMetadata {
+export type IIndexMetadata = {
   state: "ready" | "building" | "stale" | "error" | "initial"
-  error?: string
+  error?: string | undefined
   typeName: string
   keyPrefix: number | string
   keyFields: Array<[fieldName: string, orderDirection: number]>
@@ -43,7 +43,7 @@ export type IndexKey = Array<IndexFieldValue>
 export async function createIndex(
   context: IIndexingContext,
   typeName: string,
-  indexFields: IndexFields
+  indexFields: IndexFields,
 ): Promise<IIndexMetadata> {
   const indexName = buildIndexName(typeName, indexFields)
   const meta = getIndexMetadata(context, typeName, indexFields, false)
@@ -72,7 +72,7 @@ export function getIndexMetadata(
   context: IIndexingContext,
   typeName: string,
   indexFields: IndexFields,
-  assertReady = true
+  assertReady: boolean | undefined = true,
 ): IIndexMetadata {
   const { databases } = context
   const indexName = buildIndexName(typeName, indexFields)
@@ -80,7 +80,7 @@ export function getIndexMetadata(
 
   if (assertReady && meta?.state !== `ready`) {
     throw new Error(
-      `Index ${indexName} is not ready yet. State: ${meta?.state ?? `unknown`}`
+      `Index ${indexName} is not ready yet. State: ${meta?.state ?? `unknown`}`,
     )
   }
   return meta
@@ -89,7 +89,7 @@ export function getIndexMetadata(
 async function doCreateIndex(
   context: IIndexingContext,
   typeName: string,
-  indexFields: IndexFields
+  indexFields: IndexFields,
 ): Promise<IIndexMetadata> {
   const { datastore, databases } = context
   const { indexes, metadata } = databases
@@ -127,7 +127,7 @@ async function doCreateIndex(
         node,
         resolvedFields,
         indexName,
-        indexFields
+        indexFields,
       )
       stats.keyCount += keys.length
       stats.itemCount++
@@ -140,7 +140,7 @@ async function doCreateIndex(
       }
       if (++i % 5000 === 0) {
         // Do not block event loop too much
-        await new Promise(resolve => setTimeout(resolve, 3))
+        await new Promise((resolve) => setTimeout(resolve, 3))
       }
     }
     indexMetadata.state = `ready`
@@ -175,7 +175,7 @@ function prepareIndexKeys(
   node: IGatsbyNode,
   resolvedFields: { [field: string]: unknown } | undefined,
   indexName: string,
-  indexFields: IndexFields
+  indexFields: IndexFields,
 ): { keys: Array<IndexKey>; multiKeyFields: Array<string> } {
   // TODO: use index id vs index name (shorter)
   const indexKeyElements: Array<Array<IndexFieldValue>> = []
@@ -201,14 +201,14 @@ function prepareIndexKeys(
       multiKeyFields.push(dottedField)
     }
   }
-  indexKeyElements.push([node.internal.counter])
+  indexKeyElements.push([node.internal.counter ?? 0])
 
   return { keys: cartesianProduct(...indexKeyElements), multiKeyFields }
 }
 
 async function lockIndex(
   context: IIndexingContext,
-  indexName: string
+  indexName: string,
 ): Promise<void> {
   const { metadata } = context.databases
   const indexKey = toMetadataKey(indexName)
@@ -223,7 +223,7 @@ async function lockIndex(
 
 async function indexReady(
   context: IIndexingContext,
-  indexName: string
+  indexName: string,
 ): Promise<IIndexMetadata> {
   return new Promise((resolve, reject) => {
     const { metadata } = context.databases

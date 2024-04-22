@@ -1,11 +1,11 @@
-import { ActionsUnion, IGatsbyNode } from "../../../redux/types"
+import type { ActionsUnion, IGatsbyNode } from "../../../redux/types"
 import type { Database } from "lmdb"
 
 type NodeId = string
 
 export function updateNodes(
   nodesDb: Database<IGatsbyNode, NodeId>,
-  action: ActionsUnion
+  action: ActionsUnion,
 ): Promise<boolean> | boolean {
   switch (action.type) {
     case `CREATE_NODE`:

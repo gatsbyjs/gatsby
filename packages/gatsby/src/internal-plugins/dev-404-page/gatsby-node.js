@@ -10,7 +10,7 @@ exports.createPagesStatefully = async ({ store, actions }, options, done) => {
     const destination = path.join(
       program.directory,
       `.cache`,
-      `dev-404-page.js`
+      `dev-404-page.js`,
     )
     const copy = () => fs.copy(source, destination)
     await copy()

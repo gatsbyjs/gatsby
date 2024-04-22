@@ -14,22 +14,22 @@
     "data-update": "NODE_ENV=production node update-post.js"
   },
   "dependencies": {
-    "cosmicjs": "^3.2.45",
-    "dotenv": "^8.2.0",
-    "gatsby": "^2.19.7",
-    "gatsby-image": "^2.2.40",
-    "gatsby-plugin-benchmark-reporting": "*",
-    "gatsby-plugin-sharp": "^5.14.0-next.2",
-    "gatsby-source-cosmicjs": "^1.1.0",
-    "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-transformer-sharp": "^5.13.1",
-    "lodash.kebabcase": "^4.1.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "cosmicjs": "4.3.7",
+    "dotenv": "16.4.5",
+    "gatsby": "5.13.4",
+    "gatsby-image": "3.11.0",
+    "gatsby-plugin-benchmark-reporting": "3.13.1",
+    "gatsby-plugin-sharp": "5.13.1",
+    "gatsby-source-cosmicjs": "1.3.2",
+    "gatsby-source-filesystem": "5.13.1",
+    "gatsby-transformer-sharp": "5.13.1",
+    "lodash.kebabcase": "4.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.0",
-    "prettier": "^1.19.1"
+    "cross-env": "7.0.3",
+    "prettier": "3.2.5"
   },
   "repository": {
     "type": "git",

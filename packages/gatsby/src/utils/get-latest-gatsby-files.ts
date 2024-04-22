@@ -1,6 +1,6 @@
 import path from "node:path"
 import * as fs from "fs-extra"
-import { IAdapterManifestEntry } from "./adapter/types"
+import type { IAdapterManifestEntry } from "./adapter/types"
 import { preferDefault } from "../bootstrap/prefer-default"
 
 const ROOT = path.join(__dirname, `..`, `..`)
@@ -39,7 +39,7 @@ async function _fetchFile(root: string, fileName: string): Promise<any> {
       .fetch(`${root}${fileName}`, {
         signal: controller.signal,
       })
-      .then(res => {
+      .then((res) => {
         globalThis.clearTimeout(tm)
         return res.json()
       })

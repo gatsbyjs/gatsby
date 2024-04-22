@@ -50,10 +50,11 @@ let showLockTimeoutWarning = true // Only show this once
  * @param {boolean} [args.subdirs] create subdirectories
  * @returns {DiskStore}
  */
-exports.create = function (args): typeof DiskStore {
+exports.create = function create(args): typeof DiskStore {
   return new DiskStore(args && args.options ? args.options : args)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function DiskStore(this: any, options): void {
   options = options || {}
 
@@ -91,11 +92,12 @@ function DiskStore(this: any, options): void {
  * @param {function} [cb]
  * @returns {Promise}
  */
-DiskStore.prototype.set = wrapCallback(async function (
+DiskStore.prototype.set = wrapCallback(async function set(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   this: any,
   key,
   val,
-  options
+  options,
 ) {
   key = key + ``
   const filePath = this._getFilePathByKey(key)
@@ -111,7 +113,7 @@ DiskStore.prototype.set = wrapCallback(async function (
     // check if subdir exists or create it
     const dir = path.dirname(filePath)
     await promisify(fs.access)(dir, fs.constants.W_OK).catch(function () {
-      return promisify(fs.mkdir)(dir).catch(err => {
+      return promisify(fs.mkdir)(dir).catch((err) => {
         if (err.code !== `EEXIST`) throw err
       })
     })
@@ -133,6 +135,7 @@ DiskStore.prototype.set = wrapCallback(async function (
  * @param {function} [cb]
  * @returns {Promise}
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 DiskStore.prototype.get = wrapCallback(async function (this: any, key) {
   key = key + ``
   const filePath = this._getFilePathByKey(key)
@@ -140,7 +143,7 @@ DiskStore.prototype.get = wrapCallback(async function (this: any, key) {
   try {
     const data = await jsonFileStore
       .read(filePath, this.options)
-      .catch(async err => {
+      .catch(async (err) => {
         if (err.code === `ENOENT`) {
           throw err
         }
@@ -177,7 +180,8 @@ DiskStore.prototype.get = wrapCallback(async function (this: any, key) {
 /**
  * delete entry from cache
  */
-DiskStore.prototype.del = wrapCallback(async function (this: any, key) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+DiskStore.prototype.del = wrapCallback(async function del(this: any, key) {
   const filePath = this._getFilePathByKey(key)
   try {
     if (this.options.subdirs) {
@@ -201,8 +205,9 @@ DiskStore.prototype.del = wrapCallback(async function (this: any, key) {
 /**
  * cleanup cache on disk -> delete all files from the cache
  */
-DiskStore.prototype.reset = wrapCallback(async function (
-  this: any
+DiskStore.prototype.reset = wrapCallback(async function reset(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  this: any,
 ): Promise<void> {
   const readdir = promisify(fs.readdir)
   const stat = promisify(fs.stat)
@@ -247,7 +252,7 @@ function innerLock(resolve, reject, filePath): void {
       if (showLockTimeoutWarning) {
         showLockTimeoutWarning = false
         reporter.verbose(
-          `Warning: lock file older than 10s, ignoring it... There is a possibility this leads to caching problems later. This warning will only be shown once.`
+          `Warning: lock file older than 10s, ignoring it... There is a possibility this leads to caching problems later. This warning will only be shown once.`,
         )
       }
       lockTime = 0
@@ -285,7 +290,9 @@ DiskStore.prototype._unlock = function _unlock(filePath): void {
  * @returns {string}
  * @private
  */
-DiskStore.prototype._getFilePathByKey = function (key): string {
+DiskStore.prototype._getFilePathByKey = function _getFilePathByKey(
+  key,
+): string {
   const hash = crypto
     .createHash(`md5`)
     .update(key + ``)
@@ -295,7 +302,7 @@ DiskStore.prototype._getFilePathByKey = function (key): string {
     return path.join(
       this.options.path,
       `diskstore-` + hash.slice(0, 3),
-      hash.slice(3)
+      hash.slice(3),
     )
   } else {
     return path.join(this.options.path, `diskstore-` + hash)

@@ -3,11 +3,11 @@ import {
   parse,
   validate,
   execute,
-  DocumentNode,
+  type DocumentNode,
   GraphQLSchema,
   Source,
   GraphQLError,
-  ExecutionResult,
+  type ExecutionResult,
   NoDeprecatedCustomRule,
   print,
 } from "graphql"
@@ -18,10 +18,11 @@ import { sha1 } from "gatsby-core-utils/hash"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 import withResolverContext from "../schema/context"
 import { LocalNodeModel } from "../schema/node-model"
-import { Store } from "redux"
-import { IGatsbyState } from "../redux/types"
-import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
-import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
+import type { Store } from "redux"
+import type { IGatsbyState } from "../redux/types"
+import type { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
+import type { IGraphQLTelemetryRecord } from "../schema/type-definitions"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import GraphQLSpanTracer from "./graphql-span-tracer"
 import { tranformDocument } from "./transform-document"
 
@@ -31,7 +32,7 @@ const _trackedRootNodes = new WeakSet()
 
 type Query = string | Source
 
-export interface IQueryOptions {
+export type IQueryOptions = {
   parentSpan: Span | undefined
   queryName: string
   componentPath?: string | undefined
@@ -39,7 +40,7 @@ export interface IQueryOptions {
   telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
 }
 
-export interface IGraphQLRunnerOptions {
+export type IGraphQLRunnerOptions = {
   collectStats?: boolean
   graphqlTracing?: boolean
 }
@@ -60,7 +61,7 @@ export class GraphQLRunner {
 
   constructor(
     protected store: Store<IGatsbyState>,
-    { collectStats, graphqlTracing }: IGraphQLRunnerOptions = {}
+    { collectStats, graphqlTracing }: IGraphQLRunnerOptions = {},
   ) {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -113,7 +114,7 @@ export class GraphQLRunner {
     schema: GraphQLSchema,
     originalQueryText: string,
     document: DocumentNode,
-    originalDocument: DocumentNode = document
+    originalDocument: DocumentNode = document,
   ): {
     errors: ReadonlyArray<GraphQLError>
     warnings: ReadonlyArray<GraphQLError>
@@ -139,14 +140,14 @@ export class GraphQLRunner {
           schema,
           originalQueryText,
           transformedDocument,
-          originalDocument
+          originalDocument,
         )
 
         if (!errors.length) {
           reporter.warn(
             `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nCurrent query:\n\n${reporter.stripIndent(
-              originalQueryText
-            )}\n\nConverted query:\n\n${print(transformedDocument)}`
+              originalQueryText,
+            )}\n\nConverted query:\n\n${print(transformedDocument)}`,
           )
         }
 
@@ -193,7 +194,7 @@ export class GraphQLRunner {
       componentPath,
       forceGraphqlTracing = false,
       telemetryResolverTimings,
-    }: IQueryOptions
+    }: IQueryOptions,
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -218,7 +219,7 @@ export class GraphQLRunner {
     const { errors, warnings, document } = this.validate(
       schema,
       queryText,
-      this.parse(query)
+      this.parse(query),
     )
 
     // Queries are usually executed in batch. But after the batch is finished
@@ -228,7 +229,7 @@ export class GraphQLRunner {
 
     if (warnings.length > 0) {
       // TODO: move those warnings to the caller side, e.g. query-runner.ts
-      warnings.forEach(err => {
+      warnings.forEach((err) => {
         const message = componentPath ? `\nQueried in ${componentPath}` : ``
         reporter.warn(err.message + message)
       })

@@ -1,5 +1,4 @@
 // @ts-check
-
 export const CODES = {
   /* Fetch errors */
   LocalesMissing: `111001`,
@@ -12,42 +11,42 @@ export const CODES = {
 
 export const ERROR_MAP = {
   [CODES.LocalesMissing]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `USER`,
   },
   [CODES.ContentTypesMissing]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `USER`,
   },
   [CODES.SelfSignedCertificate]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `USER`,
   },
   [CODES.SyncError]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,
   },
   [CODES.FetchContentTypes]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,
   },
   [CODES.FetchTags]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,
   },
   [CODES.FetchTags]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,
   },
   [CODES.GatsbyPluginMissing]: {
-    text: context => context.sourceMessage,
+    text: (context) => context.sourceMessage,
     level: `ERROR`,
     category: `USER`,
   },

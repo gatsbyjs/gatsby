@@ -1,3 +1,4 @@
-const r = m => require.resolve(m)
+"use strict";
 
-module.exports = r
+const r = m => require.resolve(m);
+module.exports = r;

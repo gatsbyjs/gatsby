@@ -9,7 +9,7 @@ import { makeTypeName } from "./normalize"
 
 export async function setFieldsOnGraphQLNodeType(
   { type, cache },
-  { typePrefix = `Contentful` } = {}
+  { typePrefix = `Contentful` } = {},
 ) {
   if (type.name !== makeTypeName(`Asset`, typePrefix)) {
     return {}
@@ -44,7 +44,7 @@ export async function setFieldsOnGraphQLNodeType(
         quality: {
           type: GraphQLInt,
         },
-      }
+      },
     )
 
     fieldConfig.type = hasFeature(`graphql-typegen`)

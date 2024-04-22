@@ -15,7 +15,7 @@ jest.mock(`../utils/`, () => {
   }
 })
 
-jest.mock(`axios`)
+jest.mock(fetch)
 
 jest.mock(`sharp`, () => {
   const metadataMock = jest.fn(() => {
@@ -26,7 +26,7 @@ jest.mock(`sharp`, () => {
     }
   })
 
-  const sharp = () => {
+  function sharp() {
     const pipeline = {
       metadata: metadataMock,
     }
@@ -46,7 +46,7 @@ const mockSharpFailure = () => {
   sharp.metadataMock.mockRejectedValueOnce(new Error(`invalid image`))
 }
 
-const createNode = content => {
+function createNode(content) {
   const node = {
     id: 1234,
   }
@@ -70,10 +70,10 @@ const createNode = content => {
   return markdownNode
 }
 
-const createPluginOptions = (content, imagePaths = `/`, options = {}) => {
+function createPluginOptions(content, imagePaths = `/`, options = {}) {
   const dirName = `not-a-real-dir`
   return {
-    files: [].concat(imagePaths).map(imagePath => {
+    files: [].concat(imagePaths).map((imagePath) => {
       return {
         absolutePath: `${dirName}/${imagePath}`,
       }
@@ -97,17 +97,16 @@ const remark = new Remark().data(`settings`, {
   footnotes: true,
   pedantic: true,
 })
-const axios = require(`axios`)
 
 beforeEach(() => {
-  axios.mockClear()
-  axios.mockImplementation(() =>
+  fetch.mockClear()
+  fetch.mockImplementation(() =>
     Promise.resolve({
       data: {
         pipe: jest.fn(),
         destroy: jest.fn(),
       },
-    })
+    }),
   )
 })
 
@@ -176,7 +175,7 @@ test(`it transforms images with a https scheme in markdown`, async () => {
 })
 
 test(`it throws specific error if the image is not found`, async () => {
-  axios.mockImplementationOnce(() => Promise.reject(new Error(`oh no`)))
+  fetch.mockImplementationOnce(() => Promise.reject(new Error(`oh no`)))
   const reporter = {
     panic: jest.fn(),
   }
@@ -189,7 +188,7 @@ test(`it throws specific error if the image is not found`, async () => {
   expect(reporter.panic).toHaveBeenCalledTimes(1)
   expect(reporter.panic).toHaveBeenCalledWith(
     `Image downloading failed for ${imagePath}, please check if the image still exists on contentful`,
-    expect.any(Error)
+    expect.any(Error),
   )
 })
 
@@ -273,6 +272,6 @@ test(`it shows an useful error message when the file is not a valid image`, asyn
   expect(reporter.panic).toHaveBeenCalledTimes(1)
   expect(reporter.panic).toHaveBeenCalledWith(
     `The image "${imagePath}" (with alt text: "image") doesn't appear to be a supported image format.`,
-    expect.any(Error)
+    expect.any(Error),
   )
 })

@@ -1,4 +1,4 @@
-import { ExportType, ICurrentAPIs } from "../validate"
+import type { ExportType, ICurrentAPIs } from "../validate"
 import { keys } from "lodash"
 
 export function getAPI(api: {

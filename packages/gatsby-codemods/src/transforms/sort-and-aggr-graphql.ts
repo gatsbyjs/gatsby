@@ -24,7 +24,7 @@ export default function jsCodeShift(file: FileInfo): string {
 export function babelRecast(code: string, filePath: string): string {
   const transformedAst = parse(code, {
     parser: {
-      parse: source => runParseSync(source, filePath),
+      parse: (source) => runParseSync(source, filePath),
     },
   })
 
@@ -50,10 +50,7 @@ export function babelRecast(code: string, filePath: string): string {
 
 function runParseSync(source: string, filePath: string): ParseResult | null {
   const ast = parseSync(source, {
-    plugins: [
-      `@babel/plugin-syntax-jsx`,
-      `@babel/plugin-proposal-class-properties`,
-    ],
+    plugins: [`@babel/plugin-syntax-jsx`],
     overrides: [
       {
         test: [`**/*.ts`, `**/*.tsx`],
@@ -67,13 +64,13 @@ function runParseSync(source: string, filePath: string): ParseResult | null {
   })
   if (!ast) {
     console.log(
-      `The codemod was unable to parse ${filePath}. If you're running against the '/src' directory and your project has a custom babel config, try running from the root of the project so the codemod can pick it up.`
+      `The codemod was unable to parse ${filePath}. If you're running against the '/src' directory and your project has a custom babel config, try running from the root of the project so the codemod can pick it up.`,
     )
   }
   return ast
 }
 
-interface IState {
+type IState = {
   opts: {
     hasChanged: boolean
   }
@@ -106,7 +103,7 @@ export function updateSortAndAggrField(): PluginObj<IState> {
 
           if (hasChanged) {
             node.quasi.quasis[0].value.raw = graphql.print(
-              transformedGraphQLQuery
+              transformedGraphQLQuery,
             )
             state.opts.hasChanged = true
           }
@@ -172,7 +169,7 @@ export function updateSortAndAggrField(): PluginObj<IState> {
 
 function extractEnumValues(
   value: graphql.ValueNode,
-  acc: Array<string> = []
+  acc: Array<string> = [],
 ): undefined | Array<string> {
   let hasValue = false
   if (value.kind === graphql.Kind.ENUM) {
@@ -188,7 +185,7 @@ function extractEnumValues(
   return hasValue ? acc : undefined
 }
 
-interface IOldSortObject {
+type IOldSortObject = {
   fields: Array<string>
   order?: Array<"ASC" | "DESC">
 }
@@ -215,7 +212,7 @@ function isOldSortObject(props: unknown): props is IOldSortObject {
 
 function pathSegmentsToAst(
   path: string,
-  value: string
+  value: string,
 ): graphql.ObjectValueNode | graphql.EnumValueNode {
   return path.split(`___`).reduceRight(
     (previousNode, fieldPathSegment) => {
@@ -236,7 +233,7 @@ function pathSegmentsToAst(
     {
       kind: graphql.Kind.ENUM,
       value,
-    } as graphql.ObjectValueNode | graphql.EnumValueNode
+    } as graphql.ObjectValueNode | graphql.EnumValueNode,
   )
 }
 
@@ -303,7 +300,7 @@ export function processGraphQLQuery(query: string | graphql.DocumentNode): {
     return { ast, hasChanged }
   } catch (err) {
     throw new Error(
-      `GatsbySortAndAggrCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`
+      `GatsbySortAndAggrCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`,
     )
   }
 }

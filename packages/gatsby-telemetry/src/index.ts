@@ -1,9 +1,9 @@
 import {
   AnalyticsTracker,
-  IAggregateStats,
-  ITelemetryTagsPayload,
-  ITelemetryOptsPayload,
-  IDefaultTelemetryTagsPayload,
+  type IAggregateStats,
+  type ITelemetryTagsPayload,
+  type ITelemetryOptsPayload,
+  type IDefaultTelemetryTagsPayload,
 } from "./telemetry"
 import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
@@ -38,7 +38,7 @@ export function trackFeatureIsUsed(name: string): void {
 export function trackCli(
   input: string | Array<string>,
   tags?: ITelemetryTagsPayload,
-  opts?: ITelemetryOptsPayload
+  opts?: ITelemetryOptsPayload,
 ): void {
   instance.trackCli(input, tags, opts)
 }
@@ -46,7 +46,7 @@ export function trackCli(
 export function captureEvent(
   input: string | Array<string>,
   tags?: ITelemetryTagsPayload,
-  opts?: ITelemetryOptsPayload
+  opts?: ITelemetryOptsPayload,
 ): void {
   instance.captureEvent(input, tags, opts)
 }
@@ -57,7 +57,7 @@ export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
 
 export function trackBuildError(
   input: string,
-  tags?: ITelemetryTagsPayload
+  tags?: ITelemetryTagsPayload,
 ): void {
   instance.captureBuildError(input, tags)
 }
@@ -68,7 +68,7 @@ export function setDefaultTags(tags: IDefaultTelemetryTagsPayload): void {
 
 export function decorateEvent(
   event: string,
-  tags?: Record<string, unknown>
+  tags?: Record<string, unknown>,
 ): void {
   instance.decorateNextEvent(event, tags)
 }
@@ -91,7 +91,7 @@ export function aggregateStats(data: Array<number>): IAggregateStats {
 
 export function addSiteMeasurement(
   event: string,
-  obj: ITelemetryTagsPayload["siteMeasurements"]
+  obj: ITelemetryTagsPayload["siteMeasurements"],
 ): void {
   instance.addSiteMeasurement(event, obj)
 }
@@ -120,27 +120,8 @@ export function setGatsbyCliVersion(version: string): void {
 
 export {
   AnalyticsTracker,
-  IAggregateStats,
-  ITelemetryTagsPayload,
-  ITelemetryOptsPayload,
-  IDefaultTelemetryTagsPayload,
-}
-
-module.exports = {
-  addSiteMeasurement,
-  aggregateStats,
-  captureEvent,
-  decorateEvent,
-  expressMiddleware,
-  flush,
-  isTrackingEnabled,
-  setDefaultComponentId,
-  setDefaultTags,
-  setGatsbyCliVersion,
-  setTelemetryEnabled,
-  startBackgroundUpdate,
-  trackBuildError,
-  trackCli,
-  trackError,
-  trackFeatureIsUsed,
+  type IAggregateStats,
+  type ITelemetryTagsPayload,
+  type ITelemetryOptsPayload,
+  type IDefaultTelemetryTagsPayload,
 }

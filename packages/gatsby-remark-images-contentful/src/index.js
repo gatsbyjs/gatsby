@@ -1,7 +1,6 @@
 const { selectAll } = require(`unist-util-select`)
 // TODO(v5): use gatsby/sharp
 const getSharpInstance = require(`./safe-sharp`)
-const axios = require(`axios`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
@@ -17,16 +16,16 @@ const { buildResponsiveSizes } = require(`./utils`)
 
 module.exports = async (
   {
-    files,
-    markdownNode,
+    _files,
+    _markdownNode,
     markdownAST,
     pathPrefix,
-    getNode,
+    _getNode,
     reporter,
     cache,
     createContentDigest,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const defaults = {
     maxWidth: 650,
@@ -69,7 +68,7 @@ module.exports = async (
     // @todo to increase reliablility, this should use the asset downloading function from gatsby-source-contentful
     let response
     try {
-      response = await axios({
+      response = await fetch({
         method: `GET`,
         url: originalImg, // for some reason there is a './' prefix
         responseType: `stream`,
@@ -77,7 +76,7 @@ module.exports = async (
     } catch (err) {
       reporter.panic(
         `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
-        err
+        err,
       )
       return []
     }
@@ -91,7 +90,7 @@ module.exports = async (
       console.log(error)
       reporter.panic(
         `The image "${node.url}" (with alt text: "${node.alt}") doesn't appear to be a supported image format.`,
-        error
+        error,
       )
     }
 
@@ -103,7 +102,7 @@ module.exports = async (
         imageUrl: originalImg,
         options,
       },
-      reporter
+      reporter,
     )
 
     // Calculate the paddingBottom %
@@ -123,9 +122,9 @@ module.exports = async (
       reporter.warn(
         reporter.stripIndent(`
         ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
-          `loading`
+          `loading`,
         )} option. Please pass one of "lazy", "eager" or "auto".
-      `)
+      `),
       )
     }
 
@@ -217,10 +216,10 @@ ${rawHTML}
   return Promise.all(
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
-      node =>
-        new Promise(resolve => {
+      (node) =>
+        new Promise((resolve) => {
           if (node.url.indexOf(`images.ctfassets.net`) !== -1) {
-            return generateImagesAndUpdateNode(node).then(rawHTML => {
+            return generateImagesAndUpdateNode(node).then((rawHTML) => {
               if (rawHTML) {
                 // Replace the image node with an inline HTML node.
                 node.type = `html`
@@ -233,14 +232,14 @@ ${rawHTML}
             // Image isn't relative so there's nothing for us to do.
             return resolve()
           }
-        })
-    )
-  ).then(markdownImageNodes =>
+        }),
+    ),
+  ).then((markdownImageNodes) =>
     // HTML image node stuff
     Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
-        node =>
+        (node) =>
           // eslint-disable-next-line no-async-promise-executor
           new Promise(async (resolve, reject) => {
             if (!node.value) {
@@ -273,7 +272,7 @@ ${rawHTML}
               if (formattedImgTag.url.indexOf(`images.ctfassets.net`) !== -1) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,
-                  resolve
+                  resolve,
                 )
 
                 if (rawHTML) {
@@ -290,10 +289,10 @@ ${rawHTML}
             node.value = $(`body`).html() // fix for cheerio v1
 
             return resolve(node)
-          })
-      )
-    ).then(htmlImageNodes =>
-      markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
-    )
+          }),
+      ),
+    ).then((htmlImageNodes) =>
+      markdownImageNodes.concat(htmlImageNodes).filter((node) => !!node),
+    ),
   )
 }

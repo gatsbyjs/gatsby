@@ -154,7 +154,7 @@ export function wrapNodes<T extends Array<IGatsbyNode> | undefined>(
   nodes: T,
 ): T {
   if (nodes && shouldWrapNodesInProxies && nodes.length > 0) {
-    return nodes.map(node => memoizedProxy(node, nodeProxy)) as T
+    return nodes.map((node) => memoizedProxy(node, nodeProxy)) as T
   } else {
     return nodes
   }

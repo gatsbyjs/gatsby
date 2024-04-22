@@ -1,4 +1,4 @@
-import { GatsbyNode } from "gatsby"
+import type { GatsbyNode } from "gatsby"
 import path from "path"
 
 // require.resolve not working

@@ -56,7 +56,7 @@ export default class GatsbyCache {
       },
     ]
 
-    const caches = configs.map(cache => manager.caching(cache))
+    const caches = configs.map((cache) => manager.caching(cache))
 
     this.cache = manager.multiCaching(caches)
 
@@ -64,7 +64,7 @@ export default class GatsbyCache {
   }
 
   async get<T = unknown>(key): Promise<T | undefined> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
           `GatsbyCache wasn't initialised yet, please run the init method first`,
@@ -81,13 +81,13 @@ export default class GatsbyCache {
     value: T,
     args: CachingConfig = { ttl: TTL },
   ): Promise<T | undefined> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
           `GatsbyCache wasn't initialised yet, please run the init method first`,
         )
       }
-      this.cache.set(key, value, args, err => {
+      this.cache.set(key, value, args, (err) => {
         resolve(err ? undefined : value)
       })
     })

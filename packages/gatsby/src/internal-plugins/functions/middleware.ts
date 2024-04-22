@@ -1,4 +1,3 @@
-// @ts-ignore
 import { match as reachMatch } from "@gatsbyjs/reach-router"
 import cookie from "cookie"
 import { urlencoded, text, json, raw } from "express"
@@ -8,9 +7,9 @@ import multer from "multer"
 
 import {
   createConfig,
-  IGatsbyFunctionConfigProcessed,
-  IGatsbyBodyParserConfigProcessed,
-  IAPIFunctionWarning,
+  type IGatsbyFunctionConfigProcessed,
+  type IGatsbyBodyParserConfigProcessed,
+  type IAPIFunctionWarning,
 } from "./config"
 import type { IGatsbyFunction } from "../../redux/types"
 
@@ -32,7 +31,7 @@ type IGatsbyRequestContext = {
 }
 
 type IGatsbyInternalRequest = {
-  context?: IGatsbyRequestContext
+  context?: IGatsbyRequestContext | undefined
 } & Request
 
 type IGatsbyMiddleware = (
@@ -43,8 +42,10 @@ type IGatsbyMiddleware = (
 
 type ICreateMiddlewareConfig = {
   getFunctions: () => Array<IGatsbyFunction>
-  prepareFn?: (functionObj: IGatsbyFunction) => Promise<void> | void
-  showDebugMessageInResponse?: boolean
+  prepareFn?:
+    | ((functionObj: IGatsbyFunction) => Promise<void> | void)
+    | undefined
+  showDebugMessageInResponse?: boolean | undefined
 }
 
 export function printConfigWarnings(
@@ -95,7 +96,7 @@ function createSetContextFunctionMiddleware({
     if (!functionObj) {
       // Check if there's any matchPaths that match.
       // We loop until we find the first match.
-      functions.some(f => {
+      functions.some((f) => {
         if (f.matchPath) {
           const matchResult = reachMatch(f.matchPath, pathFragment)
           if (matchResult) {

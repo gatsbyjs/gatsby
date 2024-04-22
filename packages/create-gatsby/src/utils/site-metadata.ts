@@ -1,7 +1,7 @@
 export async function setSiteMetadata(
   root: string,
   name: string,
-  value: string
+  value: string,
 ): Promise<void> {
   try {
     const coreUtilsPath = require.resolve(`gatsby-core-utils`, {

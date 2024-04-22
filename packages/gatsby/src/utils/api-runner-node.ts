@@ -7,14 +7,12 @@ import { bindActionCreators as origBindActionCreators } from "redux"
 import memoize from "memoizee"
 import opentracing, { Span, SpanContext } from "opentracing"
 
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import stackTrace from "stack-trace"
 import { codeFrameColumns } from "@babel/code-frame"
 import fs from "fs-extra"
 import { getCache } from "./get-cache"
 import { createNodeId } from "./create-node-id"
-// @ts-ignore
 import { createContentDigest as _createContentDigest } from "gatsby-core-utils"
 import {
   buildObjectType,
@@ -30,16 +28,19 @@ import { getNodeAndSavePathDependency, loadNodeContent } from "./nodes"
 import { getPublicPath } from "./get-public-path"
 import { importGatsbyPlugin } from "./import-gatsby-plugin"
 import { getNonGatsbyCodeFrameFormatted } from "./stack-trace-utils"
-// @ts-ignore
 import { trackBuildError, decorateEvent } from "gatsby-telemetry"
 import errorParser from "./api-runner-error-parser"
 import { wrapNode, wrapNodes } from "./detect-node-mutations"
 import { reportOnce } from "./report-once"
-import { GatsbyNodeAPI, IGatsbyNode, IGatsbyState, Stage } from "../internal"
+import type {
+  GatsbyNodeAPI,
+  IGatsbyNode,
+  IGatsbyState,
+  Stage,
+} from "../internal"
 import webpack from "webpack"
-import { ILoaderUtils, IRuleUtils, PluginUtils } from "./webpack-utils"
-// import { GatsbySSR } from "../.."
-import { Runner } from "../bootstrap/create-graphql-runner"
+import type { ILoaderUtils, IRuleUtils, PluginUtils } from "./webpack-utils"
+import type { Runner } from "../bootstrap/create-graphql-runner"
 import {
   publicActions,
   restrictedActionsAvailableInAPI,
@@ -179,7 +180,7 @@ function deferredAction(type): (...args: Array<any>) => void | Promise<void> {
     // Regular createNode returns a Promise, but when deferred we need
     // to wrap it in another which we resolve when it's actually called
     if (type === `createNode`) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         emitter.emit(`ENQUEUE_NODE_MUTATION`, {
           type,
           payload: args,
@@ -206,7 +207,7 @@ const NODE_MUTATION_ACTIONS = [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function deferActions(actions: any): any {
   const deferred = { ...actions }
-  NODE_MUTATION_ACTIONS.forEach(action => {
+  NODE_MUTATION_ACTIONS.forEach((action) => {
     deferred[action] = deferredAction(action)
   })
   return deferred
@@ -502,7 +503,7 @@ async function runAPI(plugin, api, args, activity): globalThis.Promise<any> {
     })
 
     function endInProgressActivitiesCreatedByThisRun(): void {
-      runningActivities.forEach(activity => {
+      runningActivities.forEach((activity) => {
         // @ts-ignore
         return activity.end()
       })
@@ -559,7 +560,7 @@ async function runAPI(plugin, api, args, activity): globalThis.Promise<any> {
     // If the plugin is using a callback use that otherwise
     // expect a Promise to be returned.
     if (gatsbyNode[api].length === 3) {
-      return Promise.fromCallback(callback => {
+      return Promise.fromCallback((callback) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         function cb(err: any, val: unknown): void {
           pluginSpan.finish()
@@ -614,7 +615,8 @@ export function apiRunnerNode(
     type?: { name?: string | undefined } | undefined
     page?: { path?: string | undefined } | undefined
     filename?: string | undefined
-    node?: { internal: { contentDigest: string } } | undefined
+    contents?: string | undefined
+    node?: IGatsbyNode | undefined
     deferNodeMutation?: boolean | undefined
   } = {},
   {
@@ -634,14 +636,14 @@ export function apiRunnerNode(
   // call an action which will trigger the same API being called.
   // `onCreatePage` is the only example right now. In these cases, we should
   // avoid calling the originating plugin again.
-  let implementingPlugins = plugins.filter(plugin => {
+  let implementingPlugins = plugins.filter((plugin) => {
     // @ts-ignore
     return plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
   })
 
   if (api === `sourceNodes` && args.pluginName) {
     implementingPlugins = implementingPlugins.filter(
-      plugin => plugin.name === args.pluginName,
+      (plugin) => plugin.name === args.pluginName,
     )
   }
 
@@ -650,7 +652,7 @@ export function apiRunnerNode(
     return null
   }
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -679,13 +681,7 @@ export function apiRunnerNode(
             }
           | undefined
         filename?: string | undefined
-        node?:
-          | {
-              internal: {
-                contentDigest: string
-              }
-            }
-          | undefined
+        node?: IGatsbyNode | undefined
       }
       pluginSource: string | undefined
       resolve: (thenableOrResult?: unknown) => void
@@ -784,12 +780,12 @@ export function apiRunnerNode(
 
     runPromise(
       implementingPlugins,
-      plugin => {
+      (plugin) => {
         if (stopQueuedApiRuns) {
           return null
         }
 
-        return importGatsbyPlugin(plugin, `gatsby-node`).then(gatsbyNode => {
+        return importGatsbyPlugin(plugin, `gatsby-node`).then((gatsbyNode) => {
           const pluginName =
             plugin.name === `default-site-plugin`
               ? `gatsby-node.js`
@@ -808,11 +804,11 @@ export function apiRunnerNode(
             return null
           }
 
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             resolve(
               runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity),
             )
-          }).catch(err => {
+          }).catch((err) => {
             decorateEvent(`BUILD_PANIC`, {
               pluginName: `${plugin.name}@${plugin.version}`,
             })
@@ -822,7 +818,7 @@ export function apiRunnerNode(
             const file = stackTrace
               .parse(err)
               // @ts-ignore
-              .find(file => /gatsby-node/.test(file.fileName))
+              .find((file) => /gatsby-node/.test(file.fileName))
 
             let codeFrame = ``
             const structuredError = errorParser({ err })
@@ -874,7 +870,7 @@ export function apiRunnerNode(
         })
       },
       apiRunPromiseOptions,
-    ).then(results => {
+    ).then((results) => {
       if (onAPIRunComplete) {
         onAPIRunComplete()
       }
@@ -889,7 +885,7 @@ export function apiRunnerNode(
 
       // Filter empty results
       // @ts-ignore
-      apiRunInstance.results = results.filter(result => !_.isEmpty(result))
+      apiRunInstance.results = results.filter((result) => !_.isEmpty(result))
 
       // Filter out empty responses and return if the
       // api caller isn't waiting for cascading actions to finish.
@@ -901,7 +897,7 @@ export function apiRunnerNode(
 
       // Check if any of our waiters are done.
       waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
-        instance => {
+        (instance) => {
           // If none of its trace IDs are running, it's done.
           // @ts-ignore
           const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)

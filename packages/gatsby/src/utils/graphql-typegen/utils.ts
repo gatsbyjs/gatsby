@@ -3,7 +3,7 @@ import slugify from "slugify"
 import _ from "lodash"
 import { lexicographicSortSchema } from "graphql"
 import type { GraphQLSchema } from "graphql"
-import { IDefinitionMeta } from "../../redux/types"
+import type { IDefinitionMeta } from "../../redux/types"
 
 type DefinitionName = string
 type DefinitionMap = Map<DefinitionName, IDefinitionMeta>

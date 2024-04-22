@@ -1,8 +1,8 @@
 import type { IGatsbyFunction, IGatsbyPage } from "../../redux/types"
 
 function maybeDropNamedPartOfWildcard(
-  path: string | undefined,
-): string | undefined {
+  path: string | null | undefined,
+): string | null | undefined {
   if (!path) {
     return path
   }

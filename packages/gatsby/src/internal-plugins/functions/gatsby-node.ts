@@ -1,21 +1,25 @@
 import fs from "fs-extra"
 import glob, { type GlobOptions } from "glob"
 import path from "path"
-// @ts-ignore
 import webpack from "webpack"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
-// @ts-ignore
-import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
+
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
-import { IGatsbyFunction } from "../../redux/types"
+import type { IGatsbyFunction } from "../../redux/types"
 import { functionMiddlewares } from "./middleware"
 import mod from "module"
+import type {
+  ParentSpanPluginArgs,
+  CreateDevServerArgs,
+  Reporter,
+  Store,
+} from "../../.."
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -53,12 +57,12 @@ async function ensureFunctionIsCompiled(
     // compiled.
     const time = new Date()
     fs.utimesSync(functionObj.originalAbsoluteFilePath, time, time)
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       const watcher = chokidar
         // Watch the root of the compiled function directory in .cache as chokidar
         // can't watch files in directories that don't yet exist.
         .watch(compiledFunctionsDir)
-        .on(`add`, async _path => {
+        .on(`add`, async (_path) => {
           if (_path === functionObj.absoluteCompiledFilePath) {
             await watcher.close()
 
@@ -99,7 +103,7 @@ function createGlobArray(
   })
 
   // Add each plugin
-  plugins.forEach(plugin => {
+  plugins.forEach((plugin) => {
     // Ignore the "default" site plugin (aka the src tree) as we're
     // already watching that.
     if (plugin.name === `default-site-plugin`) {
@@ -133,23 +137,29 @@ function createGlobArray(
 
 async function globAsync(
   pattern: string,
-  options: GlobOptions = {},
+  options: GlobOptions | undefined = {},
 ): Promise<Array<string>> {
   return await new Promise((resolve, reject) => {
     glob
       .glob(pattern, options)
-      .then(path => {
+      .then((path) => {
         resolve(path as Array<string>)
       })
       .catch(reject)
   })
 }
 
-const createWebpackConfig = async ({
+type IWebpackConfigArgs = {
+  siteDirectoryPath: string
+  store: Store
+  reporter: Reporter
+}
+
+async function createWebpackConfig({
   siteDirectoryPath,
   store,
   reporter,
-}): Promise<webpack.Configuration> => {
+}: IWebpackConfigArgs): Promise<webpack.Configuration> {
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
     `.cache`,
@@ -164,13 +174,13 @@ const createWebpackConfig = async ({
   const seenFunctionIds = new Set<string>()
   // Glob and return object with relative/absolute paths + which plugin
   // they belong to.
-  const allFunctions = await Promise.all(
+  const allFunctions: Array<Array<IGatsbyFunction>> = await Promise.all(
     globs.map(async (glob): Promise<Array<IGatsbyFunction>> => {
       const knownFunctions: Array<IGatsbyFunction> = []
       const files = await globAsync(glob.globPattern, {
         ignore: glob.ignorePattern,
       })
-      files.map(file => {
+      files.map((file) => {
         const originalAbsoluteFilePath = file
         const originalRelativeFilePath = path.relative(glob.rootPath, file)
 
@@ -218,7 +228,11 @@ const createWebpackConfig = async ({
   // Combine functions by the route name so that functions in the default
   // functions directory can override the plugin's implementations.
   // @ts-ignore - Seems like a TS bug: https://github.com/microsoft/TypeScript/issues/28010#issuecomment-713484584
-  const knownFunctions = _.unionBy(...allFunctions, func => func.functionRoute)
+  const knownFunctions = _.unionBy(
+    // @ts-ignore
+    ...allFunctions,
+    (func) => func.functionRoute,
+  )
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
 
@@ -235,7 +249,6 @@ const createWebpackConfig = async ({
 
   // Load environment variables from process.env.* and .env.* files.
   // Logic is shared with webpack.config.js
-
   // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
   const nodeEnv = process.env.NODE_ENV || `development`
   // config env is dependent on the env that it's run, this can be anything from staging-production
@@ -297,7 +310,7 @@ const createWebpackConfig = async ({
     ? knownFunctions
     : activeDevelopmentFunctions
 
-  functionsList.forEach(functionObj => {
+  functionsList.forEach((functionObj) => {
     // Get path without the extension (as it could be ts or js)
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
     const compiledNameWithoutExtension = path.join(
@@ -489,7 +502,7 @@ export async function onPreBootstrap({
         } else {
           const formatted = formatWebpackMessages({
             errors: rawMessages?.errors
-              ? rawMessages.errors.map(e => e.message)
+              ? rawMessages.errors.map((e) => e.message)
               : [],
             warnings: [],
           })
@@ -524,7 +537,7 @@ export async function onPreBootstrap({
           .watch(
             [
               `${siteDirectoryPath}/.env*`,
-              ...globs.map(glob => glob.globPattern),
+              ...globs.map((glob) => glob.globPattern),
             ],
             { ignoreInitial: true },
           )

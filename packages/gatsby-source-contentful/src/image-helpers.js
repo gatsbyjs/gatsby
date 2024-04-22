@@ -1,5 +1,5 @@
 // @ts-check
-import { URLSearchParams } from "url"
+import { URLSearchParams } from "node:url"
 
 // Maximum value for size parameters in Contentful Image API
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height

@@ -1,4 +1,4 @@
-import fetch from "node-fetch"
+// @ts-ignore
 import faker from "faker"
 
 interface IArticle {
@@ -9,23 +9,25 @@ interface IArticle {
 }
 
 // Remove last word of title and replace it with a random word.
-const updateTitle = (title: string): string =>
-  `${title.substring(0, title.lastIndexOf(` `))} ${faker.lorem.word()}`
+function updateTitle(title: string): string {
+  return `${title.substring(0, title.lastIndexOf(` `))} ${faker.lorem.word()}`
+}
 
-const patchArticle = async (
+async function patchArticle(
   username: string,
   password: string,
   server: string,
-  article: IArticle
-): Promise<void> => {
+  article: IArticle,
+): Promise<void> {
   const url = `${server}/jsonapi/node/article/${article.id}`
 
   const response = await fetch(url, {
     method: `PATCH`,
     headers: {
       "Content-Type": `application/vnd.api+json`,
+      // @ts-ignore
       Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString(
-        `base64`
+        `base64`,
       )}`,
     },
     body: JSON.stringify({
@@ -40,18 +42,18 @@ const patchArticle = async (
   })
 }
 
-const getFirstArticle = async (server: string): Promise<IArticle> => {
+async function getFirstArticle(server: string): Promise<IArticle> {
   const url = `${server}/jsonapi/node/article?page[limit]=1&sort=created`
-  const response = await fetch(url)
+  const response = await globalThis.fetch(url)
   const body = await response.json()
   return body.data[0]
 }
 
-export const update = async (
-  username?: string,
-  password?: string,
-  server?: string
-): Promise<void> => {
+export async function update(
+  username?: string | undefined,
+  password?: string | undefined,
+  server?: string | undefined,
+): Promise<void> {
   if (!username || !password || !server) {
     console.error(`You must pass username, password and server`)
     return

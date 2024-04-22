@@ -6,5 +6,5 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "exclude": ["**/__tests__/**/*", "./src/index.ts"]
+  "exclude": ["**/__tests__/**/*"]
 }

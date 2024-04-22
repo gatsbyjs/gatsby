@@ -6,8 +6,8 @@ import {
 
 import { link, fileByPath } from "../resolvers"
 import {
-  DateResolver,
-  IDateResolverOption,
+  type DateResolver,
+  type IDateResolverOption,
   getDateResolver,
 } from "../types/date"
 
@@ -181,7 +181,7 @@ export const internalExtensionNames = [
   `directives`,
   `infer`,
   `plugin`,
-  ...specifiedDirectives.map(directive => directive.name),
+  ...specifiedDirectives.map((directive) => directive.name),
 ]
 export const reservedExtensionNames = [
   ...internalExtensionNames,
@@ -204,7 +204,7 @@ function toDirectives({
     const normalizedArgs = schemaComposer.typeMapper.convertArgConfigMap(args)
 
     // arg.type is a composer that needs to be converted to graphql-js type
-    Object.keys(normalizedArgs).forEach(argName => {
+    Object.keys(normalizedArgs).forEach((argName) => {
       normalizedArgs[argName].type = normalizedArgs[argName].type.getType()
     })
 
@@ -223,13 +223,13 @@ export function addDirectives({ schemaComposer, fieldExtensions = {} }): void {
     extensions: fieldExtensions,
     locations: [DirectiveLocation.FIELD_DEFINITION],
   })
-  fieldDirectives.forEach(directive => schemaComposer.addDirective(directive))
+  fieldDirectives.forEach((directive) => schemaComposer.addDirective(directive))
   const typeDirectives = toDirectives({
     schemaComposer,
     extensions: typeExtensions,
     locations: [DirectiveLocation.OBJECT],
   })
-  typeDirectives.forEach(directive => schemaComposer.addDirective(directive))
+  typeDirectives.forEach((directive) => schemaComposer.addDirective(directive))
 }
 
 export function processFieldExtensions({
@@ -238,11 +238,11 @@ export function processFieldExtensions({
   typeComposer,
   // _parentSpan,
 }): void {
-  typeComposer.getFieldNames().forEach(fieldName => {
+  typeComposer.getFieldNames().forEach((fieldName) => {
     const extensions = typeComposer.getFieldExtensions(fieldName)
     Object.keys(extensions)
-      .filter(name => !internalExtensionNames.includes(name))
-      .forEach(name => {
+      .filter((name) => !internalExtensionNames.includes(name))
+      .forEach((name) => {
         const { extend } = fieldExtensions[name] || {}
         if (typeof extend === `function`) {
           // Always get fresh field config as it will have been changed

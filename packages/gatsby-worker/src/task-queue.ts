@@ -1,15 +1,15 @@
-interface ITaskQueueNode<ValueType> {
+type ITaskQueueNode<ValueType> = {
   value: ValueType
-  next?: ITaskQueueNode<ValueType>
-  prev?: ITaskQueueNode<ValueType>
+  next?: ITaskQueueNode<ValueType> | undefined
+  prev?: ITaskQueueNode<ValueType> | undefined
 }
 
 /**
  * Task queue implemented with doubly linked list
  */
 export class TaskQueue<ValueType> {
-  private head?: ITaskQueueNode<ValueType>
-  private tail?: ITaskQueueNode<ValueType>;
+  private head?: ITaskQueueNode<ValueType> | undefined
+  private tail?: ITaskQueueNode<ValueType> | undefined;
 
   *[Symbol.iterator](): Iterator<ITaskQueueNode<ValueType>> {
     let currentHead = this.head

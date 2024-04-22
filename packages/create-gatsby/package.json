@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "create-gatsby",
   "version": "3.14.0-next.2",
   "main": "lib/index.js",
@@ -45,6 +45,8 @@
   "author": "Matt Kane <matt@gatsbyjs.com>",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
-    "configstore": "^6.0.0"
+    "configstore": "^6.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

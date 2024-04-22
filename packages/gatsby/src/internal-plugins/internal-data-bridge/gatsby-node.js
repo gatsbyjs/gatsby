@@ -6,12 +6,12 @@ const _ = require(`lodash`)
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../datastore`)
-const {
-  findCompiledLocalPluginModule,
-} = require(`../../utils/parcel/compile-gatsby-files`)
+const { findCompiledLocalPluginModule } = require(
+  `../../utils/parcel/compile-gatsby-files`,
+)
 
 function transformPackageJson(json) {
-  const transformDeps = deps =>
+  const transformDeps = (deps) =>
     _.entries(deps).map(([name, version]) => {
       return {
         name,
@@ -42,7 +42,7 @@ function transformPackageJson(json) {
   return json
 }
 
-const createPageId = path => `SitePage ${path}`
+const createPageId = (path) => `SitePage ${path}`
 
 exports.sourceNodes = ({
   createContentDigest,
@@ -53,13 +53,13 @@ exports.sourceNodes = ({
   const { createNode, deleteNode } = actions
   const { program, flattenedPlugins, config } = store.getState()
 
-  flattenedPlugins.forEach(plugin => {
+  flattenedPlugins.forEach((plugin) => {
     plugin.pluginFilepath = plugin.resolve
 
     createNode({
       ...plugin,
       packageJson: transformPackageJson(
-        require(`${plugin.resolve}/package.json`)
+        require(`${plugin.resolve}/package.json`),
       ),
       parent: null,
       children: [],
@@ -120,13 +120,13 @@ exports.sourceNodes = ({
     findCompiledLocalPluginModule(
       program.directory,
       `default-site-plugin`,
-      `gatsby-config`
+      `gatsby-config`,
     ) ?? systemPath.join(program.directory, `gatsby-config.js`)
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
 
   // Create nodes for functions
   const { functions } = store.getState()
-  const createFunctionNode = config => {
+  const createFunctionNode = (config) => {
     createNode({
       id: `gatsby-function-${config.absoluteCompiledFilePath}`,
       ...config,
@@ -138,24 +138,24 @@ exports.sourceNodes = ({
       },
     })
   }
-  functions.forEach(config => {
+  functions.forEach((config) => {
     createFunctionNode(config)
   })
 
   // Listen for updates to functions to update the nodes.
-  emitter.on(`SET_SITE_FUNCTIONS`, action => {
+  emitter.on(`SET_SITE_FUNCTIONS`, (action) => {
     // Identify any now deleted functions and remove their nodes.
     const existingNodes = getNodesByType(`SiteFunction`)
     const newFunctionsSet = new Set()
-    action.payload.forEach(config =>
-      newFunctionsSet.add(`gatsby-function-${config.absoluteCompiledFilePath}`)
+    action.payload.forEach((config) =>
+      newFunctionsSet.add(`gatsby-function-${config.absoluteCompiledFilePath}`),
     )
     const toBeDeleted = existingNodes.filter(
-      node => !newFunctionsSet.has(node.id)
+      (node) => !newFunctionsSet.has(node.id),
     )
-    toBeDeleted.forEach(node => deleteNode(node))
+    toBeDeleted.forEach((node) => deleteNode(node))
 
-    action.payload.forEach(config => {
+    action.payload.forEach((config) => {
       createFunctionNode(config)
     })
   })
@@ -195,7 +195,7 @@ exports.createResolvers = ({ createResolvers }) => {
             },
             args,
             context,
-            info
+            info,
           )
         },
       },
@@ -206,7 +206,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 
 // Listen for DELETE_PAGE and delete page nodes.
-emitter.on(`DELETE_PAGE`, action => {
+emitter.on(`DELETE_PAGE`, (action) => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
   store.dispatch(actions.deleteNode(node))

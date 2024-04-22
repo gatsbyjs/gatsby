@@ -2,8 +2,9 @@
  * This file is taken almost unchanged from enquirer, because it's not exported from the module
  */
 
-const isPrimitive = val =>
-  val != null && typeof val !== `object` && typeof val !== `function`
+function isPrimitive(val) {
+  return val != null && typeof val !== `object` && typeof val !== `function`
+}
 
 /**
  * Render a placeholder value with cursor and styling based on the
@@ -24,13 +25,13 @@ export default (prompt, options = {}) => {
   let { input = ``, initial = ``, pos, showCursor = true, color } = options
   const style = color || prompt.styles.placeholder
   const inverse = prompt.styles.primary.inverse
-  let blinker = str => inverse(str)
+  let blinker = (str) => inverse(str)
   let output = input
   const char = ` `
   let reverse = blinker(char)
 
   if (prompt.blink && prompt.blink.off === true) {
-    blinker = str => str
+    blinker = (str) => str
     reverse = ``
   }
 

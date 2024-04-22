@@ -1,4 +1,3 @@
-// import { fetch, Response } from 'node-fetch';
 import something from 'my-import'
 import * as fs from "fs"
 
@@ -23,7 +22,7 @@ function anotherSelfReferencedOne() {
 }
 
 export async function getServerData() {
-  const data = await fetch('https://example.com');
+  const data = await globalThis.fetch('https://example.com');
   const file = fs.readFileSync('./unknown.tmp.json', 'utf8')
   renderPage();
   anotherSelfReferencedOne();

@@ -1,5 +1,5 @@
 import joi from "joi"
-import { PluginOptionsSchemaJoi } from "./utils/plugin-options-schema-joi-type"
+import type { PluginOptionsSchemaJoi } from "./utils/plugin-options-schema-joi-type"
 
 export * from "./utils/plugin-options-schema-joi-type"
 export const Joi: PluginOptionsSchemaJoi = joi.extend({

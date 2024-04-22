@@ -1,23 +1,22 @@
-// @flow
-
 /** Query compiler extracts queries and fragments from all files, validates them
  * and then collocates them with fragments they require. This way fragments
  * have global scope and can be used in any other query or fragment.
  */
 
-const _ = require(`lodash`)
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash"
 
-const path = require(`path`)
-const normalize = require(`normalize-path`)
-const glob = require(`glob`)
+import path from "node:path"
+import normalize from "normalize-path"
+import glob from "glob"
 
-const {
+import {
   validate,
   print,
   visit,
-  visitWithTypeInfo,
-  TypeInfo,
-  isAbstractType,
+  // visitWithTypeInfo,
+  // TypeInfo,
+  // isAbstractType,
   Kind,
   FragmentsOnCompositeTypesRule,
   LoneAnonymousOperationRule,
@@ -26,32 +25,35 @@ const {
   ValuesOfCorrectTypeRule,
   VariablesAreInputTypesRule,
   VariablesInAllowedPositionRule,
-} = require(`graphql`)
+  type DocumentNode,
+} from "graphql"
 
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
-const { store } = require(`../redux`)
+import { store } from "../redux"
 import { actions } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
 import { getPathToLayoutComponent } from "gatsby-core-utils"
 import { tranformDocument } from "./transform-document"
-const { default: FileParser } = require(`./file-parser`)
-const {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import { default as FileParser } from "./file-parser"
+import {
   graphqlError,
   multipleRootQueriesError,
   duplicateFragmentError,
   unknownFragmentError,
-} = require(`./graphql-errors`)
-const report = require(`gatsby-cli/lib/reporter`)
-const {
-  default: errorParser,
-  locInGraphQlToLocInFile,
-} = require(`./error-parser`)
+} from "./graphql-errors"
+import report from "gatsby-cli/lib/reporter"
+import { default as errorParser, locInGraphQlToLocInFile } from "./error-parser"
+import type { Span, SpanContext } from "opentracing"
 
 const overlayErrorID = `graphql-compiler`
 
-export default async function compile({ parentSpan } = {}): Promise<
-  Map<string, RootQuery>
+export default async function compile({
+  parentSpan,
+}: { parentSpan?: Span | SpanContext | undefined } = {}): Promise<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Map<string, any>
 > {
   const { program, schema, flattenedPlugins } = store.getState()
 
@@ -67,11 +69,11 @@ export default async function compile({ parentSpan } = {}): Promise<
   const parsedQueries = await parseQueries({
     base: program.directory,
     additional: resolveThemes(
-      flattenedPlugins.map(plugin => {
+      flattenedPlugins.map((plugin) => {
         return {
           themeDir: plugin.pluginFilepath,
         }
-      })
+      }),
     ),
     addError,
     parentSpan: activity.span,
@@ -81,7 +83,7 @@ export default async function compile({ parentSpan } = {}): Promise<
     schema,
     parsedQueries,
     addError,
-    parentSpan: activity.span,
+    // parentSpan: activity.span,
   })
 
   if (errors.length !== 0) {
@@ -100,18 +102,22 @@ export default async function compile({ parentSpan } = {}): Promise<
   return queries
 }
 
-export const resolveThemes = (themes = []) =>
-  themes.reduce((merged, theme) => {
+export function resolveThemes(
+  themes: Array<{ themeDir: string }> = [],
+): Array<string> {
+  return themes.reduce((merged: Array<string>, theme) => {
     merged.push(theme.themeDir)
     return merged
   }, [])
+}
 
-export const parseQueries = async ({
+export async function parseQueries({
   base,
   additional,
   addError,
   parentSpan,
-}) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): Promise<Array<any>> {
   const filesRegex = `*.?(m|c)+(t|j)s?(x)`
   // Pattern that will be appended to searched directories.
   // It will match any .js, .jsx, .ts, .tsx, .cjs, .cjsx,
@@ -124,18 +130,18 @@ export const parseQueries = async ({
   let files = [
     path.join(base, `src`),
     path.join(base, `.cache`, `fragments`),
-    ...additional.map(additional => path.join(additional, `src`)),
-    ...modulesThatUseGatsby.map(module => module.path),
+    ...additional.map((additional) => path.join(additional, `src`)),
+    ...modulesThatUseGatsby.map((module) => module.path),
   ].reduce((merged, folderPath) => {
     merged.push(
       ...glob.sync(path.join(folderPath, pathRegex), {
         nodir: true,
-      })
+      }),
     )
     return merged
   }, [])
 
-  files = files.filter(d => !d.match(/\.d\.ts$/))
+  files = files.filter((d) => !d.match(/\.d\.ts$/))
 
   files = files.map(normalize)
 
@@ -143,7 +149,6 @@ export const parseQueries = async ({
   // that they aren't needed anymore since we transpile node_modules now
   // However, there could be some cases (where a page is outside of src for example)
   // that warrant keeping this and removing later once we have more confidence (and tests)
-
   // Ensure all page components added as they're not necessarily in the
   // pages directory e.g. a plugin could add a page component. Plugins
   // *should* copy their components (if they add a query) to .cache so that
@@ -151,7 +156,7 @@ export const parseQueries = async ({
   // Otherwise the component will throw an error in the browser of
   // "graphql is not defined".
   files = files.concat(
-    Array.from(store.getState().components.keys(), c => normalize(c))
+    Array.from(store.getState().components.keys(), (c) => normalize(c)),
   )
 
   files = _.uniq(files)
@@ -161,17 +166,23 @@ export const parseQueries = async ({
   return await parser.parseFiles(files, addError)
 }
 
-export const processQueries = ({
+export function processQueries({
   schema,
   parsedQueries,
   addError,
-  parentSpan,
-}) => {
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  schema: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  parsedQueries: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addError: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): Map<any, any> {
   const { definitionsByName, operations } = extractOperations(
     schema,
     parsedQueries,
     addError,
-    parentSpan
   )
 
   store.dispatch(actions.setGraphQLDefinitions(definitionsByName))
@@ -181,7 +192,6 @@ export const processQueries = ({
     operations,
     definitionsByName,
     addError,
-    parentSpan,
   })
 }
 
@@ -195,9 +205,22 @@ const preValidationRules = [
   VariablesInAllowedPositionRule,
 ]
 
-const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
+type Operation = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  def: any
+  filePath: string
+  templatePath: string
+  hash: string
+}
+
+function extractOperations(
+  schema,
+  parsedQueries,
+  addError,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { definitionsByName: Map<any, any>; operations: Array<Operation> } {
   const definitionsByName = new Map()
-  const operations = []
+  const operations: Array<Operation> = []
 
   for (const {
     filePath,
@@ -219,13 +242,13 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
         const newErrors = validate(
           schema,
           transformedDocument,
-          preValidationRules
+          preValidationRules,
         )
         if (newErrors.length === 0) {
           report.warn(
             `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nFile: ${filePath}\n\nCurrent query:\n\n${originalQueryText}\n\nConverted query:\n\n${print(
-              transformedDocument
-            )}`
+              transformedDocument,
+            )}`,
           )
           doc = transformedDocument
           errors = newErrors
@@ -235,8 +258,9 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
 
     if (errors && errors.length) {
       addError(
-        ...errors.map(error => {
+        ...errors.map((error) => {
           const location = {
+            // @ts-ignore
             start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
           }
           return errorParser({
@@ -245,21 +269,24 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
             location,
             error,
           })
-        })
+        }),
       )
 
       store.dispatch(
         actions.queryExtractionGraphQLError({
           componentPath: filePath,
-        })
+        }),
       )
       // Something is super wrong with this document, so we report it and skip
       continue
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     doc.definitions.forEach((def: any) => {
       const name = def.name.value
-      let printedAst = null
+
+      let printedAst: string | null = null
+
       if (def.kind === Kind.OPERATION_DEFINITION) {
         operations.push({
           def,
@@ -285,7 +312,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
                   templateLoc,
                 },
                 rightDefinition: otherDef,
-              })
+              }),
             )
             // We won't know which one to use, so it's better to fail both of
             // them.
@@ -318,20 +345,27 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
   }
 }
 
-const processDefinitions = ({
+function processDefinitions({
   schema,
   operations,
   definitionsByName,
   addError,
-  parentSpan,
-}) => {
-  const processedQueries: Queries = new Map()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): Map<any, any> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const processedQueries: Map<any, any> = new Map()
 
   const fragmentsUsedByFragment = new Map()
 
   const fragmentNames = Array.from(definitionsByName.entries())
-    .filter(([_, def]) => def.isFragment)
-    .map(([name, _]) => name)
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+    .filter(([_, def]): any => def.isFragment)
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .map(([name, _]) => {
+      return name
+    })
 
   for (const operation of operations) {
     const { filePath, templatePath, def } = operation
@@ -342,7 +376,7 @@ const processDefinitions = ({
       determineUsedFragmentsForDefinition(
         originalDefinition,
         definitionsByName,
-        fragmentsUsedByFragment
+        fragmentsUsedByFragment,
       )
 
     if (missingFragments.length > 0) {
@@ -350,7 +384,7 @@ const processDefinitions = ({
         store.dispatch(
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
-          })
+          }),
         )
         addError(
           unknownFragmentError({
@@ -358,16 +392,16 @@ const processDefinitions = ({
             filePath,
             definition,
             node,
-          })
+          }),
         )
       }
       continue
     }
 
-    const document = {
+    const document: DocumentNode = {
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
-        .map(name => definitionsByName.get(name).def)
+        .map((name) => definitionsByName.get(name).def)
         .concat([operation.def]),
     }
 
@@ -377,7 +411,7 @@ const processDefinitions = ({
       for (const error of errors) {
         const { formattedMessage, message } = graphqlError(
           definitionsByName,
-          error
+          error,
         )
 
         const filePath = originalDefinition.filePath
@@ -385,11 +419,12 @@ const processDefinitions = ({
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
             error: formattedMessage,
-          })
+          }),
         )
         const location = locInGraphQlToLocInFile(
           originalDefinition.templateLoc,
-          error.locations[0]
+          // @ts-ignore
+          error.locations[0],
         )
         addError(
           errorParser({
@@ -400,7 +435,7 @@ const processDefinitions = ({
             message,
             filePath,
             error,
-          })
+          }),
         )
       }
       continue
@@ -421,14 +456,14 @@ const processDefinitions = ({
           multipleRootQueriesError(
             filePath,
             originalDefinition.def,
-            otherQuery && definitionsByName.get(otherQuery.name).def
-          )
+            otherQuery && definitionsByName.get(otherQuery.name).def,
+          ),
         )
 
         store.dispatch(
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
-          })
+          }),
         )
         continue
       }
@@ -448,10 +483,11 @@ const processDefinitions = ({
     }
 
     if (query.isStaticQuery) {
+      // @ts-ignore
       query.id =
         `sq--` +
         _.kebabCase(
-          `${path.relative(store.getState().program.directory, filePath)}`
+          `${path.relative(store.getState().program.directory, filePath)}`,
         )
     }
 
@@ -462,7 +498,7 @@ const processDefinitions = ({
     ) {
       report.panicOnBuild(
         `You're likely using a version of React that doesn't support Hooks\n` +
-          `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
+          `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`,
       )
     }
 
@@ -477,21 +513,36 @@ const processDefinitions = ({
   return processedQueries
 }
 
-const determineUsedFragmentsForDefinition = (
-  definition,
-  definitionsByName,
-  fragmentsUsedByFragment,
-  traversalPath = []
-) => {
+function determineUsedFragmentsForDefinition(
+  definition: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    def: any
+    name: string
+    isFragment: boolean
+    filePath: string
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  definitionsByName: Map<string, any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fragmentsUsedByFragment: any,
+  traversalPath: Array<string> | undefined = [],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { usedFragments: any; missingFragments: any } {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
   if (cachedUsedFragments) {
     return { usedFragments: cachedUsedFragments, missingFragments: [] }
   } else {
     const usedFragments = new Set()
-    const missingFragments = []
+    const missingFragments: Array<{
+      filePath: string
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      definition: any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      node: any
+    }> = []
     visit(def, {
-      [Kind.FRAGMENT_SPREAD]: node => {
+      [Kind.FRAGMENT_SPREAD]: (node) => {
         const name = node.name.value
         const fragmentDefinition = definitionsByName.get(name)
         if (fragmentDefinition) {
@@ -509,11 +560,11 @@ const determineUsedFragmentsForDefinition = (
             fragmentDefinition,
             definitionsByName,
             fragmentsUsedByFragment,
-            traversalPath
+            traversalPath,
           )
           traversalPath.pop()
-          usedFragmentsForFragment.forEach(fragmentName =>
-            usedFragments.add(fragmentName)
+          usedFragmentsForFragment.forEach((fragmentName) =>
+            usedFragments.add(fragmentName),
           )
           missingFragments.push(...missingFragmentsForFragment)
         } else {

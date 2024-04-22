@@ -3,7 +3,7 @@ import fs from "fs-extra"
 
 import { promisifiedSpawn } from "../utils/promisified-spawn"
 import { registryUrl } from "./verdaccio-config"
-import { PackageJson } from "../../../gatsby"
+import type { PackageJson } from "../../../gatsby"
 
 export async function installPackages({
   packagesToInstall,
@@ -20,7 +20,7 @@ export async function installPackages({
 }): Promise<void> {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
-      .map(packageAndVersion => ` - ${packageAndVersion}`)
+      .map((packageAndVersion) => ` - ${packageAndVersion}`)
       .join(`\n`)}`,
   )
   let installCmd
@@ -94,7 +94,7 @@ export async function installPackages({
       }
 
       let changed = false
-      Object.keys(deps).forEach(depName => {
+      Object.keys(deps).forEach((depName) => {
         if (packagesToInstall.includes(depName)) {
           deps[depName] = `gatsby-dev`
           changed = true
@@ -103,7 +103,7 @@ export async function installPackages({
       return changed
     }
 
-    Object.keys(workspacesLayout).forEach(workspaceName => {
+    Object.keys(workspacesLayout).forEach((workspaceName) => {
       const { location } = workspacesLayout[workspaceName]
       const pkgJsonPath = path.join(yarnWorkspaceRoot, location, `package.json`)
       if (!fs.existsSync(pkgJsonPath)) {
@@ -140,7 +140,7 @@ export async function installPackages({
 
     installCmd = [`pnpm`, yarnCommands]
   } else {
-    const packageAndVersionsToInstall = packagesToInstall.map(packageName => {
+    const packageAndVersionsToInstall = packagesToInstall.map((packageName) => {
       const packageVersion = newlyPublishedPackageVersions[packageName]
       return `${packageName}@${packageVersion}`
     })

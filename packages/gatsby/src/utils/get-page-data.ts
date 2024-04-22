@@ -54,7 +54,7 @@ async function waitNextPageData(
   initialWaitForMs: number,
 ): Promise<IPageDataWithQueryResult> {
   if (remainingTime > 0) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       emitter.on(`CLEAR_PENDING_PAGE_DATA_WRITE`, listener)
 
       const timeout = setTimeout(

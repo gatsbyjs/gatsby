@@ -9,6 +9,7 @@ const getLastBuildTime = jest.spyOn(helpersModule, `getLastBuildTime`)
 
 jest
   .spyOn(createOperationsModule, `createOperations`)
+  // @ts-ignore
   .mockImplementation(mockOperations)
 
 const sourceFromOperation = jest.fn()
@@ -19,7 +20,8 @@ const makeSourceFromOperation = jest
 
 const updateCache = jest
   .spyOn(updateCacheModule, `updateCache`)
-  .mockReturnValue(undefined)
+  // @ts-ignore
+  .getMockImplementation.mockReturnValue(undefined)
 
 const setLastBuildTime = jest
   .spyOn(helpersModule, `setLastBuildTime`)
@@ -27,11 +29,11 @@ const setLastBuildTime = jest
 
 const connections = [`collections`, `orders`, `locations`]
 
-const generateTestName = (
+function generateTestName(
   prioritize,
   lastBuildTime,
-  shopifyConnections
-): string => {
+  shopifyConnections,
+): string {
   const modifiers = [
     lastBuildTime ? `fresh` : `incremental`,
     prioritize ? `priority` : `non-priority`,
@@ -56,6 +58,7 @@ describe(`sourceNodes`, () => {
           async () => {
             getLastBuildTime.mockImplementationOnce(() => lastBuildTime)
 
+            // @ts-ignore
             await sourceNodes(gatsbyApi, {
               ...pluginOptions,
               prioritize,
@@ -64,11 +67,11 @@ describe(`sourceNodes`, () => {
 
             expect(makeSourceFromOperation.mock.calls.length).toEqual(1)
             expect(sourceFromOperation.mock.calls.length).toEqual(
-              shopifyConnections.length > 0 ? 5 : 2
+              shopifyConnections.length > 0 ? 5 : 2,
             )
             expect(updateCache.mock.calls.length).toEqual(lastBuildTime ? 1 : 0)
             expect(setLastBuildTime.mock.calls.length).toEqual(1)
-          }
+          },
         )
       }
     }

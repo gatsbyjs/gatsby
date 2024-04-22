@@ -33,7 +33,7 @@ export function cleanPaths(str: string, separator: string = sep): string {
 // Takes an Error and returns a sanitized JSON String
 export function sanitizeError(
   error: IErrorWithStdErrAndStdOut,
-  pathSeparator: string = sep
+  pathSeparator: string = sep,
 ): string {
   // Convert Buffers to Strings
   if (error.stderr) error.stderr = String(error.stderr)
@@ -41,7 +41,7 @@ export function sanitizeError(
     error.stdout = String(error.stdout)
 
     // Remove sensitive and useless keys
-  ;[`envPairs`, `options`, `output`].forEach(key => delete error[key])
+  ;[`envPairs`, `options`, `output`].forEach((key) => delete error[key])
 
   // Hack because Node
   error = JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error)))

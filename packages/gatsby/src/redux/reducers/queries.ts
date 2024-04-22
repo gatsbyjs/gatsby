@@ -178,7 +178,7 @@ export function queriesReducer(
       return state
     }
     case `CREATE_COMPONENT_DEPENDENCY`: {
-      action.payload.forEach(dep => {
+      action.payload.forEach((dep) => {
         const { path: queryId, nodeId, connection } = dep
 
         if (nodeId) {
@@ -209,8 +209,9 @@ export function queriesReducer(
         return state
       }
       const queriesByNode = state.byNode.get(node.id) ?? []
-      const queriesByConnection =
-        state.byConnection.get(node.internal.type) ?? []
+      const queriesByConnection = node.internal.type
+        ? state.byConnection.get(node.internal.type) ?? []
+        : []
 
       for (const queryId of queriesByNode) {
         const query = state.trackedQueries.get(queryId)

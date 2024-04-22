@@ -1,5 +1,4 @@
-// @ts-ignore
-import { SourceNodesArgs } from "gatsby"
+import type { SourceNodesArgs } from "gatsby"
 
 import { updateCache } from "./update-cache"
 import { createOperations } from "./create-operations"

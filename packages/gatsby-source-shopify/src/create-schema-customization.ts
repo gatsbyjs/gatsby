@@ -1,4 +1,4 @@
-import { CreateSchemaCustomizationArgs } from "../../gatsby"
+import type { CreateSchemaCustomizationArgs } from "../../gatsby"
 
 import { collectionTypeBuilder } from "./type-builders/collection-type"
 import { commonTypeBuilder } from "./type-builders/common-type"

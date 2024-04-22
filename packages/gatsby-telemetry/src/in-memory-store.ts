@@ -1,6 +1,6 @@
 import { uuid } from "gatsby-core-utils"
-import os from "os"
-import { join } from "path"
+import os from "node:os"
+import { join } from "node:path"
 
 export class InMemoryConfigStore {
   config: Record<string, unknown>
@@ -21,6 +21,7 @@ export class InMemoryConfigStore {
     return this.config[key]
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set(key: string, value: any): void {
     this.config[key] = value
   }

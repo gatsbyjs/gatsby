@@ -1,5 +1,5 @@
 import { emitter, store } from "../redux"
-import { ICreatePageAction, ISetComponentFeatures } from "../redux/types"
+import type { ICreatePageAction, ISetComponentFeatures } from "../redux/types"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
 
 export function shouldPrintEngineSnapshot(): boolean {

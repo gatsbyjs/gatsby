@@ -15,26 +15,25 @@
     "data-update": "NODE_ENV=development node bin/update.js"
   },
   "dependencies": {
-    "@agility/content-fetch": "^0.8.2",
-    "@agility/content-management": "^0.1.5",
-    "@agility/gatsby-source-agilitycms": "^1.5.0",
-    "async": "^3.2.0",
-    "dotenv": "^8.1.0",
-    "gatsby": "^2.24.2",
-    "gatsby-image": "^2.3.2",
-    "gatsby-plugin-netlify": "^2.1.33",
-    "gatsby-plugin-react-helmet": "^3.1.21",
-    "gatsby-plugin-sharp": "^5.14.0-next.2",
-    "gatsby-source-filesystem": "^2.2.1",
-    "gatsby-transformer-sharp": "^5.13.1",
-    "node-fetch": "^2.6.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-helmet": "^5.2.1",
-    "truncate-html": "^1.0.2"
+    "@agility/content-fetch": "2.0.0",
+    "@agility/content-management": "0.5.0",
+    "@agility/gatsby-source-agilitycms": "3.0.1",
+    "async": "3.2.5",
+    "dotenv": "16.4.5",
+    "gatsby": "5.13.4",
+    "gatsby-image": "3.13.1",
+    "gatsby-plugin-netlify": "5.1.1",
+    "gatsby-plugin-react-helmet": "6.13.1",
+    "gatsby-plugin-sharp": "5.13.1",
+    "gatsby-source-filesystem": "5.13.1",
+    "gatsby-transformer-sharp": "5.13.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0",
+    "truncate-html": "1.1.1"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "prettier": "3.2.5"
   },
   "repository": {
     "type": "git",

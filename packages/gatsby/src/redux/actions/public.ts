@@ -1,40 +1,41 @@
-// @flow
-const reporter = require(`gatsby-cli/lib/reporter`)
-const chalk = require(`chalk`)
-const _ = require(`lodash`)
-const { stripIndent } = require(`common-tags`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { platform } = require(`os`)
-const path = require(`path`)
-const { trueCasePathSync } = require(`true-case-path`)
-const url = require(`url`)
-const { slash } = require(`gatsby-core-utils/path`)
-const {
-  createContentDigest,
-} = require(`gatsby-core-utils/create-content-digest`)
-const { splitComponentPath } = require(`gatsby-core-utils/parse-component-path`)
-const { hasNodeChanged } = require(`../../utils/nodes`)
-const { getNode, getDataStore } = require(`../../datastore`)
+import reporter from "gatsby-cli/lib/reporter"
+import chalk from "chalk"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash"
+import { stripIndent } from "common-tags"
+import report from "gatsby-cli/lib/reporter"
+import { platform } from "node:os"
+import path from "node:path"
+import { trueCasePathSync } from "true-case-path"
+import url from "node:url"
+import { slash } from "gatsby-core-utils/path"
+import { createContentDigest } from "gatsby-core-utils/create-content-digest"
+import { splitComponentPath } from "gatsby-core-utils/parse-component-path"
+import { hasNodeChanged } from "../../utils/nodes"
+import { getNode, getDataStore } from "../../datastore"
 import { sanitizeNode } from "../../utils/sanitize-node"
-const { store } = require(`../index`)
-const { validateComponent } = require(`../../utils/validate-component`)
+import { store } from "../index"
+import { validateComponent } from "../../utils/validate-component"
 import { nodeSchema } from "../../joi-schemas/joi"
-const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const {
+import { generateComponentChunkName } from "../../utils/js-chunk-names"
+import {
   getCommonDir,
   truncatePath,
   tooLongSegmentsInPath,
-} = require(`../../utils/path`)
-const { applyTrailingSlashOption } = require(`gatsby-page-utils`)
-const apiRunnerNode = require(`../../utils/api-runner-node`)
-const { trackCli } = require(`gatsby-telemetry`)
-const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
-const { getPageMode } = require(`../../utils/page-mode`)
-const normalizePath = require(`../../utils/normalize-path`).default
+} from "../../utils/path"
+import { applyTrailingSlashOption } from "gatsby-page-utils"
+import { apiRunnerNode } from "../../utils/api-runner-node"
+import { trackCli } from "gatsby-telemetry"
+import { getNonGatsbyCodeFrame } from "../../utils/stack-trace-utils"
+import { getPageMode } from "../../utils/page-mode"
+import normalizePath from "../../utils/normalize-path"
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
 import { wrapNode } from "../../utils/detect-node-mutations"
+import type { IGatsbyNode, IGatsbyPage, IPlugin } from "../types"
+import type { Span, SpanContext } from "opentracing"
+import { createInternalJob } from "../../utils/jobs/manager"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -44,27 +45,27 @@ const isTestEnv = process.env.NODE_ENV === `test`
 // on files that are in shadowing chain, but webpack currently doesn't handle
 // shadowing changes during develop session, so no invalidation is not a deal breaker.
 const shadowCreatePagePath = _.memoize(
-  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+  require(
+    `../../internal-plugins/webpack-theme-component-shadowing/create-page`,
+  ),
 )
-const { createInternalJob } = require(`../../utils/jobs/manager`)
 
-const actions = {}
 const isWindows = platform() === `win32`
 
-const ensureWindowsDriveIsUppercase = filePath => {
-  const segments = filePath.split(`:`).filter(s => s !== ``)
+function ensureWindowsDriveIsUppercase(filePath: string): string {
+  const segments: Array<string> = filePath.split(`:`).filter((s) => s !== ``)
   return segments.length > 0
-    ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
+    ? segments.shift()?.toUpperCase() + `:` + segments.join(`:`)
     : filePath
 }
 
-const findChildren = initialChildren => {
+function findChildren(initialChildren: Array<string>): Array<string> {
   const children = [...initialChildren]
   const queue = [...initialChildren]
   const traversedNodes = new Set()
 
   while (queue.length > 0) {
-    const currentChild = getNode(queue.pop())
+    const currentChild = getNode(queue.pop() ?? ``)
     if (!currentChild || traversedNodes.has(currentChild.id)) {
       continue
     }
@@ -78,67 +79,84 @@ const findChildren = initialChildren => {
   return children
 }
 
-import type { Plugin } from "./types"
-
 type Job = {
-  id: string,
+  id: string
 }
 
 type JobV2 = {
-  name: string,
-  inputPaths: string[],
-  outputDir: string,
-  args: Object,
+  name: string
+  inputPaths: Array<string>
+  outputDir: string
+  args: Record<string, unknown>
 }
 
-export interface IPageInput {
-  path: string;
-  component: string;
-  context?: Object;
-  ownerNodeId?: string;
-  defer?: boolean;
-  slices: Record<string, string>;
+export type IPageInput = {
+  path: string
+  component: string
+  matchPath?: string | null | undefined
+  context?: Record<string, unknown> | undefined
+  ownerNodeId?: string | undefined
+  defer?: boolean
+  slices: Record<string, string>
 }
 
-type PageMode = "SSG" | "DSG" | "SSR"
+// type PageMode = "SSG" | "DSG" | "SSR"
 
-type Page = {
-  path: string,
-  matchPath: ?string,
-  component: string,
-  context: Object,
-  internalComponentName: string,
-  componentChunkName: string,
-  updatedAt: number,
-  ownerNodeId?: string,
-  mode: PageMode,
-  slices: Record<string, string>,
-}
+// type Page = {
+//   id?: string | undefined
+//   path: string
+//   matchPath: string | null | undefined
+//   component: string
+//   componentPath: string
+//   context: Record<string, unknown>
+//   internalComponentName: string
+//   componentChunkName: string
+//   isCreatedByStatefulCreatePages: boolean
+//   updatedAt: number
+//   ownerNodeId: string
+//   mode: PageMode
+//   slices: Record<string, string>
+//   pluginCreator___NODE: string
+//   pluginCreatorId: string
+//   defer?: boolean | undefined
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   children?: Array<any> | undefined
+//   internal?:
+//     | {
+//         type: `SitePage`
+//         contentDigest: string
+//         counter?: number | undefined
+//       }
+//     | undefined
+// }
 
 type ActionOptions = {
-  traceId: ?string,
-  parentSpan: ?Object,
-  followsSpan: ?Object,
+  traceId?: string | null | undefined
+  parentSpan?: Span | null | undefined
+  followsSpan?: Span | SpanContext | null | undefined
 }
 
-type PageData = {
-  id: string,
-  resultHash: string,
-}
+// type PageData = {
+//   id: string
+//   resultHash: string
+// }
 
-type PageDataRemove = {
-  id: string,
-}
+// type PageDataRemove = {
+//   id: string
+// }
 
 /**
  * Delete a page
- * @param {Object} page a page object
+ * @param {object} page a page object
  * @param {string} page.path The path of the page
  * @param {string} page.component The absolute path to the page component
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: IPageInput) => {
+function deletePage(page: IPageInput): {
+  type: string
+  payload: IPageInput
+} {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -160,16 +178,16 @@ const reservedFields = [
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
- * @param {Object} page a page object
+ * @param {object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash. Unicode characters should be passed directly and not encoded (eg. `á` not `%C3%A1`).
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
  * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page. Note that the ownerNodeId must be for a node which is queried on this page via a GraphQL query.
  * @param {string} page.component The absolute path to the component for this page
- * @param {Object} page.context Context data for this page. Passed as props
+ * @param {object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
- * @param {Object} page.slices A mapping of alias-of-id for Slices rendered on this page. See the technical docs for the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
+ * @param {object} page.slices A mapping of alias-of-id for Slices rendered on this page. See the technical docs for the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
  * @param {boolean} page.defer When set to `true`, Gatsby will exclude the page from the build step and instead generate it during the first HTTP request. Default value is `false`. Also see docs on [Deferred Static Generation](/docs/reference/rendering-options/deferred-static-generation/).
  * @example
  * createPage({
@@ -183,13 +201,25 @@ const reservedFields = [
  *   },
  * })
  */
-actions.createPage = (
+function createPage(
   page: IPageInput,
-  plugin?: Plugin,
-  actionOptions?: ActionOptions
-) => {
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
+  plugin?: IPlugin | undefined,
+  actionOptions?: ActionOptions | undefined,
+):
+  | string
+  | Array<{
+      type: string
+      contextModified: boolean
+      componentModified: boolean
+      slicesModified: boolean
+      plugin: IPlugin | undefined
+      payload: IGatsbyPage | IGatsbyNode | undefined
+      traceId?: string | null | undefined
+      parentSpan?: Span | SpanContext | null | undefined
+      followsSpan?: Span | SpanContext | null | undefined
+    }> {
+  let name = `The plugin "${plugin?.name}"`
+  if (plugin?.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
   }
   if (!page.path) {
@@ -200,7 +230,7 @@ actions.createPage = (
         id: `11323`,
         context: {
           pluginName: name,
-          pageObject: page,
+          pageobject: page,
           message,
         },
       })
@@ -211,8 +241,9 @@ actions.createPage = (
 
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
-  if (page.context && typeof page.context === `object`) {
-    const invalidFields = reservedFields.filter(field => field in page.context)
+  const context = page.context
+  if (typeof context !== `undefined` && typeof context === `object`) {
+    const invalidFields = reservedFields.filter((field) => field in context)
 
     if (invalidFields.length > 0) {
       const error = `${
@@ -221,7 +252,7 @@ actions.createPage = (
           : `${name} used reserved field names in the context object when creating a page:`
       }
 
-${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
+${invalidFields.map((f) => `  * "${f}"`).join(`\n`)}
 
 ${JSON.stringify(page, null, 4)}
 
@@ -239,7 +270,7 @@ Please choose another name for the conflicting fields.
 
 The following fields are used by the page object and should be avoided.
 
-${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
+${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
 
             `
       if (isTestEnv) {
@@ -247,7 +278,13 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
-      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
+      } else if (
+        invalidFields.some((f) => {
+          return (
+            typeof page.context !== `undefined` && page.context[f] !== page[f]
+          )
+        })
+      ) {
         report.panic({
           id: `11324`,
           context: {
@@ -339,7 +376,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
-          path.win32.relative(commonDir, page.component)
+          path.win32.relative(commonDir, page.component),
         )
 
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
@@ -368,7 +405,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           page.component:     "${page.component}"
           path in filesystem: "${trueComponentPath}"
                                ${markers}
-        `
+        `,
           )
           hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
@@ -384,7 +421,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
-  let internalComponentName
+  let internalComponentName: string
+
   if (page.path === `/`) {
     internalComponentName = `ComponentIndex`
   } else {
@@ -404,14 +442,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         Original Path: ${page.path}
 
         Truncated Path: ${truncatedPath}
-      `)
+      `),
     )
     page.path = truncatedPath
   }
 
   page.path = applyTrailingSlashOption(page.path, trailingSlash)
 
-  const internalPage: Page = {
+  const internalPage: IGatsbyPage = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -426,8 +464,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     slices: page?.slices || {},
 
     // Link page to its plugin.
-    pluginCreator___NODE: plugin.id ?? ``,
-    pluginCreatorId: plugin.id ?? ``,
+    pluginCreator___NODE: plugin?.id ?? ``,
+    pluginCreatorId: plugin?.id ?? ``,
   }
 
   if (page.defer) {
@@ -446,7 +484,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalPage.path = `/${internalPage.path}`
   }
 
-  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const oldPage: IGatsbyPage | undefined = store
+    .getState()
+    .pages.get(internalPage.path)
+
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
   const componentModified =
@@ -463,37 +504,53 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       chalk.bold.yellow(`Non-deterministic routing danger: `) +
         `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
         chalk.bold.yellow(
-          `This could lead to non-deterministic routing behavior`
-        )
+          `This could lead to non-deterministic routing behavior`,
+        ),
     )
   }
 
   // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
-  const { updatedAt, ...node } = internalPage
-  node.children = []
-  node.internal = {
-    type: `SitePage`,
-    contentDigest: createContentDigest(node),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { updatedAt: ___, ...node } = internalPage
+
+  const newNode: IGatsbyNode = {
+    id: `SitePage ${internalPage.path}`,
+    parent: null,
+    ...node,
+    children: [],
+    internal: {
+      type: `SitePage`,
+      contentDigest: createContentDigest(node),
+    },
   }
-  node.id = `SitePage ${internalPage.path}`
-  const oldNode = getNode(node.id)
+
+  const oldNode = getNode(newNode.id)
 
   let deleteActions
   let updateNodeAction
   // marking internal-data-bridge as owner of SitePage instead of plugin that calls createPage
-  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
+  if (oldNode && !hasNodeChanged(newNode.id, newNode.internal.contentDigest)) {
     updateNodeAction = {
       ...actionOptions,
       plugin: { name: `internal-data-bridge` },
       type: `TOUCH_NODE`,
-      typeName: node.internal.type,
-      payload: node.id,
+      typeName: newNode.internal.type,
+      payload: newNode.id,
     }
   } else {
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const createDeleteAction = node => {
+      function createDeleteAction(node?: IGatsbyNode | undefined): {
+        type: string
+        plugin: { name: string }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        payload?: IGatsbyNode | undefined
+        isRecursiveChildrenDelete: boolean
+        traceId?: string | null | undefined
+        parentSpan?: Span | SpanContext | null | undefined
+        followsSpan?: Span | SpanContext | null | undefined
+      } {
         return {
           ...actionOptions,
           type: `DELETE_NODE`,
@@ -507,14 +564,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         .map(createDeleteAction)
     }
 
-    node.internal.counter = getNextNodeCounter()
+    newNode.internal.counter = getNextNodeCounter()
 
     updateNodeAction = {
       ...actionOptions,
       type: `CREATE_NODE`,
       plugin: { name: `internal-data-bridge` },
       oldNode,
-      payload: node,
+      payload: newNode,
     }
   }
 
@@ -548,14 +605,42 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode(node)
  */
-actions.deleteNode = (node: any, plugin?: Plugin) => {
+function deleteNode(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyNode,
+  plugin?: IPlugin | undefined,
+):
+  | {
+      type: string
+      plugin: IPlugin | undefined
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      payload: any
+      // main node need to be owned by plugin that calls deleteNode
+      // child nodes should skip ownership check
+      isRecursiveChildrenDelete: boolean
+    }
+  | Array<{
+      type: string
+      plugin: IPlugin | undefined
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      payload: any
+      // main node need to be owned by plugin that calls deleteNode
+      // child nodes should skip ownership check
+      isRecursiveChildrenDelete: boolean
+    }> {
   const id = node && node.id
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const internalNode = getNode(id)
 
-  const createDeleteAction = node => {
+  function createDeleteAction(node): {
+    type: string
+    plugin: IPlugin | undefined
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: any
+    isRecursiveChildrenDelete: boolean
+  } {
     return {
       type: `DELETE_NODE`,
       plugin,
@@ -583,11 +668,11 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
 
 // We add a counter to node.internal for fast comparisons/intersections
 // of various node slices. The counter must increase even across builds.
-function getNextNodeCounter() {
+function getNextNodeCounter(): number {
   const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
   if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
     throw new Error(
-      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`
+      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`,
     )
   }
   return lastNodeCounter + 1
@@ -597,7 +682,7 @@ function getNextNodeCounter() {
 /**
  * Create a new node.
  * @memberof actions
- * @param {Object} node a node object
+ * @param {object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
  * derived from another node, set that node as the parent. Otherwise it can
@@ -607,7 +692,7 @@ function getNextNodeCounter() {
  * children node IDs here directly. If you're adding a child node to a
  * parent node created by a plugin, you can't mutate this value directly
  * to add your node id, instead use the action creator `createParentChildLink`.
- * @param {Object} node.internal node fields that aren't generally
+ * @param {object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
  * and Gatsby core. Only fields described below are allowed in `internal` object.
  * Using any type of custom fields will result in validation errors.
@@ -675,16 +760,18 @@ function getNextNodeCounter() {
  *   }
  * })
  */
-const createNode = (
-  node: any,
-  plugin?: Plugin,
-  actionOptions?: ActionOptions = {}
-) => {
+function _createNode(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyNode,
+  plugin?: IPlugin | undefined,
+  actionOptions: ActionOptions | undefined = {},
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
-        `The node passed to the "createNode" action creator must be an object`
-      )
+        `The node passed to the "createNode" action creator must be an object`,
+      ),
     )
   }
 
@@ -708,12 +795,13 @@ const createNode = (
     report.error(JSON.stringify(node, null, 4))
     report.panic(
       chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugins`
-      )
+        `The node internal.owner field is set automatically by Gatsby and not by plugins`,
+      ),
     )
   }
 
   const trackParams = {}
+
   // Add the plugin name to the internal object.
   if (plugin) {
     node.internal.owner = plugin.name
@@ -735,8 +823,11 @@ const createNode = (
 
       const possiblyCodeFrame = getNonGatsbyCodeFrame()
       if (possiblyCodeFrame) {
+        // @ts-ignore
         errorObj.context.codeFrame = possiblyCodeFrame.codeFrame
+        // @ts-ignore
         errorObj.filePath = possiblyCodeFrame.fileName
+        // @ts-ignore
         errorObj.location = {
           start: {
             line: possiblyCodeFrame.line,
@@ -769,23 +860,37 @@ const createNode = (
       Plugin that created the node:
 
       ${JSON.stringify(plugin, null, 4)}
-    `
+    `,
     )
   }
 
-  node = sanitizeNode(node)
+  const sanitizedNode = sanitizeNode(node)
 
-  const oldNode = getNode(node.id)
+  // node = sanitizeNode(node)
+
+  const oldNode = getNode((sanitizedNode as IGatsbyNode | undefined)?.id ?? ``)
 
   if (actionOptions.parentSpan) {
-    actionOptions.parentSpan.setTag(`nodeId`, node.id)
-    actionOptions.parentSpan.setTag(`nodeType`, node.id)
+    actionOptions.parentSpan.setTag(
+      `nodeId`,
+      (sanitizedNode as IGatsbyNode | undefined)?.id,
+    )
+    actionOptions.parentSpan.setTag(
+      `nodeType`,
+      (sanitizedNode as IGatsbyNode | undefined)?.id,
+    )
   }
 
   let deleteActions
   let updateNodeAction
   // Check if the node has already been processed.
-  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
+  if (
+    oldNode &&
+    !hasNodeChanged(
+      (sanitizedNode as IGatsbyNode | undefined)?.id,
+      (sanitizedNode as IGatsbyNode | undefined)?.internal.contentDigest,
+    )
+  ) {
     updateNodeAction = {
       ...actionOptions,
       plugin,
@@ -797,7 +902,15 @@ const createNode = (
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const createDeleteAction = node => {
+      function createDeleteAction(node?: IGatsbyNode | undefined): {
+        type: string
+        plugin: IPlugin | undefined
+        payload?: IGatsbyNode | undefined
+        isRecursiveChildrenDelete: boolean
+        traceId?: string | null | undefined
+        parentSpan?: Span | null | undefined
+        followsSpan?: Span | SpanContext | null | undefined
+      } {
         return {
           ...actionOptions,
           type: `DELETE_NODE`,
@@ -829,33 +942,37 @@ const createNode = (
   }
 }
 
-actions.createNode =
-  (...args) =>
-  dispatch => {
-    const actions = createNode(...args)
+function createNode(
+  node: IGatsbyNode,
+  plugin?: IPlugin | undefined,
+  actionOptions: ActionOptions | undefined = {},
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+) {
+  return (dispatch): Promise<unknown> => {
+    const actions = _createNode(node, plugin, actionOptions)
 
     dispatch(actions)
     const createNodeAction = (
       Array.isArray(actions) ? actions : [actions]
-    ).find(action => action.type === `CREATE_NODE`)
+    ).find((action) => action.type === `CREATE_NODE`)
 
     if (!createNodeAction) {
       return Promise.resolve(undefined)
     }
 
-    const { payload: node, traceId, parentSpan } = createNodeAction
+    const { payload, traceId, parentSpan } = createNodeAction
     const maybePromise = apiRunnerNode(`onCreateNode`, {
-      node: wrapNode(node),
+      node: wrapNode(payload),
       traceId,
       parentSpan,
-      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+      traceTags: { nodeId: payload.id, nodeType: payload.internal.type },
     })
 
     if (maybePromise?.then) {
-      return maybePromise.then(res =>
+      return maybePromise.then((res) =>
         getDataStore()
           .ready()
-          .then(() => res)
+          .then(() => res),
       )
     } else {
       return getDataStore()
@@ -863,6 +980,7 @@ actions.createNode =
         .then(() => maybePromise)
     }
   }
+}
 
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
@@ -870,11 +988,18 @@ actions.createNode =
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} node A node object. See the "createNode" action for more information about the node object details.
+ * @param {object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
  * touchNode(node)
  */
-actions.touchNode = (node: any, plugin?: Plugin) => {
+function touchNode(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyNode,
+  plugin?: IPlugin | undefined,
+):
+  | Array<never>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | { type: string; plugin: IPlugin | undefined; payload: any; typeName: any } {
   const nodeId = node?.id
 
   if (!nodeId) {
@@ -891,9 +1016,10 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
 }
 
 type CreateNodeInput = {
-  node: Object,
-  name?: string,
-  value: any,
+  node: IGatsbyNode
+  name?: string | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any
 }
 /**
  * Extend another node. The new node field is placed under the `fields`
@@ -902,8 +1028,8 @@ type CreateNodeInput = {
  * Once a plugin has claimed a field name the field name can't be used by
  * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
- * @param {Object} $0
- * @param {Object} $0.node the target node object
+ * @param {object} $0
+ * @param {object} $0.node the target node object
  * @param {string} $0.name the name for the field
  * @param {any} $0.value the value for the field
  * @example
@@ -915,11 +1041,23 @@ type CreateNodeInput = {
  *
  * // The field value is now accessible at node.fields.happiness
  */
-actions.createNodeField = (
+function createNodeField(
   { node, name, value }: CreateNodeInput,
-  plugin: Plugin,
-  actionOptions?: ActionOptions
-) => {
+  plugin: IPlugin,
+  actionOptions?: ActionOptions | undefined,
+): {
+  type: string
+  plugin: IPlugin
+  payload?: IGatsbyNode | IGatsbyPage | undefined
+  addedField: string | undefined
+  traceId?: string | null | undefined
+  parentSpan?: Span | SpanContext | null | undefined
+  followsSpan?: Span | SpanContext | null | undefined
+} {
+  if (!name) {
+    throw new Error(`A field name must be provided when creating a node field`)
+  }
+
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
@@ -930,11 +1068,12 @@ actions.createNodeField = (
 
   // Normalized name of the field that will be used in schema
   const schemaFieldName = _.includes(name, `___NODE`)
-    ? name.split(`___`)[0]
+    ? name?.split(`___`)[0]
     : name
 
   // Check that this field isn't owned by another plugin.
   const fieldOwner = node.internal.fieldOwners[schemaFieldName]
+
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
       stripIndent`
@@ -944,20 +1083,19 @@ actions.createNodeField = (
       Plugin: ${plugin.name}
       name: ${name}
       value: ${value}
-      `
+      `,
     )
   }
 
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
-  node = sanitizeNode(node)
 
   return {
     ...actionOptions,
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    payload: node,
+    payload: sanitizeNode(node),
     addedField: name,
   }
 }
@@ -968,16 +1106,21 @@ actions.createNodeField = (
  * this new child node to the `children` array of the parent but since you
  * don't have direct access to the immutable parent node, use this action
  * instead.
- * @param {Object} $0
- * @param {Object} $0.parent the parent node object
- * @param {Object} $0.child the child node object
+ * @param {object} $0
+ * @param {object} $0.parent the parent node object
+ * @param {object} $0.child the child node object
  * @example
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
-actions.createParentChildLink = (
-  { parent, child }: { parent: any, child: any },
-  plugin?: Plugin
-) => {
+function createParentChildLink(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  {
+    parent,
+    child,
+  }: { parent: { children: Array<string> }; child: { id: string } },
+  plugin?: IPlugin | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { type: string; plugin: IPlugin | undefined; payload: any } {
   if (!parent.children.includes(child.id)) {
     parent.children.push(child.id)
   }
@@ -996,18 +1139,26 @@ actions.createParentChildLink = (
  *
  * For full control over the webpack config, use `replaceWebpackConfig()`.
  *
- * @param {Object} config partial webpack config, to be merged into the current one
+ * @param {object} config partial webpack config, to be merged into the current one
  */
-actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+function setWebpackConfig(
+  config: Record<string, unknown>,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
+  // @ts-ignore
   if (config.node?.fs === `empty`) {
     report.warn(
       `[deprecated${
         plugin ? ` ` + plugin.name : ``
-      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`,
     )
+    // @ts-ignore
     delete config.node.fs
+    // @ts-ignore
     config.resolve = config.resolve || {}
+    // @ts-ignore
     config.resolve.fallback = config.resolve.fallback || {}
+    // @ts-ignore
     config.resolve.fallback.fs = false
   }
 
@@ -1025,18 +1176,26 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * Generally only useful for cases where you need to handle config merging logic
  * yourself, in which case consider using `webpack-merge`.
  *
- * @param {Object} config complete webpack config
+ * @param {object} config complete webpack config
  */
-actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+function replaceWebpackConfig(
+  config: Record<string, unknown>,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
+  // @ts-ignore
   if (config.node?.fs === `empty`) {
     report.warn(
       `[deprecated${
         plugin ? ` ` + plugin.name : ``
-      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`,
     )
+
+    // @ts-ignore
     delete config.node.fs
-    config.resolve = config.resolve || {}
-    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve = config.resolve ?? {}
+    // @ts-ignore
+    config.resolve.fallback = config.resolve.fallback ?? {}
+    // @ts-ignore
     config.resolve.fallback.fs = false
   }
 
@@ -1050,7 +1209,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
+ * @param {object} config An options object in the shape of a normal babelrc JavaScript object
  * @example
  * setBabelOptions({
  *   options: {
@@ -1058,10 +1217,13 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  *   }
  * })
  */
-actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
+function setBabelOptions(
+  options: Record<string, unknown>,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
+  let name = `The plugin "${plugin?.name}"`
+  if (plugin?.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
   }
   if (!_.isObject(options)) {
@@ -1089,9 +1251,9 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
 
 /**
  * Add new plugins or merge options into existing Babel plugins.
- * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {object} config A config object describing the Babel plugin to be added.
  * @param {string} config.name The name of the Babel plugin
- * @param {Object} config.options Options to pass to the Babel plugin.
+ * @param {object} config.options Options to pass to the Babel plugin.
  * @example
  * setBabelPlugin({
  *   name:  `@emotion/babel-plugin`,
@@ -1100,10 +1262,13 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  *   },
  * })
  */
-actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
+function setBabelPlugin(
+  config: Record<string, unknown>,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
+  let name = `The plugin "${plugin?.name}"`
+  if (plugin?.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
   }
   if (!config.name) {
@@ -1125,9 +1290,9 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
 
 /**
  * Add new presets or merge options into existing Babel presets.
- * @param {Object} config A config object describing the Babel plugin to be added.
+ * @param {object} config A config object describing the Babel plugin to be added.
  * @param {string} config.name The name of the Babel preset.
- * @param {Object} config.options Options to pass to the Babel preset.
+ * @param {object} config.options Options to pass to the Babel preset.
  * @example
  * setBabelPreset({
  *   name: `@babel/preset-react`,
@@ -1136,10 +1301,13 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
  *   },
  * })
  */
-actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
+function setBabelPreset(
+  config: Record<string, unknown>,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
+  let name = `The plugin "${plugin?.name}"`
+  if (plugin?.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
   }
   if (!config.name) {
@@ -1168,18 +1336,22 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job A job object with at least an id set
+ * @param {object} job A job object with at least an id set
  * @param {id} job.id The id of the job
  * @deprecated Use "createJobV2" instead
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
-actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+function createJob(
+  job: Job,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Job } {
   let msg = `Action "createJob" is deprecated. Please use "createJobV2" instead`
 
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
+
   reportOnce(msg)
 
   return {
@@ -1196,27 +1368,32 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job A job object with name, inputPaths, outputDir and args
+ * @param {object} job A job object with name, inputPaths, outputDir and args
  * @param {string} job.name The name of the job you want to execute
  * @param {string[]} job.inputPaths The inputPaths that are needed to run
  * @param {string} job.outputDir The directory where all files are being saved to
- * @param {Object} job.args The arguments the job needs to execute
+ * @param {object} job.args The arguments the job needs to execute
  * @returns {Promise<object>} Promise to see if the job is done executing
  * @example
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
-actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
-  const internalJob = createInternalJob(job, plugin)
+function createJobV2(job: JobV2, plugin: IPlugin) {
+  return function thunk(dispatch, getState): Promise<Record<string, unknown>> {
+    const internalJob = createInternalJob(job, plugin)
 
-  const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
-  if (maybeWorkerPromise) {
-    return maybeWorkerPromise
+    const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
+    if (maybeWorkerPromise) {
+      return maybeWorkerPromise
+    }
+
+    return createJobV2FromInternalJob(internalJob)(dispatch, getState)
   }
-
-  return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 
-actions.addGatsbyImageSourceUrl = (sourceUrl: string) => {
+function addGatsbyImageSourceUrl(sourceUrl: string): {
+  type: string
+  payload: { sourceUrl: string }
+} {
   return {
     type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
     payload: { sourceUrl },
@@ -1229,13 +1406,16 @@ actions.addGatsbyImageSourceUrl = (sourceUrl: string) => {
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  *
- * @param {Object} job A job object with at least an id set
+ * @param {object} job A job object with at least an id set
  * @param {id} job.id The id of the job
  * @deprecated Use "createJobV2" instead
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
-actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+function setJob(
+  job: Job,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Job } {
   let msg = `Action "setJob" is deprecated. Please use "createJobV2" instead`
 
   if (plugin?.name) {
@@ -1256,13 +1436,16 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job  A job object with at least an id set
+ * @param {object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
  * @deprecated Use "createJobV2" instead
  * @example
  * endJob({ id: `write file id: 123` })
  */
-actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+function endJob(
+  job: Job,
+  plugin: IPlugin | null | undefined = null,
+): { type: string; plugin: IPlugin | null; payload: Job } {
   let msg = `Action "endJob" is deprecated. Please use "createJobV2" instead`
 
   if (plugin?.name) {
@@ -1281,14 +1464,16 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
  * Set plugin status. A plugin can use this to save status keys e.g. the last
  * it fetched something. These values are persisted between runs of Gatsby.
  *
- * @param {Object} status  An object with arbitrary values set
+ * @param {object} status  An object with arbitrary values set
  * @example
  * setPluginStatus({ lastFetched: Date.now() })
  */
-actions.setPluginStatus = (
-  status: { [key: string]: mixed },
-  plugin: Plugin
-) => {
+function setPluginStatus(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  status: { [key: string]: any },
+  plugin: IPlugin,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { type: string; plugin: IPlugin; payload: { [key: string]: any } } {
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,
@@ -1297,12 +1482,10 @@ actions.setPluginStatus = (
 }
 
 // Check if path is absolute and add pathPrefix in front if it's not
-const maybeAddPathPrefix = (path, pathPrefix) => {
+function maybeAddPathPrefix(path: string, pathPrefix: string): string {
   const parsed = url.parse(path)
   const isRelativeProtocol = path.startsWith(`//`)
-  return `${
-    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
-  }${path}`
+  return `${parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix}${path}`
 }
 
 /**
@@ -1314,7 +1497,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  *
  * Keep the redirects configuration in sync with trailing slash configuration from [Gatsby Config API](/docs/reference/config-files/gatsby-config/#trailingslash).
  *
- * @param {Object} redirect Redirect data
+ * @param {object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
@@ -1322,7 +1505,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects
- * @param {Object} redirect.conditions Specify a country or language based redirect
+ * @param {object} redirect.conditions Specify a country or language based redirect
  * @param {(string|string[])} redirect.conditions.country A two-letter country code based on the regional indicator symbol
  * @param {(string|string[])} redirect.conditions.language A two-letter identifier defined by ISO 639-1
  * @example
@@ -1340,17 +1523,39 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  *   // Create pages here
  * }
  */
-actions.createRedirect = ({
+function createRedirect({
   fromPath,
   isPermanent = false,
   redirectInBrowser = false,
   toPath,
   ignoreCase = true,
   ...rest
-}) => {
+}: {
+  fromPath: string
+  isPermanent?: boolean | undefined
+  redirectInBrowser?: boolean | undefined
+  toPath: string
+  ignoreCase?: boolean | undefined
+  statusCode?: number | undefined
+  conditions?:
+    | {
+        country?: string | Array<string> | undefined
+        language?: string | Array<string> | undefined
+      }
+    | undefined
+}): {
+  type: string
+  payload: {
+    fromPath: string
+    isPermanent: boolean
+    ignoreCase: boolean
+    redirectInBrowser: boolean
+    toPath: string
+  }
+} {
   let pathPrefix = ``
   if (store.getState().program.prefixPaths) {
-    pathPrefix = store.getState().config.pathPrefix
+    pathPrefix = store.getState().config.pathPrefix ?? ``
   }
 
   return {
@@ -1369,22 +1574,26 @@ actions.createRedirect = ({
 /**
  * Create a dependency between a page and data.
  *
- * @param {Object} $0
+ * @param {object} $0
  * @param {string} $0.path the path to the page
  * @param {string} $0.nodeId A node ID
  * @param {string} $0.connection A connection type
  * @private
  */
-actions.createPageDependency = (
+function createPageDependency(
   {
     path,
     nodeId,
     connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
-) => {
+  }: { path: string; nodeId: string; connection: string },
+  plugin: string = ``,
+): {
+  type: string
+  plugin: string
+  payload: Array<{ path: string; nodeId: string; connection: string }>
+} {
   console.warn(
-    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`,
   )
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
@@ -1402,10 +1611,12 @@ actions.createPageDependency = (
 /**
  * Record that a page was visited on the server..
  *
- * @param {Object} $0
+ * @param {object} $0
  * @param {string} $0.id the chunkName for the page component.
  */
-actions.createServerVisitedPage = (chunkName: string) => {
+function createServerVisitedPage(
+  chunkName: string,
+): Array<never> | { type: string; payload: { componentChunkName: string } } {
   if (store.getState().visitedPages.get(`server`)?.has(chunkName)) {
     // we already have given chunk tracked, let's not emit `CREATE_SERVER_VISITED_PAGE`
     // action to not cause any additional work
@@ -1422,10 +1633,13 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * Creates an individual node manifest.
  * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
  *
- * @param {Object} manifest Manifest data
- * @param {string} manifest.manifestId An id which ties the unique revision state of this manifest to the unique revision state of a data source.
- * @param {Object} manifest.node The Gatsby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
- * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated. If this parameter is not included, a manifest is created for every node that gets called. By default, node manifests are created for content updated in the last 30 days. To change this, set a `NODE_MANIFEST_MAX_DAYS_OLD` environment variable.
+ * @param {{
+ *   manifestId: string
+ *   node: any
+ *   pluginName: string
+ *   updatedAtUTC: string
+ * }} manifest Manifest data
+ * @returns {{ type: string; payload: { manifestId: any; node: any; pluginName: string; updatedAtUTC: any } } | null}
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
@@ -1435,10 +1649,23 @@ actions.createServerVisitedPage = (chunkName: string) => {
  *   },
  * })
  */
-actions.unstable_createNodeManifest = (
+// * @param {string} manifest.manifestId An id which ties the unique revision state of this manifest to the unique revision state of a data source.
+// * @param {object} manifest.node The Gatsby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
+// * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated. If this parameter is not included, a manifest is created for every node that gets called. By default, node manifests are created for content updated in the last 30 days. To change this, set a `NODE_MANIFEST_MAX_DAYS_OLD` environment variable.
+// eslint-disable-next-line @typescript-eslint/naming-convention
+function unstable_createNodeManifest(
   { manifestId, node, updatedAtUTC },
-  plugin: Plugin
-) => {
+  plugin: IPlugin,
+): {
+  type: string
+  payload: {
+    manifestId: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    node: any
+    pluginName: string
+    updatedAtUTC: string
+  }
+} {
   return {
     type: `CREATE_NODE_MANIFEST`,
     payload: {
@@ -1466,9 +1693,13 @@ actions.unstable_createNodeManifest = (
  *    }
  * }
  *
- * @param {void} $0
+ * @param {IPlugin} plugin
+ * @returns {{ type: string; plugin: IPlugin }}
  */
-actions.enableStatefulSourceNodes = (plugin: Plugin) => {
+function enableStatefulSourceNodes(plugin: IPlugin): {
+  type: string
+  plugin: IPlugin
+} {
   return {
     type: `ENABLE_STATEFUL_SOURCE_PLUGIN`,
     plugin,
@@ -1478,32 +1709,35 @@ actions.enableStatefulSourceNodes = (plugin: Plugin) => {
 /**
  * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
  *
- * @param {Object} $0
- * @param {string} $0.domain The domain to store the headers for.
- * @param {Object} $0.headers The headers to store.
+ * @param {{ domain: string; headers: Record<string, string> }} $0
+ * @returns {{ type: string; payload: { domain: string; headers: any } } | null}
  */
-actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
-  const headersIsObject =
+function setRequestHeaders(
+  { domain, headers }: { domain: string; headers: Record<string, string> },
+  plugin: IPlugin,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): { type: string; payload: { domain: string; headers: any } } | null {
+  const headersIsobject =
     typeof headers === `object` && headers !== null && !Array.isArray(headers)
 
-  const noHeaders = !headersIsObject
+  const noHeaders = !headersIsobject
   const noDomain = typeof domain !== `string`
 
   if (noHeaders) {
     reporter.warn(
-      `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`,
     )
   }
 
   if (noDomain) {
     reporter.warn(
-      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`,
     )
   }
 
   if (noDomain || noHeaders) {
-    reporter.panic(
-      `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`
+    reporter.warn(
+      `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`,
     )
 
     return null
@@ -1520,12 +1754,37 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
       },
     }
   } else {
-    reporter.panic(
-      `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
+    reporter.warn(
+      `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`,
     )
 
     return null
   }
 }
 
-module.exports = { actions }
+export const actions = {
+  deletePage,
+  createPage,
+  deleteNode,
+  touchNode,
+  createNode,
+  createNodeField,
+  createParentChildLink,
+  setWebpackConfig,
+  replaceWebpackConfig,
+  setBabelOptions,
+  setBabelPlugin,
+  setBabelPreset,
+  createJob,
+  createJobV2,
+  addGatsbyImageSourceUrl,
+  setJob,
+  endJob,
+  setPluginStatus,
+  createRedirect,
+  createPageDependency,
+  createServerVisitedPage,
+  unstable_createNodeManifest,
+  enableStatefulSourceNodes,
+  setRequestHeaders,
+}

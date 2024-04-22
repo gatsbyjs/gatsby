@@ -11,7 +11,7 @@ import { watch } from "./watch"
 import { getVersionInfo } from "./utils/version"
 import argv from "yargs"
 import fs from "fs-extra"
-import { PackageJson } from "../../gatsby"
+import type { PackageJson } from "../../gatsby"
 
 // eslint-disable-next-line @babel/no-unused-expressions
 argv
@@ -101,7 +101,7 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 const packageNameToPath = new Map()
 const monoRepoPackages = fs
   .readdirSync(path.join(gatsbyLocation, `packages`))
-  .map(dirName => {
+  .map((dirName) => {
     try {
       const filePath = path.join(
         gatsbyLocation,

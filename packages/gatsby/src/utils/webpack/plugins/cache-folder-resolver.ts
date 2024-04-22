@@ -1,8 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Resolver from "enhanced-resolve/lib/Resolver"
 import mod from "module"
 
-interface IRequest {
-  request?: string
+type IRequest = {
+  request?: string | undefined
   path: string
 }
 
@@ -112,7 +113,7 @@ export class CacheFolderResolver {
         (
           request: IRequest,
           resolveContext: unknown,
-          callback: (err?: Error | null, result?: unknown) => void
+          callback: (err?: Error | null, result?: unknown) => void,
         ) => {
           const req = request.request
           if (!req) {
@@ -139,9 +140,9 @@ export class CacheFolderResolver {
             obj,
             `change issuer to gatsby package by cache-folder-resolver to fix pnp`,
             resolveContext,
-            callback
+            callback,
           )
-        }
+        },
       )
   }
 }

@@ -33,10 +33,10 @@ function get(obj: unknown, selectors: Array<string>): any {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getArray(arr: Array<unknown>, selectors: Array<string>): Array<any> {
   return arr
-    .map(value => {
+    .map((value) => {
       return Array.isArray(value)
         ? getArray(value, selectors)
         : get(value, selectors)
     })
-    .filter(v => v !== undefined)
+    .filter((v) => v !== undefined)
 }

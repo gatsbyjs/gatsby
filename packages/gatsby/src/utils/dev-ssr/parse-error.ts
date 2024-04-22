@@ -3,7 +3,7 @@ import * as sysPath from "path"
 import * as fs from "fs-extra"
 import { slash } from "gatsby-core-utils/path"
 
-const getPosition = function (stackObject: Array<string>): {
+function getPosition(stackObject: Array<string>): {
   filename: string
   line: number
   column: number
@@ -64,7 +64,7 @@ const getPosition = function (stackObject: Array<string>): {
   }
 }
 
-export interface IParsedError {
+export type IParsedError = {
   filename: string
   sourceContent: string
   message: string
@@ -73,7 +73,7 @@ export interface IParsedError {
   column: number
 }
 
-export interface IErrorRenderMeta {
+export type IErrorRenderMeta = {
   codeFrame: string
   source: string
   line: number
@@ -83,7 +83,7 @@ export interface IErrorRenderMeta {
 }
 
 // Code borrowed and modified from https://github.com/watilde/parse-error
-export const parseError = function ({
+export function parseError({
   err,
   directory,
   componentPath,
@@ -115,12 +115,12 @@ export const parseError = function ({
     try {
       const projectName = fs.readJsonSync(
         sysPath.join(directory, `package.json`),
-        `utf8`
+        `utf8`,
       ).name
 
       if (relativeFileName.startsWith(projectName + sysPath.sep)) {
         relativeFileName = relativeFileName.substring(
-          (projectName + sysPath.sep).length
+          (projectName + sysPath.sep).length,
         )
       }
 

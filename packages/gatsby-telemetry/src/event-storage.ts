@@ -1,4 +1,5 @@
 import path from "path"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Configstore from "configstore"
 import createFetch from "@turist/fetch"
 import { Store } from "./store"
@@ -71,8 +72,8 @@ export class EventStorage {
     return this.store.startFlushEvents(async (eventsData: string) => {
       const events = eventsData
         .split(`\n`)
-        .filter(e => e && e.length > 2) // drop empty lines
-        .map(e => JSON.parse(e))
+        .filter((e) => e && e.length > 2) // drop empty lines
+        .map((e) => JSON.parse(e))
 
       return this.submitEvents(events)
     })

@@ -7,8 +7,6 @@ This [Babel](https://babeljs.io/) preset is used for our internal packages. If y
 - [`@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env)
 - [`@babel/preset-react`](https://babeljs.io/docs/en/babel-preset-react)
 - [`@babel/preset-flow`](https://babeljs.io/docs/en/babel-preset-flow)
-- [`@babel/plugin-proposal-class-properties`](https://babeljs.io/docs/en/babel-plugin-proposal-class-properties)
-- [`@babel/plugin-proposal-optional-chaining`](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining)
 - [`@babel/plugin-transform-runtime`](https://babeljs.io/docs/en/babel-plugin-transform-runtime#docsNav)
 
 ## Usage

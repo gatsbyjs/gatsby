@@ -47,37 +47,28 @@ type AllTypeComposer =
   | UnionTypeComposer
   | ScalarTypeComposer
 
-const getDerivedTypes = ({
+function getDerivedTypes({
   typeComposer,
 }: {
   typeComposer: AllTypeComposer
-}): Set<string> => {
+}): Set<string> {
   const derivedTypes = typeComposer.getExtension(`derivedTypes`)
   if (derivedTypes) {
     return derivedTypes as Set<string>
   }
 
-  return new Set()
+  return new Set<string>()
 }
 
-export const deleteFieldsOfDerivedTypes = ({ typeComposer }): void => {
-  const derivedTypes = getDerivedTypes({ typeComposer })
-
-  typeComposer.getFieldNames().forEach(fieldName => {
-    const fieldType = typeComposer.getField(fieldName).type
-
-    if (derivedTypes.has(fieldType.getTypeName())) {
-      typeComposer.removeField(fieldName)
-    }
-  })
-}
-
-const removeTypeFromSchemaComposer = ({
+function removeTypeFromSchemaComposer({
   schemaComposer,
   typeComposer,
-}): void => {
+}: {
+  schemaComposer: SchemaComposer<string>
+  typeComposer: AllTypeComposer
+}): void {
   schemaComposer.delete(typeComposer.getTypeName())
-  schemaComposer.delete((typeComposer as any)._gqType)
+  schemaComposer.delete(typeComposer._gqType)
   schemaComposer.delete(typeComposer)
 }
 
@@ -85,7 +76,7 @@ export const clearDerivedTypes = ({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<string>
   typeComposer: AllTypeComposer
 }): void => {
   const derivedTypes = getDerivedTypes({ typeComposer })

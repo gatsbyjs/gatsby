@@ -5,14 +5,14 @@
   "author": "Jacob Bolda <me@jacobbolda.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter#readme",
   "dependencies": {
-    "@babel/parser": "^7.20.13",
-    "@babel/runtime": "^7.20.13",
-    "@babel/traverse": "^7.20.13",
+    "@babel/parser": "^7.24.4",
+    "@babel/runtime": "^7.24.4",
+    "@babel/traverse": "^7.24.1",
     "bluebird": "^3.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },
@@ -23,8 +23,10 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
-    "gatsby-source-filesystem": "^5.0.0-next"
+    "gatsby": "^5.14.0-next.2",
+    "gatsby-source-filesystem": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

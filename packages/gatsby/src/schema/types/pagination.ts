@@ -3,10 +3,10 @@ import {
   ObjectTypeComposer,
   InputTypeComposer,
   InterfaceTypeComposer,
-  ObjectTypeComposerFieldConfigMapDefinition,
+  type ObjectTypeComposerFieldConfigMapDefinition,
   UnionTypeComposer,
   ScalarTypeComposer,
-  AnyTypeComposer,
+  type AnyTypeComposer,
 } from "graphql-compose"
 import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
@@ -17,15 +17,16 @@ import {
   createMinResolver,
   createSumResolver,
 } from "../resolvers"
-import { convertToNestedInputType, IVisitContext } from "./utils"
+import { convertToNestedInputType, type IVisitContext } from "./utils"
 import { SORTABLE_ENUM } from "./sort"
 
-export const getPageInfo = <TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPageInfo<TContext = any>({
   schemaComposer,
 }: {
   schemaComposer: SchemaComposer<TContext>
-}): ObjectTypeComposer =>
-  schemaComposer.getOrCreateOTC(`PageInfo`, tc => {
+}): ObjectTypeComposer {
+  return schemaComposer.getOrCreateOTC(`PageInfo`, (tc) => {
     tc.addFields({
       currentPage: `Int!`,
       hasPreviousPage: `Boolean!`,
@@ -36,17 +37,19 @@ export const getPageInfo = <TContext = any>({
       totalCount: `Int!`,
     })
   })
+}
 
-export const getEdge = <TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getEdge<TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-}): ObjectTypeComposer => {
+}): ObjectTypeComposer {
   const typeName = `${typeComposer.getTypeName()}Edge`
   addDerivedType({ typeComposer, derivedTypeName: typeName })
-  return schemaComposer.getOrCreateOTC(typeName, tc => {
+  return schemaComposer.getOrCreateOTC(typeName, (tc) => {
     tc.addFields({
       next: typeComposer,
       node: typeComposer.getTypeNonNull(),
@@ -55,13 +58,14 @@ export const getEdge = <TContext = any>({
   })
 }
 
-export const getGroup = <TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getGroup<TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-}): ObjectTypeComposer => {
+}): ObjectTypeComposer {
   const typeName = `${typeComposer.getTypeName()}GroupConnection`
   const fields = {
     field: `String!`,
@@ -70,24 +74,26 @@ export const getGroup = <TContext = any>({
   return createPagination({ schemaComposer, typeComposer, typeName, fields })
 }
 
-export const getPagination = <TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPagination<TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-}): ObjectTypeComposer => {
+}): ObjectTypeComposer {
   const typeName = `${typeComposer.getTypeName()}Connection`
   return createPagination({ schemaComposer, typeComposer, typeName })
 }
 
-function getFieldSelectorTC({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getFieldSelectorTC<TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-}): AnyTypeComposer<any> {
+}): AnyTypeComposer<TContext> {
   if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     return convertToNestedInputType({
       schemaComposer,
@@ -113,13 +119,13 @@ function getFieldSelectorTC({
       },
       leafInputComposer: schemaComposer.getOrCreateETC(
         `FieldSelectorEnum`,
-        etc => {
+        (etc) => {
           etc.setFields({
             // GraphQL spec doesn't allow using "true" (or "false" or "null") as enum values
             // so we "SELECT"
             SELECT: { value: `SELECT` },
           })
-        }
+        },
       ),
       postfix: `FieldSelector`,
     }).getTypeNonNull()
@@ -136,6 +142,7 @@ function getFieldSelectorTC({
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createPagination<TSource = any, TContext = any>({
   schemaComposer,
   typeComposer,
@@ -145,15 +152,18 @@ function createPagination<TSource = any, TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
   typeName: string
-  fields?: ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
+  fields?:
+    | ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
+    | undefined
 }): ObjectTypeComposer {
   const fieldTC = getFieldSelectorTC({ schemaComposer, typeComposer })
 
   const paginationTypeComposer: ObjectTypeComposer =
-    schemaComposer.getOrCreateOTC(typeName, tc => {
+    schemaComposer.getOrCreateOTC(typeName, (tc) => {
       // getGroup() will create a recursive call to pagination,
       // so only add it and other aggregate functions on onCreate.
       // Cast into their own category to avoid Typescript conflicts.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const aggregationFields: { [key: string]: any } = {
         distinct: {
           type: [`String!`],

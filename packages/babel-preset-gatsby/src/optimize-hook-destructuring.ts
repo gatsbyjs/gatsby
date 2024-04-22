@@ -1,5 +1,8 @@
 import { NodePath, PluginObj, Visitor } from "@babel/core"
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as BabelTypes from "@babel/types"
+// @ts-ignore
 import { Program } from "@babel/types"
 
 // matches any hook-like (the default)
@@ -9,11 +12,13 @@ const isHook = /^use[A-Z]/
 const isBuiltInHook =
   /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
 
-interface IState {
-  opts?: {
-    onlyBuiltIns?: boolean
-    lib?: boolean
-  }
+type IState = {
+  opts?:
+    | {
+        onlyBuiltIns?: boolean | undefined
+        lib?: boolean | undefined
+      }
+    | undefined
 }
 
 export default function ({
@@ -46,7 +51,7 @@ export default function ({
         const specifier = (binding.path.parent as BabelTypes.ImportDeclaration)
           .source.value
         // not a match
-        if (!libs.some(lib => lib === specifier)) return
+        if (!libs.some((lib) => lib === specifier)) return
       }
 
       // only match function calls with names that look like a hook
@@ -59,14 +64,14 @@ export default function ({
               acc.push(
                 t.objectProperty(
                   t.numericLiteral(i),
-                  element as BabelTypes.Identifier
-                )
+                  element as BabelTypes.Identifier,
+                ),
               )
             }
             return acc
           },
-          []
-        )
+          [],
+        ),
       )
     },
   }
@@ -75,6 +80,7 @@ export default function ({
     name: `optimize-hook-destructuring`,
     visitor: {
       // this is a workaround to run before preset-env destroys destructured assignments
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Program<Program>(path: NodePath<Program>, state: any): void {
         path.traverse(visitor, state)
       },

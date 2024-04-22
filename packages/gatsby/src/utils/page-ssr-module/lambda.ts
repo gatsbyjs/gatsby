@@ -1,17 +1,16 @@
-// @ts-ignore
-import type { GatsbyFunctionResponse, GatsbyFunctionRequest } from "gatsby"
-import * as path from "path"
+import * as path from "node:path"
 import * as fs from "fs-extra"
-import { get as httpsGet } from "https"
-import { get as httpGet, IncomingMessage, ClientRequest } from "http"
-import { tmpdir } from "os"
-import { pipeline } from "stream"
-import { URL } from "url"
-import { promisify } from "util"
+import { get as httpsGet } from "node:https"
+import { get as httpGet, IncomingMessage, ClientRequest } from "node:http"
+import { tmpdir } from "node:os"
+import { pipeline } from "node:stream"
+import { URL } from "node:url"
+import { promisify } from "node:util"
 
 import type { IGatsbyPage } from "../../internal"
 import type { ISSRData } from "./entry"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
+import type { GatsbyFunctionResponse, GatsbyFunctionRequest } from "../../.."
 
 const cdnDatastore = `%CDN_DATASTORE_PATH%`
 const PATH_PREFIX = `%PATH_PREFIX%`
@@ -250,7 +249,7 @@ async function getEngine(): Promise<GraphQLEngineType> {
 
     await fs.ensureDir(dbPath)
     await new Promise((resolve, reject) => {
-      const req = get(cdnDatastore, response => {
+      const req = get(cdnDatastore, (response) => {
         if (
           !response.statusCode ||
           response.statusCode < 200 ||
@@ -269,13 +268,13 @@ async function getEngine(): Promise<GraphQLEngineType> {
         const fileStream = fs.createWriteStream(downloadPath)
         streamPipeline(response, fileStream)
           .then(resolve)
-          .catch(error => {
+          .catch((error) => {
             console.log(`Error downloading ${cdnDatastore}`, error)
             reject(error)
           })
       })
 
-      req.on(`error`, error => {
+      req.on(`error`, (error) => {
         console.log(`Error downloading ${cdnDatastore}`, error)
         reject(error)
       })

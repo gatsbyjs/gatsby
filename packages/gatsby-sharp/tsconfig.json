@@ -1,17 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "ES5",
-    "module": "CommonJS",
-    "downlevelIteration": true,
-    "outDir": "./",
+    "outDir": "dist",
     "declarationDir": "dist",
     "declaration": true
   },
   "include": ["src"],
-  "exclude": [
-    "src/__tests__",
-    "src/__mocks__",
-    "dist",
-  ]
+  "exclude": ["src/__tests__", "src/__mocks__", "dist"]
 }

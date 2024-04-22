@@ -1,4 +1,3 @@
-const fetch = require("node-fetch").default
 const {
   JwtVerifier,
   getTokenFromHeader,
@@ -22,15 +21,15 @@ const shows = async (req, res) => {
       })
     }
 
-    const result = await fetch("https://api.tvmaze.com/shows")
+    const result = await globalThis.fetch("https://api.tvmaze.com/shows")
     const shows = await result.json()
 
     res.status(200).json(
-      shows.map(s => ({
+      shows.map((s) => ({
         id: s.id,
         url: s.url,
         name: s.name,
-      }))
+      })),
     )
   } catch (err) {
     res.status(500).json({ error_description: err.message })

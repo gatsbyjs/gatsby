@@ -100,10 +100,10 @@ You should now see the following dependencies in your `site/package.json`:
 ```json:title=site/package.json
 {
   "dependencies": {
-    "gatsby": "^4.15.1",
+    "gatsby": "5.13.4",
     "gatsby-theme-events": "*",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
 ```
@@ -142,9 +142,9 @@ The `gatsby-theme-events/package.json` file should now include the following:
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
-    "gatsby": "^4.15.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "gatsby": "5.13.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
 ```
@@ -1327,15 +1327,15 @@ It's important to namespace your theme. It helps differentiate between published
     "develop": "gatsby develop"
   },
   "peerDependencies": {
-    "gatsby": "^3.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "gatsby": "5.13.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "dependencies": {
-    "gatsby-plugin-theme-ui": "^0.10.0",
-    "gatsby-source-filesystem": "^3.0.0",
-    "gatsby-transformer-yaml": "^3.0.0",
-    "theme-ui": "^0.10.0"
+    "gatsby-plugin-theme-ui": "0.10.0",
+    "gatsby-source-filesystem": "3.0.0",
+    "gatsby-transformer-yaml": "3.0.0",
+    "theme-ui": "0.10.0"
   }
 }
 ```

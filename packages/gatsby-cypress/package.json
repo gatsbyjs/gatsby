@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "gatsby-cypress",
   "version": "3.14.0-next.2",
   "description": "Cypress tools for Gatsby projects",
@@ -17,7 +17,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13"
+    "@babel/runtime": "^7.24.4"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
@@ -33,8 +33,10 @@
     "integration"
   ],
   "peerDependencies": {
-    "cypress": "^13.7.3",
-    "gatsby": "^5.0.0-next"
+    "cypress": "^13.8.0",
+    "gatsby": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

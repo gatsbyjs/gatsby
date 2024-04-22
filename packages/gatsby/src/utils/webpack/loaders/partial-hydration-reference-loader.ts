@@ -1,4 +1,3 @@
-/* eslint-disable @babel/no-invalid-this */
 import { parse } from "acorn-loose"
 import { simple as walk } from "acorn-walk"
 import type { LoaderDefinitionFunction } from "webpack"
@@ -43,7 +42,9 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
   let hasClientExportDirective = false
 
   const normalizedModuleKey = createNormalizedModuleKey(
+    // eslint-disable-next-line @babel/no-invalid-this
     this.resourcePath,
+    // eslint-disable-next-line @babel/no-invalid-this
     this.rootContext,
   )
 

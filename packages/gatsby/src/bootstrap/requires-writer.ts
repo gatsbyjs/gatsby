@@ -3,11 +3,10 @@ import _ from "lodash"
 import path from "path"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
-// @ts-ignore
 import { match } from "@gatsbyjs/reach-router"
 import { joinPath, md5, slash } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
-import { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types"
+import type { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types"
 import {
   writeModule,
   getAbsolutePathForVirtualModule,
@@ -16,8 +15,9 @@ import { getPageMode } from "../utils/page-mode"
 import { devSSRWillInvalidate } from "../commands/build-html"
 import { rankRoute } from "../utils/rank-route"
 
-const hasContentFilePath = (componentPath: string): boolean =>
-  componentPath.includes(`?__contentFilePath=`)
+function hasContentFilePath(componentPath: string): boolean {
+  return componentPath.includes(`?__contentFilePath=`)
+}
 
 type IGatsbyPageComponent = {
   componentPath: string
@@ -27,12 +27,12 @@ type IGatsbyPageComponent = {
 
 type IGatsbyPageMatchPath = {
   path: string
-  matchPath: string | undefined
+  matchPath: string | null | undefined
 }
 
 let lastHash: string | null = null
 
-export const resetLastHash = (): void => {
+export function resetLastHash(): void {
   lastHash = null
 }
 
@@ -61,9 +61,9 @@ export function getComponents(
   return _.orderBy(
     _.uniqBy(
       _.map([...pages, ...slices.values()], pickComponentFields),
-      c => c.componentChunkName,
+      (c) => c.componentChunkName,
     ),
-    c => c.componentChunkName,
+    (c) => c.componentChunkName,
   )
 }
 
@@ -75,7 +75,6 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
   type IMatchPathEntry = {
     index: number
     score: number
-    matchPath: string
   } & IGatsbyPage
 
   function createMatchPathEntry(
@@ -94,7 +93,7 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
       ...page,
       matchPath,
       index,
-      score: rankRoute(matchPath),
+      score: rankRoute(matchPath) ?? 0,
     }
   }
 
@@ -116,7 +115,7 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
 
     pages.forEach((page: IGatsbyPage, index: number): void => {
       const isInsideMatchPath = !!matchPathPages.find(
-        pageWithMatchPath =>
+        (pageWithMatchPath) =>
           !page.matchPath && match(pageWithMatchPath.matchPath, page.path),
       )
 
@@ -137,7 +136,7 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
   }
 
   return matchPathPages
-    .sort((a, b) => {
+    .sort((a, b): number => {
       // The higher the score, the higher the specificity of our matchPath
       const order = b.score - a.score
       if (order !== 0) {
@@ -146,11 +145,19 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
 
       // if specificity is the same we do lexigraphic comparison of path to ensure
       // deterministic order regardless of order pages where created
-      return a.matchPath.localeCompare(b.matchPath)
+      return a.matchPath?.localeCompare(b.matchPath ?? ``) ?? 0
     })
-    .map(({ path, matchPath }) => {
-      return { path, matchPath }
-    })
+    .map(
+      ({
+        path,
+        matchPath,
+      }: IMatchPathEntry): {
+        path: string
+        matchPath: string | null | undefined
+      } => {
+        return { path, matchPath }
+      },
+    )
 }
 
 // Write out pages information.
@@ -167,9 +174,9 @@ export async function writeAll(state: IGatsbyState): Promise<boolean> {
     ]
 
     // Remove any page components that no longer exist.
-    cleanedSSRVisitedPageComponents = components.filter(c => {
+    cleanedSSRVisitedPageComponents = components.filter((c) => {
       return (
-        ssrVisitedPageComponents.some(s => s === c.componentChunkName) ||
+        ssrVisitedPageComponents.some((s) => s === c.componentChunkName) ||
         c.componentChunkName.startsWith(`slice---`)
       )
     })
@@ -337,6 +344,7 @@ const debouncedWriteAll = _.debounce(
  * files as required
  */
 let listenerStarted = false
+
 export function startListener(): void {
   // Only start the listener once.
   if (listenerStarted) {

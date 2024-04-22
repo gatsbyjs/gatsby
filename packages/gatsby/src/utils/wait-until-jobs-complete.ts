@@ -6,7 +6,7 @@ import {
 } from "./jobs/manager"
 
 async function waitJobsV1(): Promise<void> {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve) => {
     const onEndJob = (): void => {
       if (store.getState().jobs.active.length === 0) {
         resolve()

@@ -1,22 +1,23 @@
-const axios = require(`axios`)
+function get(endpoint) {
+  return fetch(`https://pokeapi.co/api/v2${endpoint}`)
+}
 
-const get = endpoint => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
-
-const getPokemonData = names =>
-  Promise.all(
-    names.map(async name => {
+function getPokemonData(names) {
+  return Promise.all(
+    names.map(async (name) => {
       const { data: pokemon } = await get(`/pokemon/${name}`)
       const abilities = await Promise.all(
         pokemon.abilities.map(async ({ ability: { name: abilityName } }) => {
           const { data: ability } = await get(`/ability/${abilityName}`)
 
           return ability
-        })
+        }),
       )
 
       return { ...pokemon, abilities }
-    })
+    }),
   )
+}
 
 exports.createPages = async ({ actions: { createPage } }) => {
   const allPokemon = await getPokemonData([`pikachu`, `charizard`, `squirtle`])
@@ -29,7 +30,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   })
 
   // Create a page for each Pokémon.
-  allPokemon.forEach(pokemon => {
+  allPokemon.forEach((pokemon) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`,
       component: require.resolve(`./src/templates/pokemon.js`),
@@ -37,7 +38,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     })
 
     // Create a page for each ability of the current Pokémon.
-    pokemon.abilities.forEach(ability => {
+    pokemon.abilities.forEach((ability) => {
       createPage({
         path: `/pokemon/${pokemon.name}/ability/${ability.name}/`,
         component: require.resolve(`./src/templates/ability.js`),

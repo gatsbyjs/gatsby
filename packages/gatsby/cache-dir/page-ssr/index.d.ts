@@ -20,8 +20,8 @@ interface IGatsbyPage {
 
 // also inlined
 interface IQueryResult {
-  errors?: Array<Error>
-  data?: any
+  errors?: Array<Error> | undefined
+  data?: any | undefined
 }
 
 // https://codemix.com/opaque-types-in-javascript/

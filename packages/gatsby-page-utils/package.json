@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "gatsby-page-utils",
   "version": "3.14.0-next.2",
   "description": "Gatsby library that helps creating pages",

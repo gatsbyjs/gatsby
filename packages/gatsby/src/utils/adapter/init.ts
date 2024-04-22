@@ -1,4 +1,3 @@
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
 import { join } from "path"
@@ -136,7 +135,7 @@ export async function getAdapterInit(
 
   // 1. Find adapter candidates that are compatible with the current environment
   //    we find all matching adapters in case package is renamed in the future and future gatsby versions will need different package than previous ones
-  const adapterEntry = latestAdapters.find(candidate => candidate.test())
+  const adapterEntry = latestAdapters.find((candidate) => candidate.test())
 
   if (!adapterEntry) {
     reporter.verbose(

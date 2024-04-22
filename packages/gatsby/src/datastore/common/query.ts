@@ -93,7 +93,7 @@ function createDbQueriesFromObjectNested(
   return _.flatMap(keys, (key: string): Array<DbQuery> => {
     if (key === `$elemMatch`) {
       const queries = createDbQueriesFromObjectNested(filter[key])
-      return queries.map(query => {
+      return queries.map((query) => {
         return {
           type: `elemMatch`,
           path: path,
@@ -155,13 +155,13 @@ export function prefixResolvedFields(
 ): Array<DbQuery> {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.getOwnPropertyNames(dottedFields)
-  queries.forEach(query => {
+  queries.forEach((query) => {
     const prefixPath = query.path.join(`.`)
     if (
       dottedFields[prefixPath] ||
-      (dottedFieldKeys.some(dottedKey => dottedKey.startsWith(prefixPath)) &&
+      (dottedFieldKeys.some((dottedKey) => dottedKey.startsWith(prefixPath)) &&
         query.type === `elemMatch`) ||
-      dottedFieldKeys.some(dottedKey => prefixPath.startsWith(dottedKey))
+      dottedFieldKeys.some((dottedKey) => prefixPath.startsWith(dottedKey))
     ) {
       query.path.unshift(`__gatsby_resolved`)
     }
@@ -180,7 +180,7 @@ export function prepareQueryArgs(
   filterFields: Array<IInputQuery> | IInputQuery = {},
 ): IPreparedQueryArg {
   const filters = {}
-  Object.keys(filterFields).forEach(key => {
+  Object.keys(filterFields).forEach((key) => {
     const value = filterFields[key]
     if (_.isPlainObject(value)) {
       filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
@@ -245,7 +245,7 @@ export function objectToDottedField(
   path: Array<string> = [],
 ): Record<string, unknown> {
   let result = {}
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     const value = obj[key]
     if (_.isPlainObject(value)) {
       const pathResult = objectToDottedField(

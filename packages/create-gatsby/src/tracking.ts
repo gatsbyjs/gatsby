@@ -8,7 +8,7 @@ const analyticsApi =
   process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
 let trackingEnabled: boolean | undefined
 const trackingDisabledFromEnvVar: boolean | undefined = isTruthy(
-  process.env.GATSBY_TELEMETRY_DISABLED
+  process.env.GATSBY_TELEMETRY_DISABLED,
 )
 
 const getMachineId = (): string => {
@@ -22,12 +22,12 @@ const getMachineId = (): string => {
   return machineId
 }
 
-export interface ITrackCliArgs {
-  name?: string
-  valueString?: string
-  exitCode?: number
-  valueStringArray?: Array<string>
-  siteHash?: string
+export type ITrackCliArgs = {
+  name?: string | undefined
+  valueString?: string | undefined
+  exitCode?: number | undefined
+  valueStringArray?: Array<string> | undefined
+  siteHash?: string | undefined
 }
 
 const sessionId = uuidv4()
@@ -55,7 +55,7 @@ export function isTrackingEnabled(): boolean {
   return enabled
 }
 
-export const trackCli = (eventType: string, args?: ITrackCliArgs): void => {
+export function trackCli(eventType: string, args?: ITrackCliArgs): void {
   if (!isTrackingEnabled()) {
     return
   }

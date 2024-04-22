@@ -1,4 +1,3 @@
-const axios = require(`axios`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 
 /**
@@ -10,7 +9,7 @@ async function fetch({ site, verbose, typePrefix }) {
 
   let entities = []
   try {
-    const res = await axios({
+    const res = await fetch({
       method: `get`,
       url: `https://api.lever.co/v0/postings/${site}?mode=json`,
     })

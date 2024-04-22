@@ -6,7 +6,6 @@ import webpack, {
   NormalModule,
   javascript,
   Compilation,
-  Compiler,
   AsyncDependenciesBlock,
 } from "webpack"
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -19,7 +18,7 @@ type IModuleExport = {
 }
 
 type IDirective = {
-  directive?: string
+  directive?: string | undefined
 }
 
 export const PARTIAL_HYDRATION_CHUNK_REASON = `PartialHydration client module`
@@ -51,12 +50,12 @@ export class PartialHydrationPlugin {
     const json: Record<string, Record<string, IModuleExport>> = {}
     const mapOriginalModuleToPotentiallyConcatanetedModule = new Map()
     // @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L220-L252
-    const recordModule = (
+    function recordModule(
       id: string,
       module: Module | NormalModule,
       exports: Array<{ originalExport: string; resolvedExport: string }>,
       chunkIds: Array<string>,
-    ): void => {
+    ): void {
       const normalModule: NormalModule = module as NormalModule
 
       const moduleExports: Record<string, IModuleExport> = {}
@@ -71,7 +70,7 @@ export class PartialHydrationPlugin {
       // @ts-ignore
       if (normalModule.modules) {
         // @ts-ignore
-        normalModule.modules.forEach(mod => {
+        normalModule.modules.forEach((mod) => {
           if (mod.buildInfo.rsc) {
             const normalizedModuleKey = createNormalizedModuleKey(
               mod.resource,
@@ -141,7 +140,7 @@ export class PartialHydrationPlugin {
     }
 
     const newClientModules = new Set<webpack.Module>()
-    compilation.chunkGroups.forEach(chunkGroup => {
+    compilation.chunkGroups.forEach((chunkGroup) => {
       chunkGroup.chunks.forEach((chunk: webpack.Chunk) => {
         const chunkModules =
           compilation.chunkGraph.getChunkModulesIterable(chunk)
@@ -207,11 +206,7 @@ export class PartialHydrationPlugin {
     return json
   }
 
-  async addClientModuleEntries(
-    // @ts-ignore
-    compiler: Compiler,
-    compilation: Compilation,
-  ): Promise<void> {
+  async addClientModuleEntries(compilation: Compilation): Promise<void> {
     const clientModules: Array<webpack.NormalModule> = []
     const cssModules = (this._collectedCssModules = new Set())
 
@@ -295,7 +290,7 @@ export class PartialHydrationPlugin {
       {
         modules: clientModules
           .map(
-            module =>
+            (module) =>
               `./` +
               path.relative(
                 compilation.options.context as string,
@@ -385,21 +380,21 @@ export class PartialHydrationPlugin {
       }
     })
 
-    compiler.hooks.finishMake.tapPromise(this.name, async compilation => {
+    compiler.hooks.finishMake.tapPromise(this.name, async (compilation) => {
       if (compilation.compiler.parentCompilation) {
         // child compilation happen for css modules for example, we only care about the main compilation
         return
       }
-      await this.addClientModuleEntries(compiler, compilation)
+      await this.addClientModuleEntries(compilation)
     })
 
     compiler.hooks.thisCompilation.tap(
       this.name,
       (compilation, { normalModuleFactory }) => {
         const parserCallback = (parser: javascript.JavascriptParser): void => {
-          parser.hooks.program.tap(this.name, ast => {
+          parser.hooks.program.tap(this.name, (ast) => {
             const hasClientExportDirective = ast.body.find(
-              statement =>
+              (statement) =>
                 statement.type === `ExpressionStatement` &&
                 (statement as IDirective).directive === `use client`,
             )

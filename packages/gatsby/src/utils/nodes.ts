@@ -1,13 +1,16 @@
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 import { getNode } from "../datastore"
-import { IGatsbyNode } from "../redux/types"
+import type { IGatsbyNode } from "../redux/types"
 import { store } from "../redux"
 
 /**
  * Determine if node has changed.
  */
-export const hasNodeChanged = (id: string, digest: string): boolean => {
-  const node = getNode(id)
+export function hasNodeChanged(
+  id?: string | undefined,
+  digest?: string | undefined,
+): boolean {
+  const node = getNode(id ?? ``)
   if (!node) {
     return true
   } else {
@@ -18,12 +21,15 @@ export const hasNodeChanged = (id: string, digest: string): boolean => {
 /**
  * Get node and save path dependency.
  */
-export function getNodeAndSavePathDependency(id: string, path: string | undefined = ''): IGatsbyNode | undefined {
+export function getNodeAndSavePathDependency(
+  id: string,
+  path: string | undefined = ``,
+): IGatsbyNode | undefined {
   const node = getNode(id)
 
   if (!node) {
     console.error(
-      `getNodeAndSavePathDependency failed for node id: ${id} as it was not found in cache`
+      `getNodeAndSavePathDependency failed for node id: ${id} as it was not found in cache`,
     )
     return undefined
   }
@@ -43,11 +49,11 @@ export async function loadNodeContent(node: IGatsbyNode): Promise<string> {
   // Load plugin's loader function
   const plugin = store
     .getState()
-    .flattenedPlugins.find(plug => plug.name === node.internal.owner)
+    .flattenedPlugins.find((plug) => plug.name === node.internal.owner)
 
   if (!plugin) {
     throw new Error(
-      `Could not find owner plugin of node for loadNodeContent with owner \`${node.internal.owner}\``
+      `Could not find owner plugin of node for loadNodeContent with owner \`${node.internal.owner}\``,
     )
   }
 
@@ -55,7 +61,7 @@ export async function loadNodeContent(node: IGatsbyNode): Promise<string> {
 
   if (!loadNodeContent) {
     throw new Error(
-      `Could not find function loadNodeContent for plugin ${plugin.name}`
+      `Could not find function loadNodeContent for plugin ${plugin.name}`,
     )
   }
 

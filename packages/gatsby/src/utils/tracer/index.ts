@@ -2,7 +2,7 @@ import { slash } from "gatsby-core-utils"
 import path from "path"
 import { Tracer, initGlobalTracer } from "opentracing"
 
-interface ITracerProvider {
+type ITracerProvider = {
   create(): Tracer
   stop(): Promise<void>
 }
@@ -18,7 +18,7 @@ let tracerProvider: ITracerProvider | undefined
  * `stop` - Run any tracer cleanup required before the node.js process
  * exits
  */
-export const initTracer = async (tracerFile: string): Promise<Tracer> => {
+export async function initTracer(tracerFile: string): Promise<Tracer> {
   let tracer: Tracer
   if (tracerFile) {
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE = tracerFile
@@ -34,7 +34,7 @@ export const initTracer = async (tracerFile: string): Promise<Tracer> => {
   return tracer
 }
 
-export const stopTracer = async (): Promise<void> => {
+export async function stopTracer(): Promise<void> {
   if (tracerProvider?.stop) {
     await tracerProvider.stop()
   }

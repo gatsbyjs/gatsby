@@ -1,7 +1,7 @@
 import { execSync } from "child_process"
 import { execa, type Options, type ExecaReturnBase } from "execa"
 import fs from "fs-extra"
-import path from "path"
+import path from "node:path"
 import { reporter } from "./utils/reporter"
 import { spin } from "tiny-spin"
 import { getConfigStore } from "./utils/get-config-store"
@@ -12,9 +12,9 @@ type PackageManager = "pnpm" | "npm"
 
 const packageManagerConfigKey = `cli.packageManager`
 
-export const getPackageManager = (
+export function getPackageManager(
   npmConfigUserAgent?: string | undefined,
-): PackageManager => {
+): PackageManager {
   const configStore = getConfigStore()
   const actualPackageManager = configStore.get(packageManagerConfigKey)
 
@@ -182,7 +182,7 @@ async function clone(
     `--recursive`,
     `--depth=1`,
     `--quiet`,
-  ].filter(arg => Boolean(arg))
+  ].filter((arg) => Boolean(arg))
 
   try {
     await execa(`git`, args)

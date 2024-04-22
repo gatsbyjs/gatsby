@@ -4,7 +4,7 @@ import {
   execa,
   type Options,
   type ExecaChildProcess,
-  ExecaReturnBase,
+  type ExecaReturnBase,
 } from "execa"
 import { sync as existsSync } from "fs-exists-cached"
 import fs from "fs-extra"
@@ -19,17 +19,15 @@ import report from "./reporter"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
 
-const spawnWithArgs = (
+function spawnWithArgs(
   file: string,
   args: Array<string>,
   options?: Options | undefined,
-): ExecaChildProcess =>
-  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
+): ExecaChildProcess {
+  return execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
+}
 
-const spawn = (
-  cmd: string,
-  options?: Options | undefined,
-): ExecaChildProcess => {
+function spawn(cmd: string, options?: Options | undefined): ExecaChildProcess {
   // Split on spaces, tabs, new lines
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
@@ -50,7 +48,7 @@ async function isAlreadyGitRepository(): Promise<boolean> {
   try {
     return await spawn(`git rev-parse --is-inside-work-tree`, {
       stdio: `pipe`,
-    }).then(output => output.stdout === `true`)
+    }).then((output) => output.stdout === `true`)
   } catch (err) {
     return false
   }
@@ -185,7 +183,7 @@ async function clone(hostInfo: hostedGitInfo, rootPath: string): Promise<void> {
     rootPath,
     `--recursive`,
     `--depth=1`,
-  ].filter(arg => Boolean(arg))
+  ].filter((arg) => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
 

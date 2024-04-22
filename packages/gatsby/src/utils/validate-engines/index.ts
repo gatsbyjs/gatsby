@@ -9,16 +9,16 @@ import {
 
 export async function validateEnginesWithActivity(
   directory: string,
-  buildSpan?: Span
+  buildSpan?: Span,
 ): Promise<void> {
   if (
     !isEqual(
       getCurrentPlatformAndTarget(),
-      getFunctionsTargetPlatformAndTarget()
+      getFunctionsTargetPlatformAndTarget(),
     )
   ) {
     reporter.info(
-      `Skipping Rendering Engines validation as they are build for different platform and/or architecture`
+      `Skipping Rendering Engines validation as they are build for different platform and/or architecture`,
     )
     return
   }
@@ -27,7 +27,7 @@ export async function validateEnginesWithActivity(
     `Validating Rendering Engines`,
     {
       parentSpan: buildSpan,
-    }
+    },
   )
   validateEnginesActivity.start()
   try {
@@ -51,7 +51,7 @@ async function validateEngines(directory: string): Promise<void> {
         GATSBY_OPEN_TRACING_CONFIG_FILE: ``,
       },
       silent: true,
-    }
+    },
   )
 
   try {

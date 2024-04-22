@@ -4,19 +4,17 @@ import { rebuild } from "../schema"
 import { haveEqualFields } from "../schema/infer/inference-metadata"
 import { updateStateAndRunQueries } from "../query/query-watcher"
 import report from "gatsby-cli/lib/reporter"
-import { IGatsbyState } from "../redux/types"
+import type { IGatsbyState } from "../redux/types"
 
 type TypeMap = IGatsbyState["inferenceMetadata"]["typeMap"]
 type InferenceMetadata = IGatsbyState["inferenceMetadata"]
 
-const inferredTypesChanged = (
-  typeMap: TypeMap,
-  prevTypeMap: TypeMap
-): boolean =>
-  Object.keys(typeMap).some(
-    type =>
-      typeMap[type].dirty && !haveEqualFields(typeMap[type], prevTypeMap[type])
+function inferredTypesChanged(typeMap: TypeMap, prevTypeMap: TypeMap): boolean {
+  return Object.keys(typeMap).some(
+    (type) =>
+      typeMap[type].dirty && !haveEqualFields(typeMap[type], prevTypeMap[type]),
   )
+}
 
 let lastMetadata: InferenceMetadata
 

@@ -1,11 +1,13 @@
-import webpack, { WebpackPluginInstance } from "webpack"
+import webpack, { type WebpackPluginInstance } from "webpack"
 
 const plugin =
   (
     name: string,
-    optimize?: boolean,
-    deprecationReason?: string
+    optimize?: boolean | undefined,
+    deprecationReason?: string | undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): ((...args: any) => WebpackPluginInstance) =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (...args: any): WebpackPluginInstance => {
     if (deprecationReason) {
       // TODO add proper deprecation function to reporter
@@ -37,7 +39,7 @@ export const builtinPlugins = {
   libraryTemplate: plugin(
     `LibraryTemplatePlugin`,
     false,
-    `plugins.libraryTemplate is deprecated and has been replaced by compilation.outputOptions.library or compilation.addEntry + passing a library option`
+    `plugins.libraryTemplate is deprecated and has been replaced by compilation.outputOptions.library or compilation.addEntry + passing a library option`,
   ),
   loaderTarget: plugin(`LoaderTargetPlugin`),
   memoryOutputFile: plugin(`MemoryOutputFileSystem`),
@@ -60,7 +62,7 @@ export const builtinPlugins = {
   aggressiveSplitting: plugin(
     `AggressiveSplittingPlugin`,
     true,
-    `plugins.aggressiveSplitting is deprecated in favor of plugins.splitChunks.`
+    `plugins.aggressiveSplitting is deprecated in favor of plugins.splitChunks.`,
   ),
   splitChunks: plugin(`SplitChunks`, true),
   chunkModuleIdRange: plugin(`ChunkModuleIdRangePlugin`, true),

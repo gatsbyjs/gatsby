@@ -1,11 +1,11 @@
-const axios = require(`axios`)
 const url = require(`url`)
 const _ = require(`lodash`)
 
-const get = query =>
-  axios.get(
-    `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
+function get(query) {
+  return fetch(
+    `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`,
   )
+}
 
 exports.createSchemaCustomization = async ({ actions }) => {
   const typeDefs = `
@@ -33,7 +33,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
 
 exports.sourceNodes = async ({
   actions,
-  getNode,
+  // getNode,
   createNodeId,
   createContentDigest,
 }) => {
@@ -42,7 +42,7 @@ exports.sourceNodes = async ({
   // Do the initial fetch
   console.time(`fetch HN data`)
   console.log(
-    `starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`
+    `starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`,
   )
   const result = await get(
     `
@@ -94,7 +94,7 @@ fragment commentsFragment on HackerNewsItem {
     id
   }
 }
-  `
+  `,
   )
   console.timeEnd(`fetch HN data`)
 
@@ -120,7 +120,7 @@ fragment commentsFragment on HackerNewsItem {
       kids.kids = []
     }
     const kidLessStory = _.omit(story, `kids`)
-    const childIds = kids.kids.filter(Boolean).map(k => createNodeId(k.id))
+    const childIds = kids.kids.filter(Boolean).map((k) => createNodeId(k.id))
 
     const storyNode = {
       ...kidLessStory,
@@ -152,7 +152,7 @@ fragment commentsFragment on HackerNewsItem {
         if (!comment.kids) {
           comment.kids = []
         }
-        const commentChildIds = comment.kids.map(k => createNodeId(k.id))
+        const commentChildIds = comment.kids.map((k) => createNodeId(k.id))
         const commentNode = {
           ..._.omit(comment, `kids`),
           id: createNodeId(comment.id),

@@ -1,13 +1,17 @@
-import { getMessenger, isWorker, IGatsbyWorkerMessenger } from "gatsby-worker"
-import { ReporterMessagesFromChild } from "gatsby-cli/lib/reporter/types"
 import {
-  IJobCreatedMessage,
-  IJobCompletedMessage,
+  getMessenger,
+  isWorker,
+  type IGatsbyWorkerMessenger,
+} from "gatsby-worker"
+import type { ReporterMessagesFromChild } from "gatsby-cli/lib/reporter/types"
+import {
+  type IJobCreatedMessage,
+  type IJobCompletedMessage,
   MESSAGE_TYPES,
-  InternalJob,
+  type InternalJob,
 } from "../jobs/types"
 
-interface IJobFailedSerialized {
+type IJobFailedSerialized = {
   type: MESSAGE_TYPES.JOB_FAILED
   payload: {
     id: InternalJob["id"]

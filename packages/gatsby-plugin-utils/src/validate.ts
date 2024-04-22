@@ -1,6 +1,6 @@
-import { ValidationOptions } from "joi"
-import { ObjectSchema, Joi } from "./joi"
-import { IPluginInfoOptions } from "./types"
+import type { ValidationOptions } from "joi"
+import { type ObjectSchema, Joi } from "./joi"
+import type { IPluginInfoOptions } from "./types"
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
@@ -8,12 +8,12 @@ const validationOptions: ValidationOptions = {
   cache: true,
 }
 
-interface IOptions {
-  validateExternalRules?: boolean
-  returnWarnings?: boolean
+type IOptions = {
+  validateExternalRules?: boolean | undefined
+  returnWarnings?: boolean | undefined
 }
 
-interface IValidateAsyncResult {
+type IValidateAsyncResult = {
   value: IPluginInfoOptions
   warning: {
     message: string
@@ -32,13 +32,13 @@ export async function validateOptionsSchema(
   options: IOptions = {
     validateExternalRules: true,
     returnWarnings: true,
-  }
+  },
 ): Promise<IValidateAsyncResult> {
   const { validateExternalRules, returnWarnings } = options
 
   const warnOnUnknownSchema = pluginSchema.pattern(
     /.*/,
-    Joi.any().warning(`any.unknown`)
+    Joi.any().warning(`any.unknown`),
   )
 
   return (await warnOnUnknownSchema.validateAsync(pluginOptions, {

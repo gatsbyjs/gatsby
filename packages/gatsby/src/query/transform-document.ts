@@ -2,7 +2,7 @@ import * as graphql from "graphql"
 
 function extractEnumValues(
   value: graphql.ValueNode,
-  acc: Array<string> = []
+  acc: Array<string> = [],
 ): undefined | Array<string> {
   let hasValue = false
   if (value.kind === graphql.Kind.ENUM) {
@@ -18,7 +18,7 @@ function extractEnumValues(
   return hasValue ? acc : undefined
 }
 
-interface IOldSortObject {
+type IOldSortObject = {
   fields: Array<string>
   order?: Array<"ASC" | "DESC">
 }
@@ -45,7 +45,7 @@ function isOldSortObject(props: unknown): props is IOldSortObject {
 
 function pathSegmentsToAst(
   path: string,
-  value: string
+  value: string,
 ): graphql.ObjectValueNode | graphql.EnumValueNode {
   return path.split(`___`).reduceRight(
     (previousNode, fieldPathSegment) => {
@@ -66,7 +66,7 @@ function pathSegmentsToAst(
     {
       kind: graphql.Kind.ENUM,
       value,
-    } as graphql.ObjectValueNode | graphql.EnumValueNode
+    } as graphql.ObjectValueNode | graphql.EnumValueNode,
   )
 }
 
@@ -133,7 +133,7 @@ function processGraphQLQuery(query: string | graphql.DocumentNode): {
     return { ast, hasChanged }
   } catch (err) {
     throw new Error(
-      `GatsbySortAndAggrCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`
+      `GatsbySortAndAggrCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`,
     )
   }
 }

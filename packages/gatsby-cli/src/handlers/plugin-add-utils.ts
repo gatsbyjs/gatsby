@@ -95,7 +95,7 @@ const PACKAGE_MANAGER = getConfigStore().get(packageMangerConfigKey) || `pnpm`
 function getPackageNames(
   packages: Array<{ name: string; version: string }>,
 ): Array<string> {
-  return packages.map(n => `${n.name}@${n.version}`)
+  return packages.map((n) => `${n.name}@${n.version}`)
 }
 
 function generateClientCommands({
@@ -146,7 +146,7 @@ let installs: Array<{
 
 async function executeInstalls(root: string): Promise<void> {
   // @ts-ignore - fix me
-  const types = _.groupBy(installs, c => c.resource.dependencyType)
+  const types = _.groupBy(installs, (c) => c.resource.dependencyType)
 
   // Grab the key of the first install & delete off installs these packages
   // then run intall
@@ -156,11 +156,11 @@ async function executeInstalls(root: string): Promise<void> {
   const packagesToInstall = types[depType]
   installs = installs.filter(
     // @ts-ignore - fix me
-    i => !packagesToInstall.some(p => i.resource.name === p.resource.name),
+    (i) => !packagesToInstall.some((p) => i.resource.name === p.resource.name),
   )
 
   // @ts-ignore - fix me
-  const pkgs = packagesToInstall.map(p => p.resource)
+  const pkgs = packagesToInstall.map((p) => p.resource)
   const packageNames = getPackageNames(pkgs)
 
   const commands = generateClientCommands({
@@ -176,7 +176,7 @@ async function executeInstalls(root: string): Promise<void> {
     })
   } catch (e) {
     // A package failed so call the rejects
-    return packagesToInstall.forEach(p => {
+    return packagesToInstall.forEach((p) => {
       // @ts-ignore - fix me
       p.outsideReject(
         JSON.stringify({
@@ -189,7 +189,7 @@ async function executeInstalls(root: string): Promise<void> {
   release()
 
   // @ts-ignore - fix me
-  packagesToInstall.forEach(p => p.outsideResolve())
+  packagesToInstall.forEach((p) => p.outsideResolve())
 
   // Run again if there's still more installs.
   if (installs.length > 0) {

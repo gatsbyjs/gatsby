@@ -1,8 +1,8 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { apiRunnerNode } from "../utils/api-runner-node"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import type { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
-import { IGatsbyPage } from "../redux/types"
+import type { IGatsbyPage } from "../redux/types"
 import { actions } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
 import { getDataStore } from "../datastore"
@@ -96,7 +96,7 @@ export async function createPages({
     const types = dataStore.getTypes()
     reporter.verbose(
       `Number of node types: ${types.length}. Nodes per type: ${types
-        .map(type => type + `: ` + dataStore.countNodes(type))
+        .map((type) => type + `: ` + dataStore.countNodes(type))
         .join(`, `)}`,
     )
   }
@@ -131,7 +131,7 @@ export async function createPages({
 
   tim.end()
 
-  store.getState().slices.forEach(slice => {
+  store.getState().slices.forEach((slice) => {
     if (slice.updatedAt < timestamp) {
       store.dispatch({
         type: `DELETE_SLICE`,

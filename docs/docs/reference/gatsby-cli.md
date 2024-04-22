@@ -219,7 +219,7 @@ In it you’re going to see something like this.
 ```json:title=config.json
 {
   "cli": {
-    "packageManager": "pnpm@9.0.4",
+    "packageManager": "pnpm@9.0.5",
   }
 }
 ```

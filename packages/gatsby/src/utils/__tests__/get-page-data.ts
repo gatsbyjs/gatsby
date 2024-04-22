@@ -16,18 +16,21 @@ let MOCK_LMDBCACHE_INFO = {}
 
 jest.mock(`fs-extra`, () => {
   return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     readFile: jest.fn(async (path: string): Promise<any> => {
       if (MOCK_FILE_INFO[path]) {
         return MOCK_FILE_INFO[path]
       }
       throw new Error(`Cannot read file "${path}"`)
     }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     readJSON: jest.fn(async (path: string): Promise<any> => {
       if (MOCK_FILE_INFO[path]) {
         return JSON.parse(MOCK_FILE_INFO[path])
       }
       throw new Error(`Cannot read file "${path}"`)
     }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     outputFile: jest.fn(async (path: string, content: string): Promise<any> => {
       MOCK_FILE_INFO[path] = content
     }),
@@ -53,6 +56,7 @@ jest.mock(`../cache-lmdb`, () => {
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createProgress: (): any => {
       return {
         start: jest.fn(),
@@ -150,21 +154,21 @@ describe(`get-page-data-util`, () => {
       expect(setTimeout).toHaveBeenNthCalledWith(
         1,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
       expect(setTimeout).toHaveBeenNthCalledWith(
         2,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
       expect(setTimeout).toHaveBeenNthCalledWith(
         3,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
 
       await expect(resultPromise).rejects.toMatchInlineSnapshot(
-        `[Error: Couldn't get query results for "/foo" in 15.000s.]`
+        `[Error: Couldn't get query results for "/foo" in 15.000s.]`,
       )
     })
 
@@ -180,12 +184,12 @@ describe(`get-page-data-util`, () => {
       expect(setTimeout).toHaveBeenNthCalledWith(
         1,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
       expect(setTimeout).toHaveBeenNthCalledWith(2, expect.any(Function), 2000)
 
       await expect(resultPromise).rejects.toMatchInlineSnapshot(
-        `[Error: Couldn't get query results for "/foo" in 7.000s.]`
+        `[Error: Couldn't get query results for "/foo" in 7.000s.]`,
       )
     })
 
@@ -205,12 +209,12 @@ describe(`get-page-data-util`, () => {
       expect(setTimeout).toHaveBeenNthCalledWith(
         1,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
       expect(setTimeout).toHaveBeenNthCalledWith(
         1,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
 
       finishQuery(Pages.foo, queryResultContent)
@@ -238,17 +242,17 @@ describe(`get-page-data-util`, () => {
       expect(setTimeout).toHaveBeenNthCalledWith(
         1,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
       expect(setTimeout).toHaveBeenNthCalledWith(
         2,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
       expect(setTimeout).toHaveBeenNthCalledWith(
         3,
         expect.any(Function),
-        RETRY_INTERVAL
+        RETRY_INTERVAL,
       )
 
       // we didn't get fresh results, but we resolved to stale ones
@@ -282,7 +286,7 @@ describe(`get-page-data-util`, () => {
         jest.runAllTimers()
 
         await expect(resultPromise).rejects.toMatchInlineSnapshot(
-          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`
+          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`,
         )
       })
 
@@ -298,7 +302,7 @@ describe(`get-page-data-util`, () => {
         jest.runAllTimers()
 
         await expect(resultPromise).rejects.toMatchInlineSnapshot(
-          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`
+          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`,
         )
       })
 
@@ -314,7 +318,7 @@ describe(`get-page-data-util`, () => {
         jest.runAllTimers()
 
         await expect(resultPromise).rejects.toMatchInlineSnapshot(
-          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`
+          `[Error: Page "/foo" doesn't exist. It might have been deleted recently.]`,
         )
       })
     })
@@ -367,7 +371,7 @@ describe(`get-page-data-util`, () => {
 
 function createPage(
   page: Partial<IGatsbyPage>,
-  contextModified: boolean = false
+  contextModified: boolean = false,
 ): void {
   store.dispatch({
     type: `CREATE_PAGE`,
@@ -392,13 +396,13 @@ function startPageQuery(page: Partial<IGatsbyPage>): void {
     isPage: true,
   }
   store.dispatch(
-    queryStart(payload, { name: `page-data-test` } as IGatsbyPlugin)
+    queryStart(payload, { name: `page-data-test` } as IGatsbyPlugin),
   )
 }
 
 function finishQuery(
   page: Partial<IGatsbyPage>,
-  jsonObject: Record<string, unknown>
+  jsonObject: Record<string, unknown>,
 ): void {
   const payload: IPageQueryRunAction["payload"] = {
     path: page.path!,
@@ -411,7 +415,7 @@ function finishQuery(
   savePageQueryResult(page.path!, JSON.stringify(jsonObject))
 
   store.dispatch(
-    pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)
+    pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin),
   )
 
   store.dispatch({
@@ -429,7 +433,7 @@ function deletePageDataFilesFromFs(): void {
 
 function writePageDataFileToFs(
   page: Partial<IGatsbyPage>,
-  jsonObject: Record<string, unknown>
+  jsonObject: Record<string, unknown>,
 ): void {
   MOCK_FILE_INFO[
     pathJoin(
@@ -437,7 +441,7 @@ function writePageDataFileToFs(
       `public`,
       `page-data`,
       fixedPagePath(page.path!),
-      `page-data.json`
+      `page-data.json`,
     )
   ] = JSON.stringify(jsonObject)
   store.dispatch({

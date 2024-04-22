@@ -1,4 +1,3 @@
-import { CombinedState } from "redux"
 import { ExecutionResult, graphql, GraphQLSchema } from "graphql"
 import { getNode } from "../../../../datastore"
 import { store } from "../../../../redux"
@@ -14,7 +13,7 @@ import {
 import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
 // @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
-import {apiRunnerNode} from "../../../api-runner-node"
+import { apiRunnerNode } from "../../../api-runner-node"
 import withResolverContext from "../../../../schema/context"
 
 // re-export all usual methods from production worker
@@ -33,12 +32,12 @@ export function getPage(pathname: string): IGatsbyPage | undefined {
   return store.getState().pages.get(pathname)
 }
 export function getComponent(
-  componentPath: IGatsbyPageComponent["componentPath"]
+  componentPath: IGatsbyPageComponent["componentPath"],
 ): IGatsbyPageComponent | undefined {
   return store.getState().components.get(componentPath)
 }
 export function getStaticQueryComponent(
-  id: IGatsbyStaticQueryComponents["id"]
+  id: IGatsbyStaticQueryComponents["id"],
 ): IGatsbyStaticQueryComponents | undefined {
   return store.getState().staticQueryComponents.get(id)
 }
@@ -49,7 +48,7 @@ export function getInferenceMetadata(typeName: string): ITypeMetadata {
 // test: reporter
 export function log(
   message: string,
-  method: "log" | "warn" | "info" | "success" | "verbose" | "error" = `log`
+  method: "log" | "warn" | "info" | "success" | "verbose" | "error" = `log`,
 ): boolean {
   if (method === `verbose`) {
     reporter.setVerbose(true)
@@ -61,11 +60,11 @@ export async function activityTimer(message: string): Promise<void> {
   const activity = reporter.activityTimer(message)
   activity.start()
 
-  await new Promise(resolve => setTimeout(resolve, 50))
+  await new Promise((resolve) => setTimeout(resolve, 50))
 
   activity.setStatus(`test`)
 
-  await new Promise(resolve => setTimeout(resolve, 50))
+  await new Promise((resolve) => setTimeout(resolve, 50))
 
   activity.end()
 }
@@ -74,45 +73,46 @@ export async function progress(message: string): Promise<void> {
   const activity = reporter.createProgress(message, 50)
   activity.start()
 
-  await new Promise(resolve => setTimeout(resolve, 50))
+  await new Promise((resolve) => setTimeout(resolve, 50))
 
   activity.tick(25)
 
-  await new Promise(resolve => setTimeout(resolve, 50))
+  await new Promise((resolve) => setTimeout(resolve, 50))
 
   activity.total = 100
 
-  await new Promise(resolve => setTimeout(resolve, 50))
+  await new Promise((resolve) => setTimeout(resolve, 50))
 
   activity.tick(75)
 
-  await new Promise(resolve => setTimeout(resolve, 50))
+  await new Promise((resolve) => setTimeout(resolve, 50))
 
   activity.setStatus(`test`)
 
-  await new Promise(resolve => setTimeout(resolve, 50))
+  await new Promise((resolve) => setTimeout(resolve, 50))
 
   activity.end()
 }
 
 // test: config
-export async function runAPI(apiName: GatsbyNodeAPI): Promise<any> {
+export async function runAPI(apiName: GatsbyNodeAPI): Promise<unknown> {
   return await apiRunnerNode(apiName)
 }
 
 // test: config
 export function getAPIRunResult(): string | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (global as any).test
 }
 
-export function getState(): CombinedState<IGatsbyState> {
+export function getState(): IGatsbyState {
   return store.getState()
 }
 
 const runQuery = (
   schema: GraphQLSchema,
   schemaComposer,
-  query: string
+  query: string,
 ): Promise<ExecutionResult> =>
   graphql({
     schema,
@@ -128,7 +128,7 @@ const runQuery = (
 
 // test: schema
 export async function getRunQueryResult(
-  query: string
+  query: string,
 ): Promise<ExecutionResult> {
   const state = store.getState()
 
@@ -136,12 +136,13 @@ export async function getRunQueryResult(
 }
 
 // test: jobs
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ;(global as any).jobs = {
   executedInThisProcess: [],
   createdInThisProcess: [],
 }
 
-interface ITestJobArgs {
+type ITestJobArgs = {
   description: string
 }
 
@@ -153,6 +154,7 @@ export function getJobsMeta(): {
   awaitReturnedWith: null | Record<string, unknown>
   awaitThrewWith: null | string
 } {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (global as any).jobs
 }
 

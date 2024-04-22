@@ -6,7 +6,6 @@ async function run() {
   const { generateHtmlPath } = require(`gatsby-core-utils`)
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
-  const fetch = require(`node-fetch`)
   const { diff } = require(`jest-diff`)
   const prettier = require(`prettier`)
   const cheerio = require(`cheerio`)
@@ -15,10 +14,10 @@ async function run() {
 
   const devSiteBasePath = `http://localhost:8000`
 
-  const comparePath = async path => {
-    const format = htmlStr => prettier.format(htmlStr, { parser: `html` })
+  async function comparePath(path) {
+    const format = (htmlStr) => prettier.format(htmlStr, { parser: `html` })
 
-    const filterHtml = htmlStr => {
+    const filterHtml = (htmlStr) => {
       const $ = cheerio.load(htmlStr)
       // There are many script tag differences
       $(`script`).remove()
@@ -45,7 +44,7 @@ async function run() {
       return $.html()
     }
 
-    const getProdHtmlPath = path => {
+    const getProdHtmlPath = (path) => {
       let maybeUsingEngine = pagesUsingEngines[path]
       if (maybeUsingEngine) {
         return maybeUsingEngine
@@ -54,11 +53,11 @@ async function run() {
     }
 
     const builtHtml = format(
-      filterHtml(fs.readFileSync(getProdHtmlPath(path), `utf-8`))
+      filterHtml(fs.readFileSync(getProdHtmlPath(path), `utf-8`)),
     )
 
     // Fetch once to trigger re-compilation.
-    await fetch(`${devSiteBasePath}/${path}`, {
+    await globalThis.fetch(`${devSiteBasePath}/${path}`, {
       headers: {
         "x-gatsby-wait-for-dev-ssr": `1`,
       },
@@ -66,19 +65,21 @@ async function run() {
 
     // Then wait for six seconds to ensure it's ready to go.
     // Otherwise, tests are flaky depending on the speed of the testing machine.
-    await new Promise(resolve => {
-      setTimeout(() => resolve(), 6000)
+    await new Promise((resolve) => {
+      globalThis.setTimeout(() => resolve(), 6000)
     })
 
     let devStatus = 200
-    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`, {
-      headers: {
-        "x-gatsby-wait-for-dev-ssr": `1`,
-      },
-    }).then(res => {
-      devStatus = res.status
-      return res.text()
-    })
+    const rawDevHtml = await globalThis
+      .fetch(`${devSiteBasePath}/${path}`, {
+        headers: {
+          "x-gatsby-wait-for-dev-ssr": `1`,
+        },
+      })
+      .then((res) => {
+        devStatus = res.status
+        return res.text()
+      })
 
     if (devStatus !== 200) {
       return false
@@ -100,11 +101,12 @@ async function run() {
     }
   }
 
-  const response = await fetch(`${devSiteBasePath}/__graphql`, {
-    method: `POST`,
-    headers: { "Content-Type": `application/json` },
-    body: JSON.stringify({
-      query: `query MyQuery {
+  const response = await globalThis
+    .fetch(`${devSiteBasePath}/__graphql`, {
+      method: `POST`,
+      headers: { "Content-Type": `application/json` },
+      body: JSON.stringify({
+        query: `query MyQuery {
   allSitePage {
     nodes {
       path
@@ -112,16 +114,17 @@ async function run() {
   }
 }
 `,
-    }),
-  }).then(res => res.json()) // expecting a json response
+      }),
+    })
+    .then((res) => res.json()) // expecting a json response
 
   const paths = response.data.allSitePage.nodes
-    .map(n => n.path)
-    .filter(p => p !== `/dev-404-page/`)
+    .map((n) => n.path)
+    .filter((p) => p !== `/dev-404-page/`)
 
   console.log(
     `testing these paths for differences between dev & prod outputs`,
-    paths
+    paths,
   )
 
   const results = []
@@ -134,14 +137,14 @@ async function run() {
   }
 
   // Test all true
-  if (results.every(r => r)) {
+  if (results.every((r) => r)) {
     process.exit(0)
   } else {
     process.exit(1)
   }
 }
 
-run().catch(e => {
+run().catch((e) => {
   console.error(e)
   process.exit(1)
 })

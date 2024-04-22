@@ -7,7 +7,7 @@ import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript"
 import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations"
 import { CodeFileLoader } from "@graphql-tools/code-file-loader"
 import { loadDocuments } from "@graphql-tools/load"
-import {
+import type {
   IDefinitionMeta,
   IStateProgram,
   IGraphQLTypegenOptions,
@@ -57,7 +57,7 @@ export async function writeTypeScriptTypes(
   directory: IStateProgram["directory"],
   schema: GraphQLSchema,
   definitions: Map<string, IDefinitionMeta>,
-  graphqlTypegenOptions: IGraphQLTypegenOptions
+  graphqlTypegenOptions: IGraphQLTypegenOptions,
 ): Promise<void> {
   const pluginConfig: Pick<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     pluginMap: {
@@ -124,7 +124,7 @@ export async function writeTypeScriptTypes(
           }),
         ],
         sort: true,
-      }
+      },
     )
   } catch (e) {
     // These files might not exist, so just skip this
@@ -134,7 +134,7 @@ export async function writeTypeScriptTypes(
     ...filterTargetDefinitions(definitions).values(),
   ]
     .sort(sortDefinitions)
-    .map(definitionMeta => {
+    .map((definitionMeta) => {
       return {
         document: {
           kind: Kind.DOCUMENT,

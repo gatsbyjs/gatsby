@@ -5,15 +5,15 @@ function onCreateBabelConfig({ actions }, options) {
     name: require.resolve(`@babel/preset-typescript`),
     options,
   })
-  actions.setBabelPlugin({
-    name: require.resolve(`@babel/plugin-proposal-optional-chaining`),
-  })
-  actions.setBabelPlugin({
-    name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`),
-  })
-  actions.setBabelPlugin({
-    name: require.resolve(`@babel/plugin-proposal-numeric-separator`),
-  })
+  // actions.setBabelPlugin({
+  //   name: require.resolve(`@babel/plugin-proposal-optional-chaining`),
+  // })
+  // actions.setBabelPlugin({
+  //   name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`),
+  // })
+  // actions.setBabelPlugin({
+  //   name: require.resolve(`@babel/plugin-proposal-numeric-separator`),
+  // })
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {
@@ -46,7 +46,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .default(`React`),
     jsxPragmaFrag: Joi.string()
       .description(
-        `Replace the function used when compiling JSX fragment expressions.`
+        `Replace the function used when compiling JSX fragment expressions.`,
       )
       .optional(),
     allExtensions: Joi.boolean()
@@ -58,13 +58,13 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .optional(),
     allowDeclareFields: Joi.boolean()
       .description(
-        `When enabled, type-only class fields are only removed if they are prefixed with the declare modifier.`
+        `When enabled, type-only class fields are only removed if they are prefixed with the declare modifier.`,
       )
       .optional(),
     onlyRemoveTypeImports: Joi.boolean()
       .description(
         `When set to true, the transform will only remove type-only imports (introduced in TypeScript 3.8).` +
-          `This should only be used if you are using TypeScript >= 3.8.`
+          `This should only be used if you are using TypeScript >= 3.8.`,
       )
       .optional(),
   })

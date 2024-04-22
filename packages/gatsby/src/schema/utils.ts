@@ -37,8 +37,10 @@ export function toNodeTypeNames(
     : [gqlType]
 
   return possibleTypes
-    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
-    .map(type => type.name)
+    .filter((type) =>
+      type.getInterfaces().some((iface) => iface.name === `Node`),
+    )
+    .map((type) => type.name)
 }
 
 export function isObjectOrInterfaceTypeComposer(
@@ -70,7 +72,7 @@ export function fieldNeedToResolve({
   const possibleTCs: Array<ObjectTypeComposer | InterfaceTypeComposer> = [
     typeComposer,
     ...nodeTypeNames
-      .map(name => schemaComposer.getAnyTC(name))
+      .map((name) => schemaComposer.getAnyTC(name))
       .filter(isObjectOrInterfaceTypeComposer),
   ]
 
@@ -148,7 +150,10 @@ export function getResolvedFields(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): undefined | Record<string, any> {
   const typeName = node.internal.type
-  const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
+
+  const resolvedNodes = typeName
+    ? store.getState().resolvedNodesCache.get(typeName)
+    : undefined
   return resolvedNodes?.get(node.id)
 }
 
@@ -201,7 +206,7 @@ export function maybeConvertSortInputObjectToSortPath(
     if (
       Array.isArray(args.sort?.fields) &&
       Array.isArray(args.sort?.order) &&
-      args.sort.order.every(item => {
+      args.sort.order.every((item) => {
         return (
           typeof item === `string` &&
           (item.toLowerCase() === `asc` || item.toLowerCase() === `desc`)

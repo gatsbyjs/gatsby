@@ -1,6 +1,11 @@
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
-import { WebpackError, StatsCompilation, Module, NormalModule } from "webpack"
-import { Stage } from "../commands/types"
+import type { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import {
+  WebpackError,
+  type StatsCompilation,
+  Module,
+  NormalModule,
+} from "webpack"
+import type { Stage } from "../commands/types"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 
 const stageCodeToReadableLabel: Record<Stage, string> = {
@@ -18,40 +23,48 @@ type IFileLocation = {
 type IWebpackError = {
   name: string
   message: string
-  file?: string
-  error?: {
-    message: string
-    loc?: {
-      start: IFileLocation
-      end: IFileLocation
-    }
-  }
+  file?: string | undefined
+  error?:
+    | {
+        message: string
+        loc?:
+          | {
+              start: IFileLocation
+              end: IFileLocation
+            }
+          | undefined
+      }
+    | undefined
   module: Module
-  loc?: {
-    start: IFileLocation
-    end: IFileLocation
-  }
+  loc?:
+    | {
+        start: IFileLocation
+        end: IFileLocation
+      }
+    | undefined
 }
 
 type ITransformedWebpackError = {
   id: string
   filePath: string
-  location?: {
-    start: IFileLocation
-    end: IFileLocation
-  }
+  location?:
+    | {
+        start: IFileLocation
+        end: IFileLocation
+      }
+    | undefined
   context: {
     stage: Stage
     stageLabel: string
-    sourceMessage?: string
+    sourceMessage?: string | undefined
     [key: string]: unknown
   }
 }
 
-const transformWebpackError = (
+function transformWebpackError(
   stage: Stage,
   webpackError: WebpackError,
-): ITransformedWebpackError => {
+): ITransformedWebpackError {
   const castedWebpackError = webpackError as unknown as IWebpackError
 
   let location
@@ -127,15 +140,14 @@ const transformWebpackError = (
     // In case of webpack error stack will include internals of webpack
     // or one of loaders (for example babel-loader) and doesn't provide
     // much value to user, so it's purposely omitted.
-
     // error: webpackError?.error || webpackError,
   }
 }
 
 // With the introduction of Head API, the modulePath can have a resourceQuery so this function can be used to remove it
-const removeResourceQuery = (
+function removeResourceQuery(
   moduleName: string | undefined,
-): string | undefined => {
+): string | undefined {
   const moduleNameWithoutQuery = moduleName?.replace(
     /(\?|&)export=(default|head)$/,
     ``,
@@ -144,22 +156,23 @@ const removeResourceQuery = (
   return moduleNameWithoutQuery
 }
 
-export const structureWebpackErrors = (
+export function structureWebpackErrors(
   stage: Stage,
   webpackError: WebpackError | Array<WebpackError>,
-): Array<ITransformedWebpackError> | ITransformedWebpackError => {
+): Array<ITransformedWebpackError> | ITransformedWebpackError {
   if (Array.isArray(webpackError)) {
-    return webpackError.map(e => transformWebpackError(stage, e))
+    return webpackError.map((e) => transformWebpackError(stage, e))
   }
 
   return transformWebpackError(stage, webpackError)
 }
 
-export const reportWebpackWarnings = (
-  warnings: StatsCompilation["warnings"] = [],
+export function reportWebpackWarnings(
+  warnings: StatsCompilation["warnings"] | undefined = [],
   reporter: Reporter,
-): void => {
+): void {
   let warningMessages: Array<string> = []
+
   if (typeof warnings[0] === `string`) {
     warningMessages = warnings as unknown as Array<string>
   } else if (
@@ -167,15 +180,15 @@ export const reportWebpackWarnings = (
     removeResourceQuery(warnings[0]?.moduleName)
   ) {
     warningMessages = warnings.map(
-      warning =>
+      (warning) =>
         `${removeResourceQuery(warning.moduleName)}\n\n${warning.message}`,
     )
   } else if (warnings[0]?.message) {
-    warningMessages = warnings.map(warning => warning.message)
+    warningMessages = warnings.map((warning) => warning.message)
   }
 
   formatWebpackMessages({
     errors: [],
     warnings: warningMessages,
-  }).warnings.forEach(warning => reporter.warn(warning))
+  }).warnings.forEach((warning) => reporter.warn(warning))
 }

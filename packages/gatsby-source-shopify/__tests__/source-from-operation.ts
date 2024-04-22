@@ -4,7 +4,7 @@
 import fs from "fs"
 import path from "path"
 import os from "os"
-import { graphql, rest } from "msw"
+import { graphql, http } from "msw"
 import { setupServer } from "msw/node"
 import * as processBulkResultsModule from "../src/process-bulk-results"
 import { makeSourceFromOperation } from "../src/source-from-operation"
@@ -109,15 +109,17 @@ describe(`makeSourceFromOperation`, () => {
     server.use(
       graphql.query<ICurrentBulkOperationResponse>(
         `OPERATION_STATUS`,
+        // @ts-ignore
         resolveOnce({
           currentBulkOperation: {
             id: `12345`,
             status: `COMPLETED`,
           },
-        })
+        }),
       ),
       graphql.mutation<IBulkOperationRunQueryResponse>(
         `INITIATE_BULK_OPERATION`,
+        // @ts-ignore
         resolveOnce({
           bulkOperationRunQuery: {
             bulkOperation: {
@@ -129,10 +131,11 @@ describe(`makeSourceFromOperation`, () => {
             },
             userErrors: [],
           },
-        })
+        }),
       ),
       graphql.query<{ node: IBulkOperationNode }>(
         `OPERATION_BY_ID`,
+        // @ts-ignore
         resolveOnce({
           node: {
             status: `CREATED`,
@@ -141,10 +144,11 @@ describe(`makeSourceFromOperation`, () => {
             query: ``,
             url: ``,
           },
-        })
+        }),
       ),
       graphql.query<{ node: IBulkOperationNode }>(
         `OPERATION_BY_ID`,
+        // @ts-ignore
         resolve({
           node: {
             status: `COMPLETED`,
@@ -153,39 +157,42 @@ describe(`makeSourceFromOperation`, () => {
             query: ``,
             url: BULK_DATA_URL,
           },
-        })
-      )
+        }),
+      ),
     )
   })
 
   testConfigs.forEach(({ bulkResults, prioritize, type }) => {
     it(`testing prioritize: ${prioritize}, type: ${type}`, async () => {
-      const jsonLData = bulkResults.map(d => JSON.stringify(d)).join(os.EOL)
+      const jsonLData = bulkResults.map((d) => JSON.stringify(d)).join(os.EOL)
       server.use(
-        rest.get(BULK_DATA_URL, (req, res, ctx) => res(ctx.text(jsonLData)))
+        // @ts-ignore
+        http.get(BULK_DATA_URL, (_req, res, ctx) => res(ctx.text(jsonLData))),
       )
       const options = {
         password: ``,
         storeUrl: `my-shop.shopify.com`,
         downloadImages: true,
       }
+      // @ts-ignore
       const operations = createOperations(mockGatsbyApi(), options)
 
       const finishLastOperation = jest.spyOn(operations, `finishLastOperation`)
       const completedOperation = jest.spyOn(operations, `completedOperation`)
       const cancelOperationInProgress = jest.spyOn(
         operations,
-        `cancelOperationInProgress`
+        `cancelOperationInProgress`,
       )
       const gatsbyApi = mockGatsbyApi()
       const pluginOptions = mockPluginOptions()
 
       const sourceFromOperation = makeSourceFromOperation(
+        // @ts-ignore
         finishLastOperation,
         completedOperation,
         cancelOperationInProgress,
         gatsbyApi,
-        { ...pluginOptions, prioritize }
+        { ...pluginOptions, prioritize },
       )
 
       await sourceFromOperation(operations.productsOperation)
@@ -194,7 +201,7 @@ describe(`makeSourceFromOperation`, () => {
 
       expect(createNode).toHaveBeenCalledTimes(bulkResults.length)
       expect(cancelOperationInProgress.mock.calls.length).toEqual(
-        prioritize ? 1 : 0
+        prioritize ? 1 : 0,
       )
       expect(finishLastOperation.mock.calls.length).toEqual(prioritize ? 0 : 1)
 
@@ -202,7 +209,7 @@ describe(`makeSourceFromOperation`, () => {
         expect(createNode).toHaveBeenCalledWith(
           expect.objectContaining({
             shopifyId: id,
-          })
+          }),
         )
       })
     })
@@ -213,15 +220,16 @@ describe(`makeSourceFromOperation`, () => {
       it(generateTestName(prioritize, type), async () => {
         const fileContents = fs.readFileSync(
           path.join(__dirname, `fixtures`, `bulk-results`, `${type}.jsonl`),
-          { encoding: `utf8` }
+          { encoding: `utf8` },
         )
 
         const lineCountInFile = countJsonLRows(fileContents)
 
         server.use(
-          rest.get(BULK_DATA_URL, (req, res, ctx) =>
-            res(ctx.text(fileContents))
-          )
+          // @ts-ignore
+          http.get(BULK_DATA_URL, (_req, res, ctx) => {
+            return res(ctx.text(fileContents))
+          }),
         )
 
         const options = {
@@ -229,30 +237,33 @@ describe(`makeSourceFromOperation`, () => {
           storeUrl: `my-shop.shopify.com`,
           downloadImages: true,
         }
+
+        // @ts-ignore
         const operations = createOperations(mockGatsbyApi(), options)
 
         const processBulkResults = jest.spyOn(
           processBulkResultsModule,
-          `processBulkResults`
+          `processBulkResults`,
         )
         const finishLastOperation = jest.spyOn(
           operations,
-          `finishLastOperation`
+          `finishLastOperation`,
         )
         const completedOperation = jest.spyOn(operations, `completedOperation`)
         const cancelOperationInProgress = jest.spyOn(
           operations,
-          `cancelOperationInProgress`
+          `cancelOperationInProgress`,
         )
         const gatsbyApi = mockGatsbyApi()
         const pluginOptions = mockPluginOptions()
 
         const sourceFromOperation = makeSourceFromOperation(
+          // @ts-ignore
           finishLastOperation,
           completedOperation,
           cancelOperationInProgress,
           gatsbyApi,
-          { ...pluginOptions, prioritize }
+          { ...pluginOptions, prioritize },
         )
 
         await sourceFromOperation(operations.productsOperation)
@@ -261,12 +272,13 @@ describe(`makeSourceFromOperation`, () => {
 
         expect(createNode).toHaveBeenCalledTimes(lineCountInFile)
         expect(cancelOperationInProgress.mock.calls.length).toEqual(
-          prioritize ? 1 : 0
+          prioritize ? 1 : 0,
         )
         expect(finishLastOperation.mock.calls.length).toEqual(
-          prioritize ? 0 : 1
+          prioritize ? 0 : 1,
         )
         expect(processBulkResults.mock.calls[0][2]).toMatchSnapshot()
+        // @ts-ignore
         expect(gatsbyApi.actions.createNode.mock.calls).toMatchSnapshot()
       })
     }

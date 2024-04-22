@@ -55,7 +55,7 @@ export function writeModule(filePath: string, fileContents: string): void {
 
   fileContentLookup[adjustedFilePath] = fileContents
 
-  instances.forEach(instance => {
+  instances.forEach((instance) => {
     instance.writeModule(adjustedFilePath, fileContents)
   })
 }

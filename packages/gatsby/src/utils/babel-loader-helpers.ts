@@ -8,8 +8,8 @@ import Babel, {
   type CreateConfigItemOptions,
 } from "@babel/core"
 
-import { IBabelStage } from "../redux/types"
-import { Stage } from "../commands/types"
+import type { IBabelStage } from "../redux/types"
+import type { Stage } from "../commands/types"
 
 type ILoadCachedConfigReturnType = {
   stages: {
@@ -167,7 +167,7 @@ export const prepareOptions = (
   const reduxPresets: Array<PluginItem> = []
 
   if (stage) {
-    pluginBabelConfig.stages[stage].plugins.forEach(plugin => {
+    pluginBabelConfig.stages[stage].plugins.forEach((plugin) => {
       reduxPlugins.push(
         babel.createConfigItem([resolve(plugin.name), plugin.options], {
           dirname: plugin.name,
@@ -175,7 +175,7 @@ export const prepareOptions = (
         }),
       )
     })
-    pluginBabelConfig.stages[stage].presets.forEach(preset => {
+    pluginBabelConfig.stages[stage].presets.forEach((preset) => {
       reduxPresets.push(
         babel.createConfigItem([resolve(preset.name), preset.options], {
           dirname: preset.name,
@@ -208,7 +208,7 @@ export const addRequiredPresetOptions = (
   //  (even if defined in custom babelrc)
   const gatsbyPresetResolved = resolve(`babel-preset-gatsby`)
   const index = presets.findIndex(
-    p => p.file!.resolved === gatsbyPresetResolved,
+    (p) => p.file!.resolved === gatsbyPresetResolved,
   )
 
   if (index !== -1) {
@@ -236,7 +236,7 @@ export const mergeConfigItemOptions = ({
 }): Array<ConfigItem> => {
   const index = _.findIndex(
     items,
-    i => i.file?.resolved === itemToMerge.file?.resolved,
+    (i) => i.file?.resolved === itemToMerge.file?.resolved,
   )
 
   // If this exist, merge the options, otherwise, add it to the array

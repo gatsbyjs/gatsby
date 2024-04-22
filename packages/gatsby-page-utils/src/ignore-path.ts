@@ -1,13 +1,13 @@
-import { isMatch, Options as mmOptions } from "micromatch"
+import { isMatch, type Options as mmOptions } from "micromatch"
 
-export interface IPathIgnoreOptions {
-  patterns?: string | ReadonlyArray<string>
-  options?: mmOptions
+export type IPathIgnoreOptions = {
+  patterns?: string | ReadonlyArray<string> | undefined
+  options?: mmOptions | undefined
 }
 
 export function ignorePath(
   path: string,
-  ignore?: IPathIgnoreOptions | string | Array<string> | null
+  ignore?: IPathIgnoreOptions | string | Array<string> | null | undefined,
 ): boolean {
   // Don't do anything if no ignore patterns
   if (!ignore) return false

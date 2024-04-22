@@ -75,7 +75,7 @@ const nodePaths = [
  * @param fileName File name
  */
 export function isNodeInternalModulePath(fileName: string): boolean {
-  return nodePaths.some(regTest => regTest.test(fileName))
+  return nodePaths.some((regTest) => regTest.test(fileName))
 }
 
 /**

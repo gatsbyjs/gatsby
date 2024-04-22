@@ -25,7 +25,7 @@ export function initJobsMessagingInMainProcess(
       activeWorkerJobs++
       store
         .dispatch(internalActions.createJobV2FromInternalJob(msg.payload))
-        .then(result => {
+        .then((result) => {
           workerPool.sendMessage(
             {
               type: MESSAGE_TYPES.JOB_COMPLETED,
@@ -37,7 +37,7 @@ export function initJobsMessagingInMainProcess(
             workerId,
           )
         })
-        .catch(error => {
+        .catch((error) => {
           workerPool.sendMessage(
             {
               type: MESSAGE_TYPES.JOB_FAILED,
@@ -76,7 +76,7 @@ const deferredWorkerPromises = new Map<
 const gatsbyWorkerMessenger = getMessenger()
 export function initJobsMessagingInWorker(): void {
   if (isWorker && gatsbyWorkerMessenger) {
-    gatsbyWorkerMessenger.onMessage(msg => {
+    gatsbyWorkerMessenger.onMessage((msg) => {
       if (msg.type === MESSAGE_TYPES.JOB_COMPLETED) {
         const { id, result } = msg.payload
         const deferredPromise = deferredWorkerPromises.get(id)

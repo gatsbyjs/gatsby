@@ -20,7 +20,7 @@ export function getBrowsersList(directory: string): Array<string> {
 
   if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     fallbackOthers = fallbackOthers.map(
-      fallback => fallback + ` and supports es6-module`,
+      (fallback) => fallback + ` and supports es6-module`,
     )
   }
 

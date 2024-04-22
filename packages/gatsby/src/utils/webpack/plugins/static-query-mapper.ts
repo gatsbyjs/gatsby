@@ -1,11 +1,11 @@
 import path from "path"
-import { Store } from "redux"
+import type { Store } from "redux"
 import { Compiler, NormalModule } from "webpack"
 import { isEqual, cloneDeep } from "lodash"
 import { enqueueFlush } from "../../page-data"
 import type { IGatsbyState, IGatsbyPageComponent } from "../../../redux/types"
 import {
-  ICollectedSlices,
+  type ICollectedSlices,
   mergePreviouslyCollectedSlices,
 } from "../../babel/find-slices"
 import { slash } from "gatsby-core-utils/path"
@@ -16,7 +16,7 @@ import { slash } from "gatsby-core-utils/path"
  * b) but also contain ?__contentFilePath&export=
  */
 export const removeExportQueryParam = (
-  path: string | undefined
+  path: string | undefined,
 ): string | undefined => {
   if (!path?.includes(`?`)) {
     return path
@@ -37,7 +37,7 @@ export const removeExportQueryParam = (
  */
 function doesModuleMatchResourcePath(
   resourcePath: string,
-  webpackModule: NormalModule
+  webpackModule: NormalModule,
 ): boolean {
   return (
     removeExportQueryParam((webpackModule as NormalModule).resource) ===
@@ -50,7 +50,7 @@ function doesModuleMatchResourcePath(
  */
 function getRealPath(
   cache: Map<string, string>,
-  componentPath: string
+  componentPath: string,
 ): string {
   if (!cache.has(componentPath)) {
     cache.set(componentPath, path.resolve(componentPath))
@@ -76,7 +76,7 @@ export class StaticQueryMapper {
       program,
     } = this.store.getState()
 
-    compiler.hooks.done.tap(this.name, stats => {
+    compiler.hooks.done.tap(this.name, (stats) => {
       // In dev mode we want to write page-data when compilation succeeds
       if (!stats.hasErrors() && compiler.watchMode) {
         enqueueFlush()
@@ -88,7 +88,7 @@ export class StaticQueryMapper {
         name: this.name,
         before: `PartialHydrationPlugin`,
       },
-      async compilation => {
+      async (compilation) => {
         if (compilation.compiler.parentCompilation) {
           return
         }
@@ -98,8 +98,8 @@ export class StaticQueryMapper {
           path.join(
             program.directory,
             `.cache`,
-            `api-runner-browser-plugins.js`
-          )
+            `api-runner-browser-plugins.js`,
+          ),
         )
         const asyncRequiresPath = slash(
           path.join(
@@ -107,8 +107,8 @@ export class StaticQueryMapper {
             `.cache`,
             `_this_is_virtual_fs_path_`,
             `$virtual`,
-            `async-requires.js`
-          )
+            `async-requires.js`,
+          ),
         )
         for (const entry of compilation.entries.values()) {
           for (const dependency of entry.dependencies) {
@@ -152,13 +152,13 @@ export class StaticQueryMapper {
           for (const staticQuery of staticQueryComponents.values()) {
             const staticQueryComponentPath = getRealPath(
               realPathCache,
-              staticQuery.componentPath
+              staticQuery.componentPath,
             )
 
             if (
               !doesModuleMatchResourcePath(
                 staticQueryComponentPath,
-                webpackModule
+                webpackModule,
               )
             ) {
               continue
@@ -180,7 +180,7 @@ export class StaticQueryMapper {
             if (
               !doesModuleMatchResourcePath(
                 componentComponentPath,
-                webpackModule
+                webpackModule,
               )
             ) {
               continue
@@ -192,13 +192,13 @@ export class StaticQueryMapper {
           for (const component of components.values()) {
             const componentComponentPath = getRealPath(
               realPathCache,
-              component.componentPath
+              component.componentPath,
             )
 
             if (
               !doesModuleMatchResourcePath(
                 componentComponentPath,
-                webpackModule
+                webpackModule,
               )
             ) {
               continue
@@ -214,7 +214,7 @@ export class StaticQueryMapper {
             onComponent(component: IGatsbyPageComponent): void
             onRoot(): void
           },
-          visitedModules = new Set<NormalModule>()
+          visitedModules = new Set<NormalModule>(),
         ): void {
           if (visitedModules.has(module)) {
             return
@@ -255,13 +255,13 @@ export class StaticQueryMapper {
             traverseModule(module, {
               onComponent(component: IGatsbyPageComponent) {
                 let staticQueriesForComponent = staticQueriesByComponents.get(
-                  component.componentPath
+                  component.componentPath,
                 )
                 if (!staticQueriesForComponent) {
                   staticQueriesForComponent = new Set()
                   staticQueriesByComponents.set(
                     component.componentPath,
-                    staticQueriesForComponent
+                    staticQueriesForComponent,
                   )
                 }
 
@@ -286,14 +286,14 @@ export class StaticQueryMapper {
                 component.componentPath,
                 mergePreviouslyCollectedSlices(
                   slices,
-                  slicesByComponents.get(component.componentPath)
-                )
+                  slicesByComponents.get(component.componentPath),
+                ),
               )
             },
             onRoot() {
               globalSliceUsage = mergePreviouslyCollectedSlices(
                 slices,
-                globalSliceUsage
+                globalSliceUsage,
               )
             },
           })
@@ -308,7 +308,7 @@ export class StaticQueryMapper {
 
           const allSlices = mergePreviouslyCollectedSlices(
             slicesByComponents.get(component.componentPath) ?? {},
-            component.isSlice ? {} : cloneDeep(globalSliceUsage)
+            component.isSlice ? {} : cloneDeep(globalSliceUsage),
           )
 
           const slices = Object.keys(allSlices)
@@ -320,13 +320,13 @@ export class StaticQueryMapper {
 
           const didSlicesChange = !isEqual(
             this.store.getState().slicesByTemplate.get(component.componentPath),
-            slices
+            slices,
           )
           const didStaticQueriesChange = !isEqual(
             this.store
               .getState()
               .staticQueriesByTemplate.get(component.componentPath),
-            staticQueryHashes
+            staticQueryHashes,
           )
 
           if (didStaticQueriesChange || didSlicesChange) {
@@ -369,7 +369,7 @@ export class StaticQueryMapper {
             })
           }
         }
-      }
+      },
     )
   }
 }

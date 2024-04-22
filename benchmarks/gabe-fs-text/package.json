@@ -27,10 +27,10 @@
     "benchmark"
   ],
   "dependencies": {
-    "faker": "^4.1.0",
-    "gatsby": "^2",
-    "gatsby-source-filesystem": "^2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "faker": "^6.6.6",
+    "gatsby": "^5.13.4",
+    "gatsby-source-filesystem": "^5.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

@@ -8,18 +8,27 @@ const DYNAMIC_POINTS = 2
 const SPLAT_PENALTY = 1
 const ROOT_POINTS = 1
 
-const isRootSegment = (segment: string): boolean => segment === ``
-const isDynamic = (segment: string): boolean => paramRe.test(segment)
-const isSplat = (segment: string): boolean => segment === `*`
+function isRootSegment(segment: string): boolean {
+  return segment === ``
+}
+function isDynamic(segment: string): boolean {
+  return paramRe.test(segment)
+}
+function isSplat(segment: string): boolean {
+  return segment === `*`
+}
 
-const segmentize = (uri: string): Array<string> =>
-  uri
-    // strip starting/ending slashes
-    .replace(/(^\/+|\/+$)/g, ``)
-    .split(`/`)
+function segmentize(uri: string | null): Array<string> | undefined {
+  return (
+    uri
+      // strip starting/ending slashes
+      ?.replace(/(^\/+|\/+$)/g, ``)
+      .split(`/`)
+  )
+}
 
-export const rankRoute = (path: string): number =>
-  segmentize(path).reduce((score, segment) => {
+export function rankRoute(path: string | null): number | undefined {
+  return segmentize(path)?.reduce((score: number, segment: string) => {
     score += SEGMENT_POINTS
     if (isRootSegment(segment)) score += ROOT_POINTS
     else if (isDynamic(segment)) score += DYNAMIC_POINTS
@@ -27,4 +36,5 @@ export const rankRoute = (path: string): number =>
     else score += STATIC_POINTS
     return score
   }, 0)
+}
 // end of copied `@reach/router` internals

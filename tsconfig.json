@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -16,6 +16,11 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    // "incremental": true,
+    "pretty": true,
+    // "exactOptionalPropertyTypes": true,
+    // "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "jsx": "preserve",
     "typeRoots": ["./types", "**/node_modules/@types", "node_modules/@types"],
     "paths": {

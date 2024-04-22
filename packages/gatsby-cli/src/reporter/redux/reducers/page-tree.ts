@@ -1,9 +1,9 @@
-import { ActionsUnion } from "../types"
-import { IRenderPageArgs } from "../../types"
+import type { ActionsUnion } from "../types"
+import type { IRenderPageArgs } from "../../types"
 import { Actions } from "../../constants"
 
 export function reducer(
-  state: IRenderPageArgs | null = null,
+  state: IRenderPageArgs | null | undefined = null,
   action: ActionsUnion,
 ): IRenderPageArgs | null {
   switch (action.type) {

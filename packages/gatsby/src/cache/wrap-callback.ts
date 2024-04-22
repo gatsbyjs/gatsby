@@ -29,7 +29,7 @@ SOFTWARE.
  * @returns {function}
  */
 module.exports = function wrapCallback<T>(
-  fn: () => Promise<T>
+  fn: () => Promise<T>,
 ): () => Promise<T> {
   return function (...args): Promise<T> {
     let cb
@@ -42,8 +42,8 @@ module.exports = function wrapCallback<T>(
 
     if (typeof cb === `function`) {
       promise.then(
-        value => setImmediate(cb, null, value),
-        err => setImmediate(cb, err)
+        (value) => setImmediate(cb, null, value),
+        (err) => setImmediate(cb, err),
       )
     }
 

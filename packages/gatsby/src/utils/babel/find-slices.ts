@@ -3,7 +3,7 @@ import type { Node } from "@babel/core"
 import { getAttributeValues } from "babel-jsx-utils"
 import reporter from "gatsby-cli/lib/reporter"
 
-export interface ICollectedSlice {
+export type ICollectedSlice = {
   name: string
   allowEmpty: boolean
 }
@@ -14,7 +14,7 @@ const SLICES_PROPS = new Set([`alias`, `allowEmpty`])
 
 function mergePreviouslyCollectedSlice(
   newInfo: ICollectedSlice,
-  previousInfo?: ICollectedSlice
+  previousInfo?: ICollectedSlice | undefined,
 ): ICollectedSlice {
   return {
     name: newInfo.name,
@@ -29,7 +29,7 @@ function mergePreviouslyCollectedSlice(
 
 export function mergePreviouslyCollectedSlices(
   newInfo: ICollectedSlices,
-  previousInfo?: ICollectedSlices
+  previousInfo?: ICollectedSlices | undefined,
 ): ICollectedSlices {
   const ret: ICollectedSlices = previousInfo ?? {}
 
@@ -42,7 +42,7 @@ export function mergePreviouslyCollectedSlices(
 
 export function collectSlices(
   ast: Node,
-  filename: string
+  filename: string,
 ): Record<string, ICollectedSlice> | null {
   const result: Record<string, ICollectedSlice> = {}
   let hasResults = false
@@ -57,10 +57,10 @@ export function collectSlices(
 
       const props = getAttributeValues(
         nodePath,
-        prop => {
+        (prop) => {
           unresolvedProps.push(prop)
         },
-        SLICES_PROPS
+        SLICES_PROPS,
       ) as { alias: string; allowEmpty?: boolean }
 
       const { alias: name, allowEmpty = false } = props
@@ -75,7 +75,7 @@ export function collectSlices(
         }
 
         const error = `[Gatsby Slice API] Could not find values in "${filename}${locationInFile}" for the following props at build time: ${unresolvedProps.join(
-          `, `
+          `, `,
         )}`
 
         reporter.warn(error)
@@ -85,7 +85,7 @@ export function collectSlices(
       if (name) {
         result[name] = mergePreviouslyCollectedSlice(
           { name, allowEmpty },
-          result[name]
+          result[name],
         )
         hasResults = true
       }

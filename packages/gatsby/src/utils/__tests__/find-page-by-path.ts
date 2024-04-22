@@ -2,11 +2,11 @@ import { findPageByPath } from "../find-page-by-path"
 import { IGatsbyPage, IGatsbyState } from "../../redux/types"
 
 function generatePagesState(
-  pages: Array<string | Partial<IGatsbyPage>>
+  pages: Array<string | Partial<IGatsbyPage>>,
 ): IGatsbyState {
   const state: IGatsbyState = {
     pages: new Map<string, IGatsbyPage>(
-      pages.map(pathOrObject => {
+      pages.map((pathOrObject) => {
         let pageObject
 
         if (typeof pathOrObject !== `object`) {
@@ -19,12 +19,12 @@ function generatePagesState(
 
         if (!pageObject.path) {
           throw new Error(
-            `Missing path\n\n${JSON.stringify(pageObject, null, 2)}`
+            `Missing path\n\n${JSON.stringify(pageObject, null, 2)}`,
           )
         }
 
         return [pageObject.path, pageObject]
-      })
+      }),
     ),
   } as IGatsbyState
 
@@ -64,7 +64,7 @@ const state = generatePagesState([...commonPages])
 describe(`findPageByPath`, () => {
   function assertGetterWithSlashMatrix(
     pathWithoutTrailingOrLeadingSlashes: string,
-    exactPath: string
+    exactPath: string,
   ): void {
     const withTrailingSlash = pathWithoutTrailingOrLeadingSlashes + `/`
     const withLeadingSlash = `/` + pathWithoutTrailingOrLeadingSlashes
@@ -125,7 +125,7 @@ describe(`findPageByPath`, () => {
   describe(`Page with leading and trailing slash ("/leading-and-trailing-slash/")`, () => {
     assertGetterWithSlashMatrix(
       `leading-and-trailing-slash`,
-      `/leading-and-trailing-slash/`
+      `/leading-and-trailing-slash/`,
     )
   })
 
@@ -201,7 +201,7 @@ describe(`findPageByPath`, () => {
       const page = findPageByPath(
         stateWithBoth404Pages,
         `/does-not-exist/`,
-        true
+        true,
       )
       expect(page).toBeDefined()
       expect(page?.path).toEqual(`/dev-404-page/`)
@@ -217,7 +217,7 @@ describe(`findPageByPath`, () => {
       const page = findPageByPath(
         stateWith404HtmlPage,
         `/does-not-exist/`,
-        true
+        true,
       )
       expect(page).toBeDefined()
       expect(page?.path).toEqual(`/404.html`)
@@ -227,7 +227,7 @@ describe(`findPageByPath`, () => {
       const page = findPageByPath(
         stateWithBoth404Pages,
         `/does-not-exist/`,
-        false
+        false,
       )
       expect(page).toBeUndefined()
     })

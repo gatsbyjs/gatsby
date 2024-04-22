@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { uuid } from "gatsby-core-utils"
-import { ActionsUnion, IGatsbyState } from "../types"
+import type { ActionsUnion, IGatsbyState } from "../types"
 
 const defaultState: IGatsbyState["status"] = {
   PLUGINS_HASH: ``,

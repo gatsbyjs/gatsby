@@ -1,7 +1,6 @@
-import sysPath from "path"
+import sysPath from "node:path"
 import express from "express"
-// @ts-ignore
-import { ServeStaticOptions } from "serve-static"
+import type { ServeStaticOptions } from "serve-static"
 import parseUrl from "parseurl"
 
 export function developStatic(

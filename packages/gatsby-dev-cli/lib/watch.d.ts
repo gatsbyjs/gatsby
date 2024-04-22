@@ -1,1 +1,0 @@
-export declare function watch(root: any, packages: Set<string> | undefined, { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages, packageNameToPath, externalRegistry, packageManager, }: any): Promise<void>;

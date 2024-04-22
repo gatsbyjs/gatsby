@@ -29,7 +29,7 @@ function incrementalReducer(
         ? action.payload
         : [action.payload]
       const ignoredTypes = typeDefs.reduce(typesWithoutInference, [])
-      ignoredTypes.forEach(type => {
+      ignoredTypes.forEach((type) => {
         state[type] = ignore(state[type] || initialTypeMetadata())
       })
       return state
@@ -52,7 +52,7 @@ function incrementalReducer(
     case `DISABLE_TYPE_INFERENCE`: {
       // Note: types disabled here will be re-enabled after BUILD_TYPE_METADATA
       const types = action.payload
-      types.forEach(type => {
+      types.forEach((type) => {
         state[type] = disable(state[type] || initialTypeMetadata())
       })
       return state
@@ -61,18 +61,27 @@ function incrementalReducer(
     case `CREATE_NODE`: {
       const { payload: node, oldNode } = action
       const { type } = node.internal
-      if (oldNode) {
-        state[type] = deleteNode(state[type] || initialTypeMetadata(), oldNode)
+      if (type) {
+        if (oldNode) {
+          state[type] = deleteNode(
+            state[type] || initialTypeMetadata(),
+            oldNode,
+          )
+        }
+        state[type] = addNode(state[type] || initialTypeMetadata(), node)
       }
-      state[type] = addNode(state[type] || initialTypeMetadata(), node)
       return state
     }
 
     case `DELETE_NODE`: {
       const node = action.payload
-      if (!node) return state
+      if (!node) {
+        return state
+      }
       const { type } = node.internal
-      state[type] = deleteNode(state[type] || initialTypeMetadata(), node)
+      if (type) {
+        state[type] = deleteNode(state[type] || initialTypeMetadata(), node)
+      }
       return state
     }
 
@@ -80,12 +89,17 @@ function incrementalReducer(
       const { payload: node, addedField } = action
       const { type } = node.internal
 
-      // Must unregister previous fields first.
-      // Can't simply add { fields: { [addedField]: node.fields[addedField] } }
-      // because it will count `fields` key twice for the same node
-      const previousFields = omit(node.fields, [addedField])
-      state[type] = deleteNode(state[type], { ...node, fields: previousFields })
-      state[type] = addNode(state[type], { ...node, fields: node.fields })
+      if (type) {
+        // Must unregister previous fields first.
+        // Can't simply add { fields: { [addedField]: node.fields[addedField] } }
+        // because it will count `fields` key twice for the same node
+        const previousFields = omit(node.fields, [addedField])
+        state[type] = deleteNode(state[type], {
+          ...node,
+          fields: previousFields,
+        })
+        state[type] = addNode(state[type], { ...node, fields: node.fields })
+      }
 
       // TODO: there might be an edge case when the same field is "added" twice.
       //   Then we'll count it twice in metadata. The only way to avoid it as I see it
@@ -97,12 +111,14 @@ function incrementalReducer(
     case `ADD_CHILD_NODE_TO_PARENT_NODE`: {
       // Marking parent type as dirty so that it rebuilds
       const { type } = action.payload.internal
-      state[type].dirty = true
+      if (type) {
+        state[type].dirty = true
+      }
       return state
     }
 
     case `SET_SCHEMA`: {
-      Object.keys(state).forEach(type => {
+      Object.keys(state).forEach((type) => {
         state[type].dirty = false
       })
       return state

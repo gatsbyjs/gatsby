@@ -5,13 +5,13 @@ export class SelectInput extends Select {
     if (!this.state.submitted || this.state.cancelled) return ``
     if (Array.isArray(this.selected)) {
       return this.selected
-        .map(choice =>
-          this.styles.primary(this.symbols.middot + ` ` + choice.message)
+        .map((choice) =>
+          this.styles.primary(this.symbols.middot + ` ` + choice.message),
         )
         .join(`\n`)
     }
     return this.styles.primary(
-      this.symbols.middot + ` ` + this.selected.message
+      this.symbols.middot + ` ` + this.selected.message,
     )
   }
 
@@ -34,10 +34,10 @@ export class SelectInput extends Select {
 
     const styles = this.styles
     const focused = this.index === i
-    const style = focused ? styles.primary : val => val
+    const style = focused ? styles.primary : (val) => val
     const ele = await this.resolve(
       val[focused ? `on` : `off`] || val,
-      this.state
+      this.state,
     )
     return focused ? style(ele) : ` `.repeat(ele.length)
   }

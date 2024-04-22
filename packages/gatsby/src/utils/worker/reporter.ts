@@ -1,9 +1,9 @@
 import reporter from "gatsby-cli/lib/reporter"
-import { GatsbyWorkerPool } from "./types"
+import type { GatsbyWorkerPool } from "./types"
 import { isWorker, getMessenger } from "./messaging"
 
 export function initReporterMessagingInMainProcess(
-  workerPool: GatsbyWorkerPool
+  workerPool: GatsbyWorkerPool,
 ): void {
   if (typeof reporter._initReporterMessagingInMain === `function`) {
     reporter._initReporterMessagingInMain(workerPool.onMessage.bind(workerPool))
@@ -18,7 +18,7 @@ export function initReporterMessagingInWorker(): void {
     typeof reporter._initReporterMessagingInWorker === `function`
   ) {
     reporter._initReporterMessagingInWorker(
-      gatsbyWorkerMessenger.sendMessage.bind(gatsbyWorkerMessenger)
+      gatsbyWorkerMessenger.sendMessage.bind(gatsbyWorkerMessenger),
     )
 
     process.on(`unhandledRejection`, (reason: unknown) => {

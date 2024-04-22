@@ -147,7 +147,7 @@ interface IShopifyPluginOptions {
   shopifyConnections: Array<string>
   typePrefix: string
   salesChannel: string
-  prioritize?: boolean
+  prioritize?: boolean | undefined
   apiVersion: string
 }
 
@@ -156,5 +156,5 @@ interface IGraphQLClient {
 }
 
 interface IRestClient {
-  request: (path: string) => Promise<import("node-fetch").Response>
+  request: (path: string) => Promise<Response>
 }

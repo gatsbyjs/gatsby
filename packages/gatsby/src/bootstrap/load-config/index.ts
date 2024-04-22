@@ -54,7 +54,7 @@ export async function loadConfig({
       reporter.warn(unfitFlagMessage)
     }
     //  set process.env for each flag
-    enabledConfigFlags.forEach(flag => {
+    enabledConfigFlags.forEach((flag) => {
       process.env[flag.env] = `true`
     })
 
@@ -66,7 +66,7 @@ export async function loadConfig({
     process.env.GATSBY_SLICES = `true`
 
     //  track usage of feature
-    enabledConfigFlags.forEach(flag => {
+    enabledConfigFlags.forEach((flag) => {
       if (flag.telemetryId) {
         telemetry.trackFeatureIsUsed(flag.telemetryId)
       }

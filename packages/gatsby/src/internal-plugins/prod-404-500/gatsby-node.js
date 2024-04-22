@@ -6,7 +6,7 @@ const { actions } = require(`../../redux/actions`)
 const originalStatusPageByStatus = {}
 const originalStatusPageByPath = {}
 
-emitter.on(`CREATE_PAGE`, action => {
+emitter.on(`CREATE_PAGE`, (action) => {
   // Copy /404/ to /404.html and /500/ to /500.html. Many static site hosts expect
   // site 404 pages to be named this. In addition, with Rendering Engines there might
   // be runtime errors which would fallback to "/500.html" page.
@@ -36,21 +36,21 @@ emitter.on(`CREATE_PAGE`, action => {
             path: `/${status}.html`,
           },
           action.plugin,
-          action
-        )
+          action,
+        ),
       )
     }
   }
 })
 
-emitter.on(`DELETE_PAGE`, action => {
+emitter.on(`DELETE_PAGE`, (action) => {
   const storedPage = originalStatusPageByPath[action.payload.path]
   if (storedPage) {
     store.dispatch(
       actions.deletePage({
         ...storedPage,
         path: `/${storedPage.status}.html`,
-      })
+      }),
     )
     originalStatusPageByPath[action.payload.path] = null
     originalStatusPageByStatus[storedPage.status] = null

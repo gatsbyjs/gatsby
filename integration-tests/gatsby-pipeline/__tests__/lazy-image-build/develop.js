@@ -1,7 +1,6 @@
 const execa = require(`execa`)
 const path = require(`path`)
 const glob = require(`glob`)
-const fetch = require(`node-fetch`)
 const md5File = require(`md5-file`)
 const { clean, createDevServer } = require(`../../utils/create-devserver`)
 const { isCI } = require("gatsby-core-utils")
@@ -18,11 +17,11 @@ describe(`Lazy images`, () => {
   it(`should process images on demand`, async () => {
     const { kill } = await createDevServer()
     const contentDigest = await md5File(
-      path.resolve("./src/images/gatsby-astronaut.png")
+      path.resolve("./src/images/gatsby-astronaut.png"),
     )
 
-    const response = await fetch(
-      `http://localhost:8000/static/${contentDigest}/630fb/gatsby-astronaut.png`
+    const response = await globalThis.fetch(
+      `http://localhost:8000/static/${contentDigest}/630fb/gatsby-astronaut.png`,
     )
 
     await kill()

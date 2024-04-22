@@ -10,7 +10,7 @@ import {
   ActivityStatuses,
   ActivityTypes,
 } from "../constants"
-import {
+import type {
   IPendingActivity,
   ICreateLog,
   ISetStatus,
@@ -29,8 +29,11 @@ import {
   getElapsedTimeMS,
   getGlobalStatus,
 } from "./utils"
-import { IStructuredError, ErrorCategory } from "../../structured-errors/types"
-import { IRenderPageArgs } from "../types"
+import {
+  type IStructuredError,
+  ErrorCategory,
+} from "../../structured-errors/types"
+import type { IRenderPageArgs } from "../types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,

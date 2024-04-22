@@ -4,7 +4,7 @@ import {
   getNullableType,
   GraphQLInputObjectType,
   GraphQLList,
-  GraphQLInputFieldMap,
+  type GraphQLInputFieldMap,
 } from "graphql"
 import { addDerivedType } from "./derived-types"
 import {
@@ -16,15 +16,19 @@ import {
   UnionTypeComposer,
   ScalarTypeComposer,
   toInputObjectType,
+  ListComposer,
 } from "graphql-compose"
 
-import { convertToNestedInputType, IVisitContext } from "./utils"
+import { convertToNestedInputType, type IVisitContext } from "./utils"
 
 type AnyTypeComposer<TContext> =
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ObjectTypeComposer<any, TContext>
   | InputTypeComposer<TContext>
   | EnumTypeComposer<TContext>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | InterfaceTypeComposer<any, TContext>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | UnionTypeComposer<any, TContext>
   | ScalarTypeComposer<TContext>
 
@@ -34,22 +38,25 @@ export const SORTABLE_ENUM = {
   DEPRECATED_SORTABLE: `DEPRECATED_SORTABLE`,
 }
 
-export const getSortOrderEnum = <TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getSortOrderEnum<TContext = any>({
   schemaComposer,
 }: {
   schemaComposer: SchemaComposer<TContext>
-}): EnumTypeComposer<TContext> =>
-  schemaComposer.getOrCreateETC(`SortOrderEnum`, etc => {
+}): EnumTypeComposer<TContext> {
+  return schemaComposer.getOrCreateETC(`SortOrderEnum`, (etc) => {
     etc.setFields({
       ASC: { value: `ASC` },
       DESC: { value: `DESC` },
     })
   })
+}
 
 const MAX_SORT_DEPTH = 3
 const SORT_FIELD_DELIMITER = `___`
 
-const convert = <TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function convert<TContext = any>({
   schemaComposer,
   typeComposer,
   fields,
@@ -60,13 +67,14 @@ const convert = <TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: AnyTypeComposer<TContext>
   fields: GraphQLInputFieldMap
-  prefix?: string | null
-  depth?: number
+  prefix?: string | null | undefined
+  depth?: number | undefined
   deprecationReason?: string
-}): any => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): any {
   const sortFields = {}
 
-  Object.keys(fields).forEach(fieldName => {
+  Object.keys(fields).forEach((fieldName) => {
     let deprecationReason = parentFieldDeprecationReason
     const fieldConfig = fields[fieldName]
     const sortable =
@@ -94,7 +102,7 @@ const convert = <TContext = any>({
     if (type instanceof GraphQLInputObjectType) {
       if (depth < MAX_SORT_DEPTH) {
         const typeComposer = schemaComposer.getAnyTC(
-          type.name.replace(/Input$/, ``)
+          type.name.replace(/Input$/, ``),
         )
         Object.assign(
           sortFields,
@@ -105,7 +113,7 @@ const convert = <TContext = any>({
             prefix: sortKey,
             depth: depth + 1,
             deprecationReason,
-          })
+          }),
         )
       }
     } else {
@@ -119,7 +127,8 @@ const convert = <TContext = any>({
   return sortFields
 }
 
-export const getFieldsEnum = <TSource = any, TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getFieldsEnum<TSource = any, TContext = any>({
   schemaComposer,
   typeComposer,
   inputTypeComposer,
@@ -129,7 +138,7 @@ export const getFieldsEnum = <TSource = any, TContext = any>({
     | ObjectTypeComposer<TSource, TContext>
     | InterfaceTypeComposer<TSource, TContext>
   inputTypeComposer: InputTypeComposer<TContext>
-}): EnumTypeComposer<TContext> => {
+}): EnumTypeComposer<TContext> {
   const typeName = typeComposer.getTypeName()
   const fieldsEnumTypeName = `${typeName}FieldsEnum`
   const fieldsEnumTypeComposer =
@@ -145,13 +154,14 @@ export const getFieldsEnum = <TSource = any, TContext = any>({
   return fieldsEnumTypeComposer
 }
 
-export const getSortInput = <TSource = any, TContext = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getSortInput<TSource = any, TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer<TSource, TContext>
-}): InputTypeComposer<TContext> => {
+}): InputTypeComposer<TContext> {
   // toInputObjectType() will fail to convert fields of union types, e.g.
   //   union FooBar = Foo | Bar
   //   type Baz {
@@ -169,11 +179,10 @@ export const getSortInput = <TSource = any, TContext = any>({
   })
   const typeName = typeComposer.getTypeName()
   // console.log(fieldsEnumTC.getType().getValues())
-
   const sortInputTypeName = `${typeName}SortInput`
   addDerivedType({ typeComposer, derivedTypeName: sortInputTypeName })
 
-  return schemaComposer.getOrCreateITC(sortInputTypeName, itc => {
+  return schemaComposer.getOrCreateITC(sortInputTypeName, (itc) => {
     itc.addFields({
       fields: [fieldsEnumTC],
       order: { type: [sortOrderEnumTC], defaultValue: [`ASC`] },
@@ -181,15 +190,17 @@ export const getSortInput = <TSource = any, TContext = any>({
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Context = any
 
-export const getSortInputNestedObjects = ({
+export function getSortInputNestedObjects({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<Context>
   typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>
-}): InputTypeComposer => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): ListComposer<InputTypeComposer<any>> {
   const itc = convertToNestedInputType({
     schemaComposer,
     typeComposer,
@@ -213,7 +224,7 @@ export const getSortInputNestedObjects = ({
       // continue
       return undefined
     },
-    // @ts-ignore TODO: correct types
+
     leafInputComposer: getSortOrderEnum({ schemaComposer }),
   })
 

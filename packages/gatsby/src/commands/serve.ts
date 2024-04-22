@@ -12,9 +12,9 @@ import telemetry from "gatsby-telemetry"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { preferDefault } from "../bootstrap/prefer-default"
-import { IProgram } from "./types"
-import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
-import {
+import type { IProgram } from "./types"
+import { type IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
+import type {
   IGatsbyConfig,
   IGatsbyFunction,
   IGatsbyPage,
@@ -44,9 +44,9 @@ onExit.onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
 })
 
-const readMatchPaths = async (
+async function readMatchPaths(
   program: IServeProgram,
-): Promise<Array<IMatchPath>> => {
+): Promise<Array<IMatchPath>> {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
   try {
@@ -67,14 +67,17 @@ const readMatchPaths = async (
   return JSON.parse(rawJSON) as Array<IMatchPath>
 }
 
-const matchPathRouter =
-  (
-    matchPaths: Array<IMatchPath>,
-    options: {
-      root: string
-    },
-  ) =>
-  (
+function matchPathRouter(
+  matchPaths: Array<IMatchPath>,
+  options: {
+    root: string
+  },
+): (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => void {
+  return (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
@@ -88,7 +91,7 @@ const matchPathRouter =
         return res.sendFile(
           path.join(matchPath.path, `index.html`),
           options,
-          err => {
+          (err) => {
             if (err) {
               next()
             }
@@ -98,6 +101,7 @@ const matchPathRouter =
     }
     return next()
   }
+}
 
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
@@ -313,7 +317,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                 `Rendering html for "${potentialPagePath}" failed.`,
                 e,
               )
-              return res.status(500).sendFile(`500.html`, { root }, err => {
+              return res.status(500).sendFile(`500.html`, { root }, (err) => {
                 if (err) {
                   res.contentType(`text/plain`).send(`Internal server error.`)
                 }

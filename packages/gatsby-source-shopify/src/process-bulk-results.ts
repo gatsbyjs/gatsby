@@ -1,4 +1,3 @@
-// @ts-ignore
 import { SourceNodesArgs } from "gatsby"
 
 import { shopifyTypes } from "./shopify-types"

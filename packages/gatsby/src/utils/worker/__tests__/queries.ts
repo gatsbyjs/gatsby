@@ -1,5 +1,5 @@
 import "jest-extended"
-import * as path from "path"
+import * as path from "node:path"
 import fs from "fs-extra"
 import type { watch as ChokidarWatchType } from "chokidar"
 import { build } from "../../../schema"
@@ -52,9 +52,10 @@ jest.mock(`gatsby-telemetry`, () => {
 })
 
 const dummyKeys = `a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z`.split(
-  `,`
+  `,`,
 )
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function pagePlaceholders(key): any {
   return {
     path: `/${key}`,
@@ -72,7 +73,7 @@ function pagePlaceholders(key): any {
   }
 }
 
-const dummyPages: Array<IGatsbyPage> = dummyKeys.map(name => {
+const dummyPages: Array<IGatsbyPage> = dummyKeys.map((name) => {
   return {
     ...pagePlaceholders(name),
     query: `{ nodeTypeOne { number } }`,
@@ -136,7 +137,7 @@ describe(`worker (queries)`, () => {
 
     await build({ parentSpan: {} })
 
-    pageQueryIds.forEach(page => {
+    pageQueryIds.forEach((page) => {
       store.dispatch({
         type: `CREATE_PAGE`,
         plugin: {
@@ -154,7 +155,7 @@ describe(`worker (queries)`, () => {
 
     savePartialStateToDisk([`inferenceMetadata`])
 
-    pageQueryIds.forEach(page => {
+    pageQueryIds.forEach((page) => {
       store.dispatch({
         type: `QUERY_EXTRACTED`,
         plugin: {
@@ -248,7 +249,7 @@ describe(`worker (queries)`, () => {
     const stateFromWorker = await worker.single.getState()
 
     const staticQueryResult = await fs.readJson(
-      `${stateFromWorker.program.directory}/public/page-data/sq/d/${dummyStaticQuery.hash}.json`
+      `${stateFromWorker.program.directory}/public/page-data/sq/d/${dummyStaticQuery.hash}.json`,
     )
 
     expect(staticQueryResult).toStrictEqual({
@@ -268,7 +269,8 @@ describe(`worker (queries)`, () => {
 
     const pageQueryResult = await readPageQueryResult(`/foo`)
 
-    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((JSON.parse(pageQueryResult) as any).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -284,7 +286,8 @@ describe(`worker (queries)`, () => {
 
     const pageQueryResult = await readPageQueryResult(`/bar`)
 
-    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((JSON.parse(pageQueryResult) as any).data).toStrictEqual({
       nodeTypeOne: {
         default: `You are not cool`,
         fieldWithArg: `You are cool`,
@@ -303,7 +306,8 @@ describe(`worker (queries)`, () => {
     // Called the complete ABC so we can test _a
     const pageQueryResultA = await readPageQueryResult(`/a`)
 
-    expect(JSON.parse(pageQueryResultA).data).toStrictEqual({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((JSON.parse(pageQueryResultA) as any).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -311,7 +315,8 @@ describe(`worker (queries)`, () => {
 
     const pageQueryResultZ = await readPageQueryResult(`/z`)
 
-    expect(JSON.parse(pageQueryResultZ).data).toStrictEqual({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((JSON.parse(pageQueryResultZ) as any).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -345,8 +350,8 @@ describe(`worker (queries)`, () => {
   })
 
   it(`should return actions occurred in worker to replay in the main process`, async () => {
-    await Promise.all(worker.all.setComponents())
-    const result = await worker.single.runQueries(queryIdsSmall)
+    await Promise.all(worker?.all.setComponents() || [])
+    const result = (await worker?.single.runQueries(queryIdsSmall)) ?? []
 
     const expectedActionShapes = {
       QUERY_START: [`componentPath`, `isPage`, `path`],
@@ -361,10 +366,10 @@ describe(`worker (queries)`, () => {
     }
     // Double-check that important actions are actually present
     expect(result).toContainValue(
-      expect.objectContaining({ type: `QUERY_START` })
+      expect.objectContaining({ type: `QUERY_START` }),
     )
     expect(result).toContainValue(
-      expect.objectContaining({ type: `PAGE_QUERY_RUN` })
+      expect.objectContaining({ type: `PAGE_QUERY_RUN` }),
     )
   })
 
@@ -436,6 +441,7 @@ describe(`worker (queries)`, () => {
       },
     ]
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const actualActions: Array<any> = []
     function listenActions(action): void {
       actualActions.push(action)

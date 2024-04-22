@@ -44,7 +44,7 @@ export function babelrcReducer(
 ): IGatsbyState["babelrc"] {
   switch (action.type) {
     case `SET_BABEL_PLUGIN`: {
-      Object.keys(state.stages).forEach(stage => {
+      Object.keys(state.stages).forEach((stage) => {
         if (action.payload.stage && action.payload.stage !== stage) {
           return
         }
@@ -72,7 +72,7 @@ export function babelrcReducer(
       return state
     }
     case `SET_BABEL_PRESET`: {
-      Object.keys(state.stages).forEach(stage => {
+      Object.keys(state.stages).forEach((stage) => {
         if (action.payload.stage && action.payload.stage !== stage) {
           return
         }
@@ -99,7 +99,7 @@ export function babelrcReducer(
       return state
     }
     case `SET_BABEL_OPTIONS`: {
-      Object.keys(state.stages).forEach(stage => {
+      Object.keys(state.stages).forEach((stage) => {
         if (action.payload.stage && action.payload.stage !== stage) {
           return
         }

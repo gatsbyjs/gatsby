@@ -1,4 +1,5 @@
 import { store } from "../"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Batcher from "../../utils/batcher"
 import {
   createPageDependency as internalCreatePageDependency,
@@ -9,20 +10,20 @@ export const createPageDependencyBatcher = new Batcher<
   typeof internalCreatePageDependency
 >(1000)
 
-createPageDependencyBatcher.bulkCall(createCalls => {
-  const dependencyPayloads = createCalls.map(call => call[0])
+createPageDependencyBatcher.bulkCall((createCalls) => {
+  const dependencyPayloads = createCalls.map((call) => call[0])
   store.dispatch(internalCreatePageDependencies(dependencyPayloads))
 })
 
-export const createPageDependency = ({
+export function createPageDependency({
   path,
   nodeId,
   connection,
 }: {
   path: string
   nodeId: string
-  connection?: string
-}): void => {
+  connection?: string | undefined
+}): void {
   const { queries } = store.getState()
 
   // Check that the dependencies aren't already recorded so we

@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "gatsby-plugin-flow",
   "version": "4.14.0-next.2",
   "description": "Provides drop-in support for Flow by adding @babel/preset-flow.",
@@ -25,7 +25,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/preset-flow": "^7.18.6",
+    "@babel/preset-flow": "^7.24.1",
     "@babel/runtime": "^7.24.4"
   },
   "devDependencies": {
@@ -37,7 +37,9 @@
     "gatsby-plugin-utils": "^4.14.0-next.2"
   },
   "peerDependencies": {
-    "gatsby": "^5.13.4"
+    "gatsby": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "engines": {
     "node": ">=20.12.2"

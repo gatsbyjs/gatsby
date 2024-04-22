@@ -49,7 +49,7 @@ export class GatsbyIterable<T> {
   slice(start: number, end?: number): GatsbyIterable<T> {
     if ((typeof end !== `undefined` && end < start) || start < 0)
       throw new Error(
-        `Both arguments must not be negative and end must be greater than start`
+        `Both arguments must not be negative and end must be greater than start`,
       )
     return new GatsbyIterable<T>(() => sliceSequence(this, start, end))
   }
@@ -73,7 +73,7 @@ export class GatsbyIterable<T> {
    */
   mergeSorted<U = T>(
     other: Iterable<U>,
-    comparator?: (a: T | U, b: T | U) => number
+    comparator?: (a: T | U, b: T | U) => number,
   ): GatsbyIterable<T | U> {
     return new GatsbyIterable(() => mergeSorted(this, other, comparator))
   }
@@ -85,7 +85,7 @@ export class GatsbyIterable<T> {
    */
   intersectSorted<U = T>(
     other: Iterable<U>,
-    comparator?: (a: T | U, b: T | U) => number
+    comparator?: (a: T | U, b: T | U) => number,
   ): GatsbyIterable<T | U> {
     return new GatsbyIterable(() => intersectSorted(this, other, comparator))
   }
@@ -107,6 +107,7 @@ export class GatsbyIterable<T> {
 /**
  * Returns true when passed value is iterable
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isIterable(obj: unknown): obj is Iterable<any> {
   if (typeof obj !== `object` || obj === null) {
     return false
@@ -120,7 +121,7 @@ export function isNonArrayIterable<T>(value: unknown): value is Iterable<T> {
 
 function* mapSequence<T, U>(
   source: Iterable<T>,
-  fn: (arg: T, index: number) => U
+  fn: (arg: T, index: number) => U,
 ): Generator<U> {
   let i = 0
   for (const value of source) {
@@ -131,7 +132,7 @@ function* mapSequence<T, U>(
 function* sliceSequence<T>(
   source: Iterable<T>,
   start: number,
-  end: number | undefined
+  end: number | undefined,
 ): Generator<T> {
   let index = -1
   for (const item of source) {
@@ -144,7 +145,7 @@ function* sliceSequence<T>(
 
 function* filterSequence<T>(
   source: Iterable<T>,
-  predicate: (arg: T) => unknown
+  predicate: (arg: T) => unknown,
 ): Generator<T> {
   for (const value of source) {
     if (predicate(value)) {
@@ -155,7 +156,7 @@ function* filterSequence<T>(
 
 function* concatSequence<T, U>(
   first: Iterable<T>,
-  second: Iterable<U>
+  second: Iterable<U>,
 ): Generator<U | T> {
   for (const value of first) {
     yield value
@@ -167,7 +168,7 @@ function* concatSequence<T, U>(
 
 function* deduplicateSequence<T>(
   source: Iterable<T>,
-  keyFn?: (entry: T) => unknown
+  keyFn?: (entry: T) => unknown,
 ): Generator<T> {
   // TODO: this can be potentially improved by using bloom filters?
   const registered = new Set<unknown>()
@@ -183,7 +184,7 @@ function* deduplicateSequence<T>(
 
 function* deduplicateSorted<T>(
   source: Iterable<T>,
-  comparator: (a: T, b: T) => number = defaultComparator
+  comparator: (a: T, b: T) => number = defaultComparator,
 ): Generator<T> {
   let prev
   for (const current of source) {
@@ -198,7 +199,7 @@ function* deduplicateSorted<T>(
 function* mergeSorted<T, U = T>(
   firstSorted: Iterable<T>,
   secondSorted: Iterable<U>,
-  comparator: (a: T | U, b: T | U) => number = defaultComparator
+  comparator: (a: T | U, b: T | U) => number = defaultComparator,
 ): Generator<T | U> {
   const iter1 = firstSorted[Symbol.iterator]()
   const iter2 = secondSorted[Symbol.iterator]()
@@ -233,7 +234,7 @@ function* mergeSorted<T, U = T>(
 function* intersectSorted<T, U = T>(
   firstSorted: Iterable<T>,
   secondSorted: Iterable<U>,
-  comparator: (a: T | U, b: T | U) => number = defaultComparator
+  comparator: (a: T | U, b: T | U) => number = defaultComparator,
 ): Generator<T> {
   const iter1 = firstSorted[Symbol.iterator]()
   const iter2 = secondSorted[Symbol.iterator]()

@@ -11,10 +11,10 @@ import { untilNextEventLoopTick } from "./utils"
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
 import {
+  createAssetNodes,
   buildEntryList,
   buildForeignReferenceMap,
   buildResolvableSet,
-  createAssetNodes,
   createNodesForContentType,
   makeId,
 } from "./normalize"
@@ -57,7 +57,7 @@ export async function sourceNodes(
     reporter,
     parentSpan,
   },
-  pluginOptions
+  pluginOptions,
 ) {
   const {
     createNode: originalCreateNode,
@@ -74,13 +74,13 @@ export async function sourceNodes(
   const pluginConfig = createPluginConfig(pluginOptions)
 
   // wrap createNode so we can cache them in memory for faster lookups when finding backreferences
-  const createNode = node => {
+  const createNode = (node) => {
     addNodeToExistingNodesCache(node)
 
     return originalCreateNode(node)
   }
 
-  const deleteNode = node => {
+  const deleteNode = (node) => {
     removeNodeFromExistingNodesCache(node)
 
     return originalDeleteNode(node)
@@ -91,7 +91,7 @@ export async function sourceNodes(
     await getExistingCachedNodes({
       actions,
       getNode,
-      pluginConfig,
+      // pluginConfig,
     })
 
   // If the user knows they are offline, serve them cached result
@@ -103,18 +103,18 @@ export async function sourceNodes(
   ) {
     reporter.info(`Using Contentful Offline cache ⚠️`)
     reporter.info(
-      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`,
     )
 
     return
   } else if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
     reporter.info(
-      `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
+      `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`,
     )
   }
 
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-    `environment`
+    `environment`,
   )}`
 
   const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
@@ -158,13 +158,13 @@ export async function sourceNodes(
   reporter.verbose(
     `Default locale: ${defaultLocale}. All locales: ${allLocales
       .map(({ code }) => code)
-      .join(`, `)}`
+      .join(`, `)}`,
   )
   if (allLocales.length !== locales.length) {
     reporter.verbose(
       `After plugin.options.localeFilter: ${locales
         .map(({ code }) => code)
-        .join(`, `)}`
+        .join(`, `)}`,
     )
   }
   if (locales.length === 0) {
@@ -172,7 +172,7 @@ export async function sourceNodes(
       id: CODES.LocalesMissing,
       context: {
         sourceMessage: `Please check if your localeFilter is configured properly. Locales '${allLocales
-          .map(item => item.code)
+          .map((item) => item.code)
           .join(`,`)}' were found but were filtered down to none.`,
       },
     })
@@ -192,7 +192,7 @@ export async function sourceNodes(
     `Contentful: Process data`,
     {
       parentSpan,
-    }
+    },
   )
   processingActivity.start()
 
@@ -206,11 +206,15 @@ export async function sourceNodes(
     deletedAsset: currentSyncData?.deletedAssets?.length || 0,
   }
 
-  currentSyncData?.entries?.forEach(entry =>
-    entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
+  currentSyncData?.entries?.forEach((entry) =>
+    entry.sys.revision === 1
+      ? nodeCounts.newEntry++
+      : nodeCounts.updatedEntry++,
   )
-  currentSyncData?.assets?.forEach(asset =>
-    asset.sys.revision === 1 ? nodeCounts.newAsset++ : nodeCounts.updatedAsset++
+  currentSyncData?.assets?.forEach((asset) =>
+    asset.sys.revision === 1
+      ? nodeCounts.newAsset++
+      : nodeCounts.updatedAsset++,
   )
 
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
@@ -219,20 +223,21 @@ export async function sourceNodes(
   reporter.info(
     `Contentful: ${
       memoryNodeCountsBySysType.Entry / locales.length
-    } cached entries`
+    } cached entries`,
   )
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
   reporter.info(
     `Contentful: ${
       memoryNodeCountsBySysType.Asset / locales.length
-    } cached assets`
+    } cached assets`,
   )
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
   reporter.verbose(`Building Contentful reference map`)
 
   const entryList = buildEntryList({ contentTypeItems, currentSyncData })
+  // @ts-ignore
   const { assets } = currentSyncData
 
   // Create map of resolvable ids so we can check links against them while creating
@@ -244,7 +249,7 @@ export async function sourceNodes(
   })
 
   const previousForeignReferenceMapState = await cache.get(
-    CACHE_FOREIGN_REFERENCE_MAP_STATE
+    CACHE_FOREIGN_REFERENCE_MAP_STATE,
   )
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMapState = buildForeignReferenceMap({
@@ -264,12 +269,13 @@ export async function sourceNodes(
   reporter.verbose(`Resolving Contentful references`)
 
   let newOrUpdatedEntries = new Set()
-  entryList.forEach(entries => {
-    entries.forEach(entry => {
+  entryList.forEach((entries) => {
+    entries.forEach((entry) => {
       newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
 
+  // @ts-ignore
   const { deletedEntries, deletedAssets } = currentSyncData
   const deletedEntryGatsbyReferenceIds = new Set()
 
@@ -279,23 +285,23 @@ export async function sourceNodes(
       : node.sys.type
 
     const localizedNodes = locales
-      .map(locale => {
+      .map((locale) => {
         const nodeId = createNodeId(
           makeId({
-            spaceId: space.sys.id,
+            spaceId: space?.sys.id,
             id: node.sys.id,
             type: normalizedType,
             currentLocale: locale.code,
             defaultLocale,
-          })
+          }),
         )
         // Gather deleted node ids to remove them later on
         deletedEntryGatsbyReferenceIds.add(nodeId)
         return getNode(nodeId)
       })
-      .filter(node => node)
+      .filter((node) => node)
 
-    localizedNodes.forEach(node => {
+    localizedNodes.forEach((node) => {
       // touchNode first, to populate typeOwners & avoid erroring
       touchNode(node)
       deleteNode(node)
@@ -307,7 +313,7 @@ export async function sourceNodes(
       `Contentful: Deleting nodes and assets`,
       {
         parentSpan,
-      }
+      },
     )
     deletionActivity.start()
     deletedEntries.forEach(deleteContentfulNode)
@@ -319,7 +325,7 @@ export async function sourceNodes(
   let existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
 
   if (isCachedBuild) {
-    existingNodes.forEach(n => {
+    existingNodes.forEach((n) => {
       if (
         !(
           n.sys.type === `Entry` &&
@@ -335,7 +341,7 @@ export async function sourceNodes(
         foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
       ) {
         foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
-          foreignReference => {
+          (foreignReference) => {
             const { name, id: contentfulId, type, spaceId } = foreignReference
 
             const nodeId = createNodeId(
@@ -345,7 +351,7 @@ export async function sourceNodes(
                 type,
                 currentLocale: n.node_locale,
                 defaultLocale,
-              })
+              }),
             )
 
             // Create new reference field when none exists
@@ -360,19 +366,19 @@ export async function sourceNodes(
               existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
               n[name].push(nodeId)
             }
-          }
+          },
         )
       }
 
       // Remove references to deleted nodes
       if (n.contentful_id && deletedEntryGatsbyReferenceIds.size) {
-        Object.keys(n).forEach(name => {
+        Object.keys(n).forEach((name) => {
           // @todo Detect reference fields based on schema. Should be easier to achieve in the upcoming version.
           if (!name.endsWith(`___NODE`)) {
             return
           }
           if (Array.isArray(n[name])) {
-            n[name] = n[name].filter(referenceId => {
+            n[name] = n[name].filter((referenceId) => {
               const shouldRemove =
                 deletedEntryGatsbyReferenceIds.has(referenceId)
               if (shouldRemove) {
@@ -428,7 +434,7 @@ export async function sourceNodes(
         let counter
         const [initialContentDigest, counterStr] =
           nodeToUpdate.internal.contentDigest.split(
-            CONTENT_DIGEST_COUNTER_SEPARATOR
+            CONTENT_DIGEST_COUNTER_SEPARATOR,
           )
 
         if (counterStr) {
@@ -502,7 +508,7 @@ export async function sourceNodes(
           pluginConfig.get(`useNameForId`)
             ? contentTypeItem.name
             : contentTypeItem.sys.id
-        } nodes`
+        } nodes`,
       )
     }
 
@@ -548,7 +554,7 @@ export async function sourceNodes(
         locales,
         space,
         pluginConfig,
-      }))
+      })),
     )
 
     assets[i] = undefined
@@ -565,7 +571,7 @@ export async function sourceNodes(
 
     for (const tag of tagItems) {
       await createNode({
-        id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
+        id: createNodeId(`ContentfulTag__${space?.sys.id}__${tag.sys.id}`),
         name: tag.name,
         contentful_id: tag.sys.id,
         internal: {

@@ -6,38 +6,38 @@ import * as reporterActionsForTypes from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
-import { IStructuredError } from "../structured-errors/types"
-import { ErrorMeta } from "./types"
+import type { IStructuredError } from "../structured-errors/types"
+import type { ErrorMeta } from "./types"
 
-interface ICreateTimerReporterArguments {
+type ICreateTimerReporterArguments = {
   text: string
   id: string
   span: Span
   reporter: typeof gatsbyReporter
   reporterActions: typeof reporterActionsForTypes
-  pluginName?: string
+  pluginName?: string | undefined
 }
 
-export interface ITimerReporter {
+export type ITimerReporter = {
   start(): void
   setStatus(statusText: string): void
   panicOnBuild(
     errorMeta: ErrorMeta,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
   ): IStructuredError | Array<IStructuredError>
   panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): never
   end(): void
   span: Span
 }
 
-export const createTimerReporter = ({
+export function createTimerReporter({
   text,
   id,
   span,
   reporter,
   reporterActions,
   pluginName,
-}: ICreateTimerReporterArguments): ITimerReporter => {
+}: ICreateTimerReporterArguments): ITimerReporter {
   return {
     start(): void {
       reporterActions.startActivity({
@@ -56,7 +56,7 @@ export const createTimerReporter = ({
 
     panicOnBuild(
       errorMeta: ErrorMeta,
-      error?: Error | Array<Error>
+      error?: Error | Array<Error>,
     ): IStructuredError | Array<IStructuredError> {
       span.finish()
 

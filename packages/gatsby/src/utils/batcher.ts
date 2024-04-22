@@ -18,12 +18,12 @@ export default class Batcher<Callback extends (...args: Array<any>) => any> {
   /** Call all of our callbacks and clear out the queue */
   flush(): void {
     // call each callback for each item in the queue
-    this.queue.forEach(args =>
-      this.callbacks.forEach(callback => callback(...args)),
+    this.queue.forEach((args) =>
+      this.callbacks.forEach((callback) => callback(...args)),
     )
 
     // pass the entire queue to all bulk callbacks
-    this.bulkCallbacks.forEach(callback => {
+    this.bulkCallbacks.forEach((callback) => {
       callback(this.queue)
     })
 

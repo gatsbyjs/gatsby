@@ -3,7 +3,7 @@ import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
 
 const createOperations = jest.spyOn(
   createOperationsModule,
-  `createOperationObject`
+  `createOperationObject`,
 )
 
 const generateTestName = (salesChannel, lastBuildTime): string => {
@@ -27,9 +27,10 @@ describe(`createOperations`, () => {
     for (const lastBuildTime of [undefined, new Date(0)]) {
       it(generateTestName(salesChannel, lastBuildTime), () => {
         const result = createOperationsModule.createOperations(
+          // @ts-ignore
           gatsbyApi,
           { ...pluginOptions, salesChannel },
-          lastBuildTime
+          lastBuildTime,
         )
 
         expect(createOperations.mock.calls.length).toBe(5)

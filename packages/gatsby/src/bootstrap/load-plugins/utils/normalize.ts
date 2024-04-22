@@ -26,7 +26,7 @@ export function normalizePlugin(
 }
 
 export function normalizePlugins(
-  plugins?: Array<PluginRef>,
+  plugins?: Array<PluginRef> | undefined,
 ): Array<IPluginRefObject> {
   return (plugins || []).map(normalizePlugin)
 }

@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "fs-extra"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
-import path from "path"
+import path from "node:path"
 import {
   createUrl,
   isImage,
@@ -17,7 +17,7 @@ const inFlightBase64Cache = new Map()
 const resolvedBase64Cache = new Map()
 
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = (imageProps, cache) => {
+function getBase64Image(imageProps, cache) {
   if (!imageProps) {
     return null
   }
@@ -73,49 +73,49 @@ const getBase64Image = (imageProps, cache) => {
   const promise = loadImage()
   inFlightBase64Cache.set(requestUrl, promise)
 
-  return promise.then(body => {
+  return promise.then((body) => {
     inFlightBase64Cache.delete(requestUrl)
     resolvedBase64Cache.set(requestUrl, body)
     return body
   })
 }
 
-const getTracedSVG = async ({ image, options, cache }) => {
-  const { traceSVG } = await import(`gatsby-plugin-sharp`)
+// async function getTracedSVG({ image, options, cache }) {
+//   const { traceSVG } = await import(`gatsby-plugin-sharp`)
 
-  const {
-    file: { contentType, url: imgUrl, fileName },
-  } = image
+//   const {
+//     file: { contentType, url: imgUrl, fileName },
+//   } = image
 
-  if (contentType.indexOf(`image/`) !== 0) {
-    return null
-  }
+//   if (contentType.indexOf(`image/`) !== 0) {
+//     return null
+//   }
 
-  const extension = mimeTypeExtensions.get(contentType)
-  const url = createUrl(imgUrl, options)
-  const name = path.basename(fileName, extension)
+//   const extension = mimeTypeExtensions.get(contentType)
+//   const url = createUrl(imgUrl, options)
+//   const name = path.basename(fileName, extension)
 
-  const absolutePath = await fetchRemoteFile({
-    url,
-    name,
-    directory: cache.directory,
-    ext: extension,
-    cacheKey: image.internal.contentDigest,
-  })
+//   const absolutePath = await fetchRemoteFile({
+//     url,
+//     name,
+//     directory: cache.directory,
+//     ext: extension,
+//     cacheKey: image.internal.contentDigest,
+//   })
 
-  return traceSVG({
-    file: {
-      internal: image.internal,
-      name: image.file.fileName,
-      extension,
-      absolutePath,
-    },
-    args: { toFormat: ``, ...options.tracedSVGOptions },
-    fileArgs: options,
-  })
-}
+//   return traceSVG({
+//     file: {
+//       internal: image.internal,
+//       name: image.file.fileName,
+//       extension,
+//       absolutePath,
+//     },
+//     args: { toFormat: ``, ...options.tracedSVGOptions },
+//     fileArgs: options,
+//   })
+// }
 
-const getDominantColor = async ({ image, options, cache }) => {
+async function getDominantColor({ image, options, cache }) {
   let pluginSharp
 
   try {
@@ -123,7 +123,7 @@ const getDominantColor = async ({ image, options, cache }) => {
   } catch (e) {
     console.error(
       `[gatsby-source-contentful] Please install gatsby-plugin-sharp`,
-      e
+      e,
     )
     return `rgba(0,0,0,0.5)`
   }
@@ -156,7 +156,7 @@ const getDominantColor = async ({ image, options, cache }) => {
 
     if (!(`getDominantColor` in pluginSharp)) {
       console.error(
-        `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`
+        `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`,
       )
       return `rgba(0,0,0,0.5)`
     }
@@ -165,7 +165,7 @@ const getDominantColor = async ({ image, options, cache }) => {
   } catch (e) {
     console.error(
       `[gatsby-source-contentful] Could not getDominantColor from image`,
-      e
+      e,
     )
     console.error(e)
     return `rgba(0,0,0,0.5)`
@@ -197,7 +197,7 @@ export function generateImageSource(
   height,
   toFormat,
   _fit, // We use resizingBehavior instead
-  imageTransformOptions
+  imageTransformOptions,
 ) {
   const imageFormatDefaults = imageTransformOptions[`${toFormat}Options`]
 
@@ -233,7 +233,7 @@ export function generateImageSource(
 
   if (!validImageFormats.has(toFormat)) {
     console.warn(
-      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png, webp and avif"`
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png, webp and avif"`,
     )
     return undefined
   }
@@ -253,12 +253,13 @@ export function generateImageSource(
 }
 
 let didShowTraceSVGRemovalWarning = false
+
 export async function resolveGatsbyImageData(
   image,
   options,
   context,
   info,
-  { cache }
+  { cache },
 ) {
   if (!isImage(image)) return null
 
@@ -290,7 +291,7 @@ export async function resolveGatsbyImageData(
   if (options.placeholder === `tracedSVG`) {
     if (!didShowTraceSVGRemovalWarning) {
       console.warn(
-        `"TRACED_SVG" placeholder argument value is no longer supported (used in ContentfulAsset.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in ContentfulAsset.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`,
       )
       didShowTraceSVGRemovalWarning = true
     }
@@ -299,7 +300,7 @@ export async function resolveGatsbyImageData(
 
   const { baseUrl, contentType, width, height } = getBasicImageProps(
     image,
-    options
+    options,
   )
   let [, format] = contentType.split(`/`)
   if (format === `jpeg`) {
@@ -342,7 +343,7 @@ export async function resolveGatsbyImageData(
         image,
         options,
       },
-      cache
+      cache,
     )
   }
 

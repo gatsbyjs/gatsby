@@ -1,4 +1,4 @@
-import { ErrorId } from "./error-map"
+import type { ErrorId } from "./error-map"
 
 export type IConstructError = {
   details: {

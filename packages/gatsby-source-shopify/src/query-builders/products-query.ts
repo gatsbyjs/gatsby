@@ -12,7 +12,7 @@ export class ProductsQuery extends BulkQuery {
       filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
 
-    const queryString = filters.map(f => `(${f})`).join(` AND `)
+    const queryString = filters.map((f) => `(${f})`).join(` AND `)
 
     const query = `
       {

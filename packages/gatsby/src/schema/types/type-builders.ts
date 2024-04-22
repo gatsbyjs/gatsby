@@ -1,4 +1,4 @@
-import {
+import type {
   ObjectTypeComposerAsObjectDefinition as ComposeObjectTypeConfig,
   InputTypeComposerAsObjectDefinition as ComposeInputObjectTypeConfig,
   InterfaceTypeComposerAsObjectDefinition as ComposeInterfaceTypeConfig,
@@ -39,11 +39,12 @@ export type GatsbyGraphQLType<TSource, TContext> =
     }
   | {
       kind: GatsbyGraphQLTypeKind.SCALAR
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       config: ComposeScalarTypeConfig<any, any>
     }
 
 function buildObjectType<TSource, TContext>(
-  config: ComposeObjectTypeConfig<TSource, TContext>
+  config: ComposeObjectTypeConfig<TSource, TContext>,
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.OBJECT,
@@ -52,7 +53,7 @@ function buildObjectType<TSource, TContext>(
 }
 
 function buildUnionType<TSource, TContext>(
-  config: ComposeUnionTypeConfig<TSource, TContext>
+  config: ComposeUnionTypeConfig<TSource, TContext>,
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.UNION,
@@ -61,7 +62,7 @@ function buildUnionType<TSource, TContext>(
 }
 
 function buildInterfaceType<TSource, TContext>(
-  config: ComposeInterfaceTypeConfig<TSource, TContext>
+  config: ComposeInterfaceTypeConfig<TSource, TContext>,
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.INTERFACE,
@@ -70,7 +71,7 @@ function buildInterfaceType<TSource, TContext>(
 }
 
 function buildInputObjectType<TSource, TContext>(
-  config: ComposeInputObjectTypeConfig
+  config: ComposeInputObjectTypeConfig,
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.INPUT_OBJECT,
@@ -79,7 +80,7 @@ function buildInputObjectType<TSource, TContext>(
 }
 
 function buildEnumType<TSource, TContext>(
-  config: ComposeEnumTypeConfig
+  config: ComposeEnumTypeConfig,
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.ENUM,
@@ -88,7 +89,8 @@ function buildEnumType<TSource, TContext>(
 }
 
 function buildScalarType<TSource, TContext>(
-  config: ComposeScalarTypeConfig<any, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config: ComposeScalarTypeConfig<any, any>,
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.SCALAR,
@@ -96,6 +98,7 @@ function buildScalarType<TSource, TContext>(
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isGatsbyType(something: any): something is GatsbyGraphQLTypeKind {
   return (
     typeof something === `object` &&

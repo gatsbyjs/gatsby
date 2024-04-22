@@ -12,7 +12,7 @@ const OUTPUT_PATHS = {
 }
 
 export async function writeGraphQLConfig(
-  program: IStateProgram
+  program: IStateProgram,
 ): Promise<void> {
   try {
     const base = program.directory
@@ -38,7 +38,7 @@ export async function writeGraphQLConfig(
         },
       },
       null,
-      2
+      2,
     )
 
     await fs.outputFile(outputPath, configJSONString)
@@ -50,11 +50,13 @@ export async function writeGraphQLConfig(
 
 export async function writeGraphQLFragments(
   directory: IStateProgram["directory"],
-  definitions: Map<string, IDefinitionMeta>
+  definitions: Map<string, IDefinitionMeta>,
 ): Promise<void> {
   try {
     const fragmentString = Array.from(definitions.entries())
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, def]) => def.isFragment)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
       .join(`\n`)
 
@@ -67,7 +69,7 @@ export async function writeGraphQLFragments(
 
 export async function writeGraphQLSchema(
   directory: IStateProgram["directory"],
-  schema: GraphQLSchema
+  schema: GraphQLSchema,
 ): Promise<void> {
   try {
     const schemaSDLString = printSchema(stabilizeSchema(schema))

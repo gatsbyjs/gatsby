@@ -4,6 +4,10 @@
     "declaration": false
   },
   // For now index.d.ts is manually-created, but gatsby/internal is auto-generated
-  "include": ["src/**/*.ts", "src/schema/node-model.js"],
-  "exclude": ["**/__tests__/**/*"]
+  "include": [
+    "src/**/*.ts",
+    "src/schema/node-model.js",
+    "src/redux/actions/public.js"
+  ],
+  "exclude": ["**/__tests__/**/*", "dist"]
 }

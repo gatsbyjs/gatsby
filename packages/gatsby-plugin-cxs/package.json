@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "gatsby-plugin-cxs",
   "description": "Gatsby plugin to add SSR support for ctx",
   "version": "5.14.0-next.2",
@@ -29,9 +29,9 @@
   "main": "index.js",
   "peerDependencies": {
     "cxs": ">=6.2.0",
-    "gatsby": "^5.13.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "gatsby": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

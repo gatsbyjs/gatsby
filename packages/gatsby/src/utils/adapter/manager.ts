@@ -93,7 +93,7 @@ async function setAdapter({
           `trailingSlash option "${trailingSlash}". Supported option${
             configFromAdapter.supports.trailingSlash.length > 1 ? `s` : ``
           }: ${configFromAdapter.supports.trailingSlash
-            .map(option => `"${option}"`)
+            .map((option) => `"${option}"`)
             .join(`, `)}`,
         )
       }
@@ -104,7 +104,7 @@ async function setAdapter({
         `Adapter "${
           instance.name
         }" is not compatible with following settings:\n${incompatibleFeatures
-          .map(line => ` - ${line}`)
+          .map((line) => ` - ${line}`)
           .join(`\n`)}`,
       )
     }
@@ -237,7 +237,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
           if (!_imageCdnAllowedUrls) {
             _imageCdnAllowedUrls = Array.from(
               store.getState().remoteFileAllowedUrls,
-            ).map(urlPattern => {
+            ).map((urlPattern) => {
               return {
                 urlPattern,
                 regexSource: pathToRegexp.pathToRegexp(urlPattern).source,
@@ -354,7 +354,7 @@ function getRoutesManifest(): {
       cwd: posix.join(process.cwd(), `public`),
       nodir: true,
       dot: true,
-    }).map(filePath => slash(filePath)),
+    }).map((filePath) => slash(filePath)),
   )
 
   // TODO: This could be a "addSortedRoute" function that would add route to the list in sorted order. TBD if necessary performance-wise
@@ -391,7 +391,7 @@ function getRoutesManifest(): {
 
     const routeWithScore: RouteWithScore = {
       ...route,
-      score: rankRoute(route.path),
+      score: rankRoute(route.path) ?? 0,
     }
 
     routes.push(routeWithScore)
@@ -668,7 +668,7 @@ function getFunctionsManifest(): FunctionsManifest {
         cwd: posix.join(process.cwd(), dir),
         nodir: true,
         dot: true,
-      }).map(file => posix.join(dir, file))
+      }).map((file) => posix.join(dir, file))
     }
 
     functions.push({

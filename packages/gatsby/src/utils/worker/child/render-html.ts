@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 import fs from "fs-extra"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Bluebird from "bluebird"
 import * as path from "path"
 // @ts-ignore
@@ -14,7 +15,7 @@ import {
   clearCache as clearAssetsMappingCache,
 } from "../../client-assets-for-template"
 import {
-  IPageDataWithQueryResult,
+  type IPageDataWithQueryResult,
   modifyPageDataForErrorMessage,
   readPageData,
   readSliceData,
@@ -22,11 +23,11 @@ import {
 import type { IRenderHtmlResult } from "../../../commands/build-html"
 import {
   clearStaticQueryCaches,
-  IResourcesForTemplate,
+  type IResourcesForTemplate,
   getStaticQueryContext,
 } from "../../static-query-utils"
 import { ServerLocation } from "@gatsbyjs/reach-router"
-import { IGatsbySlice } from "../../../internal"
+import type { IGatsbySlice } from "../../../internal"
 import { ensureFileContent } from "../../ensure-file-content"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
@@ -35,14 +36,14 @@ type IUnsafeBuiltinUsage = Array<string> | undefined
 
 declare global {
   namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/consistent-type-definitions
     interface Global {
       unsafeBuiltinUsage: IUnsafeBuiltinUsage
     }
   }
 }
 
-interface IRenderHTMLError extends Error {
+type IRenderHTMLError = {
   message: string
   name: string
   code?: string
@@ -51,7 +52,7 @@ interface IRenderHTMLError extends Error {
     path?: string
     unsafeBuiltinsUsageByPagePath?: Record<string, IUnsafeBuiltinUsage>
   }
-}
+} & Error
 
 /**
  * Used to track if renderHTMLProd / renderHTMLDev are called within same "session" (from same renderHTMLQueue call).
@@ -77,15 +78,15 @@ function clearCaches(): void {
 }
 
 async function doGetResourcesForTemplate(
-  pageData: IPageDataWithQueryResult
+  pageData: IPageDataWithQueryResult,
 ): Promise<IResourcesForTemplate> {
   const scriptsAndStyles = await getScriptsAndStylesForTemplate(
     pageData.componentChunkName,
-    webpackStats
+    webpackStats,
   )
 
   const { staticQueryContext } = await getStaticQueryContext(
-    pageData.staticQueryHashes
+    pageData.staticQueryHashes,
   )
 
   return {
@@ -95,10 +96,10 @@ async function doGetResourcesForTemplate(
 }
 
 async function getResourcesForTemplate(
-  pageData: IPageDataWithQueryResult
+  pageData: IPageDataWithQueryResult,
 ): Promise<IResourcesForTemplate> {
   const memoizedResourcesForTemplate = resourcesForTemplateCache.get(
-    pageData.componentChunkName
+    pageData.componentChunkName,
   )
   if (memoizedResourcesForTemplate) {
     return memoizedResourcesForTemplate
@@ -120,7 +121,7 @@ async function getResourcesForTemplate(
   return resources
 }
 
-interface IPreviewErrorProps {
+type IPreviewErrorProps = {
   pagePath: string
   publicDir: string
   error: IRenderHTMLError
@@ -334,7 +335,7 @@ const generatePreviewErrorPage = async ({
         <pre><code>${JSON.stringify(
           pageDataForErrorMessage,
           null,
-          2
+          2,
         )}</code></pre>
       </details>
     </main>
@@ -388,7 +389,7 @@ export const renderHTMLProd = async ({
 
   await Bluebird.map(
     paths,
-    async pagePath => {
+    async (pagePath) => {
       try {
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
@@ -444,7 +445,7 @@ export const renderHTMLProd = async ({
         }
       }
     },
-    { concurrency: 2 }
+    { concurrency: 2 },
   )
 
   return {
@@ -484,7 +485,7 @@ export const renderHTMLDev = async ({
 
   return Bluebird.map(
     paths,
-    async pagePath => {
+    async (pagePath) => {
       try {
         const htmlString = await htmlComponentRenderer.default({
           pagePath,
@@ -501,7 +502,7 @@ export const renderHTMLDev = async ({
         throw e
       }
     },
-    { concurrency: 2 }
+    { concurrency: 2 },
   )
 }
 
@@ -549,7 +550,7 @@ export async function renderPartialHydrationProd({
         const sliceDataPath = path.join(
           publicDir,
           `slice-data`,
-          `${sliceName}.json`
+          `${sliceName}.json`,
         )
         const sliceData = await fs.readJSON(sliceDataPath)
         for (const staticQueryHash of sliceData.staticQueryHashes) {
@@ -559,14 +560,14 @@ export async function renderPartialHydrationProd({
     }
 
     const { staticQueryContext } = await getStaticQueryContext(
-      Array.from(staticQueryHashes)
+      Array.from(staticQueryHashes),
     )
 
     const pageRenderer = path.join(
       process.cwd(),
       `.cache`,
       `partial-hydration`,
-      `render-page`
+      `render-page`,
     )
 
     const {
@@ -580,7 +581,7 @@ export async function renderPartialHydrationProd({
     })
     const outputPath = generatePageDataPath(
       path.join(process.cwd(), `public`),
-      pagePath
+      pagePath,
     ).replace(`.json`, `-rsc.json`)
 
     const stream = fs.createWriteStream(outputPath)
@@ -611,9 +612,9 @@ export async function renderPartialHydrationProd({
                   hash: ``,
                 },
               }),
-            ]
+            ],
           ),
-        ]
+        ],
       ),
       JSON.parse(
         fs.readFileSync(
@@ -621,15 +622,15 @@ export async function renderPartialHydrationProd({
             process.cwd(),
             `.cache`,
             `partial-hydration`,
-            `manifest.json`
+            `manifest.json`,
           ),
-          `utf8`
-        )
+          `utf8`,
+        ),
       ),
       {
         // React spits out the error here and does not emit it, we want to emit it
         // so we can reject with the error and handle it upstream
-        onError: error => {
+        onError: (error) => {
           const partialHydrationError: IRenderHTMLError = error
 
           partialHydrationError.context = {
@@ -639,7 +640,7 @@ export async function renderPartialHydrationProd({
 
           stream.emit(`error`, error)
         },
-      }
+      },
     )
 
     await new Promise<void>((resolve, reject) => {
@@ -656,22 +657,22 @@ export async function renderPartialHydrationProd({
   }
 }
 
-export interface IRenderSliceResult {
+export type IRenderSliceResult = {
   chunks: 2 | 1
 }
 
-export interface IRenderSlicesResults {
+export type IRenderSlicesResults = {
   [sliceName: string]: IRenderSliceResult
 }
 
-export interface ISlicePropsEntry {
+export type ISlicePropsEntry = {
   sliceId: string
   sliceName: string
   props: Record<string, unknown>
   hasChildren: boolean
 }
 
-interface IRenderSliceHTMLError extends Error {
+type IRenderSliceHTMLError = {
   message: string
   name: string
   code?: string
@@ -681,7 +682,7 @@ interface IRenderSliceHTMLError extends Error {
     sliceData: unknown
     sliceProps: unknown
   }
-}
+} & Error
 
 export async function renderSlices({
   slices,
@@ -699,19 +700,18 @@ export async function renderSlices({
   const htmlComponentRenderer = require(htmlComponentRendererPath)
 
   for (const { sliceId, props, sliceName, hasChildren } of slicesProps) {
-    const sliceEntry = slices.find(f => f[0] === sliceName)
+    const sliceEntry = slices.find((f) => f[0] === sliceName)
     if (!sliceEntry) {
       throw new Error(
-        `Slice name "${sliceName}" not found when rendering slices`
+        `Slice name "${sliceName}" not found when rendering slices`,
       )
     }
     const slice = sliceEntry[1]
     const staticQueryHashes =
       staticQueriesBySliceTemplate[slice.componentPath] || []
 
-    const { staticQueryContext } = await getStaticQueryContext(
-      staticQueryHashes
-    )
+    const { staticQueryContext } =
+      await getStaticQueryContext(staticQueryHashes)
 
     const MAGIC_CHILDREN_STRING = `__DO_NOT_USE_OR_ELSE__`
     const sliceData = await readSliceData(publicDir, slice.name)
@@ -733,7 +733,7 @@ export async function renderSlices({
       for (const htmlChunk of split) {
         await ensureFileContent(
           path.join(publicDir, `_gatsby`, `slices`, `${sliceId}-${index}.html`),
-          htmlChunk
+          htmlChunk,
         )
         index++
       }

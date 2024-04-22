@@ -10,13 +10,11 @@ import compression from "compression"
 import { createHandler as createGraphqlEndpointHandler } from "graphql-http/lib/use/express"
 import type { OperationContext } from "graphql-http"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { FragmentDefinitionNode, GraphQLError, Kind } from "graphql"
-// @ts-ignore
+import { type FragmentDefinitionNode, GraphQLError, Kind } from "graphql"
 import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
 import cors from "cors"
-// @ts-ignore
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
@@ -25,7 +23,6 @@ import * as fs from "fs-extra"
 import { withBasePath } from "../utils/path"
 import { webpackConfig } from "../utils/webpack.config"
 import { store, emitter } from "../redux"
-// @ts-ignore
 import report from "gatsby-cli/lib/reporter"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import * as WorkerPool from "../utils/worker/pool"
@@ -59,7 +56,6 @@ import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
 import { configureTrailingSlash } from "./express-middlewares"
 import type { Express } from "express"
-// @ts-ignore
 import { addImageRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 import { isFileInsideCompilations } from "./webpack/utils/is-file-inside-compilations"
 
@@ -212,7 +208,7 @@ export async function startServer(
       onOperation(_req, _args, result) {
         if (result.errors) {
           result.errors = result.errors.map(
-            err =>
+            (err) =>
               ({
                 ...err.toJSON(),
                 extensions: {
@@ -320,7 +316,7 @@ export async function startServer(
               page,
               potentialPagePath,
               componentInstance,
-            ).catch(error => error)
+            ).catch((error) => error)
           }
 
           let pageData: IPageDataWithQueryResult
@@ -636,7 +632,7 @@ export async function startServer(
                 method: method as Method,
                 decompress: false,
               })
-              .on(`response`, response =>
+              .on(`response`, (response) =>
                 res.writeHead(response.statusCode || 200, response.headers),
               )
               .on(`error`, (err, _, response) => {
@@ -868,7 +864,7 @@ export async function startServer(
           res.status(404)
         }
 
-        res.sendFile(directoryPath(`.cache/develop-html/index.html`), err => {
+        res.sendFile(directoryPath(`.cache/develop-html/index.html`), (err) => {
           if (err) {
             res.status(500).end()
           }
@@ -889,7 +885,7 @@ export async function startServer(
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)
     // Register watcher that rebuilds index.html every time html.js changes.
-    const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+    const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map((path) =>
       slash(directoryPath(path)),
     )
 

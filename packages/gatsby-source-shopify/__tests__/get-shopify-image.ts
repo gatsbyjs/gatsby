@@ -8,6 +8,7 @@ const image = {
 
 describe(`getShopifyImage`, () => {
   it(`generates an imagedata object`, () => {
+    // @ts-ignore
     const data = getShopifyImage({ image, layout: `fullWidth` })
     expect(data).toMatchSnapshot()
   })

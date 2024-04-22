@@ -1,6 +1,6 @@
 import { relative } from "path"
 import { PluginObj, types as BabelTypes, PluginPass } from "@babel/core"
-import { ObjectProperty } from "@babel/types"
+import type { ObjectProperty } from "@babel/types"
 import { store } from "../../redux"
 
 /**

@@ -72,7 +72,7 @@ export function readFromCache(
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const nodesChunks = globSync(
     reduxChunkedNodesFilePrefix(cacheFolder) + `*`,
-  ).map(file => v8.deserialize(readFileSync(file)))
+  ).map((file) => v8.deserialize(readFileSync(file)))
 
   const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
 
@@ -88,7 +88,7 @@ export function readFromCache(
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const pagesChunks = globSync(
     reduxChunkedPagesFilePrefix(cacheFolder) + `*`,
-  ).map(file => v8.deserialize(readFileSync(file)))
+  ).map((file) => v8.deserialize(readFileSync(file)))
 
   const pages: Array<[string, IGatsbyPage]> = [].concat(...pagesChunks)
 
@@ -162,7 +162,7 @@ function prepareCacheFolder(
           counter: 0,
           owner: ``,
         },
-        fields: [],
+        fields: {},
       }
       nodesMap.set(dummyNode.id, dummyNode)
     }

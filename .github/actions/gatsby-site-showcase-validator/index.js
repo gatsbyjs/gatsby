@@ -1,11 +1,10 @@
 // Load in modules
-const fetch = require("node-fetch")
 const yaml = require("js-yaml")
 const cheerio = require("cheerio")
 const chalk = require("chalk")
 
 async function fetchAsSiteValidator(url) {
-  return fetch(url, {
+  return globalThis.fetch(url, {
     headers: {
       "User-Agent":
         "gatsby-site-showcase-validator/1.0 (+https://github.com/gatsbyjs/gatsby/tree/master/.github/actions/gatsby-site-showcase-validator)",
@@ -21,7 +20,7 @@ async function run() {
   let yamlStr
 
   try {
-    yamlStr = await fetchAsSiteValidator(url).then(resp => resp.text())
+    yamlStr = await fetchAsSiteValidator(url).then((resp) => resp.text())
   } catch (err) {
     console.log(`[Err]: ${err.message}`)
     process.exit(1)
@@ -44,12 +43,12 @@ async function run() {
 
     // Fetch site
     try {
-      siteHtml = await fetchAsSiteValidator(siteUrl).then(resp => resp.text())
+      siteHtml = await fetchAsSiteValidator(siteUrl).then((resp) => resp.text())
     } catch (err) {
       console.log(
         `${chalk.red(`[Err]`)}: ${site.title} (${siteUrl}) ran into an error: ${
           err.message
-        }`
+        }`,
       )
       sitesVisited++
       erroredOut++
@@ -67,7 +66,7 @@ async function run() {
       console.log(
         `${chalk.yellow(`[Notice]`)}: ${
           site.title
-        } (${siteUrl}) is not a Gatsby site`
+        } (${siteUrl}) is not a Gatsby site`,
       )
       nonGatsbySiteCount++
     }
@@ -75,14 +74,14 @@ async function run() {
     // Check if provided repository is public
     if (sourceUrl) {
       const status = await fetchAsSiteValidator(sourceUrl).then(
-        ({ status }) => status
+        ({ status }) => status,
       )
 
       if (status !== 200) {
         console.log(
           `${chalk.yellow(`[Notice]`)}: ${
             site.title
-          } (${siteUrl}) provided a 'source_url', but it's repository is inaccessible (${sourceUrl})`
+          } (${siteUrl}) provided a 'source_url', but it's repository is inaccessible (${sourceUrl})`,
         )
         inaccessibleRepoCount++
       }
@@ -93,8 +92,8 @@ async function run() {
 
   console.log(
     chalk.green(
-      `We visited ${sitesVisited}/${totalSitesCount} sites. Out of them, ${nonGatsbySiteCount} sites were not a Gatsby site, ${inaccessibleRepoCount} provided inaccessible repositories, and ${erroredOut} errored out when visiting it.`
-    )
+      `We visited ${sitesVisited}/${totalSitesCount} sites. Out of them, ${nonGatsbySiteCount} sites were not a Gatsby site, ${inaccessibleRepoCount} provided inaccessible repositories, and ${erroredOut} errored out when visiting it.`,
+    ),
   )
 
   // If there are any non Gatsby sites or their `source_url` is inaccessible, fail (non-zero exit code)

@@ -28,7 +28,7 @@ export async function updateInternalSiteMetadata(
   }
 
   return createServiceLock(metadata.sitePath, `metadata`, metadata).then(
-    unlock => unlock?.(),
+    (unlock) => unlock?.(),
   )
 }
 

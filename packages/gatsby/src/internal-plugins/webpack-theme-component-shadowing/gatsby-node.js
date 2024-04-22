@@ -1,9 +1,6 @@
 const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
 
-exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, rules, loaders, actions },
-  pluginOptions
-) => {
+exports.onCreateWebpackConfig = ({ store, actions }) => {
   const { flattenedPlugins, program } = store.getState()
 
   actions.setWebpackConfig({
@@ -11,7 +8,7 @@ exports.onCreateWebpackConfig = (
       plugins: [
         new GatsbyThemeComponentShadowingResolverPlugin({
           extensions: program.extensions,
-          themes: flattenedPlugins.map(plugin => {
+          themes: flattenedPlugins.map((plugin) => {
             return {
               themeDir: plugin.pluginFilepath,
               themeName: plugin.name,

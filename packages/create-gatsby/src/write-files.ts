@@ -1,7 +1,7 @@
 import * as fs from "fs-extra"
-import path from "path"
+import path from "node:path"
 
-export interface IFile {
+export type IFile = {
   source: string
   targetPath: string
 }
@@ -15,7 +15,7 @@ async function writeFile({ source, targetPath }: IFile): Promise<void> {
 
 export async function writeFiles(
   rootPath: string,
-  files: Array<IFile> | undefined
+  files: Array<IFile> | undefined,
 ): Promise<void> {
   if (!files) {
     return

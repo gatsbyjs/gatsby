@@ -1,4 +1,4 @@
-import { ExecutionResult } from "graphql"
+import type { ExecutionResult } from "graphql"
 
 export type IGraphQLRunnerStats = {
   totalQueries: number
@@ -32,6 +32,6 @@ export type IGraphQLRunnerStatResults = {
 export type PageContext = Record<string, any>
 
 export type IExecutionResult = {
-  pageContext?: PageContext
-  serverData?: unknown
+  pageContext?: PageContext | undefined
+  serverData?: unknown | undefined
 } & ExecutionResult

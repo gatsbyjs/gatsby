@@ -42,14 +42,14 @@ export function loadInternalPlugins(
     `../../internal-plugins/functions`,
   ].filter(Boolean) as Array<string>
 
-  internalPlugins.forEach(relPath => {
+  internalPlugins.forEach((relPath) => {
     const absPath = path.join(__dirname, relPath)
     plugins.push(processPlugin(absPath, rootDir))
   })
 
   // Add plugins from the site config.
   if (config.plugins) {
-    config.plugins.forEach(plugin => {
+    config.plugins.forEach((plugin) => {
       const processedPlugin = processPlugin(plugin, rootDir)
       plugins.push(processedPlugin)
       configuredPluginNames.add(processedPlugin.name)
@@ -61,7 +61,7 @@ export function loadInternalPlugins(
   // match the plugin definition order before that. This works fine for themes
   // because themes have already been added in the proper order to the plugins
   // array
-  plugins.forEach(plugin => {
+  plugins.forEach((plugin) => {
     plugins.push(
       processPlugin(
         {

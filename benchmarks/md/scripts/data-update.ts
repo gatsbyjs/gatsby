@@ -2,23 +2,20 @@ import faker from "faker"
 import frontMatter from "front-matter"
 import fs from "fs-extra"
 import glob from "glob"
-import fetch from "node-fetch"
 
-interface IArticleAttributes {
+type IArticleAttributes = {
   articleNumber: Number
-  title: String
-  image: String
+  title: string
+  image: string
 }
-
 ;(async () => {
   // get the first article file
   const [articleFilePath] = glob.sync(`./src/articles/**/*.md`)
   const articleFileContents = await fs.readFile(articleFilePath, `utf8`)
 
   // parse the frontmatter
-  const { attributes }: { attributes: IArticleAttributes } = frontMatter(
-    articleFileContents
-  )
+  const { attributes }: { attributes: IArticleAttributes } =
+    frontMatter(articleFileContents)
 
   // generate a new title
   const title = faker.random.words(Math.floor(Math.random() * 5) + 3)
@@ -42,7 +39,7 @@ interface IArticleAttributes {
     const webhooks = process.env.BENCHMARK_MD_UPDATE_WEBHOOKS.split(`,`)
 
     for (const webhook of webhooks) {
-      await fetch(webhook, { method: `POST` })
+      await globalThis.fetch(webhook, { method: `POST` })
       console.log(`Sent a post request to ${webhook}`)
     }
   }

@@ -1,4 +1,4 @@
-import path from "path"
+import path from "node:path"
 import resolveCwd from "resolve-cwd"
 import yargs, { type Arguments, type Argv } from "yargs"
 import envinfo from "envinfo"
@@ -20,14 +20,14 @@ import { whoami } from "./whoami"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
 
-const handlerP =
-  (fn: (args: Arguments) => void) =>
-  (args: Arguments): void => {
+const handlerP = (fn: (args: Arguments) => void) => {
+  return (args: Arguments): void => {
     Promise.resolve(fn(args)).then(
       () => process.exit(0),
-      err => report.panic(err),
+      (err) => report.panic(err),
     )
   }
+}
 
 function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
   const defaultHost = `localhost`
@@ -143,7 +143,7 @@ function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
     describe:
       `Start development server. Watches files, rebuilds, and hot reloads ` +
       `if something changes`,
-    builder: _ => {
+    builder: (_) => {
       return _.option(`H`, {
         alias: `host`,
         type: `string`,
@@ -230,7 +230,7 @@ function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
   cli.command({
     command: `build`,
     describe: `Build a Gatsby project.`,
-    builder: _ => {
+    builder: (_) => {
       return (
         _.option(`prefix-paths`, {
           type: `boolean`,
@@ -298,7 +298,7 @@ function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
   cli.command({
     command: `serve`,
     describe: `Serve previously built Gatsby site.`,
-    builder: _ => {
+    builder: (_) => {
       return _.option(`H`, {
         alias: `host`,
         type: `string`,
@@ -339,7 +339,7 @@ function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
   cli.command({
     command: `info`,
     describe: `Get environment information for debugging and issue reporting`,
-    builder: _ => {
+    builder: (_) => {
       return _.option(`C`, {
         alias: `clipboard`,
         type: `boolean`,
@@ -364,7 +364,7 @@ function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
           })
-          .then(envinfoOutput => {
+          .then((envinfoOutput) => {
             console.log(envinfoOutput)
 
             if (copyToClipboard) {
@@ -383,7 +383,7 @@ function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
 
   cli.command({
     command: `feedback`,
-    builder: _ => {
+    builder: (_) => {
       return _.option(`disable`, {
         type: `boolean`,
         describe: `Opt out of future feedback requests`,
@@ -414,7 +414,7 @@ function buildLocalCommands(cli: Argv, isLocalSite: boolean): void {
   cli.command({
     command: `plugin <cmd> [plugins...]`,
     describe: `Useful commands relating to Gatsby plugins`,
-    builder: yargs => {
+    builder: (yargs) => {
       return yargs.positional(`cmd`, {
         choices: [`docs`, `ls`],
         describe: "Valid commands include `docs`, `ls`.",
@@ -565,7 +565,7 @@ export function createCli(argv: Array<string>):
     .command({
       command: `telemetry`,
       describe: `Enable or disable Gatsby anonymous analytics collection.`,
-      builder: yargs =>
+      builder: (yargs) =>
         yargs
           .option(`enable`, {
             type: `boolean`,
@@ -585,7 +585,7 @@ export function createCli(argv: Array<string>):
     .command({
       command: `options [cmd] [key] [value]`,
       describe: `View or set your gatsby-cli configuration settings.`,
-      builder: yargs => {
+      builder: (yargs) => {
         return yargs
           .positional(`cmd`, {
             choices: [`set`],

@@ -14,11 +14,11 @@ export async function md5File(filePath: string): Promise<string> {
 
     const fileInput = fs.createReadStream(filePath)
 
-    fileInput.on(`error`, err => {
+    fileInput.on(`error`, (err) => {
       reject(err)
     })
 
-    fileInput.on(`data`, data => {
+    fileInput.on(`data`, (data) => {
       md5hasher.update(data)
     })
 

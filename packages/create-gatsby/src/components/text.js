@@ -42,7 +42,7 @@ export class TextInput extends Input {
     this.write(
       [header, message, prompt, await this.error(), footer]
         .filter(Boolean)
-        .join(`\n`)
+        .join(`\n`),
     )
     this.restore()
   }

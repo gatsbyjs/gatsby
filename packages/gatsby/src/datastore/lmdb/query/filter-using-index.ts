@@ -1,18 +1,18 @@
 import { GatsbyIterable } from "../../common/iterable"
 import {
   DbComparator,
-  DbComparatorValue,
-  DbQuery,
+  type DbComparatorValue,
+  type DbQuery,
   dbQueryToDottedField,
   getFilterStatement,
-  IDbFilterStatement,
+  type IDbFilterStatement,
   sortBySpecificity,
 } from "../../common/query"
-import { IDataStore, ILmdbDatabases, NodeId } from "../../types"
+import type { IDataStore, ILmdbDatabases, NodeId } from "../../types"
 import {
-  IIndexMetadata,
-  IndexFieldValue,
-  IndexKey,
+  type IIndexMetadata,
+  type IndexFieldValue,
+  type IndexKey,
   undefinedSymbol,
 } from "./create-index"
 import { cartesianProduct, matchesFilter } from "./common"
@@ -32,12 +32,12 @@ type RangeValue =
   | typeof BinaryInfinityNegative
 type RangeBoundary = Array<RangeValue>
 
-export interface IIndexEntry {
+export type IIndexEntry = {
   key: IndexKey
   value: NodeId
 }
 
-interface IIndexRange {
+type IIndexRange = {
   start: RangeBoundary
   end: RangeBoundary
 }
@@ -48,7 +48,7 @@ enum ValueEdges {
   AFTER = 1,
 }
 
-export interface IFilterArgs {
+export type IFilterArgs = {
   datastore: IDataStore
   databases: ILmdbDatabases
   dbQueries: Array<DbQuery>
@@ -58,26 +58,28 @@ export interface IFilterArgs {
   reverse?: boolean
 }
 
-interface IFilterContext extends IFilterArgs {
+type IFilterContext = {
   usedLimit: number | undefined
   usedSkip: number
   usedQueries: Set<DbQuery>
-}
+} & IFilterArgs
 
-export interface IFilterResult {
+export type IFilterResult = {
   entries: GatsbyIterable<IIndexEntry>
   usedQueries: Set<DbQuery>
   usedLimit: number | undefined
   usedSkip: number
 }
 
-interface ILmdbStoreRangeOptions {
-  start?: any
-  end?: any
+type ILmdbStoreRangeOptions = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  start?: any | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  end?: any | undefined
   limit?: number | undefined
   offset?: number | undefined
-  revers?: boolean
-  snapshot?: boolean
+  revers?: boolean | undefined
+  snapshot?: boolean | undefined
 }
 
 export function filterUsingIndex(args: IFilterArgs): IFilterResult {
@@ -158,20 +160,20 @@ function needsDeduplication(context: IFilterContext): boolean {
   }
   // Deduplication is not needed if all multiKeyFields have applied `eq` filters
   const fieldsWithAppliedEq = new Set<string>()
-  context.usedQueries.forEach(q => {
+  context.usedQueries.forEach((q) => {
     const filter = getFilterStatement(q)
     if (filter.comparator === DbComparator.EQ) {
       fieldsWithAppliedEq.add(dbQueryToDottedField(q))
     }
   })
   return context.indexMetadata.multiKeyFields.some(
-    fieldName => !fieldsWithAppliedEq.has(fieldName)
+    (fieldName) => !fieldsWithAppliedEq.has(fieldName),
   )
 }
 
 function performRangeScan(
   context: IFilterContext,
-  ranges: Array<IIndexRange>
+  ranges: Array<IIndexRange>,
 ): GatsbyIterable<IIndexEntry> {
   const {
     indexMetadata: { keyPrefix, stats },
@@ -253,7 +255,7 @@ function performFullScan(context: IFilterContext): GatsbyIterable<IIndexEntry> {
 
 function* traverseRanges(
   context: IFilterContext,
-  ranges: Array<ILmdbStoreRangeOptions>
+  ranges: Array<ILmdbStoreRangeOptions>,
 ): Generator<IIndexEntry> {
   const {
     databases: { indexes },
@@ -285,7 +287,7 @@ function* traverseRanges(
  */
 function narrowResultsIfPossible(
   context: IFilterContext,
-  entries: GatsbyIterable<IIndexEntry>
+  entries: GatsbyIterable<IIndexEntry>,
 ): GatsbyIterable<IIndexEntry> {
   const { indexMetadata, dbQueries, usedQueries } = context
 
@@ -346,7 +348,7 @@ function narrowResultsIfPossible(
  */
 function getSupportedQueries(
   context: IFilterContext,
-  dbQueries: Array<DbQuery>
+  dbQueries: Array<DbQuery>,
 ): Array<DbQuery> {
   const isSupported = new Set([
     DbComparator.EQ,
@@ -358,8 +360,8 @@ function getSupportedQueries(
     DbComparator.NIN,
     DbComparator.NE,
   ])
-  let supportedQueries = dbQueries.filter(query =>
-    isSupported.has(getFilterStatement(query).comparator)
+  let supportedQueries = dbQueries.filter((query) =>
+    isSupported.has(getFilterStatement(query).comparator),
   )
   if (isMultiKeyIndex(context)) {
     // Note:
@@ -369,7 +371,9 @@ function getSupportedQueries(
     //   But multikey index contains separate entries for `foo` and `bar` values.
     //   Final range will exclude entry "foo" but it will still include entry for "bar" hence
     //   will incorrectly include our node in results.
-    supportedQueries = supportedQueries.filter(query => !isNegatedQuery(query))
+    supportedQueries = supportedQueries.filter(
+      (query) => !isNegatedQuery(query),
+    )
   }
   return sortBySpecificity(supportedQueries)
 }
@@ -472,14 +476,14 @@ export function getIndexRanges(context: IFilterContext): Array<IIndexRange> {
 
 function getFieldQueries(
   queries: Array<DbQuery>,
-  fieldName: string
+  fieldName: string,
 ): Array<DbQuery> {
-  return queries.filter(q => dbQueryToDottedField(q) === fieldName)
+  return queries.filter((q) => dbQueryToDottedField(q) === fieldName)
 }
 
 function getMostSpecificQuery(
   queries: Array<DbQuery>,
-  [indexField]: [fieldName: string, sortDirection: number]
+  [indexField]: [fieldName: string, sortDirection: number],
 ): DbQuery | undefined {
   const fieldQueries = getFieldQueries(queries, indexField)
   // Assuming queries are sorted by specificity, the best bet is to pick the first query
@@ -489,7 +493,7 @@ function getMostSpecificQuery(
 function resolveIndexFieldRanges(
   context: IFilterContext,
   query: DbQuery,
-  [field, sortDirection]: [fieldName: string, sortDirection: number]
+  [field, sortDirection]: [fieldName: string, sortDirection: number],
 ): {
   rangeStarts: RangeBoundary
   rangeEndings: RangeBoundary
@@ -515,6 +519,7 @@ function resolveIndexFieldRanges(
         : [filter.value]
 
       // Sort ranges by index sort direction
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       arr.sort((a: any, b: any): number => {
         if (a === b) return 0
         if (sortDirection === 1) return a > b ? 1 : -1
@@ -599,12 +604,13 @@ function resolveIndexFieldRanges(
         : [filter.value]
 
       // Sort ranges by index sort direction
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       arr.sort((a: any, b: any): number => {
         if (a === b) return 0
         if (sortDirection === 1) return a > b ? 1 : -1
         return a < b ? 1 : -1
       })
-      const hasNull = arr.some(value => value === null)
+      const hasNull = arr.some((value) => value === null)
 
       if (hasNull) {
         rangeStarts.push(getValueEdgeAfter(undefinedSymbol))
@@ -630,7 +636,7 @@ function resolveRangeEdge(
   context: IFilterContext,
   indexField: string,
   predicate: DbComparator,
-  edge: ValueEdges = ValueEdges.EQ
+  edge: ValueEdges | undefined = ValueEdges.EQ,
 ): IndexFieldValue | RangeEdgeBefore | RangeEdgeAfter | undefined {
   const fieldQueries = getFieldQueries(context.dbQueries, indexField)
   for (const dbQuery of fieldQueries) {
@@ -648,7 +654,7 @@ function resolveRangeEdge(
     }
     if (typeof value === `object` && value !== null) {
       throw new Error(
-        `Range filter ${predicate} should not have value of type ${typeof value}`
+        `Range filter ${predicate} should not have value of type ${typeof value}`,
       )
     }
     if (edge === 0) {
@@ -683,13 +689,13 @@ function getValueEdgeBefore(value: IndexFieldValue): RangeEdgeBefore {
 
 function toIndexFieldValue(
   filterValue: DbComparatorValue,
-  filter: IDbFilterStatement
+  filter: IDbFilterStatement,
 ): IndexFieldValue {
   if (typeof filterValue === `object` && filterValue !== null) {
     throw new Error(
       `Bad filter value for predicate ${filter.comparator}: ${inspect(
-        filter.value
-      )}`
+        filter.value,
+      )}`,
     )
   }
   return filterValue
@@ -700,7 +706,7 @@ function getIdentifier(entry: IIndexEntry): number | string {
   if (typeof id !== `number` && typeof id !== `string`) {
     const out = inspect(id)
     throw new Error(
-      `Last element of index key is expected to be numeric or string id, got ${out}`
+      `Last element of index key is expected to be numeric or string id, got ${out}`,
     )
   }
   return id

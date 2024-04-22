@@ -7,20 +7,20 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "cheerio": "^1.0.0-rc.10",
+    "@babel/runtime": "^7.24.4",
+    "cheerio": "^1.0.0-rc.12",
     "common-tags": "^1.8.2",
     "lodash": "^4.17.21",
-    "unist-util-visit": "^2.0.3"
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
-    "remark": "^13.0.0",
-    "remark-mdx": "^1.6.22",
-    "unist-util-find": "1.0.2"
+    "remark": "^15.0.1",
+    "remark-mdx": "^3.0.1",
+    "unist-util-find": "3.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe#readme",
   "keywords": [
@@ -31,7 +31,9 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next"
+    "gatsby": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

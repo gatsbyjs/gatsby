@@ -1,11 +1,11 @@
-import path from "path"
+import path from "node:path"
 import glob from "glob"
 import debug from "debug"
 import report from "gatsby-cli/lib/reporter"
 
 const log = debug(`gatsby:webpack-eslint-config`)
 
-export const hasLocalEslint = (directory: string): boolean => {
+export function hasLocalEslint(directory: string): boolean {
   try {
     log(`Attempting to load package.json for eslint config check`)
 

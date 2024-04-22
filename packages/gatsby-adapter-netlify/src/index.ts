@@ -7,14 +7,14 @@ import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
 import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 
-interface INetlifyCacheUtils {
+type INetlifyCacheUtils = {
   restore: (paths: Array<string>) => Promise<boolean>
   save: (paths: Array<string>) => Promise<boolean>
 }
 
-interface INetlifyAdapterOptions {
-  excludeDatastoreFromEngineFunction?: boolean
-  imageCDN?: boolean
+type INetlifyAdapterOptions = {
+  excludeDatastoreFromEngineFunction?: boolean | undefined
+  imageCDN?: boolean | undefined
 }
 
 let _cacheUtils: INetlifyCacheUtils | undefined
@@ -37,7 +37,9 @@ async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
   return undefined
 }
 
-const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
+const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions | undefined> = (
+  options: INetlifyAdapterOptions | undefined,
+) => {
   let useNetlifyImageCDN = options?.imageCDN
   if (
     typeof useNetlifyImageCDN === `undefined` &&
@@ -55,12 +57,12 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         const utils = await getCacheUtils()
         if (utils) {
           reporter.verbose(
-            `[gatsby-adapter-netlify] using @netlify/cache-utils restore`
+            `[gatsby-adapter-netlify] using @netlify/cache-utils restore`,
           )
           const didRestore = await utils.restore(directories)
           if (didRestore) {
             reporter.info(
-              `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`
+              `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`,
             )
           }
           return didRestore
@@ -72,11 +74,11 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         const utils = await getCacheUtils()
         if (utils) {
           reporter.verbose(
-            `[gatsby-adapter-netlify] using @netlify/cache-utils save`
+            `[gatsby-adapter-netlify] using @netlify/cache-utils save`,
           )
           await utils.save(directories)
           reporter.info(
-            `[gatsby-adapter-netlify] Stored the Gatsby cache to speed up future builds. 🔥`
+            `[gatsby-adapter-netlify] Stored the Gatsby cache to speed up future builds. 🔥`,
           )
         }
       },
@@ -103,20 +105,20 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
 
       const { lambdasThatUseCaching } = await handleRoutesManifest(
         routesManifest,
-        headerRoutes
+        headerRoutes,
       )
 
       // functions handling
       for (const fun of functionsManifest) {
         await prepareFunctionVariants(
           fun,
-          lambdasThatUseCaching.get(fun.functionId)
+          lambdasThatUseCaching.get(fun.functionId),
         )
       }
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(
-        `[gatsby-adapter-netlify] version: ${packageJson?.version ?? `unknown`}`
+        `[gatsby-adapter-netlify] version: ${packageJson?.version ?? `unknown`}`,
       )
       // excludeDatastoreFromEngineFunction can be enabled either via options or via env var (to preserve handling of env var that existed in Netlify build plugin).
       let excludeDatastoreFromEngineFunction =
@@ -141,14 +143,14 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
 
       if (excludeDatastoreFromEngineFunction && !deployURL) {
         reporter.warn(
-          `[gatsby-adapter-netlify] excludeDatastoreFromEngineFunction is set to true but no DEPLOY_URL is set. Disabling excludeDatastoreFromEngineFunction.`
+          `[gatsby-adapter-netlify] excludeDatastoreFromEngineFunction is set to true but no DEPLOY_URL is set. Disabling excludeDatastoreFromEngineFunction.`,
         )
         excludeDatastoreFromEngineFunction = false
       }
 
       return {
         excludeDatastoreFromEngineFunction,
-        deployURL,
+        deployURL: deployURL ?? ``,
         supports: {
           pathPrefix: true,
           trailingSlash: [`always`, `never`, `ignore`],

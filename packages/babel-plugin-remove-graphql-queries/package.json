@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "babel-plugin-remove-graphql-queries",
   "version": "5.14.0-next.2",
   "author": "Jason Quense <monastic.panic@gmail.com>",
@@ -18,12 +18,15 @@
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
+    "@babel/traverse": "7.24.1",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.24.4",
-    "gatsby": "^5.13.4"
+    "gatsby": "^5.13.4",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "license": "MIT",
   "main": "index.js",

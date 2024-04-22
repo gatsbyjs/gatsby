@@ -1,17 +1,17 @@
-import path from "path"
+import path from "node:path"
 import fs from "fs-extra"
 import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
-import { IPageInput as ICreatePageInput } from "../redux/actions/public"
-import { ICreateSliceInput } from "../redux/actions/restricted"
+import type { IPageInput as ICreatePageInput } from "../redux/actions/public"
+import type { ICreateSliceInput } from "../redux/actions/restricted"
 
 const validationCache = new Set<string>()
 
-interface IErrorMeta {
+type IErrorMeta = {
   id: string
   context: Record<string, unknown>
 }
 
-interface IErrorIdMap {
+type IErrorIdMap = {
   noPath: string
   notAbsolute: string
   doesNotExist: string
@@ -26,7 +26,7 @@ export function validateComponent(args: {
   input: ICreatePageInput | ICreateSliceInput
   pluginName: string
   errorIdMap: IErrorIdMap
-}): { error?: IErrorMeta; panicOnBuild?: boolean } {
+}): { error?: IErrorMeta | undefined; panicOnBuild?: boolean | undefined } {
   const { input, pluginName, errorIdMap } = args || {}
 
   // No component path passed

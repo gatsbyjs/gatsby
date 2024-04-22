@@ -27,7 +27,7 @@ Creating a plugin:
       try {
         const plugins = await listPlugins({ root })
         let list = ``
-        plugins.forEach(plugin => (list += `- ${plugin}\n`))
+        plugins.forEach((plugin) => (list += `- ${plugin}\n`))
         console.log(`
 Following plugins are installed:
 
@@ -35,7 +35,7 @@ ${list}
         `)
       } catch {
         reporter.error(
-          `There was a problem parsing your \`gatsby-config.js\` file.\nIt may be malformed. Or, the syntax you're using is not currently supported by this command.`
+          `There was a problem parsing your \`gatsby-config.js\` file.\nIt may be malformed. Or, the syntax you're using is not currently supported by this command.`,
         )
       }
 

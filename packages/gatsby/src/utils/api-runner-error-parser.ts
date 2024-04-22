@@ -1,4 +1,4 @@
-import { IMatch } from "../types"
+import type { IMatch } from "../types"
 
 const errorParser = ({ err }: { err: unknown }): IMatch => {
   const handlers = [

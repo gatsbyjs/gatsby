@@ -8,7 +8,7 @@ export function listPlugins({ root }: { root: string }): Array<string> {
     return []
   }
 
-  const plugins = parsedPlugins.map(plugin => {
+  const plugins = parsedPlugins.map((plugin) => {
     if (typeof plugin === `string`) {
       return plugin
     } else if (plugin.resolve) {

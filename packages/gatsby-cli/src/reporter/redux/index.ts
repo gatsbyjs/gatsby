@@ -1,4 +1,4 @@
-import { createStore, combineReducers, Store } from "redux"
+import { createStore, combineReducers, type Store } from "redux"
 import { reducer as logsReducer } from "./reducers/logs"
 import { reducer as pageTreeReducer } from "./reducers/page-tree"
 import type { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
@@ -37,7 +37,7 @@ export function dispatch(action: ActionsUnion | Thunk): void {
   }
 
   if (Array.isArray(action)) {
-    action.forEach(item => dispatch(item))
+    action.forEach((item) => dispatch(item))
     return
   } else if (typeof action === `function`) {
     action(dispatch)
@@ -86,5 +86,5 @@ export function setStore(s: GatsbyCLIStore): void {
   } satisfies ISetLogs)
 
   store = s
-  storeSwapListeners.forEach(fn => fn(store))
+  storeSwapListeners.forEach((fn) => fn(store))
 }

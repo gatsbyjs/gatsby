@@ -1,5 +1,5 @@
-import path from "path"
-import { pathToFileURL } from "url"
+import path from "node:path"
+import { pathToFileURL } from "node:url"
 import report from "gatsby-cli/lib/reporter"
 
 /**
@@ -40,8 +40,8 @@ export async function resolveJSFilepath({
         report.warn(
           `The file '${path.relative(
             rootDir,
-            filePath
-          )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`
+            filePath,
+          )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`,
         )
       }
       return filePathWithJSExtension

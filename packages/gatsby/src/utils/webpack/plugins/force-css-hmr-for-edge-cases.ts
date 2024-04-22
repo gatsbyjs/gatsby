@@ -24,7 +24,7 @@ export class ForceCssHMRForEdgeCases {
   }
 
   apply(compiler: Compiler): void {
-    compiler.hooks.thisCompilation.tap(this.name, compilation => {
+    compiler.hooks.thisCompilation.tap(this.name, (compilation) => {
       compilation.hooks.fullHash.tap(this.name, () => {
         const chunkGraph = compilation.chunkGraph
         const records = compilation.records
@@ -48,7 +48,7 @@ export class ForceCssHMRForEdgeCases {
             if (compilation.codeGenerationResults.has(module, chunk.runtime)) {
               return compilation.codeGenerationResults.getHash(
                 module,
-                chunk.runtime
+                chunk.runtime,
               )
             } else {
               return chunkGraph.getModuleHash(module, chunk.runtime)
@@ -72,8 +72,8 @@ export class ForceCssHMRForEdgeCases {
               }
 
               // @ts-ignore - exists on NormalModule but not Module
-              const isUsingMiniCssExtract = module.loaders?.find(loader =>
-                loader?.loader?.includes(`mini-css-extract-plugin`)
+              const isUsingMiniCssExtract = module.loaders?.find((loader) =>
+                loader?.loader?.includes(`mini-css-extract-plugin`),
               )
 
               if (isUsingMiniCssExtract) {

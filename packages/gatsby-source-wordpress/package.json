@@ -50,10 +50,7 @@
   "devDependencies": {
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@types/cache-manager": "^4.0.6",
-    "@types/ink": "^2.0.3",
     "@types/semver": "^7.5.8",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
@@ -80,10 +77,12 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.13.4",
-    "gatsby-plugin-image": "^3.0.0-next",
+    "gatsby": "^5.14.0-next.2",
+    "gatsby-plugin-image": "^3.14.0-next.2",
     "gatsby-plugin-sharp": "^5.14.0-next.2",
-    "gatsby-transformer-sharp": "^5.13.1"
+    "gatsby-transformer-sharp": "^5.13.1",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Joi from "joi"
-import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
+import type { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
 import {
   DEFAULT_DOCUMENT_SEARCH_PATHS,
   DEFAULT_TYPES_OUTPUT_PATH,
@@ -21,7 +22,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
     assetPrefix: stripTrailingSlash(
       Joi.string().uri({
         allowRelative: true,
-      })
+      }),
     ),
     pathPrefix: addLeadingSlash(
       stripTrailingSlash(
@@ -33,11 +34,11 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           .default(``)
           // removes single / value
           .allow(``)
-          .replace(/^\/$/, ``)
-      )
+          .replace(/^\/$/, ``),
+      ),
     ),
     linkPrefix: Joi.forbidden().error(
-      new Error(`"linkPrefix" should be changed to "pathPrefix"`)
+      new Error(`"linkPrefix" should be changed to "pathPrefix"`),
     ),
     siteMetadata: Joi.object({
       siteUrl: stripTrailingSlash(Joi.string()).uri(),
@@ -49,7 +50,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         Joi.object().keys({
           prefix: Joi.string().required(),
           url: Joi.string().required(),
-        })
+        }),
       )
       .single(),
     partytownProxiedURLs: Joi.array().items(Joi.string()),
@@ -69,10 +70,10 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
             .default(DEFAULT_DOCUMENT_SEARCH_PATHS),
           generateOnBuild: Joi.boolean().default(false),
         })
-        .unknown(false)
+        .unknown(false),
     )
       .default(false)
-      .custom(value => {
+      .custom((value) => {
         if (value === true) {
           return {
             typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
@@ -96,11 +97,11 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
                     value: Joi.string().required(),
                   })
                   .required()
-                  .unknown(false)
+                  .unknown(false),
               )
               .required(),
           })
-          .unknown(false)
+          .unknown(false),
       )
       .default([]),
     adapter: Joi.object()
@@ -139,11 +140,11 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           })
           .error(
             new Error(
-              `assetPrefix must be an absolute URI when used with pathPrefix`
-            )
+              `assetPrefix must be an absolute URI when used with pathPrefix`,
+            ),
           ),
       }),
-    }
+    },
   )
 
 export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()

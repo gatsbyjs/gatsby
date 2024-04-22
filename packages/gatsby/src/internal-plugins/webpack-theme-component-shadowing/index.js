@@ -62,7 +62,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   constructor({ projectRoot, themes, extensions, extensionsCategory }) {
     debug(
       `themes list`,
-      themes.map(({ themeName }) => themeName)
+      themes.map(({ themeName }) => themeName),
     )
     this.themes = themes
     this.projectRoot = projectRoot
@@ -78,7 +78,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   buildAdditionalShadowExtensions() {
     const extensionsByCategory = _.groupBy(
       this.extensions,
-      ext => this.extensionsCategory[ext.substring(1)] || `undefined`
+      (ext) => this.extensionsCategory[ext.substring(1)] || `undefined`,
     )
 
     const additionalExtensions = []
@@ -92,7 +92,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     // Sort extensions in reverse length order, so that something such as
     // ".css.js" get caught before ".js"
     return additionalExtensions.sort(
-      ({ key: a }, { key: b }) => a.length <= b.length
+      ({ key: a }, { key: b }) => a.length <= b.length,
     )
   }
 
@@ -107,7 +107,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
             request._gatsbyThemeShadowingOriginalRequestPath = request.request
           }
           return callback()
-        }
+        },
       )
 
     // This is where the magic really happens
@@ -167,12 +167,12 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
               { ...request, path: builtComponentPath },
               null,
               {},
-              callback
+              callback,
             )
           } else {
             return callback()
           }
-        }
+        },
       )
   }
 
@@ -186,7 +186,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
     // don't include matching theme in possible shadowing paths
     const themes = this.themes.filter(
-      ({ themeName }) => themeName !== theme.themeName
+      ({ themeName }) => themeName !== theme.themeName,
     )
 
     const themesArray = [
@@ -194,12 +194,12 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     ].concat(
       themes
         .reverse()
-        .map(({ themeDir }) => path.join(themeDir, `src`, theme.themeName))
+        .map(({ themeDir }) => path.join(themeDir, `src`, theme.themeName)),
     )
 
     const acceptableShadowFileNames = this.getAcceptableShadowFileNames(
       path.basename(component),
-      originalRequestComponent
+      originalRequestComponent,
     )
 
     for (const theme of themesArray) {
@@ -214,16 +214,16 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       } catch (e) {
         continue
       }
-      const existsDir = dir.map(filepath => path.basename(filepath))
+      const existsDir = dir.map((filepath) => path.basename(filepath))
 
       // if no exact path, search for extension
-      const matchingShadowFile = acceptableShadowFileNames.find(shadowFile =>
-        existsDir.includes(shadowFile)
+      const matchingShadowFile = acceptableShadowFileNames.find((shadowFile) =>
+        existsDir.includes(shadowFile),
       )
       if (matchingShadowFile) {
         const shadowPath = path.join(
           path.dirname(possibleComponentPath),
-          matchingShadowFile
+          matchingShadowFile,
         )
 
         if (content) {
@@ -239,7 +239,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   getThemeAndComponent(filepath) {
     // find out which theme's src/components dir we're requiring from
     const allMatchingThemes = this.themes.filter(({ themeDir }) =>
-      filepath.startsWith(path.join(themeDir, `src`))
+      filepath.startsWith(path.join(themeDir, `src`)),
     )
 
     // The same theme can be included twice in the themes list causing multiple
@@ -252,8 +252,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     if (matchingThemes.length > 1) {
       throw new Error(
         `Gatsby can't differentiate between themes ${matchingThemes
-          .map(theme => theme.themeName)
-          .join(` and `)} for path ${filepath}`
+          .map((theme) => theme.themeName)
+          .join(` and `)} for path ${filepath}`,
       )
     }
 
@@ -290,28 +290,28 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     // get list of potential shadow locations
     const shadowFiles = this.getBaseShadowDirsForThemes(theme.themeName)
       .concat(path.join(userSiteDir, `src`, theme.themeName))
-      .map(dir => path.join(dir, component))
-      .flatMap(comp => this.getAcceptableShadowFileNames(comp))
+      .map((dir) => path.join(dir, component))
+      .flatMap((comp) => this.getAcceptableShadowFileNames(comp))
 
     // if the issuer is requesting a path that is a potential shadow path of itself
     return shadowFiles.includes(issuerPath)
   }
 
   getAcceptableShadowFileNames(componentName, originalRequestComponent) {
-    const matchingEntry = this.additionalShadowExtensions.find(entry =>
-      componentName.endsWith(entry.key)
+    const matchingEntry = this.additionalShadowExtensions.find((entry) =>
+      componentName.endsWith(entry.key),
     )
 
     let additionalNames = []
     if (matchingEntry) {
       const baseName = componentName.slice(0, -matchingEntry.key.length)
-      additionalNames = matchingEntry.value.map(ext => `${baseName}${ext}`)
+      additionalNames = matchingEntry.value.map((ext) => `${baseName}${ext}`)
     }
 
     let legacyAdditionalNames = []
     if (originalRequestComponent) {
       legacyAdditionalNames = this.extensions.map(
-        ext => `${originalRequestComponent}${ext}`
+        (ext) => `${originalRequestComponent}${ext}`,
       )
     }
 

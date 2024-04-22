@@ -11,7 +11,7 @@ import { addDerivedType } from "../types/derived-types"
 import { reportOnce } from "../../utils/report-once"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { getDataStore } from "../../datastore"
-import { IGatsbyNode } from "../../internal"
+import type { IGatsbyNode } from "../../internal"
 
 const deprecatedNodeKeys = new Set()
 
@@ -63,7 +63,7 @@ function addInferredFieldsImpl({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     exampleValue: any
   }> = []
-  Object.keys(exampleObject).forEach(unsanitizedKey => {
+  Object.keys(exampleObject).forEach((unsanitizedKey) => {
     const key = createFieldName(unsanitizedKey)
     fields.push({
       key,
@@ -72,15 +72,15 @@ function addInferredFieldsImpl({
     })
   })
 
-  const fieldsByKey = _.groupBy(fields, field => field.key)
+  const fieldsByKey = _.groupBy(fields, (field) => field.key)
 
-  Object.keys(fieldsByKey).forEach(key => {
+  Object.keys(fieldsByKey).forEach((key) => {
     const possibleFields = fieldsByKey[key]
     let selectedField
     if (possibleFields.length > 1) {
       const field = resolveMultipleFields(possibleFields)
       const possibleFieldsNames = possibleFields
-        .map(field => `\`${field.unsanitizedKey}\``)
+        .map((field) => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
         `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`,
@@ -191,7 +191,7 @@ function resolveMultipleFields(
   possibleFields: Array<{ key: string; unsanitizedKey: string }>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
-  const nodeField = possibleFields.find(field => {
+  const nodeField = possibleFields.find((field) => {
     return field.unsanitizedKey.includes(`___NODE`)
   })
   if (nodeField) {
@@ -199,13 +199,13 @@ function resolveMultipleFields(
   }
 
   const canonicalField = possibleFields.find(
-    field => field.unsanitizedKey === field.key,
+    (field) => field.unsanitizedKey === field.key,
   )
   if (canonicalField) {
     return canonicalField
   }
 
-  return _.sortBy(possibleFields, field => field.unsanitizedKey)[0]
+  return _.sortBy(possibleFields, (field) => field.unsanitizedKey)[0]
 }
 
 // XXX(freiksenet): removing this as it's a breaking change
@@ -263,7 +263,7 @@ function getFieldConfigFromFieldNameConvention({
         }
       })
   } else {
-    value.linkedNodes.forEach(id => {
+    value.linkedNodes.forEach((id) => {
       const node = getDataStore().getNode(id)
       if (node) {
         linkedTypesSet.add(node.internal.type)
@@ -287,9 +287,11 @@ function getFieldConfigFromFieldNameConvention({
   // fields are arrays, but not if they are scalars. See the tests for an example.
   if (linkedTypes.length > 1) {
     const typeName = linkedTypes.sort().join(``) + `Union`
-    type = schemaComposer.getOrCreateUTC(typeName, utc => {
-      utc.setTypes(linkedTypes.map(typeName => schemaComposer.getOTC(typeName)))
-      utc.setResolveType(node => node.internal.type)
+    type = schemaComposer.getOrCreateUTC(typeName, (utc) => {
+      utc.setTypes(
+        linkedTypes.map((typeName) => schemaComposer.getOTC(typeName)),
+      )
+      utc.setResolveType((node) => node.internal.type)
     })
   } else {
     type = linkedTypes[0]

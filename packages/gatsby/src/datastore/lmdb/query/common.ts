@@ -1,9 +1,9 @@
-import { DbComparator, IDbFilterStatement } from "../../common/query"
-import { IGatsbyNode } from "../../../redux/types"
+import { DbComparator, type IDbFilterStatement } from "../../common/query"
+import type { IGatsbyNode } from "../../../redux/types"
 import { getValueAt } from "../../../utils/get-value-at"
 
 export function isDesc(
-  sortOrder: "asc" | "desc" | "ASC" | "DESC" | boolean | void
+  sortOrder: "asc" | "desc" | "ASC" | "DESC" | boolean | void,
 ): boolean {
   return sortOrder === `desc` || sortOrder === `DESC` || sortOrder === false
 }
@@ -25,9 +25,10 @@ export function isDesc(
 export function resolveFieldValue(
   dottedFieldPath: string | Array<string>,
   nodeOrThunk: IGatsbyNode | (() => IGatsbyNode),
-  resolvedNodeFields?: { [field: string]: unknown }
+  resolvedNodeFields?: { [field: string]: unknown } | undefined,
 ): unknown {
   let result
+
   if (resolvedNodeFields) {
     result = getValueAt(resolvedNodeFields, dottedFieldPath)
   }
@@ -35,12 +36,13 @@ export function resolveFieldValue(
     return result
   }
   const node = typeof nodeOrThunk === `function` ? nodeOrThunk() : nodeOrThunk
+
   return getValueAt(node, dottedFieldPath)
 }
 
 export function matchesFilter(
   filter: IDbFilterStatement,
-  fieldValue: unknown
+  fieldValue: unknown,
 ): boolean {
   switch (filter.comparator) {
     case DbComparator.EQ:
@@ -49,7 +51,7 @@ export function matchesFilter(
         : filter.value === fieldValue
     case DbComparator.IN: {
       const arr = Array.isArray(filter.value) ? filter.value : [filter.value]
-      return arr.some(v => (v === null ? v == fieldValue : v === fieldValue))
+      return arr.some((v) => (v === null ? v == fieldValue : v === fieldValue))
     }
     case DbComparator.GT:
       return compareKey(fieldValue, filter.value) > 0
@@ -62,7 +64,7 @@ export function matchesFilter(
     case DbComparator.NE:
     case DbComparator.NIN: {
       const arr = Array.isArray(filter.value) ? filter.value : [filter.value]
-      return arr.every(v => (v === null ? v != fieldValue : v !== fieldValue))
+      return arr.every((v) => (v === null ? v != fieldValue : v !== fieldValue))
     }
     case DbComparator.REGEX: {
       if (typeof fieldValue !== `undefined` && filter.value instanceof RegExp) {
@@ -74,8 +76,9 @@ export function matchesFilter(
   return false
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function cartesianProduct(...arr: Array<Array<any>>): Array<any> {
-  return arr.reduce((a, b) => a.flatMap(d => b.map(e => [...d, e])), [[]])
+  return arr.reduce((a, b) => a.flatMap((d) => b.map((e) => [...d, e])), [[]])
 }
 
 const typeOrder = {
@@ -124,6 +127,7 @@ export function compareKey(a: unknown, b: unknown): number {
       a = Symbol.keyFor(a)
       b = Symbol.keyFor(b)
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (a as any) < (b as any) ? -1 : a === b ? 0 : 1
   } else if (typeof b == `object`) {
     if (b instanceof Array) return -compareKey(b, a)

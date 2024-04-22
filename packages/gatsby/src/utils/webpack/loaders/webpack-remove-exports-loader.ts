@@ -1,9 +1,9 @@
 /* eslint-disable @babel/no-invalid-this */
 
-import { LoaderDefinitionFunction } from "webpack"
+import type { LoaderDefinitionFunction } from "webpack"
 import { transform } from "@babel/core"
 
-interface IOptions {
+type IOptions = {
   jsx?: boolean
   remove?: Array<string>
 }
@@ -54,7 +54,7 @@ const webpackRemoveExportsLoader: LoaderDefinitionFunction<IOptions> =
         } else {
           callback(null, source, sourceMap)
         }
-      }
+      },
     )
   }
 

@@ -1,5 +1,4 @@
-// @ts-ignore
-import { SourceNodesArgs } from "gatsby"
+import type { SourceNodesArgs } from "gatsby"
 import { createInterface } from "readline"
 import { shiftLeft } from "shift-left"
 
@@ -43,7 +42,7 @@ export function makeSourceFromOperation(
 
       if (userErrors.length) {
         reporter.panic(
-          userErrors.map(e => {
+          userErrors.map((e) => {
             const msg = e.field
               ? `${e.field.join(`.`)}: ${e.message}`
               : e.message
@@ -110,7 +109,7 @@ export function makeSourceFromOperation(
               `This operation has been canceled by a higher priority build. It will retry shortly.`,
             )
             operationTimer.end()
-            await new Promise(resolve => setTimeout(resolve, 5000))
+            await new Promise((resolve) => setTimeout(resolve, 5000))
             await sourceFromOperation(op)
           }
         }

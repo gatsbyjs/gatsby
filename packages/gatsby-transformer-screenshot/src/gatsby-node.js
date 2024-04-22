@@ -1,4 +1,3 @@
-const axios = require(`axios`)
 const Queue = require(`fastq`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
@@ -13,7 +12,7 @@ async function worker(input) {
     try {
       return await createScreenshotNode(input)
     } catch (e) {
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     }
   }
   return await createScreenshotNode(input)
@@ -29,7 +28,7 @@ exports.onPreBootstrap = (
     getNodesByType,
     createContentDigest,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, touchNode } = actions
   const screenshotNodes = getNodesByType(`Screenshot`)
@@ -42,7 +41,7 @@ exports.onPreBootstrap = (
 
   // Check for updated screenshots and placeholder flag
   // and prevent Gatsby from garbage collecting remote file nodes
-  screenshotNodes.forEach(n => {
+  screenshotNodes.forEach((n) => {
     if (
       (n.expires && new Date() >= new Date(n.expires)) ||
       USE_PLACEHOLDER_IMAGE !== n.usingPlaceholder
@@ -71,7 +70,7 @@ exports.onPreBootstrap = (
     return null
   }
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     screenshotQueue.drain = () => {
       resolve()
     }
@@ -91,7 +90,7 @@ exports.shouldOnCreateNode = shouldOnCreateNode
 
 exports.onCreateNode = async (
   { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, createParentChildLink } = actions
 
@@ -140,9 +139,12 @@ const createScreenshotNode = async ({
       })
       expires = new Date(2999, 1, 1).getTime()
     } else {
-      const screenshotResponse = await axios.post(
-        pluginOptions.screenshotEndpoint,
-        { url }
+      const screenshotResponse = await fetch(
+        {
+          type: `POST`,
+          url: pluginOptions.screenshotEndpoint,
+        },
+        { url },
       )
 
       fileNode = await createRemoteFileNode({

@@ -3,7 +3,7 @@ const mockFiles = new Map<string, string>()
 /* eslint-disable @typescript-eslint/no-var-requires */
 jest.mock(`fs-extra`, () => {
   return {
-    readJSON: jest.fn().mockImplementation(async filePath => {
+    readJSON: jest.fn().mockImplementation(async (filePath) => {
       const content = mockFiles.get(filePath)
 
       if (content) {
@@ -16,10 +16,10 @@ jest.mock(`fs-extra`, () => {
     }),
     pathExists: jest
       .fn()
-      .mockImplementation(async filePath => mockFiles.has(filePath)),
+      .mockImplementation(async (filePath) => mockFiles.has(filePath)),
   }
 })
-jest.mock(`axios`, () => {
+jest.mock(`fetch`, () => {
   return {
     get: jest.fn(),
   }
@@ -32,7 +32,7 @@ const latestAdaptersModulePath = path.join(
   `..`,
   `..`,
   `..`,
-  `latest-adapters.js`
+  `latest-adapters.js`,
 )
 
 const latestAdaptersMarker = `<mocked-adapters-js>`
@@ -54,11 +54,11 @@ jest.doMock(
     }
     throw new Error(`Module not found`)
   },
-  { virtual: true }
+  { virtual: true },
 )
 
 const fs = require(`fs-extra`)
-const axios = require(`axios`)
+
 import { IAdapterManifestEntry } from "../adapter/types"
 import {
   getLatestAPIs,
@@ -67,8 +67,8 @@ import {
 } from "../get-latest-gatsby-files"
 
 beforeEach(() => {
-  ;[fs, axios].forEach(mock =>
-    Object.keys(mock).forEach(key => mock[key].mockClear())
+  ;[fs, fetch].forEach((mock) =>
+    Object.keys(mock).forEach((key) => mock[key].mockClear()),
   )
 })
 
@@ -83,15 +83,16 @@ const getMockAPIFile = (): IAPIResponse => {
 describe(`default behavior: has network connectivity`, () => {
   describe(`getLatestAPIs`, () => {
     beforeEach(() => {
-      axios.get.mockResolvedValueOnce({ data: getMockAPIFile() })
+      // @ts-ignore
+      fetch.mockResolvedValueOnce({ data: getMockAPIFile() })
     })
 
     it(`makes a request to unpkg to request file`, async () => {
       const data = await getLatestAPIs()
 
-      expect(axios.get).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining(`unpkg.com`),
-        expect.any(Object)
+        expect.any(Object),
       )
       expect(data).toEqual(getMockAPIFile())
     })
@@ -102,7 +103,7 @@ describe(`default behavior: has network connectivity`, () => {
       expect(fs.writeFile).toHaveBeenCalledWith(
         expect.stringContaining(`latest-apis.json`),
         JSON.stringify(data, null, 2),
-        expect.any(String)
+        expect.any(String),
       )
     })
   })
@@ -112,48 +113,51 @@ describe(`default behavior: has network connectivity`, () => {
       delete process.env.GATSBY_ADAPTERS_MANIFEST
     })
     it(`loads .js modules (prefers github)`, async () => {
-      axios.get.mockResolvedValueOnce({ data: latestAdaptersMarker })
+      // @ts-ignore
+      fetch.mockResolvedValueOnce({ data: latestAdaptersMarker })
       const data = await getLatestAdapters()
 
-      expect(axios.get).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining(`raw.githubusercontent.com`),
-        expect.any(Object)
+        expect.any(Object),
       )
 
-      expect(axios.get).not.toHaveBeenCalledWith(
+      expect(fetch).not.toHaveBeenCalledWith(
         expect.stringContaining(`unpkg.com`),
-        expect.any(Object)
+        expect.any(Object),
       )
 
       expect(fs.writeFile).toHaveBeenCalledWith(
         expect.stringContaining(`latest-adapters.js`),
         latestAdaptersMarker,
-        expect.any(String)
+        expect.any(String),
       )
 
       expect(data).toEqual(mockAdaptersManifest)
     })
 
     it(`loads .js modules (fallbacks to unkpg of github fails)`, async () => {
-      axios.get.mockRejectedValueOnce(new Error(`does not matter`))
-      axios.get.mockResolvedValueOnce({ data: latestAdaptersMarker })
+      // @ts-ignore
+      fetch.mockRejectedValueOnce(new Error(`does not matter`))
+      // @ts-ignore
+      fetch.mockResolvedValueOnce({ data: latestAdaptersMarker })
 
       const data = await getLatestAdapters()
 
-      expect(axios.get).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining(`raw.githubusercontent.com`),
-        expect.any(Object)
+        expect.any(Object),
       )
 
-      expect(axios.get).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining(`unpkg.com`),
-        expect.any(Object)
+        expect.any(Object),
       )
 
       expect(fs.writeFile).toHaveBeenCalledWith(
         expect.stringContaining(`latest-adapters.js`),
         latestAdaptersMarker,
-        expect.any(String)
+        expect.any(String),
       )
 
       expect(data).toEqual(mockAdaptersManifest)
@@ -162,29 +166,31 @@ describe(`default behavior: has network connectivity`, () => {
     it(`uses GATSBY_ADAPTERS_MANIFEST env var if set`, async () => {
       process.env.GATSBY_ADAPTERS_MANIFEST = `custom_manifest`
 
-      axios.get.mockRejectedValueOnce(
-        new Error(`does not matter and should't be called`)
+      // @ts-ignore
+      fetch.mockRejectedValueOnce(
+        new Error(`does not matter and should't be called`),
       )
-      axios.get.mockRejectedValueOnce(
-        new Error(`does not matter and should't be called`)
+      // @ts-ignore
+      fetch.mockRejectedValueOnce(
+        new Error(`does not matter and should't be called`),
       )
 
       const data = await getLatestAdapters()
 
-      expect(axios.get).not.toHaveBeenCalledWith(
+      expect(fetch).not.toHaveBeenCalledWith(
         expect.stringContaining(`raw.githubusercontent.com`),
-        expect.any(Object)
+        expect.any(Object),
       )
 
-      expect(axios.get).not.toHaveBeenCalledWith(
+      expect(fetch).not.toHaveBeenCalledWith(
         expect.stringContaining(`unpkg.com`),
-        expect.any(Object)
+        expect.any(Object),
       )
 
       expect(fs.writeFile).toHaveBeenCalledWith(
         expect.stringContaining(`latest-adapters.js`),
         process.env.GATSBY_ADAPTERS_MANIFEST,
-        expect.any(String)
+        expect.any(String),
       )
 
       expect(data).toEqual(mockAdaptersManifest)
@@ -194,7 +200,8 @@ describe(`default behavior: has network connectivity`, () => {
 
 describe(`downloading APIs failure`, () => {
   beforeEach(() => {
-    axios.get.mockRejectedValueOnce(new Error(`does not matter`))
+    // @ts-ignore
+    fetch.mockRejectedValueOnce(new Error(`does not matter`))
   })
 
   it(`falls back to downloaded cached file, if it exists`, async () => {
@@ -204,7 +211,7 @@ describe(`downloading APIs failure`, () => {
 
     expect(fs.writeFile).not.toHaveBeenCalled()
     expect(fs.readJSON).toHaveBeenCalledWith(
-      expect.stringContaining(`${path.sep}latest-apis.json`)
+      expect.stringContaining(`${path.sep}latest-apis.json`),
     )
     expect(data).toEqual(apis)
   })
@@ -215,7 +222,7 @@ describe(`downloading APIs failure`, () => {
     await getLatestAPIs()
 
     expect(fs.readJSON).toHaveBeenCalledWith(
-      expect.stringContaining(`${path.sep}apis.json`)
+      expect.stringContaining(`${path.sep}apis.json`),
     )
   })
 })

@@ -4,16 +4,24 @@ import template from "@babel/template"
 import { declare } from "@babel/helper-plugin-utils"
 import type { ConfigAPI, PluginObj } from "@babel/core"
 
-const getKeyNameFromAttribute = (node: any): any =>
-  node.key.name || node.key.value
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getKeyNameFromAttribute(node: any): any {
+  return node.key.name || node.key.value
+}
 
-const unwrapTemplateLiteral = (str: string): string =>
-  str.trim().replace(/^`/, ``).replace(/`$/, ``)
+function unwrapTemplateLiteral(str: string): string {
+  return str.trim().replace(/^`/, ``).replace(/`$/, ``)
+}
 
-const isLiteral = (node: any): boolean =>
-  t.isLiteral(node) || t.isStringLiteral(node) || t.isNumericLiteral(node)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isLiteral(node: any): boolean {
+  return (
+    t.isLiteral(node) || t.isStringLiteral(node) || t.isNumericLiteral(node)
+  )
+}
 
-const getObjectFromNode = (nodeValue: any): any => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getObjectFromNode(nodeValue: any): any {
   if (!nodeValue || !nodeValue.properties) {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return getValueFromNode(nodeValue)
@@ -41,7 +49,8 @@ const getObjectFromNode = (nodeValue: any): any => {
   return props
 }
 
-const getValueFromNode = (node: any): any => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getValueFromNode(node: any): any {
   if (t.isTemplateLiteral(node)) {
     // @ts-ignore - fix me
     delete node.leadingComments
@@ -80,7 +89,8 @@ function isDefaultExport(node): boolean {
   return true
 }
 
-const getOptionsForPlugin = (node: any): any => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getOptionsForPlugin(node: any): any {
   if (!t.isObjectExpression(node) && !t.isLogicalExpression(node)) {
     return undefined
   }
@@ -91,11 +101,14 @@ const getOptionsForPlugin = (node: any): any => {
   if (t.isLogicalExpression(node)) {
     // @ts-ignore - fix me
     options = node.right.properties.find(
-      property => property.key.name === `options`
+      (property) => property.key.name === `options`,
     )
   } else {
     // @ts-ignore - fix me
-    options = node.properties.find(property => property.key.name === `options`)
+    options = node.properties.find(
+      // @ts-ignore
+      (property) => property.key.name === `options`,
+    )
   }
 
   if (options) {
@@ -105,10 +118,11 @@ const getOptionsForPlugin = (node: any): any => {
   return undefined
 }
 
-const getKeyForPlugin = (node: any): any => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getKeyForPlugin(node: any): any {
   if (t.isObjectExpression(node)) {
     // @ts-ignore - fix me
-    const key = node.properties.find(p => p.key.name === `__key`)
+    const key = node.properties.find((p) => p.key.name === `__key`)
 
     // @ts-ignore - fix me
     return key ? getValueFromNode(key.value) : null
@@ -117,7 +131,7 @@ const getKeyForPlugin = (node: any): any => {
   // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
     // @ts-ignore - fix me
-    const key = node.right.properties.find(p => p.key.name === `__key`)
+    const key = node.right.properties.find((p) => p.key.name === `__key`)
 
     return key ? getValueFromNode(key.value) : null
   }
@@ -125,14 +139,15 @@ const getKeyForPlugin = (node: any): any => {
   return null
 }
 
-const getNameForPlugin = (node: any): any => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getNameForPlugin(node: any): any {
   if (t.isStringLiteral(node) || t.isTemplateLiteral(node)) {
     return getValueFromNode(node)
   }
 
   if (t.isObjectExpression(node)) {
     // @ts-ignore - fix me
-    const resolve = node.properties.find(p => p.key.name === `resolve`)
+    const resolve = node.properties.find((p) => p.key.name === `resolve`)
 
     // @ts-ignore - fix me
     return resolve ? getValueFromNode(resolve.value) : null
@@ -141,7 +156,7 @@ const getNameForPlugin = (node: any): any => {
   // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
     // @ts-ignore - fix me
-    const resolve = node.right.properties.find(p => p.key.name === `resolve`)
+    const resolve = node.right.properties.find((p) => p.key.name === `resolve`)
 
     return resolve ? getValueFromNode(resolve.value) : null
   }
@@ -149,7 +164,8 @@ const getNameForPlugin = (node: any): any => {
   return null
 }
 
-const getPlugin = (node: any): any => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getPlugin(node: any): any {
   const plugin = {
     name: getNameForPlugin(node),
     options: getOptionsForPlugin(node),
@@ -164,6 +180,7 @@ const getPlugin = (node: any): any => {
   return plugin
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function buildPluginNode({ name, options, key }): any {
   if (!options && !key) {
     return t.stringLiteral(name)
@@ -177,7 +194,7 @@ function buildPluginNode({ name, options, key }): any {
       ${key ? `__key: "` + key + `"` : ``}
     }
   `,
-    { placeholderPattern: false }
+    { placeholderPattern: false },
   )()
 
   // @ts-ignore - fix me
@@ -192,7 +209,7 @@ function addPluginsToConfig({
 }): void {
   if (t.isCallExpression(pluginNodes.value)) {
     const plugins = pluginNodes.value.callee.object.elements.map(getPlugin)
-    const matches = plugins.filter(plugin => {
+    const matches = plugins.filter((plugin) => {
       if (!key) {
         return plugin.name === pluginOrThemeName
       }
@@ -210,7 +227,7 @@ function addPluginsToConfig({
       pluginNodes.value.callee.object.elements.push(pluginNode)
     } else {
       pluginNodes.value.callee.object.elements =
-        pluginNodes.value.callee.object.elements.map(node => {
+        pluginNodes.value.callee.object.elements.map((node) => {
           const plugin = getPlugin(node)
 
           if (plugin.key !== key) {
@@ -230,7 +247,7 @@ function addPluginsToConfig({
     }
   } else {
     const plugins = pluginNodes.value.elements.map(getPlugin)
-    const matches = plugins.filter(plugin => {
+    const matches = plugins.filter((plugin) => {
       if (!key) {
         return plugin.name === pluginOrThemeName
       }
@@ -247,7 +264,7 @@ function addPluginsToConfig({
 
       pluginNodes.value.elements.push(pluginNode)
     } else {
-      pluginNodes.value.elements = pluginNodes.value.elements.map(node => {
+      pluginNodes.value.elements = pluginNodes.value.elements.map((node) => {
         const plugin = getPlugin(node)
 
         if (plugin.key !== key) {
@@ -269,13 +286,13 @@ function addPluginsToConfig({
 }
 
 function getPluginNodes(
-  properties: Array<t.ObjectProperty | t.ObjectMethod | t.SpreadElement>
+  properties: Array<t.ObjectProperty | t.ObjectMethod | t.SpreadElement>,
 ): t.ObjectProperty | undefined {
   return properties.find(
-    prop =>
+    (prop) =>
       t.isObjectProperty(prop) &&
       t.isIdentifier(prop.key) &&
-      prop.key.name === `plugins`
+      prop.key.name === `plugins`,
   ) as t.ObjectProperty
 }
 
@@ -296,7 +313,7 @@ export default declare(
       pluginOrThemeName: string
       options: unknown
       key: string
-    }
+    },
   ): PluginObj => {
     api.assertVersion(7)
 
@@ -338,8 +355,8 @@ export default declare(
         VariableDeclaration(path): void {
           const { node } = path
           const configDeclaration = node.declarations.find(
-            dec =>
-              t.isIdentifier(dec.id) && dec.id.name === `config` && dec.init
+            (dec) =>
+              t.isIdentifier(dec.id) && dec.id.name === `config` && dec.init,
           )
           const config = configDeclaration?.init
           if (!t.isObjectExpression(config)) {
@@ -361,5 +378,5 @@ export default declare(
         },
       },
     }
-  }
+  },
 )

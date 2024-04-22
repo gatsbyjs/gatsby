@@ -1,4 +1,4 @@
-import { parseError, IErrorRenderMeta } from "./parse-error"
+import { parseError, type IErrorRenderMeta } from "./parse-error"
 
 import type { IServerData } from "../get-server-data"
 
@@ -17,9 +17,9 @@ export async function renderHTML({
   htmlComponentRendererPath: string
   publicDir: string
   isClientOnlyPage?: boolean
-  error?: IErrorRenderMeta
+  error?: IErrorRenderMeta | undefined
   directory: string
-  serverData?: IServerData["props"]
+  serverData?: IServerData["props"] | undefined
 }): Promise<string> {
   try {
     const htmlComponentRenderer = require(htmlComponentRendererPath)

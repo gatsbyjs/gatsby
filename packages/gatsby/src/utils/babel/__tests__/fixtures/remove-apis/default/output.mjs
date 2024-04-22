@@ -1,4 +1,3 @@
-// import { fetch, Response } from 'node-fetch';
 const usedReference = 'my cool ref';
 const unusedReference = 'I hope to be removed';
 export default function () {

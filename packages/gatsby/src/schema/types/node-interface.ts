@@ -5,18 +5,18 @@ import {
   InterfaceTypeComposer,
   ObjectTypeComposer,
 } from "graphql-compose"
-import { IGatsbyResolverContext } from "../type-definitions"
-import { Node } from "../../.."
+import type { IGatsbyResolverContext } from "../type-definitions"
+import type { IGatsbyNode } from "../../internal"
 
 export const NodeInterfaceFields = [`id`, `parent`, `children`, `internal`]
 
 const getOrCreateNodeInterface = <TSource, TArgs>(
-  schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>>
+  schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>>,
 ): InterfaceTypeComposer => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
   // `fieldOwners` is an object
   // Should we drop ignoreType?
-  const internalTC = schemaComposer.getOrCreateOTC(`Internal`, tc => {
+  const internalTC = schemaComposer.getOrCreateOTC(`Internal`, (tc) => {
     tc.addFields({
       content: `String`,
       contentDigest: `String!`,
@@ -32,13 +32,13 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
     tc.getInputTypeComposer()
   })
 
-  const nodeInterfaceTC = schemaComposer.getOrCreateIFTC(`Node`, tc => {
+  const nodeInterfaceTC = schemaComposer.getOrCreateIFTC(`Node`, (tc) => {
     tc.setDescription(`Node Interface`)
     tc.addFields({
       id: `ID!`,
       parent: {
         type: `Node`,
-        resolve: (source, _args, context): Node | null => {
+        resolve: (source, _args, context): IGatsbyNode | null => {
           const { path } = context
           return context.nodeModel.getNodeById({ id: source.parent }, { path })
         },
@@ -50,11 +50,11 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
       },
       children: {
         type: `[Node!]!`,
-        resolve: (source, _args, context): Array<Node> => {
+        resolve: (source, _args, context): Array<IGatsbyNode> => {
           const { path } = context
           return context.nodeModel.getNodesByIds(
             { ids: source.children },
-            { path }
+            { path },
           )
         },
         extensions: {
@@ -73,34 +73,38 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
   return nodeInterfaceTC
 }
 
-export const addNodeInterfaceFields = <TSource = any, TArgs = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function addNodeInterfaceFields<TSource = any, TArgs = any>({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>>
   typeComposer: ObjectTypeComposer
-}): void => {
+}): void {
   const nodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
   typeComposer.addFields(nodeInterfaceTC.getFields())
-  nodeInterfaceTC.setResolveType(node => node.internal.type)
+  nodeInterfaceTC.setResolveType((node) => node.internal.type)
   schemaComposer.addSchemaMustHaveType(typeComposer)
 }
 
-export const addNodeInterface = <TSource = any, TArgs = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function addNodeInterface<TSource = any, TArgs = any>({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>>
   typeComposer: ObjectTypeComposer
-}): void => {
+}): void {
   const nodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
   typeComposer.addInterface(nodeInterfaceTC)
   addNodeInterfaceFields({ schemaComposer, typeComposer })
 }
 
-export const getNodeInterface = <TSource = any, TContext = any, TArgs = any>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getNodeInterface<TSource = any, TContext = any, TArgs = any>({
   schemaComposer,
 }: {
   schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>>
-}): InterfaceTypeComposer<TSource, TContext> =>
-  getOrCreateNodeInterface(schemaComposer)
+}): InterfaceTypeComposer<TSource, TContext> {
+  return getOrCreateNodeInterface(schemaComposer)
+}

@@ -1,8 +1,7 @@
 import { Span } from "opentracing"
-import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
-import { ExecutionResult, GraphQLError } from "graphql"
+import { type ExecutionResult, GraphQLError } from "graphql"
 import { sha1 } from "gatsby-core-utils/hash"
 
 import path from "path"
@@ -12,8 +11,9 @@ import { getCodeFrame } from "./graphql-errors-codeframe"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
-import { IExecutionResult, PageContext } from "./types"
+import type { IExecutionResult, PageContext } from "./types"
 import { pageDataExists, savePageQueryResult } from "../utils/page-data"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import GatsbyCacheLmdb from "../utils/cache-lmdb"
 
 let resultHashCache: GatsbyCacheLmdb | undefined
@@ -27,9 +27,9 @@ function getResultHashCache(): GatsbyCacheLmdb {
   return resultHashCache
 }
 
-export interface IQueryJob {
+export type IQueryJob = {
   id: string
-  hash?: string
+  hash?: string | undefined
   query: string
   componentPath: string
   context: PageContext
@@ -52,7 +52,7 @@ function reportLongRunningQueryJob(queryJob: IQueryJob): void {
 
 function panicQueryJobError(
   queryJob: IQueryJob,
-  errors: ReadonlyArray<GraphQLError>
+  errors: ReadonlyArray<GraphQLError>,
 ): void {
   let urlPath = undefined
   let queryContext = {}
@@ -63,7 +63,7 @@ function panicQueryJobError(
     queryContext = queryJob.context.context
   }
 
-  const structuredErrors = errors.map(e => {
+  const structuredErrors = errors.map((e) => {
     const structuredError = errorParser({
       message: e.message,
       filePath: undefined,
@@ -76,7 +76,7 @@ function panicQueryJobError(
       codeFrame: getCodeFrame(
         queryJob.query,
         e.locations && e.locations[0].line,
-        e.locations && e.locations[0].column
+        e.locations && e.locations[0].column,
       ),
       filePath: queryJob.componentPath,
       ...(urlPath ? { urlPath } : {}),
@@ -93,7 +93,7 @@ function panicQueryJobError(
 async function startQueryJob(
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
-  parentSpan: Span | undefined
+  parentSpan?: Span | undefined,
 ): Promise<ExecutionResult> {
   let isPending = true
 
@@ -119,7 +119,7 @@ async function startQueryJob(
 export async function queryRunner(
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
-  parentSpan: Span | undefined
+  parentSpan?: Span | undefined,
 ): Promise<IExecutionResult> {
   const { program } = store.getState()
 
@@ -128,7 +128,7 @@ export async function queryRunner(
       path: queryJob.id,
       componentPath: queryJob.componentPath,
       isPage: queryJob.queryType === `page`,
-    })
+    }),
   )
 
   // Run query
@@ -218,7 +218,7 @@ export async function queryRunner(
         `page-data`,
         `sq`,
         `d`,
-        `${queryJob.hash}.json`
+        `${queryJob.hash}.json`,
       )
       await fs.outputFile(resultPath, resultJSON)
     }
@@ -232,7 +232,7 @@ export async function queryRunner(
       queryType: queryJob.queryType,
       resultHash,
       queryHash: queryJob.hash,
-    })
+    }),
   )
 
   return result

@@ -3,7 +3,7 @@ import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
 
 const connections = [`orders`, `collections`, `locations`]
 
-const generateTestName = (downloadImages, shopifyConnections): string => {
+function generateTestName(downloadImages, shopifyConnections): string {
   const modifiers = [
     downloadImages ? `with` : `without`,
     shopifyConnections.length > 0 ? `with` : `without`,
@@ -23,6 +23,7 @@ describe(`createSchemaCustomization`, () => {
   for (const downloadImages of [false, true]) {
     for (const shopifyConnections of [[], connections]) {
       it(generateTestName(downloadImages, shopifyConnections), () => {
+        // @ts-ignore
         createSchemaCustomization(gatsbyApi, {
           ...pluginOptions,
           downloadImages,
@@ -30,6 +31,7 @@ describe(`createSchemaCustomization`, () => {
           typePrefix: `__PREFIX__`,
         })
 
+        // @ts-ignore
         expect(gatsbyApi.actions.createTypes.mock.calls).toMatchSnapshot()
       })
     }

@@ -59,8 +59,8 @@ of fields in the node object (including nested fields)
 import { isEqual } from "lodash"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { looksLikeADate } from "../types/date"
-import type { Node } from "../../../index"
 import { TypeConflictReporter } from "./type-conflict-reporter"
+import type { IGatsbyNode } from "../../internal"
 
 export type ITypeInfo = {
   first?: string | undefined
@@ -170,7 +170,7 @@ function updateValueDescriptorObject(
   const { dprops = {} } = typeInfo
   typeInfo.dprops = dprops
 
-  Object.keys(value).forEach(key => {
+  Object.keys(value).forEach((key) => {
     const v = value[key]
 
     let descriptor = dprops[key]
@@ -194,7 +194,7 @@ function updateValueDescriptorArray(
   metadata: ITypeMetadata,
   path: Array<Record<string, unknown>>,
 ): void {
-  value.forEach(item => {
+  value.forEach((item) => {
     let descriptor = typeInfo.item
     if (descriptor === undefined) {
       descriptor = {}
@@ -223,7 +223,7 @@ const updateValueDescriptorRelNodes = (
   const { nodes = {} } = typeInfo
   typeInfo.nodes = nodes
 
-  listOfNodeIds.forEach(nodeId => {
+  listOfNodeIds.forEach((nodeId) => {
     nodes[nodeId] = (nodes[nodeId] || 0) + delta
 
     // Treat any new related node addition or removal as a structural change
@@ -378,7 +378,7 @@ function descriptorsAreEqual(
           descriptor?.object?.dprops,
           otherDescriptor?.object?.dprops,
         )
-        return dpropsKeys.every(prop =>
+        return dpropsKeys.every((prop) =>
           descriptorsAreEqual(
             descriptor?.object?.dprops[prop],
             otherDescriptor?.object?.dprops[prop],
@@ -393,7 +393,7 @@ function descriptorsAreEqual(
         // Must be present in both descriptors or absent in both
         // in order to be considered equal
         return nodeIds.every(
-          id =>
+          (id) =>
             Boolean(descriptor?.relatedNode?.nodes[id]) ===
             Boolean(otherDescriptor?.relatedNode?.nodes[id]),
         )
@@ -404,7 +404,7 @@ function descriptorsAreEqual(
           otherDescriptor?.relatedNodeList?.nodes,
         )
         return nodeIds.every(
-          id =>
+          (id) =>
             Boolean(descriptor?.relatedNodeList?.nodes[id]) ===
             Boolean(otherDescriptor?.relatedNodeList?.nodes[id]),
         )
@@ -418,14 +418,17 @@ function descriptorsAreEqual(
   return isEqual(types, otherTypes) && types.every(childDescriptorsAreEqual)
 }
 
-function nodeFields(node: Node, ignoredFields = new Set()): Array<string> {
-  return Object.keys(node).filter(key => !ignoredFields.has(key))
+function nodeFields(
+  node: IGatsbyNode,
+  ignoredFields = new Set(),
+): Array<string> {
+  return Object.keys(node).filter((key) => !ignoredFields.has(key))
 }
 
 function updateTypeMetadata(
   metadata = initialMetadata(),
   operation: Operation,
-  node: Node,
+  node: IGatsbyNode,
 ): ITypeMetadata {
   if (metadata.disabled) {
     return metadata
@@ -436,7 +439,7 @@ function updateTypeMetadata(
   }
   const { ignoredFields, fieldMap = {} } = metadata
 
-  nodeFields(node, ignoredFields).forEach(field => {
+  nodeFields(node, ignoredFields).forEach((field) => {
     let descriptor = fieldMap[field]
     if (descriptor === undefined) {
       descriptor = {}
@@ -474,17 +477,23 @@ export function disable(
   return metadata
 }
 
-export function addNode(metadata: ITypeMetadata, node: Node): ITypeMetadata {
+export function addNode(
+  metadata: ITypeMetadata,
+  node: IGatsbyNode,
+): ITypeMetadata {
   return updateTypeMetadata(metadata, `add`, node)
 }
 
-export function deleteNode(metadata: ITypeMetadata, node: Node): ITypeMetadata {
+export function deleteNode(
+  metadata: ITypeMetadata,
+  node: IGatsbyNode,
+): ITypeMetadata {
   return updateTypeMetadata(metadata, `del`, node)
 }
 
 export function addNodes(
   metadata = initialMetadata(),
-  nodes: Iterable<Node>,
+  nodes: Array<IGatsbyNode>,
 ): ITypeMetadata {
   let state = metadata
   for (const node of nodes) {
@@ -495,13 +504,13 @@ export function addNodes(
 
 function possibleTypes(descriptor: IValueDescriptor = {}): Array<ValueType> {
   return Object.keys(descriptor).filter(
-    type => descriptor[type].total > 0,
+    (type) => descriptor[type].total > 0,
   ) as Array<ValueType>
 }
 
 export function isEmpty({ fieldMap }): boolean {
   return Object.keys(fieldMap).every(
-    field => possibleTypes(fieldMap[field]).length === 0,
+    (field) => possibleTypes(fieldMap[field]).length === 0,
   )
 }
 
@@ -515,7 +524,7 @@ export function haveEqualFields(
   { fieldMap: otherFieldMap = {} } = {},
 ): boolean {
   const fields = mergeObjectKeys(fieldMap, otherFieldMap)
-  return fields.every(field =>
+  return fields.every((field) =>
     descriptorsAreEqual(fieldMap[field], otherFieldMap[field]),
   )
 }

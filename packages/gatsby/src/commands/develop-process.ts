@@ -16,7 +16,7 @@ import {
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 import { store } from "../redux"
 
-import { IProgram, IDebugInfo } from "./types"
+import type { IProgram, IDebugInfo } from "./types"
 import { interpret } from "xstate"
 import { globalTracer } from "opentracing"
 import { developMachine } from "../state-machines/develop"

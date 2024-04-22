@@ -7,7 +7,6 @@ import { CacheFolderResolver } from "./webpack/plugins/cache-folder-resolver"
 import { store } from "../redux"
 import { actions } from "../redux/actions"
 import { getPublicPath } from "./get-public-path"
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./get-gatsby-dependents"
@@ -27,7 +26,7 @@ import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
 import { resolveJSFilepath } from "../bootstrap/resolve-js-file-path"
 import webpack from "webpack"
-import { IProgram, Stage } from "../internal"
+import type { IProgram, Stage } from "../internal"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _debug from "debug"
 import { Span, SpanContext } from "opentracing"
@@ -195,7 +194,7 @@ export async function webpackConfig(
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
           publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
-          devtoolModuleFilenameTemplate: info =>
+          devtoolModuleFilenameTemplate: (info) =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
           // See https://reactjs.org/docs/cross-origin-errors.html
@@ -981,7 +980,7 @@ export async function webpackConfig(
         })
 
         // User modules that do not need to be part of the bundle
-        if (userExternalList.some(item => checkItem(item, request))) {
+        if (userExternalList.some((item) => checkItem(item, request))) {
           // TODO figure out to make preact work with this too
 
           resolver(context, request, (err, newRequest) => {
@@ -1068,10 +1067,10 @@ export async function webpackConfig(
     )
     const pluginsPathsPromises = store
       .getState()
-      .flattenedPlugins.filter(plugin =>
+      .flattenedPlugins.filter((plugin) =>
         plugin.nodeAPIs.includes(`onCreateWebpackConfig`),
       )
-      .map(async plugin => {
+      .map(async (plugin) => {
         return (
           // @ts-ignore
           plugin.resolvedCompiledGatsbyNode ??
@@ -1135,7 +1134,7 @@ export async function webpackConfig(
       }
 
       const ruleLoaders = Array.isArray(use)
-        ? use.map(useEntry => {
+        ? use.map((useEntry) => {
             // @ts-ignore
             return typeof useEntry === `string` ? useEntry : useEntry.loader
           })
@@ -1143,7 +1142,7 @@ export async function webpackConfig(
           [use?.loader ?? rule.loader]
 
       const hasBabelLoader = ruleLoaders.some(
-        loader => loader === babelLoaderLoc,
+        (loader) => loader === babelLoaderLoc,
       )
 
       if (hasBabelLoader) {
@@ -1162,7 +1161,7 @@ export async function webpackConfig(
         modulePath = modulePath.slice(0, queryParamStartIndex)
       }
 
-      return fastRefreshIncludes.some(re => {
+      return fastRefreshIncludes.some((re) => {
         // @ts-ignore
         return re.test(modulePath)
       })

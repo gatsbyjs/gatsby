@@ -2,14 +2,14 @@
 // see details in that module
 import "./bootstrap"
 
-import { ExecutionResult, Source } from "graphql"
+import { type ExecutionResult, Source } from "graphql"
 import { uuid } from "gatsby-core-utils"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
 import { actions } from "../../redux/actions"
 import reporter from "gatsby-cli/lib/reporter"
-import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
+import { GraphQLRunner, type IQueryOptions } from "../../query/graphql-runner"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 import { setGatsbyPluginCache } from "../../utils/import-gatsby-plugin"
 import { apiRunnerNode } from "../../utils/api-runner-node"

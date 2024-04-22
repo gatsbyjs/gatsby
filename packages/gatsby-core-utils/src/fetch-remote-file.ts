@@ -1,4 +1,5 @@
-import fileType from "file-type"
+// @ts-ignore
+import { fileTypeFromFile } from "file-type"
 import path from "path"
 import fs from "fs-extra"
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -13,7 +14,6 @@ import { slash } from "./path"
 import { requestRemoteNode } from "./remote-file-utils/fetch-file"
 import { getStorage, getDatabaseDir } from "./utils/get-storage"
 import { createMutex } from "./mutex"
-// @ts-ignore
 import type { Options } from "got"
 import type { IFetchRemoteFileOptions } from "./remote-file-utils/fetch-file"
 
@@ -188,7 +188,8 @@ async function fetchFile({
 
     // Add htaccess authentication if passed in. This isn't particularly
     // extensible. We should define a proper API that we validate.
-    const httpOptions: Options = {}
+    const httpOptions: Partial<Options> = {}
+
     if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
       httpOptions.username = auth.htaccess_user
       httpOptions.password = auth.htaccess_pass
@@ -220,7 +221,7 @@ async function fetchFile({
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
       if (!ext) {
         // if this is fresh response - try to guess extension and cache result for future
-        const filetype = await fileType.fileTypeFromFile(tmpFilename)
+        const filetype = await fileTypeFromFile(tmpFilename)
         if (filetype) {
           ext = `.${filetype.ext}`
 

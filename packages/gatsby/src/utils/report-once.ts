@@ -6,7 +6,7 @@ const displayedWarnings = new Set<string>()
 export const reportOnce = (
   message: string,
   method: "log" | "warn" | "info" | "success" | "verbose" | "error" = `warn`,
-  key?: string
+  key?: string,
 ): void => {
   const messageId = key ?? message
   if (!displayedWarnings.has(messageId) && !isWorker) {

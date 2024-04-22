@@ -1,6 +1,6 @@
 const preset = require(`../index.js`)
 
-jest.mock(`../resolver`, () => jest.fn(moduleName => moduleName))
+jest.mock(`../resolver`, () => jest.fn((moduleName) => moduleName))
 
 const itWhenV4 = _CFLAGS_.GATSBY_MAJOR !== `5` ? it : it.skip
 const itWhenV5 = _CFLAGS_.GATSBY_MAJOR === `5` ? it : it.skip
@@ -22,8 +22,6 @@ describe(`babel-preset-gatsby-package`, () => {
       const { plugins } = preset()
       expect(plugins).toMatchInlineSnapshot(`
         Array [
-          "@babel/plugin-proposal-nullish-coalescing-operator",
-          "@babel/plugin-proposal-optional-chaining",
           "@babel/plugin-transform-runtime",
           "@babel/plugin-syntax-dynamic-import",
           "babel-plugin-dynamic-import-node",
@@ -47,8 +45,6 @@ describe(`babel-preset-gatsby-package`, () => {
       const { plugins } = preset()
       expect(plugins).toMatchInlineSnapshot(`
         Array [
-          "@babel/plugin-proposal-nullish-coalescing-operator",
-          "@babel/plugin-proposal-optional-chaining",
           "@babel/plugin-transform-runtime",
           "@babel/plugin-syntax-dynamic-import",
           "babel-plugin-dynamic-import-node",
@@ -84,9 +80,9 @@ describe(`babel-preset-gatsby-package`, () => {
         nodeVersion,
       })
 
-      const [, opts] = presets.find(preset =>
-        [].concat(preset).includes(`@babel/preset-env`)
-      )
+      const [, opts] = presets.find((preset) => {
+        return [].concat(preset).includes(`@babel/preset-env`)
+      })
 
       expect(opts.targets.node).toBe(nodeVersion)
     })
@@ -95,8 +91,6 @@ describe(`babel-preset-gatsby-package`, () => {
       const { plugins } = preset(null, { availableCompilerFlags: [`MAJOR`] })
       expect(plugins).toMatchInlineSnapshot(`
         Array [
-          "@babel/plugin-proposal-nullish-coalescing-operator",
-          "@babel/plugin-proposal-optional-chaining",
           "@babel/plugin-transform-runtime",
           "@babel/plugin-syntax-dynamic-import",
           "babel-plugin-dynamic-import-node",
@@ -120,8 +114,6 @@ describe(`babel-preset-gatsby-package`, () => {
       const { plugins } = preset(null, { availableCompilerFlags: [`MAJOR`] })
       expect(plugins).toMatchInlineSnapshot(`
         Array [
-          "@babel/plugin-proposal-nullish-coalescing-operator",
-          "@babel/plugin-proposal-optional-chaining",
           "@babel/plugin-transform-runtime",
           "@babel/plugin-syntax-dynamic-import",
           "babel-plugin-dynamic-import-node",
@@ -147,8 +139,6 @@ describe(`babel-preset-gatsby-package`, () => {
       const { plugins } = preset(null, { browser: true })
       expect(plugins).toMatchInlineSnapshot(`
         Array [
-          "@babel/plugin-proposal-nullish-coalescing-operator",
-          "@babel/plugin-proposal-optional-chaining",
           "@babel/plugin-transform-runtime",
           "@babel/plugin-syntax-dynamic-import",
           "babel-plugin-dynamic-import-node",
@@ -172,8 +162,6 @@ describe(`babel-preset-gatsby-package`, () => {
       const { plugins } = preset(null, { browser: true })
       expect(plugins).toMatchInlineSnapshot(`
         Array [
-          "@babel/plugin-proposal-nullish-coalescing-operator",
-          "@babel/plugin-proposal-optional-chaining",
           "@babel/plugin-transform-runtime",
           "@babel/plugin-syntax-dynamic-import",
           "babel-plugin-dynamic-import-node",

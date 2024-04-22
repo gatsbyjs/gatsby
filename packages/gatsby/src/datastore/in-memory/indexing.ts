@@ -1,8 +1,8 @@
-import { IGatsbyNode } from "../../redux/types"
+import type { IGatsbyNode } from "../../redux/types"
 import {
-  IDbQueryElemMatch,
-  FilterValue,
-  FilterValueNullable,
+  type IDbQueryElemMatch,
+  type FilterValue,
+  type FilterValueNullable,
   objectToDottedField,
 } from "../common/query"
 import { getDataStore, getNode } from "../"
@@ -30,7 +30,7 @@ type GatsbyNodeID = string
 export type IGatsbyNodePartial = {
   id: GatsbyNodeID
   internal: {
-    type: string
+    type?: string | undefined
     counter: number
   }
   gatsbyNodePartialInternalData: {
@@ -51,12 +51,12 @@ const nodeIdToIdentifierMap = new Map<
  * us to conditionally store index fields on the partial if we encounter
  * one that hasn't been stored on the partial yet.
  */
-export const getGatsbyNodePartial = (
+export function getGatsbyNodePartial(
   node: IGatsbyNode | IGatsbyNodePartial,
   indexFields: Array<string>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: Record<string, any>,
-): IGatsbyNodePartial => {
+): IGatsbyNodePartial {
   // first, check if we have the partial in the cache
   const cacheKey = `${node.id}_____${node.internal.counter}`
   let derefPartial: IGatsbyNodePartial | undefined = undefined
@@ -67,7 +67,7 @@ export const getGatsbyNodePartial = (
     if (
       derefPartial &&
       _.every(
-        indexFields.map(field =>
+        indexFields.map((field) =>
           derefPartial!.gatsbyNodePartialInternalData.indexFields.has(field),
         ),
       )
@@ -119,10 +119,10 @@ export const getGatsbyNodePartial = (
   }
 
   // create the partial object
-  const partial = Object.assign(dottedFields, {
+  const partial: IGatsbyNodePartial = Object.assign(dottedFields, {
     id: node.id,
     internal: {
-      counter: node.internal.counter,
+      counter: node.internal.counter ?? 0,
       type: node.internal.type,
     },
     gatsbyNodePartialInternalData: {
@@ -136,8 +136,9 @@ export const getGatsbyNodePartial = (
   return partial
 }
 
-const sortByIds = (a: IGatsbyNodePartial, b: IGatsbyNodePartial): number =>
-  a.internal.counter - b.internal.counter
+function sortByIds(a: IGatsbyNodePartial, b: IGatsbyNodePartial): number {
+  return a.internal.counter - b.internal.counter
+}
 
 export type IFilterCache = {
   op: FilterOp
@@ -202,8 +203,8 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
 
   const arr: Array<IGatsbyNodePartial> = []
   filterCache.meta.nodesUnordered = arr
-  filterCache.byValue.forEach(v => {
-    v.forEach(nodeId => {
+  filterCache.byValue.forEach((v) => {
+    v.forEach((nodeId) => {
       arr.push(nodeId)
     })
   })
@@ -260,7 +261,7 @@ function postIndexingMetaSetupLtLteGtGte(
     offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.length])
     // We could do `arr.push(...bucket)` here but that's not safe with very
     // large sets, so we use a regular loop
-    bucket.forEach(node => orderedNodes.push(node))
+    bucket.forEach((node) => orderedNodes.push(node))
     orderedValues.push(v)
   })
 
@@ -288,7 +289,7 @@ function postIndexingMetaSetupLtLteGtGte(
  * This cache is used for applying the filter and is a massive improvement over
  * looping over all the nodes, when the number of pages (/nodes) scales up.
  */
-export const ensureIndexByQuery = (
+export function ensureIndexByQuery(
   op: FilterOp,
   filterCacheKey: FilterCacheKey,
   filterPath: Array<string>,
@@ -297,7 +298,7 @@ export const ensureIndexByQuery = (
   indexFields: Array<string>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: Record<string, any>,
-): void => {
+): void {
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
@@ -308,11 +309,10 @@ export const ensureIndexByQuery = (
   // We cache the subsets of nodes by type, but only one type. So if searching
   // through one node type we can prevent a search through all nodes, otherwise
   // it's probably faster to loop through all nodes. Perhaps. Maybe.
-
   if (nodeTypeNames.length === 1) {
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
-      .forEach(node => {
+      .forEach((node) => {
         addNodeToFilterCache({
           node,
           chain: filterPath,
@@ -326,8 +326,8 @@ export const ensureIndexByQuery = (
     // This loop is expensive at scale (!)
     getDataStore()
       .iterateNodes()
-      .forEach(node => {
-        if (!nodeTypeNames.includes(node.internal.type)) {
+      .forEach((node) => {
+        if (!nodeTypeNames.includes(node.internal.type ?? ``)) {
           return
         }
 
@@ -369,7 +369,7 @@ export function ensureEmptyFilterCache(
   if (nodeTypeNames.length === 1) {
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
-      .forEach(node => {
+      .forEach((node) => {
         orderedByCounter.push(
           getGatsbyNodePartial(node, indexFields, resolvedFields),
         )
@@ -379,8 +379,8 @@ export function ensureEmptyFilterCache(
     // This loop is expensive at scale (!)
     getDataStore()
       .iterateNodes()
-      .forEach(node => {
-        if (nodeTypeNames.includes(node.internal.type)) {
+      .forEach((node) => {
+        if (nodeTypeNames.includes(node.internal.type ?? ``)) {
           orderedByCounter.push(
             getGatsbyNodePartial(node, indexFields, resolvedFields),
           )
@@ -437,7 +437,7 @@ function addNodeToFilterCache({
       // Add an entry for each element of the array. This would work for ops
       // like eq and ne, but not sure about range ops like lt,lte,gt,gte.
 
-      v.forEach(v => {
+      v.forEach((v) => {
         return markNodeForValue(
           filterCache,
           node,
@@ -503,7 +503,7 @@ export function ensureIndexByElemMatch(
   if (nodeTypeNames.length === 1) {
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
-      .forEach(node => {
+      .forEach((node) => {
         addNodeToBucketWithElemMatch({
           node,
           valueAtCurrentStep: node,
@@ -517,8 +517,8 @@ export function ensureIndexByElemMatch(
     // Expensive at scale
     getDataStore()
       .iterateNodes()
-      .forEach(node => {
-        if (!nodeTypeNames.includes(node.internal.type)) {
+      .forEach((node) => {
+        if (!nodeTypeNames.includes(node.internal.type ?? ``)) {
           return
         }
 
@@ -581,7 +581,7 @@ function addNodeToBucketWithElemMatch({
   // to multiple buckets (`{a:[{b:3},{b:4}]}`, for `a.elemMatch.b/eq` that
   // node ends up in buckets for value 3 and 4. This may lead to duplicate
   // work when elements resolve to the same value, but that can't be helped.
-  valueAtCurrentStep.forEach(elem => {
+  valueAtCurrentStep.forEach((elem) => {
     if (nestedQuery.type === `elemMatch`) {
       addNodeToBucketWithElemMatch({
         node,
@@ -692,7 +692,7 @@ export function getNodesFromCacheByValue(
   filterCacheKey: FilterCacheKey,
   filterValue: FilterValueNullable,
   filtersCache: FiltersCache,
-  wasElemMatch,
+  wasElemMatch: boolean,
 ): Array<IGatsbyNodePartial> | undefined {
   const filterCache = filtersCache.get(filterCacheKey)
   if (!filterCache) {
@@ -730,7 +730,7 @@ export function getNodesFromCacheByValue(
     // For every value in the needle array, find the bucket of nodes for
     // that value, add this bucket of nodes to one list, return the list.
     filterValueArr.forEach((v: FilterValueNullable) =>
-      filterCache.byValue.get(v)?.forEach(v => set.add(v)),
+      filterCache.byValue.get(v)?.forEach((v) => set.add(v)),
     )
 
     const arr = [...set] // this is bad for perf but will guarantee us a unique set :(
@@ -766,7 +766,7 @@ export function getNodesFromCacheByValue(
     const set = new Set(filterCache.meta.nodesUnordered)
 
     // Do the action for "$ne" for each element in the set of values
-    values.forEach(filterValue => {
+    values.forEach((filterValue) => {
       removeBucketFromSet(filterValue, filterCache, set)
     })
 
@@ -802,7 +802,7 @@ export function getNodesFromCacheByValue(
       // TODO: does the value have to be a string for $regex? Can we auto-ignore any non-strings? Or does it coerce.
       // Note: for legacy reasons partial paths should also be included for regex
       if (value !== undefined && regex.test(String(value))) {
-        nodes.forEach(node => arr.push(node))
+        nodes.forEach((node) => arr.push(node))
       }
     })
 
@@ -1076,14 +1076,14 @@ function removeBucketFromSet(
     // Edge case: $ne with `null` returns only the nodes that contain the full
     // path and that don't resolve to null, so drop `undefined` as well.
     let cache = filterCache.byValue.get(undefined)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach((node) => set.delete(node))
     cache = filterCache.byValue.get(null)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach((node) => set.delete(node))
   } else {
     // Not excluding null so it should include undefined leafs or leafs where
     // only the partial path exists for whatever reason.
     const cache = filterCache.byValue.get(filterValue)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach((node) => set.delete(node))
   }
 }
 
@@ -1231,10 +1231,10 @@ export function getSortFieldIdentifierKeys(
 ): Array<string> {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)
-  const fieldKeys = indexFields.map(field => {
+  const fieldKeys = indexFields.map((field) => {
     if (
       dottedFields[field] ||
-      dottedFieldKeys.some(key => field.startsWith(key))
+      dottedFieldKeys.some((key) => field.startsWith(key))
     ) {
       return `__gatsby_resolved.${field}`
     } else {

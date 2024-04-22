@@ -3,7 +3,7 @@ import PrettyError from "pretty-error"
 import stackTrace from "stack-trace"
 import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
 import { isNodeInternalModulePath } from "gatsby-core-utils"
-import { IStructuredStackFrame } from "../structured-errors/types"
+import type { IStructuredStackFrame } from "../structured-errors/types"
 import { readFileSync } from "fs-extra"
 import { codeFrameColumns } from "@babel/code-frame"
 
@@ -19,7 +19,7 @@ export function sanitizeStructuredStackTrace(
   stack: Array<stackTrace.StackFrame>,
 ): Array<IStructuredStackFrame> {
   // first filter out not useful call sites
-  stack = stack.filter(callSite => {
+  stack = stack.filter((callSite) => {
     if (!callSite.getFileName()) {
       return false
     }
@@ -41,7 +41,7 @@ export function sanitizeStructuredStackTrace(
 
   // then sanitize individual call site objects to make sure we don't
   // emit objects with extra fields that won't be handled by consumers
-  return stack.map(callSite => {
+  return stack.map((callSite) => {
     return {
       fileName: callSite.getFileName(),
       functionName: callSite.getFunctionName(),
@@ -67,7 +67,7 @@ export function getErrorFormatter(): PrettyError {
   )
 
   // @ts-ignore the type defs in prettyError are wrong
-  prettyError.skip(traceLine => {
+  prettyError.skip((traceLine) => {
     if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
     return false
   })
@@ -92,7 +92,7 @@ export function getErrorFormatter(): PrettyError {
     err: PrettyRenderError | Array<PrettyRenderError>,
   ): string => {
     if (Array.isArray(err)) {
-      return err.map(e => prettyError.render(e)).join(`\n`)
+      return err.map((e) => prettyError.render(e)).join(`\n`)
     }
 
     let rendered = baseRender.call(prettyError, err)

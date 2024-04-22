@@ -2,9 +2,8 @@ import fs from "fs-extra"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { getMonorepoPackageJsonPath } from "./get-monorepo-package-json-path"
-// @ts-ignore
 import got from "got"
-import { PackageJson } from "../../../gatsby"
+import type { PackageJson } from "../../../gatsby"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function difference(object, base): any {

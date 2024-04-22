@@ -1,5 +1,5 @@
-import { Rule } from "eslint"
-import { Node, ExportDefaultDeclaration } from "estree"
+import type { Rule } from "eslint"
+import type { Node, ExportDefaultDeclaration } from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
 
@@ -54,7 +54,7 @@ const noAnonymousExports: Rule.RuleModule = {
 `,
     },
   },
-  create: context => {
+  create: (context) => {
     if (!isPageTemplate(store, context)) {
       return {}
     }

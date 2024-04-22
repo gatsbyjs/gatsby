@@ -1,5 +1,4 @@
-// @ts-ignore
-import { SourceNodesArgs } from "gatsby"
+import type { SourceNodesArgs } from "gatsby"
 
 import { createGraphqlClient } from "./clients"
 import { OperationError } from "./errors"
@@ -73,7 +72,7 @@ export function createOperations(
         timer.start()
 
         while (!finishedStatuses.includes(currentBulkOperation.status)) {
-          await new Promise(resolve => setTimeout(resolve, 1000))
+          await new Promise((resolve) => setTimeout(resolve, 1000))
           currentBulkOperation = (await currentOperation()).currentBulkOperation
 
           // add warning for CI environments
@@ -137,7 +136,7 @@ export function createOperations(
       bulkOperation = bulkOperationCancel.bulkOperation
 
       while (bulkOperation.status !== `CANCELED`) {
-        await new Promise(resolve => setTimeout(resolve, 100))
+        await new Promise((resolve) => setTimeout(resolve, 100))
         const currentOp = await currentOperation()
         bulkOperation = currentOp.currentBulkOperation
         cancelTimer.setStatus(
@@ -152,7 +151,7 @@ export function createOperations(
        * to be officially finished before we start a new one.
        */
       while (!finishedStatuses.includes(bulkOperation.status)) {
-        await new Promise(resolve => setTimeout(resolve, 100))
+        await new Promise((resolve) => setTimeout(resolve, 100))
         bulkOperation = (await currentOperation()).currentBulkOperation
         cancelTimer.setStatus(
           `Waiting for operation to complete: ${bulkOperation.id}`,
@@ -194,7 +193,7 @@ export function createOperations(
         return operation
       }
 
-      await new Promise(resolve => setTimeout(resolve, interval))
+      await new Promise((resolve) => setTimeout(resolve, interval))
 
       operation = await graphqlClient.request<{
         node: IBulkOperationNode

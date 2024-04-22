@@ -1,5 +1,4 @@
-// @ts-ignore
-import { CreateResolversArgs } from "gatsby"
+import type { CreateResolversArgs } from "gatsby"
 import { getGatsbyImageFieldConfig } from "gatsby-plugin-image/graphql-utils"
 
 import { shopifyTypes } from "./shopify-types"

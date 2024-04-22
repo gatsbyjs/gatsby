@@ -96,8 +96,6 @@ Only HTTP headers prefixed with `x-gatsby-` are passed into your functions.
 Site [environment variables](/docs/how-to/local-development/environment-variables) are used to pass secrets and environment-specific configuration to Functions.
 
 ```js:title=src/api/users/[id].js
-import fetch from "node-fetch"
-
 export default async function postNewPersonHandler(req, res) {
   // POST data to an authenticated API
   const url = "https://example.com/people"
@@ -114,7 +112,7 @@ export default async function postNewPersonHandler(req, res) {
   }
 
   try {
-    const result = await fetch(url, {
+    const result = await globalThis.fetch(url, {
       method: "POST",
       headers: headers,
       body: data,

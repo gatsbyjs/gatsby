@@ -2,9 +2,16 @@ import * as fs from "fs"
 import enhancedResolve, { CachedInputFileSystem } from "enhanced-resolve"
 
 export type ModuleResolver = (modulePath: string) => string | false
-type ResolveType = (context?: any, path?: any, request?: any) => string | false
+type ResolveType = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context?: any | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  path?: any | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  request?: any | undefined,
+) => string | false
 
-export const resolveModule: ModuleResolver = modulePath => {
+export const resolveModule: ModuleResolver = (modulePath) => {
   let resolve: ResolveType
 
   try {

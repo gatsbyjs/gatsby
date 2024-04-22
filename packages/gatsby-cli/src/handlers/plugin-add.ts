@@ -1,7 +1,7 @@
 import reporter from "../reporter"
 import { GatsbyPluginCreate, NPMPackageCreate } from "./plugin-add-utils"
 
-const normalizePluginName = (plugin: string): string => {
+function normalizePluginName(plugin: string): string {
   if (plugin.startsWith(`gatsby-`)) {
     return plugin
   }
@@ -17,7 +17,7 @@ const normalizePluginName = (plugin: string): string => {
 
 async function installPluginPackage(
   plugin: string,
-  root: string
+  root: string,
 ): Promise<void> {
   const installTimer = reporter.activityTimer(`Installing ${plugin}`)
 
@@ -36,13 +36,13 @@ async function installPluginPackage(
 async function installPluginConfig(
   plugin: string,
   options: Record<string, unknown> | undefined,
-  root: string
+  root: string,
 ): Promise<void> {
   // Plugins can optionally include a key, to allow duplicates
   const [pluginName, pluginKey] = plugin.split(`:`)
 
   const installTimer = reporter.activityTimer(
-    `Adding ${pluginName} ${pluginKey ? `(${pluginKey}) ` : ``}to gatsby-config`
+    `Adding ${pluginName} ${pluginKey ? `(${pluginKey}) ` : ``}to gatsby-config`,
   )
 
   installTimer.start()
@@ -66,7 +66,7 @@ export async function addPlugins(
   plugins: Array<string>,
   pluginOptions: Record<string, Record<string, unknown>>,
   directory: string,
-  packages: Array<string> = []
+  packages: Array<string> = [],
 ): Promise<void> {
   if (!plugins?.length) {
     reporter.error(`Please specify a plugin to install`)
@@ -76,11 +76,11 @@ export async function addPlugins(
   const pluginList = plugins.map(normalizePluginName)
 
   await Promise.all(
-    packages.map(plugin => installPluginPackage(plugin, directory))
+    packages.map((plugin) => installPluginPackage(plugin, directory)),
   )
   await Promise.all(
-    pluginList.map(plugin =>
-      installPluginConfig(plugin, pluginOptions[plugin], directory)
-    )
+    pluginList.map((plugin) =>
+      installPluginConfig(plugin, pluginOptions[plugin], directory),
+    ),
   )
 }

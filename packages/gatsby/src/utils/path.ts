@@ -1,21 +1,25 @@
-import path from "path"
+import path from "node:path"
 import { joinPath, createContentDigest } from "gatsby-core-utils"
 
-export const withBasePath =
-  (basePath: string) =>
-  (...paths: Array<string>): string =>
-    joinPath(basePath, ...paths)
+export function withBasePath(basePath: string) {
+  return (...paths: Array<string>): string => {
+    return joinPath(basePath, ...paths)
+  }
+}
 
-export const withTrailingSlash = (basePath: string): string => `${basePath}/`
+export function withTrailingSlash(basePath: string): string {
+  return `${basePath}/`
+}
 
-const posixJoinWithLeadingSlash = (paths: Array<string>): string =>
-  path.posix.join(
+function posixJoinWithLeadingSlash(paths: Array<string>): string {
+  return path.posix.join(
     ...paths.map((segment, index) =>
-      segment === `` && index === 0 ? `/` : segment
-    )
+      segment === `` && index === 0 ? `/` : segment,
+    ),
   )
+}
 
-export const getCommonDir = (path1: string, path2: string): string => {
+export function getCommonDir(path1: string, path2: string): string {
   const path1Segments = path1.split(/[/\\]/)
   const path2Segments = path2.split(/[/\\]/)
 
@@ -42,12 +46,13 @@ const pathSegmentRe = /[^/]+/g
 const isMacOs = process.platform === `darwin`
 const isWindows = process.platform === `win32`
 
-const isNameTooLong = (segment: string): boolean =>
-  isMacOs || isWindows
+function isNameTooLong(segment: string): boolean {
+  return isMacOs || isWindows
     ? segment.length > MAX_PATH_SEGMENT_CHARS // MacOS (APFS) and Windows (NTFS) filename length limit (255 chars)
-    : Buffer.from(segment).length > MAX_PATH_SEGMENT_BYTES // Other (255 bytes)
+    : Buffer.from(segment).length > MAX_PATH_SEGMENT_BYTES
+} // Other (255 bytes)
 
-export const tooLongSegmentsInPath = (path: string): Array<string> => {
+export function tooLongSegmentsInPath(path: string): Array<string> {
   const invalidFilenames: Array<string> = []
   for (const segment of path.split(`/`)) {
     if (isNameTooLong(segment)) {
@@ -57,8 +62,8 @@ export const tooLongSegmentsInPath = (path: string): Array<string> => {
   return invalidFilenames
 }
 
-export const truncatePath = (path: string): string =>
-  path.replace(pathSegmentRe, match => {
+export function truncatePath(path: string): string {
+  return path.replace(pathSegmentRe, (match) => {
     if (isNameTooLong(match)) {
       return (
         match.slice(0, SLICING_INDEX) +
@@ -67,3 +72,4 @@ export const truncatePath = (path: string): string =>
     }
     return match
   })
+}

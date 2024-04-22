@@ -1,9 +1,8 @@
-import * as path from "path"
+import * as path from "node:path"
 import * as fs from "fs-extra"
 import webpack from "webpack"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
 
@@ -11,7 +10,7 @@ import {
   getScriptsAndStylesForTemplate,
   readWebpackStats,
 } from "../client-assets-for-template"
-import { IGatsbyState } from "../../redux/types"
+import type { IGatsbyState } from "../../redux/types"
 import { store } from "../../redux"
 import { LmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
 
@@ -75,7 +74,7 @@ export async function createPageSSRBundle({
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   reporter: Reporter
-  isVerbose?: boolean
+  isVerbose?: boolean | undefined
 }): Promise<webpack.Compilation | undefined> {
   const state = store.getState()
   const pathPrefix = state.program.prefixPaths
@@ -108,7 +107,7 @@ export async function createPageSSRBundle({
       staticQueryHashes,
       assets: await getScriptsAndStylesForTemplate(
         pageTemplate.componentChunkName,
-        webpackStats
+        webpackStats,
       ),
     }
   }
@@ -204,17 +203,17 @@ export async function createPageSSRBundle({
                   `public`,
                   `_gatsby`,
                   `slices`,
-                  `_gatsby-scripts-1.html`
+                  `_gatsby-scripts-1.html`,
                 ),
-                `utf-8`
+                `utf-8`,
               )
-            : ``
+            : ``,
         ),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_SLICES": JSON.stringify(
-          !!process.env.GATSBY_SLICES
+          !!process.env.GATSBY_SLICES,
         ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
@@ -227,7 +226,7 @@ export async function createPageSSRBundle({
   if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
     await fs.copyFile(
       global.__GATSBY.imageCDNUrlGeneratorModulePath,
-      path.join(outputDir, `image-cdn-url-generator.js`)
+      path.join(outputDir, `image-cdn-url-generator.js`),
     )
     IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./image-cdn-url-generator.js`
   }
@@ -236,14 +235,14 @@ export async function createPageSSRBundle({
   if (global.__GATSBY?.fileCDNUrlGeneratorModulePath) {
     await fs.copyFile(
       global.__GATSBY.fileCDNUrlGeneratorModulePath,
-      path.join(outputDir, `file-cdn-url-generator.js`)
+      path.join(outputDir, `file-cdn-url-generator.js`),
     )
     FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./file-cdn-url-generator.js`
   }
 
   let functionCode = await fs.readFile(
     path.join(__dirname, `lambda.js`),
-    `utf-8`
+    `utf-8`,
   )
 
   functionCode = functionCode
@@ -251,23 +250,23 @@ export async function createPageSSRBundle({
       `%CDN_DATASTORE_PATH%`,
       shouldBundleDatastore()
         ? ``
-        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
+        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`,
     )
     .replaceAll(`%PATH_PREFIX%`, pathPrefix)
     .replaceAll(
       `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
-      IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
+      IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH,
     )
     .replaceAll(
       `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
-      FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
+      FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH,
     )
 
   await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
-      compiler.close(closeErr => {
+      compiler.close((closeErr) => {
         if (err) {
           return reject(err)
         }

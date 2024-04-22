@@ -26,7 +26,7 @@ function findBestMatchingPage(
     }
   }
 
-  const routes = Object.keys(pagesByMatchPath).map(path => {
+  const routes = Object.keys(pagesByMatchPath).map((path) => {
     return { path }
   })
 
@@ -81,7 +81,7 @@ export function findPageByPath(
       hasTrailingSlash ? -1 : path.length,
     )
 
-    ;[bare, `/` + bare, bare + `/`, `/` + bare + `/`].some(potentialPath => {
+    ;[bare, `/` + bare, bare + `/`, `/` + bare + `/`].some((potentialPath) => {
       page = pages.get(potentialPath)
       return !!page
     })

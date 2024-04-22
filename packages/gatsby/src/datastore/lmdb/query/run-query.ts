@@ -1,66 +1,67 @@
-import {
+import type {
   IDataStore,
   ILmdbDatabases,
   IQueryResult,
   IRunQueryArgs,
 } from "../../types"
-import { IGatsbyNode } from "../../../redux/types"
+import type { IGatsbyNode } from "../../../redux/types"
 import { GatsbyIterable } from "../../common/iterable"
 import {
   createDbQueriesFromObject,
-  DbQuery,
+  type DbQuery,
   dbQueryToDottedField,
   getFilterStatement,
-  IDbFilterStatement,
+  type IDbFilterStatement,
   prepareQueryArgs,
 } from "../../common/query"
 import {
   createIndex,
   getIndexMetadata,
-  IIndexMetadata,
-  IndexFields,
+  type IIndexMetadata,
+  type IndexFields,
 } from "./create-index"
 import {
   countUsingIndexOnly,
   filterUsingIndex,
-  IIndexEntry,
+  type IIndexEntry,
 } from "./filter-using-index"
 import { store } from "../../../redux"
 import { isDesc, resolveFieldValue, matchesFilter, compareKey } from "./common"
 import { suggestIndex } from "./suggest-index"
 
-interface IDoRunQueryArgs extends IRunQueryArgs {
+type IDoRunQueryArgs = {
   databases: ILmdbDatabases
   datastore: IDataStore
-}
+} & IRunQueryArgs
 
 type SortFields = Map<string, number>
 
-interface IQueryContext {
+type IQueryContext = {
   datastore: IDataStore
   databases: ILmdbDatabases
   dbQueries: Array<DbQuery>
   sortFields: SortFields
   nodeTypeNames: Array<string>
   suggestedIndexFields: IndexFields
-  indexMetadata?: IIndexMetadata
-  limit?: number
+  indexMetadata?: IIndexMetadata | undefined
+  limit?: number | undefined
   skip: number
-  totalCount?: number
+  totalCount?: number | undefined
 }
 
 export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
   // Note: Keeping doRunQuery method the only async method in chain for perf
   const context = createQueryContext(args)
 
-  const totalCount = async (): Promise<number> =>
-    runCountOnce({ ...context, limit: undefined, skip: 0 })
+  async function totalCount(): Promise<number> {
+    return runCountOnce({ ...context, limit: undefined, skip: 0 })
+  }
 
   if (canUseIndex(context)) {
     await Promise.all(
-      context.nodeTypeNames.map(typeName =>
-        createIndex(context, typeName, context.suggestedIndexFields)
-      )
+      context.nodeTypeNames.map((typeName) =>
+        createIndex(context, typeName, context.suggestedIndexFields),
+      ),
     )
     return { entries: performIndexScan(context), totalCount }
   }
@@ -88,7 +89,7 @@ function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
     const indexMetadata = getIndexMetadata(
       context,
       typeName,
-      suggestedIndexFields
+      suggestedIndexFields,
     )
     if (!needsSorting(context)) {
       const { nodes, usedSkip } = filterNodes(filterContext, indexMetadata)
@@ -111,7 +112,7 @@ function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
 
     result = result.mergeSorted(
       sortedNodes,
-      createNodeSortComparator(sortFields)
+      createNodeSortComparator(sortFields),
     )
   }
   const { limit, skip = 0 } = context
@@ -144,8 +145,9 @@ function runCount(context: IQueryContext): number {
     for (const typeName of context.nodeTypeNames) {
       const nodes = completeFiltering(
         context,
-        new GatsbyIterable(context.datastore.iterateNodesByType(typeName))
+        new GatsbyIterable(context.datastore.iterateNodesByType(typeName)),
       )
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (const _ of nodes) count++
     }
     return count
@@ -155,12 +157,13 @@ function runCount(context: IQueryContext): number {
     const indexMetadata = getIndexMetadata(
       context,
       typeName,
-      context.suggestedIndexFields
+      context.suggestedIndexFields,
     )
     try {
       count += countUsingIndexOnly({ ...context, indexMetadata })
     } catch (e) {
       // We cannot reliably count using index - fallback to full iteration :/
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (const _ of filterNodes(context, indexMetadata).nodes) count++
     }
   }
@@ -168,7 +171,7 @@ function runCount(context: IQueryContext): number {
 }
 
 function performFullTableScan(
-  context: IQueryContext
+  context: IQueryContext,
 ): GatsbyIterable<IGatsbyNode> {
   // console.warn(`Fallback to full table scan :/`)
 
@@ -183,7 +186,7 @@ function performFullTableScan(
       nodes = sortNodesInMemory(context, nodes)
       result = result.mergeSorted(
         nodes,
-        createNodeSortComparator(context.sortFields)
+        createNodeSortComparator(context.sortFields),
       )
     } else {
       result = result.concat(nodes)
@@ -199,7 +202,7 @@ function performFullTableScan(
 
 function filterNodes(
   context: IQueryContext,
-  indexMetadata: IIndexMetadata
+  indexMetadata: IIndexMetadata,
 ): { nodes: GatsbyIterable<IGatsbyNode>; usedSkip: number } {
   const { entries, usedQueries, usedSkip } = filterUsingIndex({
     ...context,
@@ -214,7 +217,7 @@ function filterNodes(
     nodes: completeFiltering(
       context,
       nodes as GatsbyIterable<IGatsbyNode>,
-      usedQueries
+      usedQueries,
     ),
     usedSkip,
   }
@@ -228,26 +231,29 @@ function filterNodes(
 function completeFiltering(
   context: IQueryContext,
   intermediateResult: GatsbyIterable<IGatsbyNode>,
-  usedQueries: Set<DbQuery> = new Set()
+  usedQueries: Set<DbQuery> = new Set(),
 ): GatsbyIterable<IGatsbyNode> {
   const { dbQueries } = context
   if (isFullyFiltered(dbQueries, usedQueries)) {
     return intermediateResult
   }
+
   // Apply remaining filter operations directly (last resort: slow)
   const resolvedNodes = store.getState().resolvedNodesCache
 
   const filtersToApply: Array<[string, IDbFilterStatement]> = dbQueries
-    .filter(q => !usedQueries.has(q))
-    .map(q => [dbQueryToDottedField(q), getFilterStatement(q)])
+    .filter((q) => !usedQueries.has(q))
+    .map((q) => [dbQueryToDottedField(q), getFilterStatement(q)])
 
-  return intermediateResult.filter(node => {
-    const resolvedFields = resolvedNodes?.get(node.internal.type)?.get(node.id)
+  return intermediateResult.filter((node) => {
+    const resolvedFields = node.internal.type
+      ? resolvedNodes.get(node.internal.type)?.get(node.id)
+      : undefined
 
     for (const [dottedField, filter] of filtersToApply) {
       const tmp = resolveFieldValue(dottedField, node, resolvedFields)
       const value = Array.isArray(tmp) ? tmp : [tmp]
-      if (value.some(v => !matchesFilter(filter, v))) {
+      if (value.some((v) => !matchesFilter(filter, v))) {
         // Mimic AND semantics
         return false
       }
@@ -258,7 +264,7 @@ function completeFiltering(
 
 function sortNodesInMemory(
   context: IQueryContext,
-  nodes: GatsbyIterable<IGatsbyNode>
+  nodes: GatsbyIterable<IGatsbyNode>,
 ): GatsbyIterable<IGatsbyNode> {
   // TODO: Sort using index data whenever possible (maybe store data needed for sorting in index values)
   // TODO: Nodes can be partially sorted by index prefix - we can (and should) exploit this
@@ -278,7 +284,7 @@ function createQueryContext(args: IDoRunQueryArgs): IQueryContext {
     nodeTypeNames: args.nodeTypeNames,
     dbQueries: createDbQueriesFromObject(prepareQueryArgs(filter)),
     sortFields: new Map<string, number>(
-      sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1])
+      sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1]),
     ),
     suggestedIndexFields: new Map(suggestIndex({ filter, sort })),
     limit: firstOnly ? 1 : limit,
@@ -304,7 +310,7 @@ function needsSorting(context: IQueryContext): boolean {
  */
 function canUseIndexForSorting(
   index: IIndexMetadata,
-  sortFields: SortFields
+  sortFields: SortFields,
 ): boolean {
   const indexKeyFields = new Map(index.keyFields)
   for (const [field, sortOrder] of sortFields) {
@@ -317,7 +323,7 @@ function canUseIndexForSorting(
 
 function isFullyFiltered(
   dbQueries: Array<DbQuery>,
-  usedQueries: Set<DbQuery>
+  usedQueries: Set<DbQuery>,
 ): boolean {
   return dbQueries.length === usedQueries.size
 }
@@ -326,11 +332,25 @@ function createNodeSortComparator(sortFields: SortFields): (a, b) => number {
   const resolvedNodesCache = store.getState().resolvedNodesCache
 
   return function nodeComparator(a: IGatsbyNode, b: IGatsbyNode): number {
-    const resolvedAFields = resolvedNodesCache?.get(a.internal.type)?.get(a.id)
-    const resolvedBFields = resolvedNodesCache?.get(b.internal.type)?.get(b.id)
+    const resolvedAFields:
+      | {
+          [field: string]: unknown
+        }
+      | undefined = a.internal.type
+      ? resolvedNodesCache.get(a.internal.type)?.get(a.id)
+      : undefined
+    const resolvedBFields:
+      | {
+          [field: string]: unknown
+        }
+      | undefined = b.internal.type
+      ? resolvedNodesCache?.get(b.internal.type)?.get(b.id)
+      : undefined
 
     for (const [field, direction] of sortFields) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const valueA: any = resolveFieldValue(field, a, resolvedAFields)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const valueB: any = resolveFieldValue(field, b, resolvedBFields)
 
       if (valueA > valueB) {

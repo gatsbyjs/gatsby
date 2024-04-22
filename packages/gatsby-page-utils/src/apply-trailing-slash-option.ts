@@ -1,6 +1,6 @@
 export type TrailingSlash = "always" | "never" | "ignore"
 
-const endsWithSuffixes = (suffixes: Array<string>, input): boolean => {
+function endsWithSuffixes(suffixes: Array<string>, input: string): boolean {
   for (const suffix of suffixes) {
     if (input.endsWith(suffix)) return true
   }
@@ -9,11 +9,13 @@ const endsWithSuffixes = (suffixes: Array<string>, input): boolean => {
 
 const suffixes = [`.html`, `.json`, `.js`, `.map`, `.txt`, `.xml`, `.pdf`]
 
-export const applyTrailingSlashOption = (
+export function applyTrailingSlashOption(
   input: string,
-  option: TrailingSlash = `always`
-): string => {
-  if (input === `/`) return input
+  option: TrailingSlash | undefined = `always`,
+): string {
+  if (input === `/`) {
+    return input
+  }
 
   const hasTrailingSlash = input.endsWith(`/`)
 

@@ -6,7 +6,7 @@ import axios, {
   type AxiosResponse,
   type RawAxiosRequestHeaders,
 } from "axios"
-import rateLimit, { RateLimitedAxiosInstance } from "axios-rate-limit"
+import rateLimit, { type RateLimitedAxiosInstance } from "axios-rate-limit"
 import chalk from "chalk"
 import retry from "async-retry"
 import { formatLogMessage } from "./format-log-message"
@@ -231,10 +231,9 @@ async function handleGraphQLErrors({
           `(${error.category}) ${
             error?.locations?.length
               ? error.locations
-                  .map(
-                    location =>
-                      `location: line ${location.line}, column: ${location.column}`,
-                  )
+                  .map((location) => {
+                    return `location: line ${location.line}, column: ${location.column}`
+                  })
                   ?.join(`. `)
               : ``
           } \n\t ${error.message}  \n\n Error path: ${errorPath} \n\n If you haven't already, try adding ${chalk.bold(
@@ -741,7 +740,7 @@ export default async function fetchGraphql({
         moduleHelpers
           .getHttp(limit)
           .post(url, { query, variables }, requestOptions)
-          .catch(e => {
+          .catch((e) => {
             if (!errorIs500ish(e)) {
               // for any error that is not a 50x error, we bail, meaning we stop retrying. error will be thrown one level higher
               bail(e)

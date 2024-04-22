@@ -11,21 +11,22 @@ import {
   RESULT,
   CUSTOM_MESSAGE,
   WORKER_READY,
-  ParentMessageUnion,
-  ChildMessageUnion,
+  type ParentMessageUnion,
+  type ChildMessageUnion,
 } from "./types"
 
-interface IWorkerOptions {
+type IWorkerOptions = {
   // number of workers to spawn, defaults to 1
-  numWorkers?: number
+  numWorkers?: number | undefined
   // environmental variables specific to the worker(s)
-  env?: Record<string, string>
+  env?: Record<string, string> | undefined
   // whether or not output should be ignored
-  silent?: boolean
+  silent?: boolean | undefined
 }
 
 type WrapReturnOfAFunctionInAPromise<
-  FunctionThatDoesNotReturnAPromise extends (...args: Array<any>) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  FunctionThatDoesNotReturnAPromise extends (...args: Array<any>) => any,
 > = (
   ...a: Parameters<FunctionThatDoesNotReturnAPromise>
 ) => Promise<ReturnType<FunctionThatDoesNotReturnAPromise>>
@@ -33,15 +34,20 @@ type WrapReturnOfAFunctionInAPromise<
 // gatsby-worker will make sync function async, so to keep proper types we need to adjust types so all functions
 // on worker pool are async
 type EnsureFunctionReturnsAPromise<MaybeFunction> = MaybeFunction extends (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...args: Array<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Promise<any>
   ? MaybeFunction
-  : MaybeFunction extends (...args: Array<any>) => any
-  ? WrapReturnOfAFunctionInAPromise<MaybeFunction>
-  : never
+  : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    MaybeFunction extends (...args: Array<any>) => any
+    ? WrapReturnOfAFunctionInAPromise<MaybeFunction>
+    : never
 
 type WrapReturnInArray<MaybeFunction> = MaybeFunction extends (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...args: Array<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => any
   ? (...a: Parameters<MaybeFunction>) => Array<ReturnType<MaybeFunction>>
   : never
@@ -62,14 +68,18 @@ const childWrapperPath = require.resolve(`./child`)
 
 class TaskInfo<T> {
   functionName: T
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: Array<any>
-  assignedToWorker?: IWorkerInfo<T>
+  assignedToWorker?: IWorkerInfo<T> | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   promise: Promise<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolve!: (r: any) => void
   reject!: (e: Error) => void
 
   constructor(opts: {
     functionName: T
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     args: Array<any>
     assignedToWorker?: IWorkerInfo<T>
   }) {
@@ -83,20 +93,20 @@ class TaskInfo<T> {
   }
 }
 
-interface IWorkerInfo<T> {
+type IWorkerInfo<T> = {
   workerId: number
   send: (msg: ParentMessageUnion) => void
-  kill: (signal?: NodeJS.Signals | number) => boolean
+  kill: (signal?: NodeJS.Signals | number | undefined) => boolean
   lastMessage: number
   exitedPromise: Promise<{
     code: number | null
     signal: NodeJS.Signals | null
   }>
-  currentTask?: TaskInfo<T>
+  currentTask?: TaskInfo<T> | undefined
   ready: Promise<void>
 }
 
-export interface IPublicWorkerInfo {
+export type IPublicWorkerInfo = {
   workerId: number
 }
 
@@ -111,7 +121,7 @@ export interface IPublicWorkerInfo {
 export class WorkerPool<
   WorkerModuleExports = Record<string, unknown>,
   MessagesFromParent = unknown,
-  MessagesFromChild = MessagesFromParent
+  MessagesFromChild = MessagesFromParent,
 > {
   /**
    * Schedule task execution on all workers. Useful for setting up workers
@@ -138,7 +148,10 @@ export class WorkerPool<
     []
   private counter = 0
 
-  constructor(private workerPath: string, private options?: IWorkerOptions) {
+  constructor(
+    private workerPath: string,
+    private options?: IWorkerOptions,
+  ) {
     const single: Partial<WorkerPool<WorkerModuleExports>["single"]> = {}
     const all: Partial<WorkerPool<WorkerModuleExports>["all"]> = {}
 
@@ -160,12 +173,12 @@ export class WorkerPool<
 
         single[exportName] = this.scheduleWorkSingle.bind(
           this,
-          exportName
+          exportName,
         ) as WorkerPool<WorkerModuleExports>["single"][typeof exportName]
 
         all[exportName] = this.scheduleWorkAll.bind(
           this,
-          exportName
+          exportName,
         ) as unknown as WorkerPool<WorkerModuleExports>["all"][typeof exportName]
       }
     }
@@ -182,7 +195,7 @@ export class WorkerPool<
     for (let workerId = 1; workerId <= (options?.numWorkers ?? 1); workerId++) {
       const workerInFlightsDumpLocation = path.join(
         tmpDir,
-        `worker-${workerId}.json`
+        `worker-${workerId}.json`,
       )
       const worker = fork(childWrapperPath, {
         cwd: process.cwd(),
@@ -194,7 +207,7 @@ export class WorkerPool<
           GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION: workerInFlightsDumpLocation,
         },
         // Suppress --debug / --inspect flags while preserving others (like --harmony).
-        execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
+        execArgv: process.execArgv.filter((v) => !/^--(debug|inspect)/.test(v)),
         silent: options && options.silent,
       })
 
@@ -211,18 +224,18 @@ export class WorkerPool<
             return
           }
 
-          worker.send(msg, undefined, undefined, error => {
+          worker.send(msg, undefined, undefined, (error) => {
             if (error && worker.connected) {
               throw error
             }
           })
         },
         kill: worker.kill.bind(worker),
-        ready: new Promise<void>(resolve => {
+        ready: new Promise<void>((resolve) => {
           workerReadyResolve = resolve
         }),
         lastMessage: 0,
-        exitedPromise: new Promise(resolve => {
+        exitedPromise: new Promise((resolve) => {
           workerExitResolve = resolve
         }),
       }
@@ -254,15 +267,15 @@ export class WorkerPool<
             }, got ${msg[1]}.\n\nFull message:\n${JSON.stringify(
               msg,
               null,
-              2
-            )}.`
+              2,
+            )}.`,
           )
         }
         workerInfo.lastMessage = msg[1]
         if (msg[0] === RESULT) {
           if (!workerInfo.currentTask) {
             throw new Error(
-              `Invariant: gatsby-worker received execution result, but it wasn't expecting it.`
+              `Invariant: gatsby-worker received execution result, but it wasn't expecting it.`,
             )
           }
           const task = workerInfo.currentTask
@@ -272,7 +285,7 @@ export class WorkerPool<
         } else if (msg[0] === ERROR) {
           if (!workerInfo.currentTask) {
             throw new Error(
-              `Invariant: gatsby-worker received execution rejection, but it wasn't expecting it.`
+              `Invariant: gatsby-worker received execution rejection, but it wasn't expecting it.`,
             )
           }
 
@@ -329,7 +342,7 @@ export class WorkerPool<
         if (workerInfo.currentTask) {
           // worker exited without finishing a task
           workerInfo.currentTask.reject(
-            new Error(`Worker exited before finishing task`)
+            new Error(`Worker exited before finishing task`),
           )
         }
         // remove worker from list of workers
@@ -347,7 +360,7 @@ export class WorkerPool<
    * @returns Array of promises for each worker that will resolve once worker did exit.
    */
   end(): Array<Promise<number | null>> {
-    const results = this.workers.map(async workerInfo => {
+    const results = this.workers.map(async (workerInfo) => {
       // tell worker to end gracefully
       const endMessage: ParentMessageUnion = [END, ++this.counter]
 
@@ -386,13 +399,13 @@ export class WorkerPool<
   }
 
   getWorkerInfo(): Array<IPublicWorkerInfo> {
-    return this.workers.map(worker => {
+    return this.workers.map((worker) => {
       return { workerId: worker.workerId }
     })
   }
 
   private checkForWork<T extends keyof WorkerModuleExports>(
-    workerInfo: IWorkerInfo<T>
+    workerInfo: IWorkerInfo<T>,
   ): void {
     // check if there is task in queue
     for (const taskNode of this.taskQueue) {
@@ -411,7 +424,7 @@ export class WorkerPool<
 
   private async doWork<T extends keyof WorkerModuleExports>(
     taskInfo: TaskInfo<T>,
-    workerInfo: IWorkerInfo<T>
+    workerInfo: IWorkerInfo<T>,
   ): Promise<void> {
     // block worker
     workerInfo.currentTask = taskInfo
@@ -429,7 +442,7 @@ export class WorkerPool<
   }
 
   private scheduleWork<T extends keyof WorkerModuleExports>(
-    taskInfo: TaskInfo<T>
+    taskInfo: TaskInfo<T>,
   ): Promise<unknown> {
     let workerToExecuteTaskNow:
       | IWorkerInfo<keyof WorkerModuleExports>
@@ -463,15 +476,15 @@ export class WorkerPool<
     functionName: T,
     ...args: Array<unknown>
   ): Array<Promise<unknown>> {
-    return this.workers.map(workerInfo =>
+    return this.workers.map((workerInfo) =>
       this.scheduleWork(
-        new TaskInfo({ assignedToWorker: workerInfo, functionName, args })
-      )
+        new TaskInfo({ assignedToWorker: workerInfo, functionName, args }),
+      ),
     )
   }
 
   onMessage(
-    listener: (msg: MessagesFromChild, workerId: number) => void
+    listener: (msg: MessagesFromChild, workerId: number) => void,
   ): void {
     this.listeners.push(listener)
   }

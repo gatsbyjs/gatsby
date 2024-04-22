@@ -1,9 +1,11 @@
-import { exec } from "child_process"
+import { exec } from "node:child_process"
 import { createRequire } from "module"
 
 let sharpInstance: typeof import("sharp")
 
-export = async function getSharpInstance(): Promise<typeof import("sharp")> {
+export default async function getSharpInstance(): Promise<
+  typeof import("sharp")
+> {
   try {
     return importSharp()
   } catch (err) {
@@ -46,7 +48,7 @@ function rebuildSharp(): Promise<string> {
         }
 
         return setImmediate(() => resolve(stdout))
-      }
+      },
     )
   })
 }

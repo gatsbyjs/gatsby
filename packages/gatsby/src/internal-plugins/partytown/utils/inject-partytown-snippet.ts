@@ -1,10 +1,10 @@
 import { partytownSnippet } from "@builder.io/partytown/integration"
-import { ScriptProps } from "gatsby-script"
+import type { ScriptProps } from "gatsby-script"
 import { getForwards } from "./get-forwards"
 
 // Adapted from https://github.com/BuilderIO/partytown/blob/main/src/react/snippet.tsx to only include CSR logic
 export function injectPartytownSnippet(
-  collectedScripts: Array<ScriptProps>
+  collectedScripts: Array<ScriptProps>,
 ): void {
   if (!collectedScripts.length) {
     return
@@ -12,7 +12,7 @@ export function injectPartytownSnippet(
 
   const existingSnippet = document.querySelector(`script[data-partytown]`)
   const existingSandbox = document.querySelector(
-    `iframe[src*="~partytown/partytown-sandbox-sw"]`
+    `iframe[src*="~partytown/partytown-sandbox-sw"]`,
   )
 
   if (existingSnippet) {

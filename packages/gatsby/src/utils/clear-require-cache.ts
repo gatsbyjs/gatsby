@@ -1,6 +1,6 @@
 export function clearRequireCacheRecursively(
   module: string,
-  ignoreNodeModules: boolean = true,
+  ignoreNodeModules: boolean | undefined = true,
 ): void {
   const resolvedModule = require.resolve(module)
   const cacheEntry = require.cache[resolvedModule]
@@ -14,12 +14,14 @@ export function clearRequireCacheRecursively(
 
   const parent = cacheEntry.parent
   if (parent) {
-    const index = parent.children.findIndex(c => c.filename === resolvedModule)
+    const index = parent.children.findIndex(
+      (c) => c.filename === resolvedModule,
+    )
     if (index !== -1) {
       parent.children.splice(index, 1)
     }
   }
-  cacheEntry.children.forEach(module =>
-    clearRequireCacheRecursively(module.filename, ignoreNodeModules),
-  )
+  cacheEntry.children.forEach((module) => {
+    return clearRequireCacheRecursively(module.filename, ignoreNodeModules)
+  })
 }

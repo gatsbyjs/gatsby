@@ -30,7 +30,7 @@ export function createHeadersMatcher(
   for (const header of headers) {
     if (header.source.includes(`:`) || header.source.includes(`*`)) {
       // rankRoute is the internal function that also "match" uses
-      const score = rankRoute(header.source)
+      const score = rankRoute(header.source) ?? 0
 
       dynamicHeaders.push({ ...header, score })
     } else {

@@ -2,8 +2,8 @@ import { codeFrameColumns } from "@babel/code-frame"
 
 export function getCodeFrame(
   query: string,
-  line?: number,
-  column?: number
+  line?: number | undefined,
+  column?: number | undefined,
 ): string {
   if (!line) {
     return query
@@ -20,6 +20,6 @@ export function getCodeFrame(
     {
       linesAbove: 10,
       linesBelow: 10,
-    }
+    },
   )
 }

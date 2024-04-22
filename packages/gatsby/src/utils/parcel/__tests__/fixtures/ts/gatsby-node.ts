@@ -1,4 +1,4 @@
-import { GatsbyNode } from "gatsby"
+import type { GatsbyNode } from "gatsby"
 import { working } from "../utils/say-what-ts"
 import { createPages } from "../utils/create-pages-ts"
 

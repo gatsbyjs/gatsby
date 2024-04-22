@@ -37,7 +37,7 @@ const customOptionsCache = new Map<string, IBabelCustomLoader>()
 const configCache = new Map()
 const babelrcFileToCacheKey = new Map()
 
-const customBabelLoader = babelLoader.custom(babel => {
+const customBabelLoader = babelLoader.custom((babel) => {
   return {
     // Passed the loader options.
     customOptions({
@@ -88,13 +88,13 @@ const customBabelLoader = babelLoader.custom(babel => {
 
       if (partialConfig.hasFilesystemConfig()) {
         // partialConfig.files is a Set that accumulates used config files (absolute paths)
-        partialConfig.files.forEach(configFilePath => {
+        partialConfig.files.forEach((configFilePath) => {
           configCacheKey += `_${configFilePath}`
         })
 
         // after generating configCacheKey add link between babelrc files and cache keys that rely on it
         // so we can invalidate memoized configs when used babelrc file changes
-        partialConfig.files.forEach(configFilePath => {
+        partialConfig.files.forEach((configFilePath) => {
           let cacheKeysToInvalidate = babelrcFileToCacheKey.get(configFilePath)
           if (!cacheKeysToInvalidate) {
             cacheKeysToInvalidate = new Set()
@@ -139,7 +139,7 @@ const customBabelLoader = babelLoader.custom(babel => {
       }
 
       // Merge in presets/plugins added from gatsby plugins.
-      reduxPresets.forEach(preset => {
+      reduxPresets.forEach((preset) => {
         options.presets = mergeConfigItemOptions({
           items: options.presets,
           itemToMerge: preset as ConfigItem,
@@ -148,7 +148,7 @@ const customBabelLoader = babelLoader.custom(babel => {
         })
       })
 
-      reduxPlugins.forEach(plugin => {
+      reduxPlugins.forEach((plugin) => {
         options.plugins = mergeConfigItemOptions({
           items: options.plugins,
           itemToMerge: plugin as ConfigItem,

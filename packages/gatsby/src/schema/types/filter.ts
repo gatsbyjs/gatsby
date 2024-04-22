@@ -13,8 +13,9 @@ import {
   ScalarTypeComposer,
 } from "graphql-compose"
 import { GraphQLDate } from "./date"
-import { convertToNestedInputType, IVisitContext } from "./utils"
+import { convertToNestedInputType, type IVisitContext } from "./utils"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Context = any
 
 export const SEARCHABLE_ENUM = {
@@ -23,15 +24,16 @@ export const SEARCHABLE_ENUM = {
   DEPRECATED_SEARCHABLE: `DERPECATED_SEARCHABLE`,
 } as const
 
-const getQueryOperatorListInput = ({
+function getQueryOperatorListInput({
   schemaComposer,
   inputTypeComposer,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   schemaComposer: SchemaComposer<any>
   inputTypeComposer: InputTypeComposer
-}): InputTypeComposer => {
+}): InputTypeComposer {
   const typeName = inputTypeComposer.getTypeName().replace(/Input/, `ListInput`)
-  return schemaComposer.getOrCreateITC(typeName, itc => {
+  return schemaComposer.getOrCreateITC(typeName, (itc) => {
     itc.addFields({
       elemMatch: inputTypeComposer,
     })
@@ -67,10 +69,10 @@ const ARRAY_OPERATORS = [IN, NIN]
 
 const getOperatorFields = (
   fieldType: string,
-  operators: Array<string>
+  operators: Array<string>,
 ): Record<string, string | Array<string>> => {
   const result = {}
-  operators.forEach(op => {
+  operators.forEach((op) => {
     if (ARRAY_OPERATORS.includes(op)) {
       result[op] = [fieldType]
     } else {
@@ -80,16 +82,21 @@ const getOperatorFields = (
   return result
 }
 
-const isBuiltInScalarType = (type: any): type is GraphQLScalarType =>
-  isSpecifiedScalarType(type) || type === GraphQLDate || type === GraphQLJSON
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isBuiltInScalarType(type: any): type is GraphQLScalarType {
+  return (
+    isSpecifiedScalarType(type) || type === GraphQLDate || type === GraphQLJSON
+  )
+}
 
-const getQueryOperatorInput = ({
+function getQueryOperatorInput({
   schemaComposer,
   type,
 }: {
   schemaComposer: SchemaComposer<Context>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   type: any
-}): InputTypeComposer => {
+}): InputTypeComposer {
   let typeName: TypeName
   if (type instanceof GraphQLEnumType) {
     typeName = `Enum`
@@ -99,19 +106,20 @@ const getQueryOperatorInput = ({
     typeName = `CustomScalar`
   }
   const operators = ALLOWED_OPERATORS[typeName]
-  return schemaComposer.getOrCreateITC(type.name + `QueryOperatorInput`, itc =>
-    itc.addFields(getOperatorFields(type, operators))
+  return schemaComposer.getOrCreateITC(
+    type.name + `QueryOperatorInput`,
+    (itc) => itc.addFields(getOperatorFields(type, operators)),
   )
 }
 
-export const getFilterInput = ({
+export function getFilterInput({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<Context>
   typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>
-}): InputTypeComposer =>
-  convertToNestedInputType({
+}): InputTypeComposer {
+  return convertToNestedInputType({
     schemaComposer,
     typeComposer,
     postfix: `FilterInput`,
@@ -139,3 +147,4 @@ export const getFilterInput = ({
     // elemMatch operator
     listInputComposer: getQueryOperatorListInput,
   })
+}

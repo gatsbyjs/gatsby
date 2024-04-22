@@ -34,7 +34,7 @@ export function schemaCustomizationReducer(
       if (Array.isArray(action.payload)) {
         types = [
           ...state.types,
-          ...action.payload.map(typeOrTypeDef => {
+          ...action.payload.map((typeOrTypeDef) => {
             return {
               typeOrTypeDef,
               plugin: action.plugin,

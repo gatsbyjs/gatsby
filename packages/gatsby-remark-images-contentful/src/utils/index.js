@@ -1,18 +1,15 @@
 const { URL } = require(`url`)
-const axios = require(`axios`)
 
 // This should be replaced with the solution for https://github.com/gatsbyjs/gatsby/issues/24220
-const getBase64Img = async (url, reporter) => {
+async function getBase64Img(url, reporter) {
   try {
-    const response = await axios({
+    const response = await fetch({
       method: `GET`,
       responseType: `arraybuffer`,
       url: `${url}`,
     })
 
-    const base64Img = `data:${
-      response.headers[`content-type`]
-    };base64,${new Buffer(response.data).toString(`base64`)}`
+    const base64Img = `data:${response.headers[`content-type`]};base64,${new Buffer(response.data).toString(`base64`)}`
 
     return base64Img
   } catch (err) {
@@ -21,12 +18,12 @@ const getBase64Img = async (url, reporter) => {
   }
 }
 
-const buildResponsiveSizes = async (
+async function buildResponsiveSizes(
   { metadata, imageUrl, options = {} },
-  reporter
-) => {
+  reporter,
+) {
   const imageURL = new URL(
-    imageUrl.indexOf(`/`) === 0 ? `https:${imageUrl}` : imageUrl
+    imageUrl.indexOf(`/`) === 0 ? `https:${imageUrl}` : imageUrl,
   )
 
   const { width, height, density } = metadata
@@ -47,7 +44,7 @@ const buildResponsiveSizes = async (
   images.push(metadata.width * 2)
   images.push(metadata.width * 3)
 
-  const filteredSizes = images.filter(size => size < width)
+  const filteredSizes = images.filter((size) => size < width)
 
   filteredSizes.push(width)
 
@@ -55,7 +52,7 @@ const buildResponsiveSizes = async (
 
   const base64Img = await getBase64Img(imageURL.href, reporter)
 
-  const getSrcSetUrl = size => {
+  function getSrcSetUrl(size) {
     imageURL.searchParams.set(`w`, `${Math.round(size)}`)
     return `${imageURL.href} ${Math.round(size)}w`
   }

@@ -7,18 +7,19 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/runtime": "^7.20.13",
+    "@babel/core": "^7.24.4",
+    "@babel/runtime": "^7.24.4",
     "fs-extra": "^11.2.0",
-    "signal-exit": "^3.0.7"
+    "signal-exit": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/register": "^7.18.9",
+    "@babel/cli": "^7.24.1",
+    "@babel/register": "^7.23.7",
+    "@types/signal-exit": "^3.0.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.5",
-    "typescript": "5.4.5"
+    "typescript": "^5.4.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-worker#readme",
   "keywords": [

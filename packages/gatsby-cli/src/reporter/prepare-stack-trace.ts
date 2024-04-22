@@ -8,8 +8,8 @@ import stackTrace from "stack-trace"
 import {
   TraceMap,
   originalPositionFor,
-  OriginalMapping,
-  InvalidOriginalMapping,
+  type OriginalMapping,
+  type InvalidOriginalMapping,
   sourceContentFor,
 } from "@jridgewell/trace-mapping"
 import path from "path"
@@ -22,7 +22,7 @@ export class ErrorWithCodeFrame extends Error {
 
     // We must use getOwnProperty because keys like `stack` are not enumerable,
     // but we want to copy over the entire error
-    Object.getOwnPropertyNames(error).forEach(key => {
+    Object.getOwnPropertyNames(error).forEach((key) => {
       this[key] = error[key]
     })
   }
@@ -37,18 +37,18 @@ export function prepareStackTrace(
   // we use fact that all .map files will be in same dir as main one here
   const bundleDir = path.dirname(sourceOfMainMap)
   const bundleDirMapFiles = readdirSync(bundleDir)
-    .filter(fileName => fileName.endsWith(`.js.map`))
-    .map(fileName => path.join(bundleDir, fileName))
+    .filter((fileName) => fileName.endsWith(`.js.map`))
+    .map((fileName) => path.join(bundleDir, fileName))
 
   const maps = bundleDirMapFiles.map(
-    source => new TraceMap(readFileSync(source, `utf8`)),
+    (source) => new TraceMap(readFileSync(source, `utf8`)),
   )
 
   const stack = stackTrace
     .parse(newError)
-    .map(frame => wrapCallSite(maps, frame))
+    .map((frame) => wrapCallSite(maps, frame))
     .filter(
-      frame =>
+      (frame) =>
         `wasConverted` in frame &&
         (!frame.getFileName() ||
           !frame
@@ -59,7 +59,7 @@ export function prepareStackTrace(
   newError.codeFrame = getErrorSource(maps, stack[0])
   newError.stack =
     `${newError.name}: ${newError.message}\n` +
-    stack.map(frame => `    at ${frame}`).join(`\n`)
+    stack.map((frame) => `    at ${frame}`).join(`\n`)
 
   return newError
 }

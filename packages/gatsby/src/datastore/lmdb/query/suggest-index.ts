@@ -1,8 +1,8 @@
-import { IRunQueryArgs } from "../../types"
+import type { IRunQueryArgs } from "../../types"
 import {
   createDbQueriesFromObject,
   DbComparator,
-  DbQuery,
+  type DbQuery,
   dbQueryToDottedField,
   getFilterStatement,
   prepareQueryArgs,
@@ -10,7 +10,7 @@ import {
 } from "../../common/query"
 import { isDesc } from "./common"
 
-interface ISelectIndexArgs {
+type ISelectIndexArgs = {
   filter: IRunQueryArgs["queryArgs"]["filter"]
   sort: IRunQueryArgs["queryArgs"]["sort"]
   maxFields?: number
@@ -62,7 +62,7 @@ export function suggestIndex({
       //  Note: fields previously listed in eqFilterFields and sortFields will be removed in dedupeAndTrim
       ...toIndexFields(filterQueriesThatCanUseIndex, sortDirection),
     ],
-    maxFields
+    maxFields,
   )
 }
 
@@ -83,12 +83,12 @@ const canUseIndex = new Set([
  */
 function getQueriesThatCanUseIndex(all: Array<DbQuery>): Array<DbQuery> {
   return sortBySpecificity(
-    all.filter(q => canUseIndex.has(getFilterStatement(q).comparator))
+    all.filter((q) => canUseIndex.has(getFilterStatement(q).comparator)),
   )
 }
 
 function getSortFieldsThatCanUseIndex(
-  querySortArg: IRunQueryArgs["queryArgs"]["sort"]
+  querySortArg: IRunQueryArgs["queryArgs"]["sort"],
 ): Array<IndexField> {
   const sort = querySortArg || { fields: [], order: [] }
   const initialOrder = isDesc(sort?.order[0]) ? -1 : 1
@@ -109,13 +109,13 @@ function getSortFieldsThatCanUseIndex(
 
 function findOverlappingFields(
   filterQueries: Array<DbQuery>,
-  sortFields: Array<IndexField>
+  sortFields: Array<IndexField>,
 ): Set<string> {
   const overlap = new Set<string>()
 
   for (const [fieldName] of sortFields) {
     const filterQuery = filterQueries.find(
-      q => dbQueryToDottedField(q) === fieldName
+      (q) => dbQueryToDottedField(q) === fieldName,
     )
     if (!filterQuery) {
       break
@@ -127,17 +127,17 @@ function findOverlappingFields(
 
 function getEqQueries(filterQueries: Array<DbQuery>): Array<DbQuery> {
   return filterQueries.filter(
-    filterQuery =>
-      getFilterStatement(filterQuery).comparator === DbComparator.EQ
+    (filterQuery) =>
+      getFilterStatement(filterQuery).comparator === DbComparator.EQ,
   )
 }
 
 function toIndexFields(
   queries: Array<DbQuery>,
-  sortDirection: number = 1
+  sortDirection: number = 1,
 ): IndexFields {
   return queries.map(
-    (q): IndexField => [dbQueryToDottedField(q), sortDirection]
+    (q): IndexField => [dbQueryToDottedField(q), sortDirection],
   )
 }
 

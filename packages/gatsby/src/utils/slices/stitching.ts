@@ -1,8 +1,8 @@
-import * as path from "path"
+import * as path from "node:path"
 import * as fs from "fs-extra"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
 
-interface ISliceBoundaryMatch {
+type ISliceBoundaryMatch = {
   index: number
   end: number
   syntax: "element" | "comment"
@@ -20,7 +20,7 @@ function ensureExpectedType(maybeType: string): "start" | "end" {
 
 async function stitchSlices(
   htmlString: string,
-  publicDir: string
+  publicDir: string,
 ): Promise<string> {
   let previousStart: ISliceBoundaryMatch | undefined = undefined
 
@@ -30,22 +30,22 @@ async function stitchSlices(
   async function getSliceContent(sliceHtmlName: string): Promise<string> {
     return fs.readFile(
       path.join(publicDir, `_gatsby`, `slices`, `${sliceHtmlName}.html`),
-      `utf-8`
+      `utf-8`,
     )
   }
 
   for (const match of htmlString.matchAll(
-    /(<slice-(?<startOrEndElementOpenening>start|end)\s[^>]*id="(?<idElement>[^"]+)"[^>]*><\/slice-(?<startOrEndElementClosing>[^>]+)>|<!-- slice-(?<startOrEndComment>start|end) id="(?<idComment>[^"]+)" -->)/g
+    /(<slice-(?<startOrEndElementOpenening>start|end)\s[^>]*id="(?<idElement>[^"]+)"[^>]*><\/slice-(?<startOrEndElementClosing>[^>]+)>|<!-- slice-(?<startOrEndComment>start|end) id="(?<idComment>[^"]+)" -->)/g,
   )) {
     if (!match.groups) {
       throw new Error(
-        `Invariant: [stitching slices] Capturing groups should be defined`
+        `Invariant: [stitching slices] Capturing groups should be defined`,
       )
     }
 
     if (typeof match.index !== `number`) {
       throw new Error(
-        `Invariant: [stitching slices] There is no location of a match when stitching slices`
+        `Invariant: [stitching slices] There is no location of a match when stitching slices`,
       )
     }
 
@@ -55,7 +55,7 @@ async function stitchSlices(
         match.groups.startOrEndElementClosing
     ) {
       throw new Error(
-        `Invariant: [stitching slices] start and end tags should be the same. Got: Start: ${match.groups.startOrEndElementOpenening} End: ${match.groups.startOrEndElementClosing}`
+        `Invariant: [stitching slices] start and end tags should be the same. Got: Start: ${match.groups.startOrEndElementOpenening} End: ${match.groups.startOrEndElementClosing}`,
       )
     }
 
@@ -91,7 +91,7 @@ async function stitchSlices(
     } else if (meta.type === `end`) {
       if (!previousStart) {
         throw new Error(
-          `Invariant: [stitching slices] There was no start tag, but close tag was found`
+          `Invariant: [stitching slices] There was no start tag, but close tag was found`,
         )
       }
       if (previousStart.id !== meta.id) {
@@ -102,7 +102,7 @@ async function stitchSlices(
 
       processedHTML += `${await stitchSlices(
         await getSliceContent(meta.id),
-        publicDir
+        publicDir,
       )}<!-- slice-end id="${meta.id}" -->`
       cursor = meta.end
 
@@ -112,7 +112,7 @@ async function stitchSlices(
 
   if (previousStart) {
     throw new Error(
-      `Invariant: [stitching slices] There was start tag, but no close tag was found`
+      `Invariant: [stitching slices] There was start tag, but no close tag was found`,
     )
   }
 

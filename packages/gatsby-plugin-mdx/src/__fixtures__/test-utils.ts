@@ -1,4 +1,4 @@
-import { NodePluginArgs } from "gatsby"
+import type { NodePluginArgs } from "gatsby"
 
 export function mockGatsbyApi(): NodePluginArgs {
   return {
@@ -11,7 +11,7 @@ export function mockGatsbyApi(): NodePluginArgs {
     },
     reporter: {
       info: jest.fn(),
-      panic: jest.fn(e => {
+      panic: jest.fn((e) => {
         throw e
       }),
       activityTimer: jest.fn(() => {
@@ -24,7 +24,7 @@ export function mockGatsbyApi(): NodePluginArgs {
       setErrorMap: jest.fn(),
       verbose: jest.fn(),
       warn: jest.fn(),
-      panicOnBuild: jest.fn(e => {
+      panicOnBuild: jest.fn((e) => {
         throw e
       }),
     },

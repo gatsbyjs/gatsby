@@ -1,5 +1,4 @@
-// @ts-ignore
-import { NodePluginArgs, SourceNodesArgs } from "gatsby"
+import type { NodePluginArgs, SourceNodesArgs } from "gatsby"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
 import { shopifyTypes } from "./shopify-types"
@@ -79,7 +78,7 @@ export function decorateBulkObject(
 ): unknown {
   if (input && typeof input === `object`) {
     if (Array.isArray(input)) {
-      return input.map(item =>
+      return input.map((item) =>
         decorateBulkObject(item, createGatsbyNodeId, inputKey, input),
       )
     }

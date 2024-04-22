@@ -2,7 +2,7 @@ import report from "gatsby-cli/lib/reporter"
 import fs from "node:fs"
 import path from "node:path"
 import os from "node:os"
-import { ICert } from "../commands/types"
+import type { ICert } from "../commands/types"
 import prompts from "prompts"
 
 function absoluteOrDirectory(directory: string, filePath: string): string {
@@ -29,7 +29,7 @@ async function getWindowsEncryptionPassword(): Promise<string> {
     type: `password`,
     name: `value`,
     message: `Please enter the CA password`,
-    validate: input => input.length > 0 || `You must enter a password.`,
+    validate: (input) => input.length > 0 || `You must enter a password.`,
   })
   return results.value
 }

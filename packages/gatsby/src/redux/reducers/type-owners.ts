@@ -9,9 +9,9 @@ import type {
 
 function setTypeOwner(
   typeName: string,
-  plugin: IGatsbyPlugin,
+  plugin: IGatsbyPlugin | undefined,
   typeOwners: IGatsbyState["typeOwners"],
-  fullNode?: IGatsbyNode,
+  fullNode?: IGatsbyNode | undefined,
 ): IGatsbyState["typeOwners"] {
   const ownerName = plugin?.name || fullNode?.internal.owner
 
@@ -104,6 +104,10 @@ export function typeOwnersReducer(
     case `CREATE_NODE`: {
       const { plugin, oldNode, payload: node } = action
       const { owner, type } = node.internal
+
+      if (!type) {
+        throw new Error(`No type for node ${node.id}`)
+      }
 
       setTypeOwner(type, plugin, typeOwners, node)
 

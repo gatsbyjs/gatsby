@@ -1,7 +1,7 @@
 import { getStore } from "./index"
 import convertHrtime from "convert-hrtime"
 import { Actions, ActivityTypes, ActivityStatuses } from "../constants"
-import { ActionsUnion, IActivity } from "./types"
+import type { ActionsUnion, IActivity } from "./types"
 import signalExit from "signal-exit"
 
 export function isActivityInProgress(

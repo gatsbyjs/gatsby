@@ -164,7 +164,9 @@ function iterateNodes(): GatsbyIterable<IGatsbyNode> {
   return new GatsbyIterable(
     nodesDb
       .getKeys({ snapshot: false })
-      .map(nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined))
+      .map((nodeId) =>
+        typeof nodeId === `string` ? getNode(nodeId) : undefined,
+      )
       .filter(Boolean) as Iterable<IGatsbyNode>,
   )
 }
@@ -174,7 +176,7 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
   return new GatsbyIterable(
     nodesByType
       .getValues(type)
-      .map(nodeId => getNode(nodeId))
+      .map((nodeId) => getNode(nodeId))
       .filter(Boolean) as Iterable<IGatsbyNode>,
   )
 }
@@ -293,7 +295,7 @@ export function setupLmdbStore({
     nodesByType: (state = new Map(), action) =>
       action.type === `DELETE_CACHE` ? new Map() : state,
   })
-  emitter.on(`*`, action => {
+  emitter.on(`*`, (action) => {
     if (action) {
       updateDataStore(action)
     }

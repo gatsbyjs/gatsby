@@ -7,14 +7,14 @@ import {
   ScalarTypeComposer,
   UnionTypeComposer,
   SchemaComposer,
-  NamedTypeComposer,
-  ObjectTypeComposerFieldConfigMap,
-  ObjectTypeComposerFieldConfig,
-  ObjectTypeComposerArgumentConfigMap,
-  ObjectTypeComposerArgumentConfig,
-  Extensions,
+  type NamedTypeComposer,
+  type ObjectTypeComposerFieldConfigMap,
+  type ObjectTypeComposerFieldConfig,
+  type ObjectTypeComposerArgumentConfigMap,
+  type ObjectTypeComposerArgumentConfig,
+  type Extensions,
   isNamedTypeComposer,
-  EnumTypeComposerValueConfig,
+  type EnumTypeComposerValueConfig,
 } from "graphql-compose"
 import report from "gatsby-cli/lib/reporter"
 import {
@@ -26,24 +26,29 @@ import {
 } from "graphql"
 import { printBlockString } from "graphql/language/blockString"
 import { internalExtensionNames } from "./extensions"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import { internalTypeNames } from "./types/built-in-types"
 
-export interface ISchemaPrintConfig {
-  path?: string
-  include?: {
-    types: Array<string>
-    plugins: Array<string>
-  }
-  exclude?: {
-    types: Array<string>
-    plugins: Array<string>
-  }
-  withFieldTypes?: boolean
-  rewrite?: boolean
+export type ISchemaPrintConfig = {
+  path?: string | undefined
+  include?:
+    | {
+        types: Array<string>
+        plugins: Array<string>
+      }
+    | undefined
+  exclude?:
+    | {
+        types: Array<string>
+        plugins: Array<string>
+      }
+    | undefined
+  withFieldTypes?: boolean | undefined
+  rewrite?: boolean | undefined
 }
 
-const breakLine = (line: string, maxLen: number): Array<string> => {
+function breakLine(line: string, maxLen: number): Array<string> {
   const parts = line.split(new RegExp(`((?: |^).{15,${maxLen - 40}}(?= |$))`))
   if (parts.length < 4) {
     return [line]
@@ -55,12 +60,9 @@ const breakLine = (line: string, maxLen: number): Array<string> => {
   return sublines
 }
 
-const descriptionLines = (
-  description: string,
-  maxLen: number
-): Array<string> => {
+function descriptionLines(description: string, maxLen: number): Array<string> {
   const rawLines = description.split(`\n`)
-  return _.flatMap(rawLines, line => {
+  return _.flatMap(rawLines, (line) => {
     if (line.length < maxLen + 5) {
       return line
     }
@@ -70,14 +72,15 @@ const descriptionLines = (
   })
 }
 
-const printBlock = (items: Array<string>): string =>
-  items.length !== 0 ? ` {\n` + items.join(`\n`) + `\n}` : ``
+function printBlock(items: Array<string>): string {
+  return items.length !== 0 ? ` {\n` + items.join(`\n`) + `\n}` : ``
+}
 
-const printDeprecated = (
+function printDeprecated(
   fieldOrEnumVal:
     | ObjectTypeComposerFieldConfig<unknown, unknown>
-    | EnumTypeComposerValueConfig
-): string => {
+    | EnumTypeComposerValueConfig,
+): string {
   const reason = fieldOrEnumVal.deprecationReason
   if (!reason) {
     return ``
@@ -89,15 +92,15 @@ const printDeprecated = (
   return ` @deprecated`
 }
 
-const printDescription = (
+function printDescription(
   def:
     | ObjectTypeComposerFieldConfig<unknown, unknown>
     | NamedTypeComposer<unknown>
     | ObjectTypeComposerArgumentConfig
     | EnumTypeComposerValueConfig,
   indentation = ``,
-  firstInBlock = true
-): string => {
+  firstInBlock = true,
+): string {
   const description = isNamedTypeComposer(def)
     ? def.getDescription()
     : def.description
@@ -115,7 +118,8 @@ const printDescription = (
   return prefix + blockString.replace(/\n/g, `\n` + indentation) + `\n`
 }
 
-const printDirectiveArgs = (args: any, directive: GraphQLDirective): string => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function printDirectiveArgs(args: any, directive: GraphQLDirective): string {
   if (!args || !directive) {
     return ``
   }
@@ -130,7 +134,7 @@ const printDirectiveArgs = (args: any, directive: GraphQLDirective): string => {
     directiveArgs
       .map(([name, value]) => {
         const arg =
-          directive.args && directive.args.find(arg => arg.name === name)
+          directive.args && directive.args.find((arg) => arg.name === name)
 
         return arg && `${name}: ${print(astFromValue(value, arg.type)!)}`
       })
@@ -139,32 +143,33 @@ const printDirectiveArgs = (args: any, directive: GraphQLDirective): string => {
   )
 }
 
-export const printDirectives = (
+export function printDirectives(
   extensions: Extensions,
-  directives: Array<GraphQLDirective>
-): string =>
-  Object.entries(extensions)
+  directives: Array<GraphQLDirective>,
+): string {
+  return Object.entries(extensions)
     .map(([name, args]) => {
       if ([...internalExtensionNames, `deprecated`].includes(name)) return ``
       return (
         ` @${name}` +
         printDirectiveArgs(
           args,
-          directives.find(directive => directive.name === name)!
+          directives.find((directive) => directive.name === name)!,
         )
       )
     })
     .join(``)
+}
 
-const printInputValue = ([name, inputTC]: [
+function printInputValue([name, inputTC]: [
   string,
-  ObjectTypeComposerArgumentConfig
-]): string => {
+  ObjectTypeComposerArgumentConfig,
+]): string {
   let argDecl = name + `: ` + inputTC.type.getTypeName()
   if (inputTC.defaultValue) {
     const defaultAST = astFromValue(
       inputTC.defaultValue,
-      inputTC.type.getType()
+      inputTC.type.getType(),
     )
     if (defaultAST) {
       argDecl += ` = ${print(defaultAST)}`
@@ -173,10 +178,10 @@ const printInputValue = ([name, inputTC]: [
   return argDecl
 }
 
-const printArgs = (
+function printArgs(
   args: ObjectTypeComposerArgumentConfigMap | undefined,
-  indentation = ``
-): string => {
+  indentation = ``,
+): string {
   if (!args) {
     return ``
   }
@@ -186,6 +191,7 @@ const printArgs = (
   }
 
   // If all args have no description, print them on one line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   if (argsArray.every(([_name, argTC]) => !argTC.description)) {
     return `(` + argsArray.map(printInputValue).join(`, `) + `)`
   }
@@ -198,7 +204,7 @@ const printArgs = (
           printDescription(argTC, `  ` + indentation, !i) +
           `  ` +
           indentation +
-          printInputValue([_name, argTC])
+          printInputValue([_name, argTC]),
       )
       .join(`\n`) +
     `\n` +
@@ -207,10 +213,10 @@ const printArgs = (
   )
 }
 
-const printFields = (
+function printFields(
   fields: ObjectTypeComposerFieldConfigMap<unknown, unknown>,
-  directives: Array<GraphQLDirective>
-): string => {
+  directives: Array<GraphQLDirective>,
+): string {
   const printedFields = Object.entries(fields).map(
     ([fieldName, fieldTC], i) =>
       printDescription(fieldTC, `  `, !i) +
@@ -220,18 +226,19 @@ const printFields = (
       `: ` +
       String(fieldTC.type.getTypeName()) +
       printDirectives(fieldTC.extensions || {}, directives) +
-      printDeprecated(fieldTC)
+      printDeprecated(fieldTC),
   )
   return printBlock(printedFields)
 }
 
-const printScalarType = (tc: ScalarTypeComposer): string =>
-  printDescription(tc) + `scalar ${tc.getTypeName()}`
+function printScalarType(tc: ScalarTypeComposer): string {
+  return printDescription(tc) + `scalar ${tc.getTypeName()}`
+}
 
-const printObjectType = (tc: ObjectTypeComposer<unknown>): string => {
+function printObjectType(tc: ObjectTypeComposer<unknown>): string {
   const interfaces = tc.getInterfaces()
   const implementedInterfaces = interfaces.length
-    ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
+    ? ` implements ` + interfaces.map((i) => i.getTypeName()).join(` & `)
     : ``
   const extensions = tc.getExtensions()
   let fields = tc.getFields()
@@ -249,10 +256,10 @@ const printObjectType = (tc: ObjectTypeComposer<unknown>): string => {
   )
 }
 
-const printInterfaceType = (tc: InterfaceTypeComposer<unknown>): string => {
+function printInterfaceType(tc: InterfaceTypeComposer<unknown>): string {
   const interfaces = tc.getInterfaces()
   const implementedInterfaces = interfaces.length
-    ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
+    ? ` implements ` + interfaces.map((i) => i.getTypeName()).join(` & `)
     : ``
   const extensions = tc.getExtensions()
   const directives = tc.schemaComposer.getDirectives()
@@ -264,36 +271,36 @@ const printInterfaceType = (tc: InterfaceTypeComposer<unknown>): string => {
   )
 }
 
-const printUnionType = (tc: UnionTypeComposer): string => {
+function printUnionType(tc: UnionTypeComposer): string {
   const types = tc.getTypeNames()
   const possibleTypes = types.length ? ` = ` + types.join(` | `) : ``
   return printDescription(tc) + `union ` + tc.getTypeName() + possibleTypes
 }
 
-const printEnumType = (tc: EnumTypeComposer): string => {
+function printEnumType(tc: EnumTypeComposer): string {
   const values = Object.entries(tc.getFields()).map(
     ([name, valueTC], i) =>
       printDescription(valueTC, `  `, !i) +
       `  ` +
       name +
-      printDeprecated(valueTC)
+      printDeprecated(valueTC),
   )
 
   return printDescription(tc) + `enum ${tc.getTypeName()}` + printBlock(values)
 }
 
-const printInputObjectType = (tc: InputTypeComposer): string => {
+function printInputObjectType(tc: InputTypeComposer): string {
   const fields = Object.entries(tc.getFields()).map(
     ([fieldName, fieldTC], i) =>
       printDescription(fieldTC, `  `, !i) +
       `  ` +
-      printInputValue([fieldName, fieldTC])
+      printInputValue([fieldName, fieldTC]),
   )
 
   return printDescription(tc) + `input ${tc.getTypeName()}` + printBlock(fields)
 }
 
-const printType = (tc: NamedTypeComposer<unknown>): string => {
+function printType(tc: NamedTypeComposer<unknown>): string {
   if (tc instanceof ObjectTypeComposer) {
     return printObjectType(tc)
   } else if (tc instanceof InterfaceTypeComposer) {
@@ -311,13 +318,13 @@ const printType = (tc: NamedTypeComposer<unknown>): string => {
   return ``
 }
 
-export const printTypeDefinitions = ({
+export function printTypeDefinitions({
   config,
   schemaComposer,
 }: {
   config: ISchemaPrintConfig
   schemaComposer: SchemaComposer
-}): Promise<void> => {
+}): Promise<void> {
   if (!config) return Promise.resolve()
 
   const {
@@ -330,14 +337,14 @@ export const printTypeDefinitions = ({
 
   if (!path) {
     report.error(
-      `Printing type definitions aborted. Please provide a file path.`
+      `Printing type definitions aborted. Please provide a file path.`,
     )
     return Promise.resolve()
   }
 
   if (!rewrite && fs.existsSync(path)) {
     report.error(
-      `Printing type definitions aborted. The file \`${path}\` already exists.`
+      `Printing type definitions aborted. The file \`${path}\` already exists.`,
     )
     return Promise.resolve()
   }
@@ -346,9 +353,11 @@ export const printTypeDefinitions = ({
   const typesToExclude = exclude?.types || []
   const pluginsToExclude = exclude?.plugins || []
 
-  const getName = (tc: NamedTypeComposer<unknown>): string => tc.getTypeName()
+  function getName(tc: NamedTypeComposer<unknown>): string {
+    return tc.getTypeName()
+  }
 
-  const isInternalType = (tc: NamedTypeComposer<unknown>): boolean => {
+  function isInternalType(tc: NamedTypeComposer<unknown>): boolean {
     const typeName = getName(tc)
     if (internalTypeNames.includes(typeName)) {
       return true
@@ -362,7 +371,7 @@ export const printTypeDefinitions = ({
     return false
   }
 
-  const shouldIncludeType = (tc: NamedTypeComposer<unknown>): boolean => {
+  function shouldIncludeType(tc: NamedTypeComposer<unknown>): boolean {
     const typeName = getName(tc)
     if (typesToExclude.includes(typeName)) {
       return false
@@ -392,9 +401,9 @@ export const printTypeDefinitions = ({
   const processedTypes = new Set<string>()
   const typeDefs = new Set<NamedTypeComposer<unknown>>()
 
-  const addType = (
-    tc: NamedTypeComposer<unknown>
-  ): null | Set<NamedTypeComposer<unknown>> => {
+  function addType(
+    tc: NamedTypeComposer<unknown>,
+  ): null | Set<NamedTypeComposer<unknown>> {
     const typeName = getName(tc)
     if (!processedTypes.has(typeName) && !isInternalType(tc)) {
       processedTypes.add(typeName)
@@ -404,7 +413,7 @@ export const printTypeDefinitions = ({
     return null
   }
 
-  const addWithFieldTypes = (tc: NamedTypeComposer<unknown>): void => {
+  function addWithFieldTypes(tc: NamedTypeComposer<unknown>): void {
     if (
       addType(tc) &&
       (tc instanceof ObjectTypeComposer ||
@@ -413,7 +422,7 @@ export const printTypeDefinitions = ({
     ) {
       if (tc instanceof ObjectTypeComposer) {
         const interfaces = tc.getInterfaces()
-        interfaces.forEach(iface => {
+        interfaces.forEach((iface) => {
           const ifaceName = iface.getTypeName()
           if (ifaceName !== `Node`) {
             addWithFieldTypes(schemaComposer.getAnyTC(ifaceName))
@@ -421,13 +430,13 @@ export const printTypeDefinitions = ({
         })
       }
 
-      tc.getFieldNames().forEach(fieldName => {
+      tc.getFieldNames().forEach((fieldName) => {
         const fieldType = tc.getFieldTC(fieldName)
         addWithFieldTypes(fieldType)
 
         if (!(tc instanceof InputTypeComposer)) {
           const fieldArgs = tc.getFieldArgs(fieldName)
-          Object.keys(fieldArgs).forEach(argName => {
+          Object.keys(fieldArgs).forEach((argName) => {
             try {
               addWithFieldTypes(tc.getFieldArgTC(fieldName, argName))
             } catch {
@@ -441,7 +450,7 @@ export const printTypeDefinitions = ({
     }
   }
 
-  schemaComposer.forEach(tc => {
+  schemaComposer.forEach((tc) => {
     if (!isInternalType(tc) && shouldIncludeType(tc)) {
       if (withFieldTypes) {
         addWithFieldTypes(tc)
@@ -456,7 +465,7 @@ export const printTypeDefinitions = ({
   ]
 
   try {
-    typeDefs.forEach(tc => printedTypeDefs.push(printType(tc)))
+    typeDefs.forEach((tc) => printedTypeDefs.push(printType(tc)))
     report.info(`Writing GraphQL type definitions to ${path}`)
     return fs.writeFile(path, printedTypeDefs.join(`\n\n`))
   } catch (error) {

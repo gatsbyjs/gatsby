@@ -60,7 +60,9 @@ async function resolveTheme(
     }
 
     if (!themeDir) {
-      const nodeResolutionPaths = module.paths.map(p => path.join(p, themeName))
+      const nodeResolutionPaths = module.paths.map((p) =>
+        path.join(p, themeName),
+      )
       reporter.panic({
         id: `10226`,
         context: {
@@ -126,7 +128,7 @@ function processTheme(
         )
         return processTheme(themeObj, { rootDir: themeDir })
       },
-    ).then(arr =>
+    ).then((arr) =>
       flattenDeep(
         arr.concat([
           { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
@@ -170,7 +172,7 @@ export async function loadThemes(
       )
       return processTheme(themeObj, { rootDir })
     },
-  ).then(arr => flattenDeep(arr))
+  ).then((arr) => flattenDeep(arr))
 
   // log out flattened themes list to aid in debugging
   debug(themesA)
@@ -185,7 +187,7 @@ export async function loadThemes(
         return {
           ...themeConfig,
           plugins: [
-            ...(themeConfig.plugins || []).map(plugin =>
+            ...(themeConfig.plugins || []).map((plugin) =>
               normalizePluginEntry(plugin, themeDir),
             ),
             // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
@@ -205,11 +207,11 @@ export async function loadThemes(
        * children, can override functionality in earlier themes.
        */
       .reduce(mergeGatsbyConfig, {})
-      .then(newConfig => {
+      .then((newConfig) => {
         const mergedConfig = mergeGatsbyConfig(newConfig, {
           ...config,
           plugins: [
-            ...(config.plugins || []).map(plugin =>
+            ...(config.plugins || []).map((plugin) =>
               normalizePluginEntry(plugin, rootDir),
             ),
           ],

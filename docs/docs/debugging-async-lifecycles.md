@@ -78,9 +78,7 @@ With Node 8, Node is able to natively interpret `async` functions. This lets you
 [`Promise.all`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) wraps up _multiple_ asynchronous actions and resolves when _each_ have completed. This can be especially helpful if you're pulling from multiple data sources or abstracted some code that returns a Promise into a helper. For instance, consider the following code:
 
 ```js:title=gatsby-node.js
-const fetch = require("node-fetch")
-
-const getJSON = uri => fetch(uri).then(response => response.json())
+const getJSON = uri => globalThis.fetch(uri).then(response => response.json())
 
 exports.createPages = async function ({ actions, graphql }) {
   // highlight-start

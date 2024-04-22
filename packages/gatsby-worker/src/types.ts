@@ -10,6 +10,7 @@ type Counter = number
 type CustomMessage = [typeof CUSTOM_MESSAGE, Counter, unknown]
 
 type FunctionName = string | number | symbol
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type FunctionArgs = Array<any>
 
 type ExecuteMessage = [typeof EXECUTE, Counter, FunctionName, FunctionArgs]
@@ -28,7 +29,7 @@ type TaskError = [
   ErrorType,
   ErrorMessage,
   ErrorStack | undefined,
-  Error
+  Error,
 ]
 
 type ResultType = unknown

@@ -1,8 +1,8 @@
-import { initTracer, JaegerTracer, TracingConfig } from "jaeger-client"
+import { initTracer, JaegerTracer, type TracingConfig } from "jaeger-client"
 
 let tracer: JaegerTracer
 
-function create(): JaegerTracer {
+export function create(): JaegerTracer {
   // See schema
   // https://github.com/jaegertracing/jaeger-client-node/blob/master/src/configuration.js#L37
   const config: TracingConfig = {
@@ -22,10 +22,8 @@ function create(): JaegerTracer {
   return tracer
 }
 
-function stop(): Promise<void> {
-  return new Promise(resolve => {
+export function stop(): Promise<void> {
+  return new Promise((resolve) => {
     tracer.close(resolve)
   })
 }
-
-export { create, stop }

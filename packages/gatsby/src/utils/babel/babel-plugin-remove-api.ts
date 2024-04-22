@@ -8,7 +8,7 @@ import { removeExportProperties } from "./babel-module-exports-helpers"
  */
 export default declare(function removeApiCalls(
   api: ConfigAPI,
-  options: { apis?: Array<string> }
+  options: { apis?: Array<string> },
 ): PluginObj {
   api.assertVersion(7)
 
@@ -16,7 +16,7 @@ export default declare(function removeApiCalls(
 
   if (!apisToRemove.length) {
     console.warn(
-      `No list of APIs was given to remove, check your plugin options.`
+      `No list of APIs was given to remove, check your plugin options.`,
     )
   }
 
@@ -38,7 +38,7 @@ export default declare(function removeApiCalls(
             // make sure all references are up to date
             path.scope.crawl()
 
-            Object.keys(path.scope.bindings).forEach(refName => {
+            Object.keys(path.scope.bindings).forEach((refName) => {
               const ref = path.scope.bindings[refName]
 
               if (ref.referenced) {
@@ -46,7 +46,7 @@ export default declare(function removeApiCalls(
                 // binding outside the function scope or not.
                 if (ref.path.type === `FunctionDeclaration`) {
                   const isSelfReferenced = ref.referencePaths.every(
-                    refPath => !!refPath.findParent(p => p === ref.path)
+                    (refPath) => !!refPath.findParent((p) => p === ref.path),
                   )
 
                   if (isSelfReferenced) {
@@ -60,18 +60,18 @@ export default declare(function removeApiCalls(
                   t.isVariableDeclarator(ref.path) &&
                   t.isObjectPattern(
                     (ref.path.parent as t.VariableDeclaration).declarations[0]
-                      .id
+                      .id,
                   )
                 ) {
                   const objectPattern = (
                     ref.path.parent as t.VariableDeclaration
                   ).declarations[0].id as t.ObjectPattern
                   objectPattern.properties = objectPattern.properties.filter(
-                    prop =>
+                    (prop) =>
                       t.isObjectProperty(prop)
                         ? (prop.value as t.Identifier).name !== refName
                         : ((prop as t.RestElement).argument as t.Identifier)
-                            .name !== refName
+                            .name !== refName,
                   )
 
                   // if all properties got removed thus the object pattern is empty, we remove the whole declaration
@@ -117,7 +117,7 @@ export default declare(function removeApiCalls(
           > = []
 
           // Remove `export { foo } = [...]` and `export { foo } from "X"` shaped exports
-          path.node.specifiers.forEach(specifier => {
+          path.node.specifiers.forEach((specifier) => {
             if (
               t.isExportSpecifier(specifier) &&
               t.isIdentifier(specifier.exported) &&
@@ -160,7 +160,7 @@ export default declare(function removeApiCalls(
           for (let i = 0; i < declaration?.declarations.length; i++) {
             if (declaration?.declarations[i].id.type === `ObjectPattern`) {
               const objectPath = path.get(
-                `declaration.declarations.${i}.id`
+                `declaration.declarations.${i}.id`,
               ) as NodePath<t.ObjectPattern>
               removeExportProperties(path, objectPath, apisToRemove)
             }

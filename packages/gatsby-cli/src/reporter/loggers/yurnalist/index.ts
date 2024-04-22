@@ -8,20 +8,21 @@ import {
 } from "../../constants"
 
 import { createReporter } from "yurnalist"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import ProgressBar from "progress"
 import chalk from "chalk"
 import boxen from "boxen"
-import { IUpdateActivity } from "../../redux/types"
+import type { IUpdateActivity } from "../../redux/types"
 import {
   generatePageTree,
   generateSliceTree,
-  IComponentWithPageModes,
-  ITreeLine,
+  type IComponentWithPageModes,
+  type ITreeLine,
 } from "../../../util/generate-trees"
-import { IRenderPageArgs } from "../../types"
+import type { IRenderPageArgs } from "../../types"
 import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 
-interface IYurnalistActivities {
+type IYurnalistActivities = {
   [activityId: string]: {
     text: string | undefined
     statusText: string | undefined
@@ -30,10 +31,10 @@ interface IYurnalistActivities {
   }
 }
 
-interface ITreeGeneratorProps {
+type ITreeGeneratorProps = {
   path: string
-  pages?: IComponentWithPageModes
-  slices?: Set<string>
+  pages?: IComponentWithPageModes | undefined
+  slices?: Set<string> | undefined
   isFirst: boolean
   isLast: boolean
 }
@@ -67,7 +68,7 @@ function treeGenerator({
         isLast ? ` ` : `│`,
         ` ${index === items.length - 1 ? `└` : `├`} `,
         `${page.symbol} ${page.text}`,
-      ].join(``)
+      ].join(``),
     )
   })
 
@@ -75,8 +76,9 @@ function treeGenerator({
 }
 
 function generatePageTreeToConsole(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   yurnalist: any,
-  state: IRenderPageArgs
+  state: IRenderPageArgs,
 ): void {
   const root = state.root
   const componentWithPages = new Map<string, IComponentWithPageModes>()
@@ -96,12 +98,12 @@ function generatePageTreeToConsole(
       sliceWithComponents.get(relativePath) || new Set<string>()
 
     if (isSlice) {
-      pages.forEach(sliceName => {
+      pages.forEach((sliceName) => {
         sliceByComponent.add(sliceName)
       })
       sliceWithComponents.set(relativePath, sliceByComponent)
     } else {
-      pages.forEach(pagePath => {
+      pages.forEach((pagePath) => {
         const gatsbyPage = state.pages.get(pagePath)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         pagesByMode[gatsbyPage!.mode].add(pagePath)
@@ -122,7 +124,7 @@ function generatePageTreeToConsole(
         DSG: new Set<string>(),
         SSR: new Set<string>(),
         FN: new Set<string>([`/api/${functionRoute}`]),
-      }
+      },
     )
   }
 
@@ -187,8 +189,8 @@ function generatePageTreeToConsole(
         },
         // @ts-ignore - bad type in boxen
         borderStyle: `round`,
-      }
-    )
+      },
+    ),
   )
 
   yurnalist.log(pageTreeConsole.join(`\n`))
@@ -214,7 +216,7 @@ export function initializeYurnalistLogger(): void {
     },
   }
 
-  onLogAction(action => {
+  onLogAction((action) => {
     switch (action.type) {
       case Actions.Log: {
         const yurnalistMethod = levelToYurnalist[action.payload.level]
@@ -241,6 +243,7 @@ export function initializeYurnalistLogger(): void {
           const activity = {
             text: action.payload.text,
             statusText: action.payload.statusText,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             update(payload: any): void {
               // TODO: I'm not convinced that this is ever called with a text property.
               // From searching the codebase it appears that we do not ever assign a text
@@ -274,7 +277,7 @@ export function initializeYurnalistLogger(): void {
               // curr: action.payload.current, // see below
               width: 30,
               clear: true,
-            }
+            },
           )
 
           // There is a bug in the `progress` package where the timer doesn't

@@ -1,13 +1,12 @@
-import { Path } from "graphql/jsutils/Path"
+import type { Path } from "graphql/jsutils/Path"
 
 import report from "gatsby-cli/lib/reporter"
-// @ts-ignore
-import { IActivityArgs } from "gatsby-cli/src/reporter/reporter"
-// @ts-ignore
-import { IPhantomReporter } from "gatsby-cli/src/reporter/reporter-phantom"
 
-import { IGraphQLSpanTracer } from "../schema/type-definitions"
 import { pathToArray } from "./utils"
+
+import type { IGraphQLSpanTracer } from "../schema/type-definitions"
+import type { IActivityArgs } from "gatsby-cli/lib/reporter/reporter"
+import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom"
 
 /**
  * Tracks and knows how to get a parent span for a particular
@@ -34,7 +33,7 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
   }
 
   end(): void {
-    this.activities.forEach(activity => {
+    this.activities.forEach((activity) => {
       activity.end()
     })
     this.parentActivity.end()

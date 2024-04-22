@@ -1,6 +1,4 @@
-const fetch = require(`node-fetch`)
 const { createReadStream } = require("fs")
-const execa = require(`execa`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const FormData = require("form-data")
@@ -11,7 +9,7 @@ const FETCH_RETRY_COUNT = 2
 async function fetchWithRetry(...args) {
   for (let i = 0; i <= FETCH_RETRY_COUNT; i++) {
     try {
-      const response = await fetch(...args)
+      const response = await globalThis.fetch(...args)
       return response
     } catch (e) {
       // ignore unless last retry
@@ -25,29 +23,29 @@ async function fetchWithRetry(...args) {
 export function runTests(env, host) {
   describe(env, () => {
     test(`top-level API`, async () => {
-      const result = await fetchWithRetry(`${host}/api/top-level`).then(res =>
-        res.text()
+      const result = await fetchWithRetry(`${host}/api/top-level`).then((res) =>
+        res.text(),
       )
 
       expect(result).toMatchSnapshot()
     })
     test(`secondary-level API`, async () => {
       const result = await fetchWithRetry(
-        `${host}/api/a-directory/function`
-      ).then(res => res.text())
+        `${host}/api/a-directory/function`,
+      ).then((res) => res.text())
 
       expect(result).toMatchSnapshot()
     })
     test(`secondary-level API with index.js`, async () => {
-      const result = await fetchWithRetry(`${host}/api/a-directory`).then(res =>
-        res.text()
+      const result = await fetchWithRetry(`${host}/api/a-directory`).then(
+        (res) => res.text(),
       )
 
       expect(result).toMatchSnapshot()
     })
     test(`secondary-level API`, async () => {
       const result = await fetchWithRetry(`${host}/api/dir/function`).then(
-        res => res.text()
+        (res) => res.text(),
       )
 
       expect(result).toMatchSnapshot()
@@ -63,7 +61,7 @@ export function runTests(env, host) {
       ]
 
       for (const route of routes) {
-        const result = await fetchWithRetry(route).then(res => res.text())
+        const result = await fetchWithRetry(route).then((res) => res.text())
 
         expect(result).toMatchSnapshot()
       }
@@ -74,7 +72,7 @@ export function runTests(env, host) {
         const routes = [`${host}/api/users/23/additional`]
 
         for (const route of routes) {
-          const result = await fetchWithRetry(route).then(res => res.json())
+          const result = await fetchWithRetry(route).then((res) => res.json())
 
           expect(result).toMatchSnapshot()
         }
@@ -82,14 +80,14 @@ export function runTests(env, host) {
       test(`unnamed wildcard routes`, async () => {
         const routes = [`${host}/api/dir/super`]
         for (const route of routes) {
-          const result = await fetchWithRetry(route).then(res => res.json())
+          const result = await fetchWithRetry(route).then((res) => res.json())
 
           expect(result).toMatchSnapshot()
         }
       })
       test(`named wildcard routes`, async () => {
         const route = `${host}/api/named-wildcard/super`
-        const result = await fetchWithRetry(route).then(res => res.json())
+        const result = await fetchWithRetry(route).then((res) => res.json())
 
         expect(result).toMatchInlineSnapshot(`
           Object {
@@ -102,7 +100,7 @@ export function runTests(env, host) {
     describe(`environment variables`, () => {
       test(`can use inside functions`, async () => {
         const result = await fetchWithRetry(`${host}/api/env-variables`).then(
-          res => res.text()
+          (res) => res.text(),
         )
 
         expect(result).toEqual(`word`)
@@ -112,7 +110,7 @@ export function runTests(env, host) {
     describe(`typescript`, () => {
       test(`typescript functions work`, async () => {
         const result = await fetchWithRetry(`${host}/api/i-am-typescript`).then(
-          res => res.text()
+          (res) => res.text(),
         )
 
         expect(result).toMatchSnapshot()
@@ -123,7 +121,7 @@ export function runTests(env, host) {
       // This test mainly just shows that the server doesn't crash.
       test(`normal`, async () => {
         const result = await fetchWithRetry(
-          `${host}/api/error-send-function-twice`
+          `${host}/api/error-send-function-twice`,
         )
 
         expect(result.status).toEqual(200)
@@ -201,8 +199,8 @@ export function runTests(env, host) {
     describe(`functions can parse different ways of sending data`, () => {
       test(`query string`, async () => {
         const result = await fetchWithRetry(
-          `${host}/api/parser?amIReal=true`
-        ).then(res => res.json())
+          `${host}/api/parser?amIReal=true`,
+        ).then((res) => res.json())
 
         expect(result).toMatchSnapshot()
       })
@@ -214,7 +212,7 @@ export function runTests(env, host) {
         const result = await fetchWithRetry(`${host}/api/parser`, {
           method: `POST`,
           body: params,
-        }).then(res => res.json())
+        }).then((res) => res.json())
 
         expect(result).toMatchSnapshot()
       })
@@ -227,7 +225,7 @@ export function runTests(env, host) {
         const result = await fetchWithRetry(`${host}/api/parser`, {
           method: `POST`,
           body: form,
-        }).then(res => res.json())
+        }).then((res) => res.json())
 
         expect(result).toMatchSnapshot()
       })
@@ -238,14 +236,14 @@ export function runTests(env, host) {
           method: `POST`,
           body: JSON.stringify(body),
           headers: { "Content-Type": "application/json" },
-        }).then(res => res.json())
+        }).then((res) => res.json())
 
         expect(result).toMatchSnapshot()
       })
 
       test(`file in multipart/form`, async () => {
         const file = createReadStream(
-          path.join(__dirname, "./__tests__/fixtures/test.txt")
+          path.join(__dirname, "./__tests__/fixtures/test.txt"),
         )
 
         const form = new FormData()
@@ -253,7 +251,7 @@ export function runTests(env, host) {
         const result = await fetchWithRetry(`${host}/api/parser`, {
           method: `POST`,
           body: form,
-        }).then(res => res.json())
+        }).then((res) => res.json())
 
         expect(result).toMatchSnapshot()
       })
@@ -278,7 +276,7 @@ export function runTests(env, host) {
       test(`cookie`, async () => {
         const result = await fetchWithRetry(`${host}/api/cookie-me`, {
           headers: { cookie: `foo=blue;` },
-        }).then(res => res.json())
+        }).then((res) => res.json())
 
         expect(result).toMatchSnapshot()
       })
@@ -333,7 +331,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "text/plain",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -370,7 +368,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "text/plain",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -414,7 +412,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "custom/type",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -464,7 +462,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "application/json",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -505,7 +503,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "application/json",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -553,7 +551,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "custom/type",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -601,7 +599,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "application/octet-stream",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -640,7 +638,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "application/octet-stream",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -686,7 +684,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "custom/type",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -733,7 +731,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "application/json",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -789,7 +787,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "application/x-www-form-urlencoded",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -833,7 +831,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "application/x-www-form-urlencoded",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -884,7 +882,7 @@ export function runTests(env, host) {
                 headers: {
                   "content-type": "custom/type",
                 },
-              }
+              },
             )
 
             expect(result.status).toBe(200)
@@ -903,18 +901,18 @@ export function runTests(env, host) {
     describe(`plugins can declare functions and they can be shadowed`, () => {
       test(`shadowing`, async () => {
         const result = await fetchWithRetry(
-          `${host}/api/gatsby-plugin-cool/shadowed`
-        ).then(res => res.text())
+          `${host}/api/gatsby-plugin-cool/shadowed`,
+        ).then((res) => res.text())
         expect(result).toEqual(`I am shadowed`)
 
         const result2 = await fetchWithRetry(
-          `${host}/api/gatsby-plugin-cool/not-shadowed`
-        ).then(res => res.text())
+          `${host}/api/gatsby-plugin-cool/not-shadowed`,
+        ).then((res) => res.text())
         expect(result2).toEqual(`I am not shadowed`)
       })
       test(`plugins can't declare functions outside of their namespace`, async () => {
         const result = await fetchWithRetry(
-          `${host}/api/i-will-not-work-cause-namespacing`
+          `${host}/api/i-will-not-work-cause-namespacing`,
         )
         expect(result.status).toEqual(404)
       })
@@ -923,7 +921,7 @@ export function runTests(env, host) {
     describe(`typescript files are resolved without needing to specify their extension`, () => {
       test(`typescript`, async () => {
         const result = await fetchWithRetry(`${host}/api/extensions`).then(
-          res => res.text()
+          (res) => res.text(),
         )
         expect(result).toEqual(`hi`)
       })
@@ -944,13 +942,13 @@ export function runTests(env, host) {
       })
       test(`test directory`, async () => {
         const result = await fetchWithRetry(
-          `${host}/api/ignore/__tests__/hello`
+          `${host}/api/ignore/__tests__/hello`,
         )
         expect(result.status).toEqual(404)
       })
       test(`test file in plugin`, async () => {
         const result = await fetchWithRetry(
-          `${host}/api/gatsby-plugin-cool/shadowed.test`
+          `${host}/api/gatsby-plugin-cool/shadowed.test`,
         )
         expect(result.status).toEqual(404)
       })
@@ -959,8 +957,8 @@ export function runTests(env, host) {
     describe(`bundling`, () => {
       test(`should succeed when gatsby-core-utils is imported`, async () => {
         const result = await fetchWithRetry(
-          `${host}/api/ignore-lmdb-require`
-        ).then(res => res.text())
+          `${host}/api/ignore-lmdb-require`,
+        ).then((res) => res.text())
         expect(result).toEqual(`hello world`)
       })
     })

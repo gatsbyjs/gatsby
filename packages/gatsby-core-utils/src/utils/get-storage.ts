@@ -1,7 +1,6 @@
 import path from "path"
 import { getLmdb } from "./get-lmdb"
 import type { RootDatabase, Database } from "lmdb"
-// @ts-ignore
 import type { Headers } from "got"
 
 export enum LockStatus {

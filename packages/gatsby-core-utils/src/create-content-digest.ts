@@ -1,4 +1,4 @@
-import crypto, { BinaryLike } from "node:crypto"
+import crypto, { type BinaryLike } from "node:crypto"
 import objectHash from "node-object-hash"
 
 const hasher = objectHash.hasher({

@@ -30,7 +30,7 @@ export function createGraphqlClient(
     if (!response.ok) {
       const waitTime = 2 ** (retries + 1) + 500
       if (response.status >= 500 && waitTime < MAX_BACKOFF_MILLISECONDS) {
-        await new Promise(resolve => setTimeout(resolve, waitTime))
+        await new Promise((resolve) => setTimeout(resolve, waitTime))
         return graphqlFetch(query, variables, retries + 1)
       }
 
@@ -72,7 +72,7 @@ export function createRestClient(options: IShopifyPluginOptions): IRestClient {
     if (!resp.ok && retries > 0 && resp.status === 429) {
       // rate limit
       const retryAfter = parseFloat(resp.headers.get(`Retry-After`) || ``)
-      await new Promise(resolve => setTimeout(resolve, retryAfter))
+      await new Promise((resolve) => setTimeout(resolve, retryAfter))
       return shopifyFetch(path, fetchOptions, retries - 1)
     }
 

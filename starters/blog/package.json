@@ -8,25 +8,25 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@fontsource/merriweather": "^5.0.8",
-    "@fontsource-variable/montserrat": "^5.0.17",
-    "gatsby": "^5.13.3",
-    "gatsby-plugin-feed": "^5.13.1",
-    "gatsby-plugin-image": "^3.13.1",
-    "gatsby-plugin-manifest": "^5.13.1",
-    "gatsby-plugin-sharp": "^5.13.1",
-    "gatsby-remark-images": "^7.13.1",
-    "gatsby-remark-prismjs": "^7.13.1",
-    "gatsby-remark-responsive-iframe": "^6.13.1",
-    "gatsby-source-filesystem": "^5.13.1",
-    "gatsby-transformer-remark": "^6.13.1",
-    "gatsby-transformer-sharp": "^5.13.1",
-    "prismjs": "^1.29.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "@fontsource/merriweather": "5.0.8",
+    "@fontsource-variable/montserrat": "5.0.17",
+    "gatsby": "5.13.4",
+    "gatsby-plugin-feed": "5.13.1",
+    "gatsby-plugin-image": "3.13.1",
+    "gatsby-plugin-manifest": "5.13.1",
+    "gatsby-plugin-sharp": "5.13.1",
+    "gatsby-remark-images": "7.13.1",
+    "gatsby-remark-prismjs": "7.13.1",
+    "gatsby-remark-responsive-iframe": "6.13.1",
+    "gatsby-source-filesystem": "5.13.1",
+    "gatsby-transformer-remark": "6.13.1",
+    "gatsby-transformer-sharp": "5.13.1",
+    "prismjs": "1.29.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "prettier": "^2.8.8"
+    "prettier": "3.2.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [

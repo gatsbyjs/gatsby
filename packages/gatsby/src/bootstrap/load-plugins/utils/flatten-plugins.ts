@@ -1,4 +1,4 @@
-import { IPluginInfo } from "../types"
+import type { IPluginInfo } from "../types"
 
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
@@ -21,12 +21,12 @@ export function flattenPlugins(
           if (segment === `[]`) {
             roots = roots.flat()
           } else {
-            roots = roots.map(root => root[segment])
+            roots = roots.map((root) => root[segment])
           }
         }
         roots = roots.flat()
 
-        roots.forEach(subPlugin => {
+        roots.forEach((subPlugin) => {
           flattened.push(subPlugin)
           extractPlugins(subPlugin)
         })
@@ -34,7 +34,7 @@ export function flattenPlugins(
     }
   }
 
-  plugins.forEach(plugin => {
+  plugins.forEach((plugin) => {
     flattened.push(plugin)
     extractPlugins(plugin)
   })

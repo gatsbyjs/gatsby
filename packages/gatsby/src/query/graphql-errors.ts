@@ -1,54 +1,66 @@
 // @flow
 
-const fs = require(`fs-extra`)
+import fs from "fs-extra"
 import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
-const { distance: levenshtein } = require(`fastest-levenshtein`)
+import { distance as levenshtein } from "fastest-levenshtein"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
-const { locInGraphQlToLocInFile } = require(`./error-parser`)
+import { locInGraphQlToLocInFile } from "./error-parser"
 import { getCodeFrame } from "./graphql-errors-codeframe"
 
-type RelayGraphQLError = Error & { validationErrors?: Object }
+type RelayGraphQLError = Error & {
+  validationErrors?: Record<string, unknown> | undefined
+}
 
 // These handle specific errors throw by RelayParser. If an error matches
 // you get a pointer to the location in the query that is broken, otherwise
 // we show the error and the query.
-const handlers = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const handlers: Array<Array<RegExp | (([name]: [string], node: any) => any)>> =
   [
-    /Unknown field `(.+)` on type `(.+)`/i,
-    ([name], node) => {
-      if (node.kind === `Field` && node.name.value === name) {
-        return node.name.loc
-      }
-      return null
-    },
-  ],
-  [
-    /Unknown argument `(.+)`/i,
-    ([name], node) => {
-      if (node.kind === `Argument` && node.name.value === name) {
-        return node.name.loc
-      }
-      return null
-    },
-  ],
-  [
-    /Unknown directive `@(.+)`/i,
-    ([name], node) => {
-      if (node.kind === `Directive` && node.name.value === name) {
-        return node.name.loc
-      }
-      return null
-    },
-  ],
-]
+    [
+      /Unknown field `(.+)` on type `(.+)`/i,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ([name], node): any => {
+        if (node.kind === `Field` && node.name.value === name) {
+          return node.name.loc
+        }
+        return null
+      },
+    ],
+    [
+      /Unknown argument `(.+)`/i,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ([name], node): any => {
+        if (node.kind === `Argument` && node.name.value === name) {
+          return node.name.loc
+        }
+        return null
+      },
+    ],
+    [
+      /Unknown directive `@(.+)`/i,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ([name], node): any => {
+        if (node.kind === `Directive` && node.name.value === name) {
+          return node.name.loc
+        }
+        return null
+      },
+    ],
+  ]
 
-function formatFilePath(filePath: string) {
+function formatFilePath(filePath: string): string {
   return `${report.format.bold(`file:`)} ${report.format.blue(filePath)}`
 }
 
-function formatError(message: string, filePath: string, codeFrame: string) {
+function formatError(
+  message: string,
+  filePath: string,
+  codeFrame: string,
+): string {
   return (
     report.stripIndent`
     ${message}
@@ -58,7 +70,11 @@ function formatError(message: string, filePath: string, codeFrame: string) {
   )
 }
 
-function extractError(error: Error): { message: string, docName: string } {
+function extractError(error: Error): {
+  message: string
+  docName: string
+  codeBlock: string
+} {
   const docRegex =
     /Error:.(RelayParser|GraphQLParser):(.*)Source: document.`(.*)`.file.*(GraphQL.request.*^\s*$)/gms
   let matches
@@ -80,15 +96,25 @@ function extractError(error: Error): { message: string, docName: string } {
   return { message, codeBlock, docName }
 }
 
-function findLocation(extractedMessage, def) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function findLocation(extractedMessage, def): any | null | undefined {
   let location = null
   visit(def, {
     enter(node) {
-      if (location) return
+      if (location) {
+        return
+      }
       for (const [regex, handler] of handlers) {
         const match = extractedMessage.match(regex)
-        if (!match) continue
-        if ((location = handler(match.slice(1), node))) break
+        if (!match) {
+          continue
+        }
+        if (
+          typeof handler === `function` &&
+          (location = handler(match.slice(1), node))
+        ) {
+          break
+        }
       }
     },
   })
@@ -96,10 +122,11 @@ function findLocation(extractedMessage, def) {
 }
 
 function getCodeFrameFromRelayError(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   def: any,
   extractedMessage: string,
-  error: Error
-) {
+  // error: Error,
+): string {
   const { start, source } = findLocation(extractedMessage, def) || {}
   const query = source ? source.body : print(def)
 
@@ -111,15 +138,28 @@ function getCodeFrameFromRelayError(
 
 export function multipleRootQueriesError(
   filePath: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   def: any,
-  otherDef: any
-) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  otherDef: any,
+): {
+  id: string
+  filePath: string
+  context: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    name: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    otherName: any
+    beforeCodeFrame: string
+    afterCodeFrame: string
+  }
+} {
   const name = def.name.value
   const otherName = otherDef.name.value
   const field = def.selectionSet.selections[0].name.value
   const otherField = otherDef.selectionSet.selections[0].name.value
   const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
-    _.camelCase(otherName)
+    _.camelCase(otherName),
   )}`
 
   // colors are problematic for tests as we can different
@@ -156,7 +196,7 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
           highlightCode,
-        }
+        },
       ),
       afterCodeFrame: codeFrameColumns(
         report.stripIndent`
@@ -178,29 +218,35 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
           highlightCode,
-        }
+        },
       ),
     },
   }
 }
 
 export function graphqlError(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   definitionsByName: Map<string, any>,
-  error: Error | RelayGraphQLError
-) {
+  error: Error | RelayGraphQLError,
+): {
+  formattedMessage: string
+  docName: string
+  message: string
+  codeBlock: string
+} {
   let codeBlock
   const { message, docName } = extractError(error)
   const { def, filePath } = definitionsByName.get(docName) || {}
 
   if (filePath && docName) {
-    codeBlock = getCodeFrameFromRelayError(def, message, error)
+    codeBlock = getCodeFrameFromRelayError(def, message)
+
     const formattedMessage = formatError(message, filePath, codeBlock)
+
     return { formattedMessage, docName, message, codeBlock }
   }
 
-  let reportedMessage = `There was an error while compiling your site's GraphQL queries.
-  ${message || error.message}
-    `
+  let reportedMessage = `There was an error while compiling your site's GraphQL queries. ${message || error.message}`
 
   if (error.message.match(/must be an instance of/)) {
     reportedMessage +=
@@ -220,13 +266,18 @@ export function unknownFragmentError({
   filePath,
   definition,
   node,
-}) {
+}): {
+  id: string
+  filePath: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: { fragmentName: string; closestFragment: any; codeFrame: string }
+} {
   const name = node.name.value
   const closestFragment = fragmentNames
-    .map(f => {
+    .map((f) => {
       return { fragment: f, score: levenshtein(name, f) }
     })
-    .filter(f => f.score < 10)
+    .filter((f) => f.score < 10)
     .sort((a, b) => a.score > b.score)[0]?.fragment
 
   let text
@@ -247,17 +298,39 @@ export function unknownFragmentError({
         {
           start: locInGraphQlToLocInFile(
             definition.templateLoc,
-            getLocation({ body: definition.text }, node.loc.start)
+            getLocation(
+              {
+                body: definition.text,
+                name: ``,
+                locationOffset: {
+                  line: 0,
+                  column: 0,
+                },
+                [Symbol.toStringTag]: ``,
+              },
+              node.loc.start,
+            ),
           ),
           end: locInGraphQlToLocInFile(
             definition.templateLoc,
-            getLocation({ body: definition.text }, node.loc.end)
+            getLocation(
+              {
+                body: definition.text,
+                name: ``,
+                locationOffset: {
+                  line: 0,
+                  column: 0,
+                },
+                [Symbol.toStringTag]: ``,
+              },
+              node.loc.end,
+            ),
           ),
         },
         {
           linesAbove: 10,
           linesBelow: 10,
-        }
+        },
       ),
     },
   }
@@ -267,7 +340,14 @@ export function duplicateFragmentError({
   name,
   leftDefinition,
   rightDefinition,
-}) {
+}): {
+  id: string
+  context: {
+    fragmentName: string
+    leftFragment: { filePath: string; codeFrame: string }
+    rightFragment: { filePath: string; codeFrame: string }
+  }
+} {
   return {
     id: `85919`,
     context: {
@@ -278,18 +358,34 @@ export function duplicateFragmentError({
           leftDefinition.text,
           {
             start: getLocation(
-              { body: leftDefinition.text },
-              leftDefinition.def.name.loc.start
+              {
+                body: leftDefinition.text,
+                name: ``,
+                locationOffset: {
+                  line: 0,
+                  column: 0,
+                },
+                [Symbol.toStringTag]: ``,
+              },
+              leftDefinition.def.name.loc.start,
             ),
             end: getLocation(
-              { body: leftDefinition.text },
-              leftDefinition.def.name.loc.end
+              {
+                body: leftDefinition.text,
+                name: ``,
+                locationOffset: {
+                  line: 0,
+                  column: 0,
+                },
+                [Symbol.toStringTag]: ``,
+              },
+              leftDefinition.def.name.loc.end,
             ),
           },
           {
             linesAbove: 10,
             linesBelow: 10,
-          }
+          },
         ),
       },
       rightFragment: {
@@ -298,18 +394,34 @@ export function duplicateFragmentError({
           rightDefinition.text,
           {
             start: getLocation(
-              { body: rightDefinition.text },
-              rightDefinition.def.name.loc.start
+              {
+                body: rightDefinition.text,
+                name: ``,
+                locationOffset: {
+                  line: 0,
+                  column: 0,
+                },
+                [Symbol.toStringTag]: ``,
+              },
+              rightDefinition.def.name.loc.start,
             ),
             end: getLocation(
-              { body: rightDefinition.text },
-              rightDefinition.def.name.loc.end
+              {
+                body: rightDefinition.text,
+                name: ``,
+                locationOffset: {
+                  line: 0,
+                  column: 0,
+                },
+                [Symbol.toStringTag]: ``,
+              },
+              rightDefinition.def.name.loc.end,
             ),
           },
           {
             linesAbove: 10,
             linesBelow: 10,
-          }
+          },
         ),
       },
     },

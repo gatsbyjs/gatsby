@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "gatsby-link",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
   "version": "5.14.0-next.2",
@@ -37,8 +37,8 @@
   },
   "peerDependencies": {
     "@gatsbyjs/reach-router": "^2.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
   "keywords": [

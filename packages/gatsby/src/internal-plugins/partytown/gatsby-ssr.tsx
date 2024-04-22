@@ -1,8 +1,9 @@
-import React from "react"
 import { collectedScriptsByPage } from "gatsby-script"
 import { getForwards } from "./utils/get-forwards"
 import { partytownSnippet } from "@builder.io/partytown/integration"
-import type { GatsbySSR } from "gatsby"
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import React from "react"
+import type { GatsbySSR } from "../../.."
 
 export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
   pathname,

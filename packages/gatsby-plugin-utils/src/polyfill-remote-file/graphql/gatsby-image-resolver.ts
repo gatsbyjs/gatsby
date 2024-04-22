@@ -7,7 +7,7 @@ import {
   shouldDispatchLocalImageServiceJob,
 } from "../jobs/dispatchers"
 import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
-import { ImageCropFocus, isImage } from "../types"
+import { type ImageCropFocus, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
 import type { Actions, Store } from "gatsby"
@@ -49,10 +49,12 @@ type IGatsbyImageDataArgs = Omit<
   backgroundColor?: string | undefined
   placeholder?: PlaceholderType | "none" | undefined
   aspectRatio?: number | undefined
-  sizes?: string
+  sizes?: string | undefined
   cropFocus?: Array<ImageCropFocus> | undefined
   fit?: CalculateImageSizesArgs["fit"] | undefined
-  outputPixelDensities?: CalculateImageSizesArgs["outputPixelDensities"] | undefined
+  outputPixelDensities?:
+    | CalculateImageSizesArgs["outputPixelDensities"]
+    | undefined
   quality?: number | undefined
 }
 
@@ -60,7 +62,7 @@ type ImageSizeArgs = CalculateImageSizesArgs & {
   sourceMetadata: ISourceMetadata
 }
 
-interface IImageSizes {
+type IImageSizes = {
   sizes: Array<number>
   presentationWidth: number
   presentationHeight: number
@@ -73,7 +75,7 @@ const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 const DEFAULT_QUALITY = 75
 
 const GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = [`true`, `1`].includes(
-  process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``
+  process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``,
 )
 
 let didShowTraceSVGRemovalWarning = false
@@ -81,7 +83,7 @@ export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
   actions: Actions,
-  store?: Store | undefined
+  store?: Store | undefined,
 ): Promise<{
   images: IGatsbyImageData
   layout: string
@@ -125,7 +127,7 @@ export async function gatsbyImageResolver(
   } else if (args.placeholder === PlaceholderType.TRACED_SVG) {
     if (!didShowTraceSVGRemovalWarning) {
       console.warn(
-        `"TRACED_SVG" placeholder argument value is no longer supported (used in gatsbyImage processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
+        `"TRACED_SVG" placeholder argument value is no longer supported (used in gatsbyImage processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`,
       )
       didShowTraceSVGRemovalWarning = true
     }
@@ -145,15 +147,15 @@ export async function gatsbyImageResolver(
   }
   const formats = validateAndNormalizeFormats(
     args.formats,
-    sourceMetadata.format
+    sourceMetadata.format,
   )
   const imageSizes = calculateImageSizes(
     sourceMetadata,
-    args as CalculateImageSizesArgs
+    args as CalculateImageSizesArgs,
   )
   const sizes = getSizesAttrFromLayout(
     args.layout,
-    imageSizes.presentationWidth
+    imageSizes.presentationWidth,
   )
   const result: Partial<IGatsbyImageData> & {
     sources: IGatsbyImageData["sources"]
@@ -174,7 +176,7 @@ export async function gatsbyImageResolver(
   }
 
   const sortedFormats = Array.from(formats).sort(
-    (a, b) => getFormatValue(b) - getFormatValue(a)
+    (a, b) => getFormatValue(b) - getFormatValue(a),
   )
 
   // Result will be used like this
@@ -184,7 +186,7 @@ export async function gatsbyImageResolver(
   // </picture>
   for (const format of sortedFormats) {
     let fallbackSrc: string | undefined = undefined
-    const images = imageSizes.sizes.map(width => {
+    const images = imageSizes.sizes.map((width) => {
       if (shouldDispatchLocalImageServiceJob()) {
         dispatchLocalImageServiceJob(
           {
@@ -201,7 +203,7 @@ export async function gatsbyImageResolver(
             quality: args.quality as number,
           },
           actions,
-          store
+          store,
         )
       }
 
@@ -214,7 +216,7 @@ export async function gatsbyImageResolver(
           cropFocus: args.cropFocus,
           quality: args.quality as number,
         },
-        store
+        store,
       )
 
       if (!fallbackSrc) {
@@ -251,7 +253,7 @@ export async function gatsbyImageResolver(
     const { fallback, backgroundColor: bgColor } = await generatePlaceholder(
       source,
       args.placeholder as PlaceholderType,
-      store
+      store,
     )
 
     if (fallback) {
@@ -280,7 +282,7 @@ export async function gatsbyImageResolver(
 export function generateGatsbyImageFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
   actions: Actions,
-  store?: Store
+  store?: Store,
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode | IRemoteImageNode,
   ReturnType<typeof gatsbyImageResolver>,
@@ -396,9 +398,9 @@ function sortNumeric(a: number, b: number): number {
 }
 
 function createSrcSetFromImages(
-  images: Array<{ src: string; descriptor: string }>
+  images: Array<{ src: string; descriptor: string }>,
 ): string {
-  return images.map(image => `${image.src} ${image.descriptor}`).join(`,`)
+  return images.map((image) => `${image.src} ${image.descriptor}`).join(`,`)
 }
 
 // eslint-disable-next-line consistent-return
@@ -412,17 +414,17 @@ function calculateImageSizes(
     outputPixelDensities,
     breakpoints,
     aspectRatio,
-  }: CalculateImageSizesArgs
+  }: CalculateImageSizesArgs,
 ): IImageSizes {
   if (width && Number(width) <= 0) {
     throw new Error(
-      `The provided width of "${width}" is incorrect. Dimensions should be a positive number.`
+      `The provided width of "${width}" is incorrect. Dimensions should be a positive number.`,
     )
   }
 
   if (height && Number(height) <= 0) {
     throw new Error(
-      `The provided height of "${height}" is incorrect. Dimensions should be a positive number.`
+      `The provided height of "${height}" is incorrect. Dimensions should be a positive number.`,
     )
   }
 
@@ -483,7 +485,7 @@ function calculateFixedImageSizes({
   // make sure output outputPixelDensities has a value of 1
   outputPixelDensities.push(1)
   const densities = new Set<number>(
-    outputPixelDensities.sort(sortNumeric).filter(Boolean)
+    outputPixelDensities.sort(sortNumeric).filter(Boolean),
   )
 
   // If both are provided then we need to check the fit
@@ -569,7 +571,7 @@ function calculateResponsiveImageSizes({
   }
   // Sort, dedupe and ensure there's a 1
   const densities = new Set<number>(
-    outputPixelDensities.sort(sortNumeric).filter(Boolean)
+    outputPixelDensities.sort(sortNumeric).filter(Boolean),
   )
 
   // If both are provided then we need to check the fit
@@ -599,7 +601,7 @@ function calculateResponsiveImageSizes({
   const originalWidth = width as number
 
   if (breakpoints && breakpoints.length > 0) {
-    sizes = breakpoints.filter(size => size <= sourceMetadata.width)
+    sizes = breakpoints.filter((size) => size <= sourceMetadata.width)
 
     // If a larger breakpoint has been filtered-out, add the actual image width instead
     if (
@@ -609,10 +611,10 @@ function calculateResponsiveImageSizes({
       sizes.push(sourceMetadata.width)
     }
   } else {
-    sizes = Array.from(densities).map(density =>
-      Math.round(density * nonNullableWidth)
+    sizes = Array.from(densities).map((density) =>
+      Math.round(density * nonNullableWidth),
     )
-    sizes = sizes.filter(size => size <= sourceMetadata.width)
+    sizes = sizes.filter((size) => size <= sourceMetadata.width)
   }
 
   // ensure that the size passed in is included in the final output

@@ -2,7 +2,7 @@
 
 import path from "path"
 import zlib from "zlib"
-import { rest } from "msw"
+import { http } from "msw"
 import { setupServer } from "msw/node"
 import { Writable } from "stream"
 import got from "got"
@@ -49,7 +49,7 @@ async function getFileContent(file, req, options = {}) {
     fileContentBuffer = zlib.deflateSync(fileContentBuffer)
   }
 
-  const content = await new Promise(resolve => {
+  const content = await new Promise((resolve) => {
     const fileStream = fs.createReadStream(file, {
       end:
         currentRetryCount < Number(maxRetry)
@@ -69,9 +69,10 @@ async function getFileContent(file, req, options = {}) {
       resolve(Buffer.concat(result))
     })
 
-    // eslint-disable-next-line no-unused-vars
     let stream = fileStream
+
     if (options.compress) {
+      // @ts-ignore
       stream = stream.pipe(zlib.createDeflate())
     }
 
@@ -90,26 +91,26 @@ async function getFileContent(file, req, options = {}) {
 let attempts503 = 0
 
 const server = setupServer(
-  rest.get(`http://external.com/logo.svg`, async (req, res, ctx) => {
+  http.get(`http://external.com/logo.svg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/gatsby-logo.svg`),
-      req
+      req,
     )
 
     return res(
       ctx.set(`Content-Type`, `image/svg+xml`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(`http://external.com/logo-gzip.svg`, async (req, res, ctx) => {
+  http.get(`http://external.com/logo-gzip.svg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/gatsby-logo.svg`),
       req,
       {
         compress: true,
-      }
+      },
     )
 
     return res(
@@ -117,72 +118,72 @@ const server = setupServer(
       ctx.set(`content-encoding`, `gzip`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(`http://external.com/dog.jpg`, async (req, res, ctx) => {
+  http.get(`http://external.com/dog.jpg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
-      req
+      req,
     )
 
     return res(
       ctx.set(`Content-Type`, `image/jpg`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
   // Should test with non-ascii word `개` (which means dog in Korean)
-  rest.get(
+  http.get(
     `http://external.com/${encodeURIComponent(`개`)}.jpg`,
     async (req, res, ctx) => {
       const { content, contentLength } = await getFileContent(
         path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
-        req
+        req,
       )
 
       return res(
         ctx.set(`Content-Type`, `image/jpg`),
         ctx.set(`Content-Length`, contentLength),
         ctx.status(200),
-        ctx.body(content)
+        ctx.body(content),
       )
-    }
+    },
   ),
-  rest.get(`http://external.com/dog`, async (req, res, ctx) => {
+  http.get(`http://external.com/dog`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
-      req
+      req,
     )
 
     return res(
       ctx.set(`Content-Type`, `image/jpg`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(
+  http.get(
     `http://external.com/invalid:dog*name.jpg`,
     async (req, res, ctx) => {
       const { content, contentLength } = await getFileContent(
         path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
-        req
+        req,
       )
 
       return res(
         ctx.set(`Content-Type`, `image/jpg`),
         ctx.set(`Content-Length`, contentLength),
         ctx.status(200),
-        ctx.body(content)
+        ctx.body(content),
       )
-    }
+    },
   ),
-  rest.get(`http://external.com/dog-304.jpg`, async (req, res, ctx) => {
+  http.get(`http://external.com/dog-304.jpg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
-      req
+      req,
     )
 
     return res(
@@ -190,43 +191,43 @@ const server = setupServer(
       ctx.set(`Content-Length`, contentLength),
       ctx.set(`etag`, `abcd`),
       ctx.status(req.headers.get(`if-none-match`) === `abcd` ? 304 : 200),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(`http://external.com/dog-*.jpg`, async (req, res, ctx) => {
+  http.get(`http://external.com/dog-*.jpg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
-      req
+      req,
     )
 
     return res(
       ctx.set(`Content-Type`, `image/jpg`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(`http://external.com/404.jpg`, async (req, res, ctx) => {
+  http.get(`http://external.com/404.jpg`, async (req, res, ctx) => {
     const content = `Page not found`
 
     return res(
       ctx.set(`Content-Type`, `text/html`),
       ctx.set(`Content-Length`, String(content.length)),
       ctx.status(404),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(`http://external.com/500.jpg`, async (req, res, ctx) => {
+  http.get(`http://external.com/500.jpg`, async (req, res, ctx) => {
     const content = `Server error`
 
     return res(
       ctx.set(`Content-Type`, `text/html`),
       ctx.set(`Content-Length`, String(content.length)),
       ctx.status(500),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(`http://external.com/503-twice.svg`, async (req, res, ctx) => {
+  http.get(`http://external.com/503-twice.svg`, async (req, res, ctx) => {
     const errorContent = `Server error`
     attempts503++
 
@@ -235,34 +236,34 @@ const server = setupServer(
         ctx.set(`Content-Type`, `text/html`),
         ctx.set(`Content-Length`, String(errorContent.length)),
         ctx.status(503),
-        ctx.body(errorContent)
+        ctx.body(errorContent),
       )
     }
 
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/gatsby-logo.svg`),
-      req
+      req,
     )
 
     return res(
       ctx.set(`Content-Type`, `image/svg+xml`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
-      ctx.body(content)
+      ctx.body(content),
     )
   }),
-  rest.get(`http://external.com/503-forever.svg`, async (req, res, ctx) => {
+  http.get(`http://external.com/503-forever.svg`, async (req, res, ctx) => {
     const errorContent = `Server error`
     return res(
       ctx.set(`Content-Type`, `text/html`),
       ctx.set(`Content-Length`, String(errorContent.length)),
       ctx.status(503),
-      ctx.body(errorContent)
+      ctx.body(errorContent),
     )
   }),
-  rest.get(`http://external.com/network-error.svg`, (req, res) =>
-    res.networkError(`ECONNREFUSED`)
-  )
+  http.get(`http://external.com/network-error.svg`, (req, res) =>
+    res.networkError(`ECONNREFUSED`),
+  ),
 )
 
 async function createMockCache(tmpDir) {
@@ -283,6 +284,7 @@ describe(`fetch-remote-file`, () => {
     server.listen()
 
     cache = await createMockCache(cachePath)
+    // @ts-ignore
     storage.getDatabaseDir.mockReturnValue(cacheRoot)
   })
 
@@ -303,9 +305,13 @@ describe(`fetch-remote-file`, () => {
         ? String(Number(global.__GATSBY.buildId) + 1)
         : `1`,
     }
+    // @ts-ignore
     gotStream.mockClear()
+    // @ts-ignore
     fsMove.mockClear()
+    // @ts-ignore
     fs.pathExists.mockClear()
+    // @ts-ignore
     fs.copy.mockClear()
     urlCount.clear()
 
@@ -331,7 +337,7 @@ describe(`fetch-remote-file`, () => {
 
     expect(path.basename(filePath)).toBe(`logo-gzip.svg`)
     expect(getFileSize(filePath)).resolves.toBe(
-      await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+      await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`)),
     )
     expect(gotStream).toBeCalledTimes(1)
   })
@@ -344,7 +350,7 @@ describe(`fetch-remote-file`, () => {
 
     expect(path.basename(filePath)).toBe(`dog.jpg`)
     expect(getFileSize(filePath)).resolves.toBe(
-      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`)),
     )
     expect(gotStream).toBeCalledTimes(1)
   })
@@ -357,7 +363,7 @@ describe(`fetch-remote-file`, () => {
 
     expect(path.basename(filePath)).toBe(`개.jpg`)
     expect(getFileSize(filePath)).resolves.toBe(
-      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`)),
     )
     expect(gotStream).toBeCalledTimes(1)
   })
@@ -371,7 +377,7 @@ describe(`fetch-remote-file`, () => {
 
     expect(path.basename(filePath)).toBe(`개.jpg`)
     expect(getFileSize(filePath)).resolves.toBe(
-      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`)),
     )
     expect(gotStream).toBeCalledTimes(1)
   })
@@ -384,7 +390,7 @@ describe(`fetch-remote-file`, () => {
 
     expect(path.basename(filePath)).toBe(`dog.jpg`)
     expect(getFileSize(filePath)).resolves.toBe(
-      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`)),
     )
     expect(gotStream).toBeCalledTimes(1)
   })
@@ -397,7 +403,7 @@ describe(`fetch-remote-file`, () => {
 
     expect(path.basename(filePath, `.js`)).toContain(`invalid-dog-name`)
     expect(getFileSize(filePath)).resolves.toBe(
-      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`)),
     )
     expect(gotStream).toBeCalledTimes(1)
   })
@@ -410,7 +416,7 @@ describe(`fetch-remote-file`, () => {
 
     expect(path.basename(filePath)).toBe(`logo-gzip.svg`)
     expect(getFileSize(filePath)).resolves.not.toBe(
-      await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+      await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`)),
     )
     expect(gotStream).toBeCalledTimes(1)
   })
@@ -477,7 +483,7 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFile({
         url: `http://external.com/404.jpg`,
         cache,
-      })
+      }),
     ).rejects.toThrow(`Response code 404 (Not Found)`)
   })
 
@@ -486,7 +492,7 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFile({
         url: `http://external.com/500.jpg`,
         cache,
-      })
+      }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
 "Unable to fetch:
 http://external.com/500.jpg
@@ -515,7 +521,7 @@ Fetch details:
   })
 
   let cacheVersion = 0
-  describe.each([false, true])(`with excludeDigest %s`, excludeDigest => {
+  describe.each([false, true])(`with excludeDigest %s`, (excludeDigest) => {
     function getExternalUrl(cacheVersion) {
       return `http://external.com/dog-${cacheVersion}.jpg?v=${cacheVersion}`
     }
@@ -753,7 +759,7 @@ Fetch details:
 
       expect(path.basename(filePath)).toBe(`logo-gzip.svg`)
       expect(getFileSize(filePath)).resolves.toBe(
-        await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+        await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`)),
       )
       expect(gotStream).toBeCalledTimes(2)
     })
@@ -766,7 +772,7 @@ Fetch details:
 
       expect(path.basename(filePath)).toBe(`dog.jpg`)
       expect(getFileSize(filePath)).resolves.toBe(
-        await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+        await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`)),
       )
       expect(gotStream).toBeCalledTimes(2)
     })
@@ -781,7 +787,7 @@ Fetch details:
 
       expect(path.basename(filePath)).toBe(`503-twice.svg`)
       expect(getFileSize(filePath)).resolves.toBe(
-        await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+        await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`)),
       )
       expect(gotStream).toBeCalledTimes(3)
     })
@@ -791,7 +797,7 @@ Fetch details:
         fetchRemoteFile({
           url: `http://external.com/503-forever.svg`,
           cache,
-        })
+        }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
 "Unable to fetch:
 http://external.com/503-forever.svg
@@ -826,7 +832,7 @@ Fetch details:
         fetchRemoteFile({
           url: `http://external.com/network-error.svg`,
           cache,
-        })
+        }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
 "Unable to fetch:
 http://external.com/network-error.svg

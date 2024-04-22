@@ -7,26 +7,26 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "@opentelemetry/semantic-conventions": "0.26.0",
+    "@babel/runtime": "^7.24.4",
+    "@opentelemetry/semantic-conventions": "^1.23.0",
     "agentkeepalive": "^4.5.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.20.2",
-    "fastq": "^1.15.0",
+    "fastq": "^1.17.1",
     "gatsby-plugin-utils": "^4.14.0-next.2",
     "gatsby-source-filesystem": "^5.14.0-next.2",
-    "got": "^11.8.6",
-    "http2-wrapper": "^2.2.0",
+    "got": "^14.2.1",
+    "http2-wrapper": "^2.2.1",
     "lodash": "^4.17.21",
     "opentracing": "^0.14.7",
     "probe-image-size": "^7.2.3",
-    "tiny-async-pool": "^1.3.0",
-    "url-join": "^4.0.1"
+    "tiny-async-pool": "^2.1.0",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
-    "@babel/preset-typescript": "^7.18.6",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-typescript": "^7.24.1",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },
@@ -41,7 +41,9 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next"
+    "gatsby": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

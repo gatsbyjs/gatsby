@@ -1,18 +1,18 @@
 import * as fs from "fs-extra"
 import * as t from "@babel/types"
 import traverse from "@babel/traverse"
-import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
+import { codeFrameColumns, type SourceLocation } from "@babel/code-frame"
 import report from "gatsby-cli/lib/reporter"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testImportError } from "../utils/test-import-error"
-import { resolveModule, ModuleResolver } from "../utils/module-resolver"
+import { resolveModule, type ModuleResolver } from "../utils/module-resolver"
 import { maybeAddFileProtocol, resolveJSFilepath } from "./resolve-js-file-path"
 import { preferDefault } from "./prefer-default"
 
-const staticallyAnalyzeExports = (
+function staticallyAnalyzeExports(
   modulePath: string,
-  resolver = resolveModule
-): Array<string> => {
+  resolver = resolveModule,
+): Array<string> {
   let absPath: string | undefined
   const exportNames: Array<string> = []
 
@@ -36,11 +36,11 @@ const staticallyAnalyzeExports = (
         },
         {
           highlightCode: true,
-        }
+        },
       )
 
       report.panic(
-        `Syntax error in "${absPath}":\n${err.message}\n${codeFrame}`
+        `Syntax error in "${absPath}":\n${err.message}\n${codeFrame}`,
       )
     } else {
       // if it's not syntax error, just throw it
@@ -172,16 +172,16 @@ plugin: ${modulePath}.js
 
 This didn't cause a problem in Gatsby v1 so you might want to review the migration doc for this:
 https://gatsby.dev/no-mixed-modules
-      `
+      `,
     )
   }
   return exportNames
 }
 
-interface IResolveModuleExportsOptions {
-  mode?: `analysis` | `import`
-  resolver?: ModuleResolver
-  rootDir?: string
+type IResolveModuleExportsOptions = {
+  mode?: `analysis` | `import` | undefined
+  resolver?: ModuleResolver | undefined
+  rootDir?: string | undefined
 }
 
 /**
@@ -202,7 +202,7 @@ export async function resolveModuleExports(
     mode = `analysis`,
     resolver = resolveModule,
     rootDir = process.cwd(),
-  }: IResolveModuleExportsOptions = {}
+  }: IResolveModuleExportsOptions = {},
 ): Promise<Array<string>> {
   if (mode === `import`) {
     try {
@@ -223,7 +223,7 @@ export async function resolveModuleExports(
       const importedModule = preferDefault(rawImportedModule)
 
       return Object.keys(importedModule).filter(
-        exportName => exportName !== `__esModule`
+        (exportName) => exportName !== `__esModule`,
       )
     } catch (error) {
       if (!testImportError(modulePath, error)) {

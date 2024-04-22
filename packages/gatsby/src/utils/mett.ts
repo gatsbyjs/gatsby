@@ -4,16 +4,17 @@
 
 type MettHandler<EventName, Payload> = (
   e: Payload,
-  eventName: EventName
+  eventName: EventName,
 ) => void
 
-export interface IMett {
+export type IMett = {
   on(eventName: EventName, callback: MettHandler<EventName, Payload>): void
   off(eventName: EventName, callback: MettHandler<EventName, Payload>): void
   emit(eventName: EventName, e?: Payload): void
 }
 
 type EventName = string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Payload = any
 
 export function mett(): IMett {

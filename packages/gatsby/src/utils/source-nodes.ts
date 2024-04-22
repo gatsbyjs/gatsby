@@ -7,8 +7,6 @@ import { actions } from "../redux/actions"
 import type { IGatsbyState, IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
 
-const { deleteNode } = actions
-
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
  * may create nodes, but which have not actually created any nodes.
@@ -24,14 +22,15 @@ function discoverPluginNamesWithoutNodes(): Array<string> {
   ])
 
   return flattenedPlugins
-    .filter(
-      plugin =>
+    .filter((plugin) => {
+      return (
         // "Can generate nodes"
         plugin.nodeAPIs.includes(`sourceNodes`) &&
         // "Has not generated nodes"
-        !pluginNamesThatCreatedNodes.has(plugin.name),
-    )
-    .map(plugin => plugin.name)
+        !pluginNamesThatCreatedNodes.has(plugin.name)
+      )
+    })
+    .map((plugin) => plugin.name)
 }
 
 /**
@@ -40,7 +39,7 @@ function discoverPluginNamesWithoutNodes(): Array<string> {
 function warnForPluginsWithoutNodes(): void {
   const pluginNamesWithNoNodes = discoverPluginNamesWithoutNodes()
 
-  pluginNamesWithNoNodes.map(name =>
+  pluginNamesWithNoNodes.map((name) =>
     report.warn(
       `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`,
     ),
@@ -54,7 +53,7 @@ function getStaleNodes(
   state: IGatsbyState,
   nodes: GatsbyIterable<IGatsbyNode>,
 ): GatsbyIterable<IGatsbyNode> {
-  return nodes.filter(node => {
+  return nodes.filter((node) => {
     let rootNode = node
     let next: IGatsbyNode | undefined = undefined
 
@@ -73,7 +72,10 @@ function getStaleNodes(
       )
     }
 
-    if (state.statefulSourcePlugins.has(rootNode.internal.owner)) {
+    if (
+      rootNode.internal.owner &&
+      state.statefulSourcePlugins.has(rootNode.internal.owner)
+    ) {
       return false
     }
 
@@ -112,12 +114,13 @@ async function deleteStaleNodes(
     const staleNodes = getStaleNodes(state, nodes)
 
     for (const node of staleNodes) {
-      store.dispatch(deleteNode(node))
+      // @ts-ignore
+      store.dispatch(actions.deleteNode(node))
       cleanupStaleNodesActivity.tick()
 
       if (++deleteCount % 5000) {
         // dont block event loop
-        await new Promise(res => {
+        await new Promise((res) => {
           setImmediate(() => {
             res(null)
           })
@@ -154,8 +157,8 @@ export default async ({
   const { typeOwners } = store.getState()
 
   const previouslyExistingNodeTypeNames: Array<string> = Array.from(
-    typeOwners.typesToPlugins.keys() || [],
-  )
+    typeOwners.typesToPlugins.keys() ?? [],
+  ).filter(Boolean)
 
   await sourceNodesApiRunner({
     traceId,

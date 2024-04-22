@@ -7,19 +7,19 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "rehype-parse": "^7.0.1",
-    "remark-math": "^4.0.0",
-    "unified": "^9.2.2",
-    "unist-util-visit": "^2.0.3"
+    "@babel/runtime": "^7.24.4",
+    "rehype-parse": "^9.0.0",
+    "remark-math": "^6.0.0",
+    "unified": "^11.0.4",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
-    "katex": "^0.13.18",
-    "remark": "^13.0.0"
+    "katex": "^0.16.10",
+    "remark": "^15.0.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-katex#readme",
   "keywords": [
@@ -31,8 +31,10 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
-    "katex": "^0.13.3"
+    "gatsby": "^5.14.0-next.2",
+    "katex": "^0.16.10",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

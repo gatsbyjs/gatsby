@@ -8,7 +8,10 @@ import reporter from "gatsby-cli/lib/reporter"
  * They may include a `resolve` prop (if they are createNode actions).
  * If so, we resolve the promise when we're done
  */
-export function callRealApi(event: IMutationAction, store?: Store): void {
+export function callRealApi(
+  event: IMutationAction,
+  store?: Store | undefined,
+): void {
   assertStore(store)
   const { type, payload, resolve } = event
   if (type in actions) {

@@ -422,7 +422,7 @@ const errors: Record<string, IErrorMapEntry> = {
         context.pathToLocalTheme &&
           `Tried looking for a local plugin in ${context.pathToLocalTheme}.`,
         `Tried looking for an installed package in the following paths:\n${context.nodeResolutionPaths
-          .map(potentialLocationPath => ` - ${potentialLocationPath}`)
+          .map((potentialLocationPath) => ` - ${potentialLocationPath}`)
           .join(`\n`)}`,
       ]
         .filter(Boolean)
@@ -546,7 +546,7 @@ const errors: Record<string, IErrorMapEntry> = {
                 ``,
                 `Some of the following may help fix the error(s):`,
                 ``,
-                ...context.fixes.map(fix => `- ${fix}`),
+                ...context.fixes.map((fix) => `- ${fix}`),
               ]
             : [],
         )
@@ -586,7 +586,7 @@ const errors: Record<string, IErrorMapEntry> = {
         .concat([``])
         .concat(
           context.validationErrors
-            .map(error => `- ${error.message}`)
+            .map((error) => `- ${error.message}`)
             .join(`\n`),
         )
         .join(`\n`),
@@ -876,7 +876,7 @@ const errors: Record<string, IErrorMapEntry> = {
     ${
       context.hints
         ? context.hints.map(
-            h => `
+            (h) => `
     Hints:
     - ${h}\n`,
           )
@@ -943,7 +943,7 @@ const errors: Record<string, IErrorMapEntry> = {
       `Adapter "${
         context.adapterName
       }" is not compatible with following settings:\n${context.incompatibleFeatures
-        .map(line => ` - ${line}`)
+        .map((line) => ` - ${line}`)
         .join(`\n`)}`,
     level: Level.ERROR,
     type: Type.ADAPTER,

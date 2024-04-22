@@ -1,15 +1,18 @@
-import { Path } from "graphql/jsutils/Path"
+import type { Path } from "graphql/jsutils/Path"
 
-export const indentString = (string: string): string =>
-  string.replace(/\n/g, `\n  `)
+export function indentString(string: string): string {
+  return string.replace(/\n/g, `\n  `)
+}
 
-export const formatErrorDetails = (errorDetails: Map<string, any>): string =>
-  Array.from(errorDetails.entries())
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function formatErrorDetails(errorDetails: Map<string, any>): string {
+  return Array.from(errorDetails.entries())
     .map(
       ([name, details]) => `${name}:
-  ${indentString(details.toString())}`
+  ${indentString(details.toString())}`,
     )
     .join(`\n`)
+}
 
 export function pathToArray(path: Path | undefined): Array<string | number> {
   const flattened: Array<string | number> = []

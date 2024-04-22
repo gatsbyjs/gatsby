@@ -29,8 +29,8 @@ import { getMaybeResolvedValue } from "./resolvers"
 import type { IGatsbyNode, IGraphQLRunnerStats } from "../internal"
 import type { FiltersCache } from "../datastore/in-memory/indexing"
 import { Span, SpanContext } from "opentracing"
-import { GatsbyGraphQLType } from "../.."
-import { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom"
+import type { GatsbyGraphQLType } from "../.."
+import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom"
 
 // import { isNode } from "@babel/types"
 // import { isNode } from "@babel/types"
@@ -238,7 +238,7 @@ export class LocalNodeModel {
         createPageDependencyArgs.connection,
       )
       if (nodeTypeNames) {
-        nodeTypeNames.forEach(typeName => {
+        nodeTypeNames.forEach((typeName) => {
           this.createPageDependencyActionCreator({
             ...createPageDependencyArgs,
             connection: typeName,
@@ -313,7 +313,10 @@ export class LocalNodeModel {
       result = node
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      result = nodeTypeNames.includes(node.internal.type) ? node : null
+      result =
+        node.internal.type && nodeTypeNames.includes(node.internal.type)
+          ? node
+          : null
     }
 
     if (result) {
@@ -357,7 +360,7 @@ export class LocalNodeModel {
     const { ids, type } = args || {}
 
     const nodes = Array.isArray(ids)
-      ? ids.map(id => getNodeById(id)).filter(Boolean)
+      ? ids.map((id) => getNodeById(id)).filter(Boolean)
       : []
 
     let result
@@ -366,11 +369,16 @@ export class LocalNodeModel {
       result = nodes
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      result = nodes.filter(node => nodeTypeNames.includes(node.internal.type))
+      result = nodes.filter((node): boolean => {
+        return (
+          typeof node.internal.type === `string` &&
+          nodeTypeNames.includes(node.internal.type)
+        )
+      })
     }
 
     if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
+      result.forEach((node) => this.trackInlineObjectsInRootNode(node))
     }
 
     return wrapNodes(this.trackPageDependencies(result, pageDependencies))
@@ -521,7 +529,7 @@ export class LocalNodeModel {
 
     return {
       gqlType,
-      entries: entries.map(node => {
+      entries: entries.map((node) => {
         // With GatsbyIterable it happens lazily as we iterate
         this.trackInlineObjectsInRootNode(node)
         return node
@@ -677,7 +685,7 @@ export class LocalNodeModel {
     })
 
     if (!this._prepareNodesPromises[typeName]) {
-      this._prepareNodesPromises[typeName] = new Promise(resolve => {
+      this._prepareNodesPromises[typeName] = new Promise((resolve) => {
         process.nextTick(async () => {
           await this._doResolvePrepareNodesQueue(type)
           resolve(undefined)
@@ -894,7 +902,7 @@ export class LocalNodeModel {
   ): Promise<any> => {
     const fieldToResolve = pathToObject(fieldPath)
     const typeName = node.internal.type
-    const type = this.schema.getType(typeName)
+    const type = typeName && this.schema.getType(typeName)
 
     await this.prepareNodes(type, fieldToResolve, fieldToResolve)
 
@@ -1057,7 +1065,7 @@ async function resolveRecursive(
         gqlNonNullType instanceof GraphQLList
       ) {
         innerValue = await Promise.all(
-          innerValue.map(item =>
+          innerValue.map((item) =>
             item == null
               ? item
               : resolveRecursive(
@@ -1150,7 +1158,7 @@ function determineResolvableFields(
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
 
-  Object.keys(fields).forEach(fieldName => {
+  Object.keys(fields).forEach((fieldName) => {
     const field = fields[fieldName]
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
@@ -1239,7 +1247,7 @@ function deepObjectDifference(
 ): Record<string, unknown> {
   const result: Record<string, unknown> = {}
 
-  Object.keys(from).forEach(key => {
+  Object.keys(from).forEach((key) => {
     const toValue = to[key]
     if (toValue) {
       if (_.isPlainObject(toValue)) {

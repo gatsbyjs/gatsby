@@ -1,21 +1,18 @@
-import path from "path"
-// @ts-ignore
+import path from "node:path"
 import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
-// @ts-ignore
 import telemetry from "gatsby-telemetry"
 import {
   updateInternalSiteMetadata,
   isTruthy,
   uuid,
   cpuCoreCount,
-  // @ts-ignore
 } from "gatsby-core-utils"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
-  IBuildArgs,
+  type IBuildArgs,
 } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import { bootstrap } from "../bootstrap"
@@ -61,9 +58,7 @@ import {
   copyStaticQueriesToEngine,
 } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
-// @ts-ignore
 import type webpack from "webpack"
 import {
   materializePageMode,
@@ -123,7 +118,7 @@ module.exports = async function build(
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
-  signalExit.onExit(exitCode => {
+  signalExit.onExit((exitCode) => {
     telemetry.trackCli(`BUILD_END`, {
       exitCode: exitCode as number | undefined,
     })
@@ -329,7 +324,7 @@ module.exports = async function build(
   // Only run queries with mode SSG
 
   queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-    query => getPageMode(query) === `SSG`,
+    (query) => getPageMode(query) === `SSG`,
   )
 
   // Start saving page.mode in the main process (while queries run in workers in parallel)
@@ -522,8 +517,8 @@ module.exports = async function build(
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
     const bundleSizes = (webpackAssets as Array<webpack.StatsAsset>)
-      .filter(asset => asset.name.endsWith(`.js`))
-      .map(asset => asset.size / 1000)
+      .filter((asset) => asset.name.endsWith(`.js`))
+      .map((asset) => asset.size / 1000)
     const pageDataSizes = [...store.getState().pageDataStats.values()]
 
     telemetry.addSiteMeasurement(`BUILD_END`, {
@@ -625,6 +620,7 @@ module.exports = async function build(
   reporter._renderPageTree({
     components: state.components,
     functions: state.functions,
+    // @ts-ignore
     pages: state.pages,
     root: state.program.directory,
   })
@@ -653,7 +649,7 @@ module.exports = async function build(
     if (toRegenerate.length) {
       report.info(
         `Built pages:\n${toRegenerate
-          .map(path => `Updated page: ${path}`)
+          .map((path) => `Updated page: ${path}`)
           .join(`\n`)}`,
       )
     }
@@ -661,7 +657,7 @@ module.exports = async function build(
     if (toDelete.length) {
       report.info(
         `Deleted pages:\n${toDelete
-          .map(path => `Deleted page: ${path}`)
+          .map((path) => `Deleted page: ${path}`)
           .join(`\n`)}`,
       )
     }

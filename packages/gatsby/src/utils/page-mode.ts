@@ -1,5 +1,5 @@
 import { store } from "../redux"
-import {
+import type {
   IGatsbyPage,
   IGatsbyState,
   IMaterializePageMode,
@@ -7,7 +7,7 @@ import {
 } from "../redux/types"
 import { reportOnce } from "./report-once"
 import { ROUTES_DIRECTORY } from "../constants"
-import { Runner } from "../bootstrap/create-graphql-runner"
+import type { Runner } from "../bootstrap/create-graphql-runner"
 import { getDataStore } from "../datastore"
 
 type IPageConfigFn = (arg: { params: Record<string, unknown> }) => {
@@ -36,7 +36,7 @@ export function getPageMode(page: IGatsbyPage, state?: IGatsbyState): PageMode {
 
 function resolvePageMode(
   page: IGatsbyPage,
-  component: { serverData: boolean; config: boolean }
+  component: { serverData: boolean; config: boolean },
 ): PageMode {
   let pageMode: PageMode | undefined = undefined
   if (component.serverData) {
@@ -71,7 +71,7 @@ function resolvePageMode(
     (page.path === `/404.html` || page.path === `/500.html`)
   ) {
     reportOnce(
-      `Status page "${page.path}" ignores page mode ("${pageMode}") and force sets it to SSG (this page can't be lazily rendered).`
+      `Status page "${page.path}" ignores page mode ("${pageMode}") and force sets it to SSG (this page can't be lazily rendered).`,
     )
     pageMode = `SSG`
   }
@@ -109,14 +109,14 @@ export async function materializePageMode(): Promise<void> {
     }
     // Do not block task queue of the event loop for too long:
     if (dispatchCount++ % 100 === 0) {
-      await new Promise(resolve => setImmediate(resolve))
+      await new Promise((resolve) => setImmediate(resolve))
     }
   }
   await getDataStore().ready()
 }
 
 export async function preparePageTemplateConfigs(
-  graphql: Runner
+  graphql: Runner,
 ): Promise<void> {
   const { program } = store.getState()
   const pageRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
@@ -125,7 +125,7 @@ export async function preparePageTemplateConfigs(
   global[`__gatsbyGraphql`] = graphql
 
   await Promise.all(
-    Array.from(store.getState().components.values()).map(async component => {
+    Array.from(store.getState().components.values()).map(async (component) => {
       if (component.config) {
         const componentInstance = await pageRenderer.getPageChunk({
           componentChunkName: component.componentChunkName,
@@ -133,13 +133,13 @@ export async function preparePageTemplateConfigs(
         const pageConfigFn = await componentInstance.config()
         if (typeof pageConfigFn !== `function`) {
           throw new Error(
-            `Unexpected result of config factory. Expected "function", got "${typeof pageConfigFn}".`
+            `Unexpected result of config factory. Expected "function", got "${typeof pageConfigFn}".`,
           )
         }
 
         pageConfigMap.set(component.componentChunkName, pageConfigFn)
       }
-    })
+    }),
   )
   delete global[`__gatsbyGraphql`]
 }

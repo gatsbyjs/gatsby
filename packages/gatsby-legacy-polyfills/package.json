@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.0.5",
   "name": "gatsby-legacy-polyfills",
   "description": "Polyfills for legacy browsers",
   "version": "3.14.0-next.1",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.24.4",
-    "core-js-compat": "3.36.1"
+    "core-js-compat": "3.37.0"
   },
   "files": [
     "dist/"
@@ -36,7 +36,7 @@
     "@jridgewell/trace-mapping": "^0.3.25",
     "chokidar-cli": "^3.0.0",
     "codegen.macro": "^4.1.0",
-    "core-js": "3.36.1",
+    "core-js": "3.37.0",
     "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "event-target-polyfill": "^0.0.4",

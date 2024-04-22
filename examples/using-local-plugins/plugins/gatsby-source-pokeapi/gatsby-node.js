@@ -1,23 +1,25 @@
-const axios = require(`axios`)
 const createNodeHelpers = require(`gatsby-node-helpers`).default
 
-const get = endpoint => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
+function get(endpoint) {
+  return fetch(`https://pokeapi.co/api/v2${endpoint}`)
+}
 
-const getPokemonData = names =>
-  Promise.all(
-    names.map(async name => {
+function getPokemonData(names) {
+  return Promise.all(
+    names.map(async (name) => {
       const { data: pokemon } = await get(`/pokemon/${name}`)
       const abilities = await Promise.all(
         pokemon.abilities.map(async ({ ability: { name: abilityName } }) => {
           const { data: ability } = await get(`/ability/${abilityName}`)
 
           return ability
-        })
+        }),
       )
 
       return { ...pokemon, abilities }
-    })
+    }),
   )
+}
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
@@ -31,14 +33,14 @@ exports.sourceNodes = async ({ actions }) => {
   const allPokemon = await getPokemonData([`pikachu`, `charizard`, `squirtle`])
 
   // Process data for each pokemon into Gatsby node format
-  const processPokemon = pokemon => {
+  const processPokemon = (pokemon) => {
     // Set up each ability as a node
-    const abilityNodes = pokemon.abilities.map(abilityData =>
-      prepareAbilityNode(abilityData)
+    const abilityNodes = pokemon.abilities.map((abilityData) =>
+      prepareAbilityNode(abilityData),
     )
 
     // Actually create the "Ability" nodes for given pokemon
-    abilityNodes.forEach(node => {
+    abilityNodes.forEach((node) => {
       createNode(node)
     })
 
@@ -46,11 +48,11 @@ exports.sourceNodes = async ({ actions }) => {
     const pokemonNode = preparePokemonNode(pokemon)
 
     // Attach an array of "Ability" node ids to `abilities___NODE` in the Pokémon
-    pokemonNode.abilities___NODE = abilityNodes.map(node => node.id)
+    pokemonNode.abilities___NODE = abilityNodes.map((node) => node.id)
 
     return pokemonNode
   }
 
   // Process data into nodes using our helper.
-  allPokemon.forEach(pokemon => createNode(processPokemon(pokemon)))
+  allPokemon.forEach((pokemon) => createNode(processPokemon(pokemon)))
 }

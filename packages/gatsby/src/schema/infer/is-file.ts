@@ -34,7 +34,7 @@ function findAncestorNode(
     if (predicate(node)) {
       return node
     }
-    node = getNode(node.parent)
+    node = getNode(node.parent ?? ``)
   } while (node !== undefined)
 
   return null
@@ -44,7 +44,7 @@ function getBaseDir(node: IGatsbyNode): string | null {
   if (node) {
     const { dir } = findAncestorNode(
       node,
-      node => node.internal.type === `File`,
+      (node) => node.internal.type === `File`,
     ) || { dir: `` }
     return typeof dir === `string` ? dir : null
   }

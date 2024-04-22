@@ -1,4 +1,4 @@
-import * as path from "node:path"
+import path from "node:path"
 import { readFile, pathExistsSync } from "fs-extra"
 
 export function getConfigPath(root: string): string {

@@ -11,25 +11,26 @@ export type CancelExperimentNoticeCallbackOrUndefined =
 
 const ONE_DAY = 24 * 60 * 60 * 1000
 
-interface INoticeObject {
+type INoticeObject = {
   noticeText: string
   umbrellaLink: string
   experimentIdentifier: string
 }
 
 const noticesToShow: Array<INoticeObject> = []
-const configStoreKey = (experimentIdentifier): string =>
-  `lastExperimentNotice.${experimentIdentifier}`
+function configStoreKey(experimentIdentifier): string {
+  return `lastExperimentNotice.${experimentIdentifier}`
+}
 
 export function showExperimentNoticeAfterTimeout(
   experimentIdentifier: string,
   umbrellaLink: string,
   noticeText: string,
   showNoticeAfterMs: number,
-  minimumIntervalBetweenNoticesMs: number = ONE_DAY
+  minimumIntervalBetweenNoticesMs: number = ONE_DAY,
 ): CancelExperimentNoticeCallbackOrUndefined {
   const lastTimeWeShowedNotice = getConfigStore().get(
-    configStoreKey(experimentIdentifier)
+    configStoreKey(experimentIdentifier),
   )
 
   if (lastTimeWeShowedNotice) {
@@ -47,32 +48,30 @@ export function showExperimentNoticeAfterTimeout(
   }
 }
 
-export const createNoticeMessage = (notices): string => {
+export function createNoticeMessage(notices): string {
   let message = `\nHi from the Gatsby maintainers! Based on what we see in your site, these coming
 features may help you. All of these can be enabled within gatsby-config.js via
 flags (samples below)`
 
   notices.forEach(
-    notice =>
+    (notice) =>
       (message += `
 
-${chalk.bgBlue.bold(notice.experimentIdentifier)} (${notice.umbrellaLink}), ${
-        notice.noticeText
-      }\n`)
+${chalk.bgBlue.bold(notice.experimentIdentifier)} (${notice.umbrellaLink}), ${notice.noticeText}\n`),
   )
 
   return message
 }
 
-export const showExperimentNotices = (): void => {
+export function showExperimentNotices(): void {
   if (noticesToShow.length > 0) {
     telemetry.trackCli(`InviteToTryExperiment`)
     // Store that we're showing the invite.
-    noticesToShow.forEach(notice =>
+    noticesToShow.forEach((notice) =>
       getConfigStore().set(
         configStoreKey(notice.experimentIdentifier),
-        Date.now()
-      )
+        Date.now(),
+      ),
     )
 
     const message = createNoticeMessage(noticesToShow)

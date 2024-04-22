@@ -7,7 +7,7 @@ function removeQueryParams(path: string): string {
 }
 
 export function setFilesFromDevelopHtmlCompilation(
-  developHtmlCompilation: Compilation
+  developHtmlCompilation: Compilation,
 ): void {
   filesInsideDevelopHtmlCompilation.clear()
 
@@ -24,7 +24,7 @@ export function setFilesFromDevelopHtmlCompilation(
  */
 export function isFileInsideCompilations(
   absolutePath: string,
-  developBrowserCompilation: Compilation
+  developBrowserCompilation: Compilation,
 ): boolean {
   if (filesInsideDevelopHtmlCompilation.has(absolutePath)) {
     return true

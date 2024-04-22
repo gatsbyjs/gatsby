@@ -3,16 +3,15 @@ import {
   combineReducers,
   createStore,
   // Middleware,
-  ReducersMapObject,
-  Store,
+  type ReducersMapObject,
+  type Store,
 } from "redux"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
-// @ts-ignore
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
-import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk"
+import thunk, { type ThunkAction, type ThunkDispatch } from "redux-thunk"
 import * as rawReducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import type { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
@@ -60,14 +59,17 @@ export function readState(): IGatsbyState {
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
-      state.nodes.forEach(node => {
+      state.nodes.forEach((node) => {
         const { type } = node.internal
-        if (!state.nodesByType.has(type)) {
-          state.nodesByType.set(type, new Map())
+
+        if (type) {
+          if (!state.nodesByType.has(type)) {
+            state.nodesByType.set(type, new Map())
+          }
+          // The `.has` and `.set` calls above make this safe
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          state.nodesByType.get(type)?.set(node.id, node)
         }
-        // The `.has` and `.set` calls above make this safe
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        state.nodesByType.get(type)!.set(node.id, node)
       })
     }
 
@@ -102,7 +104,7 @@ export type IMultiDispatch = {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function multi({ dispatch }): (next: any) => (action: any) => any {
-  return next => {
+  return (next) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (action): any => {
       return Array.isArray(action)

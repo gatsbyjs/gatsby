@@ -2,18 +2,18 @@ import {
   memo,
   type JSX,
   useContext,
-  ComponentType,
+  type ComponentType,
   type ReactElement,
 } from "react"
 import path from "path"
-import { Box, Text, BoxProps, Spacer } from "ink"
+import { Box, Text, type BoxProps, Spacer } from "ink"
 import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 import { StoreStateContext } from "../context"
 import {
   generatePageTree,
   generateSliceTree,
-  ITreeLine,
-  IComponentWithPageModes,
+  type ITreeLine,
+  type IComponentWithPageModes,
 } from "../../../../util/generate-trees"
 
 type IPageAndSliceTreesProps = {
@@ -203,12 +203,12 @@ function _Trees(): JSX.Element {
       sliceWithComponents.get(layoutComponent) || new Set<string>()
 
     if (isSlice) {
-      pages.forEach(sliceName => {
+      pages.forEach((sliceName) => {
         sliceByComponent.add(sliceName)
       })
       sliceWithComponents.set(layoutComponent, sliceByComponent)
     } else {
-      pages.forEach(pagePath => {
+      pages.forEach((pagePath) => {
         const gatsbyPage = state.pageTree!.pages.get(pagePath)
 
         pagesByMode[gatsbyPage!.mode].add(pagePath)

@@ -1,7 +1,7 @@
 import { Joi } from "./joi"
-import { GatsbyNode } from "gatsby"
+import type { GatsbyNode } from "gatsby"
 import { validateOptionsSchema } from "./validate"
-import { IPluginInfoOptions } from "./types"
+import type { IPluginInfoOptions } from "./types"
 
 type ITestPluginOptionsSchemaReturnType = {
   errors: Array<string>
@@ -12,10 +12,10 @@ type ITestPluginOptionsSchemaReturnType = {
 
 export async function testPluginOptionsSchema(
   pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
-  pluginOptions: IPluginInfoOptions
+  pluginOptions: IPluginInfoOptions,
 ): Promise<ITestPluginOptionsSchemaReturnType | undefined> {
   const pluginSchema = pluginSchemaFunction?.({
-    Joi: Joi.extend(joi => {
+    Joi: Joi.extend((joi) => {
       return {
         type: `subPlugins`,
         base: joi
@@ -26,19 +26,19 @@ export async function testPluginOptionsSchema(
               joi.object({
                 resolve: Joi.string(),
                 options: Joi.object({}).unknown(true),
-              })
-            )
+              }),
+            ),
           )
           .custom(
-            arrayValue =>
-              arrayValue.map(value => {
+            (arrayValue) =>
+              arrayValue.map((value) => {
                 if (typeof value === `string`) {
                   value = { resolve: value }
                 }
 
                 return value
               }),
-            `Gatsby specific subplugin validation`
+            `Gatsby specific subplugin validation`,
           )
           .default([]),
       }
@@ -46,16 +46,17 @@ export async function testPluginOptionsSchema(
   })
 
   try {
-    if (typeof pluginSchema === 'undefined') {
+    if (typeof pluginSchema === `undefined`) {
       return
     }
 
     // @ts-ignore
     const { warning } = await validateOptionsSchema(pluginSchema, pluginOptions)
 
-    const warnings = warning?.details?.map(detail => detail.message) ?? []
+    const warnings = warning.details.map((detail) => detail.message) ?? []
 
-    if (warnings?.length > 0) {
+    if (warnings.length > 0) {
+      // eslint-disable-next-line consistent-return
       return {
         isValid: true,
         errors: [],
@@ -63,10 +64,11 @@ export async function testPluginOptionsSchema(
         warnings,
       }
     }
+
+    return
   } catch (e) {
-    const errors = e?.details?.map(detail => detail.message) ?? []
+    const errors = e?.details?.map((detail) => detail.message) ?? []
+    // eslint-disable-next-line consistent-return
     return { isValid: false, errors, hasWarnings: false, warnings: [] }
   }
-
-  return { isValid: true, errors: [], hasWarnings: false, warnings: [] }
 }

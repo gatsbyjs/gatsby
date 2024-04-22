@@ -1,32 +1,41 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 
-import type { IGatsbyNode } from "../redux/types"
-import type { GatsbyIterable } from "../datastore/common/iterable"
+import type { IGatsbyNode, IGatsbyPage } from "../redux/types"
 
-type Data = IGatsbyNode | GatsbyIterable<IGatsbyNode>
+// export type Data = IGatsbyNode | Array<IGatsbyNode>
 
-type OmitUndefined = (data: Data) => Partial<Data>
+type OmitUndefined = (
+  data: IGatsbyNode,
+) => Partial<IGatsbyNode> | Array<Partial<IGatsbyNode>> | undefined
 
 /**
  * @param {Object|Array} data
  * @returns {Object|Array} data without undefined values
  */
-const omitUndefined: OmitUndefined = data => {
-  const isPlainObject = _.isPlainObject(data)
-  if (isPlainObject) {
-    return _.pickBy(data, p => p !== undefined)
+const omitUndefined: OmitUndefined = function omitUndefined(
+  data: IGatsbyNode | Array<IGatsbyNode>,
+): Partial<IGatsbyNode> | Array<Partial<IGatsbyNode>> | undefined {
+  if (_.isPlainObject(data)) {
+    return _.pickBy(data, Boolean) as Partial<IGatsbyNode>
   }
 
-  return (data as GatsbyIterable<IGatsbyNode>).filter(p => p !== undefined)
+  if (Array.isArray(data)) {
+    return data.filter(Boolean)
+  }
+
+  return undefined
 }
 
-type isTypeSupported = (data: Data) => boolean
+type isTypeSupported = (data: IGatsbyPage | IGatsbyNode) => boolean
 
 /**
  * @param {*} data
  * @return {boolean} Boolean if type is supported
  */
-const isTypeSupported: isTypeSupported = data => {
+const isTypeSupported: isTypeSupported = function isTypeSupported(
+  data: IGatsbyPage | IGatsbyNode,
+) {
   if (data === null) {
     return true
   }
@@ -42,22 +51,22 @@ const isTypeSupported: isTypeSupported = data => {
 }
 
 type sanitizeNode = (
-  data: Data,
-  isNode?: boolean,
-  path?: Set<unknown>
-) => Data | undefined
+  data: IGatsbyNode | IGatsbyPage,
+  isNode?: boolean | undefined,
+  path?: Set<IGatsbyNode | IGatsbyPage> | undefined,
+) => IGatsbyNode | IGatsbyPage | undefined
 
 /**
  * Make data serializable
- * @param {(Object|Array)} data to sanitize
- * @param {boolean} isNode = true
- * @param {Set<string>} path = new Set
+ * @param {IGatsbyNode | undefined} data to sanitize
+ * @param {boolean | undefined} isNode = true
+ * @param {Set<string> | undefined} path = new Set
  */
-export const sanitizeNode: sanitizeNode = (
-  data,
-  isNode = true,
-  path = new Set()
-) => {
+export const sanitizeNode: sanitizeNode = function sanitizeNode(
+  data: IGatsbyNode | IGatsbyPage,
+  isNode: boolean | undefined = true,
+  path: Set<IGatsbyNode | IGatsbyPage> | undefined = new Set<IGatsbyNode>(),
+): IGatsbyNode | IGatsbyPage | undefined {
   const isPlainObject = _.isPlainObject(data)
   const isArray = _.isArray(data)
 
@@ -85,7 +94,7 @@ export const sanitizeNode: sanitizeNode = (
         returnData[key] = value
         return
       }
-      returnData[key] = sanitizeNode(value as Data, false, path)
+      returnData[key] = sanitizeNode(value as IGatsbyNode, false, path)
 
       if (returnData[key] !== value) {
         anyFieldChanged = true
@@ -94,14 +103,18 @@ export const sanitizeNode: sanitizeNode = (
 
     if (hasLengthProperty) {
       ;(data as IGatsbyNode).length = lengthProperty
-      returnData.length = sanitizeNode(lengthProperty as Data, false, path)
+      returnData.length = sanitizeNode(
+        lengthProperty as IGatsbyNode,
+        false,
+        path,
+      )
       if (returnData.length !== lengthProperty) {
         anyFieldChanged = true
       }
     }
 
     if (anyFieldChanged) {
-      data = omitUndefined(returnData as Data) as Data
+      data = omitUndefined(returnData as IGatsbyNode) as IGatsbyNode
     }
 
     // arrays and plain objects are supported - no need to to sanitize

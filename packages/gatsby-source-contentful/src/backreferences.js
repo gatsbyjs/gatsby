@@ -13,11 +13,7 @@ export const is = {
   firstSourceNodesCallOfCurrentNodeProcess: true,
 }
 
-export async function getExistingCachedNodes({
-  actions,
-  getNode,
-  pluginConfig,
-}) {
+export async function getExistingCachedNodes({ actions, getNode }) {
   const { touchNode } = actions
 
   const needToTouchNodes =

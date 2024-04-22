@@ -2,17 +2,17 @@ import {
   setFeedbackDisabledValue,
   showFeedbackRequest,
 } from "../utils/feedback"
-import { IProgram } from "./types"
+import type { IProgram } from "./types"
 
 // This is because we splat command line arguments onto this object.
 // A good refactor would be to put this inside a key like `cliArgs`
-interface IFeedbackProgram extends IProgram {
-  disable?: boolean
-  enable?: boolean
-}
+type IFeedbackProgram = {
+  disable?: boolean | undefined
+  enable?: boolean | undefined
+} & IProgram
 
 module.exports = async function feedback(
-  program: IFeedbackProgram
+  program: IFeedbackProgram,
 ): Promise<void> {
   if (program.disable) {
     program.report.info(`Disabling gatsby feedback requests`)

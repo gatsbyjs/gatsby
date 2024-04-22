@@ -1,4 +1,4 @@
-import { parse, DocumentNode } from "graphql"
+import { parse, type DocumentNode } from "graphql"
 
 // TODO v5: mark File type as @dontInfer (requires @childOf directive to all children types like ImageSharp)
 
@@ -146,7 +146,7 @@ const allSdlTypes = [
 export const overridableBuiltInTypeNames = new Set([`SiteSiteMetadata`])
 
 export const builtInTypeDefinitions = (): Array<DocumentNode> =>
-  allSdlTypes.map(type => parse(type))
+  allSdlTypes.map((type) => parse(type))
 
 export const builtInScalarTypeNames = [
   `Boolean`,

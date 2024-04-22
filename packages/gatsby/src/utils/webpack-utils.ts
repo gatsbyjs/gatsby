@@ -1,12 +1,11 @@
-import * as path from "path"
-import { RuleSetRule, WebpackPluginInstance } from "webpack"
+import path from "node:path"
+import type { RuleSetRule, WebpackPluginInstance } from "webpack"
 import { GraphQLSchema } from "graphql"
-import { Plugin as PostCSSPlugin } from "postcss"
+import type { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import TerserPlugin from "terser-webpack-plugin"
-// @ts-ignore
 import type { MinifyOptions as TerserOptions } from "terser"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
@@ -17,7 +16,6 @@ import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import ESLintPlugin from "eslint-webpack-plugin"
-// @ts-ignore
 import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { getPublicPath } from "./get-public-path"
@@ -27,7 +25,7 @@ import {
 } from "./gatsby-webpack-virtual-modules"
 
 import { builtinPlugins } from "./webpack-plugins"
-import { IProgram, Stage } from "../commands/types"
+import type { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 import { store } from "../redux"
 import type { RuleSetUseItem } from "webpack"
@@ -373,7 +371,7 @@ export function createWebpackUtils(
               flexbox: `no-2009`,
               ...((
                 postCSSPlugins.find(
-                  plugin => plugin.postcssPlugin === `autoprefixer`,
+                  (plugin) => plugin.postcssPlugin === `autoprefixer`,
                 ) as unknown as autoprefixer.ExportedAPI
               )?.options ?? {}),
             })
@@ -412,7 +410,7 @@ export function createWebpackUtils(
       }
     },
 
-    js: options => {
+    js: (options) => {
       return {
         options: {
           stage,
@@ -431,7 +429,7 @@ export function createWebpackUtils(
       }
     },
 
-    dependencies: options => {
+    dependencies: (options) => {
       return {
         options: {
           cacheDirectory: path.join(
@@ -473,7 +471,7 @@ export function createWebpackUtils(
 
           // If the module uses Gatsby as a dependency
           // we want to treat it as src so we can extract queries
-          return modulesThatUseGatsby.some(module =>
+          return modulesThatUseGatsby.some((module) =>
             modulePath.includes(module.path),
           )
         },
@@ -578,7 +576,7 @@ export function createWebpackUtils(
 
           // If dep uses Gatsby, exclude
           if (
-            modulesThatUseGatsby.some(module =>
+            modulesThatUseGatsby.some((module) =>
               modulePath.includes(module.path),
             )
           ) {
@@ -805,7 +803,7 @@ export function createWebpackUtils(
 
       // If the module uses Gatsby as a dependency
       // we want to treat it as src because of shadowing
-      return !modulesThatUseGatsby.some(module =>
+      return !modulesThatUseGatsby.some((module) =>
         modulePath.includes(module.path),
       )
     }

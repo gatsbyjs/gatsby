@@ -77,7 +77,7 @@ export async function updateCache(
   const { typePrefix } = pluginOptions
 
   const nodeMap: IShopifyNodeMap = Object.keys(shopifyTypes)
-    .map(type => gatsbyApi.getNodesByType(`${typePrefix}Shopify${type}`))
+    .map((type) => gatsbyApi.getNodesByType(`${typePrefix}Shopify${type}`))
     .reduce((acc, value) => acc.concat(value), [])
     .reduce((acc, value) => {
       return { ...acc, [value.id]: value }

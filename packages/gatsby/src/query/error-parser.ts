@@ -1,24 +1,24 @@
-import { IMatch } from "../types"
-import { SourceLocation } from "graphql"
+import type { IMatch } from "../types"
+import type { SourceLocation } from "graphql"
 
-interface IErrorParser {
+type IErrorParser = {
   message: string
   filePath: string | undefined
   location:
     | {
         start: SourceLocation
-        end?: SourceLocation
+        end?: SourceLocation | undefined
       }
     | undefined
-  error?: Error
+  error?: Error | undefined
 }
 
-const errorParser = ({
+function errorParser({
   message,
   filePath = undefined,
   location = undefined,
   error = undefined,
-}: IErrorParser): IMatch => {
+}: IErrorParser): IMatch {
   // Handle GraphQL errors. A list of regexes to match certain
   // errors to specific callbacks
   const handlers = [
@@ -167,16 +167,16 @@ const errorParser = ({
 
 export default errorParser
 
-interface ILocOfGraphQLDocInSrcFile {
+type ILocOfGraphQLDocInSrcFile = {
   start: SourceLocation
   end: SourceLocation
   fileName: boolean
 }
 
-export const locInGraphQlToLocInFile = (
+export function locInGraphQlToLocInFile(
   locationOfGraphQLDocInSourceFile: ILocOfGraphQLDocInSrcFile,
-  graphqlLocation: SourceLocation
-): SourceLocation => {
+  graphqlLocation: SourceLocation,
+): SourceLocation {
   return {
     line:
       graphqlLocation.line + locationOfGraphQLDocInSourceFile.start.line - 1,

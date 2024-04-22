@@ -1,11 +1,10 @@
 const Promise = require(`bluebird`)
 const queryString = require(`query-string`)
-const fetch = require(`node-fetch`)
 
 const apiBase = `https://en.wikipedia.org/w/api.php?`
 
-const fetchNodesFromSearch = ({ query, limit = 15 }) =>
-  search({ query, limit }).then(results =>
+function fetchNodesFromSearch({ query, limit = 15 }) {
+  return search({ query, limit }).then((results) =>
     Promise.map(results, async (result, queryIndex) => {
       const rendered = await getArticle(result.id)
       const metadata = await getMetaData(result.id)
@@ -17,11 +16,12 @@ const fetchNodesFromSearch = ({ query, limit = 15 }) =>
         queryIndex: queryIndex + 1,
         rendered,
       }
-    })
+    }),
   )
+}
 
-const getMetaData = name =>
-  fetch(
+function getMetaData(name) {
+  return fetch(
     `${apiBase}${queryString.stringify({
       action: `query`,
       titles: name,
@@ -30,10 +30,10 @@ const getMetaData = name =>
       prop: `extracts|revisions`,
       explaintext: 1,
       exsentences: 1,
-    })}`
+    })}`,
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       const page = data.query.pages[Object.keys(data.query.pages)[0]]
 
       if (`missing` in page) {
@@ -53,33 +53,36 @@ const getMetaData = name =>
         updated,
       }
     })
+}
 
-const search = ({ query, limit }) =>
-  fetch(
+function search({ query, limit }) {
+  return fetch(
     `${apiBase}${queryString.stringify({
       action: `opensearch`,
       search: query,
       format: `json`,
       redirects: `resolve`,
       limit,
-    })}`
+    })}`,
   )
-    .then(response => response.json())
-    .then(([term, pageTitles, descriptions, urls]) =>
+    .then((response) => response.json())
+    .then(([_term, pageTitles, descriptions, urls]) =>
       pageTitles.map((title, i) => {
         return {
           title,
           description: descriptions[i],
           id: /en.wikipedia.org\/wiki\/(.+)$/.exec(urls[i])[1],
         }
-      })
+      }),
     )
+}
 
-const getArticle = name =>
-  fetch(`https://en.m.wikipedia.org/wiki/${name}?action=render`)
-    .then(res => res.text())
-    .then(pageContent =>
-      pageContent.replace(/\/\/en\.wikipedia\.org\/wiki\//g, `/wiki/`)
+function getArticle(name) {
+  return fetch(`https://en.m.wikipedia.org/wiki/${name}?action=render`)
+    .then((res) => res.text())
+    .then((pageContent) =>
+      pageContent.replace(/\/\/en\.wikipedia\.org\/wiki\//g, `/wiki/`),
     )
+}
 
 module.exports = { fetchNodesFromSearch, getMetaData, getArticle, search }

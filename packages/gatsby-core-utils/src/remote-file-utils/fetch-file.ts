@@ -1,8 +1,6 @@
 import fs from "fs-extra"
 import type { IncomingMessage } from "http"
-// @ts-ignore
 import type { Headers, Options } from "got"
-// @ts-ignore
 import type { GatsbyCache } from "gatsby"
 
 // keeping the I for backward compatibility
@@ -19,7 +17,7 @@ export type IFetchRemoteFileOptions = {
   name?: string | undefined
   cacheKey?: string | undefined
   excludeDigest?: boolean | undefined
-  directory: string
+  directory?: string | undefined
   cache?: GatsbyCache | undefined
 }
 
@@ -78,7 +76,7 @@ export async function requestRemoteNode(
   url: string | URL,
   headers: Headers,
   tmpFilename: string,
-  httpOptions?: Options,
+  httpOptions?: Partial<Options> | undefined,
   attempt: number = 1,
 ): Promise<IncomingMessage> {
   // TODO(v5): use dynamic import syntax - it's currently blocked because older v4 versions have V8-compile-cache
@@ -137,7 +135,7 @@ export async function requestRemoteNode(
     let haveAllBytesBeenWritten = false
     // Fixes a bug in latest got where progress.total gets reset when stream ends, even if it wasn't complete.
     let totalSize: number | null = null
-    responseStream.on(`downloadProgress`, progress => {
+    responseStream.on(`downloadProgress`, (progress) => {
       // reset the timeout on each progress event to make sure large files don't timeout
       resetTimeout()
 
@@ -157,7 +155,7 @@ export async function requestRemoteNode(
 
     // If there's a 400/500 response or other error.
     // it will trigger a finish event on fsWriteStream
-    responseStream.on(`error`, async error => {
+    responseStream.on(`error`, async (error) => {
       if (timeout) {
         clearTimeout(timeout)
       }
@@ -232,7 +230,7 @@ export async function requestRemoteNode(
       return reject(error)
     })
 
-    responseStream.on(`response`, response => {
+    responseStream.on(`response`, (response) => {
       resetTimeout()
 
       fsWriteStream.once(`finish`, async () => {

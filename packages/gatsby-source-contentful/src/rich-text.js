@@ -7,6 +7,7 @@ export function renderRichText({ raw, references }, options = {}) {
 
   // If no references are given, there is no need to resolve them
   if (!references || !references.length) {
+    // @ts-ignore
     return documentToReactComponents(richText, options)
   }
 
@@ -21,7 +22,7 @@ export function renderRichText({ raw, references }, options = {}) {
     includes: {
       Entry: references
         .filter(({ __typename }) => __typename !== `ContentfulAsset`)
-        .map(reference => {
+        .map((reference) => {
           return {
             ...reference,
             sys: { type: `Entry`, id: reference.contentful_id },
@@ -29,7 +30,7 @@ export function renderRichText({ raw, references }, options = {}) {
         }),
       Asset: references
         .filter(({ __typename }) => __typename === `ContentfulAsset`)
-        .map(reference => {
+        .map((reference) => {
           return {
             ...reference,
             sys: { type: `Asset`, id: reference.contentful_id },

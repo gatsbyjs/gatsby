@@ -1,21 +1,22 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash"
 import fastq from "fastq"
-import { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress"
+import type { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress"
 import { store } from "../redux"
-import { IGatsbyPage, IGatsbyState } from "../redux/types"
+import type { IGatsbyPage, IGatsbyState } from "../redux/types"
 import { hasFlag, FLAG_ERROR_EXTRACTION } from "../redux/reducers/queries"
-import { IQueryJob, queryRunner } from "./query-runner"
+import { type IQueryJob, queryRunner } from "./query-runner"
 import {
-  IStaticQueryResult,
+  type IStaticQueryResult,
   websocketManager,
 } from "../utils/websocket-manager"
 import { GraphQLRunner } from "./graphql-runner"
-import { IGroupedQueryIds } from "../services"
+import type { IGroupedQueryIds } from "../services"
 import { createPageDependencyBatcher } from "../redux/actions/add-page-dependency"
 
 if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
   console.info(
-    `GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: Running with concurrency set to \`${process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY}\``
+    `GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: Running with concurrency set to \`${process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY}\``,
   )
 }
 
@@ -58,7 +59,7 @@ export { calcDirtyQueryIds as calcInitialDirtyQueryIds }
  * Groups queryIds by whether they are static or page queries.
  */
 export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
-  const grouped = _.groupBy(queryIds, p => {
+  const grouped = _.groupBy(queryIds, (p) => {
     if (p.startsWith(`sq--`)) {
       return `static`
     } else if (p.startsWith(`slice--`)) {
@@ -74,7 +75,7 @@ export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
     staticQueryIds: grouped?.static || [],
     pageQueryIds:
       grouped?.page
-        ?.map(path => pages.get(path) as IGatsbyPage)
+        ?.map((path) => pages.get(path) as IGatsbyPage)
         ?.filter(Boolean) || [],
     sliceQueryIds: grouped?.slice || [],
   }
@@ -89,12 +90,13 @@ function createQueue<QueryIDType>({
 }: {
   createJobFn: (
     state: IGatsbyState,
-    queryId: QueryIDType
+    queryId: QueryIDType,
   ) => IQueryJob | undefined
   state: IGatsbyState
   activity: IProgressReporter
   graphqlRunner: GraphQLRunner
   graphqlTracing: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }): fastq.queue<QueryIDType, any> {
   if (!graphqlRunner) {
     graphqlRunner = new GraphQLRunner(store, { graphqlTracing })
@@ -108,7 +110,7 @@ function createQueue<QueryIDType>({
       return
     }
     queryRunner(graphqlRunner, job, activity?.span)
-      .then(result => {
+      .then((result) => {
         if (activity.tick) {
           activity.tick()
         }
@@ -116,7 +118,7 @@ function createQueue<QueryIDType>({
         //  to get started during query running
         setImmediate(() => cb(null, { job, result }))
       })
-      .catch(error => {
+      .catch((error) => {
         cb(error)
       })
   }
@@ -136,7 +138,7 @@ async function processQueries<QueryIDType>({
   queryIds: Array<QueryIDType>
   createJobFn: (
     state: IGatsbyState,
-    queryId: QueryIDType
+    queryId: QueryIDType,
   ) => IQueryJob | undefined
   onQueryDone:
     | (({ job, result }: { job: IQueryJob; result: unknown }) => void)
@@ -169,7 +171,9 @@ async function processQueries<QueryIDType>({
     })
 
     if (!fastQueue.idle()) {
-      fastQueue.drain = (): any => resolve()
+      fastQueue.drain = (): void => {
+        return resolve()
+      }
     } else {
       resolve()
     }
@@ -178,7 +182,7 @@ async function processQueries<QueryIDType>({
 
 function createStaticQueryJob(
   state: IGatsbyState,
-  queryId: string
+  queryId: string,
 ): IQueryJob | undefined {
   const component = state.staticQueryComponents.get(queryId)
 
@@ -200,7 +204,7 @@ function createStaticQueryJob(
 
 function createSliceQueryJob(
   state: IGatsbyState,
-  queryId: string
+  queryId: string,
 ): IQueryJob | undefined {
   const sliceName = queryId.substring(7) // remove "slice--" prefix
 
@@ -249,7 +253,7 @@ function onDevelopStaticQueryDone({
 
 export async function processStaticQueries(
   queryIds: IGroupedQueryIds["staticQueryIds"],
-  { state, activity, graphqlRunner, graphqlTracing }
+  { state, activity, graphqlRunner, graphqlTracing },
 ): Promise<void> {
   const processedQueries = await processQueries<string>({
     queryIds,
@@ -273,7 +277,7 @@ export async function processStaticQueries(
 
 export async function processSliceQueries(
   queryIds: IGroupedQueryIds["sliceQueryIds"],
-  { state, activity, graphqlRunner, graphqlTracing }
+  { state, activity, graphqlRunner, graphqlTracing },
 ): Promise<void> {
   const processedQueries = await processQueries<string>({
     queryIds,
@@ -294,7 +298,7 @@ export async function processSliceQueries(
 
 export async function processPageQueries(
   queryIds: IGroupedQueryIds["pageQueryIds"],
-  { state, activity, graphqlRunner, graphqlTracing }
+  { state, activity, graphqlRunner, graphqlTracing },
 ): Promise<void> {
   const processedQueries = await processQueries<IGatsbyPage>({
     queryIds,
@@ -315,7 +319,7 @@ export async function processPageQueries(
 
 function createPageQueryJob(
   state: IGatsbyState,
-  page: IGatsbyPage
+  page: IGatsbyPage,
 ): IQueryJob | undefined {
   const component = state.components.get(page.componentPath)
 

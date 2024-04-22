@@ -40,8 +40,8 @@ export function getPhysicalCpuCount(): number {
       return output
         .replace(/\r/g, ``)
         .split(`\n`)
-        .map(line => Number(line))
-        .filter(value => !isNaN(value))
+        .map((line) => Number(line))
+        .filter((value) => !isNaN(value))
         .reduce((sum, number) => sum + number, 0)
     }
   } catch (err) {

@@ -15,7 +15,7 @@ export class ProductVariantsQuery extends BulkQuery {
     const includeLocations =
       !!this.pluginOptions.shopifyConnections?.includes(`locations`)
 
-    const queryString = filters.map(f => `(${f})`).join(` AND `)
+    const queryString = filters.map((f) => `(${f})`).join(` AND `)
 
     const query = `
       {

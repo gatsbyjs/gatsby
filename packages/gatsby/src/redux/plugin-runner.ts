@@ -1,8 +1,8 @@
 import { Span } from "opentracing"
 import { emitter, store } from "./index"
 import { apiRunnerNode } from "../utils/api-runner-node"
-import { ActivityTracker } from "../../"
-import { ICreateNodeAction } from "./types"
+import type { ActivityTracker } from "../../"
+import type { ICreateNodeAction } from "./types"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Plugin = any // TODO
@@ -46,10 +46,10 @@ type ICreatePageAction = {
 
 export function startPluginRunner(): void {
   const plugins = store.getState().flattenedPlugins
-  const pluginsImplementingOnCreatePage = plugins.filter(plugin =>
+  const pluginsImplementingOnCreatePage = plugins.filter((plugin) =>
     plugin.nodeAPIs.includes(`onCreatePage`),
   )
-  const pluginsImplementingOnCreateNode = plugins.filter(plugin =>
+  const pluginsImplementingOnCreateNode = plugins.filter((plugin) =>
     plugin.nodeAPIs.includes(`onCreateNode`),
   )
   if (pluginsImplementingOnCreatePage.length > 0) {

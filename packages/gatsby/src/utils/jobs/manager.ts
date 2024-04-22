@@ -8,13 +8,13 @@ import { createContentDigest, slash, uuid } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IPhantomReporter } from "gatsby-cli"
 import {
-  JobInput,
-  InternalJob,
+  type JobInput,
+  type InternalJob,
   MESSAGE_TYPES,
-  IJobCreatedMessage,
-  IJobCompletedMessage,
-  IJobFailed,
-  IJobNotWhitelisted,
+  type IJobCreatedMessage,
+  type IJobCompletedMessage,
+  type IJobFailed,
+  type IJobNotWhitelisted,
   WorkerError,
 } from "./types"
 import { importGatsbyPlugin } from "../import-gatsby-plugin"
@@ -23,7 +23,7 @@ type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
 type OutgoingMessages = IJobCreatedMessage
 
-export { InternalJob }
+export type { InternalJob }
 export type JobResultInterface = Record<string, unknown>
 
 let activityForJobs: IPhantomReporter | null = null
@@ -107,7 +107,7 @@ function isJobsIPCMessage(msg: any): msg is IncomingMessages {
 }
 
 function listenForJobMessages(): void {
-  process.on(`message`, msg => {
+  process.on(`message`, (msg) => {
     if (isJobsIPCMessage(msg)) {
       const { job, deferred } = externalJobsMap.get(msg.payload.id)!
 
@@ -162,7 +162,7 @@ function runJob(
 ): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
-    return importGatsbyPlugin(plugin, `gatsby-worker`).then(worker => {
+    return importGatsbyPlugin(plugin, `gatsby-worker`).then((worker) => {
       if (!worker[job.name]) {
         throw new Error(`No worker function found for ${job.name}`)
       }
@@ -206,7 +206,11 @@ function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
  */
 export function createInternalJob(
   job: JobInput | InternalJob,
-  plugin: { name: string; version: string; resolve: string },
+  plugin: {
+    name: string
+    version?: string | undefined
+    resolve?: string | undefined
+  },
 ): InternalJob {
   // It looks like we already have an augmented job so we shouldn't redo this work
   if (isInternalJob(job)) {
@@ -236,7 +240,7 @@ export function createInternalJob(
       name: plugin.name,
       version: plugin.version,
       resolve: plugin.resolve,
-      isLocal: !plugin.resolve.includes(`/node_modules/`),
+      isLocal: !plugin.resolve?.includes(`/node_modules/`),
     },
   }
 
@@ -244,7 +248,7 @@ export function createInternalJob(
   internalJob.contentDigest = createContentDigest({
     name: job.name,
     inputPaths: internalJob.inputPaths.map(
-      inputPath => inputPath.contentDigest,
+      (inputPath) => inputPath.contentDigest,
     ),
     outputDir: internalJob.outputDir,
     args: internalJob.args,
@@ -374,7 +378,7 @@ export async function waitJobs(jobDigests: Set<string>): Promise<void> {
 export function isJobStale(
   job: Partial<InternalJob> & { inputPaths: InternalJob["inputPaths"] },
 ): boolean {
-  const areInputPathsStale = job.inputPaths.some(inputPath => {
+  const areInputPathsStale = job.inputPaths.some((inputPath) => {
     // does the inputPath still exists?
     if (!fs.existsSync(inputPath.path)) {
       return true

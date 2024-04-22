@@ -8,7 +8,6 @@ const {
 } = require("@apollo/client")
 const { WebSocketLink } = require("@apollo/client/link/ws")
 const { getMainDefinition } = require("@apollo/client/utilities")
-const fetch = require("node-fetch")
 const gql = require("graphql-tag")
 
 /**
@@ -44,7 +43,7 @@ const link = split(
     )
   },
   wsLink,
-  httpLink
+  httpLink,
 )
 
 const client = new ApolloClient({
@@ -130,7 +129,7 @@ exports.sourceNodes = async function sourceNodes(
     getNodesByType,
     getNode,
   },
-  pluginOptions
+  pluginOptions,
 ) {
   const { createNode, touchNode, deleteNode } = actions
   const helpers = Object.assign({}, actions, {
@@ -146,13 +145,13 @@ exports.sourceNodes = async function sourceNodes(
   console.log(await cache.get(`hello`))
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(POST_NODE_TYPE).forEach((node) => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach((node) => touchNode(node))
 
   // listen for updates using subscriptions from the API
   if (pluginOptions.preview) {
     console.log(
-      "Subscribing to updates on ws://localhost:4000 (plugin is in Preview mode)"
+      "Subscribing to updates on ws://localhost:4000 (plugin is in Preview mode)",
     )
     const subscription = await client.subscribe({
       query: gql`
@@ -175,7 +174,7 @@ exports.sourceNodes = async function sourceNodes(
     subscription.subscribe(({ data }) => {
       console.log(`Subscription received:`)
       console.log(data.posts)
-      data.posts.forEach(post => {
+      data.posts.forEach((post) => {
         const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
         switch (post.status) {
           case "deleted":
@@ -226,11 +225,11 @@ exports.sourceNodes = async function sourceNodes(
   }
 
   // loop through data returned from the api and create Gatsby nodes for them
-  sourceData.posts.forEach(post =>
-    createNodeFromData(post, POST_NODE_TYPE, helpers)
+  sourceData.posts.forEach((post) =>
+    createNodeFromData(post, POST_NODE_TYPE, helpers),
   )
-  sourceData.authors.forEach(author =>
-    createNodeFromData(author, AUTHOR_NODE_TYPE, helpers)
+  sourceData.authors.forEach((author) =>
+    createNodeFromData(author, AUTHOR_NODE_TYPE, helpers),
   )
 
   return

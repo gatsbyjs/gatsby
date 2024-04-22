@@ -44,11 +44,11 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
 
   const bar = reporter.createProgress(
     `Downloading Contentful Assets`,
-    assetNodes.length
+    assetNodes.length,
   )
   bar.start()
   await distributeWorkload(
-    assetNodes.map(node => async () => {
+    assetNodes.map((node) => async () => {
       let fileNodeID
       const { contentful_id: id, node_locale: locale } = node
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
@@ -60,7 +60,7 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
       }
       if (!node.file.url) {
         reporter.warn(
-          `The asset with id: ${id} has a file but the file contains no url.`
+          `The asset with id: ${id} has a file but the file contains no url.`,
         )
         return Promise.resolve()
       }
@@ -97,6 +97,6 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
 
       return node
     }),
-    assetDownloadWorkers
+    assetDownloadWorkers,
   )
 }

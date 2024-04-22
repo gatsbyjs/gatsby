@@ -1,8 +1,7 @@
-import path from "path"
+import path from "node:path"
 import { copyLibFiles } from "@builder.io/partytown/utils"
-// @ts-ignore
-import { CreateDevServerArgs } from "gatsby"
 import { thirdPartyProxyPath, partytownProxy } from "./proxy"
+import type { CreateDevServerArgs } from "../../.."
 
 /**
  * Copy Partytown library files to public.

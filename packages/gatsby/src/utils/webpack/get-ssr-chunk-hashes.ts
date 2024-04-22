@@ -7,7 +7,7 @@ function getHashes(
   chunkGroup: ChunkGroup,
   compilation: webpack.Compilation,
   hashes: Array<string> = [],
-  visitedChunkGroups: Set<ChunkGroup> = new Set()
+  visitedChunkGroups: Set<ChunkGroup> = new Set(),
 ): Array<string> {
   if (visitedChunkGroups.has(chunkGroup)) {
     return hashes
@@ -17,7 +17,7 @@ function getHashes(
   for (const chunk of chunkGroup.chunks) {
     if (!chunk.hash) {
       throw new Error(
-        `Invariant: [generating template hashes] Chunk doesn't have hash`
+        `Invariant: [generating template hashes] Chunk doesn't have hash`,
       )
     }
     hashes.push(chunk.hash)
@@ -25,7 +25,7 @@ function getHashes(
 
   for (const childChunkGroup of chunkGroup.childrenIterable) {
     const isNotImportedByAsyncRequires = childChunkGroup.origins.every(
-      origin => !origin.module.identifier().includes(`async-requires`)
+      (origin) => !origin.module.identifier().includes(`async-requires`),
     )
 
     if (isNotImportedByAsyncRequires) {
@@ -50,7 +50,7 @@ export function getSSRChunkHashes({
   const componentChunkNameToTemplatePath: Record<string, string> = {}
   let renderPageHash = ``
 
-  components.forEach(component => {
+  components.forEach((component) => {
     componentChunkNameToTemplatePath[component.componentChunkName] =
       component.componentPath
   })
@@ -59,7 +59,7 @@ export function getSSRChunkHashes({
     if (chunkGroup.name) {
       const concenatedChunksByName = getHashes(
         chunkGroup,
-        stats.compilation
+        stats.compilation,
       ).join(`--`)
 
       if (chunkGroup.name !== `render-page`) {

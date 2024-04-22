@@ -4,7 +4,7 @@ const { store } = require(`../../redux`)
 module.exports = function (pageComponent) {
   const shadowingPlugin = new GatsbyThemeComponentShadowingResolverPlugin({
     extensions: store.getState().program.extensions,
-    themes: store.getState().flattenedPlugins.map(aPlugin => {
+    themes: store.getState().flattenedPlugins.map((aPlugin) => {
       return {
         themeDir: aPlugin.pluginFilepath,
         themeName: aPlugin.name,

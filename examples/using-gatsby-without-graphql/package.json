@@ -9,7 +9,6 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "axios": "^0.20.0",
     "gatsby": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

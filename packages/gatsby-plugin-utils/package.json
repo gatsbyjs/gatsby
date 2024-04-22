@@ -64,13 +64,15 @@
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
-    "msw": "^2.2.13",
+    "msw": "^2.2.14",
     "rimraf": "^5.0.5",
     "typescript": "5.4.5"
   },
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
-    "graphql": "^16.0.0"
+    "gatsby": "^5.14.0-next.2",
+    "graphql": "^16.8.1",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "files": [
     "dist/"

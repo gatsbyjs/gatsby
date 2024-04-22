@@ -26,8 +26,10 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.13.4",
-    "postcss": "^8.4.38"
+    "gatsby": "^5.14.0-next.2",
+    "postcss": "^8.4.38",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

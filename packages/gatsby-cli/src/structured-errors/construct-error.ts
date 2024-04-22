@@ -2,19 +2,19 @@ import stackTrace from "stack-trace"
 import { errorSchema } from "./error-schema"
 import {
   defaultError,
-  ErrorId,
+  type ErrorId,
   errorMap,
-  IErrorMapEntryPublicApi,
+  type IErrorMapEntryPublicApi,
 } from "./error-map"
 import { sanitizeStructuredStackTrace } from "../reporter/errors"
-import { IConstructError, IStructuredError } from "./types"
+import type { IConstructError, IStructuredError } from "./types"
 
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
-const constructError = (
+function constructError(
   { details: { id, ...otherDetails } }: IConstructError,
   suppliedErrorMap: Record<ErrorId, IErrorMapEntryPublicApi>,
-): IStructuredError => {
+): IStructuredError {
   let errorMapEntry = defaultError
 
   if (id) {

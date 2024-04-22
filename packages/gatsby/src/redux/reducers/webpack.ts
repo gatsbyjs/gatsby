@@ -1,5 +1,5 @@
 import merge from "webpack-merge"
-import { ActionsUnion, IGatsbyState } from "../types"
+import type { ActionsUnion, IGatsbyState } from "../types"
 
 export function webpackReducer(
   state: IGatsbyState["webpack"] = {},

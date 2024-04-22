@@ -18,9 +18,9 @@ import * as buildUtils from "./build-utils"
 import { getPageData } from "../utils/get-page-data"
 
 import { Span, SpanContext } from "opentracing"
-import { IProgram, Stage } from "./types"
+import type { IProgram, Stage } from "./types"
 import { ROUTES_DIRECTORY } from "../constants"
-import { PackageJson } from "../.."
+import type { PackageJson } from "../.."
 import { getPublicPath } from "../utils/get-public-path"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
@@ -46,8 +46,8 @@ export type IBuildArgs = IProgram & {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
-  functionsPlatform?: string
-  functionsArch?: string
+  functionsPlatform?: string | undefined
+  functionsArch?: string | undefined
   // TODO remove in v4
   keepPageRenderer: boolean
 }
@@ -92,7 +92,7 @@ export function getDevSSRWebpack(): {
       ): Promise<() => void> {
         let isResolved = false
 
-        return await new Promise<() => void>(resolve => {
+        return await new Promise<() => void>((resolve) => {
           function stopWatching(): void {
             activeRecompilations--
             if (activeRecompilations === 0) {
@@ -145,14 +145,14 @@ export function getDevSSRWebpack(): {
 
 let oldHash = ``
 let newHash = ``
-const runWebpack = (
+function runWebpack(
   compilerConfig,
   stage: Stage,
   directory: string,
 ): Promise<{
   stats: webpack.Stats
   close: ReturnType<typeof watch>["close"]
-}> => {
+}> {
   const isDevSSREnabledAndViable =
     process.env.GATSBY_EXPERIMENTAL_DEV_SSR && stage === `develop-html`
 
@@ -199,7 +199,7 @@ const runWebpack = (
               stats: stats as webpack.Stats,
               close: () =>
                 new Promise((resolve, reject): void =>
-                  watcher.close(err => (err ? reject(err) : resolve())),
+                  watcher.close((err) => (err ? reject(err) : resolve())),
                 ),
             })
           }
@@ -211,17 +211,17 @@ const runWebpack = (
         ({ stats, close }) => {
           resolve({ stats, close })
         },
-        err => reject(err),
+        (err) => reject(err),
       )
     }
   })
 }
 
-const doBuildRenderer = async (
+async function doBuildRenderer(
   directory: string,
   webpackConfig: webpack.Configuration,
   stage: Stage,
-): Promise<IBuildRendererResult> => {
+): Promise<IBuildRendererResult> {
   const { stats, close } = await runWebpack(webpackConfig, stage, directory)
 
   if (stats?.hasErrors()) {
@@ -242,11 +242,11 @@ const doBuildRenderer = async (
   }
 }
 
-const doBuildPartialHydrationRenderer = async (
+async function doBuildPartialHydrationRenderer(
   directory: string,
   webpackConfig: webpack.Configuration,
   stage: Stage,
-): Promise<IBuildRendererResult> => {
+): Promise<IBuildRendererResult> {
   const { stats, close } = await runWebpack(webpackConfig, stage, directory)
   if (stats?.hasErrors()) {
     reporter.panicOnBuild(
@@ -262,12 +262,12 @@ const doBuildPartialHydrationRenderer = async (
   }
 }
 
-export const buildRenderer = async (
+export async function buildRenderer(
   program: IProgram,
   stage: Stage,
   parentSpan?: Span | SpanContext | undefined,
   nonce?: string | undefined,
-): Promise<IBuildRendererResult> => {
+): Promise<IBuildRendererResult> {
   const config = await webpackConfig(
     program,
     program.directory,
@@ -282,12 +282,12 @@ export const buildRenderer = async (
   return doBuildRenderer(program.directory, config, stage)
 }
 
-export const buildPartialHydrationRenderer = async (
+export async function buildPartialHydrationRenderer(
   program: IProgram,
   stage: Stage,
   parentSpan?: IActivity | undefined,
   nonce?: string | undefined,
-): Promise<IBuildRendererResult> => {
+): Promise<IBuildRendererResult> {
   const config = await webpackConfig(
     program,
     program.directory,
@@ -349,7 +349,7 @@ export const buildPartialHydrationRenderer = async (
 }
 
 // TODO remove after v4 release and update cloud internals
-export const deleteRenderer = async (rendererPath: string): Promise<void> => {
+export async function deleteRenderer(rendererPath: string): Promise<void> {
   try {
     await fs.remove(rendererPath)
     await fs.remove(`${rendererPath}.map`)
@@ -375,13 +375,13 @@ export type IRenderHtmlResult = {
   >
 }
 
-const renderHTMLQueue = async (
+async function renderHTMLQueue(
   workerPool: GatsbyWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: Array<string>,
   stage: Stage = `build-html`,
-): Promise<void> => {
+): Promise<void> {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
   const envVars: Array<[string, string | undefined]> = [
@@ -404,7 +404,7 @@ const renderHTMLQueue = async (
   const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
 
   try {
-    await Bluebird.map(segments, async pageSegment => {
+    await Bluebird.map(segments, async (pageSegment) => {
       const renderHTMLResult = await renderHTML({
         envVars,
         htmlComponentRendererPath,
@@ -430,9 +430,7 @@ const renderHTMLQueue = async (
                   `${htmlComponentRendererPath}.map`,
                 )
 
-                const errorMessageStr = `${prettyError.stack}${
-                  prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
-                }`
+                const errorMessageStr = `${prettyError.stack}${prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``}`
 
                 const errorMessage = errorMessages.get(error.stack)
                 errorMessage.errorMessage = errorMessageStr
@@ -448,7 +446,7 @@ const renderHTMLQueue = async (
 
         for (const value of errorMessages.values()) {
           const errorMessage = `The following page(s) saw this error when building their HTML:\n\n${value.pagePaths
-            .map(p => `- ${p}`)
+            .map((p) => `- ${p}`)
             .join(`\n`)}\n\n${value.errorMessage}`
           reporter.error({
             id: `95314`,
@@ -514,21 +512,19 @@ const renderHTMLQueue = async (
         `${htmlComponentRendererPath}.map`,
       )
 
-      const warningMessage = `${prettyError.stack}${
-        prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
-      }`
+      const warningMessage = `${prettyError.stack}${prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``}`
 
       reporter.warn(warningMessage)
     }
   }
 }
 
-const renderPartialHydrationQueue = async (
+async function renderPartialHydrationQueue(
   workerPool: GatsbyWorkerPool,
   activity: IActivity,
   pages: Array<string>,
   program: IProgram,
-): Promise<void> => {
+): Promise<void> {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
   const envVars: Array<[string, string | undefined]> = [
@@ -545,7 +541,7 @@ const renderPartialHydrationQueue = async (
 
   // Let the error bubble up
   await Promise.all(
-    segments.map(async pageSegment => {
+    segments.map(async (pageSegment) => {
       await workerPool.single.renderPartialHydrationProd({
         envVars,
         paths: pageSegment,
@@ -571,19 +567,19 @@ class BuildHTMLError extends Error {
 
     // We must use getOwnProperty because keys like `stack` are not enumerable,
     // but we want to copy over the entire error
-    Object.getOwnPropertyNames(error).forEach(key => {
+    Object.getOwnPropertyNames(error).forEach((key) => {
       this[key] = error[key]
     })
   }
 }
 
-export const doBuildPages = async (
+export async function doBuildPages(
   rendererPath: string,
   pagePaths: Array<string>,
   activity: IActivity,
   workerPool: GatsbyWorkerPool,
   stage: Stage,
-): Promise<void> => {
+): Promise<void> {
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
@@ -597,9 +593,7 @@ export const doBuildPages = async (
       const modifiedPageDataForErrorMessage =
         modifyPageDataForErrorMessage(pageData)
 
-      const errorMessage = `Truncated page data information for the failed page "${
-        error.context.path
-      }": ${JSON.stringify(modifiedPageDataForErrorMessage, null, 2)}`
+      const errorMessage = `Truncated page data information for the failed page "${error.context.path}": ${JSON.stringify(modifiedPageDataForErrorMessage, null, 2)}`
 
       // This is our only error during preview so customize it a bit + add the
       // pretty build error.
@@ -622,7 +616,7 @@ export const doBuildPages = async (
 }
 
 // TODO remove in v4 - this could be a "public" api
-export const buildHTML = async ({
+export async function buildHTML({
   program,
   stage,
   pagePaths,
@@ -634,7 +628,7 @@ export const buildHTML = async ({
   pagePaths: Array<string>
   activity: IActivity
   workerPool: GatsbyWorkerPool
-}): Promise<void> => {
+}): Promise<void> {
   const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
 
@@ -653,7 +647,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   program,
 }: {
   workerPool: GatsbyWorkerPool
-  parentSpan?: Span
+  parentSpan?: Span | undefined
   program: IBuildArgs
 }): Promise<{
   toRegenerate: Array<string>
@@ -789,7 +783,7 @@ export async function buildSlices({
   parentSpan,
 }: {
   workerPool: GatsbyWorkerPool
-  parentSpan?: Span
+  parentSpan?: Span | undefined
   program: IBuildArgs
 }): Promise<void> {
   const state = store.getState()
@@ -879,7 +873,7 @@ export async function stitchSlicesIntoPagesHTML({
   parentSpan,
 }: {
   publicDir: string
-  parentSpan?: Span
+  parentSpan?: Span | undefined
 }): Promise<void> {
   const stitchSlicesActivity = reporter.activityTimer(`stitching slices`, {
     parentSpan,
@@ -908,7 +902,7 @@ export async function stitchSlicesIntoPagesHTML({
     }
 
     if (!stitchQueue.idle()) {
-      await new Promise(resolve => {
+      await new Promise((resolve) => {
         stitchQueue.drain = resolve as () => unknown
       })
     }

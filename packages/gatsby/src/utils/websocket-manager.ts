@@ -1,24 +1,23 @@
-/* eslint-disable no-invalid-this */
-
 import { store, emitter } from "../redux"
-import { IAddPendingTemplateDataWriteAction } from "../redux/types"
+import type { IAddPendingTemplateDataWriteAction } from "../redux/types"
 import { clearDirtyQueriesListToEmitViaWebsocket } from "../redux/actions/internal"
-import { Server as HTTPSServer } from "https"
-import { Server as HTTPServer } from "http"
-import { IPageDataWithQueryResult } from "../utils/page-data"
+import { Server as HTTPSServer } from "node:https"
+import { Server as HTTPServer } from "node:http"
+import type { IPageDataWithQueryResult } from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
-import url from "url"
-import { createHash } from "crypto"
+import url from "node:url"
+import { createHash } from "node:crypto"
 import { findPageByPath } from "./find-page-by-path"
 import { Server as SocketIO, Socket } from "socket.io"
 import { getPageMode } from "./page-mode"
+import type { IStructuredError } from "gatsby-telemetry/lib/telemetry"
 
-export interface IPageOrSliceQueryResult {
+export type IPageOrSliceQueryResult = {
   id: string
-  result?: IPageDataWithQueryResult
+  result?: IPageDataWithQueryResult | undefined
 }
 
-export interface IStaticQueryResult {
+export type IStaticQueryResult = {
   id: string
   result: unknown // TODO: Improve this once we understand what the type is
 }
@@ -26,10 +25,10 @@ export interface IStaticQueryResult {
 type QueryResultsMap = Map<string, IStaticQueryResult>
 
 function hashPaths(paths: Array<string>): Array<string> {
-  return paths.map(path => createHash(`sha256`).update(path).digest(`hex`))
+  return paths.map((path) => createHash(`sha256`).update(path).digest(`hex`))
 }
 
-interface IClientInfo {
+type IClientInfo = {
   activePath: string | null
   socket: Socket
 }
@@ -37,7 +36,7 @@ interface IClientInfo {
 export class WebsocketManager {
   activePaths: Set<string> = new Set()
   clients: Set<IClientInfo> = new Set()
-  errors: Map<string, string> = new Map()
+  errors: Map<string, IStructuredError | Array<IStructuredError>> = new Map()
   staticQueryResults: QueryResultsMap = new Map()
   websocket: SocketIO | undefined
 
@@ -66,7 +65,7 @@ export class WebsocketManager {
       this.activePaths = serverActivePaths
     }
 
-    websocket.on(`connection`, socket => {
+    websocket.on(`connection`, (socket) => {
       const clientInfo: IClientInfo = {
         activePath: null,
         socket,
@@ -75,14 +74,14 @@ export class WebsocketManager {
 
       const setActivePath = (
         newActivePath: string | null,
-        fallbackTo404: boolean = false
+        fallbackTo404: boolean = false,
       ): void => {
         let activePagePath: string | null = null
         if (newActivePath) {
           const page = findPageByPath(
             store.getState(),
             newActivePath,
-            fallbackTo404
+            fallbackTo404,
           )
 
           if (page) {
@@ -123,7 +122,7 @@ export class WebsocketManager {
         this.clients.delete(clientInfo)
       })
 
-      socket.on(`unregisterPath`, (_path: string): void => {
+      socket.on(`unregisterPath`, (): void => {
         setActivePath(null)
       })
     })
@@ -134,26 +133,26 @@ export class WebsocketManager {
         this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)
       emitter.on(
         `CREATE_PAGE`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
+        boundEmitStalePageDataPathsFromDirtyQueryTracking,
       )
       emitter.on(
         `CREATE_NODE`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
+        boundEmitStalePageDataPathsFromDirtyQueryTracking,
       )
       emitter.on(
         `DELETE_NODE`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
+        boundEmitStalePageDataPathsFromDirtyQueryTracking,
       )
       emitter.on(
         `QUERY_EXTRACTED`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
+        boundEmitStalePageDataPathsFromDirtyQueryTracking,
       )
     }
 
     // page-data marked stale due to static query hashes change
     emitter.on(
       `ADD_PENDING_TEMPLATE_DATA_WRITE`,
-      this.emitStalePageDataPathsFromStaticQueriesAssignment.bind(this)
+      this.emitStalePageDataPathsFromStaticQueriesAssignment.bind(this),
     )
 
     return websocket
@@ -176,7 +175,7 @@ export class WebsocketManager {
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
-          { debounce: true }
+          { debounce: true },
         )
       }
     }
@@ -195,7 +194,7 @@ export class WebsocketManager {
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
-          { debounce: true }
+          { debounce: true },
         )
       }
     }
@@ -207,7 +206,10 @@ export class WebsocketManager {
     }
   }
 
-  emitError = (id: string, message?: string): void => {
+  emitError = (
+    id: string,
+    message?: IStructuredError | Array<IStructuredError> | null | undefined,
+  ): void => {
     if (message) {
       this.errors.set(id, message)
     } else {
@@ -232,10 +234,10 @@ export class WebsocketManager {
   }
 
   emitStalePageDataPathsFromStaticQueriesAssignment(
-    pendingTemplateDataWrite: IAddPendingTemplateDataWriteAction
+    pendingTemplateDataWrite: IAddPendingTemplateDataWriteAction,
   ): void {
     this.emitStalePageDataPaths(
-      Array.from(pendingTemplateDataWrite.payload.pages)
+      Array.from(pendingTemplateDataWrite.payload.pages),
     )
   }
 

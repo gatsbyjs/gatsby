@@ -1,22 +1,21 @@
 // NOTE(@mxstbr): Do not use the reporter in this file, as that has side-effects on import which break structured logging
-import path from "path"
+import path from "node:path"
 import tmp from "tmp"
-import { ChildProcess } from "child_process"
+import { ChildProcess } from "node:child_process"
 import { execaNode } from "execa"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import fs from "fs-extra"
 import { onExit } from "signal-exit"
 import { v4 } from "gatsby-core-utils/uuid"
 import { slash } from "gatsby-core-utils/path"
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
-import { IProgram, IDebugInfo } from "./types"
-// @ts-ignore
+import type { IProgram, IDebugInfo } from "./types"
 import { flush as telemetryFlush } from "gatsby-telemetry"
 
 // Adapted from https://stackoverflow.com/a/16060619
-const requireUncached = (file: string): any => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function requireUncached(file: string): any {
   try {
     delete require.cache[require.resolve(file)]
   } catch (e) {
@@ -31,9 +30,11 @@ const requireUncached = (file: string): any => {
 }
 
 // Return a user-supplied port otherwise the default Node.js debugging port
-const getDebugPort = (port?: number): number => port ?? 9229
+function getDebugPort(port?: number): number {
+  return port ?? 9229
+}
 
-export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
+export function getDebugInfo(program: IProgram): IDebugInfo | null {
   if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
     return {
       port: getDebugPort(program.inspect),
@@ -84,7 +85,7 @@ class ControllableScript {
   }
   async stop(
     signal: NodeJS.Signals | null = null,
-    code?: number
+    code?: number,
   ): Promise<void> {
     if (!this.process) {
       throw new Error(`Trying to stop the process before starting it`)
@@ -107,7 +108,7 @@ class ControllableScript {
             // The try/catch won't suffice for this process.send
             // So use the callback to manually catch the Error, otherwise it'll be thrown
             // Ref: https://nodejs.org/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback
-          }
+          },
         )
       }
     } catch (err) {
@@ -115,7 +116,7 @@ class ControllableScript {
       // Ref: https://github.com/gatsbyjs/gatsby/issues/28011#issuecomment-877302917
     }
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.process) {
         throw new Error(`Trying to stop the process before starting it`)
       }
@@ -129,6 +130,7 @@ class ControllableScript {
       })
     })
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onMessage(callback: (msg: any) => void): void {
     if (!this.process) {
       throw new Error(`Trying to attach message handler before process started`)
@@ -136,7 +138,7 @@ class ControllableScript {
     this.process.on(`message`, callback)
   }
   onExit(
-    callback: (code: number | null, signal: NodeJS.Signals | null) => void
+    callback: (code: number | null, signal: NodeJS.Signals | null) => void,
   ): void {
     if (!this.process) {
       throw new Error(`Trying to attach exit handler before process started`)
@@ -196,7 +198,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   // used together
   if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
     reporter.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
+      `for custom ssl --https, --cert-file, and --key-file must be used together`,
     )
   }
 
@@ -213,7 +215,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     if (REGEX_IP.test(sslHost)) {
       reporter.panic(
-        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
+        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`,
       )
     }
 
@@ -242,7 +244,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     })};
     cmd(args);
   `,
-    debugInfo
+    debugInfo,
   )
 
   const handleChildProcessIPC = (msg): void => {
@@ -285,11 +287,11 @@ module.exports = async (program: IProgram): Promise<void> => {
       // but just in case let do non-zero exit, because we are in situation
       // we don't expect to be possible
       process.exit(1)
-    }
+    },
   )
 
   // route ipc messaging to the original develop process
-  process.on(`message`, msg => {
+  process.on(`message`, (msg) => {
     developProcess.send(msg)
   })
 
@@ -298,7 +300,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       {
         developProcess,
       },
-      `SIGINT`
+      `SIGINT`,
     )
 
     process.exit(0)
@@ -309,7 +311,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       {
         developProcess,
       },
-      `SIGTERM`
+      `SIGTERM`,
     )
 
     process.exit(0)
@@ -320,7 +322,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       {
         developProcess,
       },
-      signal as NodeJS.Signals
+      signal as NodeJS.Signals,
     )
   })
 }
@@ -331,7 +333,7 @@ type IShutdownServicesOptions = {
 
 function shutdownServices(
   { developProcess }: IShutdownServicesOptions,
-  signal: NodeJS.Signals
+  signal: NodeJS.Signals,
 ): Promise<void> {
   try {
     telemetryFlush()

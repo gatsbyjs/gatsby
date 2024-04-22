@@ -1,4 +1,4 @@
-import { open, RootDatabase, Database, DatabaseOptions } from "lmdb"
+import { open, RootDatabase, Database, type DatabaseOptions } from "lmdb"
 import * as fs from "fs-extra"
 import path from "node:path"
 

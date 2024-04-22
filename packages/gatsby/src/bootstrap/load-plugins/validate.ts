@@ -13,8 +13,8 @@ import { trackCli } from "gatsby-telemetry"
 import { isWorker } from "gatsby-worker"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-gatsby-files"
-import { GatsbyNode, PackageJson } from "../../../"
-import {
+import type { GatsbyNode, PackageJson } from "../../../"
+import type {
   IPluginInfo,
   IFlattenedPlugin,
   IPluginInfoOptions,
@@ -68,7 +68,7 @@ function getBadExports(
   let badExports: Array<IEntry> = []
   // Discover any exports from plugins which are not "known"
   badExports = badExports.concat(
-    _.difference(pluginAPIKeys, apis).map(e => {
+    _.difference(pluginAPIKeys, apis).map((e) => {
       return {
         exportName: e,
         pluginName: plugin.name,
@@ -91,7 +91,7 @@ function getErrorContext(
   fixes: Array<string>
   sourceMessage: string
 } {
-  const entries = badExports.map(ex => {
+  const entries = badExports.map((ex) => {
     return {
       ...ex,
       api: latestAPIs[exportType][ex.exportName],
@@ -104,7 +104,7 @@ function getErrorContext(
     ? [`npm install gatsby@^${gatsbyUpgradeVersion}`]
     : []
 
-  entries.forEach(entry => {
+  entries.forEach((entry) => {
     const similarities = stringSimilarity.findBestMatch(
       entry.exportName,
       currentAPIs[exportType],
@@ -162,12 +162,12 @@ export async function handleBadExports({
   badExports: { [api in ExportType]: Array<IEntry> }
 }): Promise<void> {
   const hasBadExports = Object.keys(badExports).find(
-    api => badExports[api].length > 0,
+    (api) => badExports[api].length > 0,
   )
   if (hasBadExports) {
     const latestAPIs = await getLatestAPIs()
     // Output error messages for all bad exports
-    _.toPairs(badExports).forEach(badItem => {
+    _.toPairs(badExports).forEach((badItem) => {
       const [exportType, entries] = badItem
       if (entries.length > 0) {
         const context = getErrorContext(
@@ -219,7 +219,7 @@ async function validatePluginsOptions(
 }> {
   let errors = 0
   const newPlugins = await Promise.all(
-    plugins.map(async plugin => {
+    plugins.map(async (plugin) => {
       let gatsbyNode
       try {
         const resolvedPlugin = resolvePlugin(plugin, rootDir)
@@ -238,7 +238,7 @@ async function validatePluginsOptions(
           undefined
         >
       )({
-        Joi: Joi.extend(joi => {
+        Joi: Joi.extend((joi) => {
           return {
             type: `subPlugins`,
             base: joi
@@ -254,7 +254,7 @@ async function validatePluginsOptions(
               )
               .custom((arrayValue, helpers) => {
                 const entry = helpers.schema._flags.entry
-                return arrayValue.map(value => {
+                return arrayValue.map((value) => {
                   if (typeof value === `string`) {
                     value = { resolve: value }
                   }
@@ -364,7 +364,7 @@ async function validatePluginsOptions(
             stripIndent(`
         Warning: there are unknown plugin options for "${plugin.resolve}"${
           configDir ? `, configured by ${configDir}` : ``
-        }: ${validationWarnings.map(error => error.path.join(`.`)).join(`, `)}
+        }: ${validationWarnings.map((error) => error.path.join(`.`)).join(`, `)}
         Please open an issue at https://ghub.io/${
           plugin.resolve
         } if you believe this option is valid.
@@ -373,7 +373,7 @@ async function validatePluginsOptions(
           trackCli(`UNKNOWN_PLUGIN_OPTION`, {
             name: plugin.resolve,
             valueString: validationWarnings
-              .map(error => error.path.join(`.`))
+              .map((error) => error.path.join(`.`))
               .join(`, `),
           })
           // We do not increment errors++ here as we do not want to process.exit if there are only warnings
@@ -525,8 +525,8 @@ export const handleMultipleReplaceRenderers = ({
 }): Array<IFlattenedPlugin> => {
   // multiple replaceRenderers may cause problems at build time
   const rendererPlugins = flattenedPlugins
-    .filter(plugin => plugin.ssrAPIs.includes(`replaceRenderer`))
-    .map(plugin => plugin.name)
+    .filter((plugin) => plugin.ssrAPIs.includes(`replaceRenderer`))
+    .map((plugin) => plugin.name)
   if (rendererPlugins.length > 1) {
     if (rendererPlugins.includes(`default-site-plugin`)) {
       reporter.warn(`replaceRenderer API found in these plugins:`)
@@ -563,7 +563,7 @@ export const handleMultipleReplaceRenderers = ({
     })
     if (messages.length > 0) {
       console.log(``)
-      messages.forEach(m => reporter.warn(m))
+      messages.forEach((m) => reporter.warn(m))
       console.log(``)
     }
   }

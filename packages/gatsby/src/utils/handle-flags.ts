@@ -19,7 +19,7 @@ function handleFlags(
   // Prepare config flags.
   // Filter out any flags that are set to false.
   const availableFlags = new Map<string, IFlag>()
-  flags.forEach(flag => {
+  flags.forEach((flag) => {
     availableFlags.set(flag.name, flag)
   })
 
@@ -55,21 +55,21 @@ function handleFlags(
   if (unknownConfigFlags.length > 0) {
     unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known:`
     unknownConfigFlags.forEach(
-      flag =>
+      (flag) =>
         (unknownFlagMessage += `\n- ${flag.flag}${flag.didYouMean ? ` (did you mean: ${flag.didYouMean})` : ``}`),
     )
   }
 
   let enabledConfigFlags: Array<IFlag> = Object.keys(configFlags)
-    .filter(name => configFlags[name] && availableFlags.has(name))
-    .map(flagName => availableFlags.get(flagName)!)
+    .filter((name) => configFlags[name] && availableFlags.has(name))
+    .map((flagName) => availableFlags.get(flagName)!)
 
   // Test flags to see if it wants opted in.
   const optedInFlags = new Map<string, IFlag>()
   const applicableFlags = new Map<string, IFlag>()
   const lockedInFlags = new Map<string, IFlag>()
   const lockedInFlagsThatAreInConfig = new Map<string, IFlag>()
-  availableFlags.forEach(flag => {
+  availableFlags.forEach((flag) => {
     if (flag.command !== `all` && flag.command !== executingCommand) {
       // if flag is not for all commands and current command doesn't match command flag is for - skip
       return
@@ -112,13 +112,14 @@ function handleFlags(
       `The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:\n` +
       unfitConfigFlags
         .map(
-          flag => `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`,
+          (flag) =>
+            `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`,
         )
         .join(`\n`)
   }
 
   // Filter enabledConfigFlags against various tests
-  enabledConfigFlags = enabledConfigFlags.filter(flag => {
+  enabledConfigFlags = enabledConfigFlags.filter((flag) => {
     if (flag.command !== `all` && flag.command !== executingCommand) {
       // if flag is not for all commands and current command doesn't match command flag is for - skip
       return false
@@ -135,8 +136,8 @@ function handleFlags(
 
   const addIncluded = (flag): void => {
     if (flag.includedFlags) {
-      flag.includedFlags.forEach(includedName => {
-        const incExp = flags.find(e => e.name == includedName)
+      flag.includedFlags.forEach((includedName) => {
+        const incExp = flags.find((e) => e.name == includedName)
         if (incExp) {
           const flagIsDisabledByUser =
             typeof configFlags[includedName] !== `undefined` &&
@@ -151,7 +152,7 @@ function handleFlags(
     }
   }
   // Add to enabledConfigFlags any includedFlags
-  enabledConfigFlags.forEach(flag => {
+  enabledConfigFlags.forEach((flag) => {
     addIncluded(flag)
   })
 
@@ -181,7 +182,7 @@ function handleFlags(
       0
     ) {
       message = `The following flags are active:`
-      enabledConfigFlags.forEach(flag => {
+      enabledConfigFlags.forEach((flag) => {
         if (!optedInFlags.has(flag.name) && !lockedInFlags.has(flag.name)) {
           message += generateFlagLine(flag)
         }
@@ -194,7 +195,7 @@ function handleFlags(
       }
       message += `Some features you configured with flags are used natively now.
 Those flags no longer have any effect and you can remove them from config:`
-      lockedInFlagsThatAreInConfig.forEach(flag => {
+      lockedInFlagsThatAreInConfig.forEach((flag) => {
         message += generateFlagLine(flag)
       })
     }
@@ -213,7 +214,7 @@ flags: {
 }
 
 The following flags were automatically enabled on your site:`
-      optedInFlags.forEach(flag => {
+      optedInFlags.forEach((flag) => {
         message += generateFlagLine(flag)
       })
     }
@@ -222,8 +223,8 @@ The following flags were automatically enabled on your site:`
       // if we will print anything about flags, let's try to suggest other available ones
       const otherFlagSuggestionLines: Array<string> = []
       const enabledFlagsSet = new Set()
-      enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
-      applicableFlags.forEach(flag => {
+      enabledConfigFlags.forEach((f) => enabledFlagsSet.add(f.name))
+      applicableFlags.forEach((flag) => {
         if (
           !enabledFlagsSet.has(flag.name) &&
           typeof configFlags[flag.name] === `undefined`

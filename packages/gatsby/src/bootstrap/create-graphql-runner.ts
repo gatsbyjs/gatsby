@@ -1,14 +1,14 @@
 import stackTrace from "stack-trace"
 import { Span } from "opentracing"
-import { ExecutionResult, Source } from "graphql"
-import { Store } from "redux"
+import { type ExecutionResult, Source } from "graphql"
+import type { Store } from "redux"
 
 import { GraphQLRunner } from "../query/graphql-runner"
 import errorParser from "../query/error-parser"
 import { emitter } from "../redux"
-import { Reporter } from "../.."
-import { IGatsbyState } from "../redux/types"
-import { IMatch } from "../types"
+import type { Reporter } from "../.."
+import type { IGatsbyState } from "../redux/types"
+import type { IMatch } from "../types"
 
 export type Runner = (
   query: string | Source,
@@ -42,7 +42,7 @@ export const createGraphQLRunner = (
     `ADD_CHILD_NODE_TO_PARENT_NODE`,
   ]
 
-  eventTypes.forEach(type => {
+  eventTypes.forEach((type) => {
     emitter.on(type, () => {
       runner = undefined
     })
@@ -59,14 +59,14 @@ export const createGraphQLRunner = (
         queryName: `gatsby-node query`,
         parentSpan,
       })
-      .then(result => {
+      .then((result) => {
         if (result.errors) {
           const structuredErrors: Array<IMatch> = result.errors
-            .map(e => {
+            .map((e) => {
               // Find the file where graphql was called.
               const file = stackTrace
                 .parse(e)
-                .find(file => /createPages/.test(file.getFunctionName()))
+                .find((file) => /createPages/.test(file.getFunctionName()))
 
               if (file) {
                 const structuredError = errorParser({

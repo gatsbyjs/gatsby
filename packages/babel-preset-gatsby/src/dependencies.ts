@@ -1,12 +1,17 @@
 // This file is heavily based on create-react-app's implementation
 // @see https://github.com/facebook/create-react-app/blob/master/packages/babel-preset-react-app/dependencies.js
 
-import * as path from "path"
+import * as path from "node:path"
 import { loadCachedConfig } from "./index"
 import { CORE_JS_POLYFILL_EXCLUDE_LIST as polyfillsToExclude } from "gatsby-legacy-polyfills/dist/exclude"
 
-interface IPresetOptions {
-  stage?: "build-javascript" | "build-html" | "develop" | "develop-html"
+type IPresetOptions = {
+  stage?:
+    | "build-javascript"
+    | "build-html"
+    | "develop"
+    | "develop-html"
+    | undefined
 }
 
 // export default is required here because it is passed directly to webpack
@@ -15,7 +20,7 @@ interface IPresetOptions {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default (_?: unknown, options: IPresetOptions = {}) => {
   const absoluteRuntimePath = path.dirname(
-    require.resolve(`@babel/runtime/package.json`)
+    require.resolve(`@babel/runtime/package.json`),
   )
 
   const stage = options.stage || `test`

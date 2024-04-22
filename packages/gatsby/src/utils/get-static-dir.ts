@@ -12,7 +12,7 @@ export function copyStaticDirs(): void {
   // access the store to get themes
   const { flattenedPlugins } = store.getState()
   // if there are legacy themes, only use them. Otherwise proceed with plugins
-  const themesSet = flattenedPlugins.map(plugin => {
+  const themesSet = flattenedPlugins.map((plugin) => {
     return {
       themeDir: plugin.pluginFilepath,
       themeName: plugin.name,
@@ -21,11 +21,11 @@ export function copyStaticDirs(): void {
 
   themesSet
     // create an array of potential theme static folders
-    .map(theme => nodePath.resolve(theme.themeDir, `static`))
+    .map((theme) => nodePath.resolve(theme.themeDir, `static`))
     // filter out the static folders that don't exist
-    .filter(themeStaticPath => fs.existsSync(themeStaticPath))
+    .filter((themeStaticPath) => fs.existsSync(themeStaticPath))
     // copy the files for each folder into the user's build
-    .map(folder =>
+    .map((folder) =>
       fs.copySync(folder, nodePath.join(process.cwd(), `public`), {
         dereference: true,
       }),
@@ -47,11 +47,11 @@ export function syncStaticDir(): void {
   const staticDir = nodePath.join(process.cwd(), `static`)
   chokidar
     .watch(staticDir)
-    .on(`add`, path => {
+    .on(`add`, (path) => {
       const relativePath = nodePath.relative(staticDir, path)
       fs.copy(path, `${process.cwd()}/public/${relativePath}`)
     })
-    .on(`change`, path => {
+    .on(`change`, (path) => {
       const relativePath = nodePath.relative(staticDir, path)
       fs.copy(path, `${process.cwd()}/public/${relativePath}`)
     })

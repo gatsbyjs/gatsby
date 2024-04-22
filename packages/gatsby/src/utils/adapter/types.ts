@@ -18,7 +18,7 @@ export type {
   FileCdnSourceImage,
 }
 
-interface IBaseRoute {
+type IBaseRoute = {
   /**
    * Request path that should be matched for this route.
    * It can be:
@@ -30,7 +30,7 @@ interface IBaseRoute {
   path: string
 }
 
-export interface IStaticRoute extends IBaseRoute {
+export type IStaticRoute = {
   type: `static`
   /**
    * Location of the file that should be served for this route.
@@ -41,9 +41,9 @@ export interface IStaticRoute extends IBaseRoute {
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/headers/
    */
   headers: IHeader["headers"]
-}
+} & IBaseRoute
 
-export interface IFunctionRoute extends IBaseRoute {
+export type IFunctionRoute = {
   type: `function`
   /**
    * Unique identifier of this function. Corresponds to the `functionId` inside the `functionsManifest`.
@@ -53,14 +53,14 @@ export interface IFunctionRoute extends IBaseRoute {
   /**
    * If `cache` is true, response of function should be cached for current deployment and served on subsequent requests for this route.
    */
-  cache?: true
-}
+  cache?: true | undefined
+} & IBaseRoute
 
 /**
  * Redirects are being created through the `createRedirect` action.
  * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect
  */
-export interface IRedirectRoute extends IBaseRoute {
+export type IRedirectRoute = {
   type: `redirect`
   /**
    * The redirect should happen from `path` to `toPath`.
@@ -70,25 +70,25 @@ export interface IRedirectRoute extends IBaseRoute {
    * HTTP status code that should be used for this redirect.
    */
   status: HttpStatusCode
-  ignoreCase?: boolean
+  ignoreCase?: boolean | undefined
   /**
    * HTTP headers that should be used for this redirect.
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/headers/
    */
   headers: IHeader["headers"]
   [key: string]: unknown
-}
+} & IBaseRoute
 
 export type Route = IStaticRoute | IFunctionRoute | IRedirectRoute
 
 export type RoutesManifest = Array<Route>
 
-export interface IHeaderRoute extends IBaseRoute {
+export type IHeaderRoute = {
   headers: IHeader["headers"]
-}
+} & IBaseRoute
 
 export type HeaderRoutes = Array<IHeaderRoute>
-export interface IFunctionDefinition {
+export type IFunctionDefinition = {
   /**
    * Unique identifier of this function. Corresponds to the `functionId` inside the `routesManifest`.
    */
@@ -109,7 +109,7 @@ export interface IFunctionDefinition {
 
 export type FunctionsManifest = Array<IFunctionDefinition>
 
-interface IDefaultContext {
+type IDefaultContext = {
   /**
    * Reporter instance that can be used to log messages to terminal
    * @see https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter
@@ -128,7 +128,7 @@ export type RemoteFileAllowedUrls = Array<{
   regexSource: string
 }>
 
-export interface IAdaptContext extends IDefaultContext {
+export type IAdaptContext = {
   routesManifest: RoutesManifest
   functionsManifest: FunctionsManifest
   headerRoutes: HeaderRoutes
@@ -146,13 +146,13 @@ export interface IAdaptContext extends IDefaultContext {
    * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addRemoteFileAllowedUrl
    */
   remoteFileAllowedUrls: RemoteFileAllowedUrls
-}
+} & IDefaultContext
 
-export interface ICacheContext extends IDefaultContext {
+export type ICacheContext = {
   directories: Array<string>
-}
+} & IDefaultContext
 
-export interface IAdapterConfig {
+export type IAdapterConfig = {
   /**
    * URL representing the unique URL for an individual deploy
    */
@@ -165,17 +165,19 @@ export interface IAdapterConfig {
   /**
    * Adapters can optionally describe which features they support to prevent potentially faulty deployments
    */
-  supports?: {
-    /**
-     * If `false`, Gatsby will fail the build if user tries to use pathPrefix.
-     */
-    pathPrefix?: boolean | undefined
-    /**
-     * Provide array of supported traling slash options
-     * @example [`always`]
-     */
-    trailingSlash?: Array<TrailingSlash> | undefined
-  } | undefined
+  supports?:
+    | {
+        /**
+         * If `false`, Gatsby will fail the build if user tries to use pathPrefix.
+         */
+        pathPrefix?: boolean | undefined
+        /**
+         * Provide array of supported traling slash options
+         * @example [`always`]
+         */
+        trailingSlash?: Array<TrailingSlash> | undefined
+      }
+    | undefined
   /**
    * List of plugins that should be disabled when using this adapter. Purpose of this is to disable
    * any potential plugins that serve similar role as adapter that would cause conflicts when both
@@ -226,7 +228,7 @@ export type IAdapterFinalConfig = WithRequired<
   "excludeDatastoreFromEngineFunction" | "pluginsToDisable"
 >
 
-export interface IAdapter {
+export type IAdapter = {
   /**
    * Unique name of the adapter. Used to identify adapter in manifest.
    */
@@ -236,7 +238,7 @@ export interface IAdapter {
      * Hook to restore `directories` from previous builds. This is executed very early on in the build process. If `false` is returned Gatsby will skip its cache restoration.
      */
     restore: (
-      context: ICacheContext
+      context: ICacheContext,
     ) => Promise<boolean | void> | boolean | void
     /**
      * Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
@@ -265,7 +267,7 @@ export interface IAdapter {
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
    */
   config?: (
-    context: IDefaultContext
+    context: IDefaultContext,
   ) => Promise<IAdapterConfig> | IAdapterConfig
 }
 
@@ -274,10 +276,10 @@ export interface IAdapter {
  * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
  */
 export type AdapterInit<T = Record<string, unknown>> = (
-  adapterOptions?: T
+  adapterOptions?: T,
 ) => IAdapter
 
-export interface IAdapterManager {
+export type IAdapterManager = {
   restoreCache: () => Promise<void> | void
   storeCache: () => Promise<void> | void
   adapt: () => Promise<void> | void
@@ -287,7 +289,7 @@ export interface IAdapterManager {
  * Types for gatsby/adapters.js
  * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/
  */
-export interface IAdapterManifestEntry {
+export type IAdapterManifestEntry = {
   /**
    * Name of the adapter
    */

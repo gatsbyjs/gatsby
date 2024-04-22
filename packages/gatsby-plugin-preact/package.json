@@ -30,9 +30,11 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
+    "gatsby": "^5.14.0-next.2",
     "preact": "^10.20.2",
-    "preact-render-to-string": "^6.4.1"
+    "preact-render-to-string": "^6.4.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

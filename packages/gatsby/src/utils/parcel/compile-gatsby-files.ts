@@ -1,7 +1,6 @@
 import { Parcel } from "@parcel/core"
-import { LMDBCache, Cache } from "@parcel/cache"
-import path from "path"
-// @ts-ignore
+import { LMDBCache, type Cache } from "@parcel/cache"
+import path from "node:path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
 import { WorkerPool } from "gatsby-worker"
@@ -23,7 +22,7 @@ function exponentialBackoff(retry: number): Promise<void> {
     return Promise.resolve()
   }
   const timeout = 50 * Math.pow(2, retry)
-  return new Promise(resolve => setTimeout(resolve, timeout))
+  return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
 /**
@@ -56,7 +55,7 @@ export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
 
 type IProcessBundle = {
   filePath: string
-  mainEntryPath?: string
+  mainEntryPath?: string | undefined
 }
 
 type RunParcelReturn = Array<IProcessBundle>
@@ -68,7 +67,7 @@ export async function runParcel(siteRoot: string): Promise<RunParcelReturn> {
   const bundles = bundleGraph.getBundles()
   // bundles is not serializable, so we need to extract the data we need
   // so it crosses IPC boundaries
-  return bundles.map(bundle => {
+  return bundles.map((bundle) => {
     return {
       filePath: bundle.filePath,
       mainEntryPath: bundle.getMainEntry()?.filePath,
@@ -82,7 +81,7 @@ export async function runParcel(siteRoot: string): Promise<RunParcelReturn> {
  */
 export async function compileGatsbyFiles(
   siteRoot: string,
-  retry: number = 0,
+  retry: number | undefined = 0,
 ): Promise<void> {
   try {
     const gatsbyNodeName = `gatsby-node`
@@ -92,8 +91,8 @@ export async function compileGatsbyFiles(
     // With "withFileTypes" the array will contain <fs.Dirent> objects
     const filesAndDirectories = await readdir(siteRoot, { withFileTypes: true })
     const files = filesAndDirectories
-      .filter(i => !i.isDirectory())
-      .map(i => i.name)
+      .filter((i) => !i.isDirectory())
+      .map((i) => i.name)
 
     let nearMatch = ``
 
@@ -258,9 +257,9 @@ export async function compileGatsbyFiles(
 }
 
 function handleErrors(diagnostics: Array<Diagnostic>): void {
-  diagnostics.forEach(err => {
+  diagnostics.forEach((err) => {
     if (err.codeFrames) {
-      err.codeFrames.forEach(c => {
+      err.codeFrames.forEach((c) => {
         // Assuming that codeHighlights only ever has one entry in the array. Local tests only ever showed one
         const codeHighlightsMessage = c?.codeHighlights[0]?.message
         // If both messages are the same don't print the specific, otherwise they would be duplicate

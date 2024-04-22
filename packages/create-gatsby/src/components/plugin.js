@@ -8,7 +8,7 @@ import { SelectInput, MultiSelectInput } from "./select"
  * @param enquirer {import("enquirer")}
  * @returns {import("enquirer")}
  */
-export const plugin = enquirer => {
+export function plugin(enquirer) {
   enquirer.register(`textinput`, TextInput)
   enquirer.register(`selectinput`, SelectInput)
   enquirer.register(`multiselectinput`, MultiSelectInput)

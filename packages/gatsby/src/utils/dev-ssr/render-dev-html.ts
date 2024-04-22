@@ -9,17 +9,17 @@ import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
-import { GatsbyReduxStore } from "../../redux"
-import { IGatsbyPage } from "../../redux/types"
-import { getServerData, IServerData } from "../get-server-data"
+import type { GatsbyReduxStore } from "../../redux"
+import type { IGatsbyPage } from "../../redux/types"
+import { getServerData, type IServerData } from "../get-server-data"
 import { getPageMode } from "../page-mode"
-import { parseError, IErrorRenderMeta } from "./parse-error"
+import { parseError, type IErrorRenderMeta } from "./parse-error"
 
 type GatsbyDevSSRWorkerPool = WorkerPool<
   typeof import("./render-dev-html-child")
 >
 
-const startWorker = (): GatsbyDevSSRWorkerPool => {
+function startWorker(): GatsbyDevSSRWorkerPool {
   const newWorker = new WorkerPool<typeof import("./render-dev-html-child")>(
     require.resolve(`./render-dev-html-child`),
     {
@@ -29,19 +29,20 @@ const startWorker = (): GatsbyDevSSRWorkerPool => {
         forceColors: `true`,
         GATSBY_EXPERIMENTAL_DEV_SSR: `true`,
       },
-    }
+    },
   )
 
   return newWorker
 }
 
 let worker: GatsbyDevSSRWorkerPool
-export const initDevWorkerPool = (): void => {
+
+export function initDevWorkerPool(): void {
   worker = startWorker()
 }
 
 let changeCount = 0
-export const restartWorker = (htmlComponentRendererPath: string): void => {
+export function restartWorker(htmlComponentRendererPath: string): void {
   changeCount += 1
   // Forking is expensive — each time we re-require the outputted webpack
   // file, memory grows ~10 mb — 25 regenerations means ~250mb which seems
@@ -59,17 +60,17 @@ export const restartWorker = (htmlComponentRendererPath: string): void => {
   }
 }
 
-const searchFileForString = (
+function searchFileForString(
   substring: string,
-  filePath: string
-): Promise<boolean> =>
-  new Promise(resolve => {
+  filePath: string,
+): Promise<boolean> {
+  return new Promise((resolve) => {
     const escapedSubString = substring.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`)
 
     // See if the chunk is in the newComponents array (not the notVisited).
     const chunkRegex = RegExp(
       `exports.ssrComponents.*${escapedSubString}.*}`,
-      `gs`
+      `gs`,
     )
     const stream = fs.createReadStream(filePath)
     let found = false
@@ -87,12 +88,13 @@ const searchFileForString = (
       resolve(found)
     })
   })
+}
 
-const ensurePathComponentInSSRBundle = async (
+async function ensurePathComponentInSSRBundle(
   page: IGatsbyPage,
   directory: string,
-  allowTimedFallback: boolean
-): Promise<boolean> => {
+  allowTimedFallback: boolean,
+): Promise<boolean> {
   // This shouldn't happen.
   if (!page) {
     report.panic(`page not found`, page)
@@ -102,7 +104,7 @@ const ensurePathComponentInSSRBundle = async (
   const htmlComponentRendererPath = nodePath.join(
     directory,
     ROUTES_DIRECTORY,
-    `render-page.js`
+    `render-page.js`,
   )
 
   // This search takes 1-10ms
@@ -112,17 +114,17 @@ const ensurePathComponentInSSRBundle = async (
   // page's component won't be in the render meaning its SSR will fail.
   let found = await searchFileForString(
     page.componentChunkName,
-    htmlComponentRendererPath
+    htmlComponentRendererPath,
   )
 
   if (!found) {
-    await new Promise<void>(resolve => {
+    await new Promise<void>((resolve) => {
       let readAttempts = 0
       const searchForStringInterval = setInterval(async () => {
         readAttempts += 1
         found = await searchFileForString(
           page.componentChunkName,
-          htmlComponentRendererPath
+          htmlComponentRendererPath,
         )
         if (found || (allowTimedFallback && readAttempts > 5)) {
           clearInterval(searchForStringInterval)
@@ -135,19 +137,19 @@ const ensurePathComponentInSSRBundle = async (
   return found
 }
 
-interface IRenderDevHtmlProps {
+type IRenderDevHtmlProps = {
   path: string
-  page?: IGatsbyPage
-  skipSsr?: boolean
+  page?: IGatsbyPage | undefined
+  skipSsr?: boolean | undefined
   store: GatsbyReduxStore
-  error?: IErrorRenderMeta
+  error?: IErrorRenderMeta | undefined
   htmlComponentRendererPath: string
   directory: string
   req: Request
   allowTimedFallback: boolean
 }
 
-export const renderDevHTML = ({
+export function renderDevHTML({
   path,
   page,
   skipSsr = false,
@@ -157,9 +159,12 @@ export const renderDevHTML = ({
   allowTimedFallback,
   directory,
   req,
-}: IRenderDevHtmlProps): Promise<{ html: string; serverData?: IServerData }> =>
+}: IRenderDevHtmlProps): Promise<{
+  html: string
+  serverData?: IServerData | undefined
+}> {
   // eslint-disable-next-line no-async-promise-executor
-  new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     startListener()
     let pageObj
     if (!page) {
@@ -186,7 +191,7 @@ export const renderDevHTML = ({
         // 15000 is default timeout for this function - we keep it here for scenarios
         // that allow waiting on it, and set to impossibly high value in case
         // we want to ensure SSR happens
-        allowTimedFallback ? 15000 : Number.MAX_SAFE_INTEGER
+        allowTimedFallback ? 15000 : Number.MAX_SAFE_INTEGER,
       )
     } catch {
       // If we can't get the page, it was probably deleted recently
@@ -214,7 +219,7 @@ export const renderDevHTML = ({
     const found = await ensurePathComponentInSSRBundle(
       pageObj,
       directory,
-      allowTimedFallback
+      allowTimedFallback,
     )
 
     if (stopWatching) {
@@ -247,7 +252,7 @@ export const renderDevHTML = ({
           req,
           pageObj,
           req.path,
-          componentInstance
+          componentInstance,
         )
       } catch (err) {
         return reject(
@@ -256,7 +261,7 @@ export const renderDevHTML = ({
             directory,
             componentPath: pageObj.component,
             htmlComponentRendererPath,
-          })
+          }),
         )
       }
     }
@@ -279,3 +284,4 @@ export const renderDevHTML = ({
       return reject(error)
     }
   })
+}

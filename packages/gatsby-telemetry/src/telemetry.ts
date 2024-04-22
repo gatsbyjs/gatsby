@@ -1,5 +1,5 @@
 import * as fs from "fs-extra"
-import os from "os"
+import os from "node:os"
 import {
   isCI,
   getCIName,
@@ -9,7 +9,7 @@ import {
 } from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
-  IRepositoryId,
+  type IRepositoryId,
 } from "./repository-id"
 import { createFlush } from "./create-flush"
 import { EventStorage } from "./event-storage"
@@ -324,7 +324,7 @@ export class AnalyticsTracker {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
         const { error, ...restOfTags } = tags
-        error.forEach(err => {
+        error.forEach((err) => {
           this.formatErrorAndStoreEvent(eventType, {
             error: err,
             ...restOfTags,

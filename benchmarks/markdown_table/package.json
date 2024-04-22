@@ -11,14 +11,14 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "faker": "4.1.0",
-    "gatsby": "2.19.5",
-    "gatsby-plugin-benchmark-reporting": "*",
-    "gatsby-transformer-remark": "2.6.48",
-    "gray-matter": "4.0.2",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "ts-node": "8.9.0",
+    "faker": "6.6.6",
+    "gatsby": "5.13.4",
+    "gatsby-plugin-benchmark-reporting": "3.13.1",
+    "gatsby-transformer-remark": "6.13.1",
+    "gray-matter": "4.0.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "ts-node": "10.9.2",
     "typescript": "5.4.5"
   }
 }

@@ -1,5 +1,5 @@
-import { Rule } from "eslint"
-import {
+import type { Rule } from "eslint"
+import type {
   Node,
   Identifier,
   ImportDeclaration,
@@ -59,7 +59,7 @@ function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
     // re-exports
     if (
       node.source &&
-      node.specifiers.some(specifier => specifier.exported.name === name)
+      node.specifiers.some((specifier) => specifier.exported.name === name)
     ) {
       return true
     }
@@ -70,7 +70,7 @@ function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
 
 function hasOneValidNamedDeclaration(
   node: Node,
-  varName: string | undefined
+  varName: string | undefined,
 ): boolean {
   // Checks for:
   // const query = graphql``
@@ -79,10 +79,10 @@ function hasOneValidNamedDeclaration(
     // For export { foobar, query } the declaration will be null and specifiers exists
     // For { foobar, query } it'll return true, for { query } it'll return false
     // It will ignore any { default } declarations since these are allowed
-    const nonQueryExports = node.specifiers.some(e =>
+    const nonQueryExports = node.specifiers.some((e) =>
       varName
         ? e.exported.name !== varName && e.exported.name !== `default`
-        : e.exported.name !== `default`
+        : e.exported.name !== `default`,
     )
     return !nonQueryExports
   }
@@ -93,7 +93,7 @@ function hasOneValidNamedDeclaration(
 function isTemplateQuery(
   node: Node,
   graphqlTagName: string,
-  namespaceSpecifierName: string
+  namespaceSpecifierName: string,
 ): boolean {
   // For export const query = 'foobar' the declaration exists with type 'VariableDeclaration'
 
@@ -110,7 +110,7 @@ function isTemplateQuery(
   return (
     node.type === `ExportNamedDeclaration` &&
     node.declaration?.type === `VariableDeclaration` &&
-    node.declaration?.declarations.every(el => {
+    node.declaration?.declarations.every((el) => {
       if (
         el?.init?.type === `TaggedTemplateExpression` &&
         el.init.tag.type === `Identifier`
@@ -141,7 +141,7 @@ const limitedExports: Rule.RuleModule = {
 `,
     },
   },
-  create: context => {
+  create: (context) => {
     if (!isPageTemplate(store, context)) {
       return {}
     }
@@ -156,7 +156,7 @@ const limitedExports: Rule.RuleModule = {
         // Check if require('gatsby')
         const requiredFromGatsby = (
           node as VariableDeclaration
-        ).declarations.find(el => {
+        ).declarations.find((el) => {
           // Handle require(`gatsby`)
           if (
             (el.init as CallExpression)?.arguments?.[0]?.type ===
@@ -179,9 +179,9 @@ const limitedExports: Rule.RuleModule = {
           const graphqlTagSpecifier = (
             (requiredFromGatsby as VariableDeclarator).id as ObjectPattern
           )?.properties.find(
-            el =>
+            (el) =>
               ((el as AssignmentProperty).key as Identifier).name ===
-              DEFAULT_GRAPHQL_TAG_NAME
+              DEFAULT_GRAPHQL_TAG_NAME,
           )
 
           if (graphqlTagSpecifier) {
@@ -199,7 +199,7 @@ const limitedExports: Rule.RuleModule = {
         if ((node as ImportDeclaration).source.value === `gatsby`) {
           const graphqlTagSpecifier = (
             node as ImportDeclaration
-          ).specifiers.find(el => {
+          ).specifiers.find((el) => {
             // We only want import { graphql } from "gatsby"
             // Not import graphql from "gatsby"
             if (el.type === `ImportSpecifier`) {

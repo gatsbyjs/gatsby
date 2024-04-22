@@ -1,5 +1,5 @@
-import { FunctionComponent } from "react"
-import { Text, TextProps } from "ink"
+import type { FunctionComponent } from "react"
+import { Text, type TextProps } from "ink"
 
 export function createLabel(
   text: string,

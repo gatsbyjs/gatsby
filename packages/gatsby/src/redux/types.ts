@@ -1,8 +1,7 @@
-// @ts-ignore
 import type { TrailingSlash } from "gatsby-page-utils"
 import type { Express } from "express"
 import type { IProgram, Stage } from "../commands/types"
-import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
+import type { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import {
   type DocumentNode,
   GraphQLSchema,
@@ -10,8 +9,7 @@ import {
   type SourceLocation,
 } from "graphql"
 import { SchemaComposer } from "graphql-compose"
-// @ts-ignore
-import type { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
+import type { IGatsbyCLIState } from "gatsby-cli/lib/reporter/redux/types"
 import type { ThunkAction } from "redux-thunk"
 import type { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import type { ITypeMetadata } from "../schema/infer/inference-metadata"
@@ -48,7 +46,7 @@ export type PageMode = "SSG" | "DSG" | "SSR"
 export type IGatsbyPage = {
   internalComponentName: string
   path: string
-  matchPath: undefined | string
+  matchPath: undefined | null | string
   component: SystemPath
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
@@ -58,7 +56,7 @@ export type IGatsbyPage = {
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
-  ownerNodeId: Identifier
+  ownerNodeId?: Identifier | undefined
   manifestId?: string | undefined
   defer?: boolean | undefined
   /**
@@ -69,7 +67,7 @@ export type IGatsbyPage = {
    *
    * @internal
    */
-  mode: PageMode
+  mode?: PageMode | undefined
   slices: Record<string, string>
 }
 
@@ -154,19 +152,20 @@ export type IGatsbyConfig = {
 
 export type IGatsbyNode = {
   id: Identifier
-  parent: Identifier
+  parent: Identifier | null
   children: Array<Identifier>
   internal: {
-    type: string
-    counter: number
-    owner: string
-    contentDigest: string
-    mediaType?: string
-    content?: string
-    description?: string
+    type?: string | undefined
+    counter?: number | undefined
+    owner?: Identifier | undefined
+    contentDigest?: string | undefined
+    mediaType?: string | undefined
+    content?: string | undefined
+    description?: string | undefined
+    fieldOwners?: Record<string, Identifier> | undefined
   }
   [key: string]: unknown
-  fields: Array<string>
+  fields?: Record<string, unknown> | undefined
 }
 
 export type IGatsbyPlugin = {
@@ -233,6 +232,8 @@ export type IGatsbyCompleteJobV2 = {
 }
 
 export type IPlugin = {
+  id?: string | undefined
+  version?: string | undefined
   name: string
   options: Record<string, unknown>
 }
@@ -290,6 +291,7 @@ export type GatsbyNodeAPI =
   | "onPreExtractQueries"
   | "onPreInit"
   | "resolvableExtensions"
+  | "preprocessSource"
 
 export type FlattenedPlugin = {
   resolve: SystemPath
@@ -318,7 +320,7 @@ export type IGatsbyState = {
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  resolvedNodesCache: Map<string, any> // TODO
+  resolvedNodesCache: Map<string, Map<string, any> | undefined> // TODO
   nodesTouched: Set<string>
   typeOwners: {
     pluginsToTypes: Map<
@@ -341,7 +343,7 @@ export type IGatsbyState = {
   status: {
     plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
-    LAST_NODE_COUNTER: number
+    LAST_NODE_COUNTER?: number | undefined
     cdnObfuscatedPrefix: string
   }
   queries: {
@@ -407,7 +409,8 @@ export type IGatsbyState = {
     } | null
     thirdPartySchemas: Array<GraphQLSchema>
     types: Array<
-      string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin }
+      | string
+      | { typeOrTypeDef: DocumentNode; plugin?: IGatsbyPlugin | undefined }
     >
   }
   logs: IGatsbyCLIState
@@ -725,29 +728,29 @@ export type IQueryClearDirtyQueriesListToEmitViaWebsocket = {
 
 export type IQueryExtractedAction = {
   type: `QUERY_EXTRACTED`
-  plugin: IGatsbyPlugin
-  traceId: string | undefined
+  plugin?: IGatsbyPlugin | undefined
+  traceId?: string | undefined
   payload: { componentPath: string; query: string }
 }
 
 export type IQueryExtractionGraphQLErrorAction = {
   type: `QUERY_EXTRACTION_GRAPHQL_ERROR`
-  plugin: IGatsbyPlugin
+  plugin: IGatsbyPlugin | undefined
   traceId: string | undefined
-  payload: { componentPath: string; error: string }
+  payload: { componentPath: string; error?: string | undefined }
 }
 
 export type IQueryExtractedBabelSuccessAction = {
   type: `QUERY_EXTRACTION_BABEL_SUCCESS`
-  plugin: IGatsbyPlugin
-  traceId: string | undefined
+  plugin?: IGatsbyPlugin | undefined
+  traceId?: string | undefined
   payload: { componentPath: string }
 }
 
 export type IQueryExtractionBabelErrorAction = {
   type: `QUERY_EXTRACTION_BABEL_ERROR`
-  plugin: IGatsbyPlugin
-  traceId: string | undefined
+  plugin?: IGatsbyPlugin | undefined
+  traceId?: string | undefined
   payload: {
     componentPath: string
     error: Error
@@ -756,28 +759,29 @@ export type IQueryExtractionBabelErrorAction = {
 
 export type ISetProgramStatusAction = {
   type: `SET_PROGRAM_STATUS`
-  plugin: IGatsbyPlugin
+  plugin?: IGatsbyPlugin | undefined
   traceId: string | undefined
   payload: ProgramStatus
 }
 
 export type IPageQueryRunAction = {
   type: `PAGE_QUERY_RUN`
-  plugin: IGatsbyPlugin
-  traceId: string | undefined
+  plugin?: IGatsbyPlugin | undefined
+  traceId?: string | undefined
   payload: {
     path: string
     componentPath: string
-    queryType: "page" | "static" | "slice"
+    queryType?: "page" | "static" | "slice" | undefined
     resultHash: string
-    queryHash: string
+    isPage?: boolean | undefined
+    queryHash?: string | undefined
   }
 }
 
 export type IQueryStartAction = {
   type: `QUERY_START`
-  plugin: IGatsbyPlugin
-  traceId: string | undefined
+  plugin?: IGatsbyPlugin | undefined
+  traceId?: string | undefined
   payload: { path: string; componentPath: string; isPage: boolean }
 }
 
@@ -797,7 +801,7 @@ export type IAddThirdPartySchema = {
 
 export type ICreateTypes = {
   type: `CREATE_TYPES`
-  plugin: IGatsbyPlugin
+  plugin?: IGatsbyPlugin | undefined
   traceId?: string | undefined
   payload: DocumentNode | Array<DocumentNode>
 }

@@ -5,7 +5,7 @@ import {
   IStaticQueryResultState,
 } from "../../redux/types"
 
-interface IMinimalStateSliceForTest {
+type IMinimalStateSliceForTest = {
   html: IGatsbyState["html"]
   pages: IGatsbyState["pages"]
   components: IGatsbyState["components"]
@@ -26,10 +26,11 @@ describe(`calcDirtyHtmlFiles`, () => {
         dirty: number
         removedOrDeleted?: "deleted" | "not-recreated"
       }
-    >
+    >,
   ): IGatsbyState {
     const state: IMinimalStateSliceForTest = {
       pages: new Map<string, IGatsbyPage>(),
+      // @ts-ignore
       html: {
         browserCompilationHash: `a-hash`,
         ssrCompilationHash: `a-hash`,
@@ -39,6 +40,7 @@ describe(`calcDirtyHtmlFiles`, () => {
       },
       components: new Map(),
     }
+    // @ts-ignore
     state.components.set(`/foo`, {
       componentPath: `/foo`,
       componentChunkName: `foo`,
@@ -48,10 +50,12 @@ describe(`calcDirtyHtmlFiles`, () => {
       serverData: false,
     })
 
+    // eslint-disable-next-line guard-for-in
     for (const pagePath in pages) {
       const page = pages[pagePath]
 
       if (page.removedOrDeleted !== `not-recreated`) {
+        // @ts-ignore
         state.pages.set(pagePath, {
           component: `/foo`,
           componentPath: `/foo`,

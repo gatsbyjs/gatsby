@@ -5,7 +5,7 @@ import { trackCli } from "gatsby-telemetry"
 import { getNodes, getNode, getNodesByType } from "../datastore"
 import { loadNodeContent } from "../utils/nodes"
 import { store } from "../redux"
-import { IProgram } from "./types"
+import type { IProgram } from "./types"
 
 module.exports = async (program: IProgram): Promise<void> => {
   trackCli(`REPL_START`)

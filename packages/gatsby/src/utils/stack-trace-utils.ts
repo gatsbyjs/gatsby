@@ -1,20 +1,20 @@
-import stackTrace, { StackFrame } from "stack-trace"
+import stackTrace, { type StackFrame } from "stack-trace"
 import url from "url"
 import { codeFrameColumns } from "@babel/code-frame"
 import {
   TraceMap,
   originalPositionFor,
-  OriginalMapping,
-  SourceMapInput,
+  type OriginalMapping,
+  type SourceMapInput,
   sourceContentFor,
 } from "@jridgewell/trace-mapping"
 
 import fs from "fs-extra"
-import path from "path"
+import path from "node:path"
 import chalk from "chalk"
 import { isNodeInternalModulePath } from "gatsby-core-utils"
 
-const getDirName = (arg: unknown): string => {
+function getDirName(arg: unknown): string {
   // Caveat related to executing in engines:
   // After webpack bundling we would get number here (webpack module id) and that would crash when doing
   // path.dirname(number).
@@ -26,37 +26,38 @@ const getDirName = (arg: unknown): string => {
 
 const gatsbyLocation = getDirName(require.resolve(`gatsby/package.json`))
 const reduxThunkLocation = getDirName(
-  require.resolve(`redux-thunk/package.json`)
+  require.resolve(`redux-thunk/package.json`),
 )
 const reduxLocation = getDirName(require.resolve(`redux/package.json`))
 
-const getNonGatsbyCallSite = (): StackFrame | undefined =>
-  stackTrace
+function getNonGatsbyCallSite(): StackFrame | undefined {
+  return stackTrace
     .get()
     .find(
-      callSite =>
+      (callSite) =>
         callSite &&
         callSite.getFileName() &&
         !callSite.getFileName().includes(gatsbyLocation) &&
         !callSite.getFileName().includes(reduxLocation) &&
         !callSite.getFileName().includes(reduxThunkLocation) &&
-        !isNodeInternalModulePath(callSite.getFileName())
+        !isNodeInternalModulePath(callSite.getFileName()),
     )
+}
 
-interface ICodeFrame {
+type ICodeFrame = {
   fileName: string
   line: number
   column: number
   codeFrame: string
 }
 
-export const getNonGatsbyCodeFrame = ({
+export function getNonGatsbyCodeFrame({
   highlightCode = true,
   stack,
 }: {
-  highlightCode?: boolean
-  stack?: string
-} = {}): null | ICodeFrame => {
+  highlightCode?: boolean | undefined
+  stack?: string | undefined
+} = {}): null | ICodeFrame {
   let callSite
   if (stack) {
     callSite = stackTrace.parse({ stack, name: ``, message: `` })[0]
@@ -92,7 +93,7 @@ export const getNonGatsbyCodeFrame = ({
         },
         {
           highlightCode,
-        }
+        },
       ),
     }
   } catch (e) {
@@ -101,13 +102,13 @@ export const getNonGatsbyCodeFrame = ({
   }
 }
 
-export const getNonGatsbyCodeFrameFormatted = ({
+export function getNonGatsbyCodeFrameFormatted({
   highlightCode = true,
   stack,
 }: {
   highlightCode?: boolean
-  stack?: string
-} = {}): null | string => {
+  stack?: string | undefined
+} = {}): null | string {
   const possibleCodeFrame = getNonGatsbyCodeFrame({
     highlightCode,
     stack,
@@ -121,14 +122,14 @@ export const getNonGatsbyCodeFrameFormatted = ({
   return `File ${chalk.bold(`${fileName}:${line}:${column}`)}\n${codeFrame}`
 }
 
-interface IOriginalSourcePositionAndContent {
+type IOriginalSourcePositionAndContent = {
   sourcePosition: OriginalMapping | null
   sourceContent: string | null
 }
 
 export function findOriginalSourcePositionAndContent(
   webpackSource: SourceMapInput | string,
-  position: { line: number; column: number | null }
+  position: { line: number; column: number | null },
 ): IOriginalSourcePositionAndContent {
   const tracer = new TraceMap(webpackSource)
   const sourcePosition = originalPositionFor(tracer, {

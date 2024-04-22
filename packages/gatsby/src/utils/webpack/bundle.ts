@@ -25,7 +25,7 @@ export function build(webpackConfig: webpack.Configuration): Promise<{
         stats,
         close: (): Promise<void> =>
           new Promise((resolve, reject) =>
-            compiler.close(err => (err ? reject(err) : resolve()))
+            compiler.close((err) => (err ? reject(err) : resolve())),
           ),
       })
     })
@@ -36,9 +36,9 @@ export function watch(
   webpackConfig: webpack.Configuration,
   onWatch: (
     err: Error | webpack.WebpackError | undefined | null,
-    stats: webpack.Stats | undefined
+    stats: webpack.Stats | undefined,
   ) => void,
-  watchOptions: webpack.Watching["watchOptions"] = {}
+  watchOptions: webpack.Watching["watchOptions"] = {},
 ): {
   watcher: webpack.Watching
   close: () => Promise<void>
@@ -54,7 +54,7 @@ export function watch(
     watcher,
     close: (): Promise<void> =>
       new Promise((resolve, reject) =>
-        watcher.close(err => (err ? reject(err) : resolve()))
+        watcher.close((err) => (err ? reject(err) : resolve())),
       ),
   }
 }

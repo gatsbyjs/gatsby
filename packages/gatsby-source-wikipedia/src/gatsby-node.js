@@ -3,12 +3,12 @@ const { fetchNodesFromSearch } = require(`./fetch`)
 
 exports.sourceNodes = (
   { actions, createNodeId, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode } = actions
   return Promise.map(pluginOptions.queries, ({ query, limit }) =>
-    fetchNodesFromSearch({ query, limit }).then(results =>
-      results.forEach(result => {
+    fetchNodesFromSearch({ query, limit }).then((results) =>
+      results.forEach((result) => {
         result.wikipediaId = result.id
         result.id = createNodeId(result.id)
         const node = {
@@ -22,7 +22,7 @@ exports.sourceNodes = (
         }
         node.internal.contentDigest = createContentDigest(node)
         createNode(node)
-      })
-    )
+      }),
+    ),
   )
 }

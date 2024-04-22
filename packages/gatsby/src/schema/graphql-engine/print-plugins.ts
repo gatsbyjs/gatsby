@@ -1,11 +1,11 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-import * as fs from "fs-extra"
-import * as path from "node:path"
+import fs from "fs-extra"
+import path from "node:path"
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import * as _ from "lodash"
+import _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
-import { IGatsbyState } from "../../redux/types"
+import type { IGatsbyState } from "../../redux/types"
 import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
 
 export const schemaCustomizationAPIs = new Set([
@@ -34,10 +34,10 @@ export async function printQueryEnginePlugins(): Promise<void> {
 async function renderQueryEnginePlugins(): Promise<string> {
   const { flattenedPlugins } = store.getState()
   const usedPlugins = flattenedPlugins.filter(
-    p =>
+    (p) =>
       includePlugins.has(p.name) ||
       (!excludePlugins.has(p.name) &&
-        p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api))),
+        p.nodeAPIs.some((api) => schemaCustomizationAPIs.has(api))),
   )
   const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
   const result = await render(usedPlugins, usedSubPlugins)
@@ -116,7 +116,7 @@ ${gatsbyWorkerExports.join(`\n`)}
 
 export const flattenedPlugins =
   ${JSON.stringify(
-    sanitizedUsedPlugins.map(plugin => {
+    sanitizedUsedPlugins.map((plugin) => {
       return {
         ...plugin,
         pluginOptions: _.cloneDeepWith(
@@ -186,7 +186,7 @@ function getSubpluginsByPluginPath(
     if (segment === `[]`) {
       roots = roots.flat()
     } else {
-      roots = roots.map(root => root[segment])
+      roots = roots.map((root) => root[segment])
     }
   }
   roots = roots.flat()
@@ -200,7 +200,7 @@ function findSubPlugins(
 ): IGatsbyState["flattenedPlugins"] {
   const usedSubPluginResolves = new Set<string>(
     plugins
-      .flatMap(plugin => {
+      .flatMap((plugin) => {
         if (plugin.subPluginPaths) {
           const subPlugins: IGatsbyState["flattenedPlugins"] = []
           for (const subPluginPath of plugin.subPluginPaths) {
@@ -211,16 +211,16 @@ function findSubPlugins(
 
         return []
       })
-      .map(plugin => plugin[`resolve`])
+      .map((plugin) => plugin[`resolve`])
       .filter((p: unknown): p is string => typeof p === `string`),
   )
   return allFlattenedPlugins.filter(
-    p => usedSubPluginResolves.has(p.resolve) && !!p.modulePath,
+    (p) => usedSubPluginResolves.has(p.resolve) && !!p.modulePath,
   )
 }
 
 function uniq(
   plugins: IGatsbyState["flattenedPlugins"],
 ): IGatsbyState["flattenedPlugins"] {
-  return Array.from(new Map(plugins.map(p => [p.resolve, p])).values())
+  return Array.from(new Map(plugins.map((p) => [p.resolve, p])).values())
 }

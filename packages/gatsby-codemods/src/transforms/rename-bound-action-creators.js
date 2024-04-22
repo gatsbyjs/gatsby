@@ -1,11 +1,11 @@
 const OLD_NAME = `boundActionCreators`
 const NEW_NAME = `actions`
 
-module.exports = (file, api, options) => {
+module.exports = (file, api) => {
   const j = api.jscodeshift
   const root = j(file.source)
 
-  root.find(j.Identifier).forEach(path => {
+  root.find(j.Identifier).forEach((path) => {
     if (path.value.name === OLD_NAME) {
       path.value.name = NEW_NAME
     }

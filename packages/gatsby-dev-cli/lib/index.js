@@ -2950,7 +2950,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 
 			var _intersection = /*@__PURE__*/getDefaultExportFromCjs(intersection_1);
 
-			var packageManager = "pnpm@9.0.4";
+			var packageManager = "pnpm@9.0.5";
 			var name = "gatsby-dev-cli";
 			var description = "CLI helpers for contributors working on Gatsby";
 			var version = "5.14.0-next.2";
@@ -2980,8 +2980,9 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  "@total-typescript/ts-reset": "^0.5.1",
 			  "@babel/cli": "^7.24.1",
 			  "@babel/core": "^7.24.4",
+			  "@types/signal-exit": "^3.0.4",
 			  "babel-preset-gatsby-package": "^3.14.0-next.2",
-			  rollup: "^4.14.2",
+			  rollup: "^4.16.0",
 			  "rollup-plugin-auto-external": "^2.0.0",
 			  "rollup-plugin-internal": "^1.0.4",
 			  "@rollup/plugin-babel": "^6.0.4",
@@ -3002,11 +3003,11 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  directory: "packages/gatsby-dev-cli"
 			};
 			var scripts = {
-			  "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
+			  "build:babel": "babel src --out-dir dist --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
 			  "build:rollup": "rollup -c",
 			  build: "npm-run-all --npm-path pnpm -p build:babel build:rollup",
 			  prepare: "cross-env NODE_ENV=production pnpm run build && pnpm run typegen",
-			  typegen: "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
+			  typegen: "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
 			  "watch:babel": "pnpm run build:babel -- --watch",
 			  "watch:rollup": "pnpm run build:rollup -- -w",
 			  watch: "npm-run-all --npm-path pnpm -p watch:babel watch:rollup"

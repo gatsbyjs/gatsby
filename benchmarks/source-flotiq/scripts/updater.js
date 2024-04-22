@@ -1,13 +1,12 @@
 const faker = require("faker")
-const fetch = require("node-fetch")
 
-const flotiqRequest = async (
+async function flotiqRequest(
   url,
   method,
   apiKey,
-  contentTypeName,
-  contentObject
-) => {
+  _contentTypeName,
+  contentObject,
+) {
   let headers = {
     accept: "application/json",
   }
@@ -21,14 +20,15 @@ const flotiqRequest = async (
   if (method == "POST" || method == "PUT") {
     payload.body = JSON.stringify(contentObject)
   }
-  return await fetch(url, payload)
+  return await globalThis.fetch(url, payload)
 }
 
 // Remove last word of title and replace it with a random word.
-const updateTitle = title =>
-  `${title.substring(0, title.lastIndexOf(` `))} ${faker.lorem.word()}`
+function updateTitle(title) {
+  return `${title.substring(0, title.lastIndexOf(` `))} ${faker.lorem.word()}`
+}
 
-const fetchOneArticle = async apiKey => {
+async function fetchOneArticle(apiKey) {
   let url = "https://api.flotiq.com/api/v1/content/article?limit=1"
   let response = await flotiqRequest(url, "GET", apiKey, "article", {})
   let responseJson = await response.json()
@@ -36,7 +36,7 @@ const fetchOneArticle = async apiKey => {
   return article
 }
 
-const updateArticle = async (apiKey, article) => {
+async function updateArticle(apiKey, article) {
   let url = "https://api.flotiq.com/api/v1/content/article/" + article.id
   let response = await flotiqRequest(url, "PUT", apiKey, "article", article)
   if ((await response.status) !== 200) {
@@ -44,7 +44,7 @@ const updateArticle = async (apiKey, article) => {
   }
 }
 
-const update = async ({ apiKey }) => {
+async function update({ apiKey }) {
   if (!apiKey) {
     console.error(`You must add the BENCHMARK_FLOTIQ_API_TOKEN env variable`)
     return
@@ -55,7 +55,7 @@ const update = async ({ apiKey }) => {
   article.title = updateTitle(article.title)
   updateArticle(apiKey, article)
   console.log(
-    "Updated article ID=" + article.id + ", new title: " + article.title
+    "Updated article ID=" + article.id + ", new title: " + article.title,
   )
 }
 

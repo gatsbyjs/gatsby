@@ -1,6 +1,6 @@
 import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
 import { getNode } from "./../datastore"
-import { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types"
+import type { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
@@ -8,14 +8,14 @@ import path from "path"
 import fs from "fs-extra"
 import fastq from "fastq"
 
-interface INodeManifestPage {
-  path?: string
+type INodeManifestPage = {
+  path?: string | undefined
 }
 
 /**
  * This it the output after processing calls to the public unstable_createNodeManifest action
  */
-interface INodeManifestOut {
+type INodeManifestOut = {
   page: INodeManifestPage
   node: {
     id: string
@@ -65,7 +65,7 @@ async function findPageOwnedByNode({
 }: {
   nodeId: string
   fullNode: IGatsbyNode
-  slug?: string
+  slug?: string | undefined
 }): Promise<{
   page: INodeManifestPage
   foundPageBy: FoundPageBy
@@ -74,7 +74,7 @@ async function findPageOwnedByNode({
   const { pages, staticQueryComponents } = state
   const { byNode, byConnection, trackedComponents } = state.queries
 
-  const nodeType = fullNode?.internal?.type
+  const nodeType = fullNode?.internal?.type ?? ``
 
   const firstPagePathWithNodeAsDataDependency =
     // the first page found in node id to page query path tracking
@@ -254,7 +254,7 @@ export async function processNodeManifest(
   listOfUniqueErrorIds: Set<string>,
   nodeManifestPagePathMap: Map<string, string>,
   verboseLogs: boolean,
-  previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests
+  previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests,
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -295,7 +295,7 @@ export async function processNodeManifest(
     warnAboutNodeManifestMappingProblems(nodeManifestMappingProblemsContext)
   } else {
     const { logId } = warnAboutNodeManifestMappingProblems(
-      nodeManifestMappingProblemsContext
+      nodeManifestMappingProblemsContext,
     )
 
     if (logId !== `success`) {
@@ -337,7 +337,7 @@ export async function processNodeManifest(
     `public`,
     `__node-manifests`,
     inputManifest.pluginName,
-    `${fileNameBase}.json`
+    `${fileNameBase}.json`,
   )
 
   const manifestFileDir = path.dirname(manifestFilePath)
@@ -362,11 +362,11 @@ export async function processNodeManifest(
     // This prevents two manifests from writing to the same file at the same time
     previouslyWrittenNodeManifests.set(
       inputManifest.manifestId,
-      new Promise(resolve => {
+      new Promise((resolve) => {
         writePromise.then(() => {
           resolve(finalManifest)
         })
-      })
+      }),
     )
 
     await writePromise
@@ -374,11 +374,11 @@ export async function processNodeManifest(
 
   if (shouldWriteManifest && verboseLogs) {
     reporter.info(
-      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`
+      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`,
     )
   } else if (verboseLogs) {
     reporter.info(
-      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase} but it was not written to disk because it was already written to disk previously.`
+      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase} but it was not written to disk because it was already written to disk previously.`,
     )
   }
 
@@ -441,14 +441,15 @@ export async function processNodeManifests(): Promise<Map<
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
-    cb: fastq.done<any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cb: fastq.done<any>,
   ): Promise<void> {
     const processedManifest = await processNodeManifest(
       manifest,
       listOfUniqueErrorIds,
       nodeManifestPagePathMap,
       verboseLogs,
-      previouslyWrittenNodeManifests
+      previouslyWrittenNodeManifests,
     )
 
     if (processedManifest) {
@@ -476,7 +477,7 @@ export async function processNodeManifests(): Promise<Map<
   }
 
   if (!processNodeManifestQueue.idle()) {
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       processNodeManifestQueue.drain = resolve as () => unknown
     })
   }
@@ -488,14 +489,14 @@ export async function processNodeManifests(): Promise<Map<
 
   reporter.info(
     `Wrote out ${totalProcessedManifests} node page manifest file${pluralize(
-      totalProcessedManifests
+      totalProcessedManifests,
     )} in ${endTime - startTime} ms. ${
       totalFailedManifests > 0
         ? `. ${totalFailedManifests} manifest${pluralize(
-            totalFailedManifests
+            totalFailedManifests,
           )} couldn't be processed.`
         : ``
-    }`
+    }`,
   )
 
   reporter.info(
@@ -504,7 +505,7 @@ export async function processNodeManifests(): Promise<Map<
           ...listOfUniqueErrorIds,
         ].join(`, `)}]. `
       : ``) +
-      `To see full warning messages set process.env.VERBOSE_NODE_MANIFEST to "true".\nVisit https://gatsby.dev/nodemanifest for more info on Node Manifests.`
+      `To see full warning messages set process.env.VERBOSE_NODE_MANIFEST to "true".\nVisit https://gatsby.dev/nodemanifest for more info on Node Manifests.`,
   )
 
   // clean up all pending manifests from the store

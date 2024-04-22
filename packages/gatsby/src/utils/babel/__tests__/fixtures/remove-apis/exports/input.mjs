@@ -1,4 +1,3 @@
-// const { fetch, Response } = require('node-fetch');
 const usedReference = 'used reference';
 
 module.exports = function () {
@@ -8,7 +7,7 @@ module.exports = function () {
 }
 
 exports.getServerData = async function getServerData() {
-  const data = await fetch('https://example.com');
+  const data = await globalThis.fetch('https://example.com');
   const file = fs.readFileSync('./unknown.tmp.json', 'utf8')
 
   return {

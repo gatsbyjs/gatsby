@@ -62,7 +62,7 @@ export default function jsCodeShift(file) {
 export function babelRecast(code, filePath) {
   const transformedAst = parse(code, {
     parser: {
-      parse: source => runParseSync(source, filePath),
+      parse: (source) => runParseSync(source, filePath),
     },
   })
 
@@ -85,10 +85,7 @@ export function babelRecast(code, filePath) {
 
 function runParseSync(source, filePath) {
   const ast = parseSync(source, {
-    plugins: [
-      `@babel/plugin-syntax-jsx`,
-      `@babel/plugin-proposal-class-properties`,
-    ],
+    plugins: [`@babel/plugin-syntax-jsx`],
     overrides: [
       {
         test: [`**/*.ts`, `**/*.tsx`],
@@ -102,7 +99,7 @@ function runParseSync(source, filePath) {
   })
   if (!ast) {
     console.log(
-      `The codemod was unable to parse ${filePath}. If you're running against the '/src' directory and your project has a custom babel config, try running from the root of the project so the codemod can pick it up.`
+      `The codemod was unable to parse ${filePath}. If you're running against the '/src' directory and your project has a custom babel config, try running from the root of the project so the codemod can pick it up.`,
     )
   }
   return ast
@@ -123,7 +120,7 @@ export function updateImport(babel) {
         }
         const localName = path.node.specifiers?.[0]?.local?.name
         const usages = path.scope.getBinding(localName)?.referencePaths
-        usages.forEach(item => {
+        usages.forEach((item) => {
           processImportUsage(item, t, template, state)
         })
 
@@ -143,12 +140,12 @@ export function updateImport(babel) {
             t.isOptionalMemberExpression(path.parent)
           ) {
             console.log(
-              `It appears you're accessing src or similar. This structure has changed. Please inspect ${state.opts.filename} manually, you likely want to use a helper function like getSrc.`
+              `It appears you're accessing src or similar. This structure has changed. Please inspect ${state.opts.filename} manually, you likely want to use a helper function like getSrc.`,
             )
           }
           const updatedExpression = t.memberExpression(
             path.node.object,
-            t.identifier(`gatsbyImageData`)
+            t.identifier(`gatsbyImageData`),
           )
           path.replaceWith(updatedExpression)
           state.opts.hasChanged = true
@@ -164,14 +161,14 @@ export function updateImport(babel) {
             t.isOptionalMemberExpression(path.parent)
           ) {
             console.log(
-              `It appears you're accessing src or similar. This structure has changed. Please inspect ${state.opts.filename} manually, you likely want to use a helper function like getSrc.`
+              `It appears you're accessing src or similar. This structure has changed. Please inspect ${state.opts.filename} manually, you likely want to use a helper function like getSrc.`,
             )
           }
           const updatedExpression = t.optionalMemberExpression(
             path.node.object,
             t.identifier(`gatsbyImageData`),
             false,
-            true
+            true,
           )
           path.replaceWith(updatedExpression)
           state.opts.hasChanged = true
@@ -188,7 +185,7 @@ export function updateImport(babel) {
 
           if (hasChanged) {
             node.quasi.quasis[0].value.raw = graphql.print(
-              transformedGraphQLQuery
+              transformedGraphQLQuery,
             )
             state.opts.hasChanged = true
           }
@@ -206,7 +203,7 @@ export function updateImport(babel) {
 
           if (hasChanged) {
             node.arguments[0].quasis[0].value.raw = graphql.print(
-              transformedGraphQLQuery
+              transformedGraphQLQuery,
             )
             state.opts.hasChanged = true
           }
@@ -223,12 +220,12 @@ function processImportUsage(path, t, template, state) {
     path.node.name = `GatsbyImage`
     if (node.superClass?.name === path.node.name) {
       console.log(
-        `It appears you are extending the image component in some way. This is not supported in \`gatsby-plugin-image\`, please use composition in ${state.opts.filename} instead.`
+        `It appears you are extending the image component in some way. This is not supported in \`gatsby-plugin-image\`, please use composition in ${state.opts.filename} instead.`,
       )
       return
     }
     console.log(
-      `It appears you are referencing the image component in some way. We've updated the reference, but you will want to verify ${state.opts.filename} manually.`
+      `It appears you are referencing the image component in some way. We've updated the reference, but you will want to verify ${state.opts.filename} manually.`,
     )
     return
   }
@@ -236,16 +233,16 @@ function processImportUsage(path, t, template, state) {
   const componentName = t.jsxIdentifier(`GatsbyImage`)
 
   const fixedOrFluid = node.attributes.filter(({ name }) =>
-    propNames.includes(name?.name)
+    propNames.includes(name?.name),
   )
 
   const otherAttributes = node.attributes.filter(
-    ({ name }) => !propNames.includes(name?.name)
+    ({ name }) => !propNames.includes(name?.name),
   )
 
   if (!fixedOrFluid.length > 0) {
     path.parentPath.replaceWith(
-      t.jsxOpeningElement(componentName, [...otherAttributes], true)
+      t.jsxOpeningElement(componentName, [...otherAttributes], true),
     )
     return
   }
@@ -280,26 +277,26 @@ function processImportUsage(path, t, template, state) {
     newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
   } else if (t.isObjectExpression(expressionValue)) {
     console.log(
-      `It appears you're passing src or srcSet directly. This API is no longer exposed, please update ${state.opts.filename} manually.`
+      `It appears you're passing src or srcSet directly. This API is no longer exposed, please update ${state.opts.filename} manually.`,
     )
   } else if (expressionValue) {
     console.log(
-      `It appears you're passing a variable to your image component. We haven't changed it, but we have updated it to use the new GatsbyImage component. Please check ${state.opts.filename} manually.`
+      `It appears you're passing a variable to your image component. We haven't changed it, but we have updated it to use the new GatsbyImage component. Please check ${state.opts.filename} manually.`,
     )
   }
 
   // // create new prop
   const updatedAttribute = t.jsxAttribute(
     t.jsxIdentifier(`image`),
-    t.jsxExpressionContainer(newImageExpression)
+    t.jsxExpressionContainer(newImageExpression),
   )
 
   path.parentPath.replaceWith(
     t.jsxOpeningElement(
       componentName,
       [updatedAttribute, ...otherAttributes],
-      true
-    )
+      true,
+    ),
   )
   path.skip() // prevent us from revisiting these nodes
 }
@@ -333,31 +330,31 @@ function processArguments(queryArguments, fragment, layout, state) {
       if (layout === `fluid` && Number(argument.value.value) >= 1000) {
         delete queryArguments[index]
         const maxHeightIndex = queryArguments.findIndex(
-          arg => arg?.name?.value === `maxHeight`
+          (arg) => arg?.name?.value === `maxHeight`,
         )
 
         delete queryArguments?.[maxHeightIndex]
 
         console.log(
-          `maxWidth is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`
+          `maxWidth is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`,
         )
       } else if (layout === `fluid` && Number(argument.value.value) < 1000) {
         console.log(
-          `maxWidth is no longer supported for fluid (now fullWidth) images. We've updated the query in ${state.opts.filename} to use a constrained image instead.`
+          `maxWidth is no longer supported for fluid (now fullWidth) images. We've updated the query in ${state.opts.filename} to use a constrained image instead.`,
         )
         newLayout = `constrained`
       }
     } else if (argument.name.value === `maxHeight`) {
       argument.name.value = `height`
       console.log(
-        `maxHeight is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`
+        `maxHeight is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`,
       )
     } else if (transformOptions.includes(argument.name.value)) {
       transformOptionsToNest.push(argument)
       delete queryArguments[index]
     } else if (otherOptions.includes(argument.name.value)) {
       console.log(
-        `${argument.name.value} is now a nested value, please see the API docs and update the query in ${state.opts.filename} manually.`
+        `${argument.name.value} is now a nested value, please see the API docs and update the query in ${state.opts.filename} manually.`,
       )
     }
   })
@@ -380,14 +377,14 @@ function processGraphQLQuery(query, state) {
     graphql.visit(ast, {
       SelectionSet(node) {
         const [sharpField] = node.selections.filter(
-          ({ name }) => name?.value === `childImageSharp`
+          ({ name }) => name?.value === `childImageSharp`,
         )
 
         if (!sharpField) {
           return
         }
         const [fixedOrFluidField] = sharpField.selectionSet.selections.filter(
-          ({ name }) => propNames.includes(name?.value)
+          ({ name }) => propNames.includes(name?.value),
         )
 
         if (!fixedOrFluidField) {
@@ -398,7 +395,7 @@ function processGraphQLQuery(query, state) {
 
         const presentationSizeFragment = fragments.find(
           ({ name }) =>
-            name.value === `GatsbyImageSharpFluidLimitPresentationSize`
+            name.value === `GatsbyImageSharpFluidLimitPresentationSize`,
         )
         if (presentationSizeFragment) {
           layout = `constrained`
@@ -408,7 +405,7 @@ function processGraphQLQuery(query, state) {
           fixedOrFluidField.arguments,
           fragments?.[0],
           layout,
-          state
+          state,
         )
 
         const typeArgument = {
@@ -433,7 +430,7 @@ function processGraphQLQuery(query, state) {
     return { ast, hasChanged }
   } catch (err) {
     throw new Error(
-      `GatsbyImageCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`
+      `GatsbyImageCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`,
     )
   }
 }

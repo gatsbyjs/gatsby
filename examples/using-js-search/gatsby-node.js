@@ -1,12 +1,10 @@
 const path = require(`path`)
-const axios = require(`axios`)
 
 exports.createPages = ({ actions }) => {
   const { createPage } = actions
   return new Promise((resolve, reject) => {
-    axios
-      .get(`https://bvaughn.github.io/js-search/books.json`)
-      .then(result => {
+    fetch(`https://bvaughn.github.io/js-search/books.json`)
+      .then((result) => {
         const { data } = result
         /**
          * creates a page dynamic page with the data received
@@ -31,7 +29,7 @@ exports.createPages = ({ actions }) => {
         })
         resolve()
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(`====================================`)
         console.log(`error creating Page:${err}`)
         console.log(`====================================`)

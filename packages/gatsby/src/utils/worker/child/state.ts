@@ -1,4 +1,4 @@
-import { GatsbyStateKeys } from "../../../redux/types"
+import type { GatsbyStateKeys } from "../../../redux/types"
 import { loadPartialStateFromDisk, store } from "../../../redux"
 
 // Calls loadPartialStateFromDisk(slices) and mutates the redux store with the results

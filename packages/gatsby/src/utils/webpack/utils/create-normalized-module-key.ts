@@ -1,4 +1,4 @@
-import path from "path"
+import path from "node:path"
 import { slash } from "gatsby-core-utils"
 
 /**
@@ -14,7 +14,7 @@ import { slash } from "gatsby-core-utils"
  */
 export function createNormalizedModuleKey(
   resourcePath: string,
-  rootContext: string
+  rootContext: string,
 ): string {
   const rootRelativeFilePath = resourcePath.replace(rootContext, ``)
   const [rootRelativeDir, potentialModuleName] = rootRelativeFilePath

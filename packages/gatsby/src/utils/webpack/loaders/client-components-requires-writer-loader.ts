@@ -1,4 +1,4 @@
-import { LoaderContext } from "webpack"
+import type { LoaderContext } from "webpack"
 
 const Template = require(`webpack/lib/Template`)
 
@@ -8,7 +8,7 @@ const Template = require(`webpack/lib/Template`)
 module.exports = function virtual(
   this: LoaderContext<{
     modules: string
-  }>
+  }>,
 ): string {
   const { modules } = this.getOptions()
 
@@ -17,11 +17,11 @@ module.exports = function virtual(
   const code = requests
     .filter(Boolean)
     // Filter out css files on the server
-    .map(request => {
+    .map((request) => {
       const chunkName = Template.toPath(request)
 
       return `import(/* webpackChunkName: "${chunkName}" */ ${JSON.stringify(
-        request
+        request,
       )})`
     })
     .join(`;\n`)

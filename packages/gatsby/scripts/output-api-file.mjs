@@ -1,4 +1,4 @@
-import path from "path"
+import path from "node:path"
 import { build } from "documentation"
 import fs from "fs-extra"
 
@@ -10,13 +10,13 @@ async function outputFile() {
       path.join("cache-dir", "api-ssr-docs.js"),
       path.join("src", "utils", "api-browser-docs.ts"),
       path.join("src", "utils", "api-node-docs.ts"),
-    ].map(filePath => {
+    ].map((filePath) => {
       const resolved = path.resolve(filePath)
       const [, api] = path.basename(filePath).split("-")
       return build(resolved, {
         external: [],
         shallow: true,
-      }).then(contents => {
+      }).then((contents) => {
         return [contents, api]
       })
     }),

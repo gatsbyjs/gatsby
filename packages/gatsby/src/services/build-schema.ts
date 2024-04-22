@@ -1,6 +1,6 @@
 import { build } from "../schema"
 import reporter from "gatsby-cli/lib/reporter"
-import { IDataLayerContext } from "../state-machines/data-layer/types"
+import type { IDataLayerContext } from "../state-machines/data-layer/types"
 
 export async function buildSchema({
   parentSpan,

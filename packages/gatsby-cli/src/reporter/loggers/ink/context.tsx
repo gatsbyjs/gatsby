@@ -4,7 +4,7 @@ import {
   useState,
   createContext,
   useLayoutEffect,
-  PropsWithChildren,
+  type PropsWithChildren,
   type ComponentType,
 } from "react"
 import { getStore, onLogAction } from "../../redux"
@@ -32,14 +32,14 @@ function _StoreStateProvider({ children }: PropsWithChildren): JSX.Element {
   useLayoutEffect(() => {
     return onLogAction((action: ActionsUnion): void => {
       if (action.type === Actions.Log) {
-        setState(state => {
+        setState((state) => {
           return {
             ...state,
             messages: [...state.messages, action.payload],
           }
         })
       } else {
-        setState(state => {
+        setState((state) => {
           return { ...getStore().getState(), messages: state.messages }
         })
       }

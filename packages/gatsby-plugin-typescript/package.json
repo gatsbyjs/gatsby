@@ -10,22 +10,21 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
-    "@babel/plugin-proposal-numeric-separator": "^7.18.6",
-    "@babel/plugin-proposal-optional-chaining": "^7.20.7",
-    "@babel/preset-typescript": "^7.18.6",
-    "@babel/runtime": "^7.20.13",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-typescript": "^7.24.1",
+    "@babel/runtime": "^7.24.4",
     "babel-plugin-remove-graphql-queries": "^5.14.0-next.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "^5.0.0-next"
+    "gatsby": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",
   "keywords": [

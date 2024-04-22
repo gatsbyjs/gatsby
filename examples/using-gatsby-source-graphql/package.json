@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "0.5.1",
-    "babel-eslint": "10.1.0",
+    "@babel/eslint-parser": "^7.24.1",
     "eslint": "8.57.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jsx-a11y": "6.8.0",

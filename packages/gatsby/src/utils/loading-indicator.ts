@@ -1,4 +1,4 @@
-import { Express } from "express"
+import type { Express } from "express"
 import { writeModule } from "./gatsby-webpack-virtual-modules"
 
 // set value to undefined first, because env vars needed to determine if indicator
@@ -31,7 +31,7 @@ export function writeVirtualLoadingIndicatorModule(): void {
           : true`
         : JSON.stringify(indicatorEnabled)
     }
-  }`
+  }`,
   )
 }
 
@@ -53,8 +53,8 @@ export function routeLoadingIndicatorRequests(app: Express): void {
         indicatorEnabled === `auto`
           ? `auto`
           : indicatorEnabled
-          ? `enabled`
-          : `disabled`,
+            ? `enabled`
+            : `disabled`,
     })
   })
 }

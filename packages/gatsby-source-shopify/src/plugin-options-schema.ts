@@ -1,5 +1,4 @@
-// @ts-ignore
-import { PluginOptionsSchemaArgs } from "gatsby"
+import type { PluginOptionsSchemaArgs } from "gatsby"
 
 export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): unknown {
   return Joi.object({

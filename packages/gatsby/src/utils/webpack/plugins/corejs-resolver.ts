@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Resolver from "enhanced-resolve/lib/Resolver"
 import path from "path"
 
@@ -19,8 +20,8 @@ const replaceMap = [
   [`regexp.split`, `string.split`],
 ]
 
-interface IRequest {
-  request?: string
+type IRequest = {
+  request?: string | undefined
   path: string
 }
 
@@ -37,7 +38,7 @@ export class CoreJSResolver {
     // Get the nodemodules directory where core-js of gatsby lives
     // it might be inside gatsby/node_modules when multiple core-js versions are loaded
     this._coreJSNodeModulesPath = path.dirname(
-      path.dirname(require.resolve(`core-js`))
+      path.dirname(require.resolve(`core-js`)),
     )
   }
 
@@ -48,7 +49,7 @@ export class CoreJSResolver {
     function resolve(
       request: IRequest,
       resolveContext: unknown,
-      callback: (err?: Error | null, result?: unknown) => void
+      callback: (err?: Error | null, result?: unknown) => void,
     ): void {
       const innerRequest = request.request || request.path
 
@@ -90,7 +91,7 @@ export class CoreJSResolver {
           }
 
           return callback(null, result)
-        }
+        },
       )
     }
 

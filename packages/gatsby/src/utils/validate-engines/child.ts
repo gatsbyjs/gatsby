@@ -1,5 +1,5 @@
 import mod from "module"
-import * as path from "path"
+import * as path from "node:path"
 
 // @ts-ignore TS doesn't like accessing `_load`
 const originalModuleLoad = mod._load
@@ -19,7 +19,7 @@ class EngineValidationError extends Error {
     parent: mod
   }) {
     super(
-      `Generated engines use disallowed import "${request}". Only allowed imports are to Node.js builtin modules or engines internals.`
+      `Generated engines use disallowed import "${request}". Only allowed imports are to Node.js builtin modules or engines internals.`,
     )
     this.request = request
     this.relativeToRoot = relativeToRoot
@@ -30,6 +30,7 @@ class EngineValidationError extends Error {
 export async function validate(directory: string): Promise<void> {
   // intercept module loading and validate no unexpected imports are happening
   // @ts-ignore TS doesn't like accessing `_load`
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mod._load = (request: string, parent: mod, isMain: boolean): any => {
     // Allow all node builtins
     if (mod.builtinModules.includes(request)) {
@@ -67,11 +68,9 @@ export async function validate(directory: string): Promise<void> {
   process.env.GATSBY_WORKER_MODULE_PATH = ``
 
   // import engines, initiate them, if there is any error thrown it will be handled in parent process
-  const { GraphQLEngine } = require(path.join(
-    directory,
-    `.cache`,
-    `query-engine`
-  ))
+  const { GraphQLEngine } = require(
+    path.join(directory, `.cache`, `query-engine`),
+  )
   require(path.join(directory, `.cache`, `page-ssr`))
   const graphqlEngine = new GraphQLEngine({
     dbPath: path.join(directory, `.cache`, `data`, `datastore`),

@@ -14,21 +14,21 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "faker": "^5.0.0",
-    "gatsby": "^2.24.10",
-    "gatsby-image": "^2.2.40",
-    "gatsby-plugin-benchmark-reporting": "*",
-    "gatsby-plugin-sharp": "^5.14.0-next.2",
-    "gatsby-source-filesystem": "^2.3.22",
-    "gatsby-source-flotiq": "*",
-    "gatsby-transformer-sharp": "^5.13.1",
-    "lodash.kebabcase": "^4.1.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "dotenv": "16.4.5",
+    "faker": "6.6.6",
+    "gatsby": "5.13.4",
+    "gatsby-image": "3.11.0",
+    "gatsby-plugin-benchmark-reporting": "3.13.1",
+    "gatsby-plugin-sharp": "5.13.1",
+    "gatsby-source-filesystem": "5.13.1",
+    "gatsby-source-flotiq": "5.2.0",
+    "gatsby-transformer-sharp": "5.13.1",
+    "lodash.kebabcase": "4.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.0",
-    "prettier": "^1.19.1"
+    "cross-env": "7.0.3",
+    "prettier": "3.2.5"
   }
 }

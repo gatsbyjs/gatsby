@@ -1,4 +1,4 @@
-import {
+import type {
   ActionsUnion,
   IGatsbyState,
   IHtmlFileState,
@@ -49,7 +49,7 @@ export function htmlReducer(
         state.templateCompilationHashes = {}
         state.trackedStaticQueryResults.clear()
         state.unsafeBuiltinWasUsedInSSR = false
-        state.trackedHtmlFiles.forEach(htmlFile => {
+        state.trackedHtmlFiles.forEach((htmlFile) => {
           htmlFile.isDeleted = true
           // there was a change somewhere, so just in case we mark those files are dirty as well
           htmlFile.dirty |= FLAG_DIRTY_CLEARED_CACHE
@@ -122,11 +122,12 @@ export function htmlReducer(
       // directly when generating html. We care about page-data (which contains page query result).
       // Handling of page-data that transitively handles page query result is done in handler for
       // `ADD_PAGE_DATA_STATS` action.
-      if (action.payload.queryType === `static`) {
+      if (action.payload.queryType === `static` && action.payload.queryHash) {
         // static query case
         let staticQueryResult = state.trackedStaticQueryResults.get(
           action.payload.queryHash,
         )
+
         if (!staticQueryResult) {
           staticQueryResult = {
             dirty: FLAG_DIRTY_STATIC_QUERY_FIRST_RUN,
@@ -166,7 +167,7 @@ export function htmlReducer(
       if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
         if (state.browserCompilationHash !== action.payload) {
           state.browserCompilationHash = action.payload
-          state.trackedHtmlFiles.forEach(htmlFile => {
+          state.trackedHtmlFiles.forEach((htmlFile) => {
             htmlFile.dirty |= FLAG_DIRTY_BROWSER_COMPILATION_HASH
           })
         }
@@ -206,7 +207,7 @@ export function htmlReducer(
           }
         } else {
           if (action.payload.pages) {
-            action.payload.pages.forEach(pagePath => {
+            action.payload.pages.forEach((pagePath) => {
               const htmlFile = state.trackedHtmlFiles.get(pagePath)
               if (htmlFile) {
                 htmlFile.dirty |= FLAG_DIRTY_SSR_COMPILATION_HASH
@@ -230,7 +231,7 @@ export function htmlReducer(
         // unsafeBuiltinWasUsedInSSR flag, which might be set again if
         // ssr bundle continue to use those
         state.unsafeBuiltinWasUsedInSSR = false
-        state.trackedHtmlFiles.forEach(htmlFile => {
+        state.trackedHtmlFiles.forEach((htmlFile) => {
           htmlFile.dirty |= FLAG_DIRTY_SSR_COMPILATION_HASH
         })
       }

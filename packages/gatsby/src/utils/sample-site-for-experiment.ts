@@ -5,7 +5,7 @@ const sampleSite = (experimentName: string, percentage: number): boolean => {
   const bucketNumber =
     murmurhash(
       experimentName + `` + JSON.stringify(getRepositoryId().repositoryId),
-      0
+      0,
     ) % 100
 
   return bucketNumber < percentage

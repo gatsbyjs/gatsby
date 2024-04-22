@@ -1,6 +1,6 @@
 import { collectedScriptsByPage } from "gatsby-script"
 import { injectPartytownSnippet } from "./utils/inject-partytown-snippet"
-import type { GatsbyBrowser } from "gatsby"
+import type { GatsbyBrowser } from "../../.."
 
 // Makes sure off-main-thread scripts are loaded in `gatsby develop`
 export const onInitialClientRender: GatsbyBrowser[`onInitialClientRender`] =

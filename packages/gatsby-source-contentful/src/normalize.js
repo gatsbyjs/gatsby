@@ -9,8 +9,9 @@ import fastq from "fastq"
  * @param {string} type
  * @param {string} typePrefix
  */
-export const makeTypeName = (type, typePrefix) =>
-  _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+export function makeTypeName(type, typePrefix) {
+  return _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+}
 
 const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
 const gatsbyVersion =
@@ -19,7 +20,7 @@ const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
 const shouldUpgradeGatsbyVersion =
   lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
-export const getLocalizedField = ({ field, locale, localesFallback }) => {
+export function getLocalizedField({ field, locale, localesFallback }) {
   if (!field) {
     return null
   }
@@ -38,20 +39,20 @@ export const getLocalizedField = ({ field, locale, localesFallback }) => {
     return null
   }
 }
-export const buildFallbackChain = locales => {
+export function buildFallbackChain(locales) {
   const localesFallback = {}
   _.each(
     locales,
-    locale => (localesFallback[locale.code] = locale.fallbackCode)
+    (locale) => (localesFallback[locale.code] = locale.fallbackCode),
   )
   return localesFallback
 }
 const makeGetLocalizedField =
   ({ locale, localesFallback }) =>
-  field =>
+  (field) =>
     getLocalizedField({ field, locale, localesFallback })
 
-export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+export function makeId({ spaceId, id, currentLocale, defaultLocale, type }) {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
     : type
@@ -65,42 +66,42 @@ const makeMakeId =
   (spaceId, id, type) =>
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-export const buildEntryList = ({ contentTypeItems, currentSyncData }) => {
+export function buildEntryList({ contentTypeItems, currentSyncData }) {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map = new Map(
-    contentTypeItems.map(contentType => [contentType.sys.id, []])
+    contentTypeItems.map((contentType) => [contentType.sys.id, []]),
   )
   // Now fill the buckets. Ignore entries for which there exists no bucket. (This happens when filterContentType is used)
-  currentSyncData.entries.map(entry => {
+  currentSyncData.entries.map((entry) => {
     const arr = map.get(entry.sys.contentType.sys.id)
     if (arr) {
       arr.push(entry)
     }
   })
   // Order is relevant, must map 1:1 to contentTypeItems array
-  return contentTypeItems.map(contentType => map.get(contentType.sys.id))
+  return contentTypeItems.map((contentType) => map.get(contentType.sys.id))
 }
 
-export const buildResolvableSet = ({
+export function buildResolvableSet({
   entryList,
   existingNodes = new Map(),
   assets = [],
-}) => {
+}) {
   const resolvable = new Set()
-  existingNodes.forEach(node => {
+  existingNodes.forEach((node) => {
     // We need to add only root level resolvable (assets and entries)
     // Derived nodes (markdown or JSON) will be recreated if needed.
     resolvable.add(`${node.contentful_id}___${node.sys.type}`)
   })
 
-  entryList.forEach(entries => {
-    entries.forEach(entry =>
-      resolvable.add(`${entry.sys.id}___${entry.sys.type}`)
+  entryList.forEach((entries) => {
+    entries.forEach((entry) =>
+      resolvable.add(`${entry.sys.id}___${entry.sys.type}`),
     )
   })
 
-  assets.forEach(assetItem =>
-    resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`)
+  assets.forEach((assetItem) =>
+    resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`),
   )
 
   return resolvable
@@ -112,7 +113,7 @@ function cleanupReferencesFromEntry(foreignReferenceMapState, entry) {
 
   const entryLinks = links[entryId]
   if (entryLinks) {
-    entryLinks.forEach(link => {
+    entryLinks.forEach((link) => {
       const backLinksForLink = backLinks[link]
       if (backLinksForLink) {
         const newBackLinks = backLinksForLink.filter(({ id }) => id !== entryId)
@@ -128,7 +129,7 @@ function cleanupReferencesFromEntry(foreignReferenceMapState, entry) {
   delete links[entryId]
 }
 
-export const buildForeignReferenceMap = ({
+export function buildForeignReferenceMap({
   contentTypeItems,
   entryList,
   resolvable,
@@ -137,7 +138,7 @@ export const buildForeignReferenceMap = ({
   useNameForId,
   previousForeignReferenceMapState,
   deletedEntries,
-}) => {
+}) {
   const foreignReferenceMapState = previousForeignReferenceMapState || {
     links: {},
     backLinks: {},
@@ -161,12 +162,12 @@ export const buildForeignReferenceMap = ({
       contentTypeItemId = contentTypeItem.sys.id.toLowerCase()
     }
 
-    entryList[i].forEach(entryItem => {
+    entryList[i].forEach((entryItem) => {
       // clear links added in previous runs for given entry, as we will recreate them anyway
       cleanupReferencesFromEntry(foreignReferenceMapState, entryItem)
 
       const entryItemFields = entryItem.fields
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+      Object.keys(entryItemFields).forEach((entryItemFieldKey) => {
         if (entryItemFields[entryItemFieldKey]) {
           const entryItemFieldValue =
             entryItemFields[entryItemFieldKey][defaultLocale]
@@ -175,11 +176,15 @@ export const buildForeignReferenceMap = ({
           if (Array.isArray(entryItemFieldValue)) {
             if (
               entryItemFieldValue[0] &&
+              // @ts-ignore
               entryItemFieldValue[0].sys &&
+              // @ts-ignore
               entryItemFieldValue[0].sys.type &&
+              // @ts-ignore
               entryItemFieldValue[0].sys.id
             ) {
-              entryItemFieldValue.forEach(v => {
+              entryItemFieldValue.forEach((v) => {
+                // @ts-ignore
                 const key = `${v.sys.id}___${v.sys.linkType || v.sys.type}`
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
@@ -207,9 +212,7 @@ export const buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = `${entryItemFieldValue.sys.id}___${
-              entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
-            }`
+            const key = `${entryItemFieldValue.sys.id}___${entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type}`
             // Don't create link to an unresolvable field.
             if (!resolvable.has(key)) {
               return
@@ -329,14 +332,14 @@ function contentfulCreateNodeManifest({
         shouldCreateNodeManifest,
         manifestId,
         entryItemSysUpdatedAt: updatedAt,
-      })
+      }),
     )
   }
 
   if (shouldCreateNodeManifest) {
     if (shouldUpgradeGatsbyVersion && !warnOnceToUpgradeGatsby) {
       console.warn(
-        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`
+        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`,
       )
       warnOnceToUpgradeGatsby = true
     }
@@ -352,7 +355,7 @@ function contentfulCreateNodeManifest({
     !warnOnceForNoSupport
   ) {
     console.warn(
-      `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+      `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`,
     )
     warnOnceForNoSupport = true
   }
@@ -385,7 +388,7 @@ function makeQueuedCreateNode({ nodeCount, createNode }) {
       }
     }, 10)
 
-    const queueFinished = new Promise(resolve => {
+    const queueFinished = new Promise((resolve) => {
       createNodesQueue.drain = () => {
         resolve(null)
       }
@@ -400,13 +403,13 @@ function makeQueuedCreateNode({ nodeCount, createNode }) {
     const queueFinished = () => Promise.all(nodePromises)
 
     return {
-      create: node => nodePromises.push(createNode(node)),
+      create: (node) => nodePromises.push(createNode(node)),
       createNodesPromise: queueFinished(),
     }
   }
 }
 
-export const createNodesForContentType = async ({
+export async function createNodesForContentType({
   contentTypeItem,
   restrictedNodeFields,
   conflictFieldPrefix,
@@ -422,7 +425,7 @@ export const createNodesForContentType = async ({
   space,
   useNameForId,
   pluginConfig,
-}) => {
+}) {
   const { create, createNodesPromise } = makeQueuedCreateNode({
     nodeCount: entries.length,
     createNode,
@@ -459,7 +462,7 @@ export const createNodesForContentType = async ({
 
   create(contentTypeNode)
 
-  locales.forEach(locale => {
+  locales.forEach((locale) => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
       currentLocale: locale.code,
@@ -473,11 +476,11 @@ export const createNodesForContentType = async ({
 
     // Warn about any field conflicts
     const conflictFields = []
-    contentTypeItem.fields.forEach(contentTypeItemField => {
+    contentTypeItem.fields.forEach((contentTypeItemField) => {
       const fieldName = contentTypeItemField.id
       if (restrictedNodeFields.includes(fieldName)) {
         console.log(
-          `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
+          `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`,
         )
         conflictFields.push(fieldName)
       }
@@ -486,11 +489,11 @@ export const createNodesForContentType = async ({
     const childrenNodes = []
 
     // First create nodes for each of the entries of that content type
-    const entryNodes = entries.map(entryItem => {
+    const entryNodes = entries.map((entryItem) => {
       const entryNodeId = mId(
         space.sys.id,
         entryItem.sys.id,
-        entryItem.sys.type
+        entryItem.sys.type,
       )
 
       const existingNode = getNode(entryNodeId)
@@ -502,7 +505,9 @@ export const createNodesForContentType = async ({
 
       // Get localized fields.
       const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
-        const fieldProps = contentTypeItem.fields.find(field => field.id === k)
+        const fieldProps = contentTypeItem.fields.find(
+          (field) => field.id === k,
+        )
 
         const localizedField = fieldProps.localized
           ? getField(v)
@@ -513,17 +518,18 @@ export const createNodesForContentType = async ({
 
       // Prefix any conflicting fields
       // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
-      conflictFields.forEach(conflictField => {
+      conflictFields.forEach((conflictField) => {
         entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
           entryItemFields[conflictField]
         delete entryItemFields[conflictField]
       })
 
       // Add linkages to other nodes based on foreign references
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+      Object.keys(entryItemFields).forEach((entryItemFieldKey) => {
         if (entryItemFields[entryItemFieldKey]) {
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
           if (Array.isArray(entryItemFieldValue)) {
+            // @ts-ignore
             if (entryItemFieldValue[0]?.sys?.type === `Link`) {
               // Check if there are any values in entryItemFieldValue to prevent
               // creating an empty node field in case when original key field value
@@ -531,14 +537,17 @@ export const createNodesForContentType = async ({
               const resolvableEntryItemFieldValue = entryItemFieldValue
                 .filter(function (v) {
                   return resolvable.has(
-                    `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+                    // @ts-ignore
+                    `${v.sys.id}___${v.sys.linkType || v.sys.type}`,
                   )
                 })
                 .map(function (v) {
                   return mId(
                     space.sys.id,
+                    // @ts-ignore
                     v.sys.id,
-                    v.sys.linkType || v.sys.type
+                    // @ts-ignore
+                    v.sys.linkType || v.sys.type,
                   )
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
@@ -554,13 +563,14 @@ export const createNodesForContentType = async ({
                 `${entryItemFieldValue.sys.id}___${
                   entryItemFieldValue.sys.linkType ||
                   entryItemFieldValue.sys.type
-                }`
+                }`,
               )
             ) {
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                 space.sys.id,
                 entryItemFieldValue.sys.id,
-                entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
+                entryItemFieldValue.sys.linkType ||
+                  entryItemFieldValue.sys.type,
               )
             }
             delete entryItemFields[entryItemFieldKey]
@@ -572,7 +582,7 @@ export const createNodesForContentType = async ({
       const foreignReferences =
         foreignReferenceMap[`${entryItem.sys.id}___${entryItem.sys.type}`]
       if (foreignReferences) {
-        foreignReferences.forEach(foreignReference => {
+        foreignReferences.forEach((foreignReference) => {
           const existingReference = entryItemFields[foreignReference.name]
           if (existingReference) {
             // If the existing reference is a string, we're dealing with a
@@ -583,8 +593,8 @@ export const createNodesForContentType = async ({
                 mId(
                   foreignReference.spaceId,
                   foreignReference.id,
-                  foreignReference.type
-                )
+                  foreignReference.type,
+                ),
               )
             }
           } else {
@@ -594,7 +604,7 @@ export const createNodesForContentType = async ({
               mId(
                 foreignReference.spaceId,
                 foreignReference.id,
-                foreignReference.type
+                foreignReference.type,
               ),
             ]
           }
@@ -637,7 +647,7 @@ export const createNodesForContentType = async ({
 
       // Replace text fields with text nodes so we can process their markdown
       // into HTML.
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+      Object.keys(entryItemFields).forEach((entryItemFieldKey) => {
         // Ignore fields with "___node" as they're already handled
         // and won't be a text field.
         if (entryItemFieldKey.includes(`___`)) {
@@ -645,14 +655,14 @@ export const createNodesForContentType = async ({
         }
 
         const fieldType = contentTypeItem.fields.find(
-          f =>
+          (f) =>
             (restrictedNodeFields.includes(f.id)
               ? `${conflictFieldPrefix}${f.id}`
-              : f.id) === entryItemFieldKey
+              : f.id) === entryItemFieldKey,
         ).type
         if (fieldType === `Text`) {
           const textNodeId = createNodeId(
-            `${entryNodeId}${entryItemFieldKey}TextNode`
+            `${entryNodeId}${entryItemFieldKey}TextNode`,
           )
 
           // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
@@ -664,7 +674,7 @@ export const createNodesForContentType = async ({
               textNodeId,
               entryNode,
               entryItemFieldKey,
-              entryItemFields[entryItemFieldKey]
+              entryItemFields[entryItemFieldKey],
             )
 
             childrenNodes.push(textNode)
@@ -681,7 +691,7 @@ export const createNodesForContentType = async ({
           const rawReferences = []
 
           // Locate all Contentful Links within the rich text data
-          const traverse = obj => {
+          const traverse = (obj) => {
             // eslint-disable-next-line guard-for-in
             for (const k in obj) {
               const v = obj[k]
@@ -700,12 +710,12 @@ export const createNodesForContentType = async ({
           rawReferences
             .filter(function (v) {
               return resolvable.has(
-                `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+                `${v.sys.id}___${v.sys.linkType || v.sys.type}`,
               )
             })
             .forEach(function (v) {
               resolvableReferenceIds.add(
-                mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type)
+                mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type),
               )
             })
 
@@ -718,7 +728,7 @@ export const createNodesForContentType = async ({
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
           const jsonNodeId = createNodeId(
-            `${entryNodeId}${entryItemFieldKey}JSONNode`
+            `${entryNodeId}${entryItemFieldKey}JSONNode`,
           )
 
           // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
@@ -730,7 +740,7 @@ export const createNodesForContentType = async ({
               jsonNodeId,
               entryNode,
               entryItemFieldKey,
-              entryItemFields[entryItemFieldKey]
+              entryItemFields[entryItemFieldKey],
             )
             childrenNodes.push(jsonNode)
           }
@@ -745,7 +755,7 @@ export const createNodesForContentType = async ({
 
           entryItemFields[entryItemFieldKey].forEach((obj, i) => {
             const jsonNodeId = createNodeId(
-              `${entryNodeId}${entryItemFieldKey}${i}JSONNode`
+              `${entryNodeId}${entryItemFieldKey}${i}JSONNode`,
             )
 
             // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
@@ -757,7 +767,7 @@ export const createNodesForContentType = async ({
                 jsonNodeId,
                 entryNode,
                 entryItemFieldKey,
-                obj
+                obj,
               )
               childrenNodes.push(jsonNode)
             }
@@ -781,8 +791,8 @@ export const createNodesForContentType = async ({
       // Link tags
       if (pluginConfig.get(`enableTags`)) {
         entryNode.metadata = {
-          tags___NODE: entryItem.metadata.tags.map(tag =>
-            createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+          tags___NODE: entryItem.metadata.tags.map((tag) =>
+            createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
           ),
         }
       }
@@ -811,7 +821,7 @@ export const createNodesForContentType = async ({
   return createNodesPromise
 }
 
-export const createAssetNodes = async ({
+export async function createAssetNodes({
   assetItem,
   createNode,
   createNodeId,
@@ -819,7 +829,7 @@ export const createAssetNodes = async ({
   locales,
   space,
   pluginConfig,
-}) => {
+}) {
   const { create, createNodesPromise } = makeQueuedCreateNode({
     createNode,
     nodeCount: locales.length,
@@ -827,7 +837,7 @@ export const createAssetNodes = async ({
 
   const assetNodes = []
 
-  locales.forEach(locale => {
+  locales.forEach((locale) => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
       currentLocale: locale.code,
@@ -879,8 +889,8 @@ export const createAssetNodes = async ({
     // Link tags
     if (pluginConfig.get(`enableTags`)) {
       assetNode.metadata = {
-        tags___NODE: assetItem.metadata.tags.map(tag =>
-          createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+        tags___NODE: assetItem.metadata.tags.map((tag) =>
+          createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
         ),
       }
     }

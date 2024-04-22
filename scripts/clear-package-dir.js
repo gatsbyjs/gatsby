@@ -15,7 +15,7 @@ const argv = yargs
   .command(
     `* <bump>`,
     `Clear previously built and potentially stale files in packages`,
-    commandBuilder => {
+    (commandBuilder) => {
       commandBuilder.positional(`bump`, {
         choices: [
           `major`,
@@ -27,7 +27,7 @@ const argv = yargs
           `prerelease`,
         ],
       })
-    }
+    },
   )
 
   .option(`dry-run`, {
@@ -45,10 +45,10 @@ const argv = yargs
 
 const verbose = argv[`dry-run`] || argv[`verbose`]
 
-const buildIgnoreArray = str =>
-  str
+function buildIgnoreArray(str) {
+  return str
     .split(`\n`)
-    .filter(line => {
+    .filter((line) => {
       // skip empty lines and comments
       if (!line || line[0] === `#`) {
         return false
@@ -66,12 +66,13 @@ const buildIgnoreArray = str =>
       }
       return acc
     }, [])
+}
 
 const getListOfFilesToClear = async ({ location, name }) => {
   let gitignore = []
   try {
     gitignore = buildIgnoreArray(
-      fs.readFileSync(path.join(location, `.gitignore`), `utf-8`)
+      fs.readFileSync(path.join(location, `.gitignore`), `utf-8`),
     )
   } catch {
     // not all packages have .gitignore - see gatsby-plugin-no-sourcemap
@@ -80,7 +81,7 @@ const getListOfFilesToClear = async ({ location, name }) => {
       `git ls-files --others --exclude-standard`,
       {
         cwd: location,
-      }
+      },
     )
       .toString()
       .split(`\n`)
@@ -95,19 +96,19 @@ const getListOfFilesToClear = async ({ location, name }) => {
   console.log(`Files that will be deleted for ${chalk.bold(name)}:`)
 
   const filesToDelete = result
-    .filter(file => {
+    .filter((file) => {
       const willBeDeleted = ig.ignores(file)
       if (verbose || willBeDeleted) {
         console.log(
           `[ ${
             willBeDeleted ? chalk.red(`DEL`) : chalk.green(` - `)
-          } ] ${path.posix.join(file)}`
+          } ] ${path.posix.join(file)}`,
         )
       }
 
       return willBeDeleted
     })
-    .map(file => path.join(location, file))
+    .map((file) => path.join(location, file))
 
   return filesToDelete
 }
@@ -127,30 +128,30 @@ const run = async () => {
         ...project.config,
         loglevel: `silent`,
         bump: argv.bump,
-      }
+      },
     )
 
     const filesToDelete = _.flatten(
-      await Promise.all(changed.map(getListOfFilesToClear))
+      await Promise.all(changed.map(getListOfFilesToClear)),
     )
 
     if (!argv[`dry-run`] && filesToDelete.length > 0) {
       if (
         argv[`force`] ||
         (await PromptUtilities.confirm(
-          `Are you sure you want to delete those files?`
+          `Are you sure you want to delete those files?`,
         ))
       ) {
-        filesToDelete.forEach(file => {
+        filesToDelete.forEach((file) => {
           fs.removeSync(file)
         })
       } else {
         console.log(
           `${chalk.red(
-            `Stopping publish`
+            `Stopping publish`,
           )}: there are files that need to be cleared.\n\nIf this is a bug in check script and everything is fine, run:\n\n${chalk.green(
-            `pnpm run lerna publish`
-          )}\n\ndirectly to skip checks (and hopefully apply changes to clear-package-dir script to fix it).`
+            `pnpm run lerna publish`,
+          )}\n\ndirectly to skip checks (and hopefully apply changes to clear-package-dir script to fix it).`,
         )
         process.exit(1)
       }

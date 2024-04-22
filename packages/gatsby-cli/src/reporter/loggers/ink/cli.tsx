@@ -4,13 +4,13 @@ import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
 import { Spinner } from "./components/spinner"
 import { ProgressBar } from "./components/progress-bar"
-import { Message, IMessageProps } from "./components/messages"
+import { Message, type IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
 import { ConnectedDevelop } from "./components/develop"
 import { Trees } from "./components/trees"
-import { IGatsbyCLIState, IActivity, ILog } from "../../redux/types"
+import type { IGatsbyCLIState, IActivity, ILog } from "../../redux/types"
 import { ActivityLogLevels } from "../../constants"
-import { IStructuredError } from "../../../structured-errors/types"
+import type { IStructuredError } from "../../../structured-errors/types"
 
 const showProgress = isTTY()
 
@@ -73,7 +73,7 @@ export class CLI extends Component<ICLIProps, ICLIState> {
     const spinners: Array<IActivity> = []
     const progressBars: Array<IActivity> = []
     if (showProgress) {
-      Object.keys(activities).forEach(activityName => {
+      Object.keys(activities).forEach((activityName) => {
         const activity = activities[activityName]
         if (activity.status !== `IN_PROGRESS`) {
           return
@@ -108,11 +108,11 @@ export class CLI extends Component<ICLIProps, ICLIState> {
 
           {showTrees ? <Trees /> : null}
 
-          {spinners.map(activity => (
+          {spinners.map((activity) => (
             <Spinner key={activity.id} {...activity} />
           ))}
 
-          {progressBars.map(activity => (
+          {progressBars.map((activity) => (
             <ProgressBar
               key={activity.id}
               message={activity.text}

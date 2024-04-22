@@ -1,7 +1,6 @@
-import axios from "axios"
 import { buildResponsiveSizes } from "../../utils/index"
 
-jest.mock(`axios`)
+jest.mock(fetch)
 
 const reporterMock = jest.fn()
 
@@ -17,21 +16,21 @@ describe(`builds responsive sizes`, () => {
   }
 
   beforeEach(() => {
-    axios.mockClear()
-    axios.mockImplementation(() =>
+    fetch.mockClear()
+    fetch.mockImplementation(() =>
       Promise.resolve({
         data: `mockedBase64`,
         headers: {
           "content-type": `image/jpeg`,
         },
-      })
+      }),
     )
   })
 
   test(`proberly calculates responsive values`, async () => {
     const result = await buildResponsiveSizes(
       { metadata, imageUrl, options },
-      reporterMock
+      reporterMock,
     )
 
     expect(result).toMatchSnapshot()
@@ -39,7 +38,7 @@ describe(`builds responsive sizes`, () => {
   test(`does not remove search parameters`, async () => {
     const result = await buildResponsiveSizes(
       { metadata, imageUrl: `${imageUrl}?q=70`, options },
-      reporterMock
+      reporterMock,
     )
 
     expect(result.src).toContain(`q=70`)

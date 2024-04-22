@@ -107,8 +107,8 @@ export async function getServices(programPath: string): Promise<any> {
   const siteDir = getSiteDir(programPath)
 
   const serviceNames = (await fs.readdir(siteDir))
-    .filter(file => file.endsWith(DATA_FILE_EXTENSION))
-    .map(file => file.replace(DATA_FILE_EXTENSION, ``))
+    .filter((file) => file.endsWith(DATA_FILE_EXTENSION))
+    .map((file) => file.replace(DATA_FILE_EXTENSION, ``))
 
   const services = {}
   await Promise.all(

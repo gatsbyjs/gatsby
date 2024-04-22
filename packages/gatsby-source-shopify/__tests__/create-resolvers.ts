@@ -3,7 +3,7 @@ import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
 
 const connections = [`orders`, `collections`, `locations`]
 
-const generateTestName = (downloadImages, shopifyConnections): string => {
+function generateTestName(downloadImages, shopifyConnections): string {
   const modifiers = [
     downloadImages ? `with` : `without`,
     shopifyConnections.length > 0 ? `with` : `without`,
@@ -23,6 +23,7 @@ describe(`createResolvers`, () => {
   for (const downloadImages of [false, true]) {
     for (const shopifyConnections of [[], connections]) {
       it(generateTestName(downloadImages, shopifyConnections), () => {
+        // @ts-ignore
         createResolvers(gatsbyApi, {
           ...pluginOptions,
           downloadImages,
@@ -36,10 +37,13 @@ describe(`createResolvers`, () => {
           return 3
         }
 
-        expect(gatsbyApi.createResolvers.mock.calls.length).toEqual(
-          getExpectedValue()
+        // @ts-ignore
+        expect(gatsbyApi.createResolver?.mock.calls.length).toEqual(
+          getExpectedValue(),
         )
-        expect(gatsbyApi.createResolvers.mock.calls).toMatchSnapshot()
+
+        // @ts-ignore
+        expect(gatsbyApi.createResolvers?.mock.calls).toMatchSnapshot()
       })
     }
   }

@@ -43,7 +43,7 @@ type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
 export function getMaybeResolvedValue(
   node: IGatsbyNode,
   field: string | ISort,
-  nodeInterfaceName: string,
+  nodeInterfaceName?: string | undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
   if (typeof field !== `string`) {
@@ -157,7 +157,7 @@ export function createDistinctResolver(
         return
       }
       if (Array.isArray(value)) {
-        value.forEach(subValue =>
+        value.forEach((subValue) =>
           values.add(
             // @ts-ignore
             subValue instanceof Date ? subValue.toISOString() : subValue,
@@ -269,8 +269,8 @@ export function createGroupResolver(
         const value = getMaybeResolvedValue(node, field, nodeInterfaceName)
         const values = Array.isArray(value) ? value : [value]
         values
-          .filter(value => value != null)
-          .forEach(value => {
+          .filter((value) => value != null)
+          .forEach((value) => {
             const key = value instanceof Date ? value.toISOString() : value
             acc[key] = (acc[key] || []).concat(node)
           })
@@ -389,7 +389,7 @@ export function link<TSource, TArgs>(
 
     // Note: for this function, at scale, conditional .then is more efficient than generic await
     if (typeof fieldValueOrPromise?.then === `function`) {
-      return fieldValueOrPromise.then(fieldValue =>
+      return fieldValueOrPromise.then((fieldValue) =>
         linkResolverValue(fieldValue, args, context, info),
       )
     }
@@ -494,7 +494,7 @@ export function link<TSource, TArgs>(
       Array.isArray(fieldValue) &&
       Array.isArray(queryResult)
     ) {
-      return fieldValue.map(value => {
+      return fieldValue.map((value) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return queryResult.find((obj: any) => {
           return getValueAt(obj, options.by) === value
@@ -539,7 +539,7 @@ export function fileByPath<TSource, TArgs>(
     // like markdown which would be a child node of a File node).
     const parentFileNode = context.nodeModel.findRootNodeAncestor(
       source,
-      node => node.internal && node.internal.type === `File`,
+      (node) => node.internal && node.internal.type === `File`,
     )
 
     async function queryNodesByPath(
@@ -595,7 +595,7 @@ function getProjectedField(
 
     if (isObjectType(returnType) || isInterfaceType(returnType)) {
       const field = returnType.getFields()[fieldName]
-      const fieldArg = field?.args?.find(arg => arg.name === `field`)
+      const fieldArg = field?.args?.find((arg) => arg.name === `field`)
       if (fieldArg) {
         const fieldTC = getNullableType(fieldArg.type)
 
@@ -603,7 +603,7 @@ function getProjectedField(
           return fieldNodes.reduce(
             (acc: Array<string>, fieldNode: FieldNode) => {
               const fieldArg = fieldNode.arguments?.find(
-                arg => arg.name.value === `field`,
+                (arg) => arg.name.value === `field`,
               )
               if (isEnumType(fieldTC)) {
                 if (fieldArg?.value.kind === Kind.ENUM) {

@@ -1,8 +1,8 @@
-import address from "address"
+import { ip } from "address"
 import chalk from "chalk"
-import url from "url"
+import url from "node:url"
 
-export interface IPreparedUrls {
+export type IPreparedUrls = {
   lanUrlForConfig: string
   lanUrlForTerminal: string
   localUrlForTerminal: string
@@ -12,22 +12,24 @@ export interface IPreparedUrls {
 export function prepareUrls(
   protocol: `http` | `https`,
   host: string,
-  port: number
+  port: number,
 ): IPreparedUrls {
-  const formatUrl = (hostname: string): string =>
-    url.format({
+  function formatUrl(hostname: string): string {
+    return url.format({
       protocol,
       hostname,
       port,
       pathname: `/`,
     })
-  const prettyPrintUrl = (hostname: string): string =>
-    url.format({
+  }
+  function prettyPrintUrl(hostname: string): string {
+    return url.format({
       protocol,
       hostname,
       port: chalk.bold(String(port)),
       pathname: `/`,
     })
+  }
 
   const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
   let prettyHost = host
@@ -38,13 +40,13 @@ export function prepareUrls(
 
     try {
       // This can only return an IPv4 address
-      lanUrlForConfig = address.ip()
+      lanUrlForConfig = ip()
       if (lanUrlForConfig) {
         // Check if the address is a private ip
         // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
         if (
           /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-            lanUrlForConfig
+            lanUrlForConfig,
           )
         ) {
           // Address is private, format it for later use

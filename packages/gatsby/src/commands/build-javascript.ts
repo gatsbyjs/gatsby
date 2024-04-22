@@ -1,11 +1,11 @@
 import { Span } from "opentracing"
-import {webpackConfig} from "../utils/webpack.config"
+import { webpackConfig } from "../utils/webpack.config"
 import { build } from "../utils/webpack/bundle"
 import type { IProgram } from "./types"
 
 export const buildProductionBundle = async (
   program: IProgram,
-  parentSpan: Span
+  parentSpan: Span,
 ): Promise<ReturnType<typeof build>> => {
   const { directory } = program
 
@@ -14,7 +14,7 @@ export const buildProductionBundle = async (
     directory,
     `build-javascript`,
     undefined,
-    { parentSpan }
+    { parentSpan },
   )
 
   return build(compilerConfig)

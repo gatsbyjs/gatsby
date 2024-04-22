@@ -95,8 +95,8 @@ export function createStructuredLoggingDiagnosticsMiddleware(
   > {
     const { activities } = getStore().getState().logs
     return Object.values(activities)
-      .filter(activity => isActivityInProgress(activity.status))
-      .map(activity => {
+      .filter((activity) => isActivityInProgress(activity.status))
+      .map((activity) => {
         if (!activity.startTime) {
           return activity
         }
@@ -111,7 +111,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
   function generateStuckStatusDiagnosticMessage(): string {
     const activities = inProgressActivities()
     return Object.values(activities)
-      .map(activity => {
+      .map((activity) => {
         return `- Activity "${activity.text}" of type "${activity.type}" is currently in state "${activity.status}"`
       })
       .join(`\n`)

@@ -1,7 +1,7 @@
 import zipkin from "zipkin"
 import { HttpLogger } from "zipkin-transport-http"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import ZipkinTracer from "zipkin-javascript-opentracing"
-// import fetch from "node-fetch"
 import { ZipkinBatchRecorder, ZipkinHttpLogger } from "./zipkin-types"
 
 let logger: ZipkinHttpLogger
@@ -11,7 +11,7 @@ let recorder: ZipkinBatchRecorder
  * Create and return an open-tracing compatible tracer. See
  * https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts
  */
-export const create = (): ZipkinTracer => {
+export function create(): ZipkinTracer {
   logger = new HttpLogger({
     // endpoint of local docker zipkin instance
     endpoint: `http://localhost:9411/api/v1/spans`,
@@ -45,20 +45,20 @@ export const create = (): ZipkinTracer => {
 // cleared off their processing queue before the node.js process
 // exits. Code is mostly the same as the zipkin processQueue
 // implementation.
-const _processQueue = async (): Promise<void> => {
+async function _processQueue(): Promise<void> {
   if (logger.queue.length > 0) {
     const postBody = `[${logger.queue.join(`,`)}]`
     const controller = new AbortController()
 
     try {
-      const response = await fetch(logger.endpoint, {
+      const response = await globalThis.fetch(logger.endpoint, {
         method: `POST`,
         body: postBody,
         headers: logger.headers,
         signal: controller.signal,
       })
 
-      setTimeout(() => {
+      globalThis.setTimeout(() => {
         controller.abort()
       }, logger.timeout)
 
@@ -83,7 +83,7 @@ const _processQueue = async (): Promise<void> => {
  * exits. For Zipkin HTTP, we must manually process any spans still on
  * the queue
  */
-export const stop = async (): Promise<void> => {
+export async function stop(): Promise<void> {
   // First, write all partial spans to the http logger
   recorder.partialSpans.forEach((span, id) => {
     if (recorder._timedOut(span)) {

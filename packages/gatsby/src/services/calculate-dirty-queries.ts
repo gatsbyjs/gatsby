@@ -1,6 +1,6 @@
 import { calcDirtyQueryIds, groupQueryIds } from "../query"
-import { IGroupedQueryIds } from "./"
-import { IQueryRunningContext } from "../state-machines/query-running/types"
+import type { IGroupedQueryIds } from "./"
+import type { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
 
 export async function calculateDirtyQueries({
@@ -42,10 +42,10 @@ export async function calculateDirtyQueries({
 
     // static and slice queries are also not on demand
     queriesToRun = queryIds.filter(
-      queryId =>
+      (queryId) =>
         queryId.startsWith(`sq--`) ||
         queryId.startsWith(`slice--`) ||
-        pagePathFilter.has(queryId)
+        pagePathFilter.has(queryId),
     )
   }
 

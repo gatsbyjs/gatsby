@@ -1,19 +1,22 @@
-interface IBaseJob {
+type IBaseJob = {
   name: string
   outputDir: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: Record<string, any>
 }
 
-interface IJobInput {
+type IJobInput = {
   inputPaths: Array<string>
-  plugin: {
-    name: string
-    version: string
-    resolve: string
-  }
+  plugin?:
+    | {
+        name: string
+        version: string
+        resolve: string
+      }
+    | undefined
 }
 
-interface IInternalJob {
+type IInternalJob = {
   id: string
   contentDigest: string
   inputPaths: Array<{
@@ -22,8 +25,8 @@ interface IInternalJob {
   }>
   plugin: {
     name: string
-    version: string
-    resolve: string
+    version?: string | undefined
+    resolve?: string | undefined
     isLocal: boolean
   }
 }
@@ -38,12 +41,12 @@ export enum MESSAGE_TYPES {
   JOB_NOT_WHITELISTED = `JOB_NOT_WHITELISTED`,
 }
 
-export interface IJobCreatedMessage {
+export type IJobCreatedMessage = {
   type: MESSAGE_TYPES.JOB_CREATED
   payload: InternalJob
 }
 
-export interface IJobCompletedMessage {
+export type IJobCompletedMessage = {
   type: MESSAGE_TYPES.JOB_COMPLETED
   payload: {
     id: InternalJob["id"]
@@ -51,7 +54,7 @@ export interface IJobCompletedMessage {
   }
 }
 
-export interface IJobFailed {
+export type IJobFailed = {
   type: MESSAGE_TYPES.JOB_FAILED
   payload: {
     id: InternalJob["id"]
@@ -59,7 +62,7 @@ export interface IJobFailed {
   }
 }
 
-export interface IJobNotWhitelisted {
+export type IJobNotWhitelisted = {
   type: MESSAGE_TYPES.JOB_NOT_WHITELISTED
   payload: {
     id: InternalJob["id"]

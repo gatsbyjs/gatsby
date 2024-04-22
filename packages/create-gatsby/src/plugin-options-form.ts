@@ -1,5 +1,6 @@
 import { stripIndent } from "common-tags"
 import terminalLink from "terminal-link"
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Joi from "joi"
 import pluginSchemas from "./plugin-schemas.json"
 import cmses from "./questions/cmses.json"
@@ -16,17 +17,17 @@ type Schema = Joi.Description & {
 
 type PluginName = keyof typeof pluginSchemas
 
-interface IChoice {
+type IChoice = {
   name: string
   initial: unknown
   message: string
-  hint?: string
+  hint?: string | undefined
 }
 type Choices = Array<IChoice>
 
 type Option = Record<string, Schema> | undefined
 
-interface IFormPrompt {
+type IFormPrompt = {
   type: string
   name: string
   multiple: boolean
@@ -49,15 +50,17 @@ function docsLink(pluginName: string): string {
     terminalLink(
       `the plugin docs`,
       `https://www.gatsbyjs.com/plugins/${pluginName}/`,
-      { fallback: (_, url) => url }
-    )
+      { fallback: (_, url) => url },
+    ),
   )
 }
 
-const isOptionRequired = ([_, option]: [string, Schema]): boolean =>
-  option?.flags?.presence === `required`
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function isOptionRequired([_, option]: [string, Schema]): boolean {
+  return option?.flags?.presence === `required`
+}
 
-const schemaToChoice = ([name, option]: [string, Schema]): IChoice => {
+function schemaToChoice([name, option]: [string, Schema]): IChoice {
   const hasDefaultValue =
     option.flags?.default &&
     supportedOptionTypes.includes(typeof option.flags?.default)
@@ -70,9 +73,7 @@ const schemaToChoice = ([name, option]: [string, Schema]): IChoice => {
   }
 }
 
-export const makePluginConfigQuestions = (
-  selectedPlugins: Array<string>
-): Array<IFormPrompt> => {
+export default (selectedPlugins: Array<string>): Array<IFormPrompt> => {
   const formPrompts: Array<IFormPrompt> = []
 
   selectedPlugins.forEach((pluginName: string): void => {
@@ -102,7 +103,7 @@ export const makePluginConfigQuestions = (
           ${
             choices.length > 1
               ? colors.green(
-                  `Use arrow keys to move between fields, and enter to finish`
+                  `Use arrow keys to move between fields, and enter to finish`,
                 )
               : ``
           }

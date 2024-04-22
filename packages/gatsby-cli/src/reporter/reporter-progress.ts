@@ -5,7 +5,7 @@ import { reporter as gatsbyReporter } from "./reporter"
 import type { IStructuredError } from "../structured-errors/types"
 import type { ErrorMeta } from "./types"
 
-interface ICreateProgressReporterArguments {
+type ICreateProgressReporterArguments = {
   id: string
   text: string
   start: number
@@ -13,16 +13,16 @@ interface ICreateProgressReporterArguments {
   span: Span
   reporter: typeof gatsbyReporter
   reporterActions: typeof reporterActionsForTypes
-  pluginName?: string
+  pluginName?: string | undefined
 }
 
-export interface IProgressReporter {
+export type IProgressReporter = {
   start(): void
   setStatus(statusText: string): void
   tick(increment?: number | undefined): void
   panicOnBuild(
     errorMeta: ErrorMeta,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error> | undefined,
   ): IStructuredError | Array<IStructuredError>
   panic(errorMeta: ErrorMeta, error?: Error | Array<Error> | undefined): never
   end(): void
@@ -31,7 +31,7 @@ export interface IProgressReporter {
   span: Span
 }
 
-export const createProgressReporter = ({
+export function createProgressReporter({
   id,
   text,
   start,
@@ -40,7 +40,7 @@ export const createProgressReporter = ({
   reporter,
   reporterActions,
   pluginName,
-}: ICreateProgressReporterArguments): IProgressReporter => {
+}: ICreateProgressReporterArguments): IProgressReporter {
   let lastUpdateTime = 0
   let unflushedProgress = 0
   let unflushedTotal = 0
@@ -86,7 +86,7 @@ export const createProgressReporter = ({
 
     panicOnBuild(
       errorMeta: ErrorMeta,
-      error?: Error | Array<Error>
+      error?: Error | Array<Error>,
     ): IStructuredError | Array<IStructuredError> {
       span.finish()
 

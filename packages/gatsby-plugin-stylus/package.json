@@ -7,13 +7,13 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "stylus": "^0.54.8",
-    "stylus-loader": "^3.0.2"
+    "@babel/runtime": "^7.24.4",
+    "stylus": "^0.63.0",
+    "stylus-loader": "^8.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3"
   },
@@ -26,7 +26,9 @@
   "license": "MIT",
   "main": "./gatsby-node.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next"
+    "gatsby": "^5.14.0-next.2",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

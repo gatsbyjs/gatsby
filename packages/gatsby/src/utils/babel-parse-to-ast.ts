@@ -48,7 +48,7 @@ export function getBabelParserOptions(filePath: string): ParserOptions {
     const { plugins } = PARSER_OPTIONS
     return {
       ...PARSER_OPTIONS,
-      plugins: plugins!.map(plugin =>
+      plugins: plugins!.map((plugin) =>
         plugin === `flow` ? `typescript` : plugin,
       ),
     }

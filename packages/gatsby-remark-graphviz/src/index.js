@@ -1,16 +1,16 @@
 const visit = require(`unist-util-visit`)
-const Viz = require(`viz.js`)
-const { Module, render } = require(`viz.js/full.render.js`)
+const Viz = require(`@viz-js/viz`)
+const { Module, render } = require(`@viz-js/viz/full.render.js`)
 const cheerio = require(`cheerio`)
 
 const viz = new Viz({ Module, render })
 
 const validLanguages = [`dot`, `circo`]
 
-module.exports = async ({ markdownAST }, pluginOptions = {}) => {
+module.exports = async ({ markdownAST }) => {
   const codeNodes = []
 
-  visit(markdownAST, `code`, node => {
+  visit(markdownAST, `code`, (node) => {
     console.log({ lang: node.lang, meta: node.meta })
     // Only act on languages supported by graphviz
     if (validLanguages.includes(node.lang)) {
@@ -43,12 +43,12 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
         node.value = $.html(`svg`)
       } catch (error) {
         console.log(
-          `Error during viz.js execution. Leaving code block unchanged`
+          `Error during viz.js execution. Leaving code block unchanged`,
         )
         console.log(error)
       }
 
       return node
-    })
+    }),
   )
 }

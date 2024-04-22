@@ -5,12 +5,12 @@ enum Flag {
   ts = `-ts`, // Use TypeScript
 }
 
-export interface IFlags {
+export type IFlags = {
   yes: boolean
   ts: boolean
 }
 
-interface IArgs {
+type IArgs = {
   flags: IFlags
   dirName: string
 }
@@ -37,7 +37,7 @@ export function parseArgs(args: Array<string>): IArgs {
         default:
           if (arg.startsWith(`-`)) {
             reporter.warn(
-              `Found unknown argument "${arg}", ignoring. Known arguments are: ${Flag.yes}, ${Flag.ts}`
+              `Found unknown argument "${arg}", ignoring. Known arguments are: ${Flag.yes}, ${Flag.ts}`,
             )
             break
           }
@@ -51,7 +51,7 @@ export function parseArgs(args: Array<string>): IArgs {
         ts: false,
       },
       dirName: ``,
-    }
+    },
   )
 
   return {

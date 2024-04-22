@@ -155,7 +155,7 @@ class Reporter {
     //   reporter.error(any, [Error]);
     if (error) {
       if (Array.isArray(error)) {
-        return error.map(errorItem =>
+        return error.map((errorItem) =>
           this.error(errorMeta, errorItem),
         ) as Array<IStructuredError>
       }
@@ -174,7 +174,7 @@ class Reporter {
       //    reporter.error([Error]);
     } else if (Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
-      return errorMeta.map(errorItem =>
+      return errorMeta.map((errorItem) =>
         this.error(errorItem),
       ) as Array<IStructuredError>
       // 4.
@@ -369,7 +369,7 @@ class Reporter {
   _initReporterMessagingInMain(
     onMessage: (listener: (msg: ILogIntent | unknown) => void) => void,
   ): void {
-    onMessage(msg => {
+    onMessage((msg) => {
       if (isLogIntentMessage(msg)) {
         reduxReporterActions[msg.payload.name].call(
           reduxReporterActions,

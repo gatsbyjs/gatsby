@@ -5,24 +5,23 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "async-sema": "^3.1.0",
-    "gatsby": "^2.19.5",
+    "async-sema": "^3.1.1",
+    "gatsby": "^5.13.4",
     "gatsby-image": "^2.2.39",
-    "gatsby-plugin-manifest": "^2.2.38",
-    "gatsby-plugin-offline": "^3.0.32",
-    "gatsby-plugin-react-helmet": "^3.1.21",
-    "gatsby-plugin-sharp": "^5.14.0-next.2",
-    "gatsby-source-filesystem": "^2.1.46",
+    "gatsby-plugin-manifest": "^5.13.1",
+    "gatsby-plugin-offline": "^6.13.2",
+    "gatsby-plugin-react-helmet": "^6.13.1",
+    "gatsby-plugin-sharp": "^5.13.1",
+    "gatsby-source-filesystem": "^5.13.1",
     "gatsby-transformer-sharp": "^5.13.1",
     "lodash": "^4.17.21",
-    "node-fetch": "^3.3.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
-    "gatsby-plugin-benchmark-reporting": "*"
+    "gatsby-plugin-benchmark-reporting": "3.13.1"
   },
   "keywords": [
     "gatsby"

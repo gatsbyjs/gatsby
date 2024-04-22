@@ -1,4 +1,4 @@
-import { Rule } from "eslint"
+import type { Rule } from "eslint"
 import { slash } from "gatsby-core-utils"
 import type { GatsbyReduxStore } from "../redux"
 

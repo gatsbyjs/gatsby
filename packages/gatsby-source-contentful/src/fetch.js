@@ -1,4 +1,3 @@
-// @ts-check
 import chalk from "chalk"
 import { createClient } from "contentful"
 import _ from "lodash"
@@ -10,7 +9,7 @@ import { CODES } from "./report"
  *
  * Contentful's API has its own error message structure, which might change depending of internal server or authentification errors.
  */
-const createContentfulErrorMessage = e => {
+function createContentfulErrorMessage(e) {
   // Handle axios error messages
   if (e.isAxiosError) {
     const axiosErrorMessage = [e.code, e.status]
@@ -41,7 +40,7 @@ const createContentfulErrorMessage = e => {
 
     if (axiosErrorDetails.length) {
       axiosErrorMessage.push(
-        `\n\n---\n${axiosErrorDetails.join(`\n\n`)}\n\n---\n`
+        `\n\n---\n${axiosErrorDetails.join(`\n\n`)}\n\n---\n`,
       )
     }
 
@@ -75,12 +74,12 @@ const createContentfulErrorMessage = e => {
     }
     if (errorData.request) {
       errorDetails.push(
-        `Request:\n${JSON.stringify(errorData.request, null, 2)}`
+        `Request:\n${JSON.stringify(errorData.request, null, 2)}`,
       )
     }
     if (errorData.details && Object.keys(errorData.details).length) {
       errorDetails.push(
-        `Details:\n${JSON.stringify(errorData.details, null, 2)}`
+        `Details:\n${JSON.stringify(errorData.details, null, 2)}`,
       )
     }
   } catch (err) {
@@ -98,7 +97,7 @@ const createContentfulErrorMessage = e => {
 function createContentfulClientOptions({
   pluginConfig,
   reporter,
-  syncProgress = { total: 0, tick: a => a },
+  syncProgress = { total: 0, tick: (a) => a },
 }) {
   let syncItemCount = 0
 
@@ -109,7 +108,7 @@ function createContentfulClientOptions({
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
     integration: `gatsby-source-contentful`,
-    responseLogger: response => {
+    responseLogger: (response) => {
       function createMetadataLog(response) {
         if (!response.headers) {
           return null
@@ -147,7 +146,7 @@ function createContentfulClientOptions({
           metadataLog && `(${metadataLog})`,
         ]
           .filter(Boolean)
-          .join(` `)
+          .join(` `),
       )
     },
     // Allow passing of custom configuration to the Contentful SDK like headers
@@ -182,11 +181,11 @@ function handleContentfulError({
     ) {
       // environments need to have access to master
       details = `Unable to access your space. Check if ${chalk.yellow(
-        `environment`
+        `environment`,
       )} is correct and your ${chalk.yellow(
-        `accessToken`
+        `accessToken`,
       )} has access to the ${chalk.yellow(
-        contentfulClientOptions.environment
+        contentfulClientOptions.environment,
       )} and the ${chalk.yellow(`master`)} environments.`
       errors = {
         accessToken: `Check if setting is correct`,
@@ -195,7 +194,7 @@ function handleContentfulError({
     } else if (e.responseData.status === 404) {
       // host and space used to generate url
       details = `Endpoint not found. Check if ${chalk.yellow(
-        `host`
+        `host`,
       )} and ${chalk.yellow(`spaceId`)} settings are correct`
       errors = {
         host: `Check if setting is correct`,
@@ -204,7 +203,7 @@ function handleContentfulError({
     } else if (e.responseData.status === 401) {
       // authorization error
       details = `Authorization error. Check if ${chalk.yellow(
-        `accessToken`
+        `accessToken`,
       )} and ${chalk.yellow(`environment`)} are correct`
       errors = {
         accessToken: `Check if setting is correct`,
@@ -216,7 +215,7 @@ function handleContentfulError({
   reporter.panic({
     context: {
       sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
-        e
+        e,
       )}
 
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
@@ -249,10 +248,10 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   try {
     reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
-    locales = await client.getLocales().then(response => response.items)
+    locales = await client.getLocales().then((response) => response.items)
     defaultLocale = _.find(locales, { default: true }).code
     reporter.verbose(
-      `Default locale is: ${defaultLocale}. There are ${locales.length} locales in total.`
+      `Default locale is: ${defaultLocale}. There are ${locales.length} locales in total.`,
     )
   } catch (e) {
     handleContentfulError({
@@ -269,7 +268,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   const syncProgress = reporter.createProgress(
     `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
     pageLimit,
-    0
+    0,
   )
   syncProgress.start()
   const contentfulSyncClientOptions = createContentfulClientOptions({
@@ -305,7 +304,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
             [
               `The sync with Contentful failed using pageLimit ${lastCurrentPageLimit} as the reponse size limit of the API is exceeded.`,
               `Retrying sync with pageLimit of ${currentPageLimit}`,
-            ].join(`\n\n`)
+            ].join(`\n\n`),
           )
           continue
         }
@@ -313,7 +312,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
       }
       if (currentPageLimit !== pageLimit) {
         reporter.warn(
-          `We recommend you to set your pageLimit in gatsby-config.js to ${currentPageLimit} to avoid failed synchronizations.`
+          `We recommend you to set your pageLimit in gatsby-config.js to ${currentPageLimit} to avoid failed synchronizations.`,
         )
       }
     }
@@ -322,7 +321,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
       id: CODES.SyncError,
       context: {
         sourceMessage: `Fetching contentful data failed: ${createContentfulErrorMessage(
-          e
+          e,
         )}`,
       },
     })
@@ -353,7 +352,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
         id: CODES.FetchTags,
         context: {
           sourceMessage: `Error fetching tags: ${createContentfulErrorMessage(
-            e
+            e,
           )}`,
         },
       })
@@ -383,7 +382,7 @@ export async function fetchContentTypes({ pluginConfig, reporter }) {
   const client = createClient(contentfulClientOptions)
   const pageLimit = pluginConfig.get(`pageLimit`)
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-    `environment`
+    `environment`,
   )}`
   let contentTypes = null
 
@@ -398,13 +397,13 @@ export async function fetchContentTypes({ pluginConfig, reporter }) {
         id: CODES.FetchContentTypes,
         context: {
           sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
-            e
+            e,
           )}`,
         },
       })
     }
     reporter.verbose(
-      `Content types fetched ${contentTypes.items.length} (${sourceId})`
+      `Content types fetched ${contentTypes.items.length} (${sourceId})`,
     )
 
     contentTypes = contentTypes.items
@@ -426,14 +425,14 @@ function pagedGet(
   pageLimit,
   query = {},
   skip = 0,
-  aggregatedResponse = null
+  aggregatedResponse = null,
 ) {
   return client[method]({
     ...query,
     skip: skip,
     limit: pageLimit,
     order: `sys.createdAt`,
-  }).then(response => {
+  }).then((response) => {
     if (!aggregatedResponse) {
       aggregatedResponse = response
     } else {
@@ -446,7 +445,7 @@ function pagedGet(
         pageLimit,
         query,
         skip + pageLimit,
-        aggregatedResponse
+        aggregatedResponse,
       )
     }
     return aggregatedResponse

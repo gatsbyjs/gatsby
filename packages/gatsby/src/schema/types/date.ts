@@ -1,6 +1,6 @@
 import moment, {
   type MomentInput,
-  unitOfTime,
+  type unitOfTime,
   type LocaleSpecifier,
 } from "moment"
 import { GraphQLScalarType, Kind, type GraphQLFieldConfig } from "graphql"
@@ -144,12 +144,12 @@ const momentFormattingRegexes = {
   ".": `\\.`,
   Z: `(Z|[+-]\\d\\d(?::?\\d\\d)?)`,
 }
-const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format => {
+const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map((format) => {
   const matchedFormat = format.match(momentFormattingTokens)
   if (matchedFormat === null) return ``
   // convert ISO string to a map of momentTokens ([YYYY, MM, DD])
   return [...matchedFormat]
-    .map(token =>
+    .map((token) =>
       // see if the token (YYYY or ss) is found, else we just return the value
       momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token,
     )
@@ -322,7 +322,7 @@ export function getDateResolver(
 
       if (Array.isArray(date)) {
         return await Promise.all(
-          date.map(d => formatDate({ date: d, ...args })),
+          date.map((d) => formatDate({ date: d, ...args })),
         )
       }
 

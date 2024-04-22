@@ -18,8 +18,8 @@ export type IScriptsAndStyles = {
 type IChunk = {
   name: string
   rel: string
-  content?: string
-  shouldGenerateLink?: boolean
+  content?: string | undefined
+  shouldGenerateLink?: boolean | undefined
 }
 
 const inlineCssPromiseCache = new Map<string, Promise<string>>()
@@ -86,7 +86,7 @@ export async function getScriptsAndStylesForTemplate(
 
     // Remove JS asset for templates
     if (chunkName !== `app`) {
-      assets = assets.filter(asset => !asset.endsWith(`.js`))
+      assets = assets.filter((asset) => !asset.endsWith(`.js`))
     }
 
     for (const asset of assets) {
@@ -120,7 +120,7 @@ export async function getScriptsAndStylesForTemplate(
       // Remove JS asset for templates(magic comments)
       if (chunkName !== `app`) {
         // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
-        assets = assets.filter(asset => !asset.endsWith(`.js`))
+        assets = assets.filter((asset) => !asset.endsWith(`.js`))
       }
 
       // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable

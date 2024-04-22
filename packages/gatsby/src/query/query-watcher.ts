@@ -17,7 +17,7 @@ import { slash } from "gatsby-core-utils/path"
 
 import { store, emitter } from "../redux/"
 import { actions } from "../redux/actions"
-import { IGatsbyStaticQueryComponents } from "../redux/types"
+import type { IGatsbyStaticQueryComponents } from "../redux/types"
 import queryCompiler from "./query-compiler"
 import report from "gatsby-cli/lib/reporter"
 import { getGatsbyDependents } from "../utils/get-gatsby-dependents"
@@ -25,14 +25,14 @@ import { processNodeManifests } from "../utils/node-manifest"
 
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
-interface IComponent {
+type IComponent = {
   componentPath: string
   query: string
   pages: Set<string>
   isInBootstrap: boolean
 }
 
-interface IQuery {
+type IQuery = {
   id: string
   name: string
   text: string
@@ -43,18 +43,18 @@ interface IQuery {
   hash: string
 }
 
-interface IQuerySnapshot {
+type IQuerySnapshot = {
   components: Map<string, IComponent>
   staticQueryComponents: Map<string, IGatsbyStaticQueryComponents>
   componentsWithCleanFilePaths: Set<string>
 }
 
-const getQueriesSnapshot = (): IQuerySnapshot => {
+function getQueriesSnapshot(): IQuerySnapshot {
   const state = store.getState()
 
   const componentsWithCleanFilePaths: Set<string> = new Set()
 
-  state.components.forEach(c => {
+  state.components.forEach((c) => {
     componentsWithCleanFilePaths.add(getPathToLayoutComponent(c.componentPath))
   })
 
@@ -69,13 +69,13 @@ const getQueriesSnapshot = (): IQuerySnapshot => {
   return snapshot
 }
 
-const handleComponentsWithRemovedQueries = (
+function handleComponentsWithRemovedQueries(
   { staticQueryComponents }: IQuerySnapshot,
   queries: Map<string, IQuery>,
-): void => {
+): void {
   // If a component had static query and it doesn't have it
   // anymore - update the store
-  staticQueryComponents.forEach(c => {
+  staticQueryComponents.forEach((c) => {
     if (c.query !== `` && !queries.has(c.componentPath)) {
       debug(`Static query was removed from ${c.componentPath}`)
       store.dispatch({
@@ -86,11 +86,11 @@ const handleComponentsWithRemovedQueries = (
   })
 }
 
-const handleQuery = (
+function handleQuery(
   { staticQueryComponents }: IQuerySnapshot,
   query: IQuery,
   component: string,
-): boolean => {
+): boolean {
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
@@ -118,9 +118,7 @@ const handleQuery = (
       )
 
       debug(
-        `Static query in ${component} ${
-          isNewQuery ? `was added` : `has changed`
-        }.`,
+        `Static query in ${component} ${isNewQuery ? `was added` : `has changed`}.`,
       )
     }
     return true
@@ -132,12 +130,12 @@ const handleQuery = (
 const filesToWatch = new Set<string>()
 let watcher: FSWatcher
 
-const watch = async (rootDir: string): Promise<void> => {
+async function watch(rootDir: string): Promise<void> {
   if (watcher) return
 
   const modulesThatUseGatsby = await getGatsbyDependents()
 
-  const packagePaths = modulesThatUseGatsby.map(module => {
+  const packagePaths = modulesThatUseGatsby.map((module) => {
     const filesRegex = `*.+(t|j)s?(x)`
     const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
     return slash(path.join(module.path, pathRegex))
@@ -148,20 +146,20 @@ const watch = async (rootDir: string): Promise<void> => {
       [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
       { ignoreInitial: true, ignored: [`**/*.d.ts`] },
     )
-    .on(`change`, path => {
+    .on(`change`, (path) => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
-    .on(`add`, path => {
+    .on(`add`, (path) => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
-    .on(`unlink`, path => {
+    .on(`unlink`, (path) => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
 
-  filesToWatch.forEach(filePath => watcher.add(filePath))
+  filesToWatch.forEach((filePath) => watcher.add(filePath))
 }
 
-const watchComponent = (componentPath: string): void => {
+function watchComponent(componentPath: string): void {
   // We don't start watching until mid-way through the bootstrap so ignore
   // new components being added until then. This doesn't affect anything as
   // when extractQueries is called from bootstrap, we make sure that all
@@ -180,20 +178,20 @@ const watchComponent = (componentPath: string): void => {
 /**
  * Removes components templates that aren't used by any page from redux store.
  */
-const clearInactiveComponents = (): void => {
+function clearInactiveComponents(): void {
   const { components, pages, slices } = store.getState()
 
   const activeTemplates = new Set()
-  pages.forEach(page => {
+  pages.forEach((page) => {
     // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(page.componentPath))
   })
-  slices.forEach(slice => {
+  slices.forEach((slice) => {
     // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(slice.componentPath))
   })
 
-  components.forEach(component => {
+  components.forEach((component) => {
     if (!activeTemplates.has(component.componentPath)) {
       debug(
         `${component.componentPath} component was removed because it isn't used by any page`,
@@ -206,8 +204,8 @@ const clearInactiveComponents = (): void => {
   })
 }
 
-export const startWatchDeletePage = (): void => {
-  emitter.on(`DELETE_PAGE`, action => {
+export function startWatchDeletePage(): void {
+  emitter.on(`DELETE_PAGE`, (action) => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
     let otherPageWithTemplateExists = false
@@ -228,10 +226,10 @@ export const startWatchDeletePage = (): void => {
   })
 }
 
-export const updateStateAndRunQueries = async (
+export async function updateStateAndRunQueries(
   isFirstRun: boolean,
-  { parentSpan }: { parentSpan?: Span } = {},
-): Promise<void> => {
+  { parentSpan }: { parentSpan?: Span | undefined } = {},
+): Promise<void> {
   const snapshot = getQueriesSnapshot()
   const queries: Map<string, IQuery> = await queryCompiler({ parentSpan })
   // If there's an error while extracting queries, the queryCompiler returns false
@@ -244,7 +242,7 @@ export const updateStateAndRunQueries = async (
   handleComponentsWithRemovedQueries(snapshot, queries)
 
   // Run action for each component
-  snapshot.components.forEach(c => {
+  snapshot.components.forEach((c) => {
     const { isStaticQuery = false, text = `` } =
       queries.get(c.componentPath) || {}
 
@@ -298,7 +296,7 @@ export const updateStateAndRunQueries = async (
   }
 }
 
-export const extractQueries = ({
+export const extractQueries = async ({
   parentSpan,
 }: { parentSpan?: Span } = {}): Promise<void> => {
   // Remove template components that point to not existing page templates.
@@ -307,13 +305,11 @@ export const extractQueries = ({
   // only in initial run, because during development state will be adjusted.
   clearInactiveComponents()
 
-  return updateStateAndRunQueries(true, { parentSpan }).then(() => {
-    // During development start watching files to recompile & run
-    // queries on the fly.
-
-    // TODO: move this into a spawned service
-    if (process.env.NODE_ENV !== `production`) {
-      watch(store.getState().program.directory)
-    }
-  })
+  await updateStateAndRunQueries(true, { parentSpan })
+  // During development start watching files to recompile & run
+  // queries on the fly.
+  // TODO: move this into a spawned service
+  if (process.env.NODE_ENV !== `production`) {
+    watch(store.getState().program.directory)
+  }
 }

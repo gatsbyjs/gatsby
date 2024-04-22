@@ -40,9 +40,9 @@ export async function loadPlugins(
   const pluginArray = flattenPlugins(pluginInfos)
 
   const { disablePlugins } = store.getState().program
-  const pluginArrayWithoutDisabledPlugins = pluginArray.filter(plugin => {
+  const pluginArrayWithoutDisabledPlugins = pluginArray.filter((plugin) => {
     const disabledInfo = disablePlugins?.find(
-      entry => entry.name === plugin.name,
+      (entry) => entry.name === plugin.name,
     )
 
     if (disabledInfo) {
@@ -50,7 +50,7 @@ export async function loadPlugins(
         // show this warning only once in main process
         reporter.warn(
           `Disabling plugin "${plugin.name}":\n${disabledInfo.reasons
-            .map(line => ` - ${line}`)
+            .map((line) => ` - ${line}`)
             .join(`\n`)}`,
         )
       }

@@ -150,7 +150,7 @@ function getBucketsForFilters(
   const nodesPerValueArrs: Array<Array<IGatsbyNodePartial>> = []
 
   // Fail fast while trying to create and get the value-cache for each path
-  const every = filters.every(filter => {
+  const every = filters.every((filter) => {
     const filterCacheKey = createFilterCacheKey(nodeTypeNames, filter)
     if (filter.type === `query`) {
       // (Let TS warn us if a new query type gets added)
@@ -332,7 +332,7 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
       ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
       : sortedResult
 
-  const nodeObjects = entries.map(nodeIds => getNode(nodeIds.id)!)
+  const nodeObjects = entries.map((nodeIds) => getNode(nodeIds.id)!)
   return { entries: new GatsbyIterable(nodeObjects), totalCount }
 }
 
@@ -356,7 +356,7 @@ function convertAndApplyFastFilters(
     : []
 
   if (stats) {
-    filters.forEach(filter => {
+    filters.forEach((filter) => {
       const filterStats = filterToStats(filter)
       const comparatorPath = filterStats.comparatorPath.join(`.`)
       stats.comparatorsUsed.set(
@@ -452,7 +452,7 @@ function sortNodes(
 
   // create functions that return the item to compare on
   const sortFields = getSortFieldIdentifierKeys(sort.fields, resolvedFields)
-  const sortFns = sortFields.map(field =>
+  const sortFns = sortFields.map((field) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (v: IGatsbyNode | IGatsbyNodePartial): ((args: any) => any) => {
       return field in v
@@ -460,12 +460,12 @@ function sortNodes(
         : getGatsbyNodePartial(v, sort.fields, resolvedFields)[field]
     },
   )
-  const sortOrder = sort.order.map(order => {
+  const sortOrder = sort.order.map((order) => {
     return typeof order === `boolean` ? order : order.toLowerCase()
   }) as Array<boolean | "asc" | "desc">
 
   if (stats) {
-    sortFields.forEach(sortField => {
+    sortFields.forEach((sortField) => {
       stats.uniqueSorts.add(sortField)
     })
   }

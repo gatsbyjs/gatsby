@@ -1,6 +1,6 @@
 import chalk from "chalk"
 
-import { IPreparedUrls } from "../utils/prepare-urls"
+import type { IPreparedUrls } from "../utils/prepare-urls"
 
 export function printInstructions(appName: string, urls: IPreparedUrls): void {
   console.log()
@@ -9,10 +9,10 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
 
   if (urls.lanUrlForTerminal) {
     console.log(
-      `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`
+      `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`,
     )
     console.log(
-      `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`
+      `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`,
     )
   } else {
     console.log(`  ${urls.localUrlForTerminal}`)
@@ -20,7 +20,7 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
 
   console.log()
   console.log(
-    `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+    `View GraphiQL, an in-browser IDE, to explore your site's data and schema`,
   )
   console.log()
 
@@ -28,10 +28,10 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
     console.log(
       `  ${chalk.bold(`Local:`)}            ${
         urls.localUrlForTerminal
-      }___graphql`
+      }___graphql`,
     )
     console.log(
-      `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}___graphql`
+      `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}___graphql`,
     )
   } else {
     console.log(`  ${urls.localUrlForTerminal}___graphql`)
@@ -40,7 +40,7 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
   if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
     console.log()
     console.log(
-      `View Admin, an in-browser app to manage your site's configuration`
+      `View Admin, an in-browser app to manage your site's configuration`,
     )
     console.log()
 
@@ -48,10 +48,10 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
       console.log(
         `  ${chalk.bold(`Local:`)}            ${
           urls.localUrlForTerminal
-        }___admin`
+        }___admin`,
       )
       console.log(
-        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}___admin`
+        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}___admin`,
       )
     } else {
       console.log(`  ${urls.localUrlForTerminal}___admin`)
@@ -61,7 +61,7 @@ export function printInstructions(appName: string, urls: IPreparedUrls): void {
   console.log()
   console.log(`Note that the development build is not optimized.`)
   console.log(
-    `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
+    `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`,
   )
   console.log()
 }

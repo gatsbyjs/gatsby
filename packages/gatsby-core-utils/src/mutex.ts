@@ -21,7 +21,7 @@ async function waitUntilUnlocked(
     return
   }
 
-  await new Promise<void>(resolve => {
+  await new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve(waitUntilUnlocked(storage, key, timeout))
     }, timeout)

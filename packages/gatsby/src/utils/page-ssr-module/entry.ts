@@ -26,12 +26,11 @@ import {
 } from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
-import { getServerData, IServerData } from "../get-server-data"
-// @ts-ignore
+import { getServerData, type IServerData } from "../get-server-data"
 import reporter from "gatsby-cli/lib/reporter"
 import { initTracer } from "../tracer"
 import { getCodeFrame } from "../../query/graphql-errors-codeframe"
-import { ICollectedSlice } from "../babel/find-slices"
+import type { ICollectedSlice } from "../babel/find-slices"
 import { createHeadersMatcher } from "../adapter/create-headers"
 import { MUST_REVALIDATE_HEADERS } from "../adapter/constants"
 import { getRoutePathFromPage } from "../adapter/get-route-path"
@@ -50,8 +49,8 @@ export type ISSRData = {
    * This is no longer really just serverDataHeaders, as we add headers
    * from user defined in gatsby-config
    */
-  serverDataHeaders?: Record<string, string>
-  serverDataStatus?: number
+  serverDataHeaders?: Record<string, string> | undefined
+  serverDataStatus?: number | undefined
   searchString: string
 }
 
@@ -168,7 +167,7 @@ export async function getData({
               telemetryResolverTimings,
             },
           )
-          .then(queryResults => {
+          .then((queryResults) => {
             if (queryResults.errors && queryResults.errors.length > 0) {
               const e = queryResults.errors[0]
               const codeFrame = getCodeFrame(
@@ -208,8 +207,8 @@ export async function getData({
       }
       executionPromises.push(
         getPageChunk(page)
-          .then(mod => getServerData(req, page, potentialPagePath, mod))
-          .then(serverDataResults => {
+          .then((mod) => getServerData(req, page, potentialPagePath, mod))
+          .then((serverDataResults) => {
             serverData = serverDataResults
           })
           .finally(() => {
@@ -443,7 +442,7 @@ export async function renderHTML({
       }
 
       const contextsToMerge = await Promise.all(
-        Array.from(staticQueryHashes).map(async staticQueryHash => {
+        Array.from(staticQueryHashes).map(async (staticQueryHash) => {
           return {
             [staticQueryHash]: await readStaticQuery(staticQueryHash),
           }

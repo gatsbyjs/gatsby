@@ -9,18 +9,19 @@ import {
 } from "gatsby-core-utils"
 import { removePageData } from "../utils/page-data"
 import { store } from "../redux"
-import { IGatsbyState } from "../redux/types"
+import type { IGatsbyState } from "../redux/types"
 import { getPageMode } from "../utils/page-mode"
 
-const checkFolderIsEmpty = (path: string): boolean =>
-  fs.existsSync(path) && !fs.readdirSync(path).length
+function checkFolderIsEmpty(path: string): boolean {
+  return fs.existsSync(path) && !fs.readdirSync(path).length
+}
 
-const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
+function checkAndRemoveEmptyDir(publicDir: string, pagePath: string): void {
   const pageHtmlDirectory = path.dirname(generateHtmlPath(publicDir, pagePath))
   const pageDataDirectory = path.join(
     publicDir,
     `page-data`,
-    fixedPagePath(pagePath)
+    fixedPagePath(pagePath),
   )
   // if page's folder is empty also remove matching page-data folder
   if (checkFolderIsEmpty(pageHtmlDirectory)) {
@@ -31,18 +32,19 @@ const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
   }
 }
 
-const sortedPageKeysByNestedLevel = (pageKeys: Array<string>): Array<string> =>
-  pageKeys.sort((a, b) => {
+function sortedPageKeysByNestedLevel(pageKeys: Array<string>): Array<string> {
+  return pageKeys.sort((a, b) => {
     const currentPagePathValue = a.split(`/`).length
     const previousPagePathValue = b.split(`/`).length
     return previousPagePathValue - currentPagePathValue
   })
+}
 
-export const removePageFiles = async (
+export async function removePageFiles(
   publicDir: string,
-  pageKeys: Array<string>
-): Promise<void> => {
-  const removePages = pageKeys.map(pagePath => {
+  pageKeys: Array<string>,
+): Promise<void> {
+  const removePages = pageKeys.map((pagePath) => {
     const removePromise = removePageHtmlFile({ publicDir }, pagePath)
     removePromise.then(() => {
       store.dispatch({
@@ -53,13 +55,13 @@ export const removePageFiles = async (
     return removePromise
   })
 
-  const removePageDataList = pageKeys.map(pagePath =>
-    removePageData(publicDir, pagePath)
+  const removePageDataList = pageKeys.map((pagePath) =>
+    removePageData(publicDir, pagePath),
   )
 
   return Promise.all([...removePages, ...removePageDataList]).then(() => {
     // Sort removed pageKeys by nested directories and remove if empty.
-    sortedPageKeysByNestedLevel(pageKeys).forEach(pagePath => {
+    sortedPageKeysByNestedLevel(pageKeys).forEach((pagePath) => {
       checkAndRemoveEmptyDir(publicDir, pagePath)
     })
   })
@@ -68,6 +70,7 @@ export const removePageFiles = async (
 const FSisCaseInsensitive = process.env.TEST_FORCE_CASE_FS
   ? process.env.TEST_FORCE_CASE_FS === `INSENSITIVE`
   : platform() === `win32` || platform() === `darwin`
+
 function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`
@@ -83,6 +86,7 @@ function normalizePagePath(path: string): string {
 }
 
 type PageGenerationAction = "delete" | "regenerate" | "reuse"
+
 const pageGenerationActionPriority: Record<PageGenerationAction, number> = {
   // higher the number, higher the priority
   regenerate: 2,
@@ -151,7 +155,7 @@ export function calcDirtyHtmlFiles(state: IGatsbyState): {
 
   if (state.html.unsafeBuiltinWasUsedInSSR) {
     reporter.warn(
-      `Previous build used unsafe builtin method. We need to rebuild all pages`
+      `Previous build used unsafe builtin method. We need to rebuild all pages`,
     )
   }
 
@@ -183,28 +187,26 @@ export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
   const state = store.getState()
 
   const dirtyStaticQueryResults = new Set<string>()
-  state.html.trackedStaticQueryResults.forEach(function (
-    staticQueryResultState,
-    staticQueryHash
-  ) {
-    if (staticQueryResultState.dirty) {
-      dirtyStaticQueryResults.add(staticQueryHash)
-    }
-  })
+  state.html.trackedStaticQueryResults.forEach(
+    function (staticQueryResultState, staticQueryHash) {
+      if (staticQueryResultState.dirty) {
+        dirtyStaticQueryResults.add(staticQueryHash)
+      }
+    },
+  )
 
   // we have dirty static query hashes - now we need to find templates that use them
   const dirtyTemplates = new Set<string>()
-  state.staticQueriesByTemplate.forEach(function (
-    staticQueryHashes,
-    componentPath
-  ) {
-    for (const dirtyStaticQueryHash of dirtyStaticQueryResults) {
-      if (staticQueryHashes.includes(dirtyStaticQueryHash)) {
-        dirtyTemplates.add(componentPath)
-        break // we already know this template need to rebuild, no need to check rest of queries
+  state.staticQueriesByTemplate.forEach(
+    function (staticQueryHashes, componentPath) {
+      for (const dirtyStaticQueryHash of dirtyStaticQueryResults) {
+        if (staticQueryHashes.includes(dirtyStaticQueryHash)) {
+          dirtyTemplates.add(componentPath)
+          break // we already know this template need to rebuild, no need to check rest of queries
+        }
       }
-    }
-  })
+    },
+  )
 
   // mark html as dirty
   const dirtyPages = new Set<string>()

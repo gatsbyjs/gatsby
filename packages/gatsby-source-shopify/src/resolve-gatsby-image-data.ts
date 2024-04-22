@@ -1,6 +1,5 @@
 import { readFileSync } from "node:fs"
-// @ts-ignore
-import { GatsbyCache } from "gatsby"
+import type { GatsbyCache } from "gatsby"
 import type { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import {

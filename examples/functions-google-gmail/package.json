@@ -15,7 +15,6 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "gatsby": "next",
     "gatsby-plugin-gatsby-cloud": "next",
     "react": "^18.2.0",

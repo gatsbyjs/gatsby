@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 
-import {
+import type {
   IGatsbyConfig,
   IGatsbyPlugin,
   ProgramStatus,
@@ -33,7 +33,7 @@ import { gatsbyConfigSchema } from "../../joi-schemas/joi"
 import { didYouMean } from "../../utils/did-you-mean"
 import {
   enqueueJob,
-  InternalJob,
+  type InternalJob,
   removeInProgressJob,
   getInProcessJobPromise,
 } from "../../utils/jobs/manager"
@@ -44,10 +44,10 @@ import { getEngineContext } from "../../utils/engine-context"
  * internal use only.
  * @private
  */
-export const createPageDependencies = (
+export function createPageDependencies(
   payload: Array<ICreatePageDependencyActionPayloadType>,
-  plugin = ``
-): ICreatePageDependencyAction => {
+  plugin = ``,
+): ICreatePageDependencyAction {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
@@ -68,19 +68,21 @@ export const createPageDependencies = (
  * Shorthand for createPageDependencies.
  * @private
  */
-export const createPageDependency = (
+export function createPageDependency(
   payload: ICreatePageDependencyActionPayloadType,
-  plugin = ``
-): ICreatePageDependencyAction => createPageDependencies([payload], plugin)
+  plugin = ``,
+): ICreatePageDependencyAction {
+  return createPageDependencies([payload], plugin)
+}
 
 /**
  * Delete dependencies between an array of pages and data. Probably for
  * internal use only. Used when deleting pages.
  * @private
  */
-export const deleteComponentsDependencies = (
-  paths: Array<string>
-): IDeleteComponentDependenciesAction => {
+export function deleteComponentsDependencies(
+  paths: Array<string>,
+): IDeleteComponentDependenciesAction {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
@@ -94,13 +96,13 @@ export const deleteComponentsDependencies = (
  * this to store the query with its component.
  * @private
  */
-export const replaceComponentQuery = ({
+export function replaceComponentQuery({
   query,
   componentPath,
 }: {
   query: string
   componentPath: string
-}): IReplaceComponentQueryAction => {
+}): IReplaceComponentQueryAction {
   return {
     type: `REPLACE_COMPONENT_QUERY`,
     payload: {
@@ -110,9 +112,9 @@ export const replaceComponentQuery = ({
   }
 }
 
-export const apiFinished = (
-  payload: IApiFinishedAction["payload"]
-): IApiFinishedAction => {
+export function apiFinished(
+  payload: IApiFinishedAction["payload"],
+): IApiFinishedAction {
   return {
     type: `API_FINISHED`,
     payload,
@@ -124,7 +126,7 @@ export const apiFinished = (
  * it calls this to store the query with its component.
  * @private
  */
-export const replaceStaticQuery = (
+export function replaceStaticQuery(
   args: {
     name: string
     componentPath: string
@@ -132,8 +134,8 @@ export const replaceStaticQuery = (
     query: string
     hash: string
   },
-  plugin: IGatsbyPlugin | null | undefined = null
-): IReplaceStaticQueryAction => {
+  plugin: IGatsbyPlugin | null | undefined = null,
+): IReplaceStaticQueryAction {
   return {
     type: `REPLACE_STATIC_QUERY`,
     plugin,
@@ -147,11 +149,11 @@ export const replaceStaticQuery = (
  * query-compiler.js.
  * @private
  */
-export const queryExtracted = (
+export function queryExtracted(
   { componentPath, query }: { componentPath: string; query: string },
-  plugin: IGatsbyPlugin,
-  traceId?: string
-): IQueryExtractedAction => {
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): IQueryExtractedAction {
   return {
     type: `QUERY_EXTRACTED`,
     plugin,
@@ -168,9 +170,9 @@ export const queryExtracted = (
  * query-compiler.js.
  * @private
  */
-export const setGraphQLDefinitions = (
-  definitionsByName: Map<string, IDefinitionMeta>
-): ISetGraphQLDefinitionsAction => {
+export function setGraphQLDefinitions(
+  definitionsByName: Map<string, IDefinitionMeta>,
+): ISetGraphQLDefinitionsAction {
   return {
     type: `SET_GRAPHQL_DEFINITIONS`,
     payload: definitionsByName,
@@ -182,11 +184,14 @@ export const setGraphQLDefinitions = (
  * Report that the Relay Compiler found a graphql error when attempting to extract a query
  * @private
  */
-export const queryExtractionGraphQLError = (
-  { componentPath, error }: { componentPath: string; error: string },
-  plugin: IGatsbyPlugin,
-  traceId?: string
-): IQueryExtractionGraphQLErrorAction => {
+export function queryExtractionGraphQLError(
+  {
+    componentPath,
+    error,
+  }: { componentPath: string; error?: string | undefined },
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): IQueryExtractionGraphQLErrorAction {
   return {
     type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
     plugin,
@@ -201,11 +206,11 @@ export const queryExtractionGraphQLError = (
  * Indicates that the file is free of JS errors.
  * @private
  */
-export const queryExtractedBabelSuccess = (
-  { componentPath },
-  plugin: IGatsbyPlugin,
-  traceId?: string
-): IQueryExtractedBabelSuccessAction => {
+export function queryExtractedBabelSuccess(
+  { componentPath }: { componentPath: string },
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): IQueryExtractedBabelSuccessAction {
   return {
     type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
     plugin,
@@ -219,11 +224,11 @@ export const queryExtractedBabelSuccess = (
  * Report that the Relay Compiler found a babel error when attempting to extract a query
  * @private
  */
-export const queryExtractionBabelError = (
+export function queryExtractionBabelError(
   { componentPath, error }: { componentPath: string; error: Error },
-  plugin: IGatsbyPlugin,
-  traceId?: string
-): IQueryExtractionBabelErrorAction => {
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): IQueryExtractionBabelErrorAction {
   return {
     type: `QUERY_EXTRACTION_BABEL_ERROR`,
     plugin,
@@ -236,11 +241,11 @@ export const queryExtractionBabelError = (
  * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
  * @private
  */
-export const setProgramStatus = (
+export function setProgramStatus(
   status: ProgramStatus,
-  plugin: IGatsbyPlugin,
-  traceId?: string
-): ISetProgramStatusAction => {
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): ISetProgramStatusAction {
   return {
     type: `SET_PROGRAM_STATUS`,
     plugin,
@@ -253,11 +258,11 @@ export const setProgramStatus = (
  * Broadcast that a page's query was run.
  * @private
  */
-export const pageQueryRun = (
+export function pageQueryRun(
   payload: IPageQueryRunAction["payload"],
-  plugin: IGatsbyPlugin,
-  traceId?: string
-): IPageQueryRunAction => {
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): IPageQueryRunAction {
   return {
     type: `PAGE_QUERY_RUN`,
     plugin,
@@ -266,11 +271,11 @@ export const pageQueryRun = (
   }
 }
 
-export const queryStart = (
+export function queryStart(
   { path, componentPath, isPage },
-  plugin: IGatsbyPlugin,
-  traceId?: string
-): IQueryStartAction => {
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): IQueryStartAction {
   return {
     type: `QUERY_START`,
     plugin,
@@ -290,11 +295,11 @@ export const clearDirtyQueriesListToEmitViaWebsocket =
  * Remove jobs which are marked as stale (inputPath doesn't exists)
  * @private
  */
-export const removeStaleJob = (
+export function removeStaleJob(
   contentDigest: string,
-  plugin?: IGatsbyPlugin,
-  traceId?: string
-): IRemoveStaleJobAction => {
+  plugin?: IGatsbyPlugin | undefined,
+  traceId?: string | undefined,
+): IRemoveStaleJobAction {
   return {
     type: `REMOVE_STALE_JOB_V2`,
     plugin,
@@ -309,17 +314,17 @@ export const removeStaleJob = (
  * Set gatsby config
  * @private
  */
-export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
+export function setSiteConfig(config?: unknown | undefined): ISetSiteConfig {
   const result = gatsbyConfigSchema.validate(config || {})
   const normalizedPayload = result.value as IGatsbyConfig
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(
-      details => details.type === `object.unknown`
+      (details) => details.type === `object.unknown`,
     )
 
     if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {
-      const errorMessages = hasUnknownKeys.map(unknown => {
+      const errorMessages = hasUnknownKeys.map((unknown) => {
         const { context, message } = unknown
         const key = context?.key
         const suggestion = key && didYouMean(key)
@@ -357,24 +362,25 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
  * Set gatsby functions
  * @private
  */
-export const setFunctions = (
-  functions: IGatsbyState["functions"]
-): ISetSiteFunctions => {
+export function setFunctions(
+  functions: IGatsbyState["functions"],
+): ISetSiteFunctions {
   return {
     type: `SET_SITE_FUNCTIONS`,
     payload: functions,
   }
 }
 
-export const deleteNodeManifests = (): IDeleteNodeManifests => {
+export function deleteNodeManifests(): IDeleteNodeManifests {
   return {
     type: `DELETE_NODE_MANIFESTS`,
   }
 }
 
-export const createJobV2FromInternalJob =
-  (internalJob: InternalJob): ICreateJobV2FromInternalAction =>
-  (dispatch, getState): Promise<Record<string, unknown>> => {
+export const createJobV2FromInternalJob = (
+  internalJob: InternalJob,
+): ICreateJobV2FromInternalAction => {
+  return (dispatch, getState): Promise<Record<string, unknown>> => {
     const jobContentDigest = internalJob.contentDigest
     const currentState = getState()
 
@@ -386,7 +392,7 @@ export const createJobV2FromInternalJob =
       currentState.jobsV2.complete.has(jobContentDigest)
     ) {
       return Promise.resolve(
-        currentState.jobsV2.complete.get(jobContentDigest)!.result
+        currentState.jobsV2.complete.get(jobContentDigest)!.result,
       )
     }
     const engineContext = getEngineContext()
@@ -420,7 +426,7 @@ export const createJobV2FromInternalJob =
     })
 
     const enqueuedJobPromise = enqueueJob(internalJob)
-    return enqueuedJobPromise.then(result => {
+    return enqueuedJobPromise.then((result) => {
       // store the result in redux so we have it for the next run
       dispatch({
         type: `END_JOB_V2`,
@@ -438,6 +444,7 @@ export const createJobV2FromInternalJob =
       return result
     })
   }
+}
 
 export const clearGatsbyImageSourceUrls =
   (): IClearGatsbyImageSourceUrlAction => {

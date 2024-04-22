@@ -1,7 +1,7 @@
 import { memo, type JSX, type ComponentType } from "react"
 import path from "path"
 import { Box, Text } from "ink"
-import { IStructuredError } from "../../../../structured-errors/types"
+import type { IStructuredError } from "../../../../structured-errors/types"
 
 type IFileProps = {
   filePath: string

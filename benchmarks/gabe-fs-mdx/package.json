@@ -13,8 +13,8 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "devDependencies": {
-    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
-    "prettier": "2.0.4"
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.32",
+    "prettier": "^3.2.5"
   },
   "repository": {
     "type": "git",
@@ -29,12 +29,12 @@
     "mdx"
   ],
   "dependencies": {
-    "@mdx-js/react": "^2",
-    "faker": "^4.1.0",
-    "gatsby": "^4",
-    "gatsby-plugin-mdx": "^3",
-    "gatsby-source-filesystem": "^4",
-    "react": "^17",
-    "react-dom": "^17"
+    "@mdx-js/react": "^3.0.1",
+    "faker": "^6.6.6",
+    "gatsby": "^5.13.4",
+    "gatsby-plugin-mdx": "^5.13.1",
+    "gatsby-source-filesystem": "^5.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

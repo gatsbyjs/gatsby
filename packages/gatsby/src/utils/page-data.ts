@@ -231,7 +231,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
 
     reporter.warn(
       `[gatsby] node manifests were created but no page-data.json files were written, so manifest ID's were not added to page-data.json files. This may be a bug or it may be due to a source plugin creating a node manifest for a node that did not change. Node manifest IDs: ${nodeManifests
-        .map(n => n.manifestId)
+        .map((n) => n.manifestId)
         .slice(0, maxManifestIdsToLog)
         .join(`,`)}${
         nodeManifests.length > maxManifestIdsToLog
@@ -382,7 +382,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
   }
 
   if (!flushQueue.idle()) {
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       flushQueue.drain = resolve as () => unknown
     })
   }
@@ -429,7 +429,7 @@ export async function handleStalePageData(parentSpan: Span): Promise<void> {
         }
       })
 
-      stream.on(`error`, e => {
+      stream.on(`error`, (e) => {
         reject(e)
       })
 
@@ -438,12 +438,12 @@ export async function handleStalePageData(parentSpan: Span): Promise<void> {
   )
 
   const expectedPageDataFiles = new Set<string>()
-  store.getState().pages.forEach(page => {
+  store.getState().pages.forEach((page) => {
     expectedPageDataFiles.add(generatePageDataPath(`public`, page.path))
   })
 
   const deletionPromises: Array<Promise<void>> = []
-  pageDataFilesFromPreviousBuilds.forEach(pageDataFilePath => {
+  pageDataFilesFromPreviousBuilds.forEach((pageDataFilePath) => {
     if (!expectedPageDataFiles.has(pageDataFilePath)) {
       deletionPromises.push(fs.remove(pageDataFilePath))
     }

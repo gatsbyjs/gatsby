@@ -4,7 +4,7 @@ import _ from "lodash"
 
 const DEFAULT_PAGE_LIMIT = 1000
 
-const defaultOptions = {
+export const defaultOptions = {
   host: `cdn.contentful.com`,
   environment: `master`,
   downloadLocal: false,
@@ -16,26 +16,26 @@ const defaultOptions = {
   typePrefix: `Contentful`,
 }
 
-const createPluginConfig = pluginOptions => {
+export const createPluginConfig = (/** @type {any} */ pluginOptions) => {
   const conf = { ...defaultOptions, ...pluginOptions }
 
   return {
-    get: key => conf[key],
+    get: (key) => conf[key],
     getOriginalPluginOptions: () => pluginOptions,
   }
 }
 
 const maskedFields = [`accessToken`, `spaceId`]
 
-const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
+export function formatPluginOptionsForCLI(pluginOptions, errors = {}) {
   const optionKeys = new Set(
     Object.keys(pluginOptions)
       .concat(Object.keys(defaultOptions))
-      .concat(Object.keys(errors))
+      .concat(Object.keys(errors)),
   )
 
-  const getDisplayValue = key => {
-    const formatValue = value => {
+  function getDisplayValue(key) {
+    function formatValue(value) {
       if (_.isFunction(value)) {
         return `[Function]`
       } else if (maskedFields.includes(key) && typeof value === `string`) {
@@ -54,7 +54,7 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
   }
 
   const lines = []
-  optionKeys.forEach(key => {
+  optionKeys.forEach((key) => {
     if (key === `plugins`) {
       // skip plugins field automatically added by gatsby
       return
@@ -66,9 +66,7 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
         typeof defaultOptions[key] !== `undefined`
           ? chalk.dim(` (default value)`)
           : ``
-      }: ${getDisplayValue(key)}${
-        typeof errors[key] !== `undefined` ? ` - ${chalk.red(errors[key])}` : ``
-      }`
+      }: ${getDisplayValue(key)}${typeof errors[key] !== `undefined` ? ` - ${chalk.red(errors[key])}` : ``}`,
     )
   })
   return lines.join(`\n`)
@@ -79,19 +77,12 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
  * @param {string} input
  * @returns {string} masked text
  */
-const maskText = input => {
+export function maskText(input) {
   // show just 25% of string up to 4 characters
   const hiddenCharactersLength =
     input.length - Math.min(4, Math.floor(input.length * 0.25))
 
   return `${`*`.repeat(hiddenCharactersLength)}${input.substring(
-    hiddenCharactersLength
+    hiddenCharactersLength,
   )}`
-}
-
-export {
-  defaultOptions,
-  formatPluginOptionsForCLI,
-  maskText,
-  createPluginConfig,
 }

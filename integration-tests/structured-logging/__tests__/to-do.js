@@ -4,7 +4,6 @@
 // emitted
 const { spawn } = require(`child_process`)
 const EventEmitter = require(`events`)
-const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const cpy = require(`cpy`)
@@ -17,7 +16,7 @@ const joi = require(`joi`)
 const ISO8601 =
   /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i
 
-jest.setTimeout(100000)
+jest.globalThis.setTimeout(100000)
 
 const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
@@ -35,14 +34,14 @@ const collectEventsForDevelop = (events, env = {}) => {
   })
 
   let startedPromiseResolve = () => {}
-  const startedPromise = new Promise(resolve => {
+  const startedPromise = new Promise((resolve) => {
     startedPromiseResolve = resolve
   })
 
   const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
 
-    gatsbyProcess.on(`message`, msg => {
+    gatsbyProcess.on(`message`, (msg) => {
       if (!listening) {
         return
       }
@@ -55,7 +54,7 @@ const collectEventsForDevelop = (events, env = {}) => {
         msg.action.type === `SET_STATUS` &&
         msg.action.payload !== `IN_PROGRESS`
       ) {
-        setTimeout(() => {
+        globalThis.setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
           waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
@@ -94,12 +93,12 @@ expect.extend({
   toMatchSchema,
 })
 
-const commonAssertions = events => {
+const commonAssertions = (events) => {
   it(`emits actions with a timestamp`, () => {
-    events.forEach(event => {
+    events.forEach((event) => {
       expect(event).toHaveProperty(
         `action.timestamp`,
-        expect.stringMatching(ISO8601)
+        expect.stringMatching(ISO8601),
       )
     })
   })
@@ -146,24 +145,24 @@ const commonAssertions = events => {
         type: joi.string().required().valid(`RENDER_PAGE_TREE`),
         payload: joi.object(),
         timestamp: joi.string().required(),
-      })
+      }),
     )
 
     const eventSchema = joi.object({
       type: joi.string().required().valid(`LOG_ACTION`),
       action: actionSchema,
     })
-    events.forEach(event => {
+    events.forEach((event) => {
       expect(event).toMatchSchema(eventSchema)
     })
   })
   it(`asserts all activities that started actually ended`, () => {
     const activityStartEventUuids = events
-      .filter(event => event.action.type === `ACTIVITY_START`)
-      .map(event => event.action.payload.uuid)
+      .filter((event) => event.action.type === `ACTIVITY_START`)
+      .map((event) => event.action.payload.uuid)
     const activityEndEventUuids = events
-      .filter(event => event.action.type === `ACTIVITY_END`)
-      .map(event => event.action.payload.uuid)
+      .filter((event) => event.action.type === `ACTIVITY_END`)
+      .map((event) => event.action.payload.uuid)
 
     // const groupedActivities = groupBy(
     //   events.filter(
@@ -192,12 +191,12 @@ const commonAssertions = events => {
 
     // We use a Set here because order of some activities ending might be different
     expect(new Set(activityStartEventUuids)).toEqual(
-      new Set(activityEndEventUuids)
+      new Set(activityEndEventUuids),
     )
   })
 }
 
-const commonAssertionsForSuccess = events => {
+const commonAssertionsForSuccess = (events) => {
   commonAssertions(events)
   it(`emit initial SET_STATUS with IN_PROGRESS - very first message`, () => {
     const event = first(events)
@@ -213,7 +212,7 @@ const commonAssertionsForSuccess = events => {
   // as the FAILED status will be emitted twice. This does not impact/break Gatsby Cloud (we tested). Ref PR: #22759
   it.skip(`it emits just 2 SET_STATUS`, () => {
     const filteredEvents = events.filter(
-      event => event.action.type === `SET_STATUS`
+      (event) => event.action.type === `SET_STATUS`,
     )
     expect(filteredEvents.length).toEqual(2)
   })
@@ -225,7 +224,7 @@ const commonAssertionsForSuccess = events => {
   it.todo(`assert that there are no apis running`)
 }
 
-const commonAssertionsForFailure = events => {
+const commonAssertionsForFailure = (events) => {
   commonAssertions(events)
   it(`emit initial SET_STATUS with IN_PROGRESS - very first message`, () => {
     const event = first(events)
@@ -236,7 +235,7 @@ const commonAssertionsForFailure = events => {
   // as the FAILED status will be emitted twice. This does not impact/break Gatsby Cloud (we tested). Ref PR: #22759
   it.skip(`it emits just 2 SET_STATUS`, () => {
     const filteredEvents = events.filter(
-      event => event.action.type === `SET_STATUS`
+      (event) => event.action.type === `SET_STATUS`,
     )
     expect(filteredEvents.length).toEqual(2)
   })
@@ -316,7 +315,7 @@ describe(`develop`, () => {
     describe(`process.kill`, () => {
       let events = []
 
-      beforeAll(done => {
+      beforeAll((done) => {
         const { startedPromise, gatsbyProcess } =
           collectEventsForDevelop(events)
 
@@ -345,7 +344,7 @@ describe(`develop`, () => {
     const clearEvents = () => {
       events.splice(0, events.length)
     }
-    beforeAll(done => {
+    beforeAll((done) => {
       gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
@@ -356,7 +355,7 @@ describe(`develop`, () => {
         },
       })
 
-      gatsbyProcess.on(`message`, msg => {
+      gatsbyProcess.on(`message`, (msg) => {
         events.push(msg)
 
         // we are ready for tests
@@ -365,7 +364,7 @@ describe(`develop`, () => {
           msg.action.type === `SET_STATUS` &&
           msg.action.payload !== `IN_PROGRESS`
         ) {
-          setTimeout(() => {
+          globalThis.setTimeout(() => {
             eventEmitter.emit(`done`)
             done()
           }, 5000)
@@ -373,7 +372,7 @@ describe(`develop`, () => {
       })
     })
 
-    afterAll(done => {
+    afterAll((done) => {
       gatsbyProcess.kill()
       waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
     })
@@ -385,12 +384,12 @@ describe(`develop`, () => {
           path.join(__dirname, "../original/"),
           {
             overwrite: true,
-          }
+          },
         )
       })
 
       describe(`invalid`, () => {
-        beforeAll(done => {
+        beforeAll((done) => {
           clearEvents()
 
           const codeWithError = `import React from "react"
@@ -428,7 +427,7 @@ describe(`develop`, () => {
         commonAssertionsForFailure(events)
       })
       describe(`valid`, () => {
-        beforeAll(done => {
+        beforeAll((done) => {
           clearEvents()
 
           cpy(
@@ -436,7 +435,7 @@ describe(`develop`, () => {
             path.join(__dirname, "../src/pages/"),
             {
               overwrite: true,
-            }
+            },
           )
 
           eventEmitter.once(`done`, () => {
@@ -449,10 +448,10 @@ describe(`develop`, () => {
     })
     describe(`data change`, () => {
       describe(`via refresh webhook`, () => {
-        beforeAll(done => {
+        beforeAll((done) => {
           clearEvents()
 
-          fetch(`http://localhost:8000/__refresh`, {
+          globalThis.fetch(`http://localhost:8000/__refresh`, {
             method: `POST`,
             headers: {
               "Content-Type": `application/json`,
@@ -471,10 +470,10 @@ describe(`develop`, () => {
         commonAssertionsForSuccess(events)
       })
       describe(`with stateful plugin (i.e. Sanity)`, () => {
-        beforeAll(done => {
+        beforeAll((done) => {
           clearEvents()
 
-          fetch(`http://localhost:8000/___statefulUpdate/`, {
+          globalThis.fetch(`http://localhost:8000/___statefulUpdate/`, {
             method: `POST`,
             headers: {
               "Content-Type": `application/json`,
@@ -513,12 +512,12 @@ describe(`build`, () => {
         },
       })
 
-      await new Promise(resolve => {
-        gatsbyProcess.on(`message`, msg => {
+      await new Promise((resolve) => {
+        gatsbyProcess.on(`message`, (msg) => {
           events.push(msg)
         })
 
-        gatsbyProcess.on(`exit`, exitCode => {
+        gatsbyProcess.on(`exit`, (exitCode) => {
           resolve()
         })
       })
@@ -548,12 +547,12 @@ describe(`build`, () => {
           },
         })
 
-        await new Promise(resolve => {
-          gatsbyProcess.on(`message`, msg => {
+        await new Promise((resolve) => {
+          gatsbyProcess.on(`message`, (msg) => {
             events.push(msg)
           })
 
-          gatsbyProcess.on(`exit`, exitCode => {
+          gatsbyProcess.on(`exit`, (exitCode) => {
             resolve()
           })
         })
@@ -580,12 +579,12 @@ describe(`build`, () => {
           },
         })
 
-        await new Promise(resolve => {
-          gatsbyProcess.on(`message`, msg => {
+        await new Promise((resolve) => {
+          gatsbyProcess.on(`message`, (msg) => {
             events.push(msg)
           })
 
-          gatsbyProcess.on(`exit`, exitCode => {
+          gatsbyProcess.on(`exit`, (exitCode) => {
             resolve()
           })
         })
@@ -612,12 +611,12 @@ describe(`build`, () => {
           },
         })
 
-        await new Promise(resolve => {
-          gatsbyProcess.on(`message`, msg => {
+        await new Promise((resolve) => {
+          gatsbyProcess.on(`message`, (msg) => {
             events.push(msg)
           })
 
-          gatsbyProcess.on(`exit`, exitCode => {
+          gatsbyProcess.on(`exit`, (exitCode) => {
             resolve()
           })
         })
@@ -647,12 +646,12 @@ describe(`build`, () => {
 
         await new Promise((resolve, reject) => {
           let killing = false
-          gatsbyProcess.on(`message`, msg => {
+          gatsbyProcess.on(`message`, (msg) => {
             events.push(msg)
 
             if (!killing) {
               killing = true
-              setTimeout(() => {
+              globalThis.setTimeout(() => {
                 gatsbyProcess.kill(`SIGTERM`)
                 waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
               }, 2000)
@@ -677,7 +676,7 @@ function waitChildProcessExit(pid, resolve, reject, attempt = 0) {
       reject(new Error("Gatsby process hasn't exited in 15 seconds"))
       return
     }
-    setTimeout(() => {
+    globalThis.setTimeout(() => {
       waitChildProcessExit(pid, resolve, reject, attempt + 1)
     }, 1000)
   } catch (e) {
