@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@3.13.1/packages/gatsby-legacy-polyfills) (2024-04-10)
+
+#### Bug Fixes
+
+- handler generation on windows [#38900](https://github.com/gatsbyjs/gatsby/issues/38900) [#38929](https://github.com/gatsbyjs/gatsby/issues/38929) ([edaf016](https://github.com/gatsbyjs/gatsby/commit/edaf016906b593f0e028fa4a4e0b4ecc41cf1cc6))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@3.13.0/packages/gatsby-legacy-polyfills) (2023-12-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)
